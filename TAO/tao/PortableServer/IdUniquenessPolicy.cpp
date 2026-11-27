@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/PortableServer/IdUniquenessPolicy.h"
 #include "tao/PortableServer/PortableServer.h"
 
@@ -21,7 +20,7 @@ namespace TAO
     CORBA::Policy_ptr
     IdUniquenessPolicy::copy ()
     {
-      IdUniquenessPolicy *copy = nullptr;
+      IdUniquenessPolicy *copy {};
       ACE_NEW_THROW_EX (copy,
                         IdUniquenessPolicy (this->value_),
                         CORBA::NO_MEMORY ());

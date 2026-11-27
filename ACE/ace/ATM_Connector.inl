@@ -1,4 +1,3 @@
-// -*- C++ -*-
 // Open versioned namespace, if enabled by the user.
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -12,11 +11,11 @@ ACE_ATM_Connector::dump () const
 
 ACE_INLINE
 ACE_ATM_Connector::ACE_ATM_Connector (ACE_ATM_Stream &new_stream,
-                                      const ACE_ATM_Addr &remote_sap,
+                                      ACE_ATM_Addr const &remote_sap,
                                       ACE_ATM_Params params,
                                       ACE_ATM_QoS options,
                                       ACE_Time_Value *timeout,
-                                      const ACE_ATM_Addr &local_sap,
+                                      ACE_ATM_Addr const &local_sap,
                                       int reuse_addr,
                                       int flags,
                                       int perms)
@@ -36,7 +35,7 @@ ACE_ATM_Connector::ACE_ATM_Connector (ACE_ATM_Stream &new_stream,
                 ACE_TEXT ("ACE_ATM_Stream::ACE_ATM_Stream")));
 }
 
-// Try to complete a non-blocking connection.
+/// Try to complete a non-blocking connection.
 
 ACE_INLINE
 int
@@ -60,7 +59,7 @@ ACE_ATM_Connector::complete (ACE_ATM_Stream &new_stream,
 ACE_INLINE
 int
 ACE_ATM_Connector::add_leaf (ACE_ATM_Stream &current_stream,
-                             const ACE_Addr &remote_sap,
+                             ACE_Addr const &remote_sap,
                              ACE_ATM_QoS &qos)
 {
   ACE_TRACE ("ACE_ATM_Connector::add_leaf");
@@ -88,8 +87,10 @@ ACE_ATM_Connector::add_leaf (ACE_ATM_Stream &current_stream,
                                         qos_params);
 
   if ( result == ACE_INVALID_HANDLE )
-    ACE_OS::printf( "ATM_Connector(add_leaf): connection failed, %d\n",
-                    ::WSAGetLastError());
+    {
+      ACE_OS::printf( "ATM_Connector(add_leaf): connection failed, %d\n",
+                      ::WSAGetLastError());
+    }
 
   return (result != ACE_INVALID_HANDLE);
 #elif defined (ACE_HAS_LINUX_ATM)

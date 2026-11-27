@@ -1,4 +1,3 @@
-
 #ifndef BUG_1020_BASIC_REGRESSION_CLIENT_TASK_H
 #define BUG_1020_BASIC_REGRESSION_CLIENT_TASK_H
 #include /**/ "ace/pre.h"
@@ -14,8 +13,7 @@
 class Client_Task : public ACE_Task_Base
 {
 public:
-  /// Constructor
-  Client_Task (CORBA::ORB_ptr orb);
+  explicit Client_Task (CORBA::ORB_ptr orb);
   Client_Task (Client_Task const &) = delete;
   Client_Task &operator= (Client_Task const &) = delete;
   Client_Task (Client_Task &&) = delete;
@@ -25,7 +23,7 @@ public:
   int svc () override;
 
 private:
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var const orb_;
 };
 
 #include /**/ "ace/post.h"

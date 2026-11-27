@@ -16,13 +16,13 @@ PortableGroup_Request_Dispatcher::dispatch (TAO_ORB_Core *orb_core,
   if (request.profile ().discriminator () == GIOP::ProfileAddr)
     {
       // Get the IOP::Tagged profile.
-      const IOP::TaggedProfile &tagged_profile =
+      IOP::TaggedProfile const &tagged_profile =
         request.profile ().tagged_profile ();
       PortableGroup::TagGroupTaggedComponent group;
 
       // Extract a Group ID from the profile if it exists.
-      int result = TAO_UIPMC_Profile::extract_group_component (tagged_profile,
-                                                               group);
+      int const result = TAO_UIPMC_Profile::extract_group_component (tagged_profile,
+                                                                     group);
       if (result == 0)
         {
           // Got a group.  Dispatch based on the group ID

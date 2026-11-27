@@ -1,5 +1,3 @@
-# -*- Makefile -*-
-
 include $(ACE_ROOT)/include/makeinclude/platform_linux_common.GNU
 
 ifeq ($(insure),0)

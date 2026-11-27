@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Future.h
  *
@@ -9,7 +6,6 @@
  *  @author Per Andersson <Per.Andersson@hfera.ericsson.se> and
  *  @author John Tucker <johnny_tucker@yahoo.com>
  */
-//=============================================================================
 
 #ifndef ACE_FUTURE_H
 #define ACE_FUTURE_H
@@ -47,7 +43,7 @@ template <class T>
 class ACE_Future_Holder
 {
 public:
-  ACE_Future_Holder (const ACE_Future<T> &future);
+  ACE_Future_Holder (ACE_Future<T> const &future);
   ~ACE_Future_Holder () = default;
   ACE_Future_Holder () = delete;
 
@@ -60,7 +56,7 @@ public:
 /**
  * @class ACE_Future_Observer
  *
- * @brief ACE_Future_Observer<T>
+ * @brief ACE_Future_Observer&lt;T&gt;
  *
  * An ACE_Future_Observer object implements an object that is
  * subscribed with an ACE_Future object so that it may be notified
@@ -71,18 +67,16 @@ template <class T>
 class ACE_Future_Observer
 {
 public:
-  /// Destructor
   virtual ~ACE_Future_Observer () = default;
 
   /// Called by the ACE_Future in which we are subscribed to when
   /// its value is written to.
-  virtual void update (const ACE_Future<T> &future) = 0;
+  virtual void update (ACE_Future<T> const &future) = 0;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-  /// Constructor
   ACE_Future_Observer () = default;
 };
 
@@ -91,11 +85,11 @@ protected:
  *
  * @internal
  *
- * @brief ACE_Future_Rep<T>
+ * @brief ACE_Future_Rep&lt;T&gt;
  *
- * An ACE_Future_Rep<T> object encapsulates a pointer to an object
+ * An ACE_Future_Rep&lt;T&gt; object encapsulates a pointer to an object
  * of class T which is the result of an asynchronous method
- * invocation. It is pointed to by ACE_Future<T> object[s] and
+ * invocation. It is pointed to by ACE_Future&lt;T&gt; objects and
  * only accessible through them.
  */
 template <class T>
@@ -106,12 +100,12 @@ private:
 
   /**
    * Set the result value.  The specified @a caller represents the
-   * future that invoked this <set> method, which is used to notify
+   * future that invoked this @c set method, which is used to notify
    * the list of future observers. Returns 0 for success, -1 on error.
    * This function only has an effect the first time it is called for
    * the object. Subsequent calls return 0 (success) but have no effect.
    */
-  int set (const T &r,
+  int set (T const &r,
            ACE_Future<T> &caller);
 
   /// Wait up to @a tv time to get the @a value.  Note that @a tv must be
@@ -146,7 +140,7 @@ private:
    * available.  Note that this method is going away in a subsequent
    * release since it doesn't distinguish between failure results and
    * success results (exceptions should be used, but they aren't
-   * portable...).  The <get> method should be used instead since it
+   * portable...).  The @c get method should be used instead since it
    * separates the error value from the result, and also permits
    * timeouts.
    */
@@ -158,13 +152,14 @@ private:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
-  // = Encapsulate reference count and object lifetime of instances.
+  /// @name Reference-counted representation management
+  /// @{
 
-  /// Allocate a new ACE_Future_Rep<T> instance, returning NULL if it
+  /// Allocate a new @c ACE_Future_Rep instance, returning NULL if it
   /// cannot be created.
   static ACE_Future_Rep<T> *internal_create ();
 
-  /// Create a ACE_Future_Rep<T> and initialize the reference count.
+  /// Create an @c ACE_Future_Rep and initialize the reference count.
   static ACE_Future_Rep<T> *create ();
 
   /**
@@ -174,7 +169,7 @@ private:
    *
    * Precondition (rep != 0).
    */
-  static ACE_Future_Rep<T> *attach (ACE_Future_Rep<T> *&rep);
+  static ACE_Future_Rep<T> *attach (ACE_Future_Rep<T> *rep);
 
   /**
    * Decreases the reference count and deletes rep if there are no
@@ -191,6 +186,7 @@ private:
    * Precondition (rep != 0 && new_rep != 0)
    */
   static void assign (ACE_Future_Rep<T> *&rep, ACE_Future_Rep<T> *new_rep);
+  /// @}
 
   /// Is result available?
   int ready () const;
@@ -208,9 +204,11 @@ private:
   /// Keep a list of ACE_Future_Observers unread by client's reader thread.
   OBSERVER_COLLECTION observer_collection_;
 
-  // = Condition variable and mutex that protect the <value_>.
+  /// @name Result synchronization
+  /// @{
   mutable ACE_SYNCH_RECURSIVE_MUTEX value_ready_mutex_;
   mutable ACE_SYNCH_RECURSIVE_CONDITION value_ready_;
+  /// @}
 
 private:
   ACE_Future_Rep ();
@@ -230,27 +228,25 @@ template <class T>
 class ACE_Future
 {
 public:
-  /// Constructor.
   ACE_Future ();
 
   /// Copy constructor binds @a this and @a r to the same
   /// ACE_Future_Rep. An ACE_Future_Rep is created if necessary.
-  ACE_Future (const ACE_Future<T> &r);
+  ACE_Future (ACE_Future<T> const &r);
 
   /// Constructor that initialises an ACE_Future to point to the
   /// result @a r immediately.
-  ACE_Future (const T &r);
+  ACE_Future (T const &r);
 
-  /// Destructor.
   ~ACE_Future ();
 
   /// Assignment operator that binds @a this and @a r to the same
   /// ACE_Future_Rep. An ACE_Future_Rep is created if necessary.
-  void operator = (const ACE_Future<T> &r);
+  void operator = (ACE_Future<T> const &r);
 
   /// Cancel an ACE_Future and assign the value @a r.  It is used if a
   /// client does not want to wait for the value to be produced.
-  int cancel (const T &r);
+  int cancel (T const &r);
 
   /**
    * Cancel an ACE_Future.  Put the future into its initial
@@ -267,10 +263,10 @@ public:
    * @note It also returns @c true if both objects have just been
    *       instantiated and not used yet.
    */
-  bool operator == (const ACE_Future<T> &r) const;
+  bool operator == (ACE_Future<T> const &r) const;
 
   /// Inequality operator, which is the opposite of equality.
-  bool operator != (const ACE_Future<T> &r) const;
+  bool operator != (ACE_Future<T> const &r) const;
 
   /**
    * Make the result available. Is used by the server thread to give
@@ -280,7 +276,7 @@ public:
    * value assigned to it). Subsequent calls return 0 (success) but have no
    * effect.
    */
-  int set (const T &r);
+  int set (T const &r);
 
   /**
    * Wait to get the object's value.
@@ -347,14 +343,14 @@ public:
    * rarely, if ever, be used and that modifying the underlying
    * ACE_Future_Rep should be done with extreme caution.
    */
-  ACE_Future_Rep<T> *get_rep ();
+  ACE_Future_Rep<T> *get_rep () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
   /// The ACE_Future_Rep
-  /// Protect operations on the <Future>.
+  /// Protect operations on the @c Future.
   using FUTURE_REP = ACE_Future_Rep<T>;
   FUTURE_REP *future_rep_;
 };

@@ -1,33 +1,26 @@
-// ******************************************************************
-// Include Section
-// ******************************************************************
-
 #include "ace/OS_NS_unistd.h"
 #include "Notify_Structured_Push_Consumer.h"
 #include "Notify_Test_Client.h"
 #include "orbsvcs/Notify/Notify_Extensions.h"
 #include "common.h"
 
-// ******************************************************************
-// Subroutine Section
-// ******************************************************************
+#include <cstdio>
 
 Notify_Structured_Push_Consumer::Notify_Structured_Push_Consumer (
-                                            const char* name,
-                                            unsigned int expected,
-                                            Notify_Test_Client& client)
- : name_ (name),
-   expected_ (expected),
-   count_ (0),
-   delay_count_ (0),
-   delay_period_ (5),
-   client_ (client)
+  char const* name,
+  unsigned int expected,
+  Notify_Test_Client& client)
+  : name_ (name),
+    expected_ (expected),
+    client_ (client)
 {
   this->client_.consumer_start (this);
 }
 
 void
-Notify_Structured_Push_Consumer::set_delay_parameters (unsigned int delay_count, unsigned long delay_period)
+Notify_Structured_Push_Consumer::set_delay_parameters (
+  unsigned int delay_count,
+  unsigned long delay_period)
 {
   this->delay_count_ = delay_count;
   this->delay_period_ = delay_period;
@@ -35,7 +28,7 @@ Notify_Structured_Push_Consumer::set_delay_parameters (unsigned int delay_count,
 
 void
 Notify_Structured_Push_Consumer::_connect (
-                CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin)
+  CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin)
 {
 #ifdef TEST_QOS_MAX_EVENTS_PER_CONSUMER
   CosNotification::QoSProperties properties (8);
@@ -43,11 +36,13 @@ Notify_Structured_Push_Consumer::_connect (
   CORBA::ULong idx = 0;
   properties[idx].name = CORBA::string_dup (CosNotification::DiscardPolicy);
   properties[idx].value <<= this->CosNotification::FifoOrder;
-  idx += 1;
+  ++idx;
   properties[idx].name = CORBA::string_dup (CosNotification::MaxEventsPerConsumer);
   properties[idx].value <<= 500;
-  idx += 1;
-  ACE_OS::printf("Setting %d::%d QoS properties in Admin.\n", (int)idx, (int)properties.length());
+  ++idx;
+  std::printf ("Setting %u::%u QoS properties in Admin.\n",
+               static_cast<unsigned int> (idx),
+               static_cast<unsigned int> (properties.length ()));
   consumer_admin->set_qos (properties);
 #endif // TEST_QOS_MAX_EVENTS_PER_CONSUMER
 
@@ -81,15 +76,14 @@ Notify_Structured_Push_Consumer::_connect (
   this->_remove_ref ();
 }
 
-
 void
 Notify_Structured_Push_Consumer::push_structured_event (
-  const CosNotification::StructuredEvent&)
+  CosNotification::StructuredEvent const &)
 {
   ACE_DEBUG ((LM_DEBUG, "-"));
-  static const ACE_Time_Value sl (0, 2000);
+  static ACE_Time_Value const sleep_time (0, 2000);
 
-  this->count_++;
+  ++this->count_;
 
   if (this->delay_count_ != 0 && this->count_ % this->delay_count_ == 0)
     {
@@ -97,16 +91,16 @@ Notify_Structured_Push_Consumer::push_structured_event (
     }
 
   if (this->count_ > this->expected_)
-  {
-    ACE_ERROR ((LM_ERROR,
-      ACE_TEXT ("Structured Consumer (%P|%t): ERROR: too ")
-      ACE_TEXT ("many events received.\n")));
-  }
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Structured Consumer (%P|%t): ERROR: too ")
+                  ACE_TEXT ("many events received.\n")));
+    }
 
   if (this->count_ >= this->expected_)
-  {
-    ACE_DEBUG ((LM_DEBUG, "\nConsumer received %u events.\n", count_));
-    this->client_.consumer_done (this);
-  }
-  ACE_OS::sleep (sl);
+    {
+      ACE_DEBUG ((LM_DEBUG, "\nConsumer received %u events.\n", count_));
+      this->client_.consumer_done (this);
+    }
+  ACE_OS::sleep (sleep_time);
 }

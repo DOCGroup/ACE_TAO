@@ -1,6 +1,3 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
  *  @file    Naming_Client.h
  *
@@ -10,8 +7,6 @@
  *  @author Matt Braun <mjb2@cs.wustl.edu>
  *  @author and Douglas C. Schmidt <d.schmidt@vanderbilt.edu>.
  */
-//=============================================================================
-
 
 #ifndef TAO_NAMING_CLIENT_H
 #define TAO_NAMING_CLIENT_H
@@ -30,33 +25,31 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * the role of Naming Service clients.
  *
  * Wrapper class that locates the root Naming Context.  It also
- * defines the operator-> so that <NamingContext> functions like
- * <resolve>, etc. can be directly called on a
- * <TAO_Naming_Client> object, and will be forwarded to the root
+ * defines the operator-> so that @c NamingContext functions like
+ * @c resolve, etc. can be directly called on a
+ * @c TAO_Naming_Client object, and will be forwarded to the root
  * Naming Context.
  */
 class TAO_Naming_Export TAO_Naming_Client
 {
 public:
-  /// Default constructor.
-  TAO_Naming_Client ();
+  TAO_Naming_Client () = default;
 
   /**
    * Look for a Naming Service for a period of @a timeout using
    * @c resolve_initial_references.  Return 0 if Naming Service is
    * successfully located, and -1 on failure.
    */
-  int init (CORBA::ORB_ptr orb, ACE_Time_Value *timeout = 0);
+  int init (CORBA::ORB_ptr orb, ACE_Time_Value *timeout = nullptr);
 
-  /// Destructor.
-  ~TAO_Naming_Client ();
+  ~TAO_Naming_Client () = default;
 
   /// Returns a pointer to the root Naming Context.
   CosNaming::NamingContext_ptr operator-> () const;
 
   /**
    * Returns a pointer to the root Naming Context.  This ptr is
-   * duplicated via <_duplicate> so that it can be stored into a
+   * duplicated via @c _duplicate so that it can be stored into a
    * <*_var>.
    */
   CosNaming::NamingContext_ptr get_context () const;

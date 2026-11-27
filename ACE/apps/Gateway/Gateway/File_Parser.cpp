@@ -12,25 +12,30 @@ using FP_RETURN_TYPE = FPRT::Return_Type;
 
 // File_Parser stuff.
 
-template <class ENTRY>
-File_Parser<ENTRY>::~File_Parser ()
-{
-}
-
 template <class ENTRY> int
-File_Parser<ENTRY>::open (const ACE_TCHAR filename[])
+File_Parser<ENTRY>::open (ACE_TCHAR const filename[])
 {
-  this->infile_ = ACE_OS::fopen (filename, ACE_TEXT ("r"));
-  if (this->infile_ == 0)
-    return -1;
+  this->infile_.reset (ACE_OS::fopen (filename, ACE_TEXT ("r")));
+  if (this->infile_ == nullptr)
+    {
+      return -1;
+    }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 
 template <class ENTRY> int
 File_Parser<ENTRY>::close ()
 {
-  return ACE_OS::fclose (this->infile_);
+  if (!this->infile_)
+    {
+      return -1;
+    }
+
+  FILE * const file = this->infile_.release ();
+  return ACE_OS::fclose (file);
 }
 
 template <class ENTRY> FP_RETURN_TYPE
@@ -52,79 +57,104 @@ File_Parser<ENTRY>::getint (ACE_INT32 &value)
     {
       // Check to see if this is the "use the default value" symbol?
       if (buf[0] == '*')
-        return FPRT::RT_DEFAULT;
+        {
+          return FPRT::RT_DEFAULT;
+        }
       else
         {
           // ptr is used for error checking with ACE_OS::strtol.
-          char *ptr = 0;
+          char *ptr {};
 
           // try to convert the buf to a decimal number
           value = ACE_OS::strtol (buf, &ptr, 10);
 
           // check if the buf is a decimal or not
           if (value == 0 && ptr == buf)
-            return FPRT::RT_PARSE_ERROR;
+            {
+              return FPRT::RT_PARSE_ERROR;
+            }
           else
-            return FPRT::RT_SUCCESS;
+            {
+              return FPRT::RT_SUCCESS;
+            }
         }
     }
   else
-    return read_result;
+    {
+      return read_result;
+    }
 }
-
 
 template <class ENTRY> FP_RETURN_TYPE
 File_Parser<ENTRY>::readword (char buf[])
 {
-  int wordlength = 0;
-  int c;
+  int wordlength {};
+  int c {};
 
   // Skip over leading delimiters and get word.
 
-  while ((c = ACE_OS::getc (this->infile_)) != EOF && c != '\n')
+  while ((c = ACE_OS::getc (this->infile_.get ())) != EOF && c != '\n')
     if (this->delimiter (c))
       {
         // We've reached the end of a "word".
         if (wordlength > 0)
-          break;
+          {
+            break;
+          }
       }
     else
-      buf[wordlength++] = c;
+      {
+        buf[wordlength] = c;
+        ++wordlength;
+      }
 
   buf[wordlength] = '\0';
 
-  if (c == EOF) {
-    // If EOF is just a delimiter, don't return EOF so that the word
-    // gets processed.
-    if (wordlength > 0)
-      {
-        ACE_OS::ungetc (c, this->infile_);
-        return FPRT::RT_SUCCESS;
-      }
-    else
-      // else return EOF so that read loops stop
-      return FPRT::RT_EOFILE;
-  }
+  if (c == EOF)
+    {
+      // If EOF is just a delimiter, don't return EOF so that the word
+      // gets processed.
+      if (wordlength > 0)
+        {
+          ACE_OS::ungetc (c, this->infile_.get ());
+          return FPRT::RT_SUCCESS;
+        }
+      else
+        {
+          // else return EOF so that read loops stop
+          return FPRT::RT_EOFILE;
+        }
+    }
   else if (c == '\n')
     {
       // if the EOLINE is just a delimiter, don't return EOLINE
       // so that the word gets processed
       if (wordlength > 0)
-        ACE_OS::ungetc (c, this->infile_);
+        {
+          ACE_OS::ungetc (c, this->infile_.get ());
+        }
       else
-        return FPRT::RT_EOLINE;
+        {
+          return FPRT::RT_EOLINE;
+        }
     }
 
   // Skip comments.
   if (this->comments (buf[0]))
     {
       if (this->skipline () == EOF)
-        return FPRT::RT_EOFILE;
+        {
+          return FPRT::RT_EOFILE;
+        }
       else
-        return FPRT::RT_COMMENT;
+        {
+          return FPRT::RT_COMMENT;
+        }
     }
   else
-    return FPRT::RT_SUCCESS;
+    {
+      return FPRT::RT_SUCCESS;
+    }
 }
 
 template <class ENTRY> int
@@ -144,10 +174,11 @@ File_Parser<ENTRY>::skipline ()
 {
   // Skip the remainder of the line.
 
-  int c;
+  int c {};
 
-  while ((c = ACE_OS::getc (this->infile_)) != '\n' && c != EOF)
-    continue;
+  while ((c = ACE_OS::getc (this->infile_.get ())) != '\n' && c != EOF)
+    {
+    }
 
   return c;
 }

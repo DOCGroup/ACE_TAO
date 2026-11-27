@@ -4,6 +4,8 @@
 #include "DSRT_Direct_Dispatcher_Impl_T.h"
 #include "DSRT_CV_Dispatcher_Impl_T.h"
 
+#include <memory>
+
 #if ! defined (__ACE_INLINE__)
 #include "Kokyu_dsrt.inl"
 #endif /* __ACE_INLINE__ */
@@ -14,20 +16,19 @@ template <class DSRT_Scheduler_Traits>
 void
 DSRT_Dispatcher<DSRT_Scheduler_Traits>::implementation (DSRT_Dispatcher_Impl<DSRT_Scheduler_Traits>* impl)
 {
-  std::unique_ptr<DSRT_Dispatcher_Impl<DSRT_Scheduler_Traits> > tmp_impl (impl);
-  dispatcher_impl_ = std::move(tmp_impl);
+  this->dispatcher_impl_.reset (impl);
 }
 
 template <class DSRT_Scheduler_Traits>
 int
-DSRT_Dispatcher<DSRT_Scheduler_Traits>::schedule (Guid_t guid, const DSRT_QoSDescriptor& qos)
+DSRT_Dispatcher<DSRT_Scheduler_Traits>::schedule (Guid_t guid, DSRT_QoSDescriptor const &qos)
 {
   return dispatcher_impl_->schedule (guid, qos);
 }
 
 template <class DSRT_Scheduler_Traits>
 int
-DSRT_Dispatcher<DSRT_Scheduler_Traits>::update_schedule (Guid_t guid, const DSRT_QoSDescriptor& qos)
+DSRT_Dispatcher<DSRT_Scheduler_Traits>::update_schedule (Guid_t guid, DSRT_QoSDescriptor const &qos)
 {
   return dispatcher_impl_->update_schedule (guid, qos);
 }
@@ -55,44 +56,48 @@ int DSRT_Dispatcher<DSRT_Scheduler_Traits>::shutdown ()
 template <class DSRT_Scheduler_Traits>
 DSRT_Dispatcher<DSRT_Scheduler_Traits>*
 DSRT_Dispatcher_Factory<DSRT_Scheduler_Traits>::
-create_DSRT_dispatcher (const DSRT_ConfigInfo& config_info)
+create_DSRT_dispatcher (DSRT_ConfigInfo const &config_info)
 {
-  ACE_UNUSED_ARG ((config_info));
-
-  DSRT_Dispatcher_Impl<DSRT_Scheduler_Traits>* tmp;
-  DSRT_Dispatcher<DSRT_Scheduler_Traits>* disp;
+  DSRT_Dispatcher_Impl<DSRT_Scheduler_Traits> *raw_impl {};
+  std::unique_ptr<DSRT_Dispatcher_Impl<DSRT_Scheduler_Traits>> impl;
 
   switch (config_info.impl_type_)
     {
     case DSRT_OS_BASED:
-      ACE_NEW_RETURN (tmp,
+      ACE_NEW_RETURN (raw_impl,
                       DSRT_Direct_Dispatcher_Impl<DSRT_Scheduler_Traits> (
                       config_info.sched_policy_,
                       config_info.sched_scope_),
-                      0);
+                      nullptr);
+      impl.reset (raw_impl);
       break;
 
     case DSRT_CV_BASED:
     default:
-      ACE_NEW_RETURN (tmp,
+      ACE_NEW_RETURN (raw_impl,
                       DSRT_CV_Dispatcher_Impl<DSRT_Scheduler_Traits>(
                       config_info.sched_policy_,
                       config_info.sched_scope_),
-                      0);
+                      nullptr);
+      impl.reset (raw_impl);
       break;
     }
 
-  ACE_ASSERT (tmp != 0);
-  ACE_NEW_RETURN (disp, DSRT_Dispatcher<DSRT_Scheduler_Traits>, 0);
-  disp->implementation (tmp);
-  tmp->init (config_info);
-  return disp;
+  DSRT_Dispatcher<DSRT_Scheduler_Traits> *raw_dispatcher {};
+  ACE_NEW_RETURN (raw_dispatcher,
+                  DSRT_Dispatcher<DSRT_Scheduler_Traits>,
+                  nullptr);
+  std::unique_ptr<DSRT_Dispatcher<DSRT_Scheduler_Traits>> dispatcher (raw_dispatcher);
+  DSRT_Dispatcher_Impl<DSRT_Scheduler_Traits> * const impl_ptr = impl.get ();
+  dispatcher->implementation (impl.release ());
+  impl_ptr->init (config_info);
+  return dispatcher.release ();
 }
 
 template <class QoSDescriptor_t>
 int MUF_Comparator<QoSDescriptor_t>::
-operator ()(const QoSDescriptor_t& qos1,
-            const QoSDescriptor_t& qos2)
+operator ()(QoSDescriptor_t const &qos1,
+            QoSDescriptor_t const &qos2)
 {
   if (qos1.criticality_ > qos2.criticality_)
     {
@@ -104,14 +109,14 @@ operator ()(const QoSDescriptor_t& qos1,
     }
 
   typename QoSDescriptor_t::Now now_functor;
-  Time_t now = now_functor ();
+  Time_t const now = now_functor ();
 
-  Time_t exec_time1 = qos1.exec_time_;
-  Time_t deadline1 = qos1.deadline_;
-  Time_t laxity1 = deadline1 - now - exec_time1;
-  Time_t exec_time2 = qos2.exec_time_;
-  Time_t deadline2 = qos2.deadline_;
-  Time_t laxity2 = deadline2 - now - exec_time2;
+  Time_t const exec_time1 = qos1.exec_time_;
+  Time_t const deadline1 = qos1.deadline_;
+  Time_t const laxity1 = deadline1 - now - exec_time1;
+  Time_t const exec_time2 = qos2.exec_time_;
+  Time_t const deadline2 = qos2.deadline_;
+  Time_t const laxity2 = deadline2 - now - exec_time2;
 
   if (laxity1 < laxity2)
     {
@@ -129,13 +134,14 @@ operator ()(const QoSDescriptor_t& qos1,
 
 template <class QoSDescriptor>
 int MIF_Comparator<QoSDescriptor>::
-operator ()(const QoSDescriptor& qos1,
-            const QoSDescriptor& qos2)
+operator ()(QoSDescriptor const &qos1,
+            QoSDescriptor const &qos2)
 {
 #ifdef KOKYU_DSRT_LOGGING
   ACE_DEBUG ((LM_DEBUG,
-              "(%t|%T):qos1.importance = %d, qos2.importance = %d\n",
-              qos1.importance_, qos2.importance_));
+              "(%t|%T):qos1.importance = %q, qos2.importance = %q\n",
+              static_cast<ACE_INT64> (qos1.importance_),
+              static_cast<ACE_INT64> (qos2.importance_)));
 #endif
 
   if (qos1.importance_ > qos2.importance_)
@@ -154,8 +160,8 @@ operator ()(const QoSDescriptor& qos1,
 
 template <class QoSDescriptor>
 int Fixed_Priority_Comparator<QoSDescriptor>::
-operator ()(const QoSDescriptor& qos1,
-            const QoSDescriptor& qos2)
+operator ()(QoSDescriptor const &qos1,
+            QoSDescriptor const &qos2)
 {
   if (qos1.priority_ > qos2.priority_)
     {

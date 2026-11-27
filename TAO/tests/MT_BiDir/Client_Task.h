@@ -1,4 +1,3 @@
-
 #ifndef MT_BIDIR_CLIENT_TASK_H
 #define MT_BIDIR_CLIENT_TASK_H
 #include /**/ "ace/pre.h"
@@ -11,21 +10,24 @@
 
 #include "tao/ORB.h"
 
-
 /// Implement a Task to run the experiments using multiple threads.
 class Client_Task : public ACE_Task_Base
 {
 public:
-  /// Constructor
   Client_Task (CORBA::ORB_ptr orb,
                ACE_Thread_Manager *thr_mgr);
 
   /// Thread entry point
-  int svc ();
+  int svc () override;
+
+  Client_Task (Client_Task const &) = delete;
+  Client_Task (Client_Task &&) = delete;
+  Client_Task & operator= (Client_Task const &) = delete;
+  Client_Task & operator= (Client_Task &&) = delete;
 
 private:
   /// Reference to the ORB
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var const orb_;
 };
 
 #include /**/ "ace/post.h"

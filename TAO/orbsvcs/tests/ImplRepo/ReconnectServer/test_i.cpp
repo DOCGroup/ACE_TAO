@@ -1,15 +1,9 @@
 #include "test_i.h"
 #include "ace/OS_NS_time.h"
 
-// Implementation skeleton constructor
-Test_Dummy_i::Test_Dummy_i ()
-{
-}
+Test_Dummy_i::Test_Dummy_i () = default;
 
-// Implementation skeleton destructor
-Test_Dummy_i::~Test_Dummy_i ()
-{
-}
+Test_Dummy_i::~Test_Dummy_i () = default;
 
 char * Test_Dummy_i::getMessage ()
 {
@@ -17,14 +11,9 @@ char * Test_Dummy_i::getMessage ()
    return CORBA::string_dup("Test::Dummy---->Hello World");
 }
 
-Test_Time_i::Test_Time_i ()
-{
-}
+Test_Time_i::Test_Time_i () = default;
 
-// Implementation skeleton destructor
-Test_Time_i::~Test_Time_i ()
-{
-}
+Test_Time_i::~Test_Time_i () = default;
 
 ::CORBA::Long Test_Time_i::current_time ()
 {
@@ -38,5 +27,4 @@ void Test_Time_i::shutdown ()
               "%C\n",
               "Time_i is shutting down"));
 }
-
 

@@ -1,47 +1,43 @@
-// -*- C++ -*-
-
 #include "ACEXML/common/SAXExceptions.h"
+
+#include <memory>
+
 #include "ace/Log_Msg.h"
 #include "ace/ACE.h"
 #include "ace/OS_Memory.h"
 #include "ace/OS_NS_string.h"
 
-const ACEXML_Char * ACEXML_SAXException::exception_name_ = ACE_TEXT ("ACEXML_SAXException");
+ACEXML_Char const * ACEXML_SAXException::exception_name_ = ACE_TEXT ("ACEXML_SAXException");
 
-const ACEXML_Char ACEXML_SAXNotSupportedException::exception_name_[] = ACE_TEXT ("ACEXML_SAXNotSupportedException");
+ACEXML_Char const ACEXML_SAXNotSupportedException::exception_name_[] = ACE_TEXT ("ACEXML_SAXNotSupportedException");
 
-const ACEXML_Char ACEXML_SAXNotRecognizedException::exception_name_[] = ACE_TEXT ("ACEXML_SAXNotRecognizedException");
+ACEXML_Char const ACEXML_SAXNotRecognizedException::exception_name_[] = ACE_TEXT ("ACEXML_SAXNotRecognizedException");
 
-const ACEXML_Char ACEXML_SAXParseException::exception_name_[] = ACE_TEXT ("ACEXML_SAXParseException");
+ACEXML_Char const ACEXML_SAXParseException::exception_name_[] = ACE_TEXT ("ACEXML_SAXParseException");
 
 #if !defined (__ACEXML_INLINE__)
 # include "ACEXML/common/SAXExceptions.inl"
 #endif /* __ACEXML_INLINE__ */
 
-ACEXML_SAXException::ACEXML_SAXException ()
-  : message_ (0)
-{
-}
+ACEXML_SAXException::ACEXML_SAXException () = default;
 
-ACEXML_SAXException::ACEXML_SAXException (const ACEXML_Char *msg)
+ACEXML_SAXException::ACEXML_SAXException (ACEXML_Char const *msg)
   : message_ (ACE::strnew (msg))
 {
 }
 
-ACEXML_SAXException::ACEXML_SAXException (const ACEXML_SAXException &ex)
+ACEXML_SAXException::ACEXML_SAXException (ACEXML_SAXException const &ex)
   : ACEXML_Exception (ex),
-    message_ (ACE::strnew (ex.message_))
-
+    message_ (ACE::strnew (ex.message_.get ()))
 {
 }
 
 ACEXML_SAXException&
-ACEXML_SAXException::operator= (const ACEXML_SAXException& src)
+ACEXML_SAXException::operator= (ACEXML_SAXException const& src)
 {
-  if (this != &src)
+  if (this != std::addressof (src))
     {
-      ACE::strdelete (this->message_);
-      this->message_ = ACE::strnew (src.message_);
+      this->message_.reset (ACE::strnew (src.message_.get ()));
     }
 
   return *this;
@@ -53,21 +49,18 @@ ACEXML_SAXException::_downcast (ACEXML_Exception* ex)
   return dynamic_cast<ACEXML_SAXException*> (ex);
 }
 
-ACEXML_SAXException::~ACEXML_SAXException ()
-{
-  ACE::strdelete (this->message_);
-}
+ACEXML_SAXException::~ACEXML_SAXException () = default;
 
 ACEXML_Exception *
 ACEXML_SAXException::duplicate () const
 {
   ACEXML_Exception *tmp;
-  ACE_NEW_RETURN (tmp, ACEXML_SAXException (*this), 0);
+  ACE_NEW_RETURN (tmp, ACEXML_SAXException (*this), nullptr);
   return tmp;
 }
 
-int
-ACEXML_SAXException::is_a (const ACEXML_Char *name)
+bool
+ACEXML_SAXException::is_a (ACEXML_Char const *name)
 {
   return ACE_OS::strcmp (ACEXML_SAXException::exception_name_, name) == 0
     || this->ACEXML_Exception::is_a (name);
@@ -82,21 +75,12 @@ ACEXML_SAXException::print () const
 }
 
 ACEXML_SAXNotSupportedException::ACEXML_SAXNotSupportedException ()
-{
-}
+= default;
 
-ACEXML_SAXNotSupportedException::ACEXML_SAXNotSupportedException (const ACEXML_SAXNotSupportedException &ex)
-  : ACEXML_SAXException (ex)
-{
-}
+ACEXML_SAXNotSupportedException::ACEXML_SAXNotSupportedException (ACEXML_SAXNotSupportedException const &) = default;
 
 ACEXML_SAXNotSupportedException&
-ACEXML_SAXNotSupportedException::operator= (const
-                                            ACEXML_SAXNotSupportedException &ex)
-{
-  this->ACEXML_SAXException::operator= (ex);
-  return *this;
-}
+ACEXML_SAXNotSupportedException::operator= (ACEXML_SAXNotSupportedException const &) = default;
 
 ACEXML_SAXNotSupportedException*
 ACEXML_SAXNotSupportedException::_downcast (ACEXML_Exception* ex)
@@ -104,26 +88,23 @@ ACEXML_SAXNotSupportedException::_downcast (ACEXML_Exception* ex)
   return dynamic_cast<ACEXML_SAXNotSupportedException*> (ex);
 }
 
-ACEXML_SAXNotSupportedException::ACEXML_SAXNotSupportedException (const ACEXML_Char* msg)
+ACEXML_SAXNotSupportedException::ACEXML_SAXNotSupportedException (ACEXML_Char const * msg)
   : ACEXML_SAXException (msg)
 {
 }
 
-ACEXML_SAXNotSupportedException::~ACEXML_SAXNotSupportedException ()
-{
-}
-
+ACEXML_SAXNotSupportedException::~ACEXML_SAXNotSupportedException () = default;
 
 ACEXML_Exception *
 ACEXML_SAXNotSupportedException::duplicate () const
 {
   ACEXML_Exception *tmp;
-  ACE_NEW_RETURN (tmp, ACEXML_SAXNotSupportedException (*this), 0);
+  ACE_NEW_RETURN (tmp, ACEXML_SAXNotSupportedException (*this), nullptr);
   return tmp;
 }
 
-int
-ACEXML_SAXNotSupportedException::is_a (const ACEXML_Char *name)
+bool
+ACEXML_SAXNotSupportedException::is_a (ACEXML_Char const *name)
 {
   return ACE_OS::strcmp (ACEXML_SAXNotSupportedException::exception_name_,
                          name) == 0
@@ -139,25 +120,17 @@ ACEXML_SAXNotSupportedException::print () const
 }
 
 ACEXML_SAXNotRecognizedException::ACEXML_SAXNotRecognizedException ()
-{
-}
+= default;
 
-ACEXML_SAXNotRecognizedException::ACEXML_SAXNotRecognizedException (const ACEXML_Char *msg)
+ACEXML_SAXNotRecognizedException::ACEXML_SAXNotRecognizedException (ACEXML_Char const *msg)
   : ACEXML_SAXException (msg)
 {
 }
 
-ACEXML_SAXNotRecognizedException::ACEXML_SAXNotRecognizedException (const ACEXML_SAXNotRecognizedException &ex)
-  : ACEXML_SAXException (ex)
-{
-}
+ACEXML_SAXNotRecognizedException::ACEXML_SAXNotRecognizedException (ACEXML_SAXNotRecognizedException const &) = default;
 
 ACEXML_SAXNotRecognizedException&
-ACEXML_SAXNotRecognizedException::operator= (const ACEXML_SAXNotRecognizedException &ex)
-{
-  this->ACEXML_SAXException::operator= (ex);
-  return *this;
-}
+ACEXML_SAXNotRecognizedException::operator= (ACEXML_SAXNotRecognizedException const &) = default;
 
 ACEXML_SAXNotRecognizedException*
 ACEXML_SAXNotRecognizedException::_downcast (ACEXML_Exception* ex)
@@ -165,20 +138,18 @@ ACEXML_SAXNotRecognizedException::_downcast (ACEXML_Exception* ex)
   return dynamic_cast<ACEXML_SAXNotRecognizedException*> (ex);
 }
 
-ACEXML_SAXNotRecognizedException::~ACEXML_SAXNotRecognizedException ()
-{
-}
+ACEXML_SAXNotRecognizedException::~ACEXML_SAXNotRecognizedException () = default;
 
 ACEXML_Exception *
 ACEXML_SAXNotRecognizedException::duplicate () const
 {
   ACEXML_Exception *tmp;
-  ACE_NEW_RETURN (tmp, ACEXML_SAXNotRecognizedException (*this), 0);
+  ACE_NEW_RETURN (tmp, ACEXML_SAXNotRecognizedException (*this), nullptr);
   return tmp;
 }
 
-int
-ACEXML_SAXNotRecognizedException::is_a (const ACEXML_Char *name)
+bool
+ACEXML_SAXNotRecognizedException::is_a (ACEXML_Char const *name)
 {
   return ACE_OS::strcmp (ACEXML_SAXNotRecognizedException::exception_name_,
                          name) == 0
@@ -194,25 +165,17 @@ ACEXML_SAXNotRecognizedException::print () const
 }
 
 ACEXML_SAXParseException::ACEXML_SAXParseException ()
-{
-}
+= default;
 
-ACEXML_SAXParseException::ACEXML_SAXParseException (const ACEXML_Char *msg)
+ACEXML_SAXParseException::ACEXML_SAXParseException (ACEXML_Char const *msg)
   : ACEXML_SAXException (msg)
 {
 }
 
-ACEXML_SAXParseException::ACEXML_SAXParseException (const ACEXML_SAXParseException &ex)
-  : ACEXML_SAXException (ex)
-{
-}
+ACEXML_SAXParseException::ACEXML_SAXParseException (ACEXML_SAXParseException const &) = default;
 
 ACEXML_SAXParseException&
-ACEXML_SAXParseException::operator= (const ACEXML_SAXParseException &ex)
-{
-  this->ACEXML_SAXException::operator= (ex);
-  return *this;
-}
+ACEXML_SAXParseException::operator= (ACEXML_SAXParseException const &) = default;
 
 ACEXML_SAXParseException*
 ACEXML_SAXParseException::_downcast (ACEXML_Exception* ex)
@@ -220,20 +183,18 @@ ACEXML_SAXParseException::_downcast (ACEXML_Exception* ex)
   return dynamic_cast<ACEXML_SAXParseException*> (ex);
 }
 
-ACEXML_SAXParseException::~ACEXML_SAXParseException ()
-{
-}
+ACEXML_SAXParseException::~ACEXML_SAXParseException () = default;
 
 ACEXML_Exception *
 ACEXML_SAXParseException::duplicate () const
 {
   ACEXML_Exception *tmp;
-  ACE_NEW_RETURN (tmp, ACEXML_SAXParseException (*this), 0);
+  ACE_NEW_RETURN (tmp, ACEXML_SAXParseException (*this), nullptr);
   return tmp;
 }
 
-int
-ACEXML_SAXParseException::is_a (const ACEXML_Char *name)
+bool
+ACEXML_SAXParseException::is_a (ACEXML_Char const *name)
 {
   return ACE_OS::strcmp (ACEXML_SAXParseException::exception_name_,
                          name) == 0

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <typename StringType,
@@ -43,7 +42,7 @@ TAO::TypeCode::Value<StringType,
   , base_attributes_ (id)
   , type_modifier_ (CORBA::VM_NONE)
   , concrete_base_ ()
-  , nfields_ (0)
+  , nfields_ {}
   , fields_ ()
 {
 }

@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*idl) : taoclient {
   IDL_Files {
     time.idl

@@ -3,7 +3,6 @@
 #include "tao/debug.h"
 #include "Simple.h"
 
-
 //***************************************************************************
 
 Event_AnyPushConsumer::Event_AnyPushConsumer (Simple_Test *test_client)
@@ -12,15 +11,17 @@ Event_AnyPushConsumer::Event_AnyPushConsumer (Simple_Test *test_client)
 }
 
 void
-Event_AnyPushConsumer::push (const CORBA::Any & data)
+Event_AnyPushConsumer::push (CORBA::Any const & data)
 {
-  int event_num;
+  int event_num {};
   data >>= event_num;
 
   if (TAO_debug_level)
-    ACE_DEBUG ((LM_DEBUG,
-                "Received event# %d\n",
-                event_num));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Received event# %d\n",
+                  event_num));
+    }
 
   this->test_client_->on_event_received ();
 }
@@ -32,9 +33,7 @@ Event_AnyPushSupplier::Event_AnyPushSupplier (Simple_Test* test_client)
 {
 }
 
-Event_AnyPushSupplier::~Event_AnyPushSupplier ()
-{
-}
+Event_AnyPushSupplier::~Event_AnyPushSupplier () = default;
 
 //***************************************************************************
 
@@ -43,9 +42,7 @@ Simple_Test::Simple_Test ()
 {
 }
 
-Simple_Test::~Simple_Test ()
-{
-}
+Simple_Test::~Simple_Test () = default;
 
 int
 Simple_Test::init (int argc,
@@ -104,10 +101,9 @@ Simple_Test::parse_args (int argc,
     ACE_Arg_Shifter arg_shifter (argc,
                                  argv);
 
-    const ACE_TCHAR *current_arg = 0;
-
     while (arg_shifter.is_anything_left ())
     {
+      ACE_TCHAR const *current_arg {};
       if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-events"))))
         {
           this->event_count_ = ACE_OS::atoi (current_arg);
@@ -152,11 +148,13 @@ Simple_Test::on_event_received ()
   ++this->result_count_;
 
   if (TAO_debug_level)
-    ACE_DEBUG ((LM_DEBUG,
-                "event count = #%d\n",
-                this->result_count_.value ()));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "event count = #%d\n",
+                  this->result_count_.load ()));
+    }
 
-  if (this->result_count_ == 2 * this->event_count_)
+  if (this->result_count_.load () == 2 * this->event_count_)
     {
       this->end_test ();
     }
@@ -167,7 +165,7 @@ Simple_Test::run_test ()
 {
   CORBA::Any data;
 
-  for (int i = 0; i < this->event_count_; ++i)
+  for (int i {}; i < this->event_count_; ++i)
     {
       data <<= (CORBA::Long)i;
 
@@ -187,7 +185,7 @@ Simple_Test::check_results ()
   // Destroy the channel
   this->ec_->destroy ();
 
-  if (this->result_count_ == 2 * this->event_count_)
+  if (this->result_count_.load () == 2 * this->event_count_)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Events test success\n"));
@@ -222,19 +220,19 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       events.ORB_run();
     }
-  catch (const CORBA::Exception& se)
+  catch (CORBA::Exception const &se)
     {
       se._tao_print_exception ("Error: ");
       return 1;
     }
 
-  int status = 0;
+  int status {};
 
   try
     {
       status = events.check_results ();
     }
-  catch (const CORBA::Exception& se)
+  catch (CORBA::Exception const &se)
     {
       se._tao_print_exception ("Error: ");
       status = 1;

@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <typename StringType,

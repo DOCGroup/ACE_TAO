@@ -25,17 +25,21 @@ public:
   Scavenger_Task (ACE_TCHAR const * endpoint,
                   ACE_Barrier * the_barrier,
                   int period_in_usecs);
+  Scavenger_Task (Scavenger_Task const &) = delete;
+  Scavenger_Task (Scavenger_Task &&) = delete;
+  Scavenger_Task &operator= (Scavenger_Task const &) = delete;
+  Scavenger_Task &operator= (Scavenger_Task &&) = delete;
 
   void stop();
 
-  virtual int svc ();
+  int svc () override;
 
 private:
   ACE_TCHAR const * endpoint_;
   ACE_Barrier * the_barrier_;
   int period_in_usecs_;
   TAO_SYNCH_MUTEX mutex_;
-  int stopped_;
+  bool stopped_ {};
 };
 
 class Measuring_Task : public ACE_Task_Base
@@ -45,8 +49,12 @@ public:
                   ACE_Barrier *the_barrier,
                   int iterations,
                   int period_in_usecs);
+  Measuring_Task (Measuring_Task const &) = delete;
+  Measuring_Task (Measuring_Task &&) = delete;
+  Measuring_Task &operator= (Measuring_Task const &) = delete;
+  Measuring_Task &operator= (Measuring_Task &&) = delete;
 
-  virtual int svc();
+  int svc () override;
 
   ACE_Sample_History sample_history;
 
@@ -64,7 +72,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   Client_Options options (argc, argv);
 
   if (parse_args (argc, argv) != 0)
+  {
     return 1;
+  }
 
   ACE_DEBUG ((LM_DEBUG, "Calibrating high res timer ...."));
   ACE_High_Res_Timer::calibrate ();
@@ -78,7 +88,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   int per_thread_period = options.low_priority_period;
   if (options.global_low_priority_rate)
+  {
     per_thread_period = options.low_priority_period * options.nthreads;
+  }
 
   Scavenger_Task lo_task (lo_endpoint, &the_barrier,
                           per_thread_period);
@@ -124,7 +136,6 @@ Scavenger_Task::Scavenger_Task(ACE_TCHAR const * endpoint,
   , the_barrier_ (the_barrier)
   , period_in_usecs_ (period_in_usecs)
   , mutex_ ()
-  , stopped_ (0)
 {
 }
 
@@ -132,7 +143,7 @@ void
 Scavenger_Task::stop()
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
-  this->stopped_ = 1;
+  this->stopped_ = true;
 }
 
 int
@@ -161,17 +172,23 @@ Scavenger_Task::svc()
       {
         ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, -1);
         if (this->stopped_)
+        {
           break;
+        }
       }
       ACE_hrtime_t start = ACE_OS::gethrtime ();
       ssize_t n = stream.send_n(&start, sizeof(start));
       if (n == 0 || n == -1)
+      {
         break;
+      }
 
       ACE_hrtime_t end;
       n = stream.recv(&end, sizeof(end));
       if (n == 0 || n == -1)
+      {
         break;
+      }
 
       if (start != end)
       {
@@ -233,7 +250,7 @@ Measuring_Task::svc ()
       } else if (n == -1) {
         ACE_ERROR((LM_ERROR,
                    "Error writing data to server <%s> %p\n",
-                   endpoint_));
+                   endpoint_, ACE_TEXT ("write")));
         break;
       }
       if (n == 0 || n == -1)
@@ -253,7 +270,7 @@ Measuring_Task::svc ()
       } else if (n == -1) {
         ACE_ERROR((LM_ERROR,
                    "Error reading data from server <%s> %p\n",
-                   endpoint_));
+                   endpoint_, ACE_TEXT ("read")));
         break;
       }
 

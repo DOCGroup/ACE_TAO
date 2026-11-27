@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    TypeCode_Struct_Field.h
  *
@@ -9,7 +6,6 @@
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  *  @author Carlos O'Ryan
  */
-//=============================================================================
 
 #ifndef TAO_TYPECODE_STRUCT_FIELD_H
 #define TAO_TYPECODE_STRUCT_FIELD_H

@@ -1,22 +1,14 @@
-//=============================================================================
 /**
  *  @file    Load_Balancing_Service.cpp
  *
  *  @author Marina Spivak <marina@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #include "Load_Balancing_Service.h"
 #include "Load_Balancer_i.h"
 #include "tao/debug.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
-
-Load_Balancing_Service::Load_Balancing_Service ()
-  : ior_output_file_ (0)
-{
-}
 
 int
 Load_Balancing_Service::parse_args (int argc, ACE_TCHAR *argv[])
@@ -28,16 +20,18 @@ Load_Balancing_Service::parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 'd':  // debug flag.
-        TAO_debug_level++;
+        ++TAO_debug_level;
         break;
       case 'o': // outputs object ior to the specified file.
         this->ior_output_file_ =
           ACE_OS::fopen (get_opts.opt_arg (), "w");
 
-        if (this->ior_output_file_ == 0)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Unable to open %s for writing: %p\n",
-                             get_opts.opt_arg ()), -1);
+        if (this->ior_output_file_ == nullptr)
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "Unable to open %s for writing: %p\n",
+                               get_opts.opt_arg ()), -1);
+          }
         break;
       case '?':
       default:
@@ -57,20 +51,22 @@ Load_Balancing_Service::parse_args (int argc, ACE_TCHAR *argv[])
 int
 Load_Balancing_Service::init (int argc, ACE_TCHAR* argv[])
 {
-  int result;
   CORBA::String_var ior;
 
   try
     {
-      result = this->orb_manager_.init (argc, argv);
-      if (result == -1)
-        return result;
+      int const init_result = this->orb_manager_.init (argc, argv);
+      if (init_result == -1)
+      {
+        return init_result;
+      }
 
       // Check the non-ORB arguments.
-      result = this->parse_args (argc, argv);
-      if (result < 0)
-        return result;
-
+      int const parse_result = this->parse_args (argc, argv);
+      if (parse_result < 0)
+      {
+        return parse_result;
+      }
 
       CORBA::PolicyList policies (2);
       policies.length (2);
@@ -86,7 +82,6 @@ Load_Balancing_Service::init (int argc, ACE_TCHAR* argv[])
         this->orb_manager_.root_poa()->create_POA ("persistent",
                                                    this->orb_manager_.poa_manager (),
                                                    policies);
-
 
       // Destroy policy objects
       for (CORBA::ULong i = 0;
@@ -111,20 +106,24 @@ Load_Balancing_Service::init (int argc, ACE_TCHAR* argv[])
 
       ior = this->orb_manager_.orb ()->object_to_string (objref.in ());
 
-      if (ior.in () == 0)
-        return -1;
+      if (ior.in () == nullptr)
+        {
+          return -1;
+        }
       else if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    "Object Group Factory ior: %s\n",
-                    ior.in ()));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "Object Group Factory ior: %C\n",
+                      ior.in ()));
+        }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Load_Balancing_Service::init");
       return -1;
     }
 
-  if (this->ior_output_file_ != 0)
+  if (this->ior_output_file_ != nullptr)
     {
       ACE_OS::fprintf (this->ior_output_file_,
                        "%s",
@@ -133,7 +132,6 @@ Load_Balancing_Service::init (int argc, ACE_TCHAR* argv[])
     }
   return 0;
 }
-
 
 int
 Load_Balancing_Service::run ()
@@ -145,10 +143,6 @@ Load_Balancing_Service::run ()
   return result;
 }
 
-Load_Balancing_Service::~Load_Balancing_Service ()
-{
-}
-
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
@@ -156,20 +150,26 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   Load_Balancing_Service factory;
 
   if (factory.init (argc, argv) == -1)
+  {
     return 1;
+  }
 
   try
     {
       result = factory.run ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Load_Balancing_Service");
       return 1;
     }
 
   if (result == -1)
-    return 1;
+    {
+      return 1;
+    }
   else
-    return 0;
+    {
+      return 0;
+    }
 }

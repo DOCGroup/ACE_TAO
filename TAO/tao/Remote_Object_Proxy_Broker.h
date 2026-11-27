@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Remote_Object_Proxy_Broker.h
  *
@@ -10,7 +7,6 @@
  *  @author  Angelo Corsaro <corsaro@cs.wustl.edu>
  *  @author  Balachandran Natarajan (modified the implementation)
  */
-//=============================================================================
 
 #ifndef TAO_REMOTE_OBJECT_PROXY_BROKER_H
 #define TAO_REMOTE_OBJECT_PROXY_BROKER_H
@@ -44,7 +40,7 @@ namespace TAO
     /// details.
 
     CORBA::Boolean _is_a (CORBA::Object_ptr target,
-                          const char *logical_type_id) override;
+                          char const *logical_type_id) override;
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 
@@ -61,8 +57,6 @@ namespace TAO
 
   };
 }
-
-// -----------------------------------------------------
 
 TAO::Remote_Object_Proxy_Broker *the_tao_remote_object_proxy_broker ();
 

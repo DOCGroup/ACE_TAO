@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    IPC_SAP.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef ACE_IPC_SAP_H
 #define ACE_IPC_SAP_H
@@ -30,10 +26,11 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_IPC_SAP
 {
 public:
-  /// Interface for <ioctl>.
+  /// Interface for @c ioctl().
   int control (int cmd, void *) const;
 
-  // = Common I/O handle options related to sockets.
+  /// @name Common I/O handle options
+  /// @{
 
   /**
    * Enable asynchronous I/O (ACE_SIGIO), urgent data (ACE_SIGURG),
@@ -48,6 +45,7 @@ public:
    * which is passed as the @a value.
    */
   int disable (int value) const;
+  /// @}
 
   /// Get the underlying handle.
   ACE_HANDLE get_handle () const;
@@ -62,8 +60,8 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-  // = Ensure that ACE_IPC_SAP is an abstract base class.
-  /// Default constructor.
+  /// @name Construction
+  /// @{
   ACE_IPC_SAP ();
 
   /// Protected destructor.
@@ -73,6 +71,7 @@ protected:
    * ACE_IPC_SAP pointer/reference.
    */
   ~ACE_IPC_SAP ();
+  /// @}
 
 private:
   /// Underlying I/O handle.

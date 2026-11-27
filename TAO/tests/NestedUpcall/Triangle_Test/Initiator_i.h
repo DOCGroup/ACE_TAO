@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    Initiator_i.h
  *
@@ -8,9 +6,6 @@
  *
  *  @author Michael Kircher
  */
-//=============================================================================
-
-
 #ifndef INITIATOR_IMPL_H
 #  define INITIATOR_IMPL_H
 
@@ -19,19 +14,22 @@
 /**
  * @class Initiator_i
  *
- * @brief Implement the <Initiator> IDL interface.
+ * @brief Implement the @c Initiator IDL interface.
  */
 class Initiator_i : public POA_Initiator
 {
 public:
-  /// Constructor.
   Initiator_i (Object_A_ptr object_A_ptr,
                   Object_B_ptr object_B_ptr);
 
-  /// Destructor.
-  virtual ~Initiator_i ();
+  ~Initiator_i () override = default;
 
-  virtual void foo_object_B ();
+  Initiator_i (Initiator_i const &) = delete;
+  Initiator_i (Initiator_i &&) = delete;
+  Initiator_i &operator= (Initiator_i const &) = delete;
+  Initiator_i &operator= (Initiator_i &&) = delete;
+
+  void foo_object_B () override;
 
 private:
   /// reference to object A

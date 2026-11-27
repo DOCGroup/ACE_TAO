@@ -78,7 +78,7 @@ class AST_Decl;
 extern void AST_record_fwd_decl (AST_Type *i);
 extern TAO_IDL_FE_Export void AST_check_fwd_decls ();
 extern bool AST_illegal_recursive_type (AST_Decl *t);
-extern bool AST_illegal_interface_recursion (AST_Decl *t);
+extern bool AST_illegal_interface_recursion (AST_Decl const *t);
 
 #endif           // _AST_EXTERN_AST_EXTERN_HH
 

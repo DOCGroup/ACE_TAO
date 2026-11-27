@@ -1,4 +1,3 @@
-// -*- C++ -*-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<typename S_var,
@@ -31,8 +30,6 @@ TAO::In_BD_String_Clonable_Argument_T<S_var,BOUND,Insert_Policy>::In_BD_String_C
   : In_BD_String_Argument_T<S_var,BOUND,Insert_Policy> (x)
 {}
 
-// ==========================================================================
-
 template<typename S_var,
          size_t BOUND,
          template <typename> class Insert_Policy>
@@ -52,8 +49,6 @@ TAO::Inout_BD_String_Argument_T<S_var,BOUND,Insert_Policy>::arg ()
   return this->x_;
 }
 
-// ==========================================================================
-
 template<typename S_var,
          size_t BOUND,
          template <typename> class Insert_Policy>
@@ -72,8 +67,6 @@ TAO::Out_BD_String_Argument_T<S_var,BOUND,Insert_Policy>::arg ()
 {
   return this->x_;
 }
-
-// ==========================================================================
 
 template<typename S_var,
          size_t BOUND,

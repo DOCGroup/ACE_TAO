@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-// ================================================================
 /**
  *  @file   LFU_Connection_Purging_Strategy.h
  *
  *  @author Chad Elliott (elliott_c@ociweb.com)
  */
-// ================================================================
 
 #ifndef TAO_LFU_PURGING_STRATEGY_H
 #define TAO_LFU_PURGING_STRATEGY_H
@@ -18,8 +14,6 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
-// ****************************************************************
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -36,13 +30,13 @@ class TAO_Strategies_Export TAO_LFU_Connection_Purging_Strategy:
                             public TAO_Connection_Purging_Strategy
 {
 public:
-  /// The constructor
   explicit TAO_LFU_Connection_Purging_Strategy (int cache_maximum);
 
   /// Called when accessing an item from the cache
   void update_item (TAO_Transport& transport) override;
 
 private:
+  TAO_LFU_Connection_Purging_Strategy () = delete;
   TAO_LFU_Connection_Purging_Strategy (TAO_LFU_Connection_Purging_Strategy const &) = delete;
   TAO_LFU_Connection_Purging_Strategy &operator= (
     TAO_LFU_Connection_Purging_Strategy const &) = delete;

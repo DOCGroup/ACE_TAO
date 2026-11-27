@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    CDR_File_Test.cpp
  *
@@ -8,7 +6,6 @@
  *
  *  @author Giga Giguashvili <gregoryg@ParadigmGeo.com> and Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "ace/OS_Memory.h"
@@ -33,20 +30,18 @@
  */
 class CDR_Test
 {
-  /// Output the state of a <CDR_Test> object to the <ostream>.
-  friend ostream& operator << (ostream &os, const CDR_Test &t);
+  /// Output the state of a @c CDR_Test object to the @c ostream.
+  friend ostream& operator << (ostream &os, CDR_Test const &t);
 
-  /// Convert the state of this object into an <ACE_OutputCDR>.
-  friend void operator << (ACE_OutputCDR &os, const CDR_Test &t);
+  /// Convert the state of this object into an @c ACE_OutputCDR.
+  friend void operator << (ACE_OutputCDR &os, CDR_Test const &t);
 
-  /// Convert the <ACE_InputCDR> into the state of this object.
+  /// Convert the @c ACE_InputCDR into the state of this object.
   friend void operator >> (ACE_InputCDR &is, CDR_Test &);
 
 public:
-  /// Default constructor.
   CDR_Test ();
 
-  /// Constructor.
   CDR_Test (ACE_CDR::Char o,
             ACE_CDR::Short s,
             ACE_CDR::Long w,
@@ -54,8 +49,8 @@ public:
             ACE_CDR::Float f,
             ACE_CDR::Double d);
 
-  /// Compare <rhs> for equality with <this>.
-  bool operator == (const CDR_Test &rhs) const;
+  /// Compare @a rhs for equality with @c this.
+  bool operator == (CDR_Test const &rhs) const;
 
 private:
   ACE_CDR::Char char_;
@@ -68,14 +63,14 @@ private:
 
 ostream &
 operator << (ostream &os,
-             const CDR_Test &t)
+             CDR_Test const &t)
 {
   os << "Char:              " << t.char_ << endl
      << "Short:             " << t.word2_ << endl
      << "Long:              " << t.word4_ << endl;
 
-  ACE_CDR::ULongLong hi = (t.word8_ >> 32);
-  ACE_CDR::ULongLong lo = (t.word8_ & 0xffffffff);
+  ACE_CDR::ULongLong const hi = (t.word8_ >> 32);
+  ACE_CDR::ULongLong const lo = (t.word8_ & 0xffffffff);
 
   os << "ULongLong 1st half: "
      << hex
@@ -116,7 +111,7 @@ CDR_Test::CDR_Test (ACE_CDR::Char o,
 }
 
 void
-operator << (ACE_OutputCDR &os, const CDR_Test &t)
+operator << (ACE_OutputCDR &os, CDR_Test const &t)
 {
   os << t.char_;
   os << t.word2_;
@@ -138,29 +133,41 @@ operator >> (ACE_InputCDR &is, CDR_Test &t)
 }
 
 bool
-CDR_Test::operator == (const CDR_Test &rhs) const
+CDR_Test::operator == (CDR_Test const &rhs) const
 {
   // @@ Workaround bug in egcs-1.1.1 using a single && expression
   // results in UMR errors in purify.
   if (this->char_ != rhs.char_)
+  {
     return false;
+  }
   if (this->word2_ != rhs.word2_)
+  {
     return false;
+  }
   if (this->word4_ != rhs.word4_)
+  {
     return false;
+  }
   if (this->word8_ != rhs.word8_)
+  {
     return false;
+  }
   if (!ACE::is_equal (this->fpoint_, rhs.fpoint_))
+  {
     return false;
+  }
   if (!ACE::is_equal (this->dprec_, rhs.dprec_))
+  {
     return false;
+  }
   return true;
 }
 
 static int
 run_test (int write_file,
           ACE_FILE_IO &file,
-          const ACE_TCHAR *filename,
+          ACE_TCHAR const *filename,
           CDR_Test &cdr_test)
 {
   if (write_file)
@@ -168,10 +175,12 @@ run_test (int write_file,
       char byte_order = ACE_CDR_BYTE_ORDER;
       size_t n = file.send (&byte_order, 1);
       if (n != 1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("send failed on %p\n"),
-                           filename),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("send failed on %p\n"),
+                             filename),
+                            -1);
+        }
 
       ACE_OutputCDR output_cdr (0,
                                 ACE_CDR_BYTE_ORDER,
@@ -188,7 +197,7 @@ run_test (int write_file,
       *ace_file_stream::instance ()->output_file () << cdr_test;
 
       // Save the data.
-      const ACE_Message_Block *output_mb =
+      ACE_Message_Block const *output_mb =
         output_cdr.begin ();
 
       ACE_DEBUG ((LM_DEBUG,
@@ -199,24 +208,28 @@ run_test (int write_file,
       n = file.send (output_mb->rd_ptr (),
                      output_mb->length ());
       if (n != (size_t) output_mb->length ())
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("send failed on %p\n"),
-                           filename),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("send failed on %p\n"),
+                             filename),
+                            -1);
+        }
     }
   else // We're reading from the file.
     {
       ACE_FILE_Info info;
       if (file.get_info (info) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("get_info failed on %p\n"),
-                           filename),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("get_info failed on %p\n"),
+                             filename),
+                            -1);
+        }
 
-      ACE_OFF_T msgsize = info.size_ - 1;
+      ACE_OFF_T const msgsize = info.size_ - 1;
 
       // Allocate the input buffer
-      char *buffer = nullptr;
+      char *buffer {};
       ACE_NEW_RETURN (buffer,
                       char[msgsize],
                       -1);
@@ -225,45 +238,51 @@ run_test (int write_file,
 #endif /* ACE_INITIALIZE_MEMORY_BEFORE_USE */
 
       // Make sure <buffer> is released automagically.
-      std::unique_ptr<char[]> b (buffer);
+      std::unique_ptr<char[]> const b (buffer);
 
       // Move the file pointer back to the beginning of the file.
       if (file.seek (0,
                      SEEK_SET) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p\n"),
-                           filename),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("%p\n"),
+                             filename),
+                            -1);
+        }
 
       char byte_order;
       ssize_t size = file.recv (&byte_order, 1);
       if (size != 1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Read %d bytes, rather than expected ")
-                           ACE_TEXT ("1 bytes\n"),
-                           size),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Read %b bytes, rather than expected ")
+                             ACE_TEXT ("1 bytes\n"),
+                             size),
+                            -1);
+        }
 
       // Read the cdr data from the file into the buffer.
       size = file.recv (buffer, msgsize);
       if (size != msgsize)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Read %d bytes, rather than expected ")
-                           ACE_TEXT ("%d bytes\n"),
-                           size,
-                           msgsize),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Read %b bytes, rather than expected ")
+                             ACE_TEXT ("%q bytes\n"),
+                             size,
+                             static_cast<ACE_INT64> (msgsize)),
+                            -1);
+        }
 
       // Create message block for the whole file.  Ensure that it is
       // aligned to properly handle the double.
       ACE_Message_Block mb (ACE_CDR::MAX_ALIGNMENT + msgsize);
-      ACE_CDR::mb_align (&mb);
+      ACE_CDR::mb_align (std::addressof (mb));
 
       mb.copy (buffer, msgsize);
 
       // Create CDR input stream from the message block.
 
-      ACE_InputCDR input_cdr (&mb);
+      ACE_InputCDR input_cdr (std::addressof (mb));
       input_cdr.reset_byte_order ((int) byte_order);
 
       ACE_DEBUG ((LM_DEBUG,
@@ -280,14 +299,16 @@ run_test (int write_file,
       *ace_file_stream::instance ()->output_file () << temp;
 
       if (!(temp == cdr_test))
+      {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Data mismatch across file\n")));
+      }
     }
 
   return 0;
 }
 
 static void
-usage (const ACE_TCHAR *cmd)
+usage (ACE_TCHAR const *cmd)
 {
   ACE_ERROR ((LM_ERROR,
               ACE_TEXT ("Usage: %s ")
@@ -313,7 +334,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   int opt;
   int reading = 1;
   int writing = 1;
-  ACE_TCHAR* fn = nullptr;
+  ACE_TCHAR* fn {};
   while ((opt = get_opt ()) != EOF)
     {
       switch (opt)
@@ -334,16 +355,21 @@ run_main (int argc, ACE_TCHAR *argv[])
     }
 
   if ((!reading || !writing) && fn == nullptr)
+  {
     usage (ACE_TEXT("CDR_File_Test"));
+  }
 
   if (!reading && !writing)
+  {
     usage (ACE_TEXT("CDR_File_Test"));
+  }
 
   // Create a temporary filename.
   ACE_FILE_Addr filename (ACE_sap_any_cast (ACE_FILE_Addr &));
   if (fn != nullptr)
+  {
     filename.set (fn);
-
+  }
 
   ACE_FILE_Connector connector;
   ACE_FILE_IO file;
@@ -356,10 +382,12 @@ run_main (int argc, ACE_TCHAR *argv[])
                          0,
                          ((writing) ? (O_RDWR | O_CREAT) : O_RDONLY),
                          ACE_DEFAULT_FILE_PERMS) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("connect failed for %p\n"),
-                       filename.get_path_name ()),
-                      1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("connect failed for %p\n"),
+                         filename.get_path_name ()),
+                        1);
+    }
 
   CDR_Test cdr_test ('a',
                      0x00ff,
@@ -390,10 +418,12 @@ run_main (int argc, ACE_TCHAR *argv[])
     {
       file.close ();
       if (file.unlink () == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("unlink failed for %p\n"),
-                           filename.get_path_name ()),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("unlink failed for %p\n"),
+                             filename.get_path_name ()),
+                            1);
+        }
     }
 
   ACE_END_TEST;

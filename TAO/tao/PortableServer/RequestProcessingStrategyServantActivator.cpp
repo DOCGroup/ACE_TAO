@@ -21,7 +21,7 @@ namespace TAO
     RequestProcessingStrategyServantActivator::strategy_cleanup ()
     {
       {
-        Non_Servant_Upcall non_servant_upcall (*this->poa_);
+        Non_Servant_Upcall const non_servant_upcall (*this->poa_);
         ACE_UNUSED_ARG (non_servant_upcall);
 
         this->servant_activator_ = PortableServer::ServantActivator::_nil ();
@@ -58,12 +58,11 @@ namespace TAO
 
     TAO_Servant_Location
     RequestProcessingStrategyServantActivator::locate_servant (
-      const PortableServer::ObjectId &system_id,
+      PortableServer::ObjectId const &system_id,
       PortableServer::Servant &servant)
     {
-      TAO_Servant_Location location = TAO_Servant_Location::Not_Found;
-
-      location = this->poa_->servant_present (system_id, servant);
+      TAO_Servant_Location location =
+        this->poa_->servant_present (system_id, servant);
 
       if (location == TAO_Servant_Location::Not_Found)
         {
@@ -78,8 +77,8 @@ namespace TAO
 
     PortableServer::Servant
     RequestProcessingStrategyServantActivator::locate_servant (
-      const char * /*operation*/,
-      const PortableServer::ObjectId &system_id,
+      char const */*operation*/,
+      PortableServer::ObjectId const &system_id,
       TAO::Portable_Server::Servant_Upcall &servant_upcall,
       TAO::Portable_Server::POA_Current_Impl &poa_current_impl,
       bool &wait_occurred_restart_call)
@@ -120,7 +119,7 @@ namespace TAO
       // the POA policy and is considered to be in error. The POA
       // will raise an OBJ_ADAPTER system exception for the
       // request.
-      bool may_activate =
+      bool const may_activate =
         this->poa_->is_servant_activation_allowed (servant, wait_occurred_restart_call);
 
       if (!may_activate)
@@ -156,7 +155,7 @@ namespace TAO
         }
       else
         {
-          CORBA::Boolean cleanup_in_progress = false;
+          CORBA::Boolean const cleanup_in_progress {};
           this->etherealize_servant (poa_current_impl.object_id (),
                                      servant,
                                      cleanup_in_progress);
@@ -164,7 +163,7 @@ namespace TAO
           // We ended up waiting on a condition variable, the
           // POA state may have changed while we are waiting.
           // Therefore, we need to restart this call.
-          return 0;
+          return nullptr;
         }
 
       // Success
@@ -173,7 +172,7 @@ namespace TAO
 
     void
     RequestProcessingStrategyServantActivator::etherealize_servant (
-      const PortableServer::ObjectId& object_id,
+      PortableServer::ObjectId const& object_id,
       PortableServer::Servant servant,
       CORBA::Boolean cleanup_in_progress)
     {
@@ -181,7 +180,7 @@ namespace TAO
         this->poa_->servant_has_remaining_activations (servant);
 
       // ATTENTION: Trick locking here, see class header for details
-      Non_Servant_Upcall non_servant_upcall (*this->poa_);
+      Non_Servant_Upcall const non_servant_upcall (*this->poa_);
       ACE_UNUSED_ARG (non_servant_upcall);
 
       // @todo This is not according to the spec. According to 11.3.6.2 at the
@@ -196,12 +195,12 @@ namespace TAO
 
     PortableServer::Servant
     RequestProcessingStrategyServantActivator::incarnate_servant (
-      const PortableServer::ObjectId& object_id)
+      PortableServer::ObjectId const& object_id)
     {
-      PortableServer::Servant servant = nullptr;
+      PortableServer::Servant servant {};
 
       // ATTENTION: Trick locking here, see class header for details
-      Non_Servant_Upcall non_servant_upcall (*this->poa_);
+      Non_Servant_Upcall const non_servant_upcall (*this->poa_);
       ACE_UNUSED_ARG (non_servant_upcall);
 
       // @@
@@ -223,7 +222,7 @@ namespace TAO
     void
     RequestProcessingStrategyServantActivator::cleanup_servant (
       PortableServer::Servant servant,
-      const PortableServer::ObjectId &user_id)
+      PortableServer::ObjectId const &user_id)
     {
       // If a servant manager is associated with the POA,
       // ServantLocator::etherealize will be invoked with the oid and the
@@ -262,7 +261,7 @@ namespace TAO
           else
             {
               // ATTENTION: Trick locking here, see class header for details
-              Non_Servant_Upcall non_servant_upcall (*this->poa_);
+              Non_Servant_Upcall const non_servant_upcall (*this->poa_);
               ACE_UNUSED_ARG (non_servant_upcall);
 
               try
@@ -280,7 +279,9 @@ namespace TAO
       // by the oid parameter and its servant to be removed from the
       // Active Object Map.
       if (this->poa_->unbind_using_user_id (user_id) != 0)
+      {
         throw ::CORBA::OBJ_ADAPTER ();
+      }
     }
 
     void
@@ -292,8 +293,8 @@ namespace TAO
 
     void
     RequestProcessingStrategyServantActivator::post_invoke_servant_cleanup(
-      const PortableServer::ObjectId &/*system_id*/,
-      const TAO::Portable_Server::Servant_Upcall &/*servant_upcall*/)
+      PortableServer::ObjectId const &/*system_id*/,
+      TAO::Portable_Server::Servant_Upcall const &/*servant_upcall*/)
     {
     }
   }

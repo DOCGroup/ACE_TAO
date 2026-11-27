@@ -1,5 +1,7 @@
 #include "ace/config-all.h"
 
+#include <algorithm>
+
 #if defined (ACE_VXWORKS) && !defined (__RTP__)
 # undef ACE_MAIN
 # define ACE_MAIN client
@@ -44,7 +46,9 @@ switchHook (WIND_TCB *pOldTcb,    // pointer to old task's WIND_TCB.
   // We create the client threads with names starting with "@".
   char* name = ::taskName (::taskIdSelf ());
   if (name[0] == '@')
-    ++ctx;
+    {
+      ++ctx;
+    }
 
   if (ct < SWITCHES)
     {
@@ -60,38 +64,22 @@ switchHook (WIND_TCB *pOldTcb,    // pointer to old task's WIND_TCB.
 }
 #endif /* ACE_HAS_VXTHREADS */
 
-// Constructor.
-
-Client_i::Client_i ()
-  : high_priority_client_ (0),
-    low_priority_client_ (0),
-    util_thread_ (0),
-    ts_ (0),
-    num_low_priority_ (0),
-    num_priorities_ (0),
-    grain_ (0),
-    counter_ (0),
-    task_name_ (0),
-    argc_ (0),
-    argv_ (0),
-    context_switch_ (0)
-{
-}
-
-// Destructor.
-
 Client_i::~Client_i ()
 {
-  delete this->high_priority_client_;
-  if (this->low_priority_client_ != 0)
-    // Delete the low priority task array.
-    for (u_int i = this->num_low_priority_;
-         i > 0;
-         i--)
-      delete this->low_priority_client_[i - 1];
+  this->high_priority_client_.reset ();
+  if (this->low_priority_client_ != nullptr)
+    {
+      // Delete the low priority task array.
+      for (u_int i = this->num_low_priority_;
+           i > 0;
+           i--)
+    {
+          delete this->low_priority_client_[i - 1];
+    }
+    }
   delete [] this->low_priority_client_;
-  delete this->util_thread_;
-  delete this->ts_;
+  this->util_thread_.reset ();
+  this->ts_.reset ();
 }
 
 int
@@ -103,16 +91,20 @@ Client_i::init (int argc, ACE_TCHAR *argv[])
   int result;
   result = GLOBALS::instance ()->sched_fifo_init ();
   if (result == -1)
+  {
     return result;
+  }
   VX_VME_INIT;
   FORCE_ARGV (this->argc_,this->argv_);
   // Make sure we've got plenty of socket handles.  This call will use
   // the default maximum.
   ACE::set_handle_limit ();
 
-  ACE_NEW_RETURN (this->ts_,
+  Task_State *task_state {};
+  ACE_NEW_RETURN (task_state,
                   Task_State,
                   -1);
+  this->ts_.reset (task_state);
 
   // Preliminary argument processing.
   for (int i=0;
@@ -120,11 +112,15 @@ Client_i::init (int argc, ACE_TCHAR *argv[])
        ++i)
     {
       if (ACE_OS::strcmp (this->argv_[i],ACE_TEXT("-r")) == 0)
-        this->ts_->thread_per_rate_ = 1;
+        {
+          this->ts_->thread_per_rate_ = 1;
+        }
       else if (ACE_OS::strcmp (this->argv_[i],ACE_TEXT("-t")) == 0
                && (i - 1 < this->argc_))
-        this->ts_->thread_count_ =
-          ACE_OS::atoi (this->argv_[i+1]);
+        {
+          this->ts_->thread_count_ =
+            ACE_OS::atoi (this->argv_[i+1]);
+        }
     }
   return 0;
 }
@@ -143,7 +139,9 @@ Client_i::run ()
         }
     }
   else
+  {
     this->do_thread_per_rate_test ();
+  }
 }
 
 #if defined (ACE_HAS_VXTHREADS)
@@ -204,7 +202,7 @@ Client_i::get_context_switches ()
 void
 Client_i::output_latency ()
 {
-  FILE *latency_file_handle = 0;
+  FILE *latency_file_handle {};
   char latency_file[BUFSIZ];
   char buffer[BUFSIZ];
 
@@ -235,7 +233,7 @@ Client_i::output_latency ()
         this->ts_->global_jitter_array_ [j]->begin ();
 
       u_int i = 0;
-      ACE_timer_t *latency = 0;
+      ACE_timer_t *latency {};
 
       for (iterator.first ();
            (i < (j == 0
@@ -264,15 +262,19 @@ Client_i::init_low_priority ()
 {
   ACE_Sched_Priority prev_priority = this->high_priority_;
   if (this->ts_->use_multiple_priority_ == 1)
-    this->low_priority_ =
-      this->priority_.get_low_priority (this->num_low_priority_,
-                                        prev_priority,
-                                        1);
+    {
+      this->low_priority_ =
+        this->priority_.get_low_priority (this->num_low_priority_,
+                                          prev_priority,
+                                          1);
+    }
   else
-    this->low_priority_ =
-      this->priority_.get_low_priority (this->num_low_priority_,
-                                        prev_priority,
-                                        0);
+    {
+      this->low_priority_ =
+        this->priority_.get_low_priority (this->num_low_priority_,
+                                          prev_priority,
+                                          0);
+    }
   this->num_priorities_ =
     this->priority_.number_of_priorities ();
   this->grain_ = this->priority_.grain ();
@@ -291,7 +293,9 @@ Client_i::calc_util_time ()
   for (u_int i = 0;
        i < NUM_UTIL_COMPUTATIONS;
        ++i)
-    this->util_thread_->computation ();
+    {
+      this->util_thread_->computation ();
+    }
 
   timer.stop ();
   this->util_task_duration_ = timer.get_elapsed () / NUM_UTIL_COMPUTATIONS;
@@ -300,18 +304,20 @@ Client_i::calc_util_time ()
 int
 Client_i::activate_high_client ()
 {
-  ACE_NEW_RETURN (this->high_priority_client_,
+  Client *client {};
+  ACE_NEW_RETURN (client,
                   Client (&this->client_thread_manager_,
-                          this->ts_,
+                          this->ts_.get (),
                           this->argc_,
                           this->argv_,
                           0),
                   -1);
+  this->high_priority_client_.reset (client);
 
 #if defined (ACE_HAS_VXTHREADS)
   // Set a task_handle string starting with "@", so we are able to
   // accurately count the number of context switches.
-  ACE_OS::strcpy (this->task_name_,
+  ACE_OS::strcpy (this->task_name_.get (),
                   "@High");
 #endif /* ACE_HAS_VXTHREADS */
 
@@ -322,7 +328,7 @@ Client_i::activate_high_client ()
               "Creating 1 client with high priority of %d\n",
               this->high_priority_));
 
-  const char *t_name = this->task_name_;
+  const char *t_name = this->task_name_.get ();
 
   if (this->high_priority_client_->activate (
       GLOBALS::instance ()->thr_create_flags,
@@ -336,11 +342,13 @@ Client_i::activate_high_client ()
       0,
       0,
       &t_name) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p; priority is %d\n",
-                       "activate failed",
-                       this->high_priority_),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p; priority is %d\n",
+                         "activate failed",
+                         this->high_priority_),
+                        -1);
+    }
   return 0;
 }
 
@@ -350,11 +358,14 @@ Client_i::activate_low_client ()
   ACE_NEW_RETURN (this->low_priority_client_,
                   Client *[this->ts_->thread_count_],
                   -1);
+  std::fill_n (this->low_priority_client_,
+               this->ts_->thread_count_,
+               nullptr);
 
   // Hack to make sure we have something in this pointer, when
   // thread_count == 1.
   this->low_priority_client_[0] =
-    this->high_priority_client_;
+    this->high_priority_client_.get ();
   this->num_low_priority_ =
     this->ts_->thread_count_ - 1;
 
@@ -372,7 +383,7 @@ Client_i::activate_low_client ()
     {
       ACE_NEW_RETURN (this->low_priority_client_ [i - 1],
                       Client (&this->client_thread_manager_,
-                              this->ts_,
+                              this->ts_.get (),
                               this->argc_,
                               this->argv_,
                               i),
@@ -384,7 +395,7 @@ Client_i::activate_low_client ()
 
       // Set a task_name string starting with "@", so we are able to
       // accurately count the number of context switches on VXWORKS
-      ACE_OS::sprintf (this->task_name_,
+      ACE_OS::sprintf (this->task_name_.get (),
                        "@Low%u",
                        i);
 #endif /* ACE_HAS_VXTHREADS */
@@ -394,7 +405,7 @@ Client_i::activate_low_client ()
                   this->low_priority_));
       // The first thread starts at the lowest priority of all the low
       // priority clients.
-      const char *t_name = this->task_name_;
+      const char *t_name = this->task_name_.get ();
 
       if (this->low_priority_client_[i - 1]->activate (
           GLOBALS::instance ()->thr_create_flags,
@@ -408,10 +419,12 @@ Client_i::activate_low_client ()
           0,                   // size_t stack_size[] = 0,
           0,
           &t_name) == -1)
-        ACE_ERROR ((LM_ERROR,
-                    "%p; priority is %d\n",
-                    "activate failed",
-                    this->low_priority_));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "%p; priority is %d\n",
+                      "activate failed",
+                      this->low_priority_));
+        }
 
       if (this->ts_->use_multiple_priority_ == 1)
         {
@@ -421,9 +434,11 @@ Client_i::activate_low_client ()
               // Just so when we distribute the priorities among the
               // threads, we make sure we don't go overboard.
               && this->num_priorities_ * this->grain_ > this->num_low_priority_ - (i - 1))
-            // Get the next higher priority.
-            this->low_priority_ = ACE_Sched_Params::next_priority
-              (ACE_SCHED_FIFO, this->low_priority_, ACE_SCOPE_THREAD);
+            {
+              // Get the next higher priority.
+              this->low_priority_ = ACE_Sched_Params::next_priority
+                (ACE_SCHED_FIFO, this->low_priority_, ACE_SCOPE_THREAD);
+            }
         }
     } /* end of for () */
 
@@ -433,10 +448,12 @@ Client_i::activate_low_client ()
 int
 Client_i::activate_util_thread ()
 {
-  ACE_NEW_RETURN (this->util_thread_,
-                  Util_Thread (this->ts_,
+  Util_Thread *util_thread {};
+  ACE_NEW_RETURN (util_thread,
+                  Util_Thread (this->ts_.get (),
                                &this->util_thread_manager_),
                   -1);
+  this->util_thread_.reset (util_thread);
 
   // Time the utilization thread' "computation" to get %IdleCPU at the
   // end of the test.
@@ -462,7 +479,9 @@ Client_i::activate_util_thread ()
         this->low_priority_);
     }
   else
+  {
     this->util_thread_->close ();
+  }
   return 0;
 }
 
@@ -594,16 +613,20 @@ Client_i::start_servant ()
        1,
        0,
        this->high_priority_) == -1)
-     ACE_ERROR ((LM_ERROR,
-                 "(%P|%t) %p\n",
-                 "\thigh_priority_task->activate failed"));
+     {
+       ACE_ERROR ((LM_ERROR,
+                   "(%P|%t) %p\n",
+                   "\thigh_priority_task->activate failed"));
+     }
 
    ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ready_mon, GLOBALS::instance ()->ready_mtx_,-1));
 
    // Wait on the condition variable till the high priority cubit_task
    // has finished argument processing.
    while (!GLOBALS::instance ()->ready_)
-     GLOBALS::instance ()->ready_cnd_.wait ();
+     {
+       GLOBALS::instance ()->ready_cnd_.wait ();
+     }
    // wait on the barrier till the servant writes its ior.
    GLOBALS::instance ()->barrier_->wait ();
 
@@ -619,41 +642,53 @@ Client_i::do_priority_inversion_test ()
   this->timer_.start ();
 #if defined (ACE_HAS_VXTHREADS)
   ctx = 0;
-  ACE_NEW_RETURN (this->task_name_,
+  char *task_name {};
+  ACE_NEW_RETURN (task_name,
                   char[TASK_HANDLE_LEN],
                   -1);
+  this->task_name_.reset (task_name);
 #endif /* ACE_HAS_VXTHREADS */
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) <<<<<<< starting test on %D\n"));
   GLOBALS::instance ()->num_of_objs = 1;
 
-  for (int j = 0; j < this->argc_; j++)
-    if (ACE_OS::strcmp (this->argv_[j], ACE_TEXT("-u")) == 0)
-      {
-        this->start_servant ();
-        break;
-      }
+  for (int j = 0; j < this->argc_; ++j)
+  {
+      if (ACE_OS::strcmp (this->argv_[j], ACE_TEXT("-u")) == 0)
+        {
+          this->start_servant ();
+          break;
+        }
+  }
   // Create and activate the high priority client.
   int result = this->activate_high_client ();
   if (result < 0)
+  {
     return result;
+  }
 
   ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ready_mon, this->ts_->ready_mtx_,-1));
 
   // Wait on the condition variable until the high priority thread
   // wakes us up.
   while (!this->ts_->ready_)
-    this->ts_->ready_cnd_.wait ();
+    {
+      this->ts_->ready_cnd_.wait ();
+    }
 
   result = this->activate_low_client ();
 
   if (result < 0)
+  {
     return result;
+  }
 
   // Activate the utilization thread if necessary.
   result = this->activate_util_thread ();
   if (result < 0)
+  {
     return result;
+  }
 
   // Wait for all the client threads to be initialized before going
   // any further.
@@ -698,22 +733,22 @@ int
 Client_i::do_thread_per_rate_test ()
 {
   Client CB_20Hz_client (&this->client_thread_manager_,
-                         this->ts_,
+                         this->ts_.get (),
                          this->argc_,
                          this->argv_,
                          CB_20HZ_CONSUMER);
   Client CB_10Hz_client (&this->client_thread_manager_,
-                         this->ts_,
+                         this->ts_.get (),
                          this->argc_,
                          this->argv_,
                          CB_10HZ_CONSUMER);
   Client CB_5Hz_client (&this->client_thread_manager_,
-                        this->ts_,
+                        this->ts_.get (),
                         this->argc_,
                         this->argv_,
                         CB_5HZ_CONSUMER);
   Client CB_1Hz_client (&this->client_thread_manager_,
-                        this->ts_,
+                        this->ts_.get (),
                         this->argc_,
                         this->argv_,
                         CB_1HZ_CONSUMER);
@@ -729,8 +764,10 @@ Client_i::do_thread_per_rate_test ()
        1,
        1,
        priority) == -1)
-    ACE_ERROR ((LM_ERROR,
-                "(%P|%t) errno = %p: activate failed\n"));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "(%P|%t) errno = %m: activate failed\n"));
+    }
   // The high priority thread is parsing the arguments, so wait on the
   // condition variable until it wakes us up.
 
@@ -742,7 +779,9 @@ Client_i::do_thread_per_rate_test ()
   // Wait on the condition variable until the high priority thread
   // wakes us up.
   while (!this->ts_->ready_)
-    this->ts_->ready_cnd_.wait ();
+    {
+      this->ts_->ready_cnd_.wait ();
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               "(%t) Argument parsing waiting done\n"));
@@ -759,8 +798,10 @@ Client_i::do_thread_per_rate_test ()
        1,
        1,
        priority) == -1)
-    ACE_ERROR ((LM_ERROR,
-                "(%P|%t) errno = %p: activate failed\n"));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "(%P|%t) errno = %m: activate failed\n"));
+    }
 
   priority = ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO,
                                                   priority,
@@ -774,8 +815,10 @@ Client_i::do_thread_per_rate_test ()
        1,
        1,
        priority) == -1)
-    ACE_ERROR ((LM_ERROR,
-                "(%P|%t) errno = %p: activate failed\n"));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "(%P|%t) errno = %m: activate failed\n"));
+    }
 
   priority = ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO,
                                                   priority,
@@ -789,8 +832,10 @@ Client_i::do_thread_per_rate_test ()
        1,
        1,
        priority) == -1)
-    ACE_ERROR ((LM_ERROR,
-                "(%P|%t) errno = %p: activate failed\n"));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "(%P|%t) errno = %m: activate failed\n"));
+    }
 
   // Wait for all the threads to exit.
   this->client_thread_manager_.wait ();
@@ -828,7 +873,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   int result = client.init (argc,argv);
 
   if (result < 0)
+  {
     return result;
+  }
 
   // Run the tests.
   client.run ();

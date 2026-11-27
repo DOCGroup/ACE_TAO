@@ -1,7 +1,3 @@
-// -*- C++ -*-
-
-//
-
 #ifndef LOG_WALKER_THREAD_H
 #define LOG_WALKER_THREAD_H
 
@@ -12,8 +8,10 @@
 #include "Invocation.h"
 #include "PeerProcess.h"
 
-using PeerProcessStack = ACE_Unbounded_Stack<PeerProcess *>;
-using InvocationStack = ACE_Unbounded_Stack<Invocation *>;
+#include <vector>
+
+using PeerProcessStack = std::vector<PeerProcess *>;
+using InvocationStack = std::vector<Invocation *>;
 
 class Thread
 {

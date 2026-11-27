@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   NotifyLog_i.h
  *
@@ -10,7 +7,6 @@
  *
  *  @author David A. Hanvey <d.hanvey@qub.ac.uk>
  */
-//=============================================================================
 
 #ifndef TAO_TLS_NOTIFYLOG_I_H
 #define TAO_TLS_NOTIFYLOG_I_H
@@ -53,7 +49,6 @@ class TAO_NotifyLog_Serv_Export TAO_NotifyLog_i :
   public POA_DsNotifyLogAdmin::NotifyLog
 {
 public:
-  /// Constructor.
   TAO_NotifyLog_i (CORBA::ORB_ptr orb,
                    PortableServer::POA_ptr poa,
                    TAO_LogMgr_i &logmgr_i,
@@ -62,7 +57,6 @@ public:
                    TAO_LogNotification * log_notifier,
                    DsLogAdmin::LogId id);
 
-  /// Destructor.
   ~TAO_NotifyLog_i () override;
 
   /// Duplicate the log.
@@ -78,7 +72,8 @@ public:
   void
   activate ();
 
-  // = Methods from CosNotifyChannelAdmin::EventChannel.
+  /// @name CosNotifyChannelAdmin::EventChannel methods
+  /// @{
   CosNotifyFilter::Filter_ptr get_filter () override;
 
   void set_filter (CosNotifyFilter::Filter_ptr filter) override;
@@ -108,7 +103,10 @@ public:
   CosNotifyChannelAdmin::AdminIDSeq * get_all_consumeradmins () override;
 
   CosNotifyChannelAdmin::AdminIDSeq * get_all_supplieradmins () override;
+  /// @}
 
+  /// @name CosNotification::QoSAdmin methods
+  /// @{
   CosNotification::AdminProperties * get_admin () override;
 
   void set_admin (CosNotification::AdminProperties const & admin) override;
@@ -119,16 +117,19 @@ public:
 
   void validate_qos (CosNotification::QoSProperties const &,
     CosNotification::NamedPropertyRangeSeq_out) override;
+  /// @}
 
-  // = Methods from DsEventLogAdmin::EventLog.
+  /// @name DsEventLogAdmin::EventLog methods
+  /// @{
   CosEventChannelAdmin::ConsumerAdmin_ptr for_consumers () override;
 
   CosEventChannelAdmin::SupplierAdmin_ptr for_suppliers () override;
+  /// @}
 
 private:
   /// The PushConsumer that consumes the events and stores them
   /// in the log.
-  TAO_Notify_LogConsumer * my_log_consumer_;
+  TAO_Notify_LogConsumer * my_log_consumer_ {};
 
   /// The Event Channel that the log uses.
   CosNotifyChannelAdmin::EventChannel_var event_channel_;

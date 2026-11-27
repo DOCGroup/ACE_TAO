@@ -5,8 +5,8 @@
 #include "ace/svc_export.h"
 #include "ace/OS_Memory.h"
 
-// Implementation of the abstract class method which describes
-// the magazine.
+/// Implementation of the abstract class method which describes
+/// the magazine.
 void Newsweek::title ()
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -19,12 +19,12 @@ Newsweek::operator new (size_t bytes)
   return ::new char[bytes];
 }
 void *
-Newsweek::operator new (size_t bytes, const std::nothrow_t&)
+Newsweek::operator new (size_t bytes, std::nothrow_t const &)
 {
   return ::new (std::nothrow) char[bytes];
 }
 void
-Newsweek::operator delete (void *p, const std::nothrow_t&) noexcept
+Newsweek::operator delete (void *p, std::nothrow_t const &) noexcept
 {
   delete [] static_cast <char *> (p);
 }
@@ -34,15 +34,15 @@ Newsweek::operator delete (void *ptr)
   delete [] static_cast <char *> (ptr);
 }
 
-// Returns the Newsweek class pointer.
-// The ACE_BUILD_SVC_DLL and ACE_Svc_Export directives are necessary to
-// take care of exporting the function for Win32 platforms.
+/// Returns the Newsweek class pointer.
+/// The ACE_BUILD_SVC_DLL and ACE_Svc_Export directives are necessary to
+/// take care of exporting the function for Win32 platforms.
 extern "C" ACE_Svc_Export Magazine *create_magazine ();
 
 Magazine *
 create_magazine ()
 {
-  Magazine *mag = nullptr;
-  ACE_NEW_RETURN (mag, Newsweek, 0);
+  Magazine *mag {};
+  ACE_NEW_RETURN (mag, Newsweek, nullptr);
   return mag;
 }

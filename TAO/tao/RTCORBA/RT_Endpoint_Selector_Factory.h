@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   RT_Endpoint_Selector_Factory.h
  *
@@ -9,8 +6,6 @@
  *
  *  @author Marina Spivak <marina@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef RT_ENDPOINT_SELECTOR_FACTORY_H
 #define RT_ENDPOINT_SELECTOR_FACTORY_H
@@ -27,16 +22,16 @@
 #include "tao/RTCORBA/rtcorba_export.h"
 #include "tao/Endpoint_Selector_Factory.h"
 #include "ace/Service_Config.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_RT_Invocation_Endpoint_Selector;
 
-// ****************************************************************
 /**
  * @class RT_Endpoint_Selector_Factory
  *
- * @brief Factory for obtaining appropriate <Invocation_Selector>.
+ * @brief Factory for obtaining an appropriate @c TAO_RT_Invocation_Endpoint_Selector.
  *
  * Used by Invocation classes to intialize its endpoint selection
  * strategy and state based on the effective policies.  Endpoint
@@ -51,29 +46,26 @@ class TAO_RTCORBA_Export RT_Endpoint_Selector_Factory
   : public TAO_Endpoint_Selector_Factory
 {
 public:
-  /// Constructor.
   RT_Endpoint_Selector_Factory ();
 
-  /// Destructor.
   ~RT_Endpoint_Selector_Factory () override;
+
+  RT_Endpoint_Selector_Factory (RT_Endpoint_Selector_Factory const &) = delete;
+  RT_Endpoint_Selector_Factory &operator= (RT_Endpoint_Selector_Factory const &) = delete;
+  RT_Endpoint_Selector_Factory (RT_Endpoint_Selector_Factory &&) = delete;
+  RT_Endpoint_Selector_Factory &operator= (RT_Endpoint_Selector_Factory &&) = delete;
 
   TAO_Invocation_Endpoint_Selector *get_selector () override;
 
 private:
-  RT_Endpoint_Selector_Factory (RT_Endpoint_Selector_Factory const &) = delete;
-  void operator= (RT_Endpoint_Selector_Factory const &) = delete;
-  RT_Endpoint_Selector_Factory (RT_Endpoint_Selector_Factory &&) = delete;
-  void operator= (RT_Endpoint_Selector_Factory &&) = delete;
-
-private:
-  TAO_RT_Invocation_Endpoint_Selector *rt_invocation_endpoint_selector_ {};
+  std::unique_ptr<TAO_RT_Invocation_Endpoint_Selector>
+    rt_invocation_endpoint_selector_;
 };
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_RTCORBA, RT_Endpoint_Selector_Factory)
 ACE_FACTORY_DECLARE (TAO_RTCORBA, RT_Endpoint_Selector_Factory)
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */
 

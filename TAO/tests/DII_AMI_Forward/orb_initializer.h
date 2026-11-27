@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 #ifndef TAO_SERVER_ORB_INITIALIZER_H
 #define TAO_SERVER_ORB_INITIALIZER_H
 #include /**/ "ace/pre.h"
@@ -10,7 +8,6 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
 
 class ForwardTest_Request_Interceptor;
 
@@ -27,12 +24,15 @@ class Server_ORBInitializer
   , public virtual CORBA::LocalObject
 {
 public:
-  /// Constructor
-  Server_ORBInitializer ();
+  Server_ORBInitializer () = default;
+  Server_ORBInitializer (Server_ORBInitializer const &) = delete;
+  Server_ORBInitializer (Server_ORBInitializer &&) = delete;
+  Server_ORBInitializer &operator= (Server_ORBInitializer const &) = delete;
+  Server_ORBInitializer &operator= (Server_ORBInitializer &&) = delete;
 
-  virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info);
+  void pre_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 
-  virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info);
+  void post_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 
   /// Return the created server request interceptor.  Only valid after
   /// post_init(), i.e. ORB_init(), has been called.
@@ -41,7 +41,7 @@ public:
 private:
   /// Pointer to the server request interceptor.  ORB is responsible
   /// for storage.
-  ForwardTest_Request_Interceptor * server_interceptor_;
+  ForwardTest_Request_Interceptor * server_interceptor_ {};
 };
 
 #if defined(_MSC_VER)

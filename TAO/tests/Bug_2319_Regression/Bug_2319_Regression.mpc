@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*server) : taoserver, amh {
   source_files {
     server.cpp

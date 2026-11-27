@@ -2,6 +2,7 @@
 #include "Locator_Loader.h"
 #include "ace/Dynamic_Service.h"
 #include "ace/Task.h"
+#include <memory>
 
 class ImR_Locator_ORB_Runner : public ACE_Task_Base
 {
@@ -20,9 +21,7 @@ private:
   ImR_Locator_Loader& service_;
 };
 
-ImR_Locator_Loader::~ImR_Locator_Loader()
-{
-}
+ImR_Locator_Loader::~ImR_Locator_Loader() = default;
 
 int
 ImR_Locator_Loader::init (int argc, ACE_TCHAR *argv[])
@@ -31,18 +30,22 @@ ImR_Locator_Loader::init (int argc, ACE_TCHAR *argv[])
     {
       int err = this->opts_.init (argc, argv);
       if (err != 0)
+      {
         return -1;
+      }
 
       err = this->service_.init (this->opts_);
       if (err != 0)
+      {
         return -1;
+      }
 
       // Create a thread in which to run the service
-      ACE_ASSERT (this->runner_.get () == nullptr);
-      this->runner_.reset(new ImR_Locator_ORB_Runner (*this));
+      ACE_ASSERT (!this->runner_);
+      this->runner_ = std::make_unique<ImR_Locator_ORB_Runner> (*this);
       this->runner_->activate ();
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const&)
     {
       return -1;
     }
@@ -52,16 +55,16 @@ ImR_Locator_Loader::init (int argc, ACE_TCHAR *argv[])
 int
 ImR_Locator_Loader::fini ()
 {
-  ACE_ASSERT (this->runner_.get () != nullptr);
+  ACE_ASSERT (this->runner_);
   try
     {
       int ret = this->service_.fini ();
 
       this->runner_->wait ();
-      this->runner_.reset (nullptr);
+      this->runner_.reset ();
       return ret;
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const&)
     {
     }
   return -1;
@@ -88,6 +91,5 @@ ImR_Locator_Loader::run()
       return -1;
     }
 }
-
 
 ACE_FACTORY_DEFINE (Locator, ImR_Locator_Loader)

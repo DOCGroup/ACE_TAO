@@ -1,12 +1,8 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
  *  @file    Buffer_Allocator_T.h
  *
  *  @author Johnny Willemsen (jwillemsen@remedy.nl)
  */
-//=============================================================================
 
 #ifndef TAO_BUFFER_ALLOCATOR_T_H
 #define TAO_BUFFER_ALLOCATOR_T_H
@@ -37,10 +33,11 @@ namespace TAO
     public:
       using HANDLER_TYPE = handler_type;
       using ALLOC_TYPE = alloc_type;
-      TAO_Buffer_Allocator (alloc_type *allocator);
+      TAO_Buffer_Allocator () = delete;
+      explicit TAO_Buffer_Allocator (alloc_type *allocator);
 
-      virtual handler_type *allocate ();
-      virtual void release (handler_type *ptr);
+      handler_type *allocate () override;
+      void release (handler_type *ptr) override;
     private:
       alloc_type* allocator_;
   };

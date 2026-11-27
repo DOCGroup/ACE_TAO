@@ -21,7 +21,7 @@ TAO_CEC_ConsumerAdmin::TAO_CEC_ConsumerAdmin (TAO_CEC_EventChannel *ec)
 }
 
 void
-TAO_CEC_ConsumerAdmin::push (const CORBA::Any &event)
+TAO_CEC_ConsumerAdmin::push (CORBA::Any const &event)
 {
   TAO_CEC_Propagate_Event_Push push_worker (event);
 

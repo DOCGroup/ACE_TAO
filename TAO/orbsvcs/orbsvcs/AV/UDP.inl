@@ -1,15 +1,14 @@
-// -*- C++ -*-
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-//----------------------------------------------------------------------
 // TAO_AV_UDP_Flow_Handler
-//----------------------------------------------------------------------
 
 ACE_INLINE
-const ACE_SOCK_Dgram *
+ACE_SOCK_Dgram const *
 TAO_AV_UDP_Flow_Handler::get_socket () const
 {
-  return &this->sock_dgram_;
+  return std::addressof (this->sock_dgram_);
 }
 
 ACE_INLINE

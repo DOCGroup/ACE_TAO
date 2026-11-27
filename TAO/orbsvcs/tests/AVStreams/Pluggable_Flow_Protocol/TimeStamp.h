@@ -2,19 +2,25 @@
 #define TIMESTAMP_H
 #include /**/ "ace/pre.h"
 
+#include <cstddef>
 #include "export.h"
 
 #include "orbsvcs/AV/Protocol_Factory.h"
 
 #include "ace/Dynamic_Service.h"
+#include "ace/Message_Block.h"
 #include "ace/Service_Config.h"
-
 
 class TAO_TS_Export TimeStamp_Protocol_Object : public TAO_AV_Protocol_Object
 {
- public:
+public:
   TimeStamp_Protocol_Object (TAO_AV_Callback *callback,
                              TAO_AV_Transport *transport);
+  ~TimeStamp_Protocol_Object () override;
+  TimeStamp_Protocol_Object (TimeStamp_Protocol_Object const &) = delete;
+  TimeStamp_Protocol_Object &operator= (TimeStamp_Protocol_Object const &) = delete;
+  TimeStamp_Protocol_Object (TimeStamp_Protocol_Object &&) = delete;
+  TimeStamp_Protocol_Object &operator= (TimeStamp_Protocol_Object &&) = delete;
 
   int handle_input () override;
 
@@ -26,26 +32,29 @@ class TAO_TS_Export TimeStamp_Protocol_Object : public TAO_AV_Protocol_Object
                   int iovcnt,
                   TAO_AV_frame_info *frame_info = nullptr) override;
 
-  int send_frame (const char *buf,
+  int send_frame (char const *buf,
                   size_t len) override;
 
   /// end the stream.
   int destroy () override;
 
- private:
-  /// Pre-allocated memory to receive the data...
-  ACE_Message_Block* frame_;
+private:
+  ACE_Message_Block_Unique_Ptr frame_;
 };
 
 class TAO_TS_Export TimeStamp_Protocol_Factory : public TAO_AV_Flow_Protocol_Factory
 {
- public:
+public:
   /// Initialization hook.
   TimeStamp_Protocol_Factory ();
   ~TimeStamp_Protocol_Factory () override;
+  TimeStamp_Protocol_Factory (TimeStamp_Protocol_Factory const &) = delete;
+  TimeStamp_Protocol_Factory &operator= (TimeStamp_Protocol_Factory const &) = delete;
+  TimeStamp_Protocol_Factory (TimeStamp_Protocol_Factory &&) = delete;
+  TimeStamp_Protocol_Factory &operator= (TimeStamp_Protocol_Factory &&) = delete;
   int init (int argc, ACE_TCHAR *argv[]) override;
-  int match_protocol (const char *flow_string) override;
-  // Note : Some platforms still don't support Covariant returns
+  /// @note Some platforms still don't support Covariant returns
+  int match_protocol (char const *flow_string) override;
   TAO_AV_Protocol_Object *make_protocol_object (TAO_FlowSpec_Entry *entry,
                                                  TAO_Base_StreamEndPoint *endpoint,
                                                  TAO_AV_Flow_Handler *handler,

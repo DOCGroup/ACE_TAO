@@ -1,13 +1,8 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
  *  @file    Search_Struct.h
  *
  *  @author Douglas C. Schmidt
  */
-//=============================================================================
-
 
 #ifndef _SEARCH_STRUCT_H
 #define _SEARCH_STRUCT_H
@@ -27,13 +22,13 @@ public:
   virtual ~Search_Struct ();
   virtual int n_elems ();
 
-  virtual Protocol_Record *insert (const char *key_name,
+  virtual Protocol_Record *insert (char const *key_name,
                                    int max_len = MAXUSERIDNAMELEN) = 0;
   virtual Protocol_Record *get_next_entry () = 0;
   virtual Protocol_Record *get_each_entry () = 0;
 
 protected:
-  int count_;
+  int count_ {};
 };
 
 #endif /* _SEARCH_STRUCT_H */

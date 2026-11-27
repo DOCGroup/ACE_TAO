@@ -1,14 +1,9 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Msg_WFMO_Reactor.h
  *
  *  @author Beskrovny Evgeny <evgeny_beskrovny@icomverse.com>
  *  @author Irfan Pyarali <irfan@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef ACE_MSG_WFMO_REACTOR_H
 #define ACE_MSG_WFMO_REACTOR_H
@@ -30,7 +25,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * @class ACE_Msg_WFMO_Reactor
  *
  * @brief An OO event demultiplexor and event handler dispatcher for
- * Win32 <MsgWaitForMultipleObjects>.
+ * Win32 @c MsgWaitForMultipleObjects.
  *
  * The ACE_Msg_WFMO_Reactor is an OO event demultiplexor and
  * event handler Reactor. It differs from ACE_WFMO_Reactor by
@@ -41,8 +36,8 @@ class ACE_Export ACE_Msg_WFMO_Reactor : public ACE_WFMO_Reactor
 {
 public:
   /// Initialize ACE_Msg_WFMO_Reactor with the default size.
-  ACE_Msg_WFMO_Reactor (ACE_Sig_Handler * = 0,
-                        ACE_Timer_Queue * = 0);
+  ACE_Msg_WFMO_Reactor (ACE_Sig_Handler * = nullptr,
+                        ACE_Timer_Queue * = nullptr);
 
   /**
    * Initialize ACE_Msg_WFMO_Reactor with size @a size.  Two slots will be
@@ -51,8 +46,8 @@ public:
    */
   ACE_Msg_WFMO_Reactor (size_t size,
                         int unused = 0,
-                        ACE_Sig_Handler * = 0,
-                        ACE_Timer_Queue * = 0);
+                        ACE_Sig_Handler * = nullptr,
+                        ACE_Timer_Queue * = nullptr);
 
   /// Close down the ACE_Msg_WFMO_Reactor and release all of its resources.
   virtual ~ACE_Msg_WFMO_Reactor () = default;
@@ -60,9 +55,10 @@ public:
   /**
    * This event loop driver blocks for up to @a max_wait_time before
    * returning.  It will return earlier if timer events, I/O events,
-   * window events, or signal events occur.  Note that @a max_wait_time
-   * can be 0, in which case this method blocks indefinitely until
-   * events occur.
+   * window events, or signal events occur.
+   *
+   * @note @a max_wait_time can be 0, in which case this method blocks
+   * indefinitely until events occur.
    *
    * @a max_wait_time is decremented to reflect how much time this call
    * took.  For instance, if a time value of 3 seconds is passed to
@@ -71,15 +67,15 @@ public:
    * application wishes to handle events for some fixed amount of
    * time.
    *
-   * <MsgWaitForMultipleObjects> is used as the demultiplexing call
+   * @c MsgWaitForMultipleObjects is used as the demultiplexing call
    *
    * Returns the total number of ACE_Event_Handlers that were
    * dispatched, 0 if the @a max_wait_time elapsed without dispatching
    * any handlers, or -1 if an error occurs.
    *
-   * The only difference between <alertable_handle_events> and
-   * <handle_events> is that in the alertable case, MWMO_ALERTABLE is
-   * passed to <MsgWaitForMultipleObjects> for the <bAlertable>
+   * The only difference between @c alertable_handle_events and
+   * @c handle_events is that in the alertable case, MWMO_ALERTABLE is
+   * passed to @c MsgWaitForMultipleObjects for the @c bAlertable
    * option.
    */
   virtual int handle_events (ACE_Time_Value *max_wait_time = nullptr);

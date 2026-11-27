@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*auto_event) : aceexe {
   exename = auto_event
   Source_Files {
@@ -45,6 +44,12 @@ project(*process_mutex) : aceexe, avoids_ace_for_tao {
   exename = process_mutex
   Source_Files {
     process_mutex.cpp
+  }
+}
+project(*process_manager) : aceexe {
+  exename = process_manager
+  Source_Files {
+    process_manager.cpp
   }
 }
 project(*process_semaphore) : aceexe, avoids_ace_for_tao {

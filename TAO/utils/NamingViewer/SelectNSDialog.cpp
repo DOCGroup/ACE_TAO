@@ -17,7 +17,6 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // CSelectNSDialog dialog
 
-
 CSelectNSDialog::CSelectNSDialog(CWnd* pParent /*=NULL*/)
   : CDialog(CSelectNSDialog::IDD, pParent)
 {
@@ -27,7 +26,6 @@ CSelectNSDialog::CSelectNSDialog(CWnd* pParent /*=NULL*/)
   m_pConfig = 0;
 }
 
-
 void CSelectNSDialog::DoDataExchange(CDataExchange* pDX)
 {
   CDialog::DoDataExchange(pDX);
@@ -35,7 +33,6 @@ void CSelectNSDialog::DoDataExchange(CDataExchange* pDX)
   DDX_Control(pDX, IDC_SERVERS, m_Servers);
   //}}AFX_DATA_MAP
 }
-
 
 BEGIN_MESSAGE_MAP(CSelectNSDialog, CDialog)
   //{{AFX_MSG_MAP(CSelectNSDialog)
@@ -57,7 +54,7 @@ void CSelectNSDialog::OnOK()
     AfxMessageBox(ACE_TEXT ("You must select a server or cancel"));
     return;
   }
-  char* pIOR = (char*)m_Servers.GetItemData(index);
+  ACE_TCHAR *pIOR = reinterpret_cast<ACE_TCHAR *> (m_Servers.GetItemData (index));
   m_IOR = pIOR;
   m_Servers.GetText(index, m_Name);
   CDialog::OnOK();
@@ -77,7 +74,7 @@ void CSelectNSDialog::OnAdd()
   int pos = m_Servers.AddString(Dialog.m_Name);
   ACE_TCHAR* pIOR = new ACE_TCHAR[Value.length() + 1];
   ACE_OS::strcpy(pIOR, Value.c_str());
-  m_Servers.SetItemData(pos, (DWORD)pIOR);
+  m_Servers.SetItemData (pos, reinterpret_cast<DWORD_PTR> (pIOR));
 }
 
 void CSelectNSDialog::OnRemove()
@@ -88,7 +85,7 @@ void CSelectNSDialog::OnRemove()
   {
     return;
   }
-  delete (char*)m_Servers.GetItemData(index);
+  delete[] reinterpret_cast<ACE_TCHAR *> (m_Servers.GetItemData (index));
   CString Name;
   m_Servers.GetText(index, Name);
   ACE_Configuration_Section_Key Section = m_pConfig->root_section();
@@ -115,7 +112,7 @@ BOOL CSelectNSDialog::OnInitDialog()
       int pos = m_Servers.AddString(name.c_str());
       ACE_TCHAR* pIOR = new ACE_TCHAR[value.length() + 1];
       ACE_OS::strcpy(pIOR, value.c_str());
-      m_Servers.SetItemData(pos, (DWORD)pIOR);
+      m_Servers.SetItemData (pos, reinterpret_cast<DWORD_PTR> (pIOR));
     }
     ++index;
   }
@@ -130,8 +127,8 @@ void CSelectNSDialog::OnDestroy()
 
   // TODO: Add your message handler code here
   int const count = m_Servers.GetCount();
-  for(int i=0; i < count; i++)
+  for(int i=0; i < count; ++i)
   {
-    delete (char*)m_Servers.GetItemData(i);
+    delete[] reinterpret_cast<ACE_TCHAR *> (m_Servers.GetItemData (i));
   }
 }

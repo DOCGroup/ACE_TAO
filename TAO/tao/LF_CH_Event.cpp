@@ -36,14 +36,14 @@ TAO_LF_CH_Event::state_changed_i (LFS_STATE new_state)
 
       if (TAO_debug_level > 9)
         {
-          size_t id = 0;
+          size_t id {};
           TAO_Connection_Handler *const ch = dynamic_cast<TAO_Connection_Handler *> (this);
           if (ch && ch->transport ())
             {
               id = ch->transport ()->id ();
             }
 
-          TAOLIB_DEBUG ((LM_DEBUG, "TAO (%P|%t) - TAO_LF_CH_Event[%d]::"
+          TAOLIB_DEBUG ((LM_DEBUG, "TAO (%P|%t) - TAO_LF_CH_Event[%B]::"
                       "state_changed_i, state %C->%C\n",
                       id,
                       TAO_LF_Event::state_name(prev_state_),
@@ -53,7 +53,7 @@ TAO_LF_CH_Event::state_changed_i (LFS_STATE new_state)
 
   ACE_MT (ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->followers_.mutex ()));
 
-  HASH_MAP::iterator end_it = this->followers_.end ();
+  HASH_MAP::iterator const end_it = this->followers_.end ();
   for (HASH_MAP::iterator it = this->followers_.begin (); it != end_it ; ++it)
     {
       it->ext_id_->signal ();
@@ -109,7 +109,9 @@ bool
 TAO_LF_CH_Event::successful_i () const
 {
   if (this->prev_state_ == TAO_LF_Event::LFS_CONNECTION_WAIT)
+  {
     return this->state_ == TAO_LF_Event::LFS_SUCCESS;
+  }
 
   return this->state_ == TAO_LF_Event::LFS_CONNECTION_CLOSED;
 }
@@ -118,7 +120,9 @@ bool
 TAO_LF_CH_Event::error_detected_i () const
 {
   if (this->prev_state_ == TAO_LF_Event::LFS_CONNECTION_WAIT)
+  {
     return this->state_ == TAO_LF_Event::LFS_CONNECTION_CLOSED;
+  }
 
   return this->state_ == TAO_LF_Event::LFS_TIMEOUT;
 }
@@ -133,13 +137,13 @@ TAO_LF_CH_Event::set_state (LFS_STATE new_state)
       this->state_ = new_state;
       if (TAO_debug_level > 9)
         {
-          size_t id = 0;
+          size_t id {};
           TAO_Connection_Handler *const ch = dynamic_cast<TAO_Connection_Handler *> (this);
           if (ch && ch->transport ())
             {
               id = ch->transport ()->id ();
             }
-          TAOLIB_DEBUG ((LM_DEBUG, "TAO (%P|%t) - TAO_LF_CH_Event[%d]::set_state, "
+          TAOLIB_DEBUG ((LM_DEBUG, "TAO (%P|%t) - TAO_LF_CH_Event[%B]::set_state, "
                       "state_ is LFS_TIMEOUT\n", id));
         }
     }

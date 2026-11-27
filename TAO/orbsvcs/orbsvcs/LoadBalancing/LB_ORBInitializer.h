@@ -1,13 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file LB_ORBInitializer.h
  *
  *  @author  Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_LB_ORB_INITIALIZER_H
 #define TAO_LB_ORB_INITIALIZER_H
@@ -53,10 +48,14 @@ class TAO_LB_ORBInitializer
     public virtual ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
   TAO_LB_ORBInitializer (CORBA::StringSeq const & object_groups,
                          CORBA::StringSeq const & repository_ids,
                          char const * location);
+
+  TAO_LB_ORBInitializer (TAO_LB_ORBInitializer const &) = delete;
+  TAO_LB_ORBInitializer (TAO_LB_ORBInitializer &&) = delete;
+  TAO_LB_ORBInitializer & operator= (TAO_LB_ORBInitializer const &) = delete;
+  TAO_LB_ORBInitializer & operator= (TAO_LB_ORBInitializer &&) = delete;
 
   /**
    * @name PortableInterceptor::ORBInitializer Methods
@@ -64,11 +63,11 @@ public:
    * Methods required by the PortableInterceptor::ORBInitializer
    * interface.
    */
-  //@{
+  /// @{
   void pre_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 
   void post_init (PortableInterceptor::ORBInitInfo_ptr info) override;
-  //@}
+  /// @}
 
 private:
   /// List of stringified object group references.
@@ -77,11 +76,6 @@ private:
   /// List of RepositoryIds for object that will be load
   /// managed/balanced.
   CORBA::StringSeq const repository_ids_;
-
-  TAO_LB_ORBInitializer (TAO_LB_ORBInitializer const &) = delete;
-  TAO_LB_ORBInitializer (TAO_LB_ORBInitializer &&) = delete;
-  TAO_LB_ORBInitializer & operator= (TAO_LB_ORBInitializer const &) = delete;
-  TAO_LB_ORBInitializer & operator= (TAO_LB_ORBInitializer &&) = delete;
 
   /// Location at which the LoadBalancing component resides.
   CORBA::String_var location_;

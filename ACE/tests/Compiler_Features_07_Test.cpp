@@ -37,7 +37,7 @@ run_main (int, ACE_TCHAR *[])
   c.insert(std::string("1"));
 
   // ... inserting twice returns a pair ...
-  std::pair<collection::iterator,bool> r =
+  std::pair<collection::iterator,bool> const r =
     c.insert(collection::value_type("5"));
 
   // ... the iterator points to the element ...
@@ -48,7 +48,7 @@ run_main (int, ACE_TCHAR *[])
     }
 
   // ... and the booleans says that it is already in the set ...
-  if (r.second == true)
+  if (r.second)
     {
       status = 1;
       ACE_ERROR ((LM_ERROR, ACE_TEXT("Expected duplicate insert to fail")));
@@ -74,5 +74,4 @@ run_main (int, ACE_TCHAR *[])
   ACE_END_TEST;
   return status;
 }
-
 

@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   ForwardCtrlServerInterceptor.h
  *
  *  @author Huang-Ming Huang <hh1@cse.wustl.edu>
  */
-//=============================================================================
 #ifndef FORWARDCTRLSERVERINTERCEPTOR_H
 #define FORWARDCTRLSERVERINTERCEPTOR_H
 
@@ -41,7 +37,6 @@ public:
 
   void send_other (PortableInterceptor::ServerRequestInfo_ptr) override;
 
-private:
   ForwardCtrlServerInterceptor (ForwardCtrlServerInterceptor const &) = delete;
   ForwardCtrlServerInterceptor &operator= (ForwardCtrlServerInterceptor const &) = delete;
   ForwardCtrlServerInterceptor (ForwardCtrlServerInterceptor &&) = delete;

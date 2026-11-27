@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  * @file    Versioned_Namespace.h
  *
@@ -10,7 +7,6 @@
  *
  * @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef TAO_VERSIONED_NAMESPACE_H
 #define TAO_VERSIONED_NAMESPACE_H
@@ -18,7 +14,6 @@
 #if !defined (TAO_ORBCONF_H) && !defined (ACE_CONFIG_MACROS_H)
 # error This header is only meant to be included after "tao/orbconf.h".
 #endif  /* !TAO_ORBCONF_H */
-
 
 #if !defined (TAO_HAS_VERSIONED_NAMESPACE) \
   && defined (ACE_HAS_VERSIONED_NAMESPACE) \

@@ -7,7 +7,7 @@
 #include "tao/AnyTypeCode/Any.h"
 
 int request_delay_secs = 0;
-const ACE_TCHAR *ior = ACE_TEXT ("");
+ACE_TCHAR const *ior = ACE_TEXT ("");
 CORBA::ORB_var orb;
 
 int
@@ -41,7 +41,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 CORBA::Object_ptr
-set_timeout_policy (CORBA::Object_ptr obj, const ACE_Time_Value& to)
+set_timeout_policy (CORBA::Object_ptr obj, ACE_Time_Value const & to)
 {
   CORBA::Object_var ret;
 
@@ -68,7 +68,7 @@ set_timeout_policy (CORBA::Object_ptr obj, const ACE_Time_Value& to)
           ret = CORBA::Object::_duplicate (obj);
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception (ACE_TEXT ("set_timeout_policy ()"));
       ret = CORBA::Object::_duplicate (obj);
@@ -93,9 +93,9 @@ do_restart_test ()
           test->arm ();
           attempt = 0;
         }
-      catch (const CORBA::Exception& ex)
+      catch (CORBA::Exception const & ex)
         {
-          attempt--;
+          --attempt;
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("client caught %C during arm, retrying\n"),
                       ex._name ()));
@@ -114,7 +114,7 @@ do_restart_test ()
                   ACE_TEXT ("client trigger completed\n")));
       return;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("client caught %C during first trigger\n"),
@@ -131,7 +131,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     orb = CORBA::ORB_init(argc, argv);
 
     if (parse_args (argc, argv) != 0)
+    {
       return 1;
+    }
 
     do_restart_test ();
 
@@ -139,7 +141,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     return 0;
   }
-  catch(const CORBA::Exception& ex) {
+  catch(CORBA::Exception const & ex) {
     ex._tao_print_exception (ACE_TEXT ("client:"));
   }
 

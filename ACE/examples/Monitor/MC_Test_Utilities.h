@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  * @file MC_Test_Utilities.h
  *
  * @author Jeff Parsons <j.parsons@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef MC_TEST_UTILITIES_H
 #define MC_TEST_UTILITIES_H
@@ -23,7 +19,7 @@
 
 #if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
 
-using namespace ACE_VERSIONED_NAMESPACE_NAME::ACE::Monitor_Control;
+using ACE_VERSIONED_NAMESPACE_NAME::ACE::Monitor_Control::Monitor_Control_Types;
 
 #endif /* ACE_HAS_MONITOR_FRAMEWORK==1 */
 
@@ -35,17 +31,19 @@ using namespace ACE_VERSIONED_NAMESPACE_NAME::ACE::Monitor_Control;
  */
 struct MC_TEST_UTILITIES_Export MC_Test_Utilities
 {
+  MC_Test_Utilities () = delete;
+
 #if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
 
-  static void display_timestamp (const Monitor_Control_Types::Data &data);
-  static void display_num_threads (const Monitor_Control_Types::Data &data);
-  static void display_mq_size (const Monitor_Control_Types::Data &data);
-  static void display_memory_usage (const Monitor_Control_Types::Data &data);
-  static void display_cpu_load (const Monitor_Control_Types::Data &data);
-  static void display_bytes_sent (const Monitor_Control_Types::Data &data);
-  static void display_bytes_received (const Monitor_Control_Types::Data &data);
-  static void display_packets_sent (const Monitor_Control_Types::Data &data);
-  static void display_packets_received (const Monitor_Control_Types::Data &data);
+  static void display_timestamp (Monitor_Control_Types::Data const &data);
+  static void display_num_threads (Monitor_Control_Types::Data const &data);
+  static void display_mq_size (Monitor_Control_Types::Data const &data);
+  static void display_memory_usage (Monitor_Control_Types::Data const &data);
+  static void display_cpu_load (Monitor_Control_Types::Data const &data);
+  static void display_bytes_sent (Monitor_Control_Types::Data const &data);
+  static void display_bytes_received (Monitor_Control_Types::Data const &data);
+  static void display_packets_sent (Monitor_Control_Types::Data const &data);
+  static void display_packets_received (Monitor_Control_Types::Data const &data);
 
 #endif /* ACE_HAS_MONITOR_FRAMEWORK==1 */
 };

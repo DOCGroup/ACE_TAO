@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*test_idl): taoexe, ifr_client {
   exename = test_idl
   includes += $(TAO_ROOT)/include

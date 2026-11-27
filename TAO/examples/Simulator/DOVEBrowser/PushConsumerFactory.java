@@ -1,19 +1,8 @@
-//
-// ============================================================================
-//
-// = FILENAME
-//    PushConsumerFactory.java
-//
-// = AUTHOR
-//    Michael Kircher (mk1@cs.wustl.edu)
-//
-// = DESCRIPTION
-//   This is the administor/factory for a PushConsumer.
-//
-// ============================================================================
-
-
-
+/**
+ * @file PushConsumerFactory.java
+ * @author Michael Kircher (mk1@cs.wustl.edu)
+ * @brief This is the administor/factory for a PushConsumer.
+ */
 
 public class PushConsumerFactory {
 
@@ -317,7 +306,6 @@ public class PushConsumerFactory {
                                            "demo_consumer_" + ec_number);
             }
 
-
   	  // Tell the CORBA environment that we are ready
 
 	  System.out.println ("PushConsumer registered with POA");
@@ -356,12 +344,5 @@ public class PushConsumerFactory {
 	}
     }
 
-
 } // public class PushConsumerFactory
-
-
-
-
-
-
 

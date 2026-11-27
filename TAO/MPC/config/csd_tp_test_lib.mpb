@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project : taolib_with_idl, csd_threadpool, pi {
   after += CSD_TP_Test_Lib
   includes += ../../CSD_Strategy_Tests/TP_Common

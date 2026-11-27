@@ -1,14 +1,7 @@
-// -*- C++ -*-
 #include "Manager_i.h"
 
-Manager_i::Manager_i (long retryCount)
-: server_instance_(0)
-, retry_count_(retryCount)
-, retry_attempt_(0)
-{
-}
-
-Manager_i::~Manager_i ()
+Manager_i::Manager_i (long retry_count)
+  : retry_count_ (retry_count)
 {
 }
 

@@ -7,15 +7,15 @@
 #include "tao/PI/ORBInitInfo.h"
 #include "tao/debug.h"
 
-static const char pg_poa_factory_name[] = "TAO_GOA";
-static const ACE_TCHAR pg_poa_factory_directive[] = ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE(
+constexpr char pg_poa_factory_name[] = "TAO_GOA";
+constexpr ACE_TCHAR pg_poa_factory_directive[] = ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE(
   "TAO_GOA", "TAO_PortableGroup", TAO_VERSION , "_make_TAO_PG_Object_Adapter_Factory", "");
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
 TAO_PortableGroup_ORBInitializer::pre_init (
-    PortableInterceptor::ORBInitInfo_ptr info)
+  PortableInterceptor::ORBInitInfo_ptr info)
 {
   // Narrow to a TAO_ORBInitInfo object to get access to the
   // orb_core() TAO extension.
@@ -24,17 +24,19 @@ TAO_PortableGroup_ORBInitializer::pre_init (
   if (CORBA::is_nil (tao_info.in ()))
     {
       if (TAO_debug_level > 0)
-        ORBSVCS_ERROR ((LM_ERROR,
+        {
+          ORBSVCS_ERROR ((LM_ERROR,
                     "(%P|%t) PortableGroup_ORBInitializer::pre_init:\n"
                     "(%P|%t)    Unable to narrow "
                     "\"PortableInterceptor::ORBInitInfo_ptr\" to\n"
                     "(%P|%t)   \"TAO_ORBInitInfo_ptr.\"\n"));
+        }
 
       throw CORBA::INTERNAL ();
     }
 
   // Set a new request dispatcher in the ORB.
-  PortableGroup_Request_Dispatcher *rd = nullptr;
+  PortableGroup_Request_Dispatcher *rd {};
   ACE_NEW_THROW_EX (rd,
                     PortableGroup_Request_Dispatcher (),
                     CORBA::NO_MEMORY (

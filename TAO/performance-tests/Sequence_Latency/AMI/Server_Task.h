@@ -1,4 +1,3 @@
-
 #ifndef SERVER_TASK_H
 #define SERVER_TASK_H
 #include /**/ "ace/pre.h"
@@ -13,11 +12,14 @@
 class Server_Task : public ACE_Task_Base
 {
 public:
-  /// Constructor
-  Server_Task (CORBA::ORB_ptr orb);
+  explicit Server_Task (CORBA::ORB_ptr orb);
+  Server_Task (Server_Task const &) = delete;
+  Server_Task (Server_Task &&) = delete;
+  Server_Task &operator= (Server_Task const &) = delete;
+  Server_Task &operator= (Server_Task &&) = delete;
 
   /// The thread entry point
-  virtual int svc ();
+  int svc () override;
 
 private:
   /// Keep a reference to the ORB

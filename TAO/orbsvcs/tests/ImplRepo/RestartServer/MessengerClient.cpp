@@ -3,7 +3,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_unistd.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://Messenger.ior");
+ACE_TCHAR const *ior = ACE_TEXT("file://Messenger.ior");
 int seconds_between_requests = 4;
 // Number of times we try to invoke the operation
 int number_of_tries = 2;
@@ -17,6 +17,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
   int c;
 
   while ((c = get_opts ()) != -1)
+  {
     switch (c)
       {
       case 'k':
@@ -47,6 +48,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
+  }
   // Indicates successful parsing of the command line
   return 0;
 }
@@ -64,7 +66,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
 
     if (parse_args (argc, argv) != 0)
+    {
       return 1;
+    }
 
     // Destringify ior
     CORBA::Object_var obj = orb->string_to_object(ior);
@@ -101,7 +105,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         messenger->abort(2);
         ACE_OS::sleep(seconds_between_requests);
       }
-      catch (const CORBA::Exception&)
+      catch (CORBA::Exception const &)
       {
         // Swallow
       }
@@ -120,7 +124,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     orb->destroy ();
   }
-  catch(const CORBA::Exception& ex) {
+  catch(CORBA::Exception const & ex) {
     std::cerr << "Client main() Caught CORBA::Exception: " << ex << std::endl;
     return 1;
   }

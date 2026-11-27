@@ -7,7 +7,7 @@ Payload_Receiver::Payload_Receiver (CORBA::ORB_ptr orb)
 }
 
 void
-Payload_Receiver::more_data (const Test::Payload &payload)
+Payload_Receiver::more_data (Test::Payload const &payload)
 {
   ++this->count_;
 
@@ -21,13 +21,11 @@ Payload_Receiver::more_data (const Test::Payload &payload)
     }
 }
 
-
 void
 Payload_Receiver::shutdown ()
 {
   this->orb_->shutdown (false);
 }
-
 
 int
 Payload_Receiver::get_count () const

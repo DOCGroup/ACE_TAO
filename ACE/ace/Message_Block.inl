@@ -1,4 +1,3 @@
-// -*- C++ -*-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE ACE_Data_Block *
@@ -119,7 +118,7 @@ ACE_Message_Block::flags () const
    return this->data_block ()->flags ();
 }
 
-// Return the length of the "active" portion of the message.
+/// Return the length of the "active" portion of the message.
 
 ACE_INLINE size_t
 ACE_Message_Block::length () const
@@ -128,8 +127,8 @@ ACE_Message_Block::length () const
   return this->wr_ptr_ - this->rd_ptr_;
 }
 
-// Sets the length of the "active" portion of the message.  This is
-// defined as the offset from RD_PTR to WR_PTR.
+/// Sets the length of the "active" portion of the message.  This is
+/// defined as the offset from RD_PTR to WR_PTR.
 
 ACE_INLINE void
 ACE_Message_Block::length (size_t len)
@@ -138,7 +137,7 @@ ACE_Message_Block::length (size_t len)
   this->wr_ptr_ = this->rd_ptr_ + len;
 }
 
-// Return the length of the potential size of the message.
+/// Return the length of the potential size of the message.
 
 ACE_INLINE size_t
 ACE_Message_Block::size () const
@@ -188,14 +187,20 @@ ACE_Message_Block::msg_class () const
   ACE_TRACE ("ACE_Message_Block::msg_class");
 
   if (this->msg_type () < ACE_Message_Block::MB_PRIORITY)
-    return ACE_Message_Block::MB_NORMAL;
+    {
+      return ACE_Message_Block::MB_NORMAL;
+    }
   else if (this->msg_type () < ACE_Message_Block::MB_USER)
-    return ACE_Message_Block::MB_PRIORITY;
+    {
+      return ACE_Message_Block::MB_PRIORITY;
+    }
   else
-    return ACE_Message_Block::MB_USER;
+    {
+      return ACE_Message_Block::MB_USER;
+    }
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 ACE_Message_Block::is_data_msg () const
 {
   ACE_TRACE ("ACE_Message_Block::is_data_msg");
@@ -220,7 +225,7 @@ ACE_Message_Block::msg_priority (unsigned long pri)
   this->priority_ = pri;
 }
 
-ACE_INLINE const ACE_Time_Value &
+ACE_INLINE ACE_Time_Value const &
 ACE_Message_Block::msg_execution_time () const
 {
   ACE_TRACE ("ACE_Message_Block::msg_execution_time ()");
@@ -232,7 +237,7 @@ ACE_Message_Block::msg_execution_time () const
 }
 
 ACE_INLINE void
-ACE_Message_Block::msg_execution_time (const ACE_Time_Value &et)
+ACE_Message_Block::msg_execution_time (ACE_Time_Value const &et)
 {
   ACE_TRACE ("ACE_Message_Block::msg_execution_time (const ACE_Time_Value & et)");
 #if defined (ACE_HAS_TIMED_MESSAGE_BLOCKS)
@@ -242,7 +247,7 @@ ACE_Message_Block::msg_execution_time (const ACE_Time_Value &et)
 #endif /* ACE_HAS_TIMED_MESSAGE_BLOCKS */
 }
 
-ACE_INLINE const ACE_Time_Value &
+ACE_INLINE ACE_Time_Value const &
 ACE_Message_Block::msg_deadline_time () const
 {
   ACE_TRACE ("ACE_Message_Block::msg_deadline_time ()");
@@ -255,7 +260,7 @@ ACE_Message_Block::msg_deadline_time () const
 }
 
 ACE_INLINE void
-ACE_Message_Block::msg_deadline_time (const ACE_Time_Value &dt)
+ACE_Message_Block::msg_deadline_time (ACE_Time_Value const &dt)
 {
   ACE_TRACE ("ACE_Message_Block::msg_deadline_time (const ACE_Time_Value & et)");
 #if defined (ACE_HAS_TIMED_MESSAGE_BLOCKS)
@@ -310,7 +315,7 @@ ACE_Message_Block::wr_ptr (char *new_ptr)
   this->wr_ptr_ = static_cast<size_t> (new_ptr - this->base ());
 }
 
-// Return a pointer to 1 past the end of the data buffer.
+/// Return a pointer to 1 past the end of the data buffer.
 
 ACE_INLINE char *
 ACE_Data_Block::mark () const
@@ -339,7 +344,6 @@ ACE_Message_Block::end () const
   ACE_TRACE ("ACE_Message_Block::end");
   return this->data_block ()->end ();
 }
-
 
 ACE_INLINE void
 ACE_Message_Block::rd_ptr (char *new_ptr)
@@ -391,7 +395,7 @@ ACE_Message_Block::replace_data_block (ACE_Data_Block *db)
   ACE_Data_Block *old = this->data_block_;
   this->data_block_ = db;
 
-  if (db != 0)
+  if (db != nullptr)
     {
       // Set the read and write pointers in the <Message_Block> to point
       // to the buffer in the ACE_Data_Block.
@@ -428,10 +432,12 @@ ACE_Message_Block::reset_allocators (ACE_Allocator *allocator_strategy,
   this->message_block_allocator_ =
     message_block_allocator;
 
-  if (this->cont () != 0)
-    this->cont ()->reset_allocators (allocator_strategy,
-                                     data_block_allocator,
-                                     message_block_allocator);
+  if (this->cont () != nullptr)
+    {
+      this->cont ()->reset_allocators (allocator_strategy,
+                                       data_block_allocator,
+                                       message_block_allocator);
+    }
 }
 
 ACE_INLINE void

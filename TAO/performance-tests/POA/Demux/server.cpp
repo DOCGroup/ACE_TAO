@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    server.cpp
  *
@@ -6,7 +5,6 @@
  *
  *  @author Aniruddha Gokhale
  */
-//=============================================================================
 
 #include "demux_test_server.h"
 #include "tao/debug.h"
@@ -26,7 +24,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv [])
         demux_test_server.init (argc, argv);
 
       if (r == -1)
+      {
         return -1;
+      }
 
       demux_test_server.run ();
     }

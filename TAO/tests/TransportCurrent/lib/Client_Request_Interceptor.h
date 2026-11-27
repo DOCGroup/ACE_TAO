@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  * @file Client_Request_Interceptor.h
  *
@@ -9,7 +6,6 @@
  *
  * @author Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
 
 #ifndef CLIENT_REQUEST_INTERCEPTOR_H
 #define CLIENT_REQUEST_INTERCEPTOR_H
@@ -31,8 +27,7 @@ namespace Test
 {
   /// A metod doing the actual testing, so we could change it for the
   /// different traits implementations
-  typedef int (*TEST) (CORBA::ORB_ptr);
-
+  using TEST = int (*) (CORBA::ORB_ptr);
 
   /**
    * @class Client_Request_Interceptor
@@ -51,9 +46,13 @@ namespace Test
       public virtual ::CORBA::LocalObject
   {
  public:
-    /// Constructor.
-    Client_Request_Interceptor (const char *orb_id,
+    Client_Request_Interceptor (char const *orb_id,
                                 TEST test);
+
+    Client_Request_Interceptor (Client_Request_Interceptor const &) = delete;
+    Client_Request_Interceptor (Client_Request_Interceptor &&) = delete;
+    Client_Request_Interceptor &operator= (Client_Request_Interceptor const &) = delete;
+    Client_Request_Interceptor &operator= (Client_Request_Interceptor &&) = delete;
     /**
      * @name Methods Required by the Client Request Interceptor
      * Interface
@@ -62,30 +61,30 @@ namespace Test
      * virtual in the abstract base class.  They are the canonical
      * methods required for all client request interceptors.
      */
-    //@{
+    /// @{
     /// Return the name of this ClientRequestinterceptor.
-    virtual char * name ();
+    char * name () override;
 
-    virtual void destroy ();
+    void destroy () override;
 
-    virtual void send_request (PortableInterceptor::ClientRequestInfo_ptr ri);
+    void send_request (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
-    virtual void send_poll (PortableInterceptor::ClientRequestInfo_ptr ri);
+    void send_poll (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
-    virtual void receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri);
+    void receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
-    virtual void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri);
+    void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
-    virtual void receive_other (PortableInterceptor::ClientRequestInfo_ptr ri);
-    //@}
+    void receive_other (PortableInterceptor::ClientRequestInfo_ptr ri) override;
+    /// @}
 
-    // Number of interceptions
+    /// Number of interceptions
     CORBA::Long interceptions ();
 
   private:
-    // Implementation method, every inteception point will have to
-    // call it, supplying a name.
-    void test_transport_current (const ACE_TCHAR* amethod);
+    /// Implementation method, every interception point will have to
+    /// call it, supplying a name.
+    void test_transport_current (ACE_TCHAR const *amethod);
 
   private:
     ///The ID of the ORB this interceptor is registered with.

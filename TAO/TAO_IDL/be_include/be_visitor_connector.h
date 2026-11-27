@@ -1,6 +1,3 @@
-/* -*- c++ -*- */
-
-//=============================================================================
 /**
  *  @file    be_visitor_connector.h
  *
@@ -8,7 +5,6 @@
  *
  *  @author Jeff Parsons
  */
-//=============================================================================
 
 #ifndef TAO_BE_VISITOR_CONNECTOR_H
 #define TAO_BE_VISITOR_CONNECTOR_H

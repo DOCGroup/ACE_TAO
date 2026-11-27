@@ -1,9 +1,5 @@
 #include "Simple.h"
 
-Simple::Simple ()
-{
-}
-
 char *
 Simple::get_string ()
 {

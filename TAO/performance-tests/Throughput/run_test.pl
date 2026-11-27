@@ -2,7 +2,6 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
      & eval 'exec perl -S $0 $argv:q'
      if 0;
 
-# -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::TestTarget;
@@ -26,7 +25,7 @@ my $iorbase = "test.ior";
 my $svc_conf = "svc$PerlACE::svcconf_ext";
 
 my $server_conf = $server->LocalFile ("$svc_conf");
-my $client_conf = $server->LocalFile ("$svc_conf");
+my $client_conf = $client->LocalFile ("$svc_conf");
 
 my $server_iorfile = $server->LocalFile ($iorbase);
 my $client_iorfile = $client->LocalFile ($iorbase);

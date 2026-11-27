@@ -1,19 +1,16 @@
-
-//=============================================================================
 /**
  *  @file    Future_Stress_Test.cpp
  *
  *  This example tests the ACE Future set() and get() operations in
  *  multithreaded environment and concurrent access.
  *
- *  Usage: Future_Stress_Test [-t <duration in seconds>]
- *            [-n <number of threads>]
+ *  Usage: Future_Stress_Test [-t @a duration in seconds]
+ *            [-n @a number of threads]
  *
  *  @see https://github.com/DOCGroup/ACE_TAO/issues/2163
  *
  *  @author Andres Kruse <Frank.Hilliger@cs-sol.de>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include <ace/Time_Value.h>
@@ -22,7 +19,6 @@
 #include <ace/Get_Opt.h>
 
 #include <random>
-
 
 #if defined (ACE_HAS_THREADS)
 
@@ -34,16 +30,16 @@ struct Worker_Config
   ACE_Future<int> result;
 };
 
-void* worker (void* args)
+ACE_THR_FUNC_RETURN worker (void* args)
 {
   Worker_Config* config = static_cast<Worker_Config*>(args);
-  int r = config->a + config->b * config->c;
+  int const r = config->a + config->b * config->c;
   config->result.set(r);
 
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
-void* runner (void* args)
+ACE_THR_FUNC_RETURN runner (void* args)
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) runner start\n")));
 
@@ -58,7 +54,8 @@ void* runner (void* args)
   {
     if( ++runNum % 5000 == 0 )
     {
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) runner iteration %u\n"), runNum));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) runner iteration %Q\n"),
+                  runNum));
     }
     ACE_Future<int> result;
     Worker_Config config;
@@ -67,9 +64,9 @@ void* runner (void* args)
     config.c = dis(gen);
     config.result = result;
     ACE_hthread_t thread_id;
-    int expected_res = config.a+config.b*config.c;
+    int const expected_res = config.a+config.b*config.c;
     int actual_res = -1;
-    if (ACE_Thread::spawn((ACE_THR_FUNC)worker,
+    if (ACE_Thread::spawn(worker,
                         static_cast<void*>(&config), THR_NEW_LWP | THR_JOINABLE, nullptr,
                         &thread_id) == -1)
     {
@@ -90,7 +87,7 @@ void* runner (void* args)
   } while( *duration != ACE_Time_Value::zero );
    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) runner done\n"), runNum));
 
-   return nullptr;
+   return ACE_THR_FUNC_RETURN_NULL;
 }
 
 int
@@ -127,7 +124,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   if (valid)
   {
     ACE_Thread_Manager::instance ()->spawn_n (n_threads,
-      ACE_THR_FUNC (runner),
+      runner,
       static_cast<void*>(&duration),
       THR_NEW_LWP | THR_DETACHED);
 

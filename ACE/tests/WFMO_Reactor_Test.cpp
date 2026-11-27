@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    WFMO_Reactor_Test.cpp
  *
@@ -8,16 +6,18 @@
  *
  *  @author Irfan Pyarali <irfan@oomworks.com>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "ace/Reactor.h"
 #include "ace/WFMO_Reactor.h"
 #include "ace/Pipe.h"
 
+#include <array>
+#include <memory>
+
 #if defined (ACE_WIN32)
 
-static int number_of_handlers = 6;
+static constexpr size_t number_of_handlers = 6;
 static int number_of_closes = 0;
 
 class Event_Handler : public ACE_Event_Handler
@@ -39,7 +39,7 @@ Event_Handler::Event_Handler (ACE_Reactor &reactor)
               "Reference count in Event_Handler() is %d\n",
               this->reference_count_.load ()));
 
-  this->reactor (&reactor);
+  this->reactor (std::addressof (reactor));
 
   int result =
     this->pipe_.open ();
@@ -71,17 +71,13 @@ void
 test ()
 {
   int result = 0;
-  int i = 0;
 
   ACE_Reactor reactor (new ACE_WFMO_Reactor, true);
 
-  ACE_Event_Handler_var *safe_event_handlers =
-    new ACE_Event_Handler_var[number_of_handlers];
+  std::array<ACE_Event_Handler_var, number_of_handlers> safe_event_handlers {};
+  std::array<Event_Handler *, number_of_handlers> event_handlers {};
 
-  Event_Handler **event_handlers =
-    new Event_Handler*[number_of_handlers];
-
-  for (i = 0; i < number_of_handlers; ++i)
+  for (size_t i = 0; i < number_of_handlers; ++i)
     {
       event_handlers[i] =
         new Event_Handler (reactor);
@@ -95,10 +91,12 @@ test ()
   result = reactor.run_reactor_event_loop (timeout);
   ACE_TEST_ASSERT (result != -1);
 
-  for (i = 0; i < number_of_handlers; ++i)
+  for (size_t i = 0; i < number_of_handlers; ++i)
     {
       if (i % 2 == 0)
-        continue;
+        {
+          continue;
+        }
 
       result = reactor.suspend_handler (event_handlers[i]->pipe_.read_handle ());
       ACE_TEST_ASSERT (result == 0);
@@ -110,8 +108,6 @@ test ()
   result = reactor.run_reactor_event_loop (timeout);
   ACE_TEST_ASSERT (result != -1);
 
-  delete[] safe_event_handlers;
-  delete[] event_handlers;
 }
 
 int

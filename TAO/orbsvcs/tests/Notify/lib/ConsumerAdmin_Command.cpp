@@ -1,6 +1,5 @@
 #include "ConsumerAdmin_Command.h"
 
-
 #include "LookupManager.h"
 #include "Name.h"
 #include "Options_Parser.h"
@@ -10,17 +9,15 @@ TAO_Notify_Tests_ConsumerAdmin_Command::TAO_Notify_Tests_ConsumerAdmin_Command (
 {
 }
 
-TAO_Notify_Tests_ConsumerAdmin_Command::~TAO_Notify_Tests_ConsumerAdmin_Command ()
-{
-}
+TAO_Notify_Tests_ConsumerAdmin_Command::~TAO_Notify_Tests_ConsumerAdmin_Command () = default;
 
-const char*
+char const *
 TAO_Notify_Tests_ConsumerAdmin_Command::get_name ()
 {
   return TAO_Notify_Tests_ConsumerAdmin_Command::name ();
 }
 
-const char*
+char const *
 TAO_Notify_Tests_ConsumerAdmin_Command::name ()
 {
   return TAO_Notify_Tests_Name::consumer_admin_command;
@@ -41,7 +38,6 @@ TAO_Notify_Tests_ConsumerAdmin_Command::handle_create ()
   LOOKUP_MANAGER->_register (sa.in(), this->name_.c_str ());
 }
 
-
 void
 TAO_Notify_Tests_ConsumerAdmin_Command::handle_subscriptions ()
 {
@@ -56,11 +52,11 @@ TAO_Notify_Tests_ConsumerAdmin_Command::handle_subscriptions ()
 
   for (; i < added_.length (); ++i)
     {
-      ACE_DEBUG ((LM_DEBUG, "+(%s,%s), ", added_[i].domain_name.in (), added_[i].type_name.in ()));
+      ACE_DEBUG ((LM_DEBUG, "+(%C,%C), ", added_[i].domain_name.in (), added_[i].type_name.in ()));
     }
   for (i = 0; i < removed_.length (); ++i)
     {
-      ACE_DEBUG ((LM_DEBUG, "-(%s,%s), ", removed_[i].domain_name.in (), removed_[i].type_name.in ()));
+      ACE_DEBUG ((LM_DEBUG, "-(%C,%C), ", removed_[i].domain_name.in (), removed_[i].type_name.in ()));
     }
 
   ACE_DEBUG ((LM_DEBUG, "\n"));

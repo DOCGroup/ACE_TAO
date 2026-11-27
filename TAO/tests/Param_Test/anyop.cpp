@@ -1,14 +1,12 @@
-
-//=============================================================================
 /**
  *  @file   anyop.cpp
  *
  *  @author Carlos O'Ryan
  */
-//=============================================================================
-
 
 #include "param_testC.h"
+
+#include <cstring>
 
 #include "tao/debug.h"
 #include "ace/OS_NS_string.h"
@@ -22,12 +20,11 @@
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  int n = 1024;
-
   try
     {
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
+      int n = 1024;
       ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("dn:"));
       int opt;
 
@@ -36,7 +33,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           switch (opt)
             {
             case 'd':
-              TAO_debug_level++;
+              ++TAO_debug_level;
               break;
             case 'n':
               n = ACE_OS::atoi (get_opt.opt_arg ());
@@ -53,7 +50,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             }
         }
 
-      for (int i = 0; i != n; ++i)
+      for (int iteration = 0; iteration != n; ++iteration)
         {
           CORBA::Any any;
 
@@ -80,24 +77,24 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           }
 
           {
-            CORBA::Object_var obj =
+            CORBA::Object_var const obj =
               orb->string_to_object ("corbaloc:iiop:localhost:1234/Foo/Bar");
 
-            Param_Test_var param_test =
+            Param_Test_var const param_test =
               TAO::Narrow_Utils<Param_Test>::unchecked_narrow (obj.in ());
             TAO_Stub *stub = param_test->_stubobj ();
             stub->type_id = CORBA::string_dup ("IDL:Param_Test:1.0");
 
             any <<= param_test.in ();
 
-            Param_Test_ptr o;
+            Param_Test_ptr o {};
 
             if (!(any >>= o))
               {
                 ACE_DEBUG ((LM_DEBUG,
                             "Cannot extract Param_Test (oh the horror)\n"));
               }
-            CORBA::Boolean equiv =
+            CORBA::Boolean const equiv =
               param_test->_is_equivalent (o);
 
             if (!equiv)
@@ -116,10 +113,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           }
 
           {
-            CORBA::Short i = 123;
+            CORBA::Short const i = 123;
             any <<= i;
 
-            CORBA::Short o;
+            CORBA::Short o {};
 
             if (!(any >>= o)
                 || i != o)
@@ -131,10 +128,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           }
 
           {
-            CORBA::Long i = 123;
+            CORBA::Long const i = 123;
             any <<= i;
 
-            CORBA::Long o;
+            CORBA::Long o {};
 
             if (!(any >>= o)
                 || i != o)
@@ -146,10 +143,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           }
 
           {
-            CORBA::ULongLong i = 123;
+            CORBA::ULongLong const i = 123;
             any <<= i;
 
-            CORBA::ULongLong o;
+            CORBA::ULongLong o {};
 
             if (!(any >>= o)
                 || i != o)
@@ -161,10 +158,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           }
 
           {
-            CORBA::Double i = 123;
+            CORBA::Double const i = 123;
             any <<= i;
 
-            CORBA::Double o;
+            CORBA::Double o {};
 
             if (!(any >>= o) || !ACE::is_equal (i, o))
               {
@@ -175,18 +172,18 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           }
 
           {
-            CORBA::Any any;
-            CORBA::Any *i = 0;
+            CORBA::Any nested_any;
+            CORBA::Any *i {};
             ACE_NEW_RETURN (i,
                             CORBA::Any,
                             -1);
             *i <<= CORBA::Short (123);
-            any <<= *i;
+            nested_any <<= *i;
 
-            const CORBA::Any *o;
-            CORBA::Short oo;
+            CORBA::Any const *o {};
+            CORBA::Short oo {};
 
-            if (!(any >>= o)
+            if (!(nested_any >>= o)
                 || !(*o >>= oo)
                 || 123 != oo)
               {
@@ -196,9 +193,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                             oo));
               }
 
-            any <<= i;
+            nested_any <<= i;
 
-            if (!(any >>= o)
+            if (!(nested_any >>= o)
                 || !(*o >>= oo)
                 || 123 != oo)
               {
@@ -213,10 +210,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             const char i[] = "123";
             any <<= i;
 
-            const char *o;
+            char const *o {};
 
             if (!(any >>= o)
-                || ACE_OS::strcmp (i, o) != 0)
+                || std::strcmp (i, o) != 0)
               {
                 ACE_DEBUG ((LM_DEBUG,
                             "Failure for char* (%C,%C)\n",
@@ -226,8 +223,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           }
 
           {
-            CORBA::Any any;
-            Param_Test::Fixed_Struct *i = 0;
+            CORBA::Any nested_any;
+            Param_Test::Fixed_Struct *i {};
             ACE_NEW_RETURN (i,
                             Param_Test::Fixed_Struct,
                             -1);
@@ -236,13 +233,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             i->s = 5;
             i->o = 255;
             i->f = 2.3f;
-            i->b = 0;
+            i->b = false;
             i->d = 3.1416;
 
-            any <<= *i;
-            const Param_Test::Fixed_Struct *o = 0;
+            nested_any <<= *i;
+            Param_Test::Fixed_Struct const *o {};
 
-            if (!(any >>= o)
+            if (!(nested_any >>= o)
                 || o->l != i->l
                 || o->c != i->c
                 || o->s != i->s
@@ -256,9 +253,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                             "(copying insertion)\n"));
               }
 
-            any <<= i;
+            nested_any <<= i;
 
-            if (!(any >>= o)
+            if (!(nested_any >>= o)
                 || o->l != i->l
                 || o->c != i->c
                 || o->s != i->s
@@ -274,9 +271,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           }
 
           {
-            CORBA::ULong len = 3;
-            CORBA::Any any;
-            CORBA::LongSeq *i = 0;
+            CORBA::ULong const len = 3;
+            CORBA::Any nested_any;
+            CORBA::LongSeq *i {};
             ACE_NEW_RETURN (i,
                             CORBA::LongSeq (len),
                             -1);
@@ -287,10 +284,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                 (*i)[k] = k;
               }
 
-            any <<= *i;
-            const CORBA::LongSeq *o = 0;
+            nested_any <<= *i;
+            CORBA::LongSeq const *o {};
 
-            if (!(any >>= o)
+            if (!(nested_any >>= o)
                 || (*i)[0] != (*o)[0]
                 || (*i)[1] != (*o)[1]
                 || (*i)[2] != (*o)[2])
@@ -300,9 +297,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                             "(copying insertion)\n"));
               }
 
-            any <<= i;
+            nested_any <<= i;
 
-            if (!(any >>= o)
+            if (!(nested_any >>= o)
                 || (*i)[0] != (*o)[0]
                 || (*i)[1] != (*o)[1]
                 || (*i)[2] != (*o)[2])
@@ -314,7 +311,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           }
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("IDL Types");
       return 1;

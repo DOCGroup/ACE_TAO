@@ -11,15 +11,13 @@
 #include "tao/Transport_Cache_Manager_T.h"
 #include "tao/Thread_Lane_Resources.h"
 
-// ---------------------------------------------------------------------------
 // Helpers
-// ---------------------------------------------------------------------------
 
 /// Keep this ORB's reactor running while waiting on a monotonic deadline.
 void
 sleep_with_reactor (CORBA::ORB_ptr orb, int seconds)
 {
-  const auto deadline = std::chrono::steady_clock::now ()
+  std::chrono::steady_clock::time_point const deadline = std::chrono::steady_clock::now ()
     + std::chrono::seconds (seconds);
   while (std::chrono::steady_clock::now () < deadline)
     {
@@ -30,7 +28,7 @@ sleep_with_reactor (CORBA::ORB_ptr orb, int seconds)
 
 /// Verify an expected value and print PASS/FAIL.  Returns false on failure.
 bool
-check (const char *label, size_t got, size_t expected)
+check (char const *label, size_t got, size_t expected)
 {
   if (got == expected)
     {
@@ -47,18 +45,16 @@ check (const char *label, size_t got, size_t expected)
 
 /// Retrieve the current size of the cache in the client
 size_t
-cache_size(CORBA::ORB_ptr orb)
+cache_size (CORBA::ORB_ptr orb)
 {
-  TAO_ORB_Core *core = orb->orb_core ();
+  TAO_ORB_Core * const core = orb->orb_core ();
   return core->lane_resources ().transport_cache ().current_size ();
 }
 
-// ---------------------------------------------------------------------------
 // Argument parsing
-// ---------------------------------------------------------------------------
 
-static const char *ior          = nullptr;
-static const char *ior2         = nullptr;
+static char const *ior {};
+static char const *ior2 {};
 static int         timeout_sec  = 3;    // must match server svc.conf value
 static int         scan_interval_sec = 2;
 static int         loop_count   = 10;
@@ -68,7 +64,7 @@ static int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("k:l:t:x:n:d"));
-  int c;
+  int c {};
   while ((c = get_opts ()) != -1)
     switch (c)
       {
@@ -94,14 +90,11 @@ parse_args (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-// ---------------------------------------------------------------------------
 // TC-1 : Basic idle close
-// ---------------------------------------------------------------------------
 // Steps:
 //   1. Ping once  -> transport created, server cache_size must be 1.
 //   2. Wait Y + X + margin while processing local reactor events.
 //   3. cache_size must be 0 -> transport closed by an idle scan.
-// ---------------------------------------------------------------------------
 static bool
 tc1_basic_idle_close (CORBA::ORB_ptr orb, Test::Echo_ptr echo, Test::Echo_ptr echo2)
 {
@@ -111,7 +104,7 @@ tc1_basic_idle_close (CORBA::ORB_ptr orb, Test::Echo_ptr echo, Test::Echo_ptr ec
   // --- Step 1: establish a transport ---
   ok &= echo->ping (0, 1, echo2, 0, 2, 1);
 
-  ok &= check ("TC-1 after ping (expect 1)", cache_size(orb), 1);
+  ok &= check ("TC-1 after ping (expect 1)", cache_size (orb), 1);
 
   // --- Step 2: idle sleep ---
   int const sleep_sec = timeout_sec + scan_interval_sec + 1;
@@ -121,7 +114,7 @@ tc1_basic_idle_close (CORBA::ORB_ptr orb, Test::Echo_ptr echo, Test::Echo_ptr ec
   sleep_with_reactor (orb, sleep_sec);
 
   // --- Step 3: cache must be empty now ---
-  ok &= check ("TC-1 after idle timeout (expect 0)", cache_size(orb), 0);
+  ok &= check ("TC-1 after idle timeout (expect 0)", cache_size (orb), 0);
 
   ACE_DEBUG ((LM_INFO, ACE_TEXT ("(%P|%t) \n=== TC-1: Call again ping ===\n")));
 
@@ -129,23 +122,20 @@ tc1_basic_idle_close (CORBA::ORB_ptr orb, Test::Echo_ptr echo, Test::Echo_ptr ec
   // Both server-1 connections and the server-2 connection remain active.
   ok &= echo->ping (0, 1, echo2, 1, 2, 1);
 
-  ok &= check ("TC-1 after nested call (expect 1)", cache_size(orb), 1);
+  ok &= check ("TC-1 after nested call (expect 1)", cache_size (orb), 1);
 
   sleep_with_reactor (orb, sleep_sec);
 
   // --- Step 4: cache must be empty now ---
-  ok &= check ("TC-1 after second idle timeout (expect 0)", cache_size(orb), 0);
+  ok &= check ("TC-1 after second idle timeout (expect 0)", cache_size (orb), 0);
 
   return ok;
 }
 
-// ---------------------------------------------------------------------------
 // TC-2 : Reconnect after idle close
-// ---------------------------------------------------------------------------
 // Steps:
 //   1. Ping (reconnects transparently after TC-1 closed the transport).
 //   2. cache_size must be 1 again.
-// ---------------------------------------------------------------------------
 static bool
 tc2_reconnect (CORBA::ORB_ptr orb, Test::Echo_ptr echo, Test::Echo_ptr echo2)
 {
@@ -156,17 +146,14 @@ tc2_reconnect (CORBA::ORB_ptr orb, Test::Echo_ptr echo, Test::Echo_ptr echo2)
   // server to close the connection.  TAO's reconnect logic handles this.
   ok &= echo->ping (0, 1, echo2, 0, 2, 1);
 
-  ok &= check ("TC-2 after reconnect ping (expect 1)", cache_size(orb), 1);
+  ok &= check ("TC-2 after reconnect ping (expect 1)", cache_size (orb), 1);
 
   return ok;
 }
 
-// ---------------------------------------------------------------------------
 // TC-3 : Activity refresh on reuse
-// ---------------------------------------------------------------------------
 // Send pings over multiple scan intervals, then check retention before Y
 // and eventual closure after Y + X plus margin from the last activity.
-// ---------------------------------------------------------------------------
 static bool
 tc3_activity_on_reuse (CORBA::ORB_ptr orb, Test::Echo_ptr echo, Test::Echo_ptr echo2)
 {
@@ -187,7 +174,7 @@ tc3_activity_on_reuse (CORBA::ORB_ptr orb, Test::Echo_ptr echo, Test::Echo_ptr e
     }
 
   // The last ping refreshed activity; the transport must still be cached.
-  ok &= check ("TC-3 immediately after loop (expect 1)", cache_size(orb), 1);
+  ok &= check ("TC-3 immediately after loop (expect 1)", cache_size (orb), 1);
 
   // Sleep to just before the expected timeout
   int const pre_sleep = timeout_sec - 1;
@@ -195,7 +182,7 @@ tc3_activity_on_reuse (CORBA::ORB_ptr orb, Test::Echo_ptr echo, Test::Echo_ptr e
               ACE_TEXT ("(%P|%t)   sleeping %d s (pre-timeout)...\n"), pre_sleep));
   sleep_with_reactor (orb, pre_sleep);
 
-  ok &= check ("TC-3 before timeout (expect 1)", cache_size(orb), 1);
+  ok &= check ("TC-3 before timeout (expect 1)", cache_size (orb), 1);
 
   // Sleep past the remainder of the timeout
   int const post_sleep = timeout_sec - pre_sleep + scan_interval_sec + 1;
@@ -203,17 +190,14 @@ tc3_activity_on_reuse (CORBA::ORB_ptr orb, Test::Echo_ptr echo, Test::Echo_ptr e
               ACE_TEXT ("(%P|%t)   sleeping %d s (post-timeout)...\n"), post_sleep));
   sleep_with_reactor (orb, post_sleep);
 
-  ok &= check ("TC-3 after timeout (expect 0)", cache_size(orb), 0);
+  ok &= check ("TC-3 after timeout (expect 0)", cache_size (orb), 0);
 
   return ok;
 }
 
-// ---------------------------------------------------------------------------
 // TC-4 : Disabled timeout (opt-out)
-// ---------------------------------------------------------------------------
 // The server is started with -ORBTransportIdleTimeout 0 for this scenario.
 // After waiting beyond the enabled expiry window, the connection must remain.
-// ---------------------------------------------------------------------------
 static bool
 tc4_disabled_timeout (CORBA::ORB_ptr orb, Test::Echo_ptr echo, Test::Echo_ptr echo2)
 {
@@ -222,23 +206,21 @@ tc4_disabled_timeout (CORBA::ORB_ptr orb, Test::Echo_ptr echo, Test::Echo_ptr ec
 
   ok &= echo->ping (0, 1, echo2, 0, 2, 1);
 
-  ok &= check ("TC-4 after ping (expect 1)", cache_size(orb), 1);
+  ok &= check ("TC-4 after ping (expect 1)", cache_size (orb), 1);
 
   // Wait longer than the enabled Y + X window; both ORBs disable expiry.
-  const int sleep_sec = timeout_sec + scan_interval_sec + 1;
+  int const sleep_sec = timeout_sec + scan_interval_sec + 1;
   ACE_DEBUG ((LM_INFO,
               ACE_TEXT ("(%P|%t)   sleeping %d s (timeout should NOT fire)...\n"),
               sleep_sec));
   sleep_with_reactor (orb, sleep_sec);
 
-  ok &= check ("TC-4 after sleep with timeout=0 (expect 1)", cache_size(orb), 1);
+  ok &= check ("TC-4 after sleep with timeout=0 (expect 1)", cache_size (orb), 1);
 
   return ok;
 }
 
-// ---------------------------------------------------------------------------
 // main
-// ---------------------------------------------------------------------------
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
@@ -248,7 +230,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) != 0)
-        return 1;
+        {
+          return 1;
+        }
 
       CORBA::Object_var obj = orb->string_to_object (ior);
       CORBA::Object_var obj2;
@@ -295,7 +279,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                   all_pass ? "PASS" : "FAIL"));
       return all_pass ? 0 : 1;
     }
-  catch (const CORBA::Exception &ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception (ACE_TEXT ("client exception"));
       return 1;

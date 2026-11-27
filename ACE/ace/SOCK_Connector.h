@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    SOCK_Connector.h
  *
  *  @author Doug Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef ACE_SOCK_CONNECTOR_H
 #define ACE_SOCK_CONNECTOR_H
@@ -41,7 +37,6 @@ class ACE_Time_Value;
 class ACE_Export ACE_SOCK_Connector
 {
 public:
-  /// Default constructor.
   ACE_SOCK_Connector ();
 
   /**
@@ -82,9 +77,9 @@ public:
    *                    protocol is selected by kernel (typically TCP).
    */
   ACE_SOCK_Connector (ACE_SOCK_Stream &new_stream,
-                      const ACE_Addr &remote_sap,
-                      const ACE_Time_Value *timeout = nullptr,
-                      const ACE_Addr &local_sap = ACE_Addr::sap_any,
+                      ACE_Addr const &remote_sap,
+                      ACE_Time_Value const *timeout = nullptr,
+                      ACE_Addr const &local_sap = ACE_Addr::sap_any,
                       int reuse_addr = 0,
                       int flags = 0,
                       int perms = 0,
@@ -104,6 +99,8 @@ public:
    * @param qos_params  Contains QoS parameters that are passed to the
    *                    IntServ (RSVP) and DiffServ protocols.
    *                    @see ACE_QoS_Params.
+   * @param protocolinfo Protocol information used when creating the socket.
+   * @param g Socket group used for QoS.
    * @param timeout     Pointer to an @c ACE_Time_Value object with amount
    *                    of time to wait to connect. If the pointer is 0
    *                    then the call blocks until the connection attempt
@@ -129,10 +126,10 @@ public:
    * @param perms       Ignored.
    */
   ACE_SOCK_Connector (ACE_SOCK_Stream &new_stream,
-                      const ACE_Addr &remote_sap,
+                      ACE_Addr const &remote_sap,
                       ACE_QoS_Params qos_params,
-                      const ACE_Time_Value *timeout = nullptr,
-                      const ACE_Addr &local_sap = ACE_Addr::sap_any,
+                      ACE_Time_Value const *timeout = nullptr,
+                      ACE_Addr const &local_sap = ACE_Addr::sap_any,
                       ACE_Protocol_Info *protocolinfo = nullptr,
                       ACE_SOCK_GROUP g = 0,
                       u_long flags = 0,
@@ -181,9 +178,9 @@ public:
    *                    code.
    */
   int connect (ACE_SOCK_Stream &new_stream,
-               const ACE_Addr &remote_sap,
-               const ACE_Time_Value *timeout = nullptr,
-               const ACE_Addr &local_sap = ACE_Addr::sap_any,
+               ACE_Addr const &remote_sap,
+               ACE_Time_Value const *timeout = nullptr,
+               ACE_Addr const &local_sap = ACE_Addr::sap_any,
                int reuse_addr = 0,
                int flags = 0,
                int perms = 0,
@@ -203,6 +200,8 @@ public:
    * @param qos_params  Contains QoS parameters that are passed to the
    *                    IntServ (RSVP) and DiffServ protocols.
    *                    @see ACE_QoS_Params.
+   * @param protocolinfo Protocol information used when creating the socket.
+   * @param g Socket group used for QoS.
    * @param timeout     Pointer to an @c ACE_Time_Value object with amount
    *                    of time to wait to connect. If the pointer is 0
    *                    then the call blocks until the connection attempt
@@ -232,20 +231,20 @@ public:
    *                    code.
    */
   int connect (ACE_SOCK_Stream &new_stream,
-               const ACE_Addr &remote_sap,
+               ACE_Addr const &remote_sap,
                ACE_QoS_Params qos_params,
-               const ACE_Time_Value *timeout = nullptr,
-               const ACE_Addr &local_sap = ACE_Addr::sap_any,
+               ACE_Time_Value const *timeout = nullptr,
+               ACE_Addr const &local_sap = ACE_Addr::sap_any,
                ACE_Protocol_Info *protocolinfo = nullptr,
                ACE_SOCK_GROUP g = 0,
                u_long flags = 0,
                int reuse_addr = 0,
                int perms = 0);
 
-  /// Default destructor.
   ~ACE_SOCK_Connector ();
 
-  // = Completion routine.
+  /// @name Nonblocking connection completion
+  /// @{
   /**
    * Try to complete a nonblocking connection that was begun by a
    * previous call to connect with a {0, 0} ACE_Time_Value timeout.
@@ -260,14 +259,17 @@ public:
    */
   int complete (ACE_SOCK_Stream &new_stream,
                 ACE_Addr *remote_sap = nullptr,
-                const ACE_Time_Value *timeout = nullptr);
+                ACE_Time_Value const *timeout = nullptr);
 
   /// Resets any event associations on this handle
   bool reset_new_handle (ACE_HANDLE handle);
+  /// @}
 
-  // = Meta-type info
+  /// @name Peer types
+  /// @{
   using PEER_ADDR = ACE_INET_Addr;
   using PEER_STREAM = ACE_SOCK_Stream;
+  /// @}
 
   /// Dump the state of an object.
   void dump () const;
@@ -293,14 +295,14 @@ protected:
                    u_long flags,
                    int reuse_addr);
 
-  /// Perform operations that must be called before <ACE_OS::connect>.
+  /// Perform operations that must be called before @c ACE_OS::connect.
   int shared_connect_start (ACE_SOCK_Stream &new_stream,
-                            const ACE_Time_Value *timeout,
-                            const ACE_Addr &local_sap);
+                            ACE_Time_Value const *timeout,
+                            ACE_Addr const &local_sap);
 
-  /// Perform operations that must be called after <ACE_OS::connect>.
+  /// Perform operations that must be called after @c ACE_OS::connect.
   int shared_connect_finish (ACE_SOCK_Stream &new_stream,
-                             const ACE_Time_Value *timeout,
+                             ACE_Time_Value const *timeout,
                              int result);
 };
 

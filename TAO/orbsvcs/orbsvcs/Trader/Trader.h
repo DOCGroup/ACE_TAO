@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  * @file Trader.h
  *
@@ -8,8 +5,6 @@
  * @author Seth Widoff <sbw1@cs.wustl.edu>
  * @author Irfan Pyarali <irfan@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_TRADER_BASE_H
 #define TAO_TRADER_BASE_H
@@ -27,6 +22,10 @@
 #include "orbsvcs/CosTradingReposS.h"
 #include "orbsvcs/CosTradingDynamicS.h"
 #include "orbsvcs/Trader/trading_serv_export.h"
+
+#include <deque>
+#include <string>
+#include <vector>
 
 #if defined(_MSC_VER)
 #pragma warning(push)
@@ -51,6 +50,11 @@ class TAO_Trader_Base;
 class TAO_Trading_Serv_Export TAO_Trader_Factory
 {
 public:
+  TAO_Trader_Factory (TAO_Trader_Factory const&) = delete;
+  TAO_Trader_Factory& operator= (TAO_Trader_Factory const&) = delete;
+  TAO_Trader_Factory (TAO_Trader_Factory&&) = delete;
+  TAO_Trader_Factory& operator= (TAO_Trader_Factory&&) = delete;
+
   using TAO_TRADER = TAO_Trader_Base;
 
   /**
@@ -88,27 +92,20 @@ private:
 
   void parse_args (int& argc, ACE_TCHAR** argv);
 
-  TAO_Trader_Factory (TAO_Trader_Factory const&) = delete;
-  TAO_Trader_Factory& operator= (TAO_Trader_Factory const&) = delete;
-  TAO_Trader_Factory (TAO_Trader_Factory&&) = delete;
-  TAO_Trader_Factory& operator= (TAO_Trader_Factory&&) = delete;
-
-  // = Command line configurable parameters.
-
-  Conformance conformance_;
-  CORBA::Boolean threadsafe_;
-  CORBA::Boolean supports_dynamic_properties_;
-  CORBA::Boolean supports_modifiable_properties_;
-  CORBA::ULong def_search_card_;
-  CORBA::ULong max_search_card_;
-  CORBA::ULong def_match_card_;
-  CORBA::ULong max_match_card_;
-  CORBA::ULong def_return_card_;
-  CORBA::ULong max_return_card_;
-  CORBA::ULong def_hop_count_;
-  CORBA::ULong max_hop_count_;
-  CosTrading::FollowOption def_follow_policy_;
-  CosTrading::FollowOption max_follow_policy_;
+  Conformance conformance_ {TAO_TRADER_LINKED};
+  CORBA::Boolean threadsafe_ {};
+  CORBA::Boolean supports_dynamic_properties_ {true};
+  CORBA::Boolean supports_modifiable_properties_ {true};
+  CORBA::ULong def_search_card_ {20};
+  CORBA::ULong max_search_card_ {50};
+  CORBA::ULong def_match_card_ {20};
+  CORBA::ULong max_match_card_ {50};
+  CORBA::ULong def_return_card_ {20};
+  CORBA::ULong max_return_card_ {50};
+  CORBA::ULong def_hop_count_ {5};
+  CORBA::ULong max_hop_count_ {10};
+  CosTrading::FollowOption def_follow_policy_ {CosTrading::if_no_local};
+  CosTrading::FollowOption max_follow_policy_ {CosTrading::always};
 };
 
   // *************************************************************
@@ -137,7 +134,6 @@ protected:
   TAO_Lockable () = default;
 };
 
-
 /**
  * @class TAO_Support_Attributes_i
  *
@@ -150,10 +146,14 @@ protected:
 class TAO_Trading_Serv_Export TAO_Support_Attributes_i
 {
 public:
-  TAO_Support_Attributes_i (TAO_Lockable &locker);
+  TAO_Support_Attributes_i (TAO_Support_Attributes_i const&) = delete;
+  TAO_Support_Attributes_i& operator= (TAO_Support_Attributes_i const&) = delete;
+  TAO_Support_Attributes_i (TAO_Support_Attributes_i&&) = delete;
+  TAO_Support_Attributes_i& operator= (TAO_Support_Attributes_i&&) = delete;
+
+  explicit TAO_Support_Attributes_i (TAO_Lockable &locker);
   ~TAO_Support_Attributes_i ();
 
-  // = Accessor methods.
   CORBA::Boolean supports_modifiable_properties () const;
   void supports_modifiable_properties (CORBA::Boolean);
 
@@ -173,24 +173,19 @@ private:
   TAO_Lockable &locker_;
 
   /// Indicator of whether the trader supports property modification.
-  CORBA::Boolean supports_modifiable_properties_;
+  CORBA::Boolean supports_modifiable_properties_ {true};
 
   /// Indicator of whether the trader supports dynamic properties.
-  CORBA::Boolean supports_dynamic_properties_;
+  CORBA::Boolean supports_dynamic_properties_ {true};
 
   /// Indicator of whether the trader supports proxy offers.
-  CORBA::Boolean supports_proxy_offers_;
+  CORBA::Boolean supports_proxy_offers_ {};
 
   /// A reference to the TypeRepostitory used by the trader.
   CORBA::Object_var type_repos_;
 
   /// Already narrowed reference to the ServiceTypeRepository.
   CosTradingRepos::ServiceTypeRepository_var service_type_repos_;
-
-  TAO_Support_Attributes_i (TAO_Support_Attributes_i const&) = delete;
-  TAO_Support_Attributes_i& operator= (TAO_Support_Attributes_i const&) = delete;
-  TAO_Support_Attributes_i (TAO_Support_Attributes_i&&) = delete;
-  TAO_Support_Attributes_i& operator= (TAO_Support_Attributes_i&&) = delete;
 };
 
 /**
@@ -205,10 +200,13 @@ private:
 class TAO_Trading_Serv_Export TAO_Link_Attributes_i
 {
 public:
-  TAO_Link_Attributes_i (TAO_Lockable &locker);
-  ~TAO_Link_Attributes_i ();
+  TAO_Link_Attributes_i (TAO_Link_Attributes_i const&) = delete;
+  TAO_Link_Attributes_i& operator= (TAO_Link_Attributes_i const&) = delete;
+  TAO_Link_Attributes_i (TAO_Link_Attributes_i&&) = delete;
+  TAO_Link_Attributes_i& operator= (TAO_Link_Attributes_i&&) = delete;
 
-  // = Accessor methods.
+  explicit TAO_Link_Attributes_i (TAO_Lockable &locker);
+  ~TAO_Link_Attributes_i ();
 
   CosTrading::FollowOption max_link_follow_policy () const;
   void  max_link_follow_policy (CosTrading::FollowOption);
@@ -219,11 +217,6 @@ private:
 
   ///
   CosTrading::FollowOption max_link_follow_policy_;
-
-  TAO_Link_Attributes_i (TAO_Link_Attributes_i const&) = delete;
-  TAO_Link_Attributes_i& operator= (TAO_Link_Attributes_i const&) = delete;
-  TAO_Link_Attributes_i (TAO_Link_Attributes_i&&) = delete;
-  TAO_Link_Attributes_i& operator= (TAO_Link_Attributes_i&&) = delete;
 };
 
 /**
@@ -238,10 +231,13 @@ private:
 class TAO_Trading_Serv_Export TAO_Import_Attributes_i
 {
 public:
-  TAO_Import_Attributes_i (TAO_Lockable &locker);
-  ~TAO_Import_Attributes_i ();
+  TAO_Import_Attributes_i (TAO_Import_Attributes_i const&) = delete;
+  TAO_Import_Attributes_i& operator= (TAO_Import_Attributes_i const&) = delete;
+  TAO_Import_Attributes_i (TAO_Import_Attributes_i&&) = delete;
+  TAO_Import_Attributes_i& operator= (TAO_Import_Attributes_i&&) = delete;
 
-  // = Accessor methods.
+  explicit TAO_Import_Attributes_i (TAO_Lockable &locker);
+  ~TAO_Import_Attributes_i ();
 
   CORBA::ULong def_search_card () const;
   void def_search_card (CORBA::ULong);
@@ -279,7 +275,7 @@ public:
 private:
   TAO_Lockable &locker_;
 
-  /// Upper bound of offers to be searched if <search_card>
+  /// Upper bound of offers to be searched if @c search_card
   /// is not specified.
   CORBA::ULong def_search_card_;
 
@@ -287,14 +283,14 @@ private:
   CORBA::ULong max_search_card_;
 
   /// Upper bound of matched offers to be ordered if
-  /// <match_card> is not specified).
+  /// @c match_card is not specified).
   CORBA::ULong def_match_card_;
 
   /// Maximum upper bound of matched offers to be ordered.
   CORBA::ULong max_match_card_;
 
   /// Upper bound of ordered offers to be returned if
-  /// <returned_card> is not specified.
+  /// @c returned_card is not specified.
   CORBA::ULong def_return_card_;
 
   /// Maximum upper bound of ordered offers to be returned.
@@ -303,7 +299,7 @@ private:
   /// Upper bound of depth
   CORBA::ULong max_list_;
 
-  /// Upper bound of depth of links to be traversed if <hop_count> is
+  /// Upper bound of depth of links to be traversed if @c hop_count is
   /// not specified.
   CORBA::ULong def_hop_count_;
 
@@ -316,11 +312,6 @@ private:
   /// Limiting link follow policy for all links of the trader -
   /// overrides both link and importer policies.
   CosTrading::FollowOption max_follow_policy_;
-
-  TAO_Import_Attributes_i (TAO_Import_Attributes_i const&) = delete;
-  TAO_Import_Attributes_i& operator= (TAO_Import_Attributes_i const&) = delete;
-  TAO_Import_Attributes_i (TAO_Import_Attributes_i&&) = delete;
-  TAO_Import_Attributes_i& operator= (TAO_Import_Attributes_i&&) = delete;
 };
 
 /**
@@ -329,7 +320,7 @@ private:
  * @brief Set/get methods for references to various
  * interfaces of the trader.
  *
- * Note, this class is for use in local address space only and is NOT a
+ * @note This class is for use in local address space only and is NOT a
  * direct implementation of IDL methods. (Implementation of
  * IDL methods in CosTrading::Trader_Components would need
  * add a _duplicate call for each get method).
@@ -337,7 +328,12 @@ private:
 class TAO_Trading_Serv_Export TAO_Trading_Components_i
 {
 public:
-  TAO_Trading_Components_i (TAO_Lockable &locker);
+  TAO_Trading_Components_i (TAO_Trading_Components_i const&) = delete;
+  TAO_Trading_Components_i& operator= (TAO_Trading_Components_i const&) = delete;
+  TAO_Trading_Components_i (TAO_Trading_Components_i&&) = delete;
+  TAO_Trading_Components_i& operator= (TAO_Trading_Components_i&&) = delete;
+
+  explicit TAO_Trading_Components_i (TAO_Lockable &locker);
   ~TAO_Trading_Components_i ();
 
   /// Returns an object reference to the Lookup interface of the trader.
@@ -383,11 +379,6 @@ private:
   CosTrading::Link_var link_;
   CosTrading::Proxy_var proxy_;
   CosTrading::Admin_var admin_;
-
-  TAO_Trading_Components_i (TAO_Trading_Components_i const&) = delete;
-  TAO_Trading_Components_i& operator= (TAO_Trading_Components_i const&) = delete;
-  TAO_Trading_Components_i (TAO_Trading_Components_i&&) = delete;
-  TAO_Trading_Components_i& operator= (TAO_Trading_Components_i&&) = delete;
 };
 
   // *************************************************************
@@ -403,14 +394,19 @@ private:
  * and be be aware of the type of lock they use.
  *
  * TAO_Trader is a template class.  And while we want
- * <import_attributes_>, <trader_components_>, and
- * <support_attributes> use a lock contained in TAO_Trader, we do not
+ * @c import_attributes_, @c trader_components_, and
+ * @c support_attributes use a lock contained in TAO_Trader, we do not
  * want all these classes to be templatized.  TAO_Trader_Base class solves
  * this problem.
  */
 class TAO_Trading_Serv_Export TAO_Trader_Base : public TAO_Lockable
 {
 public:
+  TAO_Trader_Base (TAO_Trader_Base const&) = delete;
+  TAO_Trader_Base& operator= (TAO_Trader_Base const&) = delete;
+  TAO_Trader_Base (TAO_Trader_Base&&) = delete;
+  TAO_Trader_Base& operator= (TAO_Trader_Base&&) = delete;
+
   enum Trader_Components
   {
     LOOKUP = 0x001,
@@ -422,25 +418,21 @@ public:
 
   ~TAO_Trader_Base () override;
 
-  // = Accessors for objects that manage trader's configuration.
-
   TAO_Trading_Components_i &trading_components ();
 
-  const TAO_Trading_Components_i &trading_components () const;
+  TAO_Trading_Components_i const &trading_components () const;
 
   TAO_Import_Attributes_i &import_attributes ();
 
-  const TAO_Import_Attributes_i &import_attributes () const;
+  TAO_Import_Attributes_i const &import_attributes () const;
 
   TAO_Support_Attributes_i &support_attributes ();
 
-  const TAO_Support_Attributes_i &support_attributes () const;
+  TAO_Support_Attributes_i const &support_attributes () const;
 
   TAO_Link_Attributes_i &link_attributes ();
 
-  const TAO_Link_Attributes_i &link_attributes () const;
-
-  // = Accessor for trader's lock.
+  TAO_Link_Attributes_i const &link_attributes () const;
 
   /**
    * Determine whether the identifier is a valid one (i.e., if the
@@ -449,27 +441,25 @@ public:
    *
    * IDL identifier scoping and escaping rules apply.
    */
-  static CORBA::Boolean is_valid_identifier_name (const char* ident);
+  static CORBA::Boolean is_valid_identifier_name (char const *ident);
 
   /**
    * Determine whether the identifier is a valid one (i.e., if the
    * first character is a letter, and the subsequent ones letter,
    * numbers, or underscores.)
    */
-  static CORBA::Boolean is_valid_property_name (const char* ident);
+  static CORBA::Boolean is_valid_property_name (char const *ident);
 
   /**
    * Determine whether the link name is a valid one
    * currently defined the same as property name.
    */
-  static CORBA::Boolean is_valid_link_name (const char* ident)
+  static CORBA::Boolean is_valid_link_name (char const *ident)
   {
     return is_valid_property_name (ident);
   }
 
 protected:
-  // = Objects determining current configuration of a trader.
-
   /// Stores and allows lookup of trader's components.
   TAO_Trading_Components_i trading_components_;
 
@@ -487,12 +477,7 @@ protected:
   TAO_Trader_Base ();
 
  private:
-  TAO_Trader_Base (TAO_Trader_Base const&) = delete;
-  TAO_Trader_Base& operator= (TAO_Trader_Base const&) = delete;
-  TAO_Trader_Base (TAO_Trader_Base&&) = delete;
-  TAO_Trader_Base& operator= (TAO_Trader_Base&&) = delete;
 };
-
 
 // Helpful typedefs
 // Should probably be private to TAO_Offer_Database, but g++ has a
@@ -502,22 +487,20 @@ using TAO_Offer_Map = ACE_Hash_Map_Manager_Ex<CORBA::ULong,
                                                ACE_Hash<CORBA::ULong>,
                                                ACE_Equal_To<CORBA::ULong>,
                                                ACE_Null_Mutex>;
-using TAO_String_Set = ACE_Unbounded_Set<CORBA::String_var>;
-using TAO_String_Queue = ACE_Unbounded_Queue<char*>;
-
-// = Helpful operators.
+using TAO_String_Set = std::vector<CORBA::String_var>;
+using TAO_String_Queue = std::deque<std::string>;
 
 bool
-operator> (const CosTradingRepos::ServiceTypeRepository::IncarnationNumber &l,
-           const CosTradingRepos::ServiceTypeRepository::IncarnationNumber &r);
+operator> (CosTradingRepos::ServiceTypeRepository::IncarnationNumber const &l,
+           CosTradingRepos::ServiceTypeRepository::IncarnationNumber const &r);
 
 bool
-operator< (const CosTradingRepos::ServiceTypeRepository::IncarnationNumber &l,
-           const CosTradingRepos::ServiceTypeRepository::IncarnationNumber &r);
+operator< (CosTradingRepos::ServiceTypeRepository::IncarnationNumber const &l,
+           CosTradingRepos::ServiceTypeRepository::IncarnationNumber const &r);
 
 bool
-operator== (const CosTrading::Admin::OctetSeq& left,
-            const CosTrading::Admin::OctetSeq& right);
+operator== (CosTrading::Admin::OctetSeq const& left,
+            CosTrading::Admin::OctetSeq const& right);
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

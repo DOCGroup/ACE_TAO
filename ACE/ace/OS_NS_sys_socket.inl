@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_macros.h"
 #include "ace/OS_NS_sys_uio.h"
@@ -20,7 +19,7 @@ typedef void *ACE_SOCKOPT_TYPE1;
 #elif defined (ACE_HAS_CHARPTR_SOCKOPT)
 typedef char *ACE_SOCKOPT_TYPE1;
 #else
-typedef const char *ACE_SOCKOPT_TYPE1;
+typedef char const *ACE_SOCKOPT_TYPE1;
 #endif /* ACE_HAS_VOIDPTR_SOCKOPT */
 
 ACE_INLINE ACE_HANDLE
@@ -63,7 +62,9 @@ ACE_OS::accept (ACE_HANDLE handle,
    int fake_addrlen;
 
    if (addrlen == 0)
-     addrlen = &fake_addrlen;
+     {
+       addrlen = &fake_addrlen;
+     }
 
    if (addr == 0)
      {
@@ -115,9 +116,13 @@ ACE_OS::bind (ACE_HANDLE handle, struct sockaddr *addr, int addrlen)
                         addr,
                         (ACE_SOCKET_LEN) addrlen), int, -1, result);
   if (result == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
-    return ACE_OS::getsockname (handle, addr, &addrlen);
+    {
+      return ACE_OS::getsockname (handle, addr, &addrlen);
+    }
 #else
   ACE_SOCKCALL_RETURN (::bind ((ACE_SOCKET) handle,
                                addr,
@@ -393,9 +398,13 @@ ACE_OS::recvfrom (ACE_HANDLE handle,
       ACE_OS::set_errno_to_wsa_last_error ();
       if (errno == WSAEMSGSIZE &&
           ACE_BIT_ENABLED (flags, MSG_PEEK))
-        return shortened_len;
+        {
+          return shortened_len;
+        }
       else
-        return -1;
+        {
+          return -1;
+        }
     }
   else
     {
@@ -482,7 +491,9 @@ ACE_OS::recvmsg (ACE_HANDLE handle, struct msghdr *msg, int flags)
       return -1;
     }
   else
-    return bytes_received;
+    {
+      return bytes_received;
+    }
 # else /* ACE_HAS_WINSOCK2 */
   ACE_SOCKCALL_RETURN (::recvmsg (handle, msg, flags), ssize_t, -1);
 # endif /* ACE_HAS_WINSOCK2 */
@@ -543,14 +554,16 @@ ACE_OS::recvv (ACE_HANDLE handle,
       return -1;
     }
   else
-    return (ssize_t) bytes_received;
+    {
+      return (ssize_t) bytes_received;
+    }
 #else
   return ACE_OS::readv (handle, buffers, n);
 #endif /* ACE_HAS_WINSOCK2 */
 }
 
 ACE_INLINE ssize_t
-ACE_OS::send (ACE_HANDLE handle, const char *buf, size_t len, int flags)
+ACE_OS::send (ACE_HANDLE handle, char const *buf, size_t len, int flags)
 {
   ACE_OS_TRACE ("ACE_OS::send");
 
@@ -578,12 +591,16 @@ ACE_OS::send (ACE_HANDLE handle, const char *buf, size_t len, int flags)
     {
       ACE_OS::set_errno_to_wsa_last_error();
       if (errno != ENOBUFS)
-        return -1;
+        {
+          return -1;
+        }
 
       ACE_SOCKCALL_RETURN(send_partial_i(handle, buf, len, flags), ssize_t, -1);
     }
   else
-    return result;
+    {
+      return result;
+    }
 
 #else
 # if defined (ACE_MQX)
@@ -639,7 +656,9 @@ ACE_OS::sendmsg (ACE_HANDLE handle,
       return -1;
     }
   else
-    return (ssize_t) bytes_sent;
+    {
+      return (ssize_t) bytes_sent;
+    }
 # elif defined (ACE_HAS_NONCONST_SENDMSG)
   ACE_SOCKCALL_RETURN (::sendmsg (handle,
                                   const_cast<struct msghdr *>(msg),
@@ -658,7 +677,7 @@ ACE_OS::sendmsg (ACE_HANDLE handle,
 
 ACE_INLINE ssize_t
 ACE_OS::sendto (ACE_HANDLE handle,
-                const char *buf,
+                char const *buf,
                 size_t len,
                 int flags,
                 const struct sockaddr *addr,
@@ -754,7 +773,9 @@ ACE_OS::sendto (ACE_HANDLE handle,
                                 addr,
                                 addrlen);
        if (result == -1)
-         break;
+         {
+           break;
+         }
        number_of_bytes_sent += static_cast<size_t> (result);
     }
 
@@ -813,7 +834,9 @@ ACE_OS::sendv (ACE_HANDLE handle,
           // This gives the caller an opportunity to keep track of
           // bytes that have already been sent.
           if (bytes_sent > 0)
-            break;
+            {
+              break;
+            }
           else
             {
               ACE_OS::set_errno_to_wsa_last_error ();
@@ -827,7 +850,9 @@ ACE_OS::sendv (ACE_HANDLE handle,
 
           // If the transfer isn't complete just drop out of the loop.
           if (result < (int)buffers[i].iov_len)
-            break;
+            {
+              break;
+            }
         }
     }
 # endif /* ACE_HAS_WINSOCK2 != 0 */
@@ -849,7 +874,9 @@ ACE_OS::sendv (ACE_HANDLE handle,
           // This gives the caller an opportunity to keep track of
           // bytes that have already been sent.
           if (bytes_sent > 0)
-            break;
+            {
+              break;
+            }
           else
             {
               // errno should already be set from the ACE_OS::send call.
@@ -863,7 +890,9 @@ ACE_OS::sendv (ACE_HANDLE handle,
 
           // If the transfer isn't complete just drop out of the loop.
           if (result < buffers[i].iov_len)
-            break;
+            {
+              break;
+            }
         }
     }
 
@@ -875,7 +904,7 @@ ACE_OS::sendv (ACE_HANDLE handle,
   iovec local_iov[ACE_IOV_MAX];
   long total = 0;
   long new_total = 0;
-  for (int i = 0; i < n; i++)
+  for (int i = 0; i < n; ++i)
     {
       local_iov[i].iov_base = buffers[i].iov_base;
       local_iov[i].iov_len  = buffers[i].iov_len;
@@ -899,7 +928,7 @@ ACE_INLINE int
 ACE_OS::setsockopt (ACE_HANDLE handle,
                     int level,
                     int optname,
-                    const char *optval,
+                    char const *optval,
                     int optlen)
 {
   ACE_OS_TRACE ("ACE_OS::setsockopt");
@@ -925,7 +954,9 @@ ACE_OS::setsockopt (ACE_HANDLE handle,
 #else
   if (result == -1)
 #endif /* WSAEOPNOTSUPP */
-    errno = ENOTSUP;
+    {
+      errno = ENOTSUP;
+    }
   return result;
 #endif
 }
@@ -1011,7 +1042,7 @@ ACE_OS::socketpair (int domain, int type,
 }
 
 ACE_INLINE unsigned int
-ACE_OS::if_nametoindex (const char *ifname)
+ACE_OS::if_nametoindex (char const *ifname)
 {
   ACE_OS_TRACE ("ACE_OS::if_nametoindex");
 #ifdef ACE_LACKS_IF_NAMETOINDEX

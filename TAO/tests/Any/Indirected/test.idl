@@ -1,4 +1,3 @@
-
 module Test
 {
   struct RecursiveStruct3;

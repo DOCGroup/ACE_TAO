@@ -1,4 +1,3 @@
-
 #include "Stock_Factory_i.h"
 #include "orbsvcs/CosNamingC.h"
 #include "ace/streams.h"
@@ -44,7 +43,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
     poa->destroy (true, true);
     orb->destroy ();
   }
-  catch (const CORBA::Exception &) {
+  catch (CORBA::Exception const &) {
     cerr << "CORBA exception raised!" << endl;
   }
   return 0;

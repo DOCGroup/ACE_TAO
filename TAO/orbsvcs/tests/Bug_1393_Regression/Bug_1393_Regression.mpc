@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*Client): taoclient, ifr_client {
   exename = client
   IDL_Files {

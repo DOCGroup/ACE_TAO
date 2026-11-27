@@ -1,12 +1,11 @@
-// -*- C++ -*-
 #if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_INLINE const ACE_INET_Addr&
+ACE_INLINE ACE_INET_Addr const &
 TAO_IIOP_Acceptor::address () const
 {
-  ACE_ASSERT (this->addrs_ != 0);
+  ACE_ASSERT (this->addrs_ != nullptr);
 
   // @@ This is busted.
   //    The Implementation Repository will have to start supporting
@@ -16,22 +15,22 @@ TAO_IIOP_Acceptor::address () const
   return this->addrs_[0];
 }
 
-ACE_INLINE const ACE_INET_Addr *
+ACE_INLINE ACE_INET_Addr const *
 TAO_IIOP_Acceptor::endpoints ()
 {
-  ACE_ASSERT (this->addrs_ != 0);
+  ACE_ASSERT (this->addrs_ != nullptr);
 
-  return this->addrs_;
+  return this->addrs_.get ();
 }
 
-ACE_INLINE const ACE_INET_Addr&
+ACE_INLINE ACE_INET_Addr const &
 TAO_IIOP_Acceptor::default_address () const
 {
   return this->default_address_;
 }
 
 ACE_INLINE void
-TAO_IIOP_Acceptor::set_default_address (const ACE_INET_Addr& addr)
+TAO_IIOP_Acceptor::set_default_address (ACE_INET_Addr const &addr)
 {
   this->default_address_.set (addr);
 }

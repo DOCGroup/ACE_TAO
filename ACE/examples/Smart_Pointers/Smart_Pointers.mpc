@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*Gadget) : aceexe {
   exename = gadget
   Source_Files {

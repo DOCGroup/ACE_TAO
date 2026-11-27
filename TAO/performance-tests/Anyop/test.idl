@@ -1,4 +1,3 @@
-
 /**
  *  @file    test.idl
  *
@@ -35,7 +34,7 @@ interface Param_Test
                     inout short s2,
                     out short s3);
 
-  /// @note  use unsigned long long instead of long long, because
+  /// @note  Use unsigned long long instead of long long, because
   /// unsigned long long has much better support on platforms that
   /// do not have a native 64 bit int type.
   unsigned long long test_ulonglong (in unsigned long long s1,

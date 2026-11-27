@@ -1,14 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    DynCommon.h
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */
-//=============================================================================
-
-
 #ifndef TAO_DYNCOMMON_H
 #define TAO_DYNCOMMON_H
 #include /**/ "ace/pre.h"
@@ -31,13 +25,18 @@ class TAO_DynamicAny_Export TAO_DynCommon
   : public virtual DynamicAny::DynAny
 {
 public:
-  /// Constructor.
   explicit TAO_DynCommon (CORBA::Boolean allow_truncation);
 
-  /// Destructor.
   ~TAO_DynCommon () override = default;
 
-  // = Some functions common to all Dynamic Any types.
+  TAO_DynCommon () = delete;
+  TAO_DynCommon (TAO_DynCommon const &) = delete;
+  TAO_DynCommon &operator= (TAO_DynCommon const &) = delete;
+  TAO_DynCommon (TAO_DynCommon &&) = delete;
+  TAO_DynCommon &operator= (TAO_DynCommon &&) = delete;
+
+  /// @name Functions common to all Dynamic Any types
+  /// @{
 
   CORBA::TypeCode_ptr type () override;
 
@@ -59,7 +58,7 @@ public:
 
   void insert_double (CORBA::Double value) override;
 
-  void insert_string (const char * value) override;
+  void insert_string (char const *value) override;
 
   void insert_reference (CORBA::Object_ptr value) override;
 
@@ -73,9 +72,9 @@ public:
 
   void insert_wchar (CORBA::WChar value) override;
 
-  void insert_wstring (const CORBA::WChar * value) override;
+  void insert_wstring (CORBA::WChar const *value) override;
 
-  void insert_any (const CORBA::Any & value) override;
+  void insert_any (CORBA::Any const &value) override;
 
   void insert_dyn_any (DynamicAny::DynAny_ptr value) override;
 
@@ -135,31 +134,31 @@ public:
 
   CORBA::AbstractBase_ptr get_abstract () override;
 
-  void insert_boolean_seq (const CORBA::BooleanSeq & value) override;
+  void insert_boolean_seq (CORBA::BooleanSeq const &value) override;
 
-  void insert_octet_seq (const CORBA::OctetSeq & value) override;
+  void insert_octet_seq (CORBA::OctetSeq const &value) override;
 
-  void insert_char_seq (const CORBA::CharSeq & value) override;
+  void insert_char_seq (CORBA::CharSeq const &value) override;
 
-  void insert_short_seq (const CORBA::ShortSeq & value) override;
+  void insert_short_seq (CORBA::ShortSeq const &value) override;
 
-  void insert_ushort_seq (const CORBA::UShortSeq & value) override;
+  void insert_ushort_seq (CORBA::UShortSeq const &value) override;
 
-  void insert_long_seq (const CORBA::LongSeq & value) override;
+  void insert_long_seq (CORBA::LongSeq const &value) override;
 
-  void insert_ulong_seq (const CORBA::ULongSeq & value) override;
+  void insert_ulong_seq (CORBA::ULongSeq const &value) override;
 
-  void insert_float_seq (const CORBA::FloatSeq & value) override;
+  void insert_float_seq (CORBA::FloatSeq const &value) override;
 
-  void insert_double_seq (const CORBA::DoubleSeq & value) override;
+  void insert_double_seq (CORBA::DoubleSeq const &value) override;
 
-  void insert_longlong_seq (const CORBA::LongLongSeq & value) override;
+  void insert_longlong_seq (CORBA::LongLongSeq const &value) override;
 
-  void insert_ulonglong_seq (const CORBA::ULongLongSeq & value) override;
+  void insert_ulonglong_seq (CORBA::ULongLongSeq const &value) override;
 
-  void insert_longdouble_seq (const CORBA::LongDoubleSeq & value) override;
+  void insert_longdouble_seq (CORBA::LongDoubleSeq const &value) override;
 
-  void insert_wchar_seq (const CORBA::WCharSeq & value) override;
+  void insert_wchar_seq (CORBA::WCharSeq const &value) override;
 
   CORBA::BooleanSeq * get_boolean_seq () override;
 
@@ -198,24 +197,20 @@ public:
   /// destroy() method.
   void set_flag (DynamicAny::DynAny_ptr component, CORBA::Boolean destroying);
 
-  // Utility functions.
-
   DynamicAny::DynAny_ptr check_component (CORBA::Boolean isValueType = false);
 
   void check_type (CORBA::TypeCode_ptr tc);
 
   static bool is_basic_type_seq (CORBA::TypeCode_ptr tc);
 
-  // Accessors
-
   CORBA::Boolean has_components () const;
   CORBA::Boolean destroyed () const;
   CORBA::Any &the_any ();
 
-  // Mutators
-
   void container_is_destroying (CORBA::Boolean val);
   void ref_to_component (CORBA::Boolean val);
+
+  /// @}
 
 protected:
   /// Were we created by current_component()?
@@ -247,12 +242,7 @@ protected:
   CORBA::Boolean allow_truncation_;
 
 private:
-  TAO_DynCommon (TAO_DynCommon const &) = delete;
-  TAO_DynCommon &operator= (TAO_DynCommon const &) = delete;
-  TAO_DynCommon (TAO_DynCommon &&) = delete;
-  TAO_DynCommon &operator= (TAO_DynCommon &&) = delete;
-
-  // Utility functions used by insert_* and get_*.
+  /// Utility functions used by insert_* and get_*.
   CORBA::TypeCode_ptr check_type_and_unalias (CORBA::TypeCode_ptr tc);
 };
 

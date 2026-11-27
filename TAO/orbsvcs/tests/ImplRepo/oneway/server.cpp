@@ -53,7 +53,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   try {
     CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
 
-    const ACE_TCHAR *iorfile = ACE_TEXT ("");
+    ACE_TCHAR const *iorfile = ACE_TEXT ("");
 
     ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("o:?"));
     int c;
@@ -96,10 +96,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         CORBA::String_var ior = orb->object_to_string (obj.in());
         FILE *output_file= ACE_OS::fopen (iorfile, "w");
         if (output_file == 0)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Cannot open output file for writing IOR: %s\n",
-                             iorfile),
-                            1);
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "Cannot open output file for writing IOR: %s\n",
+                               iorfile),
+                              1);
+          }
         ACE_OS::fprintf (output_file, "%s", ior.in ());
         ACE_OS::fclose (output_file);
       }
@@ -147,22 +149,22 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     test_ior = orb->object_to_string (tva.in());
     base += "_a";
-    ACE_DEBUG ((LM_DEBUG, "%s:\n%s\n", base.c_str(), test_ior.in()));
+    ACE_DEBUG ((LM_DEBUG, "%C:\n%C\n", base.c_str(), test_ior.in()));
     table->bind (base.c_str (), test_ior.in ());
     base[base.length()-1] = 'b';
     test_ior = orb->object_to_string (tvb.in());
-    ACE_DEBUG ((LM_DEBUG, "%s:\n%s\n", base.c_str(), test_ior.in()));
+    ACE_DEBUG ((LM_DEBUG, "%C:\n%C\n", base.c_str(), test_ior.in()));
     table->bind (base.c_str (), test_ior.in ());
 
     ACE_DEBUG ((LM_DEBUG,
-      "Started Server %s \n",
+      "Started Server %C \n",
       base.c_str()));
 
     orb->run();
-    root_poa->destroy(1,1);
+    root_poa->destroy(true,true);
     orb->destroy();
   }
-  catch(const CORBA::Exception& ex) {
+  catch(CORBA::Exception const & ex) {
     ex._tao_print_exception ("Server main()");
     return 1;
   }

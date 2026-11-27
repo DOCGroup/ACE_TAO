@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    SystemException.h
  *
@@ -9,7 +6,6 @@
  *  @author DOC Group at Vanderbilt U, Wash U, and UCI
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef TAO_SYSTEM_EXCEPTION_H
 #define TAO_SYSTEM_EXCEPTION_H
@@ -80,19 +76,9 @@ namespace CORBA
   class TAO_Export SystemException : public Exception
   {
   public:
-    /// Copy constructor.
-    /**
-     * @note This constructor should be protected, but VC7.1 at
-     *       warning level 4 complains about the inaccessible copy
-     *       constructor preventing it from being caught.  However,
-     *       that probably isn't true for most cases since CORBA
-     *       exceptions are typically caught by reference, not by
-     *       copy.
-     */
-    SystemException (const SystemException & src);
+    SystemException (SystemException const & src);
 
-    /// Destructor.
-    virtual ~SystemException () = default;
+    ~SystemException () override = default;
 
     /// Get the minor status.
     ULong minor () const;
@@ -110,11 +96,9 @@ namespace CORBA
     static SystemException *_downcast (CORBA::Exception *exception);
 
     /// The const version of narrow operation to a SystemException
-    static const SystemException *_downcast(const CORBA::Exception *exception);
+    static SystemException const *_downcast(CORBA::Exception const *exception);
 
-    virtual void _raise () const = 0;
-
-    // = TAO-specific extension.
+    void _raise () const override = 0;
 
     /// Print the system exception @c ex to output determined by @c f.
     /// This function is not CORBA compliant.
@@ -122,11 +106,11 @@ namespace CORBA
 
     /// Returns a string containing information about the exception. This
     /// function is not CORBA compliant.
-    virtual ACE_CString _info () const;
+    ACE_CString _info () const override;
 
-    virtual void _tao_encode (TAO_OutputCDR &cdr) const;
+    void _tao_encode (TAO_OutputCDR &cdr) const override;
 
-    virtual void _tao_decode (TAO_InputCDR &cdr);
+    void _tao_decode (TAO_InputCDR &cdr) override;
 
     /// Helper to create a minor status value.
     static CORBA::ULong _tao_minor_code (u_int location, int errno_value);
@@ -136,35 +120,33 @@ namespace CORBA
     static CORBA::ULong _tao_errno (int errno_value);
 
     /// Deep copy
-    virtual CORBA::Exception *_tao_duplicate () const;
+    CORBA::Exception *_tao_duplicate () const override;
 
   protected:
-    /// Default constructor.
     SystemException ();
 
-    /// Assignment operator.
-    SystemException & operator= (const SystemException &src);
+    SystemException & operator= (SystemException const &src);
 
     /// Constructor using a repository id.
     SystemException (CORBA::ULong code, CORBA::CompletionStatus completed);
 
     /// Constructor using a repository id.
-    SystemException (const char *repository_id,
-                     const char *local_name,
+    SystemException (char const *repository_id,
+                     char const *local_name,
                      CORBA::ULong code,
                      CORBA::CompletionStatus completed);
 
     /// Return the exception description associated with the given OMG
     /// minor code.
-    static const char *_tao_get_omg_exception_description (
-      const CORBA::SystemException &exc, CORBA::ULong minor_code);
+    static char const *_tao_get_omg_exception_description (
+      CORBA::SystemException const &exc, CORBA::ULong minor_code);
 
   private:
     /// Minor code.
-    CORBA::ULong minor_;
+    CORBA::ULong minor_ {};
 
     /// Completion status.
-    CORBA::CompletionStatus completed_;
+    CORBA::CompletionStatus completed_ {CORBA::COMPLETED_NO};
   };
 
   // Declarations for all of the CORBA standard exceptions.
@@ -181,10 +163,10 @@ namespace CORBA
             CORBA::CompletionStatus completed); \
       static name * _downcast (CORBA::Exception* exception); \
       static name const * _downcast (CORBA::Exception const * exception); \
-      virtual void _raise () const; \
-      virtual CORBA::TypeCode_ptr _tao_type () const; \
+      void _raise () const override; \
+      CORBA::TypeCode_ptr _tao_type () const override; \
       static void _tao_any_destructor (void*); \
-      virtual CORBA::Exception *_tao_duplicate () const; \
+      CORBA::Exception *_tao_duplicate () const override; \
       static CORBA::SystemException *_tao_create (); \
     }; \
 

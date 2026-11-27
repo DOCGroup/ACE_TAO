@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   ORB_Time_Policy.h
  *
  *  @author Martin Corino <mcorino@remedy.nl>
  */
-//=============================================================================
 
 #ifndef ORB_TIME_POLICY_H
 #define ORB_TIME_POLICY_H
@@ -46,10 +42,11 @@ namespace TAO
 
   private:
     static ACE_Time_Policy_T<ACE_Default_Time_Policy> default_policy_;
+    /// Active policy owned by the default policy object or its service provider.
     static ACE_Dynamic_Time_Policy_Base const * active_policy_;
   };
 
-  // Declare a countdown timer type based on ORB time policy
+  /// Declare a countdown timer type based on ORB time policy.
   using ORB_Countdown_Time = ACE_Countdown_Time_T<ORB_Time_Policy>;
 } // TAO
 

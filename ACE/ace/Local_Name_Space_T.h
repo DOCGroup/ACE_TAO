@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Local_Name_Space_T.h
  *
@@ -8,7 +5,6 @@
  *  @author Irfan Pyarali <irfan@wuerl.wustl.edu> and
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef ACE_LOCAL_NAME_SPACE_T_H
 #define ACE_LOCAL_NAME_SPACE_T_H
@@ -24,6 +20,8 @@
 #include "ace/SString.h"
 #include "ace/Local_Name_Space.h"
 #include "ace/Null_Mutex.h"
+
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -57,32 +55,40 @@ template <class ALLOCATOR>
 class ACE_Name_Space_Map : public MAP_MANAGER
 {
 public:
-  /// Constructor.
-  ACE_Name_Space_Map (ALLOCATOR *alloc);
+  ACE_Name_Space_Map () = delete;
+  ACE_Name_Space_Map (ACE_Name_Space_Map const &) = delete;
+  ACE_Name_Space_Map (ACE_Name_Space_Map &&) = delete;
+  ACE_Name_Space_Map &operator= (ACE_Name_Space_Map const &) = delete;
+  ACE_Name_Space_Map &operator= (ACE_Name_Space_Map &&) = delete;
+  ~ACE_Name_Space_Map () = default;
 
-  // = The following methods are Proxies to the underlying methods
-  // provided by ACE_Hash_Map_Manager.  When they are called, they
-  // acquire the lock, set the allocator to the one specific to this
-  // process, and then call down to perform the intended operation.
-  int bind (const ACE_NS_String &,
-            const ACE_NS_Internal &,
+  explicit ACE_Name_Space_Map (ALLOCATOR *alloc);
+
+  /** @name Map operation proxies
+   * These methods acquire the lock, set the allocator for this process, and
+   * call the corresponding ACE_Hash_Map_Manager operation.
+   */
+  /// @{
+  int bind (ACE_NS_String const &,
+            ACE_NS_Internal const &,
             ALLOCATOR *alloc);
 
-  int unbind (const ACE_NS_String &,
+  int unbind (ACE_NS_String const &,
               ACE_NS_Internal &,
               ALLOCATOR *alloc);
 
-  int rebind (const ACE_NS_String &,
-              const ACE_NS_Internal &,
+  int rebind (ACE_NS_String const &,
+              ACE_NS_Internal const &,
               ACE_NS_String &,
               ACE_NS_Internal &,
               ALLOCATOR *alloc);
 
-  int find (const ACE_NS_String &,
+  int find (ACE_NS_String const &,
             ACE_NS_Internal &,
             ALLOCATOR *alloc);
 
   int close (ALLOCATOR *alloc);
+  /// @}
 };
 
 /**
@@ -113,6 +119,11 @@ public:
   ACE_Local_Name_Space (ACE_Naming_Context::Context_Scope_Type scope_in,
                         ACE_Name_Options *name_options);
 
+  ACE_Local_Name_Space (ACE_Local_Name_Space const &) = delete;
+  ACE_Local_Name_Space &operator= (ACE_Local_Name_Space const &) = delete;
+  ACE_Local_Name_Space (ACE_Local_Name_Space &&) = delete;
+  ACE_Local_Name_Space &operator= (ACE_Local_Name_Space &&) = delete;
+
   /**
    * Specifies the scope of this namespace, opens and memory-maps the
    * associated file (if accessible) or contacts the dedicated name
@@ -120,58 +131,57 @@ public:
    */
   int open (ACE_Naming_Context::Context_Scope_Type scope_in);
 
-  /// Destructor, do some cleanup :TBD: last dtor should "compress"
-  /// file
-  ~ACE_Local_Name_Space () override;
+  /// Release the owned allocator and lock.
+  ~ACE_Local_Name_Space () override = default;
 
   /// Bind a new name to a naming context (Wide character strings).
-  int bind (const ACE_NS_WString &name,
-                    const ACE_NS_WString &value,
-                    const char *type = "") override;
+  int bind (ACE_NS_WString const &name,
+                    ACE_NS_WString const &value,
+                    char const *type = "") override;
 
   /**
    * Overwrite the value or type of an existing name in a
    * ACE_Local_Name_Space or bind a new name to the context, if it
    * didn't exist yet. (Wide character strings interface).
    */
-  int rebind (const ACE_NS_WString &name,
-                      const ACE_NS_WString &value,
-                      const char *type = "") override;
+  int rebind (ACE_NS_WString const &name,
+                      ACE_NS_WString const &value,
+                      char const *type = "") override;
 
   /// Delete a name from a ACE_Local_Name_Space (Wide character strings
   /// Interface).
-  int unbind (const ACE_NS_WString &name) override;
-  virtual int unbind_i (const ACE_NS_WString &name);
+  int unbind (ACE_NS_WString const &name) override;
+  virtual int unbind_i (ACE_NS_WString const &name);
 
   /// Get value and type of a given name binding (Wide chars).  The
   /// caller is responsible for deleting @a type!
-  int resolve (const ACE_NS_WString &name,
+  int resolve (ACE_NS_WString const &name,
                        ACE_NS_WString &value,
                        char *&type) override;
-  virtual int resolve_i (const ACE_NS_WString &name,
+  virtual int resolve_i (ACE_NS_WString const &name,
                          ACE_NS_WString &value,
                          char *&type);
 
   /// Get a set of names matching a specified pattern (wchars). Matching
   /// means the names must begin with the pattern string.
   int list_names (ACE_WSTRING_SET &set,
-                          const ACE_NS_WString &pattern) override;
+                          ACE_NS_WString const &pattern) override;
   virtual int list_names_i (ACE_WSTRING_SET &set,
-                          const ACE_NS_WString &pattern);
+                          ACE_NS_WString const &pattern);
 
   /// Get a set of values matching a specified pattern (wchars). Matching
   /// means the values must begin with the pattern string.
   int list_values (ACE_WSTRING_SET &set,
-                           const ACE_NS_WString &pattern) override;
+                           ACE_NS_WString const &pattern) override;
   virtual int list_values_i (ACE_WSTRING_SET &set,
-                             const ACE_NS_WString &pattern);
+                             ACE_NS_WString const &pattern);
 
   /// Get a set of types matching a specified pattern (wchars). Matching
   /// means the types must begin with the pattern string.
   int list_types (ACE_WSTRING_SET &set,
-                          const ACE_NS_WString &pattern) override;
+                          ACE_NS_WString const &pattern) override;
   virtual int list_types_i (ACE_WSTRING_SET &set,
-                            const ACE_NS_WString &pattern);
+                            ACE_NS_WString const &pattern);
 
   /**
    * Get a set of names matching a specified pattern (wchars). Matching
@@ -179,9 +189,9 @@ public:
    * complete binding associated each pattern match.
    */
   int list_name_entries (ACE_BINDING_SET &set,
-                                 const ACE_NS_WString &pattern) override;
+                                 ACE_NS_WString const &pattern) override;
   virtual int list_name_entries_i (ACE_BINDING_SET &set,
-                                   const ACE_NS_WString &pattern);
+                                   ACE_NS_WString const &pattern);
 
   /**
    * Get a set of values matching a specified pattern (wchars). Matching
@@ -189,9 +199,9 @@ public:
    * complete binding associated each pattern match.
    */
   int list_value_entries (ACE_BINDING_SET &set,
-                                  const ACE_NS_WString &pattern) override;
+                                  ACE_NS_WString const &pattern) override;
   virtual int list_value_entries_i (ACE_BINDING_SET &set,
-                                    const ACE_NS_WString &pattern);
+                                    ACE_NS_WString const &pattern);
 
   /**
    * Get a set of types matching a specified pattern (wchars). Matching
@@ -199,15 +209,14 @@ public:
    * complete binding associated each pattern match.
    */
   int list_type_entries (ACE_BINDING_SET &set,
-                                 const ACE_NS_WString &pattern) override;
+                                 ACE_NS_WString const &pattern) override;
   virtual int list_type_entries_i (ACE_BINDING_SET &set,
-                                   const ACE_NS_WString &pattern);
+                                   ACE_NS_WString const &pattern);
 
   /// Dump the state of the object
   void dump () const override;
   virtual void dump_i () const;
 
-  // = I just know this is going to cause problems on some platform...
   using ALLOCATOR = ACE_Allocator_Adapter<ACE_Malloc<_ACE_MEM_POOL, ACE_LOCK>>;
 
   ACE_ALLOC_HOOK_DECLARE;
@@ -219,36 +228,36 @@ private:
 #endif /* ACE_WIN32 */
 
   /// Factor out code from bind() and rebind().
-  int shared_bind (const ACE_NS_WString &name,
-                   const ACE_NS_WString &value,
-                   const char *type, int rebind);
-  int shared_bind_i (const ACE_NS_WString &name,
-                     const ACE_NS_WString &value,
-                     const char *type, int rebind);
+  int shared_bind (ACE_NS_WString const &name,
+                   ACE_NS_WString const &value,
+                   char const *type, bool rebind);
+  int shared_bind_i (ACE_NS_WString const &name,
+                     ACE_NS_WString const &value,
+                     char const *type, bool rebind);
 
   /// Allocate the appropriate type of map manager that stores the
   /// key/value binding.
   int create_manager ();
   int create_manager_i ();
 
-  /// Pointer to the allocator
-  ALLOCATOR *allocator_;
+  /// Owns the process-local allocator used by the shared map proxy.
+  std::unique_ptr<ALLOCATOR> allocator_;
 
-  /// Pointer to the allocated map manager.
-  ACE_Name_Space_Map <ALLOCATOR> *name_space_map_;
+  /// Non-owning pointer to the map manager, which may reside in shared memory.
+  ACE_Name_Space_Map<ALLOCATOR> *name_space_map_ {};
 
   /// Scope of this naming context (e.g., PROC_LOCAL, NODE_LOCAL, or
   /// NET_LOCAL).
-  ACE_Naming_Context::Context_Scope_Type ns_scope_;
+  ACE_Naming_Context::Context_Scope_Type ns_scope_ {};
 
   /// Keep track of the options such as database name etc
-  ACE_Name_Options *name_options_;
+  ACE_Name_Options *name_options_ {};
 
   /// Name of the file used as the backing store.
   ACE_TCHAR context_file_[MAXPATHLEN + MAXNAMELEN];
 
   /// Synchronization variable.
-  ACE_LOCK *lock_;
+  std::unique_ptr<ACE_LOCK> lock_;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

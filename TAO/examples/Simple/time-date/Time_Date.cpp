@@ -15,7 +15,6 @@
 #include "ace/Get_Opt.h"
 #include "ace/Dynamic_Service.h"
 
-
 ACE_Reactor *
 My_Resource_Factory::get_reactor ()
 {
@@ -41,7 +40,7 @@ DLL_ORB::svc ()
       // Run the ORB event loop in its own thread.
       this->orb_->run ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception in DLL_ORB::svc");
       return -1;
@@ -56,7 +55,7 @@ DLL_ORB::init (int argc, ACE_TCHAR *argv[])
   // Prevent TAO from registering with the ACE_Object_Manager so
   // that it can be dynamically unloaded successfully.
 
-  int register_with_object_manager = 0;
+  constexpr int register_with_object_manager = 0;
   if (TAO_Singleton_Manager::instance ()->init (register_with_object_manager) == -1)
     {
 //       ACE_ERROR_RETURN ((LM_ERROR,
@@ -76,15 +75,19 @@ DLL_ORB::init (int argc, ACE_TCHAR *argv[])
                                     "An ORB");
 
       if (CORBA::is_nil (this->orb_.in ()))
+      {
         return -1;
+      }
 
       CORBA::Object_var poa_object =
         this->orb_->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT (" (%P|%t) Unable to initialize the POA.\n")),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT (" (%P|%t) Unable to initialize the POA.\n")),
+                            1);
+        }
 
       this->poa_ =
         PortableServer::POA::_narrow (poa_object.in ());
@@ -102,7 +105,7 @@ DLL_ORB::init (int argc, ACE_TCHAR *argv[])
       return 0;
 #endif /* ACE_HAS_THREADS */
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("DLL_ORB::init");
     }
@@ -119,44 +122,39 @@ DLL_ORB::fini ()
   // return 0;
 }
 
-Time_Date_Servant::Time_Date_Servant ()
-  : servant_ (0)
-  , ior_output_file_ (0)
-  , orb_ ("")
-{
-}
-
 int
 Time_Date_Servant::parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("dn:o:"));
-  int c = 0;
+  int c;
 
   this->orb_ = "ORB";
 
   while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'd':  // debug flag.
-        TAO_debug_level++;
-        break;
-      case 'o':  // output the IOR to a file.
-        this->ior_output_file_ = get_opts.opt_arg ();
-        break;
-        // Find the ORB in the Service Repository.
-      case 'n':
-        this->orb_ = ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ());
-        break;
-      case '?':  // display help for use of the server.
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("usage:  %s")
-                           ACE_TEXT (" [-d]")
-                           ACE_TEXT (" [-o] <ior_output_file>")
-                           ACE_TEXT ("\n"),
-                           argv [0]),
-                          -1);
-      }
+  {
+      switch (c)
+        {
+        case 'd':  // debug flag.
+          ++TAO_debug_level;
+          break;
+        case 'o':  // output the IOR to a file.
+          this->ior_output_file_ = get_opts.opt_arg ();
+          break;
+          // Find the ORB in the Service Repository.
+        case 'n':
+          this->orb_ = ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ());
+          break;
+        case '?':  // display help for use of the server.
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("usage:  %s")
+                             ACE_TEXT (" [-d]")
+                             ACE_TEXT (" [-o] <ior_output_file>")
+                             ACE_TEXT ("\n"),
+                             argv [0]),
+                            -1);
+        }
+  }
 
   // Indicates successful parsing of command line.
   return 0;
@@ -175,13 +173,15 @@ Time_Date_Servant::init (int argc, ACE_TCHAR *argv[])
       DLL_ORB *orb =
         ACE_Dynamic_Service<DLL_ORB>::instance (this->orb_.c_str ());
 
-      if (orb == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("can't find %C in the Service Repository\n"),
-                           this->orb_.c_str ()),
-                          -1);
+  if (orb == nullptr)
+    {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("can't find %C in the Service Repository\n"),
+                             this->orb_.c_str ()),
+                            -1);
+    }
 
-      Time_Date_i * servant = 0;
+      Time_Date_i *servant {};
       ACE_NEW_THROW_EX (servant,
                         Time_Date_i,
                         CORBA::NO_MEMORY ());
@@ -205,22 +205,24 @@ Time_Date_Servant::init (int argc, ACE_TCHAR *argv[])
       CORBA::String_var str =
         orb->orb_->object_to_string (obj.in ());
 
-      if (this->ior_output_file_)
+      if (this->ior_output_file_ != nullptr)
         {
           FILE *output_file = ACE_OS::fopen (this->ior_output_file_, "w");
-          if (output_file == 0)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("Unable to open %s for writing (%p)\n"),
-                               this->ior_output_file_,
-                               ACE_TEXT ("fopen")),
-                              -1);
+          if (output_file == nullptr)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("Unable to open %s for writing (%p)\n"),
+                                 this->ior_output_file_,
+                                 ACE_TEXT ("fopen")),
+                                -1);
+            }
           ACE_OS::fprintf (output_file,
                            "%s",
                            str.in ());
           ACE_OS::fclose (output_file);
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("DLL_ORB::init");
       return -1;

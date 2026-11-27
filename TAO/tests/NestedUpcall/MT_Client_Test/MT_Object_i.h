@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    MT_Object_i.h
  *
@@ -8,7 +6,6 @@
  *
  *  @author Michael Kircher
  */
-//=============================================================================
 
 #ifndef MT_OBJECT_IMPL_H
 #  define MT_OBJECT_IMPL_H
@@ -19,19 +16,22 @@
 /**
  * @class MT_Object_i
  *
- * @brief Implement the <MT_Object> IDL interface.
+ * @brief Implement the @c MT_Object IDL interface.
  */
 class MT_Object_i : public POA_MT_Object
 {
 public:
-  /// Constructor.
-  MT_Object_i ();
+  MT_Object_i () = default;
 
-  /// Destructor.
-  virtual ~MT_Object_i ();
+  ~MT_Object_i () override = default;
 
-  virtual CORBA::Long yadda (CORBA::Long hop_count,
-                             MT_Object_ptr partner);
+  MT_Object_i (MT_Object_i const &) = delete;
+  MT_Object_i (MT_Object_i &&) = delete;
+  MT_Object_i &operator= (MT_Object_i const &) = delete;
+  MT_Object_i &operator= (MT_Object_i &&) = delete;
+
+  CORBA::Long yadda (CORBA::Long hop_count,
+                     MT_Object_ptr partner) override;
 };
 
 #endif /* MT_OBJECT_IMPL_H */

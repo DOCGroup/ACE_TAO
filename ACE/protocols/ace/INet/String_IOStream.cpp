@@ -5,6 +5,9 @@
 #include "ace/INet/IOS_util.h"
 #include "ace/Truncate.h"
 
+#include <cstring>
+#include <memory>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE
@@ -14,7 +17,7 @@ namespace ACE
     template <class ACE_CHAR_T, class TR>
     String_StreamBufferBase<ACE_CHAR_T, TR>::String_StreamBufferBase (openmode mode)
       : BasicBufferedStreamBuffer<ACE_CHAR_T, TR> (BUFFER_SIZE, mode),
-        string_ref_ (&string_),
+        string_ref_ (std::addressof (string_)),
         rd_ptr_ (0)
       {
       }
@@ -22,15 +25,13 @@ namespace ACE
     template <class ACE_CHAR_T, class TR>
     String_StreamBufferBase<ACE_CHAR_T, TR>::String_StreamBufferBase (string_type& string, openmode mode)
       : BasicBufferedStreamBuffer<ACE_CHAR_T, TR> (BUFFER_SIZE, mode),
-        string_ref_ (&string),
+        string_ref_ (std::addressof (string)),
         rd_ptr_ (0)
       {
       }
 
     template <class ACE_CHAR_T, class TR>
-    String_StreamBufferBase<ACE_CHAR_T, TR>::~String_StreamBufferBase ()
-      {
-      }
+    String_StreamBufferBase<ACE_CHAR_T, TR>::~String_StreamBufferBase () = default;
 
     template <class ACE_CHAR_T, class TR>
     typename String_StreamBufferBase<ACE_CHAR_T, TR>::pos_type
@@ -40,18 +41,28 @@ namespace ACE
         openmode which)
       {
         if (which != this->get_mode () || which == std::ios::out)
-          return pos_type (-1);
+          {
+            return pos_type (-1);
+          }
 
         size_type spos = 0;
         if (way == std::ios::cur)
-          spos = this->rd_ptr_;
+          {
+            spos = this->rd_ptr_;
+          }
         else if (way == std::ios::end)
-          spos = this->string_ref_->length ();
+          {
+            spos = this->string_ref_->length ();
+          }
         spos += off;
         if (spos < this->string_ref_->length ())
-          this->rd_ptr_ = spos;
+          {
+            this->rd_ptr_ = spos;
+          }
         else
-          this->rd_ptr_ = this->string_ref_->length ();
+          {
+            this->rd_ptr_ = this->string_ref_->length ();
+          }
 
         this->setg (this->eback (), this->eback (), this->eback ());
         return pos_type (this->rd_ptr_);
@@ -67,7 +78,7 @@ namespace ACE
       }
 
     template <class ACE_CHAR_T, class TR>
-    const typename String_StreamBufferBase<ACE_CHAR_T, TR>::string_type&
+    typename String_StreamBufferBase<ACE_CHAR_T, TR>::string_type const&
     String_StreamBufferBase<ACE_CHAR_T, TR>::str () const
       {
         const_cast<String_StreamBufferBase<ACE_CHAR_T, TR>*> (this)->sync ();
@@ -78,7 +89,7 @@ namespace ACE
     void String_StreamBufferBase<ACE_CHAR_T, TR>::close_string ()
       {
         this->sync ();
-        this->string_ref_ = 0;
+        this->string_ref_ = nullptr;
       }
 
     template <class ACE_CHAR_T, class TR>
@@ -98,7 +109,9 @@ namespace ACE
               {
                 length = this->string_ref_->length () - this->rd_ptr_;
               }
-            ACE_OS::memmove (buffer, &(*this->string_ref_)[this->rd_ptr_], length * sizeof (char_type));
+            std::memmove (buffer,
+                          this->string_ref_->c_str () + this->rd_ptr_,
+                          length * sizeof (char_type));
             this->rd_ptr_ += length;
             n = ACE_Utils::truncate_cast<int> (length);
           }
@@ -106,7 +119,7 @@ namespace ACE
       }
 
     template <class ACE_CHAR_T, class TR>
-    int String_StreamBufferBase<ACE_CHAR_T, TR>::write_to_stream (const char_type* buffer, std::streamsize length)
+    int String_StreamBufferBase<ACE_CHAR_T, TR>::write_to_stream (char_type const* buffer, std::streamsize length)
       {
         int n = 0;
         if (this->string_ref_)
@@ -121,14 +134,14 @@ namespace ACE
     String_IOSBase<ACE_CHAR_T, TR>::String_IOSBase (openmode mode)
       : streambuf_ (mode)
       {
-        ace_ios_init (&this->streambuf_);
+        ace_ios_init (std::addressof (this->streambuf_));
       }
 
     template <class ACE_CHAR_T, class TR>
     String_IOSBase<ACE_CHAR_T, TR>::String_IOSBase (string_type& string, openmode mode)
       : streambuf_ (string, mode)
       {
-        ace_ios_init (&this->streambuf_);
+        ace_ios_init (std::addressof (this->streambuf_));
       }
 
     template <class ACE_CHAR_T, class TR>
@@ -141,7 +154,7 @@ namespace ACE
     typename String_IOSBase<ACE_CHAR_T, TR>::buffer_type*
     String_IOSBase<ACE_CHAR_T, TR>::rdbuf ()
       {
-        return &this->streambuf_;
+        return std::addressof (this->streambuf_);
       }
 
     template <class ACE_CHAR_T, class TR>
@@ -151,7 +164,7 @@ namespace ACE
       }
 
     template <class ACE_CHAR_T, class TR>
-    const typename String_IOSBase<ACE_CHAR_T, TR>::buffer_type&
+    typename String_IOSBase<ACE_CHAR_T, TR>::buffer_type const&
     String_IOSBase<ACE_CHAR_T, TR>::stream () const
       {
         return this->streambuf_;
@@ -172,12 +185,10 @@ namespace ACE
       }
 
     template <class ACE_CHAR_T, class TR>
-    String_OStreamBase<ACE_CHAR_T, TR>::~String_OStreamBase()
-      {
-      }
+    String_OStreamBase<ACE_CHAR_T, TR>::~String_OStreamBase() = default;
 
     template <class ACE_CHAR_T, class TR>
-    const typename String_OStreamBase<ACE_CHAR_T, TR>::string_type&
+    typename String_OStreamBase<ACE_CHAR_T, TR>::string_type const&
     String_OStreamBase<ACE_CHAR_T, TR>::str () const
       {
         return this->stream ().str ();
@@ -197,7 +208,7 @@ namespace ACE
       }
 
     template <class ACE_CHAR_T, class TR>
-    String_IStreamBase<ACE_CHAR_T, TR>::String_IStreamBase(const string_type& string)
+    String_IStreamBase<ACE_CHAR_T, TR>::String_IStreamBase(string_type const& string)
       : String_IOSBase<ACE_CHAR_T, TR> (const_cast<string_type&> (string),
                                         std::ios::in),
         std::basic_istream<ACE_CHAR_T, TR> (String_IOSBase<ACE_CHAR_T, TR>::rdbuf ())
@@ -205,9 +216,7 @@ namespace ACE
       }
 
     template <class ACE_CHAR_T, class TR>
-    String_IStreamBase<ACE_CHAR_T, TR>::~String_IStreamBase()
-      {
-      }
+    String_IStreamBase<ACE_CHAR_T, TR>::~String_IStreamBase() = default;
 
     template <class ACE_CHAR_T, class TR>
     String_IStreamBase<ACE_CHAR_T, TR>&

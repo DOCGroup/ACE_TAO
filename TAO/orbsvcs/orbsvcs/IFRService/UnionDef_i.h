@@ -1,7 +1,3 @@
-// -*- C++ -*-
-
-
-//=============================================================================
 /**
  *  @file    UnionDef_i.h
  *
@@ -9,8 +5,6 @@
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_UNIONDEF_I_H
 #define TAO_UNIONDEF_I_H
@@ -80,7 +74,7 @@ public:
 private:
   /// Used by members() to get each member's label value.
   void fetch_label (
-    const ACE_Configuration_Section_Key member_key,
+    ACE_Configuration_Section_Key const member_key,
     CORBA::UnionMember &member);
 };
 

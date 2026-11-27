@@ -9,7 +9,7 @@ TAO_LRU_Connection_Purging_Strategy::TAO_LRU_Connection_Purging_Strategy (int ca
 }
 
 void
-TAO_LRU_Connection_Purging_Strategy::update_item (TAO_Transport& transport)
+TAO_LRU_Connection_Purging_Strategy::update_item (TAO_Transport &transport)
 {
   transport.purging_order (++this->order_);
 }

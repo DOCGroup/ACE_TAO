@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 #ifndef TAO_INTERPRETER_UTILS_T_H
 #define TAO_INTERPRETER_UTILS_T_H
 #include /**/ "ace/pre.h"
@@ -9,7 +7,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class OPERAND_TYPE>
-CORBA::Boolean TAO_find (const CORBA::Any& sequence, const OPERAND_TYPE& operand);
+CORBA::Boolean TAO_find (CORBA::Any const& sequence, OPERAND_TYPE const& operand);
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

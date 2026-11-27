@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file     MProfile.h
  *
@@ -8,8 +5,6 @@
  *
  *  @author  Fred Kuhns <fredk@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_MPROFILE_H
 #define TAO_MPROFILE_H
@@ -21,10 +16,11 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
 #include /**/ "tao/TAO_Export.h"
 #include "tao/Basic_Types.h"
 #include "tao/orbconf.h"
+#include <memory>
+#include <vector>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -56,16 +52,14 @@ public:
   TAO_MProfile (CORBA::ULong sz = 0);
 
   /**
-   * **NOTE:  IF mprofiles->last_ > 0, THEN this->size_ will be set to
-   *          mprofiles->last_.  Otherwise this->size_ - mprofiles->size_.
-   *          Furthermore, current_ is set back to 0!  i.e. rewound.
-   * The reference count on any profiles in mprofiles is increment
-   * when their references (i.e. pointers) are copied.
+   * Copies the used profiles from @a mprofiles and rewinds the current
+   * position. Profile reference counts are incremented for each copied
+   * profile.
    */
-  TAO_MProfile (const TAO_MProfile &mprofiles);
+  TAO_MProfile (TAO_MProfile const &mprofiles);
 
   /// Assigment operator.
-  TAO_MProfile& operator= (const TAO_MProfile& mprofiles);
+  TAO_MProfile& operator= (TAO_MProfile const& mprofiles);
 
   /// Destructor: decrements reference count on all references
   /// profiles!
@@ -75,13 +69,8 @@ public:
   /// NOT THREAD SAFE
   int set (CORBA::ULong sz);
 
-  /**
-   * Inits this to the values of mprofile.  NOTE: We use
-   * mprofile->last_ instead of mprofile->size_ to set this->size_.
-   * This is so we can use set () to trim a profile list!!
-   * NOT THREAD SAFE
-   */
-  int set (const TAO_MProfile &mprofile);
+  /// Copies the used profiles from @a mprofile. NOT THREAD SAFE.
+  int set (TAO_MProfile const &mprofile);
 
   /// increase the number of profiles this object can hold.
   /// NOT THREAD SAFE
@@ -117,13 +106,12 @@ public:
   /// Returns the number of profiles stored in the list (last_+1).
   CORBA::ULong profile_count () const;
 
-  /// return the maximum number of profiles that can be stored in this
-  /// container, (size_+1)
+  /// Return the maximum number of profiles that can be stored in this container.
   CORBA::ULong size () const;
 
-  /// Return the profile at position <slot>.  If <slot> is out of range
+  /// Return the profile at position @a slot.  If @a slot is out of range
   /// it returns 0.
-  const TAO_Profile* get_profile (CORBA::ULong slot) const;
+  TAO_Profile const* get_profile (CORBA::ULong slot) const;
 
   /// Sets the current slot back to 0.
   void rewind ();
@@ -141,10 +129,10 @@ public:
   int add_profiles (TAO_MProfile *pfiles);
 
   /// remove from this MProfile any profiles which also appear in pfiles.
-  int remove_profile (const TAO_Profile *pfile);
+  int remove_profile (TAO_Profile const *pfile);
 
   /// remove from this MProfile any profiles which also appear in pfiles.
-  int remove_profiles (const TAO_MProfile *pfiles);
+  int remove_profiles (TAO_MProfile const *pfiles);
 
   /// Set a pointer to the MProfile whose 'current' TAO_Profile was
   /// forwarded This object is the set of forwarding profiles.
@@ -159,7 +147,7 @@ public:
    * NON-THREAD SAFE, relies on some other entity to guarentee
    * the profiles will not change during the call.
    */
-  CORBA::Boolean is_equivalent (const TAO_MProfile *rhs);
+  CORBA::Boolean is_equivalent (TAO_MProfile const *rhs);
 
   /**
    * use all registered profiles.  The hash() method is called on each
@@ -169,8 +157,8 @@ public:
   CORBA::ULong hash (CORBA::ULong max);
 
 protected:
-  /// This method handle the dynamic allocation of the data member
-  /// <policy_list_>.
+  /// This method handles the dynamic allocation of the data member
+  /// @c policy_list_.
  void create_policy_list ();
 
 public:
@@ -189,19 +177,16 @@ protected:
 protected:
   /// Stores the policy list for the profile of this MProfile.
   friend class TAO_Profile;
-  CORBA::PolicyList *policy_list_;
+  std::unique_ptr<CORBA::PolicyList> policy_list_;
 
-  CORBA::Boolean is_policy_list_initialized_;
+  CORBA::Boolean is_policy_list_initialized_ {};
 
   /// Mutex used to make sure that only one policy list
   /// is created.
   TAO_SYNCH_RECURSIVE_MUTEX mutex_;
 
-protected:
-  /// Return the complete list of profiles, this object retains
-  /// ownership!
-  TAO_Profile **pfiles () const;
-
+  /// Return the complete list of profiles retained by this object.
+  TAO_Profile *const *pfiles () const;
 
 private:
   /// Helper method to implement the destructor
@@ -215,26 +200,24 @@ private:
 
 private:
   /**
-   * Used for chaning references when the current profile is
-   * forwarded.  Note, this will only be valid for an MProfile which
-   * contains a list of forward_profiles for some initial or base
-   * profile.  This is a backward reference to the profile list which
-   * received the relocate message.  The actual profile what was
-   * forwarded will be forward_from_->get_current_profile ()
+   * Used for changing references when the current profile is
+   * forwarded.
+   * @note This will only be valid for an MProfile which contains a list
+   * of forward_profiles for some initial or base profile. This is a
+   * backward reference to the profile list which received the relocate
+   * message. The actual profile that was forwarded will be
+   * forward_from_->get_current_profile ().
    */
-  TAO_MProfile  *forward_from_;
+  TAO_MProfile  *forward_from_ {};
 
-  /// Actual list of profiles.
-  TAO_Profile **pfiles_;
+  /// Profiles whose reference counts are held by this MProfile.
+  std::vector<TAO_Profile *> pfiles_;
 
-  /// Points to the next profile to be used.  0 ... size_
-  TAO_PHandle current_;
+  /// Points to the next profile to be used.  0 ... pfiles_.size ()
+  TAO_PHandle current_ {};
 
-  /// Max size of array
-  TAO_PHandle size_;
-
-  /// Index plus 1 of last valid entry!  May be < size_.
-  TAO_PHandle last_;
+  /// Index plus 1 of last valid entry!  May be < pfiles_.size ().
+  TAO_PHandle last_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

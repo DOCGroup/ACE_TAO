@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "ace/OS_NS_sys_socket.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -13,16 +12,16 @@ ACE_SOCK_Dgram_Bcast::~ACE_SOCK_Dgram_Bcast ()
 // preassigned to the broadcast address of the subnet...)
 
 ACE_INLINE ssize_t
-ACE_SOCK_Dgram_Bcast::send (const void *buf,
+ACE_SOCK_Dgram_Bcast::send (void const *buf,
                             size_t n,
-                            const ACE_Addr &addr,
+                            ACE_Addr const &addr,
                             int flags) const
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Bcast::send");
 
   sockaddr *saddr = (sockaddr *) addr.get_addr ();
   int len = addr.get_size ();
-  return ACE_OS::sendto (this->get_handle (), (const char *) buf, n, flags,
+  return ACE_OS::sendto (this->get_handle (), (char const *) buf, n, flags,
                          (struct sockaddr *) saddr, len);
 }
 

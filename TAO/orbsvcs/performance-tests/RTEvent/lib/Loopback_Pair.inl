@@ -5,9 +5,7 @@
  */
 
 ACE_INLINE
-Loopback_Pair::Loopback_Pair ()
-{
-}
+Loopback_Pair::Loopback_Pair () = default;
 
 ACE_INLINE Loopback_Supplier *
 Loopback_Pair::loopback_supplier () const

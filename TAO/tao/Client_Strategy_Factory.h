@@ -1,13 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file     Client_Strategy_Factory.h
  *
  *  @author  Chris Cleeland <cleeland@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_CLIENT_STRATEGY_FACTORY_H
 #define TAO_CLIENT_STRATEGY_FACTORY_H
@@ -56,7 +51,6 @@ namespace Messaging
 class TAO_Export TAO_Client_Strategy_Factory : public ACE_Service_Object
 {
 public:
-  /// Destructor
   ~TAO_Client_Strategy_Factory () override;
 
   /// Create the correct client request muxing strategy.
@@ -95,7 +89,7 @@ public:
 
   /// Return the parameters used to optionally retry invocation
   /// after an exception occurs.
-  virtual const TAO::Invocation_Retry_Params &invocation_retry_params () const = 0;
+  virtual TAO::Invocation_Retry_Params const &invocation_retry_params () const = 0;
 
   /// Return the value to be used as the default sync scope for the ORB
   virtual Messaging::SyncScope sync_scope () const = 0;

@@ -4,7 +4,6 @@
 #include "Foo_A_ClientEngine.h"
 #include "ace/Get_Opt.h"
 
-
 ClientApp::ClientApp()
   : TestAppBase("TP_Test_2_Client"),
     ior_(ACE_TEXT("Not Set")),
@@ -13,11 +12,7 @@ ClientApp::ClientApp()
 {
 }
 
-
-ClientApp::~ClientApp()
-{
-}
-
+ClientApp::~ClientApp() = default;
 
 int
 ClientApp::run_i(int argc, ACE_TCHAR* argv[])
@@ -35,7 +30,6 @@ ClientApp::run_i(int argc, ACE_TCHAR* argv[])
   return result;
 }
 
-
 int
 ClientApp::init(int argc, ACE_TCHAR* argv[])
 {
@@ -48,7 +42,6 @@ ClientApp::init(int argc, ACE_TCHAR* argv[])
   return this->parse_args(argc, argv);
 }
 
-
 void
 ClientApp::client_setup()
 {
@@ -60,20 +53,17 @@ ClientApp::client_setup()
   this->engine_ = new Foo_A_ClientEngine(foo.in(), this->client_id_);
 }
 
-
 int
 ClientApp::run_engine()
 {
-  bool result = this->engine_->execute();
+  bool const result = this->engine_->execute();
   return result ? 0 : -1;
 }
-
 
 void
 ClientApp::cleanup()
 {
 }
-
 
 int
 ClientApp::parse_args(int argc, ACE_TCHAR* argv[])
@@ -138,7 +128,6 @@ ClientApp::usage_statement()
              this->exe_name_.c_str()));
 }
 
-
 int
 ClientApp::arg_dependency_checks()
 {
@@ -162,15 +151,14 @@ ClientApp::arg_dependency_checks()
   return 0;
 }
 
-
 int
 ClientApp::set_arg(unsigned&   value,
-                   const ACE_TCHAR* arg,
+                   ACE_TCHAR const *arg,
                    char        opt,
-                   const char* name,
+                   char const *name,
                    int         min)
 {
-  int tmp = ACE_OS::atoi(arg);
+  const int tmp = ACE_OS::atoi(arg);
 
   if (tmp < min)
     {
@@ -184,5 +172,4 @@ ClientApp::set_arg(unsigned&   value,
   value = tmp;
   return 0;
 }
-
 

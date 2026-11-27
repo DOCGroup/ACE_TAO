@@ -1,6 +1,7 @@
 #include "test.h"
 #include "../Task_Stats.h"
 #include "../Synch_i.h"
+#include "../Guid_Utils.h"
 
 #include "tao/RTScheduling/RTScheduler_Manager.h"
 #include "tao/ORB_Core.h"
@@ -9,6 +10,73 @@
 
 #include "ace/Event_Handler.h"
 #include "ace/Sig_Handler.h"
+
+#include <memory>
+#include <limits>
+
+class Test_Task_Stats : public Task_Stats
+{
+public:
+  size_t count () const { return this->samples_count_; }
+  size_t first_guid () const { return this->thr_count_[0]; }
+};
+
+static int
+test_guid_value ()
+{
+  RTScheduling::Current::IdType guid;
+  CORBA::OctetSeq context;
+  CORBA::ULong const lengths[] = {
+    0, static_cast<CORBA::ULong> (sizeof (size_t) - 1),
+    static_cast<CORBA::ULong> (sizeof (size_t) + 1)
+  };
+  for (CORBA::ULong const length : lengths)
+    {
+      guid.length (length);
+      try
+        {
+          rtscheduling_guid_value (guid);
+          ACE_ERROR_RETURN ((LM_ERROR, "Invalid GUID length accepted\n"), 1);
+        }
+      catch (CORBA::BAD_PARAM const &)
+        {
+        }
+
+      context.length (length);
+      try
+        {
+          rtscheduling_guid_value (context);
+          ACE_ERROR_RETURN ((LM_ERROR, "Invalid context length accepted\n"), 1);
+        }
+      catch (CORBA::BAD_PARAM const &)
+        {
+        }
+    }
+
+  size_t const expected = 0x12345678;
+  guid.length (sizeof (expected));
+  std::memcpy (guid.get_buffer (), &expected, sizeof (expected));
+  if (rtscheduling_guid_value (guid) != expected)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "GUID value changed\n"), 1);
+    }
+  context.length (sizeof (expected));
+  std::memcpy (context.get_buffer (), &expected, sizeof (expected));
+  if (rtscheduling_guid_value (context) != expected)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "Context GUID value changed\n"), 1);
+    }
+
+  Test_Task_Stats stats;
+  size_t const large_guid = (std::numeric_limits<size_t>::max) ();
+  if (stats.init (1) != 0 || stats.sample (1, large_guid) != 0
+      || stats.first_guid () != large_guid || stats.init (1) != 0
+      || stats.count () != 0)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "Scheduling statistics lost a GUID\n"), 1);
+    }
+  return 0;
+}
 
 class TestShutdown : public ACE_Event_Handler
 {
@@ -24,7 +92,7 @@ public:
 #endif
   }
 
-  ~TestShutdown ()
+  ~TestShutdown () override
   {
 #if !defined(ACE_LACKS_UNIX_SIGNALS)
     this->shutdown_.remove_handler (SIGTERM);
@@ -34,7 +102,7 @@ public:
 #endif
   }
 
-  virtual int handle_signal (int, siginfo_t*, ucontext_t*)
+  int handle_signal (int, siginfo_t*, ucontext_t*) override
   {
     ACE_DEBUG ((LM_DEBUG, "Shutting down...\n"));
     this->orb_->shutdown ();
@@ -62,7 +130,6 @@ DT_Test::init (int argc, ACE_TCHAR *argv [])
 
   TAO_RTScheduler_Manager_var manager = TAO_RTScheduler_Manager::_narrow (manager_obj.in ());
 
-
   ACE_NEW_RETURN (scheduler_,
       MIF_Scheduler (orb_.in ()), -1);
 
@@ -86,7 +153,9 @@ DT_Test::run (int argc, ACE_TCHAR* argv [])
 
   TASK_STATS::instance ()->init (this->dt_creator_->total_load ());
   if (this->dt_creator_->resolve_naming_service () == -1)
+  {
     return;
+  }
 
   this->dt_creator_->activate_root_poa ();
 
@@ -109,13 +178,11 @@ DT_Test::run (int argc, ACE_TCHAR* argv [])
         "Test Terminating......\n"));
 }
 
-
 void
 DT_Test::dt_creator (MIF_DT_Creator* dt_creator)
 {
   this->dt_creator_ = dt_creator;
 }
-
 
 MIF_Scheduler*
 DT_Test::scheduler ()
@@ -150,7 +217,7 @@ DT_Test::svc ()
     {
       dt_creator_->create_distributable_threads (current_.in ());
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return -1;
@@ -163,9 +230,15 @@ DT_Test::svc ()
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
+  if (argc == 2 && ACE_OS::strcmp (argv[1], ACE_TEXT ("-test-guid")) == 0)
+    {
+      return test_guid_value ();
+    }
+
   int status = 0;
 
-  ACE_Service_Config::static_svcs ()->insert (&ace_svc_desc_MIF_DT_Creator);
+  ACE_Service_Config::static_svcs ()->insert (
+    std::addressof (ace_svc_desc_MIF_DT_Creator));
 
   try
     {
@@ -173,7 +246,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
          "%t Main Thread\n"));
       DT_TEST::instance ()->run (argc, argv);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Caught exception:");
       status = 1;

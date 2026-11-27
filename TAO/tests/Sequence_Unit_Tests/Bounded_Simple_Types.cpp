@@ -11,17 +11,17 @@
 
 struct Foo
 {
-  int x;
+  int x {};
 };
 
-CORBA::ULong const TEST_INT_MAX = 32;
-CORBA::ULong const TEST_FOO_MAX = 64;
+CORBA::ULong constexpr TEST_INT_MAX = 32;
+CORBA::ULong constexpr TEST_FOO_MAX = 64;
 
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {
   try
     {
-      typedef TAO::bounded_value_sequence<int,TEST_INT_MAX> int_sequence;
+      using int_sequence = TAO::bounded_value_sequence<int,TEST_INT_MAX>;
 
       int_sequence a;
       int_sequence b(a);
@@ -56,18 +56,18 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
       b.replace(0, int_sequence::allocbuf(), true);
 
       int const * x = d.get_buffer();
-      if (x != 0)
+      if (x != nullptr)
       {
         int_sequence::freebuf(a.get_buffer(true));
       }
       x = b.get_buffer();
 
-      int_sequence e(c);
+      int_sequence const e(c);
 
-      typedef TAO::bounded_value_sequence<Foo,TEST_FOO_MAX> Foo_sequence;
+      using Foo_sequence = TAO::bounded_value_sequence<Foo,TEST_FOO_MAX>;
 
       Foo_sequence u;
-      Foo_sequence v(u);
+      Foo_sequence const v(u);
       u = v;
     }
   catch (const ::CORBA::Exception &)

@@ -8,7 +8,7 @@
 class Worker : public ACE_Task_Base
 {
 public:
-  Worker (CORBA::ORB_ptr orb)
+  explicit Worker (CORBA::ORB_ptr const orb)
     : orb_ (CORBA::ORB::_duplicate (orb))
   {
   }
@@ -25,7 +25,7 @@ public:
   }
 
 private:
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var orb_ {};
 };
 
 /// Implement the Test::TestCallback interface
@@ -33,17 +33,18 @@ class TestCallback
   : public virtual POA_Test::TestCallback
 {
 public:
-  /// Constructor
-  TestCallback (CORBA::ORB_ptr orb);
+  explicit TestCallback (CORBA::ORB_ptr const orb);
   TestCallback (TestCallback const &) = delete;
   TestCallback (TestCallback &&) = delete;
   TestCallback &operator= (TestCallback const &) = delete;
   TestCallback &operator= (TestCallback &&) = delete;
 
-  // = The skeleton methods
+  /// @name Skeleton methods
+  /// @{
   void start_threads_and_block () override;
   void test_call () override;
   void shutdown () override;
+  /// @}
 
 private:
   Worker work_;

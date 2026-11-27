@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Asynch_Pseudo_Task.h
  *
  *  @author Alexander Libman <alibman@ihug.com.au>
  */
-//=============================================================================
 
 #ifndef ACE_ASYNCH_PSEUDO_TASK_H
 #define ACE_ASYNCH_PSEUDO_TASK_H

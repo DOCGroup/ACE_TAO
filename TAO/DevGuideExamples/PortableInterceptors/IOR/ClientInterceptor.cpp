@@ -4,8 +4,10 @@
 #include "tao/PI/ClientRequestInfo.h"
 
 #include <iostream>
+#include <string>
+#include <utility>
 
-const CORBA::ULong service_ctx_id = 0xdeed;
+constexpr CORBA::ULong service_ctx_id = 0xdeed;
 
 ClientInterceptor::
 ClientInterceptor (IOP::CodecFactory_var cf)
@@ -22,10 +24,6 @@ ClientInterceptor (IOP::CodecFactory_var cf)
 
   // Obtain the CDR encapsulation Codec.
   this->codec = cf->create_codec (encoding);
-}
-
-ClientInterceptor::~ClientInterceptor ()
-{
 }
 
 char *
@@ -48,22 +46,25 @@ ClientInterceptor::send_poll (
   std::cout << "Calling send_poll()." << std::endl;
 }
 
-
 void
 ClientInterceptor::send_request (
                                  PortableInterceptor::ClientRequestInfo_ptr ri)
 {
   std::cout << "Calling send_request()." << std::endl;
 
-  const CORBA::ULong tagID = 9654;
+  constexpr CORBA::ULong tagID = 9654;
 
   try
     {
       IOP::TaggedComponent_var myTag = ri->get_effective_component(tagID);
-      char *tag =
-        reinterpret_cast<char*> (myTag->component_data.get_buffer());
+      std::string tag;
+      if (myTag->component_data.length () != 0)
+        {
+          tag.assign (reinterpret_cast<char const *> (myTag->component_data.get_buffer ()),
+                      myTag->component_data.length ());
+        }
 
-      std::cout << "IOR Tag is : " << tag << std::endl;
+      std::cout << "IOR Tag is : " << tag.c_str () << std::endl;
     }
   catch(...)
     {
@@ -73,14 +74,15 @@ ClientInterceptor::send_request (
   IOP::ServiceContext sc;
   sc.context_id = service_ctx_id;
 
-  const CORBA::Long gid = 9007;
+  constexpr CORBA::Long gid = 9007;
 
   std::cout << "GID: " << gid << std::endl;
 
   CORBA::Any gid_as_any;
   gid_as_any <<= gid;
 
-  sc.context_data = *codec->encode(gid_as_any);
+  CORBA::OctetSeq_var encoded {this->codec->encode (gid_as_any)};
+  sc.context_data = std::move (encoded.inout ());
 
   // Add this context to the service context list.
   ri->add_request_service_context (sc, false);

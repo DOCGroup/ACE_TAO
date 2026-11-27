@@ -9,10 +9,10 @@
 #include "ace/OS_NS_sys_socket.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/CDR_Stream.h"
-#include <memory>
 #include "ace/SString.h"
 #include "ace/INET_Addr.h"
 #include "Client_Logging_Handler.h"
+#include <memory>
 
 ACE_Client_Logging_Handler::ACE_Client_Logging_Handler (ACE_HANDLE output_handle)
   : logging_output_ (output_handle)
@@ -22,9 +22,11 @@ ACE_Client_Logging_Handler::ACE_Client_Logging_Handler (ACE_HANDLE output_handle
 #if !defined (ACE_LACKS_UNIX_SIGNALS)
   if (ACE_Reactor::instance ()->register_handler (SIGPIPE,
                                                   this) == -1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%n: %p\n"),
-                ACE_TEXT ("register_handler (SIGPIPE)")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("%n: %p\n"),
+                  ACE_TEXT ("register_handler (SIGPIPE)")));
+    }
 #endif /* !ACE_LACKS_UNIX_SIGNALS */
 }
 
@@ -35,9 +37,13 @@ ACE_Client_Logging_Handler::handle_signal (int signum,
                                            ucontext_t *)
 {
   if (signum == SIGPIPE)
-    return 0;
+    {
+      return 0;
+    }
   else
+  {
     return -1;
+  }
 }
 
 // This function is called every time a client connects to us.
@@ -55,18 +61,22 @@ ACE_Client_Logging_Handler::open (void *)
        this,
        ACE_Event_Handler::READ_MASK
        | ACE_Event_Handler::EXCEPT_MASK) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%n: %p\n"),
-                       ACE_TEXT ("register_handler")),
-                       -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%n: %p\n"),
+                         ACE_TEXT ("register_handler")),
+                         -1);
+    }
   // Figure out what remote port we're really bound to.
   if (this->peer ().get_remote_addr (server_addr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("get_remote_addr")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("get_remote_addr")),
+                        -1);
+    }
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Connected to client on handle %u\n"),
+              ACE_TEXT ("Connected to client on handle %H\n"),
               this->peer ().get_handle ()));
   return 0;
 }
@@ -88,28 +98,30 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
 {
 #if 0
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("in ACE_Client_Logging_Handler::handle_input, handle = %u\n"),
+              ACE_TEXT ("in ACE_Client_Logging_Handler::handle_input, handle = %H\n"),
               handle));
 #endif /* 0 */
 
   if (handle == this->logging_output_)
-    // We're getting a message from the logging server!
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Received data from server!\n")),
-                      -1);
+    {
+      // We're getting a message from the logging server!
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Received data from server!\n")),
+                        -1);
+    }
   ACE_Log_Record log_record;
 
   // We need to use the old two-read trick here since TCP sockets
   // don't support framing natively.  Allocate a message block for the
   // payload; initially at least large enough to hold the header, but
   // needs some room for alignment.
-  ACE_Message_Block *payload_p = 0;
-  ACE_Message_Block *header_p = 0;
+  ACE_Message_Block *payload_p {};
+  ACE_Message_Block *header_p {};
   ACE_NEW_RETURN (header_p,
                   ACE_Message_Block (ACE_DEFAULT_CDR_BUFSIZE),
                   -1);
 
-  std::unique_ptr <ACE_Message_Block> header (header_p);
+  ACE_Message_Block_Unique_Ptr header {header_p};
 
   // Align the Message Block for a CDR stream
   ACE_CDR::mb_align (header.get ());
@@ -123,10 +135,10 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
 
   ACE_SPIPE_Stream spipe;
   spipe.set_handle (handle);
-  int flags = 0;
+  int flags {};
 
   // We've got a framed IPC mechanism, so we can just to a <recv>.
-  ssize_t result = spipe.recv (&header_msg,
+  ssize_t result = spipe.recv (std::addressof (header_msg),
                                (ACE_Str_Buf *) 0,
                                &flags);
 
@@ -168,14 +180,20 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
            ACE_Event_Handler::READ_MASK
            | ACE_Event_Handler::EXCEPT_MASK
            | ACE_Event_Handler::DONT_CALL) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%n: %p\n"),
-                           ACE_TEXT ("remove_handler")),
-                          0);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("%n: %p\n"),
+                             ACE_TEXT ("remove_handler")),
+                            0);
+        }
       if (handle == this->peer ().get_handle ())
-        this->peer ().close ();
+        {
+          this->peer ().close ();
+        }
       else
+      {
         ACE_OS::closesocket (handle);
+      }
       // Release the memory to prevent a leak.
       return 0;
       /* NOTREACHED */
@@ -194,7 +212,7 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
 
   // Extract the byte-order and use helper methods to disambiguate
   // octet, booleans, and chars.
-  ACE_CDR::Boolean byte_order;
+  ACE_CDR::Boolean byte_order {};
   if (!(header_cdr >> ACE_InputCDR::to_boolean (byte_order)))
     {
       ACE_ERROR ((LM_ERROR,
@@ -206,7 +224,7 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
   header_cdr.reset_byte_order (byte_order);
 
   // Extract the length
-  ACE_CDR::ULong length;
+  ACE_CDR::ULong length {};
   if (!(header_cdr >> length))
     {
       ACE_ERROR ((LM_ERROR,
@@ -217,7 +235,7 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
   ACE_NEW_RETURN (payload_p,
                   ACE_Message_Block (length),
                   -1);
-  std::unique_ptr <ACE_Message_Block> payload (payload_p);
+  ACE_Message_Block_Unique_Ptr payload {payload_p};
 
   // Ensure there's sufficient room for log record payload.
   ACE_CDR::grow (payload.get (), 8 + ACE_CDR::MAX_ALIGNMENT + length);
@@ -229,7 +247,7 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
 
   // We've got a framed IPC mechanism, so we can just do a <recv>.
   result = spipe.recv ((ACE_Str_Buf *) 0,
-                       &payload_msg,
+                       std::addressof (payload_msg),
                        &flags);
 
   if (result < 0 || payload_msg.len != (int)length)
@@ -244,7 +262,7 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
            | ACE_Event_Handler::EXCEPT_MASK
            | ACE_Event_Handler::DONT_CALL) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%n: result %d, length %d %p\n"),
+                           ACE_TEXT ("%n: result %b, length %d %p\n"),
                            result,
                            payload_msg.len,
                            ACE_TEXT ("remove_handler")),
@@ -265,9 +283,11 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
            ACE_Event_Handler::READ_MASK
            | ACE_Event_Handler::EXCEPT_MASK
            | ACE_Event_Handler::DONT_CALL) == -1)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("%n: %p\n"),
-                    ACE_TEXT ("remove_handler")));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("%n: %p\n"),
+                      ACE_TEXT ("remove_handler")));
+        }
 
       ACE_OS::closesocket (handle);
       return 0;
@@ -290,9 +310,11 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
 
   // Forward the logging record to the server.
   if (this->send (log_record) == -1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("send")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("%p\n"),
+                  ACE_TEXT ("send")));
+    }
   return 0;
 }
 
@@ -309,7 +331,9 @@ int
 ACE_Client_Logging_Handler::close (u_long)
 {
   if (this->logging_output_ != ACE_STDERR)
+  {
     ACE_OS::closesocket (this->logging_output_);
+  }
 
   this->destroy ();
   return 0;
@@ -334,9 +358,11 @@ ACE_Client_Logging_Handler::send (ACE_Log_Record &log_record)
   // network byte order.
 
   if (orig_ostream)
-    log_record.print (ACE_TEXT ("<localhost>"),
-                      ACE_Log_Msg::instance ()->flags (),
-                      *orig_ostream);
+    {
+      log_record.print (ACE_TEXT ("<localhost>"),
+                        ACE_Log_Msg::instance ()->flags (),
+                        *orig_ostream);
+    }
 
   if (this->logging_output_ == ACE_STDERR)
     {
@@ -400,80 +426,86 @@ ACE_Client_Logging_Handler::send (ACE_Log_Record &log_record)
           ACE_DEBUG ((LM_DEBUG,
                       "Something about the sendv_n() failed, so switch to stderr\n"));
 
-          if (ACE_Log_Msg::instance ()->msg_ostream () == 0)
-            // Switch over to logging to stderr for now.  At some
-            // point, we'll improve the implementation to queue up the
-            // message, try to reestablish a connection, and then send
-            // the queued data once we've reconnect to the logging
-            // server.  If you'd like to implement this functionality
-            // and contribute it back to ACE that would be great!
-            this->logging_output_ = ACE_STDERR;
+          if (ACE_Log_Msg::instance ()->msg_ostream () == nullptr)
+            {
+              // Switch over to logging to stderr for now.  At some
+              // point, we'll improve the implementation to queue up the
+              // message, try to reestablish a connection, and then send
+              // the queued data once we've reconnect to the logging
+              // server.  If you'd like to implement this functionality
+              // and contribute it back to ACE that would be great!
+              this->logging_output_ = ACE_STDERR;
+            }
         }
       else
-        ACE_DEBUG ((LM_DEBUG,
-                    "Sent logging message %s successfully to Server Logging Daemon!\n",
-                    log_record.priority_name (ACE_Log_Priority (log_record.type ()))));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "Sent logging message %s successfully to Server Logging Daemon!\n",
+                      log_record.priority_name (ACE_Log_Priority (log_record.type ()))));
+        }
     }
 
   return 0;
 }
 
+/**
+ * This factory creates connections with the Server_Logging_Acceptor.  It
+ * contains the service-specific methods that cannot easily be factored into
+ * ACE_Acceptor.
+ */
 class ACE_Client_Logging_Acceptor : public ACE_Acceptor<ACE_Client_Logging_Handler, LOGGING_ACCEPTOR>
 {
-  // = TITLE
-  //     This factory creates connections with the
-  //     <Server_Logging_Acceptor>.
-  //
-  // = DESCRIPTION
-  //     This class contains the service-specific methods that can't
-  //     easily be factored into the <ACE_Acceptor>.
 public:
   ACE_Client_Logging_Acceptor ();
-  // Default constructor.
 
 protected:
-  // = Dynamic linking hooks.
-  virtual int init (int argc, ACE_TCHAR *argv[]);
-  // Called when service is linked.
+  /// @name Dynamic linking hooks.
+  /// @{
 
-  virtual int fini ();
-  // Called when service is unlinked.
+  /// Called when service is linked.
+  int init (int argc, ACE_TCHAR *argv[]) override;
 
-  virtual int info (ACE_TCHAR **strp, size_t length) const;
-  // Called to determine info about the service.
+  /// Called when service is unlinked.
+  int fini () override;
 
-  virtual int make_svc_handler (ACE_Client_Logging_Handler *&sh);
-  // Factory that always returns the <handler_>.
+  /// Called to determine info about the service.
+  int info (ACE_TCHAR **strp, size_t length) const override;
 
-  // = Scheduling hooks.
-  virtual int suspend ();
-  virtual int resume ();
+  /// Factory that always returns the handler_.
+  int make_svc_handler (ACE_Client_Logging_Handler *&sh) override;
+  /// @}
+
+  /// @name Scheduling hooks.
+  /// @{
+
+  int suspend () override;
+  int resume () override;
+  /// @}
 
 private:
+  /// Parse svc.conf arguments.
   int parse_args (int argc, ACE_TCHAR *argv[]);
-  // Parse svc.conf arguments.
 
-  const ACE_TCHAR *server_host_;
-  // Host where the logging server is located.
+  /// Host where the logging server is located.
+  ACE_TCHAR const *server_host_;
 
+  /// Port number where the logging server is listening for connections.
   u_short server_port_;
-  // Port number where the logging server is listening for
-  // connections.
 
+  /// Address to connect to the server logging daemon.
   ACE_INET_Addr server_addr_;
-  // Address to connect to the server logging daemon.
 
+  /// Local IP/port number to use for the connection to the server logging
+  /// daemon.
   ACE_INET_Addr local_addr_;
-  // Local IP/port number to use for the connection to the server logging
-  // daemon.
 
-  const ACE_TCHAR *logger_key_;
-  // Communication endpoint where the client logging daemon will
-  // listen for connections from clients.
+  /// Communication endpoint where the client logging daemon listens for
+  /// connections from clients.
+  ACE_TCHAR const *logger_key_;
 
+  /// Singleton handler that receives messages from clients and forwards
+  /// them to the server.
   ACE_Client_Logging_Handler *handler_;
-  // Pointer to the singleton handler that receives messages from
-  // clients and forwards to the server.
 };
 
 int
@@ -481,8 +513,10 @@ ACE_Client_Logging_Acceptor::fini ()
 {
   this->close ();
 
-  if (this->handler_ != 0)
+  if (this->handler_ != nullptr)
+  {
     this->handler_->close (0);
+  }
 
   // Try to unlink the logger key so weird things don't happen if
   // we're using STREAM pipes.
@@ -513,10 +547,18 @@ ACE_Client_Logging_Acceptor::info (ACE_TCHAR **strp, size_t length) const
                    this->server_addr_.get_port_number (), "tcp",
                    "# client logging daemon\n");
 
-  if (*strp == 0 && (*strp = ACE_OS::strdup (buf)) == 0)
-    return -1;
+  if (*strp == nullptr)
+    {
+      *strp = ACE_OS::strdup (buf);
+    }
+  if (*strp == nullptr)
+    {
+      return -1;
+    }
   else
-    ACE_OS::strncpy (*strp, buf, length);
+  {
+    ACE_OS::strsncpy (*strp, buf, length);
+  }
   return ACE_OS::strlen (buf);
 }
 
@@ -524,7 +566,7 @@ ACE_Client_Logging_Acceptor::ACE_Client_Logging_Acceptor ()
   : server_host_ (ACE_OS::strdup (ACE_DEFAULT_SERVER_HOST)),
     server_port_ (ACE_DEFAULT_LOGGING_SERVER_PORT),
     logger_key_ (ACE_OS::strdup (ACE_DEFAULT_LOGGER_KEY)),
-    handler_ (0)
+    handler_ (nullptr)
 {
 }
 
@@ -533,9 +575,11 @@ ACE_Client_Logging_Acceptor::init (int argc, ACE_TCHAR *argv[])
 {
   // We'll log *our* error and debug messages to stderr!
   if (ACE_LOG_MSG->open (ACE_TEXT ("Client Logging Service")) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Can't open ACE_Log_Msg\n")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Can't open ACE_Log_Msg\n")),
+                        -1);
+    }
 
   // Use the options hook to parse the command line arguments and set
   // options.
@@ -547,10 +591,12 @@ ACE_Client_Logging_Acceptor::init (int argc, ACE_TCHAR *argv[])
 
   // Initialize the acceptor endpoint.
   if (this->open (LOGGING_ADDR (this->logger_key_)) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       this->logger_key_),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         this->logger_key_),
+                        -1);
+    }
 
   // Establish connection with the server.
   ACE_SOCK_Connector con;
@@ -562,14 +608,16 @@ ACE_Client_Logging_Acceptor::init (int argc, ACE_TCHAR *argv[])
 
   // Figure out what local port we're really bound to.
   if (this->acceptor ().get_local_addr (lserver_addr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("get_local_addr")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("get_local_addr")),
+                        -1);
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Starting up Client Logging Daemon, ")
-              ACE_TEXT ("bounded to STREAM addr %s on handle %u\n"),
+              ACE_TEXT ("bounded to STREAM addr %s on handle %H\n"),
               lserver_addr.get_path_name (),
               this->acceptor ().get_handle ()));
 #else
@@ -577,21 +625,23 @@ ACE_Client_Logging_Acceptor::init (int argc, ACE_TCHAR *argv[])
 
   // Figure out what local port we're really bound to.
   if (this->acceptor ().get_local_addr (lserver_addr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("get_local_addr")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("get_local_addr")),
+                        -1);
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Starting up Client Logging Daemon, ")
-              ACE_TEXT ("bounded to local port %d on handle %u\n"),
+              ACE_TEXT ("bounded to local port %d on handle %H\n"),
               lserver_addr.get_port_number (),
               this->acceptor ().get_handle ()));
 #endif /* ACE_HAS_STREAM_LOG_MSG_IPC == 1 */
 
   if (con.connect (stream,
                    this->server_addr_,
-                   0,
+                   nullptr,
                    this->local_addr_) == -1)
     {
       ACE_ERROR ((LM_ERROR,
@@ -601,22 +651,26 @@ ACE_Client_Logging_Acceptor::init (int argc, ACE_TCHAR *argv[])
                   this->server_addr_.get_port_number (),
                   ACE_ERRNO_GET));
 
-      if (ACE_Log_Msg::instance ()->msg_ostream () == 0)
-        // If we can't connect to the server then we'll send the logging
-        // messages to stderr.
-        stream.set_handle (ACE_STDERR);
+      if (ACE_Log_Msg::instance ()->msg_ostream () == nullptr)
+        {
+          // If we can't connect to the server then we'll send the logging
+          // messages to stderr.
+          stream.set_handle (ACE_STDERR);
+        }
     }
   else
     {
       // Figure out what remote port we're really bound to.
       if (stream.get_remote_addr (server_addr) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("get_remote_addr")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("%p\n"),
+                             ACE_TEXT ("get_remote_addr")),
+                            -1);
+        }
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("Client Logging Daemon is connected to Server ")
-                  ACE_TEXT ("Logging Daemon %C on port %d on handle %u\n"),
+                  ACE_TEXT ("Logging Daemon %C on port %d on handle %H\n"),
                   server_addr.get_host_name (),
                   server_addr.get_port_number (),
                   stream.get_handle ()));
@@ -665,19 +719,25 @@ ACE_Client_Logging_Acceptor::parse_args (int argc, ACE_TCHAR *argv[])
   if (local_addr_str.length () > 0)
     {
       if (local_addr_str.rfind (ACE_TCHAR(':')) == ACE_TString::npos)
+      {
         local_addr_str += ACE_TEXT (":0");
+      }
       ACE_TCHAR *local_addr_cstr = local_addr_str.rep ();
       if (-1 == local_addr_.string_to_addr (ACE_TEXT_ALWAYS_CHAR (local_addr_cstr)))
+      {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), local_addr_cstr));
+      }
       delete [] local_addr_cstr;
     }
 
   if (this->server_addr_.set (this->server_port_,
                               this->server_host_) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       this->server_host_),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         this->server_host_),
+                        -1);
+    }
   return 0;
 }
 

@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project: taoserver, utils {
   exename = ORB_destroy
 }

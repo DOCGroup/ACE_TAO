@@ -73,15 +73,10 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // param holder for a template parameter.
 class AST_Type;
 
-// NOTE: This list class only works correctly because we use single public
-//       inheritance, as opposed to multiple inheritance or public virtual.
-//       It relies on a type-unsafe cast from UTL_List to subclasses, which
-//       will cease to operate correctly if you use either multiple or
-//       public virtual inheritance.
-
 class TAO_IDL_FE_Export UTL_ExceptList : public UTL_List
 {
 public:
+  UTL_ExceptList () = delete;
   UTL_ExceptList (AST_Type *s,
                   UTL_ExceptList *cdr);
 
@@ -115,14 +110,15 @@ struct UTL_ExceptList_Deleter
 using UTL_ExceptList_Owner =
   std::unique_ptr<UTL_ExceptList, UTL_ExceptList_Deleter>;
 
-// Active iterator for UTL_ExceptList.
+/// Active iterator for UTL_ExceptList.
 class TAO_IDL_FE_Export UTL_ExceptlistActiveIterator
   : public UTL_ListActiveIterator
 {
 public:
+  UTL_ExceptlistActiveIterator () = delete;
   explicit UTL_ExceptlistActiveIterator (UTL_ExceptList *s);
 
-  // Get current item
+  /// Get the current item.
   AST_Type *item () const;
 };
 

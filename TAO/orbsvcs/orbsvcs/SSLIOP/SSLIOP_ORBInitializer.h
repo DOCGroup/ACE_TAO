@@ -1,13 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    SSLIOP_ORBInitializer.h
  *
  *  @author  Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_SSLIOP_ORB_INITIALIZER_H
 #define TAO_SSLIOP_ORB_INITIALIZER_H
@@ -51,8 +46,7 @@ namespace TAO
         public virtual ::CORBA::LocalObject
     {
     public:
-      /// Constructor.
-      ORBInitializer (::Security::QOP qop);
+      explicit ORBInitializer (::Security::QOP qop);
 
       void pre_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 

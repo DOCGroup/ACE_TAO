@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "orbsvcs/FaultTolerance/FT_ORBInitializer.h"
 #include "orbsvcs/FaultTolerance/FT_PolicyFactory.h"
 #include "orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.h"
@@ -83,7 +82,6 @@ TAO_FT_ORBInitializer::register_server_request_interceptors (
 
   info->add_server_request_interceptor (server_interceptor.in ());
 }
-
 
 void
 TAO_FT_ORBInitializer::register_client_request_interceptors (

@@ -1,13 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    SOCK_Dgram_Bcast.h
  *
  *  @author Doug Schmidt
  */
-//=============================================================================
-
 
 #ifndef ACE_SOCK_DGRAM_BCAST_H
 #define ACE_SOCK_DGRAM_BCAST_H
@@ -32,11 +27,9 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Bcast_Node
 {
 public:
-  /// Default constructor.
   ACE_Bcast_Node (ACE_INET_Addr &,
                   ACE_Bcast_Node *);
 
-  /// Destructor.
   ~ACE_Bcast_Node () = default;
 
   /// Broadcast address for the interface.
@@ -57,33 +50,31 @@ public:
 class ACE_Export ACE_SOCK_Dgram_Bcast : public ACE_SOCK_Dgram
 {
 public:
-  /// Default constructor.
   ACE_SOCK_Dgram_Bcast ();
 
-  ACE_SOCK_Dgram_Bcast (const ACE_Addr &local,
+  ACE_SOCK_Dgram_Bcast (ACE_Addr const &local,
                         int protocol_family = PF_INET,
                         int protocol = 0,
                         int reuse_addr = 0,
-                        const ACE_TCHAR *host_name = nullptr);
+                        ACE_TCHAR const *host_name = nullptr);
 
-  /// Default dtor.
   ~ACE_SOCK_Dgram_Bcast ();
 
   // Initiate a connectionless datagram broadcast endpoint.
 
   /// Initiate a connectionless datagram broadcast endpoint.
-  int open (const ACE_Addr &local,
+  int open (ACE_Addr const &local,
             int protocol_family = PF_INET,
             int protocol = 0,
             int reuse_addr = 0,
-            const ACE_TCHAR *host_name = nullptr);
+            ACE_TCHAR const *host_name = nullptr);
 
   /// Close up and release dynamically allocated resources.
   int close ();
 
   /// Broadcast the datagram to every interface.  Returns the average
   /// number of bytes sent.
-  ssize_t send (const void *buf,
+  ssize_t send (void const *buf,
                 size_t n,
                 u_short portnum,
                 int flags = 0) const;
@@ -97,9 +88,9 @@ public:
 
   /// Broadcast an N byte datagram to ADDR (note that addr must be
   /// preassigned to the broadcast address of the subnet...).
-  ssize_t send (const void *buf,
+  ssize_t send (void const *buf,
                 size_t n,
-                const ACE_Addr &addr,
+                ACE_Addr const &addr,
                 int flags = 0) const;
 
   /**
@@ -109,7 +100,7 @@ public:
    */
   ssize_t send (const iovec iov[],
                 int n,
-                const ACE_Addr &addr,
+                ACE_Addr const &addr,
                 int flags = 0) const;
 
   /// Dump the state of an object.
@@ -120,10 +111,10 @@ public:
 
 private:
   /// Make broadcast available for Datagram socket.
-  int mk_broadcast (const ACE_TCHAR *host_name);
+  int mk_broadcast (ACE_TCHAR const *host_name);
 
   /// Points to the head of the list of broadcast interfaces.
-  ACE_Bcast_Node *if_list_;
+  ACE_Bcast_Node *if_list_ {};
 
   /// Do not allow this function to percolate up to this interface...
   int get_remote_addr (ACE_Addr &) const;

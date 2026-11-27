@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   Entries.h
  *
  *  @author Marina Spivak <marina@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_ENTRIES_H
 #define TAO_ENTRIES_H
@@ -29,39 +25,33 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * @class TAO_IntId
  *
  * @brief Helper class for TAO_Transient_Bindings_Map: unifies several
- * data items, so they can be stored together as a  <value>
- * for a <key> in a hash table holding the state of a Transient
+ * data items, so they can be stored together as a  @c value
+ * for a @c key in a hash table holding the state of a Transient
  * Naming Context.
  *
  * This class holds CORBA Object pointer and a binding type, so
- * they can be stored together as a <value> for a <key> in a
+ * they can be stored together as a @c value for a @c key in a
  * hash table holding the state of a Transient Naming Context.
  */
 class TAO_Naming_Serv_Export TAO_IntId
 {
 public:
-  /// Constructor.
   TAO_IntId ();
 
-  /// Constructor.
   TAO_IntId (CORBA::Object_ptr obj,
             CosNaming::BindingType type /* = CosNaming::nobject */);
 
-  /// Copy constructor.
-  TAO_IntId (const TAO_IntId & rhs);
+  TAO_IntId (TAO_IntId const &rhs);
 
-  /// Destructor.
   ~TAO_IntId ();
 
   /// Assignment operator (does copy memory).
-  void operator= (const TAO_IntId & rhs);
-
-  // = Data members.
+  void operator= (TAO_IntId const &rhs);
 
   /// Object reference to be stored in a Transient Naming Context.
   CORBA::Object_ptr ref_;
 
-  /// Binding type for <ref_>.
+  /// Binding type for @c ref_.
   CosNaming::BindingType type_;
 };
 
@@ -69,62 +59,61 @@ public:
  * @class TAO_ExtId
  *
  * @brief Helper class for TAO_Transient_Bindings_Map: unifies several
- * data items, so they can be stored together as a  <key>
- * for a <value> in a hash table holding the state of a Transient
+ * data items, so they can be stored together as a  @c key
+ * for a @c value in a hash table holding the state of a Transient
  * Naming Context.
  *
  * This class holds id and kind strings, so
- * they can be stored together as a <key> for a <value> in a
+ * they can be stored together as a @c key for a @c value in a
  * hash table holding the state of a Transient Naming Context.
  */
 class TAO_Naming_Serv_Export TAO_ExtId
 {
 public:
-  /// Constructor.
   TAO_ExtId ();
 
-  /// Constructor.
-  TAO_ExtId (const char *id,
-            const char *kind);
+  TAO_ExtId (char const *id,
+            char const *kind);
 
-  /// Copy constructor.
-  TAO_ExtId (const TAO_ExtId & rhs);
+  TAO_ExtId (TAO_ExtId const &rhs);
 
-  /// Destructor.
   ~TAO_ExtId ();
 
-  // = Assignment and comparison operators.
+  /// @name Assignment and comparison operators
+  /// @{
 
   /// Assignment operator (does copy memory).
-  void operator= (const TAO_ExtId & rhs);
+  void operator= (TAO_ExtId const &rhs);
 
   /// Equality comparison operator (must match both id_ and kind_).
-  bool operator== (const TAO_ExtId &rhs) const;
+  bool operator== (TAO_ExtId const &rhs) const;
 
   /// Inequality comparison operator.
-  bool operator!= (const TAO_ExtId &rhs) const;
+  bool operator!= (TAO_ExtId const &rhs) const;
 
-  /// <hash> function is required in order for this class to be usable by
+  /// @c hash function is required in order for this class to be usable by
   /// ACE_Hash_Map_Manager.
   u_long hash () const;
 
-  // = Data members.
+  /// @}
 
-  /// <kind> portion of the name to be associated with some object
+  /// @c kind portion of the name to be associated with some object
   /// reference in a Transient Naming Context.
   ACE_CString kind_;
 
-  /// <id> portion of the name to be associated with some object
+  /// @c id portion of the name to be associated with some object
   /// reference in a Transient Naming Context.
   ACE_CString id_;
 
-  // = Accessors
+  /// @name Accessors
+  /// @{
 
-  /// Return id_ in a const char * format.
-  const char * id ();
+  /// Return id_ in a char const * format.
+  char const * id ();
 
-  /// Return kind_ in a const char * format.
-  const char * kind ();
+  /// Return kind_ in a char const * format.
+  char const * kind ();
+  /// @}
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

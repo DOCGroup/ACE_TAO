@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Adapter.h
  *
  *  @author Carlos O'Ryan (coryan@uci.edu)
  */
-//=============================================================================
 
 #ifndef TAO_ADAPTER_H
 #define TAO_ADAPTER_H
@@ -45,6 +41,11 @@ class TAO_ServerRequest;
 class TAO_Export TAO_Adapter
 {
 public:
+  TAO_Adapter () = default;
+  TAO_Adapter (TAO_Adapter const &) = default;
+  TAO_Adapter (TAO_Adapter &&) = default;
+  TAO_Adapter &operator= (TAO_Adapter const &) = default;
+  TAO_Adapter &operator= (TAO_Adapter &&) = default;
   virtual ~TAO_Adapter ();
 
   /// Initialize the Adapter
@@ -110,6 +111,7 @@ public:
   /// Initialize a collocated object using the given stub
   /// pointer for lazily evaluated object references.
   virtual CORBA::Long initialize_collocated_object (TAO_Stub *) = 0;
+
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

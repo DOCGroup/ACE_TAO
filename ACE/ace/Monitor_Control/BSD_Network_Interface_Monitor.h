@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  * @file BSD_Network_Interface_Monitor.h
  *
  * @author Jeff Parsons <j.parsons@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef BSD_NETWORK_INTERFACE_MONITOR_H
 #define BSD_NETWORK_INTERFACE_MONITOR_H
@@ -38,7 +34,7 @@ namespace ACE
     class MONITOR_CONTROL_Export BSD_Network_Interface_Monitor
     {
     protected:
-      BSD_Network_Interface_Monitor (const ACE_TCHAR *lookup_str);
+      explicit BSD_Network_Interface_Monitor (ACE_TCHAR const *lookup_str);
 
       /// Platform-specific implementation.
       void update_i ();
@@ -47,13 +43,13 @@ namespace ACE
       void clear_impl ();
 
     protected:
-      ACE_UINT64 value_;
+      ACE_UINT64 value_ {};
 
     private:
       void init ();
       void fetch (ACE_UINT64& value) const;
 
-      ACE_UINT64 start_;
+      ACE_UINT64 start_ {};
       ACE_CString lookup_str_;
     };
   }

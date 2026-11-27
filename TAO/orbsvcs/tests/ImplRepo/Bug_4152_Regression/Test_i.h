@@ -1,5 +1,3 @@
-/* -*- C++ -*-  */
-
 #ifndef TEST_I_H_
 #define TEST_I_H_
 
@@ -12,7 +10,7 @@
 class  Test_i : public virtual POA_Test
 {
 public:
-  Test_i (CORBA::ORB_ptr orb);
+  explicit Test_i (CORBA::ORB_ptr orb);
   virtual CORBA::Short get_server_num ();
 
   virtual void terminate ();

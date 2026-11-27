@@ -1,13 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    CSD_TP_Dispatchable_Visitor.h
  *
  *  @author  Tim Bradley <bradley_t@ociweb.com>
  */
-//=============================================================================
-
 #ifndef TAO_CSD_TP_DISPATCHABLE_VISITOR_H
 #define TAO_CSD_TP_DISPATCHABLE_VISITOR_H
 
@@ -41,22 +36,24 @@ namespace TAO
      *
      * An method is provided to retrieve a "copy" of the "dispatchable"
      * request that was saved off during visitation.  A nil reference
-     * (ie, a NULL pointer) will be returned if no dispatchable request
+     * (ie, a null pointer) will be returned if no dispatchable request
      * was found.
      *
      */
     class TAO_CSD_TP_Export TP_Dispatchable_Visitor : public TP_Queue_Visitor
     {
     public:
-      /// Default Constructor.
       TP_Dispatchable_Visitor() = default;
 
-      /// Virtual Destructor.
-      ~TP_Dispatchable_Visitor() override;
+      ~TP_Dispatchable_Visitor() override = default;
+      TP_Dispatchable_Visitor (TP_Dispatchable_Visitor const &) = default;
+      TP_Dispatchable_Visitor (TP_Dispatchable_Visitor &&) = default;
+      TP_Dispatchable_Visitor &operator= (TP_Dispatchable_Visitor const &) = default;
+      TP_Dispatchable_Visitor &operator= (TP_Dispatchable_Visitor &&) = default;
 
       /// Reset this visitor object in order to re-use it for another
       /// visitation of the request queue.  This sets the visitor's "result"
-      /// (the TP_Request* data member) to its default value (a nil handle).
+      /// (the TP_Request* data member) to its default value (a null handle).
       void reset();
 
       /// Returns true to continue visitation.  Returns false to stop
@@ -65,10 +62,9 @@ namespace TAO
       /// remove_flag alone otherwise.
       bool visit_request(TP_Request* request, bool& remove_flag) override;
 
-      /// This returns a "copy" of the located request, or 0 if no request
+      /// This returns a "copy" of the located request, or nullptr if no request
       /// was located.
       TP_Request* request();
-
 
     private:
       /// A handle to the located request.

@@ -1,13 +1,9 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file     MMAP_Memory_Pool.h
  *
  *  @author Dougls C. Schmidt <d.schmidt@vanderbilt.edu>
  *  @author Prashant Jain <pjain@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef ACE_MMAP_MEMORY_POOL_H
 #define ACE_MMAP_MEMORY_POOL_H
@@ -61,8 +57,7 @@ public:
     NEVER_FIXED = 2
   };
 
-  /// Constructor
-  ACE_MMAP_Memory_Pool_Options (const void *base_addr = ACE_DEFAULT_BASE_ADDR,
+  ACE_MMAP_Memory_Pool_Options (void const *base_addr = ACE_DEFAULT_BASE_ADDR,
                                 int use_fixed_addr = ALWAYS_FIXED,
                                 bool write_each_page = true,
                                 size_t minimum_bytes = 0,
@@ -74,7 +69,7 @@ public:
                                 bool install_signal_handler = true);
 
   /// Base address of the memory-mapped backing store.
-  const void *base_addr_;
+  void const *base_addr_;
 
   /**
    * Determines whether we set @c base_addr_ or if mmap(2) selects it
@@ -120,8 +115,10 @@ public:
   bool install_signal_handler_;
 
 private:
-  ACE_MMAP_Memory_Pool_Options (const ACE_MMAP_Memory_Pool_Options &) = delete;
-  ACE_MMAP_Memory_Pool_Options &operator= (const ACE_MMAP_Memory_Pool_Options &) = delete;
+  ACE_MMAP_Memory_Pool_Options (ACE_MMAP_Memory_Pool_Options const &) = delete;
+  ACE_MMAP_Memory_Pool_Options (ACE_MMAP_Memory_Pool_Options &&) = delete;
+  ACE_MMAP_Memory_Pool_Options &operator= (ACE_MMAP_Memory_Pool_Options const &) = delete;
+  ACE_MMAP_Memory_Pool_Options &operator= (ACE_MMAP_Memory_Pool_Options &&) = delete;
 };
 
 /**
@@ -136,10 +133,9 @@ public:
   using OPTIONS = ACE_MMAP_Memory_Pool_Options;
 
   /// Initialize the pool.
-  ACE_MMAP_Memory_Pool (const ACE_TCHAR *backing_store_name = nullptr,
-                        const OPTIONS *options = nullptr);
+  ACE_MMAP_Memory_Pool (ACE_TCHAR const *backing_store_name = nullptr,
+                        OPTIONS const *options = nullptr);
 
-  /// Destructor.
   ~ACE_MMAP_Memory_Pool () override;
 
   /// Ask system for initial chunk of shared memory.
@@ -265,20 +261,20 @@ protected:
    * free to select any address to map the file, otherwise this value
    * is what the OS must try to use to mmap the file.
    */
-  void *base_addr_;
+  void *base_addr_ {};
 
   /// Must we use the @c base_addr_ or can we let mmap(2) select it?
-  int use_fixed_addr_;
+  int use_fixed_addr_ {ACE_MMAP_Memory_Pool_Options::FIRSTCALL_FIXED};
 
   /// Flags passed into ACE_OS::mmap().
-  int flags_;
+  int flags_ {MAP_SHARED};
 
   /// Should we write a byte to each page to forceably allocate memory
   /// for this backing store?
-  bool write_each_page_;
+  bool write_each_page_ {};
 
   /// What the minimum bytes of the initial segment should be.
-  size_t minimum_bytes_;
+  size_t minimum_bytes_ {};
 
   /// Name of the backing store where the shared memory pool is kept.
   ACE_TCHAR backing_store_name_[MAXPATHLEN + 1];
@@ -291,13 +287,13 @@ protected:
   bool guess_on_fault_;
 
   /// Security attributes object, only used on NT.
-  LPSECURITY_ATTRIBUTES sa_;
+  LPSECURITY_ATTRIBUTES sa_ {};
 
   /// Protection mode for mmaped file.
-  mode_t file_mode_;
+  mode_t file_mode_ {ACE_DEFAULT_FILE_PERMS};
 
   /// Should we install a signal handler
-  bool install_signal_handler_;
+  bool install_signal_handler_ {true};
 };
 
 /**
@@ -316,10 +312,9 @@ class ACE_Export ACE_Lite_MMAP_Memory_Pool : public ACE_MMAP_Memory_Pool
 {
 public:
   /// Initialize the pool.
-  ACE_Lite_MMAP_Memory_Pool (const ACE_TCHAR *backing_store_name = nullptr,
-                             const OPTIONS *options = nullptr);
+  ACE_Lite_MMAP_Memory_Pool (ACE_TCHAR const *backing_store_name = nullptr,
+                             OPTIONS const *options = nullptr);
 
-  /// Destructor.
   ~ACE_Lite_MMAP_Memory_Pool () override;
 
   /// Overwrite the default sync behavior with no-op

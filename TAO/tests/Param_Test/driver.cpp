@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    driver.cpp
  *
@@ -7,14 +5,14 @@
  *
  *  @author   Aniruddha Gokhale
  */
-//=============================================================================
-
 
 #include "client.h"
 #include "driver.h"
 #include "results.h"
 #include "tests.h"
 #include "ace/Get_Opt.h"
+
+#include <cstring>
 
 // This function runs the test (main program)
 int
@@ -27,34 +25,29 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // initialize the driver
       if (drv.init (argc, argv) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                          "(%N:%l) driver.cpp - "
-                          "Driver initialization failed\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) driver.cpp - "
+                             "Driver initialization failed\n"),
+                            -1);
+        }
 
       // run various tests
       if (drv.run () == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                          "(%N:%l) driver.cpp - "
-                          "tests failed\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) driver.cpp - "
+                             "tests failed\n"),
+                            -1);
+        }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Caught unexpected CORBA exception:");
 
       return 1;
     }
   return 0;
-}
-
-// constructor
-Driver::Driver ()
-{
-}
-
-Driver::~Driver ()
-{
 }
 
 // initialize the driver
@@ -70,7 +63,7 @@ Driver::init (int argc, ACE_TCHAR **argv)
 
   try
     {
-      ACE_OS::strcpy (exception_string, "ORB Initialization");
+      std::strcpy (exception_string, "ORB Initialization");
 
       // Retrieve the underlying ORB
       this->orb_ = CORBA::ORB_init (argc,
@@ -79,29 +72,32 @@ Driver::init (int argc, ACE_TCHAR **argv)
 
       // Parse command line and verify parameters.
       if (opt->parse_args (argc, argv) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "(%N:%l) driver.cpp - "
-                           "parse_args failed\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%N:%l) driver.cpp - "
+                             "parse_args failed\n"),
+                            -1);
+        }
       // Retrieve a Param_Test object reference
-      ACE_OS::strcpy (exception_string,"ORB::string_to_object() failed.");
+      std::strcpy (exception_string,"ORB::string_to_object() failed.");
 
-      CORBA::Object_var temp =
+      CORBA::Object_var const temp =
         this->orb_->string_to_object (opt->param_test_ior ());
 
-
       if (CORBA::is_nil (temp.in()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "ORB::string_to_object() returned null object for IOR <%s>\n",
-                           opt->param_test_ior ()),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "ORB::string_to_object() returned null object for IOR <%s>\n",
+                             opt->param_test_ior ()),
+                            -1);
+        }
 
       // Get the object reference
-      ACE_OS::strcpy (exception_string,"Param_Test::_narrow () failed.");
+      std::strcpy (exception_string,"Param_Test::_narrow () failed.");
 
       this->objref_ = Param_Test::_narrow (temp.in());
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception (exception_string);
       return -1;
@@ -128,9 +124,13 @@ Driver::run ()
                                          this->objref_.in(),
                                          new Test_Short);
         if (opt->invoke_type () == Options::SII)
-          retstatus = client->run_sii_test ();
+          {
+            retstatus = client->run_sii_test ();
+          }
         else
+        {
           retstatus = client->run_dii_test ();
+        }
         delete client;
       }
       break;
@@ -141,9 +141,13 @@ Driver::run ()
                                              this->objref_.in(),
                                              new Test_ULongLong);
         if (opt->invoke_type () == Options::SII)
-          retstatus = client->run_sii_test ();
+          {
+            retstatus = client->run_sii_test ();
+          }
         else
+        {
           retstatus = client->run_dii_test ();
+        }
         delete client;
       }
       break;
@@ -154,9 +158,13 @@ Driver::run ()
                                                     this->objref_.in(),
                                                     new Test_Unbounded_String);
         if (opt->invoke_type () == Options::SII)
-          retstatus = client->run_sii_test ();
+          {
+            retstatus = client->run_sii_test ();
+          }
         else
+        {
           retstatus = client->run_dii_test ();
+        }
         delete client;
       }
       break;
@@ -167,9 +175,13 @@ Driver::run ()
                                                   this->objref_.in(),
                                                   new Test_Bounded_String);
         if (opt->invoke_type () == Options::SII)
-          retstatus = client->run_sii_test ();
+          {
+            retstatus = client->run_sii_test ();
+          }
         else
+        {
           retstatus = client->run_dii_test ();
+        }
         delete client;
       }
       break;
@@ -180,9 +192,13 @@ Driver::run ()
                                                      this->objref_.in(),
                                                      new Test_Unbounded_WString);
         if (opt->invoke_type () == Options::SII)
-          retstatus = client->run_sii_test ();
+          {
+            retstatus = client->run_sii_test ();
+          }
         else
+        {
           retstatus = client->run_dii_test ();
+        }
         delete client;
       }
       break;
@@ -193,9 +209,13 @@ Driver::run ()
                                                    this->objref_.in(),
                                                    new Test_Bounded_WString);
         if (opt->invoke_type () == Options::SII)
-          retstatus = client->run_sii_test ();
+          {
+            retstatus = client->run_sii_test ();
+          }
         else
+        {
           retstatus = client->run_dii_test ();
+        }
         delete client;
       }
       break;
@@ -206,9 +226,13 @@ Driver::run ()
                                                 this->objref_.in(),
                                                 new Test_Fixed_Struct);
         if (opt->invoke_type () == Options::SII)
-          retstatus = client->run_sii_test ();
+          {
+            retstatus = client->run_sii_test ();
+          }
         else
+        {
           retstatus = client->run_dii_test ();
+        }
         delete client;
       }
       break;
@@ -219,9 +243,13 @@ Driver::run ()
                                                    this->objref_.in(),
                                                    new Test_String_Sequence);
         if (opt->invoke_type () == Options::SII)
-          retstatus = client->run_sii_test ();
+          {
+            retstatus = client->run_sii_test ();
+          }
         else
+        {
           retstatus = client->run_dii_test ();
+        }
         delete client;
       }
       break;
@@ -232,9 +260,13 @@ Driver::run ()
                                                            this->objref_.in(),
                                                            new Test_Bounded_String_Sequence);
         if (opt->invoke_type () == Options::SII)
-          retstatus = client->run_sii_test ();
+          {
+            retstatus = client->run_sii_test ();
+          }
         else
+        {
           retstatus = client->run_dii_test ();
+        }
         delete client;
       }
       break;
@@ -245,9 +277,13 @@ Driver::run ()
                                                     this->objref_.in(),
                                                     new Test_WString_Sequence);
         if (opt->invoke_type () == Options::SII)
-          retstatus = client->run_sii_test ();
+          {
+            retstatus = client->run_sii_test ();
+          }
         else
+        {
           retstatus = client->run_dii_test ();
+        }
         delete client;
       }
       break;
@@ -258,9 +294,13 @@ Driver::run ()
                                                             this->objref_.in(),
                                                             new Test_Bounded_WString_Sequence);
         if (opt->invoke_type () == Options::SII)
-          retstatus = client->run_sii_test ();
+          {
+            retstatus = client->run_sii_test ();
+          }
         else
+        {
           retstatus = client->run_dii_test ();
+        }
         delete client;
       }
       break;
@@ -271,9 +311,13 @@ Driver::run ()
                                               this->objref_.in(),
                                               new Test_Var_Struct);
         if (opt->invoke_type () == Options::SII)
-          retstatus = client->run_sii_test ();
+          {
+            retstatus = client->run_sii_test ();
+          }
         else
+        {
           retstatus = client->run_dii_test ();
+        }
         delete client;
       }
       break;
@@ -284,9 +328,13 @@ Driver::run ()
                                                  this->objref_.in(),
                                                  new Test_Nested_Struct);
         if (opt->invoke_type () == Options::SII)
-          retstatus = client->run_sii_test ();
+          {
+            retstatus = client->run_sii_test ();
+          }
         else
+        {
           retstatus = client->run_dii_test ();
+        }
         delete client;
       }
       break;
@@ -297,9 +345,13 @@ Driver::run ()
                                                     this->objref_.in(),
                                                     new Test_Recursive_Struct);
         if (opt->invoke_type () == Options::SII)
-          retstatus = client->run_sii_test ();
+          {
+            retstatus = client->run_sii_test ();
+          }
         else
+        {
           retstatus = client->run_dii_test ();
+        }
         delete client;
       }
       break;
@@ -310,9 +362,13 @@ Driver::run ()
                                                  this->objref_.in(),
                                                  new Test_Objref_Struct);
         if (opt->invoke_type () == Options::SII)
-          retstatus = client->run_sii_test ();
+          {
+            retstatus = client->run_sii_test ();
+          }
         else
+        {
           retstatus = client->run_dii_test ();
+        }
         delete client;
       }
       break;
@@ -323,9 +379,13 @@ Driver::run ()
                                                    this->objref_.in(),
                                                    new Test_Struct_Sequence);
         if (opt->invoke_type () == Options::SII)
-          retstatus = client->run_sii_test ();
+          {
+            retstatus = client->run_sii_test ();
+          }
         else
+        {
           retstatus = client->run_dii_test ();
+        }
         delete client;
 
         Param_Test_Client<Test_Unbounded_Struct_Sequence> *client2 = new
@@ -335,9 +395,13 @@ Driver::run ()
            new Test_Unbounded_Struct_Sequence);
 
         if (opt->invoke_type () == Options::SII)
-          retstatus = client2->run_sii_test ();
+          {
+            retstatus = client2->run_sii_test ();
+          }
         else
+        {
           retstatus = client2->run_dii_test ();
+        }
         delete client2;
       }
       break;
@@ -348,9 +412,13 @@ Driver::run ()
                                                            this->objref_.in (),
                                                            new Test_Bounded_Struct_Sequence);
         if (opt->invoke_type () == Options::SII)
-          retstatus = client->run_sii_test ();
+          {
+            retstatus = client->run_sii_test ();
+          }
         else
+        {
           retstatus = client->run_dii_test ();
+        }
         delete client;
       }
       break;
@@ -361,9 +429,13 @@ Driver::run ()
                                                   this->objref_.in (),
                                                   new Test_Array_Sequence);
         if (opt->invoke_type () == Options::SII)
-          retstatus = client->run_sii_test ();
+          {
+            retstatus = client->run_sii_test ();
+          }
         else
+        {
           retstatus = client->run_dii_test ();
+        }
         delete client;
       }
       break;
@@ -374,9 +446,13 @@ Driver::run ()
                                                           this->objref_.in (),
                                                           new Test_Bounded_Array_Sequence);
         if (opt->invoke_type () == Options::SII)
-          retstatus = client->run_sii_test ();
+          {
+            retstatus = client->run_sii_test ();
+          }
         else
+        {
           retstatus = client->run_dii_test ();
+        }
         delete client;
       }
       break;
@@ -387,9 +463,13 @@ Driver::run ()
                                           this->objref_.in (),
                                           new Test_ObjRef);
         if (opt->invoke_type () == Options::SII)
-          retstatus = client->run_sii_test ();
+          {
+            retstatus = client->run_sii_test ();
+          }
         else
+        {
           retstatus = client->run_dii_test ();
+        }
         delete client;
       }
       break;
@@ -400,9 +480,13 @@ Driver::run ()
                                             this->objref_.in(),
                                             new Test_TypeCode);
         if (opt->invoke_type () == Options::SII)
-          retstatus = client->run_sii_test ();
+          {
+            retstatus = client->run_sii_test ();
+          }
         else
+        {
           retstatus = client->run_dii_test ();
+        }
         delete client;
       }
       break;
@@ -413,9 +497,13 @@ Driver::run ()
                                        this->objref_.in(),
                                        new Test_Any);
         if (opt->invoke_type () == Options::SII)
-          retstatus = client->run_sii_test ();
+          {
+            retstatus = client->run_sii_test ();
+          }
         else
+        {
           retstatus = client->run_dii_test ();
+        }
         delete client;
       }
       break;
@@ -426,9 +514,13 @@ Driver::run ()
                                                    this->objref_.in(),
                                                    new Test_ObjRef_Sequence);
         if (opt->invoke_type () == Options::SII)
-          retstatus = client->run_sii_test ();
+          {
+            retstatus = client->run_sii_test ();
+          }
         else
+        {
           retstatus = client->run_dii_test ();
+        }
         delete client;
       }
       break;
@@ -439,9 +531,13 @@ Driver::run ()
                                           this->objref_.in(),
                                           new Test_AnySeq);
         if (opt->invoke_type () == Options::SII)
-          retstatus = client->run_sii_test ();
+          {
+            retstatus = client->run_sii_test ();
+          }
         else
+        {
           retstatus = client->run_dii_test ();
+        }
         delete client;
       }
       break;
@@ -452,9 +548,13 @@ Driver::run ()
                                                   this->objref_.in(),
                                                   new Test_Short_Sequence);
         if (opt->invoke_type () == Options::SII)
-          retstatus = client->run_sii_test ();
+          {
+            retstatus = client->run_sii_test ();
+          }
         else
+        {
           retstatus = client->run_dii_test ();
+        }
         delete client;
       }
       break;
@@ -465,9 +565,13 @@ Driver::run ()
                                                           this->objref_.in(),
                                                           new Test_Bounded_Short_Sequence);
         if (opt->invoke_type () == Options::SII)
-          retstatus = client->run_sii_test ();
+          {
+            retstatus = client->run_sii_test ();
+          }
         else
+        {
           retstatus = client->run_dii_test ();
+        }
         delete client;
       }
       break;
@@ -478,9 +582,13 @@ Driver::run ()
                                                  this->objref_.in(),
                                                  new Test_Long_Sequence);
         if (opt->invoke_type () == Options::SII)
-          retstatus = client->run_sii_test ();
+          {
+            retstatus = client->run_sii_test ();
+          }
         else
+        {
           retstatus = client->run_dii_test ();
+        }
         delete client;
       }
       break;
@@ -491,9 +599,13 @@ Driver::run ()
                                                          this->objref_.in(),
                                                          new Test_Bounded_Long_Sequence);
         if (opt->invoke_type () == Options::SII)
-          retstatus = client->run_sii_test ();
+          {
+            retstatus = client->run_sii_test ();
+          }
         else
+        {
           retstatus = client->run_dii_test ();
+        }
         delete client;
       }
       break;
@@ -504,9 +616,13 @@ Driver::run ()
                                                this->objref_.in(),
                                                new Test_Fixed_Array);
         if (opt->invoke_type () == Options::SII)
-          retstatus = client->run_sii_test ();
+          {
+            retstatus = client->run_sii_test ();
+          }
         else
+        {
           retstatus = client->run_dii_test ();
+        }
         delete client;
       }
       break;
@@ -517,9 +633,13 @@ Driver::run ()
                                              this->objref_.in(),
                                              new Test_Var_Array);
         if (opt->invoke_type () == Options::SII)
-          retstatus = client->run_sii_test ();
+          {
+            retstatus = client->run_sii_test ();
+          }
         else
+        {
           retstatus = client->run_dii_test ();
+        }
         delete client;
       }
       break;
@@ -530,9 +650,13 @@ Driver::run ()
                                              this->objref_.in(),
                                              new Test_Exception);
         if (opt->invoke_type () == Options::SII)
-          retstatus = client->run_sii_test ();
+          {
+            retstatus = client->run_sii_test ();
+          }
         else
+        {
           retstatus = client->run_dii_test ();
+        }
         delete client;
       }
       break;
@@ -543,9 +667,13 @@ Driver::run ()
                                              this->objref_.in(),
                                              new Test_Big_Union);
         if (opt->invoke_type () == Options::SII)
-          retstatus = client->run_sii_test ();
+          {
+            retstatus = client->run_sii_test ();
+          }
         else
+        {
           retstatus = client->run_dii_test ();
+        }
         delete client;
       }
       break;
@@ -556,9 +684,13 @@ Driver::run ()
                                              this->objref_.in(),
                                              new Test_Small_Union);
         if (opt->invoke_type () == Options::SII)
-          retstatus = client->run_sii_test ();
+          {
+            retstatus = client->run_sii_test ();
+          }
         else
+        {
           retstatus = client->run_dii_test ();
+        }
         delete client;
       }
       break;
@@ -569,9 +701,13 @@ Driver::run ()
                                                    this->objref_.in(),
                                                    new Test_Recursive_Union);
         if (opt->invoke_type () == Options::SII)
-          retstatus = client->run_sii_test ();
+          {
+            retstatus = client->run_sii_test ();
+          }
         else
+        {
           retstatus = client->run_dii_test ();
+        }
         delete client;
       }
       break;
@@ -582,9 +718,13 @@ Driver::run ()
                                                this->objref_.in(),
                                                new Test_Complex_Any);
         if (opt->invoke_type () == Options::SII)
-          retstatus = client->run_sii_test ();
+          {
+            retstatus = client->run_sii_test ();
+          }
         else
+        {
           retstatus = client->run_dii_test ();
+        }
         delete client;
       }
       break;
@@ -595,9 +735,13 @@ Driver::run ()
                                                  this->objref_.in(),
                                                  new Test_Multdim_Array);
         if (opt->invoke_type () == Options::SII)
-          retstatus = client->run_sii_test ();
+          {
+            retstatus = client->run_sii_test ();
+          }
         else
+        {
           retstatus = client->run_dii_test ();
+        }
         delete client;
       }
       break;
@@ -616,7 +760,7 @@ Driver::run ()
       this->objref_ = Param_Test::_nil ();
       this->orb_->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("during shutdown");
     }

@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   NotifyLogConsumer.h
  *
@@ -9,7 +6,6 @@
  *
  *  @author David A. Hanvey <d.hanvey@qub.ac.uk>
  */
-//=============================================================================
 
 #ifndef TAO_TLS_NOTIFYLOGCONSUMER_H
 #define TAO_TLS_NOTIFYLOGCONSUMER_H
@@ -51,8 +47,7 @@ class TAO_Notify_LogConsumer :
   public virtual POA_CosNotifyComm::PushConsumer
 {
 public:
-  /// Constructor.
-  TAO_Notify_LogConsumer (TAO_NotifyLog_i * log);
+  explicit TAO_Notify_LogConsumer (TAO_NotifyLog_i * log);
 
   /// Connect to NotifyLog.
   void connect (CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin);
@@ -61,18 +56,21 @@ public:
   virtual void disconnect ();
 
 protected:
-  /// Destructor.
   ~TAO_Notify_LogConsumer () override;
 
-  // = NotifyPublish method
+  /// @name NotifyPublish method
+  /// @{
   void offer_change (
     CosNotification::EventTypeSeq const & added,
     CosNotification::EventTypeSeq const & removed) override;
+  /// @}
 
-  // = PushSupplier methods
+  /// @name PushSupplier methods
+  /// @{
   void push (CORBA::Any const & event) override;
 
   void disconnect_push_consumer () override;
+  /// @}
 
   TAO_Notify_LogConsumer (TAO_Notify_LogConsumer const &) = delete;
   TAO_Notify_LogConsumer (TAO_Notify_LogConsumer &&) = delete;

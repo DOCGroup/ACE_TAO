@@ -25,7 +25,6 @@ class RT_Class;
 class TAO_RTEC_Perf_Export RTCORBA_Setup
 {
 public:
-  /// Constructor
   RTCORBA_Setup (CORBA::ORB_ptr orb,
                  const RT_Class &rtclass,
                  int nthreads);

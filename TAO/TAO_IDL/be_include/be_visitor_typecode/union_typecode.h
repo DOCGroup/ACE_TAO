@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file  union_typecode.h
  *
@@ -8,7 +5,6 @@
  *
  *  @author  Ossama Othman <ossama@dre.vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef TAO_BE_VISITOR_UNION_TYPECODE_H
 #define TAO_BE_VISITOR_UNION_TYPECODE_H

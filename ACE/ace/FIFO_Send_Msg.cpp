@@ -24,29 +24,36 @@ ACE_FIFO_Send_Msg::dump () const
 }
 
 ssize_t
-ACE_FIFO_Send_Msg::send (const ACE_Str_Buf &send_msg)
+ACE_FIFO_Send_Msg::send (ACE_Str_Buf const &send_msg)
 {
   // ACE_TRACE ("ACE_FIFO_Send_Msg::send");
 #if defined (ACE_HAS_STREAM_PIPES)
   if (ACE_OS::putmsg (this->get_handle (),
-                      (strbuf *) 0,
-                      (strbuf *) &send_msg,
+                      nullptr,
+                      &send_msg,
                       0) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
-    return send_msg.len;
+    {
+      return send_msg.len;
+    }
 #else
   iovec iov[2];
 
-  iov[0].iov_base = (char *) &send_msg.len;
+  iov[0].iov_base = const_cast<char *> (
+    reinterpret_cast<char const *> (&send_msg.len));
   iov[0].iov_len  = sizeof send_msg.len;
 
-  iov[1].iov_base = (char *) send_msg.buf;
+  iov[1].iov_base = static_cast<char *> (send_msg.buf);
   iov[1].iov_len  =  static_cast<u_long> (send_msg.len);
 
   ssize_t sent = ACE_OS::writev (this->get_handle (), iov, 2);
   if (sent > 0)
+  {
     sent -= iov[0].iov_len;       // Don't count the length we added.
+  }
   return sent;
 #endif /* ACE_HAS_STREAM_PIPES */
 }
@@ -57,7 +64,7 @@ ACE_FIFO_Send_Msg::ACE_FIFO_Send_Msg ()
 }
 
 int
-ACE_FIFO_Send_Msg::open (const ACE_TCHAR *fifo_name,
+ACE_FIFO_Send_Msg::open (ACE_TCHAR const *fifo_name,
                          int flags,
                          mode_t perms,
                          LPSECURITY_ATTRIBUTES sa)
@@ -66,14 +73,16 @@ ACE_FIFO_Send_Msg::open (const ACE_TCHAR *fifo_name,
   return ACE_FIFO_Send::open (fifo_name, flags | O_WRONLY, perms, sa);
 }
 
-ACE_FIFO_Send_Msg::ACE_FIFO_Send_Msg (const ACE_TCHAR *fifo_name,
+ACE_FIFO_Send_Msg::ACE_FIFO_Send_Msg (ACE_TCHAR const *fifo_name,
                                       int flags,
                                       mode_t perms,
                                       LPSECURITY_ATTRIBUTES sa)
 {
   ACE_TRACE ("ACE_FIFO_Send_Msg::ACE_FIFO_Send_Msg");
   if (this->ACE_FIFO_Send_Msg::open (fifo_name, flags, perms, sa) == -1)
+  {
     ACELIB_ERROR ((LM_ERROR,  ACE_TEXT ("%p\n"),  ACE_TEXT ("ACE_FIFO_Send_Msg")));
+  }
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

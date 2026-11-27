@@ -1,11 +1,12 @@
 #include "ace/INet/HTTP_BasicAuthentication.h"
 #include "ace/Codecs.h"
+
 #include <memory>
+#include <new>
 
 #if !defined (__ACE_INLINE__)
 #include "ace/INet/HTTP_BasicAuthentication.inl"
 #endif
-
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -13,18 +14,18 @@ namespace ACE
 {
   namespace HTTP
   {
-    const char* BasicAuthentication::SCHEME = "Basic";
+    char const * BasicAuthentication::SCHEME = "Basic";
 
     BasicAuthentication::BasicAuthentication()
       {
       }
 
-    BasicAuthentication::BasicAuthentication(const ACE_CString& user, const ACE_CString& passwd)
+    BasicAuthentication::BasicAuthentication(ACE_CString const& user, ACE_CString const& passwd)
       : user_ (user), passwd_ (passwd)
       {
       }
 
-    BasicAuthentication::BasicAuthentication(const Request& request)
+    BasicAuthentication::BasicAuthentication(Request const& request)
       {
         if (request.has_credentials ())
         {
@@ -34,10 +35,15 @@ namespace ACE
           if (scheme == SCHEME)
             {
               size_t out_len = 0;
-              std::unique_ptr<ACE_Byte[]> safe_buf (ACE_Base64::decode ((const ACE_Byte*)info.c_str (),
-                                                                         &out_len));
-              ACE_CString credentials ((char*)safe_buf.get (), out_len);
-              ACE_CString::size_type pos = credentials.find (':');
+              ACE_Base64::Buffer const safe_buf (ACE_Base64::decode (
+                reinterpret_cast<ACE_Byte const *> (info.c_str ()),
+                std::addressof (out_len)));
+              if (!safe_buf)
+                {
+                  return;
+                }
+              ACE_CString const credentials (reinterpret_cast<char const *> (safe_buf.get ()), out_len);
+              ACE_CString::size_type const pos = credentials.find (':');
               if (pos != ACE_CString::npos)
                 {
                   this->user_ = credentials.substr (0, pos);
@@ -47,9 +53,7 @@ namespace ACE
         }
       }
 
-    BasicAuthentication::~BasicAuthentication()
-      {
-      }
+    BasicAuthentication::~BasicAuthentication() = default;
 
     void BasicAuthentication::set_credentials (Request& request) const
       {
@@ -57,12 +61,16 @@ namespace ACE
         credentials += ':';
         credentials += this->passwd_;
         size_t out_len = 0;
-        std::unique_ptr<ACE_Byte[]> safe_buf (
-            ACE_Base64::encode ((const ACE_Byte*)credentials.c_str (),
+        ACE_Base64::Buffer const safe_buf (
+            ACE_Base64::encode (reinterpret_cast<ACE_Byte const *> (credentials.c_str ()),
                                 credentials.length (),
-                                &out_len,
+                                std::addressof (out_len),
                                 false));
-        ACE_CString enc_cred ((char*)safe_buf.get (), out_len);
+        if (!safe_buf)
+          {
+            throw std::bad_alloc ();
+          }
+        ACE_CString const enc_cred (reinterpret_cast<char const *> (safe_buf.get ()), out_len);
         request.set_credentials (SCHEME, enc_cred);
       }
   }

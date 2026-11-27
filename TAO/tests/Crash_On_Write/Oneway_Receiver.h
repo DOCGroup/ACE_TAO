@@ -1,4 +1,3 @@
-
 #ifndef ONEWAY_RECEIVER_H
 #define ONEWAY_RECEIVER_H
 #include /**/ "ace/pre.h"
@@ -10,11 +9,17 @@ class Oneway_Receiver
   : public virtual POA_Test::Oneway_Receiver
 {
 public:
-  /// Constructor
-  Oneway_Receiver ();
+  Oneway_Receiver () = default;
 
-  // = The skeleton methods
-  virtual void receive_oneway ();
+  Oneway_Receiver (Oneway_Receiver const &) = delete;
+  Oneway_Receiver (Oneway_Receiver &&) = delete;
+  Oneway_Receiver & operator= (Oneway_Receiver const &) = delete;
+  Oneway_Receiver & operator= (Oneway_Receiver &&) = delete;
+
+  /// @name Skeleton methods
+  /// @{
+  void receive_oneway () override;
+  /// @}
 };
 
 #include /**/ "ace/post.h"

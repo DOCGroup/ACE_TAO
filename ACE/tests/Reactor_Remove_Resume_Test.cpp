@@ -24,8 +24,6 @@
 
 int overall_result = 0;
 
-// ------------------------------------------------------------
-
 class Bogus_Handler : public ACE_Event_Handler
 {
 public:
@@ -61,9 +59,7 @@ Bogus_Handler::Bogus_Handler (ACE_Reactor * reactor,
      ACE_Event_Handler::Reference_Counting_Policy::ENABLED);
 }
 
-Bogus_Handler::~Bogus_Handler ()
-{
-}
+Bogus_Handler::~Bogus_Handler () = default;
 
 ACE_HANDLE
 Bogus_Handler::get_handle () const
@@ -87,7 +83,9 @@ Bogus_Handler::handle_close (ACE_HANDLE,
                              ACE_Reactor_Mask)
 {
   if (this->okay_to_close_)
+  {
     return 0;
+  }
 
   overall_result = -1;
 
@@ -103,8 +101,6 @@ Bogus_Handler::resume_handler ()
   // We don't want the reactor to resume this event handler.
   return ACE_APPLICATION_RESUMES_HANDLER;
 }
-
-// ------------------------------------------------------------
 
 class Bad_Handler : public ACE_Event_Handler
 {
@@ -154,9 +150,7 @@ Bad_Handler::Bad_Handler (ACE_Reactor * reactor,
      ACE_Event_Handler::Reference_Counting_Policy::ENABLED);
 }
 
-Bad_Handler::~Bad_Handler ()
-{
-}
+Bad_Handler::~Bad_Handler () = default;
 
 ACE_HANDLE
 Bad_Handler::get_handle () const
@@ -247,7 +241,6 @@ Bad_Handler::handle_input_result () const
      : -1);
 }
 
-// ------------------------------------------------------------
 int
 register_handler (ACE_Reactor * reactor,
                   ACE_HANDLE read_handle,
@@ -272,8 +265,6 @@ register_handler (ACE_Reactor * reactor,
   return 0;
 }
 
-// ------------------------------------------------------------
-
 int
 send_data (ACE_HANDLE write_handle)
 {
@@ -291,7 +282,7 @@ send_data (ACE_HANDLE write_handle)
     ACE::send_n (write_handle,
                  foo,
                  len,
-                 &timeout, // timeout
+                 std::addressof (timeout), // timeout
                  &bytes_transferred);
 
   if (result == -1
@@ -306,8 +297,6 @@ send_data (ACE_HANDLE write_handle)
   return 0;
 }
 
-// ------------------------------------------------------------
-
 int
 handle_events (ACE_Reactor & reactor,
                bool & okay_to_close)
@@ -315,7 +304,7 @@ handle_events (ACE_Reactor & reactor,
   ACE_Time_Value timeout (2);
 
   // Only one event handler should have been dispatched.
-  if (reactor.handle_events (&timeout) != 1)
+  if (reactor.handle_events (std::addressof (timeout)) != 1)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("Initial event dispatch failed\n")));
@@ -328,8 +317,7 @@ handle_events (ACE_Reactor & reactor,
       // dispatch the newly registered event handler.  No events
       // should be dispatched.
       timeout.sec (2);
-      int const result = reactor.handle_events (&timeout);
-
+      int const result = reactor.handle_events (std::addressof (timeout));
 
       if (result > 0)
         {
@@ -344,13 +332,13 @@ handle_events (ACE_Reactor & reactor,
                       ACE_TEXT ("Event loop failed unexpectedly\n")));
         }
       else
+      {
         return 0;
+      }
     }
 
   return -1;
 }
-
-// ------------------------------------------------------------
 
 using reactor_factory_type = std::unique_ptr<ACE_Reactor_Impl> (*)();
 
@@ -360,10 +348,9 @@ tp_reactor_factory ()
   ACE_DEBUG ((LM_INFO,
               ACE_TEXT ("Creating ACE_TP_Reactor.\n")));
 
-  return std::unique_ptr<ACE_Reactor_Impl> (new ACE_TP_Reactor);
+  return std::make_unique<ACE_TP_Reactor> ();
 }
 
-// ------------------------------------------------------------
 /**
  * @struct Caller
  *
@@ -405,7 +392,7 @@ struct Run_Test
                         ACE_TEXT ("** Running removal test **\n")));
           }
 
-        std::unique_ptr<ACE_Reactor_Impl> the_factory (factory ());
+        std::unique_ptr<ACE_Reactor_Impl> const the_factory (factory ());
         ACE_Reactor reactor (the_factory.get ());
 
         // In this test, it's only okay to close the Bogus_Handler
@@ -414,7 +401,7 @@ struct Run_Test
 
         ACE_Pipe the_pipe;
         if (the_pipe.open () != 0
-            || register_handler (&reactor,
+            || register_handler (std::addressof (reactor),
                                  the_pipe.read_handle (),
                                  okay_to_close,
                                  suspension_test) != 0
@@ -431,8 +418,6 @@ struct Run_Test
   }
 };
 
-// ------------------------------------------------------------
-
 int
 run_main (int, ACE_TCHAR *[])
 {
@@ -448,11 +433,15 @@ run_main (int, ACE_TCHAR *[])
   std::for_each (factories, factories + factory_count, Run_Test ());
 
   if (overall_result != 0)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("Test failed.\n")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Test failed.\n")));
+    }
   else
-    ACE_ERROR ((LM_INFO,
-                ACE_TEXT ("Test passed.\n")));
+    {
+      ACE_ERROR ((LM_INFO,
+                  ACE_TEXT ("Test passed.\n")));
+    }
 
   ACE_Event_Handler_var nullvar;
   if (!nullvar)

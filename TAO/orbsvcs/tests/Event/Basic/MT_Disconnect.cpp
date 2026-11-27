@@ -8,10 +8,10 @@
 #include "orbsvcs/Event/EC_Default_Factory.h"
 
 static void run_test (PortableServer::POA_ptr poa,
-                      int use_callbacks);
+                      bool use_callbacks);
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   TAO_EC_Default_Factory::init_svcs ();
 
@@ -31,9 +31,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // ****************************************************************
 
-      run_test (poa.in (), 0);
+      run_test (poa.in (), false);
 
-      run_test (poa.in (), 1);
+      run_test (poa.in (), true);
 
       // ****************************************************************
 
@@ -41,7 +41,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Service");
       return 1;
@@ -63,7 +63,7 @@ deactivate_servant (PortableServer::Servant servant)
 
 void
 run_test (PortableServer::POA_ptr poa,
-          int use_callbacks)
+          bool use_callbacks)
 {
   TAO_EC_Event_Channel_Attributes attributes (poa, poa);
   attributes.disconnect_callbacks = use_callbacks;
@@ -90,12 +90,11 @@ run_test (PortableServer::POA_ptr poa,
 }
 
 Task::Task (RtecEventChannelAdmin::EventChannel_ptr ec,
-            int callbacks)
+            bool callbacks)
   :  event_channel (RtecEventChannelAdmin::EventChannel::_duplicate (ec)),
      use_callbacks (callbacks)
 {
 }
-
 
 int
 Task::svc ()
@@ -106,7 +105,7 @@ Task::svc ()
         {
           this->run_iteration ();
         }
-      catch (const CORBA::Exception&)
+      catch (CORBA::Exception const &)
         {
           return -1;
         }
@@ -134,8 +133,8 @@ Task::run_iteration ()
   EC_Counting_Consumer consumer_0 ("Consumer/0");
   EC_Counting_Consumer consumer_1 ("Consumer/1");
 
-  const int event_type = 20;
-  const int event_source = 10;
+  constexpr int event_type = 20;
+  constexpr int event_source = 10;
 
   ACE_ConsumerQOS_Factory consumer_qos;
   consumer_qos.start_disjunction_group ();
@@ -181,28 +180,36 @@ Task::run_iteration ()
     }
 
   if (consumer_0.disconnect_count != count_0)
-    ACE_ERROR ((LM_ERROR,
-                "ERROR: incorrect number of disconnect calls (%d/%d) for "
-                "consumer 0 (%d)\n",
-                consumer_0.disconnect_count, count_0,
-                use_callbacks));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "ERROR: incorrect number of disconnect calls (%d/%d) for "
+                  "consumer 0 (%d)\n",
+                  consumer_0.disconnect_count, count_0,
+                  use_callbacks));
+    }
   if (supplier_0.disconnect_count != count_0)
-    ACE_ERROR ((LM_ERROR,
-                "ERROR: incorrect number of disconnect calls (%d/%d) for "
-                "supplier 0 (%d)\n",
-                supplier_0.disconnect_count, count_0,
-                use_callbacks));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "ERROR: incorrect number of disconnect calls (%d/%d) for "
+                  "supplier 0 (%d)\n",
+                  supplier_0.disconnect_count, count_0,
+                  use_callbacks));
+    }
 
   if (consumer_1.disconnect_count != count_1)
-    ACE_ERROR ((LM_ERROR,
-                "ERROR: incorrect number of disconnect calls (%d/%d) for "
-                "consumer 1 (%d)\n",
-                consumer_1.disconnect_count, count_1,
-                use_callbacks));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "ERROR: incorrect number of disconnect calls (%d/%d) for "
+                  "consumer 1 (%d)\n",
+                  consumer_1.disconnect_count, count_1,
+                  use_callbacks));
+    }
   if (supplier_1.disconnect_count != count_1)
-    ACE_ERROR ((LM_ERROR,
-                "ERROR: incorrect number of disconnect calls (%d/%d) for "
-                "supplier 1 (%d)\n",
-                supplier_1.disconnect_count, count_1,
-                use_callbacks));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "ERROR: incorrect number of disconnect calls (%d/%d) for "
+                  "supplier 1 (%d)\n",
+                  supplier_1.disconnect_count, count_1,
+                  use_callbacks));
+    }
 }

@@ -1,13 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file IdUniquenessStrategy.h
  *
  *  @author  Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-//=============================================================================
-
 #ifndef TAO_ID_UNIQUENESS_STRATEGY_H
 #define TAO_ID_UNIQUENESS_STRATEGY_H
 #include /**/ "ace/pre.h"

@@ -21,17 +21,18 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Recursive_Thread_Mutex)
 
-ACE_Recursive_Thread_Mutex::ACE_Recursive_Thread_Mutex (const ACE_TCHAR *name,
+ACE_Recursive_Thread_Mutex::ACE_Recursive_Thread_Mutex (ACE_TCHAR const *name,
                                                         ACE_mutexattr_t *arg)
-  : removed_ (false)
 {
   // ACE_TRACE ("ACE_Recursive_Thread_Mutex::ACE_Recursive_Thread_Mutex");
-   if (ACE_OS::recursive_mutex_init (&this->lock_,
-                                     name,
-                                     arg) == -1)
-     ACELIB_ERROR ((LM_ERROR,
-                 ACE_TEXT ("%p\n"),
-                 ACE_TEXT ("recursive_mutex_init")));
+  if (ACE_OS::recursive_mutex_init (&this->lock_,
+                                    name,
+                                    arg) == -1)
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("%p\n"),
+                     ACE_TEXT ("recursive_mutex_init")));
+    }
 }
 
 ACE_Recursive_Thread_Mutex::~ACE_Recursive_Thread_Mutex ()

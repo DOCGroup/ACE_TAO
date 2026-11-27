@@ -7,18 +7,13 @@
 #include "ace/Arg_Shifter.h"
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   EC_Inversion driver;
   return driver.run (argc, argv);
 }
 
 // ****************************************************************
-
-EC_Inversion::EC_Inversion ()
-  :  same_events_ (0)
-{
-}
 
 int
 EC_Inversion::parse_args (int &argc, ACE_TCHAR *argv [])
@@ -27,12 +22,12 @@ EC_Inversion::parse_args (int &argc, ACE_TCHAR *argv [])
 
   while (arg_shifter.is_anything_left ())
     {
-      const ACE_TCHAR *arg = arg_shifter.get_current ();
+      ACE_TCHAR const* arg = arg_shifter.get_current ();
 
       if (ACE_OS::strcmp (arg, ACE_TEXT("-same_events")) == 0)
         {
           arg_shifter.consume_arg ();
-          this->same_events_ = 1;
+          this->same_events_ = true;
         }
 
       else
@@ -43,9 +38,11 @@ EC_Inversion::parse_args (int &argc, ACE_TCHAR *argv [])
 
   int r = this->EC_Driver::parse_args (argc, argv);
   if (this->verbose ())
-    ACE_DEBUG ((LM_DEBUG,
-                "EC_Inversion (%P|%t) "
-                "adjusting number of consumers (2)\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "EC_Inversion (%P|%t) "
+                  "adjusting number of consumers (2)\n"));
+    }
   return r;
 }
 
@@ -68,7 +65,9 @@ EC_Inversion::connect_consumers ()
     {
       int base_event = ACE_ES_EVENT_UNDEFINED + 2;
       if (this->same_events_)
+      {
         base_event = ACE_ES_EVENT_UNDEFINED;
+      }
 
       ACE_ConsumerQOS_Factory qos1;
       qos1.start_disjunction_group (2);
@@ -80,7 +79,9 @@ EC_Inversion::connect_consumers ()
                                     base_event + 1);
     }
   if (this->verbose ())
+  {
     ACE_DEBUG ((LM_DEBUG, "EC_Inversion (%P|%t) connected consumer(s)\n"));
+  }
 }
 
 void
@@ -101,7 +102,9 @@ EC_Inversion::connect_suppliers ()
     {
       int base_event = ACE_ES_EVENT_UNDEFINED + 2;
       if (this->same_events_)
+      {
         base_event = ACE_ES_EVENT_UNDEFINED;
+      }
 
       ACE_SupplierQOS_Factory qos1;
       qos1.insert (1, base_event    , 0, 1);
@@ -113,7 +116,9 @@ EC_Inversion::connect_suppliers ()
     }
 
   if (this->verbose ())
+  {
     ACE_DEBUG ((LM_DEBUG, "EC_Inversion (%P|%t) connected supplier(s)\n"));
+  }
 }
 
 void

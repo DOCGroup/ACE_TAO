@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-// ================================================================
 /**
  *  @file   Object_Loader.h
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  */
-// ================================================================
 
 #ifndef TAO_OBJECT_LOADER_H
 #define TAO_OBJECT_LOADER_H
@@ -47,7 +43,6 @@ namespace CORBA
 class TAO_Export TAO_Object_Loader : public ACE_Service_Object
 {
 public:
-  /// The destructor
   ~TAO_Object_Loader () override;
 
   /**

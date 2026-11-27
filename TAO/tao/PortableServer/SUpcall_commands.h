@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    SUpcall_commands.h
  *
@@ -16,8 +13,6 @@
  * - _repository_id_skel
  * - _interface_skel
  */
-//=============================================================================
-
 #ifndef TAO_SUPCALL_COMMANDS_H
 #define TAO_SUPCALL_COMMANDS_H
 
@@ -84,7 +79,6 @@ private:
   TAO::Argument * const * const args_;
 };
 
-
 /**
  * @class _non_existent_thru_poa_Upcall_Command
  *
@@ -135,7 +129,6 @@ private:
   TAO_ServantBase * const servant_;
   TAO::Argument * const * const args_;
 };
-
 
 # if !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 /**

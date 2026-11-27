@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file LF_Event.h
  *
  *  @author Carlos O'Ryan <coryan@uci.edu>
  */
-//=============================================================================
 
 #ifndef TAO_LF_EVENT_H
 #define TAO_LF_EVENT_H
@@ -49,10 +45,8 @@ class TAO_Export TAO_LF_Event
 public:
   friend class TAO_Leader_Follower;
 
-  /// Constructor
   TAO_LF_Event ();
 
-  /// Destructor
   virtual ~TAO_LF_Event ();
 
   /// Bind a follower
@@ -71,7 +65,7 @@ public:
   /// Unbind the follower
   virtual int unbind (TAO_LF_Follower *follower);
 
-  //@{
+  /// @{
   /** @name State management
    *
    * A Leader/Followers event goes through several states during its
@@ -112,12 +106,12 @@ public:
 
   /// Check if we should keep waiting.
   bool keep_waiting (TAO_Leader_Follower &lf) const;
-  //@}
+  /// @}
 
   /// Reset the state, irrespective of the previous states
   void reset_state (LFS_STATE new_state);
 
-  static const char *state_name (LFS_STATE st);
+  static char const *state_name (LFS_STATE st);
 
 protected:
   /// Validate the state change

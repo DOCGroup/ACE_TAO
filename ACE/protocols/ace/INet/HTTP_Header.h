@@ -34,20 +34,17 @@ namespace ACE
           : public ACE::INet::HeaderBase
           {
             public:
-              /// Constructor
               Header();
 
-              /// Constructor
-              Header(const ACE_CString& version);
+              explicit Header(ACE_CString const& version);
 
-              /// Destructor
               virtual ~Header();
 
               /// Sets the HTTP version to use.
-              void set_version(const ACE_CString& version);
+              void set_version(ACE_CString const& version);
 
               /// Returns the HTTP version.
-              const ACE_CString& get_version() const;
+              ACE_CString const& get_version() const;
 
               /// If flag is true, sets the Transfer-Encoding header to
               /// CHUNKED_TRANSFER_ENCODING. Otherwise, removes the
@@ -69,16 +66,16 @@ namespace ACE
               /// Returns false otherwise.
               bool has_keep_alive() const;
 
-              static const ACE_CString HTTP_1_0;
-              static const ACE_CString HTTP_1_1;
+              static ACE_CString const HTTP_1_0;
+              static ACE_CString const HTTP_1_1;
 
-              static const ACE_CString CHUNKED_TRANSFER_ENCODING;
+              static ACE_CString const CHUNKED_TRANSFER_ENCODING;
 
-              static const ACE_CString TRANSFER_ENCODING;
-              static const ACE_CString CONNECTION;
+              static ACE_CString const TRANSFER_ENCODING;
+              static ACE_CString const CONNECTION;
 
-              static const ACE_CString CONNECTION_KEEP_ALIVE;
-              static const ACE_CString CONNECTION_CLOSE;
+              static ACE_CString const CONNECTION_KEEP_ALIVE;
+              static ACE_CString const CONNECTION_CLOSE;
 
             private:
               ACE_CString version_;

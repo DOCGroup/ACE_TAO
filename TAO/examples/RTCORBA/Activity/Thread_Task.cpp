@@ -9,12 +9,9 @@
 #include "Task_Stats.h"
 #include "ace/Barrier.h"
 
-Thread_Task::Thread_Task ()
-{
-}
-
 int
-Thread_Task::activate_task (ACE_Barrier* barrier, RTCORBA::PriorityMapping *priority_mapping)
+Thread_Task::activate_task (ACE_Barrier *barrier,
+                            RTCORBA::PriorityMapping *priority_mapping)
 {
   barrier_ = barrier;
 
@@ -22,10 +19,12 @@ Thread_Task::activate_task (ACE_Barrier* barrier, RTCORBA::PriorityMapping *prio
   RTCORBA::NativePriority native_priority;
 
   if (priority_mapping->to_native (this->task_priority_, native_priority) == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Cannot convert CORBA priority %d to native priority\n",
-                       this->task_priority_),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Cannot convert CORBA priority %d to native priority\n",
+                         this->task_priority_),
+                        -1);
+    }
 
   long flags =
     THR_NEW_LWP |
@@ -39,15 +38,19 @@ Thread_Task::activate_task (ACE_Barrier* barrier, RTCORBA::PriorityMapping *prio
                       native_priority) == -1)
     {
       if (ACE_OS::last_error () == EPERM)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Insufficient privilege to run this test.\n")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Insufficient privilege to run this test.\n")),
+                            -1);
+        }
       else
-        ACE_DEBUG ((LM_ERROR,
-                    ACE_TEXT ("(%t) task activation at priority %d failed, ")
-                    ACE_TEXT ("exiting!\n%a"),
-                    native_priority,
-                    -1));
+        {
+          ACE_DEBUG ((LM_ERROR,
+                      ACE_TEXT ("(%t) task activation at priority %d failed, ")
+                      ACE_TEXT ("exiting!\n%a"),
+                      native_priority,
+                      -1));
+        }
     }
   return 0;
 }
@@ -63,9 +66,11 @@ Thread_Task::svc ()
         ACTIVITY::instance()->current ()->the_priority ();
 
       if (prio == this->task_priority_)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%t) actual prio of %d equals desired priority\n"),
-                    prio));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%t) actual prio of %d equals desired priority\n"),
+                      prio));
+        }
       else
         {
           ACE_DEBUG ((LM_ERROR,
@@ -76,7 +81,9 @@ Thread_Task::svc ()
     }
 
   if (TAO_debug_level > 0)
+  {
     ACE_DEBUG ((LM_DEBUG, "Thread_Task (%t) - wait\n"));
+  }
 
   // First, wait for other threads.
   this->barrier_->wait ();
@@ -120,7 +127,10 @@ Thread_Task::svc ()
           sleep_time -= elapsed_microseconds;
 
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG, "(%t) sleep time = %d\n", sleep_time));
+          {
+            ACE_DEBUG ((LM_DEBUG, "(%t) sleep time = %Ld\n",
+                        sleep_time));
+          }
 
           ACE_Time_Value t_sleep (0, sleep_time);
           ACE_OS::sleep (t_sleep);

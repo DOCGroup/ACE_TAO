@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    WFMO_Reactor.h
  *
@@ -8,7 +5,6 @@
  *  @author Tim Harrison <harrison@cs.wustl.edu>
  *  @author Doug Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef ACE_WFMO_REACTOR_H
 #define ACE_WFMO_REACTOR_H
@@ -82,12 +78,12 @@ class ACE_Handle_Set;
  * @class ACE_Wakeup_All_Threads_Handler
  *
  * @brief This is a helper class whose sole purpose is to handle events
- * on <ACE_WFMO_Reactor->wakeup_all_threads_>
+ * on @c ACE_WFMO_Reactor::wakeup_all_threads_.
  */
 class ACE_Export ACE_Wakeup_All_Threads_Handler : public ACE_Event_Handler
 {
 public:
-  /// Called when the <ACE_WFMO_Reactor->wakeup_all_threads_>
+  /// Called when ACE_WFMO_Reactor::wakeup_all_threads_ is signaled.
   int handle_signal (int signum, siginfo_t * = nullptr, ucontext_t * = nullptr) override;
 };
 
@@ -153,7 +149,6 @@ public:
      */
     ACE_Reactor_Mask close_masks_ { ACE_Event_Handler::NULL_MASK };
 
-    /// Default constructor
     Common_Info () = default;
 
     /// Reset the state of the structure
@@ -187,7 +182,6 @@ public:
     /// This is set when the entry needed to be suspended.
     bool suspend_entry_ {};
 
-    /// Default constructor
     Current_Info () = default;
 
     /// Reset the state of the structure
@@ -215,7 +209,7 @@ public:
    * @class To_Be_Added_Info
    *
    * @brief This structure inherits from the common structure to add
-   * information for <to_be_added> entries.
+   * information for @c to_be_added entries.
    */
   class To_Be_Added_Info : public Common_Info
   {
@@ -226,7 +220,6 @@ public:
     /// This is set when the entry needed to be suspended.
     bool suspend_entry_ {};
 
-    /// Default constructor
     To_Be_Added_Info () = default;
 
     /// Reset the state of the structure
@@ -267,7 +260,6 @@ public:
     /// This is set when the entry needed to be resumed.
     bool resume_entry_ {};
 
-    /// Default constructor
     Suspended_Info () = default;
 
     /// Reset the state of the structure
@@ -293,10 +285,8 @@ public:
     void dump () const;
   };
 
-  /// Constructor.
   ACE_WFMO_Reactor_Handler_Repository (ACE_WFMO_Reactor &wfmo_reactor);
 
-  /// Destructor.
   virtual ~ACE_WFMO_Reactor_Handler_Repository ();
 
   /// Initialize the repository of the appropriate @a size.
@@ -305,7 +295,8 @@ public:
   /// Close down the handler repository.
   int close ();
 
-  // = Search structure operations.
+  /// @name Search structure operations
+  /// @{
 
   /// Insert I/O Event_Handler entry into the system. This method
   /// assumes that the lock are head *before* this method is invoked.
@@ -325,15 +316,17 @@ public:
                 ACE_Reactor_Mask mask,
                 bool &changes_required);
 
-  /// Remove all bindings of <ACE_HANDLE, ACE_Event_Handler> tuples.
+  /// Remove all bindings of ACE_HANDLE and ACE_Event_Handler tuples.
   void unbind_all ();
 
-  // = Sanity checking.
+  /// @}
 
-  // Check the @a handle to make sure it's a valid ACE_HANDLE
+  /// Check the @a handle to make sure it's a valid ACE_HANDLE.
   int invalid_handle (ACE_HANDLE handle) const;
 
-  // = Accessors.
+  /// @name Accessors
+  /// @{
+
   /// Maximum ACE_HANDLE value, plus 1.
   DWORD max_handlep1 () const;
 
@@ -356,7 +349,7 @@ public:
 
   /**
    * This method is used to calculate the network mask after a mask_op
-   * request to <WFMO_Reactor>. Note that because the Event_Handler
+   * request to @c WFMO_Reactor. Note that because the Event_Handler
    * may already be in the handler repository, we may have to find the
    * old event and the old network events
    */
@@ -369,7 +362,7 @@ public:
                                int operation);
 
   /// This method is used to change the network mask left (if any)
-  /// after a remove request to <WFMO_Reactor>
+  /// after a remove request to @c WFMO_Reactor
   ACE_Reactor_Mask bit_ops (long &existing_masks,
                             ACE_Reactor_Mask to_be_removed_masks,
                             int operation);
@@ -428,6 +421,7 @@ public:
 
   /// Dump the state of an object.
   void dump () const;
+  /// @}
 
 protected:
   /// Reference to our WFMO_Reactor.
@@ -437,9 +431,9 @@ protected:
   size_t max_size_;
 
   /**
-   * Array of ACE_HANDLEs passed to <WaitForMultipleObjects>.  This
+   * Array of ACE_HANDLEs passed to @c WaitForMultipleObjects.  This
    * is not part of the structure as the handle array needs to be
-   * passed directly to <WaitForMultipleObjects>.
+   * passed directly to @c WaitForMultipleObjects.
    */
   ACE_HANDLE *current_handles_;
 
@@ -480,16 +474,15 @@ protected:
  * This implementation is necessary for cases where the
  * ACE_WFMO_Reactor is run in a multi-threaded program.  In
  * this case, we need to be able to unblock
- * <WaitForMultipleObjects> when updates occur other than in the
- * main <ACE_WFMO_Reactor> thread.  To do this, we signal an
- * auto-reset event the <ACE_WFMO_Reactor> is listening on.  If
+ * @c WaitForMultipleObjects when updates occur other than in the
+ * main @c ACE_WFMO_Reactor thread.  To do this, we signal an
+ * auto-reset event the @c ACE_WFMO_Reactor is listening on.  If
  * an ACE_Event_Handler and ACE_Reactor_Mask is passed to
- * <notify>, the appropriate <handle_*> method is dispatched.
+ * @c notify, the appropriate <handle_*> method is dispatched.
  */
 class ACE_Export ACE_WFMO_Reactor_Notify : public ACE_Reactor_Notify
 {
 public:
-  /// Constructor
   ACE_WFMO_Reactor_Notify (size_t max_notifies = 1024);
 
   /// Initialization. @a timer_queue is stored to call gettimeofday().
@@ -501,11 +494,11 @@ public:
   virtual int close ();
 
   /**
-   * Special trick to unblock <WaitForMultipleObjects> when updates
+   * Special trick to unblock @c WaitForMultipleObjects when updates
    * occur.  All we do is enqueue @a event_handler and @a mask onto the
-   * ACE_Message_Queue and wakeup the <WFMO_Reactor> by signaling
-   * its <ACE_Event> handle.  The ACE_Time_Value indicates how long
-   * to blocking trying to notify the <WFMO_Reactor>.  If @a timeout ==
+   * ACE_Message_Queue and wakeup the @c WFMO_Reactor by signaling
+   * its @c ACE_Event handle.  The ACE_Time_Value indicates how long
+   * to blocking trying to notify the @c WFMO_Reactor.  If @a timeout ==
    * 0, the caller will block until action is possible, else will wait
    * until the relative time specified in @a timeout elapses).
    */
@@ -522,11 +515,11 @@ public:
 
   /// Returns the ACE_HANDLE of the notify pipe on which the reactor
   /// is listening for notifications so that other threads can unblock
-  /// the <Reactor_Impl>
+  /// the @c Reactor_Impl
   virtual ACE_HANDLE notify_handle ();
 
-  /// Handle one of the notify call on the <handle>. This could be
-  /// because of a thread trying to unblock the <Reactor_Impl>
+  /// Handle one of the notify call on the @c handle. This could be
+  /// because of a thread trying to unblock the @c Reactor_Impl
   virtual int dispatch_notify (ACE_Notification_Buffer &buffer);
 
   /// Verify whether the buffer has dispatchable info or not.
@@ -534,7 +527,7 @@ public:
 
   /// Read one of the notify call on the @a handle into the
   /// @a buffer. This could be because of a thread trying to unblock
-  /// the <Reactor_Impl>
+  /// the @c Reactor_Impl
   virtual int read_notify_pipe (ACE_HANDLE handle,
                                 ACE_Notification_Buffer &buffer);
 
@@ -575,17 +568,17 @@ public:
 
 private:
   /// Pointer to the wfmo_reactor's timer queue.
-  ACE_Timer_Queue *timer_queue_;
+  ACE_Timer_Queue *timer_queue_ {};
 
   /**
    * Called when the notification event waited on by
-   * <ACE_WFMO_Reactor> is signaled.  This dequeues all pending
+   * @c ACE_WFMO_Reactor is signaled.  This dequeues all pending
    * ACE_Event_Handlers and dispatches them.
    */
-  virtual int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0);
+  virtual int handle_signal (int signum, siginfo_t * = nullptr, ucontext_t * = nullptr);
 
   /// An auto event is used so that we can signal() it to wakeup one
-  /// thread up (e.g., when the <notify> method is called).
+  /// thread up (e.g., when the @c notify method is called).
   ACE_Auto_Event wakeup_one_thread_;
 
   /// Message queue that keeps track of pending ACE_Event_Handlers.
@@ -595,10 +588,10 @@ private:
 
   /**
    * Keeps track of the maximum number of times that the
-   * <ACE_WFMO_Reactor_Notify::handle_input> method will iterate and
+   * @c ACE_WFMO_Reactor_Notify::handle_input method will iterate and
    * dispatch the ACE_Event_Handlers that are passed in via the
    * notify queue before breaking out of its
-   * <ACE_Message_Queue::dequeue> loop.  By default, this is set to
+   * @c ACE_Message_Queue::dequeue loop.  By default, this is set to
    * -1, which means "iterate until the queue is empty."
    */
   int max_notify_iterations_;
@@ -620,7 +613,7 @@ private:
  * exception notification just as with other platforms. See Chapter 4 in
  * C++NPv2 for complete details.
  *
- * Note that changes to the state of ACE_WFMO_Reactor are not
+ * @note Changes to the state of ACE_WFMO_Reactor are not
  * instantaneous.  Most changes (registration, removal,
  * suspension, and resumption of handles, and changes in
  * ownership) are made when the ACE_WFMO_Reactor reaches a stable
@@ -633,7 +626,7 @@ private:
  * allocated event handlers and call "delete this" inside the handle_close()
  * hook method.
  *
- * Note that although multiple threads can concurrently run the
+ * @note Although multiple threads can concurrently run the
  * ACE_WFMO_Reactor event loop, the concept of the reactor "owner" is still
  * important. Only the owner thread can expire timers and wait on the
  * notifications handle. Thus, be careful to properly set the owner thread
@@ -643,6 +636,11 @@ private:
 class ACE_Export ACE_WFMO_Reactor : public ACE_Reactor_Impl
 {
 public:
+  ACE_WFMO_Reactor (ACE_WFMO_Reactor const &) = delete;
+  ACE_WFMO_Reactor (ACE_WFMO_Reactor &&) = delete;
+  ACE_WFMO_Reactor &operator= (ACE_WFMO_Reactor const &) = delete;
+  ACE_WFMO_Reactor &operator= (ACE_WFMO_Reactor &&) = delete;
+
   friend class ACE_WFMO_Reactor_Handler_Repository;
   friend class ACE_WFMO_Reactor_Test;
 
@@ -667,6 +665,10 @@ public:
    *              ACE_WFMO_Reactor::DEFAULT_SIZE. Two slots will be
    *              added to the @a size parameter which will store handles
    *              used for internal management purposes.
+   * @param unused Unused compatibility parameter.
+   * @param sh Signal handler used by the reactor.
+   * @param tq Timer queue used by the reactor.
+   * @param notify Notification strategy used by the reactor.
    */
   ACE_WFMO_Reactor (size_t size,
                     int unused = 0,
@@ -682,6 +684,11 @@ public:
    *              ACE_WFMO_Reactor::DEFAULT_SIZE. Two slots will be
    *              added to the @a size parameter which will store handles
    *              used for internal management purposes.
+   * @param restart Whether to restart interrupted event loops.
+   * @param sh Signal handler used by the reactor.
+   * @param tq Timer queue used by the reactor.
+   * @param disable_notify_pipe Whether to disable the notification pipe.
+   * @param notify Notification strategy used by the reactor.
    */
   virtual int open (size_t size = ACE_WFMO_Reactor::DEFAULT_SIZE,
                     bool restart = false,
@@ -708,14 +715,15 @@ public:
   /// Close down the ACE_WFMO_Reactor and release all of its resources.
   virtual ~ACE_WFMO_Reactor ();
 
-  // = Event loop drivers.
+  /// @name Event loop drivers
+  /// @{
 
   /**
    * This method is not currently implemented.  We recommend that you
    * use handle_events (ACE_Time_Value::zero) to get basically the
    * same effect, i.e., it won't block the caller if there are no events.
    */
-  virtual int work_pending (const ACE_Time_Value &max_wait_time = ACE_Time_Value::zero);
+  virtual int work_pending (ACE_Time_Value const &max_wait_time = ACE_Time_Value::zero);
 
   /**
    * This event loop driver blocks for up to @a max_wait_time before
@@ -730,15 +738,15 @@ public:
    * application wishes to handle events for some fixed amount of
    * time.
    *
-   * <WaitForMultipleObjects> is used as the demultiplexing call
+   * @c WaitForMultipleObjects is used as the demultiplexing call
    *
    * Returns the total number of I/O and timer ACE_Event_Handlers
    * that were dispatched, 0 if the @a max_wait_time elapsed without
    * dispatching any handlers, or -1 if an error occurs.
    *
-   * The only difference between <alertable_handle_events> and
-   * <handle_events> is that in the alertable case, TRUE is passed to
-   * <WaitForMultipleObjects> for the <bAlertable> option.
+   * The only difference between @c alertable_handle_events and
+   * @c handle_events is that in the alertable case, TRUE is passed to
+   * @c WaitForMultipleObjects for the @c bAlertable option.
    */
   virtual int handle_events (ACE_Time_Value *max_wait_time = nullptr);
   virtual int alertable_handle_events (ACE_Time_Value *max_wait_time = nullptr);
@@ -748,20 +756,21 @@ public:
    * @a max_wait_time value is a reference and can therefore never be
    * NULL.
    *
-   * The only difference between <alertable_handle_events> and
-   * <handle_events> is that in the alertable case, TRUE is passed to
-   * <WaitForMultipleObjects> for the <bAlertable> option.
+   * The only difference between @c alertable_handle_events and
+   * @c handle_events is that in the alertable case, TRUE is passed to
+   * @c WaitForMultipleObjects for the @c bAlertable option.
    */
   virtual int handle_events (ACE_Time_Value &max_wait_time);
   virtual int alertable_handle_events (ACE_Time_Value &max_wait_time);
+  /// @}
 
-
-  // = Event handling control.
+  /// @name Event handling control
+  /// @{
 
   /**
    * Return the status of Reactor.  If this function returns 0, the reactor is
-   * actively handling events.  If it returns non-zero, <handling_events> and
-   * <handle_alertable_events> return -1 immediately.
+   * actively handling events.  If it returns non-zero, @c handling_events and
+   * @c handle_alertable_events return -1 immediately.
    */
   virtual int deactivated ();
 
@@ -771,16 +780,18 @@ public:
    * is in active state and can be deactivated/reactivated as wish.
    */
   virtual void deactivate (int do_stop);
+  /// @}
 
-  // = Register and remove Handlers.
+  /// @name Handler registration and removal
+  /// @{
 
   /**
    * Register an ACE_Event_Handler @a event_handler.  Since no Event
    * Mask is passed through this interface, it is assumed that the
    * @a handle being passed in is an event handle and when the event
-   * becomes signaled, <WFMO_Reactor> will call handle_signal on
-   * @a event_handler.  If @a handle == <ACE_INVALID_HANDLE> the
-   * <ACE_WFMO_Reactor> will call the <get_handle> method of
+   * becomes signaled, @c WFMO_Reactor will call handle_signal on
+   * @a event_handler.  If @a handle == @c ACE_INVALID_HANDLE the
+   * @c ACE_WFMO_Reactor will call the @c get_handle method of
    * @a event_handler to extract the underlying event handle.
    */
   virtual int register_handler (ACE_Event_Handler *event_handler,
@@ -790,7 +801,7 @@ public:
    * Register an ACE_Event_Handler @a event_handle.  @a mask specifies
    * the network events that the @a event_handler is interested in.  If
    * @a io_handle == ACE_INVALID_HANDLE the ACE_WFMO_Reactor will
-   * call the <get_handle> method of <event_handler> to extract the
+   * call the @c get_handle method of @c event_handler to extract the
    * underlying I/O handle. If the @a event_handle ==
    * ACE_INVALID_HANDLE, WFMO_Reactor will create an event for
    * associating it with the I/O handle. When the @a event_handle is
@@ -803,26 +814,26 @@ public:
                                 ACE_Reactor_Mask mask);
 
   /**
-   * This is a simple version of the above <register_handler> method
+   * This is a simple version of the above @c register_handler method
    * where the I/O handle is passed in and the event handle will
-   * always be created by <WFMO_Reactor>
+   * always be created by @c WFMO_Reactor
    */
   virtual int register_handler (ACE_HANDLE io_handle,
                                 ACE_Event_Handler *event_handler,
                                 ACE_Reactor_Mask mask);
 
   /**
-   * This is a simple version of the above <register_handler> method
-   * where the I/O handle will always come from <get_handle> on the
+   * This is a simple version of the above @c register_handler method
+   * where the I/O handle will always come from @c get_handle on the
    * Event_Handler and the event handle will always be created by
-   * <WFMO_Reactor>
+   * @c WFMO_Reactor
    */
   virtual int register_handler (ACE_Event_Handler *event_handler,
                                 ACE_Reactor_Mask mask);
 
   /// Register @a event_handler with all the @a handles in the
-  /// <Handle_Set>.
-  virtual int register_handler (const ACE_Handle_Set &handles,
+  /// @c Handle_Set.
+  virtual int register_handler (ACE_Handle_Set const &handles,
                                 ACE_Event_Handler *event_handler,
                                 ACE_Reactor_Mask mask);
 
@@ -839,33 +850,33 @@ public:
 
   /// Registers @a new_sh to handle a set of signals @a sigset using the
   /// @a new_disp.
-  virtual int register_handler (const ACE_Sig_Set &sigset,
+  virtual int register_handler (ACE_Sig_Set const &sigset,
                                 ACE_Event_Handler *new_sh,
                                 ACE_Sig_Action *new_disp = nullptr);
 
   /**
    * Removes @a event_handler from the ACE_WFMO_Reactor.  Note that
-   * the ACE_WFMO_Reactor will call the <get_handle> method of
+   * the ACE_WFMO_Reactor will call the @c get_handle method of
    * @a event_handler to extract the underlying handle.  If @a mask ==
-   * ACE_Event_Handler::DONT_CALL then the <handle_close> method of
+   * ACE_Event_Handler::DONT_CALL then the @c handle_close method of
    * the @a event_handler is not invoked. Note that the @a handle can
-   * either be the <event_handle> or the <io_handle>
+   * either be the @c event_handle or the @c io_handle
    */
   virtual int remove_handler (ACE_Event_Handler *event_handler,
                               ACE_Reactor_Mask mask);
 
   /**
-   * Removes @a handle from the <ACE_WFMO_Reactor>.  If @a mask ==
-   * ACE_Event_Handler::DONT_CALL then the <handle_close> method of
-   * the <event_handler> is not invoked. Note that the @a handle can
-   * either be the <event_handle> or the <io_handle>
+   * Removes @a handle from the @c ACE_WFMO_Reactor.  If @a mask ==
+   * ACE_Event_Handler::DONT_CALL then the @c handle_close method of
+   * the @c event_handler is not invoked. Note that the @a handle can
+   * either be the @c event_handle or the @c io_handle
    *
    * For the case of I/O entries, this removes the @a mask binding of
-   * Event_Handler whose handle is @a handle from <WFMO_Reactor>.  If
-   * there are no more bindings for this <event_handler> then it is
+   * Event_Handler whose handle is @a handle from @c WFMO_Reactor.  If
+   * there are no more bindings for this @c event_handler then it is
    * removed from the WFMO_Reactor.  For simple event entries, mask is
    * mostly ignored and the Event_Handler is always removed from
-   * <WFMO_Reactor>
+   * @c WFMO_Reactor
    */
   virtual int remove_handler (ACE_HANDLE handle,
                               ACE_Reactor_Mask mask);
@@ -875,7 +886,7 @@ public:
    * bind of Event_Handler.  If there are no more bindings for any
    * of these handles then they are removed from WFMO_Reactor.
    */
-  virtual int remove_handler (const ACE_Handle_Set &handle_set,
+  virtual int remove_handler (ACE_Handle_Set const &handle_set,
                               ACE_Reactor_Mask);
 
   /**
@@ -891,9 +902,11 @@ public:
                               int sigkey = -1);
 
   /// Calls remove_handler() for every signal in @a sigset.
-  virtual int remove_handler (const ACE_Sig_Set &sigset);
+  virtual int remove_handler (ACE_Sig_Set const &sigset);
+  /// @}
 
-  // = Suspend and resume Handlers.
+  /// @name Handler suspension and resumption
+  /// @{
 
   /// Suspend @a event_handler temporarily.  Use
   /// ACE_Event_Handler::get_handle() to get the handle.
@@ -903,12 +916,12 @@ public:
   virtual int suspend_handler (ACE_HANDLE handle);
 
   /// Suspend all @a handles in handle set temporarily.
-  virtual int suspend_handler (const ACE_Handle_Set &handles);
+  virtual int suspend_handler (ACE_Handle_Set const &handles);
 
   /// Suspend all handles temporarily.
   virtual int suspend_handlers ();
 
-  /// Resume @a event_handler. Use <ACE_Event_Handler::get_handle> to
+  /// Resume @a event_handler. Use @c ACE_Event_Handler::get_handle to
   /// get the handle.
   virtual int resume_handler (ACE_Event_Handler *event_handler);
 
@@ -916,9 +929,9 @@ public:
   virtual int resume_handler (ACE_HANDLE handle);
 
   /// Resume all @a handles in handle set.
-  virtual int resume_handler (const ACE_Handle_Set &handles);
+  virtual int resume_handler (ACE_Handle_Set const &handles);
 
-  /// Resume all <handles>.
+  /// Resume all @c handles.
   virtual int resume_handlers ();
 
   /// Does the reactor allow the application to resume the handle on
@@ -934,8 +947,10 @@ public:
    * return true.
    */
   virtual bool uses_event_associations ();
+  /// @}
 
-  // Timer management.
+  /// @name Timer management
+  /// @{
 
   /**
    * Schedule an ACE_Event_Handler that will expire after an amount
@@ -955,9 +970,9 @@ public:
    * @return -1 on failure, a timer_id value on success
    */
   virtual long schedule_timer (ACE_Event_Handler *event_handler,
-                               const void *arg,
-                               const ACE_Time_Value &delay,
-                               const ACE_Time_Value &interval = ACE_Time_Value::zero);
+                               void const *arg,
+                               ACE_Time_Value const &delay,
+                               ACE_Time_Value const &interval = ACE_Time_Value::zero);
 
   /**
    * Resets the interval of the timer represented by @a timer_id to
@@ -967,7 +982,7 @@ public:
    * timer.  Returns 0 if successful, -1 if not.
    */
   virtual int reset_timer_interval (long timer_id,
-                                    const ACE_Time_Value &interval);
+                                    ACE_Time_Value const &interval);
 
   /// Cancel all Event_Handlers that match the address of
   /// @a event_handler.  Returns number of handler's cancelled.
@@ -984,10 +999,12 @@ public:
    * wasn't found.
    */
   virtual int cancel_timer (long timer_id,
-                            const void **arg = nullptr,
+                            void const **arg = nullptr,
                             int dont_call_handle_close = 1);
+  /// @}
 
-  // = High-level Event_Handler scheduling operations
+  /// @name Event handler scheduling
+  /// @{
 
   /**
    * Add @a masks_to_be_added to the @a event_handler's entry in
@@ -1006,7 +1023,7 @@ public:
                                ACE_Reactor_Mask masks_to_be_added);
 
   /**
-   * Remove @a masks_to_be_deleted to the <handle>'s entry in
+   * Remove @a masks_to_be_deleted to the @c handle's entry in
    * WFMO_Reactor.  The Event_Handler associated with @a event_handler must
    * already have been registered with WFMO_Reactor.
    */
@@ -1020,13 +1037,15 @@ public:
    */
   virtual int cancel_wakeup (ACE_HANDLE handle,
                              ACE_Reactor_Mask masks_to_be_deleted);
+  /// @}
 
-  // = Notification methods.
+  /// @name Notification methods
+  /// @{
 
   /**
-   * Wakeup one <ACE_WFMO_Reactor> thread if it is currently blocked
-   * in <WaitForMultipleObjects>.  The ACE_Time_Value indicates how
-   * long to blocking trying to notify the <WFMO_Reactor>.  If
+   * Wakeup one @c ACE_WFMO_Reactor thread if it is currently blocked
+   * in @c WaitForMultipleObjects.  The ACE_Time_Value indicates how
+   * long to blocking trying to notify the @c WFMO_Reactor.  If
    * @a timeout == 0, the caller will block until action is possible,
    * else will wait until the relative time specified in @a timeout
    * elapses).
@@ -1037,10 +1056,10 @@ public:
 
   /**
    * Set the maximum number of times that the
-   * <ACE_WFMO_Reactor_Notify::handle_input> method will iterate and
+   * @c ACE_WFMO_Reactor_Notify::handle_input method will iterate and
    * dispatch the ACE_Event_Handlers that are passed in via the
    * notify queue before breaking out of its
-   * <ACE_Message_Queue::dequeue> loop.  By default, this is set to
+   * @c ACE_Message_Queue::dequeue loop.  By default, this is set to
    * -1, which means "iterate until the queue is empty."  Setting this
    * to a value like "1 or 2" will increase "fairness" (and thus
    * prevent starvation) at the expense of slightly higher dispatching
@@ -1050,10 +1069,10 @@ public:
 
   /**
    * Get the maximum number of times that the
-   * <ACE_WFMO_Reactor_Notify::handle_input> method will iterate and
+   * @c ACE_WFMO_Reactor_Notify::handle_input method will iterate and
    * dispatch the ACE_Event_Handlers that are passed in via the
    * notify queue before breaking out of its
-   * <ACE_Message_Queue::dequeue> loop.
+   * @c ACE_Message_Queue::dequeue loop.
    */
   virtual int max_notify_iterations ();
 
@@ -1064,8 +1083,10 @@ public:
    */
   virtual int purge_pending_notifications (ACE_Event_Handler * = nullptr,
                                            ACE_Reactor_Mask    = ACE_Event_Handler::ALL_EVENTS_MASK);
+  /// @}
 
-  // = Assorted helper methods.
+  /// @name Helper methods
+  /// @{
 
   /**
    * Return the Event_Handler associated with @a handle.  Return 0 if
@@ -1084,8 +1105,8 @@ public:
 
   /**
    * Check to see if @a signum is associated with a valid Event_Handler
-   * bound to a signal.  Return the <event_handler> associated with
-   * this @a handler if <event_handler> != 0.
+   * bound to a signal.  Return the @c event_handler associated with
+   * this @a handler if @c event_handler != 0.
    */
   virtual int handler (int signum,
                        ACE_Event_Handler ** = nullptr);
@@ -1126,12 +1147,14 @@ public:
 
   /// Not implemented
   virtual int requeue_position ();
+  /// @}
 
-  // = Low-level wait_set mask manipulation methods.
+  /// @name Wait set mask operations
+  /// @{
 
   /**
    * Modify @a masks of the @a event_handler's entry in WFMO_Reactor
-   * depending upon <operation>.  @a event_handler must already have
+   * depending upon @c operation.  @a event_handler must already have
    * been registered with WFMO_Reactor.
    */
   virtual int mask_ops (ACE_Event_Handler *event_handler,
@@ -1139,15 +1162,17 @@ public:
                         int operation);
 
   /**
-   * Modify @a masks of the <handle>'s entry in WFMO_Reactor depending
-   * upon <operation>.  <handle> must already have been registered
+   * Modify @a masks of the @c handle's entry in WFMO_Reactor depending
+   * upon @c operation.  @c handle must already have been registered
    * with WFMO_Reactor.
    */
   virtual int mask_ops (ACE_HANDLE handle,
                         ACE_Reactor_Mask masks,
                         int ops);
+  /// @}
 
-  // = Low-level ready_set mask manipulation methods.
+  /// @name Ready set mask operations
+  /// @{
 
   /// Not implemented
   virtual int ready_ops (ACE_Event_Handler *event_handler,
@@ -1158,6 +1183,7 @@ public:
   virtual int ready_ops (ACE_HANDLE handle,
                          ACE_Reactor_Mask,
                          int ops);
+  /// @}
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -1210,7 +1236,7 @@ protected:
 
   /**
    * Dispatches any active handles from handles_[@a slot] to
-   * handles_[active_handles_] using <WaitForMultipleObjects> to poll
+   * handles_[active_handles_] using @c WaitForMultipleObjects to poll
    * through our handle set looking for active handles.
    */
   virtual int dispatch_handles (DWORD slot);
@@ -1254,30 +1280,30 @@ protected:
 
   /// Keeps track of whether we should delete the signal handler (if we
   /// didn't create it, then we don't delete it).
-  bool delete_signal_handler_;
+  bool delete_signal_handler_ {};
 
   /// Defined as a pointer to allow overriding by derived classes...
   ACE_Timer_Queue *timer_queue_ {};
 
   /// Keeps track of whether we should delete the timer queue (if we
   /// didn't create it, then we don't delete it).
-  bool delete_timer_queue_;
+  bool delete_timer_queue_ {};
 
   /// Keeps track of whether we should delete the handler repository
-  bool delete_handler_rep_;
+  bool delete_handler_rep_ {};
 
-  /// Used when <notify> is called.
+  /// Used when @c notify is called.
   ACE_Reactor_Notify *notify_handler_ {};
 
   /// Keeps track of whether we should delete the notify handler.
-  bool delete_notify_handler_;
+  bool delete_notify_handler_ {};
 
   /**
    * Synchronization for the ACE_WFMO_Reactor.
    *
    * A Process Mutex is used here because of two reasons:
    * (a) The implementation of ACE_Thread_Mutex uses CriticalSections
-   *     CriticalSections are not waitable using ::WaitForMultipleObjects
+   *     CriticalSections are not waitable using @c WaitForMultipleObjects()
    * (b) This is really not a process mutex because it is not
    *     named. No other process can use this mutex.
    */
@@ -1286,7 +1312,7 @@ protected:
   /// Adapter used to return internal lock to outside world.
   ACE_Lock_Adapter<ACE_Process_Mutex> lock_adapter_;
 
-  /// Table that maps <ACE_HANDLEs> to <ACE_Event_Handler *>'s.
+  /// Table that maps @c ACE_HANDLE values to pointers to @c ACE_Event_Handler objects.
   ACE_WFMO_Reactor_Handler_Repository handler_rep_;
 
   /// A manual event used to block threads from proceeding into
@@ -1300,7 +1326,7 @@ protected:
    */
   ACE_Manual_Event wakeup_all_threads_;
 
-  /// Used when <wakeup_all_threads_> is signaled
+  /// Used when @c wakeup_all_threads_ is signaled
   ACE_Wakeup_All_Threads_Handler wakeup_all_threads_handler_;
 
   /// The changing thread waits on this event, till all threads are not
@@ -1324,11 +1350,11 @@ protected:
   ACE_thread_t new_owner_;
 
   /// This is the thread which is responsible for the changing the
-  /// state of the <WFMO_Reactor> handle set
+  /// state of the @c WFMO_Reactor handle set
   ACE_thread_t change_state_thread_;
 
-  /// This is an array of ACE_HANDLEs which keep track of the <lock_>
-  /// and <ok_to_wait_> handles
+  /// This is an array of ACE_HANDLEs which keep track of the @c lock_
+  /// and @c ok_to_wait_ handles
   ACE_HANDLE atomic_wait_array_ [2];
 
   /// This flag is used to keep track of whether we are already closed.
@@ -1337,10 +1363,6 @@ protected:
   /// This flag is used to keep track of whether we are actively handling
   /// events or not.
   sig_atomic_t deactivated_;
-
-private:
-  ACE_WFMO_Reactor (const ACE_WFMO_Reactor &) = delete;
-  ACE_WFMO_Reactor &operator = (const ACE_WFMO_Reactor &) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

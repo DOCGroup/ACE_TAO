@@ -1,15 +1,11 @@
-
-//=============================================================================
 /**
  *  @file    Bug_2659_Regression_Test.cpp
  *
  *     Reproduces the problems reported in bug 2659:
  *      https://github.com/DOCGroup/bugzilla/issues/2659
  *
- *  @author Ciju John <johnc at ociweb>
+ *  @author Ciju John (johnc at ociweb)
  */
-//=============================================================================
-
 
 #include "test_config.h"
 
@@ -19,10 +15,11 @@
 #include "ace/Thread_Manager.h"
 #include "ace/TP_Reactor.h"
 
+#include <memory>
+
 #if !defined (ACE_LACKS_UNIX_SIGNALS)
 
 bool reactor_task_ready = false;
-
 
 //#define RUN_DEBUG 1
 
@@ -34,9 +31,9 @@ EntryExit ee (CNAME,MNAME,LOC)
 class EntryExit
 {
 public:
-  EntryExit (const ACE_TCHAR* class_name,
-             const ACE_TCHAR *method_name,
-             void *location = 0)
+  EntryExit (ACE_TCHAR const * class_name,
+             ACE_TCHAR const *method_name,
+             void *location = nullptr)
   {
     class_name_ [20] = method_name_[20] = 0;
 
@@ -65,7 +62,6 @@ private:
 #define EE_DEBUG(CNAME,MNAME,LOC)
 
 #endif // if defined RUN_DEBUG
-
 
 static void
 handle_signal (int )
@@ -159,7 +155,7 @@ run_main (int, ACE_TCHAR *[])
   // Wait 5 seconds for the other thread to exit, if it didn't exit the
   // wait return -1 and we return with an error
   ACE_Time_Value timeout (5);
-  if (thread_manager->wait (&timeout, false, false) == -1)
+  if (thread_manager->wait (std::addressof (timeout), false, false) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                         ACE_TEXT ("(%P|%t) Error, task wait failed.\n")),

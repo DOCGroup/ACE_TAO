@@ -1,4 +1,3 @@
-// ============================================================================
 //FUZZ: disable check_for_lack_ACE_OS
 /**
  * @file Multicast_Test_IPV6.cpp
@@ -30,12 +29,10 @@
  * @author Don Hinton <dhinton@dresystems.com>
  *         Brian Buesker <bbuesker@qualcomm.com>
  */
-// ============================================================================
 //FUZZ: enable check_for_lack_ACE_OS
 
 #include "test_config.h"
 #include "ace/Get_Opt.h"
-#include "ace/Vector_T.h"
 #include "ace/SOCK_Dgram_Mcast.h"
 #include "ace/ACE.h"
 #include "ace/Reactor.h"
@@ -46,6 +43,9 @@
 #include "ace/SString.h"
 #include "ace/Signal.h"
 #include <algorithm>
+#include <cstring>
+#include <memory>
+#include <vector>
 
 #if defined (ACE_HAS_IP_MULTICAST) && defined (ACE_HAS_THREADS)
 
@@ -104,9 +104,13 @@ public:
       wait_ (2)
     {
       if (IP_MAX_MEMBERSHIPS == 0)
+      {
         this->groups_ = MCT_GROUPS;
+      }
       else
+      {
         this->groups_ = (std::min) (IP_MAX_MEMBERSHIPS, MCT_GROUPS);
+      }
     }
 
   ~MCT_Config ()
@@ -133,7 +137,7 @@ public:
     return static_cast<ACE_SOCK_Dgram_Mcast::options> (this->sdm_opts_);
   }
 
-  int set_group (int port, const char *group);
+  int set_group (int port, char const *group);
 
 private:
   // Starting group address.
@@ -174,62 +178,80 @@ MCT_Config::open (int argc, ACE_TCHAR *argv[])
   if (getopt.long_option (ACE_TEXT ("GroupStart"),
                           'g',
                           ACE_Get_Opt::ARG_REQUIRED) != 0)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT (" Unable to add GroupStart option.\n")),
                       1);
+  }
 
   if (getopt.long_option (ACE_TEXT ("Groups"),
                           'n',
                           ACE_Get_Opt::ARG_REQUIRED) != 0)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT (" Unable to add Groups option.\n")), 1);
+  }
 
   if (getopt.long_option (ACE_TEXT ("Debug"),
                           'd',
                           ACE_Get_Opt::NO_ARG) != 0)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT (" Unable to add Debug option.\n")), 1);
+  }
 
   if (getopt.long_option (ACE_TEXT ("Role"),
                           'r',
                           ACE_Get_Opt::ARG_REQUIRED) != 0)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT (" Unable to add Role option.\n")), 1);
+  }
 
   if (getopt.long_option (ACE_TEXT ("SDM_options"),
                           'm',
                           ACE_Get_Opt::ARG_REQUIRED) != 0)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT (" Unable to add Multicast_Options option.\n")),
                       1);
+  }
 
   if (getopt.long_option (ACE_TEXT ("Iterations"),
                           'i',
                           ACE_Get_Opt::ARG_REQUIRED) != 0)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT (" Unable to add iterations option.\n")),
                       1);
+  }
 
   if (getopt.long_option (ACE_TEXT ("TTL"),
                           't',
                           ACE_Get_Opt::ARG_REQUIRED) != 0)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT (" Unable to add TTL option.\n")),
                       1);
+  }
 
   if (getopt.long_option (ACE_TEXT ("Wait"),
                           'w',
                           ACE_Get_Opt::ARG_REQUIRED) != 0)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT (" Unable to add wait option.\n")),
                       1);
+  }
 
   if (getopt.long_option (ACE_TEXT ("help"),
                           'h',
                           ACE_Get_Opt::NO_ARG) != 0)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT (" Unable to add help option.\n")),
                       1);
+  }
 
   // Now, let's parse it...
   int c = 0;
@@ -263,14 +285,18 @@ MCT_Config::open (int argc, ACE_TCHAR *argv[])
           break;
         case 'n':
           {
-            int n = ACE_OS::atoi (getopt.opt_arg ());
+            int const n = ACE_OS::atoi (getopt.opt_arg ());
             // I'm assuming 0 means unlimited, so just use whatever the
             // user provides.
             if (IP_MAX_MEMBERSHIPS == 0)
+            {
               this->groups_ = n;
+            }
             else
+            {
               this->groups_ = (std::min) ((std::max) (n, MCT_MIN_GROUPS),
                                        IP_MAX_MEMBERSHIPS);
+            }
             break;
           }
         case 'd':
@@ -280,9 +306,13 @@ MCT_Config::open (int argc, ACE_TCHAR *argv[])
           {
             ACE_TCHAR *c = getopt.opt_arg ();
             if (ACE_OS::strcasecmp (c, ACE_TEXT ("CONSUMER")) == 0)
+            {
               this->role_ = CONSUMER;
+            }
             else if (ACE_OS::strcasecmp (c, ACE_TEXT ("PRODUCER")) == 0)
+            {
               this->role_ = PRODUCER;
+            }
             else
               {
                 help = 1;
@@ -295,11 +325,15 @@ MCT_Config::open (int argc, ACE_TCHAR *argv[])
             //@todo add back OPT_BINDADDR_NO...
             ACE_TCHAR *c = getopt.opt_arg ();
             if (ACE_OS::strcasecmp (c, ACE_TEXT ("OPT_BINDADDR_YES")) == 0)
+            {
               ACE_SET_BITS (this->sdm_opts_,
                             ACE_SOCK_Dgram_Mcast::OPT_BINDADDR_YES);
+            }
             else if (ACE_OS::strcasecmp (c, ACE_TEXT ("OPT_BINDADDR_NO")) == 0)
+            {
               ACE_CLR_BITS (this->sdm_opts_,
                             ACE_SOCK_Dgram_Mcast::OPT_BINDADDR_YES);
+            }
             else if (ACE_OS::strcasecmp (c, ACE_TEXT ("DEFOPT_BINDADDR")) == 0)
               {
                 ACE_CLR_BITS (this->sdm_opts_,
@@ -308,11 +342,15 @@ MCT_Config::open (int argc, ACE_TCHAR *argv[])
                               ACE_SOCK_Dgram_Mcast::DEFOPT_BINDADDR);
               }
             else if (ACE_OS::strcasecmp (c, ACE_TEXT ("OPT_NULLIFACE_ALL")) == 0)
+            {
               ACE_SET_BITS (this->sdm_opts_,
                             ACE_SOCK_Dgram_Mcast::OPT_NULLIFACE_ALL);
+            }
             else if (ACE_OS::strcasecmp (c, ACE_TEXT ("OPT_NULLIFACE_ONE")) == 0)
+            {
               ACE_CLR_BITS (this->sdm_opts_,
                             ACE_SOCK_Dgram_Mcast::OPT_NULLIFACE_ALL);
+            }
             else if (ACE_OS::strcasecmp (c, ACE_TEXT ("DEFOPT_NULLIFACE")) == 0)
               {
                 ACE_CLR_BITS (this->sdm_opts_,
@@ -321,7 +359,9 @@ MCT_Config::open (int argc, ACE_TCHAR *argv[])
                               ACE_SOCK_Dgram_Mcast::DEFOPT_NULLIFACE);
               }
             else if (ACE_OS::strcasecmp (c, ACE_TEXT ("DEFOPTS")) == 0)
+            {
               this->sdm_opts_ = ACE_SOCK_Dgram_Mcast::DEFOPTS;
+            }
             else
               {
                 help = 1;
@@ -349,6 +389,7 @@ MCT_Config::open (int argc, ACE_TCHAR *argv[])
         default:
           if (ACE_OS::strcmp (argv[getopt.opt_ind () - 1], ACE_TEXT ("-?")) != 0
               && getopt.opt_opt () != 'h')
+          {
             // Don't allow unknown options.
             ACE_ERROR ((LM_ERROR,
                         ACE_TEXT (" Found an unknown option (%c) ")
@@ -356,6 +397,7 @@ MCT_Config::open (int argc, ACE_TCHAR *argv[])
                         getopt.opt_opt ()));
                         // getopt.last_option ())); //readd with "%s" when
                         // last_option() is available.
+          }
           help = 1;
           retval = -1;
           break;
@@ -365,6 +407,7 @@ MCT_Config::open (int argc, ACE_TCHAR *argv[])
   if (retval == -1)
     {
       if (help)
+      {
         // print usage here
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("usage: %s [options]\n")
@@ -396,6 +439,7 @@ MCT_Config::open (int argc, ACE_TCHAR *argv[])
                     ACE_TEXT ("  -h/?         --help                 ")
                     ACE_TEXT ("show this message\n"),
                     argv[0]));
+      }
 
       return -1;
     }
@@ -437,7 +481,7 @@ MCT_Config::dump () const
   // Note that this call to get_host_addr is the non-reentrant
   // version, but it's okay for us.
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("\tgroups_start_ = %s:%d\n"),
+              ACE_TEXT ("\tgroups_start_ = %C:%d\n"),
               this->group_start_.get_host_addr (),
               this->group_start_.get_port_number ()));
 
@@ -445,7 +489,7 @@ MCT_Config::dump () const
 }
 
 int
-MCT_Config::set_group (int port, const char *group)
+MCT_Config::set_group (int port, char const *group)
 {
   return group_start_.set (port, group);
 }
@@ -457,36 +501,36 @@ class MCT_Event_Handler : public ACE_Event_Handler
 public:
   MCT_Event_Handler (ACE_SOCK_Dgram_Mcast::options options
                       = ACE_SOCK_Dgram_Mcast::DEFOPTS);
-  ~MCT_Event_Handler () override;
-
-  int join (const ACE_INET_Addr &mcast_addr,
+  int join (ACE_INET_Addr const &mcast_addr,
             int reuse_addr = 1,
-            const ACE_TCHAR *net_if = nullptr);
-  int leave (const ACE_INET_Addr &mcast_addr,
-             const ACE_TCHAR *net_if = nullptr);
+            ACE_TCHAR const *net_if = nullptr);
+  int leave (ACE_INET_Addr const &mcast_addr,
+             ACE_TCHAR const *net_if = nullptr);
 
-  // = Event Handler hooks.
+  /// @name Event Handler hooks
+  /// @{
   int handle_input (ACE_HANDLE handle) override;
   int handle_close (ACE_HANDLE fd, ACE_Reactor_Mask close_mask) override;
+  /// @}
 
   ACE_HANDLE get_handle () const override;
 
 protected:
   ACE_SOCK_Dgram_Mcast *mcast ();
-  int find (const char *buf);
+  int find (char const *buf);
 
 private:
   ACE_SOCK_Dgram_Mcast mcast_;
 
   // List of groups we've joined
-  ACE_Vector<ACE_CString*> address_vec_;
+  std::vector<ACE_CString> address_vec_;
 
   // Flag used to set the 'finished' flag when the last event handler
   // gets removed from the reactor.
   static ACE_Atomic_Op<ACE_SYNCH_MUTEX, long> active_handlers_;
 };
 
-ACE_Atomic_Op<ACE_SYNCH_MUTEX, long> MCT_Event_Handler::active_handlers_ = 0;
+ACE_Atomic_Op<ACE_SYNCH_MUTEX, long> MCT_Event_Handler::active_handlers_ {0};
 
 MCT_Event_Handler::MCT_Event_Handler (ACE_SOCK_Dgram_Mcast::options options)
   : mcast_ (options)
@@ -496,41 +540,30 @@ MCT_Event_Handler::MCT_Event_Handler (ACE_SOCK_Dgram_Mcast::options options)
   ++MCT_Event_Handler::active_handlers_;
 }
 
-MCT_Event_Handler::~MCT_Event_Handler ()
-{
-  size_t size = this->address_vec_.size ();
-  for (size_t i = 0; i < size; ++i)
-    {
-      delete this->address_vec_[i];
-      this->address_vec_[i] = 0;
-    }
-}
-
-
 ACE_SOCK_Dgram_Mcast *
 MCT_Event_Handler::mcast ()
 {
-  return &this->mcast_;
+  return std::addressof (this->mcast_);
 }
 
 int
-MCT_Event_Handler::find (const char *buf)
+MCT_Event_Handler::find (char const *buf)
 {
-  size_t size = this->address_vec_.size ();
-  size_t i;
-  for (i = 0; i < size; ++i)
+  for (ACE_CString const &address : this->address_vec_)
     {
-      if (ACE_OS::strcasecmp (buf, this->address_vec_[i]->c_str ()) == 0)
+      if (ACE_OS::strcasecmp (buf, address.c_str ()) == 0)
+      {
         return 0;
+      }
     }
 
   // Not found, so output message we received along with a list of groups
   // we've joined for debugging.
   ACE_CString local;
-  for (i = 0; i < size; ++i)
+  for (ACE_CString const &address : this->address_vec_)
     {
       local += "\t";
-      local += this->address_vec_[i]->c_str ();
+      local += address.c_str ();
       local += "\n";
     }
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%C not in:\n%C"),
@@ -539,11 +572,10 @@ MCT_Event_Handler::find (const char *buf)
   return -1;
 }
 
-
 int
-MCT_Event_Handler::join (const ACE_INET_Addr &mcast_addr,
+MCT_Event_Handler::join (ACE_INET_Addr const &mcast_addr,
                          int reuse_addr,
-                         const ACE_TCHAR *net_if)
+                         ACE_TCHAR const *net_if)
 {
   char buf[MAX_STRING_SIZE];
   ACE_OS::snprintf (buf, MAX_STRING_SIZE, "%s/%d",
@@ -551,35 +583,34 @@ MCT_Event_Handler::join (const ACE_INET_Addr &mcast_addr,
                     mcast_addr.get_port_number ());
 
   if (this->mcast_.join (mcast_addr, reuse_addr, net_if) == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("MCT_Event_Handler::join %C %p\n"),
                        buf,
                        ACE_TEXT ("failed")),
                       -1);
+  }
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Joined %C\n"), buf));
 
-  ACE_CString *str = nullptr;
-  ACE_NEW_RETURN (str, ACE_CString (buf), -1);
-  this->address_vec_.push_back (str);
+  this->address_vec_.emplace_back (buf);
   return 0;
 }
 
 int
-MCT_Event_Handler::leave (const ACE_INET_Addr &mcast_addr,
-                          const ACE_TCHAR *net_if)
+MCT_Event_Handler::leave (ACE_INET_Addr const &mcast_addr,
+                          ACE_TCHAR const *net_if)
 {
   if (this->mcast_.leave (mcast_addr, net_if) == 0)
     {
       char buf[MAX_STRING_SIZE];
-      size_t size = this->address_vec_.size ();
-      for (size_t i = 0; i < size; ++i)
+      for (ACE_CString &address : this->address_vec_)
         {
           ACE_OS::snprintf (buf, MAX_STRING_SIZE, "%s/%d",
                             mcast_addr.get_host_addr (),
                             mcast_addr.get_port_number ());
-          if (ACE_OS::strcasecmp (buf, this->address_vec_[i]->c_str ()) == 0)
+          if (ACE_OS::strcasecmp (buf, address.c_str ()) == 0)
           {
-            this->address_vec_[i]->set ("");
+            address.set ("");
             break;
           }
         }
@@ -604,8 +635,10 @@ MCT_Event_Handler::handle_input (ACE_HANDLE /*handle*/)
     }
 
   // Zero length buffer means we are done.
-  if (ACE_OS::strlen (buf) == 0)
+  if (buf[0] == '\0')
+  {
     return -1;
+  }
   else if (this->find (buf) == -1)
     {
       ++error;
@@ -625,7 +658,9 @@ MCT_Event_Handler::handle_close (ACE_HANDLE /*fd*/,
   // If this is the last handler, use the finished flag to signal
   // the task to exit.
   if (--MCT_Event_Handler::active_handlers_ == 0)
+  {
     finished = 1;
+  }
 
   // The DONT_CALL flag keeps the reactor from calling handle_close ()
   // again, since we commit suicide below.
@@ -653,29 +688,30 @@ MCT_Event_Handler::get_handle () const
 class MCT_Task : public ACE_Task<ACE_NULL_SYNCH>
 {
 public:
-  MCT_Task (const MCT_Config &config,
+  MCT_Task (MCT_Config const &config,
             ACE_Reactor *reactor = ACE_Reactor::instance ());
   ~MCT_Task () override;
 
   //FUZZ: disable check_for_lack_ACE_OS
-  // = Task hooks.
+  /// @name Task hooks
+  /// @{
   int open (void *args = nullptr) override;
-  int svc () override;
   //FUZZ: enable check_for_lack_ACE_OS
+  int svc () override;
+  /// @}
 
 private:
-  const MCT_Config &config_;
+  MCT_Config const &config_;
 };
 
-MCT_Task::MCT_Task (const MCT_Config &config,
+MCT_Task::MCT_Task (MCT_Config const &config,
                     ACE_Reactor *reactor)
   : config_ (config)
 {
   this->reactor (reactor);
 }
 
-MCT_Task::~MCT_Task ()
-{}
+MCT_Task::~MCT_Task () = default;
 
 int
 MCT_Task::open (void *)
@@ -683,7 +719,7 @@ MCT_Task::open (void *)
   MCT_Event_Handler *handler;
 
   ACE_INET_Addr addr = this->config_.group_start ();
-  int groups = this->config_.groups ();
+  int const groups = this->config_.groups ();
   for (int i = 0; i < groups; ++i)
     {
       ACE_NEW_RETURN (handler,
@@ -702,37 +738,47 @@ MCT_Task::open (void *)
               if (j > 0
                   && ACE_BIT_ENABLED (ACE_SOCK_Dgram_Mcast::OPT_BINDADDR_YES,
                                       this->config_.options ()))
+              {
                 break;
+              }
 
               if (handler->join (addr) == -1)
+              {
                 ACE_ERROR_RETURN ((LM_ERROR,
                                    ACE_TEXT ("MCT_Task::open - join error\n")),
                                   -1);
+              }
               advance_addr (addr);
             }
         }
       else
         {
           if (handler->join (addr) == -1)
+          {
             ACE_ERROR_RETURN ((LM_ERROR,
                                ACE_TEXT ("MCT_Task::open - join error\n")),
                               -1);
+          }
         }
 
       advance_addr (addr);
 
       if (this->reactor ()->register_handler (handler, READ_MASK) == -1)
+      {
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("MCT_Task::open - cannot register ")
                            ACE_TEXT ("handler\n")),
                           -1);
+      }
     }
 
   if (this->activate (THR_NEW_LWP) == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("MCT_TASK:open - activate failed")),
                       -1);
+  }
   return 0;
 }
 
@@ -745,7 +791,9 @@ MCT_Task::svc ()
 
   // loop and call handle_events...
   while (!finished)
+  {
     this->reactor ()->handle_events ();
+  }
 
   return 0;
 }
@@ -757,21 +805,27 @@ int send_dgram (ACE_SOCK_Dgram &socket, ACE_INET_Addr addr, int done = 0)
   // Send each message twice, once to the right port, and once to the "wrong"
   // port.  This helps generate noise and lets us see if port filtering is
   // working properly.
-  const char *address = addr.get_host_addr ();
+  char const *address = addr.get_host_addr ();
   int port = addr.get_port_number ();
 
   for (int i = 0; i < 2; ++i)
     {
       char buf[MAX_STRING_SIZE];
       if (done)
+      {
         buf[0] = 0;
+      }
       else
+      {
         ACE_OS::snprintf (buf, MAX_STRING_SIZE, "%s/%d", address, port);
+      }
       //ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("sending (%s)\n"), buf));
-      if (socket.send (buf, ACE_OS::strlen (buf),addr) == -1)
+      if (socket.send (buf, std::strlen (buf),addr) == -1)
+      {
         ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
                            ACE_TEXT ("send_dgram - error calling send on ")
                            ACE_TEXT ("ACE_SOCK_Dgram.")), -1);
+      }
       addr.set_port_number (++port);
     }
   return 0;
@@ -794,12 +848,16 @@ int producer (MCT_Config &config)
                              IP_MULTICAST_TTL,
                              (void*) &ttl,
                              sizeof ttl) != 0)
+      {
         ACE_DEBUG ((LM_ERROR,
                     ACE_TEXT ("could net set socket option IP_MULTICAST_TTL ")
                     ACE_TEXT ("= %d\n"),
                     ttl));
+      }
       else
+      {
         ACE_DEBUG ((LM_INFO, ACE_TEXT ("set IP_MULTICAST_TTL = %d\n"), ttl));
+      }
     }
 #if defined (ACE_HAS_IPV6)
   else
@@ -810,13 +868,17 @@ int producer (MCT_Config &config)
                              IPV6_MULTICAST_HOPS,
                              (void*) &hops,
                              sizeof hops) != 0)
+      {
         ACE_DEBUG ((LM_ERROR,
                     ACE_TEXT ("could net set socket option IPV6_MULTICAST_HOPS")
                     ACE_TEXT (" = %d\n"),
                     hops));
+      }
       else
+      {
         ACE_DEBUG ((LM_INFO, ACE_TEXT ("set IPV6_MULTICAST_HOPS = %d\n"),
                     hops));
+      }
     }
 
   // Turn on multicast loopback since the test relies on it and the
@@ -828,18 +890,21 @@ int producer (MCT_Config &config)
                          sizeof (do_loopback)) == -1)
     {
       if (errno == ENOTSUP)
+      {
         ACE_DEBUG ((LM_INFO,
                     ACE_TEXT ("IPV6_MULTICAST_LOOP not supported\n")));
+      }
       else
+      {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"),
                     ACE_TEXT ("Can't set IPV6_MULTICAST_LOOP")));
+      }
     }
 #endif /* ACE_HAS_IPV6 */
 
-
-  int iterations = config.iterations ();
+  int const iterations = config.iterations ();
   // we add an extra 5 groups for noise.
-  int groups = config.groups () + 5;
+  int const groups = config.groups () + 5;
   for (int i = 0; (i < iterations || iterations == 0) && !finished; ++i)
     {
       ACE_INET_Addr addr = config.group_start ();
@@ -847,10 +912,14 @@ int producer (MCT_Config &config)
         {
           if ((retval += send_dgram (socket, addr,
                                      ((i + 1) == iterations))) == -1)
+          {
             ACE_ERROR ((LM_ERROR, ACE_TEXT ("Calling send_dgram.\n")));
+          }
           if ((retval += advance_addr (addr)) == -1)
+          {
             ACE_ERROR ((LM_ERROR,
                         ACE_TEXT ("Calling advance_addr.\n")));
+          }
         }
       // Give the task thread a chance to run.
       ACE_Thread::yield ();
@@ -858,10 +927,9 @@ int producer (MCT_Config &config)
   return retval;
 }
 
-/*
+/**
  * Advance the address by 1, e.g., 239.255.0.1 => 239.255.0.2
- * Note that the algorithm is somewhat simplistic, but sufficient for our
- * purpose.
+ * @note The algorithm is somewhat simplistic, but sufficient for this test.
  */
 int advance_addr (ACE_INET_Addr &addr)
 {
@@ -870,7 +938,9 @@ int advance_addr (ACE_INET_Addr &addr)
     {
       ::sscanf (addr.get_host_addr (), "%d.%d.%d.%d", &a, &b, &c, &d);
       if (d < 255)
+      {
         ++d;
+      }
       else if (c < 255)
         {
           d = 1;
@@ -890,11 +960,13 @@ int advance_addr (ACE_INET_Addr &addr)
           ++a;
         }
       else
+      {
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("advance_addr - Cannot advance multicast ")
                            ACE_TEXT ("group address past %s\n"),
                            addr.get_host_addr ()),
                           -1);
+      }
 
       ACE_TCHAR buf[MAX_STRING_SIZE];
       ACE_OS::snprintf (buf, MAX_STRING_SIZE, ACE_TEXT ("%d.%d.%d.%d:%d"),
@@ -914,12 +986,12 @@ int advance_addr (ACE_INET_Addr &addr)
       while (i >= 2 && sin6_addr[i] == 0xff)
         {
           sin6_addr[i] = 0;
-          i--;
+          --i;
         }
 
       if (i >= 2)
         {
-          sin6_addr[i]++;
+          ++sin6_addr[i];
         }
       else
         {
@@ -942,9 +1014,11 @@ run_main (int argc, ACE_TCHAR *argv[])
   MCT_Config config;
   retval = config.open (argc, argv);
   if (retval != 0)
+  {
     return 1;
+  }
 
-  const ACE_TCHAR *temp = ACE_TEXT ("Multicast_Test_IPV6");
+  ACE_TCHAR const *temp = ACE_TEXT ("Multicast_Test_IPV6");
   ACE_TString test = temp;
 
   u_long role = config.role ();
@@ -952,9 +1026,13 @@ run_main (int argc, ACE_TCHAR *argv[])
       || ACE_BIT_DISABLED (role, MCT_Config::CONSUMER))
     {
       if (ACE_BIT_ENABLED (role, MCT_Config::PRODUCER))
+      {
         test += ACE_TEXT ("-PRODUCER");
+      }
       else
+      {
         test += ACE_TEXT ("-CONSUMER");
+      }
     }
 
   // Start test only if options are valid.
@@ -969,7 +1047,9 @@ run_main (int argc, ACE_TCHAR *argv[])
 
   // Dump the configuration info to the log if caller passed debug option.
   if (config.debug ())
+  {
     config.dump ();
+  }
 
   ACE_Reactor *reactor = ACE_Reactor::instance ();
 
@@ -984,7 +1064,9 @@ run_main (int argc, ACE_TCHAR *argv[])
 
   // now produce the datagrams...
   if (ACE_BIT_ENABLED (role, MCT_Config::PRODUCER))
+  {
     retval += producer (config);
+  }
 
   if (ACE_BIT_ENABLED (role, MCT_Config::CONSUMER))
     {
@@ -997,15 +1079,19 @@ run_main (int argc, ACE_TCHAR *argv[])
       ACE_Time_Value max_wait ( config.wait ()/* seconds */);
       ACE_Time_Value wait_time (ACE_OS::gettimeofday () + max_wait);
       ACE_Time_Value *ptime = ACE_BIT_ENABLED (role, MCT_Config::PRODUCER)
-                                ? &wait_time : nullptr;
+                                ? std::addressof (wait_time) : nullptr;
       if (ACE_Thread_Manager::instance ()->wait (ptime) == -1)
         {
           if (errno == ETIME)
+          {
             ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("maximum wait time of %d msec exceeded\n"),
+                        ACE_TEXT ("maximum wait time of %Lu msec exceeded\n"),
                         max_wait.msec ()));
+          }
           else
+          {
             ACE_OS::perror (ACE_TEXT ("wait"));
+          }
 
           ++error;
         }

@@ -6,13 +6,14 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/Time_Value.h"
 
+#include <memory>
 
 #if defined (ACE_HAS_STREAM_PIPES)
 
 #include "shared.h"
 
 int
-ACE_TMAIN (int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR * const argv[])
 {
   ACE_SPIPE_Acceptor peer_acceptor;
   ACE_SPIPE_Stream new_stream;
@@ -21,7 +22,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   int flags = 0;
 
   if (argc > 1)
-    rendezvous = argv[1];
+    {
+      rendezvous = argv[1];
+    }
 
   ACE_OS::unlink (rendezvous);
   ACE_OS::fdetach (ACE_TEXT_ALWAYS_CHAR (rendezvous));
@@ -30,20 +33,31 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_Time_Value timeout (ACE_DEFAULT_TIMEOUT);
 
   if (peer_acceptor.open (addr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), 1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "open"), 1);
+    }
 
   ACE_DEBUG ((LM_DEBUG, "waiting for connection\n"));
 
-  if (peer_acceptor.accept (new_stream, 0, &timeout) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "accept"), 1);
+  if (peer_acceptor.accept (new_stream, nullptr,
+                            std::addressof (timeout)) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "accept"), 1);
+    }
 
   ACE_DEBUG ((LM_DEBUG, "accepted\n"));
 
-  while (new_stream.recv ((ACE_Str_Buf *) 0, &buffer, &flags) >= 0)
-    if (buffer.len == 0)
-      break;
-    else
-      ACE_OS::write (ACE_STDOUT, buffer.buf, buffer.len);
+  while (new_stream.recv (nullptr, &buffer, &flags) >= 0)
+    {
+      if (buffer.len == 0)
+        {
+          break;
+        }
+      else
+        {
+          ACE_OS::write (ACE_STDOUT, buffer.buf, buffer.len);
+        }
+    }
   return 0;
 }
 #else

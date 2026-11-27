@@ -1,13 +1,9 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Timer_Queue_Adapters.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu> and
  *          Carlos O'Ryan <coryan@uci.edu>
  */
-//=============================================================================
 
 #ifndef ACE_TIMER_QUEUE_ADAPTERS_H
 #define ACE_TIMER_QUEUE_ADAPTERS_H
@@ -22,6 +18,8 @@
 #include "ace/Signal.h"
 #include "ace/Sig_Handler.h"
 #include "ace/Condition_Recursive_Thread_Mutex.h"
+
+#include <memory>
 
 #if defined (ACE_HAS_DEFERRED_TIMER_COMMANDS)
 #  include "ace/Unbounded_Queue.h"
@@ -53,7 +51,6 @@ class ACE_Async_Timer_Queue_Adapter : public ACE_Event_Handler
 public:
   using TIMER_QUEUE = TQ;
 
-  /// Constructor
   /**
    * Register the SIGALRM handler.  If @a mask == 0 then block all
    * signals when @c SIGALRM is run.  Otherwise, just block the signals
@@ -61,21 +58,28 @@ public:
    */
   ACE_Async_Timer_Queue_Adapter (ACE_Sig_Set *mask = nullptr);
 
+  ACE_Async_Timer_Queue_Adapter (ACE_Async_Timer_Queue_Adapter const &) = delete;
+  ACE_Async_Timer_Queue_Adapter (ACE_Async_Timer_Queue_Adapter &&) = delete;
+  ACE_Async_Timer_Queue_Adapter &operator= (ACE_Async_Timer_Queue_Adapter const &) = delete;
+  ACE_Async_Timer_Queue_Adapter &operator= (ACE_Async_Timer_Queue_Adapter &&) = delete;
+
   /// Schedule the timer according to the semantics of the
   /// ACE_Timer_List.
   /**
    * This timer gets dispatched via a signal, rather than by a user
-   * calling expire().  Note that interval timers are not implemented
+   * calling expire().
+   *
+   * @note Interval timers are not implemented
    * yet.
    */
   long schedule (TYPE type,
-                 const void *act,
-                 const ACE_Time_Value &future_time,
-                 const ACE_Time_Value &interval = ACE_Time_Value::zero);
+                 void const *act,
+                 ACE_Time_Value const &future_time,
+                 ACE_Time_Value const &interval = ACE_Time_Value::zero);
 
   /// Cancel the @a timer_id and pass back the @a act if an address is
   /// passed in.
-  int cancel (long timer_id, const void **act = nullptr);
+  int cancel (long timer_id, void const **act = nullptr);
 
   /// Dispatch all timers with expiry time at or before the current time.
   /// Returns the number of timers expired.
@@ -134,22 +138,27 @@ public:
   /// Creates the timer queue.  Activation of the task is the user's
   /// responsibility. Optionally a pointer to a timer queue can be passed,
   /// when no pointer is passed, a TQ is dynamically created
-  ACE_Thread_Timer_Queue_Adapter (ACE_Thread_Manager * = ACE_Thread_Manager::instance (),
-                                  TQ* timer_queue = nullptr);
+  ACE_Thread_Timer_Queue_Adapter (
+    ACE_Thread_Manager * = ACE_Thread_Manager::instance (),
+    TQ *timer_queue = nullptr);
 
-  /// Destructor.
+  ACE_Thread_Timer_Queue_Adapter (ACE_Thread_Timer_Queue_Adapter const &) = delete;
+  ACE_Thread_Timer_Queue_Adapter (ACE_Thread_Timer_Queue_Adapter &&) = delete;
+  ACE_Thread_Timer_Queue_Adapter &operator= (ACE_Thread_Timer_Queue_Adapter const &) = delete;
+  ACE_Thread_Timer_Queue_Adapter &operator= (ACE_Thread_Timer_Queue_Adapter &&) = delete;
+
   ~ACE_Thread_Timer_Queue_Adapter () override;
 
-  /// Schedule the timer according to the semantics of the <TQ>; wakes
+  /// Schedule the timer according to the semantics of the @c TQ; wakes
   /// up the dispatching thread.
   long schedule (TYPE handler,
-                 const void *act,
-                 const ACE_Time_Value &future_time,
-                 const ACE_Time_Value &interval = ACE_Time_Value::zero);
+                 void const *act,
+                 ACE_Time_Value const &future_time,
+                 ACE_Time_Value const &interval = ACE_Time_Value::zero);
 
   /// Cancel the @a timer_id and return the @a act parameter if an
   /// address is passed in. Also wakes up the dispatching thread.
-  int cancel (long timer_id, const void **act = nullptr);
+  int cancel (long timer_id, void const **act = nullptr);
 
   /// Runs the dispatching thread.
   int svc () override;
@@ -163,7 +172,7 @@ public:
   /// Set a user-specified timer queue.
   int timer_queue (TQ *tq);
 
-  /// Return the current <TQ>.
+  /// Return the current @c TQ.
   TQ *timer_queue () const;
 
   /// Return the thread id of our active object.
@@ -184,7 +193,7 @@ public:
                         void *stack[] = nullptr,
                         size_t stack_size[] = nullptr,
                         ACE_thread_t thread_ids[] = nullptr,
-                        const char* thr_name[] = nullptr) override;
+                        char const *thr_name[] = nullptr) override;
 
 # if defined (ACE_HAS_DEFERRED_TIMER_COMMANDS)
 
@@ -214,14 +223,14 @@ private:
 # endif /* ACE_HAS_DEFERRED_TIMER_COMMANDS */
 
   /// The underlying Timer_Queue.
-  TQ* timer_queue_;
+  /// Observed active queue; owned_timer_queue_ owns it when created by this adapter.
+  TQ *timer_queue_ {};
 
-  /// Keeps track of whether we should delete the timer queue (if we
-  /// didn't create it, then we don't delete it).
-  bool delete_timer_queue_;
+  /// Owns the queue when this adapter creates it.
+  std::unique_ptr<TQ> owned_timer_queue_;
 
   /// The mutual exclusion mechanism that is required to use the
-  /// <condition_>.
+  /// @c condition_.
   ACE_SYNCH_RECURSIVE_MUTEX mutex_;
 
   /// Attributes to initialize condition with.

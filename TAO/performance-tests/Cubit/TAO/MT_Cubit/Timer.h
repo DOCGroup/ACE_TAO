@@ -1,6 +1,3 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
  *  @file    Timer.h
  *
@@ -8,8 +5,6 @@
  *  @author Sumedh Mungee
  *  @author Sergio Flores-Gaitan and Nagarajan Surendran.
  */
-//=============================================================================
-
 
 #ifndef _MT_CUBIT_TIMER_H
 #define _MT_CUBIT_TIMER_H
@@ -42,7 +37,7 @@ private:
   ACE_High_Res_Timer timer_;
 
   /// Elapsed time in microseconds.
-  ACE_Time_Value delta_;
+  ACE_Time_Value delta_ {};
 
   /**
    * This is the granularity of the timing of the CORBA requests. A

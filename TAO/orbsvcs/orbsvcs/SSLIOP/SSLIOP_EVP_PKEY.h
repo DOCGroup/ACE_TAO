@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   SSLIOP_EVP_PKEY.h
  *
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef TAO_SSLIOP_EVP_PKEY_H
 #define TAO_SSLIOP_EVP_PKEY_H
@@ -32,14 +28,9 @@ namespace TAO
   {
     // OpenSSL @c EVP_PKEY structure traits specialization.
     template <>
-    struct OpenSSL_traits< ::EVP_PKEY >
+    struct OpenSSL_traits<::EVP_PKEY>
     {
       /// Increase the reference count on the given OpenSSL structure.
-      /**
-       * @note This used to be in a function template but MSVC++ 6
-       *       can't handle function templates correctly so reproduce
-       *       the code in each specialization.  *sigh*
-       */
       static ::EVP_PKEY * _duplicate (::EVP_PKEY * st)
       {
         if (st != nullptr)
@@ -67,7 +58,7 @@ namespace TAO
       }
     };
 
-    using EVP_PKEY_var = OpenSSL_st_var< ::EVP_PKEY >;
+    using EVP_PKEY_var = OpenSSL_st_var<::EVP_PKEY>;
   }  // End SSLIOP namespace.
 }  // End TAO namespace.
 

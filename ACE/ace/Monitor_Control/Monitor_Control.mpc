@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(Monitor_Control) : acelib, ace_etcl_parser, ace_output, install {
   dynamicflags += MONITOR_CONTROL_BUILD_DLL
   sharedname   = ACE_Monitor_Control

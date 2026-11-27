@@ -1,23 +1,21 @@
-// -*- C++ -*-
-#include "ace/OS_NS_string.h"
+#include <cstring>
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 ACE_Active_Map_Manager_Key::ACE_Active_Map_Manager_Key ()
+  : key_data_ {ACE_UINT32_MAX, 0}
 {
-  // If you change ~0, please change ACE_Map_Manager::free_list_id()
+  // If you change the slot index, please change ACE_Map_Manager::free_list_id()
   // accordingly.
-  this->key_data_.slot_index_ = (ACE_UINT32) ~0;
-  this->key_data_.slot_generation_ = 0;
 }
 
 ACE_INLINE
 ACE_Active_Map_Manager_Key::ACE_Active_Map_Manager_Key (ACE_UINT32 slot_index,
                                                         ACE_UINT32 slot_generation)
+  : key_data_ {slot_index, slot_generation}
 {
-  this->key_data_.slot_index_ = slot_index;
-  this->key_data_.slot_generation_ = slot_generation;
 }
 
 ACE_INLINE ACE_UINT32
@@ -33,7 +31,7 @@ ACE_Active_Map_Manager_Key::slot_generation () const
 }
 
 ACE_INLINE bool
-ACE_Active_Map_Manager_Key::operator== (const ACE_Active_Map_Manager_Key &rhs) const
+ACE_Active_Map_Manager_Key::operator== (ACE_Active_Map_Manager_Key const &rhs) const
 {
   return
     this->key_data_.slot_index_ == rhs.key_data_.slot_index_ &&
@@ -41,7 +39,7 @@ ACE_Active_Map_Manager_Key::operator== (const ACE_Active_Map_Manager_Key &rhs) c
 }
 
 ACE_INLINE bool
-ACE_Active_Map_Manager_Key::operator!= (const ACE_Active_Map_Manager_Key &rhs) const
+ACE_Active_Map_Manager_Key::operator!= (ACE_Active_Map_Manager_Key const &rhs) const
 {
   return !this->operator== (rhs);
 }
@@ -72,21 +70,17 @@ ACE_Active_Map_Manager_Key::size ()
 }
 
 ACE_INLINE void
-ACE_Active_Map_Manager_Key::decode (const void *data)
+ACE_Active_Map_Manager_Key::decode (void const *data)
 {
   // Copy the information from the user buffer into the key.
-  ACE_OS::memcpy (&this->key_data_,
-                  data,
-                  sizeof this->key_data_);
+  std::memcpy (std::addressof (this->key_data_), data, sizeof this->key_data_);
 }
 
 ACE_INLINE void
 ACE_Active_Map_Manager_Key::encode (void *data) const
 {
   // Copy the key data to the user buffer.
-  ACE_OS::memcpy (data,
-                  &this->key_data_,
-                  sizeof this->key_data_);
+  std::memcpy (data, std::addressof (this->key_data_), sizeof this->key_data_);
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    COIOP_Acceptor.h
  *
@@ -8,7 +5,6 @@
  *
  *  @author  Johnny Willemsen <jwillemsen@remedy.nl>
  */
-//=============================================================================
 
 #ifndef TAO_COIOP_ACCEPTOR_H
 #define TAO_COIOP_ACCEPTOR_H
@@ -31,8 +27,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// TAO COIOP_Acceptor concrete call definition
-
 /**
  * @class TAO_COIOP_Acceptor
  *
@@ -43,10 +37,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Strategies_Export TAO_COIOP_Acceptor : public TAO_Acceptor
 {
 public:
-  /// Constructor.
   TAO_COIOP_Acceptor ();
 
-  /// Destructor.
   ~TAO_COIOP_Acceptor ();
 
   /**
@@ -54,7 +46,7 @@ public:
    *
    * Please check the documentation in Transport_Acceptor.h for details.
    */
-  //@{
+  /// @{
   int open (TAO_ORB_Core *orb_core,
                     ACE_Reactor *reactor,
                     int version_major,
@@ -71,12 +63,12 @@ public:
                               TAO_MProfile &mprofile,
                       CORBA::Short priority) override;
 
-  int is_collocated (TAO_Endpoint const *endpoint) override;
+  bool is_collocated (TAO_Endpoint const *endpoint) override;
   CORBA::ULong endpoint_count () override;
 
   int object_key (IOP::TaggedProfile &profile,
                   TAO::ObjectKey &key) override;
-  //@}
+  /// @}
 
 protected:
   /// Parse protocol specific options.
@@ -84,13 +76,13 @@ protected:
 
   /// Helper method to add a new profile to the mprofile for
   /// each endpoint.
-  int create_new_profile (const TAO::ObjectKey &object_key,
+  int create_new_profile (TAO::ObjectKey const &object_key,
                           TAO_MProfile &mprofile,
                           CORBA::Short priority);
 
   /// Helper method to create a profile that contains all of
   /// our endpoints.
-  int create_shared_profile (const TAO::ObjectKey &object_key,
+  int create_shared_profile (TAO::ObjectKey const &object_key,
                              TAO_MProfile &mprofile,
                              CORBA::Short priority);
 protected:

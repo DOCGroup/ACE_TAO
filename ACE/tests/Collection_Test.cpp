@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    Collection_Test.cpp
  *
@@ -8,9 +6,10 @@
  *
  *  @author Irfan Pyarali <irfan@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "test_config.h"
+
+#include <memory>
 
 #include "ace/Containers.h"
 #include "Collection_Test.h"
@@ -22,7 +21,7 @@ UglyThing::UglyThing (void* alloc, deletion_func dfunc)
 }
 
 bool
-UglyThing::operator== (const UglyThing& r) const
+UglyThing::operator== (UglyThing const& r) const
 {
   return this->alloc_ == r.alloc_;
 }
@@ -36,21 +35,21 @@ using ARRAY_DATA = int;
 using ARRAY = ACE_Array<ARRAY_DATA>;
 using ARRAY_ITERATOR = ACE_Array_Iterator<ARRAY_DATA>;
 
-void iterate_const(const UNBOUNDED_SET& set)
+void iterate_const (UNBOUNDED_SET const& set)
 {
   {
     UNBOUNDED_SET_CONST_ITERATOR iterator (set);
     while (!iterator.done ())
     {
-      DATA *data = nullptr;
+      DATA *data {};
       iterator.next (data);
 
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%x,%x\n"),
-                  data->alloc_, (void *) data->dfunc_));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%@, deletion function set=%d\n"),
+                  data->alloc_, data->dfunc_ != nullptr));
 
-      DATA data_second = *iterator;
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%x,%x\n"),
-                  data_second.alloc_, (void *) data_second.dfunc_));
+      DATA const data_second = *iterator;
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%@, deletion function set=%d\n"),
+                  data_second.alloc_, data_second.dfunc_ != nullptr));
 
       iterator.advance ();
     }
@@ -67,36 +66,34 @@ run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Collection_Test"));
 
-  deletion_func NO_DFUNC = (deletion_func)nullptr;
+  deletion_func const NO_DFUNC {};
   DummyFunctor dummyfunc;
 
   {
     UNBOUNDED_SET unbounded_set;
 
-    unbounded_set.insert (UglyThing ((void*)&unbounded_set, NO_DFUNC));
-    unbounded_set.insert (UglyThing ((void*)&dummyfunc, NO_DFUNC));
+    unbounded_set.insert (UglyThing (std::addressof (unbounded_set), NO_DFUNC));
+    unbounded_set.insert (UglyThing (std::addressof (dummyfunc), NO_DFUNC));
 
     {
-      for (UNBOUNDED_SET::iterator iterator = unbounded_set.begin ();
-           iterator != unbounded_set.end ();
-           ++iterator)
+      for (UglyThing const &thing : unbounded_set)
         {
-          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%x,%x\n"),
-                      (*iterator).alloc_, (void *) (*iterator).dfunc_));
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%@, deletion function set=%d\n"),
+                      thing.alloc_, thing.dfunc_ != nullptr));
         }
     }
 
     unbounded_set.insert (UglyThing (nullptr, NO_DFUNC));
-    unbounded_set.remove (UglyThing ((void*)&dummyfunc, NO_DFUNC));
+    unbounded_set.remove (UglyThing (std::addressof (dummyfunc), NO_DFUNC));
 
     {
       UNBOUNDED_SET_ITERATOR iterator (unbounded_set);
       while (!iterator.done ())
         {
-          DATA *data = nullptr;
+          DATA *data {};
           iterator.next (data);
-          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%x,%x\n"),
-                      data->alloc_, (void *) data->dfunc_));
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%@, deletion function set=%d\n"),
+                      data->alloc_, data->dfunc_ != nullptr));
           iterator.advance ();
         }
     }
@@ -110,7 +107,9 @@ run_main (int, ACE_TCHAR *[])
 
       while (i.next (data) != 0)
         {
-          ACE_DEBUG ((LM_DEBUG, "%x,%x\n", data->alloc_, (void *) data->dfunc_));
+          ACE_DEBUG ((LM_DEBUG,
+                      "%@, deletion function set=%d\n",
+                      data->alloc_, data->dfunc_ != nullptr));
           i.advance ();
         }
     }
@@ -118,11 +117,30 @@ run_main (int, ACE_TCHAR *[])
   }
 
   {
-    ARRAY array;
+    ARRAY const array;
   }
 
   {
-    ARRAY array (0);
+    ARRAY const array (0);
+  }
+
+  {
+    ACE_Unbounded_Stack<int> stack;
+    ACE_TEST_ASSERT (stack.is_empty ());
+    ACE_TEST_ASSERT (stack.push (23) == 0);
+
+    int item {};
+    ACE_TEST_ASSERT (stack.pop (item) == 0);
+    ACE_TEST_ASSERT (item == 23);
+  }
+
+  {
+    ACE_Fixed_Set<int, 8> original;
+    ACE_TEST_ASSERT (original.insert (42) == 0);
+
+    ACE_Fixed_Set<int, 8> const copy (original);
+    ACE_TEST_ASSERT (copy.size () == 1);
+    ACE_TEST_ASSERT (copy.find (42) == 0);
   }
 
   {
@@ -131,9 +149,9 @@ run_main (int, ACE_TCHAR *[])
     array1[0] = 4;
     array1[1] = 4;
 
-    ARRAY array2 (2, 4);
+    ARRAY const array2 (2, 4);
 
-    ARRAY array3 (array2);
+    ARRAY const array3 (array2);
 
     ARRAY array4;
     array4 = array2;
@@ -157,7 +175,7 @@ run_main (int, ACE_TCHAR *[])
       ARRAY_ITERATOR iterator (array1);
       while (!iterator.done ())
         {
-          ARRAY_DATA *data = nullptr;
+          ARRAY_DATA *data {};
           iterator.next (data);
           ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%d\n"),
                       (*data)));
@@ -166,7 +184,6 @@ run_main (int, ACE_TCHAR *[])
         }
     }
   }
-
 
   ACE_END_TEST;
 

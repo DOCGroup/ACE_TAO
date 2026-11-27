@@ -2,18 +2,13 @@
 #include "CB.h"
 #include "TimerDispatcher.h"
 
-CB::CB () : count_(0)
-{
-  ACE_TRACE ("CB::CB");
-}
-
 // Listing 1 code/ch20
-int CB::handle_timeout (const ACE_Time_Value &,
-                        const void *arg)
+int CB::handle_timeout (ACE_Time_Value const &,
+                        void const *arg)
 {
   ACE_TRACE ("CB::handle_timeout");
 
-  const int *val = static_cast<const int*> (arg);
+  int const *val = static_cast<int const *> (arg);
   ACE_ASSERT ((*val) == timerID_);
 
   ACE_UNUSED_ARG (val);
@@ -25,8 +20,8 @@ int CB::handle_timeout (const ACE_Time_Value &,
                   timerID_));
 
       // New interval is 10 ms.
-      ACE_Time_Value interval (0L, 1000L);
-      int status = Timer::instance ()->reset_interval
+      ACE_Time_Value const interval (0L, 1000L);
+      int const status = Timer::instance ()->reset_interval
                                          (timerID_, interval);
 #if defined (ACE_NDEBUG)
       ACE_UNUSED_ARG (status);
@@ -39,7 +34,8 @@ int CB::handle_timeout (const ACE_Time_Value &,
     {
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Canceling %d\n"),
                   timerID_));
-      ACE_ASSERT ((Timer::instance ()->cancel (this)) != 0);
+      int const cancel_result = Timer::instance ()->cancel (this);
+      ACE_TEST_ASSERT (cancel_result != 0);
     }
 
   return 0;
@@ -54,7 +50,7 @@ CB::setID (long timerID)
 }
 
 long
-CB::getID ()
+CB::getID () const
 {
   ACE_TRACE ("CB::getID");
   return timerID_;

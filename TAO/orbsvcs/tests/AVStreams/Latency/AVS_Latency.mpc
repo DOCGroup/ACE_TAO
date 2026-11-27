@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*ping): avstreamsexe, strategies {
   exename  = ping
 

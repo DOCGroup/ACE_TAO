@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   Locator_Options.h
  *
@@ -8,7 +5,6 @@
  *
  *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef LOCATOR_OPTIONS_H
 #define LOCATOR_OPTIONS_H
@@ -54,7 +50,7 @@ public:
   unsigned int debug () const;
 
   /// Returns the file where the IOR should be stored.
-  const ACE_TString& ior_filename () const;
+  ACE_TString const& ior_filename () const;
 
   /// Will we listen for multicast location requests?
   bool multicast () const;
@@ -64,11 +60,11 @@ public:
 
   int save_registry_options();
 
-  const char* cmdline() const;
+  char const *cmdline() const;
 
   /// File that contains the activator related information
   /// that the persistent locator has to save.
-  const ACE_TString& persist_file_name() const;
+  ACE_TString const& persist_file_name() const;
 
   /// Do we allow modifications to the servers?
   bool readonly () const;
@@ -100,9 +96,9 @@ public:
   /// rules, all registered servers.
   bool ping_external () const;
 
-  /// If the server hasn't been verified for a while, then we'll
-  /// ping it. Note : No timers are currently used. We simply ping()
-  /// during indirect invocations, if this interval has elapsed.
+  /// If the server hasn't been verified for a while, then we'll ping it.
+  /// @note No timers are currently used. We simply ping() during indirect
+  /// invocations if this interval has elapsed.
   ACE_Time_Value ping_interval () const;
 
   /// When pinging, this is the timeout
@@ -121,7 +117,7 @@ public:
   enum ImrType { BACKUP_IMR, PRIMARY_IMR, STANDALONE_IMR };
   ImrType imr_type() const;
 
-  const ACE_CString &ft_endpoint () const;
+  ACE_CString const &ft_endpoint () const;
 
   ACE_Time_Value ft_update_delay () const;
 
@@ -133,7 +129,7 @@ private:
   void print_usage () const;
 
   /// Run a service command.
-  int run_service_command (const ACE_TString& cmdline);
+  int run_service_command (ACE_TString const& cmdline);
 
   int load_registry_options();
 

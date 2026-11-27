@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   Activator_Options.h
  *
@@ -8,7 +5,6 @@
  *
  *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef ACTIVATOR_OPTIONS_H
 #define ACTIVATOR_OPTIONS_H

@@ -1,5 +1,3 @@
-/* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file   Events.h
  *
@@ -8,8 +6,6 @@
  *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef NOTIFY_TESTS_EventS_H
 #define NOTIFY_TESTS_EventS_H
@@ -17,6 +13,8 @@
 #include "Notify_Test_Client.h"
 #include "Notify_StructuredPushConsumer.h"
 #include "Notify_StructuredPushSupplier.h"
+
+#include <atomic>
 
 #if defined(_MSC_VER)
 #pragma warning(push)
@@ -28,12 +26,13 @@ class Events;
 class Event_StructuredPushConsumer : public TAO_Notify_Tests_StructuredPushConsumer
 {
 public:
-  /// Constructor.
-  Event_StructuredPushConsumer (Events *test_client);
+  explicit Event_StructuredPushConsumer (Events *test_client);
 
-  // = StructuredPushSupplier methods.
-  virtual void push_structured_event (
-      const CosNotification::StructuredEvent & notification);
+  /// @name StructuredPushConsumer operations
+  /// @{
+  void push_structured_event (
+      CosNotification::StructuredEvent const &notification) override;
+  /// @}
 
 protected:
   Events * test_client_;
@@ -44,11 +43,9 @@ protected:
 class Event_StructuredPushSupplier : public TAO_Notify_Tests_StructuredPushSupplier
 {
 public:
-  /// Constructor.
-  Event_StructuredPushSupplier (Events * test_client);
+  explicit Event_StructuredPushSupplier (Events *test_client);
 
-  /// Destructor.
-  virtual ~Event_StructuredPushSupplier ();
+  ~Event_StructuredPushSupplier () override;
 
 protected:
   Events* test_client_;
@@ -59,16 +56,18 @@ protected:
 class Events : public Notify_Test_Client
 {
 public:
-  // Initialization and termination code.
+  /// @name Initialization and termination
+  /// @{
   Events ();
-  virtual ~Events ();
+  ~Events () override;
+  /// @}
 
   int parse_args (int argc,
-                  ACE_TCHAR *argv[]) ;
+                  ACE_TCHAR *argv[]) override;
 
   /// Initialization.
   int init (int argc,
-            ACE_TCHAR *argv []);
+            ACE_TCHAR *argv []) override;
 
   /// Called when an event is received.
   void on_event_received ();
@@ -87,7 +86,7 @@ protected:
   void create_EC ();
 
   /// Number of events received so far.
-  ACE_Atomic_Op <TAO_SYNCH_MUTEX, int> result_count_;
+  std::atomic<int> result_count_ {0};
 
   /// Use the default admins.
   int use_default_admin_;
@@ -105,10 +104,10 @@ protected:
   CosNotifyChannelAdmin::SupplierAdmin_var supplier_admin_;
 
   /// Consumer
-  TAO_Notify_Tests_StructuredPushConsumer* consumer_;
+  TAO_Notify_Tests_StructuredPushConsumer* consumer_ {};
 
   /// Supplier
-  TAO_Notify_Tests_StructuredPushSupplier* supplier_;
+  TAO_Notify_Tests_StructuredPushSupplier* supplier_ {};
 
 private:
   friend class Event_StructuredPushSupplier;

@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file     test_i.h
  *
@@ -6,8 +5,6 @@
  *
  *  @author  Irfan Pyarali and Michael Kircher
  */
-//=============================================================================
-
 
 #include "testS.h"
 
@@ -18,19 +15,24 @@ class test_i :
 {
 public:
   test_i (CORBA::ORB_ptr orb_ptr,
-                PortableServer::POA_ptr poa,
-                ServantActivator &activator,
-                CORBA::Long value);
+          PortableServer::POA_ptr poa,
+          ServantActivator &activator,
+          CORBA::Long value);
 
-  virtual CORBA::Long doit ();
+  test_i (test_i const &) = delete;
+  test_i &operator= (test_i const &) = delete;
+  test_i (test_i &&) = delete;
+  test_i &operator= (test_i &&) = delete;
 
-  // Setup forwarding
-  virtual void forward ();
+  CORBA::Long doit () override;
 
-  virtual void shutdown ();
+  /// Setup forwarding
+  void forward () override;
+
+  void shutdown () override;
 
   /// Returns the default POA for this servant.
-  virtual PortableServer::POA_ptr _default_POA ();
+  PortableServer::POA_ptr _default_POA () override;
 
 protected:
   CORBA::ORB_var orb_;

@@ -6,20 +6,24 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      const char *location1 = "MyLocation 1";
-      const char *location2 = "MyLocation 2";
-      const char *location3 = "MyLocation 3";
-      const char *location4 = "MyLocation 4";
-      const char *location5 = "MyLocation 5";
-      const char *location6 = "MyLocation 6";
+      char const *location1 = "MyLocation 1";
+      char const *location2 = "MyLocation 2";
+      char const *location3 = "MyLocation 3";
+      char const *location4 = "MyLocation 4";
+      char const *location5 = "MyLocation 5";
+      char const *location6 = "MyLocation 6";
 
       LB_server lb_server (argc, argv);
 
       if (lb_server.start_orb_and_poa () != 0)
+      {
         return 1;
+      }
 
       if (lb_server.create_object_group () != 0)
+      {
         return 1;
+      }
 
       CosNaming::Name name (1);
       name.length (1);
@@ -27,7 +31,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       try {
         (lb_server.name_svc ())->rebind (name, lb_server.object_group ());
       }
-      catch (const CORBA::Exception& ex)
+      catch (CORBA::Exception const & ex)
       {
         ex._tao_print_exception ("Unable to bind object group in name service.\n");
         return 1;
@@ -104,9 +108,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - event loop finished\n"));
 
       if (lb_server.destroy () == -1)
+      {
         return 1;
+      }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("lb_server exception");
       return 1;

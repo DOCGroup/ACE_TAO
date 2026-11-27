@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*poa idl): taoidldefaults {
   IDL_Files {
     demux_test.idl

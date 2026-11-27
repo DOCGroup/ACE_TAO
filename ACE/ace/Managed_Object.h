@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Managed_Object.h
  *
  *  @author David L. Levine <levine@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef ACE_MANAGED_OBJECT_H
 #define ACE_MANAGED_OBJECT_H
@@ -21,6 +17,7 @@
 
 #include "ace/Object_Manager.h"
 #include "ace/Global_Macros.h"
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -41,7 +38,6 @@ template <class TYPE>
 class ACE_Cleanup_Adapter : public ACE_Cleanup
 {
 public:
-  /// Default constructor.
   ACE_Cleanup_Adapter ();
 
   /// Virtual destructor, needed by some compilers for vtable placement.
@@ -51,8 +47,10 @@ public:
   TYPE &object ();
 
 private:
-  ACE_Cleanup_Adapter (const ACE_Cleanup_Adapter<TYPE> &) = delete;
-  void operator= (const ACE_Cleanup_Adapter<TYPE> &) = delete;
+  ACE_Cleanup_Adapter (ACE_Cleanup_Adapter<TYPE> const &) = delete;
+  ACE_Cleanup_Adapter (ACE_Cleanup_Adapter<TYPE> &&) = delete;
+  ACE_Cleanup_Adapter &operator= (ACE_Cleanup_Adapter<TYPE> const &) = delete;
+  ACE_Cleanup_Adapter &operator= (ACE_Cleanup_Adapter<TYPE> &&) = delete;
 
   /// Contained object.
   TYPE object_;
@@ -75,7 +73,7 @@ private:
  * construction/destruction.  Managed objects won't be allocated
  * until needed, but should be allocated when first needed.  And
  * they are destroyed in the reverse order of construction.
- * <get_preallocated_object> accesses a "preallocated" object,
+ * @c get_preallocated_object accesses a "preallocated" object,
  * i.e., one that is identified by a value in the
  * ACE_Object_Manager:: Preallocated_Object enum.  These objects
  * are used internally by the ACE library.
@@ -93,7 +91,7 @@ private:
  * preallocated objects and arrays are allocated off the heap in
  * the ACE_Object_Manager constructor.  To statically place the
  * preallocated objects in program global data instead of on the
- * heap, #define ACE_HAS_STATIC_PREALLOCATION prior to building
+ * heap, define @c ACE_HAS_STATIC_PREALLOCATION prior to building
  * the ACE library.
  */
 template <class TYPE>
@@ -112,8 +110,9 @@ public:
 
     // Cast the return type of the the object pointer based
     // on the type of the function template parameter.
-    return &((ACE_Cleanup_Adapter<TYPE> *)
-             ACE_Object_Manager::preallocated_object[identifier])->object ();
+    return std::addressof (
+      static_cast<ACE_Cleanup_Adapter<TYPE> *> (
+        ACE_Object_Manager::preallocated_object[identifier])->object ());
   }
   /// Get the preallocated array identified by "id".  Returns a
   /// pointer to the array.  Beware: no error indication is provided,
@@ -127,17 +126,20 @@ public:
 
     // Cast the return type of the the object pointer based
     // on the type of the function template parameter.
-    return &((ACE_Cleanup_Adapter<TYPE> *)
-             ACE_Object_Manager::preallocated_array[identifier])->object ();
+    return std::addressof (
+      static_cast<ACE_Cleanup_Adapter<TYPE> *> (
+        ACE_Object_Manager::preallocated_array[identifier])->object ());
   }
 
 protected:
-  // Disallow instantiation of this class.
+  /// Disallow instantiation of this class.
   ACE_Managed_Object () = delete;
 
 private:
-  ACE_Managed_Object (const ACE_Managed_Object<TYPE> &) = delete;
-  void operator= (const ACE_Managed_Object<TYPE> &) = delete;
+  ACE_Managed_Object (ACE_Managed_Object<TYPE> const &) = delete;
+  ACE_Managed_Object (ACE_Managed_Object<TYPE> &&) = delete;
+  ACE_Managed_Object &operator= (ACE_Managed_Object<TYPE> const &) = delete;
+  ACE_Managed_Object &operator= (ACE_Managed_Object<TYPE> &&) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

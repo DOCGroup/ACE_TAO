@@ -1,12 +1,8 @@
-
-//=============================================================================
 /**
  *  @file    Event_Con.h
  *
  *  @author originally David Levine (levine@cs.wustl.edu) and Tim Harrison (harrison@cs.wustl.edu) modified Michael Kircher (mk1@cs.wustl.edu)
  */
-//=============================================================================
-
 
 #ifndef EVENT_CON_H
 #define EVENT_CON_H
@@ -21,6 +17,8 @@
 #include "orbsvcs/RtecEventCommS.h"
 #include "orbsvcs/RtecSchedulerC.h"
 
+#include <memory>
+
 /**
  * @class Demo_Consumer
  *
@@ -32,37 +30,44 @@
 class Demo_Consumer : public POA_RtecEventComm::PushConsumer
 {
 public:
-  Demo_Consumer ();
+  Demo_Consumer () = default;
+
+  Demo_Consumer (Demo_Consumer const &) = delete;
+  Demo_Consumer (Demo_Consumer &&) = delete;
+  Demo_Consumer &operator= (Demo_Consumer const &) = delete;
+  Demo_Consumer &operator= (Demo_Consumer &&) = delete;
 
   /**
-   * Uses the name server to obtain a reference to the <supplier_name>
+   * Uses the name server to obtain a reference to the supplier
    * and registers with channel to receive notifications from the
    * supplier.  Also registers to receive shutdown messages from the
-   * supplier.  Stores <my_name> for printing out messages.  Returns 0
+   * supplier.  Stores @a my_name for printing out messages.  Returns 0
    * on success, -1 on failure.
    */
   int open_consumer (RtecEventChannelAdmin::EventChannel_ptr ec,
-                     const char *my_name);
+                     char const *my_name);
 
   /// The channel is disconnecting.
-  virtual void disconnect_push_consumer ();
+  void disconnect_push_consumer () override;
 
-  // = (not protected to allow short-circuiting) protected:
   /**
-   * If the <events>[0] is a notification, prints out the data from
+   * If the @c events[0] is a notification, prints out the data from
    * the supplier.  If its a shutdown message, the consumer
-   * disconnects from the channel.
+   * disconnects from the channel.  This operation remains public to
+   * allow short-circuiting.
    */
-  virtual void push (const RtecEventComm::EventSet &events);
+  void push (RtecEventComm::EventSet const &events) override;
 
 protected:
   /// Disconnect from the Event Service.
   void shutdown ();
 
-  // = Event channel adminstration references.
+  /// @name Event channel administration references
+  /// @{
   RtecEventChannelAdmin::EventChannel_var channel_admin_;
   RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin_;
   RtecEventChannelAdmin::ProxyPushSupplier_var suppliers_;
+  /// @}
 
 private:
   RtecScheduler::handle_t rt_info_;

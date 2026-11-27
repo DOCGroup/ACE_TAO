@@ -1,9 +1,6 @@
-// -*- C++ -*-
 #include "ace/OS_NS_unistd.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
-// Send an n byte message to the connected socket.
 
 ACE_INLINE
 ACE_SOCK_IO::ACE_SOCK_IO ()
@@ -21,7 +18,7 @@ ACE_INLINE ssize_t
 ACE_SOCK_IO::recv (void *buf,
                    size_t len,
                    int flags,
-                   const ACE_Time_Value *timeout) const
+                   ACE_Time_Value const *timeout) const
 {
   ACE_TRACE ("ACE_SOCK_IO::recv");
   return ACE::recv (this->get_handle (),
@@ -34,7 +31,7 @@ ACE_SOCK_IO::recv (void *buf,
 ACE_INLINE ssize_t
 ACE_SOCK_IO::recv (void *buf,
                    size_t len,
-                   const ACE_Time_Value *timeout) const
+                   ACE_Time_Value const *timeout) const
 {
   ACE_TRACE ("ACE_SOCK_IO::recv");
   return ACE::recv (this->get_handle (),
@@ -46,7 +43,7 @@ ACE_SOCK_IO::recv (void *buf,
 ACE_INLINE ssize_t
 ACE_SOCK_IO::recvv (iovec iov[],
                     int n,
-                    const ACE_Time_Value *timeout) const
+                    ACE_Time_Value const *timeout) const
 {
   ACE_TRACE ("ACE_SOCK_IO::recvv");
   return ACE::recvv (this->get_handle (),
@@ -67,11 +64,12 @@ ACE_SOCK_IO::recv (void *buf,
                        overlapped);
 }
 
+/// Send an n byte message to the connected socket.
 ACE_INLINE ssize_t
-ACE_SOCK_IO::send (const void *buf,
+ACE_SOCK_IO::send (void const *buf,
                    size_t len,
                    int flags,
-                   const ACE_Time_Value *timeout) const
+                   ACE_Time_Value const *timeout) const
 {
   ACE_TRACE ("ACE_SOCK_IO::send");
   return ACE::send (this->get_handle (),
@@ -82,9 +80,9 @@ ACE_SOCK_IO::send (const void *buf,
 }
 
 ACE_INLINE ssize_t
-ACE_SOCK_IO::send (const void *buf,
+ACE_SOCK_IO::send (void const *buf,
                    size_t len,
-                   const ACE_Time_Value *timeout) const
+                   ACE_Time_Value const *timeout) const
 {
   ACE_TRACE ("ACE_SOCK_IO::send");
   return ACE::send (this->get_handle (),
@@ -96,7 +94,7 @@ ACE_SOCK_IO::send (const void *buf,
 ACE_INLINE ssize_t
 ACE_SOCK_IO::sendv (const iovec iov[],
                     int n,
-                    const ACE_Time_Value *timeout) const
+                    ACE_Time_Value const *timeout) const
 {
   ACE_TRACE ("ACE_SOCK_IO::sendv");
   return ACE::sendv (this->get_handle (),
@@ -106,7 +104,7 @@ ACE_SOCK_IO::sendv (const iovec iov[],
 }
 
 ACE_INLINE ssize_t
-ACE_SOCK_IO::send (const void *buf,
+ACE_SOCK_IO::send (void const *buf,
                    size_t n,
                    ACE_OVERLAPPED *overlapped) const
 {

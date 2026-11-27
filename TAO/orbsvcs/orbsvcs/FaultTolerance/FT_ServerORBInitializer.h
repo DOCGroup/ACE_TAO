@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file     FT_ServerORBInitializer.h
  *
  *  @author  Balachandran Natarajan <bala@cs.wustl.edu>
  */
-//=============================================================================
 #ifndef TAO_FT_SERVERORB_INITIALIZER_H
 #define TAO_FT_SERVERORB_INITIALIZER_H
 
@@ -29,9 +25,16 @@ class TAO_FT_ServerORBInitializer
   , public virtual ::CORBA::LocalObject
 {
 public:
+  TAO_FT_ServerORBInitializer () = default;
+
   void pre_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 
   void post_init (PortableInterceptor::ORBInitInfo_ptr info) override;
+
+  TAO_FT_ServerORBInitializer (TAO_FT_ServerORBInitializer const&) = delete;
+  TAO_FT_ServerORBInitializer& operator= (TAO_FT_ServerORBInitializer const&) = delete;
+  TAO_FT_ServerORBInitializer (TAO_FT_ServerORBInitializer&&) = delete;
+  TAO_FT_ServerORBInitializer& operator= (TAO_FT_ServerORBInitializer&&) = delete;
 
 private:
   /// Register FTCORBA policy factories.

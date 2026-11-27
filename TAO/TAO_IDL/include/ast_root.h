@@ -67,11 +67,11 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "ast_module.h"
 
-// Representation of root of AST.
-
+/// Represents the root of the AST.
 class TAO_IDL_FE_Export AST_Root : public virtual AST_Module
 {
 public:
+  AST_Root () = delete;
   explicit AST_Root (UTL_ScopedName *n);
 
   ~AST_Root () override;

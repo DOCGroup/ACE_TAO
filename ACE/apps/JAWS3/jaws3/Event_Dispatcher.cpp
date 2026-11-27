@@ -14,16 +14,14 @@ static ACE_THR_FUNC_RETURN
 JAWS_Event_Dispatcher_Proactor_Event_Loop (void *)
 {
   ACE_Proactor::run_event_loop ();
-  return 0;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
-
 
 void
 JAWS_Event_Dispatcher::end_event_loop ()
 {
   ACE_Reactor::end_event_loop ();
 }
-
 
 void
 JAWS_Event_Dispatcher::run_event_loop ()
@@ -32,7 +30,7 @@ JAWS_Event_Dispatcher::run_event_loop ()
 
   int result;
   result = ACE_Thread::spawn ( JAWS_Event_Dispatcher_Proactor_Event_Loop
-                             , 0
+                             , nullptr
                              , THR_BOUND
                              );
   if (result < 0)

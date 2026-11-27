@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  * @file TX_Object_i.h
  *
@@ -9,7 +6,6 @@
  * @author Andrew Finnell
  * @author Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
 
 #ifndef TX_OBJECT_I_H
 #define TX_OBJECT_I_H
@@ -23,13 +19,16 @@
 class TX_Object_i : public virtual POA_TX_Object
 {
 public:
-  // Constructor
-  TX_Object_i (CORBA::ORB_ptr orb);
+  explicit TX_Object_i (CORBA::ORB_ptr orb);
 
-  // Destructor
+  TX_Object_i (TX_Object_i const &) = delete;
+  TX_Object_i (TX_Object_i &&) = delete;
+  TX_Object_i &operator= (TX_Object_i const &) = delete;
+  TX_Object_i &operator= (TX_Object_i &&) = delete;
+
   ~TX_Object_i () override = default;
 
-  void send (const DataSeq & data) override;
+  void send (DataSeq const & data) override;
 
   void recv (DataSeq_out data) override;
 
@@ -37,7 +36,7 @@ public:
 
 private:
   CORBA::ORB_var orb_;
-  DataSeq data_;
+  DataSeq data_ {};
 };
 
 #endif  /* TX_OBJECT_I_H */

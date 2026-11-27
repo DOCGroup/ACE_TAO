@@ -1,13 +1,8 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
  *  @file    Event_Forwarding_Discriminator.h
  *
  *  @author Doug Schmidt
  */
-//=============================================================================
-
 
 #ifndef _CONSUMER_MAP_H
 #define _CONSUMER_MAP_H
@@ -31,6 +26,13 @@
 class Event_Forwarding_Discriminator
 {
 public:
+  Event_Forwarding_Discriminator () = default;
+  ~Event_Forwarding_Discriminator ();
+  Event_Forwarding_Discriminator (Event_Forwarding_Discriminator const &) = delete;
+  Event_Forwarding_Discriminator (Event_Forwarding_Discriminator &&) = delete;
+  Event_Forwarding_Discriminator &operator= (Event_Forwarding_Discriminator const &) = delete;
+  Event_Forwarding_Discriminator &operator= (Event_Forwarding_Discriminator &&) = delete;
+
   /// Associate Event with the Consumer_Dispatch_Set.
   int bind (Event_Key event, Consumer_Dispatch_Set *cds);
 
@@ -42,8 +44,8 @@ public:
   int find (Event_Key event, Consumer_Dispatch_Set *&cds);
 
 public:
-  /// Map that associates <Event_Key>s (external ids) with
-  /// <Consumer_Dispatch_Set> *'s <internal IDs>.
+  /// Associates event keys with owned dispatch sets. Sets are deleted
+  /// when unbound or when the discriminator is destroyed.
   ACE_Map_Manager<Event_Key, Consumer_Dispatch_Set *, ACE_Null_Mutex> map_;
 };
 
@@ -55,7 +57,8 @@ public:
 class Event_Forwarding_Discriminator_Iterator
 {
 public:
-  Event_Forwarding_Discriminator_Iterator (Event_Forwarding_Discriminator &mm);
+  explicit Event_Forwarding_Discriminator_Iterator (
+    Event_Forwarding_Discriminator &mm);
   int next (Consumer_Dispatch_Set *&);
   int advance ();
 

@@ -1,15 +1,3 @@
-ACE_INLINE
-Receiver_Stats::Receiver_Stats ()
-  : samples_count_ (0)
-  , min_ (0)
-  , min_at_ (0)
-  , max_ (0)
-  , max_at_ (0)
-  , sum_ (0)
-  , sum2_ (0)
-{
-}
-
 ACE_INLINE ACE_UINT32
 Receiver_Stats::samples_count () const
 {

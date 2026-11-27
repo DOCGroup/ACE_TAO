@@ -1,4 +1,3 @@
-
 /**
  * @file Echo.h
  *
@@ -13,7 +12,7 @@ class Echo : public POA_Test::Echo
 {
 public:
   Echo (CORBA::ORB_ptr orb,
-       int abort_counter);
+        int abort_counter);
   Echo (Echo const &) = delete;
   Echo &operator= (Echo const &) = delete;
   Echo (Echo &&) = delete;
@@ -22,7 +21,7 @@ public:
   void echo_payload (Test::Payload const &data) override;
 
 private:
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var const orb_;
 
   int abort_counter_;
 };

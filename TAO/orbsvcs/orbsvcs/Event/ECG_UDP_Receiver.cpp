@@ -15,7 +15,9 @@ TAO_ECG_UDP_Receiver::~TAO_ECG_UDP_Receiver ()
     RtecEventChannelAdmin::ProxyPushConsumer::_nil ();
 
   if (this->handler_rptr_.get ())
+  {
     this->handler_rptr_->shutdown ();
+  }
 }
 
 void
@@ -44,7 +46,7 @@ TAO_ECG_UDP_Receiver::init (RtecEventChannelAdmin::EventChannel_ptr lcl_ec,
 }
 
 void
-TAO_ECG_UDP_Receiver::connect (const RtecEventChannelAdmin::SupplierQOS& pub)
+TAO_ECG_UDP_Receiver::connect (RtecEventChannelAdmin::SupplierQOS const &pub)
 {
   if (CORBA::is_nil (this->lcl_ec_.in ()))
     {
@@ -76,11 +78,11 @@ TAO_ECG_UDP_Receiver::connect (const RtecEventChannelAdmin::SupplierQOS& pub)
 }
 
 void
-TAO_ECG_UDP_Receiver::new_connect (const RtecEventChannelAdmin::SupplierQOS& pub)
+TAO_ECG_UDP_Receiver::new_connect (RtecEventChannelAdmin::SupplierQOS const &pub)
 {
   // Activate with poa.
   RtecEventComm::PushSupplier_var supplier_ref;
-  PortableServer::POA_var poa = this->_default_POA ();
+  PortableServer::POA_var const poa = this->_default_POA ();
 
   TAO_EC_Object_Deactivator deactivator;
   activate (supplier_ref,
@@ -89,7 +91,7 @@ TAO_ECG_UDP_Receiver::new_connect (const RtecEventChannelAdmin::SupplierQOS& pub
             deactivator);
 
   // Connect as a supplier to the local EC.
-  RtecEventChannelAdmin::SupplierAdmin_var supplier_admin =
+  RtecEventChannelAdmin::SupplierAdmin_var const supplier_admin =
     this->lcl_ec_->for_suppliers ();
 
   RtecEventChannelAdmin::ProxyPushConsumer_var proxy =
@@ -106,13 +108,13 @@ TAO_ECG_UDP_Receiver::new_connect (const RtecEventChannelAdmin::SupplierQOS& pub
 }
 
 void
-TAO_ECG_UDP_Receiver::reconnect (const RtecEventChannelAdmin::SupplierQOS& pub)
+TAO_ECG_UDP_Receiver::reconnect (RtecEventChannelAdmin::SupplierQOS const &pub)
 {
   // Obtain our object reference from the POA.
   RtecEventComm::PushSupplier_var supplier_ref;
-  PortableServer::POA_var poa = this->_default_POA ();
+  PortableServer::POA_var const poa = this->_default_POA ();
 
-  CORBA::Object_var obj = poa->servant_to_reference (this);
+  CORBA::Object_var const obj = poa->servant_to_reference (this);
   supplier_ref =
     RtecEventComm::PushSupplier::_narrow (obj.in ());
 
@@ -139,7 +141,9 @@ void
 TAO_ECG_UDP_Receiver::shutdown ()
 {
   if (this->handler_rptr_.get ())
+  {
     this->handler_rptr_->shutdown ();
+  }
   TAO_ECG_Refcounted_Handler empty_handler_rptr;
   this->handler_rptr_ = empty_handler_rptr;
 
@@ -157,7 +161,7 @@ TAO_ECG_UDP_Receiver::shutdown ()
 class TAO_ECG_Event_CDR_Decoder: public TAO_ECG_CDR_Processor
 {
 public:
-  virtual int decode (TAO_InputCDR &cdr);
+  int decode (TAO_InputCDR &cdr) override;
 
   RtecEventComm::EventSet events;
 };
@@ -211,7 +215,7 @@ TAO_ECG_UDP_Receiver::handle_input (ACE_SOCK_Dgram& dgram)
       this->consumer_proxy_->push (cdr_decoder.events);
     }
 
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ORBSVCS_ERROR ((LM_ERROR,
                   "Caught and swallowed EXCEPTION in "

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/orbconf.h"
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
@@ -68,7 +67,7 @@ namespace TAO
           // other threads will not be able to make progress since
           // <Object_Adapter::non_servant_upcall_in_progress_> has been
           // set.
-          Non_Servant_Upcall non_servant_upcall (*this->poa_);
+          Non_Servant_Upcall const non_servant_upcall (*this->poa_);
           ACE_UNUSED_ARG (non_servant_upcall);
 
           servant->_add_ref ();
@@ -77,12 +76,11 @@ namespace TAO
 
     TAO_Servant_Location
     RequestProcessingStrategyDefaultServant::locate_servant (
-      const PortableServer::ObjectId & system_id,
+      PortableServer::ObjectId const & system_id,
       PortableServer::Servant & servant)
     {
-      TAO_Servant_Location location = TAO_Servant_Location::Not_Found;
-
-      location = this->poa_->servant_present (system_id, servant);
+      TAO_Servant_Location location =
+        this->poa_->servant_present (system_id, servant);
 
       if (location == TAO_Servant_Location::Not_Found)
         {
@@ -97,13 +95,13 @@ namespace TAO
 
     PortableServer::Servant
     RequestProcessingStrategyDefaultServant::locate_servant (
-      const char * /*operation*/,
-      const PortableServer::ObjectId & system_id,
+      char const */*operation*/,
+      PortableServer::ObjectId const & system_id,
       TAO::Portable_Server::Servant_Upcall &servant_upcall,
       TAO::Portable_Server::POA_Current_Impl &poa_current_impl,
       bool & /*wait_occurred_restart_call*/)
     {
-      PortableServer::Servant servant = nullptr;
+      PortableServer::Servant servant {};
 
       servant = this->poa_->find_servant (system_id,
                                           servant_upcall,
@@ -135,7 +133,7 @@ namespace TAO
 
     PortableServer::Servant
     RequestProcessingStrategyDefaultServant::system_id_to_servant (
-      const PortableServer::ObjectId &system_id)
+      PortableServer::ObjectId const &system_id)
     {
       PortableServer::Servant servant = this->default_servant_.in ();
 
@@ -149,7 +147,7 @@ namespace TAO
 
     PortableServer::Servant
     RequestProcessingStrategyDefaultServant::id_to_servant (
-      const PortableServer::ObjectId & /*id*/)
+      PortableServer::ObjectId const & /*id*/)
     {
       PortableServer::Servant servant = this->default_servant_.in ();
 
@@ -169,12 +167,12 @@ namespace TAO
     void
     RequestProcessingStrategyDefaultServant::cleanup_servant (
       PortableServer::Servant servant,
-      const PortableServer::ObjectId &user_id)
+      PortableServer::ObjectId const &user_id)
     {
       if (servant)
         {
           // ATTENTION: Trick locking here, see class header for details
-          Non_Servant_Upcall non_servant_upcall (*this->poa_);
+          Non_Servant_Upcall const non_servant_upcall (*this->poa_);
           ACE_UNUSED_ARG (non_servant_upcall);
 
           try
@@ -230,8 +228,8 @@ namespace TAO
 
     void
     RequestProcessingStrategyDefaultServant::post_invoke_servant_cleanup(
-      const PortableServer::ObjectId &/*system_id*/,
-      const TAO::Portable_Server::Servant_Upcall &/*servant_upcall*/)
+      PortableServer::ObjectId const &/*system_id*/,
+      TAO::Portable_Server::Servant_Upcall const &/*servant_upcall*/)
     {
     }
   }

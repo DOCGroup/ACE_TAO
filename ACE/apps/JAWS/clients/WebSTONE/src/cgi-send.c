@@ -21,10 +21,14 @@ main()
   printf("Content-type: text/plain\r\n\r\n");
 
   if ( !(str_filesize = getenv("QUERY_STRING")) )
-    filesize = FILE_SIZE;
+    {
+      filesize = FILE_SIZE;
+    }
   else {
     if ( !strncmp(str_filesize, "size=", 5) )
-      filesize = atoi(&(str_filesize[5]));
+      {
+        filesize = atoi(&(str_filesize[5]));
+      }
     else
       filesize = FILE_SIZE;
   }
@@ -34,7 +38,7 @@ main()
     return -1;
   }
 
-  for (index=0; index< filesize; index++)
+  for (index=0; index< filesize; ++index)
     /* generate random characters from A-Z */
     buffer[index] = rand() %26 + 63;
 

@@ -1,6 +1,3 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
  *  @file    PublishesDef_i.h
  *
@@ -8,8 +5,6 @@
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_PUBLISHESDEF_I_H
 #define TAO_PUBLISHESDEF_I_H

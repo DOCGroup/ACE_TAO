@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//==========================================================================
 /**
  *  @file    Event.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//==========================================================================
 
 #ifndef ACE_EVENT_H
 #define ACE_EVENT_H
@@ -38,11 +34,16 @@ template <class TIME_POLICY = ACE_System_Time_Policy>
 class ACE_Event_T : public ACE_Event_Base
 {
 public:
+  ACE_Event_T (ACE_Event_T const &) = delete;
+  ACE_Event_T (ACE_Event_T &&) = delete;
+  ACE_Event_T &operator= (ACE_Event_T const &) = delete;
+  ACE_Event_T &operator= (ACE_Event_T &&) = delete;
+
   /// Constructor that creates event.
   ACE_Event_T (int manual_reset = 0,
                int initial_state = 0,
                int type = USYNC_THREAD,
-               const ACE_TCHAR *name = nullptr,
+               ACE_TCHAR const *name = nullptr,
                void *arg = nullptr,
                LPSECURITY_ATTRIBUTES sa = 0);
 
@@ -63,10 +64,6 @@ public:
 protected:
   /// The policy to return the current time of day
   TIME_POLICY time_policy_;
-
-private:
-  ACE_Event_T (const ACE_Event_T<TIME_POLICY>& event) = delete;
-  const ACE_Event_T &operator= (const ACE_Event_T<TIME_POLICY> &rhs) = delete;
 };
 
 using ACE_Event = ACE_Event_T<ACE_System_Time_Policy>;

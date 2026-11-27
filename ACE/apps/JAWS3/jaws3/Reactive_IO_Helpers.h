@@ -1,4 +1,3 @@
-/* -*- c++ -*- */
 #ifndef JAWS_REACTIVE_IO_HELPERS_H
 #define JAWS_REACTIVE_IO_HELPERS_H
 
@@ -6,6 +5,8 @@
 #include "ace/Message_Block.h"
 #include "ace/Singleton.h"
 #include "ace/Time_Value.h"
+
+#include <memory>
 
 #include "jaws3/Export.h"
 #include "jaws3/Jaws_IO.h"
@@ -23,15 +24,15 @@ class JAWS_IO_Reactive_Handler : public ACE_Event_Handler
 public:
   virtual void open ();
 
-  int handle_timeout (const ACE_Time_Value &, const void *);
+  int handle_timeout (ACE_Time_Value const &, void const *) override;
 
-  int handle_close (ACE_HANDLE, ACE_Reactor_Mask);
+  int handle_close (ACE_HANDLE, ACE_Reactor_Mask) override;
 
-  int handle_exception (ACE_HANDLE);
+  int handle_exception (ACE_HANDLE) override;
 
-  ACE_HANDLE get_handle () const { return this->handle_; }
+  ACE_HANDLE get_handle () const override { return this->handle_; }
 
-  void set_handle (ACE_HANDLE handle) { this->handle_ = handle; }
+  void set_handle (ACE_HANDLE handle) override { this->handle_ = handle; }
 
 protected:
   virtual void close (int result);
@@ -39,7 +40,7 @@ protected:
 private:
   JAWS_IO_Reactive_Handler ( ACE_HANDLE handle
                            , JAWS_Event_Completer *completer
-                           , const ACE_Time_Value &tv
+                           , ACE_Time_Value const &tv
                            , void *act
                            , ACE_Reactor_Mask mask
                            )
@@ -50,20 +51,26 @@ private:
     , act_ (act)
     , mask_ (mask)
     , timer_id_ (-1)
-    , was_active_ (0)
+    , was_active_ (false)
   {
     if (ACE_Time_Value::zero < this->tv_)
       this->timer_id_ =
-        ACE_Reactor::instance ()->schedule_timer (this, 0, this->tv_);
+        ACE_Reactor::instance ()->schedule_timer (this, nullptr, this->tv_);
   }
 
-public: // needed for destructor due to "aCC: HP ANSI C++ B3910B A.03.39" compiler bug
+public:
 
-  ~JAWS_IO_Reactive_Handler ()
+  ~JAWS_IO_Reactive_Handler () override
   {
     if (this->timer_id_ != -1)
-      ACE_Reactor::instance ()->cancel_timer (this->timer_id_);
+      {
+        ACE_Reactor::instance ()->cancel_timer (this->timer_id_);
+      }
   }
+  JAWS_IO_Reactive_Handler (JAWS_IO_Reactive_Handler const &) = delete;
+  JAWS_IO_Reactive_Handler (JAWS_IO_Reactive_Handler &&) = delete;
+  JAWS_IO_Reactive_Handler &operator= (JAWS_IO_Reactive_Handler const &) = delete;
+  JAWS_IO_Reactive_Handler &operator= (JAWS_IO_Reactive_Handler &&) = delete;
 
 private:
   JAWS_Event_Result io_result_;
@@ -77,22 +84,20 @@ private:
   ACE_Reactor_Mask mask_;
   long timer_id_;
 
-  int was_active_;
+  bool was_active_;
 };
-
 
 class JAWS_IO_Reactive_Send : public JAWS_IO_Reactive_Handler
 {
   friend class JAWS_Reactive_IO;
 
 public:
-  int handle_output (ACE_HANDLE handle);
+  int handle_output (ACE_HANDLE handle) override;
 
   static JAWS_IO_Reactive_Send * make ( ACE_HANDLE handle
                                       , ACE_Message_Block *mb
                                       , JAWS_Event_Completer *completer
-                                      , void *act
-                                      )
+                                      , void *act)
   {
     return new JAWS_IO_Reactive_Send ( handle
                                      , mb
@@ -106,9 +111,8 @@ public:
   static JAWS_IO_Reactive_Send * make ( ACE_HANDLE handle
                                       , ACE_Message_Block *mb
                                       , JAWS_Event_Completer *completer
-                                      , const ACE_Time_Value &tv
-                                      , void *act
-                                      )
+                                      , ACE_Time_Value const &tv
+                                      , void *act)
   {
     return new JAWS_IO_Reactive_Send ( handle
                                      , mb
@@ -123,7 +127,7 @@ private:
   JAWS_IO_Reactive_Send ( ACE_HANDLE handle
                         , ACE_Message_Block *mb
                         , JAWS_Event_Completer *completer
-                        , const ACE_Time_Value &tv
+                        , ACE_Time_Value const &tv
                         , void *act
                         , ACE_Reactor_Mask mask
                         )
@@ -136,19 +140,17 @@ private:
   ACE_Message_Block *mb_;
 };
 
-
 class JAWS_IO_Reactive_Recv : public JAWS_IO_Reactive_Handler
 {
   friend class JAWS_Reactive_IO;
 
 public:
-  int handle_input (ACE_HANDLE handle);
+  int handle_input (ACE_HANDLE handle) override;
 
   static JAWS_IO_Reactive_Recv * make ( ACE_HANDLE handle
                                       , ACE_Message_Block *mb
                                       , JAWS_Event_Completer *completer
-                                      , void *act
-                                      )
+                                      , void *act)
   {
     return new JAWS_IO_Reactive_Recv ( handle
                                      , mb
@@ -162,9 +164,8 @@ public:
   static JAWS_IO_Reactive_Recv * make ( ACE_HANDLE handle
                                       , ACE_Message_Block *mb
                                       , JAWS_Event_Completer *completer
-                                      , const ACE_Time_Value &tv
-                                      , void *act
-                                      )
+                                      , ACE_Time_Value const &tv
+                                      , void *act)
   {
     return new JAWS_IO_Reactive_Recv ( handle
                                      , mb
@@ -179,7 +180,7 @@ private:
   JAWS_IO_Reactive_Recv ( ACE_HANDLE handle
                         , ACE_Message_Block *mb
                         , JAWS_Event_Completer *completer
-                        , const ACE_Time_Value &tv
+                        , ACE_Time_Value const &tv
                         , void *act
                         , ACE_Reactor_Mask mask
                         )
@@ -192,25 +193,23 @@ private:
   ACE_Message_Block *mb_;
 };
 
-
 class JAWS_IO_Reactive_Transmit : public JAWS_IO_Reactive_Handler
 {
   friend class JAWS_Reactive_IO;
 
 public:
-  int handle_timeout (const ACE_Time_Value &, const void *);
+  int handle_timeout (ACE_Time_Value const &, void const *) override;
 
-  int handle_output (ACE_HANDLE handle);
+  int handle_output (ACE_HANDLE handle) override;
 
-  int handle_exception (ACE_HANDLE handle);
+  int handle_exception (ACE_HANDLE handle) override;
 
   static JAWS_IO_Reactive_Transmit * make ( ACE_HANDLE handle
                                           , ACE_HANDLE source
                                           , JAWS_Event_Completer *completer
                                           , ACE_Message_Block *header
                                           , ACE_Message_Block *trailer
-                                          , void *act
-                                          )
+                                          , void *act)
   {
     return new JAWS_IO_Reactive_Transmit ( handle
                                          , source
@@ -226,11 +225,10 @@ public:
   static JAWS_IO_Reactive_Transmit * make ( ACE_HANDLE handle
                                           , ACE_HANDLE source
                                           , JAWS_Event_Completer *completer
-                                          , const ACE_Time_Value &tv
+                                          , ACE_Time_Value const &tv
                                           , ACE_Message_Block *header
                                           , ACE_Message_Block *trailer
-                                          , void *act
-                                          )
+                                          , void *act)
   {
     return new JAWS_IO_Reactive_Transmit ( handle
                                          , source
@@ -244,7 +242,7 @@ public:
   }
 
 protected:
-  void close (int result);
+  void close (int result) override;
 
   int handle_output_header (ACE_HANDLE handle);
 
@@ -258,7 +256,7 @@ private:
   JAWS_IO_Reactive_Transmit ( ACE_HANDLE handle
                             , ACE_HANDLE source
                             , JAWS_Event_Completer *completer
-                            , const ACE_Time_Value &tv
+                            , ACE_Time_Value const &tv
                             , ACE_Message_Block *header
                             , ACE_Message_Block *trailer
                             , void *act
@@ -267,7 +265,7 @@ private:
     : JAWS_IO_Reactive_Handler (handle, completer, tv, act, mask)
     , source_ (source)
     , source_mb_ (8 * 1024)
-    , source_buf_ (& this->source_mb_)
+    , source_buf_ (std::addressof (this->source_mb_))
     , header_ (header)
     , trailer_ (trailer)
   {

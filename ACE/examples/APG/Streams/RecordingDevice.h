@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 #ifndef RECORDING_DEVICE_H
 #define RECORDING_DEVICE_H
 
@@ -14,17 +13,11 @@ class MessageType;
 class RecordingDevice
 {
 public:
-  RecordingDevice ()
-  {
-    // Initialize the semaphore so that we don't block on the
-    // first call to wait_for_activity().
-  }
+  RecordingDevice () = default;
 
-  virtual ~RecordingDevice ()
-  {
-  }
+  virtual ~RecordingDevice () = default;
 
-  virtual const ACE_TCHAR *get_name () const
+  virtual ACE_TCHAR const *get_name () const
   {
     return ACE_TEXT ("UNKNOWN");
   }
@@ -34,31 +27,31 @@ public:
     return 0;
   }
 
-  // Answer the incoming call
+  /// Answer the incoming call
   virtual int answer_call () = 0;
 
-  // Fetch some form of caller identification at the hardware level.
+  /// Fetch some form of caller identification at the hardware level.
   virtual CallerId *retrieve_callerId () = 0;
 
-  // Fetch the message at the location specified by 'addr' and play
-  // it for the caller.
+  /// Fetch the message at the location specified by 'addr' and play
+  /// it for the caller.
   virtual int play_message (ACE_FILE_Addr &addr) = 0;
 
-  // Record data from our physical device into the file at the
-  // specified address. Return the number of bytes recorded.
+  /// Record data from our physical device into the file at the
+  /// specified address. Return the number of bytes recorded.
   virtual MessageType *record_message (ACE_FILE_Addr &addr) = 0;
 
-  // Release the RecordingDevice to accept another incoming call
+  /// Release the RecordingDevice to accept another incoming call
   virtual void release ()
   {
     this->release_semaphore ();
   }
 
-  // Get the handler of the device so that wait_for_activity() can
-  // wait for data to arrive.
+  /// Get the handler of the device so that wait_for_activity() can
+  /// wait for data to arrive.
   virtual ACE_Event_Handler *get_handler () const
   {
-    return 0;
+    return nullptr;
   }
 
   virtual RecordingDevice *wait_for_activity ()

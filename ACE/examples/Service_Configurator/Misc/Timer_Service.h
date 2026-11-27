@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "ace/svc_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -8,57 +7,63 @@
 #include "ace/Service_Config.h"
 #include "ace/Reactor.h"
 #include "ace/Service_Object.h"
-
+#include <string>
 
 class ACE_Svc_Export Timer_Service_1 : public ACE_Service_Object
 {
-  // = TITLE
-  //   Demonstrates a simple timer service that can be configured
-  //   statically.
+  /// Demonstrates a simple timer service that can be configured statically.
 public:
   Timer_Service_1 ();
-  // Default constructor.
+  Timer_Service_1 (Timer_Service_1 const &) = delete;
+  Timer_Service_1 (Timer_Service_1 &&) = delete;
+  Timer_Service_1 &operator= (Timer_Service_1 const &) = delete;
+  Timer_Service_1 &operator= (Timer_Service_1 &&) = delete;
 
-  virtual int init (int argc, ACE_TCHAR *argv[]);
-  // Initialization hook.
+  /// Initialization hook.
+  int init (int argc, ACE_TCHAR *argv[]) override;
 
-  virtual int handle_timeout (const ACE_Time_Value &,
-                              const void *);
-  // Timeout hook.
+  /// Timeout hook.
+  int handle_timeout (ACE_Time_Value const &,
+                      void const *) override;
 
-  virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask);
-  // Close hook.
+  /// Close hook.
+  int handle_close (ACE_HANDLE, ACE_Reactor_Mask) override;
 
 protected:
-  ACE_TCHAR name_[BUFSIZ];
-  // Keep track of which service this is!
+  /// Identifies this service instance.
+  std::basic_string<ACE_TCHAR> name_ { ACE_TEXT ("Timer_Service_1") };
 
 private:
-  enum
-  {
-    TIMEOUT = 4, // Wait 4 seconds between timeouts
-    MAX_TIMEOUTS = 10 // Don't timeout for more than 10 times.
-  };
+  /// Seconds between timeouts.
+  static constexpr int TIMEOUT { 4 };
+  /// Maximum number of timeouts.
+  static constexpr int MAX_TIMEOUTS { 10 };
 
-  int max_timeouts_;
-  // Maximum number of timeouts before shutting down the test.
+  /// Maximum number of timeouts before shutting down the test.
+  int max_timeouts_ { MAX_TIMEOUTS };
 
-  int cur_timeouts_;
-  // Current number of timeouts.
+  /// Current number of timeouts.
+  int cur_timeouts_ {};
 };
 
 class ACE_Svc_Export Timer_Service_2 : public Timer_Service_1
 {
 public:
   Timer_Service_2 ();
-  // Default constructor.
+  Timer_Service_2 (Timer_Service_2 const &) = delete;
+  Timer_Service_2 (Timer_Service_2 &&) = delete;
+  Timer_Service_2 &operator= (Timer_Service_2 const &) = delete;
+  Timer_Service_2 &operator= (Timer_Service_2 &&) = delete;
 };
 
 class ACE_Svc_Export Timer_Service_3 : public Timer_Service_1
 {
 public:
   Timer_Service_3 ();
-  // Default constructor.
+  Timer_Service_3 (Timer_Service_3 const &) = delete;
+  Timer_Service_3 (Timer_Service_3 &&) = delete;
+  Timer_Service_3 &operator= (Timer_Service_3 const &) = delete;
+  Timer_Service_3 &operator= (Timer_Service_3 &&) = delete;
 };
 
 // Declare both static and dynamic services.

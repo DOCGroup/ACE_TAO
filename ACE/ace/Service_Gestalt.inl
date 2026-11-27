@@ -1,14 +1,11 @@
-// -*- C++ -*-
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-
-// This is the primary entry point into the ACE_Service_Config (the
-// constructor just handles simple initializations).
+/// This is the primary entry point into the ACE_Service_Config (the
+/// constructor just handles simple initializations).
 
 ACE_INLINE int
-ACE_Service_Gestalt::open (const ACE_TCHAR program_name[],
-                           const ACE_TCHAR *logger_key,
+ACE_Service_Gestalt::open (ACE_TCHAR const program_name[],
+                           ACE_TCHAR const *logger_key,
                            bool ignore_static_svcs,
                            bool ignore_default_svc_conf,
                            bool ignore_debug_flag)
@@ -26,7 +23,7 @@ ACE_Service_Gestalt::open (const ACE_TCHAR program_name[],
 ACE_INLINE int
 ACE_Service_Gestalt::open (int argc,
                           ACE_TCHAR *argv[],
-                          const ACE_TCHAR *logger_key,
+                          ACE_TCHAR const *logger_key,
                           bool ignore_static_svcs,
                           bool ignore_default_svc_conf,
                           bool ignore_debug_flag)
@@ -40,9 +37,11 @@ ACE_Service_Gestalt::open (int argc,
   if (this->parse_args_i (argc,
                           argv,
                           ignore_default_svc_conf) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
-  return this->open_i (argv == 0 ? 0 : argv[0],
+  return this->open_i (argv == nullptr ? nullptr : argv[0],
                        logger_key,
                        this->no_static_svcs_,
                        ignore_default_svc_conf,
@@ -52,16 +51,18 @@ ACE_Service_Gestalt::open (int argc,
 /// Searches for a service object declaration in the local repo, only
 
 ACE_INLINE int
-ACE_Service_Gestalt::find (const ACE_TCHAR name[],
-                           const ACE_Service_Type **srp,
+ACE_Service_Gestalt::find (ACE_TCHAR const name[],
+                           ACE_Service_Type const **srp,
                            bool ignore_suspended) const
 {
   // Closing the gestalt will have disassociated it from the
   // repository. If the repository used to be owned by the gestalt, it
   // will also have been destroyed - so just check for repo_ before
   // doing anything with it.
-  if (this->repo_ != 0)
-    return this->repo_->find (name, srp, ignore_suspended);
+  if (this->repo_ != nullptr)
+    {
+      return this->repo_->find (name, srp, ignore_suspended);
+    }
 
   return 0;
 }

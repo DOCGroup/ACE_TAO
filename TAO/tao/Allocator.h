@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Allocator.h
  *
  *  @author Johnny Willemsen (jwillemsen@remedy.nl)
  */
-//=============================================================================
 
 #ifndef TAO_ALLOCATOR_H
 #define TAO_ALLOCATOR_H
@@ -17,7 +13,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include /**/ "tao/Versioned_Namespace.h"
+#include "tao/orbconf.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

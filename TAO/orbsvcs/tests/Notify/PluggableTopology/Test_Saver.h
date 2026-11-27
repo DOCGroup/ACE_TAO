@@ -1,5 +1,3 @@
-/* -*- C++ -*- */
-
 #ifndef TEST_SAVER_H
 #define TEST_SAVER_H
 #include /**/ "ace/pre.h"
@@ -18,17 +16,19 @@
 class PLUGTOP_Export Test_Saver : public TAO_Notify::Topology_Saver
 {
 public:
-  Test_Saver();
+  Test_Saver () = default;
+  Test_Saver (Test_Saver const&) = delete;
+  Test_Saver (Test_Saver&&) = delete;
+  Test_Saver& operator= (Test_Saver const&) = delete;
+  Test_Saver& operator= (Test_Saver&&) = delete;
 
-   virtual bool begin_object (CORBA::Long id,
-      const ACE_CString &type,
-      const TAO_Notify::NVPList& attrs,
-      bool changed);
+  bool begin_object (CORBA::Long id,
+                     ACE_CString const& type,
+                     TAO_Notify::NVPList const& attrs,
+                     bool changed) override;
 
-    virtual void end_object (CORBA::Long id,
-      const ACE_CString &type);
+  void end_object (CORBA::Long id, ACE_CString const& type) override;
 };
-
 
 #include /**/ "ace/post.h"
 #endif /* TEST_SAVER_H */

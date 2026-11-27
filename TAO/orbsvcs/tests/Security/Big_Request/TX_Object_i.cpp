@@ -1,14 +1,12 @@
-// -*- C++ -*-
 #include "TX_Object_i.h"
 
 TX_Object_i::TX_Object_i (CORBA::ORB_ptr orb)
-  : orb_ (CORBA::ORB::_duplicate (orb)),
-    data_ ()
+  : orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
 
 void
-TX_Object_i::send (const DataSeq & data)
+TX_Object_i::send (DataSeq const & data)
 {
   this->data_ = data;
 

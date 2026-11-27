@@ -2,19 +2,22 @@
 #include "ace/ACE.h"
 #include "ace/RW_Process_Mutex.h"
 #include "ace/SString.h"
-#include "ace/OS_NS_string.h"
 #include "ace/Truncate.h"
+
+#include <cstring>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_NS_String::~ACE_NS_String ()
 {
   if (this->delete_rep_)
+    {
 #if defined (ACE_HAS_ALLOC_HOOKS)
-    ACE_Allocator::instance()->free(this->rep_);
+      ACE_Allocator::instance()->free (this->rep_);
 #else
-    delete [] this->rep_;
+      delete [] this->rep_;
 #endif /* ACE_HAS_ALLOC_HOOKS */
+    }
 }
 
 ACE_WCHAR_T *
@@ -42,20 +45,17 @@ char *
 ACE_NS_String::char_rep () const
 {
   ACE_TRACE ("ACE_NS_String::char_rep");
-  ACE_NS_WString w_string (this->rep_,
+  ACE_NS_WString const w_string (this->rep_,
                            (this->len_ / sizeof (ACE_WCHAR_T)) - 1);
   return w_string.char_rep ();
 }
 
 ACE_NS_String::ACE_NS_String ()
-  : len_ (0),
-    rep_ (nullptr),
-    delete_rep_ (false)
 {
   ACE_TRACE ("ACE_NS_String::ACE_NS_String");
 }
 
-ACE_NS_String::ACE_NS_String (const ACE_NS_WString &s)
+ACE_NS_String::ACE_NS_String (ACE_NS_WString const &s)
   : len_ ((s.length () + 1) * sizeof (ACE_WCHAR_T)),
     rep_ (s.rep ()),
     delete_rep_ (true)
@@ -64,33 +64,43 @@ ACE_NS_String::ACE_NS_String (const ACE_NS_WString &s)
 }
 
 int
-ACE_NS_String::strstr (const ACE_NS_String &s) const
+ACE_NS_String::strstr (ACE_NS_String const &s) const
 {
   ACE_TRACE ("ACE_NS_String::strstr");
 
   if (this->len_ < s.len_)
-    // If they're larger than we are they can't be a substring of us!
-    return -1;
+    {
+      // If they're larger than we are they can't be a substring of us!
+      return -1;
+    }
   else if (this->len_ == s.len_)
-    // Check if we're equal.
-    return *this == s ? 0 : -1;
+    {
+      // Check if we're equal.
+      return *this == s ? 0 : -1;
+    }
   else
     {
       // They're smaller than we are...
-      const size_t len = (this->len_ - s.len_) / sizeof (ACE_WCHAR_T);
-      const size_t pat_len = s.len_ / sizeof (ACE_WCHAR_T) - 1;
+      size_t const len = (this->len_ - s.len_) / sizeof (ACE_WCHAR_T);
+      size_t const pat_len = s.len_ / sizeof (ACE_WCHAR_T) - 1;
 
       for (size_t i = 0; i <= len; ++i)
         {
           size_t j;
 
           for (j = 0; j < pat_len; ++j)
-            if (this->rep_[i + j] != s.rep_[j])
-              break;
+            {
+              if (this->rep_[i + j] != s.rep_[j])
+                {
+                  break;
+                }
+            }
 
           if (j == pat_len)
-            // Found a match!  Return the index.
-            return ACE_Utils::truncate_cast<int> (i);
+            {
+              // Found a match!  Return the index.
+              return ACE_Utils::truncate_cast<int> (i);
+            }
         }
 
       return -1;
@@ -98,30 +108,31 @@ ACE_NS_String::strstr (const ACE_NS_String &s) const
 }
 
 bool
-ACE_NS_String::operator == (const ACE_NS_String &s) const
+ACE_NS_String::operator == (ACE_NS_String const &s) const
 {
   ACE_TRACE ("ACE_NS_String::operator ==");
   return this->len_ == s.len_
-    && ACE_OS::memcmp ((void *) this->rep_,
-                       (void *) s.rep_, this->len_) == 0;
+    && (this->len_ == 0 || std::memcmp (this->rep_, s.rep_, this->len_) == 0);
 }
 
 bool
-ACE_NS_String::operator != (const ACE_NS_String &s) const
+ACE_NS_String::operator != (ACE_NS_String const &s) const
 {
   ACE_TRACE ("ACE_NS_String::operator !=");
   return !this->operator == (s);
 }
 
 ACE_NS_String::ACE_NS_String (ACE_WCHAR_T *dst,
-                              const ACE_WCHAR_T *src,
+                              ACE_WCHAR_T const *src,
                               size_t bytes)
   : len_ (bytes),
-    rep_ (dst),
-    delete_rep_ (false)
+    rep_ (dst)
 {
   ACE_TRACE ("ACE_NS_String::ACE_NS_String");
-  ACE_OS::memcpy (this->rep_, src, bytes);
+  if (bytes != 0)
+    {
+      std::memcpy (this->rep_, src, bytes);
+    }
 }
 
 u_long
@@ -133,12 +144,11 @@ ACE_NS_String::hash () const
 }
 
 ACE_NS_Internal::ACE_NS_Internal ()
-  : value_ (),
-    type_ ()
+  : value_ ()
 {
 }
 
-ACE_NS_Internal::ACE_NS_Internal (ACE_NS_String &value, const char *type)
+ACE_NS_Internal::ACE_NS_Internal (ACE_NS_String &value, char const *type)
   : value_ (value),
     type_ (type)
 {
@@ -146,7 +156,7 @@ ACE_NS_Internal::ACE_NS_Internal (ACE_NS_String &value, const char *type)
 }
 
 bool
-ACE_NS_Internal::operator == (const ACE_NS_Internal &s) const
+ACE_NS_Internal::operator == (ACE_NS_Internal const &s) const
 {
   ACE_TRACE ("ACE_NS_Internal::operator ==");
   return this->value_ == s.value_;
@@ -159,7 +169,7 @@ ACE_NS_Internal::value ()
   return this->value_;
 }
 
-const char *
+char const *
 ACE_NS_Internal::type ()
 {
   ACE_TRACE ("ACE_NS_Internal::type");

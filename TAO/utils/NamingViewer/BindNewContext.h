@@ -12,9 +12,9 @@
 
 class CBindNewContext : public CDialog
 {
-// Construction
 public:
-  CBindNewContext(CWnd* pParent = 0);   // standard constructor
+  /// standard constructor
+  CBindNewContext(CWnd* pParent = nullptr);
 
 // Dialog Data
   //{{AFX_DATA(CBindNewContext)
@@ -28,7 +28,8 @@ public:
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(CBindNewContext)
   protected:
-  virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+  /// DDX/DDV support
+  virtual void DoDataExchange(CDataExchange* pDX);
   //}}AFX_VIRTUAL
 
 // Implementation

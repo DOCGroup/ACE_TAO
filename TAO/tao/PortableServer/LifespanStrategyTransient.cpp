@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/PortableServer/LifespanStrategyTransient.h"
 #include "ace/OS_NS_sys_time.h"
 #include "ace/OS_NS_string.h"
@@ -6,6 +5,8 @@
 #include "tao/PortableServer/Root_POA.h"
 #include "tao/ORB_Constants.h"
 #include "tao/PortableServer/Creation_Time.h"
+
+#include <cstring>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -67,10 +68,9 @@ namespace TAO
 
 #if (POA_NO_TIMESTAMP == 0)
       // Then copy the timestamp for transient POAs.
-      ACE_OS::memcpy (&buffer[starting_at],
-                      this->creation_time_.creation_time (),
-                      TAO::Portable_Server::Creation_Time::creation_time_length
-                      ());
+      std::memcpy (&buffer[starting_at],
+                   this->creation_time_.creation_time (),
+                   TAO::Portable_Server::Creation_Time::creation_time_length ());
       starting_at += TAO::Portable_Server::Creation_Time::creation_time_length
         ();
 #endif /* POA_NO_TIMESTAMP */

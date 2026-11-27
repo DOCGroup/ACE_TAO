@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   OS_NS_pwd.h
  *
@@ -8,7 +5,6 @@
  *  @author Jesper S. M|ller<stophph@diku.dk>
  *  @author and a cast of thousands...
  */
-//=============================================================================
 
 #ifndef ACE_OS_NS_PWD_H
 #define ACE_OS_NS_PWD_H
@@ -35,7 +31,8 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE_OS
 {
-  //@{ @name A set of wrappers for password routines.
+  /// @name A set of wrappers for password routines.
+  /// @{
 
   ACE_NAMESPACE_INLINE_FUNCTION
   void endpwent ();
@@ -44,10 +41,10 @@ namespace ACE_OS
   struct passwd *getpwent ();
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  struct passwd *getpwnam (const char *user);
+  struct passwd *getpwnam (char const *user);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int getpwnam_r (const char *name,
+  int getpwnam_r (char const *name,
                   struct passwd *pwd,
                   char *buffer,
                   size_t bufsize,
@@ -55,7 +52,7 @@ namespace ACE_OS
 
   ACE_NAMESPACE_INLINE_FUNCTION
   void setpwent ();
-  //@}
+  /// @}
 } /* namespace ACE_OS */
 
 ACE_END_VERSIONED_NAMESPACE_DECL

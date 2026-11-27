@@ -1,4 +1,3 @@
-// -*- MPC -*-
 feature(qos) {
   after  += QoS
   libs   += ACE_QoS

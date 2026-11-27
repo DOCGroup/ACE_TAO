@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=========================================================================
 /**
  * @file UTF16_Encoding_Converter.h
  *
@@ -9,7 +6,6 @@
  *
  * @author Chad Elliott <elliott_c@ociweb.com>
  */
-//=========================================================================
 
 #ifndef ACE_UTF16_ENCODING_CONVERTER_H
 #define ACE_UTF16_ENCODING_CONVERTER_H
@@ -36,7 +32,7 @@ public:
 
   /// Convert the source from UTF-16 to UTF-8 and store it in the
   /// provided target buffer.
-  virtual Result to_utf8 (const void* source,
+  virtual Result to_utf8 (void const * source,
                           size_t source_size,
                           ACE_Byte* target,
                           size_t target_size,
@@ -44,7 +40,7 @@ public:
 
   /// Convert the UTF-8 source into a UTF-16 encoding and store it
   /// in the provided target buffer.
-  virtual Result from_utf8 (const ACE_Byte* source,
+  virtual Result from_utf8 (ACE_Byte const * source,
                             size_t source_size,
                             void* target,
                             size_t target_size,
@@ -53,20 +49,20 @@ public:
   /// This factory helper method determines if the source stream is UTF-16
   /// encoded.  If it is, allocate an ACE_UTF16_Encoding_Converter and
   /// return it.  The caller then owns the allocated object.
-  static ACE_UTF16_Encoding_Converter* encoded (const ACE_Byte* source,
+  static ACE_UTF16_Encoding_Converter* encoded (ACE_Byte const * source,
                                                 size_t source_size);
 
 protected:
   /// Determines if the source buffer is legal UTF-8
-  bool is_legal_utf8 (const ACE_Byte* source,
+  bool is_legal_utf8 (ACE_Byte const * source,
                       size_t length) const;
 
   static ACE_UINT32 get_UNI_SUR_HIGH_START ();
   static ACE_UINT32 get_UNI_SUR_LOW_END ();
   static ACE_UINT32 get_UNI_REPLACEMENT_CHAR ();
-  static const ACE_Byte* get_first_byte_mark ();
-  static const ACE_Byte* get_trailing_bytes_for_utf8 ();
-  static const ACE_UINT32* get_offsets_from_utf8 ();
+  static ACE_Byte const * get_first_byte_mark ();
+  static ACE_Byte const * get_trailing_bytes_for_utf8 ();
+  static ACE_UINT32 const * get_offsets_from_utf8 ();
 
   bool swap_;
 };

@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  * @file Monitor_Size.h
  *
  * @author Jeff Parsons <j.parsons@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef SIZE_MONITOR_H
 #define SIZE_MONITOR_H
@@ -40,7 +36,7 @@ namespace ACE
     {
     public:
       Size_Monitor ();
-      Size_Monitor (const char* name);
+      explicit Size_Monitor (char const * name);
       ~Size_Monitor () override = default;
 
       /// Implemented by the most-derived class. Does the actual

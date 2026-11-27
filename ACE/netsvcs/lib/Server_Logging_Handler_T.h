@@ -1,18 +1,14 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
  *  @file    Server_Logging_Handler_T.h
  *
  *  @author Doug Schmidt and Per Andersson
  */
-//=============================================================================
-
 
 #ifndef ACE_SERVER_LOGGING_HANDLER_T_H
 #define ACE_SERVER_LOGGING_HANDLER_T_H
 
 #include "ace/config-all.h"
+#include <atomic>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -23,8 +19,6 @@
 #include "ace/Svc_Handler.h"
 #include "ace/Acceptor.h"
 #include "ace/SString.h"
-#include "ace/Atomic_Op.h"
-
 
 #if !defined (__GNUG__)
 #include "Base_Optimizer.h"
@@ -33,10 +27,10 @@
 /**
  * @class ACE_Server_Logging_Handler_T
  *
- * @brief Product object created by an <ACE_Server_Logging_Acceptor_T>.  An
- * <ACE_Server_Logging_Handler_T> receives, and frames logging
+ * @brief Product object created by an @c ACE_Server_Logging_Acceptor_T.  An
+ * @c ACE_Server_Logging_Handler_T receives, and frames logging
  * records. The logging record is then processed by the
- * <LOG_MESSAGE_RECEIVER>
+ * @c LOG_MESSAGE_RECEIVER
  *
  * Defines the classes that perform server logging daemon
  * functionality.
@@ -45,13 +39,11 @@ template <ACE_PEER_STREAM_1, class COUNTER, ACE_SYNCH_DECL, class LOG_MESSAGE_RE
 class ACE_Server_Logging_Handler_T : public ACE_Svc_Handler<ACE_PEER_STREAM_2, ACE_SYNCH_USE>
 {
 public:
-  /// Constructor.
   ACE_Server_Logging_Handler_T (ACE_Thread_Manager *,
-                                const LOG_MESSAGE_RECEIVER &receiver );
-
+                                LOG_MESSAGE_RECEIVER const &receiver );
 
   /// Process remote logging records.
-  virtual int handle_input (ACE_HANDLE = ACE_INVALID_HANDLE);
+  int handle_input (ACE_HANDLE = ACE_INVALID_HANDLE) override;
 
 protected:
   /// Receive the logging record from a client.
@@ -76,7 +68,7 @@ protected:
   ACE_TString host_name_;
 #endif /* ! __GNUG__ */
   /// Name of the host we are connected to.
-  const ACE_TCHAR *host_name ();
+  ACE_TCHAR const *host_name ();
 
   /// The receiver of log records
   LOG_MESSAGE_RECEIVER &receiver () { return receiver_; }
@@ -93,12 +85,12 @@ protected:
 /**
  * @class ACE_Server_Logging_Acceptor_T
  *
- * @brief Factory that creates <SERVER_LOGGING_HANDLER>s scheduled with
- * <SCHEDULE_STRATEGY> and logging records proccessed by a
- * <LOG_MESSAGE_RECEIVER>
+ * @brief Factory that creates @c SERVER_LOGGING_HANDLER objects scheduled with
+ * @c SCHEDULE_STRATEGY and logging records proccessed by a
+ * @c LOG_MESSAGE_RECEIVER
  *
  * This class contains the service-specific methods that can't
- * easily be factored into the <ACE_Strategy_Acceptor>.
+ * easily be factored into the @c ACE_Strategy_Acceptor.
  */
 template<class SERVER_LOGGING_HANDLER, class LOG_MESSAGE_RECEIVER, class SCHEDULE_STRATEGY>
 class ACE_Server_Logging_Acceptor_T : public ACE_Strategy_Acceptor<SERVER_LOGGING_HANDLER, LOGGING_PEER_ACCEPTOR>
@@ -106,18 +98,18 @@ class ACE_Server_Logging_Acceptor_T : public ACE_Strategy_Acceptor<SERVER_LOGGIN
 public:
   /// Dynamic linking hook.
   ACE_Server_Logging_Acceptor_T ();
-  virtual int init (int argc, ACE_TCHAR *argv[]);
+  int init (int argc, ACE_TCHAR *argv[]) override;
 
 protected:
   /// Parse svc.conf arguments.
   int parse_args (int argc, ACE_TCHAR *argv[]);
 
   /**
-   * Factory that creates a new <SERVER_LOGGING_HANDLER>.  We need to
-   * specialize this since the <LOG_MESSAGE_RECEIVER> held by this Acceptor must be
-   * passed into the <SERVER_LOGGING_HANDLER>.
+   * Factory that creates a new @c SERVER_LOGGING_HANDLER.  We need to
+   * specialize this since the @c LOG_MESSAGE_RECEIVER held by this Acceptor must be
+   * passed into the @c SERVER_LOGGING_HANDLER.
    */
-  virtual int make_svc_handler (SERVER_LOGGING_HANDLER *&);
+  int make_svc_handler (SERVER_LOGGING_HANDLER *&) override;
 
 private:
   // At the moment each ACE_Server_Logging_Acceptor_T contains
@@ -153,9 +145,9 @@ private:
  * @class ACE_Server_Logging_Handler
  *
  * @brief Product object created by a
- * <ACE_Server_Logging_Acceptor_T<ACE_Server_Logging_Handler> >.  An
+ * @c ACE_Server_Logging_Acceptor_T<ACE_Server_Logging_Handler>.  An
  * ACE_Server_Logging_Handler receives, frames. The logging record
- * is then processed by the <LOG_MESSAGE_RECEIVER>
+ * is then processed by the @c LOG_MESSAGE_RECEIVER
  *
  * All clients are handled in the same thread.
  */
@@ -163,15 +155,15 @@ template<class LOG_MESSAGE_RECEIVER>
 class ACE_Server_Logging_Handler : public ACE_Server_Logging_Handler_T<LOGGING_PEER_STREAM, u_long, ACE_NULL_SYNCH, LOG_MESSAGE_RECEIVER>
 {
 public:
-  ACE_Server_Logging_Handler (ACE_Thread_Manager * = 0);
+  explicit ACE_Server_Logging_Handler (ACE_Thread_Manager * = nullptr);
   ACE_Server_Logging_Handler (ACE_Thread_Manager *,
-                              const LOG_MESSAGE_RECEIVER &receiver);
+                              LOG_MESSAGE_RECEIVER const &receiver);
 
-  virtual int open (void* = 0);
+  int open (void* = nullptr) override;
 };
 
 #if defined (ACE_HAS_THREADS)
-using ACE_LOGGER_COUNTER = ACE_Atomic_Op<ACE_Thread_Mutex, u_long>;
+using ACE_LOGGER_COUNTER = std::atomic<u_long>;
 #define ACE_LOGGER_SYNCH ACE_MT_SYNCH
 #else
 using ACE_LOGGER_COUNTER = u_long;
@@ -182,9 +174,9 @@ using ACE_LOGGER_COUNTER = u_long;
  * @class ACE_Thr_Server_Logging_Handler
  *
  * @brief Product object created by a
- * <ACE_Server_Logging_Acceptor_T<ACE_Thr_Server_Logging_Handler>
- * >.  An ACE_Thr_Server_Logging_Handler receives, frames. The
- * logging record is then processed by the <LOG_MESSAGE_RECEIVER>
+ * @c ACE_Server_Logging_Acceptor_T<ACE_Thr_Server_Logging_Handler>.
+ * An ACE_Thr_Server_Logging_Handler receives, frames. The
+ * logging record is then processed by the @c LOG_MESSAGE_RECEIVER
  *
  * Each client is handled in its own separate thread.
  */
@@ -192,11 +184,11 @@ template<class LOG_MESSAGE_RECEIVER>
 class ACE_Thr_Server_Logging_Handler : public ACE_Server_Logging_Handler_T<LOGGING_PEER_STREAM, ACE_LOGGER_COUNTER, ACE_LOGGER_SYNCH, LOG_MESSAGE_RECEIVER>
 {
 public:
-  ACE_Thr_Server_Logging_Handler (ACE_Thread_Manager * = 0);
+  explicit ACE_Thr_Server_Logging_Handler (ACE_Thread_Manager * = nullptr);
   ACE_Thr_Server_Logging_Handler (ACE_Thread_Manager *,
-                                  const LOG_MESSAGE_RECEIVER &receiver);
-  virtual int open (void * = 0);
-  virtual int svc ();
+                                  LOG_MESSAGE_RECEIVER const &receiver);
+  int open (void * = nullptr) override;
+  int svc () override;
 };
 
 #include "Server_Logging_Handler_T.cpp"

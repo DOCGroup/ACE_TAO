@@ -1,14 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    BD_String_SArgument_T.h
  *
  *  @authors Jeff Parsons, Carlos O'Ryan and Ossama Othman
  */
-//=============================================================================
-
-
 #ifndef TAO_BD_STRING_SARGUMENT_T_H
 #define TAO_BD_STRING_SARGUMENT_T_H
 

@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//==========================================================================
 /**
  *  @file    High_Res_Timer.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//==========================================================================
 
 #ifndef ACE_HIGH_RES_TIMER_H
 #define ACE_HIGH_RES_TIMER_H
@@ -35,7 +31,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * reason that one would fail is if high-resolution time isn't
  * supported on the platform.  To avoid impacting performance
  * and complicating the interface, in that case,
- * <ACE_OS::gettimeofday> is used instead.
+ * @c ACE_OS::gettimeofday is used instead.
  * The global scale factor is required for platforms that have
  * high-resolution timers that return units other than
  * microseconds, such as clock ticks.  It is represented as a
@@ -43,10 +39,10 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * and is used by all instances of High Res Timer.  The member
  * functions that return or print times use the global scale
  * factor.  They divide the "time" that they get from
- * <ACE_OS::gethrtime> by global_scale_factor_ to obtain the
+ * @c ACE_OS::gethrtime by global_scale_factor_ to obtain the
  * time in microseconds.  Its units are therefore 1/microsecond.
  * On Windows the global_scale_factor_ units are 1/millisecond.
- * There's a macro <ACE_HR_SCALE_CONVERSION> which gives the
+ * There's a macro @c ACE_HR_SCALE_CONVERSION which gives the
  * units/second.  Because it's possible that the units/second
  * changes in the future, it's recommended to use it instead
  * of a "hard coded" solution.
@@ -62,18 +58,18 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * ticks since system boot.  For a 200MHz cpu, each clock tick
  * is 1/200 of a microsecond; the global_scale_factor_ should
  * therefore be 200 or 200000 if it's in unit/millisecond.
- * On Windows ::QueryPerformanceCounter() is used, which can be a
+ * On Windows @c QueryPerformanceCounter() is used, which can be a
  * different implementation depending on the used windows HAL
  * (Hardware Abstraction Layer).  On some it uses the PC "timer chip"
  * while it uses RDTSC on others.
  * @note The elapsed time calculations in the print methods use
  * ACE_hrtime_t values.  Those methods do _not_ check for overflow!
  * @note Gabe <begeddov@proaxis.com> raises this issue regarding
- * <ACE_OS::gethrtime>: on multi-processors, the processor that
+ * @c ACE_OS::gethrtime: on multi-processors, the processor that
  * you query for your @c timer.stop() value might not be the one
  * you queried for @c timer.start().  Its not clear how much
  * divergence there would be, if any.
- * A RDTSC NOTE: RDTSC is the Intel Pentium read-time stamp counter
+ * @note RDTSC: RDTSC is the Intel Pentium read-time stamp counter
  * and is actualy a 64 bit clock cycle counter, which is increased
  * with every cycle.  It has a low overhead and can be read within
  * 16 (pentium) or 32 (pentium II,III,...) cycles, but it doesn't
@@ -86,8 +82,8 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * Another problem arises with multiprocessor computers, there
  * are reports that the different RDTSC's are not always kept
  * in sync.
- * A windows "timer chip" NOTE: (8254-compatible real-time clock)
- * When ::QueryPerformanceCounter() uses the 8254 it has a
+ * @note Windows "timer chip" (8254-compatible real-time clock):
+ * When @c QueryPerformanceCounter() uses the 8254 it has a
  * frequency off about 1.193 Mhz (or sometimes 3.579 Mhz?) and
  * reading it requires some time (several thousand cycles).
  */
@@ -106,8 +102,8 @@ public:
    * factor just once for all High_Res_Timers.  Check
    *  High_Res_Timer.cpp for the default global_scale_factors for
    * several platforms.  For many platforms the
-   * global_scale_factor_ is set to 1000 so that <scale_factor> need
-   * not be set.  Careful, a <scale_factor> of 0 will cause division
+   * global_scale_factor_ is set to 1000 so that @c scale_factor need
+   * not be set.  Careful, a @c scale_factor of 0 will cause division
    * by zero exceptions.
    * Depending on the platform its units are 1/microsecond or
    * 1/millisecond. Use @c ACE_HR_SCALE_CONVERSION inside calculations
@@ -129,7 +125,7 @@ public:
    * This is basically a no-op on CE because there is no concept of
    * environment variable on CE.
    */
-  static int get_env_global_scale_factor (const ACE_TCHAR *env
+  static int get_env_global_scale_factor (ACE_TCHAR const *env
                                           = ACE_TEXT ("ACE_SCALE_FACTOR"));
 
   /**
@@ -143,23 +139,22 @@ public:
    * first ACE_High_Res_Timer instance.
    * Beware for platforms that can change the cycle rate on the fly.
    */
-  static ACE_UINT32 calibrate (const ACE_UINT32 usec = 500000,
-                               const u_int iterations = 10);
+  static ACE_UINT32 calibrate (ACE_UINT32 const usec = 500000,
+                               u_int const iterations = 10);
 
   /// Initialize the timer.
   ACE_High_Res_Timer ();
 
-  /// Destructor.
   ~ACE_High_Res_Timer ();
 
   /// Reinitialize the timer.
   void reset ();
 
   /// Start timing.
-  void start (const ACE_OS::ACE_HRTimer_Op = ACE_OS::ACE_HRTIMER_GETTIME);
+  void start (ACE_OS::ACE_HRTimer_Op const = ACE_OS::ACE_HRTIMER_GETTIME);
 
   /// Stop timing.
-  void stop (const ACE_OS::ACE_HRTimer_Op = ACE_OS::ACE_HRTIMER_GETTIME);
+  void stop (ACE_OS::ACE_HRTimer_Op const = ACE_OS::ACE_HRTIMER_GETTIME);
 
   /// Set @a tv to the number of microseconds elapsed.
   void elapsed_time (ACE_Time_Value &tv) const;
@@ -184,10 +179,10 @@ public:
   void elapsed_microseconds (ACE_hrtime_t &usecs) const;
 
   /// Start incremental timing.
-  void start_incr (const ACE_OS::ACE_HRTimer_Op = ACE_OS::ACE_HRTIMER_GETTIME);
+  void start_incr (ACE_OS::ACE_HRTimer_Op const = ACE_OS::ACE_HRTIMER_GETTIME);
 
   /// Stop incremental timing.
-  void stop_incr (const ACE_OS::ACE_HRTimer_Op = ACE_OS::ACE_HRTIMER_GETTIME);
+  void stop_incr (ACE_OS::ACE_HRTimer_Op const = ACE_OS::ACE_HRTIMER_GETTIME);
 
   /// Set @a tv to the number of microseconds elapsed between all calls
   /// to start_incr and stop_incr.
@@ -198,14 +193,14 @@ public:
   void elapsed_time_incr (ACE_hrtime_t &nanoseconds) const;
 
   /// Print total time.
-  /// @note only use @c print_total if incremental timings had been used!
-  void print_total (const ACE_TCHAR *message,
-                    const int iterations = 1,
+  /// @note Only use @c print_total if incremental timings had been used!
+  void print_total (ACE_TCHAR const *message,
+                    int const iterations = 1,
                     ACE_HANDLE handle = ACE_STDOUT) const;
 
   /// Print average time.
-  void print_ave (const ACE_TCHAR *message,
-                  const int iterations = 1,
+  void print_ave (ACE_TCHAR const *message,
+                  int const iterations = 1,
                   ACE_HANDLE handle = ACE_STDOUT) const;
 
   /// Dump the state of an object.
@@ -224,23 +219,23 @@ public:
 
   /**
    * @deprecated THIS FUNCTION IS DEPRECATED.  PLEASE USE
-   * <ACE_OS::gettimeofday> INSTEAD!  Calls <ACE_High_Res_Timer::hrtime_to_tv>
-   * passing <ACE_OS::gethrtime>.  This function can be used to parameterize
-   * objects such as <ACE_Timer_Queue::gettimeofday>.  If
-   * <global_scale_factor_> is not set, and we're on a platform that
-   * requires <global_scale_factor_> (e.g., Win32),
-   * ACE_OS::gettimeofday will be used instead of <ACE_OS::gethrtime>.
-   * This allows applications on Intel to use <High_Res_Timer> even
-   * when <global_scale_factor> is not set.  However, setting the
-   * <global_scale_factor_> appropriately will result in the finest
+   * @c ACE_OS::gettimeofday INSTEAD!  Calls @c ACE_High_Res_Timer::hrtime_to_tv
+   * passing @c ACE_OS::gethrtime.  This function can be used to parameterize
+   * objects such as @c ACE_Timer_Queue::gettimeofday.  If
+   * @c global_scale_factor_ is not set, and we're on a platform that
+   * requires @c global_scale_factor_ (e.g., Win32),
+   * ACE_OS::gettimeofday will be used instead of @c ACE_OS::gethrtime.
+   * This allows applications on Intel to use @c High_Res_Timer even
+   * when @c global_scale_factor is not set.  However, setting the
+   * @c global_scale_factor_ appropriately will result in the finest
    * resolution possible.
    */
-  static ACE_Time_Value gettimeofday (const ACE_OS::ACE_HRTimer_Op =
+  static ACE_Time_Value gettimeofday (ACE_OS::ACE_HRTimer_Op const =
                                         ACE_OS::ACE_HRTIMER_GETTIME);
 
   /// Converts an @a hrt to @a tv using global_scale_factor_.
   static void hrtime_to_tv (ACE_Time_Value &tv,
-                            const ACE_hrtime_t hrt);
+                            ACE_hrtime_t const hrt);
 
 #if defined (ACE_LINUX) && !defined (ACE_LACKS_SSCANF)
   /**
@@ -254,19 +249,19 @@ public:
 private:
   /**
    * For internal use: gets the high-resolution time using
-   * <ACE_OS::gethrtime>.  Except on platforms that require that the
-   * <global_scale_factor_> be set, such as ACE_WIN32, uses the
-   * low-resolution clock if the <global_scale_factor_> has not been
+   * @c ACE_OS::gethrtime.  Except on platforms that require that the
+   * @c global_scale_factor_ be set, such as ACE_WIN32, uses the
+   * low-resolution clock if the @c global_scale_factor_ has not been
    * set.
    */
-  static ACE_hrtime_t gettime (const ACE_OS::ACE_HRTimer_Op =
+  static ACE_hrtime_t gettime (ACE_OS::ACE_HRTimer_Op const =
                                  ACE_OS::ACE_HRTIMER_GETTIME);
 
   /// Calculate the difference between two ACE_hrtime_t values. It is assumed
   /// that the end time is later than start time, so if end is a smaller
   /// value, the time counter has wrapped around.
-  static ACE_hrtime_t elapsed_hrtime (const ACE_hrtime_t end,
-                                      const ACE_hrtime_t start);
+  static ACE_hrtime_t elapsed_hrtime (ACE_hrtime_t const end,
+                                      ACE_hrtime_t const start);
 
   /// Starting time.
   ACE_hrtime_t start_;

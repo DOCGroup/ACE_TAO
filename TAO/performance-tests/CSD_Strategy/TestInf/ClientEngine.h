@@ -1,10 +1,8 @@
-//=============================================================================
 /**
  *  @file    ClientEngine.h
  *
  *  @author  Tim Bradley <bradley_t@ociweb.com>
  */
-//=============================================================================
 
 #ifndef CLIENT_ENGINE_H
 #define CLIENT_ENGINE_H
@@ -17,15 +15,15 @@
 #include "ace/CORBA_macros.h"
 
 class ClientEngine;
-typedef TAO_Intrusive_Ref_Count_Handle<ClientEngine> ClientEngine_Handle;
+using ClientEngine_Handle = TAO_Intrusive_Ref_Count_Handle<ClientEngine>;
 
 class CSD_PT_TestInf_Export ClientEngine : public TAO_Intrusive_Ref_Count_Base<TAO_SYNCH_MUTEX>
 {
 public:
-  ClientEngine();
-  virtual ~ClientEngine();
+  ClientEngine () = default;
+  virtual ~ClientEngine ();
 
-  virtual bool execute(unsigned num_loops) = 0;
+  virtual bool execute (unsigned num_loops) = 0;
 };
 
 #endif

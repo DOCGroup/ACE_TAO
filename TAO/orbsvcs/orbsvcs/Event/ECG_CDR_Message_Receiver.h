@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /**
  *  @file ECG_CDR_Message_Receiver.h
  *
@@ -23,6 +22,8 @@
 #include "ace/INET_Addr.h"
 #include "ace/Null_Mutex.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
@@ -35,7 +36,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_ECG_CDR_Processor
 {
 public:
-  virtual ~TAO_ECG_CDR_Processor ();
+  virtual ~TAO_ECG_CDR_Processor () = default;
 
   /// Extracts data from @a cdr.  Returns 0 on success, -1 on error.
   virtual int decode (TAO_InputCDR &cdr) = 0;
@@ -64,6 +65,10 @@ public:
                              CORBA::ULong fragment_count);
 
   ~TAO_ECG_UDP_Request_Entry ();
+  TAO_ECG_UDP_Request_Entry (TAO_ECG_UDP_Request_Entry const&) = delete;
+  TAO_ECG_UDP_Request_Entry (TAO_ECG_UDP_Request_Entry&&) = delete;
+  TAO_ECG_UDP_Request_Entry& operator= (TAO_ECG_UDP_Request_Entry const&) = delete;
+  TAO_ECG_UDP_Request_Entry& operator= (TAO_ECG_UDP_Request_Entry&&) = delete;
 
   /// Validate a fragment, it should be rejected if it is invalid..
   int validate_fragment (CORBA::Boolean byte_order,
@@ -86,10 +91,6 @@ public:
   char* fragment_buffer (CORBA::ULong fragment_offset);
 
 private:
-  TAO_ECG_UDP_Request_Entry (const TAO_ECG_UDP_Request_Entry & rhs);
-  TAO_ECG_UDP_Request_Entry& operator= (const TAO_ECG_UDP_Request_Entry & rhs);
-
-private:
   /// This attributes should remain constant in all the fragments, used
   /// for validation....
   CORBA::Boolean byte_order_;
@@ -100,9 +101,10 @@ private:
   ACE_Message_Block payload_;
 
   /// This is a bit vector, used to keep track of the received buffers.
-  CORBA::ULong* received_fragments_;
-  int own_received_fragments_;
-  CORBA::ULong received_fragments_size_;
+  std::unique_ptr<CORBA::ULong[]> owned_received_fragments_ {};
+  /// View of the inline storage or the owned dynamic storage above.
+  CORBA::ULong* received_fragments_ {};
+  CORBA::ULong received_fragments_size_ {};
   CORBA::ULong default_received_fragments_[ECG_DEFAULT_FRAGMENT_BUFSIZ];
 };
 
@@ -124,7 +126,7 @@ private:
  * This class is used by various Gateway classes (Senders/Receivers)
  * responsible for federating Event Channels with UDP/Mcast.
  *
- * = REASSEMBLY
+ * @par Reassembly
  * Fragmentation is described in ECG_CDR_Message_Sender.h
  * Whenever an incomplete fragment is received (one with
  * fragment_count > 1) we allocate an entry for the message in an
@@ -141,8 +143,8 @@ class TAO_RTEvent_Serv_Export TAO_ECG_CDR_Message_Receiver
 {
 public:
   /// Initialization and termination methods.
-  //@{
-  TAO_ECG_CDR_Message_Receiver (CORBA::Boolean check_crc);
+  /// @{
+  explicit TAO_ECG_CDR_Message_Receiver (CORBA::Boolean check_crc);
   ~TAO_ECG_CDR_Message_Receiver ();
 
   /**
@@ -152,18 +154,18 @@ public:
   void init (TAO_ECG_Refcounted_Endpoint ignore_from
              /* , ACE_Lock *lock = 0 */);
 
-  // Shutdown the component: close down the request map, etc.
+  /// Shutdown the component: close down the request map, etc.
   void shutdown ();
-  //@}
+  /// @}
 
   /// Main method: read the data from @a dgram and either pass ready data
-  /// to @a cdr_processor or update the <request_map_> if the request
+  /// to @a cdr_processor or update the @c request_map_ if the request
   /// is not yet complete.
   /**
    * Returns 1 if data was read successfully and accepted by
-   * <cdr_processor> without errors.
+   * @c cdr_processor without errors.
    * Returns 0 if there were no errors, but no data has been passed to
-   * <cdr_processor>, either due to request being incomplete (not all
+   * @c cdr_processor, either due to request being incomplete (not all
    * fragments received), or it being a duplicate.
    * Returns -1 if there were errors.
    */
@@ -188,21 +190,20 @@ private:
                                            ACE_Null_Mutex>;
 
 private:
-  /// Returns 1 on success, 0 if <request_id> has already been
+  /// Returns 1 on success, 0 if @c request_id has already been
   /// received or is below current request range, and -1 on error.
-  int mark_received (const ACE_INET_Addr &from,
+  int mark_received (ACE_INET_Addr const &from,
                      CORBA::ULong request_id);
 
-  /// Returns 1 if complete request is received and <event> is
+  /// Returns 1 if complete request is received and @c event is
   /// populated, 0 if request has only partially been received or is a
   /// duplicate, and -1 on error.
-  int process_fragment (const ACE_INET_Addr &from,
-                        const Mcast_Header &header,
+  int process_fragment (ACE_INET_Addr const &from,
+                        Mcast_Header const &header,
                         char * data_buf,
                         TAO_ECG_CDR_Processor *cdr_processor);
 
-
-  Request_Map::ENTRY* get_source_entry (const ACE_INET_Addr &from);
+  Request_Map::ENTRY* get_source_entry (ACE_INET_Addr const &from);
 
 private:
   /// Ignore any events coming from this IP address.
@@ -212,7 +213,7 @@ private:
   /// partially received.
   Request_Map request_map_;
 
-  /// Serializes use of <request_map_>.
+  /// Serializes use of @c request_map_.
   //  ACE_Lock* lock_;
 
   /// Size of a fragmented requests array, i.e., max number of
@@ -243,7 +244,7 @@ struct TAO_ECG_CDR_Message_Receiver::Mcast_Header
   CORBA::ULong crc;
   int read (char * header,
             size_t bytes_received,
-            CORBA::Boolean checkcrc = 0);
+            CORBA::Boolean checkcrc = false);
 };
 
 // ****************************************************************
@@ -253,49 +254,52 @@ struct TAO_ECG_CDR_Message_Receiver::Mcast_Header
 class TAO_ECG_CDR_Message_Receiver::Requests
 {
 public:
-  Requests ();
+  Requests () = default;
   ~Requests ();
+  Requests (Requests const&) = delete;
+  Requests (Requests&&) = delete;
+  Requests& operator= (Requests const&) = delete;
+  Requests& operator= (Requests&&) = delete;
 
-  /// Allocates and initializes <fragmented_requests_>.
+  /// Allocates and initializes @c fragmented_requests_.
   int init (size_t size, size_t min_purge_count);
 
-  /// Returns pointer to a <fragmented_requests_> element
-  /// representing <request_id>.
+  /// Returns pointer to a @c fragmented_requests_ element
+  /// representing @c request_id.
   /**
-   * If <request_id> < <id_range_low> return 0.
-   * If <request_id> > <id_range_high>, shift the range so it
-   * includes <request_id>, purging incomplete requests as needed.
+   * If @c request_id is less than @c id_range_low, return 0.
+   * If @c request_id is greater than @c id_range_high, shift the range so it
+   * includes @c request_id, purging incomplete requests as needed.
    */
   TAO_ECG_UDP_Request_Entry ** get_request (CORBA::ULong request_id);
 
 private:
   /// Delete any outstanding requests with ids in the range
-  /// [<purge_first>, <purge_last>] from <fragmented_requests> and
+  /// @c purge_first through @c purge_last from @c fragmented_requests
   /// and reset their slots.
   void purge_requests (CORBA::ULong purge_first,
                        CORBA::ULong purge_last);
-
-  Requests & operator= (const Requests &rhs);
-  Requests (const Requests &rhs);
 
 private:
   /// Array, used in a circular fashion, that stores partially received
   /// requests (and info on which requests have been fully received
   /// and processed) for a range of request ids.
-  TAO_ECG_UDP_Request_Entry** fragmented_requests_;
+  /// Non-sentinel slots own their request pointers; the raw slots also allow
+  /// get_request() to return the address of a slot.
+  std::unique_ptr<TAO_ECG_UDP_Request_Entry*[]> fragmented_requests_ {};
 
-  /// Size of <fragmented_requests_> array.
-  size_t size_;
+  /// Size of @c fragmented_requests_ array.
+  size_t size_ {};
 
   /// The range of request ids, currently represented in
-  /// <fragmented_requests>.
-  //@{
-  CORBA::ULong id_range_low_;
-  CORBA::ULong id_range_high_;
-  //@}
+  /// @c fragmented_requests.
+  /// @{
+  CORBA::ULong id_range_low_ {};
+  CORBA::ULong id_range_high_ {};
+  /// @}
 
   /// Minimum range shifting amount.
-  size_t min_purge_count_;
+  size_t min_purge_count_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -1,6 +1,3 @@
-//x -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file Thread_Per_Connection_Handler.h
  *
@@ -9,7 +6,6 @@
  *
  *  @author  Balachandran Natarajan <bala@dre.vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef TAO_THREAD_PER_CONNECTION_HANDLER_H
 #define TAO_THREAD_PER_CONNECTION_HANDLER_H
@@ -52,9 +48,9 @@ public:
   /**
    * Please see the documentation in ace/Task.h for details.
    */
-  virtual int svc ();
-  virtual int open (void *);
-  virtual int close (u_long);
+  int svc () override;
+  int open (void *) override;
+  int close (u_long) override;
 
 private:
   /// Pointer to protocol-specific code that does a bunch of the job.

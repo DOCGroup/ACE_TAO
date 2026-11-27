@@ -1,12 +1,8 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
  *  @file    MEM_Connector.h
  *
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef ACE_MEM_CONNECTOR_H
 #define ACE_MEM_CONNECTOR_H
@@ -35,7 +31,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_MEM_Connector : public ACE_SOCK_Connector
 {
 public:
-  /// Default constructor.
   ACE_MEM_Connector ();
 
   /**
@@ -49,7 +44,7 @@ public:
    *                    the connected socket. That is, if @c remote_sap
    *                    contains an IPv6 address, a socket with family
    *                    PF_INET6 will be used, else it will be PF_INET.
-   *                    @note remote_sap must be an address on the local
+   *                    @note The @a remote_sap must be an address on the local
    *                    host.
    * @param timeout     Pointer to an @c ACE_Time_Value object with amount
    *                    of time to wait to connect. If the pointer is 0
@@ -76,9 +71,9 @@ public:
    * @param perms       Ignored.
    */
   ACE_MEM_Connector (ACE_MEM_Stream &new_stream,
-                     const ACE_INET_Addr &remote_sap,
-                     const ACE_Time_Value *timeout = nullptr,
-                     const ACE_Addr &local_sap = ACE_Addr::sap_any,
+                     ACE_INET_Addr const &remote_sap,
+                     ACE_Time_Value const *timeout = nullptr,
+                     ACE_Addr const &local_sap = ACE_Addr::sap_any,
                      int reuse_addr = 0,
                      int flags = 0,
                      int perms = 0);
@@ -94,7 +89,7 @@ public:
    *                    the connected socket. That is, if @c remote_sap
    *                    contains an IPv6 address, a socket with family
    *                    PF_INET6 will be used, else it will be PF_INET.
-   *                    @note remote_sap must be an address on the local
+   *                    @note The @a remote_sap must be an address on the local
    *                    host.
    * @param timeout     Pointer to an @c ACE_Time_Value object with amount
    *                    of time to wait to connect. If the pointer is 0
@@ -125,9 +120,9 @@ public:
    *                    code.
    */
   int connect (ACE_MEM_Stream &new_stream,
-               const ACE_INET_Addr &remote_sap,
-               const ACE_Time_Value *timeout = nullptr,
-               const ACE_Addr &local_sap = ACE_Addr::sap_any,
+               ACE_INET_Addr const &remote_sap,
+               ACE_Time_Value const *timeout = nullptr,
+               ACE_Addr const &local_sap = ACE_Addr::sap_any,
                int reuse_addr = 0,
                int flags = 0,
                int perms = 0);
@@ -138,9 +133,11 @@ public:
   /// Set the preferred signaling strategy.
   void preferred_strategy (ACE_MEM_IO::Signal_Strategy strategy);
 
-  // = Meta-type info
+  /// @name Peer types
+  /// @{
   using PEER_ADDR = ACE_INET_Addr;
   using PEER_STREAM = ACE_MEM_Stream;
+  /// @}
 
   /// Dump the state of an object.
   void dump () const;

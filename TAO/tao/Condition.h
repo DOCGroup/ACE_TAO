@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Condition.h
  *
  *  @author From ACE to TAO by Balachandran Natarajan <bala@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_CONDITION_H
 #define TAO_CONDITION_H
@@ -21,6 +17,8 @@
 
 #include "ace/Condition_T.h"
 #include "ace/Global_Macros.h"
+
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Time_Value;
@@ -41,12 +39,13 @@ template <class MUTEX>
 class TAO_Condition
 {
 public:
-  /// Useful typedef
   using LOCK = MUTEX;
 
-  // = Initialiation and termination methods.
+  /// @name Initialization and termination
+  /// @{
+
   /// Initialize the condition variable.
-  TAO_Condition (MUTEX &m);
+  explicit TAO_Condition (MUTEX &m);
 
   /// A default constructor. Since no lock is provided by the user,
   /// one will be created internally.
@@ -55,27 +54,31 @@ public:
   /// Implicitly destroy the condition variable.
   ~TAO_Condition ();
 
-  // = Lock accessors.
+  /// @}
+
+  /// @name Wait and signal operations
+  /// @{
+
   /**
-   * Block on condition, or until absolute time-of-day has passed.  If
-   * abstime == 0 use "blocking" <wait> semantics.  Else, if <abstime>
-   * != 0 and the call times out before the condition is signaled
-   * <wait> returns -1 and sets errno to ETIME.
+   * Block on condition, or until absolute time-of-day has passed. If
+   * @a abstime is null, use blocking @c wait() semantics. Otherwise,
+   * if @a abstime is not null and the call times out before the
+   * condition is signaled, @c wait() returns -1 and sets errno to ETIME.
    */
-  int wait (const ACE_Time_Value *abstime);
+  int wait (ACE_Time_Value const *abstime);
 
   /// Block on condition.
   int wait ();
 
   /**
-   * Block on condition or until absolute time-of-day has passed.  If
-   * abstime == 0 use "blocking" wait() semantics on the <mutex>
-   * passed as a parameter (this is useful if you need to store the
-   * <Condition> in shared memory).  Else, if <abstime> != 0 and the
-   * call times out before the condition is signaled <wait> returns -1
-   * and sets errno to ETIME.
+   * Block on condition or until absolute time-of-day has passed. If
+   * @a abstime is null, use blocking @c wait() semantics on @a mutex
+   * (this is useful if you need to store @c TAO_Condition in shared
+   * memory). Otherwise, if @a abstime is not null and the call times
+   * out before the condition is signaled, @c wait() returns -1 and
+   * sets errno to ETIME.
    */
-  int wait (MUTEX &mutex, const ACE_Time_Value *abstime = nullptr);
+  int wait (MUTEX &mutex, ACE_Time_Value const *abstime = nullptr);
 
   /// Signal one waiting thread.
   int signal ();
@@ -83,25 +86,33 @@ public:
   /// Signal *all* waiting threads.
   int broadcast ();
 
-  // = Utility methods.
+  /// @}
+
+  /// @name Utility methods
+  /// @{
+
   /// Explicitly destroy the condition variable.
   int remove ();
 
   /// Returns a reference to the underlying mutex_;
   MUTEX *mutex ();
 
+  /// @}
+
 private:
-  TAO_Condition (const TAO_Condition<MUTEX> &) = delete;
-  TAO_Condition &operator= (const TAO_Condition<MUTEX> &) = delete;
+  TAO_Condition (TAO_Condition<MUTEX> const &) = delete;
+  TAO_Condition &operator= (TAO_Condition<MUTEX> const &) = delete;
+  TAO_Condition (TAO_Condition<MUTEX> &&) = delete;
+  TAO_Condition &operator= (TAO_Condition<MUTEX> &&) = delete;
 
-  /// Reference to mutex lock.
-  MUTEX *mutex_;
+  /// Internally owned mutex, empty when an external mutex is used.
+  std::unique_ptr<MUTEX> owned_mutex_ {};
 
-  /// A flag to indicate whether the lock needs to be deleted.
-  bool delete_lock_;
+  /// Mutex used by the condition variable.
+  MUTEX *mutex_ {};
 
   /// Condition variable.
-  TAO_SYNCH_CONDITION *cond_;
+  std::unique_ptr<TAO_SYNCH_CONDITION> cond_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -1,5 +1,3 @@
-/* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file   Notify_StructuredPushSupplier.h
  *
@@ -8,7 +6,6 @@
  *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_NOTIFY_STRUCTUREDPUSHSUPPLIER_H
 #define TAO_NOTIFY_STRUCTUREDPUSHSUPPLIER_H
@@ -16,7 +13,7 @@
 
 #include "StructuredPushSupplier.h"
 
-typedef TAO_Notify_Tests_StructuredPushSupplier TAO_Notify_StructuredPushSupplier;
+using TAO_Notify_StructuredPushSupplier = TAO_Notify_Tests_StructuredPushSupplier;
 
 #include /**/ "ace/post.h"
 #endif /* TAO_NOTIFY_STRUCTUREDPUSHSUPPLIER_H */

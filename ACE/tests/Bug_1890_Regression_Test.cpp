@@ -99,9 +99,9 @@ run_main (int, ACE_TCHAR *[])
 
   // Bug 1890 is all about ACE_Select_Reactor, so run it on that reactor
   // regardless of platform.
-  ACE_Select_Reactor *impl_ptr = nullptr;
+  ACE_Select_Reactor *impl_ptr {};
   ACE_NEW_RETURN (impl_ptr, ACE_Select_Reactor, -1);
-  std::unique_ptr<ACE_Select_Reactor> auto_impl (impl_ptr);
+  std::unique_ptr<ACE_Select_Reactor> const auto_impl (impl_ptr);
 
   ACE_Reactor reactor (impl_ptr);
 
@@ -109,7 +109,7 @@ run_main (int, ACE_TCHAR *[])
   Timer * timer = new Timer;
 
   // Initialize the timer and register with the reactor
-  if (-1 == timer->open (&reactor))
+  if (-1 == timer->open (std::addressof (reactor)))
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("%p\n"),
@@ -121,7 +121,9 @@ run_main (int, ACE_TCHAR *[])
 
   // Verify that the results are what we expect
   if (!(success = timer->check_expected_results ()))
+  {
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("Test failed\n")));
+  }
 
   // Cleanup
   timer->close ();
@@ -225,9 +227,9 @@ Timer::open (ACE_Reactor * r)
 void
 Timer::close()
 {
-  for (int i = 0; i != nhandlers; ++i)
+  for (Handler& handler : handler_)
     {
-      this->reactor ()->remove_handler (&handler_[i],
+      this->reactor ()->remove_handler (std::addressof (handler),
                                         ACE_Event_Handler::ALL_EVENTS_MASK |
                                         ACE_Event_Handler::DONT_CALL);
     }
@@ -282,9 +284,9 @@ Timer::handle_timeout(ACE_Time_Value const &, void const *)
 void
 Timer::send_data_through_handlers()
 {
-  for (int i = 0; i != nhandlers; ++i)
+  for (Handler& handler : handler_)
     {
-      handler_[i].send_dummy_data();
+      handler.send_dummy_data();
     }
 }
 
@@ -297,7 +299,7 @@ Timer::remove_some_handlers()
     ACE_Event_Handler::ALL_EVENTS_MASK | ACE_Event_Handler::DONT_CALL;
   for (int i = 0; i != nhandlers; ++i)
     {
-      if (-1 == reactor()->remove_handler(&handler_[i], mask))
+      if (-1 == reactor()->remove_handler(std::addressof (handler_[i]), mask))
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("Cannot remove handler %d in %p\n"),
@@ -306,7 +308,7 @@ Timer::remove_some_handlers()
         }
     }
 
-  if (-1 == reactor()->register_handler(&special_handler(),
+  if (-1 == reactor()->register_handler(std::addressof (special_handler()),
                                         ACE_Event_Handler::ALL_EVENTS_MASK))
     {
       ACE_ERROR ((LM_ERROR,

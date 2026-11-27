@@ -7,7 +7,6 @@
 #include <cstdio>
 #include <string.h>
 #include <stdlib.h>
-#include <string.h>
 
 // This is a non-ACE driver program which loads an ACE-based DLL.  The
 // usual ACE-related defines will not apply and we must use
@@ -60,7 +59,7 @@ void* loadDll(void*)
   if (subdir_env)
     {
       char *dllFile =
-        (char *) malloc (2 + strlen (subdir_env) + strlen (DllTestName));
+        static_cast<char *> (malloc (2 + strlen (subdir_env) + strlen (DllTestName)));
       strcpy (dllFile, subdir_env);
       strcat (dllFile, "/");
       strcat (dllFile, DllTestName);

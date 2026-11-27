@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/LF_Event.h"
 #include "tao/LF_Follower.h"
 #include "tao/Leader_Follower.h"
@@ -29,7 +28,9 @@ TAO_LF_Event::state_changed (LFS_STATE new_state, TAO_Leader_Follower &lf)
 
       /// Sort of double-checked optimization..
       if (this->follower_ != nullptr)
+      {
         this->follower_->signal ();
+      }
     }
 }
 

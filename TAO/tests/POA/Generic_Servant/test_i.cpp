@@ -1,8 +1,8 @@
 #include "test_i.h"
 #include "ace/OS_NS_unistd.h"
-#include "ace/OS_NS_string.h"
 
-// Constructor
+#include <cstring>
+
 test_i::test_i (CORBA::ORB_ptr orb,
                 PortableServer::POA_ptr poa)
   : orb_ (CORBA::ORB::_duplicate (orb)),
@@ -28,7 +28,7 @@ test_i::oneway_method ()
 
 void
 test_i::sleep (CORBA::ULong timeout,
-               const char *method)
+               char const *method)
 {
   ACE_DEBUG ((LM_DEBUG,
               "Thread %t starting %s with timeout %d\n",
@@ -62,7 +62,6 @@ test_i::shutdown ()
   this->orb_->shutdown (false);
 }
 
-
 // This is the point of entry into this library.
 extern "C" GENERIC_SERVANT_Export PortableServer::Servant create_test_i (CORBA::ORB_ptr orb,
                                                                          PortableServer::POA_ptr poa);
@@ -71,15 +70,14 @@ PortableServer::Servant
 create_test_i (CORBA::ORB_ptr orb,
                PortableServer::POA_ptr poa)
 {
-  PortableServer::Servant servant;
+  PortableServer::Servant servant {};
 
   ACE_NEW_RETURN (servant,
                   test_i (orb,
                           poa),
-                  0);
+                  nullptr);
   return servant;
 }
-
 
 extern "C" GENERIC_SERVANT_Export PortableServer::Servant supply_servant (const PortableServer::ObjectId &oid,
                                                                           PortableServer::POA_ptr poa,
@@ -90,16 +88,18 @@ supply_servant (const PortableServer::ObjectId &oid,
                 PortableServer::POA_ptr poa,
                 CORBA::ORB_ptr orb)
 {
-  PortableServer::Servant servant = 0;
+  PortableServer::Servant servant {};
 
   // Convert ObjectId to string.
   CORBA::String_var s = PortableServer::ObjectId_to_string (oid);
 
-  if (ACE_OS::strstr (s.in (), "test") != 0)
-    ACE_NEW_RETURN (servant,
-                    test_i (orb,
-                            poa),
-                    0);
+  if (std::strstr (s.in (), "test") != nullptr)
+    {
+      ACE_NEW_RETURN (servant,
+                      test_i (orb,
+                              poa),
+                      nullptr);
+    }
   return servant;
 }
 

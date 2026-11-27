@@ -1,5 +1,4 @@
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Notify/XML_Saver.h"
 
 #include "ACEXML/common/XML_Util.h"
@@ -8,17 +7,16 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
 
+#include <cstdio>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Notify
 {
-  extern const char TOPOLOGY_ID_NAME[];
+  extern char const TOPOLOGY_ID_NAME[];
 
   XML_Saver::XML_Saver(bool timestamp)
-    : output_ (nullptr)
-    , close_out_ (false)
-    , backup_count_ (1)
-    , timestamp_ (timestamp)
+    : timestamp_ (timestamp)
   {
   }
 
@@ -79,7 +77,7 @@ namespace TAO_Notify
   }
 
   bool
-  XML_Saver::open(const ACE_TString & base_name, size_t backup_count)
+  XML_Saver::open (ACE_TString const &base_name, size_t backup_count)
   {
     this->base_name_ = base_name;
     this->backup_count_ = backup_count;
@@ -111,7 +109,7 @@ namespace TAO_Notify
     {
       FILE * const out = this->output_;
 
-      ACE_OS::fprintf (out, "<?xml version=\"1.0\"?>\n");
+      std::fprintf (out, "<?xml version=\"1.0\"?>\n");
 
       try
       {
@@ -121,7 +119,7 @@ namespace TAO_Notify
         ACE_Time_Value const now = ACE_High_Res_Timer::gettimeofday();
 
         ACE_UINT64 nowus = now.usec();
-        static const ACE_UINT64 USECSPERSEC = 1000 * 1000;
+        static constexpr ACE_UINT64 USECSPERSEC = 1000 * 1000;
         ACE_UINT64 const tmpus = now.sec();
         nowus += tmpus * USECSPERSEC;
 
@@ -135,7 +133,7 @@ namespace TAO_Notify
         }
         this->begin_object(0, "notification_service", attrs, changed);
       }
-      catch (const CORBA::Exception& ex)
+      catch (CORBA::Exception const &ex)
       {
         ex._tao_print_exception (
           ACE_TEXT (
@@ -152,40 +150,40 @@ namespace TAO_Notify
   }
 
   bool
-  XML_Saver::begin_object(CORBA::Long id,
-                          const ACE_CString& type,
-                          const NVPList& attrs,
+  XML_Saver::begin_object (CORBA::Long id,
+                          ACE_CString const &type,
+                          NVPList const &attrs,
                           bool /* changed */)
   {
     ACE_ASSERT(this->output_ != nullptr);
 
     FILE * const out = this->output_;
 
-    ACE_OS::fprintf (out, "%s%s%s", indent_.c_str(), "<", type.c_str());
+    std::fprintf (out, "%s%s%s", indent_.c_str(), "<", type.c_str());
     if (id != 0)
     {
       // not all ostreams know what to do with a CORBA::Long
       long const lid = id;
-      ACE_OS::fprintf (out, " %s%s%ld%s", TOPOLOGY_ID_NAME, "=\"", lid, "\"");
+      std::fprintf (out, " %s%s%ld%s", TOPOLOGY_ID_NAME, "=\"", lid, "\"");
     }
 
     ACE_TString::size_type const BUF_SIZE = 512;
     ACE_TString tmp(BUF_SIZE);
-    for (size_t idx = 0; idx < attrs.size(); ++idx)
+    for (size_t idx {}; idx < attrs.size(); ++idx)
     {
       ACE_TString valuetmp (ACE_TEXT_CHAR_TO_TCHAR (attrs[idx].value.c_str()));
       ACEXML_escape_string(valuetmp, tmp);
-      ACE_OS::fprintf (out, "%s%s%s%s%s"," ",
+      std::fprintf (out, "%s%s%s%s%s"," ",
            attrs[idx].name.c_str (),
            "=\"", ACE_TEXT_ALWAYS_CHAR (tmp.c_str()), "\"");
     }
-    ACE_OS::fprintf (out, ">\n");
+    std::fprintf (out, ">\n");
     this->indent_ += "  ";
     return true;
   }
 
   void XML_Saver::end_object (CORBA::Long /* id */,
-                              const ACE_CString& type)
+                              ACE_CString const &type)
   {
     ACE_ASSERT(this->output_ != nullptr);
     FILE * const out = this->output_;
@@ -193,7 +191,7 @@ namespace TAO_Notify
     {
       this->indent_ = this->indent_.substr(2);
     }
-    ACE_OS::fprintf (out, "%s%s%s%s", indent_.c_str(), "</",
+    std::fprintf (out, "%s%s%s%s", indent_.c_str(), "</",
                      type.c_str(), ">\n");
   }
 } /* namespace TAO_Notify */

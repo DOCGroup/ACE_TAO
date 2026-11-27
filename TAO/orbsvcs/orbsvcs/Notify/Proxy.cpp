@@ -12,16 +12,13 @@
 #include "orbsvcs/Notify/POA_Helper.h"
 #include "orbsvcs/Notify/Topology_Saver.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Notify_Proxy::TAO_Notify_Proxy ()
-  : updates_off_ (0)
-{
-}
+TAO_Notify_Proxy::TAO_Notify_Proxy () = default;
 
-TAO_Notify_Proxy::~TAO_Notify_Proxy ()
-{
-}
+TAO_Notify_Proxy::~TAO_Notify_Proxy () = default;
 
 CORBA::Object_ptr
 TAO_Notify_Proxy::activate (PortableServer::Servant servant)
@@ -58,12 +55,14 @@ TAO_Notify_Proxy::subscribed_types (TAO_Notify_EventTypeSeq& subscribed_types)
 }
 
 void
-TAO_Notify_Proxy::types_changed (const TAO_Notify_EventTypeSeq& added, const TAO_Notify_EventTypeSeq& removed)
+TAO_Notify_Proxy::types_changed (TAO_Notify_EventTypeSeq const& added, TAO_Notify_EventTypeSeq const& removed)
 {
   // return if the updates for this proxy are turned off or
   // if all the updates in the channel are switched off.
-  if (this->updates_off_ == 1 || TAO_Notify_PROPERTIES::instance()->updates () == 0)
+  if (this->updates_off_ || !TAO_Notify_PROPERTIES::instance()->updates ())
+  {
     return;
+  }
 
   TAO_Notify_Method_Request_Updates_No_Copy request (added, removed, this);
 
@@ -78,7 +77,7 @@ TAO_Notify_Proxy::types_changed (const TAO_Notify_EventTypeSeq& added, const TAO
 }
 
 CosNotification::EventTypeSeq*
-TAO_Notify_Proxy::obtain_types (CosNotifyChannelAdmin::ObtainInfoMode mode, const TAO_Notify_EventTypeSeq& types)
+TAO_Notify_Proxy::obtain_types (CosNotifyChannelAdmin::ObtainInfoMode mode, TAO_Notify_EventTypeSeq const& types)
 {
   CosNotification::EventTypeSeq_var event_type_seq;
 
@@ -97,24 +96,26 @@ TAO_Notify_Proxy::obtain_types (CosNotifyChannelAdmin::ObtainInfoMode mode, cons
   if (mode == CosNotifyChannelAdmin::NONE_NOW_UPDATES_ON ||
       mode == CosNotifyChannelAdmin::ALL_NOW_UPDATES_ON)
     {
-      this->updates_off_ = 0;
+      this->updates_off_ = false;
     }
   else
     {
-      this->updates_off_ = 1;
+      this->updates_off_ = true;
     }
 
   return event_type_seq._retn ();
 }
 
 void
-TAO_Notify_Proxy::qos_changed (const TAO_Notify_QoSProperties& qos_properties)
+TAO_Notify_Proxy::qos_changed (TAO_Notify_QoSProperties const &qos_properties)
 {
   //Inform Peers of qos changes.
   TAO_Notify_Peer* peer = this->peer ();
 
   if (peer != nullptr)
+  {
     peer->qos_changed (qos_properties);
+  }
 }
 
 void
@@ -129,7 +130,7 @@ TAO_Notify_Proxy::save_persistent (TAO_Notify::Topology_Saver& saver)
     TAO_Notify::NVPList attrs;
     this->save_attrs(attrs);
 
-    const char * type_name = this->get_proxy_type_name ();
+    char const *type_name = this->get_proxy_type_name ();
     bool want_all_children = saver.begin_object(this->id(), type_name, attrs, changed);
 
     if (want_all_children || this->filter_admin_.is_changed ())
@@ -160,8 +161,8 @@ TAO_Notify_Proxy::save_attrs (TAO_Notify::NVPList& attrs)
 }
 
 TAO_Notify::Topology_Object*
-TAO_Notify_Proxy::load_child (const ACE_CString &type, CORBA::Long id,
-  const TAO_Notify::NVPList& attrs)
+TAO_Notify_Proxy::load_child (ACE_CString const &type, CORBA::Long id,
+  TAO_Notify::NVPList const &attrs)
 {
   ACE_UNUSED_ARG (id);
   ACE_UNUSED_ARG (attrs);
@@ -170,12 +171,12 @@ TAO_Notify_Proxy::load_child (const ACE_CString &type, CORBA::Long id,
   {
     // since we initialized our subscribed types to everything
     // in the constructor. we have to clear it out first.
-    this->subscribed_types_.reset();
-    result = &this->subscribed_types_;
+    this->subscribed_types_.clear ();
+    result = std::addressof (this->subscribed_types_);
   }
   else if (type == "filter_admin")
   {
-    result = & this->filter_admin_;
+    result = std::addressof (this->filter_admin_);
   }
   return result;
 }

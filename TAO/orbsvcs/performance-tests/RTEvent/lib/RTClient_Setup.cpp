@@ -10,6 +10,8 @@
 
 #include "ace/Log_Msg.h"
 
+#include <memory>
+
 #if !defined(__ACE_INLINE__)
 #include "RTClient_Setup.inl"
 #endif /* __ACE_INLINE__ */
@@ -23,6 +25,6 @@ RTClient_Setup::RTClient_Setup (int use_rt_corba,
 {
   if (use_rt_corba)
     {
-      this->rtcorba_setup_.reset (new RTCORBA_Setup (orb, rt_class, nthreads));
+      this->rtcorba_setup_ = std::make_unique<RTCORBA_Setup> (orb, rt_class, nthreads);
     }
 }

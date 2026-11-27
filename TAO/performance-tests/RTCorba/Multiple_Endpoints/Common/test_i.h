@@ -1,12 +1,8 @@
-
-//=============================================================================
 /**
  *  @file   test_i.h
  *
  *  @author Carlos O'Ryan
  */
-//=============================================================================
-
 
 #ifndef TAO_TPP_TEST_I_H
 #define TAO_TPP_TEST_I_H
@@ -23,13 +19,14 @@
 class RTCORBA_COMMON_Export Test_i : public POA_Test
 {
 public:
-  /// ctor
   Test_i ();
 
-  // = The Test methods.
-  void test_method (CORBA::Long id);
+  /// @name Test operations
+  /// @{
+  void test_method (CORBA::Long id) override;
 
-  void shutdown (const char *orb_id);
+  void shutdown (const char *orb_id) override;
+  /// @}
 };
 
 #if defined(__ACE_INLINE__)

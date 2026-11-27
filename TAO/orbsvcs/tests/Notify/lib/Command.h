@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file Command.h
  *
@@ -35,10 +34,8 @@ class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Command
 {
   friend class TAO_Notify_Tests_Command_Builder;
 public:
-  /// Constructor
   TAO_Notify_Tests_Command ();
 
-  /// Destructor
   virtual ~TAO_Notify_Tests_Command ();
 
   /// Parse args and populate options.
@@ -48,14 +45,14 @@ public:
   virtual void execute_i () = 0;
 
   /// Return the name of this command.
-  virtual const char* get_name () = 0;
+  virtual char const *get_name () = 0;
 
-  ///= Each derived type must also implement the following signature:
-  // static const char* name ();
+  /// Each derived type must also implement the following signature:
+  /// \c static char const *name ();
 
 protected:
-  /// Next command after this one.
-  TAO_Notify_Tests_Command* next_;
+  /// Non-owning link to the next command; TAO_Notify_Tests_Command_Builder owns the chain.
+  TAO_Notify_Tests_Command* next_ {};
 
   enum {INVALID = -1};
 

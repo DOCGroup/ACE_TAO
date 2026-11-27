@@ -1,5 +1,3 @@
-/* -*- c++ -*- */
-//=============================================================================
 /**
  *  @file    be_visitor_scope.h
  *
@@ -7,7 +5,6 @@
  *
  *  @author Aniruddha Gokhale and Carlos O'Ryan
  */
-//=============================================================================
 
 #ifndef TAO_BE_VISITOR_SCOPE_H
 #define TAO_BE_VISITOR_SCOPE_H

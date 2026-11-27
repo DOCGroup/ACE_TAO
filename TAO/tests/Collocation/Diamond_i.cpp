@@ -1,25 +1,9 @@
 #include "Diamond_i.h"
 
-Top_i::Top_i ()
-{
-}
-
-Top_i::~Top_i ()
-{
-}
-
 char *
 Top_i::shape ()
 {
   return CORBA::string_dup ("a point.");
-}
-
-Left_i::Left_i ()
-{
-}
-
-Left_i::~Left_i ()
-{
 }
 
 char *
@@ -34,39 +18,16 @@ Left_i::color ()
   return CORBA::string_dup ("black");
 }
 
-Right_i::Right_i ()
-{
-}
-
-Right_i::~Right_i ()
-{
-}
-
 char *
 Right_i::shape ()
 {
   return CORBA::string_dup ("the right line");
 }
 
-char *
-Right_i::color ()
-{
-  return CORBA::string_dup ("red");
-  //
-}
-
 CORBA::Long
 Right_i::width ()
 {
   return 0;
-}
-
-Buttom_i::Buttom_i ()
-{
-}
-
-Buttom_i::~Buttom_i ()
-{
 }
 
 char *

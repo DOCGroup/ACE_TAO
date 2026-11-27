@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(RTSchedEvent) : orbsvcslib, orbsvcs_output, install, rtevent_serv, rtsched {
   sharedname   = TAO_RTSchedEvent
   dynamicflags += TAO_RTSCHEDEVENT_BUILD_DLL

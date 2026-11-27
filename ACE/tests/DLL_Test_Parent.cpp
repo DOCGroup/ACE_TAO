@@ -1,9 +1,7 @@
 #include "DLL_Test_Parent.h"
 #include "ace/Log_Msg.h"
 
-Parent::~Parent ()
-{
-}
+Parent::~Parent () = default;
 
 void
 Parent::test ()
@@ -11,9 +9,7 @@ Parent::test ()
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("parent called\n")));
 }
 
-Data::~Data ()
-{
-}
+Data::~Data () = default;
 
 Base::Base ()
 {

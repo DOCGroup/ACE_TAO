@@ -1,5 +1,3 @@
-/* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file    TAO_Object_Group_Creator.h
  *
@@ -8,7 +6,6 @@
  *
  *  @author Dale Wilson <wilson_d@ociweb.com>
  */
-//=============================================================================
 
 #ifndef TAO_OBJECT_GROUP_CREATOR_H
 #define TAO_OBJECT_GROUP_CREATOR_H
@@ -21,14 +18,15 @@
 #include <orbsvcs/FT_ReplicationManagerC.h>
 #include <orbsvcs/PortableGroupC.h>
 #include <ace/SString.h>
-#include <ace/Vector_T.h>
+
+#include <vector>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace TAO
 {
   class Object_Group_Creator
   {
-    typedef ACE_Vector<ACE_CString> StringVec;
+    using StringVec = std::vector<ACE_CString>;
    public:
     ///////////////////////////
     // construction/destruction
@@ -47,15 +45,15 @@ namespace TAO
     /////////////////
     // functionality
     CORBA::Object_ptr create_group(
-        const char * role,
+        char const *role,
         int write_iors);
 
     /////////////////
     // functionality
     CORBA::Object_ptr create_infrastructure_managed_group(
-        const char * type_id);
+        char const *type_id);
 
-    int unregister_role(const char * role);
+    int unregister_role(char const *role);
 
     ////////////
     // shut down
@@ -64,23 +62,23 @@ namespace TAO
     /////////////////
     // implementation
   private:
-    int write_ior_file(const char * outputFile, const char * ior);
+    int write_ior_file(char const *outputFile, char const *ior);
 
   int create_detector_for_replica (
     CORBA::Object_ptr replica,
-    const char * role,
-    const char * type_id,
+    char const *role,
+    char const *type_id,
     PortableGroup::ObjectGroupId group_id,
-    const PortableGroup::Location & location);
+    PortableGroup::Location const & location);
 
     ////////////////////
     // forbidden methods
    private:
-      Object_Group_Creator (const Object_Group_Creator & rhs);
-      Object_Group_Creator & operator = (const Object_Group_Creator & rhs);
+      Object_Group_Creator (Object_Group_Creator const & rhs);
+      Object_Group_Creator & operator = (Object_Group_Creator const & rhs);
 
-    ////////////////
-    // Data members
+    /// @name Data members
+    /// @{
    private:
     CORBA::ORB_var orb_;
     PortableGroup::FactoryRegistry_var registry_;
@@ -90,11 +88,11 @@ namespace TAO
     ::PortableGroup::FactoryInfos_var detector_infos_;
     CORBA::String_var detector_type_id_;
 
-
     /**
      * bool: true if we have a real replication manager
      */
     int have_replication_manager_;
+    /// @}
   };
 } // namespace TAO
 TAO_END_VERSIONED_NAMESPACE_DECL

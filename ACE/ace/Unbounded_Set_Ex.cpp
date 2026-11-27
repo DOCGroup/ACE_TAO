@@ -2,6 +2,7 @@
 #define ACE_UNBOUNDED_SET_EX_CPP
 
 #include "ace/Unbounded_Set.h"
+#include <memory>
 #include "ace/Malloc_Base.h"
 #include "ace/Log_Category.h"
 
@@ -25,10 +26,10 @@ ACE_Unbounded_Set_Ex<T, C>::size () const
 }
 
 template <class T, class C> int
-ACE_Unbounded_Set_Ex<T, C>::insert_tail (const T &item)
+ACE_Unbounded_Set_Ex<T, C>::insert_tail (T const &item)
 {
   // ACE_TRACE ("ACE_Unbounded_Set_Ex<T, C>::insert_tail");
-  NODE *temp = nullptr;
+  NODE *temp {};
 
   // Insert <item> into the old dummy node location.
   this->head_->item_ = item;
@@ -63,11 +64,11 @@ ACE_Unbounded_Set_Ex<T, C>::dump () const
   ACE_TRACE ("ACE_Unbounded_Set_Ex<T, C>::dump");
 
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nhead_ = %u"), this->head_));
-  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nhead_->next_ = %u"), this->head_->next_));
-  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\ncur_size_ = %d\n"), this->cur_size_));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nhead_ = %@"), this->head_));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nhead_->next_ = %@"), this->head_->next_));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\ncur_size_ = %B\n"), this->cur_size_));
 
-  T *item = nullptr;
+  T *item {};
 #if !defined (ACE_NLOGGING)
   size_t count = 1;
 #endif /* ! ACE_NLOGGING */
@@ -76,19 +77,21 @@ ACE_Unbounded_Set_Ex<T, C>::dump () const
   for (const_iterator i (this->begin ());
        i != the_end;
        ++i)
-    ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("count = %u\n"), count++));
+    ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("count = %B\n"), count++));
 
   ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
 
 template <class T, class C> void
-ACE_Unbounded_Set_Ex<T, C>::copy_nodes (const ACE_Unbounded_Set_Ex<T, C> &us)
+ACE_Unbounded_Set_Ex<T, C>::copy_nodes (ACE_Unbounded_Set_Ex<T, C> const &us)
 {
   for (NODE *curr = us.head_->next_;
        curr != us.head_;
        curr = curr->next_)
-    this->insert_tail (curr->item_);
+    {
+      this->insert_tail (curr->item_);
+    }
 }
 
 template <class T, class C> void
@@ -125,72 +128,72 @@ ACE_Unbounded_Set_Ex<T, C>::~ACE_Unbounded_Set_Ex ()
                          this->allocator_->free,
                          ACE_Node,
                          T, C);
-  this->head_ = 0;
+  this->head_ = nullptr;
 }
 
 template <class T, class C>
 ACE_Unbounded_Set_Ex<T, C>::ACE_Unbounded_Set_Ex (ACE_Allocator *alloc)
-  : head_ (0),
-    cur_size_ (0),
-    allocator_ (alloc)
+  : allocator_ (alloc)
 {
   // ACE_TRACE ("ACE_Unbounded_Set_Ex<T, C>::ACE_Unbounded_Set_Ex");
 
-  if (this->allocator_ == 0)
-    this->allocator_ = ACE_Allocator::instance ();
+  if (this->allocator_ == nullptr)
+    {
+      this->allocator_ = ACE_Allocator::instance ();
+    }
 
   ACE_NEW_MALLOC (this->head_,
-                  (NODE*) this->allocator_->malloc (sizeof (NODE)),
+                  static_cast<NODE *> (this->allocator_->malloc (sizeof (NODE))),
                   NODE);
   // Make the list circular by pointing it back to itself.
   this->head_->next_ = this->head_;
 }
 
 template <class T, class C>
-ACE_Unbounded_Set_Ex<T, C>::ACE_Unbounded_Set_Ex (const C &comp,
+ACE_Unbounded_Set_Ex<T, C>::ACE_Unbounded_Set_Ex (C const &comp,
                                             ACE_Allocator *alloc)
-  : head_ (0),
-    cur_size_ (0),
-    allocator_ (alloc),
+  : allocator_ (alloc),
     comp_ (comp)
 {
   // ACE_TRACE ("ACE_Unbounded_Set_Ex<T, C>::ACE_Unbounded_Set_Ex");
 
-  if (this->allocator_ == 0)
-    this->allocator_ = ACE_Allocator::instance ();
+  if (this->allocator_ == nullptr)
+    {
+      this->allocator_ = ACE_Allocator::instance ();
+    }
 
   ACE_NEW_MALLOC (this->head_,
-                  (NODE*) this->allocator_->malloc (sizeof (NODE)),
+                  static_cast<NODE *> (this->allocator_->malloc (sizeof (NODE))),
                   NODE);
   // Make the list circular by pointing it back to itself.
   this->head_->next_ = this->head_;
 }
 
 template <class T, class C>
-ACE_Unbounded_Set_Ex<T, C>::ACE_Unbounded_Set_Ex (const ACE_Unbounded_Set_Ex<T, C> &us)
-  : head_ (0),
-    cur_size_ (0),
-    allocator_ (us.allocator_),
+ACE_Unbounded_Set_Ex<T, C>::ACE_Unbounded_Set_Ex (ACE_Unbounded_Set_Ex<T, C> const &us)
+  : allocator_ (us.allocator_),
     comp_ (us.comp_)
 {
   ACE_TRACE ("ACE_Unbounded_Set_Ex<T, C>::ACE_Unbounded_Set_Ex");
 
-  if (this->allocator_ == 0)
-    this->allocator_ = ACE_Allocator::instance ();
+  if (this->allocator_ == nullptr)
+    {
+      this->allocator_ = ACE_Allocator::instance ();
+    }
 
   ACE_NEW_MALLOC (this->head_,
-                  (NODE*) this->allocator_->malloc (sizeof (NODE)),
+                  static_cast<NODE *> (this->allocator_->malloc (sizeof (NODE))),
                   NODE);
   this->head_->next_ = this->head_;
   this->copy_nodes (us);
 }
 
 template <class T, class C> ACE_Unbounded_Set_Ex<T, C> &
-ACE_Unbounded_Set_Ex<T, C>::operator= (const ACE_Unbounded_Set_Ex<T, C> &us)
+ACE_Unbounded_Set_Ex<T, C>::operator= (ACE_Unbounded_Set_Ex<T, C> const &us)
 {
   ACE_TRACE ("ACE_Unbounded_Set_Ex<T, C>::operator=");
 
-  if (this != &us)
+  if (this != std::addressof (us))
     {
       this->delete_nodes ();
       this->copy_nodes (us);
@@ -200,29 +203,37 @@ ACE_Unbounded_Set_Ex<T, C>::operator= (const ACE_Unbounded_Set_Ex<T, C> &us)
 }
 
 template <class T, class C> int
-ACE_Unbounded_Set_Ex<T, C>::find (const T &item) const
+ACE_Unbounded_Set_Ex<T, C>::find (T const &item) const
 {
   // ACE_TRACE ("ACE_Unbounded_Set_Ex<T, C>::find");
   const_iterator const the_end = this->end ();
   for (const_iterator i = this->begin (); i != the_end; ++i)
-    if (this->comp_(*i, item))
-      return 0;
+    {
+      if (this->comp_(*i, item))
+        {
+          return 0;
+        }
+    }
 
   return -1;
 }
 
 template <class T, class C> int
-ACE_Unbounded_Set_Ex<T, C>::insert (const T &item)
+ACE_Unbounded_Set_Ex<T, C>::insert (T const &item)
 {
   // ACE_TRACE ("ACE_Unbounded_Set_Ex<T, C>::insert");
   if (this->find (item) == 0)
-    return 1;
+    {
+      return 1;
+    }
   else
-    return this->insert_tail (item);
+    {
+      return this->insert_tail (item);
+    }
 }
 
 template <class T, class C> int
-ACE_Unbounded_Set_Ex<T, C>::remove (const T &item)
+ACE_Unbounded_Set_Ex<T, C>::remove (T const &item)
 {
   // ACE_TRACE ("ACE_Unbounded_Set_Ex<T, C>::remove");
 
@@ -232,7 +243,9 @@ ACE_Unbounded_Set_Ex<T, C>::remove (const T &item)
   NODE *curr = this->head_;
 
   while (!(this->comp_ (curr->next_->item_, item)))
-    curr = curr->next_;
+    {
+      curr = curr->next_;
+    }
 
   // reset the dummy node. This ensures reference counted items are
   // completely released. Without this, a reference can linger as
@@ -240,7 +253,9 @@ ACE_Unbounded_Set_Ex<T, C>::remove (const T &item)
   this->head_->item_ = T();
 
   if (curr->next_ == this->head_)
-    return -1; // Item was not found.
+    {
+      return -1; // Item was not found.
+    }
   else
     {
       NODE *temp = curr->next_;
@@ -298,7 +313,7 @@ ACE_Unbounded_Set_Ex_Iterator<T, C>::ACE_Unbounded_Set_Ex_Iterator (
   ACE_Unbounded_Set_Ex<T, C> &s,
   bool end)
   : current_ (!end ? s.head_->next_ : s.head_ ),
-    set_ (&s)
+    set_ (std::addressof (s))
 {
   // ACE_TRACE ("ACE_Unbounded_Set_Ex_Iterator<T, C>::ACE_Unbounded_Set_Ex_Iterator");
 }
@@ -332,10 +347,12 @@ ACE_Unbounded_Set_Ex_Iterator<T, C>::next (T *&item)
 {
   // ACE_TRACE ("ACE_Unbounded_Set_Ex_Iterator<T, C>::next");
   if (this->current_ == this->set_->head_)
-    return 0;
+    {
+      return 0;
+    }
   else
     {
-      item = &this->current_->item_;
+      item = std::addressof (this->current_->item_);
       return 1;
     }
 }
@@ -367,7 +384,7 @@ template <class T, class C> T&
 ACE_Unbounded_Set_Ex_Iterator<T, C>::operator* ()
 {
   //ACE_TRACE ("ACE_Unbounded_Set_Ex_Iterator<T, C>::operator*");
-  T *retv = nullptr;
+  T *retv {};
 
   int result = this->next (retv);
   ACE_ASSERT (result != 0);
@@ -377,14 +394,14 @@ ACE_Unbounded_Set_Ex_Iterator<T, C>::operator* ()
 }
 
 template <class T, class C> bool
-ACE_Unbounded_Set_Ex_Iterator<T, C>::operator== (const ACE_Unbounded_Set_Ex_Iterator<T, C> &rhs) const
+ACE_Unbounded_Set_Ex_Iterator<T, C>::operator== (ACE_Unbounded_Set_Ex_Iterator<T, C> const &rhs) const
 {
   //ACE_TRACE ("ACE_Unbounded_Set_Ex_Iterator<T, C>::operator==");
   return (this->set_ == rhs.set_ && this->current_ == rhs.current_);
 }
 
 template <class T, class C> bool
-ACE_Unbounded_Set_Ex_Iterator<T, C>::operator!= (const ACE_Unbounded_Set_Ex_Iterator<T, C> &rhs) const
+ACE_Unbounded_Set_Ex_Iterator<T, C>::operator!= (ACE_Unbounded_Set_Ex_Iterator<T, C> const &rhs) const
 {
   //ACE_TRACE ("ACE_Unbounded_Set_Ex_Iterator<T, C>::operator!=");
   return (this->set_ != rhs.set_ || this->current_ != rhs.current_);
@@ -402,10 +419,10 @@ ACE_Unbounded_Set_Ex_Const_Iterator<T, C>::dump () const
 
 template <class T, class C>
 ACE_Unbounded_Set_Ex_Const_Iterator<T, C>::ACE_Unbounded_Set_Ex_Const_Iterator (
-  const ACE_Unbounded_Set_Ex<T, C> &s,
+  ACE_Unbounded_Set_Ex<T, C> const &s,
   bool end)
   : current_ (!end ? s.head_->next_ : s.head_ ),
-    set_ (&s)
+    set_ (std::addressof (s))
 {
   // ACE_TRACE ("ACE_Unbounded_Set_Ex_Const_Iterator<T, C>::ACE_Unbounded_Set_Ex_Const_Iterator");
 }
@@ -439,10 +456,12 @@ ACE_Unbounded_Set_Ex_Const_Iterator<T, C>::next (T *&item)
 {
   // ACE_TRACE ("ACE_Unbounded_Set_Ex_Const_Iterator<T, C>::next");
   if (this->current_ == this->set_->head_)
-    return 0;
+    {
+      return 0;
+    }
   else
     {
-      item = &this->current_->item_;
+      item = std::addressof (this->current_->item_);
       return 1;
     }
 }
@@ -474,7 +493,7 @@ template <class T, class C> T&
 ACE_Unbounded_Set_Ex_Const_Iterator<T, C>::operator* ()
 {
   //ACE_TRACE ("ACE_Unbounded_Set_Ex_Const_Iterator<T, C>::operator*");
-  T *retv = nullptr;
+  T *retv {};
 
   int const result = this->next (retv);
   ACE_ASSERT (result != 0);
@@ -484,14 +503,14 @@ ACE_Unbounded_Set_Ex_Const_Iterator<T, C>::operator* ()
 }
 
 template <class T, class C> bool
-ACE_Unbounded_Set_Ex_Const_Iterator<T, C>::operator== (const ACE_Unbounded_Set_Ex_Const_Iterator<T, C> &rhs) const
+ACE_Unbounded_Set_Ex_Const_Iterator<T, C>::operator== (ACE_Unbounded_Set_Ex_Const_Iterator<T, C> const &rhs) const
 {
   //ACE_TRACE ("ACE_Unbounded_Set_Ex_Const_Iterator<T, C>::operator==");
   return (this->set_ == rhs.set_ && this->current_ == rhs.current_);
 }
 
 template <class T, class C> bool
-ACE_Unbounded_Set_Ex_Const_Iterator<T, C>::operator!= (const ACE_Unbounded_Set_Ex_Const_Iterator<T, C> &rhs) const
+ACE_Unbounded_Set_Ex_Const_Iterator<T, C>::operator!= (ACE_Unbounded_Set_Ex_Const_Iterator<T, C> const &rhs) const
 {
   //ACE_TRACE ("ACE_Unbounded_Set_Ex_Const_Iterator<T, C>::operator!=");
   return (this->set_ != rhs.set_ || this->current_ != rhs.current_);

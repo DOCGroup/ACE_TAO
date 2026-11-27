@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/TAO_Server_Request.h"
 #include "tao/ORB_Core.h"
 #include "tao/Timeprobe.h"
@@ -11,6 +10,7 @@
 #include "tao/CDR.h"
 #include "tao/SystemException.h"
 #include <cstring>
+#include <memory>
 
 #if TAO_HAS_INTERCEPTORS == 1
 #include "tao/PortableInterceptorC.h"
@@ -23,7 +23,7 @@
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 
-static const char * TAO_Server_Request_Timeprobe_Description[] =
+static char const * TAO_Server_Request_Timeprobe_Description[] =
 {
   "TAO_ServerRequest::TAO_ServerRequest - start",
   "TAO_ServerRequest::TAO_ServerRequest - end",
@@ -50,33 +50,11 @@ TAO_ServerRequest::TAO_ServerRequest (TAO_GIOP_Message_Base *mesg_base,
                                       TAO_Transport *transport,
                                       TAO_ORB_Core *orb_core)
   : mesg_base_ (mesg_base),
-    operation_ (nullptr),
-    operation_len_ (0),
-    release_operation_ (false),
-    is_forwarded_ (false),
-    incoming_ (&input),
-    outgoing_ (&output),
-    response_expected_ (false),
-    deferred_reply_ (false),
-    sync_with_server_ (false),
-    is_queued_ (false),
-    is_dsi_ (false),
-    // @@ We shouldn't be using GIOP specific types here. Need to be revisited.
-    reply_status_ (GIOP::NO_EXCEPTION),
+    incoming_ (std::addressof (input)),
+    outgoing_ (std::addressof (output)),
     orb_core_ (orb_core),
-    request_id_ (0),
     profile_ (orb_core),
-    requesting_principal_ (nullptr),
-    dsi_nvlist_align_ (0),
-    operation_details_ (nullptr),
-    argument_flag_ (true)
-#if TAO_HAS_INTERCEPTORS == 1
-    , interceptor_count_ (0)
-    , rs_pi_current_ (nullptr)
-    , caught_exception_ (nullptr)
-    , pi_reply_status_ (-1)
-#endif  /* TAO_HAS_INTERCEPTORS == 1 */
-    , transport_(transport) //already duplicated in TAO_Transport::process_parsed_messages ()
+    transport_ (transport) // already duplicated in TAO_Transport::process_parsed_messages ()
 {
   ACE_FUNCTION_TIMEPROBE (TAO_SERVER_REQUEST_START);
   // No-op.
@@ -88,7 +66,7 @@ TAO_ServerRequest::TAO_ServerRequest (TAO_GIOP_Message_Base *mesg_base,
                                       CORBA::Boolean response_expected,
                                       CORBA::Boolean deferred_reply,
                                       TAO::ObjectKey &object_key,
-                                      const char *operation,
+                                      char const *operation,
                                       TAO_OutputCDR &output,
                                       TAO_Transport *transport,
                                       TAO_ORB_Core *orb_core,
@@ -97,69 +75,34 @@ TAO_ServerRequest::TAO_ServerRequest (TAO_GIOP_Message_Base *mesg_base,
     operation_ (CORBA::string_dup (operation)),
     operation_len_ (operation == nullptr ? 0 : std::strlen (operation)),
     release_operation_ (true),
-    is_forwarded_ (false),
-    incoming_ (nullptr),
-    outgoing_ (&output),
+    outgoing_ (std::addressof (output)),
     response_expected_ (response_expected),
     deferred_reply_ (deferred_reply),
-    sync_with_server_ (false),
-    is_queued_ (false),
-    is_dsi_ (false),
-    reply_status_ (GIOP::NO_EXCEPTION),
     orb_core_ (orb_core),
     request_id_ (request_id),
     profile_ (orb_core),
-    requesting_principal_ (nullptr),
-    dsi_nvlist_align_ (0),
-    operation_details_ (nullptr),
-    argument_flag_ (true)
-#if TAO_HAS_INTERCEPTORS == 1
-  , interceptor_count_ (0)
-  , rs_pi_current_ (nullptr)
-  , caught_exception_ (nullptr)
-  , pi_reply_status_ (-1)
-#endif  /* TAO_HAS_INTERCEPTORS == 1 */
-  , transport_(transport) //already duplicated in TAO_Transport::process_parsed_messages ()
+    transport_ (transport) // already duplicated in TAO_Transport::process_parsed_messages ()
 {
   this->profile_.object_key (object_key);
   parse_error = 0;
 }
 
-// Constructor used in Thru-POA collocation code.
+/// Constructor used in Thru-POA collocation code.
 TAO_ServerRequest::TAO_ServerRequest (TAO_ORB_Core * orb_core,
-                                      TAO_Operation_Details const & details,
+                                      TAO_Operation_Details & details,
                                       CORBA::Object_ptr target)
-  : mesg_base_ (nullptr),
-    operation_ (details.opname ()),
+  : operation_ (details.opname ()),
     operation_len_ (details.opname_len ()),
-    release_operation_ (false),
-    is_forwarded_ (false),
-    incoming_ (nullptr),
-    outgoing_ (nullptr),
     response_expected_ (details.response_flags () == TAO_TWOWAY_RESPONSE_FLAG
                         || details.response_flags () == static_cast<CORBA::Octet> (Messaging::SYNC_WITH_SERVER)
                         || details.response_flags () == static_cast<CORBA::Octet> (Messaging::SYNC_WITH_TARGET)),
-    deferred_reply_ (false),
     sync_with_server_ (details.response_flags () == static_cast<CORBA::Octet> (Messaging::SYNC_WITH_SERVER)),
-    is_queued_ (false),
-    is_dsi_ (false),
-    reply_status_ (GIOP::NO_EXCEPTION),
     orb_core_ (orb_core),
-    request_id_ (0),
     profile_ (orb_core),
-    requesting_principal_ (nullptr),
-    dsi_nvlist_align_ (0),
-    operation_details_ (&details),
+    operation_details_ (std::addressof (details)),
     argument_flag_ (false)
-#if TAO_HAS_INTERCEPTORS == 1
-  , interceptor_count_ (0)
-  , rs_pi_current_ (nullptr)
-  , caught_exception_ (nullptr)
-  , pi_reply_status_ (-1)
-#endif  /* TAO_HAS_INTERCEPTORS == 1 */
   , transport_ (nullptr)
 {
-  // Have to use a const_cast<>.  *sigh*
   this->profile_.object_key (
     const_cast<TAO::ObjectKey &> (target->_stubobj ()->object_key ()));
 
@@ -168,8 +111,7 @@ TAO_ServerRequest::TAO_ServerRequest (TAO_ORB_Core * orb_core,
   IOP::ServiceContextList & dest_request_contexts =
     this->request_service_context_.service_info ();
 
-  IOP::ServiceContextList & src_request_contexts =
-    (const_cast <TAO_Operation_Details&> (details)).request_service_info ();
+  IOP::ServiceContextList & src_request_contexts = details.request_service_info ();
 
   dest_request_contexts.replace (src_request_contexts.maximum (),
                                  src_request_contexts.length (),
@@ -197,7 +139,9 @@ TAO_ServerRequest::~TAO_ServerRequest ()
     }
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
   if (this->release_operation_)
+  {
     CORBA::string_free (const_cast<char*> (this->operation_));
+  }
 }
 
 CORBA::ORB_ptr
@@ -215,17 +159,17 @@ TAO_ServerRequest::reply_service_context ()
     }
   else
     {
-      return const_cast <TAO_Operation_Details*> (
-        this->operation_details_)->reply_service_context ();
+      return this->operation_details_->reply_service_context ();
     }
 }
-
 
 void
 TAO_ServerRequest::init_reply ()
 {
   if (!this->outgoing_)
+  {
     return;  // Collocated
+  }
 
   // Construct our reply generator.
   TAO_Pluggable_Reply_Params_Base reply_params;
@@ -243,7 +187,8 @@ TAO_ServerRequest::init_reply ()
   reply_params.dsi_nvlist_align_ = this->dsi_nvlist_align_;
 
   // Send back the reply service context.
-  reply_params.service_context_notowned (&this->reply_service_info ());
+  reply_params.service_context_notowned (
+    std::addressof (this->reply_service_info ()));
 
   // Are we going to marshall any data with the reply?
   reply_params.argument_flag_ = this->argument_flag_;
@@ -306,7 +251,8 @@ TAO_ServerRequest::send_no_exception_reply ()
   reply_params.svc_ctx_.length (0);
 
   // Send back the reply service context.
-  reply_params.service_context_notowned (&this->reply_service_info ());
+  reply_params.service_context_notowned (
+    std::addressof (this->reply_service_info ()));
 
   reply_params.reply_status (GIOP::NO_EXCEPTION);
 
@@ -347,7 +293,9 @@ void
 TAO_ServerRequest::tao_send_reply ()
 {
   if (this->collocated ())
+  {
     return;  // No transport in the collocated case.
+  }
 
   this->outgoing_->more_fragments (false);
 
@@ -369,7 +317,7 @@ TAO_ServerRequest::tao_send_reply ()
 }
 
 void
-TAO_ServerRequest::tao_send_reply_exception (const CORBA::Exception &ex)
+TAO_ServerRequest::tao_send_reply_exception (CORBA::Exception const &ex)
 {
   if (this->response_expected_ && !this->collocated ())
     {
@@ -380,7 +328,8 @@ TAO_ServerRequest::tao_send_reply_exception (const CORBA::Exception &ex)
       reply_params.svc_ctx_.length (0);
 
       // Send back the reply service context.
-      reply_params.service_context_notowned (&this->reply_service_info ());
+      reply_params.service_context_notowned (
+        std::addressof (this->reply_service_info ()));
 
       // We are going to send some data
       reply_params.argument_flag_ = true;
@@ -388,7 +337,7 @@ TAO_ServerRequest::tao_send_reply_exception (const CORBA::Exception &ex)
       // Make a default reply status
 
       // Check whether we are able to downcast the exception
-      if (CORBA::SystemException::_downcast (&ex) != nullptr)
+      if (CORBA::SystemException::_downcast (std::addressof (ex)) != nullptr)
         {
           reply_params.reply_status (GIOP::SYSTEM_EXCEPTION);
         }
@@ -409,7 +358,9 @@ TAO_ServerRequest::tao_send_reply_exception (const CORBA::Exception &ex)
 #endif /* ACE_INITIALIZE_MEMORY_BEFORE_USE */
       TAO_GIOP_Message_Version gv;
       if (this->outgoing_)
+      {
         this->outgoing_->get_version (gv);
+      }
 
       TAO_OutputCDR output (repbuf,
                             sizeof repbuf,
@@ -422,7 +373,7 @@ TAO_ServerRequest::tao_send_reply_exception (const CORBA::Exception &ex)
                             gv.major,
                             gv.minor);
 
-      this->transport_->assign_translators (nullptr, &output);
+      this->transport_->assign_translators (nullptr, std::addressof (output));
 
       try
         {
@@ -451,7 +402,7 @@ TAO_ServerRequest::tao_send_reply_exception (const CORBA::Exception &ex)
                           ACE_TEXT ("could not send exception reply\n")));
             }
         }
-      catch (const ::CORBA::BAD_PARAM &bp_ex)
+      catch (::CORBA::BAD_PARAM const &bp_ex)
         {
           TAOLIB_ERROR ((LM_ERROR,
                       ACE_TEXT ("TAO (%P|%t) - ServerRequest::")
@@ -503,7 +454,7 @@ TAO_ServerRequest::send_cached_reply (CORBA::OctetSeq &s)
                         gv.major,
                         gv.minor);
 
-  this->transport_->assign_translators (nullptr, &output);
+  this->transport_->assign_translators (nullptr, std::addressof (output));
 
   // A copy of the reply parameters
   TAO_Pluggable_Reply_Params_Base reply_params;
@@ -513,7 +464,8 @@ TAO_ServerRequest::send_cached_reply (CORBA::OctetSeq &s)
   reply_params.svc_ctx_.length (0);
 
   // Send back the empty reply service context.
-  reply_params.service_context_notowned (&this->reply_service_info ());
+  reply_params.service_context_notowned (
+    std::addressof (this->reply_service_info ()));
 
   // We are going to send some data
   reply_params.argument_flag_ = true;
@@ -565,9 +517,13 @@ void
 TAO_ServerRequest::caught_exception (CORBA::Exception *exception)
 {
   if (CORBA::SystemException::_downcast (exception) != nullptr)
-    this->pi_reply_status_ = PortableInterceptor::SYSTEM_EXCEPTION;
+    {
+      this->pi_reply_status_ = PortableInterceptor::SYSTEM_EXCEPTION;
+    }
   else if (CORBA::UserException::_downcast (exception) != nullptr)
-    this->pi_reply_status_ = PortableInterceptor::USER_EXCEPTION;
+    {
+      this->pi_reply_status_ = PortableInterceptor::USER_EXCEPTION;
+    }
 
   this->caught_exception_ = exception;
 }

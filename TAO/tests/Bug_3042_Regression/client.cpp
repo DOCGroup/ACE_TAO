@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "testC.h"
 #include "ace/Log_Msg.h"
 
@@ -8,7 +7,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   try
     {
       // Creation.
-      Foo::Node node;
+      Foo::Node node {};
       node.nodes.length (2);
     }
   catch (CORBA::Exception const &ex)

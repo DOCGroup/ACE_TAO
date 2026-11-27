@@ -3,11 +3,9 @@
 #include "tao/ORB_Core.h"
 #include "ace/Reactor.h"
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_Timer_Reactor::TAO_Notify_Timer_Reactor ()
-  :reactor_ (0)
 {
   // Get the ORB
   CORBA::ORB_var orb = TAO_Notify_PROPERTIES::instance()->orb ();
@@ -15,9 +13,7 @@ TAO_Notify_Timer_Reactor::TAO_Notify_Timer_Reactor ()
   this->reactor_ =  orb->orb_core ()->reactor ();
 }
 
-TAO_Notify_Timer_Reactor::~TAO_Notify_Timer_Reactor ()
-{
-}
+TAO_Notify_Timer_Reactor::~TAO_Notify_Timer_Reactor () = default;
 
 void
 TAO_Notify_Timer_Reactor::release ()
@@ -28,8 +24,8 @@ TAO_Notify_Timer_Reactor::release ()
 
 long
 TAO_Notify_Timer_Reactor::schedule_timer (ACE_Event_Handler *handler,
-                               const ACE_Time_Value &delay_time,
-                               const ACE_Time_Value &interval)
+                               ACE_Time_Value const &delay_time,
+                               ACE_Time_Value const &interval)
 {
   return this->reactor_->schedule_timer (handler, 0, delay_time, interval);
 }

@@ -1,6 +1,3 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
 *  @file XML_Backing_Store.h
 *
@@ -9,7 +6,6 @@
 *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
 *  @author Priyanka Gontla <gontla_p@ociweb.com>
 */
-//=============================================================================
 
 #ifndef XML_BACKING_STORE_H
 #define XML_BACKING_STORE_H
@@ -38,16 +34,16 @@ class ACEXML_DefaultHandler;
 class XML_Backing_Store : public Locator_Repository
 {
 public:
-  typedef std::pair<ACE_CString, ACE_CString> NameValue;
-  typedef std::vector<NameValue> NameValues;
+  using NameValue = std::pair<ACE_CString, ACE_CString>;
+  using NameValues = std::vector<NameValue>;
   XML_Backing_Store (const Options& opts,
                      CORBA::ORB_ptr orb,
                      bool suppress_erase = false);
 
-  virtual ~XML_Backing_Store ();
+  ~XML_Backing_Store () override;
 
   /// indicate the XML filename as the persistence mode for the repository
-  virtual const ACE_TCHAR* repo_mode () const;
+  ACE_TCHAR const *repo_mode () const override;
 
   /// create the Server_Info server object
   /// @param info the source Server_Info data
@@ -65,29 +61,29 @@ public:
   /// @param ior the Activator_Info ior
   /// @param extra_params extra name value pairs that
   ///        were reported for the activator
-  virtual void load_activator (const ACE_CString& activator_name,
+  virtual void load_activator (ACE_CString const& activator_name,
                                long token,
-                               const ACE_CString& ior,
+                               ACE_CString const& ior,
                                const NameValues& extra_params);
 protected:
   /// perform XML backing store specific initialization
   /// (loads servers and activators from the backing store)
-  virtual int init_repo (PortableServer::POA_ptr imr_poa);
+  int init_repo (PortableServer::POA_ptr imr_poa) override;
 
   /// perform server persistent update
-  virtual int persistent_update (const Server_Info_Ptr& info, bool add);
+  int persistent_update (const Server_Info_Ptr& info, bool add) override;
 
   /// perform activator persistent update
-  virtual int persistent_update (const Activator_Info_Ptr& info, bool add);
+  int persistent_update (const Activator_Info_Ptr& info, bool add) override;
 
   /// perform persistent remove
-  virtual int persistent_remove (const ACE_CString& name, bool activator);
+  int persistent_remove (ACE_CString const& name, bool activator) override;
 
   /// load the contents of a file into the repo using a Locator_XMLHandler
   /// @param filename the filename to read the contents from
   /// @param open_file the already open FILE stream for the
   ///        filename
-  int load_file (const ACE_TString& filename, FILE* open_file = nullptr);
+  int load_file (ACE_TString const& filename, FILE* open_file = nullptr);
 
   /// load the contents of a file into the repo using the provided
   /// ACEXML_DefaultHandler
@@ -97,7 +93,7 @@ protected:
   /// @param debug the current debug level
   /// @param open_file the already open FILE stream for the
   ///        filename
-  static int load_file (const ACE_TString& filename,
+  static int load_file (ACE_TString const& filename,
                         ACEXML_DefaultHandler& xml_handler,
                         unsigned int debug,
                         FILE* open_file = nullptr);
@@ -110,7 +106,7 @@ protected:
   /// @param name_values extra name value pairs to write as attributes
   void persist(FILE* fp,
                const Server_Info& info,
-               const char* tag_prepend,
+               char const *tag_prepend,
                const NameValues& name_values = NameValues());
 
   /// persist the activator
@@ -121,7 +117,7 @@ protected:
   /// @param name_values extra name value pairs to write as attributes
   void persist(FILE* fp,
                const Activator_Info& info,
-               const char* tag_prepend,
+               char const *tag_prepend,
                const NameValues& name_values = NameValues());
 
   /// create the Server_Info server object
@@ -132,7 +128,7 @@ protected:
 
 protected:
   /// the filename indicated in the Options for the backing store
-  const ACE_TString filename_;
+  ACE_TString const filename_;
 
 private:
   /// persist all servers and activators

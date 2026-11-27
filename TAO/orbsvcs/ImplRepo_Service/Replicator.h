@@ -1,6 +1,3 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
 *  @file Replicator.h
 *
@@ -8,7 +5,6 @@
 *  shared between multiple Locators.
 *
 */
-//=============================================================================
 
 #ifndef REPLICATOR_H
 #define REPLICATOR_H
@@ -33,7 +29,7 @@ class Options;
 class UPN_i : public virtual POA_ImplementationRepository::UpdatePushNotification
 {
 public:
-  UPN_i (Replicator &owner);
+  explicit UPN_i (Replicator &owner);
 
   /// provide the implementation for being notified of a
   /// server or activator update
@@ -83,12 +79,12 @@ public:
   int handle_exception (ACE_HANDLE ) override;
 
   void stop ();
-  void send_access_state (const char *name, ImplementationRepository::AAM_Status state);
+  void send_access_state (char const *name, ImplementationRepository::AAM_Status state);
   void send_entity (ImplementationRepository::UpdateInfo &info);
 
   void init_orb ();
 
-  bool init_peer (const ACE_CString &filename );
+  bool init_peer (ACE_CString const &filename );
   int send_registration (char *&ior );
 
   bool peer_available ();

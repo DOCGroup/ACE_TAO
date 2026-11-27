@@ -7,28 +7,29 @@
 #include "rtschedtestlib_export.h"
 
 #include "tao/RTScheduling/RTScheduler.h"
+#include "tao/PortableServer/Servant_Base.h"
 #include "orbsvcs/CosNamingC.h"
 
+#include "ace/Lock.h"
 #include "ace/Service_Config.h"
 #include "ace/Service_Object.h"
 #include "ace/Arg_Shifter.h"
 #include "ace/High_Res_Timer.h"
+#include <memory>
+#include <string>
+#include <vector>
 
 class Thread_Task;
 class Task;
-
-typedef Thread_Task **DT_LIST;
-typedef POA_Holder **POA_LIST;
-typedef Job_i **JOB_LIST;
 
 class RTSCHEDTESTLIB_Export DT_Creator : public ACE_Service_Object
 {
  public:
   DT_Creator ();
 
-  virtual ~DT_Creator ();
+  ~DT_Creator () override;
 
-  int init (int argc, ACE_TCHAR *argv []);
+  int init (int argc, ACE_TCHAR *argv []) override;
 
   int dt_task_init (ACE_Arg_Shifter& arg_shifter);
 
@@ -45,7 +46,7 @@ class RTSCHEDTESTLIB_Export DT_Creator : public ACE_Service_Object
 
   virtual CORBA::Policy_ptr sched_param (int importance) = 0;
 
-  virtual Thread_Task* create_thr_task (int importance,
+  virtual std::unique_ptr<Thread_Task> create_thr_task (int importance,
           time_t start_time,
           int load,
           int iter,
@@ -63,7 +64,7 @@ class RTSCHEDTESTLIB_Export DT_Creator : public ACE_Service_Object
 
   void check_ifexit ();
 
-  void log_msg (char* msg);
+  void log_msg (std::string msg);
 
   void orb (CORBA::ORB_ptr);
   CORBA::ORB_ptr orb ();
@@ -82,21 +83,18 @@ class RTSCHEDTESTLIB_Export DT_Creator : public ACE_Service_Object
   int activate_root_poa ();
 
  protected:
-  DT_LIST dt_list_;
-  POA_LIST poa_list_;
-  JOB_LIST job_list_;
+  std::vector<std::unique_ptr<Thread_Task>> dt_list_ {};
+  std::vector<std::unique_ptr<POA_Holder>> poa_list_ {};
+  std::vector<PortableServer::ServantBase_var> job_list_ {};
   //Fixed_Priority_Scheduler* scheduler_;
-  int dt_count_;
-  int poa_count_;
-  int job_count_;
   CORBA::ORB_var orb_;
   /// Mutex to serialize access to our internal state.
-  ACE_Lock* state_lock_;
-  ACE_Lock* shutdown_lock_;
+  std::unique_ptr<ACE_Lock> state_lock_ {};
+  std::unique_ptr<ACE_Lock> shutdown_lock_ {};
   int active_dt_count_;
   int active_job_count_;
-  char** log;
-  ACE_Time_Value* base_time_;
+  std::vector<std::string> log_ {};
+  std::unique_ptr<ACE_Time_Value> base_time_ {};
   /// A naming context.
   CosNaming::NamingContextExt_var naming_;
   ACE_TString file_name_;
@@ -104,6 +102,5 @@ class RTSCHEDTESTLIB_Export DT_Creator : public ACE_Service_Object
   ACE_High_Res_Timer::global_scale_factor_type gsf_;
   PortableServer::Servant_var<Synch_i> synch_;
 };
-
 
 #endif /*DT_CREATOR_H*/

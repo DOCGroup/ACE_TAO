@@ -1,16 +1,8 @@
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = DESCRIPTION
-//    This test asserts that close is called on Modules during
-//    ACE_Service_Repository shutdown
-//
-// = AUTHOR
-//    Chad Beaulac <chad@objectivesolutions.com>
-//
-// ============================================================================
+/// @file Bug_3912_Regression_Test.cpp
+/// This test asserts that close is called on Modules during
+/// ACE_Service_Repository shutdown
+///
+/// @author Chad Beaulac <chad@objectivesolutions.com>
 
 #include "test_config.h"
 
@@ -42,7 +34,6 @@ private:
   bool* close_called_;
 };
 
-
 int Close_Handler::close(u_long )
 {
   ACE_DEBUG ((LM_DEBUG,"Close_Handler::close \n"));
@@ -55,7 +46,7 @@ run_test (int argc, ACE_TCHAR *argv[])
 {
   int status = 0;
   bool close_called = false;
-  Close_Handler* close_handler = nullptr;
+  Close_Handler* close_handler {};
   ACE_NEW_RETURN(close_handler, Close_Handler (&close_called), -1);
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Opening service config\n")));
@@ -73,24 +64,29 @@ run_test (int argc, ACE_TCHAR *argv[])
                         status);
     }
   else
+  {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Service config opened\n")));
-
+  }
 
   ACE_Service_Repository *asr = ACE_Service_Repository::instance ();
   if (asr == nullptr)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("run_test, no service repository\n")),
-                       -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("run_test, no service repository\n")),
+                        -1);
+    }
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Finding close test module\n")));
 
-  const ACE_Service_Type* st = nullptr;
+  ACE_Service_Type const * st {};
   status = asr->find (ACE_TEXT ("Close_Test_Module"), &st);
   if (status != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("run_test, %p on Close_Test_Module\n")
-                       ACE_TEXT ("ACE_Service_Repository::find")),
-                       status);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("run_test, %p on Close_Test_Module\n")
+                         ACE_TEXT ("ACE_Service_Repository::find")),
+                        status);
+    }
 
   //
   // Put our Close_Handler Task into the Module
@@ -99,9 +95,11 @@ run_test (int argc, ACE_TCHAR *argv[])
     static_cast <MT_Module *> (st->type()->object ());
 
   if (close_test_module == nullptr)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("run_test, no close test module\n")),
-                       -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("run_test, no close test module\n")),
+                        -1);
+    }
   close_test_module->reader (close_handler);
 
   //
@@ -112,8 +110,8 @@ run_test (int argc, ACE_TCHAR *argv[])
   // by getting the close methods called so user shutdown hooks can fire.
   //
 
-  const ACE_Module_Type* module_type =
-    static_cast< const ACE_Module_Type*>(st->type ());
+  ACE_Module_Type const * module_type =
+    static_cast<ACE_Module_Type const *>(st->type ());
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Finding close test stream\n")));
 
@@ -125,8 +123,8 @@ run_test (int argc, ACE_TCHAR *argv[])
                        ACE_TEXT ("ACE_Service_Repository::find")),
                        status);
   }
-  const ACE_Stream_Type* close_test_stream =
-    static_cast<const ACE_Stream_Type*> (st->type ());
+  ACE_Stream_Type const * close_test_stream =
+    static_cast<ACE_Stream_Type const *> (st->type ());
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Removing module\n")));
 
@@ -166,7 +164,7 @@ run_main(int, ACE_TCHAR *argv[])
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Starting test\n")));
 
-  int status = run_test (3,_argv);
+  int const status = run_test (3,_argv);
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Closing service config\n")));
 

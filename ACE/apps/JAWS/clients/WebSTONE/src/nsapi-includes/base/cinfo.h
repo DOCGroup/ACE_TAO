@@ -7,9 +7,7 @@
  * parties.
  */
 
-
 /* ------------------------------------------------------------------------ */
-
 
 /*
  * cinfo.h: Content Information for a file, i.e. its type, etc.
@@ -19,13 +17,10 @@
  * Rob McCool
  */
 
-
 #ifndef CINFO_H
 #define CINFO_H
 
-
 /* ------------------------------ Constants ------------------------------- */
-
 
 /*
  * This will be the first string in the file, followed by x.x version
@@ -54,9 +49,7 @@
 /* The hash table size for that function */
 #define CINFO_HASHSIZE 27
 
-
 /* ------------------------------ Structures ------------------------------ */
-
 
 /*
  * The ContentInfo structure.
@@ -80,9 +73,7 @@ typedef struct {
     char *language;
 } cinfo;
 
-
 /* ------------------------------ Prototypes ------------------------------ */
-
 
 /*
  * cinfo_init initializes the content info system. Call this before
@@ -104,7 +95,6 @@ void cinfo_terminate();
  */
 
 char *cinfo_merge(char *fn);
-
 
 /*
  * cinfo_find finds any content information for the given uri. The file name
@@ -137,6 +127,5 @@ cinfo *cinfo_lookup(char *type);
 
 #include <stdio.h>
 void cinfo_dump_database(FILE *dump);
-
 
 #endif

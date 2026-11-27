@@ -1,13 +1,11 @@
-// -*- C++ -*-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<typename Key, typename Value, class EqualTo, class Alloc>
 ACE_INLINE
 ACE_Array_Map<Key, Value, EqualTo, Alloc>::ACE_Array_Map (
-  typename ACE_Array_Map<Key, Value, EqualTo, Alloc>::size_type s)
-  : size_ (0)
-  , capacity_ (s)
-  , nodes_ (s == 0 ? 0 : this->alloc_.allocate (s))
+  size_type s)
+  : capacity_ (s)
+  , nodes_ (s == 0 ? nullptr : this->alloc_.allocate (s))
 {
   std::uninitialized_fill_n (this->nodes_, s, value_type ());
 }
@@ -101,7 +99,7 @@ ACE_Array_Map<Key, Value, EqualTo, Alloc>::is_empty () const
   return this->size_ == 0;
 }
 
-// The following method is deprecated.
+/// The following method is deprecated.
 
 template<typename Key, typename Value, class EqualTo, class Alloc>
 ACE_INLINE bool

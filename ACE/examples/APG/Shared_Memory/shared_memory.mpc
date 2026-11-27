@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*Hash Map) : aceexe, avoids_ace_for_tao {
   exename = Hash_Map
   Source_Files {

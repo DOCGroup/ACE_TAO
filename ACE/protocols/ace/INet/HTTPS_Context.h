@@ -44,9 +44,14 @@ namespace ACE
 
               Context (ACE_SSL_Context* ssl_ctx,
                        bool release = false,
-                       ACE::INet::SSL_CallbackManager* ssl_cbmngr = 0);
+                       ACE::INet::SSL_CallbackManager* ssl_cbmngr = nullptr);
 
               ~Context ();
+
+              Context (Context const &) = delete;
+              Context (Context &&) = delete;
+              Context &operator= (Context const &) = delete;
+              Context &operator= (Context &&) = delete;
 
               explicit operator bool () const;
 
@@ -54,15 +59,15 @@ namespace ACE
 
               ACE_SSL_Context& ssl_context ();
 
-              const ACE_SSL_Context& ssl_context () const;
+              ACE_SSL_Context const& ssl_context () const;
 
               bool use_default_ca ();
 
-              bool set_key_files (const char* certificate_filename,
-                                  const char* private_key_filename,
+              bool set_key_files (char const * certificate_filename,
+                                  char const * private_key_filename,
                                   int file_type = SSL_FILETYPE_PEM);
 
-              bool load_trusted_ca (const char* ca_location);
+              bool load_trusted_ca (char const * ca_location);
 
               int has_trusted_ca ();
 
@@ -78,9 +83,6 @@ namespace ACE
 
             private:
               friend class ACE_Singleton<Context, ACE_SYNCH::MUTEX>;
-
-              //Context ();
-              Context (const Context&);
 
               ACE_SSL_Context* ssl_ctx_;
               std::unique_ptr<ACE_SSL_Context> alloc_safe;

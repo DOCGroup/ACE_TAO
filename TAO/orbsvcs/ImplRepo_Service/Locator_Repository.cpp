@@ -5,12 +5,16 @@
 #include "utils.h"
 #include "tao/ORB_Core.h"
 #include "tao/default_ports.h"
-#include "ace/Read_Buffer.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_ctype.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/Vector_T.h"
+
+#include <cstdlib>
+#include <cstring>
+#include <memory>
+#include <string>
 
 Locator_Repository::Locator_Repository (const Options& opts,
                                         CORBA::ORB_ptr orb)
@@ -34,7 +38,7 @@ Locator_Repository::shutdown ()
 int
 Locator_Repository::init (PortableServer::POA_ptr root_poa,
                           PortableServer::POA_ptr imr_poa,
-                          const char* this_ior)
+                          char const *this_ior)
 {
   this->imr_ior_ = this_ior;
   int err = init_repo(imr_poa);
@@ -81,43 +85,61 @@ Locator_Repository::report_ior (PortableServer::POA_ptr )
     {
       ACE_Reactor* reactor = this->orb_->orb_core ()->reactor ();
       if (this->setup_multicast (reactor, this->imr_ior_.in ()) != 0)
+      {
         return -1;
+      }
     }
 
   // We write the ior file last so that the tests can know we are ready.
   if (this->opts_.ior_filename ().length () > 0)
     {
-      FILE* orig_fp = ACE_OS::fopen(this->opts_.ior_filename ().c_str(),
-                                    ACE_TEXT("r"));
+      std::unique_ptr<FILE, int (*) (FILE *)> orig_fp (
+        ACE_OS::fopen (this->opts_.ior_filename ().c_str (), ACE_TEXT ("r")),
+        ACE_OS::fclose);
 
       bool write_data = true;
       if (orig_fp != nullptr)
         {
-          ACE_Read_Buffer reader (orig_fp, false);
-
-          char* string = reader.read ();
-
-          if (string != nullptr)
+          // Reading one byte beyond the expected IOR is enough to detect a
+          // different value without reading an unbounded input stream.
+          size_t const expected_length = std::strlen (this->imr_ior_.in ());
+          std::string existing (expected_length + 1, '\0');
+          size_t const bytes_read = ACE_OS::fread (existing.data (), 1,
+                                                   existing.size (), orig_fp.get ());
+          existing.resize (bytes_read);
+          for (char &ch : existing)
             {
-              write_data =
-                (ACE_OS::strcasecmp (string, this->imr_ior_.in ()) != 0);
-              reader.alloc ()->free (string);
+              if (ch == '\n')
+                {
+                  ch = '\0';
+                }
             }
-          ACE_OS::fclose (orig_fp);
+          if (!existing.empty ())
+            {
+              write_data = ACE_OS::strcasecmp (existing.c_str (), this->imr_ior_.in ()) != 0;
+            }
         }
+      orig_fp.reset ();
 
       if (write_data)
         {
-          FILE* fp = ACE_OS::fopen (this->opts_.ior_filename ().c_str (),
-                                    ACE_TEXT("w"));
+          std::unique_ptr<FILE, int (*) (FILE *)> fp (
+            ACE_OS::fopen (this->opts_.ior_filename ().c_str (), ACE_TEXT ("w")),
+            ACE_OS::fclose);
           if (fp == nullptr)
             {
               ORBSVCS_ERROR_RETURN ((LM_ERROR,
                 ACE_TEXT ("(%P|%t) ImR: Could not open file: %s\n"),
                 this->opts_.ior_filename ().c_str ()), -1);
             }
-          ACE_OS::fprintf (fp, "%s", this->imr_ior_.in ());
-          ACE_OS::fclose (fp);
+          int const write_result = ACE_OS::fprintf (fp.get (), "%s", this->imr_ior_.in ());
+          int const close_result = ACE_OS::fclose (fp.release ());
+          if (write_result < 0 || close_result != 0)
+            {
+              ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                ACE_TEXT ("(%P|%t) ImR: Could not write file: %s\n"),
+                this->opts_.ior_filename ().c_str ()), -1);
+            }
         }
     }
 
@@ -143,12 +165,14 @@ Locator_Repository::recover_ior ()
     }
 
   // Load the IOR from the specified file if it is available.
-  const ACE_TString& combined_ior_file = this->opts_.ior_filename ();
+  ACE_TString const& combined_ior_file = this->opts_.ior_filename ();
 
   // Check if the file exists. If not, then return 1 indicating
   // we cannot recover our state.
   if (ACE_OS::access (combined_ior_file.c_str (), F_OK) != 0)
+  {
     return -1;
+  }
 
   try {
     ACE_TString combined_ior = ACE_TEXT ("file://") + combined_ior_file;
@@ -163,7 +187,7 @@ Locator_Repository::recover_ior ()
         this->imr_ior_ = this->orb_->object_to_string (combined_obj.in ());
       }
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("ImR: Attempting to read combined_ior for ImR_Locator\n");
       return -1;
@@ -182,7 +206,9 @@ Locator_Repository::recover_ior ()
     {
       ACE_Reactor* reactor = this->orb_->orb_core ()->reactor ();
       if (this->setup_multicast (reactor, this->imr_ior_.in ()) != 0)
+      {
         return -1;
+      }
     }
 
   registered_ = true;
@@ -191,7 +217,7 @@ Locator_Repository::recover_ior ()
 }
 
 int
-Locator_Repository::setup_multicast (ACE_Reactor* reactor, const char* ior)
+Locator_Repository::setup_multicast (ACE_Reactor* reactor, char const *ior)
 {
   ACE_ASSERT (reactor != nullptr);
 #if defined (ACE_HAS_IP_MULTICAST)
@@ -216,13 +242,17 @@ Locator_Repository::setup_multicast (ACE_Reactor* reactor, const char* ior)
       if (port == 0)
         {
           // Check environment var. for multicast port.
-          const char* port_number = ACE_OS::getenv ("ImplRepoServicePort");
+          char const *port_number = ACE_OS::getenv ("ImplRepoServicePort");
 
           if (port_number != nullptr)
-            port = static_cast<CORBA::UShort> (ACE_OS::atoi (port_number));
+          {
+            port = static_cast<CORBA::UShort> (std::atoi (port_number));
+          }
         }
       if (port == 0)
+      {
         port = TAO_DEFAULT_IMPLREPO_SERVER_REQUEST_PORT;
+      }
 
       if (this->ior_multicast_.init (ior, port,
                                      ACE_DEFAULT_MULTICAST_ADDR, TAO_SERVICEID_IMPLREPOSERVICE) == -1)
@@ -232,11 +262,13 @@ Locator_Repository::setup_multicast (ACE_Reactor* reactor, const char* ior)
     }
 
   // Register event handler for the ior multicast.
-  if (reactor->register_handler (&this->ior_multicast_,
+  if (reactor->register_handler (std::addressof (this->ior_multicast_),
                                  ACE_Event_Handler::READ_MASK) == -1)
     {
       if (this->opts_.debug() > 0)
+      {
         ORBSVCS_DEBUG ((LM_DEBUG, "ImR: cannot register Event handler\n"));
+      }
       return -1;
     }
 #else /* ACE_HAS_IP_MULTICAST*/
@@ -251,7 +283,7 @@ Locator_Repository::teardown_multicast ()
 {
   ACE_Reactor* r = ior_multicast_.reactor ();
   if (r != nullptr) {
-    r->remove_handler (&ior_multicast_, ACE_Event_Handler::READ_MASK);
+    r->remove_handler (std::addressof (ior_multicast_), ACE_Event_Handler::READ_MASK);
     ior_multicast_.reactor (nullptr);
   }
 }
@@ -263,10 +295,10 @@ Locator_Repository::multicast() const
 }
 
 ACE_CString
-Locator_Repository::lcase (const ACE_CString& s)
+Locator_Repository::lcase (ACE_CString const& s)
 {
   ACE_CString ret(s);
-  for (size_t i = 0; i < ret.length (); ++i)
+  for (size_t i {}; i < ret.length (); ++i)
     {
       ret[i] = static_cast<char> (ACE_OS::ace_tolower (s[i]));
     }
@@ -274,8 +306,8 @@ Locator_Repository::lcase (const ACE_CString& s)
 }
 
 int
-Locator_Repository::unregister_if_address_reused (const ACE_CString& fqname,
-                                                  const char* partial_ior,
+Locator_Repository::unregister_if_address_reused (ACE_CString const& fqname,
+                                                  char const *partial_ior,
                                                   ImR_Locator_i* imr_locator)
 
 {
@@ -305,7 +337,7 @@ Locator_Repository::unregister_if_address_reused (const ACE_CString& fqname,
       poa_name = si->active_info ()->poa_name;
     }
 
-  Locator_Repository::SIMap::ENTRY* sientry = nullptr;
+  Locator_Repository::SIMap::ENTRY* sientry {};
   Locator_Repository::SIMap::ITERATOR siit (servers ());
   for (; siit.next (sientry); siit.advance() )
   {
@@ -346,10 +378,10 @@ Locator_Repository::unregister_if_address_reused (const ACE_CString& fqname,
 
 int
 Locator_Repository::add_server
-  (const ACE_CString& fqname,
+  (ACE_CString const& fqname,
    const ImplementationRepository::StartupOptions & options)
 {
-  Server_Info *si = nullptr;
+  Server_Info *si {};
   ACE_NEW_RETURN (si,
                   Server_Info (fqname,
                                options.activator.in (),
@@ -364,12 +396,12 @@ Locator_Repository::add_server
 
 int
 Locator_Repository::add_server
-  (const ACE_CString& fqname,
-   const ACE_CString& partial_ior,
-   const ACE_CString& ior,
+  (ACE_CString const& fqname,
+   ACE_CString const& partial_ior,
+   ACE_CString const& ior,
    ImplementationRepository::ServerObject_ptr srvobj)
 {
-  Server_Info *si = nullptr;
+  Server_Info *si {};
   ACE_NEW_RETURN (si,
                   Server_Info (fqname, "", "",
                                ImplementationRepository::EnvironmentList (),
@@ -382,7 +414,9 @@ Locator_Repository::add_server
 int
 Locator_Repository::add_server_i (Server_Info *si)
 {
-  Server_Info_Ptr info(si);
+  std::unique_ptr<Server_Info> si_owner (si);
+  Server_Info_Ptr info (si_owner.get ());
+  si_owner.release ();
 
   int err = sync_load ();
   if (err != 0)
@@ -400,9 +434,9 @@ Locator_Repository::add_server_i (Server_Info *si)
 }
 
 int
-Locator_Repository::add_activator (const ACE_CString& name,
-                        const CORBA::Long token,
-                        const ACE_CString& ior,
+Locator_Repository::add_activator (ACE_CString const& name,
+                        CORBA::Long const token,
+                        ACE_CString const& ior,
                         ImplementationRepository::Activator_ptr act)
 {
   int err = sync_load ();
@@ -411,7 +445,10 @@ Locator_Repository::add_activator (const ACE_CString& name,
       return err;
     }
 
-  Activator_Info_Ptr info (new Activator_Info (name, token, ior, act));
+  std::unique_ptr<Activator_Info> info_owner =
+    std::make_unique<Activator_Info> (name, token, ior, act);
+  Activator_Info_Ptr info (info_owner.get ());
+  info_owner.release ();
 
   err = activators ().bind (lcase (name), info);
   if (err != 0)
@@ -435,15 +472,15 @@ Locator_Repository::update_activator (const Activator_Info_Ptr& info)
 }
 
 void
-Locator_Repository::notify_remote_access (const char *,
+Locator_Repository::notify_remote_access (char const *,
                                           ImplementationRepository::AAM_Status)
 {
 }
 
 Server_Info_Ptr
-Locator_Repository::find_by_poa (const ACE_CString & name)
+Locator_Repository::find_by_poa (ACE_CString const & name)
 {
-  Locator_Repository::SIMap::ENTRY* sientry = nullptr;
+  Locator_Repository::SIMap::ENTRY* sientry {};
   Locator_Repository::SIMap::ITERATOR siit (servers ());
   for (; siit.next (sientry); siit.advance() )
   {
@@ -457,7 +494,7 @@ Locator_Repository::find_by_poa (const ACE_CString & name)
 }
 
 Server_Info_Ptr
-Locator_Repository::get_active_server (const ACE_CString& name, int pid)
+Locator_Repository::get_active_server (ACE_CString const& name, int pid)
 {
   sync_load ();
   ACE_CString key;
@@ -517,7 +554,7 @@ Locator_Repository::get_active_server (const ACE_CString& name, int pid)
 }
 
 int
-Locator_Repository::remove_server (const ACE_CString& name,
+Locator_Repository::remove_server (ACE_CString const& name,
                                    ImR_Locator_i* imr_locator)
 {
   int const err = sync_load ();
@@ -537,7 +574,7 @@ Locator_Repository::remove_server (const ACE_CString& name,
     {
       // name is a peer to another and must be removed from other list
       bool found = false;
-      for (CORBA::ULong i = 0; i < si->alt_info_->peers.length(); i++)
+      for (CORBA::ULong i {}; i < si->alt_info_->peers.length(); ++i)
         {
           if (!found && si->poa_name == si->alt_info_->peers[i])
             {
@@ -553,7 +590,7 @@ Locator_Repository::remove_server (const ACE_CString& name,
     }
   else if (si->peers.length () > 0)
     {
-      for (CORBA::ULong i = 0; i < si->peers.length(); i++)
+      for (CORBA::ULong i {}; i < si->peers.length(); ++i)
         {
           ACE_CString key;
           ACE_CString const peer (si->peers[i]);
@@ -571,20 +608,22 @@ Locator_Repository::remove_server (const ACE_CString& name,
 
 int
 Locator_Repository::link_peers (Server_Info_Ptr base,
-                                const CORBA::StringSeq p)
+                                CORBA::StringSeq const p)
 {
   sync_load ();
   CORBA::ULong const len = base->peers.length();
   base->peers.length (len + p.length());
-  for (CORBA::ULong i = 0; i < p.length(); i++)
+  for (CORBA::ULong i {}; i < p.length(); ++i)
     {
       base->peers[len + i] =  p[i];
-      Server_Info *si = nullptr;
+      Server_Info *si {};
       ACE_CString peer(p[i]);
       ACE_NEW_RETURN (si,
                       Server_Info (base->server_id, peer, base->is_jacorb, base),
                       -1);
-      Server_Info_Ptr sip(si);
+      std::unique_ptr<Server_Info> si_owner (si);
+      Server_Info_Ptr sip (si_owner.get ());
+      si_owner.release ();
       servers ().bind (si->key_name_, sip);
       this->persistent_update (sip, true);
     }
@@ -594,10 +633,8 @@ Locator_Repository::link_peers (Server_Info_Ptr base,
   return 0;
 }
 
-// -------------------------------------------------------------------------------------
-
 Activator_Info_Ptr
-Locator_Repository::get_activator (const ACE_CString& name)
+Locator_Repository::get_activator (ACE_CString const& name)
 {
   sync_load ();
 
@@ -607,14 +644,14 @@ Locator_Repository::get_activator (const ACE_CString& name)
 }
 
 bool
-Locator_Repository::has_activator (const ACE_CString& name)
+Locator_Repository::has_activator (ACE_CString const& name)
 {
   Activator_Info_Ptr activator (nullptr);
   return activators().find (lcase (name), activator) == 0;
 }
 
 int
-Locator_Repository::remove_activator (const ACE_CString& name)
+Locator_Repository::remove_activator (ACE_CString const& name)
 {
   int const err = sync_load ();
   if (err != 0)
@@ -628,7 +665,7 @@ Locator_Repository::remove_activator (const ACE_CString& name)
       return ret;
     }
 
-  Locator_Repository::SIMap::ENTRY* sientry = nullptr;
+  Locator_Repository::SIMap::ENTRY* sientry {};
   Locator_Repository::SIMap::ITERATOR siit (servers ());
   for (; siit.next (sientry); siit.advance() )
   {
@@ -680,19 +717,15 @@ Locator_Repository::registered () const
   return this->registered_;
 }
 
-//--------------------------------------------------------------------------
-
 No_Backing_Store::No_Backing_Store (const Options& opts,
                                     CORBA::ORB_ptr orb)
   : Locator_Repository(opts, orb)
 {
 }
 
-No_Backing_Store::~No_Backing_Store ()
-{
-}
+No_Backing_Store::~No_Backing_Store () = default;
 
-const ACE_TCHAR*
+ACE_TCHAR const *
 No_Backing_Store::repo_mode () const
 {
   return ACE_TEXT ("Disabled");
@@ -720,7 +753,7 @@ No_Backing_Store::persistent_update (const Activator_Info_Ptr& , bool )
 }
 
 int
-No_Backing_Store::persistent_remove (const ACE_CString& , bool )
+No_Backing_Store::persistent_remove (ACE_CString const& , bool )
 {
   // nothing more to do for no backing store remove
   return 0;

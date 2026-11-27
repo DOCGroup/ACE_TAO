@@ -8,33 +8,25 @@
 #include "ace/Sched_Params.h"
 #include "ace/OS_NS_errno.h"
 
+/// Runs a server thread with its own ORB.
 class Server : public ACE_Task_Base
 {
-  // = TITLE
-  //   Run the server thread, which will create its own orb.
-  //
-  // = DESCRIPTION
-  //   Use the ACE_Task_Base class to run the server threads.
-  //
 public:
-  Server ();
-  // ctor
+  Server () = default;
 
+  /// Sets the server and thread attributes.
   void set (Test_i *server, int priority, int argc, ACE_TCHAR *argv[]);
-  // Set the test attributes.
 
-  // = The ACE_Task_Base methods....
-  virtual int svc ();
+  int svc () override;
 
 private:
-  Test_i *server_;
+  Test_i *server_ {};
 
-  int priority_;
-  // Corba priority at which this thread is running.  (This number is
-  // used for creating the name of the orb.)
+  /// CORBA priority used to create this thread's ORB.
+  int priority_ {};
 
-  int argc_;
-  ACE_TCHAR *argv_[256];
+  int argc_ {};
+  ACE_TCHAR *argv_[256] {};
 };
 
 // ****************************************************************
@@ -61,7 +53,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
         if (nthreads < MAX_THREADS)
           {
             priorities[nthreads] = ACE_OS::atoi (get_opts.opt_arg ());
-            nthreads++;
+            ++nthreads;
           }
         break;
       case '?':
@@ -100,8 +92,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           flags = THR_NEW_LWP|THR_JOINABLE|THR_SCHED_DEFAULT;
         }
       else
-        ACE_ERROR ((LM_ERROR,
-                    "server (%P|%t): sched_params failed\n"));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "server (%P|%t): sched_params failed\n"));
+        }
     }
 
   // Create a servant.
@@ -109,19 +103,23 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   // Create an ORB to obtain Priority Mapping functionality.
   CORBA::ORB_var orb;
-  RTCORBA::PriorityMapping *pm = 0;
+  RTCORBA::PriorityMapping *pm {};
 
   try
     {
       ACE_TCHAR *argv_[256];
       int argc_ = argc;
       for (int i = 0; i < argc; ++i)
-        argv_[i] = argv[i];
+        {
+          argv_[i] = argv[i];
+        }
       orb = CORBA::ORB_init (argc_, argv_);
 
       // Parse the arguments.
       if (parse_args (argc_, argv_) != 0)
+      {
         return 1;
+      }
 
       // Obtain Priority Mapping used by the ORB.
       CORBA::Object_var object =
@@ -156,9 +154,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (servers[i].activate (flags,
                                1, 1,
                                native_priority) != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot activate server threads\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Cannot activate server threads\n"),
+                            1);
+        }
     }
 
   ACE_Thread_Manager::instance ()->wait ();
@@ -167,10 +167,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 }
 
 // ****************************************************************
-
-Server::Server ()
-{
-}
 
 void
 Server::set (Test_i *server,
@@ -182,7 +178,9 @@ Server::set (Test_i *server,
   priority_ = priority;
   argc_ = argc;
   for (int i = 0; i < argc; ++i)
-    argv_[i] = argv[i];
+        {
+      argv_[i] = argv[i];
+        }
 }
 
 int
@@ -211,9 +209,11 @@ Server::svc ()
         orb->resolve_initial_references("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize the POA.\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Unable to initialize the POA.\n"),
+                            1);
+        }
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
@@ -242,10 +242,12 @@ Server::svc ()
       // Output the ior to a file.
       FILE *output_file= ACE_OS::fopen (file_name, "w");
       if (output_file == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot open output file for writing IOR: %s",
-                           file_name),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Cannot open output file for writing IOR: %s",
+                             file_name),
+                            1);
+        }
       ACE_OS::fprintf (output_file, "%s", ior.in ());
       ACE_OS::fclose (output_file);
 

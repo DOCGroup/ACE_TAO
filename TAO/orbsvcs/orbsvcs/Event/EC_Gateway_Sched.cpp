@@ -8,17 +8,13 @@ TAO_EC_Gateway_Sched::TAO_EC_Gateway_Sched ()
 {
 }
 
-TAO_EC_Gateway_Sched::~TAO_EC_Gateway_Sched ()
-{
-}
-
 void
 TAO_EC_Gateway_Sched::init (RtecEventChannelAdmin::EventChannel_ptr supplier_ec,
                            RtecEventChannelAdmin::EventChannel_ptr consumer_ec,
                            RtecScheduler::Scheduler_ptr supplier_sched,
                            RtecScheduler::Scheduler_ptr consumer_sched,
-                           const char* consumer_name,
-                           const char* supplier_name)
+                           char const *consumer_name,
+                           char const *supplier_name)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
@@ -27,9 +23,11 @@ TAO_EC_Gateway_Sched::init (RtecEventChannelAdmin::EventChannel_ptr supplier_ec,
   // @@ Should we throw a system exception here?
   if (CORBA::is_nil (supplier_sched)
       || CORBA::is_nil (consumer_sched)
-      || consumer_name == 0
-      || supplier_name == 0)
+      || consumer_name == nullptr
+      || supplier_name == nullptr)
+  {
     throw CORBA::BAD_PARAM ();
+  }
 
   this->supplier_info_ =
     supplier_sched->create (supplier_name);

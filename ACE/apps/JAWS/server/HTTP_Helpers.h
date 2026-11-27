@@ -1,13 +1,8 @@
-/* -*- c++ -*- */
-
-//=============================================================================
 /**
  *  @file    HTTP_Helpers.h
  *
  *  @author James Hu
  */
-//=============================================================================
-
 
 #ifndef HTTP_HELPERS_H
 #define HTTP_HELPERS_H
@@ -26,20 +21,22 @@
 class HTTP_Helper
 {
 public:
-  // Convert and HTTP-date into a time_t
-  static time_t HTTP_mktime (const char *httpdate);
+  HTTP_Helper () = delete;
 
-  // Create today's date
-  static const char *HTTP_date ();
-  static const char *HTTP_date (char *s);
+  /// Convert and HTTP-date into a time_t
+  static time_t HTTP_mktime (char const *httpdate);
 
-  // Month conversions (ascii <--> numeric)
-  static int HTTP_month (const char *month);
-  static const char *HTTP_month (int month);
+  /// Create today's date
+  static char const *HTTP_date ();
+  static char const *HTTP_date (char *s);
+
+  /// Month conversions (ascii <--> numeric)
+  static int HTTP_month (char const *month);
+  static char const *HTTP_month (int month);
 
   static char *HTTP_decode_string (char *path);
 
-  // Encode/Decode base64 stuff (weak security model)
+  /// Encode/Decode base64 stuff (weak security model)
   static char *HTTP_decode_base64 (char *data);
   static char *HTTP_encode_base64 (char *data);
 
@@ -47,7 +44,7 @@ private:
   static int fixyear (int year);
 
 private:
-  static const char *const months_[12];
+  static char const *const months_[12];
   static char const *alphabet_;
 
   /// Use this sometimes (e.g. HTTP_date)
@@ -67,8 +64,10 @@ private:
 class HTTP_Status_Code
 {
 public:
+  HTTP_Status_Code () = delete;
+
   /// Singleton access point.
-  static const char **instance ();
+  static char const **instance ();
 
   enum STATUS_CODE
   {
@@ -96,8 +95,8 @@ public:
   };
 
 private:
-  // Singleton pattern is afoot here.
-  static const char *Reason[MAX_STATUS_CODE + 1];
+  /// Singleton pattern is afoot here.
+  static char const *Reason[MAX_STATUS_CODE + 1];
   static int instance_;
   static ACE_SYNCH_MUTEX lock_;
 };

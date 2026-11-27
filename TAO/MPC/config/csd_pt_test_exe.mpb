@@ -1,3 +1,2 @@
-// -*- MPC -*-
 project : csd_pt_testinf_lib, csd_pt_testservant_lib, taoexe, pi {
 }

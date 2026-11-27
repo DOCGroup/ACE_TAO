@@ -1,4 +1,3 @@
-// -*- MPC -*-
 workspace {
   // This doesn't work quite yet, because not all the projects
   // can be created implicitly. To fix this, we can either create

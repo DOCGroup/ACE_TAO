@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=========================================================================
 /**
  * @file Encoding_Converter.h
  *
@@ -9,7 +6,6 @@
  *
  * @author Chad Elliott <elliott_c@ociweb.com>
  */
-//=========================================================================
 
 #ifndef ACE_ENCODING_CONVERTER_H
 #define ACE_ENCODING_CONVERTER_H
@@ -45,7 +41,7 @@ public:
 
   /// Convert the source (which can be in any encoding) to UTF-8 and
   /// store it in the provided target buffer.
-  virtual Result to_utf8 (const void* source,
+  virtual Result to_utf8 (void const * source,
                           size_t source_size,
                           ACE_Byte* target,
                           size_t target_size,
@@ -53,7 +49,7 @@ public:
 
   /// Convert the UTF-8 source into an alternate encoding and store it
   /// in the provided target buffer.
-  virtual Result from_utf8 (const ACE_Byte* source,
+  virtual Result from_utf8 (ACE_Byte const * source,
                             size_t source_size,
                             void* target,
                             size_t target_size,

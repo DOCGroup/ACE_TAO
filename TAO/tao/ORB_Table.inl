@@ -1,7 +1,7 @@
-// -*- C++ -*-
 #include "tao/ORB_Core.h"
 
 #include <algorithm>
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -27,7 +27,7 @@ TAO::ORB_Table::end ()
 ACE_INLINE TAO::ORB_Table::Table *
 TAO::ORB_Table::table ()
 {
-  return &this->table_;
+  return std::addressof (this->table_);
 }
 
 ACE_INLINE TAO_SYNCH_MUTEX &
@@ -39,19 +39,12 @@ TAO::ORB_Table::lock ()
 // ****************************************************************
 
 ACE_INLINE
-TAO::ORB_Core_Ref_Counter::ORB_Core_Ref_Counter ()
-  : core_ (0)
-{
-}
-
-ACE_INLINE
 TAO::ORB_Core_Ref_Counter::ORB_Core_Ref_Counter (::TAO_ORB_Core * core)
   : core_ (core)
 {
 //   ACE_ASSERT (core != 0);
 
   // Note that the TAO_ORB_Core pointer should always be valid in this
-  // constructor.
 
   // Claim ownership.
   (void) this->core_->_incr_refcnt ();
@@ -61,7 +54,9 @@ ACE_INLINE
 TAO::ORB_Core_Ref_Counter::~ORB_Core_Ref_Counter ()
 {
   if (this->core_)
-    (void) this->core_->_decr_refcnt (); // Should never throw.
+    {
+      (void) this->core_->_decr_refcnt (); // Should never throw.
+    }
 }
 
 ACE_INLINE
@@ -71,16 +66,19 @@ TAO::ORB_Core_Ref_Counter::ORB_Core_Ref_Counter (
 {
   // Claim ownership.
   if (this->core_)
-    (void) this->core_->_incr_refcnt ();
+    {
+      (void) this->core_->_incr_refcnt ();
+    }
 }
 
-ACE_INLINE void
+ACE_INLINE TAO::ORB_Core_Ref_Counter &
 TAO::ORB_Core_Ref_Counter::operator= (TAO::ORB_Core_Ref_Counter const & rhs)
 {
   // Strongly exception safe.  May not be strictly necessary, but
   // let's do things the right way, regardless.
   TAO::ORB_Core_Ref_Counter tmp (rhs);
   std::swap (this->core_, tmp.core_);
+  return *this;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

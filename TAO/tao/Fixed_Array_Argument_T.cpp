@@ -3,6 +3,9 @@
 
 #include "tao/Fixed_Array_Argument_T.h"
 
+#include <memory>
+#include <utility>
+
 #if !defined (__ACE_INLINE__)
 #include "tao/Fixed_Array_Argument_T.inl"
 #endif /* __ACE_INLINE__ */
@@ -33,36 +36,23 @@ TAO::In_Fixed_Array_Argument_T<S_forany,Insert_Policy>::
 
 template<typename S_forany,
          template <typename> class Insert_Policy>
-TAO::In_Fixed_Array_Clonable_Argument_T<S_forany,Insert_Policy>::~In_Fixed_Array_Clonable_Argument_T ()
-{
-  if (this->is_clone_)
-    {
-      using ARRAY_TRAITS = TAO::details::array_traits<S_forany>;
-      typename ARRAY_TRAITS::slice_type * tmp =
-               const_cast<typename ARRAY_TRAITS::slice_type *>(this->x_.in ());
-      ARRAY_TRAITS::free (tmp);
-    }
-}
-
-template<typename S_forany,
-         template <typename> class Insert_Policy>
 TAO::Argument*
 TAO::In_Fixed_Array_Clonable_Argument_T<S_forany,Insert_Policy>::clone ()
 {
   using ARRAY_TRAITS = TAO::details::array_traits<S_forany>;
-  typename ARRAY_TRAITS::slice_type * tmp_ptr = nullptr;
+  typename ARRAY_TRAITS::slice_type * tmp_ptr {};
   ACE_ALLOCATOR_RETURN (tmp_ptr,
                         ARRAY_TRAITS::alloc (),
                         nullptr);
-  ARRAY_TRAITS::copy (tmp_ptr, this->x_.in ());
+  std::unique_ptr<typename ARRAY_TRAITS::slice_type, Slice_Deleter> tmp_ptr_guard (tmp_ptr);
+  ARRAY_TRAITS::copy (tmp_ptr_guard.get (), this->x_.in ());
 
-  In_Fixed_Array_Clonable_Argument_T<S_forany,Insert_Policy>* clone_arg
-    = new In_Fixed_Array_Clonable_Argument_T<S_forany,Insert_Policy> (tmp_ptr);
-  clone_arg->is_clone_ = true;
-  return clone_arg;
+  std::unique_ptr<In_Fixed_Array_Clonable_Argument_T<S_forany,Insert_Policy>> clone_arg =
+    std::make_unique<In_Fixed_Array_Clonable_Argument_T<S_forany,Insert_Policy>> (
+      tmp_ptr_guard.get ());
+  clone_arg->clone_buffer_ = std::move (tmp_ptr_guard);
+  return clone_arg.release ();
 }
-
-// ===========================================================
 
 template<typename S_forany,
          template <typename> class Insert_Policy>
@@ -95,8 +85,6 @@ TAO::Inout_Fixed_Array_Argument_T<S_forany,Insert_Policy>::
 
 #endif /* TAO_HAS_INTERCEPTORS */
 
-// ==============================================================
-
 template<typename S_forany,
          template <typename> class Insert_Policy>
 CORBA::Boolean
@@ -119,8 +107,6 @@ TAO::Out_Fixed_Array_Argument_T<S_forany,Insert_Policy>::
 
 #endif /* TAO_HAS_INTERCEPTORS */
 
-// ============================================================
-
 template<typename S_var,
          typename S_forany,
          template <typename> class Insert_Policy>
@@ -129,7 +115,7 @@ TAO::Ret_Fixed_Array_Argument_T<S_var,S_forany,Insert_Policy>::
   demarshal (TAO_InputCDR & cdr)
 {
   using ARRAY_TRAITS = TAO::Array_Traits<S_forany>;
-  typename S_forany::_slice_type * tmp_ptr = nullptr;
+  typename S_forany::_slice_type * tmp_ptr {};
   ACE_ALLOCATOR_RETURN (tmp_ptr,
                         ARRAY_TRAITS::alloc (),
                         false);

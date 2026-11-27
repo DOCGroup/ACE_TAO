@@ -1,4 +1,3 @@
-
 /**
  *  @file    array_only.idl
  *
@@ -16,7 +15,7 @@
 /// the Any insertion/extraction operators were generated.  They
 /// depended upon the definition of CORBA::SystemException (in
 /// particular, CORBA::MARSHAL), but the array impl template file in
-/// TAO (tao/AnyTypeCode/Any_Array_Impl_T.cpp) did not have an #include
+/// TAO (tao/AnyTypeCode/Any_Array_Impl_T.cpp) did not have an \#include
 /// for "tao/SystemException.h".  Now it does.
 
 typedef char TEST_TYPE[10];

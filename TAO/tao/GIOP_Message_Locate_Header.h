@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file     GIOP_Message_Locate_Header.h
  *
@@ -8,8 +5,6 @@
  *
  *  @author  Balachandran Natarajan <bala@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_GIOP_MESSAGE_LOCATE_HEADER_H
 #define TAO_GIOP_MESSAGE_LOCATE_HEADER_H
@@ -32,7 +27,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_GIOP_Locate_Request_Header
 {
 public:
-  /// Constructor
+  TAO_GIOP_Locate_Request_Header () = delete;
+
   TAO_GIOP_Locate_Request_Header (TAO_InputCDR &msg,
                                   TAO_ORB_Core *core);
 
@@ -43,7 +39,7 @@ public:
   CORBA::ULong request_id () const;
 
   /// Get the object_key in read mode..
-  const TAO::ObjectKey &object_key () const;
+  TAO::ObjectKey const &object_key () const;
 
   /// Get the object_key in read/write mode..
   TAO::ObjectKey &object_key ();
@@ -55,17 +51,19 @@ public:
   TAO_InputCDR &incoming_stream ();
 
 private:
+  TAO_GIOP_Locate_Request_Header (TAO_GIOP_Locate_Request_Header const &) = delete;
+  TAO_GIOP_Locate_Request_Header &operator= (TAO_GIOP_Locate_Request_Header const &) = delete;
+  TAO_GIOP_Locate_Request_Header (TAO_GIOP_Locate_Request_Header &&) = delete;
+  TAO_GIOP_Locate_Request_Header &operator= (TAO_GIOP_Locate_Request_Header &&) = delete;
+
   /// Request id
-  CORBA::ULong request_id_;
+  CORBA::ULong request_id_ {};
 
   /// Profile info.
   TAO_Tagged_Profile profile_;
 
-  /// Object Key
-  TAO::ObjectKey object_key_;
-
-  /// Incoming CDR stream
-  TAO_InputCDR *incoming_;
+  /// Borrowed incoming CDR stream.
+  TAO_InputCDR * const incoming_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

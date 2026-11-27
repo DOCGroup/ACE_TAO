@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file     COIOP_Endpoint.h
  *
@@ -8,8 +5,6 @@
  *
  *  @author  Johnny Willemsen <jwillemsen@remedy.nl>
  */
-//=============================================================================
-
 
 #ifndef TAO_COIOP_ENDPOINT_H
 #define TAO_COIOP_ENDPOINT_H
@@ -44,22 +39,20 @@ public:
   friend class TAO_COIOP_Profile;
   friend class TAO_SSLIOP_Profile;
 
-  /// Default constructor.
   TAO_COIOP_Endpoint ();
 
   /// Constructor.  This is the most efficient constructor since it
   /// does not require any address resolution processing.
   explicit TAO_COIOP_Endpoint (ACE_Utils::UUID const &uuid);
 
-  /// Destructor.
-  ~TAO_COIOP_Endpoint () = default;
+  ~TAO_COIOP_Endpoint () override = default;
 
   /**
    * @name TAO_Endpoint Methods
    *
    * Please check the documentation in Endpoint.h for details.
    */
-  //@{
+  /// @{
   TAO_Endpoint *next () override;
   int addr_to_string (char *buffer, size_t length) override;
   TAO_Endpoint *duplicate () override;
@@ -70,9 +63,7 @@ public:
 
   /// Return a hash value for this object.
   CORBA::ULong hash () override;
-  //@}
-
-  // = COIOP_Endpoint-specific methods.
+  /// @}
 
   /// Return a pointer to the host string.  This object maintains
   /// ownership of this string.

@@ -1,8 +1,10 @@
 #include "MIF_Task.h"
 #include "test.h"
+#include "../Task_Stats.h"
 
 #include "ace/OS_NS_errno.h"
 #include "ace/Countdown_Time.h"
+#include <memory>
 
 MIF_Task::MIF_Task (int importance,
                     time_t start_time,
@@ -20,14 +22,8 @@ MIF_Task::MIF_Task (int importance,
   this->dist_ = dist;
   this->job_name_ = CORBA::string_dup (job_name);
 
-  // create the stat object.
-  ACE_NEW (task_stats_, Task_Stats);
+  task_stats_ = std::make_unique<Task_Stats> ();
   task_stats_->init (iter_);
-}
-
-MIF_Task::~MIF_Task ()
-{
-  delete task_stats_;
 }
 
 void
@@ -49,9 +45,11 @@ MIF_Task::activate_task (RTScheduling::Current_ptr current,
        ACE_Time_Value* base_time)
 {
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-    "MIF_Task::activate %d\n",
-    importance_));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+      "MIF_Task::activate %d\n",
+      importance_));
+    }
 
   char msg [BUFSIZ];
   ACE_OS::sprintf (msg, "MIF_Task::activate task\n");
@@ -69,9 +67,11 @@ MIF_Task::activate_task (RTScheduling::Current_ptr current,
           1) == -1)
     {
       if (ACE_OS::last_error () == EPERM)
-  ACE_ERROR_RETURN ((LM_ERROR,
-         ACE_TEXT ("Insufficient privilege to run this test.\n")),
-        -1);
+        {
+    ACE_ERROR_RETURN ((LM_ERROR,
+           ACE_TEXT ("Insufficient privilege to run this test.\n")),
+          -1);
+        }
     }
 
   post_activate ();
@@ -94,15 +94,15 @@ MIF_Task::perform_task ()
       static CORBA::ULong prime_number = 9619;
       CORBA::Policy_var sched_param;
       sched_param = dt_creator_->sched_param (this->importance_);
-      const char * name = 0;
+      char const *name {};
 
-      for (int i = 0; i < this->iter_; i++)
+      for (int i = 0; i < this->iter_; ++i)
         {
           ACE_Time_Value run_time = ACE_OS::gettimeofday () - *base_time_;
           TASK_STATS::instance ()->sample (run_time.sec (), count_);
 
           ACE_Time_Value count_down_time (1);
-          ACE_Countdown_Time count_down (&count_down_time);
+          ACE_Countdown_Time count_down (std::addressof (count_down_time));
 
           while (count_down_time > ACE_Time_Value::zero)
             {
@@ -123,13 +123,13 @@ MIF_Task::perform_task ()
           this->job_->work (this->load_,
                             this->importance_);
 
-          for (int j = 0; j < this->iter_; j++)
+          for (int j = 0; j < this->iter_; ++j)
             {
               ACE_Time_Value run_time = ACE_OS::gettimeofday () - *base_time_;
               TASK_STATS::instance ()->sample (run_time.sec (), count_);
 
               ACE_Time_Value count_down_time (1);
-              ACE_Countdown_Time count_down (&count_down_time);
+              ACE_Countdown_Time count_down (std::addressof (count_down_time));
 
               while (count_down_time > ACE_Time_Value::zero)
                 {
@@ -147,19 +147,23 @@ MIF_Task::perform_task ()
         }
 
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return -1;
     }
 
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-    "Thread %d\n",
-    this->count_));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+      "Thread %d\n",
+      this->count_));
+    }
 
   if (dist_)
+  {
     job_->shutdown ();
+  }
 
   return 0;
 }

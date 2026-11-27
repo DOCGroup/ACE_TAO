@@ -12,9 +12,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<class L>
-ACE_Locked_Data_Block<L>::~ACE_Locked_Data_Block ()
-{
-}
+ACE_Locked_Data_Block<L>::~ACE_Locked_Data_Block () = default;
 
 template<class ACE_LOCK> ACE_Data_Block *
 ACE_Locked_Data_Block<ACE_LOCK>::clone_nocopy (ACE_Message_Block::Message_Flags mask,
@@ -24,10 +22,10 @@ ACE_Locked_Data_Block<ACE_LOCK>::clone_nocopy (ACE_Message_Block::Message_Flags 
 
   // You always want to clear this one to prevent memory leaks but you
   // might add some others later.
-  const ACE_Message_Block::Message_Flags always_clear =
+  ACE_Message_Block::Message_Flags const always_clear =
     ACE_Message_Block::DONT_DELETE;
 
-  ACE_Locked_Data_Block<ACE_LOCK> *nb = nullptr;
+  ACE_Locked_Data_Block<ACE_LOCK> *nb {};
 
   ACE_NEW_MALLOC_RETURN (nb,
                          static_cast<ACE_Locked_Data_Block<ACE_LOCK>*> (
@@ -36,11 +34,11 @@ ACE_Locked_Data_Block<ACE_LOCK>::clone_nocopy (ACE_Message_Block::Message_Flags 
                                                    max_size == 0 ?
                                                      this->size () : max_size,
                                                    this->msg_type (),
-                                                   0,
+                                                   nullptr,
                                                    this->allocator_strategy (),
                                                    this->flags (),
                                                    this->data_block_allocator ()),
-                         0);
+                         nullptr);
 
   // Set new flags minus the mask...
   nb->clr_flags (mask | always_clear);

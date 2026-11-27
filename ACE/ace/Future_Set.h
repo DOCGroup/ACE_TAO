@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Future_Set.h
  *
  *  @author John Tucker <jtucker@infoglide.com>
  */
-//=============================================================================
 
 #ifndef ACE_FUTURE_SET_H
 #define ACE_FUTURE_SET_H
@@ -17,6 +13,7 @@
 #include "ace/Future.h"
 #include "ace/Hash_Map_Manager_T.h"
 #include "ace/Null_Mutex.h"
+#include <memory>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -42,20 +39,19 @@ template <class T>
 class ACE_Future_Set : public ACE_Future_Observer<T>
 {
 public:
-  /// Constructor.
-  ACE_Future_Set (ACE_Message_Queue<ACE_SYNCH> *future_notification_queue_ = nullptr);
+  ACE_Future_Set (
+    ACE_Message_Queue<ACE_SYNCH> *future_notification_queue_ = nullptr);
 
-  ACE_Future_Set (const ACE_Future_Set &) = delete;
+  ACE_Future_Set (ACE_Future_Set const &) = delete;
   ACE_Future_Set (ACE_Future_Set &&) = delete;
-  ACE_Future_Set &operator= (const ACE_Future_Set &) = delete;
+  ACE_Future_Set &operator= (ACE_Future_Set const &) = delete;
   ACE_Future_Set &operator= (ACE_Future_Set &&) = delete;
 
-  /// Destructor.
   ~ACE_Future_Set ();
 
   /**
-   * Return 1 if their are no ACE_Future objects left on its queue and
-   * 0 otherwise.
+   * Return true if there are no ACE_Future objects left on its queue and
+   * false otherwise.
    *
    * When an ACE_Future_Set has no ACE_Future>subjects to observe it is
    * empty. The ACE_Future_Set is in the empty state when either the caller(s)
@@ -63,7 +59,7 @@ public:
    * ACE_Future_Set via the ACE_Future_Set::next_readable() method,
    * or when the ACE_Future_Set has not been assigned any subjects.
    */
-  int is_empty () const;
+  bool is_empty () const;
 
   /**
    * Enqueus the given ACE_Future into this objects queue when it is
@@ -75,10 +71,8 @@ public:
   int insert (ACE_Future<T> &future);
 
   /**
-   * Wait up to @a tv time to get the @a value.  Note that @a tv must be
-   * specified in absolute time rather than relative time.); get the
-   * next ACE_Future that is readable.  If @a tv = 0, the will block
-   * forever.
+   * Wait for the next readable ACE_Future. If @a tv is nullptr, block
+   * indefinitely.
    *
    * If a readable future becomes available, then the input
    * ACE_Future object param will be assigned with it and 1 will
@@ -88,13 +82,15 @@ public:
    * When a readable ACE_Future object is retrieved via the
    * ACE_Future_Set::next_readable() method, the ACE_Future_Set will
    * remove that ACE_Future object from its list of subjects.
+   *
+   * @note @a tv must specify an absolute time rather than a relative time.
    */
   int next_readable (ACE_Future<T> &result,
                      ACE_Time_Value *tv = nullptr);
 
   /// Called by the ACE_Future subject in which we are subscribed to
   /// when its value is written to.
-  virtual void update (const ACE_Future<T> &future);
+  void update (ACE_Future<T> const &future) override;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -112,16 +108,16 @@ private:
 
   using FUTURE_HASH_MAP = ACE_Hash_Map_Manager_Ex<FUTURE_REP *, FUTURE_HOLDER *, FUTURE_REP_HASH, FUTURE_REP_COMPARE, ACE_Null_Mutex>;
 
-  /// Map of <ACE_Futures>, subjects, which have not been written to by
+  /// Map of @c ACE_Futures, subjects, which have not been written to by
   /// client's writer thread.
   FUTURE_HASH_MAP future_map_;
 
-  /// Message queue for notifying the reader thread of <ACE_Futures> which
+  /// Message queue for notifying the reader thread of @c ACE_Futures which
   /// have been written to by client's writer thread.
-  ACE_Message_Queue<ACE_SYNCH> *future_notification_queue_;
+  std::unique_ptr<ACE_Message_Queue<ACE_SYNCH>> owned_future_notification_queue_;
 
-  /// Keeps track of whether we need to delete the message queue.
-  bool delete_queue_;
+  /// Message queue used for notifications; owned if the unique pointer is set.
+  ACE_Message_Queue<ACE_SYNCH> *future_notification_queue_ {};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

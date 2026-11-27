@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(idl_one_gen): taoidldefaults {
   custom_only = 1
 

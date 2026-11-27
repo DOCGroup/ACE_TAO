@@ -1,6 +1,3 @@
-// -*- IDL -*-
-
-// ================================================================
 /**
  *  @file TAO.pidl
  *
@@ -21,8 +18,6 @@
  *
  * 2. The files are ready to use
  */
-// ================================================================
-
 #ifndef TAO_TAO_IDL
 #define TAO_TAO_IDL
 
@@ -34,7 +29,7 @@
 
 module TAO
 {
-  // = TAO specific.
+  /// TAO specific.
   const Messaging::SyncScope SYNC_DELAYED_BUFFERING = -2;
 };
 

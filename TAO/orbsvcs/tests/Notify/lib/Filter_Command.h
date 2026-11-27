@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file Filter_Command.h
  *
@@ -27,21 +26,19 @@
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Filter_Command : public TAO_Notify_Tests_Command
 {
 public:
-  /// Constructor
   TAO_Notify_Tests_Filter_Command ();
 
-  /// Destructor
   ~TAO_Notify_Tests_Filter_Command ();
 
   /// Parse args and populate options.
-  virtual void init (ACE_Arg_Shifter& arg_shifter);
+  void init (ACE_Arg_Shifter& arg_shifter) override;
 
   /// Execute the command.
-  virtual void execute_i ();
+  void execute_i () override;
 
   /// Name of object
-  virtual const char* get_name ();
-  static const char* name ();
+  char const *get_name () override;
+  static char const *name ();
 
 protected:
   enum COMMAND
@@ -61,12 +58,14 @@ protected:
 
   ACE_CString constraint_;
 
-  ///= Handlers
+  /// @name Handlers
+  /// @{
   void handle_create_filter_factory ();
   void handle_create_filter ();
   void handle_add_constraint ();
   void handle_add_filter ();
   void handle_destroy_filter ();
+  /// @}
 };
 
 #include /**/ "ace/post.h"

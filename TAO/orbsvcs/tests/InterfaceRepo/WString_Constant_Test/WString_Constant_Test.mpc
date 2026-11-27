@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*WStrConst): taoclient, ifr_client {
   exename = WString_Constant_Test
   Source_Files {

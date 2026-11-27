@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #ifndef AST_CONNECTOR_H
 #define AST_CONNECTOR_H
 

@@ -12,6 +12,8 @@
 #include "ace/Condition_T.h"
 #include "test_config.h"
 
+#include <memory>
+
 #if defined (ACE_HAS_THREADS)
 
 class Worker;
@@ -28,7 +30,7 @@ public:
 class Worker : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
-  Worker (IManager *manager) : manager_(manager) { }
+  explicit Worker (IManager *manager) : manager_(manager) { }
 
   int svc () override
   {
@@ -36,10 +38,12 @@ public:
     thread_id_ = id;
     while (true)
       {
-        ACE_Message_Block *mb = nullptr;
+        ACE_Message_Block *mb {};
         if (this->getq (mb) == -1)
-          ACE_ERROR_BREAK
-            ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("getq")));
+          {
+            ACE_ERROR_BREAK
+              ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("getq")));
+          }
         if (mb->msg_type () == ACE_Message_Block::MB_HANGUP)
           {
             ACE_DEBUG ((LM_INFO,
@@ -56,7 +60,7 @@ public:
     return 0;
   }
 
-  const ACE_Thread_ID& thread_id ()
+  ACE_Thread_ID const & thread_id ()
   {
     return thread_id_;
   }
@@ -105,25 +109,27 @@ public:
 
     while (!done ())
       {
-        ACE_Message_Block *mb = nullptr;
+        ACE_Message_Block *mb {};
         ACE_Time_Value tv ((long)MAX_TIMEOUT);
         tv += ACE_OS::time (nullptr);
 
         // Get a message request.
-        if (this->getq (mb, &tv) < 0)
+        if (this->getq (mb, std::addressof (tv)) < 0)
           {
             shut_down ();
             break;
           }
 
         // Choose a worker.
-        Worker *worker = nullptr;
+        Worker *worker {};
         {
           ACE_GUARD_RETURN (ACE_Mutex,
                             worker_mon, this->workers_lock_, -1);
 
           while (this->workers_.is_empty ())
-            workers_cond_.wait ();
+            {
+              workers_cond_.wait ();
+            }
 
           this->workers_.dequeue_head (worker);
         }
@@ -137,7 +143,7 @@ public:
 
   int shut_down ();
 
-  const ACE_Thread_ID& thread_id (Worker *worker);
+  ACE_Thread_ID const & thread_id (Worker *worker);
 
   int return_to_work (Worker *worker) override
   {
@@ -158,7 +164,7 @@ private:
                       worker_mon,
                       this->workers_lock_,
                       -1);
-    for (int i = 0; i < POOL_SIZE; i++)
+    for (int i = 0; i < POOL_SIZE; ++i)
       {
         Worker *worker;
         ACE_NEW_RETURN (worker, Worker (this), -1);
@@ -175,7 +181,7 @@ private:
   int shutdown_;
   ACE_Mutex workers_lock_;
   ACE_Condition<ACE_Mutex> workers_cond_;
-  ACE_Unbounded_Queue<Worker* > workers_;
+  ACE_Unbounded_Queue<Worker*> workers_;
 };
 // Listing 1
 
@@ -188,9 +194,9 @@ int
 Manager::shut_down ()
 {
   ACE_TRACE ("Manager::shut_down");
-  ACE_Unbounded_Queue<Worker* >::ITERATOR iter =
+  ACE_Unbounded_Queue<Worker*>::ITERATOR iter =
     this->workers_.begin ();
-  Worker **worker_ptr = nullptr;
+  Worker **worker_ptr {};
   do
     {
       iter.next (worker_ptr);
@@ -203,7 +209,7 @@ Manager::shut_down ()
                  buf));
 
       // Send the hangup message.
-      ACE_Message_Block *mb = nullptr;
+      ACE_Message_Block *mb {};
       ACE_NEW_RETURN
         (mb,
          ACE_Message_Block(0,
@@ -227,7 +233,7 @@ Manager::shut_down ()
   return 0;
 }
 
-const ACE_Thread_ID&
+ACE_Thread_ID const &
 Manager::thread_id (Worker *worker)
 {
   return worker->thread_id ();
@@ -247,8 +253,8 @@ run_main (int, ACE_TCHAR *[])
   ACE_Time_Value tv;
   tv.msec (100);
 
-  ACE_Message_Block *mb = nullptr;
-  for (int i = 0; i < 3; i++)
+  ACE_Message_Block *mb {};
+  for (int i = 0; i < 3; ++i)
     {
       ACE_NEW_RETURN
         (mb, ACE_Message_Block(sizeof(int)), -1);

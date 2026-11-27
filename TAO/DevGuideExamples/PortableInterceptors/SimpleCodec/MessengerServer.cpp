@@ -8,7 +8,7 @@
 #include <fstream>
 #include "ace/Get_Opt.h"
 
-const ACE_TCHAR *ior_output_file = ACE_TEXT ("Messenger.ior");
+ACE_TCHAR const *ior_output_file = ACE_TEXT ("Messenger.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -17,21 +17,23 @@ parse_args (int argc, ACE_TCHAR *argv[])
   int c;
 
   while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'o':
-        ior_output_file = get_opts.opt_arg ();
-        break;
+    {
+      switch (c)
+        {
+        case 'o':
+          ior_output_file = get_opts.opt_arg ();
+          break;
 
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-o <iorfile>"
-                           "\n",
-                           argv [0]),
-                          -1);
-      }
+        case '?':
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "usage:  %s "
+                             "-o <iorfile>"
+                             "\n",
+                             argv [0]),
+                            -1);
+        }
+    }
   // Indicates successful parsing of the command line
   return 0;
 }
@@ -50,7 +52,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var orb = CORBA::ORB_init( argc, argv );
 
       if (parse_args (argc, argv) != 0)
+      {
         return 1;
+      }
 
       //Get reference to Root POA
       CORBA::Object_var obj = orb->resolve_initial_references( "RootPOA" );
@@ -79,7 +83,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       orb->destroy();
     }
 
-  catch(const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       std::cerr << "Exception in MessengerServer: " << ex << std::endl;
       return 1;

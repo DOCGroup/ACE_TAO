@@ -1,10 +1,8 @@
-
-//=============================================================================
 /**
  *  @file    SV_Shared_Memory_Test.cpp
  *
- *   This is a simple test of <ACE_SV_Shared_Memory> and
- *   <ACE_Malloc> using the <ACE_Shared_Memory_Pool>.  The test
+ *   This is a simple test of @c ACE_SV_Shared_Memory and
+ *   @c ACE_Malloc using the @c ACE_Shared_Memory_Pool.  The test
  *   forks two processes and then executes client and server
  *   allowing them to exchange data using shared memory. No user
  *   input is required as far as command line arguments are
@@ -12,8 +10,6 @@
  *
  *  @author Prashant Jain <pjain@cs.wustl.edu> and Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
-
 
 #include "test_config.h"
 #include "ace/Malloc_T.h"
@@ -45,16 +41,18 @@ static const int SEM_KEY_2 = ACE_DEFAULT_SEM_KEY + 2;
 static constexpr int SHMSZ = 27;
 static const char SHMDATA[SHMSZ] = "abcdefghijklmnopqrstuvwxyz";
 
-static ACE_SV_Semaphore_Complex *parent_mutex = nullptr;
-static ACE_SV_Semaphore_Complex *parent_synch = nullptr;
+static ACE_SV_Semaphore_Complex *parent_mutex {};
+static ACE_SV_Semaphore_Complex *parent_synch {};
 
 static int
 parent (char *shm)
 {
   // This for loop executes in a critical section proteced by
   // <parent_mutex>.
-  for (int i = 0; i < SHMSZ; i++)
-    shm[i] = SHMDATA[i];
+  for (int i = 0; i < SHMSZ; ++i)
+    {
+      shm[i] = SHMDATA[i];
+    }
 
   int result;
   result = parent_mutex->release ();
@@ -102,18 +100,24 @@ child (char *shm)
   // can do non-blocking acquire() calls with the ACE System V
   // semaphore wrappers.
   while ((result = mutex.tryacquire ()) == -1)
-    if (errno == EAGAIN)
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%P) spinning in child!\n")));
-    else
       {
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P) child mutex.tryacquire")));
-        ACE_TEST_ASSERT (result != -1);
+        if (errno == EAGAIN)
+          {
+            ACE_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("(%P) spinning in child!\n")));
+          }
+        else
+          {
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("(%P) child mutex.tryacquire")));
+            ACE_TEST_ASSERT (result != -1);
+          }
       }
 
-  for (int i = 0; i < SHMSZ; i++)
-    ACE_TEST_ASSERT (SHMDATA[i] == shm[i]);
+  for (int i = 0; i < SHMSZ; ++i)
+    {
+      ACE_TEST_ASSERT (SHMDATA[i] == shm[i]);
+    }
 
   result = synch.release ();
   ACE_TEST_ASSERT (result != -1);

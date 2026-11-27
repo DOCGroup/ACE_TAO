@@ -9,16 +9,13 @@
 
 #include "ace/OS_NS_errno.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Notify_ThreadPool_Task::TAO_Notify_ThreadPool_Task ()
-: shutdown_ (false)
-{
-}
+TAO_Notify_ThreadPool_Task::TAO_Notify_ThreadPool_Task () = default;
 
-TAO_Notify_ThreadPool_Task::~TAO_Notify_ThreadPool_Task ()
-{
-}
+TAO_Notify_ThreadPool_Task::~TAO_Notify_ThreadPool_Task () = default;
 
 int
 TAO_Notify_ThreadPool_Task::init (int argc, ACE_TCHAR **argv)
@@ -39,18 +36,18 @@ TAO_Notify_ThreadPool_Task::buffering_strategy ()
 }
 
 void
-TAO_Notify_ThreadPool_Task::init (const NotifyExt::ThreadPoolParams& tp_params,
-                                  const TAO_Notify_AdminProperties::Ptr& admin_properties)
+TAO_Notify_ThreadPool_Task::init (NotifyExt::ThreadPoolParams const& tp_params,
+                                  TAO_Notify_AdminProperties::Ptr const& admin_properties)
 {
   ACE_ASSERT (this->timer_.get() == nullptr);
 
-  TAO_Notify_Timer_Queue* timer = nullptr;
+  TAO_Notify_Timer_Queue* timer {};
   ACE_NEW_THROW_EX (timer,
                     TAO_Notify_Timer_Queue (),
                     CORBA::NO_MEMORY ());
   this->timer_.reset (timer);
 
-  TAO_Notify_Buffering_Strategy* buffering_strategy = nullptr;
+  TAO_Notify_Buffering_Strategy* buffering_strategy {};
   ACE_NEW_THROW_EX (buffering_strategy,
                     TAO_Notify_Buffering_Strategy (*msg_queue (), admin_properties),
                     CORBA::NO_MEMORY ());
@@ -66,7 +63,7 @@ TAO_Notify_ThreadPool_Task::init (const NotifyExt::ThreadPoolParams& tp_params,
   // Guards the thread for auto-deletion; paired with close.
   // This is done in the originating thread before the spawn to
   // avoid any race conditions.
-  for ( CORBA::ULong i = 0; i < tp_params.static_threads; ++i )
+  for ( CORBA::ULong i {}; i < tp_params.static_threads; ++i )
     {
       this->_incr_refcnt();
     }
@@ -78,13 +75,15 @@ TAO_Notify_ThreadPool_Task::init (const NotifyExt::ThreadPoolParams& tp_params,
                                                  ACE_THR_PRI_OTHER_DEF) == -1)
     {
       // Undo the ref counts on error
-      for ( CORBA::ULong i = 0; i < tp_params.static_threads; ++i )
+      for ( CORBA::ULong i {}; i < tp_params.static_threads; ++i )
         {
           this->_decr_refcnt();
         }
 
       if (ACE_OS::last_error () == EPERM)
-        ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Insufficient privilege.\n")));
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Insufficient privilege.\n")));
+        }
       else if (ACE_OS::last_error () == EAGAIN)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
@@ -109,8 +108,10 @@ TAO_Notify_ThreadPool_Task::execute (TAO_Notify_Method_Request& method_request)
           ACE_Message_Block::release (request_copy);
 
           if (TAO_debug_level > 0)
-            ORBSVCS_DEBUG ((LM_DEBUG, "NS_ThreadPool_Task (%P|%t) - "
-                        "failed to enqueue\n"));
+            {
+              ORBSVCS_DEBUG ((LM_DEBUG, "NS_ThreadPool_Task (%P|%t) - "
+                                      "failed to enqueue\n"));
+            }
         }
     }
 }
@@ -118,19 +119,19 @@ TAO_Notify_ThreadPool_Task::execute (TAO_Notify_Method_Request& method_request)
 int
 TAO_Notify_ThreadPool_Task::svc ()
 {
-  TAO_Notify_Method_Request_Queueable* method_request = nullptr;
+  TAO_Notify_Method_Request_Queueable* method_request {};
 
   while (!shutdown_)
     {
       try
         {
-          ACE_Time_Value* dequeue_blocking_time = nullptr;
+          ACE_Time_Value* dequeue_blocking_time {};
           ACE_Time_Value earliest_time;
 
           if (!this->timer_->impl().is_empty ())
             {
               earliest_time = this->timer_->impl().earliest_time ();
-              dequeue_blocking_time = &earliest_time;
+              dequeue_blocking_time = std::addressof (earliest_time);
             }
 
           // Dequeue 1 item
@@ -149,10 +150,12 @@ TAO_Notify_ThreadPool_Task::svc ()
           else
             {
               if (TAO_debug_level > 0)
+              {
                 ORBSVCS_DEBUG ((LM_DEBUG, "(%P|%t)ThreadPool_Task dequeue failed\n"));
+              }
             }
         }
-      catch (const CORBA::Exception& ex)
+      catch (CORBA::Exception const& ex)
         {
           ex._tao_print_exception (
                                    "ThreadPool_Task (%P|%t) exception in method request\n");
@@ -190,7 +193,7 @@ TAO_Notify_ThreadPool_Task::close (u_long)
 }
 
 void
-TAO_Notify_ThreadPool_Task::update_qos_properties (const TAO_Notify_QoSProperties& qos_properties)
+TAO_Notify_ThreadPool_Task::update_qos_properties (TAO_Notify_QoSProperties const& qos_properties)
 {
   this->buffering_strategy_->update_qos_properties (qos_properties);
 }

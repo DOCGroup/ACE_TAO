@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file     orbconf.h
  *
@@ -10,7 +7,6 @@
  *  @author  Chris Cleeland
  *  @author  Douglas C. Schmidt
  */
-//=============================================================================
 
 #ifndef TAO_ORBCONF_H
 #define TAO_ORBCONF_H
@@ -37,7 +33,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 #endif /* TAO_REACTOR */
 
 #if !defined (TAO_NULL_LOCK_REACTOR)
-#define TAO_NULL_LOCK_REACTOR ACE_Select_Reactor_T< ACE_Reactor_Token_T<ACE_Noop_Token> >
+#define TAO_NULL_LOCK_REACTOR ACE_Select_Reactor_T<ACE_Reactor_Token_T<ACE_Noop_Token>>
 #endif /* TAO_NULL_LOCK_REACTOR */
 
 //FUZZ: disable check_for_ACE_SYNCH_MUTEX
@@ -90,31 +86,31 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 // The default size of TAO's ORB table, i.e. the one used as the
 // underlying implementation for the CORBA::ORB_init() function.
 #if !defined (TAO_DEFAULT_ORB_TABLE_SIZE)
-const size_t TAO_DEFAULT_ORB_TABLE_SIZE = 16;
+size_t const TAO_DEFAULT_ORB_TABLE_SIZE = 16;
 #endif  /* !TAO_DEFAULT_ORB_TABLE_SIZE */
 
 // The default size of TAO's adapter registry.
 #if !defined (TAO_DEFAULT_ADAPTER_REGISTRY_SIZE)
-const size_t TAO_DEFAULT_ADAPTER_REGISTRY_SIZE = 16;
+size_t const TAO_DEFAULT_ADAPTER_REGISTRY_SIZE = 16;
 #endif  /* !TAO_DEFAULT_ORB_TABLE_SIZE */
 
 // The default size of the reply dispatcher table, ie. if the reply
 // dispatcher strategy needs a table to maintain association between
 // request id's and reply dispatchers
 #if !defined (TAO_RD_TABLE_SIZE)
-const size_t TAO_RD_TABLE_SIZE = 16;
+size_t const TAO_RD_TABLE_SIZE = 16;
 #endif  /* !TAO_RD_TABLE_SIZE */
 
 // The default size of TAO's policy factory registry, i.e. the map
 // used as the underlying implementation for the
 // PortableInterceptor::ORBInitInfo::register_policy_factory() method.
 #if !defined (TAO_DEFAULT_POLICY_FACTORY_REGISTRY_SIZE)
-const size_t TAO_DEFAULT_POLICY_FACTORY_REGISTRY_SIZE = 64;
+size_t const TAO_DEFAULT_POLICY_FACTORY_REGISTRY_SIZE = 64;
 #endif  /* !TAO_DEFAULT_ORB_TABLE_SIZE */
 
 // Should we use parallel connect
 #if !defined (TAO_USE_PARALLEL_CONNECT)
-const bool TAO_USE_PARALLEL_CONNECT = false;
+bool const TAO_USE_PARALLEL_CONNECT = false;
 #endif /* !TAO_USE_PARALLEL_CONNECT */
 
 #if !defined (TAO_ACCEPT_ERROR_DELAY)
@@ -131,14 +127,14 @@ const int TAO_SO_LINGER = -1;
 // PortableInterceptor::ORBInitInfo::register_initial_reference()
 // methods.
 #if !defined (TAO_DEFAULT_OBJECT_REF_TABLE_SIZE)
-const size_t TAO_DEFAULT_OBJECT_REF_TABLE_SIZE = 256;
+size_t const TAO_DEFAULT_OBJECT_REF_TABLE_SIZE = 256;
 #endif  /* !TAO_DEFAULT_ORB_TABLE_SIZE */
 
 // The default size of TAO's ValueFactory table, i.e. the
 // one used as the underlying implementation for the
 // CORBA::ORB::register_value_factory() method.
 #if !defined (TAO_DEFAULT_VALUE_FACTORY_TABLE_SIZE)
-const size_t TAO_DEFAULT_VALUE_FACTORY_TABLE_SIZE = 128;
+size_t const TAO_DEFAULT_VALUE_FACTORY_TABLE_SIZE = 128;
 #endif  /* !TAO_DEFAULT_ORB_TABLE_SIZE */
 
 // The default size of TAO's server active object map.
@@ -539,7 +535,6 @@ const size_t TAO_DEFAULT_VALUE_FACTORY_TABLE_SIZE = 128;
              TAO_DISABLE_CORBA_MESSAGING_POLICIES == 0 */
 #endif  /* !TAO_HAS_CONNECTION_TIMEOUT_POLICY */
 
-
 // To explicitly disable ROUTING_POLICY support uncomment the following
 // #define TAO_HAS_ROUTING_POLICY 0
 
@@ -734,7 +729,7 @@ enum TAO_Cached_Policy_Type
 
   TAO_CACHED_COMPRESSION_ID_LEVEL_LIST_POLICY,
 
-  /// NOTE: The "TAO_CACHED_POLICY_MAX_CACHED" should always be the last.
+  /// @note The "TAO_CACHED_POLICY_MAX_CACHED" should always be the last.
   ///       This value is used as the cached_policies_ array size in TAO_Policy_Set,
   ///       Any policy type defined after "TAO_CACHED_POLICY_MAX_CACHED" will cause
   ///       the policy access beyond bound problem.

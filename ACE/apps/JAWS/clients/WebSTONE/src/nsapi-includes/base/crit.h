@@ -7,9 +7,7 @@
  * parties.
  */
 
-
 /* ------------------------------------------------------------------------ */
-
 
 /*
  * crit.h: Critical section abstraction. Used in threaded servers to protect
@@ -23,7 +21,6 @@
 
 #ifndef CRIT_H
 #define CRIT_H
-
 
 #ifdef USE_NSPR
 #include <nspr/prmon.h>
@@ -70,7 +67,6 @@ typedef void *CRITICAL;
 #else
 #define crit_terminate(id) (0)
 #endif
-
 
 #ifdef USE_NSPR
 typedef PRMonitor* CONDVAR;
@@ -120,6 +116,5 @@ typedef void* CONDVAR;
 #else
 #define condvar_terminate(cv) (0)
 #endif
-
 
 #endif

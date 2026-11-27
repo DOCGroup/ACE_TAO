@@ -1,6 +1,3 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
  *  @file    TSS_Test_Errno.h
  *
@@ -8,8 +5,6 @@
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
-
 
 #include "ace/Guard_T.h"
 #include "ace/Thread_Mutex.h"
@@ -72,26 +67,25 @@ public:
   ACE_Thread_Mutex *
   allocate_lock ()
   {
-    ACE_NEW_RETURN (Errno::lock_, ACE_Thread_Mutex, 0);
+    ACE_NEW_RETURN (Errno::lock_, ACE_Thread_Mutex, nullptr);
     return Errno::lock_;
   }
 
   static
   void
-  deallocate_lock () { delete lock_; lock_ = 0; }
+  deallocate_lock () { delete lock_; lock_ = nullptr; }
 #endif /* ACE_HAS_THREADS */
 
 private:
-  // = errno_ and lineno_ will be thread-specific data so they don't
-  // need a lock.
-  int errno_;
-  int lineno_;
+  /// errno_ and lineno_ are thread-specific data, so they need no lock.
+  int errno_ {};
+  int lineno_ {};
 
   static int flags_;
   static int created_;
   static int deleted_;
 #if defined (ACE_HAS_THREADS)
-  // flags_ needs a lock.
+  /// flags_ needs a lock.
   static ACE_Thread_Mutex *lock_;
 #endif /* ACE_HAS_THREADS */
 };

@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Basic_Arguments.h
  *
  *  @authors Jeff Parsons and Carlos O'Ryan
  */
-//=============================================================================
 
 #ifndef TAO_BASIC_ARGUMENTS_H
 #define TAO_BASIC_ARGUMENTS_H

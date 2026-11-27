@@ -1,13 +1,8 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
  *  @file    BS_Client.h
  *
  *  @author Douglas C. Schmidt
  */
-//=============================================================================
-
 
 #ifndef _BS_CLIENT_H
 #define _BS_CLIENT_H
@@ -22,18 +17,21 @@
 class BS_Client : public Binary_Search
 {
 public:
-  // = Initialization.
-  /// Constructor.
   BS_Client ();
 
+  BS_Client (BS_Client const &) = delete;
+  BS_Client &operator= (BS_Client const &) = delete;
+  BS_Client (BS_Client &&) = delete;
+  BS_Client &operator= (BS_Client &&) = delete;
+
   /**
-   * This function is used to merge the <key_name> from server
-   * <host_name> into the sorted list of userids kept on the client's
+   * This function is used to merge the @c key_name from server
+   * @c host_name into the sorted list of userids kept on the client's
    * side.  Since we *know* we are going to find the name we use the
    * traditional binary search.
    */
-  virtual Protocol_Record *insert (const char *key_name,
-                                   int max_len = MAXUSERIDNAMELEN);
+  Protocol_Record *insert (char const *key_name,
+                                   int max_len = MAXUSERIDNAMELEN) override;
 
   /**
    * An iterator, similar to Binary_Search::get_next_friend, though in
@@ -42,7 +40,7 @@ public:
    * we skip over entries that don't have any hosts associated with
    * them.
    */
-  virtual Protocol_Record *get_each_entry ();
+  Protocol_Record *get_each_entry () override;
 };
 
 #endif /* _BS_CLIENT_H */

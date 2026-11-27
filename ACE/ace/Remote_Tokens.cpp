@@ -25,7 +25,7 @@ ACE_INET_Addr ACE_TSS_Connection::server_address_;
 // ************************************************************
 
 void
-ACE_TSS_Connection::set_server_address (const ACE_INET_Addr &server_address)
+ACE_TSS_Connection::set_server_address (ACE_INET_Addr const &server_address)
 {
   ACE_TRACE ("ACE_TSS_Connection::set_server_address");
   server_address_ = server_address;
@@ -54,17 +54,17 @@ ACE_TSS_Connection::make_TSS_TYPE () const
   ACE_TRACE ("ACE_TSS_Connection::make_TSS_TYPE");
 
   ACE_SOCK_Connector connector;
-  ACE_SOCK_Stream *stream = nullptr;
+  ACE_SOCK_Stream *stream {};
 
   ACE_NEW_RETURN (stream,
                   ACE_SOCK_Stream,
-                  0);
+                  nullptr);
 
   if (connector.connect (*stream, server_address_) == -1)
     {
       delete stream;
       errno = ECONNREFUSED;
-      return 0;
+      return nullptr;
     }
 
   ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("ACE_TSS_Connection new connection\n")));
@@ -102,7 +102,7 @@ ACE_Remote_Token_Proxy::~ACE_Remote_Token_Proxy ()
 }
 
 int
-ACE_Remote_Token_Proxy::open (const ACE_TCHAR *name,
+ACE_Remote_Token_Proxy::open (ACE_TCHAR const *name,
                               int ignore_deadlock,
                               int debug)
 {
@@ -112,7 +112,7 @@ ACE_Remote_Token_Proxy::open (const ACE_TCHAR *name,
 }
 
 void
-ACE_Remote_Token_Proxy::set_server_address (const ACE_INET_Addr &server_address)
+ACE_Remote_Token_Proxy::set_server_address (ACE_INET_Addr const &server_address)
 {
   ACE_TRACE ("ACE_Remote_Token_Proxy::set_server_address");
   ACE_Token_Connections::instance ()->set_server_address (server_address);
@@ -140,25 +140,31 @@ ACE_Remote_Token_Proxy::request_reply (ACE_Token_Request &request,
                                        ACE_Synch_Options &)
 {
   ACE_TRACE ("ACE_Remote_Token_Proxy::request_reply");
-  void *buffer;
-  ssize_t length;
+  void *buffer {};
+  ssize_t const length = request.encode (buffer);
 
-  if ((length = request.encode (buffer)) == -1)
-    ACELIB_ERROR_RETURN ((LM_ERROR,  ACE_TEXT ("%p\n"),  ACE_TEXT ("encode failed")), -1);
+  if (length == -1)
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,  ACE_TEXT ("%p\n"),  ACE_TEXT ("encode failed")), -1);
+    }
 
   ACE_SOCK_Stream *peer = ACE_Token_Connections::instance ()->get_connection ();
 
   if (peer == 0)
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                      ACE_TEXT("(%P|%t) %p\n"),
-                      ACE_TEXT("BIG PROBLEMS with get_connection")), -1);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                            ACE_TEXT("(%P|%t) %p\n"),
+                            ACE_TEXT("BIG PROBLEMS with get_connection")), -1);
+    }
 
   // Transmit request via a blocking send.
 
   if (peer->send_n (buffer, length) != length)
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                      ACE_TEXT ("%p\n"),
-                      ACE_TEXT ("send_n failed")), -1);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                            ACE_TEXT ("%p\n"),
+                            ACE_TEXT ("send_n failed")), -1);
+    }
   else
     {
       ACE_Token_Reply reply;
@@ -166,16 +172,24 @@ ACE_Remote_Token_Proxy::request_reply (ACE_Token_Request &request,
       // Receive reply via blocking read.
 
       if (peer->recv (&reply, sizeof reply) != sizeof reply)
-        ACELIB_ERROR_RETURN ((LM_ERROR,  ACE_TEXT ("%p\n"),  ACE_TEXT ("recv failed")), -1);
+        {
+          ACELIB_ERROR_RETURN ((LM_ERROR,  ACE_TEXT ("%p\n"),  ACE_TEXT ("recv failed")), -1);
+        }
 
       if (reply.decode () == -1)
-        ACELIB_ERROR_RETURN ((LM_ERROR,  ACE_TEXT ("%p\n"),  ACE_TEXT ("decode failed")), -1);
+        {
+          ACELIB_ERROR_RETURN ((LM_ERROR,  ACE_TEXT ("%p\n"),  ACE_TEXT ("decode failed")), -1);
+        }
 
       errno = int (reply.errnum ());
       if (errno != 0)
-        return -1;
+        {
+          return -1;
+        }
       else
-        return 0;
+        {
+          return 0;
+        }
     }
 }
 
@@ -197,17 +211,23 @@ ACE_Remote_Token_Proxy::acquire (int notify,
         case EWOULDBLOCK :
           // Whoah, we detected wouldblock via the shadow mutex!
           if (debug_)
-            ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%t) shadow: acquire will block, owner is %s\n"),
-                        this->token_->owner_id ()));
+            {
+              ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%t) shadow: acquire will block, owner is %s\n"),
+                             this->token_->owner_id ()));
+            }
           // No error, but would block,
           break;
 
         case EDEADLK :
           if (debug_)
-            ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%t) shadow: deadlock detected\n")));
+            {
+              ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%t) shadow: deadlock detected\n")));
+            }
 
           if (ignore_shadow_deadlock_)
-            break;
+            {
+              break;
+            }
           else
             {
               errno = EDEADLK;
@@ -295,11 +315,15 @@ ACE_Remote_Token_Proxy::renew (int requeue_position,
     {
       // Check for error.
       if (errno != EWOULDBLOCK)
-        return -1;
+        {
+          return -1;
+        }
       else if (debug_)
-        ACELIB_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%t) shadow: renew would block. owner %s.\n"),
-                    this->token_->owner_id ()));
+        {
+          ACELIB_DEBUG ((LM_DEBUG,
+                         ACE_TEXT ("(%t) shadow: renew would block. owner %s.\n"),
+                         this->token_->owner_id ()));
+        }
     }
 
   ACE_Token_Request request (token_->type (),
@@ -327,7 +351,9 @@ ACE_Remote_Token_Proxy::renew (int requeue_position,
   else
     {
       if (debug_)
-        ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%t) renewed %s remotely.\n"), this->name ()));
+        {
+          ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%t) renewed %s remotely.\n"), this->name ()));
+        }
       // Make sure that the local shadow reflects our new ownership.
       token_->make_owner (waiter_);
       return result;
@@ -348,13 +374,17 @@ ACE_Remote_Token_Proxy::release (ACE_Synch_Options &options)
 
   int result = this->request_reply (request, options);
   if (result == 0)
-    ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%t) released %s remotely.\n"), this->name ()));
+    {
+      ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("(%t) released %s remotely.\n"), this->name ()));
+    }
 
   // whether success or failure, we're going to release the shadow.
   // If race conditions exist such that we are no longer the owner,
   // this release will perform a remove.
   if (ACE_Token_Proxy::release () == -1)
-    ACELIB_ERROR ((LM_ERROR, ACE_TEXT ("(%t) shadow: release failed\n")));
+    {
+      ACELIB_ERROR ((LM_ERROR, ACE_TEXT ("(%t) shadow: release failed\n")));
+    }
 
   return result;
 }
@@ -376,13 +406,13 @@ ACE_Remote_Token_Proxy::token_acquired (ACE_TPQ_Entry *)
   // ACE_Token_Proxy::token_acquired (vp);
 }
 
-const ACE_TCHAR*
+ACE_TCHAR const *
 ACE_Remote_Token_Proxy::owner_id ()
 {
   ACE_TRACE ("ACE_Remote_Token_Proxy::owner_id");
   ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("owner_id called\n")));
   // @@ special operation
-  return 0;
+  return nullptr;
 }
 
 void
@@ -408,17 +438,17 @@ ACE_Remote_Mutex::clone () const
                   ACE_Remote_Mutex (this->name (),
                                                       ignore_deadlock_,
                                                       debug_),
-                  0);
+                  nullptr);
   return temp;
 }
 
 ACE_Tokens *
-ACE_Remote_Mutex::create_token (const ACE_TCHAR *name)
+ACE_Remote_Mutex::create_token (ACE_TCHAR const *name)
 {
   ACE_Tokens *temp;
   ACE_NEW_RETURN (temp,
                   ACE_Mutex_Token (name),
-                  0);
+                  nullptr);
   return temp;
 }
 
@@ -436,12 +466,12 @@ ACE_Remote_Mutex::dump () const
 }
 
 ACE_Tokens *
-ACE_Remote_RLock::create_token (const ACE_TCHAR *name)
+ACE_Remote_RLock::create_token (ACE_TCHAR const *name)
 {
-  ACE_Tokens *temp = nullptr;
+  ACE_Tokens *temp {};
   ACE_NEW_RETURN (temp,
                   ACE_RW_Token (name),
-                  0);
+                  nullptr);
   return temp;
 }
 
@@ -454,12 +484,12 @@ ACE_Remote_RLock::type () const
 ACE_Token_Proxy *
 ACE_Remote_RLock::clone () const
 {
-  ACE_Token_Proxy *temp = nullptr;
+  ACE_Token_Proxy *temp {};
   ACE_NEW_RETURN (temp,
                   ACE_Remote_RLock (this->name (),
                                     ignore_deadlock_,
                                     debug_),
-                  0);
+                  nullptr);
   return temp;
 }
 
@@ -476,14 +506,13 @@ ACE_Remote_RLock::dump () const
 #endif /* ACE_HAS_DUMP */
 }
 
-
 ACE_Tokens *
-ACE_Remote_WLock::create_token (const ACE_TCHAR *name)
+ACE_Remote_WLock::create_token (ACE_TCHAR const *name)
 {
-  ACE_Tokens *temp = nullptr;
+  ACE_Tokens *temp {};
   ACE_NEW_RETURN (temp,
                   ACE_RW_Token (name),
-                  0);
+                  nullptr);
   return temp;
 }
 
@@ -496,12 +525,12 @@ ACE_Remote_WLock::type () const
 ACE_Token_Proxy *
 ACE_Remote_WLock::clone () const
 {
-  ACE_Token_Proxy *temp = nullptr;
+  ACE_Token_Proxy *temp {};
   ACE_NEW_RETURN (temp,
                   ACE_Remote_WLock (this->name (),
                                     ignore_deadlock_,
                                     debug_),
-                  0);
+                  nullptr);
   return temp;
 }
 

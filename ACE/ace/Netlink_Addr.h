@@ -1,11 +1,9 @@
-//=============================================================================
 /**
  *  @file    Netlink_Addr.h
  *
  * @author Robert Iakobashvilli <coroberti@gmail.com>
  * @author Raz Ben Yehuda <raziebe@gmail.com>
  */
-//=============================================================================
 
 #ifndef ACE_NETLINK_ADDR_H
 #define ACE_NETLINK_ADDR_H
@@ -23,7 +21,6 @@
 #include "ace/OS_NS_string.h"
 #include "ace/Global_Macros.h"
 #include "ace/OS_NS_unistd.h"
-#include "ace/OS_NS_unistd.h"
 #include "ace/Addr.h"
 #include "ace/os_include/sys/os_socket.h"
 
@@ -36,22 +33,19 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  */
 class ACE_Export ACE_Netlink_Addr : public ACE_Addr {
 public:
-  /// Default constructor.
   ACE_Netlink_Addr ();
 
-  /// Copy constructor.
-  ACE_Netlink_Addr (const ACE_Netlink_Addr &);
+  ACE_Netlink_Addr (ACE_Netlink_Addr const &);
 
   /// Creates an ACE_INET_Addr from a sockaddr_in structure.
-  ACE_Netlink_Addr (const sockaddr_nl *, int len);
+  ACE_Netlink_Addr (sockaddr_nl const *, int len);
 
-  /// Dtor
   ~ACE_Netlink_Addr () override = default;
 
   /**
    * @param naddr sets the nl_ member @see nl_
    */
-  int set (const ACE_Netlink_Addr &naddr);
+  int set (ACE_Netlink_Addr const &naddr);
   /**
    * sets the pid and groups fields of member nl_  @see nl_
    */
@@ -59,7 +53,7 @@ public:
   /**
    * set nl_ to nl_  @see nl_
    */
-  int set (const sockaddr_nl *, int len);
+  int set (sockaddr_nl const *, int len);
   /**
    * @return pid
    */
@@ -79,7 +73,7 @@ public:
   /**
    * Set a pointer to the address
    */
-  void set_addr (const void *, int len= sizeof(sockaddr_nl) ) override;
+  void set_addr (void const *, int len= sizeof(sockaddr_nl) ) override;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -109,5 +103,4 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include /**/ "ace/post.h"
 
 #endif /* ACE_NETLINK_ADDR_H */
-
 

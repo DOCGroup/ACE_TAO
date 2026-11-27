@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    argument.h
  *
@@ -8,7 +6,6 @@
  *
  *  @author Aniruddha Gokhale
  */
-//=============================================================================
 
 #ifndef _BE_VISITOR_OPERATION_ARGUMENT_H_
 #define _BE_VISITOR_OPERATION_ARGUMENT_H_

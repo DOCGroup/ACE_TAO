@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file FilterFactory.h
  *
@@ -33,13 +32,14 @@ class TAO_Notify_Serv_Export TAO_Notify_FilterFactory
 {
 public:
   /// Factory method to create a FilterFactory reference
-  /// The Factory is activated in the default POA. The filters created are activated in the <filter_poa>.
+  /// The Factory is activated in the default POA. The filters created are
+  /// activated in @a filter_poa.
   virtual CosNotifyFilter::FilterFactory_ptr create (
       PortableServer::POA_ptr filter_poa) = 0;
   virtual void destroy () = 0;
 
   virtual TAO_Notify_Object::ID get_filter_id (CosNotifyFilter::Filter_ptr filter) = 0;
-  virtual CosNotifyFilter::Filter_ptr get_filter (const TAO_Notify_Object::ID& id) = 0;
+  virtual CosNotifyFilter::Filter_ptr get_filter (TAO_Notify_Object::ID const& id) = 0;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

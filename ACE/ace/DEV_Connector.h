@@ -1,12 +1,8 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
  *  @file    DEV_Connector.h
  *
  *  @author Gerhard Lenzer and Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef ACE_DEV_CONNECTOR_H
 #define ACE_DEV_CONNECTOR_H
@@ -30,7 +26,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_DEV_Connector
 {
 public:
-  /// Default constructor.
   ACE_DEV_Connector ();
 
   /**
@@ -46,14 +41,14 @@ public:
    * @a local_sap is the value of local address to bind to.  If it's
    * the default value of ACE_Addr::sap_any then the user is letting
    * the OS do the binding.  If @a reuse_addr == 1 then the
-   * <local_addr> is reused, even if it hasn't been cleanedup yet.
-   * The @a flags and @a perms arguments are passed down to the <open>
+   * @c local_addr is reused, even if it hasn't been cleanedup yet.
+   * The @a flags and @a perms arguments are passed down to the @c open
    * method.
    */
   ACE_DEV_Connector (ACE_DEV_IO &new_io,
-                     const ACE_DEV_Addr &remote_sap,
+                     ACE_DEV_Addr const &remote_sap,
                      ACE_Time_Value *timeout = nullptr,
-                     const ACE_Addr &local_sap = ACE_Addr::sap_any,
+                     ACE_Addr const &local_sap = ACE_Addr::sap_any,
                      int reuse_addr = 0,
                      int flags = O_RDWR,
                      int perms = 0);
@@ -71,14 +66,14 @@ public:
    * @a local_sap is the value of local address to bind to.  If it's
    * the default value of ACE_Addr::sap_any then the user is letting
    * the OS do the binding.  If @a reuse_addr == 1 then the
-   * <local_addr> is reused, even if it hasn't been cleanedup yet.
-   * The @a flags and @a perms arguments are passed down to the <open>
+   * @c local_addr is reused, even if it hasn't been cleanedup yet.
+   * The @a flags and @a perms arguments are passed down to the @c open
    * method.
    */
   int connect (ACE_DEV_IO &new_io,
-               const ACE_DEV_Addr &remote_sap,
+               ACE_DEV_Addr const &remote_sap,
                ACE_Time_Value *timeout = nullptr,
-               const ACE_Addr &local_sap = ACE_Addr::sap_any,
+               ACE_Addr const &local_sap = ACE_Addr::sap_any,
                int reuse_addr = 0,
                int flags = O_RDWR,
                int perms = 0);
@@ -92,9 +87,11 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
-  // = Meta-type info
+  /// @name Meta-type traits
+  /// @{
   using PEER_ADDR = ACE_DEV_Addr;
   using PEER_STREAM = ACE_DEV_IO;
+  /// @}
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

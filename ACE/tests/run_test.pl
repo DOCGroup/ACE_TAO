@@ -2,7 +2,6 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     & eval 'exec perl -S $0 $argv:q'
     if 0;
 
-# -*- perl -*-
 # This file is for running the tests in the ACE tests directory.
 # It is usually used for auto_compiles.
 
@@ -460,6 +459,10 @@ if ($target->PutFile ($svc_conf_file) == -1) {
 }
 # Config_Test needs config ini file.
 my $conf_ini_file = "Config_Test_Import_1.ini";
+if ($target->PutFile ($conf_ini_file) == -1) {
+    print STDERR "WARNING: Cannot send $conf_ini_file to target\n";
+}
+$conf_ini_file = "Config_Test_Whitespace.ini";
 if ($target->PutFile ($conf_ini_file) == -1) {
     print STDERR "WARNING: Cannot send $conf_ini_file to target\n";
 }

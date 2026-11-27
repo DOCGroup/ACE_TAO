@@ -11,6 +11,8 @@
 #include "ACEXML/parser/parser/Parser.h"
 #include "ACEXML/common/FileCharStream.h"
 #include "ACEXML/common/XML_Util.h"
+#include <cstdio>
+#include <memory>
 
 XML_Backing_Store::XML_Backing_Store(const Options& opts,
                                      CORBA::ORB_ptr orb,
@@ -24,12 +26,10 @@ XML_Backing_Store::XML_Backing_Store(const Options& opts,
     }
 }
 
-XML_Backing_Store::~XML_Backing_Store()
-{
-}
+XML_Backing_Store::~XML_Backing_Store() = default;
 
 int
-XML_Backing_Store::persistent_remove (const ACE_CString& , bool )
+XML_Backing_Store::persistent_remove (ACE_CString const& , bool )
 {
   // one big XML file, need to persist everything
   return persist();
@@ -52,41 +52,51 @@ XML_Backing_Store::persistent_update(const Activator_Info_Ptr& , bool )
 int
 XML_Backing_Store::persist ()
 {
-  FILE* fp = ACE_OS::fopen (this->filename_.c_str (), "w");
+  std::unique_ptr<FILE, int (*) (FILE *)> fp (
+    ACE_OS::fopen (this->filename_.c_str (), "w"), ACE_OS::fclose);
   if (fp == nullptr)
     {
       ORBSVCS_ERROR ((LM_ERROR, ACE_TEXT ("Couldn't write to file %C\n"),
         this->filename_.c_str()));
       return -1;
     }
-  ACE_OS::fprintf (fp,"<?xml version=\"1.0\"?>\n");
-  ACE_OS::fprintf (fp,"<%s>\n", Locator_XMLHandler::ROOT_TAG);
+  ACE_OS::fprintf (fp.get (), "<?xml version=\"1.0\"?>\n");
+  ACE_OS::fprintf (fp.get (), "<%s>\n", Locator_XMLHandler::ROOT_TAG);
 
   // Save servers
-  Locator_Repository::SIMap::ENTRY* sientry = nullptr;
+  Locator_Repository::SIMap::ENTRY* sientry {};
   Locator_Repository::SIMap::ITERATOR siit (this->servers ());
   for (; siit.next (sientry); siit.advance() )
     {
-      persist(fp, *sientry->int_id_, "\t");
+      persist (fp.get (), *sientry->int_id_, "\t");
     }
 
   // Save Activators
-  Locator_Repository::AIMap::ENTRY* aientry = nullptr;
+  Locator_Repository::AIMap::ENTRY* aientry {};
   Locator_Repository::AIMap::ITERATOR aiit (this->activators ());
   for (; aiit.next (aientry); aiit.advance ())
     {
       ACE_CString aname = aientry->ext_id_;
-      persist(fp, *aientry->int_id_, "\t");
+      persist (fp.get (), *aientry->int_id_, "\t");
     }
 
-  ACE_OS::fprintf (fp,"</%s>\n", Locator_XMLHandler::ROOT_TAG);
-  ACE_OS::fclose (fp);
+  ACE_OS::fprintf (fp.get (), "</%s>\n", Locator_XMLHandler::ROOT_TAG);
+
+  int const write_error = std::ferror (fp.get ());
+  int const close_error = ACE_OS::fclose (fp.release ());
+  if (write_error != 0 || close_error != 0)
+    {
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Couldn't write to file %C\n"),
+                             this->filename_.c_str ()),
+                            -1);
+    }
 
   return 0;
 }
 
 namespace {
-  ACE_CString ACEXML_escape_cstring (const ACE_CString &str)
+  ACE_CString ACEXML_escape_cstring (ACE_CString const &str)
   {
     return ACE_TEXT_ALWAYS_CHAR (ACEXML_escape_string (
       ACE_TEXT_CHAR_TO_TCHAR (str.c_str ())).c_str ());
@@ -96,7 +106,7 @@ namespace {
 void
 XML_Backing_Store::persist (FILE* fp,
                             const Server_Info& info,
-                            const char* tag_prepend,
+                            char const *tag_prepend,
                             const NameValues& name_values)
 {
   ACE_CString server_id = ACEXML_escape_cstring (info.server_id);
@@ -109,7 +119,7 @@ XML_Backing_Store::persist (FILE* fp,
     }
 
   ACE_CString activator = ACEXML_escape_cstring (info.activator);
-  ACE_CString cmdline = ACEXML_escape_cstring (info.cmdline);
+  ACE_CString command_line = ACEXML_escape_cstring (info.cmdline);
   ACE_CString wdir = ACEXML_escape_cstring (info.dir);
   ACE_CString partial_ior = ACEXML_escape_cstring (info.partial_ior);
   ACE_CString ior = ACEXML_escape_cstring (info.ior);
@@ -121,7 +131,7 @@ XML_Backing_Store::persist (FILE* fp,
   ACE_OS::fprintf (fp, " %s=\"%s\"", Locator_XMLHandler::SERVER_TAG, server_id.c_str ());
   ACE_OS::fprintf (fp, " %s=\"%s\"", Locator_XMLHandler::POANAME_TAG, pname.c_str ());
   ACE_OS::fprintf (fp, " %s=\"%s\"", Locator_XMLHandler::ACTNAME_TAG, activator.c_str ());
-  ACE_OS::fprintf (fp, " %s=\"%s\"", Locator_XMLHandler::CMDLINE_TAG, cmdline.c_str ());
+  ACE_OS::fprintf (fp, " %s=\"%s\"", Locator_XMLHandler::CMDLINE_TAG, command_line.c_str ());
   ACE_OS::fprintf (fp, " %s=\"%s\"", Locator_XMLHandler::DIR_TAG, wdir.c_str ());
   ACE_OS::fprintf (fp, " %s=\"%s\"", Locator_XMLHandler::MODE_TAG, amodestr.c_str ());
   ACE_OS::fprintf (fp, " %s=\"%d\"", Locator_XMLHandler::LIMIT_TAG, info.start_limit_);
@@ -146,7 +156,7 @@ XML_Backing_Store::persist (FILE* fp,
   if (elen + plen > 0)
     {
       ACE_OS::fprintf (fp,">\n");
-      for (CORBA::ULong i = 0; i < elen; ++i)
+      for (CORBA::ULong i {}; i < elen; ++i)
         {
           ACE_OS::fprintf (fp,"%s\t<%s", tag_prepend,
             Locator_XMLHandler::ENVIRONMENT_TAG);
@@ -155,7 +165,7 @@ XML_Backing_Store::persist (FILE* fp,
           ACE_OS::fprintf (fp," value=\"%s\"", val.c_str());
           ACE_OS::fprintf (fp,"/>\n");
         }
-      for (CORBA::ULong i = 0; i < plen; ++i)
+      for (CORBA::ULong i {}; i < plen; ++i)
         {
           ACE_OS::fprintf (fp,"%s\t<%s", tag_prepend,
             Locator_XMLHandler::PEER_TAG);
@@ -175,7 +185,7 @@ XML_Backing_Store::persist (FILE* fp,
 void
 XML_Backing_Store::persist (FILE* fp,
                             const Activator_Info& info,
-                            const char* tag_prepend,
+                            char const *tag_prepend,
                             const NameValues& name_values)
 {
   ACE_OS::fprintf (fp,"%s<%s", tag_prepend,
@@ -203,7 +213,7 @@ XML_Backing_Store::init_repo (PortableServer::POA_ptr )
 }
 
 int
-XML_Backing_Store::load_file (const ACE_TString& filename, FILE* open_file)
+XML_Backing_Store::load_file (ACE_TString const& filename, FILE* open_file)
 {
   Locator_XMLHandler xml_handler (*this);
   return XML_Backing_Store::load_file (filename, xml_handler,
@@ -212,24 +222,21 @@ XML_Backing_Store::load_file (const ACE_TString& filename, FILE* open_file)
 
 /* static */
 int
-XML_Backing_Store::load_file (const ACE_TString& filename,
+XML_Backing_Store::load_file (ACE_TString const& filename,
                               ACEXML_DefaultHandler& xml_handler,
                               unsigned int debug,
                               FILE* open_file)
 {
-  // xml input source will take ownership
-  ACEXML_FileCharStream* fstm;
-  ACE_NEW_RETURN (fstm,
+  ACEXML_FileCharStream* fstm_raw {};
+  ACE_NEW_RETURN (fstm_raw,
                   ACEXML_FileCharStream,
                   -1);
+  std::unique_ptr<ACEXML_FileCharStream> fstm (fstm_raw);
 
-  int err;
   // use the open_file stream if it is provided
-  if (open_file != 0)
-    err = fstm->use_stream(open_file,
-                           filename.c_str());
-  else
-    err = fstm->open (filename.c_str());
+  int const err = open_file != nullptr
+    ? fstm->use_stream (open_file, filename.c_str ())
+    : fstm->open (filename.c_str ());
 
   if (debug > 9)
     {
@@ -240,14 +247,12 @@ XML_Backing_Store::load_file (const ACE_TString& filename,
 
   if (err != 0)
     {
-      delete fstm;
       return err;
     }
 
   ACEXML_Parser parser;
 
-  // InputSource takes ownership
-  ACEXML_InputSource input (fstm);
+  ACEXML_InputSource input (fstm.release ());
 
   parser.setContentHandler (&xml_handler);
   parser.setDTDHandler (&xml_handler);
@@ -278,7 +283,7 @@ XML_Backing_Store::load_file (const ACE_TString& filename,
   return 0;
 }
 
-const ACE_TCHAR*
+ACE_TCHAR const *
 XML_Backing_Store::repo_mode() const
 {
   return this->filename_.c_str();
@@ -289,7 +294,9 @@ XML_Backing_Store::load_server (Server_Info *info,
                                 bool server_started,
                                 const NameValues& )
 {
-  Server_Info_Ptr si (info);
+  std::unique_ptr<Server_Info> info_owner (info);
+  Server_Info_Ptr si (info_owner.get ());
+  info_owner.release ();
 
   this->servers ().rebind (info->key_name_, si);
 
@@ -315,15 +322,17 @@ XML_Backing_Store::create_server (bool server_started,
 }
 
 void
-XML_Backing_Store::load_activator (const ACE_CString& activator_name,
+XML_Backing_Store::load_activator (ACE_CString const& activator_name,
                                    long token,
-                                   const ACE_CString& ior,
+                                   ACE_CString const& ior,
                                    const NameValues& )
 {
-  Activator_Info *ai = nullptr;
+  Activator_Info *ai {};
   ACE_NEW (ai,
            Activator_Info (activator_name, token, ior));
 
-  Activator_Info_Ptr info (ai);
+  std::unique_ptr<Activator_Info> ai_owner (ai);
+  Activator_Info_Ptr info (ai_owner.get ());
+  ai_owner.release ();
   this->activators().rebind(Locator_Repository::lcase (activator_name), info);
 }

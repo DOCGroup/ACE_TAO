@@ -1,10 +1,11 @@
-// -*- C++ -*-
 #include "tao/Messaging/AMI_Arguments_Converter_Impl.h"
 #include "tao/operation_details.h"
 #include "tao/SystemException.h"
 #include "tao/Pluggable_Messaging_Utils.h"
 #include "tao/Reply_Dispatcher.h"
 #include "tao/CDR.h"
+
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -33,8 +34,7 @@ TAO_AMI_Arguments_Converter_Impl::convert_request (
         }
     }
 
-  TAO_Operation_Details* details
-    = const_cast <TAO_Operation_Details*> (server_request.operation_details ());
+  TAO_Operation_Details * const details = server_request.operation_details ();
 
   details->use_stub_args (false);
 }
@@ -87,7 +87,7 @@ TAO_AMI_Arguments_Converter_Impl::dsi_convert_reply (
     {
       TAO_Pluggable_Reply_Params params (nullptr);
       params.reply_status (GIOP::NO_EXCEPTION);
-      params.input_cdr_ = &input;
+      params.input_cdr_ = std::addressof (input);
       server_request.operation_details ()->
         reply_dispatcher ()->dispatch_reply (params);
     }
@@ -110,7 +110,7 @@ TAO_AMI_Arguments_Converter_Impl::handle_corba_exception (
       params.reply_status (GIOP::USER_EXCEPTION);
     }
   TAO_InputCDR input (output);
-  params.input_cdr_ = &input;
+  params.input_cdr_ = std::addressof (input);
   server_request.operation_details ()->
     reply_dispatcher ()->dispatch_reply (params);
 }

@@ -50,7 +50,7 @@ TAO::HTIOP::Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::Accept_Strategy (
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> int
 TAO::HTIOP::Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::open (
-                          const ACE_PEER_ACCEPTOR_ADDR &local_addr,
+                          ACE_PEER_ACCEPTOR_ADDR const &local_addr,
                           bool restart)
 {
   return ACCEPT_STRATEGY_BASE::open (local_addr, restart);

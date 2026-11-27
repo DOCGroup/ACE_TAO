@@ -1,4 +1,3 @@
-// -*- C++ -*-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE CORBA::Boolean
@@ -36,7 +35,7 @@ TAO_EC_ProxyPushConsumer::supplier (RtecEventComm::PushSupplier_ptr supplier)
   this->supplier_i (supplier);
 }
 
-ACE_INLINE const RtecEventChannelAdmin::SupplierQOS&
+ACE_INLINE RtecEventChannelAdmin::SupplierQOS const&
 TAO_EC_ProxyPushConsumer::publications () const
 {
   // @@ TODO There should some way to signal errors here.
@@ -45,7 +44,7 @@ TAO_EC_ProxyPushConsumer::publications () const
   return this->qos_;
 }
 
-ACE_INLINE const RtecEventChannelAdmin::SupplierQOS&
+ACE_INLINE RtecEventChannelAdmin::SupplierQOS const&
 TAO_EC_ProxyPushConsumer::publications_i () const
 {
   return this->qos_;

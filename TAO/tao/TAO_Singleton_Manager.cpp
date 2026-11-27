@@ -13,7 +13,7 @@
 namespace
 {
   // Singleton instance pointer.
-  TAO_Singleton_Manager * the_instance = nullptr;
+  TAO_Singleton_Manager * the_instance {};
 }
 
 #if (defined (ACE_HAS_VERSIONED_NAMESPACE) && ACE_HAS_VERSIONED_NAMESPACE == 1)
@@ -56,13 +56,7 @@ void TAO_SINGLETON_MANAGER_FINI_NAME ()
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Singleton_Manager::TAO_Singleton_Manager ()
-  : default_mask_ (nullptr),
-    thread_hook_ (nullptr),
-    exit_info_ (),
-    registered_with_object_manager_ (-1)
-#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-    , internal_lock_ (nullptr)
-# endif /* ACE_MT_SAFE */
+  : exit_info_ ()
 {
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   ACE_NEW (this->internal_lock_,
@@ -122,7 +116,7 @@ TAO_Singleton_Manager::instance ()
   // process.  So, it's not thread safe.
   if (the_instance == nullptr)
     {
-      TAO_Singleton_Manager *instance_pointer = nullptr;
+      TAO_Singleton_Manager *instance_pointer {};
 
       ACE_NEW_RETURN (instance_pointer,
                       TAO_Singleton_Manager,
@@ -205,7 +199,9 @@ TAO_Singleton_Manager::init (int register_with_object_manager)
                (ACE_CLEANUP_FUNC) TAO_SINGLETON_MANAGER_CLEANUP_DESTROYER_NAME,
                nullptr,
                typeid (*this).name ()) != 0)
+      {
         return -1;
+      }
 
       this->registered_with_object_manager_ = register_with_object_manager;
     }
@@ -260,7 +256,9 @@ TAO_Singleton_Manager::fini ()
   this->object_manager_state_ = OBJ_MAN_SHUT_DOWN;
 
   if (this == the_instance)
+  {
     the_instance = nullptr;
+  }
 
   if (this->dynamically_allocated_)
     {
@@ -286,7 +284,7 @@ int
 TAO_Singleton_Manager::at_exit_i (void *object,
                                   ACE_CLEANUP_FUNC cleanup_hook,
                                   void *param,
-                                  const char *name)
+                                  char const *name)
 {
   ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX,
                             ace_mon,

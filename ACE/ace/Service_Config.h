@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//====================================================================
 /**
  *  @file    Service_Config.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//====================================================================
 
 #ifndef ACE_SERVICE_CONFIG_H
 #define ACE_SERVICE_CONFIG_H
@@ -162,7 +158,7 @@ class ACE_Static_Svc_Descriptor
 {
 public:
   /// Name of the service.
-  const ACE_TCHAR *name_;
+  ACE_TCHAR const *name_;
 
   /// Type of service.
   int type_;
@@ -189,7 +185,6 @@ public:
   /// Compare two service descriptors for inequality.
   bool operator!= (ACE_Static_Svc_Descriptor &) const;
 };
-
 
 /**
  * @class ACE_Threading_Helper
@@ -271,7 +266,7 @@ public:
  * uses signal_handler_.  Therefore, if the program has any
  * static ACE_Service_Config objects, there might be
  * initialization order problems.  They can be minimized, but
- * not eliminated, by _not_ #defining
+ * not eliminated, by not defining
  * ACE_HAS_NONSTATIC_OBJECT_MANAGER.
  */
 class ACE_Export ACE_Service_Config
@@ -289,22 +284,27 @@ class ACE_Export ACE_Service_Config
   ACE_Threading_Helper<ACE_SYNCH_MUTEX> threadkey_;
 
 public:
+  ACE_Service_Config (ACE_Service_Config const &) = delete;
+  ACE_Service_Config &operator= (ACE_Service_Config const &) = delete;
+  ACE_Service_Config (ACE_Service_Config &&) = delete;
+  ACE_Service_Config &operator= (ACE_Service_Config &&) = delete;
+
   /**
    * Initialize the Service Repository. Note that initialising @a
    * signum to a negative number will prevent a signal handler being
    * registered when the repository is opened.
    */
   ACE_Service_Config (bool ignore_static_svcs = true,
-                      size_t size = ACE_DEFAULT_SERVICE_REPOSITORY_SIZE,
-                      int signum = SIGHUP);
+                               size_t size = ACE_DEFAULT_SERVICE_REPOSITORY_SIZE,
+                               int signum = SIGHUP);
 
   /**
    * Performs an open without parsing command-line arguments.  The
    * @a logger_key indicates where to write the logging output, which
    * is typically either a STREAM pipe or a socket address.
    */
-  ACE_Service_Config (const ACE_TCHAR program_name[],
-                      const ACE_TCHAR *logger_key = ACE_DEFAULT_LOGGER_KEY);
+  explicit ACE_Service_Config (ACE_TCHAR const program_name[],
+                               ACE_TCHAR const *logger_key = ACE_DEFAULT_LOGGER_KEY);
 
   /// Perform user-specified close activities and remove dynamic
   /// memory.
@@ -324,8 +324,8 @@ private:
    * @c ACE_Log_Msg::priority_mask() appropriately.  Returns number of
    * errors that occurred on failure and 0 otherwise.
    */
-  virtual int open_i (const ACE_TCHAR program_name[],
-                      const ACE_TCHAR *logger_key,
+  virtual int open_i (ACE_TCHAR const program_name[],
+                      ACE_TCHAR const *logger_key,
                       bool ignore_static_svcs,
                       bool ignore_default_svc_conf_file,
                       bool ignore_debug_flag);
@@ -336,7 +336,8 @@ private:
    */
   virtual int parse_args_i (int argc, ACE_TCHAR *argv[]);
 
-  /// = Static interfaces
+  /// @name Static interfaces
+  /// @{
 
  public:
  /**
@@ -396,8 +397,8 @@ private:
    * non-0 then the application is responsible for setting the
    * @c ACE_Log_Msg::priority_mask appropriately.
    */
-  static int open (const ACE_TCHAR program_name[],
-                   const ACE_TCHAR *logger_key = ACE_DEFAULT_LOGGER_KEY,
+  static int open (ACE_TCHAR const program_name[],
+                   ACE_TCHAR const *logger_key = ACE_DEFAULT_LOGGER_KEY,
                    bool ignore_static_svcs = true,
                    bool ignore_default_svc_conf_file = false,
                    bool ignore_debug_flag = false);
@@ -435,7 +436,7 @@ private:
    *        specifies service directives without the need for a configuration
    *        file. Can be specified multiple times.
    *
-   * Note: Options '-f' and '-S' complement each other. Directives from files
+   * @note Options '-f' and '-S' complement each other. Directives from files
    * and from '-S' option are processed together in the following order. First,
    * all files are processed in the order they are specified in @a argv
    * parameter. Second, all directive strings are executed in the order the
@@ -462,7 +463,7 @@ private:
    */
   static int open (int argc,
                    ACE_TCHAR *argv[],
-                   const ACE_TCHAR *logger_key = ACE_DEFAULT_LOGGER_KEY,
+                   ACE_TCHAR const *logger_key = ACE_DEFAULT_LOGGER_KEY,
                    bool ignore_static_svcs = true,
                    bool ignore_default_svc_conf_file = false,
                    bool ignore_debug_flag = false);
@@ -472,7 +473,7 @@ private:
   static int close ();
 
   /// Perform user-specified close hooks and possibly delete all of the
-  /// configured services in the <Service_Repository>.
+  /// configured services in the @c Service_Repository.
   static int fini_svcs ();
 
   /// True if reconfiguration occurred.
@@ -483,19 +484,13 @@ private:
 
   /// Perform the reconfiguration process.
   static void reconfigure ();
+  /// @}
 
-  // = The following methods are static in order to enforce Singleton
-  // semantics for the Reactor, Service_Repository, Thread_Manager,
-  // and Acceptor/Connector Strategy factory.  Other portions of the
-  // system may need to access them at some point or another...
-
-  // = This is not strictly needed, anymore since the service configurator
-  // has been refactored to allow multiple service configuration
-  // instances (called gestalts). The interfaces, however were retained in for
-  // the sake of maintaining source-code compatibility.
-
-
-  // = Accessors and mutators for process-wide Singletons.
+  /// @name Legacy process-wide singleton accessors
+  /// The service configurator now supports multiple gestalts. These
+  /// interfaces remain for source compatibility and access to process-wide
+  /// singleton services.
+  /// @{
 
   /// Returns a pointer to the list of statically linked services.
   ///
@@ -513,34 +508,37 @@ private:
   /// services repository and provide a better way of debugging service
   /// loading and registration problems.
   static int insert (ACE_Static_Svc_Descriptor *svc);
+  /// @}
 
-  // = Utility methods.
+  /// @name Service utility methods
+  /// @{
   /// Dynamically link the shared object file and retrieve a pointer to
   /// the designated shared object in this file.
-  static int initialize (const ACE_Service_Type *,
-                         const ACE_TCHAR *parameters);
+  static int initialize (ACE_Service_Type const *,
+                         ACE_TCHAR const *parameters);
 
   /// Initialize and activate a statically @a svc_name service.
-  static int initialize (const ACE_TCHAR *svc_name,
-                         const ACE_TCHAR *parameters);
+  static int initialize (ACE_TCHAR const *svc_name,
+                         ACE_TCHAR const *parameters);
 
   /// Resume a @a svc_name that was previously suspended or has not yet
   /// been resumed (e.g., a static service).
-  static int resume (const ACE_TCHAR svc_name[]);
+  static int resume (ACE_TCHAR const svc_name[]);
 
   /**
    * Suspend @a svc_name.  Note that this will not unlink the service
    * from the daemon if it was dynamically linked, it will mark it as
-   * being suspended in the Service Repository and call the <suspend>
+   * being suspended in the Service Repository and call the @c suspend
    * member function on the appropriate ACE_Service_Object.  A
-   * service can be resumed later on by calling the <RESUME> member
+   * service can be resumed later on by calling the @c RESUME member
    * function...
    */
-  static int suspend (const ACE_TCHAR svc_name[]);
+  static int suspend (ACE_TCHAR const svc_name[]);
 
   /// Totally remove @a svc_name from the daemon by removing it
   /// from the ACE_Reactor, and unlinking it if necessary.
-  static int remove (const ACE_TCHAR svc_name[]);
+  static int remove (ACE_TCHAR const svc_name[]);
+  /// @}
 
   /// Dump the state of an object.
   void dump () const;
@@ -553,11 +551,11 @@ private:
 
   /// Process a file containing a list of service configuration
   /// directives.
-  static int process_file (const ACE_TCHAR file[]);
+  static int process_file (ACE_TCHAR const file[]);
 
   /// Process one service configuration @a directive, which is passed as
   /// a string.  Returns the number of errors that occurred.
-  static int process_directive (const ACE_TCHAR directive[]);
+  static int process_directive (ACE_TCHAR const directive[]);
 
   /**
    * Process one static service definition.  Load a new static service
@@ -571,7 +569,7 @@ private:
    *
    * @return Returns -1 if the service cannot be 'loaded'.
    */
-  static int process_directive (const ACE_Static_Svc_Descriptor &ssd,
+  static int process_directive (ACE_Static_Svc_Descriptor const &ssd,
                                 bool force_replace = false);
 
   /**
@@ -604,14 +602,14 @@ private:
   static int parse_args (int, ACE_TCHAR *argv[]);
 
 #if (ACE_USES_CLASSIC_SVC_CONF == 0)
-  static ACE_Service_Type *create_service_type  (const ACE_TCHAR *n,
+  static ACE_Service_Type *create_service_type  (ACE_TCHAR const *n,
                                                  ACE_Service_Type_Impl *o,
                                                  ACE_DLL &dll,
                                                  int active);
 #endif /* ACE_USES_CLASSIC_SVC_CONF == 0 */
 
   static ACE_Service_Type_Impl *
-    create_service_type_impl (const ACE_TCHAR *name,
+    create_service_type_impl (ACE_TCHAR const *name,
                               int type,
                               void *symbol,
                               u_int flags,
@@ -625,9 +623,9 @@ private:
   /// Become a daemon.
   static int start_daemon ();
 
-  // @deprecated
-  // Add the default statically-linked services to the
-  // ACE_Service_Repository.
+  /// @deprecated
+  /// Add the default statically-linked services to the
+  /// ACE_Service_Repository.
   static int load_static_svcs ();
 
 protected:
@@ -641,7 +639,7 @@ protected:
 
 private:
   /// Have we called ACE_Service_Config::open() yet?
-  bool is_opened_;
+  bool is_opened_ {};
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   /// Synchronization variable for open, etc.
@@ -651,7 +649,8 @@ private:
   /// True if reconfiguration occurred.
   static sig_atomic_t reconfig_occurred_;
 
-  // = Set by command-line options.
+  /// @name Command-line configuration state
+  /// @{
   /// Shall we become a daemon process?
   static bool be_a_daemon_;
 
@@ -663,6 +662,7 @@ private:
 
   /// Handles the reconfiguration signals.
   static ACE_Sig_Adapter *signal_handler_;
+  /// @}
 
   /// Pointer to the Singleton (ACE_Cleanup) Gestalt instance.
   /// There is thread-specific global instance pointer, which is used to
@@ -704,12 +704,13 @@ private:
 class ACE_Export ACE_Service_Config_Guard
 {
 public:
-  ACE_Service_Config_Guard (ACE_Service_Gestalt* psg);
-  ~ACE_Service_Config_Guard ();
+  ACE_Service_Config_Guard (ACE_Service_Config_Guard const &) = delete;
+  ACE_Service_Config_Guard (ACE_Service_Config_Guard &&) = delete;
+  ACE_Service_Config_Guard &operator= (ACE_Service_Config_Guard const &) = delete;
+  ACE_Service_Config_Guard &operator= (ACE_Service_Config_Guard &&) = delete;
 
-private:
-  ACE_Service_Config_Guard(const ACE_Service_Config_Guard&) = delete;
-  ACE_Service_Config_Guard& operator= (const ACE_Service_Config_Guard&) = delete;
+  explicit ACE_Service_Config_Guard (ACE_Service_Gestalt *psg);
+  ~ACE_Service_Config_Guard ();
 
 private:
   ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> saved_;

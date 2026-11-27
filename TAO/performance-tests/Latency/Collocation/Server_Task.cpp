@@ -1,4 +1,3 @@
-
 #include "Server_Task.h"
 #include "Roundtrip.h"
 
@@ -23,26 +22,28 @@ Server_Task::svc ()
  try
    {
      CORBA::Object_var poa_object =
-       this->sorb_->resolve_initial_references("RootPOA");
+       this->sorb_->resolve_initial_references ("RootPOA");
 
      PortableServer::POA_var root_poa =
        PortableServer::POA::_narrow (poa_object.in ());
 
      if (CORBA::is_nil (root_poa.in ()))
-       ACE_ERROR_RETURN ((LM_ERROR,
-                          " (%P|%t) Panic: nil RootPOA\n"),
-                         1);
+       {
+         ACE_ERROR_RETURN ((LM_ERROR,
+                            " (%P|%t) Panic: nil RootPOA\n"),
+                           1);
+       }
 
      PortableServer::POAManager_var poa_manager =
        root_poa->the_POAManager ();
 
-     Roundtrip *rt_impl;
+     Roundtrip *rt_impl {};
 
      ACE_NEW_RETURN (rt_impl,
                      Roundtrip (this->sorb_.in ()),
                      1);
 
-     PortableServer::ServantBase_var owner_transfer(rt_impl);
+     PortableServer::ServantBase_var owner_transfer (rt_impl);
 
      this->rt_var_ =
        rt_impl->_this ();
@@ -67,12 +68,10 @@ Server_Task::svc ()
 
      this->sorb_->destroy ();
    }
- catch (const CORBA::Exception& ex)
+ catch (CORBA::Exception const &ex)
    {
      ex._tao_print_exception ("Exception caught:");
      return 1;
    }
-
-
  return 0;
 }

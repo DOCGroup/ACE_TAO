@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/PortableServer/Servant_Upcall.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

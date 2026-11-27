@@ -1,4 +1,3 @@
-// -*- C++ -*-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
@@ -9,7 +8,6 @@ TAO::CSD::TP_Custom_Request_Operation::TP_Custom_Request_Operation
   this->servant_->_add_ref ();
 }
 
-
 ACE_INLINE
 void
 TAO::CSD::TP_Custom_Request_Operation::execute ()
@@ -17,14 +15,12 @@ TAO::CSD::TP_Custom_Request_Operation::execute ()
   this->execute_i();
 }
 
-
 ACE_INLINE
 void
 TAO::CSD::TP_Custom_Request_Operation::cancel()
 {
   this->cancel_i();
 }
-
 
 ACE_INLINE
 PortableServer::Servant

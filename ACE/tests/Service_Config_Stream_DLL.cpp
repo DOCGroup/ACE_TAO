@@ -2,7 +2,6 @@
 #include "ace/Service_Repository.h"
 #include "ace/Service_Types.h"
 
-
 int
 Test_Task::open (void *)
 {
@@ -87,7 +86,6 @@ make_close ()
                         new Test_Task, new Test_Task);
 }
 
-
 // Task to verify the order and operation of the stream assembly
 // Command line args give the stream name (to look it up) and the names
 // of the tasks that should be there, from head to tail.
@@ -99,20 +97,26 @@ int
 Stream_Order_Test::init (int argc, ACE_TCHAR *argv[])
 {
   if (argc < 1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Stream_Order_Test needs at least 1 arg\n")),
-                      -1);
-  const ACE_Service_Type *st = nullptr;
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Stream_Order_Test needs at least 1 arg\n")),
+                        -1);
+    }
+  ACE_Service_Type const *st {};
   if (ACE_Service_Repository::instance ()->find (argv[0], &st, false) == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Cannot find %s\n"), argv[0]), -1);
-  const ACE_Service_Type_Impl *st_impl = st->type ();
+  }
+  ACE_Service_Type_Impl const *st_impl = st->type ();
   MT_Stream *str = reinterpret_cast<MT_Stream *>(st_impl->object ());
-  MT_Module *m = nullptr;
+  MT_Module *m {};
   if (-1 == str->top (m))
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Cannot get module %p\n"),
-                       ACE_TEXT ("top")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Cannot get module %p\n"),
+                         ACE_TEXT ("top")),
+                        -1);
+    }
   // Walk down the stream and compare module names. Note we start from the
   // top, i.e., the last module pushed.
   bool error = false;
@@ -134,10 +138,12 @@ Stream_Order_Test::init (int argc, ACE_TCHAR *argv[])
           error = true;
         }
       else
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("Layer %d: found module %s, correct\n"),
-                    i,
-                    m->name ()));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("Layer %d: found module %s, correct\n"),
+                      i,
+                      m->name ()));
+        }
       m = m->next ();
     }
   return error ? -1 : 0;

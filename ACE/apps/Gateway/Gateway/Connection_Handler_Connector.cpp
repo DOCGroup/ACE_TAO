@@ -1,10 +1,6 @@
 #include "Connection_Handler_Connector.h"
 #include "ace/os_include/os_netdb.h"
 
-Connection_Handler_Connector::Connection_Handler_Connector ()
-{
-}
-
 // Initiate (or reinitiate) a connection to the Connection_Handler.
 
 int
@@ -48,8 +44,9 @@ Connection_Handler_Connector::initiate_connection (Connection_Handler *connectio
   else
     {
       connection_handler->state (Connection_Handler::ESTABLISHED);
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) connected to %s on %d\n"),
-                  addr_buf, connection_handler->get_handle ()));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) connected to %s on %H\n"),
+                  addr_buf,
+                  connection_handler->get_handle ()));
     }
   return 0;
 }

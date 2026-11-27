@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file     DIOP_Endpoint.h
  *
@@ -8,8 +5,6 @@
  *
  *  @author  Michael Kircher
  */
-//=============================================================================
-
 
 #ifndef TAO_DIOP_ENDPOINT_H
 #define TAO_DIOP_ENDPOINT_H
@@ -45,7 +40,6 @@ public:
   friend class TAO_DIOP_Profile;
   friend class TAO_SSLIOP_Profile;
 
-  /// Default constructor.
   TAO_DIOP_Endpoint ();
 
   /// Constructor.  This is the most efficient constructor since it
@@ -55,7 +49,6 @@ public:
                      ACE_INET_Addr const &addr,
                      CORBA::Short priority = TAO_INVALID_PRIORITY);
 
-  /// Constructor.
   TAO_DIOP_Endpoint (ACE_INET_Addr const &addr,
                      int use_dotted_decimal_addresses);
 
@@ -64,17 +57,16 @@ public:
                      CORBA::UShort port,
                      CORBA::Short priority);
 
-  /// Destructor.
-  ~TAO_DIOP_Endpoint () = default;
+  ~TAO_DIOP_Endpoint () override = default;
 
-  /**
-   * @name TAO_Endpoint Methods
-   *
-   * Please check the documentation in Endpoint.h for details.
-   */
-  //@{
+  // See Endpoint.h for the base interface.
   TAO_Endpoint *next () override;
   int addr_to_string (char *buffer, size_t length) override;
+
+  /// @name TAO_Endpoint methods
+  /// @{
+
+  /// Allocate memory and return a copy of this endpoint.
   TAO_Endpoint *duplicate () override;
 
   /// Return true if this endpoint is equivalent to @a other_endpoint.  Two
@@ -83,20 +75,19 @@ public:
 
   /// Return a hash value for this object.
   CORBA::ULong hash () override;
-  //@}
+  /// @}
 
-  // Allocates memory and returns a copy of <this>
+  /// @name DIOP-specific methods
+  /// @{
 
-  // = DIOP_Endpoint-specific methods.
-
-  /// Return a reference to the <object_addr>.
+  /// Return a reference to the @c object_addr.
   ACE_INET_Addr const &object_addr () const;
 
   /// Return a pointer to the host string.  This object maintains
   /// ownership of this string.
   char const *host () const;
 
-  /// Copy the string @a h into <host_> and return the resulting pointer.
+  /// Copy the string @a h into @c host_ and return the resulting pointer.
   /// This object maintains ownership of this string.
   char const *host (char const *h);
 
@@ -105,6 +96,7 @@ public:
 
   /// Set the port number.
   CORBA::UShort port (CORBA::UShort p);
+  /// @}
 
 private:
   TAO_DIOP_Endpoint (TAO_DIOP_Endpoint const &) = delete;
@@ -130,7 +122,7 @@ private:
   bool is_ipv6_decimal_ {};
 #endif /* ACE_HAS_IPV6 */
 
-  /// Cached instance of <ACE_INET_Addr> for use in making
+  /// Cached instance of @c ACE_INET_Addr for use in making
   /// invocations, etc.
   mutable ACE_INET_Addr object_addr_;
 

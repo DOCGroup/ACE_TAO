@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file Incoming_Message_Queue.h
  *
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_INCOMING_MESSAGE_QUEUE_H
 #define TAO_INCOMING_MESSAGE_QUEUE_H
@@ -50,11 +46,14 @@ class TAO_Transport;
 class TAO_Export TAO_Incoming_Message_Queue
 {
 public:
-  /// Constructor.
-  TAO_Incoming_Message_Queue (TAO_ORB_Core *orb_core);
+  TAO_Incoming_Message_Queue () = delete;
+  explicit TAO_Incoming_Message_Queue (TAO_ORB_Core *orb_core);
 
-  /// Destructor.
   ~TAO_Incoming_Message_Queue ();
+  TAO_Incoming_Message_Queue (TAO_Incoming_Message_Queue const &) = delete;
+  TAO_Incoming_Message_Queue &operator= (TAO_Incoming_Message_Queue const &) = delete;
+  TAO_Incoming_Message_Queue (TAO_Incoming_Message_Queue &&) = delete;
+  TAO_Incoming_Message_Queue &operator= (TAO_Incoming_Message_Queue &&) = delete;
 
   /// Adding and deleting a node from the queue.
   TAO_Queued_Data *dequeue_head ();
@@ -75,18 +74,19 @@ private:
     the list.  The earliest addition can be easily accessed via
     \a last_message_added_->next_.
    */
-  TAO_Queued_Data *last_added_;
+  TAO_Queued_Data *last_added_ {};
 
   /// The size of the queue
-  CORBA::ULong size_;
+  CORBA::ULong size_ {};
 
-  /// Copy of our ORB Core
+  /// Non-owning pointer to the ORB Core.
   TAO_ORB_Core *orb_core_;
 };
 
 /// Constant value indicating that the correct value is unknown yet,
 /// probably parsing the header failed due to insufficient data in buffer.
-constexpr size_t TAO_MISSING_DATA_UNDEFINED = ~static_cast<size_t> (0); // MAX_SIZE_T
+/// Equivalent to MAX_SIZE_T.
+constexpr size_t TAO_MISSING_DATA_UNDEFINED = ~static_cast<size_t> (0);
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

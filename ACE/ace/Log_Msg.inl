@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
 
@@ -151,7 +150,7 @@ ACE_Log_Msg::tracing_enabled () const
 }
 
 ACE_INLINE
-const char *
+char const *
 ACE_Log_Msg::file ()
 {
   return this->file_;
@@ -159,13 +158,13 @@ ACE_Log_Msg::file ()
 
 ACE_INLINE
 void
-ACE_Log_Msg::file (const char *s)
+ACE_Log_Msg::file (char const *s)
 {
   ACE_OS::strsncpy (this->file_, s, sizeof this->file_);
 }
 
 ACE_INLINE
-const ACE_TCHAR *
+ACE_TCHAR const *
 ACE_Log_Msg::msg ()
 {
   return this->msg_ + ACE_Log_Msg::msg_off_;
@@ -173,7 +172,7 @@ ACE_Log_Msg::msg ()
 
 ACE_INLINE
 void
-ACE_Log_Msg::msg (const ACE_TCHAR *m)
+ACE_Log_Msg::msg (ACE_TCHAR const *m)
 {
   ACE_OS::strsncpy (this->msg_, m,
                     ((ACE_MAXLOGMSGLEN+1) / sizeof (ACE_TCHAR)));
@@ -210,7 +209,7 @@ ACE_Log_Msg::msg_ostream (ACE_OSTREAM_TYPE *m)
 }
 
 ACE_INLINE
-const ACE_TCHAR *
+ACE_TCHAR const *
 ACE_Log_Msg::local_host () const
 {
   return ACE_Log_Msg::local_host_;

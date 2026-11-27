@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//==========================================================================
 /**
  *  @file    RW_Mutex.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//==========================================================================
 
 #ifndef ACE_RW_MUTEX_H
 #define ACE_RW_MUTEX_H
@@ -37,18 +33,24 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_RW_Mutex
 {
 public:
+  ACE_RW_Mutex (ACE_RW_Mutex const &) = delete;
+  ACE_RW_Mutex (ACE_RW_Mutex &&) = delete;
+  ACE_RW_Mutex &operator= (ACE_RW_Mutex const &) = delete;
+  ACE_RW_Mutex &operator= (ACE_RW_Mutex &&) = delete;
+
   /// Initialize a readers/writer lock.
   ACE_RW_Mutex (int type = USYNC_THREAD,
-                const ACE_TCHAR *name = nullptr,
+                ACE_TCHAR const *name = nullptr,
                 void *arg = nullptr);
 
   /// Implicitly destroy a readers/writer lock
   ~ACE_RW_Mutex ();
 
   /**
-   * Explicitly destroy a readers/writer lock.  Note that only one
-   * thread should call this method since it doesn't protect against
-   * race conditions.
+   * Explicitly destroy a readers/writer lock.
+   *
+   * @note Only one thread should call this method since it doesn't
+   * protect against race conditions.
    */
   int remove ();
 
@@ -73,21 +75,23 @@ public:
    * Conditionally upgrade a read lock to a write lock.  This only
    * works if there are no other readers present, in which case the
    * method returns 0.  Otherwise, the method returns -1 and sets
-   * @c errno to @c EBUSY.  Note that the caller of this method *must*
+   * @c errno to @c EBUSY.
+   *
+   * @note The caller of this method *must*
    * already possess this lock as a read lock (but this condition is
    * not checked by the current implementation).
    */
   int tryacquire_write_upgrade ();
 
   /**
-   * Note, for interface uniformity with other synchronization
-   * wrappers we include the <acquire> method.  This is implemented as
+   * @note For interface uniformity with other synchronization
+   * wrappers we include the @c acquire method.  This is implemented as
    * a write-lock to safe...
    */
   int acquire ();
 
   /**
-   * Note, for interface uniformity with other synchronization
+   * @note For interface uniformity with other synchronization
    * wrappers we include the tryacquire() method.  This is implemented
    * as a write-lock to be safe...  Returns -1 on failure.  If we
    * "failed" because someone else already had the lock, @c errno is
@@ -99,7 +103,7 @@ public:
   int release ();
 
   /// Return the underlying lock.
-  const ACE_rwlock_t &lock () const;
+  ACE_rwlock_t const &lock () const;
 
   /// Dump the state of an object.
   void dump () const;
@@ -116,11 +120,7 @@ protected:
   /// destructor. This flag isn't protected by a lock, so make sure
   /// that you don't have multiple threads simultaneously calling
   /// remove() on the same object, which is a bad idea anyway...
-  bool removed_;
-
-private:
-  void operator= (const ACE_RW_Mutex &) = delete;
-  ACE_RW_Mutex (const ACE_RW_Mutex &) = delete;
+  bool removed_ {};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

@@ -1,13 +1,9 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file  UUID.h
  *
  *  @author Andrew T. Finnel <andrew@activesol.net>
  *  @author Yamuna Krishnmaurthy <yamuna@oomworks.com>
  */
-//=============================================================================
 
 #ifndef ACE_UUID_H
 #define ACE_UUID_H
@@ -48,13 +44,13 @@ namespace ACE_Utils
     /**
      * @overload
      */
-    const Node_ID & node_ID () const;
+    Node_ID const & node_ID () const;
 
     /// Test for equality.
-    bool operator == (const UUID_Node & right) const;
+    bool operator == (UUID_Node const & right) const;
 
     /// Test for inequality.
-    bool operator != (const UUID_Node & right) const;
+    bool operator != (UUID_Node const & right) const;
 
   private:
     /// The value of the node id.
@@ -62,9 +58,9 @@ namespace ACE_Utils
   };
 
   /**
-   * @class ACE_UUID
+   * @class ACE_Utils::UUID
    *
-   * ACE_UUID represents a Universally Unique IDentifier (UUID) as
+   * UUID represents a Universally Unique IDentifier as
    * described in (the expired) INTERNET-DRAFT specification entitled
    * UUIDs and GUIDs. All instances of UUID are of the time-based
    * variety. That is, the version number part of the timeHiAndVersion
@@ -85,17 +81,15 @@ namespace ACE_Utils
     /// The size of a binary UUID.
     static constexpr int BINARY_SIZE = 16;
 
-    /// Constructor
     UUID ();
 
 #ifndef ACE_LACKS_SSCANF
     /// Constructs a UUID from a string representation.
-    UUID (const ACE_CString& uuidString);
+    explicit UUID (ACE_CString const& uuidString);
 #endif
 
-    UUID (const UUID &right);
+    UUID (UUID const &right);
 
-    // Destructor
     ~UUID () = default;
 
     ACE_UINT32 time_low () const;
@@ -114,9 +108,9 @@ namespace ACE_Utils
     void clock_seq_low (u_char);
 
     UUID_Node & node ();
-    const UUID_Node & node () const;
+    UUID_Node const & node () const;
 
-    void node (const UUID_Node & node);
+    void node (UUID_Node const & node);
 
     ACE_CString* thr_id ();
     void thr_id (char*);
@@ -125,25 +119,25 @@ namespace ACE_Utils
     void pid (char*);
 
     /// Returns a string representation of the UUID
-    const ACE_CString* to_string () const;
+    ACE_CString const* to_string () const;
 
 #ifndef ACE_LACKS_SSCANF
     /// Set the value using a string
-    void from_string (const ACE_CString& uuid_string);
+    void from_string (ACE_CString const& uuid_string);
 #endif
 
     /// NIL UUID
-    static const UUID NIL_UUID;
+    static UUID const NIL_UUID;
 
     /// Equality Operations
-    bool operator == (const UUID &right) const;
-    bool operator != (const UUID &right) const;
+    bool operator == (UUID const &right) const;
+    bool operator != (UUID const &right) const;
 
     /// Compute a hash value for the UUID.
     unsigned long hash () const;
 
     /// Assign an existing UUID to this UUID.
-    const UUID & operator = (const UUID & rhs);
+    UUID const & operator = (UUID const & rhs);
 
     ACE_ALLOC_HOOK_DECLARE;
 
@@ -157,7 +151,7 @@ namespace ACE_Utils
      * @param[in]        uuid_string        String version of UUID.
      */
 #ifndef ACE_LACKS_SSCANF
-    void from_string_i (const ACE_CString& uuid_string);
+    void from_string_i (ACE_CString const& uuid_string);
 #endif
 
     /// Data Members for Class Attributes
@@ -191,7 +185,7 @@ namespace ACE_Utils
   };
 
   /**
-   * @class ACE_UUID_Generator
+   * @class ACE_Utils::UUID_Generator
    *
    * Singleton class that generates UUIDs.
    *
@@ -201,11 +195,14 @@ namespace ACE_Utils
   public:
     static constexpr int ACE_UUID_CLOCK_SEQ_MASK = 0x3FFF;
 
-    /// Default constructor.
     UUID_Generator();
 
-    /// Destructor.
     ~UUID_Generator();
+
+    UUID_Generator (UUID_Generator const&) = delete;
+    UUID_Generator& operator = (UUID_Generator const&) = delete;
+    UUID_Generator (UUID_Generator&&) = delete;
+    UUID_Generator& operator = (UUID_Generator&&) = delete;
 
     /// Initialize the UUID generator
     /// @deprecated This method may go away in some future release.
@@ -224,16 +221,15 @@ namespace ACE_Utils
     /// since 00:00:00.00, 15 October 1582.
     using UUID_Time = ACE_UINT64;
 
-    /// The locking strategy prevents multiple generators from accessing
-    /// the UUID_state at the same time. Get the locking strategy.
+    /// Get the lock used to protect UUID state.
     ACE_SYNCH_MUTEX* lock ();
 
-    /// Set a new locking strategy and return the old one.
+    /// Replace the lock. When @a release_lock is true, the generator owns it.
     void lock (ACE_SYNCH_MUTEX* lock, bool release_lock);
 
   private:
     /// The system time when that last uuid was generated.
-    UUID_Time time_last_;
+    UUID_Time time_last_ {};
 
     /// Type to contain the UUID generator persistent state. This will
     /// be kept in memory mapped shared memory
@@ -260,14 +256,16 @@ namespace ACE_Utils
     void get_systemtime( UUID_Time& timeNow);
 
     /// The UUID generator persistent state.
-    UUID_State uuid_state_;
+    UUID_State uuid_state_ {};
 
-    ACE_SYNCH_MUTEX* lock_;
+    /// Owns the default lock or a lock transferred through the setter.
+    std::unique_ptr<ACE_SYNCH_MUTEX> owned_lock_ {};
 
-    bool destroy_lock_;
+    /// Views the active lock, which may be borrowed.
+    ACE_SYNCH_MUTEX* lock_ {};
 
     /// Initialization state of the generator.
-    bool is_init_;
+    bool is_init_ {};
   };
 }
 

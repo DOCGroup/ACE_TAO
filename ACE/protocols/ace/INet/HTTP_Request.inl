@@ -1,4 +1,3 @@
-// -*- C++ -*-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE
@@ -16,7 +15,7 @@ namespace ACE
       }
 
     ACE_INLINE
-    void Request::reset (const ACE_CString& version)
+    void Request::reset (ACE_CString const& version)
       {
         this->clear ();
         this->set_version (version);
@@ -25,7 +24,7 @@ namespace ACE
       }
 
     ACE_INLINE
-    void Request::reset (const ACE_CString& method, const ACE_CString& uri)
+    void Request::reset (ACE_CString const& method, ACE_CString const& uri)
       {
         this->clear ();
         this->set_version (HTTP_1_0);
@@ -34,7 +33,7 @@ namespace ACE
       }
 
     ACE_INLINE
-    void Request::reset (const ACE_CString& method, const ACE_CString& uri, const ACE_CString& version)
+    void Request::reset (ACE_CString const& method, ACE_CString const& uri, ACE_CString const& version)
       {
         this->clear ();
         this->set_version (version);
@@ -43,31 +42,31 @@ namespace ACE
       }
 
     ACE_INLINE
-    void Request::set_method(const ACE_CString& method)
+    void Request::set_method(ACE_CString const& method)
       {
         this->method_ = method;
       }
 
     ACE_INLINE
-    const ACE_CString& Request::get_method() const
+    ACE_CString const& Request::get_method() const
       {
         return this->method_;
       }
 
     ACE_INLINE
-    void Request::set_URI(const ACE_CString& uri)
+    void Request::set_URI(ACE_CString const& uri)
       {
         this->uri_ = uri;
       }
 
     ACE_INLINE
-    const ACE_CString& Request::get_URI() const
+    ACE_CString const& Request::get_URI() const
       {
         return this->uri_;
       }
 
     ACE_INLINE
-    void Request::set_host(const ACE_CString& host)
+    void Request::set_host(ACE_CString const& host)
       {
         this->set (HOST, host);
       }

@@ -39,11 +39,17 @@ template <class ACE_LOCKING_MECHANISM> int
 ACE_Reverse_Lock<ACE_LOCKING_MECHANISM>::release ()
 {
   if (this->acquire_method_ == ACE_Acquire_Method::ACE_READ)
-    return this->lock_.acquire_read ();
+    {
+      return this->lock_.acquire_read ();
+    }
   else if (this->acquire_method_ == ACE_Acquire_Method::ACE_WRITE)
-    return this->lock_.acquire_write ();
+    {
+      return this->lock_.acquire_write ();
+    }
   else
-    return this->lock_.acquire ();
+    {
+      return this->lock_.acquire ();
+    }
 }
 
 // Release the lock.

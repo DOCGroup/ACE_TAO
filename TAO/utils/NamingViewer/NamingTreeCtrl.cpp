@@ -21,9 +21,7 @@ CNamingTreeCtrl::CNamingTreeCtrl ()
   m_ObjectPopup.LoadMenu (IDR_OBJECT_POPUP);
 }
 
-CNamingTreeCtrl::~CNamingTreeCtrl ()
-{
-}
+CNamingTreeCtrl::~CNamingTreeCtrl () = default;
 
 BEGIN_MESSAGE_MAP(CNamingTreeCtrl, CTreeCtrl)
   //{{AFX_MSG_MAP(CNamingTreeCtrl)
@@ -106,12 +104,12 @@ void CNamingTreeCtrl::SetpORB(CORBA::ORB_ptr pORB)
 
 CNamingObject* CNamingTreeCtrl::GetTreeObject(HTREEITEM hItem)
 {
-  if(hItem == 0)
+  if(hItem == nullptr)
   {
     hItem = GetSelectedItem();
     if(!hItem)
     {
-      return 0;
+      return nullptr;
     }
   }
   CNamingObject* pObject = (CNamingObject*)GetItemData(hItem);
@@ -120,7 +118,7 @@ CNamingObject* CNamingTreeCtrl::GetTreeObject(HTREEITEM hItem)
 
 void CNamingTreeCtrl::ClearChildren(HTREEITEM hItem)
 {
-  if(hItem == 0)
+  if(hItem == nullptr)
   {
     HTREEITEM hItem = GetRootItem();
     if(hItem)
@@ -133,16 +131,16 @@ void CNamingTreeCtrl::ClearChildren(HTREEITEM hItem)
     return;
   }
 
-  HTREEITEM hChild;
-  while(hChild = GetNextItem(hItem, TVGN_CHILD))
+  HTREEITEM hChild = GetNextItem(hItem, TVGN_CHILD);
+  while(hChild != nullptr)
   {
     // Remove our reference count on the object reference
     ClearChildren(hChild);
     delete GetTreeObject(hChild);
     DeleteItem(hChild);
+    hChild = GetNextItem(hItem, TVGN_CHILD);
   }
 }
-
 
 #define LISTQUANTUM 40
 
@@ -352,7 +350,6 @@ void CNamingTreeCtrl::OnDestroy()
   ClearChildren();
 }
 
-
 void CNamingTreeCtrl::OnContextpopupBindnewcontext()
 {
   // TODO: Add your command handler code here
@@ -471,7 +468,7 @@ void CNamingTreeCtrl::ListBindingList(HTREEITEM hItem, CosNaming::NamingContext_
 {
   try
   {
-    for(unsigned int i=0; i < bl->length(); i++)
+    for(unsigned int i=0; i < bl->length(); ++i)
     {
       // Add each entry into the tree control
       CORBA::Object_var Object = pContext->resolve(bl[i].binding_name);

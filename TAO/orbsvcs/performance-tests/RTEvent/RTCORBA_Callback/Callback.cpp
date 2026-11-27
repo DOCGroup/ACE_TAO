@@ -22,7 +22,9 @@ Callback::sample (Test::Timestamp the_timestamp)
 
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
   if (sample_history_.max_samples () == sample_history_.sample_count ())
+  {
     return;
+  }
   this->sample_history_.sample (elapsed);
 }
 

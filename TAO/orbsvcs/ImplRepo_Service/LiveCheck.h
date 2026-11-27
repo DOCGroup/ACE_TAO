@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /*
  * @file LiveCheck.h
  *
@@ -28,7 +27,6 @@ class LiveCheck;
 class LiveEntry;
 class PingReceiver;
 
-//---------------------------------------------------------------------------
 /*
  * @enum LiveStatus
  *
@@ -56,7 +54,6 @@ enum LiveStatus {
   LS_CANCELED
 };
 
-//---------------------------------------------------------------------------
 /*
  * @class LiveListener
  *
@@ -74,7 +71,7 @@ class Locator_Export LiveListener
  public:
   /// Construct a new listener. The server name supplied is used to
   /// look up a listener entry in the LiveCheck map.
-  LiveListener (const char *server);
+  explicit LiveListener (char const *server);
 
   virtual ~LiveListener ();
 
@@ -83,7 +80,7 @@ class Locator_Export LiveListener
   virtual bool status_changed (LiveStatus status) = 0;
 
   /// Accessor for the server name. Used by the LiveCheck to associate a listener
-  const char *server () const;
+  char const *server () const;
 
   LiveListener *_add_ref ();
   void _remove_ref ();
@@ -97,7 +94,6 @@ class Locator_Export LiveListener
 
 using LiveListener_ptr = TAO_Intrusive_Ref_Count_Handle<LiveListener>;
 
-//---------------------------------------------------------------------------
 /*
  * @class LiveEntry
  *
@@ -112,7 +108,7 @@ class Locator_Export LiveEntry
 {
  public:
   LiveEntry (LiveCheck *owner,
-             const char *server,
+             char const *server,
              bool may_ping,
              ImplementationRepository::ServerObject_ptr ref,
              int pid);
@@ -126,17 +122,17 @@ class Locator_Export LiveEntry
   void reset_status ();
 
   /// the current state value as text
-  static const char *status_name (LiveStatus s);
+  static char const *status_name (LiveStatus s);
 
   void update_listeners ();
   bool validate_ping (bool &want_reping, ACE_Time_Value &next);
   void do_ping (PortableServer::POA_ptr poa);
-  const ACE_Time_Value &next_check () const;
+  ACE_Time_Value const &next_check () const;
   static void set_reping_limit (int max);
   bool reping_available () const;
   int next_reping ();
   void max_retry_msec (int max);
-  const char *server_name () const;
+  char const *server_name () const;
   void set_pid (int pid);
   bool has_pid (int pid) const;
   int pid () const;
@@ -162,7 +158,6 @@ class Locator_Export LiveEntry
   static int reping_limit_;
 };
 
-//---------------------------------------------------------------------------
 /*
  * @class PingReceiver
  *
@@ -176,25 +171,23 @@ class Locator_Export PingReceiver :
 {
  public:
   PingReceiver (LiveEntry * entry, PortableServer::POA_ptr poa);
-  virtual ~PingReceiver ();
+  ~PingReceiver () override;
 
   /// Called by the entry if it is no longer interested in the result of
   /// a ping.
   void cancel ();
 
   /// Called when an anticipated ping reply is received
-  void ping ();
+  void ping () override;
 
   /// Called when an anticipated ping raises an exception
-  void ping_excep (Messaging::ExceptionHolder * excep_holder);
+  void ping_excep (Messaging::ExceptionHolder * excep_holder) override;
 
  private:
   PortableServer::POA_var poa_;
   LiveEntry * entry_;
 };
 
-
-//---------------------------------------------------------------------------
 /*
  * @class LC_TimeoutGuard
  *
@@ -208,9 +201,9 @@ class Locator_Export PingReceiver :
  * */
 
 #if (ACE_SIZEOF_VOID_P == 8)
-typedef ACE_INT64 LC_token_type;
+using LC_token_type = ACE_INT64;
 #else
-typedef ACE_INT32 LC_token_type;
+using LC_token_type = ACE_INT32;
 #endif
 
 class Locator_Export LC_TimeoutGuard
@@ -233,7 +226,6 @@ class Locator_Export LC_TimeoutGuard
   bool blocked_;
 };
 
-//---------------------------------------------------------------------------
 /*
  * @class LiveCheck
  *
@@ -250,20 +242,20 @@ class Locator_Export LiveCheck : public ACE_Event_Handler
   friend class LC_TimeoutGuard;
 
   LiveCheck ();
-  ~LiveCheck ();
+  ~LiveCheck () override;
 
   void init (CORBA::ORB_ptr orb,
-             const ACE_Time_Value &interval);
+             ACE_Time_Value const &interval);
   void shutdown ();
-  int handle_timeout (const ACE_Time_Value &current_time,
-                      const void *act = nullptr);
-  bool has_server (const char *server);
-  void add_server (const char *server,
+  int handle_timeout (ACE_Time_Value const &current_time,
+                      void const *act = nullptr) override;
+  bool has_server (char const *server);
+  void add_server (char const *server,
                    bool may_ping,
                    ImplementationRepository::ServerObject_ptr ref,
                    int pid);
-  void set_pid (const char *server, int pid);
-  void remove_server (const char *server, int pid);
+  void set_pid (char const *server, int pid);
+  void remove_server (char const *server, int pid);
   bool remove_per_client_entry (LiveEntry *entry);
   bool add_listener (LiveListener *listener);
   bool add_poll_listener (LiveListener *listener);
@@ -271,8 +263,8 @@ class Locator_Export LiveCheck : public ACE_Event_Handler
                                 ImplementationRepository::ServerObject_ptr ref);
   void remove_listener (LiveListener *listener);
   bool schedule_ping (LiveEntry *entry);
-  LiveStatus is_alive (const char *server);
-  const ACE_Time_Value &ping_interval () const;
+  LiveStatus is_alive (char const *server);
+  ACE_Time_Value const &ping_interval () const;
 
  private:
   void enter_handle_timeout ();
@@ -280,14 +272,14 @@ class Locator_Export LiveCheck : public ACE_Event_Handler
   bool in_handle_timeout ();
   void remove_deferred_servers ();
 
-  typedef ACE_Hash_Map_Manager_Ex<ACE_CString,
-                                  LiveEntry *,
-                                  ACE_Hash<ACE_CString>,
-                                  ACE_Equal_To<ACE_CString>,
-                                  ACE_Null_Mutex> LiveEntryMap;
-  typedef ACE_Unbounded_Set<LiveEntry *> PerClientStack;
-  typedef std::pair<ACE_CString, int> NamePidPair;
-  typedef ACE_Unbounded_Set<NamePidPair> NamePidStack;
+  using LiveEntryMap = ACE_Hash_Map_Manager_Ex<ACE_CString,
+                                               LiveEntry *,
+                                               ACE_Hash<ACE_CString>,
+                                               ACE_Equal_To<ACE_CString>,
+                                               ACE_Null_Mutex>;
+  using PerClientStack = ACE_Unbounded_Set<LiveEntry *>;
+  using NamePidPair = std::pair<ACE_CString, int>;
+  using NamePidStack = ACE_Unbounded_Set<NamePidPair>;
 
   LiveEntryMap entry_map_;
   PerClientStack per_client_;

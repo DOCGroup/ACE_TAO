@@ -1,5 +1,3 @@
-/* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file POA_Holder.h
  *
@@ -7,7 +5,6 @@
  *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  */
-//=============================================================================
 #ifndef POA_HOLDER_H
 #define POA_HOLDER_H
 
@@ -24,10 +21,14 @@
 class POA_Holder
 {
  public:
-  /// Constructor
-  POA_Holder ();
+  POA_Holder () = default;
 
-  /// The arg_shifter options are read in the following manner: -POA <name> -PriorityModel <CLIENT|SERVER> <priority> -Lanes <count> (-Lane <priority> ,<static_threads> <dynamic_threads>)* -Bands <count> (-Band <low> <high>)*
+  POA_Holder (POA_Holder const &) = delete;
+  POA_Holder (POA_Holder &&) = delete;
+  POA_Holder &operator= (POA_Holder const &) = delete;
+  POA_Holder &operator= (POA_Holder &&) = delete;
+
+  /// Options are read in this order: -POA name, -PriorityModel CLIENT or SERVER priority, -Lanes count with repeated -Lane priority static_threads dynamic_threads values, and -Bands count with repeated -Band low high values.
   int init (ACE_Arg_Shifter& arg_shifter);
 
   /// Activate the new POA using the parameters initialized before.
@@ -37,12 +38,14 @@ class POA_Holder
   /// Cleanup.
   PortableServer::POA_var poa_;
 
-  /// = POA create options.
+  /// @name POA creation options
+  /// @{
   ACE_CString POA_name_;
-  RTCORBA::PriorityModel priority_model_;
-  RTCORBA::Priority server_priority_;
+  RTCORBA::PriorityModel priority_model_ {RTCORBA::CLIENT_PROPAGATED};
+  RTCORBA::Priority server_priority_ {};
   RTCORBA::ThreadpoolLanes lanes_;
   RTCORBA::PriorityBands bands_;
+  /// @}
 };
 
 #endif /* POA_HOLDER_H */

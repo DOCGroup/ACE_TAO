@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file     timetick.cpp
  *
@@ -7,7 +5,6 @@
  *
  *  @author Peter E MellquistMichael R MacFaden  mrm@cisco.com - rework & ACE port
  */
-//=============================================================================
 
 /*===================================================================
   Copyright (c) 1996
@@ -26,58 +23,57 @@
 =====================================================================*/
 
 #include "asnmp/timetick.h"            // include header file for timetick class
-#include "ace/OS_NS_stdio.h"
+#include <cstdio>
+#include <memory>
 
-// constructor with a value
-TimeTicks::TimeTicks( const unsigned long i):SnmpUInt32(i)
+TimeTicks::TimeTicks (unsigned long const i)
+  : SnmpUInt32 (i)
 {
   smival.syntax = sNMP_SYNTAX_TIMETICKS;
 }
 
-// copy constructor
-TimeTicks::TimeTicks( const TimeTicks &t)
+TimeTicks::TimeTicks (TimeTicks const &t)
   : SnmpUInt32 (t)
 {
   smival.value.uNumber = t.smival.value.uNumber;
   smival.syntax = sNMP_SYNTAX_TIMETICKS;
 }
 
-// destructor
-TimeTicks::~TimeTicks()
-{
-}
-
-// syntax type
+/// Syntax type.
 SmiUINT32 TimeTicks::get_syntax()
 {
   return sNMP_SYNTAX_TIMETICKS;
 }
 
-// create a new instance of this Value
+/// Create a new instance of this value.
 SnmpSyntax *TimeTicks::clone() const
 {
-  return (SnmpSyntax *) new TimeTicks(*this);
+  return new TimeTicks (*this);
 }
 
-// overloaded assignment from ulong
-TimeTicks& TimeTicks::operator=( const unsigned long int i)
+/// Overloaded assignment from an unsigned long.
+TimeTicks &TimeTicks::operator= (unsigned long const i)
 {
-  smival.value.uNumber =i; return *this;
+  smival.value.uNumber = i;
+  return *this;
 }
 
-// overloaded assignment from TimeTicks
-TimeTicks& TimeTicks::operator=( const TimeTicks &uli)
+/// Overloaded assignment from another TimeTicks value.
+TimeTicks &TimeTicks::operator= (TimeTicks const &uli)
 {
- this->smival.value.uNumber = uli.smival.value.uNumber; return *this;
+  this->smival.value.uNumber = uli.smival.value.uNumber;
+  return *this;
 }
 
-// general assignment from any Value
+/// General assignment from any value.
 SnmpSyntax& TimeTicks::operator=( SnmpSyntax &in_val)
 {
-  if ( this == &in_val )        // handle assignment from itself
+  if (this == std::addressof (in_val))        // handle assignment from itself
+    {
       return *this;
+    }
 
-  valid_flag = 0;               // will get set true if really valid
+  valid_flag = false;
   if (in_val.valid()) {
     switch (in_val.get_syntax()) {
       case sNMP_SYNTAX_UINT32:
@@ -87,53 +83,57 @@ SnmpSyntax& TimeTicks::operator=( SnmpSyntax &in_val)
       case sNMP_SYNTAX_INT32:           // implied cast int -> uint
           this->smival.value.uNumber =
                 ((TimeTicks &)in_val).smival.value.uNumber;
-          valid_flag = 1;
+          valid_flag = true;
           break;
     }
   }
   return *this;
 }
 
-// otherwise, behave like an unsigned long
-TimeTicks::operator unsigned long()
+/// Otherwise, behave like an unsigned long.
+TimeTicks::operator unsigned long() const
 {
   return smival.value.uNumber;
 }
 
-
-// ASCII format return
-const char * TimeTicks::to_string()
-     /* Should do something nicer like days:hours:minutes... */
+/// Return the ASCII representation.
+char const *TimeTicks::to_string ()
+  /* Should do something nicer like days:hours:minutes... */
 {
-  unsigned long tt, hseconds, seconds, minutes, hours, days;
-  tt = this->smival.value.uNumber;
+  unsigned long remaining = smival.value.uNumber;
 
   // days
-  days = tt / 8640000;
-  tt %= 8640000;
+  unsigned long const days = remaining / 8640000;
+  remaining %= 8640000;
 
   // hours
-  hours = tt / 360000;
-  tt %= 360000;
+  unsigned long const hours = remaining / 360000;
+  remaining %= 360000;
 
   // minutes
-  minutes = tt / 6000;
-  tt %= 6000;
+  unsigned long const minutes = remaining / 6000;
+  remaining %= 6000;
 
-  seconds = tt / 100;
-  tt %= 100;
+  unsigned long const seconds = remaining / 100;
+  remaining %= 100;
 
-  hseconds = tt;
+  unsigned long const hseconds = remaining;
 
-  if ( days ==0)
-    ACE_OS::sprintf( output_buffer,"%ld:%02ld:%02ld.%02ld", hours,
-                     minutes,seconds,hseconds);
-  else if ( days==1)
-    ACE_OS::sprintf( output_buffer,"1 day %ld:%02ld:%02ld.%02ld", hours,
-                     minutes,seconds,hseconds);
+  if (days == 0)
+    {
+      std::snprintf (output_buffer, sizeof output_buffer, "%lu:%02lu:%02lu.%02lu",
+                     hours, minutes, seconds, hseconds);
+    }
+  else if (days == 1)
+    {
+      std::snprintf (output_buffer, sizeof output_buffer, "1 day %lu:%02lu:%02lu.%02lu",
+                     hours, minutes, seconds, hseconds);
+    }
   else
-    ACE_OS::sprintf( output_buffer,"%ld days, %ld:%02ld:%02ld.%02ld",
-                     days,hours, minutes,seconds, hseconds);
+    {
+      std::snprintf (output_buffer, sizeof output_buffer, "%lu days, %lu:%02lu:%02lu.%02lu",
+                     days, hours, minutes, seconds, hseconds);
+    }
 
   return output_buffer;
 }

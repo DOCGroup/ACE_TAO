@@ -6,10 +6,11 @@
 // become active).  Thanks to Ari Erev <Ari_Erev@comverse.com> for
 // suggesting this and providing the initial code.
 
+#include <atomic>
+
 #include "ace/Task.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_main.h"
-
 
 #if defined (ACE_WIN32)
 
@@ -22,15 +23,22 @@ static constexpr int MAX_ITERATIONS = 100;
 class WFMO_Test : public ACE_Task <ACE_NULL_SYNCH>
 {
 public:
+  WFMO_Test () = default;
+
   //FUZZ: disable check_for_lack_ACE_OS
-  virtual int open (void *);
+  int open (void *) override;
   //FUZZ: enable check_for_lack_ACE_OS
 
-  virtual int svc ();
+  int svc () override;
+
+  WFMO_Test (WFMO_Test const &) = delete;
+  WFMO_Test (WFMO_Test &&) = delete;
+  WFMO_Test &operator= (WFMO_Test const &) = delete;
+  WFMO_Test &operator= (WFMO_Test &&) = delete;
 
   // Use two handles here..
   ACE_sema_t sema_handles_[2];
-  int semaphore_count_;
+  std::atomic<int> semaphore_count_ {};
 };
 
 static WFMO_Test wfmo_test;
@@ -38,7 +46,7 @@ static WFMO_Test wfmo_test;
 int
 WFMO_Test::open (void *arg)
 {
-  int thread_count = int (arg);
+  int thread_count = *static_cast<int *> (arg);
   int result = this->activate (0, thread_count);
 
   ACE_ASSERT (result != -1);
@@ -48,7 +56,7 @@ WFMO_Test::open (void *arg)
 int
 WFMO_Test::svc ()
 {
-  while(1)
+  while (true)
     {
       int result = ::WaitForMultipleObjects (2, this->sema_handles_,
                                              FALSE, INFINITE);
@@ -68,11 +76,10 @@ WFMO_Test::svc ()
         }
 
       // semaphore_count_ will be displayed by the "main" thread.
-      // It's value must be 2.  Note that although this is a shared
-      // resource it's not protected via a mutex because the ++
-      // operation on Intel is atomic.
+      // It's value must be 2. The atomic counter protects this shared
+      // resource without a separate mutex.
 
-      semaphore_count_++;
+      ++semaphore_count_;
       ACE_DEBUG ((LM_DEBUG,
                   "(%t) thread has been signaled.\n"));
 
@@ -90,9 +97,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   int thread_count = THREAD_COUNT;
 
   if (argc > 1)
-    thread_count = ACE_OS::atoi (argv[1]);
-
-  wfmo_test.open ((void *) thread_count);
+    {
+      thread_count = ACE_OS::atoi (argv[1]);
+    }
 
   // Initialize the semaphores.
   int result = ACE_OS::sema_init (&wfmo_test.sema_handles_[0], thread_count + 5);
@@ -101,9 +108,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   result = ACE_OS::sema_init (&wfmo_test.sema_handles_[1], thread_count + 5);
   ACE_ASSERT (result != -1);
 
-  for (int i = 0; i < MAX_ITERATIONS; i++)
+  wfmo_test.open (&thread_count);
+
+  for (int i = 0; i < MAX_ITERATIONS; ++i)
     {
-      wfmo_test.semaphore_count_ = 0;
+      wfmo_test.semaphore_count_.store (0);
 
       result = ACE_OS::sema_post (&wfmo_test.sema_handles_[0]);
       ACE_ASSERT (result != -1);
@@ -115,7 +124,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Add one for the other thread that was signaled.
       ACE_DEBUG ((LM_DEBUG,
                   "semaphore_count_ = %d  (should have been %d).\n",
-                  wfmo_test.semaphore_count_,
+                  wfmo_test.semaphore_count_.load (),
                   2)); // Two semaphores should have been released.
     }
 
@@ -128,5 +137,6 @@ int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_DEBUG ((LM_DEBUG, "this test only runs on Win32\n"));
+  return 0;
 }
 #endif /* ACE_WIN32 */

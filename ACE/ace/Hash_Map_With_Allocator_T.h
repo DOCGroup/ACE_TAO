@@ -1,13 +1,9 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   Hash_Map_With_Allocator_T.h
  *
  *  @author Marina Spivak <marina@cs.wustl.edu>
  *  @author Irfan Pyarali <irfan@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef ACE_HASH_MAP_WITH_ALLOCATOR_T_H
 #define ACE_HASH_MAP_WITH_ALLOCATOR_T_H
@@ -50,45 +46,52 @@ class ACE_Hash_Map_With_Allocator :
   public ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, ACE_Hash<EXT_ID>, ACE_Equal_To<EXT_ID>, ACE_Null_Mutex>
 {
 public:
-  /// Constructor.
-  ACE_Hash_Map_With_Allocator (ACE_Allocator *alloc);
+  ACE_Hash_Map_With_Allocator () = delete;
+  ACE_Hash_Map_With_Allocator (ACE_Hash_Map_With_Allocator const &) = delete;
+  ACE_Hash_Map_With_Allocator (ACE_Hash_Map_With_Allocator &&) = delete;
+  ACE_Hash_Map_With_Allocator &operator= (ACE_Hash_Map_With_Allocator const &) = delete;
+  ACE_Hash_Map_With_Allocator &operator= (ACE_Hash_Map_With_Allocator &&) = delete;
+  ~ACE_Hash_Map_With_Allocator () = default;
+
+  explicit ACE_Hash_Map_With_Allocator (ACE_Allocator *alloc);
 
   /// Constructor that specifies hash table size.
   ACE_Hash_Map_With_Allocator (size_t size,
                                ACE_Allocator *alloc);
 
-  // = The following methods are Proxies to the corresponding methods
-  // in ACE_Hash_Map_Manager.  Each method sets the allocator to
-  // the one specified by the invoking entity, and then calls the
-  // corresponding method in ACE_Hash_Map_Manager to do the
-  // actual work.
-
-  int bind (const EXT_ID &,
-            const INT_ID &,
+  /// @name Proxy operations
+  /// The following methods are proxies to the corresponding methods
+  /// in ACE_Hash_Map_Manager. Each method sets the allocator to the
+  /// one specified by the invoking entity, then calls the corresponding
+  /// method in ACE_Hash_Map_Manager to do the actual work.
+  /// @{
+  int bind (EXT_ID const &,
+            INT_ID const &,
             ACE_Allocator *alloc);
 
-  int unbind (const EXT_ID &,
+  int unbind (EXT_ID const &,
               INT_ID &,
               ACE_Allocator *alloc);
 
-  int unbind (const EXT_ID &,
+  int unbind (EXT_ID const &,
               ACE_Allocator *alloc);
 
-  int rebind (const EXT_ID &,
-              const INT_ID &,
+  int rebind (EXT_ID const &,
+              INT_ID const &,
               EXT_ID &,
               INT_ID &,
               ACE_Allocator *alloc);
 
-  int find (const EXT_ID &,
+  int find (EXT_ID const &,
             INT_ID &,
             ACE_Allocator *alloc);
 
   /// Returns 0 if the @a ext_id is in the mapping, otherwise -1.
-  int find (const EXT_ID &ext_id,
+  int find (EXT_ID const &ext_id,
             ACE_Allocator *alloc);
 
   int close (ACE_Allocator *alloc);
+  /// @}
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

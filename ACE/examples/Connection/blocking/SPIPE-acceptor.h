@@ -1,9 +1,9 @@
-/* -*- C++ -*- */
 #ifndef SP_ACCEPTOR_H
 #define SP_ACCEPTOR_H
 
 #include "ace/Svc_Handler.h"
 #include "ace/Service_Config.h"
+#include <string>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -25,13 +25,19 @@ class Svc_Handler : public ACE_Svc_Handler <ACE_SPIPE_STREAM, ACE_NULL_SYNCH>, p
 {
 public:
   Svc_Handler ();
-  ~Svc_Handler ();
+  ~Svc_Handler () override = default;
+  Svc_Handler (Svc_Handler const &) = delete;
+  Svc_Handler (Svc_Handler &&) = delete;
+  Svc_Handler &operator= (Svc_Handler const &) = delete;
+  Svc_Handler &operator= (Svc_Handler &&) = delete;
 
-  virtual int open (void *);
+  int open (void *) override;
 
-  virtual void handle_read_stream (const ACE_Asynch_Read_Stream::Result &result);
-  // This is called when asynchronous read from the socket complete
-  // Handle data from the client.
+  void destroy () override {}
+
+  /// This is called when asynchronous read from the socket complete
+  /// Handle data from the client.
+  void handle_read_stream (ACE_Asynch_Read_Stream::Result const &result) override;
 
 private:
   ACE_Asynch_Read_Stream ar_;
@@ -41,35 +47,41 @@ private:
 class IPC_Server : public ACE_Oneshot_Acceptor<Svc_Handler, ACE_SPIPE_ACCEPTOR>
 {
 public:
-  IPC_Server ();
-  ~IPC_Server ();
+  IPC_Server () = default;
+  ~IPC_Server () override = default;
+  IPC_Server (IPC_Server const &) = delete;
+  IPC_Server (IPC_Server &&) = delete;
+  IPC_Server &operator= (IPC_Server const &) = delete;
+  IPC_Server &operator= (IPC_Server &&) = delete;
 
-  // = Dynamic linking hooks.
-  virtual int init (int argc, ACE_TCHAR *argv[]);
-  // Initialize the network server.
+  /// @name Dynamic linking hooks
+  /// @{
+  /// Initialize the network server.
+  int init (int argc, ACE_TCHAR *argv[]) override;
 
-  virtual int fini ();
-  // Close down the server.
+  /// Close down the server.
+  int fini () override;
+  /// @}
 
+  /// Run the interative service.
   virtual int svc ();
-  // Run the interative service.
 
 private:
+  /// Parse command-line arguments.
   int parse_args (int argc, ACE_TCHAR *argv[]);
-  // Parse command-line arguments.
 
-  int n_threads_;
-  // Size of thread pool to use.
+  /// Size of thread pool to use.
+  int n_threads_ {1};
 
-  ACE_TCHAR rendezvous_[MAXPATHLEN + 1];
-  // Meeting place for pipe.
+  /// Meeting place for pipe.
+  std::basic_string<ACE_TCHAR> rendezvous_ {ACE_TEXT ("acepipe")};
 
-  int shutdown_;
-  // Keeps track of when we shut down due to receipt of the SIGINT
-  // signal.
+  /// Keeps track of when we shut down due to receipt of the SIGINT
+  /// signal.
+  int shutdown_ {};
 
-  int handle_signal (int signum, siginfo_t *, ucontext_t *);
-  // Signal handler method.
+  /// Signal handler method.
+  int handle_signal (int signum, siginfo_t *, ucontext_t *) override;
 };
 
 #endif /* ACE_HAS_WIN32_OVERLAPPED_IO || ACE_HAS_AIO_CALLS */

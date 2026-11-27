@@ -1,13 +1,8 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
  *  @file PortableServer.h
  *
  *  @author Carlos O'Ryan <coryan@uci.edu>
  */
-//=============================================================================
-
 #ifndef TAO_PORTABLESERVER_H
 #define TAO_PORTABLESERVER_H
 
@@ -26,11 +21,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_PortableServer_Export TAO_POA_Initializer
 {
 public:
+  TAO_POA_Initializer () = delete;
+
   /// Used to force the initialization of the ORB code.
   static int init ();
 };
 
-static const int TAO_Requires_POA_Initializer = TAO_POA_Initializer::init ();
+static int const TAO_Requires_POA_Initializer = TAO_POA_Initializer::init ();
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

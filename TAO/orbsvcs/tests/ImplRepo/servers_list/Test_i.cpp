@@ -1,5 +1,3 @@
-/* -*- C++ -*-  */
-
 #include "Test_i.h"
 #include "Terminator.h"
 #include "ace/OS_NS_unistd.h"
@@ -12,7 +10,7 @@ Test_i::Test_i (CORBA::Short server_num, Terminator &terminator)
 
 Test_i::~Test_i ()
 {
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb {};
   ACE_NEW (mb,
            ACE_Message_Block(0,
                              ACE_Message_Block::MB_HANGUP));
@@ -21,7 +19,7 @@ Test_i::~Test_i ()
 }
 
 CORBA::Short
-Test_i::get_server_num (const CORBA::Short delay_secs)
+Test_i::get_server_num (CORBA::Short const delay_secs)
 {
   ACE_OS::sleep (delay_secs);
   return this->server_num_;
@@ -30,7 +28,7 @@ Test_i::get_server_num (const CORBA::Short delay_secs)
 void
 Test_i::abort (CORBA::Short delay_secs)
 {
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb {};
   ACE_NEW(mb, ACE_Message_Block(2));
   ACE_OS::sprintf(mb->wr_ptr (), "%d", delay_secs);
   terminator_.putq(mb);

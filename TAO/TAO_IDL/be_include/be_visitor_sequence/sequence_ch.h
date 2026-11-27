@@ -1,6 +1,3 @@
-/* -*- c++ -*- */
-
-//=============================================================================
 /**
  *  @file    sequence_ch.h
  *
@@ -10,7 +7,6 @@
  *
  *  @author Aniruddha Gokhale
  */
-//=============================================================================
 
 #ifndef _BE_VISITOR_SEQUENCE_SEQUENCE_CH_H_
 #define _BE_VISITOR_SEQUENCE_SEQUENCE_CH_H_
@@ -30,9 +26,9 @@ public:
 
   ~be_visitor_sequence_ch () override  = default;
 
-  be_visitor_sequence_ch (const be_visitor_sequence_ch &) = delete;
+  be_visitor_sequence_ch (be_visitor_sequence_ch const &) = delete;
   be_visitor_sequence_ch (be_visitor_sequence_ch &&) = delete;
-  be_visitor_sequence_ch &operator= (const be_visitor_sequence_ch &) = delete;
+  be_visitor_sequence_ch &operator= (be_visitor_sequence_ch const &) = delete;
   be_visitor_sequence_ch &operator= (be_visitor_sequence_ch &&) = delete;
 
   /// visit sequence node.

@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   FTEC_ORBInitializer.h
  *
  *  @author Huang-Ming Huang <hh1@cse.wustl.edu>
  */
-//=============================================================================
 #ifndef FTEC_ORBINITIALIZER__H_
 #define FTEC_ORBINITIALIZER__H_
 #include /**/ "ace/pre.h"
@@ -31,7 +27,6 @@ public:
 
   void post_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 
-private:
   FTEC_ORBInitializer (FTEC_ORBInitializer const &) = delete;
   FTEC_ORBInitializer &operator= (FTEC_ORBInitializer const &) = delete;
   FTEC_ORBInitializer (FTEC_ORBInitializer &&) = delete;

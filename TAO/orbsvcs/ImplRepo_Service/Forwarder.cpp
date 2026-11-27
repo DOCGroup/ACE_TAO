@@ -1,4 +1,3 @@
-//=============================================================================
 /**
 *  @file   Forwarder.cpp
 *
@@ -6,7 +5,6 @@
 *
 *  @author Phil Mesnier <mesnier_p@ociweb.com>
 */
-//=============================================================================
 
 #include "orbsvcs/Log_Macros.h"
 #include "Forwarder.h"
@@ -26,15 +24,15 @@
 #include "tao/DynamicInterface/AMH_DSI_Response_Handler.h"
 #include "tao/Messaging/AMH_Response_Handler.h"
 
+#include <memory>
+
 ImR_DSI_Forwarder::ImR_DSI_Forwarder (ImR_Locator_i& imr_impl)
   : locator_ (imr_impl)
   , orb_ (nullptr)
 {
 }
 
-ImR_DSI_Forwarder::~ImR_DSI_Forwarder ()
-{
-}
+ImR_DSI_Forwarder::~ImR_DSI_Forwarder () = default;
 
 void
 ImR_DSI_Forwarder::init (CORBA::ORB_ptr orb)
@@ -49,7 +47,7 @@ ImR_DSI_Forwarder::init (CORBA::ORB_ptr orb)
       this->poa_current_var_ =
         PortableServer::Current::_narrow (tmp.in ());
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const&)
     {
     }
   ACE_ASSERT (!CORBA::is_nil (this->poa_current_var_.in ()));
@@ -73,7 +71,7 @@ ImR_DSI_Forwarder::_dispatch (TAO_ServerRequest &request,
     }
 
   // Create DSI request object.
-  CORBA::ServerRequest *dsi_request = nullptr;
+  CORBA::ServerRequest *dsi_request {};
   ACE_NEW (dsi_request,
            CORBA::ServerRequest (request));
   try
@@ -86,7 +84,7 @@ ImR_DSI_Forwarder::_dispatch (TAO_ServerRequest &request,
       // Delegate to user.
       this->invoke (dsi_request, rh.in());
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       // Only if the client is waiting.
       if (request.response_expected () && !request.sync_with_server ())
@@ -137,7 +135,7 @@ ImR_DSI_Forwarder::invoke (CORBA::ServerRequest_ptr request,
   TAO::Portable_Server::POA_Current_Impl* impl = tao_current->implementation ();
   TAO::ObjectKey::encode_sequence_to_string (key_str.out (), impl->object_key ());
 
-  ImR_DSI_ResponseHandler *rh = nullptr;
+  ImR_DSI_ResponseHandler *rh {};
   ACE_NEW (rh, ImR_DSI_ResponseHandler(key_str.in(),
                                     this->locator_.debug() > 0 ?
                                     server_name.in() : "",
@@ -158,10 +156,8 @@ ImR_DSI_Forwarder::invoke_primary_interface(CORBA::ServerRequest_ptr )
 }
 
 
-//--------------------------------------------------------------------
-
-ImR_DSI_ResponseHandler::ImR_DSI_ResponseHandler (const char *key,
-                                            const char *server_name,
+ImR_DSI_ResponseHandler::ImR_DSI_ResponseHandler (char const *key,
+                                            char const *server_name,
                                             CORBA::ORB_ptr orb,
                                             TAO_AMH_DSI_Response_Handler_ptr resp)
   :key_str_ (key),
@@ -171,12 +167,10 @@ ImR_DSI_ResponseHandler::ImR_DSI_ResponseHandler (const char *key,
 {
 }
 
-ImR_DSI_ResponseHandler::~ImR_DSI_ResponseHandler ()
-{
-}
+ImR_DSI_ResponseHandler::~ImR_DSI_ResponseHandler () = default;
 
 void
-ImR_DSI_ResponseHandler::send_ior (const char *pior)
+ImR_DSI_ResponseHandler::send_ior (char const *pior)
 {
   ACE_CString ior = pior;
 
@@ -224,7 +218,9 @@ ImR_DSI_ResponseHandler::send_ior (const char *pior)
 void
 ImR_DSI_ResponseHandler::invoke_excep_i (CORBA::Exception *ex)
 {
-  TAO_AMH_DSI_Exception_Holder h(ex);
+  std::unique_ptr<CORBA::Exception> exception {ex};
+  TAO_AMH_DSI_Exception_Holder h (exception.get ());
+  exception.release ();
   this->resp_->invoke_excep(&h);
   delete this;
 }

@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//==========================================================================
 /**
  *  @file    Service_Types.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//==========================================================================
 
 #ifndef ACE_SERVICE_TYPE_H
 #define ACE_SERVICE_TYPE_H
@@ -14,6 +10,8 @@
 #include /**/ "ace/pre.h"
 
 #include "ace/Service_Object.h"
+
+#include <memory>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -38,27 +36,34 @@ class ACE_Export ACE_Service_Type_Impl
 {
 public:
   ACE_Service_Type_Impl (void *object,
-                         const ACE_TCHAR *s_name,
+                         ACE_TCHAR const *s_name,
                          u_int flags = 0,
-                         ACE_Service_Object_Exterminator gobbler = 0,
+                         ACE_Service_Object_Exterminator gobbler = nullptr,
                          int stype = ACE_Service_Type::INVALID_TYPE);
   virtual ~ACE_Service_Type_Impl ();
 
-  // = Pure virtual interface (must be defined by the subclass).
+  ACE_Service_Type_Impl (ACE_Service_Type_Impl const &) = delete;
+  ACE_Service_Type_Impl (ACE_Service_Type_Impl &&) = delete;
+  ACE_Service_Type_Impl &operator= (ACE_Service_Type_Impl const &) = delete;
+  ACE_Service_Type_Impl &operator= (ACE_Service_Type_Impl &&) = delete;
+
+  /// @name Service interface
+  /// @{
   virtual int suspend () const = 0;
   virtual int resume () const = 0;
   virtual int init (int argc, ACE_TCHAR *argv[]) const = 0;
   virtual int fini () const;
   virtual int info (ACE_TCHAR **str, size_t len) const = 0;
+  /// @}
 
   /// The pointer to the service.
   void *object () const;
 
   /// Get the name of the service.
-  const ACE_TCHAR *name () const;
+  ACE_TCHAR const *name () const;
 
   /// Set the name of the service.
-  void name (const ACE_TCHAR *);
+  void name (ACE_TCHAR const *);
 
   /// Dump the state of an object.
   void dump () const;
@@ -73,8 +78,13 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
+  struct Name_Deleter
+  {
+    void operator() (ACE_TCHAR *name) const;
+  };
+
   /// Name of the service.
-  const ACE_TCHAR *name_;
+  mutable std::unique_ptr<ACE_TCHAR[], Name_Deleter> name_ {};
 
   /// Pointer to object that implements the service.  This actually
   /// points to an ACE_Service_Object, ACE_Module, or ACE_Stream.
@@ -102,19 +112,21 @@ class ACE_Export ACE_Service_Object_Type : public ACE_Service_Type_Impl
 {
 public:
   ACE_Service_Object_Type (void *so,
-                           const ACE_TCHAR *name,
+                           ACE_TCHAR const *name,
                            u_int flags = 0,
-                           ACE_Service_Object_Exterminator gobbler = 0,
+                           ACE_Service_Object_Exterminator gobbler = nullptr,
                            int stype = ACE_Service_Type::SERVICE_OBJECT);
 
   ~ACE_Service_Object_Type () override;
 
-  // = Implement the hooks for <ACE_Service_Objects>.
+  /// @name Service object hooks
+  /// @{
   int suspend () const override;
   int resume () const override;
   int init (int argc, ACE_TCHAR *argv[]) const override;
   int fini () const override;
   int info (ACE_TCHAR **str, size_t len) const override;
+  /// @}
 
 private:
   /// Holds the initialization status (result of object->init())
@@ -131,18 +143,20 @@ class ACE_Export ACE_Module_Type : public ACE_Service_Type_Impl
 {
 public:
   ACE_Module_Type (void *m, // Really an ACE_Module *.
-                   const ACE_TCHAR *identifier,
+                   ACE_TCHAR const *identifier,
                    u_int flags = 0,
                    int stype = ACE_Service_Type::MODULE);
 
   ~ACE_Module_Type () override;
 
-  // = Implement the hooks for <ACE_Modules>.
+  /// @name Module hooks
+  /// @{
   int suspend () const override;
   int resume () const override;
   int init (int argc, ACE_TCHAR *argv[]) const override;
   int fini () const override;
   int info (ACE_TCHAR **str, size_t len) const override;
+  /// @}
 
   /// Get the link pointer.
   ACE_Module_Type *link () const;
@@ -158,7 +172,7 @@ public:
 
 private:
   /// Pointer to the next ACE_Module_Type in an ACE_Stream_Type.
-  ACE_Module_Type *link_;
+  ACE_Module_Type *link_ {};
 };
 
 /**
@@ -171,18 +185,20 @@ class ACE_Export ACE_Stream_Type : public ACE_Service_Type_Impl
 {
 public:
   ACE_Stream_Type (void *s, // Really an ACE_Stream *.
-                   const ACE_TCHAR *identifier,
+                   ACE_TCHAR const *identifier,
                    u_int flags = 0,
                    int stype = ACE_Service_Type::STREAM);
 
   ~ACE_Stream_Type () override;
 
-  // = Implement the hooks for <ACE_Streams>.
+  /// @name Stream hooks
+  /// @{
   int suspend () const override;
   int resume () const override;
   int init (int argc, ACE_TCHAR *argv[]) const override;
   int fini () const override;
   int info (ACE_TCHAR **str, size_t len) const override;
+  /// @}
 
   /// Add a new  ACE_Module to the top of the ACE_Stream.
   int push (ACE_Module_Type *new_module);
@@ -191,7 +207,7 @@ public:
   int remove (ACE_Module_Type *module);
 
   /// Locate the ACE_Module with @a mod_name.
-  ACE_Module_Type *find (const ACE_TCHAR *module_name) const;
+  ACE_Module_Type *find (ACE_TCHAR const *module_name) const;
 
   /// Dump the state of an object.
   void dump () const;
@@ -201,7 +217,7 @@ public:
 
 private:
   /// Pointer to the head of the ACE_Module list.
-  ACE_Module_Type *head_;
+  ACE_Module_Type *head_ {};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

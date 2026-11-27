@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-
 #ifndef JAWS_CACHE_OBJECT_H
 #define JAWS_CACHE_OBJECT_H
 
@@ -14,19 +11,21 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Allocator;
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-
-// Cache bucket -- use Hash_Bucket to hold cacheable objects.
-
+/// Cache bucket object stored in JAWS_Hash_Bucket containers.
 class JAWS_Cache_Object
 {
 public:
-  JAWS_Cache_Object (const void *, size_t);
+  JAWS_Cache_Object (void const *, size_t);
   virtual ~JAWS_Cache_Object ();
+  JAWS_Cache_Object (JAWS_Cache_Object const &) = delete;
+  JAWS_Cache_Object (JAWS_Cache_Object &&) = delete;
+  JAWS_Cache_Object &operator= (JAWS_Cache_Object const &) = delete;
+  JAWS_Cache_Object &operator= (JAWS_Cache_Object &&) = delete;
 
   void *internal () const;
   void internal (void *);
 
-  const void *data () const;
+  void const *data () const;
   size_t size () const;
   unsigned int count () const;
 
@@ -53,7 +52,7 @@ protected:
 
 private:
   void *internal_;
-  const void *data_;
+  void const *data_;
   size_t size_;
 
   time_t last_access_;
@@ -66,16 +65,16 @@ private:
 class JAWS_Referenced_Cache_Object : public JAWS_Cache_Object
 {
 public:
-  JAWS_Referenced_Cache_Object (const void *, size_t);
-  virtual ~JAWS_Referenced_Cache_Object ();
+  JAWS_Referenced_Cache_Object (void const *, size_t);
+  ~JAWS_Referenced_Cache_Object () override;
 
-  virtual ACE_Lock & lock ();
+  ACE_Lock & lock () override;
 
 protected:
-  virtual unsigned int count_i () const;
-  virtual int acquire_i ();
-  virtual int release_i ();
-  virtual unsigned int priority_i () const;
+  unsigned int count_i () const override;
+  int acquire_i () override;
+  int release_i () override;
+  unsigned int priority_i () const override;
 
 private:
   mutable ACE_SYNCH_RW_MUTEX count_;
@@ -85,16 +84,16 @@ private:
 class JAWS_Counted_Cache_Object : public JAWS_Cache_Object
 {
 public:
-  JAWS_Counted_Cache_Object (const void *, size_t);
-  virtual ~JAWS_Counted_Cache_Object ();
+  JAWS_Counted_Cache_Object (void const *, size_t);
+  ~JAWS_Counted_Cache_Object () override;
 
-  virtual ACE_Lock & lock ();
+  ACE_Lock & lock () override;
 
 protected:
-  virtual unsigned int count_i () const;
-  virtual int acquire_i ();
-  virtual int release_i ();
-  virtual unsigned int priority_i () const;
+  unsigned int count_i () const override;
+  int acquire_i () override;
+  int release_i () override;
+  unsigned int priority_i () const override;
 
 private:
   unsigned int count_;
@@ -106,12 +105,12 @@ private:
 class JAWS_Cache_Object_Factory
 {
 public:
-  JAWS_Cache_Object_Factory (ACE_Allocator *alloc = 0);
+  explicit JAWS_Cache_Object_Factory (ACE_Allocator *alloc = nullptr);
   virtual ~JAWS_Cache_Object_Factory ();
 
-  int open (ACE_Allocator *alloc = 0);
+  int open (ACE_Allocator *alloc = nullptr);
 
-  virtual JAWS_Cache_Object * create (const void *, size_t) = 0;
+  virtual JAWS_Cache_Object * create (void const *, size_t) = 0;
   virtual void destroy (JAWS_Cache_Object *) = 0;
 
 protected:
@@ -121,21 +120,21 @@ protected:
 class JAWS_Referenced_Cache_Object_Factory : public JAWS_Cache_Object_Factory
 {
 public:
-  JAWS_Referenced_Cache_Object_Factory (ACE_Allocator *alloc = 0);
-  virtual ~JAWS_Referenced_Cache_Object_Factory ();
+  explicit JAWS_Referenced_Cache_Object_Factory (ACE_Allocator *alloc = nullptr);
+  ~JAWS_Referenced_Cache_Object_Factory () override;
 
-  virtual JAWS_Cache_Object * create (const void *, size_t);
-  virtual void destroy (JAWS_Cache_Object *);
+  JAWS_Cache_Object * create (void const *, size_t) override;
+  void destroy (JAWS_Cache_Object *) override;
 };
 
 class JAWS_Counted_Cache_Object_Factory : public JAWS_Cache_Object_Factory
 {
 public:
-  JAWS_Counted_Cache_Object_Factory (ACE_Allocator *alloc = 0);
-  virtual ~JAWS_Counted_Cache_Object_Factory ();
+  explicit JAWS_Counted_Cache_Object_Factory (ACE_Allocator *alloc = nullptr);
+  ~JAWS_Counted_Cache_Object_Factory () override;
 
-  virtual JAWS_Cache_Object * create (const void *, size_t);
-  virtual void destroy (JAWS_Cache_Object *);
+  JAWS_Cache_Object * create (void const *, size_t) override;
+  void destroy (JAWS_Cache_Object *) override;
 };
 
 #endif /* JAWS_CACHE_OBJECT_H */

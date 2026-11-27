@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 /**
  *  @file   ECG_Complex_Address_Server.h
  *
@@ -31,9 +29,9 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  * INITIALIZATION STRING FORMAT
  *
- * The string is a sequence of <key>@<value> pairs separated by
- * a single space, where <key> is event source (or type)
- * and <value> is the corresponding mcast address.  Example:
+ * The string is a sequence of key-value pairs separated by
+ * a single space, where key is event source (or type)
+ * and value is the corresponding mcast address.  Example:
  * "34@230.100.0.2:2300 45@230.100.123.43:2300"
  * The string above represents two key-value pairs.
  *
@@ -47,48 +45,47 @@ class TAO_RTEvent_Serv_Export TAO_ECG_Complex_Address_Server :
 {
 public:
   /// Create a new TAO_ECG_Complex_Address_Server object.
-  /*
-   * (Constructor access is restricted to insure that all
-   * TAO_ECG_Complex_Address_Server objects are heap-allocated.)
-   * <is_source_mapping> flag indicates whether this
-   * server maps based on event header source or event header type.
-   */
+  /// Constructor access is restricted to ensure that all
+  /// TAO_ECG_Complex_Address_Server objects are heap-allocated.
+  /// The @a is_source_mapping flag selects mapping by event header source
+  /// or event header type.
   static PortableServer::Servant_var<TAO_ECG_Complex_Address_Server>
-         create (int is_source_mapping = 1);
+         create (bool is_source_mapping = true);
 
-  /// Destructor
-  virtual ~TAO_ECG_Complex_Address_Server () override;
+  ~TAO_ECG_Complex_Address_Server () override = default;
 
   /// Initializes the mapping from the @a arg string.  See class notes
   /// for the expected format.
-  int init (const char *arg);
+  int init (char const *arg);
 
-  // = The RtecUDPAdmin::AddrServer methods
-  virtual void get_addr (const RtecEventComm::EventHeader& header,
-                         RtecUDPAdmin::UDP_Addr_out addr) override;
-  virtual void get_address (const RtecEventComm::EventHeader& header,
-                            RtecUDPAdmin::UDP_Address_out addr6) override;
+  /// @name The RtecUDPAdmin::AddrServer methods
+  /// @{
+  void get_addr (RtecEventComm::EventHeader const &header,
+                 RtecUDPAdmin::UDP_Addr_out addr) override;
+  void get_address (RtecEventComm::EventHeader const &header,
+                    RtecUDPAdmin::UDP_Address_out addr6) override;
 
   /// Prints out complete content of the address server. Useful for
   /// debugging.
   void dump_content ();
 
+  /// @}
 protected:
   /// Constructor (protected).  Clients can create new
   /// TAO_ECG_Complex_Address_Server objects using the static create()
   /// method.
-  /// <is_source_mapping> flag indicates whether this
+  /// @c is_source_mapping flag indicates whether this
   /// server maps based on event header source or event header type.
-  TAO_ECG_Complex_Address_Server (int is_source_mapping = 1);
+  explicit TAO_ECG_Complex_Address_Server (bool is_source_mapping = true);
 
 private:
   /// Helper.  Given key and mcast address in string form, add them to
   /// the mapping.
-  int add_entry (const char * key, const char * mcast_addr);
+  int add_entry (char const *key, char const *mcast_addr);
 
   /// Flag indicating whether this address server maps event source or
   /// event type to mcast groups.
-  int is_source_mapping_;
+  bool is_source_mapping_;
 
   using MAP = ACE_Hash_Map_Manager_Ex<CORBA::Long, ACE_INET_Addr,
                                       ACE_Hash<CORBA::Long>, ACE_Equal_To<CORBA::Long>, ACE_Null_Mutex>;

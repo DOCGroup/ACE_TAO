@@ -36,7 +36,7 @@ TAO::Any_Array_Impl_T<T_slice, T_forany>::insert (CORBA::Any & any,
                                                   CORBA::TypeCode_ptr tc,
                                                   T_slice * const value)
 {
-  TAO::Any_Array_Impl_T<T_slice, T_forany> *new_impl = nullptr;
+  TAO::Any_Array_Impl_T<T_slice, T_forany> *new_impl {};
   using ARRAY_ANY_IMPL = TAO::Any_Array_Impl_T<T_slice, T_forany>;
   ACE_NEW (new_impl,
            ARRAY_ANY_IMPL (destructor,
@@ -47,7 +47,7 @@ TAO::Any_Array_Impl_T<T_slice, T_forany>::insert (CORBA::Any & any,
 
 template<typename T_slice, typename T_forany>
 CORBA::Boolean
-TAO::Any_Array_Impl_T<T_slice, T_forany>::extract (const CORBA::Any & any,
+TAO::Any_Array_Impl_T<T_slice, T_forany>::extract (CORBA::Any const & any,
                                                    _tao_destructor destructor,
                                                    CORBA::TypeCode_ptr tc,
                                                    T_slice *& _tao_elem)
@@ -56,19 +56,19 @@ TAO::Any_Array_Impl_T<T_slice, T_forany>::extract (const CORBA::Any & any,
 
   try
     {
-      CORBA::TypeCode_ptr any_tc = any._tao_get_typecode ();
+      CORBA::TypeCode_ptr const any_tc = any._tao_get_typecode ();
       CORBA::Boolean const _tao_equiv = any_tc->equivalent (tc);
 
-      if (_tao_equiv == false)
+      if (!_tao_equiv)
         {
           return false;
         }
 
-      TAO::Any_Impl *impl = any.impl ();
+      TAO::Any_Impl * const impl = any.impl ();
 
       if (!impl->encoded ())
         {
-          TAO::Any_Array_Impl_T<T_slice, T_forany> *narrow_impl =
+          TAO::Any_Array_Impl_T<T_slice, T_forany> * const narrow_impl =
             dynamic_cast <TAO::Any_Array_Impl_T <T_slice, T_forany> *> (impl);
 
           if (narrow_impl == nullptr)
@@ -80,7 +80,7 @@ TAO::Any_Array_Impl_T<T_slice, T_forany>::extract (const CORBA::Any & any,
           return true;
         }
 
-      TAO::Any_Array_Impl_T<T_slice, T_forany> *replacement = nullptr;
+      TAO::Any_Array_Impl_T<T_slice, T_forany> *replacement {};
       using ARRAY_ANY_IMPL = TAO::Any_Array_Impl_T<T_slice, T_forany>;
       ACE_NEW_RETURN (replacement,
                       ARRAY_ANY_IMPL (destructor,
@@ -88,14 +88,16 @@ TAO::Any_Array_Impl_T<T_slice, T_forany>::extract (const CORBA::Any & any,
                                       T_forany::tao_alloc ()),
                       false);
 
-      std::unique_ptr<TAO::Any_Array_Impl_T<T_slice, T_forany> > replacement_safety (replacement);
+      std::unique_ptr<TAO::Any_Array_Impl_T<T_slice, T_forany>> replacement_safety (replacement);
 
       // We know this will work since the unencoded case is covered above.
       TAO::Unknown_IDL_Type * const unk =
         dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
 
       if (!unk)
-        return false;
+        {
+          return false;
+        }
 
       // We don't want the rd_ptr of unk to move, in case it is
       // shared by another Any. This copies the state, not the buffer.
@@ -115,7 +117,7 @@ TAO::Any_Array_Impl_T<T_slice, T_forany>::extract (const CORBA::Any & any,
       // Duplicated by Any_Impl base class constructor.
       ::CORBA::release (any_tc);
     }
-  catch (const ::CORBA::Exception&)
+  catch (::CORBA::Exception const &)
     {
     }
 
@@ -130,7 +132,7 @@ TAO::Any_Array_Impl_T<T_slice, T_forany>::marshal_value (TAO_OutputCDR &cdr)
 }
 
 template<typename T_slice, typename T_forany>
-const void *
+void const *
 TAO::Any_Array_Impl_T<T_slice, T_forany>::value () const
 {
   return this->value_;

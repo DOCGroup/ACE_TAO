@@ -20,7 +20,6 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
-
 /////////////////////////////////////////////////////////////////////////////
 // CServerApp
 
@@ -36,7 +35,6 @@ BEGIN_MESSAGE_MAP(CServerApp, CWinApp)
         // Standard print setup command
         ON_COMMAND(ID_FILE_PRINT_SETUP, CWinApp::OnFilePrintSetup)
 END_MESSAGE_MAP()
-
 
 // Thread-Function!
 static unsigned long
@@ -73,7 +71,7 @@ spawn_my_orb_thread (void *)
 
       the_orb->run ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return 0;
@@ -91,7 +89,6 @@ CServerApp::CServerApp()
   // Place all significant initialization in InitInstance
 }
 
-
 CServerApp::~CServerApp()
 {
   try
@@ -99,8 +96,8 @@ CServerApp::~CServerApp()
       CORBA::ORB_var the_shutdown_orb;
 
       int argc = 0;
-      ACE_TCHAR **argv = 0;
-      const ACE_TCHAR *orb_name = ACE_TEXT("");
+      ACE_TCHAR **argv {};
+      ACE_TCHAR const *orb_name = ACE_TEXT("");
 
       // Retrieving a reference to the ORB used inside the thread
       the_shutdown_orb =
@@ -112,11 +109,10 @@ CServerApp::~CServerApp()
 
       ACE_Thread_Manager::instance ()->wait ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Caught exception:");
     }
-
 
   ACE::fini ();
 }
@@ -178,7 +174,9 @@ BOOL CServerApp::InitInstance()
 
   // Dispatch commands specified on the command line
   if (!ProcessShellCommand(cmdInfo))
-    return FALSE;
+    {
+      return FALSE;
+    }
 
   // The one and only window has been initialized, so show and update it.
   m_pMainWnd->ShowWindow(SW_SHOW);
@@ -188,7 +186,6 @@ BOOL CServerApp::InitInstance()
 
   return TRUE;
 }
-
 
 /////////////////////////////////////////////////////////////////////////////
 // CAboutDlg dialog used for App About

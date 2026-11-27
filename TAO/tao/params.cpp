@@ -35,7 +35,7 @@ TAO_ORB_Parameters::TAO_ORB_Parameters ()
   , cache_incoming_by_dotted_decimal_address_ (0)
   , linger_ (-1)
   , accept_error_delay_ (0)
-  , std_profile_components_ (1)
+  , std_profile_components_ (true)
   , ace_sched_policy_ (ACE_SCHED_OTHER)
   , sched_policy_ (THR_SCHED_DEFAULT)
   , scope_policy_ (THR_SCOPE_PROCESS)
@@ -70,14 +70,14 @@ TAO_ORB_Parameters::TAO_ORB_Parameters ()
   , collocation_resolver_name_ ("Default_Collocation_Resolver")
   , allow_ziop_no_server_policies_ (!!TAO_ALLOW_ZIOP_NO_SERVER_POLICIES_DEFAULT)
 {
-  for (int i = 0; i != TAO_NO_OF_MCAST_SERVICES; ++i)
+  for (int i {}; i != TAO_NO_OF_MCAST_SERVICES; ++i)
     {
       this->service_port_[i] = 0;
     }
 }
 
 void
-TAO_ORB_Parameters::get_endpoint_set (const ACE_CString &lane,
+TAO_ORB_Parameters::get_endpoint_set (ACE_CString const &lane,
                                       TAO_EndpointSet &endpoint_set)
 {
   // Look for the lane in the endpoints map.
@@ -86,7 +86,9 @@ TAO_ORB_Parameters::get_endpoint_set (const ACE_CString &lane,
 
   // If lane is not in the map, endpoint_set remains empty
   if (endpoints == this->endpoints_map_.end ())
+  {
     return;
+  }
 
   // At this point, the parsing should not fail since they have been
   // parsed successfully before.
@@ -98,8 +100,8 @@ TAO_ORB_Parameters::get_endpoint_set (const ACE_CString &lane,
 }
 
 int
-TAO_ORB_Parameters::add_endpoints (const ACE_CString &lane,
-                                   const ACE_CString &additional_endpoints)
+TAO_ORB_Parameters::add_endpoints (ACE_CString const &lane,
+                                   ACE_CString const &additional_endpoints)
 {
   TAO_EndpointSet endpoint_set;
 
@@ -109,7 +111,9 @@ TAO_ORB_Parameters::add_endpoints (const ACE_CString &lane,
 
   // Parse failure.
   if (result != 0)
+  {
     return result;
+  }
 
   // Look for the lane in the endpoints map.
   //
@@ -130,7 +134,7 @@ TAO_ORB_Parameters::add_endpoints (const ACE_CString &lane,
 }
 
 int
-TAO_ORB_Parameters::parse_and_add_endpoints (const ACE_CString &endpoints,
+TAO_ORB_Parameters::parse_and_add_endpoints (ACE_CString const &endpoints,
                                              TAO_EndpointSet &endpoint_set)
 {
   // Parse the string into separate endpoints, where `endpoints' is of
@@ -153,14 +157,14 @@ TAO_ORB_Parameters::parse_and_add_endpoints (const ACE_CString &endpoints,
       // (e.g. ";uiop://foo;iiop://1.3@bar")
     }
 
-  int status = 0;
+  int status {};
   // Return code:  0 = success,  -1 = failure
 
   if (length > 0)
     {
       int endpoints_count = 1;
 
-      for (size_t j = 0; j != length; ++j)
+      for (size_t j {}; j != length; ++j)
         {
           if (endpoints[j] == endpoints_delimiter)
             {
@@ -168,10 +172,10 @@ TAO_ORB_Parameters::parse_and_add_endpoints (const ACE_CString &endpoints,
             }
         }
 
-      ssize_t begin = 0;
+      ssize_t begin {};
       ssize_t end = endpoints.find (endpoints_delimiter);
 
-      for (int i = 0; i < endpoints_count; ++i)
+      for (int i {}; i < endpoints_count; ++i)
         {
           if (end == 0)
             {
@@ -195,7 +199,7 @@ TAO_ORB_Parameters::parse_and_add_endpoints (const ACE_CString &endpoints,
           if (check_offset > 0 &&
               check_offset != endpt.npos)
             {
-              endpoint_set.enqueue_tail (endpt);
+              endpoint_set.push_back (endpt);
               // Insert endpoint into list
             }
           else
@@ -217,80 +221,91 @@ TAO_ORB_Parameters::parse_and_add_endpoints (const ACE_CString &endpoints,
 }
 
 bool
-TAO_ORB_Parameters::check_preferred_interfaces_string (const char *s)
+TAO_ORB_Parameters::check_preferred_interfaces_string (char const *s)
 {
   // Validates that s contains one or more comma separated
   // interfaces each consisting of a string with a single
   // assignment separator ('=' or ':')
   // Any other char is legal, although '*' and '?' will be
   // treated as wildcards.
-  bool expect_assign = false;
-  bool expect_comma = false;
-  bool expect_wild = true;
-  bool found_remote = false;
+  bool expect_assign {};
+  bool expect_comma {};
+  bool expect_wild {true};
+  bool found_remote {};
 
-  for (const char *p = s; *p; ++p) switch (*p)
+  for (char const *p = s; *p; ++p)
     {
+      switch (*p)
+        {
 #if !defined (ACE_HAS_IPV6)
-      // Can't use this as assignment operator when IPv6 decimal
-      // addresses may be involved.
-    case ':':
+          // Can't use this as assignment operator when IPv6 decimal
+          // addresses may be involved.
+        case ':':
 #endif /* ACE_HAS_IPV6 */
-    case '=':
-      if (!expect_assign)
-        return false;
-      found_remote = true;
-      expect_assign = false;
-      expect_comma = false;
-      expect_wild = true;
-      break;
+        case '=':
+          if (!expect_assign)
+            {
+              return false;
+            }
+          found_remote = true;
+          expect_assign = false;
+          expect_comma = false;
+          expect_wild = true;
+          break;
 
-    case ',':
-      if (!expect_comma)
-        return false;
-      found_remote = false;
-      expect_assign = false;
-      expect_comma = false;
-      expect_wild = true;
-      break;
+        case ',':
+          if (!expect_comma)
+            {
+              return false;
+            }
+          found_remote = false;
+          expect_assign = false;
+          expect_comma = false;
+          expect_wild = true;
+          break;
 
-    case '*':
-    case '?':
-      if (!expect_wild)
-        return false;
-      expect_assign = !found_remote;
-      expect_comma = found_remote;
-      expect_wild = false;
-      break;
+        case '*':
+        case '?':
+          if (!expect_wild)
+            {
+              return false;
+            }
+          expect_assign = !found_remote;
+          expect_comma = found_remote;
+          expect_wild = false;
+          break;
 
-    default:
-      expect_assign = !found_remote;
-      expect_comma = found_remote;
-      expect_wild = true;
-      break;
+        default:
+          expect_assign = !found_remote;
+          expect_comma = found_remote;
+          expect_wild = true;
+          break;
+        }
     }
 
   return expect_comma && !expect_assign;
 }
 
 bool
-TAO_ORB_Parameters::preferred_interfaces (const char *s)
+TAO_ORB_Parameters::preferred_interfaces (char const *s)
 {
-  const bool valid= check_preferred_interfaces_string (s);
+  bool const valid = check_preferred_interfaces_string (s);
   if (valid)
     {
       // Append any valid string to those already specified
       // (by other -ORBPreferredInterfaces options that have been
       // seen previously)
-      if (this->pref_network_.length ())
+      if (!this->pref_network_.empty ())
+      {
         this->pref_network_+= ',';
+      }
       this->pref_network_+= s;
     }
 
   return valid;
 }
 
-const char *
+char const *
 TAO_ORB_Parameters::preferred_interfaces () const
 {
   return this->pref_network_.c_str ();
@@ -347,90 +362,90 @@ TAO_ORB_Parameters::use_ipv6_link_local () const
 #endif /* ACE_HAS_IPV6 */
 
 void
-TAO_ORB_Parameters::protocols_hooks_name (const char *s)
+TAO_ORB_Parameters::protocols_hooks_name (char const *s)
 {
   this->protocols_hooks_name_ = s;
 }
 
-const char *
+char const *
 TAO_ORB_Parameters::protocols_hooks_name () const
 {
   return this->protocols_hooks_name_.c_str ();
 }
 
 void
-TAO_ORB_Parameters::thread_lane_resources_manager_factory_name (const char *s)
+TAO_ORB_Parameters::thread_lane_resources_manager_factory_name (char const *s)
 {
   this->thread_lane_resources_manager_factory_name_ = s;
 }
 
-const char *
+char const *
 TAO_ORB_Parameters::thread_lane_resources_manager_factory_name () const
 {
   return this->thread_lane_resources_manager_factory_name_.c_str ();
 }
 
 void
-TAO_ORB_Parameters::dynamic_thread_pool_config_name (const char *s)
+TAO_ORB_Parameters::dynamic_thread_pool_config_name (char const *s)
 {
   this->dynamic_thread_pool_config_name_ = s;
 }
 
-const char *
+char const *
 TAO_ORB_Parameters::dynamic_thread_pool_config_name () const
 {
   return this->dynamic_thread_pool_config_name_.c_str ();
 }
 
 void
-TAO_ORB_Parameters::stub_factory_name (const char *s)
+TAO_ORB_Parameters::stub_factory_name (char const *s)
 {
   this->stub_factory_name_ = s;
 }
 
-const char *
+char const *
 TAO_ORB_Parameters::stub_factory_name () const
 {
   return this->stub_factory_name_.c_str ();
 }
 
 void
-TAO_ORB_Parameters::poa_factory_name (const char *s)
+TAO_ORB_Parameters::poa_factory_name (char const *s)
 {
   this->poa_factory_name_ = s;
 }
 
-const char *
+char const *
 TAO_ORB_Parameters::poa_factory_name () const
 {
   return this->poa_factory_name_.c_str ();
 }
 
 void
-TAO_ORB_Parameters::poa_factory_directive (const ACE_TCHAR *s)
+TAO_ORB_Parameters::poa_factory_directive (ACE_TCHAR const *s)
 {
   this->poa_factory_directive_ = s;
 }
 
-const ACE_TCHAR *
+ACE_TCHAR const *
 TAO_ORB_Parameters::poa_factory_directive () const
 {
   return this->poa_factory_directive_.c_str ();
 }
 
 void
-TAO_ORB_Parameters::endpoint_selector_factory_name (const char *s)
+TAO_ORB_Parameters::endpoint_selector_factory_name (char const *s)
 {
   this->endpoint_selector_factory_name_ = s;
 }
 
-const char *
+char const *
 TAO_ORB_Parameters::endpoint_selector_factory_name () const
 {
   return this->endpoint_selector_factory_name_.c_str ();
 }
 
-const TAO::Invocation_Retry_Params &
+TAO::Invocation_Retry_Params const &
 TAO_ORB_Parameters::invocation_retry_params () const
 {
   return this->invocation_retry_params_;
@@ -449,7 +464,7 @@ TAO_ORB_Parameters::forward_on_exception_limit (const int ef, const int limit)
 }
 
 void
-TAO_ORB_Parameters::forward_on_exception_delay (const ACE_Time_Value &delay)
+TAO_ORB_Parameters::forward_on_exception_delay (ACE_Time_Value const &delay)
 {
   this->invocation_retry_params_.init_retry_delay_ = delay;
 }

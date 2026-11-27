@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-// ============================================================================
 /**
  * @file randomize.h
  *
@@ -10,7 +7,6 @@
  *
  * @note Based on code originally found in test_config.h and Test_Output.cpp
  */
-// ============================================================================
 
 #ifndef ACE_TESTS_RANDOMIZE_H
 #define ACE_TESTS_RANDOMIZE_H

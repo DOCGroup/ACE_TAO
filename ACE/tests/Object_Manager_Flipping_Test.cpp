@@ -1,19 +1,16 @@
-
-//=============================================================================
 /**
  *  @file    Object_Manager_Flipping_Test.cpp
  *
 
  *  Tests the basic function of the ACE_Service_Config in scenarios
  *  where the ACE_Object_Manager is being
- *  flipped. i.e. ACE::init/ACE::fini() are called in sequence
+ *  flipped. i.e. @c ACE::init and @c ACE::fini() are called in sequence
  *  (which can occur with loading DLLs).  More specifically we test
  *  that the OM correctly controlls the lifecycle of the default SC
  *  instance, which is pointed to by a TSS pointer.
  *
  *  @author Iliyan Jeliazkov <iliyan@ociweb.com>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "ace/Object_Manager.h"
@@ -60,7 +57,7 @@ int run_main (int, ACE_TCHAR *[])
       }
 
     // Obtain a SC instance which will be later used to compare with others.
-    p1 = ACE_Service_Config::instance ();
+    p1.reset (ACE_Service_Config::instance ());
 
     // ACE_TEST_ASSERT uses Log_Msg::instance() and needs to be done only
     // after ACE_START_TEST
@@ -73,7 +70,6 @@ int run_main (int, ACE_TCHAR *[])
 
     ACE_END_TEST;
 
-
     // ACE::fini() destroys the SC (unmanaged) singleton ...
     // Next time we ask for one, it will be a different instance.
     ACE::fini ();
@@ -85,7 +81,9 @@ int run_main (int, ACE_TCHAR *[])
   // following ACE::init, as it tries to use the SC instance.
 
   if (ACE_Service_Config::instance ()->is_opened ())
-      ++errors;
+  {
+    ++errors;
+  }
 
   // Not using ACE_TEST_ASSERT because ACE is not initialized yet.
 

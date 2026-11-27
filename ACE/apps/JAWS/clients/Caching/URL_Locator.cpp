@@ -3,7 +3,7 @@
 
 #include "URL_Locator.h"
 
-const char * const
+char const * const
 ACE_URL_Locator::opname[] =
 // Human readable operation name
 {
@@ -15,7 +15,7 @@ ACE_URL_Locator::opname[] =
   "Invalid Operation"
 };
 
-const char * const
+char const * const
 ACE_URL_Locator::selection_name[] =
 {
   "None",
@@ -24,7 +24,7 @@ ACE_URL_Locator::selection_name[] =
   "Invalid Selection"
 };
 
-const char * const
+char const * const
 ACE_URL_Locator::err_name[] =
 {
   "No error",
@@ -35,11 +35,9 @@ ACE_URL_Locator::err_name[] =
   "unknown error"
 };
 
-ACE_URL_Locator::~ACE_URL_Locator ()
-{
-}
+ACE_URL_Locator::~ACE_URL_Locator () = default;
 
-const char *
+char const *
 ACE_URL_Locator::error_status ()
 {
   return "Not implemented yet.";

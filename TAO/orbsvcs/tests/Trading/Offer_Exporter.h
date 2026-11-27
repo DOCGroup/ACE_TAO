@@ -1,16 +1,3 @@
-// ========================================================================
-//
-// = FILE
-//     Offer_Exporter.h
-//
-// = DESCRIPTION
-//    Class that tests the Trading Service's Register Interface
-//
-// = AUTHOR
-//     Seth Widoff <sbw1@cs.wustl.edu>
-//
-// =======================================================================
-
 #ifndef TAO_OFFER_EXPORTER_H
 #define TAO_OFFER_EXPORTER_H
 
@@ -18,6 +5,9 @@
 #include "Simple_Dynamic.h"
 #include "ttest_export.h"
 
+#include <vector>
+
+/// Tests the Trading Service's Register interface.
 class TAO_TTest_Export TAO_Offer_Exporter
 {
 public:
@@ -25,55 +15,60 @@ public:
                       CORBA::Boolean verbose);
 
   ~TAO_Offer_Exporter ();
+  TAO_Offer_Exporter (TAO_Offer_Exporter const &) = delete;
+  TAO_Offer_Exporter &operator= (TAO_Offer_Exporter const &) = delete;
+  TAO_Offer_Exporter (TAO_Offer_Exporter &&) = delete;
+  TAO_Offer_Exporter &operator= (TAO_Offer_Exporter &&) = delete;
 
+  /// Export offers to the Trading Service.
   void export_offers ();
-  // Export a number of offers to the Trading Service.
 
+  /// Export offers to all traders accessible from the bootstrapped trader.
   void export_offers_to_all ();
-  // Export a number of offers to all traders accessible by the
-  // bootstrapped trader.
 
+  /// Withdraw all exported offers.
   void withdraw_offers ();
-  // Withdraw all exported offers.
 
+  /// Describe all offers registered with the bootstrapped trader.
   void describe_offers ();
-  // Describe all the offers registered with the bootstrapped trader.
 
+  /// Remove and change properties in each offer.
   void modify_offers ();
-  // Remove some properties and change some properties in each offer.
 
+  /// Withdraw offers selected by a constraint string.
   void withdraw_offers_using_constraints ();
-  // Withdraw a number of offers based on a constraint string.
 
 private:
   CosTrading::OfferIdSeq* grab_offerids ();
 
+  /// Fill in each offer structure.
   void create_offers ();
-  // Fill in each of the offer structures.
 
+  /// Export offers through the supplied Register interface.
   void export_to (CosTrading::Register_ptr reg);
-  // Export the offers to the give Register interface.
 
-  typedef ACE_Unbounded_Queue<TAO_Dynamic_Property*> DP_Queue;
+  // Non-owning aliases: destroy() deactivates each servant and lets the POA
+  // release its final reference, which deletes the servant.
+  using DP_Queue = std::vector<TAO_Dynamic_Property *>;
 
+  /// Whether the user requested verbose output.
   CORBA::Boolean verbose_;
-  // True if the user wants verbose output.
 
   CosTrading::Register_var register_;
   CosTrading::Admin_var admin_;
 
+  /// Objects being exported.
   TT_Info::Printer printer_[NUM_OFFERS];
   TT_Info::Plotter plotter_[NUM_OFFERS];
   TT_Info::File_System fs_[NUM_OFFERS];
-  // The objects being exported.
 
+  /// Property sequences describing each service.
   CosTrading::PropertySeq props_plotters_[NUM_OFFERS];
   CosTrading::PropertySeq props_printers_[NUM_OFFERS];
   CosTrading::PropertySeq props_fs_[NUM_OFFERS];
-  // Property sequences describing each service.
 
+  /// Dynamic properties reclaimed when this object is destroyed.
   DP_Queue clean_up_;
-  // A list of dynamic properties to clean up upon destruction.
 };
 
 #endif /* TAO_OFFER_EXPORTER_H */

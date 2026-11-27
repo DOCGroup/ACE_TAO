@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "ace/os_include/os_errno.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_string.h"
@@ -6,6 +5,8 @@
 #include "ace/OS_Memory.h"
 #include "ace/OS_QoS.h"
 #include "ace/Global_Macros.h"
+
+#include <cstring>
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
 # include "ace/Malloc_Base.h"
@@ -76,7 +77,7 @@ ACE_OS::getpmsg (ACE_HANDLE handle,
 }
 
 ACE_INLINE int
-ACE_OS::fattach (int handle, const char *path)
+ACE_OS::fattach (int handle, char const *path)
 {
   ACE_OS_TRACE ("ACE_OS::fattach");
 #if defined (ACE_HAS_STREAM_PIPES)
@@ -90,7 +91,7 @@ ACE_OS::fattach (int handle, const char *path)
 }
 
 ACE_INLINE int
-ACE_OS::fdetach (const char *file)
+ACE_OS::fdetach (char const *file)
 {
   ACE_OS_TRACE ("ACE_OS::fdetach");
 #if defined (ACE_HAS_STREAM_PIPES)
@@ -149,18 +150,18 @@ ACE_OS::putmsg (ACE_HANDLE handle, const struct strbuf *ctl,
 #else
   ACE_UNUSED_ARG (flags);
   ssize_t result;
-  if (ctl == 0 && data == 0)
+  if (ctl == nullptr && data == nullptr)
     {
       errno = EINVAL;
       return 0;
     }
   // Handle the two easy cases.
-  else if (ctl != 0)
+  else if (ctl != nullptr)
     {
       result = ACE_OS::write (handle, ctl->buf, static_cast<size_t> (ctl->len));
       return static_cast<int> (result);
     }
-  else if (data != 0)
+  else if (data != nullptr)
     {
       result = ACE_OS::write (handle, data->buf, static_cast<size_t> (data->len));
       return static_cast<int> (result);
@@ -169,14 +170,14 @@ ACE_OS::putmsg (ACE_HANDLE handle, const struct strbuf *ctl,
     {
       // This is the hard case.
       char *buf;
-      const auto alloc {static_cast<unsigned int> (ctl->len) + static_cast<unsigned int> (data->len)};
+      unsigned int const alloc {static_cast<unsigned int> (ctl->len) + static_cast<unsigned int> (data->len)};
 #if defined (ACE_HAS_ALLOC_HOOKS)
       ACE_ALLOCATOR_RETURN (buf, static_cast<char*> (ACE_Allocator::instance ()->malloc (alloc)), -1);
 #else
       ACE_NEW_RETURN (buf, char [alloc], -1);
 #endif /* ACE_HAS_ALLOC_HOOKS */
-      ACE_OS::memcpy (buf, ctl->buf, static_cast<size_t> (ctl->len));
-      ACE_OS::memcpy (buf + ctl->len, data->buf, static_cast<size_t> (data->len));
+      std::memcpy (buf, ctl->buf, static_cast<size_t> (ctl->len));
+      std::memcpy (buf + ctl->len, data->buf, static_cast<size_t> (data->len));
       result = ACE_OS::write (handle, buf, alloc);
 #if defined (ACE_HAS_ALLOC_HOOKS)
       ACE_Allocator::instance()->free(buf);

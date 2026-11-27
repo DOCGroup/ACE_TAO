@@ -20,7 +20,7 @@ ACE_ALLOC_HOOK_DEFINE_Tc(ACE_Future_Rep)
 ACE_ALLOC_HOOK_DEFINE_Tc(ACE_Future)
 
 template <class T>
-ACE_Future_Holder<T>::ACE_Future_Holder (const ACE_Future<T> &item)
+ACE_Future_Holder<T>::ACE_Future_Holder (ACE_Future<T> const &item)
   : item_ (item)
 {
 }
@@ -37,9 +37,13 @@ ACE_Future_Rep<T>::dump () const
  (int) this->ref_count_));
   ACELIB_DEBUG ((LM_INFO,"value_:\n"));
   if (this->value_)
-    ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT (" (non-nullptr)\n")));
+    {
+      ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT (" (non-nullptr)\n")));
+    }
   else
-    ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT (" (nullptr)\n")));
+    {
+      ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT (" (nullptr)\n")));
+    }
 
   ACELIB_DEBUG ((LM_INFO,"value_ready_:\n"));
   this->value_ready_.dump ();
@@ -65,13 +69,14 @@ ACE_Future_Rep<T>::create ()
   // Yes set ref count to zero.
   ACE_Future_Rep<T> *temp = internal_create ();
   if (!temp)
-    throw std::bad_alloc ();
+    {
+      throw std::bad_alloc ();
+    }
    return temp;
  }
 
-
 template <class T> ACE_Future_Rep<T> *
-ACE_Future_Rep<T>::attach (ACE_Future_Rep<T>*& rep)
+ACE_Future_Rep<T>::attach (ACE_Future_Rep<T> *rep)
 {
   ACE_ASSERT (rep != nullptr);
   // Use value_ready_mutex_ for both condition and ref count management
@@ -138,7 +143,7 @@ ACE_Future_Rep<T>::ready () const
 }
 
 template <class T> int
-ACE_Future_Rep<T>::set (const T &r,
+ACE_Future_Rep<T>::set (T const &r,
                         ACE_Future<T> &caller)
 {
   // If the value is already produced, ignore it...
@@ -192,9 +197,13 @@ ACE_Future_Rep<T>::get (T &value,
       // producer writes to it.
 
       while (this->value_ == nullptr)
-        // Perform a timed wait.
-        if (this->value_ready_.wait (tv) == -1)
-          return -1;
+        {
+          // Perform a timed wait.
+          if (this->value_ready_.wait (tv) == -1)
+            {
+              return -1;
+            }
+        }
 
       // Destructor releases the lock.
     }
@@ -216,9 +225,13 @@ ACE_Future_Rep<T>::attach (ACE_Future_Observer<T> *observer,
 
   // If the value is already produced, then notify observer
   if (this->value_ == nullptr)
-    result = this->observer_collection_.insert (observer);
+    {
+      result = this->observer_collection_.insert (observer);
+    }
   else
-    observer->update (caller);
+    {
+      observer->update (caller);
+    }
 
   return result;
 }
@@ -248,11 +261,15 @@ ACE_Future_Rep<T>::operator T ()
       // Wait ``forever.''
 
       while (this->value_ == nullptr)
-        if (this->value_ready_.wait () == -1)
-          // What to do in this case since we've got to indicate
-          // failure somehow?  Exceptions would be nice, but they're
-          // not portable...
-          return 0;
+        {
+          if (this->value_ready_.wait () == -1)
+            {
+              // What to do in this case since we've got to indicate
+              // failure somehow?  Exceptions would be nice, but they're
+              // not portable...
+              return 0;
+            }
+        }
 
       // Destructor releases the mutex
     }
@@ -267,13 +284,13 @@ ACE_Future<T>::ACE_Future ()
 }
 
 template <class T>
-ACE_Future<T>::ACE_Future (const ACE_Future<T> &r)
-  : future_rep_ (FUTURE_REP::attach (((ACE_Future<T> &) r).future_rep_))
+ACE_Future<T>::ACE_Future (ACE_Future<T> const &r)
+  : future_rep_ (FUTURE_REP::attach (r.future_rep_))
 {
 }
 
 template <class T>
-ACE_Future<T>::ACE_Future (const T &r)
+ACE_Future<T>::ACE_Future (T const &r)
   : future_rep_ (FUTURE_REP::create ())
 {
   this->future_rep_->set (r, *this);
@@ -286,19 +303,19 @@ ACE_Future<T>::~ACE_Future ()
 }
 
 template <class T> bool
-ACE_Future<T>::operator== (const ACE_Future<T> &r) const
+ACE_Future<T>::operator== (ACE_Future<T> const &r) const
 {
   return r.future_rep_ == this->future_rep_;
 }
 
 template <class T> bool
-ACE_Future<T>::operator!= (const ACE_Future<T> &r) const
+ACE_Future<T>::operator!= (ACE_Future<T> const &r) const
 {
   return r.future_rep_ != this->future_rep_;
 }
 
 template <class T> int
-ACE_Future<T>::cancel (const T &r)
+ACE_Future<T>::cancel (T const &r)
 {
   this->cancel ();
   return this->future_rep_->set (r, *this);
@@ -315,7 +332,7 @@ ACE_Future<T>::cancel ()
 }
 
 template <class T> int
-ACE_Future<T>::set (const T &r)
+ACE_Future<T>::set (T const &r)
 {
   // Give the pointer to the result to the ACE_Future_Rep.
   return this->future_rep_->set (r, *this);
@@ -366,16 +383,16 @@ ACE_Future<T>::operator T ()
 }
 
 template <class T> void
-ACE_Future<T>::operator = (const ACE_Future<T> &rhs)
+ACE_Future<T>::operator = (ACE_Future<T> const &rhs)
 {
   // assignment:
   //
   //  bind <this> to the same <ACE_Future_Rep> as <r>.
 
-  // This will work if &r == this, by first increasing the ref count
-  ACE_Future<T> &r = (ACE_Future<T> &) rhs;
+  // Attach the shared representation before releasing the current one so
+  // self-assignment remains safe.
   FUTURE_REP::assign (this->future_rep_,
-                      FUTURE_REP::attach (r.future_rep_));
+                      FUTURE_REP::attach (rhs.future_rep_));
 }
 
 template <class T> void
@@ -386,7 +403,9 @@ ACE_Future<T>::dump () const
               ACE_BEGIN_DUMP, this));
 
   if (this->future_rep_)
-    this->future_rep_->dump ();
+    {
+      this->future_rep_->dump ();
+    }
 
   ACELIB_DEBUG ((LM_DEBUG,
               ACE_END_DUMP));
@@ -394,7 +413,7 @@ ACE_Future<T>::dump () const
 }
 
 template <class T> ACE_Future_Rep<T> *
-ACE_Future<T>::get_rep ()
+ACE_Future<T>::get_rep () const
 {
   return this->future_rep_;
 }

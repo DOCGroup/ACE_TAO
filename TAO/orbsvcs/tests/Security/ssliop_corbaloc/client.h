@@ -1,6 +1,3 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
  *  @file    client.h
  *
@@ -8,14 +5,23 @@
  *
  *  @author   Marina Spivak <marina@cs.wustl.edu>
  */
-//=============================================================================
 
+#ifndef TAO_TESTS_SECURITY_SSLIOP_CORBALOC_CLIENT_H
+#define TAO_TESTS_SECURITY_SSLIOP_CORBALOC_CLIENT_H
+#include /**/ "ace/pre.h"
 
 #include "test_objectS.h"
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/Naming/Naming_Client.h"
 #include "tao/Utils/ORB_Manager.h"
 #include "ace/Task.h"
+#include "ace/SString.h"
+#include <memory>
+#include <new>
+
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+# pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 /**
  * @class Naming_Test
@@ -31,9 +37,15 @@
 class Naming_Test
 {
 public:
-  /// Execute the test code.  <root_context> is the context to assume
+  /// Execute the test code. @c root_context is the context to assume
   /// as the root for all tests operations.
-  virtual ~Naming_Test () {}
+  Naming_Test () = default;
+  virtual ~Naming_Test () = default;
+  Naming_Test (Naming_Test const &) = delete;
+  Naming_Test (Naming_Test &&) = delete;
+  Naming_Test &operator= (Naming_Test const &) = delete;
+  Naming_Test &operator= (Naming_Test &&) = delete;
+
   virtual int execute (TAO_Naming_Client &root_context) = 0;
 };
 
@@ -49,7 +61,7 @@ class Simple_Test : public Naming_Test
 {
 public:
   /// Execute the simple test code.
-  virtual int execute (TAO_Naming_Client &root_context);
+  int execute (TAO_Naming_Client &root_context) override;
 };
 
 /**
@@ -67,16 +79,20 @@ public:
   /// Constructor.  Takes in an orb pointer and number of threads to spawn.
   MT_Test (CORBA::ORB_ptr orb,
            int size = 10);
+  MT_Test (MT_Test const &) = delete;
+  MT_Test (MT_Test &&) = delete;
+  MT_Test &operator= (MT_Test const &) = delete;
+  MT_Test &operator= (MT_Test &&) = delete;
 
   /// Execute the MT test code.
-  virtual int execute (TAO_Naming_Client &root_context);
+  int execute (TAO_Naming_Client &root_context) override;
 
   /// This code is executed by each thread.
-  virtual int svc ();
+  int svc () override;
 
 private:
   /// Number of threads to spawn.  By default is set to 10.
-  int size_;
+  int const size_;
 
   /// A pointer to our ORB.
   CORBA::ORB_var orb_;
@@ -88,10 +104,7 @@ private:
    * Naming Service.  If all threads try to use the same stub, bad things
    * happen...
    */
-  char* name_service_ior_;
-
-  // This can be replaced with CORBA::String_var when <string_to_object>
-  // is fixed - this will clean up the memory properly.
+  CORBA::String_var name_service_ior_;
 
   /// Holds name used for registering the object with Naming Service.
   CosNaming::Name test_name_;
@@ -124,7 +137,7 @@ class Tree_Test : public Naming_Test
 {
 public:
   /// Execute the tree test code.
-  virtual int execute (TAO_Naming_Client &root_context);
+  int execute (TAO_Naming_Client &root_context) override;
 };
 
 /**
@@ -143,7 +156,7 @@ class Iterator_Test : public Naming_Test
 {
 public:
   /// Execute the iterator test code.
-  virtual int execute (TAO_Naming_Client &root_context);
+  int execute (TAO_Naming_Client &root_context) override;
 };
 
 /**
@@ -169,7 +182,7 @@ class Exceptions_Test : public Naming_Test
 {
 public:
   /// Execute the exceptions test code.
-  virtual int execute (TAO_Naming_Client &root_context);
+  int execute (TAO_Naming_Client &root_context) override;
 
 private:
   // the following functions isolate specific tests due to the
@@ -199,12 +212,14 @@ class Destroy_Test : public Naming_Test
 {
 public:
   /// Execute the destroy test code.
-  virtual int execute (TAO_Naming_Client &root_context);
+  int execute (TAO_Naming_Client &root_context) override;
 
 private:
-  // = The following functions isolate specific tests.
+  /// @name Naming context failure tests
+  /// @{
   void not_empty_test (CosNaming::NamingContext_var &ref);
   void not_exist_test (CosNaming::NamingContext_var &ref);
+  /// @}
 };
 
 /**
@@ -214,8 +229,8 @@ private:
  * Service test.
  *
  * This test creates the Naming Context hierarchy:
- * root -> level1_context -> level2_context,
- * and prints out the ior of the <level1_context>.
+ * root -> @c level1_context -> @c level2_context,
+ * and prints out the IOR of @c level1_context.
  */
 class Persistent_Test_Begin : public Naming_Test
 {
@@ -224,18 +239,18 @@ public:
   Persistent_Test_Begin (CORBA::ORB_ptr orb,
                          FILE * ior_output_file);
 
-  /// Destructor.
-  virtual ~Persistent_Test_Begin ();
+  ~Persistent_Test_Begin () override = default;
 
   /// Execute the persistent test (part 1) code.
-  virtual int execute (TAO_Naming_Client &root_context);
+  int execute (TAO_Naming_Client &root_context) override;
 
 private:
   /// A pointer to our ORB (needed for object/string conversion).
   CORBA::ORB_var orb_;
 
   /// File where we output the ior for use by part 2 of persistent test.
-  FILE *file_;
+  using File_Ptr = std::unique_ptr<FILE, int (*) (FILE *)>;
+  File_Ptr file_;
 };
 
 /**
@@ -244,9 +259,9 @@ private:
  * @brief This class implements the second part of the Persistent Naming
  * Service test.
  *
- * This test attempts to resolve <level2_context> both through the
- * <root> Naming Context, which it gets from <resolve_initial_references>, and
- * through <level1_context> stringified ior, which it gets from part 1 of
+ * This test attempts to resolve @c level2_context both through the
+ * root Naming Context, which it gets from @c resolve_initial_references(), and
+ * through the @c level1_context stringified IOR, which it gets from part 1 of
  * the persistent test.  The results of both methods are then
  * compared for equality.
  */
@@ -254,23 +269,22 @@ class Persistent_Test_End : public Naming_Test
 {
 public:
   /// Constructor.  Takes in an orb pointer and the ior received from
-  /// <Persistent_Test_Begin>.
+  /// @c Persistent_Test_Begin.
   Persistent_Test_End (CORBA::ORB_ptr orb,
-                       const ACE_TCHAR * ior);
+                       ACE_TCHAR const *ior);
 
-  /// Destructor.
-  virtual ~Persistent_Test_End ();
+  ~Persistent_Test_End () override = default;
 
   /// Execute the persistent test (part 2).
-  virtual int execute (TAO_Naming_Client &root_context);
+  int execute (TAO_Naming_Client &root_context) override;
 
 private:
   /// A pointer to our ORB (used for string/object conversion).
   CORBA::ORB_var orb_;
 
-  /// IOR of <level1_context> recorded during the run of part 1 of
+  /// IOR of @c level1_context recorded during the run of part 1 of
   /// persistent test.
-  const ACE_TCHAR* ior_;
+  ACE_TString ior_;
 };
 
 /**
@@ -282,27 +296,29 @@ private:
  *
  * This class declares an interface to run the example client for
  * CosNaming CORBA server.  All the complexity for initializing
- * the server is hidden in the class.  Just the <run> interface
+ * the server is hidden in the class. Just the @c run() interface
  * is needed.
  */
 class CosNaming_Client : public ACE_Task_Base
 {
 public:
-  /// Constructor.
-  CosNaming_Client ();
+  CosNaming_Client () = default;
 
-  /// Destructor.
-  ~CosNaming_Client ();
+  ~CosNaming_Client () = default;
+  CosNaming_Client (CosNaming_Client const &) = delete;
+  CosNaming_Client (CosNaming_Client &&) = delete;
+  CosNaming_Client &operator= (CosNaming_Client const &) = delete;
+  CosNaming_Client &operator= (CosNaming_Client &&) = delete;
 
   /// Execute client example code.
   int run ();
 
-  int svc ();
+  int svc () override;
 
   /// Initialize the client communication endpoint with server.
-  int init (int argc, ACE_TCHAR **argv);
+  int init (int argc, ACE_TCHAR **argv) override;
 
-  // = Symbolic ids.
+  /// Symbolic object IDs used by the client.
   enum OBJ_ID
   {
     OBJ1_ID = 5,
@@ -314,14 +330,14 @@ private:
   int parse_args ();
 
   /// # of arguments on the command line.
-  int argc_;
+  int argc_ {};
 
   /// arguments from command line.
-  ACE_TCHAR **argv_;
+  ACE_TCHAR **argv_ {};
 
-  /// A pointer to the specific Naming Service test a client will
+  /// The specific Naming Service test a client will
   /// execute.
-  Naming_Test *test_;
+  std::unique_ptr<Naming_Test> test_;
 
   /// Our ORB manager helper class.
   TAO_ORB_Manager orbmgr_;
@@ -329,3 +345,5 @@ private:
   /// Our naming client helper class.
   TAO_Naming_Client naming_client_;
 };
+#include /**/ "ace/post.h"
+#endif /* TAO_TESTS_SECURITY_SSLIOP_CORBALOC_CLIENT_H */

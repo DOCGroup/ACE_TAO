@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  * @file Bytes_Received_Monitor.h
  *
  * @author Jeff Parsons <j.parsons@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef BYTES_RECEIVED_MONITOR_H
 #define BYTES_RECEIVED_MONITOR_H
@@ -61,20 +57,18 @@ namespace ACE
 #endif
     {
     public:
-      Bytes_Received_Monitor (const char* name);
+      explicit Bytes_Received_Monitor (char const* name);
 
       /// Implementation of the pure virtual method.
-      virtual void update ();
+      void update () override;
 
       /// Stores the default name, used if none is supplied by the user.
-      static const char* default_name ();
+      static char const* default_name ();
 
     private:
       /// Overridden reset, calls platform-specific reset.
-      virtual void clear_i ();
+      void clear_i () override;
 
-    private:
-      static const char* default_name_;
     };
   }
 }

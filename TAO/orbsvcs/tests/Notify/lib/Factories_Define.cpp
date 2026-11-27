@@ -1,6 +1,5 @@
 #include "Factories_Define.h"
 
-
 #include "Name.h"
 #include "Command_Factory_T.h"
 

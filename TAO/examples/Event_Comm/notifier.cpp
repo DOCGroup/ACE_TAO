@@ -20,7 +20,7 @@ Notifier::run ()
     {
       ns_.run ();
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       return;
     }
@@ -32,7 +32,7 @@ Notifier::Notifier (int argc, ACE_TCHAR *argv[])
     {
       ns_.init (argc, argv);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Notifier_Server.init failed\n");
     }
@@ -40,9 +40,11 @@ Notifier::Notifier (int argc, ACE_TCHAR *argv[])
   // Register with the ORB's Reactor to receive a signal to shut us
   // down.
   if (ns_.reactor ()->register_handler (SIGINT, this) == -1)
-    ACE_ERROR ((LM_ERROR,
-                "%p\n",
-                "register_handler"));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "%p\n",
+                  ACE_TEXT ("register_handler")));
+    }
 }
 
 Notifier::~Notifier ()
@@ -52,7 +54,7 @@ Notifier::~Notifier ()
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   // Initialize server daemon.
   Notifier notifier (argc, argv);

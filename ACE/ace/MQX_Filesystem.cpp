@@ -4,12 +4,11 @@
 
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_sys_stat.h"
+#include "ace/OS_NS_string.h"
 
 #include <mqx.h>
 #include <fio.h>
 #include <mfs.h>
-
-#include <string.h>
 
 #ifndef FOPEN_MAX
 #  error "FOPEN_MAX, the max number of open files, must be defined"
@@ -23,15 +22,11 @@
 MQX_Filesystem MQX_Filesystem::instance_;
 
 MQX_Filesystem::MQX_Filesystem ()
-  : current_fs_ (0)
-  , current_fs_name_len_ (0)
-  , max_fd_ (255)
+  : max_fd_ (255)
   , last_fd_ (-1)
 {
-  current_fs_name_[0] = '\0';
-
   // Initialize files_
-  for (unsigned i = 0; i < FOPEN_MAX; i++)
+  for (unsigned i = 0; i < FOPEN_MAX; ++i)
     {
       files_[i].fd = -1;
       files_[i].mqx_file = 0;
@@ -72,7 +67,9 @@ MQX_Filesystem::reset_state ()
 {
   update_fs (_io_get_first_valid_fs ());
   if (current_fs_ != 0)
-    chdir ("\\");
+    {
+      ACE_OS::chdir ("\\");
+    }
   return current_fs_ == 0;
 }
 
@@ -82,11 +79,17 @@ MQX_Filesystem::update_fs (MQX_FILE_PTR fs)
   current_fs_ = fs;
   bool invalid = false;
   if (fs == 0)
-    invalid = true;
+    {
+      invalid = true;
+    }
   else if (_io_get_fs_name (fs, current_fs_name_, IOCFG_FS_MAX_DEVLEN) != MQX_OK)
-    invalid = true;
+    {
+      invalid = true;
+    }
   else
-    current_fs_name_len_ = strlen (current_fs_name_);
+    {
+      current_fs_name_len_ = ACE_OS::strlen (current_fs_name_);
+    }
 
   if (invalid)
     {
@@ -97,9 +100,12 @@ MQX_Filesystem::update_fs (MQX_FILE_PTR fs)
 }
 
 int
-MQX_Filesystem::open (const char *path, int mode)
+MQX_Filesystem::open (char const *path, int mode)
 {
-  if (check_state ()) return -1;
+  if (check_state ())
+    {
+      return -1;
+    }
 
   // Convert open mode to fopen mode
   bool r = ACE_BIT_DISABLED (mode, O_RDONLY);
@@ -119,7 +125,8 @@ MQX_Filesystem::open (const char *path, int mode)
 
   /// Get Absolute Path
   char cwd[FS_FILENAME_SIZE];
-  int mqx_error = _io_ioctl (current_fs_, IO_IOCTL_GET_CURRENT_DIR, (uint32_t*) cwd);
+  int mqx_error = _io_ioctl (current_fs_, IO_IOCTL_GET_CURRENT_DIR,
+                             reinterpret_cast<uint32_t *> (cwd));
   if (mqx_error != MQX_OK)
     {
       errno = ACE_OS::mqx_error_to_errno (mqx_error);
@@ -135,7 +142,10 @@ MQX_Filesystem::open (const char *path, int mode)
 
   // Set up a new File Entry
   File *file = get_new_file ();
-  if (file == 0) return -1;
+  if (file == 0)
+    {
+      return -1;
+    }
 
   // Call into MQX
   file->mqx_file = _io_fopen (abspath, cstdlib_mode);
@@ -144,7 +154,9 @@ MQX_Filesystem::open (const char *path, int mode)
       file->fd = -1; // Free File in Our Array
       errno = ACE_OS::mqx_error_to_errno (_task_get_error());
       if (_task_get_error() == FS_FILE_NOT_FOUND)
-        _task_set_error(MQX_OK);
+        {
+          _task_set_error(MQX_OK);
+        }
     }
 
   return file->fd;
@@ -154,7 +166,10 @@ int
 MQX_Filesystem::close (int fd)
 {
   File *file = get_file (fd);
-  if (file == 0) return -1;
+  if (file == 0)
+    {
+      return -1;
+    }
   int mqx_error = _io_fclose (file->mqx_file);
   if (mqx_error != MQX_OK)
     {
@@ -168,7 +183,10 @@ size_t
 MQX_Filesystem::read (int fd, unsigned char *buffer, size_t size)
 {
   File *file = get_file (fd);
-  if (file == 0) return MQX_FILE_ERROR;
+  if (file == 0)
+    {
+      return MQX_FILE_ERROR;
+    }
   int result = _io_read (file->mqx_file, buffer, size);
   if (result == IO_ERROR)
     {
@@ -182,7 +200,10 @@ size_t
 MQX_Filesystem::write (int fd, const unsigned char *buffer, size_t size)
 {
   File *file = get_file (fd);
-  if (file == 0) return MQX_FILE_ERROR;
+  if (file == 0)
+    {
+      return MQX_FILE_ERROR;
+    }
   int result = _io_write (file->mqx_file, const_cast<unsigned char *> (buffer), size);
   if (result == IO_ERROR)
     {
@@ -211,41 +232,51 @@ MQX_Filesystem::lseek (int fd, long offset, int whence)
       return -1;
     }
   File *file = get_file (fd);
-  if (file == 0) return -1;
+  if (file == 0)
+    {
+      return -1;
+    }
   return _io_fseek (file->mqx_file, offset, whence) == MQX_OK ? 0 : -1;
 }
 
 char*
 MQX_Filesystem::getcwd (char *buf, size_t size)
 {
-  if (check_state ()) return 0;
-  if (buf == 0)
+  if (check_state ())
+    {
+      return nullptr;
+    }
+  if (buf == nullptr)
     {
       errno = EINVAL;
-      return 0;
+      return nullptr;
     }
 
   char curdirtmp[FS_FILENAME_SIZE];
-  int mqx_error = _io_ioctl (current_fs_, IO_IOCTL_GET_CURRENT_DIR, (uint32_t*) curdirtmp);
+  int mqx_error = _io_ioctl (current_fs_, IO_IOCTL_GET_CURRENT_DIR,
+                             reinterpret_cast<uint32_t *> (curdirtmp));
   if (mqx_error != MFS_NO_ERROR)
     {
       errno = ACE_OS::mqx_error_to_errno (mqx_error);
-      return 0;
+      return nullptr;
     }
-  if ((current_fs_name_len_ + strlen (curdirtmp) + 1) > size)
+  if ((current_fs_name_len_ + ACE_OS::strlen (curdirtmp) + 1) > size)
     {
       errno = ERANGE;
-      return 0;
+      return nullptr;
     }
-  strcpy (buf, current_fs_name_);
-  strcat (buf, curdirtmp);
+  ACE_OS::strcpy (buf, current_fs_name_);
+  ACE_OS::strcat (buf, curdirtmp);
   return buf;
 }
 
 MQX_FILE_PTR
-MQX_Filesystem::resolve_fs (const char *path, int *fs_name_len)
+MQX_Filesystem::resolve_fs (char const *path, int *fs_name_len)
 {
-  if (check_state ()) return 0;
+  if (check_state ())
+    {
+      return 0;
+    }
 
   if (fs_name_len == 0 || path == 0 || path[0] == '\0')
     {
@@ -275,13 +306,17 @@ MQX_Filesystem::resolve_fs (const char *path, int *fs_name_len)
 }
 
 int
-MQX_Filesystem::mkdir (const char *path)
+MQX_Filesystem::mkdir (char const *path)
 {
   int fs_name_len;
   MQX_FILE_PTR fs = resolve_fs (path, &fs_name_len);
-  if (fs == 0) return -1;
+  if (fs == 0)
+    {
+      return -1;
+    }
   int mqx_error = _io_ioctl (
-    fs, IO_IOCTL_CREATE_SUBDIR, (uint32_t*) (path + fs_name_len));
+    fs, IO_IOCTL_CREATE_SUBDIR,
+    reinterpret_cast<uint32_t *> (path + fs_name_len));
   if (mqx_error != MQX_OK)
     {
       errno = ACE_OS::mqx_error_to_errno (mqx_error);
@@ -291,14 +326,20 @@ MQX_Filesystem::mkdir (const char *path)
 }
 
 int
-MQX_Filesystem::chdir (const char *path)
+MQX_Filesystem::chdir (char const *path)
 {
   int fs_name_len;
   MQX_FILE_PTR fs = resolve_fs (path, &fs_name_len);
-  if (fs == 0) return -1;
-  if (fs != current_fs_) update_fs(fs);
+  if (fs == 0)
+    {
+      return -1;
+    }
+  if (fs != current_fs_)
+    {
+      update_fs(fs);
+    }
   int mqx_error = _io_ioctl (fs, IO_IOCTL_CHANGE_CURRENT_DIR,
-    (uint32_t*) (path + fs_name_len));
+    reinterpret_cast<uint32_t *> (path + fs_name_len));
   if (mqx_error != MQX_OK)
     {
       errno = ACE_OS::mqx_error_to_errno (mqx_error);
@@ -308,13 +349,16 @@ MQX_Filesystem::chdir (const char *path)
 }
 
 int
-MQX_Filesystem::rmdir (const char *path)
+MQX_Filesystem::rmdir (char const *path)
 {
   int fs_name_len;
   MQX_FILE_PTR fs = resolve_fs (path, &fs_name_len);
-  if (fs == 0) return -1;
+  if (fs == 0)
+    {
+      return -1;
+    }
   int mqx_error = _io_ioctl (fs, IO_IOCTL_REMOVE_SUBDIR,
-    (uint32_t*) (path + fs_name_len));
+    reinterpret_cast<uint32_t *> (path + fs_name_len));
   if (mqx_error != MQX_OK)
     {
       errno = ACE_OS::mqx_error_to_errno (mqx_error);
@@ -324,13 +368,16 @@ MQX_Filesystem::rmdir (const char *path)
 }
 
 int
-MQX_Filesystem::unlink (const char *path)
+MQX_Filesystem::unlink (char const *path)
 {
   int fs_name_len;
   MQX_FILE_PTR fs = resolve_fs (path, &fs_name_len);
-  if (fs == 0) return -1;
+  if (fs == 0)
+    {
+      return -1;
+    }
   int mqx_error = _io_ioctl (fs, IO_IOCTL_DELETE_FILE,
-    (uint32_t*) (path + fs_name_len));
+    reinterpret_cast<uint32_t *> (path + fs_name_len));
   if (mqx_error != MQX_OK)
     {
       errno = ACE_OS::mqx_error_to_errno (mqx_error);
@@ -340,14 +387,17 @@ MQX_Filesystem::unlink (const char *path)
 }
 
 int
-MQX_Filesystem::rename (const char *oldpath, const char *newpath)
+MQX_Filesystem::rename (char const *oldpath, char const *newpath)
 {
   // TODO: Handle Moving Directories?
   int old_fs_name_len;
   MQX_FILE_PTR fs = resolve_fs (oldpath, &old_fs_name_len);
   int new_fs_name_len;
   MQX_FILE_PTR other_fs = resolve_fs (newpath, &new_fs_name_len);
-  if (fs == 0 || other_fs == 0) return -1;
+  if (fs == 0 || other_fs == 0)
+    {
+      return -1;
+    }
   if (fs != other_fs)
     {
       errno = EXDEV;
@@ -382,10 +432,10 @@ MQX_Filesystem::rename (const char *oldpath, const char *newpath)
 
   MFS_RENAME_PARAM mfs_rename;
   char oldtmp[FS_FILENAME_SIZE];
-  strcpy (oldtmp, oldpath + old_fs_name_len);
+  ACE_OS::strcpy (oldtmp, oldpath + old_fs_name_len);
   mfs_rename.OLD_PATHNAME = oldtmp;
   char newtmp[FS_FILENAME_SIZE];
-  strcpy (newtmp, newpath + new_fs_name_len);
+  ACE_OS::strcpy (newtmp, newpath + new_fs_name_len);
   mfs_rename.NEW_PATHNAME = newtmp;
 
   int mqx_error = _io_ioctl (fs, IO_IOCTL_RENAME_FILE, (uint32_t*) &mfs_rename);
@@ -400,12 +450,15 @@ MQX_Filesystem::rename (const char *oldpath, const char *newpath)
 MQX_Filesystem::File *
 MQX_Filesystem::get_file (int fd)
 {
-  for (int i = 0; i < FOPEN_MAX; i++)
+  for (int i = 0; i < FOPEN_MAX; ++i)
     {
-      if (files_[i].fd == fd) return &files_[i];
+      if (files_[i].fd == fd)
+        {
+          return files_ + i;
+        }
     }
   errno = EBADF;
-  return 0;
+  return nullptr;
 }
 
 MQX_Filesystem::File *
@@ -417,7 +470,7 @@ MQX_Filesystem::get_new_file ()
     {
     file->mqx_file = 0;
     // Get Unused File Descriptor
-    for (int fd = last_fd_ + 1; fd != last_fd_; fd++)
+    for (int fd = last_fd_ + 1; fd != last_fd_; ++fd)
       {
         if (get_file (fd) == 0)
           {
@@ -425,7 +478,10 @@ MQX_Filesystem::get_new_file ()
             last_fd_ = fd;
             return file;
           }
-        if (fd == max_fd_) fd = 0;
+        if (fd == max_fd_)
+          {
+            fd = 0;
+          }
       }
     }
   errno = ENFILE;
@@ -440,7 +496,7 @@ mfs_file_attrs_to_stat_mode (int attributes)
 }
 
 int
-MQX_Filesystem::stat (const char * path, ACE_stat *statbuf)
+MQX_Filesystem::stat (char const * path, ACE_stat *statbuf)
 {
   if (statbuf == 0)
     {
@@ -450,7 +506,10 @@ MQX_Filesystem::stat (const char * path, ACE_stat *statbuf)
 
   int fs_name_len;
   MQX_FILE_PTR fs = resolve_fs (path, &fs_name_len);
-  if (fs == 0) return -1;
+  if (fs == 0)
+    {
+      return -1;
+    }
 
   statbuf->st_size = 0;
   statbuf->st_mtime = 0;
@@ -460,8 +519,8 @@ MQX_Filesystem::stat (const char * path, ACE_stat *statbuf)
   MFS_SEARCH_PARAM search;
   search.ATTRIBUTE = MFS_SEARCH_ANY;
   char tmppath[ACE_MQX_ABS_PATH_SIZE];
-  strcpy (&tmppath[0], path);
-  search.WILDCARD = &tmppath[fs_name_len];
+  ACE_OS::strcpy (tmppath, path);
+  search.WILDCARD = tmppath + fs_name_len;
   MFS_SEARCH_DATA search_results;
   search.SEARCH_DATA_PTR = &search_results;
   int mqx_error = _io_ioctl (fs, IO_IOCTL_FIND_FIRST_FILE, (uint32_t *) &search);
@@ -487,7 +546,10 @@ MQX_Filesystem::fstat (int fd, ACE_stat *statbuf)
     }
 
   File *file = get_file (fd);
-  if (file == 0) return -1;
+  if (file == 0)
+    {
+      return -1;
+    }
 
   statbuf->st_size = 0;
   statbuf->st_mtime = 0;
@@ -520,7 +582,7 @@ MQX_Filesystem::fstat (int fd, ACE_stat *statbuf)
  */
 
 extern "C" {
-int __open (const char *filename, int mode)
+int __open (char const *filename, int mode)
 {
   return MQX_Filesystem::inst ().open (filename, mode);
 }

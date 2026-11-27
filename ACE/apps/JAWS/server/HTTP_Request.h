@@ -1,13 +1,8 @@
-/* -*- c++ -*- */
-
-//=============================================================================
 /**
  *  @file    HTTP_Request.h
  *
  *  @author James Hu
  */
-//=============================================================================
-
 
 #ifndef HTTP_REQUEST_H
 #define HTTP_REQUEST_H
@@ -19,6 +14,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "Parse_Headers.h"
+#include <vector>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Message_Block;
@@ -34,8 +30,11 @@ class HTTP_Request
 public:
   /// Default construction.
   HTTP_Request ();
+  HTTP_Request (HTTP_Request const &) = delete;
+  HTTP_Request (HTTP_Request &&) = delete;
+  HTTP_Request &operator= (HTTP_Request const &) = delete;
+  HTTP_Request &operator= (HTTP_Request &&) = delete;
 
-  /// Destructor.
   ~HTTP_Request ();
 
   /// parse an incoming request
@@ -51,46 +50,44 @@ public:
             int buflen);
 
 public:
-  // = The Accessors.
-
   /// HTTP request method
-  const char *method () const;
+  char const *method () const;
 
   /// HTTP request uri
-  const char *uri () const;
+  char const *uri () const;
 
   /// HTTP request version
-  const char *version () const;
+  char const *version () const;
 
   /// The HTTP request uri translated into a server filename path
-  const char *path () const;
+  char const *path () const;
 
   /// TRUE of the request is a cgi request
   int cgi () const;
 
   /// The arguments to the cgi request
-  const char *cgi_args () const;
+  char const *cgi_args () const;
 
   /// The environment variables passed to the CGI request
-  const char **cgi_env () const;
+  char const *const *cgi_env () const;
 
   /// The cgi request query string
-  const char *query_string () const;
+  char const *query_string () const;
 
   /// The cgi request path information
-  const char *path_info () const;
+  char const *path_info () const;
 
   /// The type of the HTTP request
   int type () const;
 
   /// The headers that were parsed from the request
-  const Headers &headers () const;
+  Headers const &headers () const;
 
   /// Header strings stored
-  const char *header_strings (int index) const;
+  char const *header_strings (int index) const;
 
   /// Values associated with the header strings
-  const char *header_values (int index) const;
+  char const *header_values (int index) const;
 
   /// The buffer into which request data is read
   char *data ();
@@ -105,11 +102,12 @@ public:
   int status ();
 
   /// A string describing the state of the incoming request
-  const char *status_string ();
+  char const *status_string ();
 
   /// Dump the state of the request.
   void dump ();
 
+  /// Values for request type.
   enum
   {
     NO_TYPE = -1,
@@ -119,8 +117,7 @@ public:
     PUT,
     NUM_METHOD_STRINGS
   };
-  // Values for request type
-
+  /// Header strings.
   enum
   {
     DATE = 0,
@@ -138,14 +135,11 @@ public:
     LAST_MODIFIED,
     NUM_HEADER_STRINGS
   };
-  // Header strings
-
 private:
-  // = Private Accessors which can set values
-  const char *method (const char *method_string);
-  const char *uri (char *uri_string);
-  const char *version (const char *version_string);
-  const char *path (const char *uri_string);
+  char const *method (char const *method_string);
+  char const *uri (char *uri_string);
+  char const *version (char const *version_string);
+  char const *path (char const *uri_string);
 
   /// determine if the given URI is a CGI program.
   int cgi (char *uri_string);
@@ -159,39 +153,40 @@ private:
   /// set the arguments and environment for the cgi program
   void cgi_args_and_env (char *&extra_path_info);
 
-  int type (const char *type_string);
+  int type (char const *type_string);
 
 private:
   int got_request_line () const;
 
 private:
-  int got_request_line_;
+  bool got_request_line_ {};
   Headers headers_;
 
-  char *method_;
-  char *uri_;
-  char *version_;
-  char *path_;
+  char *method_ {};
+  char *uri_ {};
+  char *version_ {};
+  char *path_ {};
 
-  int cgi_;
-  char **cgi_env_;
-  char *cgi_args_;
+  bool cgi_ {};
+  /// Environment strings borrow storage from uri_; the vector owns only the
+  /// pointer table passed to the CGI environment builder.
+  std::vector<char *> cgi_env_;
+  char *cgi_args_ {};
 
-  char *query_string_;
-  char *path_info_;
+  char *query_string_ {};
+  char *path_info_ {};
 
-  const char * const *const header_strings_;
-  static const char *const static_header_strings_[NUM_HEADER_STRINGS];
+  char const * const *const header_strings_;
+  static char const *const static_header_strings_[NUM_HEADER_STRINGS];
 
-  const char * const *const method_strings_;
-  static const char *const static_method_strings_[NUM_METHOD_STRINGS];
+  char const * const *const method_strings_;
+  static char const *const static_method_strings_[NUM_METHOD_STRINGS];
 
-  char *data_;
-  int datalen_;
-  int content_length_;
-  char *filename_;
+  char *data_ {};
+  int datalen_ {};
+  int content_length_ {-1};
   int status_;
-  int type_;
+  int type_ {NO_TYPE};
 };
 
 #endif /* HTTP_REQUEST_H */

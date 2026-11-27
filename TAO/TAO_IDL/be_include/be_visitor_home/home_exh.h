@@ -1,5 +1,3 @@
-/* -*- c++ -*- */
-//=============================================================================
 /**
  *  @file    home_exh.h
  *
@@ -8,7 +6,6 @@
  *
  *  @author Jeff Parsons
  */
-//=============================================================================
 
 #ifndef _BE_HOME_HOME_EXH_H_
 #define _BE_HOME_HOME_EXH_H_
@@ -30,9 +27,9 @@ public:
 
   ~be_visitor_home_exh () override;
 
-  be_visitor_home_exh (const be_visitor_home_exh &) = delete;
+  be_visitor_home_exh (be_visitor_home_exh const &) = delete;
   be_visitor_home_exh (be_visitor_home_exh &&) = delete;
-  be_visitor_home_exh &operator= (const be_visitor_home_exh &) = delete;
+  be_visitor_home_exh &operator= (be_visitor_home_exh const &) = delete;
   be_visitor_home_exh &operator= (be_visitor_home_exh &&) = delete;
 
   int visit_home (be_home *node) override;

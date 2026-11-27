@@ -1,6 +1,3 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
  *  @file    tao_imr_i.h
  *
@@ -8,7 +5,6 @@
  *
  *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
  */
-//=============================================================================
 #ifndef TAO_IMR_I_H
 #define TAO_IMR_I_H
 
@@ -30,7 +26,6 @@ class TAO_IMR_Op;
 class TAO_IMR_i
 {
 public:
-  // = Constructor and destructor.
   TAO_IMR_i ();
   ~TAO_IMR_i ();
 
@@ -64,7 +59,6 @@ private:
   std::unique_ptr<TAO_IMR_Op> op_;
 };
 
-
 /**
  * @class TAO_IMR_Op
  *
@@ -86,9 +80,8 @@ public:
   };
 
   /// Factory.
-  static TAO_IMR_Op *make_op (ACE_TCHAR const *op_name);
+  static std::unique_ptr<TAO_IMR_Op> make_op (ACE_TCHAR const *op_name);
 
-  /// Destructor.
   virtual ~TAO_IMR_Op ();
 
   /// Parse arguments.
@@ -103,16 +96,16 @@ public:
 protected:
   TAO_IMR_Op () : imr_ (nullptr), quiet_ (false) {}
 
-  // = Helper methods
-
+  /// @name Helper methods
+  /// @{
   /// Prints out the information contained in a ServerInformation structure.
   void display_server_information (const ImplementationRepository::ServerInformation &info);
+  /// @}
 
   /// Reference to our implementation repository.
   ImplementationRepository::Administration_ptr imr_;
   bool quiet_;
 };
-
 
 /**
  * @class TAO_IMR_Op_Activate
@@ -154,7 +147,6 @@ protected:
   void print_usage ();
 };
 
-
 /**
  * @class TAO_IMR_Op_IOR
  *
@@ -180,7 +172,6 @@ protected:
   ACE_TString filename_;
 };
 
-
 /**
  * @class TAO_IMR_Op_Kill
  *
@@ -201,7 +192,6 @@ protected:
   ACE_CString server_name_;
   int signum_;
 };
-
 
 /**
  * @class TAO_IMR_Op_Link
@@ -225,7 +215,6 @@ protected:
   CORBA::StringSeq peers_;
 };
 
-
 /**
  * @class TAO_IMR_Op_List
  *
@@ -237,7 +226,7 @@ protected:
 class TAO_IMR_Op_List : public TAO_IMR_Op
 {
 public:
-  TAO_IMR_Op_List ();
+  TAO_IMR_Op_List () = default;
 
   int parse (int argc, ACE_TCHAR **argv) override;
   int run () override;
@@ -250,22 +239,21 @@ protected:
   ACE_CString server_name_;
 
   /// If true, more server information is displayed.
-  int verbose_server_information_;
+  bool verbose_server_information_ {};
 
   /// If true, only show servers that are currently active.
-  int list_only_active_servers_;
+  bool list_only_active_servers_ {};
 
   /// retrieve no more than this number of entries at a time
-  CORBA::ULong how_many_;
+  CORBA::ULong how_many_ {};
 
   /// If true, use minimum formatting.
-  int terse_;
+  bool terse_ {};
 
   /// Prints out the information contained in a ServerInformation structure.
   /// Specialized to only print server information
   void display_server_information (const ImplementationRepository::ServerInformation &info);
 };
-
 
 /**
  * @class TAO_IMR_Op_Remove
@@ -285,10 +273,9 @@ protected:
   void print_usage ();
 
   ACE_CString server_name_;
-  bool force_;
+  bool force_ {};
   int signum_;
 };
-
 
 /**
  * @class TAO_IMR_Op_Shutdown
@@ -316,14 +303,14 @@ protected:
 class TAO_IMR_Op_ShutdownRepo : public TAO_IMR_Op
 {
 public:
-  TAO_IMR_Op_ShutdownRepo();
+  TAO_IMR_Op_ShutdownRepo () = default;
   int parse (int argc, ACE_TCHAR **argv) override;
   int run () override;
 
 protected:
   void print_usage ();
 
-  bool activators_;
+  bool activators_ {};
 };
 
 /**
@@ -337,7 +324,7 @@ protected:
 class TAO_IMR_Op_Register : public TAO_IMR_Op
 {
 public:
-  TAO_IMR_Op_Register(bool is_add);
+  explicit TAO_IMR_Op_Register(bool is_add);
 
   int parse (int argc, ACE_TCHAR **argv) override;
   int run () override;
@@ -355,22 +342,22 @@ protected:
   /// POA server name.
   ACE_CString server_name_;
 
-  bool set_command_line_;
+  bool set_command_line_ {};
   ACE_CString command_line_;
 
-  bool set_environment_vars_;
+  bool set_environment_vars_ {};
   ImplementationRepository::EnvironmentList environment_vars_;
 
-  bool set_working_dir_;
+  bool set_working_dir_ {};
   ACE_CString working_dir_;
 
-  bool set_activation_;
+  bool set_activation_ {};
   ImplementationRepository::ActivationMode activation_;
 
-  bool set_retry_count_;
+  bool set_retry_count_ {};
   int retry_count_;
 
-  bool set_activator_;
+  bool set_activator_ {};
   ACE_CString activator_;
 };
 

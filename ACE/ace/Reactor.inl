@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "ace/Reactor_Impl.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -11,8 +10,10 @@ ACE_Reactor::run_event_loop ()
   ACE_TRACE ("ACE_Reactor::run_event_loop");
   ACE_Reactor *r = ACE_Reactor::instance ();
 
-  if (r == 0)
-    return -1;
+  if (r == nullptr)
+    {
+      return -1;
+    }
 
   return r->run_reactor_event_loop (ACE_Reactor::check_reconfiguration);
 }
@@ -27,8 +28,10 @@ ACE_Reactor::run_event_loop (ACE_Time_Value &tv)
   ACE_TRACE ("ACE_Reactor::run_event_loop");
   ACE_Reactor *r = ACE_Reactor::instance ();
 
-  if (r == 0)
-    return -1;
+  if (r == nullptr)
+    {
+      return -1;
+    }
 
   return r->run_reactor_event_loop
     (tv, ACE_Reactor::check_reconfiguration);
@@ -43,8 +46,10 @@ ACE_Reactor::run_alertable_event_loop ()
   ACE_TRACE ("ACE_Reactor::run_alertable_event_loop");
   ACE_Reactor *r = ACE_Reactor::instance ();
 
-  if (r == 0)
-    return -1;
+  if (r == nullptr)
+    {
+      return -1;
+    }
 
   return r->run_alertable_reactor_event_loop (ACE_Reactor::check_reconfiguration);
 }
@@ -59,8 +64,10 @@ ACE_Reactor::run_alertable_event_loop (ACE_Time_Value &tv)
   ACE_TRACE ("ACE_Reactor::run_alertable_event_loop");
   ACE_Reactor *r = ACE_Reactor::instance ();
 
-  if (r == 0)
-    return -1;
+  if (r == nullptr)
+    {
+      return -1;
+    }
 
   return r->run_alertable_reactor_event_loop
     (tv, ACE_Reactor::check_reconfiguration);
@@ -95,7 +102,7 @@ ACE_Reactor::end_reactor_event_loop ()
 {
   ACE_TRACE ("ACE_Reactor::end_reactor_event_loop");
 
-  this->implementation_->deactivate (1);
+  this->implementation_->deactivate (true);
 
   return 0;
 }
@@ -105,7 +112,7 @@ ACE_Reactor::reset_reactor_event_loop ()
 {
   ACE_TRACE ("ACE_Reactor::reset_reactor_event_loop");
 
-  this->implementation_->deactivate (0);
+  this->implementation_->deactivate (false);
 }
 
 ACE_INLINE int
@@ -168,7 +175,7 @@ ACE_Reactor::close ()
 }
 
 ACE_INLINE int
-ACE_Reactor::work_pending (const ACE_Time_Value &max_wait_time)
+ACE_Reactor::work_pending (ACE_Time_Value const &max_wait_time)
 {
   return this->implementation ()->work_pending (max_wait_time);
 }
@@ -212,7 +219,7 @@ ACE_Reactor::register_handler (int signum,
 }
 
 ACE_INLINE int
-ACE_Reactor::register_handler (const ACE_Sig_Set &sigset,
+ACE_Reactor::register_handler (ACE_Sig_Set const &sigset,
                                ACE_Event_Handler *new_sh,
                                ACE_Sig_Action *new_disp)
 {
@@ -236,7 +243,7 @@ ACE_Reactor::remove_handler (ACE_HANDLE handle,
 }
 
 ACE_INLINE int
-ACE_Reactor::remove_handler (const ACE_Handle_Set &handle_set,
+ACE_Reactor::remove_handler (ACE_Handle_Set const &handle_set,
                              ACE_Reactor_Mask mask)
 {
   return this->implementation ()->remove_handler (handle_set, mask);
@@ -255,7 +262,7 @@ ACE_Reactor::remove_handler (int signum,
 }
 
 ACE_INLINE int
-ACE_Reactor::remove_handler (const ACE_Sig_Set &sigset)
+ACE_Reactor::remove_handler (ACE_Sig_Set const &sigset)
 {
   return this->implementation ()->remove_handler (sigset);
 }
@@ -273,7 +280,7 @@ ACE_Reactor::suspend_handler (ACE_HANDLE handle)
 }
 
 ACE_INLINE int
-ACE_Reactor::suspend_handler (const ACE_Handle_Set &handles)
+ACE_Reactor::suspend_handler (ACE_Handle_Set const &handles)
 {
   return this->implementation ()->suspend_handler (handles);
 }
@@ -297,7 +304,7 @@ ACE_Reactor::resume_handler (ACE_HANDLE handle)
 }
 
 ACE_INLINE int
-ACE_Reactor::resume_handler (const ACE_Handle_Set &handles)
+ACE_Reactor::resume_handler (ACE_Handle_Set const &handles)
 {
   return this->implementation ()->resume_handler (handles);
 }
@@ -371,7 +378,7 @@ ACE_Reactor::handler (int signum,
   return this->implementation ()->handler (signum, event_handler);
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 ACE_Reactor::initialized ()
 {
   return this->implementation ()->initialized ();

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /**
  *  @file   EC_TPC_ProxySupplier.h
  *
@@ -24,22 +23,22 @@ class TAO_RTEvent_Serv_Export TAO_EC_TPC_ProxyPushSupplier :
   public TAO_EC_Default_ProxyPushSupplier
 {
 public:
-  /// Constructor
   TAO_EC_TPC_ProxyPushSupplier (TAO_EC_Event_Channel_Base* event_channel, int validate_connection);
 
-  /// Dtor
-  virtual ~TAO_EC_TPC_ProxyPushSupplier () override;
+  ~TAO_EC_TPC_ProxyPushSupplier () override = default;
 
   /*! These are overridden from the base class in order to maintain the
        map in the dispatcher class. */
 
-  // = The RtecEventChannelAdmin::ProxyPushSupplier methods...
-  virtual void connect_push_consumer (
-                RtecEventComm::PushConsumer_ptr push_consumer,
-                const RtecEventChannelAdmin::ConsumerQOS &qos);
+  /// @name The RtecEventChannelAdmin::ProxyPushSupplier methods
+  /// @{
+  void connect_push_consumer (
+    RtecEventComm::PushConsumer_ptr push_consumer,
+    RtecEventChannelAdmin::ConsumerQOS const &qos) override;
 
-  virtual void disconnect_push_supplier () override;
+  void disconnect_push_supplier () override;
 
+  /// @}
 private:
   using BASECLASS = TAO_EC_Default_ProxyPushSupplier;
   TAO_EC_TPC_Dispatching* tpc_dispatching ();

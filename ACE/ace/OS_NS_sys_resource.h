@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   OS_NS_sys_resource.h
  *
@@ -8,7 +5,6 @@
  *  @author Jesper S. M|ller<stophph@diku.dk>
  *  @author and a cast of thousands...
  */
-//=============================================================================
 
 #ifndef ACE_OS_NS_SYS_RESOURCE_H
 # define ACE_OS_NS_SYS_RESOURCE_H
@@ -40,7 +36,6 @@ namespace ACE_OS
   ACE_NAMESPACE_INLINE_FUNCTION
   int getrusage (int who,
                  struct rusage *rusage);
-
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int setrlimit (int resource,

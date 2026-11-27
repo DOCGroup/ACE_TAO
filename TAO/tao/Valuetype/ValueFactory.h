@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 /**
  *  @file     ValueFactory.h
  *
@@ -85,8 +83,8 @@ namespace TAO
     static void add_ref (CORBA::ValueFactoryBase *);
     static void remove_ref (CORBA::ValueFactoryBase *);
 
-    // For INOUT value type arguments, so they can use the same set
-    // of arg classes as interfaces.
+    /// For INOUT value type arguments, so they can use the same set
+    /// of arg classes as interfaces.
     static void release (CORBA::ValueFactoryBase *);
   };
 }
@@ -108,20 +106,25 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 // (The obtaining of the repository id is currently not yet like the OMG way. %!)
 //
-// Macro for on the fly registration of a factory (with type Factory).
-// The repository id is taken from the static repository id of the
-// valuetype via tao_repository_id () of the specialized factory.
-// It forgets the pre-registered factory (if any) and the reference
-// to the newly created one. (A new reference could be obtained with
-// orb->lookup_value_factory (char * repo_id) .)
+/// Macro for on the fly registration of a factory (with type Factory).
+/// The repository id is taken from the static repository id of the
+/// valuetype via tao_repository_id () of the specialized factory.
+/// It forgets the pre-registered factory (if any) and the reference
+/// to the newly created one. (A new reference could be obtained with
+/// orb->lookup_value_factory (char * repo_id) .)
 
 #define TAO_OBV_REGISTER_FACTORY(FACTORY, VALUETYPE) \
-  { CORBA::ValueFactory_var factory (new FACTORY); \
+  { \
+    CORBA::ValueFactory_var factory (new FACTORY); \
     CORBA::ValueFactory prev_factory {}; \
     prev_factory = TAO_ORB_Core_instance ()->orb ()->register_value_factory ( \
-      VALUETYPE::_tao_obv_static_repository_id (),\
-                                   factory.in ()); \
-    if (prev_factory != nullptr) prev_factory->_remove_ref (); }
+      VALUETYPE::_tao_obv_static_repository_id (), \
+      factory.in ()); \
+    if (prev_factory != nullptr) \
+      { \
+        prev_factory->_remove_ref (); \
+      } \
+  }
 
 #include /**/ "ace/post.h"
 

@@ -1,19 +1,13 @@
 #include "UDPTest_i.h"
-#include <ace/Log_Msg.h>
+#include "ace/Log_Msg.h"
+#include <algorithm>
+#include <array>
 
-unsigned char buf[1000] = {0};
-
-UDPTest_i::UDPTest_i () : received_send_ (false)
-{
-}
-
-UDPTest_i::~UDPTest_i ()
-{
-}
+std::array<CORBA::Octet, 1000> buf {};
 
 void UDPTest_i::send (::UDPTestI::BufferT const Msg)
 {
-  ACE_OS::memcpy (buf, Msg, 1000);
-  ACE_OS::memset (buf, 0, 1000);
-  received_send_ = true;
+  std::copy_n (Msg, buf.size (), buf.begin ());
+  buf.fill (CORBA::Octet {});
+  this->received_send_.store (true, std::memory_order_release);
 }

@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  * @file Auto_Update_Starter.h
  *
  * @author Jeff Parsons <j.parsons@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef AUTO_UPDATE_STARTER_H
 #define AUTO_UPDATE_STARTER_H
@@ -43,9 +39,14 @@ namespace ACE
     class MONITOR_CONTROL_Export Auto_Update_Starter : public ACE_Task_Base
     {
     public:
+      Auto_Update_Starter (Auto_Update_Starter const &) = delete;
+      Auto_Update_Starter (Auto_Update_Starter &&) = delete;
+      Auto_Update_Starter &operator= (Auto_Update_Starter const &) = delete;
+      Auto_Update_Starter &operator= (Auto_Update_Starter &&) = delete;
+
       Auto_Update_Starter ();
 
-      int svc ();
+      int svc () override;
     };
   }
 }

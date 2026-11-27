@@ -11,7 +11,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<typename T>
 void
-TAO_IFR_Generic_Utils<T>::destroy_special (const ACE_TCHAR *section_name,
+TAO_IFR_Generic_Utils<T>::destroy_special (ACE_TCHAR const *section_name,
                                            TAO_Repository_i *repo,
                                            ACE_Configuration_Section_Key &key)
 {
@@ -19,7 +19,7 @@ TAO_IFR_Generic_Utils<T>::destroy_special (const ACE_TCHAR *section_name,
   int status =
     repo->config ()->open_section (key,
                                    section_name,
-                                   0,
+                                   false,
                                    sub_key);
 
   if (status != 0)
@@ -42,7 +42,7 @@ TAO_IFR_Generic_Utils<T>::destroy_special (const ACE_TCHAR *section_name,
       stringified = TAO_IFR_Service_Utils::int_to_string (i);
       repo->config ()->open_section (sub_key,
                                      stringified,
-                                     0,
+                                     false,
                                      special_key);
       T impl (repo);
       impl.section_key (special_key);
@@ -53,10 +53,9 @@ TAO_IFR_Generic_Utils<T>::destroy_special (const ACE_TCHAR *section_name,
 template<typename T>
 void
 TAO_IFR_Generic_Utils<T>::set_initializers (
-    const T &initializers,
+    T const &initializers,
     ACE_Configuration *config,
-    ACE_Configuration_Section_Key &key
-  )
+    ACE_Configuration_Section_Key &key)
 {
   CORBA::ULong length = initializers.length ();
 
@@ -68,7 +67,7 @@ TAO_IFR_Generic_Utils<T>::set_initializers (
   ACE_Configuration_Section_Key initializers_key;
   config->open_section (key,
                         ACE_TEXT("initializers"),
-                        1,
+                        true,
                         initializers_key);
   config->set_integer_value (initializers_key,
                              ACE_TEXT("count"),
@@ -85,11 +84,11 @@ TAO_IFR_Generic_Utils<T>::set_initializers (
       ACE_TCHAR *stringified = TAO_IFR_Service_Utils::int_to_string (i);
       config->open_section (initializers_key,
                             stringified,
-                            1,
+                            true,
                             initializer_key);
       config->set_string_value (initializer_key,
                                 ACE_TEXT("name"),
-                                initializers[i].name.in ());
+                                ACE_TEXT_CHAR_TO_TCHAR (initializers[i].name.in ()));
 
       arg_count = initializers[i].members.length ();
 
@@ -97,7 +96,7 @@ TAO_IFR_Generic_Utils<T>::set_initializers (
         {
           config->open_section (initializer_key,
                                 ACE_TEXT("params"),
-                                1,
+                                true,
                                 params_key);
           config->set_integer_value (params_key,
                                      ACE_TEXT("count"),
@@ -109,12 +108,12 @@ TAO_IFR_Generic_Utils<T>::set_initializers (
                 TAO_IFR_Service_Utils::int_to_string (j);
               config->open_section (params_key,
                                     stringified,
-                                    1,
+                                    true,
                                     arg_key);
               config->set_string_value (
                   arg_key,
-                  "arg_name",
-                  initializers[i].members[j].name.in ()
+                  ACE_TEXT ("arg_name"),
+                  ACE_TEXT_CHAR_TO_TCHAR (initializers[i].members[j].name.in ())
                 );
               arg_path =
                 TAO_IFR_Service_Utils::reference_to_path (
@@ -122,7 +121,7 @@ TAO_IFR_Generic_Utils<T>::set_initializers (
                   );
               config->set_string_value (arg_key,
                                         ACE_TEXT("arg_path"),
-                                        arg_path);
+                                        ACE_TEXT_CHAR_TO_TCHAR (arg_path));
             }
         }
     }
@@ -146,7 +145,7 @@ TAO_IFR_Desc_Utils<T_desc,T_impl>::fill_desc_begin (
   repo->config ()->get_string_value (key,
                                      ACE_TEXT("container_id"),
                                      holder);
-  desc.defined_in = holder.fast_rep ();
+  desc.defined_in = static_cast<char const *> (ACE_TEXT_ALWAYS_CHAR (holder.fast_rep ()));
 
   desc.version = impl.version_i ();
 }
@@ -161,8 +160,8 @@ TAO_IFR_Strseq_Utils<T_strseq> ::fill_string_seq (
 {
   ACE_Configuration_Section_Key section_key;
   int status = config->open_section (key,
-                                     section_name,
-                                     0,
+                                     ACE_TEXT_CHAR_TO_TCHAR (section_name),
+                                     false,
                                      section_key);
 
   if (status != 0)
@@ -173,10 +172,10 @@ TAO_IFR_Strseq_Utils<T_strseq> ::fill_string_seq (
 
   CORBA::ULong count = 0;
   config->get_integer_value (section_key,
-                             "count",
+                             ACE_TEXT ("count"),
                              count);
   seq.length (count);
-  char *stringified {};
+  ACE_TCHAR *stringified {};
   ACE_TString holder;
 
   for (CORBA::ULong i {}; i < count; ++i)
@@ -185,7 +184,7 @@ TAO_IFR_Strseq_Utils<T_strseq> ::fill_string_seq (
       config->get_string_value (section_key,
                                 stringified,
                                 holder);
-      seq[i] = holder.fast_rep ();
+      seq[i] = static_cast<char const *> (ACE_TEXT_ALWAYS_CHAR (holder.fast_rep ()));
     }
 }
 
@@ -195,13 +194,12 @@ TAO_Port_Desc_Seq_Utils<T_desc_seq>::port_descriptions (
     T_desc_seq &desc_seq,
     ACE_Configuration *config,
     ACE_Configuration_Section_Key &key,
-    char const *sub_section
-  )
+    char const *sub_section)
 {
   ACE_Configuration_Section_Key sub_key;
   int status = config->open_section (key,
-                                     sub_section,
-                                     0,
+                                     ACE_TEXT_CHAR_TO_TCHAR (sub_section),
+                                     false,
                                      sub_key);
 
   if (status != 0)
@@ -212,11 +210,11 @@ TAO_Port_Desc_Seq_Utils<T_desc_seq>::port_descriptions (
 
   CORBA::ULong count = 0;
   config->get_integer_value (sub_key,
-                             "count",
+                             ACE_TEXT ("count"),
                              count);
   desc_seq.length (count);
   ACE_Configuration_Section_Key desc_key;
-  char *stringified {};
+  ACE_TCHAR *stringified {};
   ACE_TString holder;
 
   for (CORBA::ULong i {}; i < count; ++i)
@@ -224,33 +222,33 @@ TAO_Port_Desc_Seq_Utils<T_desc_seq>::port_descriptions (
       stringified = TAO_IFR_Service_Utils::int_to_string (i);
       config->open_section (sub_key,
                             stringified,
-                            0,
+                            false,
                             desc_key);
 
       config->get_string_value (desc_key,
-                                "name",
+                                ACE_TEXT ("name"),
                                 holder);
-      desc_seq[i].name = holder.c_str ();
+      desc_seq[i].name = static_cast<char const *> (ACE_TEXT_ALWAYS_CHAR (holder.c_str ()));
 
       config->get_string_value (desc_key,
-                                "id",
+                                ACE_TEXT ("id"),
                                 holder);
-      desc_seq[i].id = holder.c_str ();
+      desc_seq[i].id = static_cast<char const *> (ACE_TEXT_ALWAYS_CHAR (holder.c_str ()));
 
       /// Seems to me that this field should refer to the component
       /// where the port is defined - NOT where the base type is defined.
       config->get_string_value (key,
-                                "id",
+                                ACE_TEXT ("id"),
                                 holder);
-      desc_seq[i].defined_in = holder.c_str ();
+      desc_seq[i].defined_in = static_cast<char const *> (ACE_TEXT_ALWAYS_CHAR (holder.c_str ()));
 
       config->get_string_value (desc_key,
-                                "version",
+                                ACE_TEXT ("version"),
                                 holder);
-      desc_seq[i].version = holder.c_str ();
+      desc_seq[i].version = static_cast<char const *> (ACE_TEXT_ALWAYS_CHAR (holder.c_str ()));
 
       config->get_string_value (desc_key,
-                                "base_type",
+                                ACE_TEXT ("base_type"),
                                 holder);
       TAO_Port_Desc_Seq_Utils<T_desc_seq>::port_base_type (desc_seq,
                                                            holder,
@@ -269,8 +267,7 @@ TAO_Port_Desc_Seq_Utils<T_desc_seq>::get_is_multiple (
     T_desc_seq & /* desc_seq */,
     ACE_Configuration * /* config */,
     ACE_Configuration_Section_Key & /* key */,
-    CORBA::ULong /* index */
-  )
+    CORBA::ULong /* index */)
 {
   // All types except UsesDescription have no is_multiple member.
 }
@@ -281,7 +278,7 @@ TAO_Port_Desc_Seq_Utils<T_desc_seq>::port_base_type (T_desc_seq &desc_seq,
                                                      ACE_TString &holder,
                                                      CORBA::ULong index)
 {
-  desc_seq[index].interface_type = holder.fast_rep ();
+  desc_seq[index].interface_type = static_cast<char const *> (ACE_TEXT_ALWAYS_CHAR (holder.fast_rep ()));
 }
 
 template<typename T>
@@ -315,18 +312,18 @@ TAO_Port_Utils<T>::create_entry (char const *id,
 
   ACE_Configuration_Section_Key base_type_key;
   repo->config ()->expand_path (repo->root_key (),
-                                tmp,
+                                ACE_TEXT_CHAR_TO_TCHAR (tmp),
                                 base_type_key,
-                                0);
+                                false);
 
   ACE_TString holder;
   repo->config ()->get_string_value (base_type_key,
-                                     "id",
+                                     ACE_TEXT ("id"),
                                      holder);
 
   repo->config ()->set_string_value (
                        new_key,
-                       "base_type",
+                       ACE_TEXT ("base_type"),
                        holder);
 
   TAO_Port_Utils<T>::set_is_multiple (is_multiple,

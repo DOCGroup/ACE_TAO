@@ -12,7 +12,7 @@ static ACE_THR_FUNC_RETURN
 worker (void *arg)
 {
   intptr_t const iterations = reinterpret_cast<intptr_t> (arg);
-  for (intptr_t i = 0; i < iterations; i++)
+  for (intptr_t i = 0; i < iterations; ++i)
     {
       if ((i % 10) == 0
           && (ACE_Thread_Manager::instance ()->testcancel (ACE_Thread::self ()) != 0))
@@ -25,7 +25,7 @@ worker (void *arg)
   return ACE_THR_FUNC_RETURN_NULL;
 }
 
-static const int DEFAULT_THREADS = ACE_DEFAULT_THREADS;
+static int const DEFAULT_THREADS = ACE_DEFAULT_THREADS;
 static const intptr_t DEFAULT_ITERATIONS = 100000;
 
 int
@@ -35,13 +35,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   daemon.open (argv[0]);
 
-  int n_threads = argc > 1 ? ACE_OS::atoi (argv[1]) : DEFAULT_THREADS;
-  intptr_t n_iterations =
+  int const n_threads = argc > 1 ? ACE_OS::atoi (argv[1]) : DEFAULT_THREADS;
+  intptr_t const n_iterations =
     argc > 2 ? ACE_OS::atoi (argv[2]) : DEFAULT_ITERATIONS;
 
   ACE_Thread_Manager *thr_mgr = ACE_Thread_Manager::instance ();
 
-  int grp_id = thr_mgr->spawn_n (n_threads, worker,
+  int const grp_id = thr_mgr->spawn_n (n_threads, worker,
                                  reinterpret_cast<void *> (n_iterations),
                                  THR_NEW_LWP | THR_DETACHED);
 

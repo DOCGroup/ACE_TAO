@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//==========================================================================
 /**
  *  @file    Null_Mutex.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//==========================================================================
 
 #ifndef ACE_NULL_MUTEX_H
 #define ACE_NULL_MUTEX_H
@@ -34,8 +30,9 @@ class ACE_Time_Value;
 class ACE_Export ACE_Null_Mutex
 {
 public:
-  ACE_Null_Mutex (const ACE_TCHAR * = 0)
-    : lock_ (0) {}
+  ACE_Null_Mutex (ACE_TCHAR const * = nullptr)
+  {
+  }
   ~ACE_Null_Mutex () = default;
   /// Return 0.
   int remove () {return 0;}
@@ -76,7 +73,8 @@ public:
   /// Declare the dynamic allocation hooks.
   //ACE_ALLOC_HOOK_DECLARE;
 
-  int lock_; // A dummy lock.
+  /// A dummy lock.
+  int lock_ {};
 
   ACE_ALLOC_HOOK_DECLARE;
 };
@@ -97,6 +95,7 @@ template<>
 class ACE_Export ACE_Guard<ACE_Null_Mutex>
 {
 public:
+  ACE_Guard () = delete;
   ACE_Guard (ACE_Null_Mutex &) {}
   ACE_Guard (ACE_Null_Mutex &, int) {}
   ACE_Guard (ACE_Null_Mutex &, int, int) {}
@@ -113,8 +112,8 @@ public:
   void dump () const {}
 
 private:
-  ACE_Guard (const ACE_Guard<ACE_Null_Mutex> &) = delete;
-  void operator= (const ACE_Guard<ACE_Null_Mutex> &) = delete;
+  ACE_Guard (ACE_Guard<ACE_Null_Mutex> const &) = delete;
+  void operator= (ACE_Guard<ACE_Null_Mutex> const &) = delete;
   ACE_Guard (ACE_Guard<ACE_Null_Mutex> &&) = delete;
   void operator= (ACE_Guard<ACE_Null_Mutex> &&) = delete;
 };
@@ -131,6 +130,7 @@ class ACE_Export ACE_Write_Guard<ACE_Null_Mutex>
   : public ACE_Guard<ACE_Null_Mutex>
 {
 public:
+  ACE_Write_Guard () = delete;
   ACE_Write_Guard (ACE_Null_Mutex &m)
     : ACE_Guard<ACE_Null_Mutex> (m) {}
   ACE_Write_Guard (ACE_Null_Mutex &m, int blocked)
@@ -155,6 +155,7 @@ class ACE_Export ACE_Read_Guard<ACE_Null_Mutex>
   : public ACE_Guard<ACE_Null_Mutex>
 {
 public:
+  ACE_Read_Guard () = delete;
   ACE_Read_Guard (ACE_Null_Mutex &m)
     : ACE_Guard<ACE_Null_Mutex> (m) {}
   ACE_Read_Guard (ACE_Null_Mutex &m, int blocked)
@@ -179,10 +180,10 @@ template<>
 class ACE_Export ACE_Malloc_Lock_Adapter_T<ACE_Null_Mutex>
 {
 public:
-  ACE_Null_Mutex * operator () (const ACE_TCHAR *name)
+  ACE_Null_Mutex * operator () (ACE_TCHAR const *name)
   {
     ACE_Null_Mutex *p;
-    ACE_NEW_RETURN (p, ACE_Null_Mutex (name), 0);
+    ACE_NEW_RETURN (p, ACE_Null_Mutex (name), nullptr);
     return p;
   }
 };

@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-// ===================================================================
 /**
  *  @file   Codeset_Translator_Factory_T.h
  *
  *  @author   Phil Mesnier <mesnier_p@ociweb.com>
  */
-// ===================================================================
 
 #ifndef TAO_CODESET_TRANSLATOR_FACTORY_T_H
 #define TAO_CODESET_TRANSLATOR_FACTORY_T_H
@@ -15,10 +11,11 @@
 
 #include "tao/Codeset/Codeset_Translator_Factory.h"
 
+#include <memory>
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -39,15 +36,15 @@ class TAO_Codeset_Translator_Factory_T
 {
 public:
   TAO_Codeset_Translator_Factory_T () = default;
-  ~TAO_Codeset_Translator_Factory_T () override;
+  ~TAO_Codeset_Translator_Factory_T () override = default;
 
   /// initialize the factory service object. Instantiates the translator.
   int init (int argc, ACE_TCHAR* argv[]) override;
 
   /// ncs returns the translator's native codeset ID.
-  CONV_FRAME::CodeSetId ncs () const;
+  CONV_FRAME::CodeSetId ncs () const override;
   /// tcs returns the translator's transmission codeset ID.
-  CONV_FRAME::CodeSetId tcs () const;
+  CONV_FRAME::CodeSetId tcs () const override;
 
   /// Assign the translator to the input CDR. The inherited assign_i is used
   /// to assign either a char or wchar translator, depending on the base type
@@ -60,14 +57,14 @@ public:
   /// no-op.
   void assign (TAO_OutputCDR *) const override;
 
-private:
   TAO_Codeset_Translator_Factory_T (TAO_Codeset_Translator_Factory_T const &) = delete;
   TAO_Codeset_Translator_Factory_T &operator= (
     TAO_Codeset_Translator_Factory_T const &) = delete;
   TAO_Codeset_Translator_Factory_T (TAO_Codeset_Translator_Factory_T &&) = delete;
   TAO_Codeset_Translator_Factory_T &operator= (TAO_Codeset_Translator_Factory_T &&) = delete;
 
-  NCS_TO_TCS *translator_ {};
+private:
+  std::unique_ptr<NCS_TO_TCS> translator_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

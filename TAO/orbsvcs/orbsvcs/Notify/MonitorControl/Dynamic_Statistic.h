@@ -21,19 +21,24 @@ public:
   /// the life of the TYPE object passed in is directly linked
   /// with the life of this object.
   TAO_Dynamic_Statistic (TYPE* interf,
-                         const char* name,
+                         char const *name,
                          Monitor_Control_Types::Information_Type type)
     : Monitor_Base (name, type),
       interf_ (interf)
   {
   }
 
+  TAO_Dynamic_Statistic (TAO_Dynamic_Statistic const&) = delete;
+  TAO_Dynamic_Statistic (TAO_Dynamic_Statistic&&) = delete;
+  TAO_Dynamic_Statistic& operator= (TAO_Dynamic_Statistic const&) = delete;
+  TAO_Dynamic_Statistic& operator= (TAO_Dynamic_Statistic&&) = delete;
+
   /// Take the interface, update the data, calculate the statistic and
   /// store it for later calculations.  The implementation of this
   /// method is expected to call the receive base class method. This
   /// method isn't pure virtual in Monitor_Base, but we reintroduce
   /// it here to force all subclasses to implement it.
-  virtual void update () = 0;
+  void update () override = 0;
 
 protected:
   TYPE* interf_;

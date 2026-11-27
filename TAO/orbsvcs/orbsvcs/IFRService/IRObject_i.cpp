@@ -1,5 +1,4 @@
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/IFRService/IRObject_i.h"
 #include "orbsvcs/IFRService/Repository_i.h"
 #include "orbsvcs/IFRService/IDLType_i.h"
@@ -20,8 +19,7 @@ TAO_IRObject_i::TAO_IRObject_i (TAO_Repository_i *repo)
 TAO_IRObject_i::~TAO_IRObject_i () = default;
 
 CORBA::DefinitionKind
-TAO_IRObject_i::def_kind (
-  )
+TAO_IRObject_i::def_kind ()
 {
   // Will always be overridden by concrete classes.
   return CORBA::dk_none;
@@ -58,15 +56,13 @@ TAO_IRObject_i::update_key ()
       return;
     }
 
-  ACE_TString path (oid_string,
-                    0,
-                    false);
+  ACE_TString path (ACE_TEXT_CHAR_TO_TCHAR (oid_string));
 
   status =
     this->repo_->config ()->expand_path (this->repo_->root_key (),
                                          path,
                                          this->section_key_,
-                                         0);
+                                         false);
 
   if (status != 0)
     {

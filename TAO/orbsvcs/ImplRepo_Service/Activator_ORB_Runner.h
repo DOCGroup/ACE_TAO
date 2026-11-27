@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #ifndef TAO_IMR_ACTIVATOR_ORB_RUNNER_H
 #define TAO_IMR_ACTIVATOR_ORB_RUNNER_H
 
@@ -13,7 +12,7 @@ class ImR_Activator_Loader;
 class ImR_Activator_ORB_Runner : public ACE_Task_Base
 {
 public:
-  ImR_Activator_ORB_Runner (ImR_Activator_Loader& service);
+  explicit ImR_Activator_ORB_Runner (ImR_Activator_Loader& service);
   ~ImR_Activator_ORB_Runner () = default;
 
   int svc () override;

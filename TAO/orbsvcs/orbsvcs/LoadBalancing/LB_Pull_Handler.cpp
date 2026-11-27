@@ -6,8 +6,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_LB_Pull_Handler::TAO_LB_Pull_Handler ()
-{
-}
+= default;
 
 void
 TAO_LB_Pull_Handler::initialize (TAO_LB_MonitorMap * monitor_map,
@@ -28,7 +27,9 @@ TAO_LB_Pull_Handler::handle_timeout (
   TAO_LB_MonitorMap::iterator end   = this->monitor_map_->end ();
 
   if (begin == end)
+  {
     return 0;       // No work to be done.
+  }
 
   try
     {
@@ -61,7 +62,9 @@ TAO_LB_Pull_Handler::handle_timeout (
       // Catch the exception and ignore it.
 
       if (TAO_debug_level > 0)
+      {
         ex._tao_print_exception ("PullHandler::handle_timeout()\n");
+      }
     }
 
   return 0;

@@ -1,13 +1,8 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
  *  @file    HTTP_URL.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
-
 
 #ifndef _HTTP_URL_H
 #define _HTTP_URL_H
@@ -31,26 +26,26 @@ class HTTP_URL : public URL
 {
 public:
   /**
-   * The <url_addr> is the URL that we're going to be visiting.  We
+   * The @a url_addr is the URL that we're going to be visiting.  We
    * also keep track of the containing page, if any, which is used to
    * print out more meaningful messages.
    */
-  HTTP_URL (const ACE_URL_Addr &url_addr,
-            HTTP_URL *containing_page = 0);
+  explicit HTTP_URL (ACE_URL_Addr const &url_addr,
+                     HTTP_URL *containing_page = nullptr);
 
   /**
    * Accept the visitor, which will then perform a particular
    * visitation strategy on the URL.  This method is part of the
    * Visitor pattern.
    */
-  virtual int accept (URL_Visitor *visitor);
+  int accept (URL_Visitor *visitor) override;
 
-  /// Send a <GET> command to fetch the contents in the URI from the
+  /// Send a @c GET command to fetch the contents in the URI from the
   /// server.
-  virtual ssize_t send_request ();
+  ssize_t send_request () override;
 
   /// Returns the URL that we represent.
-  virtual const ACE_URL_Addr &url_addr () const;
+  ACE_URL_Addr const &url_addr () const override;
 
   /// Commit suicide
   int destroy ();

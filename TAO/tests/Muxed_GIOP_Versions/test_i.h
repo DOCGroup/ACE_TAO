@@ -1,12 +1,8 @@
-
-//=============================================================================
 /**
  *  @file   test_i.h
  *
  *  @author Carlos O'Ryan
  */
-//=============================================================================
-
 
 #ifndef TAO_MT_SERVER_TEST_I_H
 #define TAO_MT_SERVER_TEST_I_H
@@ -23,17 +19,20 @@
 class Simple_Server_i : public POA_Simple_Server
 {
 public:
-  /// ctor
-  Simple_Server_i (CORBA::ORB_ptr orb);
+  explicit Simple_Server_i (CORBA::ORB_ptr orb);
 
-  // = The Simple_Server methods.
-  CORBA::Long test_method (CORBA::Long x);
+  Simple_Server_i (Simple_Server_i const &) = delete;
+  Simple_Server_i (Simple_Server_i &&) = delete;
+  Simple_Server_i &operator= (Simple_Server_i const &) = delete;
+  Simple_Server_i &operator= (Simple_Server_i &&) = delete;
 
-  void shutdown ();
+  CORBA::Long test_method (CORBA::Long x) override;
+
+  void shutdown () override;
 
 private:
   /// The ORB
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var orb_ {};
 };
 
 #if defined(__ACE_INLINE__)

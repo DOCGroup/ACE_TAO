@@ -12,11 +12,11 @@ ValueDlg::ValueDlg(wxWindow* pParent, bool String)
   m_pCancel = new wxButton(this, wxID_CANCEL, "Cancel", wxPoint(160, 80));
 }
 
-ValueDlg::ValueDlg(wxWindow* pParent, wxString& Name, wxString& Value)
-: wxDialog(pParent, -1, "Edit String", wxDefaultPosition, wxSize(300,140))
+ValueDlg::ValueDlg(wxWindow* pParent, wxString const &Name, wxString& Value)
+: wxDialog(pParent, -1, "Edit String", wxDefaultPosition, wxSize(300,140)),
+  m_Name (Name),
+  m_Value (Value)
 {
-  m_Name = Name;
-  m_Value = Value;
   m_pName= new wxStaticText(this, -1, "Name:", wxPoint(20, 20));
   m_pNameText = new wxTextCtrl(this, -1, "", wxPoint(60, 20), wxDefaultSize, 0, wxTextValidator(wxFILTER_NONE, &m_Name));
   m_pNameText->SetEditable(false);
@@ -26,10 +26,10 @@ ValueDlg::ValueDlg(wxWindow* pParent, wxString& Name, wxString& Value)
   m_pCancel = new wxButton(this, wxID_CANCEL, "Cancel", wxPoint(160, 80));
 }
 
-ValueDlg::ValueDlg(wxWindow* pParent, wxString& Name, u_int Value)
-: wxDialog(pParent, -1, "Edit String", wxDefaultPosition, wxSize(300,140))
+ValueDlg::ValueDlg(wxWindow* pParent, wxString const &Name, u_int Value)
+: wxDialog(pParent, -1, "Edit String", wxDefaultPosition, wxSize(300,140)),
+  m_Name (Name)
 {
-  m_Name = Name;
   m_Value.sprintf("%d", Value);
   m_pName= new wxStaticText(this, -1, "Name:", wxPoint(20, 20));
   m_pNameText = new wxTextCtrl(this, -1, "", wxPoint(60, 20), wxDefaultSize, 0, wxTextValidator(wxFILTER_NONE, &m_Name));
@@ -40,10 +40,7 @@ ValueDlg::ValueDlg(wxWindow* pParent, wxString& Name, u_int Value)
   m_pCancel = new wxButton(this, wxID_CANCEL, "Cancel", wxPoint(160, 80));
 }
 
-
-ValueDlg::~ValueDlg()
-{
-}
+ValueDlg::~ValueDlg() = default;
 
 const wxString& ValueDlg::GetName()
 {

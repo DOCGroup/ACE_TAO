@@ -1,13 +1,8 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
  *  @file    Active_Map_Manager.h
  *
  *  @author Irfan Pyarali
  */
-//=============================================================================
-
 
 #ifndef ACE_ACTIVE_MAP_MANAGER_H
 #define ACE_ACTIVE_MAP_MANAGER_H
@@ -35,7 +30,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Active_Map_Manager_Key
 {
 public:
-  /// Default constructor.
   ACE_Active_Map_Manager_Key ();
 
   /**
@@ -63,18 +57,18 @@ public:
 
   /// Recover state of active key from @a data.  User must make sure
   /// that @a data encoded using the encode() method.
-  void decode (const void *data);
+  void decode (void const *data);
 
   /// Encode state of the active key into @a data.  @a data must be as
   /// big as the value returned from size().
   void encode (void *data) const;
 
   /// Compare keys.
-  bool operator== (const ACE_Active_Map_Manager_Key &rhs) const;
-  bool operator!= (const ACE_Active_Map_Manager_Key &rhs) const;
+  bool operator== (ACE_Active_Map_Manager_Key const &rhs) const;
+  bool operator!= (ACE_Active_Map_Manager_Key const &rhs) const;
 
-  // = This really should be protected but because of template
-  // friends, they are not.
+  /// These methods are public because the template friend declarations
+  /// require it.
 
   /// Increment the slot_generation number.
   void increment_slot_generation_count ();

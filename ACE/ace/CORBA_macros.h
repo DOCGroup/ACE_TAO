@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-// ============================================================================
 /**
  * @file CORBA_macros.h
  *
@@ -13,9 +10,6 @@
  *  @author Aniruddha Gokhale  <gokhale@sahyadri.research.bell-labs.com>
  *  @author Carlos O'Ryan  <coryan@uci.edu>, et al.
  */
-// ============================================================================
-
-// Macros for handling CORBA exceptions.
 
 #ifndef ACE_CORBA_MACROS_H
 #define ACE_CORBA_MACROS_H
@@ -35,16 +29,25 @@
 
 // FUZZ: disable check_for_ACE_Guard
 # define ACE_GUARD_THROW_EX(MUTEX,OBJ,LOCK,EXCEPTION) \
-  ACE_Guard< MUTEX > OBJ (LOCK); \
-    if (!OBJ.locked ()) throw EXCEPTION;
+  ACE_Guard<MUTEX> OBJ (LOCK); \
+    if (!OBJ.locked ()) \
+      { \
+        throw EXCEPTION; \
+      }
 
 # define ACE_READ_GUARD_THROW_EX(MUTEX,OBJ,LOCK,EXCEPTION) \
-  ACE_Read_Guard< MUTEX > OBJ (LOCK); \
-    if (!OBJ.locked ()) throw EXCEPTION;
+  ACE_Read_Guard<MUTEX> OBJ (LOCK); \
+    if (!OBJ.locked ()) \
+      { \
+        throw EXCEPTION; \
+      }
 
 # define ACE_WRITE_GUARD_THROW_EX(MUTEX,OBJ,LOCK,EXCEPTION) \
-  ACE_Write_Guard< MUTEX > OBJ (LOCK); \
-    if (!OBJ.locked ()) throw EXCEPTION;
+  ACE_Write_Guard<MUTEX> OBJ (LOCK); \
+    if (!OBJ.locked ()) \
+      { \
+        throw EXCEPTION; \
+      }
 // FUZZ: enable check_for_ACE_Guard
 
 #include /**/ "ace/post.h"

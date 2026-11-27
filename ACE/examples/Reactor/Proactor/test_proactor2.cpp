@@ -1,18 +1,14 @@
-
-//=============================================================================
 /**
  *  @file    test_proactor2.cpp
  *
  *  Alexander Libman <Alibman@baltimore.com> modified
- *  <test_proactor> and made this test. Instead of writing received
+ *  @a test_proactor and made this test. Instead of writing received
  *  data to the file, the receiver sends them back to the
  *  sender,i.e. ACE_Asynch_Write_File wf_  has been changed to
  *  ACE_Asynch_Write_Stream wf_.
  *
  *  @author Irfan Pyarali <irfan@cs.wustl.edu> and Alexander Libman <Alibman@baltimore.com>.
  */
-//=============================================================================
-
 
 #include "ace/Signal.h"
 
@@ -34,6 +30,7 @@
 #include "ace/Task.h"
 #include "ace/OS_main.h"
 
+#include <cstring>
 
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
   // This only works on Win32 platforms and on Unix platforms supporting
@@ -56,7 +53,7 @@ int PrintSigMask ();
 #define  COUT(X)  cout << X ; cout.flush ();
 
 // Host that we're connecting to.
-static ACE_TCHAR *host = 0;
+static ACE_TCHAR *host {};
 
 // duplex mode: ==0 half-duplex
 //              !=0 full duplex
@@ -71,20 +68,16 @@ static u_short port = ACE_DEFAULT_SERVER_PORT;
 // Size of each initial asynchronous <read> operation.
 static int initial_read_size = BUFSIZ;
 
-
 #define MyMutex ACE_Recursive_Thread_Mutex
 //#define MyMutex ACE_Thread_Mutex
 //#define MyMutex ACE_Null_Mutex
 
-//--------------------------------------------------------------------------
 // MyTask plays role for Proactor threads pool
-//--------------------------------------------------------------------------
 class MyTask: public ACE_Task<ACE_MT_SYNCH>
 {
 public:
-  int svc () ;
+  int svc () override;
 };
-
 
 int MyTask::svc ()
 {
@@ -99,9 +92,7 @@ int MyTask::svc ()
   return 0 ;
 }
 
-//-----------------------------------------------------------
 //  Receiver
-//-----------------------------------------------------------
 class Receiver : public ACE_Service_Handler
 {
 public:
@@ -111,21 +102,19 @@ public:
   //FUZZ: disable check_for_lack_ACE_OS
   /// This is called after the new connection has been accepted.
   ///FUZZ: enable check_for_lack_ACE_OS
-  virtual void open (ACE_HANDLE handle,
-                     ACE_Message_Block &message_block);
+  void open (ACE_HANDLE handle,
+             ACE_Message_Block &message_block) override;
 
 protected:
   // These methods are called by the framework
 
-  /// This is called when asynchronous <read> operation from the socket
+  /// This is called when asynchronous read operation from the socket
   /// complete.
-  virtual void handle_read_stream (const ACE_Asynch_Read_Stream::Result
-                                   &result);
+  void handle_read_stream (ACE_Asynch_Read_Stream::Result const &result) override;
 
-  /// This is called when an asynchronous <write> to the file
+  /// This is called when an asynchronous write to the file
   /// completes.
-  virtual void handle_write_stream (const ACE_Asynch_Write_Stream::Result
-                                    &result);
+  void handle_write_stream (ACE_Asynch_Write_Stream::Result const &result) override;
 
 private:
   int  initiate_read_stream  ();
@@ -140,7 +129,6 @@ private:
   static long nSessions ;
 };
 
-
 long Receiver::nSessions = 0 ;
 
 Receiver::Receiver ()
@@ -148,22 +136,22 @@ Receiver::Receiver ()
     nIOCount ( 0 )
 {
   ACE_GUARD (MyMutex, locker, m_Mtx);
-  nSessions ++ ;
-  ACE_DEBUG ((LM_DEBUG, "Receiver Ctor nSessions=%d\n", nSessions ));
+  ++nSessions;
+  ACE_DEBUG ((LM_DEBUG, "Receiver Ctor nSessions=%Ld\n",
+              nSessions));
 }
 
 Receiver::~Receiver ()
 {
   ACE_GUARD (MyMutex, locker, m_Mtx);
-  nSessions -- ;
+  --nSessions;
   ACE_OS::closesocket (this->handle_);
-  ACE_DEBUG ((LM_DEBUG, "~Receiver Dtor nSessions=%d\n", nSessions ));
+  ACE_DEBUG ((LM_DEBUG, "~Receiver Dtor nSessions=%Ld\n",
+              nSessions));
 }
 
-//---------------------------------------------------------------------
 //  return true if we alive, false  we commited suicide
 //
-//---------------------------------------------------------------------
 bool Receiver::check_destroy ()
 {
   {
@@ -179,13 +167,11 @@ bool Receiver::check_destroy ()
   return false ;
 }
 
-
 void Receiver::open (ACE_HANDLE handle,
                      ACE_Message_Block &)
 {
   ACE_DEBUG ((LM_DEBUG,
               "%N:%l:Receiver::open called\n"));
-
 
   this->handle_ = handle;
 
@@ -206,7 +192,6 @@ void Receiver::open (ACE_HANDLE handle,
       initiate_read_stream ();
     }
 
-
   check_destroy ();
 }
 
@@ -220,8 +205,7 @@ int Receiver::initiate_read_stream ()
   ACE_DEBUG ((LM_DEBUG,
               "initiate_read_stream called\n"));
 
-
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb {};
   ACE_NEW_RETURN (mb,
                   ACE_Message_Block (BUFSIZ + 1),
                   -1);
@@ -236,7 +220,7 @@ int Receiver::initiate_read_stream ()
                         -1);
     }
 
-  nIOCount++ ;
+  ++nIOCount;
   return 0;
 }
 
@@ -252,12 +236,12 @@ int Receiver::initiate_write_stream (ACE_Message_Block & mb, int nBytes )
                        -1);
     }
 
-  nIOCount++ ;
+  ++nIOCount;
   return 0;
 }
 
 void
-Receiver::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
+Receiver::handle_read_stream (ACE_Asynch_Read_Stream::Result const &result)
 {
   ACE_DEBUG ((LM_DEBUG,
               "handle_read_stream called\n"));
@@ -267,15 +251,14 @@ Receiver::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
     '\0';
 
   ACE_DEBUG ((LM_DEBUG, "********************\n"));
-  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "bytes_to_read", result.bytes_to_read
+  ACE_DEBUG ((LM_DEBUG, "%s = %B\n", "bytes_to_read", result.bytes_to_read
               ()));
-  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "handle", result.handle ()));
-  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "bytes_transfered",
+  ACE_DEBUG ((LM_DEBUG, "%s = %H\n", "handle", result.handle ()));
+  ACE_DEBUG ((LM_DEBUG, "%s = %B\n", "bytes_transfered",
               result.bytes_transferred ()));
-  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "act", (u_long) result.act ()));
+  ACE_DEBUG ((LM_DEBUG, "%s = %@\n", "act", const_cast<void *> (result.act ())));
   ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "success", result.success ()));
-  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "completion_key", (u_long)
-              result.completion_key ()));
+  ACE_DEBUG ((LM_DEBUG, "%s = %@\n", "completion_key", const_cast<void *> (result.completion_key ())));
   ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "error", result.error ()));
   ACE_DEBUG ((LM_DEBUG, "********************\n"));
   ACE_DEBUG ((LM_DEBUG, "%s = %s\n", "message_block",
@@ -313,21 +296,19 @@ Receiver::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
 }
 
 void
-Receiver::handle_write_stream (const ACE_Asynch_Write_Stream::Result
-                               &result)
+Receiver::handle_write_stream (ACE_Asynch_Write_Stream::Result const &result)
 {
   ACE_DEBUG ((LM_DEBUG, "handle_write_stream called\n"));
 
   ACE_DEBUG ((LM_DEBUG, "********************\n"));
-  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "bytes_to_write",
+  ACE_DEBUG ((LM_DEBUG, "%s = %B\n", "bytes_to_write",
               result.bytes_to_write ()));
-  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "handle", result.handle ()));
-  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "bytes_transfered",
+  ACE_DEBUG ((LM_DEBUG, "%s = %H\n", "handle", result.handle ()));
+  ACE_DEBUG ((LM_DEBUG, "%s = %B\n", "bytes_transfered",
               result.bytes_transferred ()));
-  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "act", (u_long) result.act ()));
+  ACE_DEBUG ((LM_DEBUG, "%s = %@\n", "act", const_cast<void *> (result.act ())));
   ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "success", result.success ()));
-  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "completion_key", (u_long)
-              result.completion_key ()));
+  ACE_DEBUG ((LM_DEBUG, "%s = %@\n", "completion_key", const_cast<void *> (result.completion_key ())));
   ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "error", result.error ()));
   ACE_DEBUG ((LM_DEBUG, "********************\n"));
 
@@ -352,10 +333,8 @@ Receiver::handle_write_stream (const ACE_Asynch_Write_Stream::Result
   check_destroy () ;
 }
 
-//-------------------------------------------------------------------------
 // Sender:  sends indefinetely welcome message
 //  and  recieves it back
-//------------------------------------------------------------------------
 class Sender : public ACE_Handler
 {
 public:
@@ -364,22 +343,20 @@ public:
 
   //FUZZ: disable check_for_lack_ACE_OS
   ///FUZZ: enable check_for_lack_ACE_OS
-  int open (const ACE_TCHAR *host, u_short port);
+  int open (ACE_TCHAR const *host, u_short port);
   void close ();
 
-  ACE_HANDLE handle () const;
-  void handle (ACE_HANDLE);
+  ACE_HANDLE handle () const override;
+  void handle (ACE_HANDLE) override;
 
 protected:
 // These methods are called by the framework
 
 /// This is called when asynchronous reads from the socket complete
-virtual void handle_read_stream (const ACE_Asynch_Read_Stream::Result
-&result);
+void handle_read_stream (ACE_Asynch_Read_Stream::Result const &result) override;
 
 /// This is called when asynchronous writes from the socket complete
-virtual void handle_write_stream (const ACE_Asynch_Write_Stream::Result
-&result);
+void handle_write_stream (ACE_Asynch_Write_Stream::Result const &result) override;
 
 private:
 int initiate_read_stream ();
@@ -401,13 +378,13 @@ MyMutex m_Mtx ;
 long    nIOCount ;
 };
 
-static const char *data = "Welcome to Irfan World! Irfan RULES here !!\n";
+static char const *data = "Welcome to Irfan World! Irfan RULES here !!\n";
 
 Sender::Sender ()
   :nIOCount ( 0 )
 {
   // Moment of inspiration... :-)
-  this->welcome_message_.init (data, ACE_OS::strlen (data));
+  this->welcome_message_.init (data, std::strlen (data));
 }
 
 Sender::~Sender ()
@@ -430,7 +407,7 @@ void Sender::handle (ACE_HANDLE handle)
   this->stream_.set_handle (handle);
 }
 
-int Sender::open (const ACE_TCHAR *host, u_short port)
+int Sender::open (ACE_TCHAR const *host, u_short port)
 {
   // Initialize stuff
   // Connect to remote host
@@ -448,27 +425,35 @@ int Sender::open (const ACE_TCHAR *host, u_short port)
 
   // Open ACE_Asynch_Write_Stream
   if (this->ws_.open (*this) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "ACE_Asynch_Write_Stream::open"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "ACE_Asynch_Write_Stream::open"),
+                        -1);
+    }
 
   // Open ACE_Asynch_Read_Stream
   if (this->rs_.open (*this) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "ACE_Asynch_Read_File::open"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "ACE_Asynch_Read_File::open"),
+                        -1);
+    }
 
   // Start an asynchronous transmit file
   if ( this->initiate_write_stream () == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   if ( duplex != 0 )
     {
       // Start an asynchronous read file
       if (this->initiate_read_stream () == -1)
-        return -1;
+        {
+          return -1;
+        }
     }
 
   return 0;
@@ -480,7 +465,7 @@ int Sender::initiate_write_stream ()
 
   welcome_message_.rd_ptr( welcome_message_.base ());
   welcome_message_.wr_ptr( welcome_message_.base ());
-  welcome_message_.wr_ptr (ACE_OS::strlen (data));
+  welcome_message_.wr_ptr (std::strlen (data));
 
   if (this->ws_.write (welcome_message_,
                        welcome_message_.length ()
@@ -492,7 +477,7 @@ int Sender::initiate_write_stream ()
                        -1);
     }
 
-  nIOCount++ ;
+  ++nIOCount;
   return 0;
 }
 
@@ -506,8 +491,7 @@ int Sender::initiate_read_stream ()
   ACE_DEBUG ((LM_DEBUG,
               "initiate_read_stream called\n"));
 
-
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb {};
   ACE_NEW_RETURN (mb,
                   ACE_Message_Block (BUFSIZ + 1),
                   -1);
@@ -522,13 +506,11 @@ int Sender::initiate_read_stream ()
                         -1);
     }
 
-  nIOCount++ ;
+  ++nIOCount;
   return 0;
 }
 
-
-void Sender::handle_write_stream (const ACE_Asynch_Write_Stream::Result
-                                  &result)
+void Sender::handle_write_stream (ACE_Asynch_Write_Stream::Result const &result)
 {
   ACE_DEBUG ((LM_DEBUG,
               "handle_write_stream called\n"));
@@ -537,17 +519,15 @@ void Sender::handle_write_stream (const ACE_Asynch_Write_Stream::Result
   result.message_block ().rd_ptr (result.message_block ().rd_ptr () -
                                   result.bytes_transferred ());
 
-
   ACE_DEBUG ((LM_DEBUG, "********************\n"));
-  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "bytes_to_write",
+  ACE_DEBUG ((LM_DEBUG, "%s = %B\n", "bytes_to_write",
               result.bytes_to_write ()));
-  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "handle", result.handle ()));
-  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "bytes_transfered",
+  ACE_DEBUG ((LM_DEBUG, "%s = %H\n", "handle", result.handle ()));
+  ACE_DEBUG ((LM_DEBUG, "%s = %B\n", "bytes_transfered",
               result.bytes_transferred ()));
-  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "act", (u_long) result.act ()));
+  ACE_DEBUG ((LM_DEBUG, "%s = %@\n", "act", const_cast<void *> (result.act ())));
   ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "success", result.success ()));
-  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "completion_key", (u_long)
-              result.completion_key ()));
+  ACE_DEBUG ((LM_DEBUG, "%s = %@\n", "completion_key", const_cast<void *> (result.completion_key ())));
   ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "error", result.error ()));
   ACE_DEBUG ((LM_DEBUG, "********************\n"));
   ACE_DEBUG ((LM_DEBUG, "%s = %s\n", "message_block",
@@ -568,13 +548,13 @@ void Sender::handle_write_stream (const ACE_Asynch_Write_Stream::Result
     }
 
   {
-    ACE_GUARD_RETURN (MyMutex, locker, m_Mtx);
+    ACE_GUARD (MyMutex, locker, m_Mtx);
     --nIOCount;
   }
 }
 
 void
-Sender::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
+Sender::handle_read_stream (ACE_Asynch_Read_Stream::Result const &result)
 {
   ACE_DEBUG ((LM_DEBUG,
               "handle_read_stream called\n"));
@@ -584,15 +564,14 @@ Sender::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
     '\0';
 
   ACE_DEBUG ((LM_DEBUG, "********************\n"));
-  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "bytes_to_read", result.bytes_to_read
+  ACE_DEBUG ((LM_DEBUG, "%s = %B\n", "bytes_to_read", result.bytes_to_read
               ()));
-  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "handle", result.handle ()));
-  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "bytes_transfered",
+  ACE_DEBUG ((LM_DEBUG, "%s = %H\n", "handle", result.handle ()));
+  ACE_DEBUG ((LM_DEBUG, "%s = %B\n", "bytes_transfered",
               result.bytes_transferred ()));
-  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "act", (u_long) result.act ()));
+  ACE_DEBUG ((LM_DEBUG, "%s = %@\n", "act", const_cast<void *> (result.act ())));
   ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "success", result.success ()));
-  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "completion_key", (u_long)
-              result.completion_key ()));
+  ACE_DEBUG ((LM_DEBUG, "%s = %@\n", "completion_key", const_cast<void *> (result.completion_key ())));
   ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "error", result.error ()));
   ACE_DEBUG ((LM_DEBUG, "********************\n"));
   ACE_DEBUG ((LM_DEBUG, "%s = %s\n", "message_block",
@@ -623,7 +602,6 @@ Sender::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
   }
 }
 
-//--------------------------------------------------------------------------
 
 static int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -632,29 +610,31 @@ parse_args (int argc, ACE_TCHAR *argv[])
   int c;
 
   while ((c = get_opt ()) != EOF)
-    switch (c)
-      {
-      case 'h':
-        host = get_opt.opt_arg ();
-        break;
-      case 'n':
-        nThreads = ACE_OS::atoi (get_opt.opt_arg ()) ;
-        break;
-      case 'p':
-        port = ACE_OS::atoi (get_opt.opt_arg ());
-        break;
-      case 'd':
-        duplex = ACE_OS::atoi (get_opt.opt_arg ());
-        break;
-      default:
-        ACE_ERROR ((LM_ERROR, "%p.\n",
-                    "usage :\n"
-                    "-h <host> for Sender mode\n"
-                    "-d <duplex mode 1-on/0-off>\n"
-                    "-p <port to listen/connect>\n"
-                    "-n <number threads for Proactor pool>\n"));
-        return -1;
-      }
+    {
+      switch (c)
+        {
+        case 'h':
+          host = get_opt.opt_arg ();
+          break;
+        case 'n':
+          nThreads = ACE_OS::atoi (get_opt.opt_arg ()) ;
+          break;
+        case 'p':
+          port = ACE_OS::atoi (get_opt.opt_arg ());
+          break;
+        case 'd':
+          duplex = ACE_OS::atoi (get_opt.opt_arg ());
+          break;
+        default:
+          ACE_ERROR ((LM_ERROR, "%p.\n",
+                      "usage :\n"
+                      "-h <host> for Sender mode\n"
+                      "-d <duplex mode 1-on/0-off>\n"
+                      "-p <port to listen/connect>\n"
+                      "-n <number threads for Proactor pool>\n"));
+          return -1;
+        }
+    }
 
   return 0;
 }
@@ -665,7 +645,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_UNUSED_ARG (initial_read_size);
 
   if (parse_args (argc, argv) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO)
 
@@ -677,10 +659,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_POSIX_SIG_Proactor *  pImpl = new ACE_POSIX_SIG_Proactor;
 #endif
 
-  ACE_Proactor Proactor ( pImpl ,1 );
+  ACE_Proactor Proactor ( pImpl, true );
 
   ACE_Proactor::instance( & Proactor );
-
 
   MyTask  Task1 ;
 
@@ -697,7 +678,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   if ( host == 0 ) // Acceptor
     {
       // Simplify , initial read with  zero size
-      Rc = acceptor.open (ACE_INET_Addr (port),0,1);
+      Rc = acceptor.open (ACE_INET_Addr (port),0,true);
     }
   else
     {
@@ -719,7 +700,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       sender.close () ; // disconnect to get reciever error !!!
     }
 
-
   ACE_Thread_Manager * pTM = ACE_Thread_Manager::instance();
 
   pTM->wait_task ( & Task1 ) ;
@@ -728,9 +708,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   return 0;
 }
-//--------------------------------------------------------------------
 //
-//--------------------------------------------------------------------
 int DisableSignal ( int SigNum )
 {
 #ifndef ACE_WIN32
@@ -757,16 +735,13 @@ int DisableSignal ( int SigNum )
 
   return  1;
 }
-//--------------------------------------------------------------------
 // Get the <signal_set> back from the OS.
-//--------------------------------------------------------------------
 
 int PrintSigMask ()
 {
 #ifndef ACE_WIN32
 
   sigset_t  mask ;
-  int member = 0;
 
   COUT ( "\n=============Signal Mask==========" )
 
@@ -776,19 +751,22 @@ int PrintSigMask ()
                     "Error:(%P | %t):%p\n",
                     "ACE_OS::pthread_sigmask failed"));
       }
-    else  for (int i = 1 ; i < 1000; i++)
+    else
       {
-        member = ACE_OS::sigismember (&mask,i);
+        for (int i = 1 ; i < 1000; ++i)
+          {
+            int const member = ACE_OS::sigismember (&mask,i);
 
-        COUT ( "\nSig " )
-          COUT ( i )
-          COUT ( " is " )
-          COUT (member )
+            COUT ( "\nSig " )
+              COUT ( i )
+              COUT ( " is " )
+              COUT (member )
 
-          if (member == -1)
-            {
-              break ;
-            }
+              if (member == -1)
+                {
+                  break ;
+                }
+          }
       }
 #endif
   return 0;

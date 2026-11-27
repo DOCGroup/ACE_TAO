@@ -2,7 +2,6 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
      & eval 'exec perl -S $0 $argv:q'
      if 0;
 
-# -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::TestTarget;
@@ -98,7 +97,7 @@ sub run_test
     }
 
     # Consumer.
-    $process_status = $CM->SpawnWaitKill ($test->ProcessStartWaitInterval() + 45);
+    $process_status = $CM->Spawn ();
 
     if ($process_status != 0) {
         print STDERR "ERROR: consumer returned $process_status\n";
@@ -111,7 +110,7 @@ sub run_test
     sleep ($sleeptime);
 
     # Supplier.
-    $process_status = $SP->SpawnWaitKill ($test->ProcessStartWaitInterval() + 45);
+    $process_status = $SP->Spawn ();
 
     if ($process_status != 0) {
         print STDERR "ERROR: supplier returned $process_status\n";

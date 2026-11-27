@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "ace/OS_NS_errno.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -37,7 +36,7 @@ t_alloc (ACE_HANDLE handle, int struct_type, int fields)
   ACE_UNUSED_ARG (struct_type);
   ACE_UNUSED_ARG (handle);
 
-  ACE_NOTSUP_RETURN (0);
+  ACE_NOTSUP_RETURN (nullptr);
 #endif /* ACE_HAS_TLI */
 }
 
@@ -84,7 +83,7 @@ t_connect(ACE_HANDLE fildes,
 }
 
 ACE_INLINE void
-t_error (const char *errmsg)
+t_error (char const *errmsg)
 {
 #if defined (ACE_HAS_TLI)
   ::t_error (errmsg);
@@ -98,7 +97,9 @@ t_free (char *ptr, int struct_type)
 {
 #if defined (ACE_HAS_TLI)
   if (!ptr)
-    return 0;
+    {
+      return 0;
+    }
   return ::t_free (ptr, struct_type);
 #else
   ACE_UNUSED_ARG (struct_type);
@@ -152,12 +153,18 @@ t_getname (ACE_HANDLE handle, struct netbuf *namep, int type)
       return -1;
     }
   if (t_getprotaddr (handle, &bound, &peer) == -1)
-    return -1;
+    {
+      return -1;
+    }
   // Call succeeded; put the caller's desired address length in his netbuf.
   if (type == LOCALNAME)
-    namep->len = bound.addr.len;
+    {
+      namep->len = bound.addr.len;
+    }
   else
-    namep->len = peer.addr.len;
+    {
+      namep->len = peer.addr.len;
+    }
   return 0;
 #else
   ACE_UNUSED_ARG (handle);
@@ -307,7 +314,7 @@ t_rcvuderr (ACE_HANDLE handle, struct t_uderr *uderr)
 
 ACE_INLINE int
 t_snd (ACE_HANDLE handle,
-       const char *buf,
+       char const *buf,
        unsigned int nbytes,
        int flags)
 {

@@ -6,14 +6,13 @@ extern "C"
 {
 ACE_Proper_Export_Flag int capi_init()
 {
-  int ret = ACE::init();
+  int const ret = ACE::init();
   ACE_START_TEST (ACE_TEXT ("Bug_2980_Regression_Test"));
   ACE_DEBUG ((LM_INFO,
               ACE_TEXT ("ACE::init ()\n")));
   ACE_END_TEST;
   return ret;
 }
-
 
 ACE_Proper_Export_Flag int capi_fini()
 {
@@ -24,7 +23,6 @@ ACE_Proper_Export_Flag int capi_fini()
 
   return ACE::fini();
 }
-
 
 ACE_Proper_Export_Flag int capi_dosomething()
 {
@@ -43,6 +41,5 @@ ACE_Proper_Export_Flag int capi_dosomething()
   ACE_END_TEST;
   return 0;
 }
-
 
 }

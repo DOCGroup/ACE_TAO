@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    ub_str_seq.cpp
  *
@@ -7,10 +5,10 @@
  *
  *  @author   Aniruddha Gokhale
  */
-//=============================================================================
-
 
 #include "helper.h"
+
+#include <cstring>
 #include "ub_str_seq.h"
 
 // ************************************************************************
@@ -18,7 +16,7 @@
 // ************************************************************************
 
 Test_String_Sequence::Test_String_Sequence ()
-  : opname_ (CORBA::string_dup ("test_strseq")),
+  : opname_ ("test_strseq"),
     in_ (new CORBA::StringSeq),
     inout_ (new CORBA::StringSeq),
     out_ (new CORBA::StringSeq),
@@ -26,13 +24,7 @@ Test_String_Sequence::Test_String_Sequence ()
 {
 }
 
-Test_String_Sequence::~Test_String_Sequence ()
-{
-  CORBA::string_free (this->opname_);
-  this->opname_ = 0;
-}
-
-const char *
+char const *
 Test_String_Sequence::opname () const
 {
   return this->opname_;
@@ -49,7 +41,7 @@ Test_String_Sequence::dii_req_invoke (CORBA::Request *req)
 
   req->invoke ();
 
-  const CORBA::StringSeq *tmp = 0;
+  CORBA::StringSeq const *tmp {};
   req->return_value () >>= tmp;
   this->ret_ = new CORBA::StringSeq (*tmp);
 
@@ -67,7 +59,7 @@ Test_String_Sequence::dii_req_invoke (CORBA::Request *req)
 int
 Test_String_Sequence::init_parameters (Param_Test_ptr)
 {
-  const char *choiceList[] =
+  char const *choiceList[] =
   {
     "one",
     "two",
@@ -75,14 +67,14 @@ Test_String_Sequence::init_parameters (Param_Test_ptr)
     "four"
   };
 
-  CORBA::ULong len = sizeof(choiceList)/sizeof(char *) - 1;
+  CORBA::ULong const len = sizeof(choiceList)/sizeof(char *) - 1;
 
   // set the length of the sequences
   this->in_->length (len);
   this->inout_->length (len);
 
   // now set each individual element
-  for (CORBA::ULong i=0; i < this->in_->length (); i++)
+  for (CORBA::ULong i=0; i < this->in_->length (); ++i)
     {
       this->in_[i] = choiceList[i];
       this->inout_[i] = choiceList[i+1];
@@ -104,7 +96,7 @@ Test_String_Sequence::run_sii_test (Param_Test_ptr objref)
 {
   try
     {
-      CORBA::StringSeq_out out (this->out_.out ());
+      CORBA::StringSeq_out const out (this->out_.out ());
 
       this->ret_ = objref->test_strseq (this->in_.in (),
                                         this->inout_.inout (),
@@ -112,7 +104,7 @@ Test_String_Sequence::run_sii_test (Param_Test_ptr objref)
 
       return 0;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Test_String_Sequence::run_sii_test\n");
     }
@@ -122,20 +114,20 @@ Test_String_Sequence::run_sii_test (Param_Test_ptr objref)
 CORBA::Boolean
 Test_String_Sequence::check_validity ()
 {
-  CORBA::Boolean flag = 0;
+  CORBA::Boolean flag = false;
   if ((this->in_->length () == this->inout_->length ()) &&
       (this->in_->length () == this->out_->length ()) &&
       (this->in_->length () == this->ret_->length ()))
     {
-      flag = 1; // assume all are equal
+      flag = true; // assume all are equal
       // lengths are same. Now compare the contents
-      for (CORBA::ULong i=0; i < this->in_->length () && flag; i++)
+      for (CORBA::ULong i=0; i < this->in_->length () && flag; ++i)
         {
-          if (ACE_OS::strcmp(this->in_[i], this->inout_[i]) ||
-              ACE_OS::strcmp(this->in_[i], this->out_[i]) ||
-              ACE_OS::strcmp(this->in_[i], this->ret_[i]))
+          if (std::strcmp(this->in_[i], this->inout_[i]) ||
+              std::strcmp(this->in_[i], this->out_[i]) ||
+              std::strcmp(this->in_[i], this->ret_[i]))
             // not equal
-            flag = 0;
+            flag = false;
         }
     }
   return flag;
@@ -152,48 +144,56 @@ Test_String_Sequence::print_values ()
 {
   CORBA::ULong i;
   ACE_DEBUG ((LM_DEBUG, "\n*=*=*=*=*=*=*=*=*=*=\n"));
-  for (i=0; this->in_.ptr () && (i < this->in_->length ()); i++)
+  for (i=0; this->in_.ptr () && (i < this->in_->length ()); ++i)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Element #%d\n"
                   "in : %C\n",
                   i,
-                  this->in_[i]? (const char *)this->in_[i]:"<nul>"));
+                  this->in_[i]? (char const *)this->in_[i]:"<nul>"));
     }
   if (!this->in_.ptr ())
+  {
     ACE_DEBUG ((LM_DEBUG, "\nin sequence is NUL\n"));
+  }
   ACE_DEBUG ((LM_DEBUG, "\n*=*=*=*=*=*=*=*=*=*=\n"));
-  for (i=0; this->inout_.ptr () && (i < this->inout_->length ()); i++)
+  for (i=0; this->inout_.ptr () && (i < this->inout_->length ()); ++i)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Element #%d\n"
                   "in : %C\n",
                   i,
-                  (this->inout_[i]? (const char *)this->inout_[i]:"<nul>")));
+                  (this->inout_[i]? (char const *)this->inout_[i]:"<nul>")));
     }
   if (!this->inout_.ptr ())
+  {
     ACE_DEBUG ((LM_DEBUG, "\ninout sequence is NUL\n"));
+  }
   ACE_DEBUG ((LM_DEBUG, "\n*=*=*=*=*=*=*=*=*=*=\n"));
-  for (i=0; this->out_.ptr () && (i < this->out_->length ()); i++)
+  for (i=0; this->out_.ptr () && (i < this->out_->length ()); ++i)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Element #%d\n"
                   "in : %C\n",
                   i,
-                  (this->out_[i]? (const char *)this->out_[i]:"<nul>")));
+                  (this->out_[i]? (char const *)this->out_[i]:"<nul>")));
     }
   if (!this->out_.ptr ())
+  {
     ACE_DEBUG ((LM_DEBUG, "\nout sequence is NUL\n"));
+  }
   ACE_DEBUG ((LM_DEBUG, "\n*=*=*=*=*=*=*=*=*=*=\n"));
-  for (i=0; this->ret_.ptr () && (i < this->ret_->length ()); i++)
+  for (i=0; this->ret_.ptr () && (i < this->ret_->length ()); ++i)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Element #%d\n"
                   "in : %C\n",
                   i,
-                  (this->ret_[i]? (const char *)this->ret_[i]:"<nul>")));
+                  (this->ret_[i]? (char const *)this->ret_[i]:"<nul>")));
     }
   if (!this->ret_.ptr ())
+  {
     ACE_DEBUG ((LM_DEBUG, "\nin sequence is NUL\n"));
+  }
   ACE_DEBUG ((LM_DEBUG, "\n*=*=*=*=*=*=*=*=*=*=\n"));
 }

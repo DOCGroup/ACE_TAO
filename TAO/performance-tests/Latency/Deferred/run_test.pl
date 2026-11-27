@@ -2,7 +2,6 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
      & eval 'exec perl -S $0 $argv:q'
      if 0;
 
-# -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::TestTarget;
@@ -34,7 +33,7 @@ $SV = $server->CreateProcess ("server",
                               "-o $server_iorfile");
 
 $CL = $client->CreateProcess ("client",
-                              "-i $iterations -b $burst" .
+                              "-i $iterations -b $burst " .
                               "-k file://$client_iorfile");
 $server_status = $SV->Spawn ();
 

@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project : orbsvcslib, notification, event_skel, portableserver {
   after     += CosNotification_Skel
   libs      += TAO_CosNotification_Skel

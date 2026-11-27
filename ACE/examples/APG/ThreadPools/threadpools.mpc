@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(Futures) : aceexe, avoids_ace_for_tao {
   exename = Futures
   Source_Files {

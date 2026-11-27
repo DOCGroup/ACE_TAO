@@ -19,25 +19,26 @@ twoway_server (ACE_SSL_SOCK_Stream &stream)
 
   // Make sure we're not in non-blocking mode.
   if (stream.disable (ACE_NONBLOCK) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "disable"),
-                       0);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "disable"),
+                        0);
+    }
   else if (stream.get_remote_addr (cli_addr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "get_remote_addr"),
-                       0);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "get_remote_addr"),
+                        0);
+    }
 
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) client %s connected from %d\n",
+              "(%P|%t) client %C connected from %d\n",
               cli_addr.get_host_name (),
               cli_addr.get_port_number ()));
 
-  size_t total_bytes = 0;
-  size_t message_count = 0;
-
-  char *request = nullptr;
+  char *request {};
 
   // Read data from client (terminate on error).
 
@@ -95,17 +96,18 @@ twoway_server (ACE_SSL_SOCK_Stream &stream)
                && ACE::write_n (ACE_STDOUT,
                                 request,
                                 r_bytes) != r_bytes)
-        ACE_ERROR ((LM_ERROR,
-                    "%p\n",
-                    "ACE::write_n"));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "%p\n",
+                      "ACE::write_n"));
+        }
       else if (stream.send_n (request,
                               r_bytes) != r_bytes)
-        ACE_ERROR ((LM_ERROR,
-                    "%p\n",
-                    "send_n"));
-
-      total_bytes += size_t (r_bytes);
-      message_count++;
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "%p\n",
+                      "send_n"));
+        }
 
       delete [] request;
       request = nullptr;
@@ -127,18 +129,22 @@ oneway_server (ACE_SSL_SOCK_Stream &stream)
 
   // Make sure we're not in non-blocking mode.
   if (stream.disable (ACE_NONBLOCK) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "disable"),
-                       0);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "disable"),
+                        0);
+    }
   else if (stream.get_remote_addr (cli_addr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "get_remote_addr"),
-                       0);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "get_remote_addr"),
+                        0);
+    }
 
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) client %s connected from %d\n",
+              "(%P|%t) client %C connected from %d\n",
               cli_addr.get_host_name (),
               cli_addr.get_port_number ()));
 
@@ -149,7 +155,7 @@ oneway_server (ACE_SSL_SOCK_Stream &stream)
   size_t total_bytes = 0;
   size_t message_count = 0;
 
-  char *request = nullptr;
+  char *request {};
 
   // Read data from client (terminate on error).
 
@@ -206,12 +212,14 @@ oneway_server (ACE_SSL_SOCK_Stream &stream)
         }
       else if (verbose
                && ACE::write_n (ACE_STDOUT, request, r_bytes) != r_bytes)
-        ACE_ERROR ((LM_ERROR,
-                    "%p\n",
-                    "ACE::write_n"));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "%p\n",
+                      "ACE::write_n"));
+        }
 
       total_bytes += size_t (r_bytes);
-      message_count++;
+      ++message_count;
 
       delete [] request;
       request = nullptr;
@@ -231,7 +239,7 @@ oneway_server (ACE_SSL_SOCK_Stream &stream)
   double messages_per_sec = double (message_count) / et.real_time;
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("\t\tmessages = %d\n\t\ttotal bytes = %d\n\t\tmbits/sec = %f\n\t\tusec-per-message = %f\n\t\tmessages-per-second = %0.00f\n"),
+              ACE_TEXT ("\t\tmessages = %B\n\t\ttotal bytes = %B\n\t\tmbits/sec = %f\n\t\tusec-per-message = %f\n\t\tmessages-per-second = %0.00f\n"),
               message_count,
               total_bytes,
               (((double) total_bytes * 8) / et.real_time) / (double) (1024 * 1024),
@@ -262,64 +270,86 @@ run_event_loop (u_short port)
   // Create acceptors, reuse the address.
   if (twoway_acceptor.open (twoway_server_addr, 1) == -1
       || oneway_acceptor.open (oneway_server_addr, 1) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "open"),
-                      1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "open"),
+                        1);
+    }
   else if (twoway_acceptor.get_local_addr (twoway_server_addr) == -1
            || oneway_acceptor.get_local_addr (oneway_server_addr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "get_local_addr"),
-                      1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "get_local_addr"),
+                        1);
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) starting twoway server at port %d and oneway server at port %d\n",
               twoway_server_addr.get_port_number (),
               oneway_server_addr.get_port_number ()));
 
+  ACE_HANDLE const twoway_handle = twoway_acceptor.get_handle ();
+  ACE_HANDLE const oneway_handle = oneway_acceptor.get_handle ();
+#if !defined (ACE_WIN32)
+  if (twoway_handle < 0 || twoway_handle >= ACE_FD_SETSIZE ||
+      oneway_handle < 0 || oneway_handle >= ACE_FD_SETSIZE)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("acceptor handle exceeds FD_SETSIZE\n")),
+                        1);
+    }
+#endif /* ! ACE_WIN32 */
+
   // Keep these objects out here to prevent excessive constructor
   // calls within the loop.
   ACE_SSL_SOCK_Stream new_stream;
 
   ACE_Handle_Set handle_set;
-  handle_set.set_bit (twoway_acceptor.get_handle ());
-  handle_set.set_bit (oneway_acceptor.get_handle ());
+  handle_set.set_bit (twoway_handle);
+  handle_set.set_bit (oneway_handle);
 
   // Performs the iterative server activities.
 
   for (;;)
     {
-      ACE_Time_Value timeout (ACE_DEFAULT_TIMEOUT);
+      ACE_Time_Value const timeout (ACE_DEFAULT_TIMEOUT);
       ACE_Handle_Set temp = handle_set;
 
       int maxfd = 0;
 #if !defined (ACE_WIN32)
-      maxfd = oneway_acceptor.get_handle ();
-      if (maxfd < twoway_acceptor.get_handle ())
+      maxfd = oneway_handle;
+      if (maxfd < twoway_handle)
         {
-          maxfd = twoway_acceptor.get_handle ();
+          maxfd = twoway_handle;
         }
 #  endif /* ACE_WIN32 */
       int result = ACE_OS::select (maxfd + 1,
-                                   (fd_set *) temp,
-                                   0,
-                                   0,
+                                   temp.fdset (),
+                                   nullptr,
+                                   nullptr,
                                    timeout);
       if (result == -1)
-        ACE_ERROR ((LM_ERROR,
-                    "(%P|%t) %p\n",
-                    "select"));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "(%P|%t) %p\n",
+                      "select"));
+        }
       else if (result == 0 && verbose)
-        ACE_DEBUG ((LM_DEBUG,
-                    "(%P|%t) select timed out\n"));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "(%P|%t) select timed out\n"));
+        }
       else
         {
           if (temp.is_set (twoway_acceptor.get_handle ()))
             {
               int r = twoway_acceptor.accept (new_stream);
               while (r == -1 && errno == EAGAIN)
-                r = twoway_acceptor.accept (new_stream);
+                {
+                  r = twoway_acceptor.accept (new_stream);
+                }
               if (r == -1)
                 {
                   ACE_ERROR ((LM_ERROR,
@@ -328,8 +358,10 @@ run_event_loop (u_short port)
                   continue;
                 }
               else
-                ACE_DEBUG ((LM_DEBUG,
-                            "(%P|%t) spawning twoway server\n"));
+                {
+                  ACE_DEBUG ((LM_DEBUG,
+                              "(%P|%t) spawning twoway server\n"));
+                }
 
               // Run the twoway server.
               twoway_server (new_stream);
@@ -342,8 +374,10 @@ run_event_loop (u_short port)
                   continue;
                 }
               else
-                ACE_DEBUG ((LM_DEBUG,
-                            "(%P|%t) spawning oneway server\n"));
+                {
+                  ACE_DEBUG ((LM_DEBUG,
+                              "(%P|%t) spawning oneway server\n"));
+                }
 
               // Run the oneway server.
               oneway_server (new_stream);
@@ -360,7 +394,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   u_short port = ACE_DEFAULT_SERVER_PORT;
 
   if (argc > 1)
+  {
     port = ACE_OS::atoi (argv[1]);
+  }
 
   return run_event_loop (port);
 }

@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    airplane_client_i.h
  *
@@ -9,13 +6,12 @@
  *
  *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #if !defined (AIRPLANE_CLIENT_I_H)
 #define AIRPLANE_CLIENT_I_H
 
 #include "AirplaneC.h"
+#include "ace/SString.h"
 
 /**
  * @class Airplane_Client_i
@@ -28,9 +24,13 @@
 class Airplane_Client_i
 {
 public:
-  // = Constructor and destructor.
-  Airplane_Client_i ();
-  ~Airplane_Client_i ();
+  Airplane_Client_i () = default;
+  ~Airplane_Client_i () = default;
+
+  Airplane_Client_i (Airplane_Client_i const &) = delete;
+  Airplane_Client_i &operator= (Airplane_Client_i const &) = delete;
+  Airplane_Client_i (Airplane_Client_i &&) = delete;
+  Airplane_Client_i &operator= (Airplane_Client_i &&) = delete;
 
   /// Execute client example code.
   int run ();
@@ -42,26 +42,26 @@ private:
   /// Parses the arguments passed on the command line.
   int parse_args ();
 
-  /// Ask the Paper Airplane Server for <count> planes.
+  /// Ask the Paper Airplane Server for @a count planes.
   int get_planes (size_t count);
 
   /// # of arguments on the command line.
-  int argc_;
+  int argc_ {};
 
   /// arguments from command line.
-  ACE_TCHAR **argv_;
+  ACE_TCHAR **argv_ {};
 
   /// Key of the obj ref of the server.
-  ACE_TCHAR *server_key_;
+  ACE_TString server_key_ {ACE_TEXT ("key0")};
 
   /// Number of airplanes to query for.
-  size_t loop_count_;
+  size_t loop_count_ {10};
 
   /// Server object ptr.
-  Paper_Airplane_Server_ptr server_;
+  Paper_Airplane_Server_var server_ {};
 
   /// Remember our orb.
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var orb_ {};
 };
 
 #endif /* AIRPLANE_CLIENT_I_H */

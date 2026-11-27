@@ -1,10 +1,9 @@
-// -*- C++ -*-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE bool
 TAO_Transport::queue_is_empty_i () const
 {
-  return (this->head_ == 0);
+  return (this->head_ == nullptr);
 }
 
 ACE_INLINE CORBA::ULong
@@ -22,14 +21,14 @@ TAO_Transport::orb_core () const
 ACE_INLINE TAO_Transport_Mux_Strategy *
 TAO_Transport::tms () const
 {
-  return tms_;
+  return this->tms_.get ();
 }
 
-// Return the Wait strategy used by the Transport.
+/// Return the Wait strategy used by the Transport.
 ACE_INLINE TAO_Wait_Strategy *
 TAO_Transport::wait_strategy () const
 {
-  return this->ws_;
+  return this->ws_.get ();
 }
 
 ACE_INLINE int
@@ -125,12 +124,11 @@ TAO_Transport::reset_flush_timer ()
 ACE_INLINE TAO_GIOP_Message_Base *
 TAO_Transport::messaging_object ()
 {
-  return this->messaging_object_;
+  return this->messaging_object_.get ();
 }
 
 //********************************************************************
 // codeset related methods
-
 
 ACE_INLINE TAO_Codeset_Translator_Base *
 TAO_Transport::char_translator () const
@@ -148,14 +146,14 @@ ACE_INLINE void
 TAO_Transport::char_translator (TAO_Codeset_Translator_Base *tf)
 {
   this->char_translator_ = tf;
-  this->tcs_set_ = 1;
+  this->tcs_set_ = true;
 }
 
 ACE_INLINE void
 TAO_Transport::wchar_translator (TAO_Codeset_Translator_Base *tf)
 {
   this->wchar_translator_ = tf;
-  this->tcs_set_ = 1;
+  this->tcs_set_ = true;
 }
 
 /// CodeSet negotiation
@@ -207,14 +205,12 @@ TAO_Transport::sent_byte_count () const
 ACE_INLINE TAO::Transport::Stats*
 TAO_Transport::stats () const
 {
-  return this->stats_;
+  return this->stats_.get ();
 }
 
 ACE_INLINE
 TAO::Transport::Stats::Stats ()
-  : messages_rcvd_ (0)
-  , messages_sent_ (0)
-  , bytes_rcvd_()
+  : bytes_rcvd_()
   , bytes_sent_ ()
   , opened_since_ ()
 {
@@ -271,14 +267,14 @@ TAO::Transport::Stats::bytes_received () const
 }
 
 ACE_INLINE void
-TAO::Transport::Stats::opened_since (const ACE_Time_Value& tv)
+TAO::Transport::Stats::opened_since (ACE_Time_Value const& tv)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->stat_mutex_);
 
   this->opened_since_ = tv;
 }
 
-ACE_INLINE const ACE_Time_Value&
+ACE_INLINE ACE_Time_Value const&
 TAO::Transport::Stats::opened_since () const
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->stat_mutex_, ACE_Time_Value::zero);

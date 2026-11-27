@@ -1,10 +1,8 @@
-//=============================================================================
 /**
  *  @file    Foo_C_Custom_Proxy.h
  *
  *  @author  Tim Bradley <bradley_t@ociweb.com>
  */
-//=============================================================================
 
 #ifndef FOO_C_CUSTOM_PROXY_H
 #define FOO_C_CUSTOM_PROXY_H
@@ -36,6 +34,11 @@ public:
   long cust_op3(long x);
   void cust_op4(long x);
   void cust_op5();
+
+  Foo_C_Custom_Proxy (Foo_C_Custom_Proxy const &) = delete;
+  Foo_C_Custom_Proxy (Foo_C_Custom_Proxy &&) = delete;
+  Foo_C_Custom_Proxy & operator= (Foo_C_Custom_Proxy const &) = delete;
+  Foo_C_Custom_Proxy & operator= (Foo_C_Custom_Proxy &&) = delete;
 
 private:
   Foo_C_i*                        servant_;

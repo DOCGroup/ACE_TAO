@@ -1,4 +1,3 @@
-// -*- C++ -*-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE void
@@ -36,7 +35,9 @@ ACE_ATM_Stream::open (ACE_ATM_Params params)
                              params.get_flags(),
                              params.get_reuse_addr());
   if (retval == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   struct sockaddr_atm sock_addr;
 
@@ -106,7 +107,7 @@ ACE_ATM_Stream::recv (void *buf,
 
 ACE_INLINE
 ssize_t
-ACE_ATM_Stream::send_n (const void *buf,
+ACE_ATM_Stream::send_n (void const *buf,
                         size_t n,
                         int flags) const
 {

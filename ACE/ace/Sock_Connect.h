@@ -1,13 +1,9 @@
-// -*- C++ -*-
-
-//==========================================================================
 /**
  *  @file   Sock_Connect.h
  *
  *  @author Priyanka Gontla <pgontla@ece.uci.edu>
  *  @author Based on code that existed formerly in ACE.h.
  */
-//==========================================================================
 
 #ifndef ACE_SOCK_CONNECT_H
 #define ACE_SOCK_CONNECT_H
@@ -30,7 +26,8 @@ class ACE_INET_Addr;
 
 namespace ACE
 {
-  // = Socket connection establishment calls.
+  /// @name Socket connection utilities
+  /// @{
 
   /// Bind a new unused port to @a handle.
   extern ACE_Export int bind_port (ACE_HANDLE handle,
@@ -47,7 +44,7 @@ namespace ACE
    */
   extern ACE_Export int get_bcast_addr (
     ACE_UINT32 &bcast_addr,
-    const ACE_TCHAR *hostname = nullptr,
+    ACE_TCHAR const *hostname = nullptr,
     ACE_UINT32 host_addr = 0,
     ACE_HANDLE handle = ACE_INVALID_HANDLE);
 
@@ -96,6 +93,7 @@ namespace ACE
    * so it only gets checked once.
    */
   extern ACE_Export int ipv6_enabled ();
+  /// @}
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

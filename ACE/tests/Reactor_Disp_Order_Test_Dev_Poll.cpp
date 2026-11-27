@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    Reactor_Disp_Order_Test_Dev_Poll.cpp
  *
@@ -8,10 +6,8 @@
  *
  *  @author Irfan Pyarali <irfan@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "test_config.h"
-#include "ace/OS_NS_string.h"
 #include "ace/Reactor.h"
 #include "ace/Select_Reactor.h"
 #include "ace/WFMO_Reactor.h"
@@ -19,9 +15,13 @@
 #include "ace/Pipe.h"
 #include "ace/ACE.h"
 
+#include <memory>
+
+#include <cstring>
+
 #if defined (ACE_HAS_DEV_POLL) || defined (ACE_HAS_EVENT_POLL)
 
-static const char *message = "Hello there! Hope you get this message";
+static char const *message = "Hello there! Hope you get this message";
 
 class Handler : public ACE_Event_Handler
 {
@@ -30,8 +30,8 @@ public:
 
   ~Handler() override;
 
-  int handle_timeout (const ACE_Time_Value &tv,
-                      const void *arg) override;
+  int handle_timeout (ACE_Time_Value const &tv,
+                      void const *arg) override;
 
   int handle_input (ACE_HANDLE fd) override;
 
@@ -57,13 +57,15 @@ public:
 };
 
 Handler::Handler (ACE_Reactor &reactor)
-  : ACE_Event_Handler (&reactor),
+  : ACE_Event_Handler (std::addressof (reactor)),
     dispatch_order_ (1),
     ok_ (false)
 {
   // Create the pipe.
   if (0 != this->pipe_.open ())
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("pipe")));
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("pipe")));
+    }
   else
     {
       // Register for all events.
@@ -71,18 +73,20 @@ Handler::Handler (ACE_Reactor &reactor)
                  (this->pipe_.read_handle (),
                   this,
                   ACE_Event_Handler::READ_MASK | ACE_Event_Handler::WRITE_MASK))
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("register")));
+        {
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("register")));
+        }
       else
-        this->ok_ = true;
+        {
+          this->ok_ = true;
+        }
     }
 }
-
 
 Handler::~Handler ()
 {
   this->pipe_.close ();
 }
-
 
 ACE_HANDLE
 Handler::get_handle () const
@@ -91,16 +95,20 @@ Handler::get_handle () const
 }
 
 int
-Handler::handle_timeout (const ACE_Time_Value &,
-                         const void *)
+Handler::handle_timeout (ACE_Time_Value const &,
+                         void const *)
 {
-  int me = this->dispatch_order_++;
+  int const me = this->dispatch_order_++;
   if (me != 1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("handle_timeout should be #1; it's %d\n"),
-                me));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("handle_timeout should be #1; it's %d\n"),
+                  me));
+    }
   else
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Handler::handle_timeout\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Handler::handle_timeout\n")));
+    }
 
   return 0;
 }
@@ -108,13 +116,17 @@ Handler::handle_timeout (const ACE_Time_Value &,
 int
 Handler::handle_output (ACE_HANDLE)
 {
-  int me = this->dispatch_order_++;
+  int const me = this->dispatch_order_++;
   if (me != 2)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("handle_output should be #2; it's %d\n"),
-                me));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("handle_output should be #2; it's %d\n"),
+                  me));
+    }
   else
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Handler::handle_output\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Handler::handle_output\n")));
+    }
 
   // Don't want to continually see writeable; only verify its relative order.
   this->reactor ()->mask_ops (this->pipe_.read_handle (),
@@ -127,26 +139,32 @@ Handler::handle_output (ACE_HANDLE)
 int
 Handler::handle_input (ACE_HANDLE fd)
 {
-  int me = this->dispatch_order_++;
+  int const me = this->dispatch_order_++;
   if (me != 3)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("handle_input should be #3; it's %d\n"),
-                me));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("handle_input should be #3; it's %d\n"),
+                  me));
+    }
 
   char buffer[BUFSIZ];
-  ssize_t result = ACE::recv (fd, buffer, sizeof buffer);
-  if (result != ssize_t (ACE_OS::strlen (message)))
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Handler recv'd %b bytes; expected %B\n"),
-                result, ACE_OS::strlen (message)));
+  ssize_t const result = ACE::recv (fd, buffer, sizeof buffer);
+  if (result != ssize_t (std::strlen (message)))
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Handler recv'd %b bytes; expected %B\n"),
+                  result, std::strlen (message)));
+    }
   buffer[result] = '\0';
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Handler::handle_input: %C\n"), buffer));
 
-  if (ACE_OS::strcmp (buffer, message) != 0)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("Handler text mismatch; received \"%C\"; ")
-                ACE_TEXT ("expected \"%C\"\n"),
-                buffer, message));
+  if (std::strcmp (buffer, message) != 0)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Handler text mismatch; received \"%C\"; ")
+                  ACE_TEXT ("expected \"%C\"\n"),
+                  buffer, message));
+    }
 
   this->reactor ()->end_reactor_event_loop ();
 
@@ -166,19 +184,19 @@ test_reactor_dispatch_order (ACE_Reactor &reactor)
   bool ok_to_go = true;
 
   // This should trigger a call to <handle_input>.
-  ssize_t result =
+  ssize_t const result =
     ACE::send_n (handler.pipe_.write_handle (),
                  message,
-                 ACE_OS::strlen (message));
-  if (result != ssize_t (ACE_OS::strlen (message)))
+                 std::strlen (message));
+  if (result != ssize_t (std::strlen (message)))
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("Handler sent %b bytes; should be %B\n"),
-                  result, ACE_OS::strlen (message)));
+                  result, std::strlen (message)));
       ok_to_go = false;
     }
 
   // This should trigger a call to <handle_timeout>.
-  if (-1 == reactor.schedule_timer (&handler,
+  if (-1 == reactor.schedule_timer (std::addressof (handler),
                                     nullptr,
                                     ACE_Time_Value (0)))
     {
@@ -201,7 +219,7 @@ test_reactor_dispatch_order (ACE_Reactor &reactor)
 
   // Reset the dispatch_order_ count and schedule another timer
   handler.dispatch_order_ = 1;
-  if (-1 == reactor.schedule_timer (&handler,
+  if (-1 == reactor.schedule_timer (std::addressof (handler),
                                     nullptr,
                                     ACE_Time_Value (0)))
     {
@@ -220,9 +238,11 @@ test_reactor_dispatch_order (ACE_Reactor &reactor)
   if (0 != reactor.remove_handler (handler.pipe_.read_handle (),
                                    ACE_Event_Handler::ALL_EVENTS_MASK |
                                    ACE_Event_Handler::DONT_CALL))
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("remover_handler pipe")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("%p\n"),
+                  ACE_TEXT ("remover_handler pipe")));
+    }
 
   if (handler.dispatch_order_ != 4)
     {
@@ -243,10 +263,12 @@ run_main (int, ACE_TCHAR *[])
 
 #if defined (ACE_HAS_DEV_POLL) || defined (ACE_HAS_EVENT_POLL)
   ACE_Dev_Poll_Reactor dev_poll_reactor_impl;
-  ACE_Reactor dev_poll_reactor (&dev_poll_reactor_impl);
+  ACE_Reactor dev_poll_reactor (std::addressof (dev_poll_reactor_impl));
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing Dev Poll Reactor\n")));
   if (!test_reactor_dispatch_order (dev_poll_reactor))
-    ++result;
+    {
+      ++result;
+    }
 #else
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("ACE_Dev_Poll_Reactor is UNSUPPORTED on this platform\n")));
 #endif /* ACE_HAS_DEV_POLL || ACE_HAS_EVENT_POLL */

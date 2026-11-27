@@ -7,9 +7,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO::CSD::TP_Collocated_Synch_With_Server_Request::~TP_Collocated_Synch_With_Server_Request () = default;
-
-
 void
 TAO::CSD::TP_Collocated_Synch_With_Server_Request::prepare_for_queue_i()
 {
@@ -24,7 +21,6 @@ TAO::CSD::TP_Collocated_Synch_With_Server_Request::prepare_for_queue_i()
   this->do_clone();
 }
 
-
 void
 TAO::CSD::TP_Collocated_Synch_With_Server_Request::dispatch_i()
 {
@@ -35,7 +31,7 @@ TAO::CSD::TP_Collocated_Synch_With_Server_Request::dispatch_i()
     {
       this->do_dispatch();
     }
-  catch (const ::CORBA::Exception&)
+  catch (::CORBA::Exception const &)
     {
       // Eat these.  We probably should log these, but since we have already
       // unblocked the requesting thread there is no point in saving it or

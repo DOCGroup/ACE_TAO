@@ -1,13 +1,10 @@
-// -*- C++ -*-
 #include "tao/SystemException.h"
 #include <cstring>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
-TAO_OutputCDR::~TAO_OutputCDR ()
-{
-}
+TAO_OutputCDR::~TAO_OutputCDR () = default;
 
 ACE_INLINE bool
 TAO_OutputCDR::more_fragments () const
@@ -122,10 +119,9 @@ TAO_OutputCDR::reset_vt_indirect_maps ()
   }
 }
 
-// -------------------------------------------------------------------
 
 ACE_INLINE
-TAO_InputCDR::TAO_InputCDR (const char *buf,
+TAO_InputCDR::TAO_InputCDR (char const *buf,
                             size_t bufsiz,
                             int byte_order,
                             ACE_CDR::Octet major_version,
@@ -155,7 +151,7 @@ TAO_InputCDR::TAO_InputCDR (size_t bufsiz,
 }
 
 ACE_INLINE
-TAO_InputCDR::TAO_InputCDR (const ACE_Message_Block *data,
+TAO_InputCDR::TAO_InputCDR (ACE_Message_Block const *data,
                             int byte_order,
                             ACE_CDR::Octet major_version,
                             ACE_CDR::Octet minor_version,
@@ -169,7 +165,7 @@ TAO_InputCDR::TAO_InputCDR (const ACE_Message_Block *data,
 }
 
 ACE_INLINE
-TAO_InputCDR::TAO_InputCDR (const ACE_Message_Block *data,
+TAO_InputCDR::TAO_InputCDR (ACE_Message_Block const *data,
                             ACE_Lock* lock,
                             int byte_order,
                             ACE_CDR::Octet major_version,
@@ -200,7 +196,6 @@ TAO_InputCDR::TAO_InputCDR (ACE_Data_Block *data,
 {
 }
 
-
 ACE_INLINE
 TAO_InputCDR::TAO_InputCDR (ACE_Data_Block *data,
                             ACE_Message_Block::Message_Flags flag,
@@ -221,9 +216,8 @@ TAO_InputCDR::TAO_InputCDR (ACE_Data_Block *data,
 {
 }
 
-
 ACE_INLINE
-TAO_InputCDR::TAO_InputCDR (const TAO_InputCDR& rhs,
+TAO_InputCDR::TAO_InputCDR (TAO_InputCDR const& rhs,
                             size_t size,
                             ACE_CDR::Long offset)
   : ACE_InputCDR (rhs,
@@ -234,7 +228,7 @@ TAO_InputCDR::TAO_InputCDR (const TAO_InputCDR& rhs,
 }
 
 ACE_INLINE
-TAO_InputCDR::TAO_InputCDR (const TAO_InputCDR& rhs,
+TAO_InputCDR::TAO_InputCDR (TAO_InputCDR const& rhs,
                             size_t size)
   : ACE_InputCDR (rhs,
                   size),
@@ -243,7 +237,7 @@ TAO_InputCDR::TAO_InputCDR (const TAO_InputCDR& rhs,
 }
 
 ACE_INLINE
-TAO_InputCDR::TAO_InputCDR (const TAO_InputCDR& rhs)
+TAO_InputCDR::TAO_InputCDR (TAO_InputCDR const& rhs)
   : ACE_InputCDR (rhs),
     orb_core_ (rhs.orb_core_),
     repo_id_map_ (rhs.repo_id_map_),
@@ -260,18 +254,14 @@ TAO_InputCDR::TAO_InputCDR (ACE_InputCDR::Transfer_Contents rhs,
 {
 }
 
-
 ACE_INLINE
-TAO_InputCDR::~TAO_InputCDR ()
-{
-}
+TAO_InputCDR::~TAO_InputCDR () = default;
 
 ACE_INLINE TAO_ORB_Core*
 TAO_InputCDR::orb_core () const
 {
   return this->orb_core_;
 }
-
 
 ACE_INLINE TAO_InputCDR::Repo_Id_Map_Handle&
 TAO_InputCDR::get_repo_id_map ()
@@ -410,13 +400,13 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
 }
 
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
-                                      const ACE_CDR::Fixed &x)
+                                      ACE_CDR::Fixed const &x)
 {
   return os.write_fixed (x);
 }
 
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
-                                      const char * x)
+                                      char const *x)
 {
   return
     os.fragment_stream (ACE_CDR::OCTET_ALIGN,
@@ -425,7 +415,7 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
 }
 
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
-                                      const CORBA::WChar * x)
+                                      CORBA::WChar const *x)
 {
   return
     os.fragment_stream ((sizeof (CORBA::WChar) == 2
@@ -438,7 +428,7 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
                                       ACE_OutputCDR::from_string x)
 {
-  if (x.bound_ != 0 && x.val_ != 0 &&
+  if (x.bound_ != 0 && x.val_ != nullptr &&
       std::strlen (x.val_) > x.bound_)
     {
       throw CORBA::BAD_PARAM ();
@@ -449,7 +439,7 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
                                       ACE_OutputCDR::from_wstring x)
 {
-  if (x.bound_ != 0 && x.val_ != 0 &&
+  if (x.bound_ != 0 && x.val_ != nullptr &&
       ACE_OS::strlen (x.val_) > x.bound_)
     {
       throw CORBA::BAD_PARAM ();
@@ -458,7 +448,7 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
 }
 
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
-                                      const std::string &x)
+                                      std::string const &x)
 {
   return
     os.fragment_stream (ACE_CDR::OCTET_ALIGN,
@@ -467,7 +457,7 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
 }
 
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
-                                      const std::string_view &x)
+                                      std::string_view const &x)
 {
   return
     os.fragment_stream (ACE_CDR::OCTET_ALIGN,
@@ -487,7 +477,7 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
 
 #if !defined(ACE_LACKS_STD_WSTRING)
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
-                                      const std::wstring &x)
+                                      std::wstring const &x)
 {
   return
     os.fragment_stream ((sizeof (CORBA::WChar) == 2
@@ -587,7 +577,7 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &is,
 {
   CORBA::Boolean const marshal_flag =
     is >> const_cast<ACE_CDR::Char *&> (x.val_);
-  if (marshal_flag && x.bound_ != 0 && x.val_ != 0 &&
+  if (marshal_flag && x.bound_ != 0 && x.val_ != nullptr &&
       std::strlen (x.val_) > x.bound_)
     {
       throw CORBA::BAD_PARAM ();
@@ -600,7 +590,7 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &is,
 {
   CORBA::Boolean const marshal_flag =
     is >> const_cast<ACE_CDR::WChar *&> (x.val_);
-  if (marshal_flag && x.bound_ != 0 && x.val_ != 0 &&
+  if (marshal_flag && x.bound_ != 0 && x.val_ != nullptr &&
       ACE_OS::strlen (x.val_) > x.bound_)
     {
       throw CORBA::BAD_PARAM ();

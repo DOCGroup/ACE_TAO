@@ -74,7 +74,7 @@ struct valuetype_traits_decorator
 template<typename object_t, typename object_t_var, bool dummy>
 struct valuetype_traits
   : public valuetype_traits_base<object_t, object_t_var>
-  , public valuetype_traits_decorator<object_t, object_t_var, valuetype_traits<object_t,object_t_var,dummy> >
+  , public valuetype_traits_decorator<object_t, object_t_var, valuetype_traits<object_t,object_t_var,dummy>>
 {
   using object_type = object_t;
   using value_type = object_type *;

@@ -5,9 +5,10 @@
 #include "orbsvcs/Event/EC_Default_Factory.h"
 #include "ace/Arg_Shifter.h"
 #include "ace/High_Res_Timer.h"
+#include <memory>
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   TAO_EC_Default_Factory::init_svcs ();
   EC_Master master;
@@ -19,19 +20,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 EC_Master::EC_Master ()
   :  seed_ (0),
      n_channels_ (4),
-     channels_ (0)
+     channels_ ()
 {
 }
 
-EC_Master::~EC_Master ()
-{
-  if (this->channels_ != 0)
-    {
-      for (int i = 0; i < this->n_channels_; ++i)
-        delete this->channels_[i];
-      delete[] this->channels_;
-    }
-}
+EC_Master::~EC_Master () = default;
 
 int
 EC_Master::run (int argc, ACE_TCHAR* argv[])
@@ -47,41 +40,51 @@ EC_Master::run (int argc, ACE_TCHAR* argv[])
       this->initialize_orb_and_poa (argc, argv);
 
       if (this->parse_args (argc, argv))
+      {
         return 1;
+      }
 
       ACE_DEBUG ((LM_DEBUG,
                   "The seed value is %d\n", this->seed_));
 
-      ACE_NEW_RETURN (this->channels_,
-                      EC_Observer*[this->n_channels_],
-                      1);
+      if (this->n_channels_ < 0)
+      {
+        ACE_ERROR_RETURN ((LM_ERROR, "EC_Master: negative channel count\n"), 1);
+      }
+
+      this->channels_.reserve (static_cast<size_t> (this->n_channels_));
 
       {
         for (int i = 0; i != this->n_channels_; ++i)
           {
             ACE_OS::rand_r (&this->seed_);
-            ACE_NEW_RETURN (this->channels_[i],
+            EC_Observer *channel {};
+            ACE_NEW_RETURN (channel,
                             EC_Observer (this,
                                          this->seed_,
                                          this->orb_.in (),
                                          this->root_poa_.in (),
                                          i),
                             1);
+            this->channels_.emplace_back (channel);
           }
       }
 
       {
-        ACE_TCHAR** targv;
-        ACE_NEW_RETURN (targv, ACE_TCHAR*[argc], 1);
+        std::unique_ptr<ACE_TCHAR *[]> targv;
+        ACE_TCHAR **raw_targv {};
+        ACE_NEW_RETURN (raw_targv, ACE_TCHAR*[argc], 1);
+        targv.reset (raw_targv);
 
         for (int i = 0; i != this->n_channels_; ++i)
           {
             int targc = argc;
             for (int j = 0; j < targc; ++j)
-              targv[j] = argv[j];
-            this->channels_[i]->run_init (targc, targv);
+        {
+                targv[j] = argv[j];
+        }
+            this->channels_[i]->run_init (targc, targv.get ());
           }
-        delete[] targv;
       }
 
       {
@@ -126,12 +129,12 @@ EC_Master::run (int argc, ACE_TCHAR* argv[])
           }
       }
 
-      this->root_poa_->destroy (1,
-                                1);
+      this->root_poa_->destroy (true,
+                                true);
 
       this->orb_->destroy ();
    }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("EC_Driver::run");
     }
@@ -174,7 +177,7 @@ EC_Master::parse_args (int &argc, ACE_TCHAR *argv [])
 
   while (arg_shifter.is_anything_left ())
     {
-      const ACE_TCHAR *arg = arg_shifter.get_current ();
+      ACE_TCHAR const * const arg = arg_shifter.get_current ();
 
       if (ACE_OS::strcmp (arg, ACE_TEXT("-channels")) == 0)
         {
@@ -201,7 +204,7 @@ EC_Master::channel_count () const
 EC_Observer*
 EC_Master::channel (int i) const
 {
-  return this->channels_[i];
+  return this->channels_[i].get ();
 }
 
 // ****************************************************************
@@ -214,17 +217,13 @@ EC_Observer::EC_Observer (EC_Master *master,
   : master_ (master),
     seed_ (seed),
     id_ (id),
-    gwys_ (0)
+    gwys_ ()
 {
   this->orb_ = CORBA::ORB::_duplicate (orb);
   this->root_poa_ = PortableServer::POA::_duplicate (root_poa);
 }
 
-EC_Observer::~EC_Observer ()
-{
-  if (this->gwys_ != 0)
-    delete[] this->gwys_;
-}
+EC_Observer::~EC_Observer () = default;
 
 void
 EC_Observer::initialize_orb_and_poa (int&, ACE_TCHAR*[])
@@ -253,12 +252,16 @@ void
 EC_Observer::execute_test ()
 {
   int peer_count = this->master_->channel_count ();
-  ACE_NEW (this->gwys_, TAO_EC_Gateway_IIOP[peer_count]);
+  TAO_EC_Gateway_IIOP *gateways {};
+  ACE_NEW (gateways, TAO_EC_Gateway_IIOP[peer_count]);
+  this->gwys_.reset (gateways);
 
   for (int i = 0; i != peer_count; ++i)
     {
       if (i == this->id_)
+      {
         continue;
+      }
 
       RtecEventChannelAdmin::EventChannel_ptr rmt_ec =
         this->master_->channel (i)->event_channel_.in ();
@@ -276,13 +279,17 @@ EC_Observer::execute_test ()
     }
 
   if (this->allocate_tasks () == -1)
+  {
     return;
+  }
 
   this->activate_tasks ();
 
   if (this->verbose ())
-    ACE_DEBUG ((LM_DEBUG, "EC_Observer[%d] (%P|%t) suppliers are active\n",
-                this->id_));
+    {
+      ACE_DEBUG ((LM_DEBUG, "EC_Observer[%d] (%P|%t) suppliers are active\n",
+                  this->id_));
+    }
 }
 
 void
@@ -291,7 +298,9 @@ EC_Observer::run_cleanup ()
   for (int j = 0; j != this->master_->channel_count (); ++j)
     {
       if (j == this->id_)
+      {
         continue;
+      }
 
       RtecEventChannelAdmin::EventChannel_ptr rmt_ec =
         this->master_->channel (j)->event_channel_.in ();
@@ -340,19 +349,23 @@ EC_Observer::connect_consumer (
     }
   unsigned int x = ACE_OS::rand_r (&this->seed_);
   if (x < RAND_MAX / 8)
+  {
     this->EC_Driver::connect_consumer (consumer_admin, i);
+  }
 }
 
 void
 EC_Observer::consumer_push (void*,
-                            const RtecEventComm::EventSet&)
+                            RtecEventComm::EventSet const &)
 {
   unsigned int x = ACE_OS::rand_r (&this->seed_);
   if (x < (RAND_MAX / 64))
     {
       if (this->verbose ())
-        ACE_DEBUG ((LM_DEBUG,
-                    "EC_Observer[%d] (%P|%t) reconnecting\n", this->id_));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "EC_Observer[%d] (%P|%t) reconnecting\n", this->id_));
+        }
 
       RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
         this->event_channel_->for_consumers ();

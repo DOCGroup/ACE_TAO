@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 /**
  *  @file   EC_Supplier_Filter.h
  *
@@ -66,8 +64,7 @@ class TAO_EC_QOS_Info;
 class TAO_RTEvent_Serv_Export TAO_EC_Supplier_Filter
 {
 public:
-  /// Destructor
-  virtual ~TAO_EC_Supplier_Filter ();
+  virtual ~TAO_EC_Supplier_Filter () = default;
 
   /**
    * Whenever a ProxyPushConsumer is initialized it calls this method
@@ -100,13 +97,13 @@ public:
 
   /// The ProxyPushConsumer delegates on this class to actually send
   /// the event.
-  virtual void push (const RtecEventComm::EventSet &event,
+  virtual void push (RtecEventComm::EventSet const &event,
                      TAO_EC_ProxyPushConsumer *consumer) = 0;
 
   /// Events are first scheduled by the TAO_EC_Scheduling_Strategy,
   /// and then pushed through this class again.
-  virtual void push_scheduled_event (RtecEventComm::EventSet &event,
-                                     const TAO_EC_QOS_Info &event_info) = 0;
+  virtual void push_scheduled_event (RtecEventComm::EventSet const &event,
+                                     TAO_EC_QOS_Info const &event_info) = 0;
 
   /// Increment and decrement the reference count, locking must be
   /// provided by the user.
@@ -119,17 +116,17 @@ public:
 class TAO_EC_Filter_Worker : public TAO_ESF_Worker<TAO_EC_ProxyPushSupplier>
 {
 public:
-  TAO_EC_Filter_Worker (RtecEventComm::EventSet &event,
-                        const TAO_EC_QOS_Info &event_info);
+  TAO_EC_Filter_Worker (RtecEventComm::EventSet const &event,
+                        TAO_EC_QOS_Info const &event_info);
 
-  virtual void work (TAO_EC_ProxyPushSupplier *supplier);
+  void work (TAO_EC_ProxyPushSupplier *supplier) override;
 
 private:
   /// The event we push on each case, use a reference to avoid copies.
-  RtecEventComm::EventSet &event_;
+  RtecEventComm::EventSet const &event_;
 
   /// The QoS info propagated on each event.
-  const TAO_EC_QOS_Info &event_info_;
+  TAO_EC_QOS_Info const &event_info_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

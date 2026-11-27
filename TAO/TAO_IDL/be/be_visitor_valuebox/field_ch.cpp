@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    field_ch.cpp
  *
@@ -14,13 +12,11 @@
  *
  *  @author Gary Maxey
  */
-//=============================================================================
 
 #include "valuebox.h"
 #include "valuebox_type_name.h"
 
 #include <string>
-#include "valuebox_type_name.h"
 
 be_visitor_valuebox_field_ch::be_visitor_valuebox_field_ch (
     be_visitor_context *ctx

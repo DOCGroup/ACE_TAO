@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 /**
  *  @file Property_T.h
  *
@@ -34,35 +32,31 @@ template <class TYPE>
 class TAO_Notify_PropertyBase_T
 {
 public:
-  /// Constructor
-  TAO_Notify_PropertyBase_T (const char* name, const TYPE& initial);
+  TAO_Notify_PropertyBase_T (char const *name, TYPE const& initial);
 
-  /// Constructor
-  TAO_Notify_PropertyBase_T (const char* name);
+  explicit TAO_Notify_PropertyBase_T (char const *name);
 
-  /// Copy Constructor
-  TAO_Notify_PropertyBase_T (const TAO_Notify_PropertyBase_T &rhs);
+  TAO_Notify_PropertyBase_T (TAO_Notify_PropertyBase_T const &rhs);
 
-  /// Destructor
-  ~TAO_Notify_PropertyBase_T ();
+  ~TAO_Notify_PropertyBase_T () = default;
 
   /// Equality comparison operator.
-  bool operator== (const TYPE &rhs) const;
+  bool operator== (TYPE const &rhs) const;
 
   /// Inequality comparison operator.
-  bool operator!= (const TYPE &rhs) const;
+  bool operator!= (TYPE const &rhs) const;
 
   /// Populate the Property Sequence with this valid value.
   void get (CosNotification::PropertySeq& prop_seq);
 
-  // assign a new value
-  void assign (const TYPE& value);
+  /// Assign a new value.
+  void assign (TYPE const& value);
 
   /// Return the value.
-  const TYPE& value () const;
+  TYPE const& value () const;
 
   /// Return the name
-  const char * name () const;
+  char const *name () const;
 
   /// Is the current value valid
   CORBA::Boolean is_valid () const;
@@ -72,15 +66,14 @@ public:
 
 protected:
   /// The Property name.
-  const char* name_;
+  char const *name_;
 
   /// The value
-  TYPE value_;
+  TYPE value_ {};
 
   /// Is the value valid
-  CORBA::Boolean valid_;
+  CORBA::Boolean valid_ {};
 };
-
 
 /*******************************************************************************/
 /**
@@ -92,19 +85,17 @@ template <class TYPE>
 class TAO_Notify_Property_T : public TAO_Notify_PropertyBase_T<TYPE>
 {
 public:
-  /// Constructor
-  TAO_Notify_Property_T (const char* name, const TYPE& initial);
+  TAO_Notify_Property_T (char const *name, TYPE const& initial);
 
-  /// Constructor
-  TAO_Notify_Property_T (const char* name);
+  explicit TAO_Notify_Property_T (char const *name);
 
   /// Init this Property from the sequence.
   /// Returns 0 on success, -1 on error
-  int set (const TAO_Notify_PropertySeq& property_seq);
+  int set (TAO_Notify_PropertySeq const& property_seq);
 
   /// Init this Property from the CosNotification::PropertyValue
   /// Returns 0 on success, -1 on error
-  int set (const CosNotification::PropertyValue &value);
+  int set (CosNotification::PropertyValue const &value);
 };
 
 /*******************************************************************************/
@@ -117,34 +108,32 @@ template <class TYPE>
 class TAO_Notify_StructProperty_T
 {
 public:
-  /// Constructor
-  TAO_Notify_StructProperty_T (const char* name, const TYPE& initial);
+  TAO_Notify_StructProperty_T (char const *name, TYPE const& initial);
 
-  /// Constructor
-  TAO_Notify_StructProperty_T (const char* name);
+  explicit TAO_Notify_StructProperty_T (char const *name);
 
   /// Init this Property from the sequence.
   /// Returns 0 on success, -1 on error
-  int set (const TAO_Notify_PropertySeq& property_seq);
+  int set (TAO_Notify_PropertySeq const& property_seq);
 
   /// Return the name
-  const char * name () const;
+  char const *name () const;
 
   /// Return the value.
-  const TYPE& value () const;
+  TYPE const& value () const;
 
   /// Is the current value valid
   CORBA::Boolean is_valid () const;
 
 protected:
   /// The Property name.
-  const char* name_;
+  char const *name_;
 
   /// The value
-  TYPE value_;
+  TYPE value_ {};
 
   /// Is the value valid
-  CORBA::Boolean valid_;
+  CORBA::Boolean valid_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

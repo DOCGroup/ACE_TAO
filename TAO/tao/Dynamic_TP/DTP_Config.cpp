@@ -10,166 +10,174 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_DTP_Config_Registry::~TAO_DTP_Config_Registry () = default;
-TAO_DTP_Config::~TAO_DTP_Config () = default;
-
 TAO_DTP_Config_Registry_Installer::TAO_DTP_Config_Registry_Installer ()
 {
   ACE_Service_Config::process_directive (ace_svc_desc_TAO_DTP_Config_Registry);
 }
 
-
-TAO_DTP_Config_Registry::TAO_DTP_Config_Registry () = default;
-
 int
-TAO_DTP_Config_Registry::init (int , ACE_TCHAR* [] )
+TAO_DTP_Config_Registry::init (int, ACE_TCHAR* [])
 {
   return 0;
 }
 
 bool
-TAO_DTP_Config_Registry::find (const ACE_CString& name,
+TAO_DTP_Config_Registry::find (std::string const &name,
                                TAO_DTP_Definition &entry)
 {
   return registry_.find (name, entry) == 0;
 }
 
 int
-TAO_DTP_Config_Registry::bind (const ACE_CString& name,
+TAO_DTP_Config_Registry::bind (std::string const &name,
                                TAO_DTP_Definition &entry)
 {
   return registry_.bind (name, entry);
 }
 
 int
-TAO_DTP_Config_Registry::rebind (const ACE_CString& name,
+TAO_DTP_Config_Registry::rebind (std::string const &name,
                                  TAO_DTP_Definition &entry)
 {
   return registry_.rebind (name, entry);
 }
 
-//-------------------------------------------------------------------------
-
-TAO_DTP_Config::TAO_DTP_Config () = default;
-
 int
 TAO_DTP_Config::init (int argc, ACE_TCHAR* argv[])
 {
-  TAO_DTP_Definition entry;
+  TAO_DTP_Definition entry {};
 
-  ACE_TCHAR *name = nullptr;
-  bool overwrite = false;
+  ACE_TCHAR const *name {};
+  bool overwrite {};
 
-  int curarg = 0;
-  int r = 0;
-
-  for (curarg = 0; curarg < argc; ++curarg)
+  for (int curarg {}; curarg < argc; ++curarg)
     {
-      long val = 0;
-      if ((r = this->parse_string (curarg,
-                                   argc,
-                                   argv,
-                                   ACE_TEXT("-DTPName"),name )) != 0)
+      long val {};
+      int r = this->parse_string (curarg,
+                                  argc,
+                                  argv,
+                                  ACE_TEXT ("-DTPName"), name);
+      if (r < 0)
         {
-          if (r < 0)
-            {
-              return -1;
-            }
-        }
-      else if ((r = this->parse_bool (curarg,
-                                      argc,
-                                      argv,
-                                      ACE_TEXT("-DTPOverwrite"),
-                                      overwrite )) != 0)
-        {
-          if (r < 0)
-            {
-              return -1;
-            }
-        }
-      else if ((r = this->parse_long (curarg,
-                                      argc,
-                                      argv,
-                                      ACE_TEXT("-DTPMin"),
-                                      val )) != 0)
-        {
-          if (r < 0)
-            {
-              return -1;
-            }
-          entry.min_threads_ = val;
-        }
-      else if ((r = this->parse_long (curarg,
-                                      argc,
-                                      argv,
-                                      ACE_TEXT("-DTPInit"),
-                                      val )) != 0)
-        {
-          if (r < 0)
-            {
-              return -1;
-            }
-          entry.init_threads_ = val;
-        }
-      else if ((r = this->parse_long (curarg,
-                                      argc,
-                                      argv,
-                                      ACE_TEXT("-DTPMax"),
-                                      val )) != 0)
-        {
-          if (r < 0)
-            {
-              return -1;
-            }
-          entry.max_threads_ = val;
-        }
-      else if ((r = this->parse_long (curarg,
-                                      argc,
-                                      argv,
-                                      ACE_TEXT("-DTPStack"),
-                                      val )) != 0)
-        {
-          if (r < 0)
-            {
-              return -1;
-            }
-          entry.stack_size_ = val;
-        }
-      else if ((r = this->parse_long (curarg,
-                                      argc,
-                                      argv,
-                                      ACE_TEXT("-DTPTImeout"),
-                                      val )) != 0)
-        {
-          if (r < 0)
-            {
-              return -1;
-            }
-          entry.timeout_ = val;
-        }
-      else if ((r = this->parse_long (curarg,
-                                      argc,
-                                      argv,
-                                      ACE_TEXT("-DTPQueue"),
-                                      val )) != 0)
-        {
-          if (r < 0)
-            {
-              return -1;
-            }
-             entry.queue_depth_ = val;
-        }
-      else
-        {
-          if (TAO_debug_level > 0)
-            {
-              TAOLIB_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("TAO (%P|%t) - DTP_Config - ")
-                          ACE_TEXT ("Unrecognized argv[%d], %C\n"),
-                         curarg, argv[curarg]));
-            }
           return -1;
         }
+      if (r > 0)
+        {
+          continue;
+        }
+
+      r = this->parse_bool (curarg,
+                            argc,
+                            argv,
+                            ACE_TEXT ("-DTPOverwrite"),
+                            overwrite);
+      if (r < 0)
+        {
+          return -1;
+        }
+      if (r > 0)
+        {
+          continue;
+        }
+
+      r = this->parse_long (curarg,
+                            argc,
+                            argv,
+                            ACE_TEXT ("-DTPMin"),
+                            val);
+      if (r < 0)
+        {
+          return -1;
+        }
+      if (r > 0)
+        {
+          entry.min_threads_ = val;
+          continue;
+        }
+
+      r = this->parse_long (curarg,
+                            argc,
+                            argv,
+                            ACE_TEXT ("-DTPInit"),
+                            val);
+      if (r < 0)
+        {
+          return -1;
+        }
+      if (r > 0)
+        {
+          entry.init_threads_ = val;
+          continue;
+        }
+
+      r = this->parse_long (curarg,
+                            argc,
+                            argv,
+                            ACE_TEXT ("-DTPMax"),
+                            val);
+      if (r < 0)
+        {
+          return -1;
+        }
+      if (r > 0)
+        {
+          entry.max_threads_ = val;
+          continue;
+        }
+
+      r = this->parse_long (curarg,
+                            argc,
+                            argv,
+                            ACE_TEXT ("-DTPStack"),
+                            val);
+      if (r < 0)
+        {
+          return -1;
+        }
+      if (r > 0)
+        {
+          entry.stack_size_ = val;
+          continue;
+        }
+
+      r = this->parse_long (curarg,
+                            argc,
+                            argv,
+                            ACE_TEXT ("-DTPTImeout"),
+                            val);
+      if (r < 0)
+        {
+          return -1;
+        }
+      if (r > 0)
+        {
+          entry.timeout_ = val;
+          continue;
+        }
+
+      r = this->parse_long (curarg,
+                            argc,
+                            argv,
+                            ACE_TEXT ("-DTPQueue"),
+                            val);
+      if (r < 0)
+        {
+          return -1;
+        }
+      if (r > 0)
+        {
+          entry.queue_depth_ = val;
+          continue;
+        }
+
+      if (TAO_debug_level > 0)
+        {
+          TAOLIB_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("TAO (%P|%t) - DTP_Config - ")
+                        ACE_TEXT ("Unrecognized argv[%d], %C\n"),
+                        curarg, argv[curarg]));
+        }
+      return -1;
     }
 
   if ((entry.max_threads_ != -1 && entry.max_threads_ < entry.init_threads_) ||
@@ -189,8 +197,14 @@ TAO_DTP_Config::init (int argc, ACE_TCHAR* argv[])
       return 0;
     }
 
-  ACE_CString name_str = ACE_TEXT_ALWAYS_CHAR (name);
-  ACE_Service_Gestalt *current = ACE_Service_Config::current();
+  if (name == nullptr)
+    {
+      this->report_option_value_error (ACE_TEXT ("-DTPName"), ACE_TEXT ("<missing>"));
+      return -1;
+    }
+
+  std::string const name_str (ACE_TEXT_ALWAYS_CHAR (name));
+  ACE_Service_Gestalt * const current = ACE_Service_Config::current ();
   TAO_DTP_Config_Registry* registry =
     ACE_Dynamic_Service<TAO_DTP_Config_Registry>::instance
     (current, "DTP_Config_Registry", true);
@@ -212,30 +226,28 @@ TAO_DTP_Config::init (int argc, ACE_TCHAR* argv[])
         }
     }
 
-  if (!overwrite)
-    {
-      return registry->bind(name_str, entry);
-    }
-  else
-    {
-      return registry->rebind(name_str, entry);
-    }
-  return 0;
+  if (overwrite)
+  {
+    return registry->rebind (name_str, entry);
+  }
+  return registry->bind (name_str, entry);
 }
 
 int
 TAO_DTP_Config::parse_long (int &curarg,
-                                   int argc, ACE_TCHAR *argv[],
-                                   const ACE_TCHAR *match, long &value)
+                            int argc, ACE_TCHAR *argv[],
+                            ACE_TCHAR const *match, long &value)
 {
-  ACE_TCHAR *str;
-  int result = this->parse_string (curarg, argc, argv, match, str);
+  ACE_TCHAR const *str {};
+  int const result = this->parse_string (curarg, argc, argv, match, str);
   if (result < 1)
+  {
     return result;
+  }
 
-  ACE_TCHAR *err = nullptr;
+  ACE_TCHAR *err {};
   value = ACE_OS::strtol (str, &err, 10);
-  if (err && *err != 0)
+  if (err != nullptr && *err != '\0')
     {
       this->report_option_value_error (match, str);
       return -1;
@@ -245,26 +257,29 @@ TAO_DTP_Config::parse_long (int &curarg,
 
 int
 TAO_DTP_Config::parse_bool (int &curarg,
-                                   int argc, ACE_TCHAR *argv[],
-                                   const ACE_TCHAR *match, bool &value)
+                            int argc, ACE_TCHAR *argv[],
+                            ACE_TCHAR const *match, bool &value)
 {
-  long num;
-  int result = this->parse_long (curarg, argc, argv, match, num);
+  long num {};
+  int const result = this->parse_long (curarg, argc, argv, match, num);
   if (result < 1)
+  {
     return result;
+  }
 
   value = num != 0;
-
   return 1;
 }
 
 int
 TAO_DTP_Config::parse_string (int &curarg,
                               int argc, ACE_TCHAR *argv[],
-                              const ACE_TCHAR *match, ACE_TCHAR *&value)
+                              ACE_TCHAR const *match, ACE_TCHAR const *&value)
 {
   if (ACE_OS::strcasecmp (argv[curarg], match) != 0)
+  {
     return 0;
+  }
 
   ++curarg;
   if (curarg >= argc)
@@ -277,10 +292,9 @@ TAO_DTP_Config::parse_string (int &curarg,
   return 1;
 }
 
-
 void
-TAO_DTP_Config::report_option_value_error (const ACE_TCHAR* option_name,
-                                           const ACE_TCHAR* option_value)
+TAO_DTP_Config::report_option_value_error (ACE_TCHAR const *option_name,
+                                           ACE_TCHAR const *option_value)
 {
   if (TAO_debug_level > 0)
     {
@@ -290,9 +304,6 @@ TAO_DTP_Config::report_option_value_error (const ACE_TCHAR* option_name,
                  option_value, option_name));
     }
 }
-
-
-/////////////////////////////////////////////////////////////////////
 
 ACE_FACTORY_DEFINE (TAO_Dynamic_TP, TAO_DTP_Config_Registry)
 ACE_STATIC_SVC_DEFINE (TAO_DTP_Config_Registry,

@@ -1,4 +1,3 @@
-/* -*- c++ -*- */
 #ifndef JAWS_OPTIONS_H
 #define JAWS_OPTIONS_H
 
@@ -7,6 +6,7 @@
 
 #include "jaws3/Export.h"
 #include "jaws3/Config_File.h"
+#include <memory>
 
 #define JAWS_DEFAULT_MIN_THYBRID_THREADS "1"
 #define JAWS_DEFAULT_MAX_THYBRID_THREADS "-1"
@@ -20,8 +20,12 @@ class JAWS_Export JAWS_Options
 {
 public:
   JAWS_Options ();
+  JAWS_Options (JAWS_Options const &) = delete;
+  JAWS_Options (JAWS_Options &&) = delete;
+  JAWS_Options &operator= (JAWS_Options const &) = delete;
+  JAWS_Options &operator= (JAWS_Options &&) = delete;
 
-  const char *getenv (const char *key);
+  char const *getenv (char const *key);
 
   static JAWS_Options * instance ()
   {
@@ -29,7 +33,7 @@ public:
   }
 
 private:
-  JAWS_Config_File *cf_;
+  std::unique_ptr<JAWS_Config_File> cf_;
 };
 
 #endif /* JAWS_OPTIONS_H */

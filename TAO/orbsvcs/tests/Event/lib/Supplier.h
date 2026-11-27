@@ -1,12 +1,8 @@
-/* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file   Supplier.h
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  */
-//=============================================================================
-
 
 #ifndef EC_SUPPLIER_H
 #define EC_SUPPLIER_H
@@ -50,29 +46,29 @@ public:
                void* supplier_cookie);
 
   /// The types of the event is chosen by the driver, based on the
-  /// cookie and the <event_number>
+  /// cookie and the @a event_number
   void send_event (int event_number);
 
-  /// Send <event> to the EC.
-  void send_event (const RtecEventComm::EventSet& event);
+  /// Send @a event to the EC.
+  void send_event (RtecEventComm::EventSet const & event);
 
-  /// Set the event type and source in <event>
+  /// Set the event type and source in @a event.
   void send_event (int event_number,
-                   const RtecEventComm::Event& event);
+                   RtecEventComm::Event const & event);
 
   /// Send a shutdown event.
   void send_shutdown ();
 
-  /// Connect using a <supplier_admin> and publications (<qos>)
+  /// Connect using @a supplier_admin and publications (@a qos)
   /// computed by the user
   virtual void connect (
         RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin,
-        const RtecEventChannelAdmin::SupplierQOS& qos,
+        RtecEventChannelAdmin::SupplierQOS const & qos,
         int shutdown_event_type);
 
   /// Connect using the current consumer_proxy (useful for reconnect test)
   virtual void connect (
-        const RtecEventChannelAdmin::SupplierQOS& qos,
+        RtecEventChannelAdmin::SupplierQOS const & qos,
         int shutdown_event_type);
 
   /// Disconnect from the EC, also deactivates the object
@@ -83,18 +79,20 @@ public:
 
   /// Dump the results...
   virtual void dump_results (
-    const ACE_TCHAR* name,
+    ACE_TCHAR const *name,
     ACE_High_Res_Timer::global_scale_factor_type global_scale_factor);
 
-  /// Add our statistics to <stats>
+  /// Add our statistics to @a stats.
   void accumulate (ACE_Throughput_Stats& stats) const;
 
   /// Return an event type to push....
   void event_type (int event_number,
                    RtecEventComm::Event& event);
 
-  // = The PushSupplier methods
-  virtual void disconnect_push_supplier ();
+  /// @name PushSupplier operations
+  /// @{
+  void disconnect_push_supplier () override;
+  /// @}
 
 private:
   /// Class we forward to.
@@ -144,7 +142,6 @@ private:
 class EC_Supplier_Task : public ACE_Task_Base
 {
 public:
-  /// Constructor
   EC_Supplier_Task (EC_Supplier* supplier,
                     EC_Driver* driver,
                     void* cookie,
@@ -153,10 +150,10 @@ public:
                     int burst_pause,
                     int payload_size,
                     int shutdown_event_type,
-                    ACE_Thread_Manager* thr_mgr = 0);
+                    ACE_Thread_Manager* thr_mgr = nullptr);
 
   /// The svc call
-  virtual int svc ();
+  int svc () override;
 
 private:
   /// The supplier

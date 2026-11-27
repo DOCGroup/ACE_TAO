@@ -1,6 +1,3 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
  *  @file   Basic.h
  *
@@ -8,8 +5,6 @@
  *
  * This is a simple test class for the standard Cos Event Channel.
  */
-//=============================================================================
-
 
 #ifndef COSECBASIC_H
 #define COSECBASIC_H
@@ -28,14 +23,13 @@
 class Basic
 {
 public:
-  /// Constructor.
-  Basic ();
-
-  /// Destructor.
-  ~Basic ();
+  Basic () = default;
+  Basic (Basic const &) = delete;
+  Basic (Basic &&) = delete;
+  Basic &operator= (Basic const &) = delete;
+  Basic &operator= (Basic &&) = delete;
 
   /// Starts up an ORB and the CosEC.
-  /// Returns 0 on success, -1 on error.
   void init (int argc, ACE_TCHAR *argv[]);
 
   /// Connects a consumer and a supplier to the CosEC and sends 1 event
@@ -55,13 +49,13 @@ private:
   void init_CosEC ();
 
   /// The ORB that we use.
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var orb_ {};
 
   /// The root poa.
-  PortableServer::POA_var root_poa_;
+  PortableServer::POA_var root_poa_ {};
 
   /// Reference to the CosEC returned after activating it in the ORB.
-  CosEventChannelAdmin::EventChannel_var cos_ec_;
+  CosEventChannelAdmin::EventChannel_var cos_ec_ {};
 
   /// The Cos Consumer that will receive the event.
   Consumer consumer_;

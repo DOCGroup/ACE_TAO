@@ -1,12 +1,11 @@
-// -*- C++ -*-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Establish a connection.
 ACE_INLINE int
 ACE_LSOCK_Connector::connect (ACE_LSOCK_Stream &new_stream,
-                              const ACE_UNIX_Addr &remote_sap,
+                              ACE_UNIX_Addr const &remote_sap,
                               ACE_Time_Value *timeout,
-                              const ACE_Addr &local_sap,
+                              ACE_Addr const &local_sap,
                               int reuse_addr,
                               int flags,
                               int perms)
@@ -16,8 +15,10 @@ ACE_LSOCK_Connector::connect (ACE_LSOCK_Stream &new_stream,
                                             timeout, local_sap,
                                             reuse_addr, flags, perms);
   if (result != -1)
-    // This is necessary due to the weird inheritance relationships of ACE_LSOCK_Stream.
-    new_stream.set_handle (new_stream.get_handle ());
+    {
+      // This is necessary due to the weird inheritance relationships of ACE_LSOCK_Stream.
+      new_stream.set_handle (new_stream.get_handle ());
+    }
   return result;
 }
 

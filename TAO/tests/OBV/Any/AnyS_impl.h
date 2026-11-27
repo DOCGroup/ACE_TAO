@@ -1,12 +1,8 @@
-
-//=============================================================================
 /**
  *  @file   AnyS_impl.h
  *
  *  @author Boris Kolpackov <bosk@ipmce.ru>
  */
-//=============================================================================
-
 
 #ifndef TAO_ANY_S_IMPL_H
 #define TAO_ANY_S_IMPL_H
@@ -24,18 +20,22 @@
 class Test_impl : public POA_OBV_AnyTest::Test
 {
 public:
-  /// ctor
-  Test_impl (CORBA::ORB_ptr orb);
+  explicit Test_impl (CORBA::ORB_ptr orb);
 
-  virtual CORBA::Any * get_something (CORBA::Boolean need_vb);
+  Test_impl (Test_impl const&) = delete;
+  Test_impl (Test_impl&&) = delete;
+  Test_impl& operator= (Test_impl const&) = delete;
+  Test_impl& operator= (Test_impl&&) = delete;
 
-  virtual OBV_AnyTest::VB * get_vb ();
+  CORBA::Any *get_something (CORBA::Boolean need_vb) override;
 
-  virtual void shutdown ();
+  OBV_AnyTest::VB *get_vb () override;
+
+  void shutdown () override;
 
 private:
   /// The ORB
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var const orb_;
 };
 
 #endif /* TAO_ANY_S_IMPL_H */

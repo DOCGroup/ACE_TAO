@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   OS_Memory.h
  *
@@ -8,7 +5,6 @@
  *  @author Jesper S. M|ller<stophph@diku.dk>
  *  @author and a cast of thousands...
  */
-//=============================================================================
 
 #ifndef ACE_OS_MEMORY_H
 #define ACE_OS_MEMORY_H
@@ -83,7 +79,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
    } while (0)
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-//@{
+/// @{
 /**
  * @name Efficiently compute aligned pointers to powers of 2 boundaries.
  */
@@ -106,13 +102,13 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * ~(alignment - 1) = 1...110...0 = T2
  *
  * Notice that there is a multiple of @a alignment in the range
- * [<value>,<value> + T1], also notice that if
+ * [@c value,@c value + T1], also notice that if
  *
- * X = ( <value> + T1 ) & T2
+ * X = ( @c value + T1 ) & T2
  *
  * then
  *
- * <value> <= X <= <value> + T1
+ * @c value <= X <= @c value + T1
  *
  * because the & operator only changes the last bits, and since X is a
  * multiple of @a alignment (its last bits are zero) we have found the
@@ -146,7 +142,7 @@ ACE_ptr_align_binary (unsigned char const * ptr, uintptr_t alignment)
   return
     ACE_ptr_align_binary (reinterpret_cast<char const *> (ptr), alignment);
 }
-//@}
+/// @}
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include "ace/OS_NS_stdlib.h"

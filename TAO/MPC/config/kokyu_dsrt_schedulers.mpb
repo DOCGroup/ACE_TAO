@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project: codecfactory, rtcorba, kokyu, rtscheduling {
   after   += Kokyu_DSRT_Schedulers
   libs    += Kokyu_DSRT_Schedulers

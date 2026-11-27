@@ -1,4 +1,3 @@
-// -*- C++ -*-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE
@@ -9,13 +8,13 @@ namespace ACE
     ACE_INLINE
     Context::operator bool () const
       {
-        return this->ssl_ctx_ != 0;
+        return this->ssl_ctx_ != nullptr;
       }
 
     ACE_INLINE
     bool Context::operator ! () const
       {
-        return this->ssl_ctx_ == 0;
+        return this->ssl_ctx_ == nullptr;
       }
 
     ACE_INLINE
@@ -25,7 +24,7 @@ namespace ACE
       }
 
     ACE_INLINE
-    const ACE_SSL_Context& Context::ssl_context () const
+    ACE_SSL_Context const& Context::ssl_context () const
       {
         return *this->ssl_ctx_;
       }
@@ -42,8 +41,8 @@ namespace ACE
       }
 
     ACE_INLINE
-    bool Context::set_key_files (const char* certificate_filename,
-                                 const char* private_key_filename,
+    bool Context::set_key_files (char const * certificate_filename,
+                                 char const * private_key_filename,
                                  int file_type)
       {
         if (this->ssl_ctx_->certificate (certificate_filename, file_type) == 0)
@@ -83,7 +82,6 @@ namespace ACE
         Context::ssl_once_ = once;
         Context::ssl_depth_ = depth;
       }
-
 
   }
 }

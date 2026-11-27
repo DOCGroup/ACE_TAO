@@ -1,11 +1,8 @@
-/* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file    Gadget_Factory.h
  *
  *  @author Christopher Kohlhoff <chris@kohlhoff.com>
  */
-//=============================================================================
 
 #ifndef GADGET_FACTORY_H
 #define GADGET_FACTORY_H
@@ -20,6 +17,8 @@
 class Gadget_Factory
 {
 public:
+  Gadget_Factory () = delete;
+
   /// Create an instance of a gadget. Ownership of the object is automatically
   /// transferred to the caller since we return a Gadget_var. This also means
   /// that the object will be deleted automatically if the caller "forgets" to

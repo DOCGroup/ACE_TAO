@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*Nested_Upcall_Server_Idl): taoidldefaults {
   IDL_Files {
     Triangle_Test.idl

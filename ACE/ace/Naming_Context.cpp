@@ -40,10 +40,15 @@ ACE_Naming_Context::info (ACE_TCHAR **strp,
                     ACE_TEXT ("ACE_Naming_Context"),
                     ACE_TEXT ("Proxy for making calls to a Name Server"));
 
-  if (*strp == nullptr && (*strp = ACE_OS::strdup (buf)) == nullptr)
-    return -1;
-  else
-    ACE_OS::strsncpy (*strp, buf, length);
+  if (*strp == nullptr)
+    {
+      *strp = ACE_OS::strdup (buf);
+      if (*strp == nullptr)
+        {
+          return -1;
+        }
+    }
+  ACE_OS::strsncpy (*strp, buf, length);
   return static_cast<int> (ACE_OS::strlen (buf));
 }
 
@@ -76,10 +81,12 @@ ACE_Naming_Context::open (Context_Scope_Type scope_in, int lite)
 // This only works on Win32 platforms when ACE_USES_WCHAR is turned on
 
   if (this->name_options_->use_registry ())
-    // Use ACE_Registry
-    ACE_NEW_RETURN (this->name_space_,
-                    ACE_Registry_Name_Space (this->name_options_),
-                    -1);
+    {
+      // Use ACE_Registry
+      ACE_NEW_RETURN (this->name_space_,
+                      ACE_Registry_Name_Space (this->name_options_),
+                      -1);
+    }
 #endif /* ACE_WIN32 && ACE_USES_WCHAR */
   if (!this->name_options_->use_registry ())
     {
@@ -94,22 +101,28 @@ ACE_Naming_Context::open (Context_Scope_Type scope_in, int lite)
       else   // Use NODE_LOCAL or PROC_LOCAL name space.
         {
           if (lite)
-            ACE_NEW_RETURN (this->name_space_,
-                            LITE_LOCAL_NAME_SPACE (scope_in,
-                                                   this->name_options_),
-                            -1);
+            {
+              ACE_NEW_RETURN (this->name_space_,
+                              LITE_LOCAL_NAME_SPACE (scope_in,
+                                                     this->name_options_),
+                              -1);
+            }
           else
-            ACE_NEW_RETURN (this->name_space_,
-                            LOCAL_NAME_SPACE (scope_in,
-                                              this->name_options_),
-                            -1);
+            {
+              ACE_NEW_RETURN (this->name_space_,
+                              LOCAL_NAME_SPACE (scope_in,
+                                                this->name_options_),
+                              -1);
+            }
         }
     }
 
   if (ACE_LOG_MSG->op_status () != 0 || this->name_space_ == nullptr)
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("NAME_SPACE::NAME_SPACE\n")),
-                      -1);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                            ACE_TEXT ("NAME_SPACE::NAME_SPACE\n")),
+                           -1);
+    }
   return 0;
 }
 
@@ -136,10 +149,6 @@ ACE_Naming_Context::close ()
 }
 
 ACE_Naming_Context::ACE_Naming_Context ()
-  : name_options_ (nullptr),
-    name_space_ (nullptr),
-    netnameserver_host_ (nullptr),
-    netnameserver_port_ (0)
 {
   ACE_TRACE ("ACE_Naming_Context::ACE_Naming_Context");
 
@@ -149,9 +158,6 @@ ACE_Naming_Context::ACE_Naming_Context ()
 
 ACE_Naming_Context::ACE_Naming_Context (Context_Scope_Type scope_in,
                                         int lite)
-  : name_options_ (nullptr),
-    name_space_ (nullptr),
-    netnameserver_host_ (nullptr)
 {
   ACE_TRACE ("ACE_Naming_Context::ACE_Naming_Context");
 
@@ -160,9 +166,11 @@ ACE_Naming_Context::ACE_Naming_Context (Context_Scope_Type scope_in,
 
   // Initialize.
   if (this->open (scope_in, lite) == -1)
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACE_Naming_Context::ACE_Naming_Context")));
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("%p\n"),
+                     ACE_TEXT ("ACE_Naming_Context::ACE_Naming_Context")));
+    }
 }
 
 ACE_Name_Options *
@@ -172,18 +180,18 @@ ACE_Naming_Context::name_options ()
 }
 
 int
-ACE_Naming_Context::bind (const ACE_NS_WString &name_in,
-                          const ACE_NS_WString &value_in,
-                          const char *type_in)
+ACE_Naming_Context::bind (ACE_NS_WString const &name_in,
+                          ACE_NS_WString const &value_in,
+                          char const *type_in)
 {
   ACE_TRACE ("ACE_Naming_Context::bind");
   return this->name_space_->bind (name_in, value_in, type_in);
 }
 
 int
-ACE_Naming_Context::bind (const char *name_in,
-                          const char *value_in,
-                          const char *type_in)
+ACE_Naming_Context::bind (char const *name_in,
+                          char const *value_in,
+                          char const *type_in)
 {
   ACE_TRACE ("ACE_Naming_Context::bind");
   return this->bind (ACE_NS_WString (name_in),
@@ -192,9 +200,9 @@ ACE_Naming_Context::bind (const char *name_in,
 }
 
 int
-ACE_Naming_Context::rebind (const ACE_NS_WString &name_in,
-                            const ACE_NS_WString &value_in,
-                            const char *type_in)
+ACE_Naming_Context::rebind (ACE_NS_WString const &name_in,
+                            ACE_NS_WString const &value_in,
+                            char const *type_in)
 {
   ACE_TRACE ("ACE_Naming_Context::rebind");
   return this->name_space_->rebind (name_in,
@@ -203,9 +211,9 @@ ACE_Naming_Context::rebind (const ACE_NS_WString &name_in,
 }
 
 int
-ACE_Naming_Context::rebind (const char *name_in,
-                            const char *value_in,
-                            const char *type_in)
+ACE_Naming_Context::rebind (char const *name_in,
+                            char const *value_in,
+                            char const *type_in)
 {
   ACE_TRACE ("ACE_Naming_Context::rebind");
   return rebind (ACE_NS_WString (name_in),
@@ -214,7 +222,7 @@ ACE_Naming_Context::rebind (const char *name_in,
 }
 
 int
-ACE_Naming_Context::resolve (const ACE_NS_WString &name_in,
+ACE_Naming_Context::resolve (ACE_NS_WString const &name_in,
                              ACE_NS_WString &value_out,
                              char *&type_out)
 {
@@ -225,7 +233,7 @@ ACE_Naming_Context::resolve (const ACE_NS_WString &name_in,
 }
 
 int
-ACE_Naming_Context::resolve (const char *name_in,
+ACE_Naming_Context::resolve (char const *name_in,
                              ACE_NS_WString &value_out,
                              char *&type_out)
 {
@@ -236,7 +244,7 @@ ACE_Naming_Context::resolve (const char *name_in,
 }
 
 int
-ACE_Naming_Context::resolve (const char *name_in,
+ACE_Naming_Context::resolve (char const *name_in,
                              char *&value_out,
                              char *&type_out)
 {
@@ -246,7 +254,9 @@ ACE_Naming_Context::resolve (const char *name_in,
   if (this->resolve (ACE_NS_WString (name_in),
                      val_str,
                      type_out) == -1)
+  {
     return -1;
+  }
 
   // Note that <char_rep> *allocates* the memory!  Thus, caller is
   // responsible for deleting it!
@@ -256,14 +266,14 @@ ACE_Naming_Context::resolve (const char *name_in,
 }
 
 int
-ACE_Naming_Context::unbind (const ACE_NS_WString &name_in)
+ACE_Naming_Context::unbind (ACE_NS_WString const &name_in)
 {
   ACE_TRACE ("ACE_Naming_Context::unbind");
   return this->name_space_->unbind (name_in);
 }
 
 int
-ACE_Naming_Context::unbind (const char *name_in)
+ACE_Naming_Context::unbind (char const *name_in)
 {
   ACE_TRACE ("ACE_Naming_Context::unbind");
   return this->unbind (ACE_NS_WString (name_in));
@@ -271,7 +281,7 @@ ACE_Naming_Context::unbind (const char *name_in)
 
 int
 ACE_Naming_Context::list_names (ACE_PWSTRING_SET &set_out,
-                                const ACE_NS_WString &pattern_in)
+                                ACE_NS_WString const &pattern_in)
 {
   ACE_TRACE ("ACE_Naming_Context::list_names");
   return this->name_space_->list_names (set_out,
@@ -280,7 +290,7 @@ ACE_Naming_Context::list_names (ACE_PWSTRING_SET &set_out,
 
 int
 ACE_Naming_Context::list_names (ACE_PWSTRING_SET &set_out,
-                                const char *pattern_in)
+                                char const *pattern_in)
 {
   ACE_TRACE ("ACE_Naming_Context::list_names");
   return this->list_names (set_out,
@@ -289,7 +299,7 @@ ACE_Naming_Context::list_names (ACE_PWSTRING_SET &set_out,
 
 int
 ACE_Naming_Context::list_values (ACE_PWSTRING_SET &set_out,
-                                 const ACE_NS_WString &pattern_in)
+                                 ACE_NS_WString const &pattern_in)
 {
   ACE_TRACE ("ACE_Naming_Context::list_values");
   return this->name_space_->list_values (set_out,
@@ -298,7 +308,7 @@ ACE_Naming_Context::list_values (ACE_PWSTRING_SET &set_out,
 
 int
 ACE_Naming_Context::list_values (ACE_PWSTRING_SET &set_out,
-                                 const char *pattern_in)
+                                 char const *pattern_in)
 {
   ACE_TRACE ("ACE_Naming_Context::list_values");
   return this->list_values (set_out,
@@ -307,7 +317,7 @@ ACE_Naming_Context::list_values (ACE_PWSTRING_SET &set_out,
 
 int
 ACE_Naming_Context::list_types (ACE_PWSTRING_SET &set_out,
-                                 const ACE_NS_WString &pattern_in)
+                                 ACE_NS_WString const &pattern_in)
 {
   ACE_TRACE ("ACE_Naming_Context::list_types");
   return this->name_space_->list_types (set_out,
@@ -316,7 +326,7 @@ ACE_Naming_Context::list_types (ACE_PWSTRING_SET &set_out,
 
 int
 ACE_Naming_Context::list_types (ACE_PWSTRING_SET &set_out,
-                                 const char *pattern_in)
+                                 char const *pattern_in)
 {
   ACE_TRACE ("ACE_Naming_Context::list_types");
   return this->list_types (set_out,
@@ -325,7 +335,7 @@ ACE_Naming_Context::list_types (ACE_PWSTRING_SET &set_out,
 
 int
 ACE_Naming_Context::list_name_entries (ACE_BINDING_SET &set_out,
-                                       const ACE_NS_WString &pattern_in)
+                                       ACE_NS_WString const &pattern_in)
 {
   ACE_TRACE ("ACE_Naming_Context::list_name_entries");
   return this->name_space_->list_name_entries (set_out,
@@ -334,7 +344,7 @@ ACE_Naming_Context::list_name_entries (ACE_BINDING_SET &set_out,
 
 int
 ACE_Naming_Context::list_name_entries (ACE_BINDING_SET &set_out,
-                                       const char *pattern_in)
+                                       char const *pattern_in)
 {
   ACE_TRACE ("ACE_Naming_Context::list_name_entries");
   return this->list_name_entries (set_out,
@@ -343,7 +353,7 @@ ACE_Naming_Context::list_name_entries (ACE_BINDING_SET &set_out,
 
 int
 ACE_Naming_Context::list_value_entries (ACE_BINDING_SET &set_out,
-                                        const ACE_NS_WString &pattern_in)
+                                        ACE_NS_WString const &pattern_in)
 {
   ACE_TRACE ("ACE_Naming_Context::list_value_entries");
   return this->name_space_->list_value_entries (set_out,
@@ -352,7 +362,7 @@ ACE_Naming_Context::list_value_entries (ACE_BINDING_SET &set_out,
 
 int
 ACE_Naming_Context::list_value_entries (ACE_BINDING_SET &set_out,
-                                        const char *pattern_in)
+                                        char const *pattern_in)
 {
   ACE_TRACE ("ACE_Naming_Context::list_value_entries");
   return this->list_value_entries (set_out,
@@ -361,7 +371,7 @@ ACE_Naming_Context::list_value_entries (ACE_BINDING_SET &set_out,
 
 int
 ACE_Naming_Context::list_type_entries (ACE_BINDING_SET &set_out,
-                                       const ACE_NS_WString &pattern_in)
+                                       ACE_NS_WString const &pattern_in)
 {
   ACE_TRACE ("ACE_Naming_Context::list_type_entries");
   return this->name_space_->list_type_entries (set_out,
@@ -370,7 +380,7 @@ ACE_Naming_Context::list_type_entries (ACE_BINDING_SET &set_out,
 
 int
 ACE_Naming_Context::list_type_entries (ACE_BINDING_SET &set_out,
-                                       const char *pattern_in)
+                                       char const *pattern_in)
 {
   ACE_TRACE ("ACE_Naming_Context::list_type_entries");
   return this->list_type_entries (set_out,
@@ -397,8 +407,10 @@ int
 ACE_Naming_Context::init (int argc, ACE_TCHAR *argv[])
 {
   if (ACE::debug ())
-    ACELIB_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("ACE_Naming_Context::init\n")));
+    {
+      ACELIB_DEBUG ((LM_DEBUG,
+                     ACE_TEXT ("ACE_Naming_Context::init\n")));
+    }
   this->name_options_->parse_args (argc, argv);
   return this->open (this->name_options_->context ());
 }
@@ -407,19 +419,17 @@ int
 ACE_Naming_Context::fini ()
 {
   if (ACE::debug ())
-    ACELIB_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("ACE_Naming_Context::fini\n")));
+    {
+      ACELIB_DEBUG ((LM_DEBUG,
+                     ACE_TEXT ("ACE_Naming_Context::fini\n")));
+    }
   this->close_down ();
   return 0;
 }
 
 ACE_Name_Options::ACE_Name_Options ()
-  : debugging_ (false),
-    verbosity_ (false),
-    use_registry_ (false),
-    nameserver_port_ (ACE_DEFAULT_SERVER_PORT),
+  : nameserver_port_ (ACE_DEFAULT_SERVER_PORT),
     nameserver_host_ (ACE_OS::strdup (ACE_DEFAULT_SERVER_HOST)),
-    process_name_ (nullptr),
     database_ (ACE_OS::strdup (ACE_DEFAULT_LOCALNAME)),
     base_address_ (ACE_DEFAULT_BASE_ADDR)
 {
@@ -428,7 +438,7 @@ ACE_Name_Options::ACE_Name_Options ()
 #if defined (ACE_DEFAULT_NAMESPACE_DIR)
   this->namespace_dir_ = ACE_OS::strdup (ACE_DEFAULT_NAMESPACE_DIR);
 #else /* ACE_DEFAULT_NAMESPACE_DIR */
-  size_t pathsize = (MAXPATHLEN + 1) * sizeof (ACE_TCHAR);
+  size_t const pathsize = (MAXPATHLEN + 1) * sizeof (ACE_TCHAR);
 #if defined (ACE_HAS_ALLOC_HOOKS)
   this->namespace_dir_ = static_cast <ACE_TCHAR *> (ACE_Allocator::instance()->malloc (pathsize));
 #else
@@ -451,15 +461,15 @@ ACE_Name_Options::~ACE_Name_Options ()
   ACE_TRACE ("ACE_Name_Options::~ACE_Name_Options");
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
-  ACE_Allocator::instance()->free ((void *) this->nameserver_host_);
-  ACE_Allocator::instance()->free ((void *) this->namespace_dir_ );
-  ACE_Allocator::instance()->free ((void *) this->process_name_ );
-  ACE_Allocator::instance()->free ((void *) this->database_ );
+  ACE_Allocator::instance()->free (const_cast<ACE_TCHAR *> (this->nameserver_host_));
+  ACE_Allocator::instance()->free (this->namespace_dir_);
+  ACE_Allocator::instance()->free (const_cast<ACE_TCHAR *> (this->process_name_));
+  ACE_Allocator::instance()->free (const_cast<ACE_TCHAR *> (this->database_));
 #else
-  ACE_OS::free ((void *) this->nameserver_host_);
-  ACE_OS::free ((void *) this->namespace_dir_ );
-  ACE_OS::free ((void *) this->process_name_ );
-  ACE_OS::free ((void *) this->database_ );
+  ACE_OS::free (const_cast<ACE_TCHAR *> (this->nameserver_host_));
+  ACE_OS::free (this->namespace_dir_);
+  ACE_OS::free (const_cast<ACE_TCHAR *> (this->process_name_));
+  ACE_OS::free (const_cast<ACE_TCHAR *> (this->database_));
 #endif /* ACE_HAS_ALLOC_HOOKS */
 }
 
@@ -480,50 +490,50 @@ ACE_Name_Options::nameserver_port ()
 }
 
 void
-ACE_Name_Options::namespace_dir (const ACE_TCHAR *dir)
+ACE_Name_Options::namespace_dir (ACE_TCHAR const *dir)
 {
   ACE_TRACE ("ACE_Name_Options::namespace_dir");
 #if defined (ACE_HAS_ALLOC_HOOKS)
-  ACE_Allocator::instance()->free ((void *) this->namespace_dir_ );
+  ACE_Allocator::instance()->free (this->namespace_dir_);
 #else
-  ACE_OS::free ((void *) this->namespace_dir_ );
+  ACE_OS::free (this->namespace_dir_);
 #endif /* ACE_HAS_ALLOC_HOOKS */
   this->namespace_dir_ = ACE_OS::strdup (dir);
 }
 
 void
-ACE_Name_Options::process_name (const ACE_TCHAR *pname)
+ACE_Name_Options::process_name (ACE_TCHAR const *pname)
 {
   ACE_TRACE ("ACE_Name_Options::process_name");
-  const ACE_TCHAR *t = ACE::basename (pname, ACE_DIRECTORY_SEPARATOR_CHAR);
+  ACE_TCHAR const *t = ACE::basename (pname, ACE_DIRECTORY_SEPARATOR_CHAR);
 #if defined (ACE_HAS_ALLOC_HOOKS)
-  ACE_Allocator::instance()->free ((void *) this->process_name_ );
+  ACE_Allocator::instance()->free (const_cast<ACE_TCHAR *> (this->process_name_));
 #else
-  ACE_OS::free ((void *) this->process_name_ );
+  ACE_OS::free (const_cast<ACE_TCHAR *> (this->process_name_));
 #endif /* ACE_HAS_ALLOC_HOOKS */
   this->process_name_ = ACE_OS::strdup (t);
 }
 
 void
-ACE_Name_Options::nameserver_host (const ACE_TCHAR *host)
+ACE_Name_Options::nameserver_host (ACE_TCHAR const *host)
 {
   ACE_TRACE ("ACE_Name_Options::nameserver_host");
 #if defined (ACE_HAS_ALLOC_HOOKS)
-  ACE_Allocator::instance()->free ((void *) this->nameserver_host_ );
+  ACE_Allocator::instance()->free (const_cast<ACE_TCHAR *> (this->nameserver_host_));
 #else
-  ACE_OS::free ((void *) this->nameserver_host_ );
+  ACE_OS::free (const_cast<ACE_TCHAR *> (this->nameserver_host_));
 #endif /* ACE_HAS_ALLOC_HOOKS */
   this->nameserver_host_ = ACE_OS::strdup (host);
 }
 
-const ACE_TCHAR *
+ACE_TCHAR const *
 ACE_Name_Options::nameserver_host ()
 {
   ACE_TRACE ("ACE_Name_Options::nameserver_host");
   return this->nameserver_host_;
 }
 
-const ACE_TCHAR *
+ACE_TCHAR const *
 ACE_Name_Options::database ()
 {
   ACE_TRACE ("ACE_Name_Options::database");
@@ -531,13 +541,13 @@ ACE_Name_Options::database ()
 }
 
 void
-ACE_Name_Options::database (const ACE_TCHAR *db)
+ACE_Name_Options::database (ACE_TCHAR const *db)
 {
   ACE_TRACE ("ACE_Name_Options::database");
 #if defined (ACE_HAS_ALLOC_HOOKS)
-  ACE_Allocator::instance()->free ((void *) this->database_);
+  ACE_Allocator::instance()->free (const_cast<ACE_TCHAR *> (this->database_));
 #else
-  ACE_OS::free ((void *) this->database_);
+  ACE_OS::free (const_cast<ACE_TCHAR *> (this->database_));
 #endif /* ACE_HAS_ALLOC_HOOKS */
   this->database_ = ACE_OS::strdup (db);
 }
@@ -575,11 +585,13 @@ ACE_Name_Options::parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_TRACE ("ACE_Name_Options::parse_args");
 
-  const ACE_TCHAR* program_name = nullptr;
+  ACE_TCHAR const *program_name {};
 
   // Argc can be 0 on some platforms like VxWorks.
   if (argc > 0)
+  {
     program_name = argv[0];
+  }
 
   ACE_LOG_MSG->open (program_name);
   this->process_name (program_name);
@@ -595,71 +607,83 @@ ACE_Name_Options::parse_args (int argc, ACE_TCHAR *argv[])
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("b:c:dh:l:P:p:s:T:vr"));
 
   for (int c; (c = get_opt ()) != -1; )
-    switch (c)
-      {
-      case 'c':
+    {
+      switch (c)
         {
-          if (ACE_OS::strcmp (get_opt.opt_arg (), ACE_TEXT ("PROC_LOCAL")) == 0)
-            this->context (ACE_Naming_Context::PROC_LOCAL);
-          else if (ACE_OS::strcmp (get_opt.opt_arg (), ACE_TEXT ("NODE_LOCAL")) == 0)
-            this->context (ACE_Naming_Context::NODE_LOCAL);
-          else if (ACE_OS::strcmp (get_opt.opt_arg (), ACE_TEXT ("NET_LOCAL")) == 0)
-            this->context (ACE_Naming_Context::NET_LOCAL);
-        }
-        break;
-      case 'd':
-        this->debugging_ = true;
-        break;
-      case 'r':
-        this->use_registry_ = true;
-        break;
-      case 'h':
-        this->nameserver_host (get_opt.opt_arg ());
-        break;
-      case 'l':
-        this->namespace_dir (get_opt.opt_arg ());
-        break;
-      case 'P':
-        this->process_name (get_opt.opt_arg ());
-        break;
-      case 'p':
-        this->nameserver_port (ACE_OS::atoi (get_opt.opt_arg ()));
-        break;
-      case 's':
-        this->database (get_opt.opt_arg ());
-        break;
-      case 'b':
-        this->base_address
-          (static_cast<char *> (ACE_OS::atop (get_opt.opt_arg ())));
-        break;
-      case 'T':
+        case 'c':
+          {
+            if (ACE_OS::strcmp (get_opt.opt_arg (), ACE_TEXT ("PROC_LOCAL")) == 0)
+              {
+                this->context (ACE_Naming_Context::PROC_LOCAL);
+              }
+            else if (ACE_OS::strcmp (get_opt.opt_arg (), ACE_TEXT ("NODE_LOCAL")) == 0)
+              {
+                this->context (ACE_Naming_Context::NODE_LOCAL);
+              }
+            else if (ACE_OS::strcmp (get_opt.opt_arg (), ACE_TEXT ("NET_LOCAL")) == 0)
+              {
+                this->context (ACE_Naming_Context::NET_LOCAL);
+              }
+          }
+          break;
+        case 'd':
+          this->debugging_ = true;
+          break;
+        case 'r':
+          this->use_registry_ = true;
+          break;
+        case 'h':
+          this->nameserver_host (get_opt.opt_arg ());
+          break;
+        case 'l':
+          this->namespace_dir (get_opt.opt_arg ());
+          break;
+        case 'P':
+          this->process_name (get_opt.opt_arg ());
+          break;
+        case 'p':
+          this->nameserver_port (ACE_OS::atoi (get_opt.opt_arg ()));
+          break;
+        case 's':
+          this->database (get_opt.opt_arg ());
+          break;
+        case 'b':
+          this->base_address
+            (static_cast<char *> (ACE_OS::atop (get_opt.opt_arg ())));
+          break;
+        case 'T':
 #if defined (ACE_HAS_TRACE)
-        if (ACE_OS::strcasecmp (get_opt.opt_arg (), ACE_TEXT ("ON")) == 0)
-          ACE_Trace::start_tracing ();
-        else if (ACE_OS::strcasecmp (get_opt.opt_arg (), ACE_TEXT ("OFF")) == 0)
-          ACE_Trace::stop_tracing ();
+          if (ACE_OS::strcasecmp (get_opt.opt_arg (), ACE_TEXT ("ON")) == 0)
+            {
+              ACE_Trace::start_tracing ();
+            }
+          else if (ACE_OS::strcasecmp (get_opt.opt_arg (), ACE_TEXT ("OFF")) == 0)
+            {
+              ACE_Trace::stop_tracing ();
+            }
 #endif /* ACE_HAS_TRACE */
-        break;
-      case 'v':
-        this->verbosity_ = true;
-        break;
-      default:
+          break;
+        case 'v':
+          this->verbosity_ = true;
+          break;
+        default:
 #ifndef ACE_LACKS_STDERR
-        ACE_OS::fprintf (stderr, "%s\n"
-                         "\t[-d] (enable debugging)\n"
-                         "\t[-h nameserver host]\n"
-                         "\t[-l namespace directory]\n"
-                         "\t[-P processname]\n"
-                         "\t[-p nameserver port]\n"
-                         "\t[-s database name]\n"
-                         "\t[-b base address]\n"
-                         "\t[-v] (verbose)\n"
-                         "\t[-r] (use Win32 Registry)\n",
-                         ACE_TEXT_ALWAYS_CHAR (argv[0]));
+          ACE_OS::fprintf (stderr, "%s\n"
+                           "\t[-d] (enable debugging)\n"
+                           "\t[-h nameserver host]\n"
+                           "\t[-l namespace directory]\n"
+                           "\t[-P processname]\n"
+                           "\t[-p nameserver port]\n"
+                           "\t[-s database name]\n"
+                           "\t[-b base address]\n"
+                           "\t[-v] (verbose)\n"
+                           "\t[-r] (use Win32 Registry)\n",
+                           ACE_TEXT_ALWAYS_CHAR (argv[0]));
 #endif
-        /* NOTREACHED */
-        break;
-      }
+          /* NOTREACHED */
+          break;
+        }
+    }
 }
 
 // The following Factory is used by the ACE_Service_Config and

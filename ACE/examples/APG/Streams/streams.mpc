@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(Answerer) : aceexe, threads, avoids_ace_for_tao {
   exename   = Answerer
   Source_Files {

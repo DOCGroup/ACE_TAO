@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  * @file    ACE.h
  *
@@ -13,7 +10,6 @@
  *
  * @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef ACE_ACE_H
 #define ACE_ACE_H
@@ -53,7 +49,9 @@ class ACE_Handle_Set;
  */
 namespace ACE
 {
-  // = ACE version information.
+  /// @name ACE version information.
+  /// @{
+
   /// e.g., the "6" in ACE 6.3.4
   extern ACE_Export u_int major_version ();
 
@@ -68,9 +66,13 @@ namespace ACE
   /// Returns 0 for "stable" (non-micro) releases.
   extern ACE_Export u_int beta_version ();
 
-  // = C++ compiler version information.
+  /// @}
+
+  /// @name C++ compiler version information.
+  /// @{
+
   /// E.g., the "SunPro C++" in SunPro C++ 4.32.0
-  extern ACE_Export const ACE_TCHAR * compiler_name ();
+  extern ACE_Export ACE_TCHAR const * compiler_name ();
 
   /// E.g., the "4" in SunPro C++ 4.32.0
   extern ACE_Export u_int compiler_major_version ();
@@ -80,6 +82,7 @@ namespace ACE
 
   /// E.g., the "0" in SunPro C++ 4.32.0
   extern ACE_Export u_int compiler_beta_version ();
+  /// @}
 
   /// Check if error indicates the process being out of handles (file
   /// descriptors).
@@ -92,13 +95,13 @@ namespace ACE
   /// expression" features are not implemented: collating symbols, equivalence
   /// class expressions, and character class expressions.  The POSIX locale is
   /// assumed.
-  extern ACE_Export bool wild_match(const char* s, const char* pattern,
+  extern ACE_Export bool wild_match(char const * s, char const * pattern,
     bool case_sensitive = true, bool character_classes = false);
 
   /**
    * @name I/O operations
    *
-   * Notes on common parameters:
+   * @note Common parameters:
    *
    * @a handle is the connected endpoint that will be used for I/O.
    *
@@ -143,12 +146,12 @@ namespace ACE
    * argument will result in @c send getting called on Win32
    * platforms, and @c write getting called on non-Win32 platforms.
    */
-  //@{
+  /// @{
   extern ACE_Export ssize_t recv (ACE_HANDLE handle,
                                   void *buf,
                                   size_t len,
                                   int flags,
-                                  const ACE_Time_Value *timeout = nullptr);
+                                  ACE_Time_Value const *timeout = nullptr);
 
 #if defined (ACE_HAS_TLI)
 
@@ -156,19 +159,19 @@ namespace ACE
                                    void *buf,
                                    size_t len,
                                    int *flags,
-                                   const ACE_Time_Value *timeout = nullptr);
+                                   ACE_Time_Value const *timeout = nullptr);
 
 #endif /* ACE_HAS_TLI */
 
   extern ACE_Export ssize_t recv (ACE_HANDLE handle,
                                   void *buf,
                                   size_t len,
-                                  const ACE_Time_Value *timeout = nullptr);
+                                  ACE_Time_Value const *timeout = nullptr);
 
   extern ACE_Export ssize_t recvmsg (ACE_HANDLE handle,
                                      struct msghdr *msg,
                                      int flags,
-                                     const ACE_Time_Value *timeout = nullptr);
+                                     ACE_Time_Value const *timeout = nullptr);
 
   extern ACE_Export ssize_t recvfrom (ACE_HANDLE handle,
                                       char *buf,
@@ -176,14 +179,14 @@ namespace ACE
                                       int flags,
                                       struct sockaddr *addr,
                                       int *addrlen,
-                                      const ACE_Time_Value *timeout = nullptr);
+                                      ACE_Time_Value const *timeout = nullptr);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   ssize_t recv_n (ACE_HANDLE handle,
                   void *buf,
                   size_t len,
                   int flags,
-                  const ACE_Time_Value *timeout = nullptr,
+                  ACE_Time_Value const *timeout = nullptr,
                   size_t *bytes_transferred = nullptr);
 
 #if defined (ACE_HAS_TLI)
@@ -193,7 +196,7 @@ namespace ACE
                    void *buf,
                    size_t len,
                    int *flags,
-                   const ACE_Time_Value *timeout = nullptr,
+                   ACE_Time_Value const *timeout = nullptr,
                    size_t *bytes_transferred = nullptr);
 
 #endif /* ACE_HAS_TLI */
@@ -202,7 +205,7 @@ namespace ACE
   ssize_t recv_n (ACE_HANDLE handle,
                   void *buf,
                   size_t len,
-                  const ACE_Time_Value *timeout = nullptr,
+                  ACE_Time_Value const *timeout = nullptr,
                   size_t *bytes_transferred = nullptr);
 
   /// Receive into a variable number of pieces.
@@ -210,8 +213,8 @@ namespace ACE
    * Accepts a variable, caller-specified, number of pointer/length
    * pairs. Arguments following @a n are char *, size_t pairs.
    *
-   * @param handle The I/O handle to receive on
-   * @param n      The total number of char *, size_t pairs following @a n.
+   * The @a handle is the I/O handle to receive on.
+   * @c n is the total number of char *, size_t pairs following it.
    *
    * @return -1 on error, else total number of bytes received.
    */
@@ -222,79 +225,79 @@ namespace ACE
   extern ACE_Export ssize_t recvv (ACE_HANDLE handle,
                                    iovec *iov,
                                    int iovcnt,
-                                   const ACE_Time_Value *timeout = nullptr);
+                                   ACE_Time_Value const *timeout = nullptr);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   ssize_t recvv_n (ACE_HANDLE handle,
                    iovec *iov,
                    int iovcnt,
-                   const ACE_Time_Value *timeout = nullptr,
+                   ACE_Time_Value const *timeout = nullptr,
                    size_t *bytes_transferred = nullptr);
 
   extern ACE_Export ssize_t recv_n (ACE_HANDLE handle,
                                     ACE_Message_Block *message_block,
-                                    const ACE_Time_Value *timeout = nullptr,
+                                    ACE_Time_Value const *timeout = nullptr,
                                     size_t *bytes_transferred = nullptr);
 
   extern ACE_Export ssize_t send (ACE_HANDLE handle,
-                                  const void *buf,
+                                  void const *buf,
                                   size_t len,
                                   int flags,
-                                  const ACE_Time_Value *timeout = nullptr);
+                                  ACE_Time_Value const *timeout = nullptr);
 
 #if defined (ACE_HAS_TLI)
 
   extern ACE_Export ssize_t t_snd (ACE_HANDLE handle,
-                                   const void *buf,
+                                   void const *buf,
                                    size_t len,
                                    int flags,
-                                   const ACE_Time_Value *timeout = nullptr);
+                                   ACE_Time_Value const *timeout = nullptr);
 
 #endif /* ACE_HAS_TLI */
 
   extern ACE_Export ssize_t send (ACE_HANDLE handle,
-                                  const void *buf,
+                                  void const *buf,
                                   size_t len,
-                                  const ACE_Time_Value *timeout = nullptr);
+                                  ACE_Time_Value const *timeout = nullptr);
 
   extern ACE_Export ssize_t sendmsg (ACE_HANDLE handle,
                                      const struct msghdr *msg,
                                      int flags,
-                                     const ACE_Time_Value *timeout = nullptr);
+                                     ACE_Time_Value const *timeout = nullptr);
 
   extern ACE_Export ssize_t sendto (ACE_HANDLE handle,
-                                    const char *buf,
+                                    char const *buf,
                                     int len,
                                     int flags,
                                     const struct sockaddr *addr,
                                     int addrlen,
-                                    const ACE_Time_Value *timeout = nullptr);
+                                    ACE_Time_Value const *timeout = nullptr);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   ssize_t send_n (ACE_HANDLE handle,
-                  const void *buf,
+                  void const *buf,
                   size_t len,
                   int flags,
-                  const ACE_Time_Value *timeout = nullptr,
+                  ACE_Time_Value const *timeout = nullptr,
                   size_t *bytes_transferred = nullptr);
 
 #if defined (ACE_HAS_TLI)
 
   ACE_NAMESPACE_INLINE_FUNCTION
   ssize_t t_snd_n (ACE_HANDLE handle,
-                   const void *buf,
+                   void const *buf,
                    size_t len,
                    int flags,
-                   const ACE_Time_Value *timeout = nullptr,
+                   ACE_Time_Value const *timeout = nullptr,
                    size_t *bytes_transferred = nullptr);
 
 #endif /* ACE_HAS_TLI */
 
   ACE_NAMESPACE_INLINE_FUNCTION
   ssize_t send_n (ACE_HANDLE handle,
-                  const void *buf,
+                  void const *buf,
                   size_t len,
-                  const ACE_Time_Value *timeout = nullptr,
+                  ACE_Time_Value const *timeout = nullptr,
                   size_t *bytes_transferred = nullptr);
 
   /// Varargs variant.
@@ -305,25 +308,27 @@ namespace ACE
   extern ACE_Export ssize_t sendv (ACE_HANDLE handle,
                                    const iovec *iov,
                                    int iovcnt,
-                                   const ACE_Time_Value *timeout = nullptr);
+                                   ACE_Time_Value const *timeout = nullptr);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   ssize_t sendv_n (ACE_HANDLE handle,
                    const iovec *iov,
                    int iovcnt,
-                   const ACE_Time_Value *timeout = nullptr,
+                   ACE_Time_Value const *timeout = nullptr,
                    size_t *bytes_transferred = nullptr);
 
   /// Send all the @a message_blocks chained through their @c next and
   /// @c cont pointers.  This call uses the underlying OS gather-write
   /// operation to reduce the domain-crossing penalty.
   extern ACE_Export ssize_t send_n (ACE_HANDLE handle,
-                                    const ACE_Message_Block *message_block,
-                                    const ACE_Time_Value *timeout = nullptr,
+                                    ACE_Message_Block const *message_block,
+                                    ACE_Time_Value const *timeout = nullptr,
                                     size_t *bytes_transferred = nullptr);
 
-  // = File system I/O functions (these don't support timeouts).
+  /// @}
 
+  /// @name File system I/O functions (these don't support timeouts)
+  /// @{
   ACE_NAMESPACE_INLINE_FUNCTION
   ssize_t read_n (ACE_HANDLE handle,
                   void *buf,
@@ -332,7 +337,7 @@ namespace ACE
 
   ACE_NAMESPACE_INLINE_FUNCTION
   ssize_t write_n (ACE_HANDLE handle,
-                   const void *buf,
+                   void const *buf,
                    size_t len,
                    size_t *bytes_transferred = nullptr);
 
@@ -340,7 +345,7 @@ namespace ACE
   /// and @c cont pointers.  This call uses the underlying OS
   /// gather-write operation to reduce the domain-crossing penalty.
   extern ACE_Export ssize_t write_n (ACE_HANDLE handle,
-                                     const ACE_Message_Block *message_block,
+                                     ACE_Message_Block const *message_block,
                                      size_t *bytes_transferred = nullptr);
 
   extern ACE_Export ssize_t readv_n (ACE_HANDLE handle,
@@ -352,7 +357,7 @@ namespace ACE
                                       const iovec *iov,
                                       int iovcnt,
                                       size_t *bytes_transferred = nullptr);
-  //@}
+  /// @}
 
   /**
    * Wait up to @a timeout amount of time to passively establish a
@@ -371,7 +376,7 @@ namespace ACE
    */
   extern ACE_Export ACE_HANDLE handle_timed_complete (
     ACE_HANDLE listener,
-    const ACE_Time_Value *timeout,
+    ACE_Time_Value const *timeout,
     int is_tli = 0);
 
   /**
@@ -390,37 +395,40 @@ namespace ACE
    */
   extern ACE_Export int max_handles ();
 
-  // = String functions
+  /// @name String functions.
+  /// @{
+
   /**
    * Return a dynamically allocated duplicate of @a str, substituting
-   * the environment variable if @c str[0] @c == @c '$'.  Note that
-   * the pointer is allocated with @c ACE_OS::malloc and must be freed
+   * the environment variable if @c str[0] @c == @c '$'.
+   *
+   * @note The pointer is allocated with @c ACE_OS::malloc and must be freed
    * by @c ACE_OS::free.
    */
-  extern ACE_Export ACE_TCHAR *strenvdup (const ACE_TCHAR *str);
+  extern ACE_Export ACE_TCHAR *strenvdup (ACE_TCHAR const *str);
 
   /// Returns a pointer to the "end" of the string, i.e., the character
   /// past the '\0'.
-  extern ACE_Export const char *strend (const char *s);
+  extern ACE_Export char const *strend (char const *s);
 
   /// This method is just like @c strdup, except that it uses
   /// @c operator @c new rather than @c malloc.  If @a s is NULL
   /// returns NULL rather than segfaulting.
-  extern ACE_Export char *strnew (const char *s);
+  extern ACE_Export char *strnew (char const *s);
 
   /// Delete the memory allocated by @c strnew.
   ACE_NAMESPACE_INLINE_FUNCTION void strdelete (char *s);
 
   /// Create a fresh new copy of @a str, up to @a n chars long.  Uses
   /// @c ACE_OS::malloc to allocate the new string.
-  extern ACE_Export char *strndup (const char *str, size_t n);
+  extern ACE_Export char *strndup (char const *str, size_t n);
 
   /// Create a fresh new copy of @a str, up to @a n chars long.  Uses
   /// @c ACE_OS::malloc to allocate the new string.
-  extern ACE_Export char *strnnew (const char *str, size_t n);
+  extern ACE_Export char *strnnew (char const *str, size_t n);
 
   /// Determine if a specified pathname is "dot dir" (ie. "." or "..").
-  ACE_NAMESPACE_INLINE_FUNCTION bool isdotdir (const char *s);
+  ACE_NAMESPACE_INLINE_FUNCTION bool isdotdir (char const *s);
 
 #if defined (ACE_HAS_WCHAR)
   extern ACE_Export const wchar_t *strend (const wchar_t *s);
@@ -436,6 +444,7 @@ namespace ACE
   ACE_NAMESPACE_INLINE_FUNCTION bool isdotdir (const wchar_t *s);
 
 #endif /* ACE_HAS_WCHAR */
+  /// @}
 
   /**
    * On Windows, determines if a specified pathname ends with ".exe"
@@ -446,21 +455,21 @@ namespace ACE
    *
    * @param pathname  The name to check for a proper suffix.
    *
-   * @retval @c pathname if there is a proper suffix for Windows. This is
+   * @return @c pathname if there is a proper suffix for Windows. This is
    *         always the return value for non-Windows platforms.
    * @retval If a suffix needs to be added, returns a pointer to new[]
    *         allocated memory containing the original @c pathname plus
    *         a ".exe" suffix. The caller is responsible for freeing the
    *         memory using delete [].
    */
-  extern ACE_Export const ACE_TCHAR *execname (const ACE_TCHAR *pathname);
+  extern ACE_Export ACE_TCHAR const *execname (ACE_TCHAR const *pathname);
 
   /**
    * Returns the "basename" of a @a pathname separated by @a delim.
    * For instance, the basename of "/tmp/foo.cpp" is "foo.cpp" when
    * @a delim is @a '/'.
    */
-  extern ACE_Export const ACE_TCHAR *basename (const ACE_TCHAR *pathname,
+  extern ACE_Export ACE_TCHAR const *basename (ACE_TCHAR const *pathname,
                                                ACE_TCHAR delim =
                                                ACE_DIRECTORY_SEPARATOR_CHAR);
 
@@ -470,7 +479,7 @@ namespace ACE
    * @a pathname has no @a delim ".\0" is returned.  This method does
    * not modify @a pathname and is not reentrant.
    */
-  extern ACE_Export const ACE_TCHAR *dirname (const ACE_TCHAR *pathname,
+  extern ACE_Export ACE_TCHAR const *dirname (ACE_TCHAR const *pathname,
                                               ACE_TCHAR delim =
                                               ACE_DIRECTORY_SEPARATOR_CHAR);
 
@@ -480,43 +489,43 @@ namespace ACE
    * @param time_value      ACE_Time_Value to format. This is assumed to be
    *                        an absolute time value.
    * @param date_and_time   Array to hold the timestamp.
-   * @param time_len        Size of @a date_and_time in ACE_TCHARs.
+   * @param date_and_timelen Size of @a date_and_time in ACE_TCHARs.
    *                        Must be greater than or equal to 27.
    * @param return_pointer_to_first_digit  If true, returned pointer value
    *                        is to the first time digit, else to the space
    *                        prior to the first time digit. See Return Values.
    *
-   * @retval 0 if unsuccessful, with errno set. If @a time_len is less than
-   *           27 errno will be EINVAL.
+   * @retval 0 if unsuccessful, with errno set. If @a date_and_timelen is less
+   *           than 27 errno will be EINVAL.
    * @retval If successful, pointer to beginning of the "time" portion of
    *         @a date_and_time.  If @a return_pointer_to_first_digit is false
    *         the pointer is actually to the space before the time, else
    *         the pointer is to the first time digit.
    */
-  extern ACE_Export ACE_TCHAR *timestamp (const ACE_Time_Value& time_value,
+  extern ACE_Export ACE_TCHAR *timestamp (ACE_Time_Value const& time_value,
                                           ACE_TCHAR date_and_time[],
-                                          size_t time_len,
+                                          size_t date_and_timelen,
                                           bool return_pointer_to_first_digit = false);
 
   /**
    * Translate the current time to ISO-8601 timestamp format.
    *
    * @param date_and_time   Array to hold the timestamp.
-   * @param time_len        Size of @a date_and_time in ACE_TCHARs.
+   * @param date_and_timelen Size of @a date_and_time in ACE_TCHARs.
    *                        Must be greater than or equal to 27.
    * @param return_pointer_to_first_digit  If true, returned pointer value
    *                        is to the first time digit, else to the space
    *                        prior to the first time digit. See Return Values.
    *
-   * @retval 0 if unsuccessful, with errno set. If @a time_len is less than
-   *           27 errno will be EINVAL.
+   * @retval 0 if unsuccessful, with errno set. If @a date_and_timelen is less
+   *           than 27 errno will be EINVAL.
    * @retval If successful, pointer to beginning of the "time" portion of
    *         @a date_and_time.  If @a return_pointer_to_first_digit is false
    *         the pointer is actually to the space before the time, else
    *         the pointer is to the first time digit.
    */
   extern ACE_Export ACE_TCHAR *timestamp (ACE_TCHAR date_and_time[],
-                                          size_t time_len,
+                                          size_t date_and_timelen,
                                           bool return_pointer_to_first_digit = false);
 
   /**
@@ -529,7 +538,7 @@ namespace ACE
    * needs to be fixed).
    */
   extern ACE_Export pid_t fork (
-    const ACE_TCHAR *program_name = ACE_TEXT ("<unknown>"),
+    ACE_TCHAR const *program_name = ACE_TEXT ("<unknown>"),
     int avoid_zombies = 0);
 
   /**
@@ -539,11 +548,13 @@ namespace ACE
    * closed.
    */
   extern ACE_Export int daemonize (
-    const ACE_TCHAR pathname[] = ACE_TEXT ("/"),
+    ACE_TCHAR const pathname[] = ACE_TEXT ("/"),
     bool close_all_handles = ACE_DEFAULT_CLOSE_ALL_HANDLES,
-    const ACE_TCHAR program_name[] = ACE_TEXT ("<unknown>"));
+    ACE_TCHAR const program_name[] = ACE_TEXT ("<unknown>"));
 
-  // = Miscellaneous functions.
+  /// @name Miscellaneous functions.
+  /// @{
+
   /// Rounds the request to a multiple of the page size.
   extern ACE_Export size_t round_to_pagesize (size_t len);
 
@@ -553,14 +564,14 @@ namespace ACE
   // @@ UNICODE what about buffer?
   /// Format buffer into printable format.  This is useful for
   /// debugging.
-  extern ACE_Export size_t format_hexdump (const char *buffer, size_t size,
+  extern ACE_Export size_t format_hexdump (char const *buffer, size_t size,
                                            ACE_TCHAR *obuf, size_t obuf_sz);
 
   /// Computes the hash value of {str} using the "Hash PJW" routine.
-  extern ACE_Export u_long hash_pjw (const char *str);
+  extern ACE_Export u_long hash_pjw (char const *str);
 
   /// Computes the hash value of {str} using the "Hash PJW" routine.
-  extern ACE_Export u_long hash_pjw (const char *str, size_t len);
+  extern ACE_Export u_long hash_pjw (char const *str, size_t len);
 
 #if defined (ACE_HAS_WCHAR)
   /// Computes the hash value of {str} using the "Hash PJW" routine.
@@ -571,10 +582,10 @@ namespace ACE
 #endif /* ACE_HAS_WCHAR */
 
   /// Computes CRC-CCITT for the string.
-  extern ACE_Export ACE_UINT16 crc_ccitt(const char *str);
+  extern ACE_Export ACE_UINT16 crc_ccitt(char const *str);
 
   /// Computes CRC-CCITT for the buffer.
-  extern ACE_Export ACE_UINT16 crc_ccitt(const void *buf, size_t len,
+  extern ACE_Export ACE_UINT16 crc_ccitt(void const *buf, size_t len,
            ACE_UINT16 crc = 0);
 
   /// Computes CRC-CCITT for the @ len iovec buffers.
@@ -582,10 +593,10 @@ namespace ACE
            ACE_UINT16 crc = 0);
 
   /// Computes the ISO 8802-3 standard 32 bits CRC for the string.
-  extern ACE_Export ACE_UINT32 crc32 (const char *str);
+  extern ACE_Export ACE_UINT32 crc32 (char const *str);
 
   /// Computes the ISO 8802-3 standard 32 bits CRC for the buffer.
-  extern ACE_Export ACE_UINT32 crc32 (const void *buf, size_t len,
+  extern ACE_Export ACE_UINT32 crc32 (void const *buf, size_t len,
               ACE_UINT32 crc = 0);
 
   /// Computes the ISO 8802-3 standard 32 bits CRC for the
@@ -607,9 +618,9 @@ namespace ACE
    * among threads. For just one thread, typical values are 2 and
    * n/2.
    */
-  extern ACE_Export u_long is_prime (const u_long n,
-                                     const u_long min_factor,
-                                     const u_long max_factor);
+  extern ACE_Export u_long is_prime (u_long const n,
+                                     u_long const min_factor,
+                                     u_long const max_factor);
 
   /// Map troublesome win32 errno values to values that standard C
   /// strerr function understands.  Thank you Microsoft.
@@ -618,7 +629,7 @@ namespace ACE
   /// Returns a string containing the error message corresponding to a
   /// WinSock error.  This works around an omission in the Win32 API.
   /// @internal
-  extern ACE_Export const ACE_TCHAR * sock_error (int error);
+  extern ACE_Export ACE_TCHAR const * sock_error (int error);
 
   /// Determins whether the given error code corresponds to to a
   /// WinSock error. If so returns true, false otherwise.
@@ -636,9 +647,10 @@ namespace ACE
    * Terminate the process abruptly with id @a pid.  On Win32 platforms
    * this uses {TerminateProcess} and on POSIX platforms is uses
    * {kill} with the -9 (SIGKILL) signal, which cannot be caught or
-   * ignored.  Note that this call is potentially dangerous to use
-   * since the process being terminated may not have a chance to
-   * cleanup before it shuts down.
+   * ignored.
+   *
+   * @note This call is potentially dangerous because the process may not
+   * have a chance to clean up before it shuts down.
    */
   extern ACE_Export int terminate_process (pid_t pid);
 
@@ -650,7 +662,7 @@ namespace ACE
    * the same process. The uniqueness of this name is therefore only
    * valid for the life of {object}.
    */
-  ACE_NAMESPACE_INLINE_FUNCTION void unique_name (const void *object,
+  ACE_NAMESPACE_INLINE_FUNCTION void unique_name (void const *object,
                                                   ACE_TCHAR *name,
                                                   size_t length);
 
@@ -660,7 +672,7 @@ namespace ACE
   /// Helper to avoid comparing floating point values with ==
   /// (uses < and > operators).
   template <typename T>
-  bool is_equal (const T& a, const T& b)
+  bool is_equal (T const& a, T const& b)
   {
     return !((a < b) || (a > b));
   }
@@ -668,7 +680,7 @@ namespace ACE
   /// Helper to avoid comparing floating point values with !=
   /// (uses < and > operators).
   template <typename T>
-  bool is_inequal (const T& a, const T& b)
+  bool is_inequal (T const& a, T const& b)
   {
     return !is_equal (a, b);
   }
@@ -679,22 +691,27 @@ namespace ACE
   /// Convert a hex character to its byte representation.
   ACE_NAMESPACE_INLINE_FUNCTION u_char hex2byte (ACE_TCHAR c);
 
-  // = Set/get the debug level.
+  /// @}
+
+  /// @name Debug level accessors.
+  /// @{
+
   extern ACE_Export bool debug ();
   extern ACE_Export void debug (bool onoff);
+  /// @}
 
   /// Wrapper facade for @c select that uses @c ACE_Handle_Sets.
   extern ACE_Export int select (int width,
                                 ACE_Handle_Set *readfds,
                                 ACE_Handle_Set *writefds = nullptr,
                                 ACE_Handle_Set *exceptfds = nullptr,
-                                const ACE_Time_Value *timeout = nullptr);
+                                ACE_Time_Value const *timeout = nullptr);
 
   /// Wrapper facade for the most common use of @c select that uses
   /// @c ACE_Handle_Sets.
   extern ACE_Export int select (int width,
                                 ACE_Handle_Set &readfds,
-                                const ACE_Time_Value *timeout = nullptr);
+                                ACE_Time_Value const *timeout = nullptr);
 
   /// Timed wait for handle to get read ready.
   /// @retval -1 for error
@@ -702,7 +719,7 @@ namespace ACE
   /// @retval 1 the handle is ready
   ACE_NAMESPACE_INLINE_FUNCTION
   int handle_read_ready (ACE_HANDLE handle,
-                         const ACE_Time_Value *timeout);
+                         ACE_Time_Value const *timeout);
 
   /// Timed wait for handle to get write ready.
   /// @retval -1 for error
@@ -710,7 +727,7 @@ namespace ACE
   /// @retval 1 the handle is ready
   ACE_NAMESPACE_INLINE_FUNCTION
   int handle_write_ready (ACE_HANDLE handle,
-                          const ACE_Time_Value *timeout);
+                          ACE_Time_Value const *timeout);
 
   /// Timed wait for handle to get exception ready.
   /// @retval -1 for error
@@ -718,14 +735,14 @@ namespace ACE
   /// @retval 1 the handle is ready
   ACE_NAMESPACE_INLINE_FUNCTION
   int handle_exception_ready (ACE_HANDLE handle,
-                              const ACE_Time_Value *timeout);
+                              ACE_Time_Value const *timeout);
 
   /// Timed wait for handle to get read, write, or exception ready.
   /// @retval -1 for error
   /// @retval 0 for timeout
   /// @retval 1 the handle is ready
   extern ACE_Export int handle_ready (ACE_HANDLE handle,
-                                      const ACE_Time_Value *timeout,
+                                      ACE_Time_Value const *timeout,
                                       bool read_ready,
                                       bool write_ready,
                                       bool exception_ready);
@@ -734,14 +751,14 @@ namespace ACE
   /// @a val keeps track of whether we're in non-blocking mode or
   /// not.
   extern ACE_Export int enter_recv_timedwait (ACE_HANDLE handle,
-                                              const ACE_Time_Value *timeout,
+                                              ACE_Time_Value const *timeout,
                                               int &val);
 
   /// Wait for @a timeout before proceeding to a @c send operation.
   /// @a val keeps track of whether we're in non-blocking mode or
   /// not.
   extern ACE_Export int enter_send_timedwait (ACE_HANDLE handle,
-                                              const ACE_Time_Value* timeout,
+                                              ACE_Time_Value const* timeout,
                                               int &val);
 
   /// This makes sure that @a handle is set into non-blocking mode.
@@ -758,9 +775,8 @@ namespace ACE
   //   These functions aren't meant to be used internally, so they are
   //   not exported.
 
-  //
-  // = Recv_n helpers
-  //
+  /// @name Receive helpers.
+  /// @{
 
   ACE_NAMESPACE_INLINE_FUNCTION ssize_t recv_i (ACE_HANDLE handle,
                                                 void *buf,
@@ -776,7 +792,7 @@ namespace ACE
                                       void *buf,
                                       size_t len,
                                       int flags,
-                                      const ACE_Time_Value *timeout,
+                                      ACE_Time_Value const *timeout,
                                       size_t *bytes_transferred);
 
 #if defined (ACE_HAS_TLI)
@@ -791,7 +807,7 @@ namespace ACE
                                        void *buf,
                                        size_t len,
                                        int *flags,
-                                       const ACE_Time_Value *timeout,
+                                       ACE_Time_Value const *timeout,
                                        size_t *bytes_transferred);
 
 #endif /* ACE_HAS_TLI */
@@ -804,7 +820,7 @@ namespace ACE
   extern ACE_Export ssize_t recv_n_i (ACE_HANDLE handle,
                                       void *buf,
                                       size_t len,
-                                      const ACE_Time_Value *timeout,
+                                      ACE_Time_Value const *timeout,
                                       size_t *bytes_transferred);
 
   extern ACE_Export ssize_t recvv_n_i (ACE_HANDLE handle,
@@ -815,56 +831,57 @@ namespace ACE
   extern ACE_Export ssize_t recvv_n_i (ACE_HANDLE handle,
                                        iovec *iov,
                                        int iovcnt,
-                                       const ACE_Time_Value *timeout,
+                                       ACE_Time_Value const *timeout,
                                        size_t *bytes_transferred);
 
-  //
-  // = Send_n helpers
-  //
+  /// @}
+
+  /// @name Send helpers.
+  /// @{
 
   ACE_NAMESPACE_INLINE_FUNCTION ssize_t send_i (ACE_HANDLE handle,
-                                                const void *buf,
+                                                void const *buf,
                                                 size_t len);
 
   extern ACE_Export ssize_t send_n_i (ACE_HANDLE handle,
-                                      const void *buf,
+                                      void const *buf,
                                       size_t len,
                                       int flags,
                                       size_t *bytes_transferred);
 
   extern ACE_Export ssize_t send_n_i (ACE_HANDLE handle,
-                                      const void *buf,
+                                      void const *buf,
                                       size_t len,
                                       int flags,
-                                      const ACE_Time_Value *timeout,
+                                      ACE_Time_Value const *timeout,
                                       size_t *bytes_transferred);
 
 #if defined (ACE_HAS_TLI)
 
   extern ACE_Export ssize_t t_snd_n_i (ACE_HANDLE handle,
-                                       const void *buf,
+                                       void const *buf,
                                        size_t len,
                                        int flags,
                                        size_t *bytes_transferred);
 
   extern ACE_Export ssize_t t_snd_n_i (ACE_HANDLE handle,
-                                       const void *buf,
+                                       void const *buf,
                                        size_t len,
                                        int flags,
-                                       const ACE_Time_Value *timeout,
+                                       ACE_Time_Value const *timeout,
                                        size_t *bytes_transferred);
 
 #endif /* ACE_HAS_TLI */
 
   extern ACE_Export ssize_t send_n_i (ACE_HANDLE handle,
-                                      const void *buf,
+                                      void const *buf,
                                       size_t len,
                                       size_t *bytes_transferred);
 
   extern ACE_Export ssize_t send_n_i (ACE_HANDLE handle,
-                                      const void *buf,
+                                      void const *buf,
                                       size_t len,
-                                      const ACE_Time_Value *timeout,
+                                      ACE_Time_Value const *timeout,
                                       size_t *bytes_transferred);
 
   extern ACE_Export ssize_t sendv_n_i (ACE_HANDLE handle,
@@ -875,8 +892,9 @@ namespace ACE
   extern ACE_Export ssize_t sendv_n_i (ACE_HANDLE handle,
                                        const iovec *iov,
                                        int iovcnt,
-                                       const ACE_Time_Value *timeout,
+                                       ACE_Time_Value const *timeout,
                                        size_t *bytes_transferred);
+  /// @}
 }
 
 // Close versioned namespace, if enabled by the user.

@@ -14,9 +14,10 @@
 #include "tao/Resume_Handle.h"
 #include "tao/GIOP_Message_Base.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+#include <cstring>
+#include <memory>
 
-TAO_SHMIOP_Transport::~TAO_SHMIOP_Transport () = default;
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_SHMIOP_Transport::TAO_SHMIOP_Transport (TAO_SHMIOP_Connection_Handler *handler,
                                             TAO_ORB_Core *orb_core)
@@ -41,19 +42,23 @@ TAO_SHMIOP_Transport::connection_handler_i ()
 ssize_t
 TAO_SHMIOP_Transport::send (iovec *iov, int iovcnt,
                             size_t &bytes_transferred,
-                            const ACE_Time_Value *max_wait_time)
+                            ACE_Time_Value const *max_wait_time)
 {
   bytes_transferred = 0;
-  for (int i = 0; i < iovcnt; ++i)
+  for (int i {}; i < iovcnt; ++i)
     {
-      ssize_t retval =
+      ssize_t const retval =
         this->connection_handler_->peer ().send (iov[i].iov_base,
                                                  iov[i].iov_len,
                                                  max_wait_time);
       if (retval > 0)
+      {
         bytes_transferred += retval;
+      }
       if (retval <= 0)
+      {
         return retval;
+      }
     }
   return bytes_transferred;
 }
@@ -61,11 +66,11 @@ TAO_SHMIOP_Transport::send (iovec *iov, int iovcnt,
 ssize_t
 TAO_SHMIOP_Transport::recv (char *buf,
                             size_t len,
-                            const ACE_Time_Value *max_wait_time)
+                            ACE_Time_Value const *max_wait_time)
 {
-  ssize_t n = 0;
+  ssize_t n {};
 
-  int read_break = 0;
+  int read_break {};
 
   while (!read_break)
     {
@@ -116,11 +121,10 @@ TAO_SHMIOP_Transport::handle_input (TAO_Resume_Handle &rh,
   // messages, compensate shrink due to alignment
   char buf [TAO_MAXBUFSIZE + ACE_CDR::MAX_ALIGNMENT];
 
-
 #if defined (ACE_INITIALIZE_MEMORY_BEFORE_USE)
-  (void) ACE_OS::memset (buf,
-                         '\0',
-                         sizeof buf);
+  (void) std::memset (buf,
+                      '\0',
+                      sizeof buf);
 #endif /* ACE_INITIALIZE_MEMORY_BEFORE_USE */
 
   // Create a data block
@@ -137,11 +141,10 @@ TAO_SHMIOP_Transport::handle_input (TAO_Resume_Handle &rh,
                                    ACE_Message_Block::DONT_DELETE,
                                    this->orb_core_->input_cdr_msgblock_allocator ());
 
-
   // Align the message block
-  ACE_CDR::mb_align (&message_block);
+  ACE_CDR::mb_align (std::addressof (message_block));
 
-  const size_t missing_header_data = this->messaging_object ()->header_length ();
+  size_t const missing_header_data = this->messaging_object ()->header_length ();
 
   if (missing_header_data == 0)
     {
@@ -149,7 +152,7 @@ TAO_SHMIOP_Transport::handle_input (TAO_Resume_Handle &rh,
     }
 
   // .. do a read on the socket again.
-  ssize_t bytes = 0;
+  ssize_t bytes {};
 
   // As this used for transports where things are available in one
   // shot this looping should not create any problems.
@@ -180,13 +183,15 @@ TAO_SHMIOP_Transport::handle_input (TAO_Resume_Handle &rh,
     }
 
     TAO_Queued_Data qd (&message_block);
-    size_t mesg_length = 0;
+    size_t mesg_length {};
 
     // Parse the incoming message for validity. The check needs to be
     // performed by the messaging objects.
     if (this->messaging_object ()->parse_next_message (qd,
                                                        mesg_length) == -1)
+    {
       return -1;
+    }
 
     if (qd.missing_data () == TAO_MISSING_DATA_UNDEFINED)
       {
@@ -260,7 +265,6 @@ TAO_SHMIOP_Transport::handle_input (TAO_Resume_Handle &rh,
   return 0;
 }
 
-
 int
 TAO_SHMIOP_Transport::send_request (TAO_Stub *stub,
                                     TAO_ORB_Core *orb_core,
@@ -276,7 +280,7 @@ TAO_SHMIOP_Transport::send_request (TAO_Stub *stub,
 
   if (this->send_message (stream,
                           stub,
-                          0,
+                          nullptr,
                           message_semantics,
                           max_wait_time) == -1)
     {
@@ -306,7 +310,7 @@ TAO_SHMIOP_Transport::send_message (TAO_OutputCDR &stream,
   // versions seem to need it though.  Leaving it costs little.
 
   // This guarantees to send all data (bytes) or return an error.
-  ssize_t n = this->send_message_shared (stub,
+  ssize_t const n = this->send_message_shared (stub,
                                          message_semantics,
                                          stream.begin (),
                                          max_wait_time);
@@ -314,10 +318,12 @@ TAO_SHMIOP_Transport::send_message (TAO_OutputCDR &stream,
   if (n == -1)
     {
       if (TAO_debug_level)
-        TAOLIB_DEBUG ((LM_DEBUG,
+        {
+          TAOLIB_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) closing transport %B after fault %p\n"),
                     this->id (),
                     ACE_TEXT ("send_message ()\n")));
+        }
 
       return -1;
     }

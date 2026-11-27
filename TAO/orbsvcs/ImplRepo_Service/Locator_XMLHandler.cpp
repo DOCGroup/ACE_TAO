@@ -4,31 +4,30 @@
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_sys_time.h"
 
-const ACE_TCHAR* Locator_XMLHandler::ROOT_TAG = ACE_TEXT("ImplementationRepository");
-const ACE_TCHAR* Locator_XMLHandler::SERVER_INFO_TAG = ACE_TEXT("Servers");
-const ACE_TCHAR* Locator_XMLHandler::ACTIVATOR_INFO_TAG = ACE_TEXT("Activators");
-const ACE_TCHAR* Locator_XMLHandler::ENVIRONMENT_TAG = ACE_TEXT("EnvironmentVariables");
+ACE_TCHAR const *Locator_XMLHandler::ROOT_TAG = ACE_TEXT("ImplementationRepository");
+ACE_TCHAR const *Locator_XMLHandler::SERVER_INFO_TAG = ACE_TEXT("Servers");
+ACE_TCHAR const *Locator_XMLHandler::ACTIVATOR_INFO_TAG = ACE_TEXT("Activators");
+ACE_TCHAR const *Locator_XMLHandler::ENVIRONMENT_TAG = ACE_TEXT("EnvironmentVariables");
 
-const ACE_TCHAR* Locator_XMLHandler::SERVER_TAG = ACE_TEXT("server_id");
-const ACE_TCHAR* Locator_XMLHandler::POANAME_TAG = ACE_TEXT("poa_name");
-const ACE_TCHAR* Locator_XMLHandler::JACORB_TAG = ACE_TEXT("is_jacorb");
-const ACE_TCHAR* Locator_XMLHandler::ACTNAME_TAG = ACE_TEXT("activator");
-const ACE_TCHAR* Locator_XMLHandler::CMDLINE_TAG = ACE_TEXT("command_line");
-const ACE_TCHAR* Locator_XMLHandler::DIR_TAG = ACE_TEXT("working_dir");
-const ACE_TCHAR* Locator_XMLHandler::MODE_TAG = ACE_TEXT("activation_mode");
-const ACE_TCHAR* Locator_XMLHandler::LIMIT_TAG = ACE_TEXT("start_limit");
-const ACE_TCHAR* Locator_XMLHandler::PARTIOR_TAG = ACE_TEXT("partial_ior");
-const ACE_TCHAR* Locator_XMLHandler::IOR_TAG = ACE_TEXT("ior");
-const ACE_TCHAR* Locator_XMLHandler::STARTED_TAG = ACE_TEXT("started");
-const ACE_TCHAR* Locator_XMLHandler::PEER_TAG = ACE_TEXT("peer");
-const ACE_TCHAR* Locator_XMLHandler::PID_TAG = ACE_TEXT("pid");
-const ACE_TCHAR* Locator_XMLHandler::KEYNAME_TAG = ACE_TEXT("key_name");
-const ACE_TCHAR* Locator_XMLHandler::ALTKEY_TAG = ACE_TEXT("altkey");
-
+ACE_TCHAR const *Locator_XMLHandler::SERVER_TAG = ACE_TEXT("server_id");
+ACE_TCHAR const *Locator_XMLHandler::POANAME_TAG = ACE_TEXT("poa_name");
+ACE_TCHAR const *Locator_XMLHandler::JACORB_TAG = ACE_TEXT("is_jacorb");
+ACE_TCHAR const *Locator_XMLHandler::ACTNAME_TAG = ACE_TEXT("activator");
+ACE_TCHAR const *Locator_XMLHandler::CMDLINE_TAG = ACE_TEXT("command_line");
+ACE_TCHAR const *Locator_XMLHandler::DIR_TAG = ACE_TEXT("working_dir");
+ACE_TCHAR const *Locator_XMLHandler::MODE_TAG = ACE_TEXT("activation_mode");
+ACE_TCHAR const *Locator_XMLHandler::LIMIT_TAG = ACE_TEXT("start_limit");
+ACE_TCHAR const *Locator_XMLHandler::PARTIOR_TAG = ACE_TEXT("partial_ior");
+ACE_TCHAR const *Locator_XMLHandler::IOR_TAG = ACE_TEXT("ior");
+ACE_TCHAR const *Locator_XMLHandler::STARTED_TAG = ACE_TEXT("started");
+ACE_TCHAR const *Locator_XMLHandler::PEER_TAG = ACE_TEXT("peer");
+ACE_TCHAR const *Locator_XMLHandler::PID_TAG = ACE_TEXT("pid");
+ACE_TCHAR const *Locator_XMLHandler::KEYNAME_TAG = ACE_TEXT("key_name");
+ACE_TCHAR const *Locator_XMLHandler::ALTKEY_TAG = ACE_TEXT("altkey");
 
 Locator_XMLHandler::Locator_XMLHandler (XML_Backing_Store& repo)
   : repo_(repo),
-    si_ (0),
+    si_ {},
     server_started_ (false),
     extra_params_ (),
     env_vars_ (),
@@ -41,7 +40,7 @@ static void convertEnvList (const Locator_XMLHandler::EnvList& in,
 {
   CORBA::ULong const sz = static_cast<CORBA::ULong> (in.size ());
   out.length (sz);
-  for (CORBA::ULong i = 0; i < sz; ++i)
+  for (CORBA::ULong i {}; i < sz; ++i)
     {
       out[i].name = ACE_TEXT_ALWAYS_CHAR (in[i].name.c_str ());
       out[i].value = ACE_TEXT_ALWAYS_CHAR (in[i].value.c_str ());
@@ -53,7 +52,7 @@ static void convertPeerList (const Locator_XMLHandler::PeerList& in,
 {
   CORBA::ULong const sz = static_cast<CORBA::ULong> (in.size ());
   out.length (sz);
-  for (CORBA::ULong i = 0; i < sz; ++i)
+  for (CORBA::ULong i {}; i < sz; ++i)
     {
       out[i] = in[i].c_str ();
     }
@@ -67,11 +66,13 @@ Locator_XMLHandler::startElement (const ACEXML_Char*,
 {
   if (ACE_OS::strcasecmp (qName, SERVER_INFO_TAG) == 0)
     {
-      ACE_NEW (this->si_, Server_Info);
+      Server_Info *si {};
+      ACE_NEW (si, Server_Info);
+      this->si_.reset (si);
       this->env_vars_.clear ();
 
       // if attrs exists and if the previously required 9 fields
-      const size_t previous_size = 9;
+      size_t const previous_size = 9;
       if (attrs != 0 && attrs->getLength () >= previous_size)
         {
           size_t index = 0;
@@ -110,7 +111,7 @@ Locator_XMLHandler::startElement (const ACEXML_Char*,
                   if (value.length() > 0 &&
                       this->repo_.servers ().find (value, this->si_->alt_info_) != 0)
                     {
-                      Server_Info *base_si = nullptr;
+                      Server_Info *base_si {};
                       ACE_NEW (base_si, Server_Info);
                       base_si->key_name_ = value;
                       this->si_->alt_info_.reset (base_si);
@@ -124,8 +125,8 @@ Locator_XMLHandler::startElement (const ACEXML_Char*,
                 }
               else
                 {
-                  const ACE_CString name_cstr (ACE_TEXT_ALWAYS_CHAR (name.c_str ()));
-                  this->extra_params_.push_back (std::make_pair (name_cstr, value));
+                  ACE_CString const name_cstr (ACE_TEXT_ALWAYS_CHAR (name.c_str ()));
+                  this->extra_params_.emplace_back (name_cstr, value);
                 }
             }
         }
@@ -135,18 +136,18 @@ Locator_XMLHandler::startElement (const ACEXML_Char*,
     if (attrs != 0 && attrs->getLength () >= 3)
       {
         size_t index = 0;
-        const ACE_CString aname =
+        ACE_CString const aname =
           ACE_TEXT_ALWAYS_CHAR(attrs->getValue (index++));
-        const ACE_TString token_str = attrs->getValue (index++);
+        ACE_TString const token_str = attrs->getValue (index++);
         long token = ACE_OS::atoi (token_str.c_str ());
-        const ACE_CString ior =
+        ACE_CString const ior =
           ACE_TEXT_ALWAYS_CHAR(attrs->getValue (index++));
         NameValues extra_params;
         for ( ; index < attrs->getLength(); ++index)
           {
             ACE_CString name (ACE_TEXT_ALWAYS_CHAR (attrs->getLocalName(index)));
             ACE_CString value (ACE_TEXT_ALWAYS_CHAR (attrs->getValue(index)));
-            extra_params.push_back (std::make_pair (name, value));
+            extra_params.emplace_back (name, value);
           }
         this->repo_.load_activator (aname, token, ior, extra_params);
       }
@@ -187,7 +188,7 @@ Locator_XMLHandler::endElement (const ACEXML_Char*,
     convertEnvList (this->env_vars_, this->si_->env_vars);
     convertPeerList (this->peer_list_, this->si_->peers);
 
-    this->repo_.load_server (this->si_,
+    this->repo_.load_server (this->si_.release (),
                              this->server_started_,
                              this->extra_params_);
   }

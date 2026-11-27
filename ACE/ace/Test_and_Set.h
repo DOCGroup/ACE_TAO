@@ -1,11 +1,6 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   Test_and_Set.h
  */
-//=============================================================================
-
 
 #ifndef ACE_TEST_AND_SET_H
 #define ACE_TEST_AND_SET_H
@@ -24,11 +19,11 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  * @brief Implements the classic ``test and set'' operation.
  *
- *     This class keeps track of the status of <is_set_>, which can be
+ *     This class keeps track of the status of @c is_set_, which can be
  *     set based on various events (such as receipt of a signal).
  *     This class is derived from ACE_Event_Handler so that it can be
  *     "signaled" by a Reactor when a signal occurs.  We assume that
- *     <TYPE> is a data type that can be assigned the value 0 or 1.
+ *     @c TYPE is a data type that can be assigned the value 0 or 1.
  */
 template <class ACE_LOCK, class TYPE>
 class ACE_Test_and_Set : public ACE_Event_Handler
@@ -39,13 +34,13 @@ public:
   /// Returns true if we are set, else false.
   TYPE is_set () const;
 
-  /// Sets the <is_set_> status, returning the original value of
-  /// <is_set_>.
+  /// Sets the @c is_set_ status, returning the original value of
+  /// @c is_set_.
   TYPE set (TYPE);
 
   /// Called when object is signaled by OS (either via UNIX signals or
   /// when a Win32 object becomes signaled).
-  int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0) override;
+  int handle_signal (int signum, siginfo_t * = nullptr, ucontext_t * = nullptr) override;
 
 private:
   /// Keeps track of our state.

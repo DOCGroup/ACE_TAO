@@ -24,34 +24,43 @@ protected:
 
 public:
   Iterative_Logging_Server () : logging_handler_ (log_file_) {}
+  Iterative_Logging_Server (Iterative_Logging_Server const &) = delete;
+  Iterative_Logging_Server (Iterative_Logging_Server &&) = delete;
+  Iterative_Logging_Server &operator= (Iterative_Logging_Server const &) = delete;
+  Iterative_Logging_Server &operator= (Iterative_Logging_Server &&) = delete;
 
-  virtual ~Iterative_Logging_Server () { log_file_.close (); }
+  ~Iterative_Logging_Server () override { log_file_.close (); }
 
   Logging_Handler &logging_handler () { return logging_handler_; }
 
 protected:
-  // Override inherited open() from Logging_Server
-  virtual int open (u_short port) {
+  /// Override inherited open() from Logging_Server
+  int open (u_short port) override {
     if (make_log_file (log_file_) == -1)
-      ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "make_log_file()"), -1);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", ACE_TEXT ("make_log_file()")), -1);
+      }
     return Logging_Server::open (port);
   }
 
-  virtual int handle_connections () {
+  int handle_connections () override {
     ACE_INET_Addr logging_peer_addr;
 
     if (acceptor ().accept (logging_handler_.peer (),
                             &logging_peer_addr) == -1)
-      ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "acceptor.accept()"), -1);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR, "%p\n", ACE_TEXT ("acceptor.accept()")), -1);
+      }
 
-    ACE_DEBUG ((LM_DEBUG, "Accepted connection from %s\n",
+    ACE_DEBUG ((LM_DEBUG, "Accepted connection from %C\n",
                 logging_peer_addr.get_host_name ()));
     return 0;
   }
 
-  virtual int handle_data (ACE_SOCK_Stream *) {
+  int handle_data (ACE_SOCK_Stream *) override {
     while (logging_handler_.log_record () != -1)
-      continue;
+      {
+      }
 
     logging_handler_.close (); // Close the socket handle.
     return 0;

@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-// ===================================================================
 /**
  *  @file   Bzip2Compressor_Factory.h
  *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-// ===================================================================
 
 #ifndef TAO_BZIP2COMPRESSOR_FACTORY_H
 #define TAO_BZIP2COMPRESSOR_FACTORY_H
@@ -34,12 +30,14 @@ namespace TAO
 
         ::Compression::Compressor_ptr get_compressor (
             ::Compression::CompressionLevel compression_level) override;
-       private:
-         Bzip2_CompressorFactory (Bzip2_CompressorFactory const &) = delete;
-         Bzip2_CompressorFactory &operator= (Bzip2_CompressorFactory const &) = delete;
-         Bzip2_CompressorFactory (Bzip2_CompressorFactory &&) = delete;
-         Bzip2_CompressorFactory &operator= (Bzip2_CompressorFactory &&) = delete;
 
+        Bzip2_CompressorFactory (Bzip2_CompressorFactory const &) = delete;
+        Bzip2_CompressorFactory &operator= (Bzip2_CompressorFactory const &) = delete;
+        Bzip2_CompressorFactory (Bzip2_CompressorFactory &&) = delete;
+        Bzip2_CompressorFactory &operator= (Bzip2_CompressorFactory &&) = delete;
+
+      private:
+         TAO_SYNCH_MUTEX mutex_;
          ::Compression::Compressor_var compressor_;
     };
 }

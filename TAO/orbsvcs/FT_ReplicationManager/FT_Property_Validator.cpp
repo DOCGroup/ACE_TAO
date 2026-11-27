@@ -31,15 +31,13 @@ TAO::FT_Property_Validator::FT_Property_Validator ()
   this->factories_[0].id = CORBA::string_dup (::FT::FT_FACTORIES);
 }
 
-
 TAO::FT_Property_Validator::~FT_Property_Validator () = default;
-
 
 void
 TAO::FT_Property_Validator::validate_property (
     PortableGroup::Properties const & props)
 {
-  const CORBA::ULong len = props.length ();
+  CORBA::ULong const len = props.length ();
 
   for (CORBA::ULong i = 0; i < len; ++i)
     {
@@ -55,7 +53,9 @@ TAO::FT_Property_Validator::validate_property (
                   && value != FT::ACTIVE
                   && value != FT::ACTIVE_WITH_VOTING
                   && value != FT::SEMI_ACTIVE))
+          {
             throw PortableGroup::InvalidProperty (property.nam, property.val);
+          }
         }
       else if (property.nam == this->membership_style_)
         {
@@ -63,7 +63,9 @@ TAO::FT_Property_Validator::validate_property (
           if (!(property.val >>= value)
               || (value != PortableGroup::MEMB_APP_CTRL
                   && value != PortableGroup::MEMB_INF_CTRL))
+          {
             throw PortableGroup::InvalidProperty (property.nam, property.val);
+          }
         }
       else if (property.nam == this->consistency_style_)
         {
@@ -71,7 +73,9 @@ TAO::FT_Property_Validator::validate_property (
           if (!(property.val >>= value)
               || (value != FT::CONS_APP_CTRL
                   && value != FT::CONS_INF_CTRL))
+          {
             throw PortableGroup::InvalidProperty (property.nam, property.val);
+          }
         }
       else if (property.nam == this->fault_monitoring_style_)
         {
@@ -80,7 +84,9 @@ TAO::FT_Property_Validator::validate_property (
               || (value != FT::PULL
                   && value != FT::PUSH
                   && value != FT::NOT_MONITORED))
+          {
             throw PortableGroup::InvalidProperty (property.nam, property.val);
+          }
         }
       else if (property.nam == this->fault_monitoring_granularity_)
         {
@@ -89,21 +95,27 @@ TAO::FT_Property_Validator::validate_property (
               || (value != FT::MEMB
                   && value != FT::LOC
                   && value != FT::LOC_AND_TYPE))
+          {
             throw PortableGroup::InvalidProperty (property.nam, property.val);
+          }
         }
       else if (property.nam == this->factories_)
         {
-          PortableGroup::FactoriesValue const * factories = nullptr;
+          PortableGroup::FactoriesValue const * factories {};
           if (!(property.val >>= factories))
-            throw PortableGroup::InvalidProperty (property.nam, property.val);
+            {
+              throw PortableGroup::InvalidProperty (property.nam, property.val);
+            }
           else
             {
-              const CORBA::ULong flen = factories->length ();
+              CORBA::ULong const flen = factories->length ();
 
               if (flen == 0)
-                throw PortableGroup::InvalidProperty (
-                  property.nam,
-                  property.val);
+                {
+                  throw PortableGroup::InvalidProperty (
+                    property.nam,
+                    property.val);
+                }
 
               for (CORBA::ULong j = 0; j < flen; ++j)
                 {
@@ -112,9 +124,11 @@ TAO::FT_Property_Validator::validate_property (
 
                   if (CORBA::is_nil (factory_info.the_factory.in ())
                       || factory_info.the_location.length () == 0)
-                    throw PortableGroup::InvalidProperty (
-                      property.nam,
-                      property.val);
+                    {
+                      throw PortableGroup::InvalidProperty (
+                        property.nam,
+                        property.val);
+                    }
                 }
             }
         }
@@ -125,7 +139,7 @@ void
 TAO::FT_Property_Validator::validate_criteria (
     PortableGroup::Properties const & props)
 {
-  const CORBA::ULong len = props.length ();
+  CORBA::ULong const len = props.length ();
   PortableGroup::Criteria invalid_criteria;
 
   // Optimize for the worst case scenario where all properties are
@@ -133,15 +147,17 @@ TAO::FT_Property_Validator::validate_criteria (
   invalid_criteria.length (len);
 
   /// The invalid criteria index.
-  CORBA::ULong p = 0;
+  CORBA::ULong p {};
 
   for (CORBA::ULong i = 0; i < len; ++i)
     {
       PortableGroup::Property const & property = props[i];
-      CORBA::Long value;
+      CORBA::Long value {};
 
       if (!(property.val >>= value))
-        invalid_criteria[p++] = property;
+        {
+          invalid_criteria[p++] = property;
+        }
       else
       {
        if (property.nam == this->replication_style_)
@@ -152,45 +168,59 @@ TAO::FT_Property_Validator::validate_criteria (
              && value != FT::ACTIVE
              && value != FT::ACTIVE_WITH_VOTING
              && value != FT::SEMI_ACTIVE  )
+          {
             invalid_criteria[p++] = property;
+          }
         }
         else if (property.nam == this->membership_style_)
         {
           if (  value != PortableGroup::MEMB_APP_CTRL
              && value != PortableGroup::MEMB_INF_CTRL )
+          {
             invalid_criteria[p++] = property;
+          }
         }
         else if (property.nam == this->consistency_style_)
         {
           if (  value != FT::CONS_APP_CTRL
              && value != FT::CONS_INF_CTRL  )
+          {
             invalid_criteria[p++] = property;
+          }
         }
         else if (property.nam == this->fault_monitoring_style_)
         {
           if (  value != FT::PULL
              && value != FT::PUSH
              && value != FT::NOT_MONITORED  )
+          {
             invalid_criteria[p++] = property;
+          }
         }
         else if (property.nam == this->fault_monitoring_granularity_)
         {
           if (  value != FT::MEMB
              && value != FT::LOC
              && value != FT::LOC_AND_TYPE  )
+          {
             invalid_criteria[p++] = property;
+          }
         }
         else if (property.nam == this->factories_)
         {
-          PortableGroup::FactoriesValue const * factories = nullptr;
+          PortableGroup::FactoriesValue const * factories {};
           if (!(property.val >>= factories))
-            invalid_criteria[p++] = property;
+            {
+              invalid_criteria[p++] = property;
+            }
           else
             {
-              const CORBA::ULong flen = factories->length ();
+              CORBA::ULong const flen = factories->length ();
 
               if (flen == 0)
-                invalid_criteria[p++] = property;
+                {
+                  invalid_criteria[p++] = property;
+                }
               else
                 {
                   for (CORBA::ULong j = 0; j < flen; ++j)

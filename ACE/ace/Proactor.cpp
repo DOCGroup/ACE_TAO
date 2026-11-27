@@ -28,11 +28,12 @@
 #endif /* __ACE_INLINE__ */
 
 #include "ace/Auto_Event.h"
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// Process-wide ACE_Proactor.
-ACE_Proactor *ACE_Proactor::proactor_ = nullptr;
+ACE_Proactor *ACE_Proactor::proactor_ {};
 
 /// Controls whether the Proactor is deleted when we shut down (we can
 /// only delete it safely if we created it!)
@@ -54,15 +55,13 @@ bool ACE_Proactor::delete_proactor_ = false;
 class ACE_Proactor_Timer_Handler : public ACE_Task<ACE_NULL_SYNCH>
 {
 public:
-  /// Constructor.
   explicit ACE_Proactor_Timer_Handler (ACE_Proactor &proactor);
 
-  /// Destructor.
   ~ACE_Proactor_Timer_Handler () override;
 
   /// Proactor calls this to shut down the timer handler
   /// gracefully. Just calling the destructor alone doesnt do what
-  /// <destroy> does. <destroy> make sure the thread exits properly.
+  /// @c destroy does. @c destroy make sure the thread exits properly.
   int destroy ();
 
   /// Proactor calls this to refresh the timer event thread, to wake
@@ -83,13 +82,12 @@ protected:
   ACE_Proactor &proactor_;
 
   /// Flag used to indicate when we are shutting down.
-  int shutting_down_;
+  bool shutting_down_ {false};
 };
 
 ACE_Proactor_Timer_Handler::ACE_Proactor_Timer_Handler (ACE_Proactor &proactor)
   : ACE_Task <ACE_NULL_SYNCH> (&proactor.thr_mgr_),
-    proactor_ (proactor),
-    shutting_down_ (0)
+    proactor_ (proactor)
 {
 }
 
@@ -102,7 +100,7 @@ int
 ACE_Proactor_Timer_Handler::destroy ()
 {
   // Mark for closing down.
-  this->shutting_down_ = 1;
+  this->shutting_down_ = true;
 
   // Signal timer event.
   this->timer_event_.signal ();
@@ -121,36 +119,42 @@ ACE_Proactor_Timer_Handler::signal ()
 int
 ACE_Proactor_Timer_Handler::svc ()
 {
-  ACE_Time_Value absolute_time;
-  ACE_Time_Value relative_time;
   int result = 0;
 
-  while (this->shutting_down_ == 0)
+  while (!this->shutting_down_)
     {
       // Check whether the timer queue has any items in it.
-      if (this->proactor_.timer_queue ()->is_empty () == 0)
+      if (!this->proactor_.timer_queue ()->is_empty ())
         {
           // Get the earliest absolute time.
-          absolute_time = this->proactor_.timer_queue ()->earliest_time ();
+          ACE_Time_Value const absolute_time =
+            this->proactor_.timer_queue ()->earliest_time ();
 
           // Get current time from timer queue since we don't know
           // which <gettimeofday> was used.
-          ACE_Time_Value cur_time =
+          ACE_Time_Value const cur_time =
             this->proactor_.timer_queue ()->gettimeofday ();
 
           // Compare absolute time with curent time received from the
           // timer queue.
+          ACE_Time_Value relative_time;
           if (absolute_time > cur_time)
-            relative_time = absolute_time - cur_time;
+            {
+              relative_time = absolute_time - cur_time;
+            }
           else
-            relative_time = ACE_Time_Value::zero;
+            {
+              relative_time = ACE_Time_Value::zero;
+            }
 
           // Block for relative time.
           result = this->timer_event_.wait (&relative_time, 0);
         }
       else
-        // The timer queue has no entries, so wait indefinitely.
-        result = this->timer_event_.wait ();
+        {
+          // The timer queue has no entries, so wait indefinitely.
+          result = this->timer_event_.wait ();
+        }
 
       // Check for timer expiries.
       if (result == -1)
@@ -176,14 +180,12 @@ ACE_Proactor_Timer_Handler::svc ()
 // *********************************************************************
 
 ACE_Proactor_Handle_Timeout_Upcall::ACE_Proactor_Handle_Timeout_Upcall ()
-  : proactor_ (nullptr)
-{
-}
+= default;
 
 int
 ACE_Proactor_Handle_Timeout_Upcall::registration (ACE_Proactor_Timer_Queue &,
                                                   ACE_Handler * handler,
-                                                  const void *)
+                                                  void const *)
 {
   handler->proactor(proactor_);
   return 0;
@@ -192,10 +194,10 @@ ACE_Proactor_Handle_Timeout_Upcall::registration (ACE_Proactor_Timer_Queue &,
 int
 ACE_Proactor_Handle_Timeout_Upcall::preinvoke (ACE_Proactor_Timer_Queue &,
                                                ACE_Handler *,
-                                               const void *,
+                                               void const *,
                                                int,
-                                               const ACE_Time_Value &,
-                                               const void *&)
+                                               ACE_Time_Value const &,
+                                               void const *&)
 {
   return 0;
 }
@@ -203,10 +205,10 @@ ACE_Proactor_Handle_Timeout_Upcall::preinvoke (ACE_Proactor_Timer_Queue &,
 int
 ACE_Proactor_Handle_Timeout_Upcall::postinvoke (ACE_Proactor_Timer_Queue &,
                                                 ACE_Handler *,
-                                                const void *,
+                                                void const *,
                                                 int,
-                                                const ACE_Time_Value &,
-                                                const void *)
+                                                ACE_Time_Value const &,
+                                                void const *)
 {
   return 0;
 }
@@ -214,15 +216,17 @@ ACE_Proactor_Handle_Timeout_Upcall::postinvoke (ACE_Proactor_Timer_Queue &,
 int
 ACE_Proactor_Handle_Timeout_Upcall::timeout (ACE_Proactor_Timer_Queue &,
                                              ACE_Handler *handler,
-                                             const void *act,
+                                             void const *act,
                                              int,
-                                             const ACE_Time_Value &time)
+                                             ACE_Time_Value const &time)
 {
   if (this->proactor_ == nullptr)
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%t) No Proactor set in ACE_Proactor_Handle_Timeout_Upcall,")
-                       ACE_TEXT (" no completion port to post timeout to?!@\n")),
-                      -1);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                            ACE_TEXT ("(%t) No Proactor set in ACE_Proactor_Handle_Timeout_Upcall,")
+                            ACE_TEXT (" no completion port to post timeout to?!@\n")),
+                           -1);
+    }
 
   // Create the Asynch_Timer.
   ACE_Asynch_Result_Impl *asynch_timer =
@@ -234,21 +238,25 @@ ACE_Proactor_Handle_Timeout_Upcall::timeout (ACE_Proactor_Timer_Queue &,
                                           -1);
 
   if (asynch_timer == nullptr)
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%N:%l:(%P | %t):%p\n"),
-                       ACE_TEXT ("ACE_Proactor_Handle_Timeout_Upcall::timeout:")
-                       ACE_TEXT ("create_asynch_timer failed")),
-                      -1);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                            ACE_TEXT ("%N:%l:(%P | %t):%p\n"),
+                            ACE_TEXT ("ACE_Proactor_Handle_Timeout_Upcall::timeout:")
+                            ACE_TEXT ("create_asynch_timer failed")),
+                           -1);
+    }
 
   std::unique_ptr<ACE_Asynch_Result_Impl> safe_asynch_timer (asynch_timer);
 
   // Post a completion.
   if (-1 == safe_asynch_timer->post_completion
       (this->proactor_->implementation ()))
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Failure in dealing with timers: ")
-                       ACE_TEXT ("PostQueuedCompletionStatus failed\n")),
-                      -1);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                            ACE_TEXT ("Failure in dealing with timers: ")
+                            ACE_TEXT ("PostQueuedCompletionStatus failed\n")),
+                           -1);
+    }
 
   // The completion has been posted.  The proactor is now responsible
   // for managing the asynch_timer memory.
@@ -280,7 +288,7 @@ ACE_Proactor_Handle_Timeout_Upcall::cancel_timer (ACE_Proactor_Timer_Queue &,
 int
 ACE_Proactor_Handle_Timeout_Upcall::deletion (ACE_Proactor_Timer_Queue &,
                                               ACE_Handler *,
-                                              const void *)
+                                              void const *)
 {
   // Do nothing
   return 0;
@@ -291,14 +299,16 @@ ACE_Proactor_Handle_Timeout_Upcall::proactor (ACE_Proactor &proactor)
 {
   if (this->proactor_ == nullptr)
     {
-      this->proactor_ = &proactor;
+      this->proactor_ = std::addressof (proactor);
       return 0;
     }
   else
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("ACE_Proactor_Handle_Timeout_Upcall is only suppose")
-                       ACE_TEXT (" to be used with ONE (and only one) Proactor\n")),
-                      -1);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                            ACE_TEXT ("ACE_Proactor_Handle_Timeout_Upcall is only suppose")
+                            ACE_TEXT (" to be used with ONE (and only one) Proactor\n")),
+                           -1);
+    }
 }
 
 // *********************************************************************
@@ -306,13 +316,7 @@ ACE_Proactor_Handle_Timeout_Upcall::proactor (ACE_Proactor &proactor)
 ACE_Proactor::ACE_Proactor (ACE_Proactor_Impl *implementation,
                             bool delete_implementation,
                             ACE_Proactor_Timer_Queue *tq)
-  : implementation_ (nullptr),
-    delete_implementation_ (delete_implementation),
-    timer_handler_ (nullptr),
-    timer_queue_ (nullptr),
-    delete_timer_queue_ (0),
-    end_event_loop_ (0),
-    event_loop_thread_count_ (0)
+  : delete_implementation_ (delete_implementation)
 {
   this->implementation (implementation);
 
@@ -353,9 +357,11 @@ ACE_Proactor::ACE_Proactor (ACE_Proactor_Impl *implementation,
 
   // Activate <timer_handler>.
   if (this->timer_handler_->activate () == -1)
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("%N:%l:(%P | %t):%p\n"),
-                ACE_TEXT ("Task::activate:could not create thread\n")));
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("%N:%l:(%P | %t):%p\n"),
+                     ACE_TEXT ("Task::activate:could not create thread\n")));
+    }
 }
 
 ACE_Proactor::~ACE_Proactor ()
@@ -421,13 +427,13 @@ ACE_Proactor::close_singleton ()
     }
 }
 
-const ACE_TCHAR *
+ACE_TCHAR const *
 ACE_Proactor::dll_name ()
 {
   return ACE_TEXT ("ACE");
 }
 
-const ACE_TCHAR *
+ACE_TCHAR const *
 ACE_Proactor::name ()
 {
   return ACE_TEXT ("ACE_Proactor");
@@ -458,10 +464,12 @@ ACE_Proactor::proactor_run_event_loop (PROACTOR_EVENT_HOOK eh)
     // Early check. It is ok to do this without lock, since we care just
     // whether it is zero or non-zero.
     if (this->end_event_loop_ != 0)
+    {
       return 0;
+    }
 
     // First time you are in. Increment the thread count.
-    this->event_loop_thread_count_ ++;
+    ++this->event_loop_thread_count_;
   }
 
   // Run the event loop.
@@ -470,16 +478,22 @@ ACE_Proactor::proactor_run_event_loop (PROACTOR_EVENT_HOOK eh)
       // Check the end loop flag. It is ok to do this without lock,
       // since we care just whether it is zero or non-zero.
       if (this->end_event_loop_ != 0)
+      {
         break;
+      }
 
       // <end_event_loop> is not set. Ready to do <handle_events>.
       result = this->handle_events ();
 
       if (eh != nullptr && (*eh) (this))
+      {
         continue;
+      }
 
       if (result == -1)
+      {
         break;
+      }
     }
 
   // Leaving the event loop. Decrement the thread count.
@@ -489,11 +503,13 @@ ACE_Proactor::proactor_run_event_loop (PROACTOR_EVENT_HOOK eh)
     ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, mutex_, -1));
 
     // Decrement the thread count.
-    this->event_loop_thread_count_ --;
+    --this->event_loop_thread_count_;
 
     if (this->event_loop_thread_count_ > 0
        && this->end_event_loop_ != 0)
-       this->proactor_post_wakeup_completions (1);
+    {
+      this->proactor_post_wakeup_completions (1);
+    }
   }
 
   return result;
@@ -515,10 +531,12 @@ ACE_Proactor::proactor_run_event_loop (ACE_Time_Value &tv,
     // whether it is zero or non-zero.
     if (this->end_event_loop_ != 0
        || tv == ACE_Time_Value::zero)
+    {
       return 0;
+    }
 
     // First time you are in. Increment the thread count.
-    this->event_loop_thread_count_ ++;
+    ++this->event_loop_thread_count_;
   }
 
   // Run the event loop.
@@ -527,16 +545,22 @@ ACE_Proactor::proactor_run_event_loop (ACE_Time_Value &tv,
       // Check the end loop flag. It is ok to do this without lock,
       // since we care just whether it is zero or non-zero.
       if (this->end_event_loop_ != 0)
+      {
         break;
+      }
 
       // <end_event_loop> is not set. Ready to do <handle_events>.
       result = this->handle_events (tv);
 
       if (eh != nullptr && (*eh) (this))
+      {
         continue;
+      }
 
       if (result == -1 || result == 0)
+      {
         break;
+      }
     }
 
   // Leaving the event loop. Decrement the thread count.
@@ -545,11 +569,13 @@ ACE_Proactor::proactor_run_event_loop (ACE_Time_Value &tv,
     ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, mutex_, -1));
 
     // Decrement the thread count.
-    this->event_loop_thread_count_ --;
+    --this->event_loop_thread_count_;
 
     if (this->event_loop_thread_count_ > 0
        && this->end_event_loop_ != 0)
-       this->proactor_post_wakeup_completions (1);
+    {
+      this->proactor_post_wakeup_completions (1);
+    }
   }
 
   return result;
@@ -585,7 +611,9 @@ ACE_Proactor::proactor_end_event_loop ()
     // Number of completions to post.
     how_many = this->event_loop_thread_count_;
     if (how_many == 0)
+    {
       return 0;
+    }
   }
 
   // Post completions to all the threads so that they will all wake
@@ -608,9 +636,11 @@ ACE_Proactor::close ()
 {
   // Close the implementation.
   if (this->implementation ()->close () == -1)
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("%N:%l:(%P | %t):%p\n"),
-                ACE_TEXT ("ACE_Proactor::close: implementation close")));
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("%N:%l:(%P | %t):%p\n"),
+                     ACE_TEXT ("ACE_Proactor::close: implementation close")));
+    }
 
   // Delete the implementation.
   if (this->delete_implementation_)
@@ -644,7 +674,7 @@ ACE_Proactor::close ()
 
 int
 ACE_Proactor::register_handle (ACE_HANDLE handle,
-                               const void *completion_key)
+                               void const *completion_key)
 {
   return this->implementation ()->register_handle (handle,
                                                    completion_key);
@@ -652,8 +682,8 @@ ACE_Proactor::register_handle (ACE_HANDLE handle,
 
 long
 ACE_Proactor::schedule_timer (ACE_Handler &handler,
-                              const void *act,
-                              const ACE_Time_Value &time)
+                              void const *act,
+                              ACE_Time_Value const &time)
 {
   return this->schedule_timer (handler,
                                act,
@@ -663,8 +693,8 @@ ACE_Proactor::schedule_timer (ACE_Handler &handler,
 
 long
 ACE_Proactor::schedule_repeating_timer (ACE_Handler &handler,
-                                        const void *act,
-                                        const ACE_Time_Value &interval)
+                                        void const *act,
+                                        ACE_Time_Value const &interval)
 {
   return this->schedule_timer (handler,
                                act,
@@ -674,14 +704,14 @@ ACE_Proactor::schedule_repeating_timer (ACE_Handler &handler,
 
 long
 ACE_Proactor::schedule_timer (ACE_Handler &handler,
-                              const void *act,
-                              const ACE_Time_Value &time,
-                              const ACE_Time_Value &interval)
+                              void const *act,
+                              ACE_Time_Value const &time,
+                              ACE_Time_Value const &interval)
 {
   // absolute time.
-  ACE_Time_Value absolute_time =
+  ACE_Time_Value const absolute_time =
     this->timer_queue_->gettimeofday () + time;
-  long result = this->timer_queue_->schedule (&handler,
+  const long result = this->timer_queue_->schedule (&handler,
                                               act,
                                               absolute_time,
                                               interval);
@@ -697,7 +727,7 @@ ACE_Proactor::schedule_timer (ACE_Handler &handler,
 
 int
 ACE_Proactor::cancel_timer (long timer_id,
-                            const void **arg,
+                            void const **arg,
                             int dont_call_handle_close)
 {
   // No need to singal timer event here. Even if the cancel timer was
@@ -809,7 +839,6 @@ ACE_Proactor::implementation () const
   return this->implementation_;
 }
 
-
 ACE_Asynch_Read_Stream_Impl *
 ACE_Proactor::create_asynch_read_stream ()
 {
@@ -870,7 +899,7 @@ ACE_Proactor::create_asynch_read_stream_result
    ACE_HANDLE handle,
    ACE_Message_Block &message_block,
    u_long bytes_to_read,
-   const void* act,
+   void const * act,
    ACE_HANDLE event,
    int priority,
    int signal_number)
@@ -886,14 +915,13 @@ ACE_Proactor::create_asynch_read_stream_result
      signal_number);
 }
 
-
 ACE_Asynch_Write_Stream_Result_Impl *
 ACE_Proactor::create_asynch_write_stream_result
   (ACE_Handler::Proxy_Ptr &handler_proxy,
    ACE_HANDLE handle,
    ACE_Message_Block &message_block,
    u_long bytes_to_write,
-   const void* act,
+   void const * act,
    ACE_HANDLE event,
    int priority,
    int signal_number)
@@ -915,7 +943,7 @@ ACE_Proactor::create_asynch_read_file_result
    ACE_HANDLE handle,
    ACE_Message_Block &message_block,
    u_long bytes_to_read,
-   const void* act,
+   void const * act,
    u_long offset,
    u_long offset_high,
    ACE_HANDLE event,
@@ -941,7 +969,7 @@ ACE_Proactor::create_asynch_write_file_result
    ACE_HANDLE handle,
    ACE_Message_Block &message_block,
    u_long bytes_to_write,
-   const void* act,
+   void const * act,
    u_long offset,
    u_long offset_high,
    ACE_HANDLE event,
@@ -969,7 +997,7 @@ ACE_Proactor::create_asynch_read_dgram_result
    size_t bytes_to_read,
    int flags,
    int protocol_family,
-   const void* act,
+   void const * act,
    ACE_HANDLE event,
    int priority,
    int signal_number)
@@ -994,7 +1022,7 @@ ACE_Proactor::create_asynch_write_dgram_result
    ACE_Message_Block *message_block,
    size_t bytes_to_write,
    int flags,
-   const void* act,
+   void const * act,
    ACE_HANDLE event,
    int priority,
    int signal_number)
@@ -1018,7 +1046,7 @@ ACE_Proactor::create_asynch_accept_result
    ACE_HANDLE accept_handle,
    ACE_Message_Block &message_block,
    u_long bytes_to_read,
-   const void* act,
+   void const * act,
    ACE_HANDLE event,
    int priority,
    int signal_number)
@@ -1039,7 +1067,7 @@ ACE_Asynch_Connect_Result_Impl *
 ACE_Proactor::create_asynch_connect_result
   (ACE_Handler::Proxy_Ptr &handler_proxy,
    ACE_HANDLE  connect_handle,
-   const void* act,
+   void const * act,
    ACE_HANDLE event,
    int priority,
    int signal_number)
@@ -1064,7 +1092,7 @@ ACE_Proactor::create_asynch_transmit_file_result
    u_long offset_high,
    u_long bytes_per_send,
    u_long flags,
-   const void *act,
+   void const *act,
    ACE_HANDLE event,
    int priority,
    int signal_number)
@@ -1088,8 +1116,8 @@ ACE_Proactor::create_asynch_transmit_file_result
 ACE_Asynch_Result_Impl *
 ACE_Proactor::create_asynch_timer
   (ACE_Handler::Proxy_Ptr &handler_proxy,
-   const void *act,
-   const ACE_Time_Value &tv,
+   void const *act,
+   ACE_Time_Value const &tv,
    ACE_HANDLE event,
    int priority,
    int signal_number)
@@ -1124,13 +1152,13 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_Proactor *
 ACE_Proactor::instance (size_t /* threads */)
 {
-  return 0;
+  return nullptr;
 }
 
 ACE_Proactor *
 ACE_Proactor::instance (ACE_Proactor *)
 {
-  return 0;
+  return nullptr;
 }
 
 void

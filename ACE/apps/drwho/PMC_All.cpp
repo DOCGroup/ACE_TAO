@@ -4,9 +4,9 @@
 #include "PMC_All.h"
 #include "ace/ACE.h"
 #include "ace/Log_Msg.h"
-#include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_Memory.h"
+#include <cstring>
 
 // This function is pretty much a no-op that just sets up the
 // appropriate lookup function to use.
@@ -14,17 +14,19 @@
 int
 PMC_All::encode (char *packet, int &packet_length)
 {
-  if (Options::get_opt (Options::DEBUGGING) != 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "in PMC_All::encode\n"));
+  if (Options::get_opt (Options::DEBUGGING))
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "in PMC_All::encode\n"));
+    }
 
-  ACE_NEW_RETURN (this->ss,
-                  HT_Client,
-                  -1);
+  Search_Struct *lookup {};
+  ACE_NEW_RETURN (lookup, HT_Client, -1);
+  this->ss.reset (lookup);
 
-  SET_PACKET_TYPE (packet, Options::PROTO_ALL);
+  drwho_set_packet_type (packet, Options::PROTO_ALL);
 
-  char *buf_ptr = SKIP_PACKET_TYPE (packet);
+  char *buf_ptr = drwho_skip_packet_type (packet);
 
   packet_length = buf_ptr - packet;
   return 1;
@@ -37,7 +39,7 @@ PMC_All::encode (char *packet, int &packet_length)
 int
 PMC_All::decode (char *packet, int &packet_length)
 {
-  if (Options::get_opt (Options::DEBUGGING) != 0)
+  if (Options::get_opt (Options::DEBUGGING))
     {
       ACE_DEBUG ((LM_DEBUG,
                   "in PMC_All::decode, packet_length = %d\n",
@@ -56,19 +58,20 @@ PMC_All::decode (char *packet, int &packet_length)
 
   this->increment_total_users (remote_users);
 
-  for (cp = (char *) ACE::strend (cp);
+  for (cp = const_cast<char *> (ACE::strend (cp));
        *cp != '\n';
-       cp++)
+       ++cp)
     {
       // Skip over the LOGIN_NAME.
 
       char *login_name = cp;
-      char *real_name = cp = (char *) ACE::strend (cp);
+      char *real_name = cp = const_cast<char *> (ACE::strend (cp));
 
-      for (cp = (char *) ACE::strend (cp);
+      for (cp = const_cast<char *> (ACE::strend (cp));
            *(cp = this->handle_protocol_entries (cp, login_name, real_name)) != '\t';
            )
-        continue;
+        {
+        }
     }
 
   return 1;
@@ -78,10 +81,12 @@ Protocol_Record *
 PMC_All::insert_protocol_info (Protocol_Record &protocol_record)
 {
   Protocol_Record *prp = PM_Client::insert_protocol_info (protocol_record);
-  int length = ACE_OS::strlen (prp->set_real (ACE::strnew (protocol_record.get_real ())));
+  int const length = std::strlen (prp->set_real (ACE::strnew (protocol_record.get_real ())));
 
   if (length > this->max_key_length)
+  {
     this->max_key_length = length;
+  }
 
   return prp;
 }
@@ -94,6 +99,4 @@ PMC_All::process ()
   PM_Client::process ();
 }
 
-PMC_All::PMC_All ()
-{
-}
+PMC_All::PMC_All () = default;

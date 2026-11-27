@@ -1,15 +1,9 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   DiffServPolicy.h
  *
  *  @author  Jaiganesh Balasubramanian <jai@dre.vanderbilt.edu>
  *           Johnny Willemsen <jwillemsen@remedy.nl>
  */
-//=============================================================================
-
-
 #ifndef TAO_DIFFSERVPOLICY_H
 #define TAO_DIFFSERVPOLICY_H
 
@@ -35,10 +29,9 @@ public:
   /// Used to force the initialization of the ORB code.
   static int static_init ();
 
-  /// Initialize the Diffserv loader hooks.
-  int init (int argc, ACE_TCHAR* []) override;
+  /// Register the DiffServ ORB initializer.
+  int init (int argc, ACE_TCHAR *[]) override;
 
-private:
   TAO_DiffServPolicy_Initializer (TAO_DiffServPolicy_Initializer const &) = delete;
   TAO_DiffServPolicy_Initializer &operator= (TAO_DiffServPolicy_Initializer const &) = delete;
   TAO_DiffServPolicy_Initializer (TAO_DiffServPolicy_Initializer &&) = delete;
@@ -48,7 +41,6 @@ private:
 static int
 TAO_Requires_DiffServPolicy_Initializer =
   TAO_DiffServPolicy_Initializer::static_init ();
-
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_DiffServPolicy, TAO_DiffServPolicy_Initializer)
 ACE_FACTORY_DECLARE (TAO_DiffServPolicy, TAO_DiffServPolicy_Initializer)

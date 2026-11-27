@@ -5,6 +5,10 @@
 #include "tao/RTPortableServer/RTPortableServer.h"
 #include "../check_supported_priorities.cpp"
 
+#include <cstdio>
+#include <cstring>
+#include <memory>
+
 class test_i :
   public POA_test
 {
@@ -14,15 +18,22 @@ public:
           CORBA::Short server_priority,
           CORBA::Short client_priority);
 
-  CORBA::Short method ();
+  ~test_i () override = default;
 
-  void prioritized_method ();
+  test_i (test_i const &) = delete;
+  test_i (test_i &&) = delete;
+  test_i &operator= (test_i const &) = delete;
+  test_i &operator= (test_i &&) = delete;
+
+  CORBA::Short method () override;
+
+  void prioritized_method () override;
 
   //FUZZ: disable check_for_lack_ACE_OS
-  void shutdown ();
+  void shutdown () override;
   //FUZZ: enable check_for_lack_ACE_OS
 
-  PortableServer::POA_ptr _default_POA ();
+  PortableServer::POA_ptr _default_POA () override;
 
 private:
   CORBA::ORB_var orb_;
@@ -87,44 +98,49 @@ test_i::_default_POA ()
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
 
-static CORBA::Short server_priority;
-static CORBA::Short client_priority;
-static CORBA::ULong stacksize = 0;
-static CORBA::ULong static_threads = 2;
-static CORBA::ULong dynamic_threads = 0;
-static RTCORBA::Priority default_thread_priority;
-static CORBA::Boolean allow_request_buffering = 0;
-static CORBA::ULong max_buffered_requests = 0;
-static CORBA::ULong max_request_buffer_size = 0;
-static CORBA::Boolean allow_borrowing = 0;
+struct Server_Options
+{
+  CORBA::Short server_priority {};
+  CORBA::Short client_priority {};
+  CORBA::ULong stacksize {};
+  CORBA::ULong static_threads {2};
+  CORBA::ULong dynamic_threads {};
+  RTCORBA::Priority default_thread_priority {};
+  bool allow_request_buffering {};
+  CORBA::ULong max_buffered_requests {};
+  CORBA::ULong max_request_buffer_size {};
+  bool allow_borrowing {};
+};
 
 static int
-parse_args (int argc, ACE_TCHAR **argv)
+parse_args (int argc, ACE_TCHAR **argv, Server_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("s:c:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 's':
-        ::server_priority = ACE_OS::atoi (get_opts.opt_arg ());
-      break;
+    {
+      switch (c)
+        {
+        case 's':
+          options.server_priority = ACE_OS::atoi (get_opts.opt_arg ());
+          break;
 
-      case 'c':
-        ::client_priority = ACE_OS::atoi (get_opts.opt_arg ());
-      break;
+        case 'c':
+          options.client_priority = ACE_OS::atoi (get_opts.opt_arg ());
+          break;
 
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-s server priority "
-                           "-c client priority "
-                           "\n",
-                           argv [0]),
-                          -1);
-      }
+        case '?':
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "usage:  %s "
+                             "-s server priority "
+                             "-c client priority "
+                             "\n",
+                             argv [0]),
+                            -1);
+        }
+    }
 
   return 0;
 }
@@ -132,25 +148,20 @@ parse_args (int argc, ACE_TCHAR **argv)
 static void
 write_iors_to_file (CORBA::Object_ptr object,
                     CORBA::ORB_ptr orb,
-                    const char *filename)
+                    char const *filename)
 {
-  FILE *file =
-    ACE_OS::fopen (filename, "w");
-  ACE_ASSERT (file != 0);
+  std::unique_ptr<FILE, int (*) (FILE *)> file (
+    std::fopen (filename, "w"), std::fclose);
+  ACE_ASSERT (file != nullptr);
 
   CORBA::String_var ior =
     orb->object_to_string (object);
 
-  u_int result = 0;
-  result =
-    ACE_OS::fprintf (file,
-                     "%s",
-                     ior.in ());
+  int const result = std::fprintf (file.get (), "%s", ior.in ());
 
-  ACE_ASSERT (result == ACE_OS::strlen (ior.in ()));
+  ACE_ASSERT (result >= 0
+              && static_cast<size_t> (result) == std::strlen (ior.in ()));
   ACE_UNUSED_ARG (result);
-
-  ACE_OS::fclose (file);
 }
 
 class server
@@ -159,56 +170,62 @@ public:
   server (CORBA::ORB_ptr orb,
           RTCORBA::RTORB_ptr rt_orb,
           PortableServer::POA_ptr root_poa,
-          PortableServer::POAManager_ptr poa_manager);
+          PortableServer::POAManager_ptr poa_manager,
+          Server_Options const &options);
+
+  server (server const &) = delete;
+  server (server &&) = delete;
+  server &operator= (server const &) = delete;
+  server &operator= (server &&) = delete;
 
   void test_root_poa ();
   void test_child_poa ();
 
-  typedef void (server::*test_function) (CORBA::PolicyList &policies,
-                                         CORBA::Short server_priority,
-                                         CORBA::Short client_priority,
-                                         const char *test_name);
+  using test_function = void (server::*) (CORBA::PolicyList &policies,
+                                          CORBA::Short server_priority,
+                                          CORBA::Short client_priority,
+                                          char const *test_name);
 
   void test_default_pool_poa (CORBA::Short server_priority,
                               CORBA::Short client_priority,
                               server::test_function function,
-                              const char *test_name);
+                              char const *test_name);
 
   void test_bands_poa (CORBA::PolicyList &policies,
                        CORBA::Short server_priority,
                        CORBA::Short client_priority,
                        server::test_function function,
-                       const char *test_name);
+                       char const *test_name);
 
   void test_no_lanes_poa (CORBA::Short server_priority,
                           CORBA::Short client_priority,
                           server::test_function function,
-                          const char *test_name);
+                          char const *test_name);
 
   void test_lanes_poa (CORBA::Short server_priority,
                        CORBA::Short client_priority,
                        server::test_function function,
-                       const char *test_name);
+                       char const *test_name);
 
   void test_no_bands_client_propagated_poa (CORBA::PolicyList &policies,
                                             CORBA::Short server_priority,
                                             CORBA::Short client_priority,
-                                            const char *test_name);
+                                            char const *test_name);
 
   void test_bands_client_propagated_poa (CORBA::PolicyList &policies,
                                          CORBA::Short server_priority,
                                          CORBA::Short client_priority,
-                                         const char *test_name);
+                                         char const *test_name);
 
   void test_no_bands_server_declared_poa (CORBA::PolicyList &policies,
                                           CORBA::Short server_priority,
                                           CORBA::Short client_priority,
-                                          const char *test_name);
+                                          char const *test_name);
 
   void test_bands_server_declared_poa (CORBA::PolicyList &policies,
                                        CORBA::Short server_priority,
                                        CORBA::Short client_priority,
-                                       const char *test_name);
+                                       char const *test_name);
 
   void test_default_pool_no_bands_client_propagated_poa ();
 
@@ -239,23 +256,26 @@ private:
   RTCORBA::RTORB_var rt_orb_;
   PortableServer::POA_var root_poa_;
   PortableServer::POAManager_var poa_manager_;
+  Server_Options options_;
 };
 
 server::server (CORBA::ORB_ptr orb,
                 RTCORBA::RTORB_ptr rt_orb,
                 PortableServer::POA_ptr root_poa,
-                PortableServer::POAManager_ptr poa_manager)
+                PortableServer::POAManager_ptr poa_manager,
+                Server_Options const &options)
   : orb_ (CORBA::ORB::_duplicate (orb)),
     rt_orb_ (RTCORBA::RTORB::_duplicate (rt_orb)),
     root_poa_ (PortableServer::POA::_duplicate (root_poa)),
-    poa_manager_ (PortableServer::POAManager::_duplicate (poa_manager))
+    poa_manager_ (PortableServer::POAManager::_duplicate (poa_manager)),
+    options_ (options)
 {
 }
 
 void
 server::test_root_poa ()
 {
-  test_i *servant = 0;
+  test_i *servant {};
   ACE_NEW_THROW_EX (servant,
                     test_i (this->orb_.in (),
                             this->root_poa_.in (),
@@ -291,7 +311,7 @@ server::test_child_poa ()
                                  this->poa_manager_.in (),
                                  policies);
 
-  test_i *servant = 0;
+  test_i *servant {};
   ACE_NEW_THROW_EX (servant,
                     test_i (this->orb_.in (),
                             poa.in (),
@@ -318,7 +338,7 @@ void
 server::test_default_pool_poa (CORBA::Short server_priority,
                                CORBA::Short client_priority,
                                server::test_function function,
-                               const char *test_name)
+                               char const *test_name)
 {
   CORBA::PolicyList empty_policies;
   (this->*function) (empty_policies,
@@ -332,17 +352,17 @@ server::test_bands_poa (CORBA::PolicyList &policies,
                         CORBA::Short server_priority,
                         CORBA::Short client_priority,
                         server::test_function function,
-                        const char *test_name)
+                        char const *test_name)
 {
   RTCORBA::PriorityBands bands;
   bands.length (3);
 
-  bands[0].low = default_thread_priority;
-  bands[0].high = default_thread_priority;
-  bands[1].low = ::server_priority - 1;
-  bands[1].high = ::server_priority + 1;
-  bands[2].low = ::client_priority - 1;
-  bands[2].high = ::client_priority + 1;
+  bands[0].low = this->options_.default_thread_priority;
+  bands[0].high = this->options_.default_thread_priority;
+  bands[1].low = this->options_.server_priority - 1;
+  bands[1].high = this->options_.server_priority + 1;
+  bands[2].low = this->options_.client_priority - 1;
+  bands[2].high = this->options_.client_priority + 1;
 
   policies.length (policies.length () + 1);
   policies[policies.length () - 1] =
@@ -358,16 +378,16 @@ void
 server::test_no_lanes_poa (CORBA::Short server_priority,
                            CORBA::Short client_priority,
                            server::test_function function,
-                           const char *test_name)
+                           char const *test_name)
 {
   RTCORBA::ThreadpoolId threadpool_id =
-    this->rt_orb_->create_threadpool (stacksize,
-                                      static_threads,
-                                      dynamic_threads,
-                                      default_thread_priority,
-                                      allow_request_buffering,
-                                      max_buffered_requests,
-                                      max_request_buffer_size);
+    this->rt_orb_->create_threadpool (this->options_.stacksize,
+                                      this->options_.static_threads,
+                                      this->options_.dynamic_threads,
+                                      this->options_.default_thread_priority,
+                                      this->options_.allow_request_buffering,
+                                      this->options_.max_buffered_requests,
+                                      this->options_.max_request_buffer_size);
 
   CORBA::Policy_var threadpool_policy =
     this->rt_orb_->create_threadpool_policy (threadpool_id);
@@ -387,30 +407,30 @@ void
 server::test_lanes_poa (CORBA::Short server_priority,
                         CORBA::Short client_priority,
                         server::test_function function,
-                        const char *test_name)
+                        char const *test_name)
 {
   RTCORBA::ThreadpoolLanes lanes;
   lanes.length (3);
 
-  lanes[0].lane_priority = ::client_priority;
-  lanes[0].static_threads = static_threads;
-  lanes[0].dynamic_threads = dynamic_threads;
+  lanes[0].lane_priority = this->options_.client_priority;
+  lanes[0].static_threads = this->options_.static_threads;
+  lanes[0].dynamic_threads = this->options_.dynamic_threads;
 
-  lanes[1].lane_priority = ::server_priority;
-  lanes[1].static_threads = static_threads;
-  lanes[1].dynamic_threads = dynamic_threads;
+  lanes[1].lane_priority = this->options_.server_priority;
+  lanes[1].static_threads = this->options_.static_threads;
+  lanes[1].dynamic_threads = this->options_.dynamic_threads;
 
-  lanes[2].lane_priority = default_thread_priority;
-  lanes[2].static_threads = static_threads;
-  lanes[2].dynamic_threads = dynamic_threads;
+  lanes[2].lane_priority = this->options_.default_thread_priority;
+  lanes[2].static_threads = this->options_.static_threads;
+  lanes[2].dynamic_threads = this->options_.dynamic_threads;
 
   RTCORBA::ThreadpoolId threadpool_id =
-    this->rt_orb_->create_threadpool_with_lanes (stacksize,
+    this->rt_orb_->create_threadpool_with_lanes (this->options_.stacksize,
                                                  lanes,
-                                                 allow_borrowing,
-                                                 allow_request_buffering,
-                                                 max_buffered_requests,
-                                                 max_request_buffer_size);
+                                                 this->options_.allow_borrowing,
+                                                 this->options_.allow_request_buffering,
+                                                 this->options_.max_buffered_requests,
+                                                 this->options_.max_request_buffer_size);
 
   CORBA::Policy_var threadpool_policy =
     this->rt_orb_->create_threadpool_policy (threadpool_id);
@@ -430,12 +450,12 @@ void
 server::test_no_bands_client_propagated_poa (CORBA::PolicyList &policies,
                                              CORBA::Short server_priority,
                                              CORBA::Short client_priority,
-                                             const char *test_name)
+                                             char const *test_name)
 {
   policies.length (policies.length () + 1);
   policies[policies.length () - 1] =
     this->rt_orb_->create_priority_model_policy (RTCORBA::CLIENT_PROPAGATED,
-                                                 default_thread_priority);
+                                                 this->options_.default_thread_priority);
 
   PortableServer::POA_var poa =
     this->root_poa_->create_POA (test_name,
@@ -445,7 +465,7 @@ server::test_no_bands_client_propagated_poa (CORBA::PolicyList &policies,
   RTPortableServer::POA_var rt_poa =
     RTPortableServer::POA::_narrow (poa.in ());
 
-  test_i *servant = 0;
+  test_i *servant {};
   ACE_NEW_THROW_EX (servant,
                     test_i (this->orb_.in (),
                             poa.in (),
@@ -470,7 +490,7 @@ void
 server::test_bands_client_propagated_poa (CORBA::PolicyList &policies,
                                           CORBA::Short server_priority,
                                           CORBA::Short client_priority,
-                                          const char *test_name)
+                                          char const *test_name)
 {
   this->test_bands_poa (policies,
                         server_priority,
@@ -482,8 +502,8 @@ server::test_bands_client_propagated_poa (CORBA::PolicyList &policies,
 void
 server::test_default_pool_no_bands_client_propagated_poa ()
 {
-  this->test_default_pool_poa (::client_priority + 1,
-                               ::client_priority + 1,
+  this->test_default_pool_poa (this->options_.client_priority + 1,
+                               this->options_.client_priority + 1,
                                &server::test_no_bands_client_propagated_poa,
                                "default_pool_no_bands_client_propagated");
 }
@@ -491,8 +511,8 @@ server::test_default_pool_no_bands_client_propagated_poa ()
 void
 server::test_no_lanes_no_bands_client_propagated_poa ()
 {
-  this->test_no_lanes_poa (::client_priority - 1,
-                           ::client_priority - 1,
+  this->test_no_lanes_poa (this->options_.client_priority - 1,
+                           this->options_.client_priority - 1,
                            &server::test_no_bands_client_propagated_poa,
                            "no_lanes_no_bands_client_propagated");
 }
@@ -500,8 +520,8 @@ server::test_no_lanes_no_bands_client_propagated_poa ()
 void
 server::test_lanes_no_bands_client_propagated_poa ()
 {
-  this->test_lanes_poa (::client_priority,
-                        ::client_priority,
+  this->test_lanes_poa (this->options_.client_priority,
+                        this->options_.client_priority,
                         &server::test_no_bands_client_propagated_poa,
                         "lanes_no_bands_client_propagated");
 }
@@ -509,8 +529,8 @@ server::test_lanes_no_bands_client_propagated_poa ()
 void
 server::test_default_pool_bands_client_propagated_poa ()
 {
-  this->test_default_pool_poa (::client_priority + 1,
-                               ::client_priority + 1,
+  this->test_default_pool_poa (this->options_.client_priority + 1,
+                               this->options_.client_priority + 1,
                                &server::test_bands_client_propagated_poa,
                                "default_pool_bands_client_propagated");
 }
@@ -518,8 +538,8 @@ server::test_default_pool_bands_client_propagated_poa ()
 void
 server::test_no_lanes_bands_client_propagated_poa ()
 {
-  this->test_no_lanes_poa (::client_priority - 1,
-                           ::client_priority - 1,
+  this->test_no_lanes_poa (this->options_.client_priority - 1,
+                           this->options_.client_priority - 1,
                            &server::test_bands_client_propagated_poa,
                            "no_lanes_bands_client_propagated");
 }
@@ -527,8 +547,8 @@ server::test_no_lanes_bands_client_propagated_poa ()
 void
 server::test_lanes_bands_client_propagated_poa ()
 {
-  this->test_lanes_poa (::client_priority,
-                        ::client_priority + 1,
+  this->test_lanes_poa (this->options_.client_priority,
+                        this->options_.client_priority + 1,
                         &server::test_bands_client_propagated_poa,
                         "lanes_bands_client_propagated");
 }
@@ -537,12 +557,12 @@ void
 server::test_no_bands_server_declared_poa (CORBA::PolicyList &policies,
                                            CORBA::Short server_priority,
                                            CORBA::Short client_priority,
-                                           const char *test_name)
+                                           char const *test_name)
 {
   policies.length (policies.length () + 1);
   policies[policies.length () - 1] =
     this->rt_orb_->create_priority_model_policy (RTCORBA::SERVER_DECLARED,
-                                                 default_thread_priority);
+                                                 this->options_.default_thread_priority);
 
   PortableServer::POA_var poa =
     this->root_poa_->create_POA (test_name,
@@ -552,7 +572,7 @@ server::test_no_bands_server_declared_poa (CORBA::PolicyList &policies,
   RTPortableServer::POA_var rt_poa =
     RTPortableServer::POA::_narrow (poa.in ());
 
-  test_i *servant = 0;
+  test_i *servant {};
   ACE_NEW_THROW_EX (servant,
                     test_i (this->orb_.in (),
                             poa.in (),
@@ -564,7 +584,7 @@ server::test_no_bands_server_declared_poa (CORBA::PolicyList &policies,
 
   PortableServer::ObjectId_var id =
     rt_poa->activate_object_with_priority (servant,
-                                           ::server_priority);
+                                           this->options_.server_priority);
 
   CORBA::Object_var object =
     poa->id_to_reference (id.in ());
@@ -578,7 +598,7 @@ void
 server::test_bands_server_declared_poa (CORBA::PolicyList &policies,
                                         CORBA::Short server_priority,
                                         CORBA::Short client_priority,
-                                        const char *test_name)
+                                        char const *test_name)
 {
   this->test_bands_poa (policies,
                         server_priority,
@@ -590,8 +610,8 @@ server::test_bands_server_declared_poa (CORBA::PolicyList &policies,
 void
 server::test_default_pool_no_bands_server_declared_poa ()
 {
-  this->test_default_pool_poa (::server_priority,
-                               ::client_priority + 1,
+  this->test_default_pool_poa (this->options_.server_priority,
+                               this->options_.client_priority + 1,
                                &server::test_no_bands_server_declared_poa,
                                "default_pool_no_bands_server_declared");
 }
@@ -599,8 +619,8 @@ server::test_default_pool_no_bands_server_declared_poa ()
 void
 server::test_no_lanes_no_bands_server_declared_poa ()
 {
-  this->test_no_lanes_poa (::server_priority,
-                           ::client_priority - 1,
+  this->test_no_lanes_poa (this->options_.server_priority,
+                           this->options_.client_priority - 1,
                            &server::test_no_bands_server_declared_poa,
                            "no_lanes_no_bands_server_declared");
 }
@@ -608,8 +628,8 @@ server::test_no_lanes_no_bands_server_declared_poa ()
 void
 server::test_lanes_no_bands_server_declared_poa ()
 {
-  this->test_lanes_poa (::server_priority,
-                        ::client_priority + 1,
+  this->test_lanes_poa (this->options_.server_priority,
+                        this->options_.client_priority + 1,
                         &server::test_no_bands_server_declared_poa,
                         "lanes_no_bands_server_declared");
 }
@@ -617,8 +637,8 @@ server::test_lanes_no_bands_server_declared_poa ()
 void
 server::test_default_pool_bands_server_declared_poa ()
 {
-  this->test_default_pool_poa (::server_priority,
-                               ::client_priority - 1,
+  this->test_default_pool_poa (this->options_.server_priority,
+                               this->options_.client_priority - 1,
                                &server::test_bands_server_declared_poa,
                                "default_pool_bands_server_declared");
 }
@@ -626,8 +646,8 @@ server::test_default_pool_bands_server_declared_poa ()
 void
 server::test_no_lanes_bands_server_declared_poa ()
 {
-  this->test_no_lanes_poa (::server_priority,
-                           ::client_priority + 1,
+  this->test_no_lanes_poa (this->options_.server_priority,
+                           this->options_.client_priority + 1,
                            &server::test_bands_server_declared_poa,
                            "no_lanes_bands_server_declared");
 }
@@ -635,8 +655,8 @@ server::test_no_lanes_bands_server_declared_poa ()
 void
 server::test_lanes_bands_server_declared_poa ()
 {
-  this->test_lanes_poa (::server_priority,
-                        ::client_priority - 1,
+  this->test_lanes_poa (this->options_.server_priority,
+                        this->options_.client_priority - 1,
                         &server::test_bands_server_declared_poa,
                         "lanes_bands_server_declared");
 }
@@ -645,16 +665,25 @@ class Task : public ACE_Task_Base
 {
 public:
   Task (ACE_Thread_Manager &thread_manager,
-        CORBA::ORB_ptr orb);
+        CORBA::ORB_ptr orb,
+        Server_Options const &options);
 
-  int svc ();
+  Task (Task const &) = delete;
+  Task (Task &&) = delete;
+  Task &operator= (Task const &) = delete;
+  Task &operator= (Task &&) = delete;
 
+  int svc () override;
+
+  Server_Options options_;
   CORBA::ORB_var orb_;
 };
 
 Task::Task (ACE_Thread_Manager &thread_manager,
-            CORBA::ORB_ptr orb)
-  : ACE_Task_Base (&thread_manager),
+            CORBA::ORB_ptr orb,
+            Server_Options const &options)
+  : ACE_Task_Base (std::addressof (thread_manager)),
+    options_ (options),
     orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
@@ -680,14 +709,16 @@ Task::svc ()
       int sched_policy =
         this->orb_->orb_core ()->orb_params ()->ace_sched_policy ();
 
-      int minimum_priority =
+      const int minimum_priority =
         ACE_Sched_Params::priority_min (sched_policy);
 
-      int result =
+      const int result =
         ACE_Thread::setprio (current_thread,
                              minimum_priority);
       if (result != 0)
+      {
         return result;
+      }
 
       object =
         this->orb_->resolve_initial_references ("RTCurrent");
@@ -695,14 +726,14 @@ Task::svc ()
       RTCORBA::Current_var current =
         RTCORBA::Current::_narrow (object.in ());
 
-      default_thread_priority =
+      this->options_.default_thread_priority =
         get_implicit_thread_CORBA_priority (this->orb_.in ());
 
-      client_priority =
-        default_thread_priority + 2;
+      this->options_.client_priority =
+        this->options_.default_thread_priority + 2;
 
-      server_priority =
-        default_thread_priority + 5;
+      this->options_.server_priority =
+        this->options_.default_thread_priority + 5;
 
       object =
         this->orb_->resolve_initial_references ("RootPOA");
@@ -716,7 +747,8 @@ Task::svc ()
       server server (this->orb_.in (),
                      rt_orb.in (),
                      root_poa.in (),
-                     poa_manager.in ());
+                     poa_manager.in (),
+                     this->options_);
 
       server.test_root_poa ();
 
@@ -752,7 +784,7 @@ Task::svc ()
 
       this->orb_->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught");
       return -1;
@@ -769,22 +801,27 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv);
 
-      int result =
-        parse_args (argc, argv);
+      Server_Options options;
+      int result = parse_args (argc, argv, options);
       if (result != 0)
+      {
         return result;
+      }
 
       // Make sure we can support multiple priorities that are required
       // for this test.
       if (!check_supported_priorities (orb.in ()))
+      {
         return 2;
+      }
 
       // Thread Manager for managing task.
       ACE_Thread_Manager thread_manager;
 
       // Create task.
       Task task (thread_manager,
-                 orb.in ());
+                 orb.in (),
+                 options);
 
       // Task activation flags.
       long flags =
@@ -807,8 +844,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                 2);
             }
           else
-            // Unexpected error.
-            ACE_ASSERT (0);
+            {
+              // Unexpected error.
+              ACE_ASSERT (0);
+            }
         }
 
       // Wait for task to exit.
@@ -816,7 +855,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         thread_manager.wait ();
       ACE_ASSERT (result != -1);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught");
       return -1;

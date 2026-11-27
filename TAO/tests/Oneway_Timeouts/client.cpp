@@ -15,8 +15,8 @@ using namespace PortableServer;
 
 namespace
 {
-  const ACE_TCHAR *non_existent_ior = ACE_TEXT("corbaloc:iiop:1.2@63.246.9.65:12345/test");
-  const int TIME_THRESHOLD = 100; //ms
+  ACE_TCHAR const *non_existent_ior = ACE_TEXT("corbaloc:iiop:1.2@63.246.9.65:12345/test");
+  constexpr int TIME_THRESHOLD = 100; //ms
 
   int request_timeout = 0;
   Messaging::SyncScope sync_scope;
@@ -41,9 +41,9 @@ namespace
   bool retry_transients = false;
   bool retry_timeouts = false;
   bool make_request_queued = false;
-  const ACE_TCHAR *server_ior = ACE_TEXT ("file://test.ior");
+  ACE_TCHAR const *server_ior = ACE_TEXT ("file://test.ior");
 
-  void print_usage (const ACE_TCHAR *argv0)
+  void print_usage (ACE_TCHAR const *argv0)
   {
     ACE_ERROR ((LM_ERROR,
                 "%s [-request_timeout ms=0] "
@@ -231,11 +231,12 @@ namespace
     return Tester::_unchecked_narrow (obj.in ());
   }
 
-
   void set_connect_timeout (ORB_ptr orb)
   {
     if (connect_timeout <= 0)
+    {
       return;
+    }
     Object_var obj = orb->resolve_initial_references ("PolicyCurrent");
     PolicyCurrent_var policy_current = PolicyCurrent::_narrow (obj.in ());
     Any a;
@@ -246,7 +247,6 @@ namespace
     policy_current->set_policy_overrides (pols, ADD_OVERRIDE);
     pols[0]->destroy ();
   }
-
 
   void set_buffering (ORB_ptr orb)
   {
@@ -259,14 +259,17 @@ namespace
       {
         Any a;
         if (make_request_queued)
-          a <<= Messaging::SYNC_NONE;
+          {
+            a <<= Messaging::SYNC_NONE;
+          }
         else
+        {
           a <<= sync_scope;
+        }
         pols[0] = orb->create_policy (Messaging::SYNC_SCOPE_POLICY_TYPE, a);
         policy_current->set_policy_overrides (pols, ADD_OVERRIDE);
         pols[0]->destroy ();
       }
-
 
     if (use_buf_constraints)
       {
@@ -300,7 +303,6 @@ namespace
 
   }
 
-
 void reset_buffering (ORB_ptr orb)
 {
   Object_var obj = orb->resolve_initial_references ("PolicyCurrent");
@@ -314,7 +316,6 @@ void reset_buffering (ORB_ptr orb)
   policy_current->set_policy_overrides (pols, ADD_OVERRIDE);
   pols[0]->destroy ();
 }
-
 
 }
 
@@ -354,7 +355,9 @@ int ACE_TMAIN (int ac, ACE_TCHAR *av[])
           ACE_DEBUG ((LM_DEBUG, "Connected...\n"));
         }
       else
+      {
         tmp_tester = Tester::_unchecked_narrow (obj.in ());
+      }
 
       Tester_var tester = set_request_timeout (tmp_tester.in (), orb.in ());
 
@@ -395,17 +398,21 @@ int ACE_TMAIN (int ac, ACE_TCHAR *av[])
                 }
 
             }
-          catch (const CORBA::TRANSIENT&)
+          catch (CORBA::TRANSIENT const &)
             {
               ACE_DEBUG ((LM_DEBUG,
                           "Transient exception during test () invocation %d\n",
                           i));
               if (retry_transients)
-                ACE_DEBUG ((LM_DEBUG,"retrying\n"));
+                {
+                  ACE_DEBUG ((LM_DEBUG,"retrying\n"));
+                }
               else
+              {
                 throw;
+              }
             }
-          catch (const CORBA::TIMEOUT&)
+          catch (CORBA::TIMEOUT const &)
             {
               ACE_DEBUG ((LM_DEBUG,
                           "Timeout exception during test () invocation %d\n",
@@ -418,9 +425,13 @@ int ACE_TMAIN (int ac, ACE_TCHAR *av[])
               // because the exception should not occur because these are
               // oneways.
               if (retry_timeouts)
-                ACE_DEBUG ((LM_DEBUG,"retrying\n"));
+                {
+                  ACE_DEBUG ((LM_DEBUG,"retrying\n"));
+                }
               else
+              {
                 throw;
+              }
             }
 
           ++num_requests_sent;
@@ -430,7 +441,7 @@ int ACE_TMAIN (int ac, ACE_TCHAR *av[])
               (after - before).msec () > max_request_time)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          "note: test() took %d ms, max is %d ms\n",
+                          "note: test() took %Lu ms, max is %u ms\n",
                           (after - before).msec (), max_request_time));
             }
 
@@ -459,13 +470,11 @@ int ACE_TMAIN (int ac, ACE_TCHAR *av[])
 
       ACE_DEBUG ((LM_DEBUG,"request loop complete\n"));
 
-
       if (run_orb_delay > 0)
         {
           ACE_Time_Value tv (0, run_orb_delay * 1000);
           ACE_OS::sleep (tv);
         }
-
 
       if (run_orb_time > 0)
         {
@@ -505,7 +514,7 @@ int ACE_TMAIN (int ac, ACE_TCHAR *av[])
 
       return 0;
     }
-  catch (const CORBA::TRANSIENT &)
+  catch (CORBA::TRANSIENT const &)
     {
       ACE_DEBUG ((LM_DEBUG, "caught transient exception\n"));
       if (force_timeout)
@@ -523,7 +532,8 @@ int ACE_TMAIN (int ac, ACE_TCHAR *av[])
               if (ms > TIME_THRESHOLD)
                 {
                   ACE_DEBUG ((LM_DEBUG,
-                              "note: Buffered request took %dms\n", ms));
+                              "note: Buffered request took %Ldms\n",
+                              ms));
                 }
 
               ms = num_requests_sent * request_interval;
@@ -534,7 +544,8 @@ int ACE_TMAIN (int ac, ACE_TCHAR *av[])
             {
               ACE_DEBUG ((LM_DEBUG,
                           "note: Timeout expected in %d ms, "
-                          "but took %d ms\n", connect_timeout, ms));
+                          "but took %Ld ms\n", connect_timeout,
+                          ms));
             }
 
           return 0;
@@ -544,7 +555,7 @@ int ACE_TMAIN (int ac, ACE_TCHAR *av[])
           ACE_ERROR_RETURN ((LM_ERROR, "Error: Unexpected\n"), 1);
         }
     }
-  catch (const CORBA::TIMEOUT &)
+  catch (CORBA::TIMEOUT const &)
     {
       ACE_DEBUG ((LM_DEBUG, "caught timeout exception\n"));
       if (force_timeout)
@@ -562,7 +573,7 @@ int ACE_TMAIN (int ac, ACE_TCHAR *av[])
               if (ms > TIME_THRESHOLD)
                 {
                   ACE_DEBUG ((LM_DEBUG,
-                              "note: Buffered request took %d ms\n",
+                              "note: Buffered request took %Ld ms\n",
                               ms));
                 }
 
@@ -574,7 +585,8 @@ int ACE_TMAIN (int ac, ACE_TCHAR *av[])
             {
               ACE_DEBUG ((LM_DEBUG,
                           "note: Timeout expected in %d ms, "
-                          "but took %d ms\n", connect_timeout, ms));
+                          "but took %Ld ms\n", connect_timeout,
+                          ms));
             }
 
           return 0;
@@ -585,9 +597,9 @@ int ACE_TMAIN (int ac, ACE_TCHAR *av[])
         }
 
     }
-  catch (Exception &ex)
+  catch (Exception const &ex)
     {
-      ACE_ERROR ((LM_ERROR, "client: %s\n\nLast operation took %d ms.\n",
+      ACE_ERROR ((LM_ERROR, "client: %s\n\nLast operation took %Lu ms.\n",
                   ex._name(),
                   (ACE_High_Res_Timer::gettimeofday_hr () - before).msec ()));
     }

@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 #include "ace/Get_Opt.h"
 #include "ace/Truncate.h"
 #include "ace/OS_NS_stdio.h"
@@ -7,37 +6,43 @@
 #include "ace/OS_NS_unistd.h"
 
 ACE_INLINE
-Handle_L_FIFO::Handle_L_FIFO ()
-{
-}
+Handle_L_FIFO::Handle_L_FIFO () = default;
 
 ACE_INLINE int
-Handle_L_FIFO::open (const ACE_TCHAR *rendezvous_fifo)
+Handle_L_FIFO::open (ACE_TCHAR const *rendezvous_fifo)
 {
   if (this->ACE_FIFO_Recv_Msg::open (rendezvous_fifo) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 
 ACE_INLINE int
 Handle_L_FIFO::info (ACE_TCHAR **strp, size_t length) const
 {
   ACE_TCHAR buf[BUFSIZ];
-  const ACE_TCHAR *rendezvous_fifo;
+  ACE_TCHAR const *rendezvous_fifo;
 
   this->get_local_addr (rendezvous_fifo);
 
   ACE_OS::strcpy (buf, rendezvous_fifo);
   ACE_OS::strcat (buf, ACE_TEXT(" # tests local ACE_FIFO\n"));
 
-  if (*strp == 0 && (*strp = ACE_OS::strdup (buf)) == 0)
+  if (*strp == nullptr)
+    {
+      *strp = ACE_OS::strdup (buf);
+    }
+  if (*strp == nullptr)
     {
       return -1;
     }
   else
     {
-      ACE_OS::strncpy (*strp, buf, length);
+      ACE_OS::strsncpy (*strp, buf, length);
     }
 
   return ACE_Utils::truncate_cast<int> (ACE_OS::strlen (buf));
@@ -46,7 +51,7 @@ Handle_L_FIFO::info (ACE_TCHAR **strp, size_t length) const
 ACE_INLINE int
 Handle_L_FIFO::init (int argc, ACE_TCHAR *argv[])
 {
-  const ACE_TCHAR *rendezvous_fifo = Handle_L_FIFO::DEFAULT_RENDEZVOUS;
+  ACE_TCHAR const *rendezvous_fifo = Handle_L_FIFO::DEFAULT_RENDEZVOUS;
   ACE_Get_Opt    get_opt (argc, argv, ACE_TEXT("r:"), 0);
 
   for (int c; (c = get_opt ()) != -1; )
@@ -61,11 +66,15 @@ Handle_L_FIFO::init (int argc, ACE_TCHAR *argv[])
 
   ACE_OS::unlink (rendezvous_fifo);
   if (this->open (rendezvous_fifo) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("open")), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("open")), -1);
+    }
   else if (ACE_Reactor::instance ()->register_handler (this, ACE_Event_Handler::READ_MASK) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("registering service with ACE_Reactor")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("registering service with ACE_Reactor")),
+                        -1);
+    }
   return 0;
 }
 
@@ -90,10 +99,13 @@ Handle_L_FIFO::handle_input (ACE_HANDLE)
 
   /* Accept communication requests */
   if (this->recv (msg) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
-
-  ACE_OS::write (ACE_STDOUT, (const char *) msg.buf, (int) msg.len);
+    {
+      ACE_OS::write (ACE_STDOUT, msg.buf, (int) msg.len);
+    }
   return 0;
 }
 

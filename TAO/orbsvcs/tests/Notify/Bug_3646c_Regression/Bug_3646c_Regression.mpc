@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*Ntf Cons): notifytest {
   exename = Consumer
 

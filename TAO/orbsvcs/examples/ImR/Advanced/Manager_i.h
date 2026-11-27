@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #ifndef MANAGERI_H_
 #define MANAGERI_H_
 
@@ -12,21 +11,25 @@ class  Manager_i
   : public virtual POA_Manager
 {
 public:
-  Manager_i (long retryCount);
+  explicit Manager_i (long retry_count);
 
-  virtual ~Manager_i ();
+  ~Manager_i () override = default;
 
-  virtual CORBA::Long registerServer ();
+  CORBA::Long registerServer () override;
 
-  virtual void startRetry (CORBA::Long count);
+  void startRetry (CORBA::Long count) override;
 
-  virtual CORBA::Long endRetry ();
+  CORBA::Long endRetry () override;
+
+  Manager_i (Manager_i const &) = delete;
+  Manager_i (Manager_i &&) = delete;
+  Manager_i &operator= (Manager_i const &) = delete;
+  Manager_i &operator= (Manager_i &&) = delete;
 
 private:
-  long server_instance_;
+  long server_instance_ {};
   long retry_count_;
-  long retry_attempt_;
+  long retry_attempt_ {};
 };
-
 
 #endif /* MANAGERI_H_  */

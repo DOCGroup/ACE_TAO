@@ -1,18 +1,9 @@
-//
-// = FILENAME
-//    DoubleVisComp.java
-//
-// = AUTHOR
-//    Seth Widoff (core graph functionality)
-//    Michael Kircher (mk1@cs.wustl.edu)
-//
-// = DESCRIPTION
-//   This is a Visualization Component for displaying doubles.
-//
-// ============================================================================
-
-
-
+/**
+ * @file DoubleVisComp.java
+ * @author Seth Widoff (core graph functionality)
+ * @author Michael Kircher (mk1@cs.wustl.edu)
+ * @brief This is a Visualization Component for displaying doubles.
+ */
 
 import java.awt.*;
 import java.util.*;
@@ -150,10 +141,11 @@ public class DoubleVisComp extends Canvas implements VisComp
   public void update(Graphics g)
   {
     Dimension d = getSize ();
-    float tmp, value_1, value_2;
+    float value_1;
     FontMetrics fm = g.getFontMetrics ();
     Enumeration queue_iter = plot_.forward_iterator();
-    int x1 = d.width - 8, y1, x2, y2, fheight = fm.getHeight (), i;
+    int x1 = d.width - 8;
+    int fheight = fm.getHeight ();
     String value =  "Value (of " + max_value_ + "): " + String.valueOf(plot_.head());
 
     if ((offscreen_ == null) ||
@@ -182,19 +174,17 @@ public class DoubleVisComp extends Canvas implements VisComp
     value_1 = ((Float)queue_iter.nextElement()).floatValue();
     while (queue_iter.hasMoreElements())
       {
-	value_2 = ((Float)queue_iter.nextElement()).floatValue();
+        float value_2 = ((Float)queue_iter.nextElement()).floatValue();
 
 	if (value_1 > local_max_)
 	  local_max_ = value_1;
 
-        y1 = normalize(offscreensize_.height - fheight, value_1);
-        y2 = normalize(offscreensize_.height - fheight, value_2);
+        int y1 = normalize(offscreensize_.height - fheight, value_1);
+        int y2 = normalize(offscreensize_.height - fheight, value_2);
 
-	tmp = value_2;
-	value_2 = value_1;
-	value_1 = tmp;
+	value_1 = value_2;
 
-        x2 = x1 - spacing_;
+        int x2 = x1 - spacing_;
         offgraphics_.drawLine(x1, y1, x2, y2);
         x1 = x2;
 	if (x1 <= 5)
@@ -260,7 +250,6 @@ public class DoubleVisComp extends Canvas implements VisComp
     local_max_value_count_++;
   }
 
-
   private int normalize(int height, float coord)
   {
     float ratio = (float)coord/max_value_;
@@ -270,5 +259,4 @@ public class DoubleVisComp extends Canvas implements VisComp
     return Math.round(location);
   }
 }
-
 

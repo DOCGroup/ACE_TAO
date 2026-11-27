@@ -16,21 +16,22 @@ TAO_Incoming_Message_Queue::~TAO_Incoming_Message_Queue ()
   CORBA::ULong const sz = this->size_;
 
   // Delete all the nodes left behind
-  for (CORBA::ULong i = 0;
+  for (CORBA::ULong i {};
        i < sz;
        ++i)
     {
-      TAO_Queued_Data *qd = this->dequeue_head ();
+      TAO_Queued_Data * const qd = this->dequeue_head ();
       TAO_Queued_Data::release (qd);
     }
 }
-
 
 TAO_Queued_Data *
 TAO_Incoming_Message_Queue::dequeue_head ()
 {
   if (this->size_ == 0)
+  {
     return nullptr;
+  }
 
   // Get the node on the head of the queue...
   TAO_Queued_Data * const head = this->last_added_->next ();
@@ -40,7 +41,9 @@ TAO_Incoming_Message_Queue::dequeue_head ()
 
   // Decrease the size and reset last_added_ if empty
   if (--this->size_ == 0)
+  {
     this->last_added_ = nullptr;
+  }
 
   return head;
 }
@@ -50,7 +53,9 @@ TAO_Incoming_Message_Queue::dequeue_tail ()
 {
   // This is a bit painful stuff...
   if (this->size_ == 0)
+  {
     return nullptr;
+  }
 
   // Get the node on the head of the queue...
   TAO_Queued_Data *head = this->last_added_->next ();
@@ -63,15 +68,17 @@ TAO_Incoming_Message_Queue::dequeue_tail ()
   // Put the head in tmp.
   head->next (this->last_added_->next ());
 
-  TAO_Queued_Data *ret_qd = this->last_added_;
+  TAO_Queued_Data * const ret_qd = this->last_added_;
 
   this->last_added_ = head;
 
   // Decrease the size
   if (--this->size_ == 0)
+  {
     this->last_added_ = nullptr;
+  }
 
- return ret_qd;
+  return ret_qd;
 }
 
 int

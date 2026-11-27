@@ -1,14 +1,8 @@
-/* -*- C++ -*- */
 #include "ace/Service_Config.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 #include "ace/Truncate.h"
-
-ACE_INLINE
-Handle_Timeout::Handle_Timeout () : count (0)
-{
-}
 
 ACE_INLINE int
 Handle_Timeout::info (ACE_TCHAR **strp, size_t length) const
@@ -17,13 +11,17 @@ Handle_Timeout::info (ACE_TCHAR **strp, size_t length) const
 
   ACE_OS::strcpy (buf, ACE_TEXT("# tests timeout facility\n"));
 
-  if (*strp == 0 && (*strp = ACE_OS::strdup (buf)) == 0)
+  if (*strp == nullptr)
+    {
+      *strp = ACE_OS::strdup (buf);
+    }
+  if (*strp == nullptr)
     {
       return -1;
     }
   else
     {
-      ACE_OS::strncpy (*strp, buf, length);
+      ACE_OS::strsncpy (*strp, buf, length);
     }
 
   return ACE_Utils::truncate_cast<int> (ACE_OS::strlen (buf));
@@ -35,7 +33,7 @@ Handle_Timeout::init (int argc, ACE_TCHAR *argv[])
   ACE_Time_Value delta (10);
   ACE_Time_Value interval (1);
   ACE_Get_Opt    get_opt (argc, argv, ACE_TEXT("a:d:i:"), 0);
-  intptr_t       arg = 0;
+  intptr_t       arg {};
 
   for (int c; (c = get_opt ()) != -1; )
      switch (c)
@@ -57,9 +55,13 @@ Handle_Timeout::init (int argc, ACE_TCHAR *argv[])
                                                 reinterpret_cast<void *> (arg),
                                                 delta,
                                                 interval) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 
 ACE_INLINE int
@@ -75,19 +77,20 @@ Handle_Timeout::get_handle () const
 }
 
 ACE_INLINE int
-Handle_Timeout::handle_timeout (const ACE_Time_Value &tv,
-                                const void *arg)
+Handle_Timeout::handle_timeout (ACE_Time_Value const &tv,
+                                void const *arg)
 {
-  if (this->count++ >= 10)
-    return -1; // Automatically cancel periodic timer...
+  if (this->count >= 10)
+    {
+      return -1; // Automatically cancel periodic timer...
+    }
+  ++this->count;
 
-  // Cast arg to a long, first, because a pointer is the same
-  // size as a long on all current ACE platforms.
   ACE_DEBUG ((LM_INFO,
-              ACE_TEXT ("time for this(%u) expired at (%d, %d) with arg = %d\n"),
+              ACE_TEXT ("time for this(%@) expired at (%:, %q) with arg = %@\n"),
               this,
               tv.sec (),
-              tv.usec (),
-              (int) (ptrdiff_t) arg));
+              static_cast<ACE_INT64> (tv.usec ()),
+              const_cast<void *> (arg)));
   return 0;
 }

@@ -1,16 +1,16 @@
 // file      : Receiver.cpp
 // author    : Boris Kolpackov <boris@kolpackov.net>
-#include "ace/Vector_T.h"
 #include "ace/Log_Msg.h"
-#include "ace/OS_NS_string.h"
+#include <algorithm>
+#include <cstring>
+#include <memory>
+#include <vector>
 
 #include "ace/RMCast/Socket.h"
 
 #include "Protocol.h"
 
-typedef
-ACE_Vector<unsigned char, ACE_VECTOR_DEFAULT_SIZE>
-Status_List;
+using Status_List = std::vector<unsigned char>;
 
 class args {};
 
@@ -19,46 +19,31 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
   try
   {
-    if (argc < 2) throw args ();
+    if (argc < 2)
+    {
+      throw args ();
+    }
 
     ACE_INET_Addr addr (argv[1]);
 
     //FUZZ: disable check_for_lack_ACE_OS
     // Turn on message loss and reordering simulation.
     //
-    ACE_RMCast::Socket socket (addr, false, true);
+    ACE_RMCast::Socket socket (addr, false, ACE_RMCast::Parameters {true});
     //FUZZ: enable check_for_lack_ACE_OS
 
+    Message expected_msg {};
 
-    Message expected_msg;
-    expected_msg.sn = 0;
-
-    // VC6 does not know about the new rules.
-    //
+    for (unsigned short i = 0; i < payload_size; ++i)
     {
-      for (unsigned short i = 0; i < payload_size; i++)
-      {
-        expected_msg.payload[i] = i;
-      }
+      expected_msg.payload[i] = i;
     }
 
-    Status_List received (message_count);
-    Status_List damaged (message_count);
-    Status_List duplicate (message_count);
+    Status_List received (message_count, 0);
+    Status_List damaged (message_count, 0);
+    Status_List duplicate (message_count, 0);
 
-    // VC6 does not know about new rules.
-    //
-    {
-      for (unsigned long i = 0; i < message_count; ++i)
-      {
-        received.push_back (0);
-        damaged.push_back (0);
-        duplicate.push_back (0);
-      }
-    }
-
-
-    Message msg;
+    Message msg {};
 
     while (true)
     {
@@ -70,19 +55,19 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 
         // Receive it.
         //
-        socket.recv (&msg, sizeof (msg));
+        socket.recv (std::addressof (msg), sizeof (msg));
 
         continue;
       }
 
-      if (s != (ssize_t)sizeof (msg))
+      if (s != static_cast<ssize_t> (sizeof (msg)))
       {
-        ACE_ERROR ((LM_ERROR, "unexpected message size %d, expected %d\n",
+        ACE_ERROR ((LM_ERROR, "unexpected message size %b, expected %B\n",
                     s, sizeof (msg)));
         continue;
       }
 
-      if (socket.recv (&msg, sizeof (msg)) != s)
+      if (socket.recv (std::addressof (msg), sizeof (msg)) != s)
       {
         ACE_ERROR ((LM_ERROR,
                     "recv() reported different size than size()\n"));
@@ -97,81 +82,59 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
       {
         received[msg.sn] = 1;
 
-        if (ACE_OS::memcmp (expected_msg.payload,
-                            msg.payload,
-                            payload_size * sizeof(short)) != 0)
+        if (std::memcmp (expected_msg.payload,
+                         msg.payload,
+                         payload_size * sizeof (short)) != 0)
         {
           damaged[msg.sn] = 1;
         }
       }
 
-      if (msg.sn + 1 == message_count) break;
-    }
-
-    unsigned long lost_count (0), damaged_count (0), duplicate_count (0);
-
-    {
-      for (Status_List::Iterator i (received); !i.done (); i.advance ())
+      if (msg.sn + 1 == message_count)
       {
-        unsigned char* e;
-        i.next (e);
-
-        if (*e == 0) ++lost_count;
+        break;
       }
     }
 
-
-    {
-      for (Status_List::Iterator i (damaged); !i.done (); i.advance ())
-      {
-        unsigned char* e;
-        i.next (e);
-
-        if (*e == 1) ++damaged_count;
-      }
-    }
-
-
-    {
-      for (Status_List::Iterator i (duplicate); !i.done (); i.advance ())
-      {
-        unsigned char* e;
-        i.next (e);
-
-        if (*e == 1) ++duplicate_count;
-      }
-    }
+    Status_List::difference_type const lost_count = std::count (received.begin (), received.end (), 0);
+    Status_List::difference_type const damaged_count = std::count (damaged.begin (), damaged.end (), 1);
+    Status_List::difference_type const duplicate_count = std::count (duplicate.begin (), duplicate.end (), 1);
 
     ACE_DEBUG ((LM_DEBUG,
-                "lost      : %d\n"
-                "damaged   : %d\n"
-                "duplicate : %d\n",
-                lost_count,
-                damaged_count,
-                duplicate_count));
+                "lost      : %Q\n"
+                "damaged   : %Q\n"
+                "duplicate : %Q\n",
+                static_cast<ACE_UINT64> (lost_count),
+                static_cast<ACE_UINT64> (damaged_count),
+                static_cast<ACE_UINT64> (duplicate_count)));
 
     if (damaged_count != 0 || duplicate_count != 0)
+    {
       return 1;
+    }
 
     if (lost_count != 0)
     {
       // It is ok to lose some number of messages at the beginning.
       //
-      unsigned long count (0);
+      Status_List::difference_type count {};
 
-      for (Status_List::Iterator i (received); !i.done (); i.advance ())
+      for (unsigned char const e : received)
       {
-        unsigned char* e;
-        i.next (e);
-
-        if (*e == 0)
+        if (e == 0)
+        {
           ++count;
+        }
         else
+        {
           break; // Seen first ok message.
+        }
       }
 
       if (lost_count != count)
+      {
         return 1;
+      }
     }
 
     return 0;

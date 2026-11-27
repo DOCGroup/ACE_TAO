@@ -32,9 +32,9 @@ ACE_FILE_Connector::ACE_FILE_Connector ()
 
 int
 ACE_FILE_Connector::connect (ACE_FILE_IO &new_io,
-                             const ACE_FILE_Addr &remote_sap,
+                             ACE_FILE_Addr const &remote_sap,
                              ACE_Time_Value *timeout,
-                             const ACE_Addr &,
+                             ACE_Addr const &,
                              int,
                              int flags,
                              int perms)
@@ -45,8 +45,7 @@ ACE_FILE_Connector::connect (ACE_FILE_IO &new_io,
   ACE_HANDLE handle = ACE_INVALID_HANDLE;
 
   // Check to see if caller has requested that we create the filename.
-  if (reinterpret_cast<const ACE_Addr &> (
-        const_cast<ACE_FILE_Addr &> (remote_sap)) == ACE_Addr::sap_any)
+  if (static_cast<ACE_Addr const &> (remote_sap) == ACE_Addr::sap_any)
     {
       // Create a new temporary file.
       // Use ACE_OS::mkstemp() if it is available since it avoids a
@@ -62,14 +61,18 @@ ACE_FILE_Connector::connect (ACE_FILE_IO &new_io,
 
       if (handle == ACE_INVALID_HANDLE
           || new_io.addr_.set (ACE_TEXT_CHAR_TO_TCHAR (filename)) != 0)
+      {
         return -1;
+      }
 
       new_io.set_handle (handle);
 
       return 0;
     }
   else
+  {
     new_io.addr_ = remote_sap; // class copy.
+  }
 
   handle = ACE::handle_timed_open (timeout,
                                    new_io.addr_.get_path_name (),

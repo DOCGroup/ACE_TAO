@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    Simple_util.h
  *
@@ -6,15 +5,18 @@
  *
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_UTIL_H
 #define TAO_UTIL_H
+
+#include <memory>
 
 #include "tao/Utils/ORB_Manager.h"
 
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
+#include "ace/OS_NS_stdio.h"
+#include "ace/SString.h"
 
 /**
  * @class Server
@@ -31,20 +33,23 @@ template <class Servant>
 class Server
 {
 public:
-  /// Constructor.
-  Server ();
+  Server () = default;
 
-  /// Destructor.
-  ~Server ();
+  ~Server () = default;
+
+  Server (Server const&) = delete;
+  Server (Server&&) = delete;
+  Server& operator= (Server const&) = delete;
+  Server& operator= (Server&&) = delete;
 
   /// Initialize the Server state - parsing arguments and waiting.
   /// interface_name is the name used to register the Servant.
-  int init (const char *servant_name,
+  int init (char const *servant_name,
             int argc,
             ACE_TCHAR *argv[]);
 
-  /// After calling <init>, this method will register the server with
-  /// the TAO Naming Service using the servant_name passed to <init>.
+  /// After calling @c init, this method will register the server with
+  /// the TAO Naming Service using the servant_name passed to @c init.
   int register_name ();
 
   /// Run the orb.
@@ -54,9 +59,6 @@ protected:
   /// Servant class
   Servant servant_;
 
-  /// name of the servant to be used for TAO Naming Service
-  const char *name;
-
   /// Parses the commandline arguments.
   int parse_args ();
 
@@ -64,17 +66,16 @@ protected:
   /// registering objects.
   TAO_ORB_Manager orb_manager_;
 
-  // TAO_Naming_Server namingServer;
-  // helper class for getting access to Naming Service.
+  using IOR_File = std::unique_ptr<FILE, int (*) (FILE *)>;
 
   /// File where the IOR of the server object is stored.
-  FILE *ior_output_file_;
+  IOR_File ior_output_file_ {nullptr, ACE_OS::fclose};
 
   /// Number of command line arguments.
-  int argc_;
+  int argc_ {};
 
   /// The command line arguments.
-  ACE_TCHAR **argv_;
+  ACE_TCHAR **argv_ {};
 };
 
 /**
@@ -90,14 +91,17 @@ template <class InterfaceObj, class Var>
 class Client
 {
 public:
-  /// Constructor.
-  Client ();
+  Client () = default;
 
-  /// Destructor.
-  ~Client ();
+  ~Client () = default;
+
+  Client (Client const&) = delete;
+  Client (Client&&) = delete;
+  Client& operator= (Client const&) = delete;
+  Client& operator= (Client&&) = delete;
 
   /// Initialize the client communication endpoint with server.
-  int init (const char *name,int argc, ACE_TCHAR *argv[]);
+  int init (char const *name, int argc, ACE_TCHAR *argv[]);
 
   /// Return the interface object pointer.
   InterfaceObj *operator-> () { return server_.in ();};
@@ -113,25 +117,19 @@ public:
 
 protected:
   /// Function to read the server IOR from a file.
-  int read_ior (ACE_TCHAR *filename);
+  int read_ior (ACE_TCHAR const *filename);
 
   /// Parses the arguments passed on the command line.
   int parse_args ();
 
-//  TAO_Naming_Client namingClient;
-  // helper class for getting access to Naming Service.
-
   /// # of arguments on the command line.
-  int argc_;
+  int argc_ {};
 
   /// arguments from command line.
-  ACE_TCHAR **argv_;
+  ACE_TCHAR **argv_ {};
 
   /// IOR of the obj ref of the server.
-  ACE_TCHAR *ior_;
-
-  /// Name to be usred for the naming service
-  char *name_;
+  ACE_TString ior_ {};
 
   /// Remember our orb.
   CORBA::ORB_var orb_;
@@ -139,11 +137,8 @@ protected:
   /// Server object
   Var server_;
 
-  /// Flag to use the naming service
-  int naming_;
-
   /// Flag for shutting down the server
-  int shutdown_;
+  bool shutdown_ {};
 };
 
 #include "Simple_util.cpp"

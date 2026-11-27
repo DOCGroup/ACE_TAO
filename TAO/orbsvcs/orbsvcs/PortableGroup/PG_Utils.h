@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    PG_Utils.h
  *
@@ -8,7 +5,6 @@
  *
  *  @author Balachandran Natarajan <bala@dre.vanderbilt.edu>
  */
-//=============================================================================
 #ifndef TAO_PORTABLEGROUP_UTILS_H
 #define TAO_PORTABLEGROUP_UTILS_H
 #include /**/ "ace/pre.h"

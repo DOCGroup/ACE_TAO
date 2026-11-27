@@ -8,6 +8,8 @@
 #include "ace/OS_NS_string.h"
 #include "ace/os_include/os_typeinfo.h"
 
+#include <memory>
+
 #if defined (ACE_HAS_ALLOC_HOOKS)
 # include "ace/Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
@@ -31,17 +33,12 @@ ACE_CLEANUP_DESTROYER_NAME (ACE_Cleanup *object, void *param)
 /*****************************************************************************/
 
 ACE_Cleanup_Info_Node::ACE_Cleanup_Info_Node ()
-  : object_ (nullptr),
-    cleanup_hook_ (nullptr),
-    param_ (nullptr),
-    name_ (nullptr)
-{
-}
+= default;
 
 ACE_Cleanup_Info_Node::ACE_Cleanup_Info_Node (void *object,
                                               ACE_CLEANUP_FUNC cleanup_hook,
                                               void *param,
-                                              const char *name)
+                                              char const *name)
   : object_ (object),
     cleanup_hook_ (cleanup_hook),
     param_ (param),
@@ -52,17 +49,19 @@ ACE_Cleanup_Info_Node::ACE_Cleanup_Info_Node (void *object,
 ACE_Cleanup_Info_Node::~ACE_Cleanup_Info_Node ()
 {
   if (this->name_)
+    {
 #if defined (ACE_HAS_ALLOC_HOOKS)
-    ACE_Allocator::instance()->free ((void *) name_);
+      ACE_Allocator::instance()->free (const_cast<char *> (this->name_));
 #else
-    ACE_OS::free ((void *) name_);
+      ACE_OS::free (const_cast<char *> (this->name_));
 #endif /* ACE_HAS_ALLOC_HOOKS */
+    }
 }
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Cleanup_Info_Node)
 
 bool
-ACE_Cleanup_Info_Node::operator== (const ACE_Cleanup_Info_Node &o) const
+ACE_Cleanup_Info_Node::operator== (ACE_Cleanup_Info_Node const &o) const
 {
   return o.object_ == this->object_
     && o.cleanup_hook_ == this->cleanup_hook_
@@ -70,11 +69,10 @@ ACE_Cleanup_Info_Node::operator== (const ACE_Cleanup_Info_Node &o) const
 }
 
 bool
-ACE_Cleanup_Info_Node::operator!= (const ACE_Cleanup_Info_Node &o) const
+ACE_Cleanup_Info_Node::operator!= (ACE_Cleanup_Info_Node const &o) const
 {
   return !(*this == o);
 }
-
 
 /*****************************************************************************/
 
@@ -82,11 +80,11 @@ int
 ACE_OS_Exit_Info::at_exit_i (void *object,
                              ACE_CLEANUP_FUNC cleanup_hook,
                              void *param,
-                             const char* name)
+                             char const * name)
 {
   // Return -1 and sets errno if unable to allocate storage.  Enqueue
   // at the head and dequeue from the head to get LIFO ordering.
-  ACE_Cleanup_Info_Node *new_node = nullptr;
+  ACE_Cleanup_Info_Node *new_node {};
 
   ACE_NEW_RETURN (new_node,
                   ACE_Cleanup_Info_Node (object, cleanup_hook, param, name),
@@ -117,7 +115,7 @@ ACE_OS_Exit_Info::find (void *object)
 bool
 ACE_OS_Exit_Info::remove (void *object)
 {
-  ACE_Cleanup_Info_Node *node = nullptr;
+  ACE_Cleanup_Info_Node *node {};
   for (ACE_Cleanup_Info_Node *iter = registered_objects_.head ();
        iter != nullptr;
        iter = iter->next ())
@@ -139,7 +137,6 @@ ACE_OS_Exit_Info::remove (void *object)
   return false;
 }
 
-
 void
 ACE_OS_Exit_Info::call_hooks ()
 {
@@ -157,7 +154,7 @@ ACE_OS_Exit_Info::call_hooks ()
             reinterpret_cast<ACE_Cleanup *> (iter->object ()),
             iter->param ());
         }
-      else if (iter->object () == &ace_exit_hook_marker)
+      else if (iter->object () == std::addressof (ace_exit_hook_marker))
         {
           // The hook is an ACE_EXIT_HOOK.
           (* reinterpret_cast<ACE_EXIT_HOOK> (iter->cleanup_hook ())) ();

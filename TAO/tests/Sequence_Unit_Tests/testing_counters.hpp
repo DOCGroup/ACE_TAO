@@ -21,10 +21,7 @@
 class call_counter
 {
 public:
-  inline call_counter()
-    : count_(0)
-    , failure_countdown_(0)
-  {}
+  inline call_counter() = default;
 
   inline long current_count() const
   {
@@ -46,8 +43,8 @@ public:
   }
 
 private:
-  long count_;
-  long failure_countdown_;
+  long count_ {};
+  long failure_countdown_ {};
 };
 
 /**
@@ -57,15 +54,15 @@ private:
 class expected_calls
 {
 public:
-  inline expected_calls(call_counter const & counter)
+  inline explicit expected_calls(call_counter const & counter)
     : current_count_(counter.current_count())
     , previous_count_(counter.current_count())
     , counter_(counter)
   { }
 
-  expected_calls (const expected_calls &) = delete;
+  expected_calls (expected_calls const &) = delete;
   expected_calls (expected_calls &&) = delete;
-  expected_calls &operator= (const expected_calls &) = delete;
+  expected_calls &operator= (expected_calls const &) = delete;
   expected_calls &operator= (expected_calls &&) = delete;
 
   inline bool expect(long n)

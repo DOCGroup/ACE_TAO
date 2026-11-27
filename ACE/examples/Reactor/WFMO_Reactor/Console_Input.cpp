@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    Console_Input.cpp
  *
@@ -8,7 +6,6 @@
  *
  *  @author Irfan Pyarali <irfan@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "ace/Reactor.h"
 #include "ace/OS_NS_unistd.h"
@@ -16,31 +13,40 @@
 #include "ace/OS_main.h"
 #include "ace/Log_Msg.h"
 
+#include <memory>
+
 class Event_Handler : public ACE_Event_Handler
 {
 public:
-  Event_Handler (ACE_Reactor &reactor);
-  int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0);
+  explicit Event_Handler (ACE_Reactor &reactor);
+  Event_Handler (Event_Handler const &) = delete;
+  Event_Handler (Event_Handler &&) = delete;
+  Event_Handler &operator= (Event_Handler const &) = delete;
+  Event_Handler &operator= (Event_Handler &&) = delete;
+  int handle_signal (int signum, siginfo_t * = nullptr, ucontext_t * = nullptr) override;
   int handle_close (ACE_HANDLE handle,
-                    ACE_Reactor_Mask close_mask);
+                    ACE_Reactor_Mask close_mask) override;
 };
 
 Event_Handler::Event_Handler (ACE_Reactor &reactor)
 {
-  this->reactor (&reactor);
+  this->reactor (std::addressof (reactor));
 
   if (this->reactor ()->register_handler (this,
                                           ACE_STDIN) != 0)
-    ACE_ERROR ((LM_ERROR,
-                "Registration with Reactor could not be done\n"));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "Registration with Reactor could not be done\n"));
+    }
 }
 
 int
 Event_Handler::handle_signal (int, siginfo_t *, ucontext_t *)
 {
   ACE_TCHAR buffer[BUFSIZ];
-  int result = ACE_OS::read (ACE_STDIN, buffer, sizeof buffer);
-  buffer[result] = '\0';
+  int const result = ACE_OS::read (ACE_STDIN,
+                                  buffer,
+                                  sizeof buffer - sizeof buffer[0]);
 
   if (result <= 0)
     {
@@ -48,8 +54,12 @@ Event_Handler::handle_signal (int, siginfo_t *, ucontext_t *)
       ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_OS::read"), -1);
     }
 
+  buffer[result] = ACE_TEXT ('\0');
+
   if (ACE_OS::strcmp (ACE_TEXT("quit\r\n"), buffer) == 0)
-    this->reactor ()->close ();
+    {
+      this->reactor ()->close ();
+    }
 
   ACE_DEBUG ((LM_DEBUG, "User input: %s", buffer));
 
@@ -72,7 +82,9 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 
   int result = 0;
   while (result != -1)
-    result = reactor.handle_events ();
+    {
+      result = reactor.handle_events ();
+    }
 
   return 0;
 }

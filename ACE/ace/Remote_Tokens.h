@@ -1,13 +1,9 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Remote_Tokens.h
  *
  *  @author Douglas C. Schmidt (d.schmidt@vanderbilt.edu)
  *  @author Tim Harrison (harrison@cs.wustl.edu)
  */
-//=============================================================================
 
 #ifndef ACE_REMOTE_MUTEX_H
 #define ACE_REMOTE_MUTEX_H
@@ -40,7 +36,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * distributed token operations.  It is similar to the
  * ACE_Token_Proxy.
  * @todo
- * Distributed sleep_hooks have not been implemented. <owner_id>
+ * Distributed sleep_hooks have not been implemented. @c owner_id
  * is not implemented.
  */
 class ACE_Export ACE_Remote_Token_Proxy : public ACE_Token_Proxy
@@ -57,10 +53,9 @@ public:
    * the token.  @a ignore_deadlock can be 1 to disable deadlock
    * notifications.  @a debug prints debug messages.
    */
-  int open (const ACE_TCHAR *name,
+  int open (ACE_TCHAR const *name,
             int ignore_deadlock = 0,
-            int debug = 0);
-
+            int debug = 0) override;
 
   /**
    * Open a connection with the token server.  This only need be used
@@ -79,10 +74,10 @@ public:
    * token server.  Asynchronous operations are not supported.
    * Returns 0 on success, -1 on failure with @c errno == problem.
    */
-  virtual int acquire (int notify = 0,
-                       void (*sleep_hook)(void *) = 0,
-                       ACE_Synch_Options &options =
-                       ACE_Synch_Options::synch);
+  int acquire (int notify = 0,
+               void (*sleep_hook)(void *) = nullptr,
+               ACE_Synch_Options &options =
+               ACE_Synch_Options::synch) override;
 
   /**
    * Try to acquire the distributed token.  If the token is already
@@ -90,7 +85,7 @@ public:
    * Returns 0 on success (the token was acquired), and -1 with
    * EWOULDBLOCK if the token was already held.
    */
-  virtual int tryacquire (void (*sleep_hook)(void *) = 0);
+  int tryacquire (void (*sleep_hook)(void *) = nullptr) override;
 
   /**
    * Renew the token by offering to release it if there are any other
@@ -105,9 +100,9 @@ public:
    * before reacquiring the token (effectively, the position in the
    * waiter list.)
    */
-  virtual int renew (int requeue_position = 0,
-                     ACE_Synch_Options &options =
-                     ACE_Synch_Options::synch);
+  int renew (int requeue_position = 0,
+             ACE_Synch_Options &options =
+             ACE_Synch_Options::synch) override;
 
   /**
    * Release the distributed token. Similar to ACE_Local_Mutex, if the
@@ -115,18 +110,18 @@ public:
    * applicable.) Returns 0 on success, -1 on failure with @c errno ==
    * problem.
    */
-  virtual int release (ACE_Synch_Options &options =
-                       ACE_Synch_Options::synch);
+  int release (ACE_Synch_Options &options =
+               ACE_Synch_Options::synch) override;
 
   /// Become interface compliant for our guards.  This has no
   /// functionality.
-  virtual int remove (ACE_Synch_Options &options = ACE_Synch_Options::synch);
+  int remove (ACE_Synch_Options &options = ACE_Synch_Options::synch) override;
 
   /// Override the default to do nothing.
-  virtual void token_acquired (ACE_TPQ_Entry *);
+  void token_acquired (ACE_TPQ_Entry *) override;
 
   /// The client id of the current token holder
-  virtual const ACE_TCHAR* owner_id ();
+  ACE_TCHAR const *owner_id () override;
 
   /**
    * Sets the server address for all instances of ACE_Remote_Token_Proxy
@@ -134,7 +129,7 @@ public:
    * checked for the server address.  If that is not specified, all
    * ACE_Remote_** operations will fail.
    */
-  static void set_server_address (const ACE_INET_Addr &server_address);
+  static void set_server_address (ACE_INET_Addr const &server_address);
 
   /// Dump the state of the class.
   void dump () const;
@@ -169,7 +164,7 @@ public:
   ACE_Remote_Mutex ();
 
   /// Calls Remote_Token_Proxy::open for you.
-  ACE_Remote_Mutex (const ACE_TCHAR *token_name,
+  ACE_Remote_Mutex (ACE_TCHAR const *token_name,
                     int ignore_deadlock = 0,
                     int debug = 0);
 
@@ -177,12 +172,12 @@ public:
   void dump () const;
 
   /// Return deep copy.
-  virtual ACE_Token_Proxy *clone () const;
+  ACE_Token_Proxy *clone () const override;
 
 protected:
   /// Make the correct type of ACE_Tokens.
   /// This is called by the ACE_Token_Manager.
-  virtual ACE_Tokens *create_token (const ACE_TCHAR *name);
+  ACE_Tokens *create_token (ACE_TCHAR const *name) override;
 };
 
 /**
@@ -203,25 +198,25 @@ class ACE_Export ACE_Remote_RLock : public ACE_Remote_Token_Proxy
 public:
   ACE_Remote_RLock ();
 
-  ACE_Remote_RLock (const ACE_TCHAR *token_name,
+  ACE_Remote_RLock (ACE_TCHAR const *token_name,
                     int ignore_deadlock = 0,
                     int debug = 0);
 
-  ACE_Remote_RLock (const ACE_Remote_RLock &mutex);
+  ACE_Remote_RLock (ACE_Remote_RLock const &mutex);
 
   /// Dump the state of the class.
   void dump () const;
 
   /// Returns ACE_RW_Token::RLOCK;
-  virtual int type () const;
+  int type () const override;
 
   /// Return deep copy.
-  virtual ACE_Token_Proxy *clone () const;
+  ACE_Token_Proxy *clone () const override;
 
 protected:
   /// Make the correct type of ACE_Tokens.  This is called by the Token
   /// Manager.
-  virtual ACE_Tokens *create_token (const ACE_TCHAR *name);
+  ACE_Tokens *create_token (ACE_TCHAR const *name) override;
 };
 
 /**
@@ -241,25 +236,25 @@ class ACE_Export ACE_Remote_WLock : public ACE_Remote_Token_Proxy
 public:
   ACE_Remote_WLock ();
 
-  ACE_Remote_WLock (const ACE_TCHAR *token_name,
+  ACE_Remote_WLock (ACE_TCHAR const *token_name,
                     int ignore_deadlock = 0,
                     int debug = 0);
 
-  ACE_Remote_WLock (const ACE_Remote_WLock &mutex);
+  ACE_Remote_WLock (ACE_Remote_WLock const &mutex);
 
   /// Dump the state of the class.
   void dump () const;
 
   /// Returns ACE_RW_Token::WLOCK;
-  virtual int type () const;
+  int type () const override;
 
   /// Return deep copy.
-  virtual ACE_Token_Proxy *clone () const;
+  ACE_Token_Proxy *clone () const override;
 
 protected:
   /// Make the correct type of ACE_Tokens.  This is called by the Token
   /// Manager.
-  virtual ACE_Tokens *create_token (const ACE_TCHAR *name);
+  ACE_Tokens *create_token (ACE_TCHAR const *name) override;
 };
 
 /**
@@ -274,6 +269,11 @@ protected:
 class ACE_Export ACE_TSS_Connection : public ACE_TSS<ACE_SOCK_Stream>
 {
 public:
+  ACE_TSS_Connection (ACE_TSS_Connection const &) = delete;
+  ACE_TSS_Connection (ACE_TSS_Connection &&) = delete;
+  ACE_TSS_Connection &operator= (ACE_TSS_Connection const &) = delete;
+  ACE_TSS_Connection &operator= (ACE_TSS_Connection &&) = delete;
+
   // Necessary to make some compilers work...
   ACE_TSS_Connection ();
   ~ACE_TSS_Connection ();
@@ -282,14 +282,14 @@ public:
   ACE_SOCK_Stream *get_connection ();
 
   /// Factory Method that creates a new SOCK Stream.
-  virtual ACE_SOCK_Stream *make_TSS_TYPE () const;
+  ACE_SOCK_Stream *make_TSS_TYPE () const override;
 
   /// Inheritance and operator overloading don't mix.  Redefine this
   /// from ACE_TSS so that we can use it.
   operator ACE_SOCK_Stream *();
 
   /// Set the server address.
-  static void set_server_address (const ACE_INET_Addr &server_address);
+  static void set_server_address (ACE_INET_Addr const &server_address);
 
   /// Dump the state of the class.
   void dump () const;
@@ -298,10 +298,6 @@ protected:
   /// The address of the Token Server used by all instances of
   /// Token_Proxy.
   static ACE_INET_Addr server_address_;
-
-private:
-  ACE_TSS_Connection (const ACE_TSS_Connection &) = delete;
-  void operator= (const ACE_TSS_Connection &) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

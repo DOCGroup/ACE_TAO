@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Thread_Hook.h
  *
  *  @author Carlos O'Ryan <coryan@uci.edu>
  */
-//=============================================================================
 
 #ifndef ACE_THREAD_HOOK_H
 #define ACE_THREAD_HOOK_H
@@ -32,10 +28,8 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Thread_Hook
 {
 public:
-  /// Default constructor
   ACE_Thread_Hook ();
 
-  /// Destructor.
   virtual ~ACE_Thread_Hook ();
 
   /**

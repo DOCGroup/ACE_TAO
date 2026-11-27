@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    HTBP_Inside_Squid_Filter.h
  *
  *  @author Phil Mesnier
  */
-//=============================================================================
 
 #ifndef ACE_HTBP_INSIDE_SQUID_FILTER_H
 #define ACE_HTBP_INSIDE_SQUID_FILTER_H
@@ -28,7 +24,7 @@ namespace ACE
     /**
      * @class Inside_Squid_Filter
      *
-     * @brief Defines the methods in the <Filter> abstraction.
+     * @brief Defines the methods in the @c Filter abstraction.
      *
      * A filter is responsible for wrapping / unwrapping messages
      * depending on direction of flow on each stream. There will be 4
@@ -43,23 +39,22 @@ namespace ACE
     class HTBP_Export Inside_Squid_Filter : public Filter
     {
     public:
-      /// Destructor.
-      virtual ~Inside_Squid_Filter ();
+      ~Inside_Squid_Filter () override;
 
       /// Inside and outside Send filters need to supply a data header
       /// that sets the stage before sending the data body, and then
       /// (maybe) send a data trailer that closes the message. The
       /// data header may be formatted differently on the first
       /// message, to send optional context information.
-      virtual ssize_t send_data_header (ssize_t data_len, Channel *);
-      virtual ssize_t send_data_trailer (Channel *);
+      ssize_t send_data_header (ssize_t data_len, Channel *) override;
+      ssize_t send_data_trailer (Channel *) override;
 
       /// Upon receiving data, the Channel is obliged to send an
       /// ack. This is either an empty document if this is the
       /// in-to-out stream, or a new long-duration document request if
       /// this is the out-to-in stream.
-      virtual int send_ack (Channel *);
-      virtual int recv_ack (Channel *);
+      int send_ack (Channel *) override;
+      int recv_ack (Channel *) override;
 
       /// receiving data must compliment sending. In the case of an
       /// in-to-out stream. It is possible that the stream identity is
@@ -69,10 +64,10 @@ namespace ACE
       /// existing sesion. In that case, the associated stream will
       /// have to be reassigned as well.
       ///
-      virtual ssize_t recv_data_header (Channel *);
-      virtual ssize_t recv_data_trailer(Channel *);
+      ssize_t recv_data_header (Channel *) override;
+      ssize_t recv_data_trailer (Channel *) override;
     private:
-      int make_request_header (Channel *, const char *, char *, size_t );
+      int make_request_header (Channel*, char const*, char*, size_t);
     };
   }
 }

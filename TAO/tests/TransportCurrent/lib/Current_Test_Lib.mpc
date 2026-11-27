@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*idl): taoidldefaults {
 
   dynamicflags += CURRENT_TEST_BUILD_DLL

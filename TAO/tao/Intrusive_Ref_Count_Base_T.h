@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Intrusive_Ref_Count_Base_T.h
  *
  *  @authors Tim Bradley  <bradley_t@ociweb.com>
  */
-//=============================================================================
 
 #ifndef TAO_INTRUSIVE_REF_COUNT_BASE_T_H
 #define TAO_INTRUSIVE_REF_COUNT_BASE_T_H
@@ -17,7 +13,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include /**/ "tao/Versioned_Namespace.h"
+#include "tao/orbconf.h"
 
 #include "tao/Basic_Types.h"
 #include <atomic>
@@ -44,12 +40,12 @@ public:
   void _remove_ref ();
 
 protected:
-  TAO_Intrusive_Ref_Count_Base ();
+  TAO_Intrusive_Ref_Count_Base () = default;
 
 private:
-  std::atomic<uint32_t> refcount_ {};
+  std::atomic<uint32_t> refcount_ {1};
 
-  // Prevent copying/assignment.
+  /// Prevent copying/assignment.
   TAO_Intrusive_Ref_Count_Base (TAO_Intrusive_Ref_Count_Base const &) = delete;
   TAO_Intrusive_Ref_Count_Base &operator= (TAO_Intrusive_Ref_Count_Base const &) = delete;
   TAO_Intrusive_Ref_Count_Base (TAO_Intrusive_Ref_Count_Base &&) = delete;

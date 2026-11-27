@@ -1,6 +1,3 @@
-/* -*- C++ -*- */
-
-// ============================================================================
 /**
  *  @file   Event_Logging_Service.h
  *
@@ -9,7 +6,6 @@
  *
  *  @author D A Hanvey (d.hanvey@qub.ac.uk)
  */
-// ============================================================================
 
 #ifndef EVENT_LOGGING_SERVICE_H
 #define EVENT_LOGGING_SERVICE_H
@@ -20,78 +16,78 @@
 #include "orbsvcs/DsEventLogAdminC.h"
 #include "orbsvcs/Log/EventLogFactory_i.h"
 
+#include <optional>
+#include <string>
+
+/// Implements the Event Telecom Log Service.
 class Event_Logging_Service
   : public ACE_Task_Base
 {
-  // = TITLE
-  //   Event_Logging_Service
-  //
-  // = DESCRIPTION
-  //   Implementation of the Telecom Log Service
 
 public:
-  Event_Logging_Service ();
-  // Constructor.
+  Event_Logging_Service () = default;
 
-  ~Event_Logging_Service () override;
-  // Destructor.
+  ~Event_Logging_Service () override = default;
 
   Event_Logging_Service (Event_Logging_Service const &) = delete;
   Event_Logging_Service (Event_Logging_Service &&) = delete;
   Event_Logging_Service &operator= (Event_Logging_Service const &) = delete;
   Event_Logging_Service &operator= (Event_Logging_Service &&) = delete;
 
-  int init (int argc, ACE_TCHAR * argv[]);
-  // Initializes the Telecom Log Service.
-  // Returns 0 on success, -1 on error.
+  /// Initializes the Telecom Log Service.
+  /// @return 0 on success, -1 on error.
+  int init (int argc, ACE_TCHAR * argv[]) override;
 
+  /// Runs the Telecom Log Service.
+  /// @return 0 on success, -1 on error.
   int run ();
-  // Run the Telecom Log Service.
-  // Returns 0 on success, -1 on error.
 
+  /// Shuts down the Telecom Log Service.
   void shutdown ();
-  // Shutdown the Telecom Log Service.
-  // Returns 0 on success, -1 on error.
 
 protected:
+  /// Initializes the ORB.
   void init_ORB (int & argc, ACE_TCHAR * argv []);
-  // initialize the ORB.
 
+  /// Parses the command-line arguments.
   int parse_args (int argc, ACE_TCHAR * argv []);
-  // Parses the command line arguments.
 
+  /// Resolves the naming service.
   void resolve_naming_service ();
-  // Resolve the naming service.
 
+  /// Runs worker threads.
   int svc () override;
-  // Run worker threads.
 
-  // = Data members
-  TAO_EventLogFactory_i * event_log_factory_;
-  // The Event Log Factory.
+  /// @name Data members
+  /// @{
 
+  /// The ORB used by this service.
   CORBA::ORB_var orb_;
-  // The ORB that we use.
 
+  /// The root POA.
   PortableServer::POA_var poa_;
-  // Reference to the root poa.
 
+  /// Keeps the factory servant alive while it is active in the POA.
+  PortableServer::ServantBase_var event_log_factory_owner_ {};
+
+  /// A naming context.
   CosNaming::NamingContext_var naming_;
-  // A naming context.
 
-  ACE_CString service_name_;
-  // The name we use to bind with the NameService
+  /// The name used to bind with the NameService.
+  std::string service_name_ {"EventLogFactory"};
 
-  ACE_TCHAR const * ior_file_name_;
-  // The name of the file where we output the factory IOR.
+  /// The name of the file used to output the factory IOR.
+  std::optional<std::basic_string<ACE_TCHAR>> ior_file_name_;
 
-  ACE_TCHAR const * pid_file_name_;
-  // The name of the file where we output the process id.
+  /// The name of the file used to output the process ID.
+  std::optional<std::basic_string<ACE_TCHAR>> pid_file_name_;
 
-  bool bind_to_naming_service_;
-  // If true, bind to naming service
+  /// Whether to bind to the naming service.
+  bool bind_to_naming_service_ {true};
 
-  int nthreads_;
-  // Number of worker threads.
+  /// Number of worker threads.
+  int nthreads_ {};
+
+  /// @}
 };
 #endif /* EVENT_LOGGING_SERVICE_H */

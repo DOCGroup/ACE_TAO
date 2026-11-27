@@ -78,8 +78,7 @@ TAO_FixedDef_i::digits (CORBA::UShort digits)
 }
 
 void
-TAO_FixedDef_i::digits_i (CORBA::UShort /* digits */
-                          )
+TAO_FixedDef_i::digits_i (CORBA::UShort /* digits */)
 {
   // TODO
 }
@@ -112,8 +111,7 @@ TAO_FixedDef_i::scale (CORBA::Short scale)
 }
 
 void
-TAO_FixedDef_i::scale_i (CORBA::Short /* scale */
-                         )
+TAO_FixedDef_i::scale_i (CORBA::Short /* scale */)
 {
   // TODO
 }

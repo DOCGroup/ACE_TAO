@@ -1,13 +1,9 @@
-// -*- C++ -*-
-
-//==========================================================================
 /**
  *  @file    Read_Buffer.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  *  @author Seth Widoff
  */
-//==========================================================================
 
 #ifndef ACE_READ_BUFFER_H
 #define ACE_READ_BUFFER_H
@@ -23,9 +19,25 @@
 #include "ace/Global_Macros.h"
 #include "ace/os_include/os_stdio.h"
 
+#include <memory>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class ACE_Allocator;
+
+/// Frees memory allocated by ACE_Read_Buffer::read () with its allocator.
+struct ACE_Export ACE_Read_Buffer_Unique_Ptr_Deleter
+{
+  /// Borrowed from ACE_Read_Buffer; null selects the default allocator.
+  /// A supplied allocator must outlive the owned buffer.
+  ACE_Allocator *allocator {};
+
+  void operator() (char *buffer) const;
+};
+
+/// Owns a buffer returned by ACE_Read_Buffer::read ().
+using ACE_Read_Buffer_Unique_Ptr =
+  std::unique_ptr<char, ACE_Read_Buffer_Unique_Ptr_Deleter>;
 
 /**
  * @class ACE_Read_Buffer
@@ -44,17 +56,20 @@ class ACE_Allocator;
 class ACE_Export ACE_Read_Buffer
 {
 public:
+  ACE_Read_Buffer () = delete;
+
   /// Read from a FILE *.
   ACE_Read_Buffer (FILE *fp,
                    bool close_on_delete = false,
                    ACE_Allocator * = nullptr);
 
-  /// Read from an open HANDLE.
+  /// Read from an open handle. Where supported, a borrowed handle is duplicated
+  /// for the stream.
   ACE_Read_Buffer (ACE_HANDLE handle,
                    bool close_on_delete = false,
                    ACE_Allocator * = nullptr);
 
-  /// Closes the FILE *.
+  /// Closes an owned stream and leaves a borrowed FILE or handle open.
   ~ACE_Read_Buffer ();
 
   /**
@@ -65,7 +80,7 @@ public:
    * @a replace value.  The last of the byte of data is a 0, so that
    * @c strlen can be used on it.  The caller is responsible for
    * freeing the pointer returned from this method using the
-   * ACE_Allocator::free().
+   * ACE_Allocator::free(). Returns null if no stream is available.
    */
   char *read (int terminator = EOF,
               int search = '\n',
@@ -85,8 +100,8 @@ public:
   void dump () const;
 
 private:
-  void operator= (const ACE_Read_Buffer &) = delete;
-  ACE_Read_Buffer (const ACE_Read_Buffer &) = delete;
+  void operator= (ACE_Read_Buffer const &) = delete;
+  ACE_Read_Buffer (ACE_Read_Buffer const &) = delete;
   void operator= (ACE_Read_Buffer &&) = delete;
   ACE_Read_Buffer (ACE_Read_Buffer &&) = delete;
 
@@ -95,16 +110,15 @@ private:
   char *rec_read (int term, int search, int replace);
 
   /// The total number of characters in the buffer.
-  size_t size_;
+  size_t size_ {};
 
   /// The total number of characters replaced.
-  size_t occurrences_;
+  size_t occurrences_ {};
 
   /// The stream we are reading from.
   FILE *stream_;
 
-  /// Keeps track of whether we should close the FILE in the
-  /// destructor.
+  /// Whether the stream is closed when this reader is destroyed.
   bool const close_on_delete_;
 
   /// Pointer to the allocator.

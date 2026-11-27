@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #ifndef UTF8_LATIN1_FACTORY_H
 #define UTF8_LATIN1_FACTORY_H
 
@@ -9,6 +8,8 @@
 
 #include "tao/Codeset/UTF8_Latin1_Translator.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Codeset_Export TAO_UTF8_Latin1_Factory
@@ -16,7 +17,7 @@ class TAO_Codeset_Export TAO_UTF8_Latin1_Factory
 {
 public:
   TAO_UTF8_Latin1_Factory () = default;
-  ~TAO_UTF8_Latin1_Factory () override;
+  ~TAO_UTF8_Latin1_Factory () override = default;
   int init (int argc, ACE_TCHAR *argv[]) override;
 
   /// ncs returns the translator's native codeset ID.
@@ -35,16 +36,15 @@ public:
   /// no-op.
   void assign (TAO_OutputCDR *) const override;
 
-private:
   TAO_UTF8_Latin1_Factory (TAO_UTF8_Latin1_Factory const &) = delete;
   TAO_UTF8_Latin1_Factory &operator= (TAO_UTF8_Latin1_Factory const &) = delete;
   TAO_UTF8_Latin1_Factory (TAO_UTF8_Latin1_Factory &&) = delete;
   TAO_UTF8_Latin1_Factory &operator= (TAO_UTF8_Latin1_Factory &&) = delete;
 
-  void create_translator () const;
-
 private:
-  TAO_UTF8_Latin1_Translator *translator_ {};
+  bool create_translator () const;
+
+  mutable std::unique_ptr<TAO_UTF8_Latin1_Translator> translator_ {};
 };
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_Codeset, TAO_UTF8_Latin1_Factory)

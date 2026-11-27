@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Echo_Client_i.h
  *
@@ -8,8 +5,6 @@
  *
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef ECHO_CLIENT_I_H
 #define ECHO_CLIENT_I_H
@@ -28,14 +23,17 @@
 class Echo_Client_i
 {
 public:
-  /// Constructor
   Echo_Client_i () = default;
 
-  /// Destructor
   ~Echo_Client_i () = default;
 
+  Echo_Client_i (Echo_Client_i const &) = delete;
+  Echo_Client_i &operator= (Echo_Client_i const &) = delete;
+  Echo_Client_i (Echo_Client_i &&) = delete;
+  Echo_Client_i &operator= (Echo_Client_i &&) = delete;
+
   /// Execute the methods
-  int run (const char *, int, ACE_TCHAR **);
+  int run (char const *, int, ACE_TCHAR **);
 
 private:
   /// Instantiate the client object.

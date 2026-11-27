@@ -31,14 +31,14 @@ CServerDoc::CServerDoc()
   // TODO: add one-time construction code here
 }
 
-CServerDoc::~CServerDoc()
-{
-}
+CServerDoc::~CServerDoc() = default;
 
 BOOL CServerDoc::OnNewDocument()
 {
   if (!CDocument::OnNewDocument())
-    return FALSE;
+    {
+      return FALSE;
+    }
 
   // TODO: add reinitialization code here
   // (SDI documents will reuse this document)

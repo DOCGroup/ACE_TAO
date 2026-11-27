@@ -3,20 +3,27 @@
 #include "ace/Signal.h"
 #include "ace/Sig_Handler.h"
 
+#include <memory>
+
 class MySignalHandler : public ACE_Event_Handler
 {
 public:
-  MySignalHandler (int signum) : signum_(signum)
+  explicit MySignalHandler (int signum) : signum_ (signum)
   { }
 
   ~MySignalHandler () override = default;
+
+  MySignalHandler (MySignalHandler const &) = delete;
+  MySignalHandler (MySignalHandler &&) = delete;
+  MySignalHandler &operator= (MySignalHandler const &) = delete;
+  MySignalHandler &operator= (MySignalHandler &&) = delete;
 
   int handle_signal (int signum, siginfo_t * = nullptr, ucontext_t * = nullptr) override
   {
     ACE_TRACE ("MySignalHandler::handle_signal");
 
     // Make sure the right handler was called back..
-    ACE_ASSERT(signum == this->signum_);
+    ACE_ASSERT (signum == this->signum_);
 
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%d occurred\n"), signum));
 
@@ -32,8 +39,8 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
 {
   MySignalHandler h1 (SIGUSR1), h2 (SIGUSR1);
   ACE_Sig_Handlers handler;
-  handler.register_handler (SIGUSR1, &h1);
-  handler.register_handler (SIGUSR1, &h2);
+  handler.register_handler (SIGUSR1, std::addressof (h1));
+  handler.register_handler (SIGUSR1, std::addressof (h2));
 
   ACE_OS::kill (ACE_OS::getpid (), SIGUSR1);
 
@@ -41,10 +48,14 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   while ((time = ACE_OS::sleep (time)) == -1)
     {
       if (errno == EINTR)
-        continue;
+        {
+          continue;
+        }
       else
-        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("sleep")), -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
+                             ACE_TEXT ("sleep")), -1);
+        }
     }
   return 0;
 }

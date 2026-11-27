@@ -1,4 +1,3 @@
-//  -*- MPC -*-
 // This project will be generated with and without ssl=1 feature
 // but will only build when the ssl macro != 1 (i.e. ssl off)
 project(HTTP_Simple_exec) : aceexe, inet {

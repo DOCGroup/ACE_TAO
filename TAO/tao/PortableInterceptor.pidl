@@ -1,5 +1,3 @@
-// -*- IDL -*-
-
 /**
  * @file PortableInterceptor.pidl
  *
@@ -17,7 +15,6 @@
  *    - move of CodecFactory and Codec interfaces to the IOP module
  */
 
-// File: PortableInterceptor.idl
 #ifndef _PORTABLE_INTERCEPTOR_IDL_
 #define _PORTABLE_INTERCEPTOR_IDL_
 
@@ -34,13 +31,15 @@ module PortableInterceptor {
   const AdapterState    INACTIVE        = 3;
   const AdapterState    NON_EXISTENT    = 4;
 
-  // Valid reply_status values:
+  /// @name Valid reply_status values
+  /// @{
   const ReplyStatus SUCCESSFUL = 0;
   const ReplyStatus SYSTEM_EXCEPTION = 1;
   const ReplyStatus USER_EXCEPTION = 2;
   const ReplyStatus LOCATION_FORWARD = 3;
   const ReplyStatus TRANSPORT_RETRY = 4;
   const ReplyStatus UNKNOWN = 5;
+  /// @}
 };
 
 #endif  /* _PORTABLE_INTERCEPTOR_IDL_ */

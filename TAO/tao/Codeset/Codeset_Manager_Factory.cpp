@@ -1,12 +1,8 @@
-/* -*- C++ -*- */
-
-// =================================================================
 /**
  * @file Codeset_Manager_Factory.cpp
  *
  * @author Phil Mesnier <mesnier_p@ociweb.com>
  */
-// =================================================================
 
 #include "tao/Codeset/Codeset_Manager_Factory.h"
 #include "ace/Service_Config.h"
@@ -14,19 +10,16 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Codeset_Manager_Factory::~TAO_Codeset_Manager_Factory () = default;
-
 bool
 TAO_Codeset_Manager_Factory::is_default () const
 {
   return false;
 }
 
-
 TAO_Codeset_Manager *
 TAO_Codeset_Manager_Factory::create ()
 {
-  TAO_Codeset_Manager_i *csm = nullptr;
+  TAO_Codeset_Manager_i *csm {};
   ACE_NEW_RETURN (csm, TAO_Codeset_Manager_i, nullptr);
 
   return csm;

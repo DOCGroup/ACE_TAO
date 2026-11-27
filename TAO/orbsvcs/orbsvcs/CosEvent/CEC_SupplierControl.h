@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   CEC_SupplierControl.h
  *
@@ -10,8 +7,6 @@
  *
  * http://doc.ece.uci.edu/~coryan/EC/
  */
-//=============================================================================
-
 
 #ifndef TAO_CEC_SUPPLIERCONTROL_H
 #define TAO_CEC_SUPPLIERCONTROL_H
@@ -49,17 +44,17 @@ namespace CORBA
  *
  * Defines the interface for the supplier control strategy.
  * This strategy handles misbehaving or failing suppliers.
- * = MEMORY MANAGEMENT
- * = LOCKING
- * = TODO
  */
 class TAO_Event_Serv_Export TAO_CEC_SupplierControl
 {
 public:
-  /// Constructor
   TAO_CEC_SupplierControl () = default;
 
-  /// destructor...
+  TAO_CEC_SupplierControl (TAO_CEC_SupplierControl const &) = delete;
+  TAO_CEC_SupplierControl (TAO_CEC_SupplierControl &&) = delete;
+  TAO_CEC_SupplierControl &operator= (TAO_CEC_SupplierControl const &) = delete;
+  TAO_CEC_SupplierControl &operator= (TAO_CEC_SupplierControl &&) = delete;
+
   virtual ~TAO_CEC_SupplierControl () = default;
 
   /// Activate any internal threads or timers used to poll the state of
@@ -93,10 +88,10 @@ public:
   /// proxy is PortableServer::ServantBase* due to the fact that this
   /// method will be used for TAO_CEC_ProxyPushSupplier's and
   /// TAO_CEC_ProxyPullSupplier's.
-  virtual bool need_to_disconnect (PortableServer::ServantBase* proxy);
+  virtual bool need_to_disconnect (PortableServer::ServantBase *proxy);
 
   /// Allow others to inform us when a send or receive was successful.
-  virtual void successful_transmission (PortableServer::ServantBase* proxy);
+  virtual void successful_transmission (PortableServer::ServantBase *proxy);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

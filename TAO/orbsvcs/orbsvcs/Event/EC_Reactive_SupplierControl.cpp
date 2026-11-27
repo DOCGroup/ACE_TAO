@@ -9,16 +9,17 @@
 
 #include "ace/Reactor.h"
 
+#include <memory>
+
 #if ! defined (__ACE_INLINE__)
 #include "orbsvcs/Event/EC_Reactive_SupplierControl.inl"
 #endif /* __ACE_INLINE__ */
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EC_Reactive_SupplierControl::
-     TAO_EC_Reactive_SupplierControl (const ACE_Time_Value &rate,
-                                      const ACE_Time_Value &timeout,
+     TAO_EC_Reactive_SupplierControl (ACE_Time_Value const &rate,
+                                      ACE_Time_Value const &timeout,
                                       TAO_EC_Event_Channel_Base *ec,
                                       CORBA::ORB_ptr orb)
   : rate_ (rate),
@@ -34,10 +35,6 @@ TAO_EC_Reactive_SupplierControl::
     this->orb_->orb_core ()->reactor ();
 }
 
-TAO_EC_Reactive_SupplierControl::~TAO_EC_Reactive_SupplierControl ()
-{
-}
-
 void
 TAO_EC_Reactive_SupplierControl::query_suppliers ()
 {
@@ -47,8 +44,8 @@ TAO_EC_Reactive_SupplierControl::query_suppliers ()
 
 void
 TAO_EC_Reactive_SupplierControl::handle_timeout (
-      const ACE_Time_Value &,
-      const void *)
+      ACE_Time_Value const &,
+      void const *)
 {
   try
     {
@@ -67,12 +64,12 @@ TAO_EC_Reactive_SupplierControl::handle_timeout (
 
       this->policy_current_->set_policy_overrides (policies.in (),
                                                    CORBA::SET_OVERRIDE);
-      for (CORBA::ULong i = 0; i != policies->length (); ++i)
+      for (CORBA::ULong i {}; i != policies->length (); ++i)
         {
           policies[i]->destroy ();
         }
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const&)
     {
       // Ignore all exceptions
     }
@@ -85,14 +82,14 @@ TAO_EC_Reactive_SupplierControl::activate ()
   try
     {
       // Get the PolicyCurrent object
-      CORBA::Object_var tmp =
+      CORBA::Object_var const tmp =
         this->orb_->resolve_initial_references ("PolicyCurrent");
 
       this->policy_current_ =
         CORBA::PolicyCurrent::_narrow (tmp.in ());
 
       // Timeout for polling state (default = 10 msec)
-      TimeBase::TimeT timeout = timeout_.usec() * 10;
+      const TimeBase::TimeT timeout = timeout_.usec() * 10;
       CORBA::Any any;
       any <<= timeout;
 
@@ -108,15 +105,17 @@ TAO_EC_Reactive_SupplierControl::activate ()
         // Schedule the timer after these policies has been set, because the
         // handle_timeout uses these policies, if done in front, the channel
         // can crash when the timeout expires before initiazation is ready.
-        timer_id_ = this->reactor_->schedule_timer (&this->adapter_,
+        timer_id_ = this->reactor_->schedule_timer (std::addressof (this->adapter_),
                                                     nullptr,
                                                     this->rate_,
                                                     this->rate_);
         if (timer_id_ == -1)
+        {
           return -1;
+        }
       }
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const&)
     {
       return -1;
     }
@@ -128,7 +127,7 @@ TAO_EC_Reactive_SupplierControl::activate ()
 int
 TAO_EC_Reactive_SupplierControl::shutdown ()
 {
-  int r = 0;
+  int r {};
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
   r = this->reactor_->cancel_timer (timer_id_);
@@ -148,7 +147,7 @@ TAO_EC_Reactive_SupplierControl::supplier_not_exist (
       //            "Consumer %x does not exists\n", long(proxy)));
       proxy->disconnect_push_consumer ();
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const&)
     {
       // Ignore all exceptions..
     }
@@ -173,7 +172,7 @@ TAO_EC_Reactive_SupplierControl::system_exception (
       // Anything else is serious, including timeouts...
       proxy->disconnect_push_consumer ();
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const&)
     {
       // Ignore all exceptions..
     }
@@ -189,8 +188,8 @@ TAO_EC_SupplierControl_Adapter::TAO_EC_SupplierControl_Adapter (
 
 int
 TAO_EC_SupplierControl_Adapter::handle_timeout (
-      const ACE_Time_Value &tv,
-      const void *arg)
+      ACE_Time_Value const &tv,
+      void const *arg)
 {
   this->adaptee_->handle_timeout (tv, arg);
   return 0;
@@ -204,25 +203,25 @@ TAO_EC_Ping_Supplier::work (TAO_EC_ProxyPushConsumer *consumer)
   try
     {
       CORBA::Boolean disconnected;
-      CORBA::Boolean non_existent =
+      CORBA::Boolean const non_existent =
         consumer->supplier_non_existent (disconnected);
       if (non_existent && !disconnected)
         {
           this->control_->supplier_not_exist (consumer);
         }
     }
-  catch (const CORBA::OBJECT_NOT_EXIST&)
+  catch (CORBA::OBJECT_NOT_EXIST const&)
     {
       this->control_->supplier_not_exist (consumer);
     }
-  catch (const CORBA::TRANSIENT&)
+  catch (CORBA::TRANSIENT const&)
     {
       // This is TAO's minor code for a failed connection, we may
       // want to be more lenient in the future..
       // if (transient.minor () == 0x54410085)
       this->control_->supplier_not_exist (consumer);
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const&)
     {
       // Ignore all exceptions
     }

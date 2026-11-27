@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 /**
  *  @file Timer.h
  *
@@ -34,14 +32,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Notify_Serv_Export TAO_Notify_Timer : public TAO_Notify_Refcountable
 {
 public:
-  using Ptr = TAO_Notify_Refcountable_Guard_T< TAO_Notify_Timer >;
-  /// Destructor
+  using Ptr = TAO_Notify_Refcountable_Guard_T<TAO_Notify_Timer>;
   virtual ~TAO_Notify_Timer () = default;
 
   /// Schedule a timer
   virtual long schedule_timer (ACE_Event_Handler *handler,
-                               const ACE_Time_Value &delay_time,
-                               const ACE_Time_Value &interval) = 0;
+                               ACE_Time_Value const &delay_time,
+                               ACE_Time_Value const &interval) = 0;
 
   /// Cancel Timer
   virtual int cancel_timer (long timer_id) = 0;

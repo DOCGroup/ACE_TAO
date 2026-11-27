@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   SSLIOP_SSL.h
  *
@@ -8,7 +5,6 @@
  *
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef TAO_SSLIOP_SSL_H
 #define TAO_SSLIOP_SSL_H
@@ -25,7 +21,7 @@
 
 #include <openssl/ssl.h>
 #include <openssl/crypto.h>
-
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -35,14 +31,9 @@ namespace TAO
   {
     // OpenSSL @c SSL structure traits specialization.
     template <>
-    struct OpenSSL_traits< ::SSL >
+    struct OpenSSL_traits<::SSL>
     {
       /// Increase the reference count on the given OpenSSL structure.
-      /**
-       * @note This used to be in a function template but MSVC++ 6
-       *       can't handle function templates correctly so reproduce
-       *       the code in each specialization.  *sigh*
-       */
       static ::SSL * _duplicate (::SSL * st)
       {
         if (st != nullptr)
@@ -62,7 +53,7 @@ namespace TAO
       /// Perform deep copy of the given OpenSSL structure.
       static ::SSL * copy (::SSL const & st)
       {
-        return ::SSL_dup (const_cast< ::SSL * > (&st));
+        return ::SSL_dup (const_cast<::SSL *> (std::addressof (st)));
       }
 
       /// Decrease the reference count on the given OpenSSL
@@ -73,7 +64,7 @@ namespace TAO
       }
     };
 
-    using SSL_var = OpenSSL_st_var< ::SSL >;
+    using SSL_var = OpenSSL_st_var<::SSL>;
   }  // End SSLIOP namespace.
 }  // End TAO namespace.
 

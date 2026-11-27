@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    TypeCodeFactory_Adapter.h
  *
  *  @author  Jeff Parsons <parsons@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_TYPECODEFACTORY_ADAPTER_H
 #define TAO_TYPECODEFACTORY_ADAPTER_H
@@ -22,9 +18,7 @@
 #include "tao/Typecode_typesC.h"
 #include "tao/Pseudo_VarOut_T.h"
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-template<class T> class ACE_Array_Base;
-ACE_END_VERSIONED_NAMESPACE_DECL
+#include <vector>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -51,7 +45,6 @@ namespace TAO
   }
 }
 
-
 /**
  * @class TAO_TypeCodeFactory_Adapter
  *
@@ -67,34 +60,34 @@ public:
   ~TAO_TypeCodeFactory_Adapter () override;
 
   virtual CORBA::TypeCode_ptr create_struct_tc (
-      const char *id,
-      const char *name,
-      const CORBA::StructMemberSeq &members) = 0;
+      char const *id,
+      char const *name,
+      CORBA::StructMemberSeq const &members) = 0;
 
   virtual CORBA::TypeCode_ptr create_union_tc (
-      const char *id,
-      const char *name,
+      char const *id,
+      char const *name,
       CORBA::TypeCode_ptr discriminator_type,
-      const CORBA::UnionMemberSeq &members) = 0;
+      CORBA::UnionMemberSeq const &members) = 0;
 
   virtual CORBA::TypeCode_ptr create_enum_tc (
-      const char *id,
-      const char *name,
-      const CORBA::EnumMemberSeq &members) = 0;
+      char const *id,
+      char const *name,
+      CORBA::EnumMemberSeq const &members) = 0;
 
   virtual CORBA::TypeCode_ptr create_alias_tc (
-      const char *id,
-      const char *name,
+      char const *id,
+      char const *name,
       CORBA::TypeCode_ptr original_type) = 0;
 
   virtual CORBA::TypeCode_ptr create_exception_tc (
-      const char *id,
-      const char *name,
-      const CORBA::StructMemberSeq &members) = 0;
+      char const *id,
+      char const *name,
+      CORBA::StructMemberSeq const &members) = 0;
 
   virtual CORBA::TypeCode_ptr create_interface_tc (
-      const char *id,
-      const char *name) = 0;
+      char const *id,
+      char const *name) = 0;
 
   virtual CORBA::TypeCode_ptr create_string_tc (
       CORBA::ULong bound) = 0;
@@ -115,45 +108,45 @@ public:
       CORBA::TypeCode_ptr element_type) = 0;
 
   virtual CORBA::TypeCode_ptr create_value_tc (
-      const char *id,
-      const char *name,
+      char const *id,
+      char const *name,
       CORBA::ValueModifier type_modifier,
       CORBA::TypeCode_ptr concrete_base,
-      const CORBA::ValueMemberSeq &members) = 0;
+      CORBA::ValueMemberSeq const &members) = 0;
 
   virtual CORBA::TypeCode_ptr create_value_box_tc (
-      const char *id,
-      const char *name,
+      char const *id,
+      char const *name,
       CORBA::TypeCode_ptr boxed_type) = 0;
 
   virtual CORBA::TypeCode_ptr create_native_tc (
-      const char *id,
-      const char *name) = 0;
+      char const *id,
+      char const *name) = 0;
 
-  virtual CORBA::TypeCode_ptr create_recursive_tc (const char *id) = 0;
+  virtual CORBA::TypeCode_ptr create_recursive_tc (char const *id) = 0;
 
   virtual CORBA::TypeCode_ptr create_abstract_interface_tc (
-      const char *id,
-      const char *name) = 0;
+      char const *id,
+      char const *name) = 0;
 
   virtual CORBA::TypeCode_ptr create_local_interface_tc (
-      const char *id,
-      const char *name) = 0;
+      char const *id,
+      char const *name) = 0;
 
   virtual CORBA::TypeCode_ptr create_component_tc (
-      const char *id,
-      const char *name) = 0;
+      char const *id,
+      char const *name) = 0;
 
   virtual CORBA::TypeCode_ptr create_home_tc (
-      const char *id,
-      const char *name) = 0;
+      char const *id,
+      char const *name) = 0;
 
   virtual CORBA::TypeCode_ptr create_event_tc (
-      const char *id,
-      const char *name,
+      char const *id,
+      char const *name,
       CORBA::ValueModifier type_modifier,
       CORBA::TypeCode_ptr concrete_base,
-      const CORBA::ValueMemberSeq &members) = 0;
+      CORBA::ValueMemberSeq const &members) = 0;
 
   /**
    * @name TAO-specific TypeCode factory methods.
@@ -161,12 +154,13 @@ public:
    * Factory methods that has no corresponding TypeCodeFactory IDL,
    * i.e. they are specific to TAO.
    */
-  //@{
+  /// @{
+
   /// Create an enumeration TypeCode.
   virtual CORBA::TypeCode_ptr create_enum_tc (
     char const * id,
     char const * name,
-    ACE_Array_Base<CORBA::String_var> const & enumerators,
+    std::vector<CORBA::String_var> const & enumerators,
     CORBA::ULong ncases) = 0;
 
   /// Create a structure or exception TypeCode.
@@ -174,9 +168,9 @@ public:
     CORBA::TCKind,
     char const * id,
     char const * name,
-    ACE_Array_Base<
+    std::vector<
       TAO::TypeCode::Struct_Field<CORBA::String_var,
-                                  CORBA::TypeCode_var> > const & fields,
+                                  CORBA::TypeCode_var>> const & fields,
     CORBA::ULong nfields) = 0;
 
   /// Create a union TypeCode.
@@ -184,8 +178,8 @@ public:
     char const * id,
     char const * name,
     CORBA::TypeCode_ptr discriminant_type,
-    ACE_Array_Base<TAO::TypeCode::Case<CORBA::String_var,
-                                       CORBA::TypeCode_var> > const & cases,
+    std::vector<TAO::TypeCode::Case<CORBA::String_var,
+                                    CORBA::TypeCode_var>> const & cases,
     CORBA::ULong ncases,
     CORBA::Long default_index,
     char const * default_case_name,
@@ -198,11 +192,11 @@ public:
     char const * name,
     CORBA::ValueModifier modifier,
     CORBA::TypeCode_ptr concrete_base,
-    ACE_Array_Base<
+    std::vector<
       TAO::TypeCode::Value_Field<CORBA::String_var,
-                                 CORBA::TypeCode_var> > const & fields,
+                                 CORBA::TypeCode_var>> const & fields,
     CORBA::ULong nfields) = 0;
-  //@}
+  /// @}
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

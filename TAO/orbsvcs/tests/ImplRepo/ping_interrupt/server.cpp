@@ -1,6 +1,8 @@
 // server.cpp
 // This version uses the Implementation Repository.
 
+#include <string>
+
 #include "Test_i.h"
 #include "Server_ORBInitializer.h"
 
@@ -17,15 +19,14 @@ namespace
 {
   ACE_CString toStr(int n)
   {
-    char buf[20];
-    return ACE_OS::itoa(n, buf, 10);
+    return ACE_CString (std::to_string (n).c_str ());
   }
 }
 
 PortableServer::POA_ptr
 createPOA (PortableServer::POA_ptr root_poa,
            bool share_mgr,
-           const char* poa_name)
+           char const *poa_name)
 {
   PortableServer::LifespanPolicy_var life =
     root_poa->create_lifespan_policy(PortableServer::PERSISTENT);
@@ -61,7 +62,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       int die_on_ping = 1;
       int ping_count = 0;
 
-      for (int i = 1; i < argc; i++)
+      for (int i = 1; i < argc; ++i)
         {
           ACE_TCHAR *c = argv[i];
           if (ACE_OS::strcasecmp (ACE_TEXT ("-n"), c) == 0)
@@ -142,10 +143,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         orb->perform_work ();
       }
 
-    root_poa->destroy(1,1);
+    root_poa->destroy(true,true);
     orb->destroy();
   }
-  catch(const CORBA::Exception& ex) {
+  catch(CORBA::Exception const & ex) {
     ex._tao_print_exception (ACE_TEXT("Server main()"));
     return 1;
   }

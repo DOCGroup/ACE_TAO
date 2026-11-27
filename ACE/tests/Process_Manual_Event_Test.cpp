@@ -1,14 +1,11 @@
-
-//=============================================================================
 /**
  *  @file    Process_Manual_Event_Test.cpp
  *
- *  This test verifies the functionality of the <ACE_Manual_Event>
+ *  This test verifies the functionality of the @c ACE_Manual_Event
  *  process-shared implementation.
  *
  *  @author Martin Corino <mcorino@remedy.nl>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "ace/Process.h"
@@ -30,8 +27,8 @@
    (defined (ACE_HAS_POSIX_SEM) && defined (ACE_HAS_POSIX_SEM_TIMEOUT) && !defined (ACE_LACKS_NAMED_POSIX_SEM)))
 static int iterations = 10;
 static int child_process = 0;
-static const ACE_TCHAR *event_ping_name = ACE_TEXT ("ACE_Ping_Event");
-static const ACE_TCHAR *event_pong_name = ACE_TEXT ("ACE_Pong_Event");
+static ACE_TCHAR const *event_ping_name = ACE_TEXT ("ACE_Ping_Event");
+static ACE_TCHAR const *event_pong_name = ACE_TEXT ("ACE_Pong_Event");
 
 // Explain usage and exit.
 static void
@@ -51,18 +48,20 @@ parse_args (int argc, ACE_TCHAR *argv[])
   int c;
 
   while ((c = get_opt ()) != -1)
-    switch (c)
-      {
-      case 'i':
-        iterations = ACE_OS::atoi (get_opt.opt_arg ());
-        break;
-      case 'c':
-        child_process = 1;
-        break;
-      default:
-        print_usage_and_die ();
-        break;
-      }
+    {
+      switch (c)
+        {
+        case 'i':
+          iterations = ACE_OS::atoi (get_opt.opt_arg ());
+          break;
+        case 'c':
+          child_process = 1;
+          break;
+        default:
+          print_usage_and_die ();
+          break;
+        }
+    }
 }
 
 static void
@@ -85,9 +84,11 @@ acquire_release ()
           event_ping.signal ();
 
           if (event_pong.wait ())
-            ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("(%P) %p\n"),
-                        ACE_TEXT ("Failed acquiring pong")));
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("(%P) %p\n"),
+                          ACE_TEXT ("Failed acquiring pong")));
+            }
           else
             {
               event_pong.reset ();
@@ -104,13 +105,17 @@ acquire_release ()
       if (event_pong.wait (&wait))
         {
           if (errno != ETIME)
-            ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("(%P) %p, but expected ETIME\n"),
-                        ACE_TEXT ("event_pong.wait()")));
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("(%P) %p, but expected ETIME\n"),
+                          ACE_TEXT ("event_pong.wait()")));
+            }
         }
       else
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P) Acquired pong without release()\n")));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("(%P) Acquired pong without release()\n")));
+        }
 
       event_ping.signal ();   // release waiting parent before timeout
     }
@@ -119,9 +124,11 @@ acquire_release ()
       for (i = 0; i < iterations; ++i)
         {
           if (event_ping.wait ())
-            ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("(%P) %p\n"),
-                        ACE_TEXT ("Failed acquiring ping")));
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("(%P) %p\n"),
+                          ACE_TEXT ("Failed acquiring ping")));
+            }
           else
             {
               event_ping.reset ();
@@ -141,9 +148,11 @@ acquire_release ()
       if (event_ping.wait (&wait))
         {
           if (errno != ETIME)
-            ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("(%P) %p but should be ETIME\n"),
-                        ACE_TEXT ("Acquire pong")));
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("(%P) %p but should be ETIME\n"),
+                          ACE_TEXT ("Acquire pong")));
+            }
 
           ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P) Acquire pong timed out\n")));
         }
@@ -188,11 +197,11 @@ run_main (int argc, ACE_TCHAR *argv[])
       ACE_TCHAR const * argv_0 = argc > 0 ? argv[0] : ACE_TEXT ("Process_Manual_Event_Test");
 
 #if defined (ACE_WIN32)
-      const ACE_TCHAR *cmdline_format = ACE_TEXT("\"%s\" -c -i %d");
+      ACE_TCHAR const *cmdline_format = ACE_TEXT("\"%s\" -c -i %d");
 #elif !defined (ACE_USES_WCHAR)
-const ACE_TCHAR *cmdline_format = argc > 0 ? ACE_TEXT ("%s -c -i %d") : (ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR ACE_TEXT("%s -c -i %d"));
+ACE_TCHAR const *cmdline_format = argc > 0 ? ACE_TEXT ("%s -c -i %d") : (ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR ACE_TEXT("%s -c -i %d"));
 #else
-const ACE_TCHAR *cmdline_format = argc > 0 ? ACE_TEXT ("%s -c -i %d") : (ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR ACE_TEXT("%ls -c -i %d"));
+ACE_TCHAR const *cmdline_format = argc > 0 ? ACE_TEXT ("%s -c -i %d") : (ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR ACE_TEXT("%ls -c -i %d"));
 #endif
 
       ACE_Process_Options options;
@@ -208,30 +217,38 @@ const ACE_TCHAR *cmdline_format = argc > 0 ? ACE_TEXT ("%s -c -i %d") : (ACE_TEX
                             options.command_line_buf ()));
 
       // Spawn the child process.
-      pid_t result = child.spawn (options);
+      pid_t const result = child.spawn (options);
       if (result != ACE_INVALID_PID)
-        ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("Parent spawned child process with pid = %d.\n"),
-                  child.getpid ()));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("Parent spawned child process with pid = %d.\n"),
+                      child.getpid ()));
+        }
       else
-        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
-                                     ACE_TEXT ("spawn failed")), 1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
+                             ACE_TEXT ("spawn failed")), 1);
+        }
 
       // start test
       acquire_release ();
 
       ACE_exitcode child_status;
       // Wait for the child processes we created to exit.
-      int wait_result = child.wait (&child_status);
+      int const wait_result = child.wait (&child_status);
       ACE_TEST_ASSERT (wait_result != -1);
       if (child_status == 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("Child %d finished ok\n"),
-                    child.getpid ()));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("Child %d finished ok\n"),
+                      child.getpid ()));
+        }
       else
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("Child %d finished with status %d\n"),
-                    child.getpid (), child_status));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("Child %d finished with status %d\n"),
+                      child.getpid (), child_status));
+        }
       ACE_END_TEST;
     }
 #else /* !ACE_LACKS_FORK */

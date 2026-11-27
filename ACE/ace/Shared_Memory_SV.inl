@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "ace/Global_Macros.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -16,7 +15,7 @@ ACE_Shared_Memory_SV::open (key_t id,
                                          perms, addr, flags);
 }
 
-// The "do-nothing" constructor.
+/// The "do-nothing" constructor.
 ACE_INLINE
 ACE_Shared_Memory_SV::ACE_Shared_Memory_SV ()
 {

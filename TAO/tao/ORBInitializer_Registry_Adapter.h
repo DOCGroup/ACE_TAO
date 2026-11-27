@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-// ===================================================================
 /**
  *  @file   ORBInitializer_Registry_Adapter.h
  *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-// ===================================================================
 
 #ifndef TAO_ORB_INITIALIZER_REGISTRY_ADAPTER_H
 #define TAO_ORB_INITIALIZER_REGISTRY_ADAPTER_H
@@ -46,6 +42,8 @@ namespace TAO
     : public ACE_Service_Object
   {
     public:
+      ORBInitializer_Registry_Adapter () = default;
+
       ~ORBInitializer_Registry_Adapter () override;
 
       /// Register an ORBInitializer with the underlying ORBInitializer
@@ -85,6 +83,16 @@ namespace TAO
         int argc,
         char *argv[],
         PortableInterceptor::SlotId slotid) = 0;
+
+    private:
+      ORBInitializer_Registry_Adapter (
+        ORBInitializer_Registry_Adapter const &) = delete;
+      ORBInitializer_Registry_Adapter &operator= (
+        ORBInitializer_Registry_Adapter const &) = delete;
+      ORBInitializer_Registry_Adapter (
+        ORBInitializer_Registry_Adapter &&) = delete;
+      ORBInitializer_Registry_Adapter &operator= (
+        ORBInitializer_Registry_Adapter &&) = delete;
   };
 }
 

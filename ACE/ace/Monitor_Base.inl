@@ -5,7 +5,7 @@ namespace ACE
   namespace Monitor_Control
   {
     ACE_INLINE
-    const char*
+    char const *
     Monitor_Base::name () const
     {
       return this->name_.c_str ();
@@ -13,7 +13,7 @@ namespace ACE
 
     ACE_INLINE
     void
-    Monitor_Base::name (const char* new_name)
+    Monitor_Base::name (char const * new_name)
     {
       this->name_ = new_name;
     }

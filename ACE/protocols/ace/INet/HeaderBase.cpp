@@ -1,5 +1,5 @@
 #include "ace/INet/HeaderBase.h"
-#include "ace/OS_NS_stdlib.h"
+#include <string>
 
 #if !defined (__ACE_INLINE__)
 #include "ace/INet/HeaderBase.inl"
@@ -7,28 +7,25 @@
 
 #include "ace/INet/INet_Log.h"
 
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE
 {
   namespace INet
   {
-    const int         HeaderBase::UNKNOWN_CONTENT_LENGTH     = -1;
-    const ACE_CString HeaderBase::UNKNOWN_CONTENT_TYPE;
-    const ACE_CString HeaderBase::CONTENT_LENGTH             = "Content-Length";
-    const ACE_CString HeaderBase::CONTENT_TYPE               = "Content-Type";
-    const ACE_CString HeaderBase::EMPTY;
+    int const         HeaderBase::UNKNOWN_CONTENT_LENGTH     = -1;
+    ACE_CString const HeaderBase::UNKNOWN_CONTENT_TYPE;
+    ACE_CString const HeaderBase::CONTENT_LENGTH             = "Content-Length";
+    ACE_CString const HeaderBase::CONTENT_TYPE               = "Content-Type";
+    ACE_CString const HeaderBase::EMPTY;
 
-    const int HeaderBase::eof_ = std::char_traits<char>::eof();
+    int const HeaderBase::eof_ = std::char_traits<char>::eof();
 
     HeaderBase::HeaderBase()
       {
       }
 
-    HeaderBase::~HeaderBase()
-      {
-      }
+    HeaderBase::~HeaderBase() = default;
 
     void HeaderBase::set_content_length(int length)
       {
@@ -38,9 +35,8 @@ namespace ACE
           }
         else
           {
-            char buf[32];
-            this->set (CONTENT_LENGTH,
-                       ACE_OS::itoa (length, buf, 10));
+            std::string const length_string = std::to_string (length);
+            this->set (CONTENT_LENGTH, length_string.c_str ());
           }
       }
 
@@ -88,9 +84,13 @@ namespace ACE
             // parse value
             ch = this->read_field (str, value, MAX_VALUE_LENGTH, '\r');
             if (ch == '\r')
-              ch = str.get (); // get lf
+              {
+                ch = str.get (); // get lf
+              }
             if (ch != '\n')
-              return false; // value too long/no crlf found; cannot continue
+              {
+                return false; // value too long/no crlf found; cannot continue
+              }
 
             // followup lines starting with ws are continuations of the value
             // and must be appended
@@ -99,9 +99,13 @@ namespace ACE
             {
               ch = this->read_field (str, value, MAX_VALUE_LENGTH, '\r');
               if (ch == '\r')
-                ch = str.get (); // get lf
+                {
+                  ch = str.get (); // get lf
+                }
               if (ch != '\n')
-                return false; // multiline value too long/no crlf; cannot continue
+                {
+                  return false; // multiline value too long/no crlf; cannot continue
+                }
 
               ch = str.peek ();
             }
@@ -116,8 +120,7 @@ namespace ACE
         return true;
       }
 
-
-    void HeaderBase::set (const ACE_CString& name, const ACE_CString& value)
+    void HeaderBase::set (ACE_CString const& name, ACE_CString const& value)
       {
         TNVMap::ITERATOR it (this->header_values_);
         if (this->header_values_.find (NVPair (name), it) == 0)
@@ -130,7 +133,7 @@ namespace ACE
           }
       }
 
-    void HeaderBase::get_values(const ACE_CString& name, ACE_Array<ACE_CString> & values) const
+    void HeaderBase::get_values(ACE_CString const& name, ACE_Array<ACE_CString> & values) const
       {
         TNVMap::ITERATOR it (const_cast<TNVMap&> (this->header_values_));
         if (this->header_values_.find (name, it) == 0)
@@ -145,25 +148,24 @@ namespace ACE
           }
       }
 
+    NVPair::NVPair () = default;
 
-    NVPair::NVPair () {}
-
-    NVPair::NVPair (const ACE_CString& first)
+    NVPair::NVPair (ACE_CString const& first)
       : first_ (first)
       {
       }
 
-    NVPair::NVPair (const ACE_CString& first, const ACE_CString& second)
+    NVPair::NVPair (ACE_CString const& first, ACE_CString const& second)
       : first_ (first), second_ (second)
       {
       }
 
-    NVPair::NVPair (const NVPair& pair)
+    NVPair::NVPair (NVPair const& pair)
       {
         *this = pair;
       }
 
-    NVPair::~NVPair () {}
+    NVPair::~NVPair () = default;
 
   }
 }

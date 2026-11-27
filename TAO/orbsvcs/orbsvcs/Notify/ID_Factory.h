@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file ID_Factory.h
  *
@@ -30,11 +29,14 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Notify_Serv_Export TAO_Notify_ID_Factory
 {
 public:
-  /// Constructor
   TAO_Notify_ID_Factory ();
 
-  /// Destructor
   ~TAO_Notify_ID_Factory ();
+
+  TAO_Notify_ID_Factory (TAO_Notify_ID_Factory const &) = delete;
+  TAO_Notify_ID_Factory (TAO_Notify_ID_Factory &&) = delete;
+  TAO_Notify_ID_Factory &operator= (TAO_Notify_ID_Factory const &) = delete;
+  TAO_Notify_ID_Factory &operator= (TAO_Notify_ID_Factory &&) = delete;
 
   TAO_Notify_Object::ID id ();
 
@@ -42,7 +44,7 @@ public:
 
 private:
   /// Can't use atomic op, because we added the set_last_used() method.
-  TAO_Notify_Object::ID seed_;
+  TAO_Notify_Object::ID seed_ {};
   TAO_SYNCH_MUTEX mtx_;
 };
 

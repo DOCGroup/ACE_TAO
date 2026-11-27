@@ -9,13 +9,16 @@
 #include "orbsvcs/Naming/Naming_Client.h"
 #include "orbsvcs/Naming/Naming_Server.h"
 
+#include <array>
+
 ACE_TCHAR const* service_name = ACE_TEXT("ScheduleService");
 
-char const* format_string = " {%-12s, %d, %d, %d, %d, %8d, "
-  " static_cast<RtecScheduler::Criticality_t> (%d), "
-  " static_cast<RtecScheduler::Importance_t> (%d), "
-  " %d, %d, %3d, %d, %d, "
-  "static_cast<RtecScheduler::Info_Type_t> (%d)}\n";
+char const* format_string = " {%-12s, %d, %d, %d, %d, %8d,\n"
+  "  static_cast<RtecScheduler::Criticality_t> (%d), "
+  "static_cast<RtecScheduler::Importance_t> (%d),\n"
+  "  %d, %d, %3d, %d, %d,\n"
+  "  static_cast<RtecScheduler::Info_Type_t> (%d), "
+  "static_cast<RtecScheduler::RT_Info_Enabled_Type_t> (%d)}\n";
 
 int
 parse_args (int argc, ACE_TCHAR *argv [])
@@ -53,8 +56,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   }
 
   // create initial data for supplier and consumer operations
-  const int operation_count = 16;
-  ACE_Scheduler_Factory::POD_RT_Info config_infos[operation_count] = {
+  constexpr int operation_count {16};
+  std::array<ACE_Scheduler_Factory::POD_RT_Info, operation_count> config_infos {{
                   // 20 Hz high criticality supplier
                   { "high_20_S",            // entry point
                         0,                  // handle
@@ -327,8 +330,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                         RtecScheduler::OPERATION,           // info type
                         RtecScheduler::RT_INFO_ENABLED
                   }
-  };
-
+  }};
 
   try
     {
@@ -340,9 +342,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         orb->resolve_initial_references("RootPOA");
 
       if (CORBA::is_nil(poa_object.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize the POA.\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Unable to initialize the POA.\n"),
+                            1);
+        }
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (poa_object.in());
@@ -355,23 +359,27 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // Initialize the naming services
       TAO_Naming_Client my_name_client;
       if (my_name_client.init (orb.in ()) != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize "
-                           "the TAO_Naming_Client.\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Unable to initialize "
+                             "the TAO_Naming_Client.\n"),
+                            -1);
+        }
 
       CosNaming::NamingContext_var context =
         my_name_client.get_context ();
 
       if (ACE_Scheduler_Factory::use_config (context.in (),
                                              ACE_TEXT_ALWAYS_CHAR(service_name)) < 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to bind to the scheduling service.\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Unable to bind to the scheduling service.\n"),
+                            1);
+        }
 
       // Create and initialize RT_Infos in the scheduler, make second
       // half of array depend on first half.
-      for (int i = 0; i < operation_count; ++i)
+      for (int i {}; i < operation_count; ++i)
         {
           // create the RT_Info
           config_infos[i].handle =
@@ -415,7 +423,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                                          ACE_SCOPE_THREAD),
          infos.out (), deps.out (), configs.out (), anomalies.out ());
 
-
       ACE_Scheduler_Factory::dump_schedule (infos.in (),
                                             deps.in (),
                                             configs.in (),
@@ -423,7 +430,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                                             ACE_TEXT("Sched_Conf_Runtime.h"),
                                             format_string);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("SYS_EX");
     }

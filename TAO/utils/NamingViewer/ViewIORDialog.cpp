@@ -13,7 +13,6 @@ static char THIS_FILE[] = __FILE__;
 /////////////////////////////////////////////////////////////////////////////
 // ViewIORDialog dialog
 
-
 ViewIORDialog::ViewIORDialog(CORBA::ORB_ptr pORB, CORBA::Object_ptr pObject, CWnd* pParent /*=NULL*/)
   : CDialog(ViewIORDialog::IDD, pParent)
 {
@@ -30,7 +29,6 @@ ViewIORDialog::ViewIORDialog(CORBA::ORB_ptr pORB, CORBA::Object_ptr pObject, CWn
   m_IOR = IOR;
 }
 
-
 void ViewIORDialog::DoDataExchange(CDataExchange* pDX)
 {
   CDialog::DoDataExchange(pDX);
@@ -40,7 +38,6 @@ void ViewIORDialog::DoDataExchange(CDataExchange* pDX)
   DDX_Text(pDX, IDC_IOR, m_IOR);
   //}}AFX_DATA_MAP
 }
-
 
 BEGIN_MESSAGE_MAP(ViewIORDialog, CDialog)
   //{{AFX_MSG_MAP(ViewIORDialog)
@@ -98,7 +95,7 @@ void ViewIORDialog::DecodeIOR()
   // Iterate through each profile and add an entry to the tree control
   const TAO_MProfile& BaseProfiles= pStub->base_profiles();
   CORBA::ULong const Count = BaseProfiles.profile_count();
-  for(CORBA::ULong Slot = 0; Slot < Count; Slot++)
+  for(CORBA::ULong Slot = 0; Slot < Count; ++Slot)
   {
     const TAO_Profile* pProfile = BaseProfiles.get_profile(Slot);
     HTREEITEM hProfile;

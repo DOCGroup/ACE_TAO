@@ -11,6 +11,9 @@
 #include "ace/OS_NS_string.h"
 #include "ace/Log_Category.h"
 #include "ace/Truncate.h"
+
+#include <cstring>
+
 #if defined (ACE_HAS_ALLOC_HOOKS)
 # include "ace/Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
@@ -26,11 +29,13 @@ ACE_Mem_Map::dump () const
   ACE_TRACE ("ACE_Mem_Map::dump");
 
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("base_addr_ = %x"), this->base_addr_));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("base_addr_ = %@"), this->base_addr_));
   ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nfilename_ = %s"), this->filename_));
-  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nlength_ = %d"), this->length_));
-  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nhandle_ = %d"), this->handle_));
-  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nfile_mapping_ = %d"), this->file_mapping_));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nlength_ = %B"), this->length_));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nhandle_ = %H"),
+                 this->handle_));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nfile_mapping_ = %H"),
+                 this->file_mapping_));
   ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nclose_handle_ = %d"), this->close_handle_));
   ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
@@ -72,7 +77,9 @@ ACE_Mem_Map::map_it (ACE_HANDLE handle,
   // unmap() before (potentially) mapping to the same location.
   int const unmap_result = this->unmap ();
   if (unmap_result != 0)
-    return unmap_result;
+    {
+      return unmap_result;
+    }
 #endif /* ACE_LACKS_AUTO_MMAP_REPLACEMENT */
 
   this->base_addr_ = addr;
@@ -81,7 +88,7 @@ ACE_Mem_Map::map_it (ACE_HANDLE handle,
   // mmap through character device doens't care about it's size
   // So map with /dev/* is done with a special case.
   ACE_stat current_file_type;
-  int result = ACE_OS::fstat (this->handle_, &current_file_type);
+  int const result = ACE_OS::fstat (this->handle_, &current_file_type);
 
   if (result == -1)
     {
@@ -121,8 +128,10 @@ ACE_Mem_Map::map_it (ACE_HANDLE handle,
           // Make sure that we have not been asked to do the impossible.
           if (static_cast<ACE_UINT64> (length_request)
               + static_cast<ACE_UINT64> (offset)
-              > static_cast<ACE_UINT64> (ACE_Numeric_Limits<ACE_OFF_T>::max ()))
-            return -1;
+              > static_cast<ACE_UINT64> ((ACE_Numeric_Limits<ACE_OFF_T>::max) ()))
+            {
+              return -1;
+            }
 
           // File length implicitly requested by user
           requested_file_length = static_cast<ACE_OFF_T> (length_request) + offset;
@@ -159,12 +168,16 @@ ACE_Mem_Map::map_it (ACE_HANDLE handle,
                               "",
                               1,
                               null_byte_position) == -1)
-            return -1;
+            {
+              return -1;
+            }
         }
-      }
-    else
+    }
+  else
+    {
       // Unmappable file type.
       return -1;
+    }
 
   this->base_addr_ = ACE_OS::mmap (this->base_addr_,
                                      this->length_,
@@ -179,7 +192,7 @@ ACE_Mem_Map::map_it (ACE_HANDLE handle,
 }
 
 int
-ACE_Mem_Map::open (const ACE_TCHAR *file_name,
+ACE_Mem_Map::open (ACE_TCHAR const *file_name,
                    int flags,
                    mode_t perms,
                    LPSECURITY_ATTRIBUTES sa)
@@ -193,20 +206,20 @@ ACE_Mem_Map::open (const ACE_TCHAR *file_name,
 #endif /* ACE_INTEGRITY */
 
   if (this->handle_ == ACE_INVALID_HANDLE)
-    return -1;
-  else
     {
-      ACE_OS::strsncpy (this->filename_,
-                        file_name,
-                        MAXPATHLEN);
-
-      this->close_handle_ = true;
-      return 0;
+      return -1;
     }
+
+  ACE_OS::strsncpy (this->filename_,
+                    file_name,
+                    MAXPATHLEN);
+
+  this->close_handle_ = true;
+  return 0;
 }
 
 int
-ACE_Mem_Map::map (const ACE_TCHAR *file_name,
+ACE_Mem_Map::map (ACE_TCHAR const *file_name,
                   size_t len,
                   int flags,
                   mode_t mode,
@@ -223,30 +236,30 @@ ACE_Mem_Map::map (const ACE_TCHAR *file_name,
                   flags,
                   mode,
                   sa) == -1)
-    return -1;
-  else
-    return this->map_it (this->handle (),
-                         len,
-                         prot,
-                         share,
-                         addr,
-                         offset,
-                         sa);
+    {
+      return -1;
+    }
+
+  return this->map_it (this->handle (),
+                       len,
+                       prot,
+                       share,
+                       addr,
+                       offset,
+                       sa);
 }
 
 ACE_Mem_Map::ACE_Mem_Map ()
   : base_addr_ (MAP_FAILED),
-    length_ (0),
     handle_ (ACE_INVALID_HANDLE),
-    file_mapping_ (ACE_INVALID_HANDLE),
-    close_handle_ (false)
+    file_mapping_ (ACE_INVALID_HANDLE)
 {
   ACE_TRACE ("ACE_Mem_Map::ACE_Mem_Map");
-  ACE_OS::memset (this->filename_, 0, sizeof this->filename_);
+  std::memset (this->filename_, 0, sizeof this->filename_);
 }
 
 // Map a file specified by FILE_NAME.
-ACE_Mem_Map::ACE_Mem_Map (const ACE_TCHAR *file_name,
+ACE_Mem_Map::ACE_Mem_Map (ACE_TCHAR const *file_name,
                           size_t len,
                           int flags,
                           mode_t mode,
@@ -256,10 +269,8 @@ ACE_Mem_Map::ACE_Mem_Map (const ACE_TCHAR *file_name,
                           ACE_OFF_T offset,
                           LPSECURITY_ATTRIBUTES sa)
   : base_addr_ (MAP_FAILED),
-    length_ (0),
     handle_ (ACE_INVALID_HANDLE),
-    file_mapping_ (ACE_INVALID_HANDLE),
-    close_handle_ (false)
+    file_mapping_ (ACE_INVALID_HANDLE)
 {
   ACE_TRACE ("ACE_Mem_Map::ACE_Mem_Map");
   if (this->map (file_name,
@@ -271,9 +282,11 @@ ACE_Mem_Map::ACE_Mem_Map (const ACE_TCHAR *file_name,
                  addr,
                  offset,
                  sa) < 0)
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACE_Mem_Map::ACE_Mem_Map")));
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("%p\n"),
+                     ACE_TEXT ("ACE_Mem_Map::ACE_Mem_Map")));
+    }
 }
 
 // Map a file from an open file descriptor HANDLE.  This function will
@@ -286,16 +299,14 @@ ACE_Mem_Map::ACE_Mem_Map (ACE_HANDLE handle,
                           ACE_OFF_T offset,
                           LPSECURITY_ATTRIBUTES sa)
   : base_addr_ (MAP_FAILED),
-    length_ (0),
     handle_ (ACE_INVALID_HANDLE),
-    file_mapping_ (ACE_INVALID_HANDLE),
-    close_handle_ (false)
+    file_mapping_ (ACE_INVALID_HANDLE)
 {
   ACE_TRACE ("ACE_Mem_Map::ACE_Mem_Map");
 
-  ACE_OS::memset (this->filename_,
-                  0,
-                  sizeof this->filename_);
+  std::memset (this->filename_,
+               0,
+               sizeof this->filename_);
   if (this->map (handle,
                  len,
                  prot,
@@ -303,9 +314,11 @@ ACE_Mem_Map::ACE_Mem_Map (ACE_HANDLE handle,
                  addr,
                  offset,
                  sa) < 0)
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACE_Mem_Map::ACE_Mem_Map")));
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("%p\n"),
+                     ACE_TEXT ("ACE_Mem_Map::ACE_Mem_Map")));
+    }
 }
 
 // Close down and remove the file from the file system.
@@ -319,14 +332,15 @@ ACE_Mem_Map::remove ()
   this->close ();
 
   if (this->filename_[0] != '\0')
+    {
 #if defined (ACE_INTEGRITY) || defined (__QNXNTO__) || defined (ACE_VXWORKS)
-  return ACE_OS::shm_unlink (this->filename_);
+      return ACE_OS::shm_unlink (this->filename_);
 #else
-  return ACE_OS::unlink (this->filename_);
+      return ACE_OS::unlink (this->filename_);
 #endif /* __QNXNTO__ */
+    }
 
-  else
-    return 0;
+  return 0;
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

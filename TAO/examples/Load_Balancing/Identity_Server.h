@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Identity_Server.h
  *
@@ -9,8 +6,6 @@
  *
  *  @author Marina Spivak <marina@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef IDENTITY_SERVER_H_
 #define IDENTITY_SERVER_H_
@@ -25,20 +20,23 @@
 /**
  * @class Identity_Server
  *
- * Contacts the <Object_Group_Factory> in the Load Balancing Server
- * to create two <Object_Group>s, one round robin and one random.
- * Then, creates a number of <Identity> objects and registers them with
- * the created <Object_Group>s in a manner specified by the
+ * Contacts the @c Object_Group_Factory in the Load Balancing Server
+ * to create two @c Object_Group objects, one round robin and one random.
+ * Then, creates a number of @c Identity objects and registers them with
+ * the created @c Object_Group objects in a manner specified by the
  * commandline arguments.
  */
 class Identity_Server
 {
 public:
-  /// Default constructor.
-  Identity_Server ();
+  Identity_Server () = default;
 
-  /// Destructor.
-  ~Identity_Server ();
+  ~Identity_Server () = default;
+
+  Identity_Server (Identity_Server const &) = delete;
+  Identity_Server (Identity_Server &&) = delete;
+  Identity_Server &operator= (Identity_Server const &) = delete;
+  Identity_Server &operator= (Identity_Server &&) = delete;
 
   /// Performs all the initializations necessary before going into the
   /// ORB event loop.
@@ -53,9 +51,9 @@ private:
 
   /**
    * Creates the specified number of identity objects, and registers
-   * each one with the provided <Object_Group>.  Identity servants are
+   * each one with the provided @c Object_Group.  Identity servants are
    * given names
-   *"Identity object 1" .... "Identity object <number_of_objects>".
+   *"Identity object 1" .... "Identity object @a number_of_objects".
    */
   void create_objects (size_t number_of_objects,
                        Load_Balancer::Object_Group_ptr group);
@@ -63,17 +61,17 @@ private:
   /// The ORB manager.
   TAO_ORB_Manager orb_manager_;
 
-  /// The ior of the <Object_Group_Factory> object we shall use to
-  /// create <Object_Group>s to load balance our <Identity> objects.
-  const ACE_TCHAR *group_factory_ior_;
+  /// The ior of the @c Object_Group_Factory object we shall use to
+  /// create @c Object_Group objects to load balance our @c Identity objects.
+  ACE_TCHAR const *group_factory_ior_ {};
 
-  /// Number of <Identity> objects to create for registering with
-  /// the random <Object_Group>.  The default value is 5.
-  size_t random_objects_;
+  /// Number of @c Identity objects to create for registering with
+  /// the random @c Object_Group.  The default value is 5.
+  size_t random_objects_ {5};
 
-  /// Number of <Identity> objects to create for registering with the
-  /// round robin <Object_Group>.  The default value is 5.
-  size_t rr_objects_;
+  /// Number of @c Identity objects to create for registering with the
+  /// round robin @c Object_Group.  The default value is 5.
+  size_t rr_objects_ {5};
 };
 
 #endif /* IDENTITY_SERVER_H_ */

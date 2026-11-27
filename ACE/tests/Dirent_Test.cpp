@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    Dirent_Test.cpp
  *
@@ -15,8 +13,6 @@
  *  @author Rich Newman <RNewman@directv.com>
  *  @author and Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
-
 
 #include "test_config.h"
 #include "ace/Dirent.h"
@@ -24,6 +20,12 @@
 #include "ace/OS_NS_sys_stat.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/SString.h"
+#include <type_traits>
+#include <utility>
+#include <cerrno>
+
+static_assert (!std::is_copy_constructible_v<ACE_Dirent>, "Directory streams cannot be copied");
+static_assert (!std::is_copy_assignable_v<ACE_Dirent>, "Directory streams cannot be copied");
 
 #if defined (ACE_HAS_TCHAR_DIRENT)
 #  define TEST_ENTRY ACE_TEXT ("run_test.lst")
@@ -40,13 +42,13 @@ static int entrycount = 0;
 
 extern "C" {
 static int
-selector (const ACE_DIRENT *d)
+selector (ACE_DIRENT const *d)
 {
   return ACE_OS::strcmp (d->d_name, TEST_ENTRY) == 0;
 }
 
 static int
-comparator (const ACE_DIRENT **d1, const ACE_DIRENT **d2)
+comparator (ACE_DIRENT const **d1, ACE_DIRENT const **d2)
 {
   return ACE_OS::alphasort (d1, d2);
 }
@@ -56,19 +58,29 @@ comparator (const ACE_DIRENT **d1, const ACE_DIRENT **d2)
 static int
 dirent_selector_test ()
 {
+#if !defined (ACE_HAS_SCANDIR)
+  errno = 0;
+  if (ACE_OS::scandir_emulation (TestDir.c_str (), nullptr, nullptr, nullptr) != -1
+      || errno != EINVAL)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("scandir accepted a null output pointer\n")), -1);
+    }
+#endif
   int n;
   int error = 0;
-  const ACE_TCHAR *test_dir = TestDir.c_str ();
+  ACE_TCHAR const *test_dir = TestDir.c_str ();
   ACE_Dirent_Selector sds;
 
   // Pass in functions that'll specify the selection criteria.
   int status = sds.open (test_dir, selector, comparator);
   if (status == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%s, %p\n"),
-                       test_dir,
-                       ACE_TEXT ("open")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%s, %p\n"),
+                         test_dir,
+                         ACE_TEXT ("open")),
+                        -1);
+    }
 
   // We should only have located ourselves!
   if (sds.length () != 1)
@@ -78,6 +90,11 @@ dirent_selector_test ()
                   sds.length (),
                   test_dir));
       error = 1;
+    }
+
+  if (sds.open (test_dir, selector, comparator) != 1 || sds.length () != 1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Could not reopen selected directory\n")), -1);
     }
 
   for (n = 0; n < sds.length (); ++n)
@@ -102,6 +119,11 @@ dirent_selector_test ()
                   ACE_TEXT ("after selecting, %p\n"),
                   ACE_TEXT ("close")));
       error = 1;
+    }
+
+  if (sds.close () != 0 || sds.length () != 0)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Repeated selector close failed\n")), -1);
     }
 
   ACE_Dirent_Selector ds;
@@ -159,13 +181,32 @@ dirent_test ()
 {
   ACE_Dirent dir;
 
-   if (dir.open (TestDir.c_str ()) == -1)
+  if (dir.open (TestDir.c_str ()) == -1)
+    {
       ACE_ERROR_RETURN
         ((LM_ERROR, ACE_TEXT ("open of dir %s failed\n"), TestDir.c_str()), -1);
+    }
 
-  for (ACE_DIRENT *directory = nullptr;
+  ACE_Dirent moved (std::move (dir));
+  if (dir.read () != nullptr)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Moved-from directory remains open\n")), -1);
+    }
+  if (dir.open (TestDir.c_str ()) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Could not reopen directory for move assignment\n")), -1);
+    }
+  dir = std::move (moved);
+  if (moved.read () != nullptr)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Move-assigned directory remains open\n")), -1);
+    }
+  ACE_Dirent &same_dir = dir;
+  dir = std::move (same_dir);
+
+  for (ACE_DIRENT *directory {};
        (directory = dir.read ()) != nullptr;
-       entrycount++)
+       ++entrycount)
     {
 #if defined (ACE_HAS_TCHAR_DIRENT)
       ACE_DEBUG ((LM_DEBUG,
@@ -201,25 +242,29 @@ dirent_test ()
 }
 
 static int
-dirent_count (const ACE_TCHAR *dir_path,
+dirent_count (ACE_TCHAR const *dir_path,
               int &dir_count,
               int &file_count,
               int recursion_level)
 {
 #if !defined (ACE_LACKS_CHDIR)
   if (ACE_OS::chdir (dir_path) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("chdir: %p\n"),
-                       dir_path),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("chdir: %p\n"),
+                         dir_path),
+                        -1);
+    }
 #else
   ACE_UNUSED_ARG (dir_path);
 #endif /* !ACE_LACKS_CHDIR */
 
   ACE_Dirent dir;
-   if (dir.open (ACE_TEXT (".")) == -1)
+  if (dir.open (ACE_TEXT (".")) == -1)
+    {
       ACE_ERROR_RETURN
         ((LM_ERROR, ACE_TEXT ("open of dir . failed\n")), -1);
+    }
 
   // Since the dir struct d_name type changes depending on the setting
   // of ACE_LACKS_STRUCT_DIR, copy each name into a neutral format
@@ -232,26 +277,32 @@ dirent_count (const ACE_TCHAR *dir_path,
   for (ACE_DIRENT *directory; (directory = dir.read ()) != nullptr;)
     {
       // Skip the ".." and "." files.
-      if (ACE::isdotdir(directory->d_name) == true)
+      if (ACE::isdotdir(directory->d_name))
+      {
         continue;
+      }
       ++entry_count;
 
 #if defined (ACE_HAS_TCHAR_DIRENT)
-      ACE_OS::strncpy (tname, directory->d_name, maxnamlen);
+      ACE_OS::strsncpy (tname,
+                        directory->d_name,
+                        sizeof tname / sizeof *tname);
 #else
-      ACE_OS::strncpy (tname,
-                       ACE_TEXT_CHAR_TO_TCHAR (directory->d_name),
-                       maxnamlen);
+      ACE_OS::strsncpy (tname,
+                        ACE_TEXT_CHAR_TO_TCHAR (directory->d_name),
+                        sizeof tname / sizeof *tname);
 #endif /* ACE_LACKS_STRUCT_DIR */
 
       int local_file_count = 0;
       int local_dir_count = 0;
       ACE_stat stat_buf;
       if (ACE_OS::lstat (directory->d_name, &stat_buf) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p\n"),
-                           tname),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("%p\n"),
+                             tname),
+                            -1);
+        }
 
       switch (stat_buf.st_mode & S_IFMT)
         {
@@ -261,16 +312,22 @@ dirent_count (const ACE_TCHAR *dir_path,
 
         case S_IFLNK: // Either a file or directory link, so let's find out.
           if (ACE_OS::stat (directory->d_name, &stat_buf) == -1)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("%p\n"),
-                               tname),
-                              -1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("%p\n"),
+                                 tname),
+                                -1);
+            }
 
           if ((stat_buf.st_mode & S_IFMT) == S_IFDIR)
-            // Don't recurse through symbolic directory links!
-            ++dir_count;
+            {
+              // Don't recurse through symbolic directory links!
+              ++dir_count;
+            }
           else
+          {
             ++file_count;
+          }
           break;
 
         case S_IFDIR:
@@ -296,10 +353,12 @@ dirent_count (const ACE_TCHAR *dir_path,
 #if !defined (ACE_LACKS_CHDIR)
               // Move back up a level.
               if (ACE_OS::chdir (ACE_TEXT ("..")) == -1)
-                ACE_ERROR_RETURN ((LM_ERROR,
-                                   ACE_TEXT ("chdir: %p\n"),
-                                   dir_path),
-                                  -1);
+                {
+                  ACE_ERROR_RETURN ((LM_ERROR,
+                                     ACE_TEXT ("chdir: %p\n"),
+                                     dir_path),
+                                    -1);
+                }
 #endif /* !ACE_LACKS_CHDIR */
             }
           break;
@@ -318,7 +377,7 @@ dirent_recurse_test ()
 {
   int total_dirs = 0;
   int total_files = 0;
-  const ACE_TCHAR *test_dir = TestDir.c_str ();
+  ACE_TCHAR const *test_dir = TestDir.c_str ();
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Starting directory recursion test for %s\n"),
@@ -328,10 +387,12 @@ dirent_recurse_test ()
                     total_dirs,
                     total_files,
                     1) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Directory recursion test failed for %s\n"),
-                       test_dir),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Directory recursion test failed for %s\n"),
+                         test_dir),
+                        -1);
+    }
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Directory recursion test succeeded for %s, read %d files %d dirs\n"),
               test_dir,
@@ -353,9 +414,11 @@ run_main (int, ACE_TCHAR *[])
 #if defined (TEST_DIR)
   TestDir = TEST_DIR;
 #else
-  const char *root = ACE_OS::getenv ("top_srcdir");
+  char const *root = ACE_OS::getenv ("top_srcdir");
   if (root == nullptr)
+  {
     root = ACE_OS::getenv ("ACE_ROOT");
+  }
   if (root != nullptr)
     {
       TestDir = ACE_TEXT_CHAR_TO_TCHAR (root);
@@ -371,13 +434,19 @@ run_main (int, ACE_TCHAR *[])
   int status = 0;
 
   if (-1 == dirent_test ())
+  {
     status = -1;
+  }
 
   if (-1 == dirent_selector_test ())
+  {
     status = -1;
+  }
 
   if (-1 == dirent_recurse_test ())
+  {
     status = -1;
+  }
 
   ACE_END_TEST;
   return status;

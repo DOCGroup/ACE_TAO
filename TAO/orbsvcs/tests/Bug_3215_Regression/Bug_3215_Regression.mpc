@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*IDL): taoidldefaults {
   IDL_Files {
     Test.idl
@@ -21,7 +20,7 @@ project(*Client): taoserver, ftclientorb {
   }
 }
 
-project (*Server) : taoserver, ftclientorb, pi_server {
+project (*Server) : taoserver, ftclientorb, pi_server, utils {
   after += *IDL
 
   exename = server

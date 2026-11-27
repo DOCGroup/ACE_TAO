@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file   Iterator.cpp
  *
@@ -6,10 +5,8 @@
  *
  *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "Iterator.h"
-
 
 ImR_AsyncIterator::ImR_AsyncIterator (CORBA::ULong start,
                                       AsyncListManager *lister)

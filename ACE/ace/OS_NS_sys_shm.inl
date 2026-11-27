@@ -1,10 +1,9 @@
-// -*- C++ -*-
 #include "ace/OS_NS_errno.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE void *
-ACE_OS::shmat (int int_id, const void *shmaddr, int shmflg)
+ACE_OS::shmat (int int_id, void const *shmaddr, int shmflg)
 {
   ACE_OS_TRACE ("ACE_OS::shmat");
 #if defined (ACE_HAS_SYSV_IPC)
@@ -38,7 +37,7 @@ ACE_OS::shmctl (int int_id, int cmd, struct shmid_ds *buf)
 }
 
 ACE_INLINE int
-ACE_OS::shmdt (const void *shmaddr)
+ACE_OS::shmdt (void const *shmaddr)
 {
   ACE_OS_TRACE ("ACE_OS::shmdt");
 #if defined (ACE_HAS_SYSV_IPC)

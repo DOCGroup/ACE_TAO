@@ -18,7 +18,7 @@ void
 FTRT_ClientORB_Initializer::post_init (
     PortableInterceptor::ORBInitInfo_ptr info)
 {
-  info->add_client_request_interceptor (client_interceptor_.in());
+  info->add_client_request_interceptor (client_interceptor_.in ());
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

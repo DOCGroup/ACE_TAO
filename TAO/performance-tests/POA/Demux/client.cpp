@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    client.cpp
  *
@@ -6,7 +5,6 @@
  *
  *  @author Aniruddha Gokhale
  */
-//=============================================================================
 
 #include "demux_test_client.h"
 #include "tao/debug.h"
@@ -24,7 +22,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     {
       int r = demux_test_client.init (argc, argv);
       if (r == -1)
+      {
         return -1;
+      }
 
       demux_test_client.run ();
     }

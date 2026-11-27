@@ -1,5 +1,3 @@
-// -*- C++ -*-
-#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Log_Macros.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -22,7 +20,7 @@ TAO_ECG_UDP_Receiver_Disconnect_Command (
 ACE_INLINE
 TAO_ECG_UDP_Receiver_Disconnect_Command::
 TAO_ECG_UDP_Receiver_Disconnect_Command (
-                          const TAO_ECG_UDP_Receiver_Disconnect_Command & rhs)
+                          TAO_ECG_UDP_Receiver_Disconnect_Command const & rhs)
   : proxy_ (RtecEventChannelAdmin::ProxyPushConsumer::_duplicate
             (rhs.proxy_.in ()))
 {
@@ -31,7 +29,7 @@ TAO_ECG_UDP_Receiver_Disconnect_Command (
 ACE_INLINE
 TAO_ECG_UDP_Receiver_Disconnect_Command &
 TAO_ECG_UDP_Receiver_Disconnect_Command::operator= (
-                         const TAO_ECG_UDP_Receiver_Disconnect_Command & rhs)
+                         TAO_ECG_UDP_Receiver_Disconnect_Command const & rhs)
 {
   this->proxy_ =
     RtecEventChannelAdmin::ProxyPushConsumer::_duplicate (rhs.proxy_.in ());
@@ -44,8 +42,10 @@ TAO_ECG_UDP_Receiver_Disconnect_Command::
 execute ()
 {
   if (CORBA::is_nil (this->proxy_.in ()))
-    // We are not connected.
-    return;
+    {
+      // We are not connected.
+      return;
+    }
 
   RtecEventChannelAdmin::ProxyPushConsumer_var release_proxy =
     this->proxy_._retn ();
@@ -84,7 +84,7 @@ TAO_ECG_UDP_Receiver::set_handler_shutdown (
 }
 
 ACE_INLINE void
-TAO_ECG_UDP_Receiver::get_addr (const RtecEventComm::EventHeader& header,
+TAO_ECG_UDP_Receiver::get_addr (RtecEventComm::EventHeader const &header,
                                 RtecUDPAdmin::UDP_Addr_out addr)
 {
   if (CORBA::is_nil (this->addr_server_.in ()))
@@ -101,7 +101,7 @@ TAO_ECG_UDP_Receiver::get_addr (const RtecEventComm::EventHeader& header,
 }
 
 ACE_INLINE void
-TAO_ECG_UDP_Receiver::get_address (const RtecEventComm::EventHeader& header,
+TAO_ECG_UDP_Receiver::get_address (RtecEventComm::EventHeader const &header,
                                    RtecUDPAdmin::UDP_Address_out addr)
 {
   if (CORBA::is_nil (this->addr_server_.in ()))

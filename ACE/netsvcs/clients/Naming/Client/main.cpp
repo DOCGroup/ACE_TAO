@@ -26,25 +26,29 @@ ACE_TMAIN (int, ACE_TCHAR *argv[])
               new_args.argc ()));
 
   // Print the contents of the combined <ACE_ARGV>.
-  for (int i = 0; i < new_args.argc (); i++)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%d) %s\n"),
-                i,
-                new_args.argv ()[i]));
+  for (int i = 0; i < new_args.argc (); ++i)
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%d) %s\n"),
+                  i,
+                  new_args.argv ()[i]));
+    }
 
   if (daemon.open (new_args.argc (),
                    new_args.argv ()) == -1)
     {
       if (errno != ENOENT)
-        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("open")),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("open")),
+                            1);
+        }
       else // Use static binding.
         {
           ACE_ARGV args;
 
           args.add (argv[0]);
           args.add (ACE_TEXT ("-p10011")); // Port number.
-          ACE_Service_Object *so =
+          ACE_Service_Object * const so =
             ACE_SVC_INVOKE (ACE_Naming_Context);
 
           if (so->init (args.argc (),
@@ -58,7 +62,9 @@ ACE_TMAIN (int, ACE_TCHAR *argv[])
 
   Client_Test test_body;
   if (test_body.open () == -1)
+  {
     return 1;
+  }
 
   // Run forever, performing the configured services until we are shut
   // down by a SIGINT/SIGQUIT signal.

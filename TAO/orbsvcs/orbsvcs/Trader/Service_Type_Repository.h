@@ -1,14 +1,9 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   Service_Type_Repository.h
  *
  *  @author Marina Spivak <marina@cs.wustl.edu>
  *  @author Seth Widoff <sbw1@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_SERVICE_TYPE_REPOSITORY_H
 #define TAO_SERVICE_TYPE_REPOSITORY_H
@@ -17,6 +12,8 @@
 #include "orbsvcs/Trader/Trader.h"
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Null_Mutex.h"
+
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -30,13 +27,18 @@ class TAO_Trading_Serv_Export TAO_Service_Type_Repository
   : public POA_CosTradingRepos::ServiceTypeRepository
 {
 public:
+  TAO_Service_Type_Repository (TAO_Service_Type_Repository const&) = delete;
+  TAO_Service_Type_Repository& operator= (TAO_Service_Type_Repository const&) = delete;
+  TAO_Service_Type_Repository (TAO_Service_Type_Repository&&) = delete;
+  TAO_Service_Type_Repository& operator= (TAO_Service_Type_Repository&&) = delete;
+
   /**
    * Parameterize the Service_Type_Repository with a lock to serialize
    * access to the type repository map. A reader/writer lock is
    * probably best. The Service_Type_Repository assumes control of the
    * lock.
    */
-  TAO_Service_Type_Repository (ACE_Lock* lock = nullptr);
+  explicit TAO_Service_Type_Repository (ACE_Lock* lock = nullptr);
 
   ~TAO_Service_Type_Repository () override;
 
@@ -50,6 +52,41 @@ public:
    * with instances of this service type, the properties definitions
    * for this service type, and the service type names of the
    * immediate super-types to this service type.
+   *
+   * If the type creation is successful, an incarnation number is
+   * returned as the value of the operation. Incarnation numbers are
+   * opaque values that are assigned to each modification to the
+   * repository's state. An incarnation number can be quoted when
+   * invoking the list_types operation to retrieve all changes to the
+   * service repository since a particular logical time. (Note:
+   * IncarnationNumber is currently declared as a struct consisting of
+   * two unsigned longs; what we really want here is an unsigned hyper
+   * [64-bit integer]. A future revision task force should modify this
+   * when CORBA systems support IDL 64-bit integers.)
+   *
+   * If the "name" parameter is malformed, then the
+   * CosTrading::IllegalServiceType exception is raised.  If the type
+   * already exists, then the ServiceTypeExists exception is raised.
+   * If the "if_name" parameter is not a sub-type of the interface
+   * associated with a service type from which this service type is
+   * derived, such that substitutability would be violated, then the
+   * InterfaceTypeMismatch exception is raised.  If a property name
+   * supplied in the "props" parameter is malformed, the
+   * CosTrading::IllegalPropertyName exception is raised.  If the
+   * same property name appears two or more times in the "props"
+   * parameter, the CosTrading::DuplicatePropertyName exception is
+   * raised.  If a property value type associated with this service
+   * type illegally modifies the value type of a super-type's
+   * property, or if two super-types incompatibly declare value types
+   * for the same property name, then the ValueTypeRedefinition
+   * exception is raised.  If one of the ServiceTypeNames in
+   * "super_types" is malformed, then the
+   * CosTrading::IllegalServiceType exception is raised. If one of the
+   * ServiceTypeNames in "super_types" does not exist, then the
+   * CosTrading::UnknownServiceType exception is raised.  If the same
+   * service type name is included two or more times in this
+   * parameter, the DuplicateServiceTypeName exception is raised.
+   * END SPEC
    */
   CosTradingRepos::ServiceTypeRepository::IncarnationNumber
   add_type (char const* name,
@@ -57,40 +94,6 @@ public:
             CosTradingRepos::ServiceTypeRepository::PropStructSeq const& props,
             CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq const& super_types) override;
 
-  // If the type creation is successful, an incarnation number is
-  // returned as the value of the operation. Incarnation numbers are
-  // opaque values that are assigned to each modification to the
-  // repository's state. An incarnation number can be quoted when
-  // invoking the list_types operation to retrieve all changes to the
-  // service repository since a particular logical time. (Note:
-  // IncarnationNumber is currently declared as a struct consisting of
-  // two unsigned longs; what we really want here is an unsigned hyper
-  // [64-bit integer]. A future revision task force should modify this
-  // when CORBA systems support IDL 64-bit integers.)
-
-  // If the "name" parameter is malformed, then the
-  // CosTrading::IllegalServiceType exception is raised.  If the type
-  // already exists, then the ServiceTypeExists exception is raised.
-  // If the "if_name" parameter is not a sub-type of the interface
-  // associated with a service type from which this service type is
-  // derived, such that substitutability would be violated, then the
-  // InterfaceTypeMismatch exception is raised.  If a property name
-  // supplied in the "props" parameter is malformed, the
-  // CosTrading::IllegalPropertyName exception is raised.  If the
-  // same property name appears two or more times in the "props"
-  // parameter, the CosTrading::DuplicatePropertyName exception is
-  // raised.  If a property value type associated with this service
-  // type illegally modifies the value type of a super-type's
-  // property, or if two super-types incompatibly declare value types
-  // for the same property name, then the ValueTypeRedefinition
-  // exception is raised.  If one of the ServiceTypeNames in
-  // "super_types" is malformed, then the
-  // CosTrading::IllegalServiceType exception is raised. If one of the
-  // ServiceTypeNames in "super_types" does not exist, then the
-  // CosTrading::UnknownServiceType exception is raised.  If the same
-  // service type name is included two or more times in this
-  // parameter, the DuplicateServiceTypeName exception is raised.
-  // END SPEC
 
   /**
    * BEGIN SPEC
@@ -104,19 +107,17 @@ public:
    */
   void remove_type (char const* name) override;
 
+  /// The list_types operation permits a client to obtain the names of
+  /// service types which are in the repository. The "which_types"
+  /// parameter permits the client to specify one of two possible
+  /// values:  all types known to the repository  all types
+  /// added/modified since a particular incarnation number The names of
+  /// the requested types are returned by the operation for subsequent
+  /// querying via the describe_type or the fully_describe_type
+  /// operation.
+
   CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq*
   list_types (CosTradingRepos::ServiceTypeRepository::SpecifiedServiceTypes const& which_types) override;
-
-  // BEGIN SPEC
-  // The list_types operation permits a client to obtain the names of
-  // service types which are in the repository. The "which_types"
-  // parameter permits the client to specify one of two possible
-  // values:  all types known to the repository  all types
-  // added/modified since a particular incarnation number The names of
-  // the requested types are returned by the operation for subsequent
-  // querying via the describe_type or the fully_describe_type
-  // operation.
-  // END SPEC
 
   /**
    * BEGIN SPEC
@@ -189,11 +190,12 @@ private:
     CosTradingRepos::ServiceTypeRepository::TypeStruct type_struct_;
 
     /// Names of subtypes.
-    CORBA::Boolean has_subtypes_;
+    CORBA::Boolean has_subtypes_ {};
   };
 
+  /// Store property values because inherited property sequences are temporary.
   using Prop_Map = ACE_Hash_Map_Manager_Ex<CORBA::String_var,
-                                           CosTradingRepos::ServiceTypeRepository::PropStruct*,
+                                           CosTradingRepos::ServiceTypeRepository::PropStruct,
                                            ACE_Hash<CORBA::String_var>,
                                            ACE_Equal_To<CORBA::String_var>,
                                            ACE_Null_Mutex>;
@@ -215,43 +217,38 @@ private:
    * supertypes of the type, and a sequence representing the
    * transitive closure of the super type relation.
    */
-  void fully_describe_type_i (const CosTradingRepos::ServiceTypeRepository::TypeStruct &type_struct,
+  void fully_describe_type_i (CosTradingRepos::ServiceTypeRepository::TypeStruct const &type_struct,
                               CosTradingRepos::ServiceTypeRepository::PropStructSeq &props,
                               CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq &super_types);
 
-  void collect_inheritance_hierarchy (const CosTradingRepos::ServiceTypeRepository::TypeStruct &type_struct,
+  void collect_inheritance_hierarchy (CosTradingRepos::ServiceTypeRepository::TypeStruct const &type_struct,
                                       TAO_String_Queue &target);
 
   /// Confirm that the properties in props have valid names, and aren't
   /// duplicated. Cram those properties into the prop_map.
   void validate_properties (Prop_Map &prop_map,
-                            const CosTradingRepos::ServiceTypeRepository::PropStructSeq &props);
+                            CosTradingRepos::ServiceTypeRepository::PropStructSeq const &props);
 
   /// Confirm that the each super type exists, and cram them into super_map.
   void validate_supertypes (Service_Type_Map &super_map,
-                            const CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq &super_types);
+                            CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq const &super_types);
 
   /// Ensure that properties of a super_type aren't having their types
   /// or retstrictions redefined.
   void validate_inheritance (Prop_Map &prop_map,
-                             const CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq &super_types);
+                             CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq const &super_types);
 
   /// Update the type map with the information contained in the
   /// TypeStruct, prop_map, and super_map.
-  void update_type_map (const char *name,
-                        const char  *if_name,
-                        const CosTradingRepos::ServiceTypeRepository::PropStructSeq &props,
-                        const CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq &super_types,
+  void update_type_map (char const *name,
+                        char const *if_name,
+                        CosTradingRepos::ServiceTypeRepository::PropStructSeq const &props,
+                        CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq const &super_types,
                         Prop_Map &prop_map,
                         Service_Type_Map &super_map);
 
-  TAO_Service_Type_Repository (TAO_Service_Type_Repository const&) = delete;
-  TAO_Service_Type_Repository& operator= (TAO_Service_Type_Repository const&) = delete;
-  TAO_Service_Type_Repository (TAO_Service_Type_Repository&&) = delete;
-  TAO_Service_Type_Repository& operator= (TAO_Service_Type_Repository&&) = delete;
-
   /// Lock with which to serialize access to the service type map.
-  ACE_Lock *lock_;
+  std::unique_ptr<ACE_Lock> lock_;
 
   /**
    * Stores information for each service type in the repository.  This
@@ -262,7 +259,7 @@ private:
 
   /// Incarnation number to be used for the next modification to the
   /// repository.
-  CosTradingRepos::ServiceTypeRepository::IncarnationNumber incarnation_;
+  CosTradingRepos::ServiceTypeRepository::IncarnationNumber incarnation_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

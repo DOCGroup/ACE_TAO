@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    HTIOP_Connector.h
  *
@@ -8,8 +5,6 @@
  *
  *  @author Priyanka Gontla <gontla_p@ociweb.com>
  */
-//=============================================================================
-
 
 #ifndef HTIOP_CONNECTOR_H
 #define HTIOP_CONNECTOR_H
@@ -27,6 +22,8 @@
 
 #include "ace/SOCK_Connector.h"
 #include "ace/Connector.h"
+
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace ACE
@@ -65,38 +62,38 @@ namespace TAO
       using CONNECT_CREATION_STRATEGY = TAO_Connect_Creation_Strategy<Connection_Handler>;
 
       /// Initialization and termination methods.
-      /// Constructor.
-      /// {@
-      Connector (ACE::HTBP::Environment *ht_env);
+      /// @{
+      explicit Connector (ACE::HTBP::Environment *ht_env);
+      Connector (Connector const&) = delete;
+      Connector (Connector&&) = delete;
+      Connector& operator= (Connector const&) = delete;
+      Connector& operator= (Connector&&) = delete;
 
-      /// Destructor.
       ~Connector () override;
 
       /// @}
 
-
       /// The TAO_Connector methods, please check the documentation on
       /// Transport_Connector.h
-      /// {@
+      /// @{
       int open (TAO_ORB_Core *orb_core) override;
       int close () override;
 
       TAO_Profile *create_profile (TAO_InputCDR& cdr) override;
 
-      int check_prefix (const char *endpoint) override;
+      int check_prefix (char const *endpoint) override;
 
       char object_key_delimiter () const override;
       /// @}
 
     protected:
-      // = The TAO_Connector methods, please check the documentation on
-      // Transport_Connector.h
-      int set_validate_endpoint (TAO_Endpoint *ep);
+      /// @name Additional TAO_Connector overrides
+      /// @{
+      int set_validate_endpoint (TAO_Endpoint *ep) override;
 
       TAO_Transport *make_connection (TAO::Profile_Transport_Resolver *r,
                                       TAO_Transport_Descriptor_Interface &desc,
                                       ACE_Time_Value *timeout = nullptr) override;
-
 
       /// More TAO_Connector methods, please check the documentation on
       /// Transport_Connector.h
@@ -106,16 +103,17 @@ namespace TAO
       /// Its not clear what it means to cancel in HTIOP, since there's no
       /// base connector.
       int cancel_svc_handler (TAO_Connection_Handler *svc_handler) override;
+      /// @}
 
     private:
       /// Return the remote endpoint, a helper function
       Endpoint *remote_endpoint (TAO_Endpoint *ep);
 
       /// Our creation strategy
-      CONNECT_CREATION_STRATEGY *connect_creation_strategy_;
+      std::unique_ptr<CONNECT_CREATION_STRATEGY> connect_creation_strategy_;
 
       /// Our activation strategy
-      CONNECT_CONCURRENCY_STRATEGY *concurrency_strategy_;
+      std::unique_ptr<CONNECT_CONCURRENCY_STRATEGY> concurrency_strategy_;
 
       /// reference to the configuration parameters
       ACE::HTBP::Environment *ht_env_;

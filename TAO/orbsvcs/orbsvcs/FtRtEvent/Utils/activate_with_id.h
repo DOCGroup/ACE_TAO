@@ -1,11 +1,8 @@
-// -*- C++ -*-
-//=============================================================================
 /**
  *  @file   activate_with_id.h
  *
  *  @author Huang-Ming Huang <hh1@cse.wustl.edu>
  */
-//=============================================================================
 #ifndef ACTIVATE_WITH_ID_H
 #define ACTIVATE_WITH_ID_H
 
@@ -21,7 +18,7 @@ void
 activate_object_with_id (T * &result,
                          PortableServer::POA_ptr poa,
                          PortableServer::ServantBase *servant,
-                         const FtRtecEventComm::ObjectId &oid)
+                         FtRtecEventComm::ObjectId const &oid)
 {
   PortableServer::ObjectId const &id =
     reinterpret_cast<PortableServer::ObjectId const &> (oid);

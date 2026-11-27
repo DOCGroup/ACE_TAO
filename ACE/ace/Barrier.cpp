@@ -1,4 +1,5 @@
 #include "ace/Barrier.h"
+#include <memory>
 
 #if defined (ACE_HAS_THREADS)
 
@@ -32,7 +33,7 @@ ACE_Sub_Barrier::dump () const
 
 ACE_Sub_Barrier::ACE_Sub_Barrier (unsigned int count,
                                   ACE_Thread_Mutex &lock,
-                                  const ACE_TCHAR *name,
+                                  ACE_TCHAR const *name,
                                   void *arg)
   : barrier_finished_ (lock, name, arg),
     running_threads_ (count)
@@ -59,17 +60,16 @@ ACE_Barrier::dump () const
 }
 
 ACE_Barrier::ACE_Barrier (unsigned int count,
-                          const ACE_TCHAR *name,
+                          ACE_TCHAR const *name,
                           void *arg)
   : lock_ (name, (ACE_mutexattr_t *) arg),
-    current_generation_ (0),
     count_ (count),
     sub_barrier_1_ (count, lock_, name, arg),
     sub_barrier_2_ (count, lock_, name, arg)
 {
   ACE_TRACE ("ACE_Barrier::ACE_Barrier");
-  this->sub_barrier_[0] = &this->sub_barrier_1_;
-  this->sub_barrier_[1] = &this->sub_barrier_2_;
+  this->sub_barrier_[0] = std::addressof (this->sub_barrier_1_);
+  this->sub_barrier_[1] = std::addressof (this->sub_barrier_2_);
 }
 
 int
@@ -105,7 +105,9 @@ ACE_Barrier::wait ()
 
       // Block until all the other threads wait().
       while (sbp->running_threads_ != this->count_)
-        sbp->barrier_finished_.wait ();
+        {
+          sbp->barrier_finished_.wait ();
+        }
 
       // We're awake and the count has completed. See if it completed
       // because all threads hit the barrier, or because the barrier
@@ -148,7 +150,7 @@ ACE_Barrier::shutdown ()
 ACE_ALLOC_HOOK_DEFINE(ACE_Thread_Barrier)
 
 ACE_Thread_Barrier::ACE_Thread_Barrier (unsigned int count,
-                                        const ACE_TCHAR *name)
+                                        ACE_TCHAR const *name)
   : ACE_Barrier (count, name)
 {
 // ACE_TRACE ("ACE_Thread_Barrier::ACE_Thread_Barrier");

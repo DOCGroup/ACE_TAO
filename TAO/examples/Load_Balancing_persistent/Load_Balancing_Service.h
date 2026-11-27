@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Load_Balancing_Service.h
  *
@@ -8,8 +5,6 @@
  *
  *  @author Marina Spivak <marina@cs.wustl.edu> with modifications by Bala Natarajan <bala@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef LOAD_BALANCING_SERVICE_H_
 #define LOAD_BALANCING_SERVICE_H_
@@ -24,19 +19,22 @@
  * @class Load_Balancing_Service
  *
  * Server, which creates and initializes a
- * <Load_Balancer::Object_Group_Factory>
+ * @c Load_Balancer::Object_Group_Factory
  * object, and runs the orb loop.
  */
 class Load_Balancing_Service
 {
 public:
-  /// Default constructor.
-  Load_Balancing_Service ();
+  Load_Balancing_Service () = default;
 
-  /// Destructor.
-  ~Load_Balancing_Service ();
+  ~Load_Balancing_Service () = default;
 
-  /// Initialize the <Load_Balancing_Service>: initializes the ORB, parses
+  Load_Balancing_Service (Load_Balancing_Service const &) = delete;
+  Load_Balancing_Service (Load_Balancing_Service &&) = delete;
+  Load_Balancing_Service &operator= (Load_Balancing_Service const &) = delete;
+  Load_Balancing_Service &operator= (Load_Balancing_Service &&) = delete;
+
+  /// Initialize the @c Load_Balancing_Service: initializes the ORB, parses
   /// arguments, creates a servant ...
   int init (int argc, ACE_TCHAR *argv[]);
 
@@ -50,8 +48,8 @@ private:
   /// The ORB manager.
   TAO_ORB_Manager orb_manager_;
 
-  /// File to output the <Object_Group_Factory> IOR.
-  FILE *ior_output_file_;
+  /// File to output the @c Object_Group_Factory IOR.
+  FILE *ior_output_file_ {};
 };
 
 #endif /* LOAD_BALANCING_SERVICE_H_ */

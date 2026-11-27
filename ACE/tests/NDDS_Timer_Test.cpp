@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    NDDS_Timer_Test.cpp
  *
@@ -6,8 +5,6 @@
  *
  *  @author Marcel Smit <msmit@remedy.nl>
  */
-//=============================================================================
-
 
 #include "test_config.h"
 #include "ace/Log_Msg.h"
@@ -30,15 +27,19 @@ check (const time_t interval, const time_t measured)
   time_t const percentage_difference = difference * 100 / interval;
 
   if (percentage_difference < threshold)
-    return 0;
+    {
+      return 0;
+    }
   else
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("The measured time of %Q differs from ")
-                       ACE_TEXT ("the interval of %Q by %Q percent.\n"),
-                       measured,
-                       interval,
-                       percentage_difference),
-                      1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("The measured time of %Q differs from ")
+                         ACE_TEXT ("the interval of %Q by %Q percent.\n"),
+                         measured,
+                         interval,
+                         percentage_difference),
+                        1);
+    }
 }
 
 // Does a sanity check of the microseconds vs nanoseconds. They're supposed
@@ -64,20 +65,22 @@ check_micro_nano (unsigned long long microinterval, unsigned long long nanointer
       return 0;
     }
   else
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("The microseconds * 1000 of %Q ")
-                       ACE_TEXT ("differs from the nanoseconds of %Q ")
-                       ACE_TEXT (" by %Q promille\n"),
-                       microinterval,
-                       nanointerval,
-                       promille_difference),
-                      1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("The microseconds * 1000 of %Q ")
+                         ACE_TEXT ("differs from the nanoseconds of %Q ")
+                         ACE_TEXT (" by %Q promille\n"),
+                         microinterval,
+                         nanointerval,
+                         promille_difference),
+                        1);
+    }
 }
 
 static
 void
 time_interval (RTIClock *timer,
-               const ACE_Time_Value & interval,
+               ACE_Time_Value const & interval,
                RTINtpTime& duration)
 {
   struct RTINtpTime start_time;
@@ -97,7 +100,6 @@ time_interval (RTIClock *timer,
   // Measure.
   RTINtpTime_subtract(duration, finish_time, start_time);
 }
-
 
 static u_int const intervals[] =
   {0, 1, 10, 100, 1000, 10000, 100000, 1000000, 4000000}; /*usec*/
@@ -146,7 +148,6 @@ run_main (int argc, ACE_TCHAR *argv[])
             interval.sec () * ACE_ONE_SECOND_IN_USECS + interval.usec ();
           time_t const measured_usec =
             sec * ACE_ONE_SECOND_IN_USECS + microseconds;
-
 
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("interval: %: usec, measured: %: usec %s\n"),

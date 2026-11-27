@@ -25,7 +25,6 @@
 class TAO_RTEC_Perf_Export Client_Group
 {
 public:
-  /// Constructor
   /**
    * We need a default constructor because this class is often used in
    * arrays.
@@ -56,7 +55,7 @@ public:
 
   /// Initialize the consumer/supplier pair(s)
   /**
-   * @param event_type_range The supplier declares more events than it
+   * @param base_event_type_range The supplier declares more events than it
    *        generates.
    */
   void init (CORBA::Long experiment_id,
@@ -74,7 +73,7 @@ public:
   /// Disconnect from the event channel
   void disconnect ();
 
-  //@{
+  /// @{
   /** @name Accessors
    */
   Supplier *supplier () const;
@@ -84,7 +83,7 @@ public:
   Loopback_Supplier *loopback_supplier () const;
 
   Loopback_Consumer *loopback_consumer () const;
-  //@}
+  /// @}
 
 private:
   Client_Pair client_pair_;

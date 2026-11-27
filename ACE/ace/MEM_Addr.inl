@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 #include "ace/Global_Macros.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -24,7 +22,7 @@ ACE_MEM_Addr::set (u_short port_number, int encode)
 }
 
 ACE_INLINE int
-ACE_MEM_Addr::set (const ACE_TCHAR port_number[])
+ACE_MEM_Addr::set (ACE_TCHAR const port_number[])
 {
   ACE_TRACE ("ACE_MEM_Addr::set");
   return this->string_to_addr (port_number);
@@ -39,7 +37,7 @@ ACE_MEM_Addr::get_port_number () const
 }
 
 /// Return the "dotted decimal" external address.
-ACE_INLINE const char *
+ACE_INLINE char const *
 ACE_MEM_Addr::get_host_addr () const
 {
   ACE_TRACE ("ACE_MEM_Addr::get_host_addr");
@@ -47,7 +45,7 @@ ACE_MEM_Addr::get_host_addr () const
 }
 
 /// Return the "dotted decimal" external address.
-ACE_INLINE const char *
+ACE_INLINE char const *
 ACE_MEM_Addr::get_host_addr (char *addr, int addr_size) const
 {
   ACE_TRACE ("ACE_MEM_Addr::get_host_addr");
@@ -62,13 +60,13 @@ ACE_MEM_Addr::get_ip_address () const
   return this->external_.get_ip_address ();
 }
 
-ACE_INLINE const ACE_INET_Addr &
+ACE_INLINE ACE_INET_Addr const &
 ACE_MEM_Addr::get_local_addr () const
 {
   return this->internal_;
 }
 
-ACE_INLINE const ACE_INET_Addr &
+ACE_INLINE ACE_INET_Addr const &
 ACE_MEM_Addr::get_remote_addr () const
 {
   return this->external_;
@@ -76,7 +74,7 @@ ACE_MEM_Addr::get_remote_addr () const
 
 /// Compare two addresses for equality.
 ACE_INLINE bool
-ACE_MEM_Addr::operator == (const ACE_MEM_Addr &sap) const
+ACE_MEM_Addr::operator == (ACE_MEM_Addr const &sap) const
 {
   ACE_TRACE ("ACE_MEM_Addr::operator ==");
 
@@ -85,7 +83,7 @@ ACE_MEM_Addr::operator == (const ACE_MEM_Addr &sap) const
 }
 
 ACE_INLINE bool
-ACE_MEM_Addr::operator == (const ACE_INET_Addr &sap) const
+ACE_MEM_Addr::operator == (ACE_INET_Addr const &sap) const
 {
   ACE_TRACE ("ACE_MEM_Addr::operator ==");
 
@@ -94,14 +92,14 @@ ACE_MEM_Addr::operator == (const ACE_INET_Addr &sap) const
 
 /// Compare two addresses for inequality.
 ACE_INLINE bool
-ACE_MEM_Addr::operator != (const ACE_MEM_Addr &sap) const
+ACE_MEM_Addr::operator != (ACE_MEM_Addr const &sap) const
 {
   ACE_TRACE ("ACE_MEM_Addr::operator !=");
   return !((*this) == sap);
 }
 
 ACE_INLINE bool
-ACE_MEM_Addr::operator != (const ACE_INET_Addr &sap) const
+ACE_MEM_Addr::operator != (ACE_INET_Addr const &sap) const
 {
   ACE_TRACE ("ACE_MEM_Addr::operator !=");
   return !((*this) == sap);

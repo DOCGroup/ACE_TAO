@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Task_Ex_T.h
  *
  *  @author Kobi Cohen-Arazi <kobi-co@barak-online.net>
  */
-//=============================================================================
 
 #ifndef ACE_TASK_EX_T_H
 #define ACE_TASK_EX_T_H
@@ -46,7 +42,7 @@ template <ACE_SYNCH_DECL, class TIME_POLICY> class ACE_Module;
  * Now specialized version of ACE_Task with ACE_Message_Block as its
  * ACE_MESSAGE_TYPE...
  *
- * template <ACE_SYNCH_DECL>
+ * template @c ACE_SYNCH_DECL
  * class ACE_Task <ACE_SYNCH_USE, ACE_Message_Block> : public ACE_Task_Base
  * {
  *   // put here the good old ACE_Task code
@@ -63,7 +59,8 @@ public:
   friend class ACE_Module_Type;
   using MESSAGE_QUEUE_EX = ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, _ACE_SYNCH, TIME_POLICY>;
 
-  // = Initialization/termination methods.
+  /// @name Initialization and termination
+  /// @{
   /**
    * Initialize a Task, supplying a thread manager and a message
    * queue.  If the user doesn't supply a ACE_Message_Queue pointer
@@ -72,12 +69,11 @@ public:
    */
   ACE_Task_Ex (ACE_Thread_Manager *thr_mgr = nullptr, MESSAGE_QUEUE_EX *mq = nullptr);
 
-  ACE_Task_Ex (const ACE_Task_Ex &) = delete;
+  ACE_Task_Ex (ACE_Task_Ex const &) = delete;
   ACE_Task_Ex (ACE_Task_Ex &&) = delete;
-  ACE_Task_Ex &operator= (const ACE_Task_Ex &) = delete;
+  ACE_Task_Ex &operator= (ACE_Task_Ex const &) = delete;
   ACE_Task_Ex &operator= (ACE_Task_Ex &&) = delete;
 
-  /// Destructor.
   ~ACE_Task_Ex () override;
 
   /// Gets the message queue associated with this task.
@@ -85,90 +81,93 @@ public:
 
   /// Sets the message queue associated with this task.
   void msg_queue (MESSAGE_QUEUE_EX *);
+  /// @}
 
 public: // Should be protected:
-  // = Message queue manipulation methods.
+  /// @name Message queue operations
+  /// @{
 
-  // = Enqueue and dequeue methods.
+  /**
+   * Message queue operations block if @a timeout is zero. Otherwise,
+   * they wait until the absolute time specified by @a timeout. They
+   * also return if the queue is closed or deactivated, a signal occurs,
+   * or the timeout expires (setting errno to EWOULDBLOCK).
+   */
 
-  // For the following five method if @a timeout == 0, the caller will
-  // block until action is possible, else will wait until the
-  // <{absolute}> time specified in *@a timeout elapses).  These calls
-  // will return, however, when queue is closed, deactivated, when a
-  // signal occurs, or if the time specified in timeout elapses, (in
-  // which case errno = EWOULDBLOCK).
-
-  /// Insert message into the message queue.  Note that @a timeout uses
-  /// <{absolute}> time rather than <{relative}> time.
+  /// Insert message into the message queue.
+  /// @note @a timeout uses absolute time rather than relative time.
   int putq (ACE_MESSAGE_TYPE *, ACE_Time_Value *timeout = nullptr);
 
   /**
-   * Extract the first message from the queue (blocking).  Note that
-   * @a timeout uses <{absolute}> time rather than <{relative}> time.
+   * Extract the first message from the queue (blocking).
    * Returns number of items in queue if the call succeeds or -1 otherwise.
+   *
+   * @note @a timeout uses absolute time rather than relative time.
    */
   int getq (ACE_MESSAGE_TYPE *&mb, ACE_Time_Value *timeout = nullptr);
 
-  /// Return a message to the queue.  Note that @a timeout uses
-  /// <{absolute}> time rather than <{relative}> time.
+  /// Return a message to the queue.
+  /// @note @a timeout uses absolute time rather than relative time.
   int ungetq (ACE_MESSAGE_TYPE *, ACE_Time_Value *timeout = nullptr);
 
   /**
-   * Turn the message around and send it back down the Stream.  Note
-   * that @a timeout uses <{absolute}> time rather than <{relative}>
-   * time.
+   * Turn the message around and send it back down the Stream.
+   *
+   * @note @a timeout uses absolute time rather than relative time.
    */
   int reply (ACE_MESSAGE_TYPE *, ACE_Time_Value *timeout = nullptr);
 
   /**
-   * Transfer message to the adjacent ACE_Task_Ex in a ACE_Stream.  Note
-   * that @a timeout uses <{absolute}> time rather than <{relative}>
-   * time.
+   * Transfer message to the adjacent ACE_Task_Ex in an ACE_Stream.
+   *
+   * @note @a timeout uses absolute time rather than relative time.
    */
   int put_next (ACE_MESSAGE_TYPE *msg, ACE_Time_Value *timeout = nullptr);
 
-  // = ACE_Task utility routines to identify names et al.
-  /// Return the name of the enclosing Module if there's one associated
-  /// with the Task, else returns 0.
-  const ACE_TCHAR *name () const;
+  /// @}
 
-  // = Pointers to next ACE_Task_Base (if ACE is part of an ACE_Stream).
+  /// @name Task and stream accessors
+  /// @{
+
+  /// Return the name of the enclosing Module if there's one associated
+  /// with the Task, else returns nullptr.
+  ACE_TCHAR const *name () const;
+
   /// Get next Task pointer.
   ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *next ();
 
   /// Set next Task pointer.
   void next (ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *);
 
-  /// Always return 0. @todo FIXME
+  /// Always return nullptr. @todo FIXME
   ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *sibling ();
 
-  /// Return the Task's Module if there is one, else returns 0.
+  /// Return the Task's Module if there is one, else returns nullptr.
   ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *module () const;
+  /// @}
 
   /**
    * Flush the task's queue, i.e., free all of the enqueued
    * message blocks and releases any threads blocked on the queue.
-   * Note that if this conflicts with the C++ iostream <flush>
-   * function, just rewrite the iostream function as ::<flush>.
+   * @note If this conflicts with the C++ iostream @c flush function,
+   * rewrite the iostream function as @c ::flush.
    */
   int flush (u_long flag = ACE_Task_Flags::ACE_FLUSHALL);
-
-  // = Special routines corresponding to certain message types.
 
   /// Manipulate watermarks.
   void water_marks (ACE_IO_Cntl_Msg::ACE_IO_Cntl_Cmds, size_t);
 
   /// Queue of messages on the ACE_Task..
-  MESSAGE_QUEUE_EX *msg_queue_;
+  MESSAGE_QUEUE_EX *msg_queue_ {};
 
   /// true if should delete Message_Queue, false otherwise.
-  bool delete_msg_queue_;
+  bool delete_msg_queue_ {};
 
   /// Back-pointer to the enclosing module.
-  ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *mod_;
+  ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *mod_ {};
 
   /// Pointer to adjacent ACE_Task.
-  ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *next_;
+  ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *next_ {};
 
   /// Dump the state of an object.
   void dump () const;

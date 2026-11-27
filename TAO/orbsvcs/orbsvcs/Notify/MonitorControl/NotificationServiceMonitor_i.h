@@ -31,54 +31,56 @@ class TAO_Notify_MC_Export NotificationServiceMonitor_i
 public:
   /// Construct a monitor service.  If the orb parameter is provided,
   /// it is possible that shutdown() will be called on it.
-  NotificationServiceMonitor_i (CORBA::ORB_ptr orb = 0);
+  explicit NotificationServiceMonitor_i (CORBA::ORB_ptr orb = nullptr);
+
+  NotificationServiceMonitor_i (NotificationServiceMonitor_i const&) = delete;
+  NotificationServiceMonitor_i (NotificationServiceMonitor_i&&) = delete;
+  NotificationServiceMonitor_i& operator= (NotificationServiceMonitor_i const&) = delete;
+  NotificationServiceMonitor_i& operator= (NotificationServiceMonitor_i&&) = delete;
 
   /// Get a list of statistic names
-  virtual Monitor::NameList* get_statistic_names ();
+  Monitor::NameList* get_statistic_names () override;
 
   /// Get the data from a single statistic
-  virtual Monitor::Data*
-  get_statistic (const char* name);
+  Monitor::Data* get_statistic (char const *name) override;
 
   /// Get the data from multiple statistic instances
-  virtual Monitor::DataList*
-  get_statistics (const Monitor::NameList& names);
+  Monitor::DataList* get_statistics (Monitor::NameList const& names) override;
 
   /// Get the data from multiple statistic instances and clear them
   /// directly afterward
-  virtual Monitor::DataList*
-  get_and_clear_statistics (const Monitor::NameList& names);
+  Monitor::DataList* get_and_clear_statistics (Monitor::NameList const& names) override;
 
   /// Clear the data from multiple statistic instances
-  virtual void clear_statistics (const Monitor::NameList& names);
+  void clear_statistics (Monitor::NameList const& names) override;
 
   /// Shut down an event channel by name
-  virtual void shutdown_event_channel (const char* name);
+  void shutdown_event_channel (char const *name) override;
 
   /// Remove a consumer by name
-  virtual void remove_consumer (const char* name);
+  void remove_consumer (char const *name) override;
 
   /// Remove a supplier by name
-  virtual void remove_supplier (const char* name);
+  void remove_supplier (char const *name) override;
 
   /// Remove a consumer admin by name
-  virtual void remove_consumeradmin (const char* name);
+  void remove_consumeradmin (char const *name) override;
 
   /// Remove a supplier admin by name
-  virtual void remove_supplieradmin (const char* name);
+  void remove_supplieradmin (char const *name) override;
 
   /// Call shutdown() on the ORB if one was provided during construction
-  virtual void shutdown ();
+  void shutdown () override;
 
 private:
-  void send_control_command (const char* name, const char* cmd);
+  void send_control_command (char const *name, char const *cmd);
 
   void get_data (Monitor_Point_Registry* registry,
-                 const char* name,
+                 char const *name,
                  Monitor::Data& data);
 
   void get_invalid_names (Monitor_Point_Registry* registry,
-                          const Monitor::NameList& names,
+                          Monitor::NameList const& names,
                           Monitor::NameList& invalid);
 
   CORBA::ORB_var orb_;

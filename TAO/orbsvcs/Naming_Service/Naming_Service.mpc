@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project : orbsvcsexe, install, naming_serv, imr_client, svc_utils {
   exename  = tao_cosnaming
   Source_Files {

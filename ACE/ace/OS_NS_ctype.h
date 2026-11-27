@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   OS_NS_ctype.h
  *
@@ -8,7 +5,6 @@
  *  @author Jesper S. M|ller<stophph@diku.dk>
  *  @author and a cast of thousands...
  */
-//=============================================================================
 
 #ifndef ACE_OS_NS_CTYPE_H
 # define ACE_OS_NS_CTYPE_H
@@ -38,15 +34,15 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace ACE_OS {
   // these are non-standard names...
 
-  /** @name Functions from <cctype>
+  /** @name Functions from &lt;cctype&gt;
    *
-   *  Included are the functions defined in <cctype> and their <cwctype>
+   *  Included are the functions defined in &lt;cctype&gt; and their &lt;cwctype&gt;
    *  equivalents.
    *
    *  Since they are often implemented as macros, we don't use the same name
    *  here.  Instead, we change by prepending "ace_".
    */
-  //@{
+  /// @{
   /// Returns true if the character is an alphanumeric character.
   ACE_NAMESPACE_INLINE_FUNCTION
   int ace_isalnum (ACE_TCHAR c);
@@ -122,7 +118,7 @@ namespace ACE_OS {
   /// Tests @a c for the property specified by the @a desc argument
   ACE_NAMESPACE_INLINE_FUNCTION
   int ace_isctype (int c, ctype_t desc);
-  //@}
+  /// @}
 
 } /* namespace ACE_OS */
 

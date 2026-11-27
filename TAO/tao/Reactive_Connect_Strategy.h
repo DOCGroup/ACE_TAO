@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file Reactive_Connect_Strategy.h
  *
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_REACTIVE_CONNECT_STRATEGY_H
 #define TAO_REACTIVE_CONNECT_STRATEGY_H
@@ -35,10 +31,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Export TAO_Reactive_Connect_Strategy : public TAO_Connect_Strategy
 {
 public:
-  /// Constructor
-  TAO_Reactive_Connect_Strategy (TAO_ORB_Core *orb);
+  explicit TAO_Reactive_Connect_Strategy (TAO_ORB_Core *orb);
 
-  /// Destructor
   ~TAO_Reactive_Connect_Strategy () override;
 
   /*

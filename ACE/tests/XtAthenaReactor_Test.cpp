@@ -1,6 +1,3 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
  *  @file    XtAthenaReactor_Test.cpp
  *
@@ -17,8 +14,6 @@
  *
  *  @author Kirill Rybaltchenko <Kirill.Rybaltchenko@cern.ch>
  */
-//=============================================================================
-
 
 #include "test_config.h"
 #include "ace/XtReactor/XtReactor.h"
@@ -28,6 +23,8 @@
 #include "ace/SOCK_Connector.h"
 #include "ace/Service_Config.h"
 #include "ace/Thread_Manager.h"
+
+#include <memory>
 
 #include "ace/OS_NS_unistd.h"
 
@@ -55,7 +52,11 @@ static void set_label(Widget w, const char *p)
 #define PRESS_ME_CALLBACK XtNcallback
 static Widget create_box(Widget parent, const char * name)
 {
-    return XtCreateWidget( (char*) name, boxWidgetClass, parent, 0, 0);
+    return XtCreateWidget (const_cast<char *> (name),
+                           boxWidgetClass,
+                           parent,
+                           0,
+                           0);
 }
 
 // Port we listen on.
@@ -77,7 +78,7 @@ Quit (Widget, XtPointer, XtPointer)
   ACE_OS::exit (0);
 }
 
-static void *
+static ACE_THR_FUNC_RETURN
 client (void *)
 {
   char buf[100];
@@ -96,28 +97,33 @@ client (void *)
   if (connector.connect (stream,
                          ACE_INET_Addr (SERV_TCP_PORT,
                                         ACE_DEFAULT_SERVER_HOST)) == -1)
-    ACE_ERROR ((LM_ERROR,
-                "(%P) %p\n",
-                "Socket open"));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "(%P) %p\n",
+                  ACE_TEXT ("Socket open")));
+    }
 
   if (stream.send (4,
-                   (void *) &mes_len,
-                   sizeof (size_t),
-                   (void *)buf,
-                   ACE_OS::strlen (buf) + 1) == -1)
-
-    ACE_ERROR ((LM_ERROR,
-                "(%P) %p\n",
-                "Socket send"));
+                   reinterpret_cast<char *> (&mes_len),
+                   static_cast<int> (sizeof mes_len),
+                   buf,
+                   static_cast<int> (ACE_OS::strlen (buf) + 1)) == -1)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "(%P) %p\n",
+                  ACE_TEXT ("Socket send")));
+    }
 
   if (stream.close () == -1)
-    ACE_ERROR ((LM_ERROR,
-                "(%P) %p\n",
-                "Socket close"));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "(%P) %p\n",
+                  ACE_TEXT ("Socket close")));
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               "(%P) Client: Message has been sent, about to exit...\n"));
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 // Callback for "Press Me" button.
@@ -141,7 +147,9 @@ inc_tmo (void *w,XtIntervalId *)
   char new_string[80];
 
   if (count2 > 10)
-    ACE_OS::exit (0);
+    {
+      ACE_OS::exit (0);
+    }
   ACE_OS::snprintf (new_string, 80, "Events: [%d] [%d] [%d]",
                     count1, count2++, count3);
 
@@ -156,7 +164,7 @@ inc_tmo (void *w,XtIntervalId *)
 class EV_handler : public ACE_Event_Handler
 {
 public:
-  int handle_timeout (const ACE_Time_Value &,
+  int handle_timeout (ACE_Time_Value const &,
                               const void *arg) override
   {
     char new_string[80];
@@ -176,22 +184,26 @@ public:
   //FUZZ: enable check_for_lack_ACE_OS
     char buf[100];
     int head;
-    ssize_t ret = this->peer ().recv_n ((char *) &head,
+    ssize_t ret = this->peer ().recv_n (reinterpret_cast<char *> (&head),
                                         sizeof (int));
     if (ret != sizeof (int))
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%P) %p\n",
-                         "read header"),
-                        -1);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%P) %p\n",
+                           ACE_TEXT ("read header")),
+                          -1);
+      }
 
     ret = this->peer ().recv_n (buf,
                                 (int) ntohl (head));
 
     if (ret != (int) ntohl (head))
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%P) %p\n",
-                         "read message"),
-                        -1);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%P) %p\n",
+                           ACE_TEXT ("read message")),
+                          -1);
+      }
     ACE_DEBUG ((LM_DEBUG,
                 " (%P)Server (ACE_SOCKET channel message): [%s]\n",
                 buf));
@@ -227,7 +239,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   digits_rc = create_box(topLevel, "digits_rc");
 
   //"Stop Test" button.
-  goodbye = XtCreateWidget ( (char *) "goodbye",
+  goodbye = XtCreateWidget (const_cast<char *> ("goodbye"),
                              BUTTON_WIDGET,
                              digits_rc,
                              0,
@@ -235,14 +247,14 @@ run_main (int argc, ACE_TCHAR *argv[])
   set_label(goodbye, "Stop Test");
 
   //"Press Me" button
-  PressMe = XtCreateWidget ((char *) "PressMe",
+  PressMe = XtCreateWidget (const_cast<char *> ("PressMe"),
                             BUTTON_WIDGET,
                             digits_rc,
                             0,
                             0);
 
   //Display for event counter
-  lbl = XtCreateWidget ((char *) "label_for_event_one",
+  lbl = XtCreateWidget (const_cast<char *> ("label_for_event_one"),
                         LABEL_WIDGET,
                         digits_rc,
                         0,
@@ -275,7 +287,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   // It will perform X Main Loop
   ACE_XtReactor reactor (app_context);
 
-  ACE_Reactor r (&reactor);
+  ACE_Reactor r (std::addressof (reactor));
 
   //Event Handler for ACE Timer.
   EV_handler evh;
@@ -283,21 +295,25 @@ run_main (int argc, ACE_TCHAR *argv[])
   ACE_Acceptor <Connection_Handler, ACE_SOCK_ACCEPTOR> acceptor;
 
   if (acceptor.open (ACE_INET_Addr ((u_short) SERV_TCP_PORT),
-                     &r) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "open"),
-                      -1);
+                     std::addressof (r)) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         ACE_TEXT ("open")),
+                        -1);
+    }
 
-  if (reactor.schedule_timer (&evh,
-                              (const void *) lbl,
+  if (reactor.schedule_timer (std::addressof (evh),
+                              lbl,
                               ACE_Time_Value (2),
                               ACE_Time_Value (2))==-1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       " (%P|%t) can't register with reactor\n"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         " (%P|%t) can't register with reactor\n"),
+                        -1);
+    }
 
-  ACE_Thread_Manager::instance ()->spawn ((ACE_THR_FUNC) client,
+  ACE_Thread_Manager::instance ()->spawn (client,
                                           nullptr,
                                           THR_NEW_LWP | THR_DETACHED);
 

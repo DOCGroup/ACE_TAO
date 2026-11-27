@@ -10,12 +10,11 @@
 #  include "ace/OS_NS_unistd.h"
 #endif  // ACE_HAS_STREAM_PIPES
 
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_SPIPE_Acceptor::ACE_SPIPE_Acceptor ()
 #if defined (ACE_HAS_WIN32_NAMED_PIPES)
-  : sa_ (0), pipe_handle_ (ACE_INVALID_HANDLE)
+  : pipe_handle_ (ACE_INVALID_HANDLE)
 #endif /* ACE_HAS_WIN32_NAMED_PIPES */
 {
   ACE_TRACE ("ACE_SPIPE_Acceptor::ACE_SPIPE_Acceptor");
@@ -50,7 +49,7 @@ ACE_SPIPE_Acceptor::dump () const
 // General purpose routine for performing server ACE_SPIPE creation.
 
 int
-ACE_SPIPE_Acceptor::open (const ACE_SPIPE_Addr &local_sap,
+ACE_SPIPE_Acceptor::open (ACE_SPIPE_Addr const &local_sap,
                           int reuse_addr,
                           int perms,
                           LPSECURITY_ATTRIBUTES sa,
@@ -82,19 +81,29 @@ ACE_SPIPE_Acceptor::create_new_instance (int perms)
   ACE_HANDLE handle = ACE_OS::creat (this->local_addr_.get_path_name (),
                                      perms);
   if (handle == ACE_INVALID_HANDLE)
-    return -1;
+    {
+      return -1;
+    }
   else if (ACE_OS::close (handle) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else if (ACE_OS::pipe (spipe) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else if (ACE_OS::ioctl (spipe[0],
                           I_PUSH,
                           module) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else if (-1 == ACE_OS::fattach(spipe[0],
                                  ACE_TEXT_ALWAYS_CHAR (
                                    this->local_addr_.get_path_name ())))
-    return -1;
+    {
+      return -1;
+    }
 
   this->set_duplex_handle (spipe[0]);
   this->set_handle (spipe[1]);
@@ -129,7 +138,9 @@ ACE_SPIPE_Acceptor::create_new_instance (int perms)
                         this->sa_);
 
   if (this->pipe_handle_ == ACE_INVALID_HANDLE)
-    return -1;
+    {
+      return -1;
+    }
   else
     {
       // Start the Connect (analogous to listen () for a socket).
@@ -187,7 +198,9 @@ ACE_SPIPE_Acceptor::close ()
 
   // Check to see if we have a valid pipe; if not, nothing to do.
   if (this->pipe_handle_ == ACE_INVALID_HANDLE)
-    return -1;
+    {
+      return -1;
+    }
 
   // Substitute the pipe handle back in so it's closed properly in the
   // ACE_OS wrapper. But leave the pipe_handle_ value so we can clean up the
@@ -197,7 +210,7 @@ ACE_SPIPE_Acceptor::close ()
 #endif /* ACE_HAS_WIN32_NAMED_PIPES */
 
   // This behavior is shared by UNIX and Win32...
-  int result = this->ACE_SPIPE::close ();
+  int const result = this->ACE_SPIPE::close ();
   this->set_handle (ACE_INVALID_HANDLE);
 
 #if defined (ACE_HAS_STREAM_PIPES)
@@ -228,7 +241,7 @@ ACE_SPIPE_Acceptor::close ()
   return result;
 }
 
-ACE_SPIPE_Acceptor::ACE_SPIPE_Acceptor (const ACE_SPIPE_Addr &local_sap,
+ACE_SPIPE_Acceptor::ACE_SPIPE_Acceptor (ACE_SPIPE_Addr const &local_sap,
                                         int reuse_addr,
                                         int perms,
                                         LPSECURITY_ATTRIBUTES sa,
@@ -237,9 +250,11 @@ ACE_SPIPE_Acceptor::ACE_SPIPE_Acceptor (const ACE_SPIPE_Addr &local_sap,
   ACE_TRACE ("ACE_SPIPE_Acceptor::ACE_SPIPE_Acceptor");
 
   if (this->open (local_sap, reuse_addr, perms, sa, pipe_mode) == -1)
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACE_SPIPE_Acceptor")));
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("%p\n"),
+                     ACE_TEXT ("ACE_SPIPE_Acceptor")));
+    }
 }
 
 // General purpose routine for accepting new connections.
@@ -280,7 +295,9 @@ ACE_SPIPE_Acceptor::accept (ACE_SPIPE_Stream &new_io,
   // This is for compatibility with ACE_SOCK_Acceptor and
   // ACE_TLI_Acceptor.
   if (remote_addr != 0)
-    *remote_addr = new_io.remote_addr_;
+    {
+      *remote_addr = new_io.remote_addr_;
+    }
 
   return 0;
 #elif defined (ACE_HAS_WIN32_NAMED_PIPES)
@@ -289,7 +306,9 @@ ACE_SPIPE_Acceptor::accept (ACE_SPIPE_Stream &new_io,
 
   // Check to see if we have a valid pipe
   if (this->pipe_handle_ == ACE_INVALID_HANDLE)
-    return -1;
+    {
+      return -1;
+    }
 
   // open () started the Connect in asynchronous mode.  Wait for the event
   // in the OVERLAPPED structure to be signalled, then grab the status.
@@ -299,11 +318,15 @@ ACE_SPIPE_Acceptor::accept (ACE_SPIPE_Stream &new_io,
         {
           ACE_Time_Value abstime (ACE_OS::gettimeofday () + *timeout);
           if (this->event_.wait (&abstime) == -1)
-            return -1;
+            {
+              return -1;
+            }
         }
       else
         if (this->event_.wait () == -1)
-          return -1;
+          {
+            return -1;
+          }
 
       // Should be here with the ConnectNamedPipe operation complete.
       // Steal the already_connected_ flag to record the results.

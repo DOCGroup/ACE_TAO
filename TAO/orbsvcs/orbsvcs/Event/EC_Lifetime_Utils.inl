@@ -1,11 +1,11 @@
-// -*- C++ -*-
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 TAO_EC_Object_Deactivator::TAO_EC_Object_Deactivator ()
   : poa_ ()
   , id_ ()
-  , deactivate_ (0)
 {
 }
 
@@ -15,7 +15,7 @@ TAO_EC_Object_Deactivator::TAO_EC_Object_Deactivator (
                                         PortableServer::ObjectId const & id)
   : poa_ (PortableServer::POA::_duplicate (poa))
   , id_ (id)
-  , deactivate_ (1)
+  , deactivate_ (true)
 {
 }
 
@@ -26,10 +26,10 @@ TAO_EC_Object_Deactivator::deactivate ()
   {
     try
     {
-      this->deactivate_ = 0;
+      this->deactivate_ = false;
       this->poa_->deactivate_object (id_);
     }
-    catch (const CORBA::Exception&)
+    catch (CORBA::Exception const&)
     {
       // The deactivation can throw...
     }
@@ -51,13 +51,13 @@ TAO_EC_Object_Deactivator::poa () const
 ACE_INLINE void
 TAO_EC_Object_Deactivator::allow_deactivation ()
 {
-  this->deactivate_ = 1;
+  this->deactivate_ = true;
 }
 
 ACE_INLINE void
 TAO_EC_Object_Deactivator::disallow_deactivation ()
 {
-  this->deactivate_ = 0;
+  this->deactivate_ = false;
 }
 
 ACE_INLINE void
@@ -66,19 +66,21 @@ TAO_EC_Object_Deactivator::set_values (PortableServer::POA_ptr poa,
 {
   this->poa_ = PortableServer::POA::_duplicate (poa);
   this->id_ = id;
-  this->deactivate_ = 1;
+  this->deactivate_ = true;
 }
 
 ACE_INLINE void
 TAO_EC_Object_Deactivator::set_values (TAO_EC_Object_Deactivator & deactivator)
 {
-  if (this == &deactivator)
-    return;
+  if (this == std::addressof (deactivator))
+    {
+      return;
+    }
 
   this->poa_ = deactivator.poa_._retn ();
   this->id_ = deactivator.id_;
   this->deactivate_ = deactivator.deactivate_;
-  deactivator.deactivate_ = 0;
+  deactivator.deactivate_ = false;
 }
 
 // ****************************************************************
@@ -120,7 +122,7 @@ TAO_EC_ORB_Holder::~TAO_EC_ORB_Holder ()
       {
         this->orb_->destroy ();
       }
-    catch (const CORBA::Exception&)
+    catch (CORBA::Exception const&)
       {
         // Ignore.
       }
@@ -150,7 +152,7 @@ TAO_EC_Event_Channel_Holder::~TAO_EC_Event_Channel_Holder ()
       {
         this->ec_->destroy ();
       }
-    catch (const CORBA::Exception&)
+    catch (CORBA::Exception const&)
       {
         // Ignore.
       }

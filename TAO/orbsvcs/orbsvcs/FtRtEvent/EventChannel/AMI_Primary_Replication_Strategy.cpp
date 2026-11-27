@@ -10,11 +10,14 @@
 #include "../Utils/ScopeGuard.h"
 #include "../Utils/Log.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-AMI_Primary_Replication_Strategy::AMI_Primary_Replication_Strategy(bool mt)
-  : handler_(this),
-    mutex_ (mt ? new ACE_SYNCH_RW_MUTEX : nullptr)
+AMI_Primary_Replication_Strategy::AMI_Primary_Replication_Strategy (bool mt)
+  : handler_ (this)
+  , mutex_ (mt ? std::make_unique<ACE_SYNCH_RW_MUTEX> ()
+               : std::unique_ptr<ACE_SYNCH_RW_MUTEX> {})
 {
 }
 
@@ -42,15 +45,14 @@ int  AMI_Primary_Replication_Strategy::release ()
 int AMI_Primary_Replication_Strategy::svc()
 {
   try{
-    int argc = 0;
-    char** argv = nullptr;
+    int argc {};
+    char** argv {};
     orb_ = CORBA::ORB_init (argc, argv);
 
     root_poa_ =  resolve_init<PortableServer::POA>(orb_.in(), "RootPOA");
 
     // create POAManager
     mgr_ = root_poa_->the_POAManager();
-
 
     mgr_->activate();
 
@@ -69,11 +71,13 @@ int AMI_Primary_Replication_Strategy::svc()
     running_ = true;
     while (running_) {
       if (orb_->work_pending())
+      {
         orb_->perform_work();
+      }
     }
     orb_->destroy();
   }
-  catch (const CORBA::Exception& ex){
+  catch (CORBA::Exception const& ex){
     ex._tao_print_exception ("AMI_Primary_Replication_Strategy::svc");
     running_ = false;
     return -1;
@@ -84,21 +88,21 @@ int AMI_Primary_Replication_Strategy::svc()
 
 void
 AMI_Primary_Replication_Strategy::replicate_request(
-  const FTRT::State& state,
+  FTRT::State const& state,
   RollbackOperation rollback,
-  const FtRtecEventChannelAdmin::ObjectId& oid)
+  FtRtecEventChannelAdmin::ObjectId const& oid)
 {
    ACE_Auto_Event event;
-   Update_Manager* manager = nullptr;
-   bool success = false;
+   Update_Manager* manager {};
+   bool success {};
 
     FTRT::TransactionDepth transaction_depth =
       Request_Context_Repository().get_transaction_depth();
 
-   const FtRtecEventChannelAdmin::EventChannelList& backups =
+   FtRtecEventChannelAdmin::EventChannelList const& backups =
      GroupInfoPublisher::instance()->backups();
 
-   size_t num_backups = backups.length();
+   size_t const num_backups = backups.length();
 
    if ((size_t)transaction_depth > num_backups) {
      TAO_FTRTEC::Log(3, ACE_TEXT("Throwing FTRT::TransactionDepthTooHigh\n"));
@@ -109,10 +113,9 @@ AMI_Primary_Replication_Strategy::replicate_request(
                     Update_Manager(event, backups.length(), transaction_depth-1, success),
                     CORBA::NO_MEMORY());
 
-
    Request_Context_Repository().set_transaction_depth(0);
 
-   for (size_t i = 0; i < num_backups; ++i)  {
+   for (size_t i {}; i < num_backups; ++i)  {
       PortableServer::ObjectId oid;
       try{
           FTRT::AMI_UpdateableHandler_ptr handler = handler_.activate(manager, i, oid);
@@ -122,19 +125,21 @@ AMI_Primary_Replication_Strategy::replicate_request(
 
           obj->sendc_set_update(handler, state);
        }
-       catch (const CORBA::Exception& ex){
+       catch (CORBA::Exception const& ex){
          ex._tao_print_exception (
            "AMI_Primary_Replication_Strategy::replicate_request : ");
          manager->handle_exception(i);
          if (oid.length())
+         {
            poa_->deactivate_object(oid);
+         }
        }
    }
    // wait until the first transaction_depth replicas replied.
    event.wait();
 
    if (!success) { // replication failed, transaction depth too high
-     for (size_t i =0; i < num_backups; ++i)  {
+     for (size_t i {}; i < num_backups; ++i)  {
        try{
          FtRtecEventChannelAdmin::EventChannel_ptr ec = backups[i];
          (ec->*rollback)(oid);
@@ -149,19 +154,19 @@ AMI_Primary_Replication_Strategy::replicate_request(
 }
 
 void
-AMI_Primary_Replication_Strategy::add_member(const FTRT::ManagerInfo & info,
+AMI_Primary_Replication_Strategy::add_member(FTRT::ManagerInfo const &info,
                                              CORBA::ULong object_group_ref_version)
 {
   ACE_Auto_Event event;
-  const FtRtecEventChannelAdmin::EventChannelList& backups =
+  FtRtecEventChannelAdmin::EventChannelList const& backups =
      GroupInfoPublisher::instance()->backups();
 
-  size_t num_backups = backups.length();
+  size_t const num_backups = backups.length();
   ObjectGroupManagerHandler add_member_handler(event, num_backups+1);
   // The extra one is to prevent the event been signaled prematurely.
 
   PortableServer::ObjectId_var oid =
-    root_poa_->activate_object(&add_member_handler);
+    root_poa_->activate_object (std::addressof (add_member_handler));
 
   TAO::Utils::Implicit_Deactivator deactivator(&add_member_handler);
 
@@ -171,7 +176,7 @@ AMI_Primary_Replication_Strategy::add_member(const FTRT::ManagerInfo & info,
   FTRT::AMI_ObjectGroupManagerHandler_var handler =
     FTRT::AMI_ObjectGroupManagerHandler::_narrow(obj.in());
 
-  for (unsigned i = 0; i < num_backups; ++i) {
+  for (unsigned i {}; i < num_backups; ++i) {
     try{
       backups[i]->sendc_add_member(handler.in(),
                                    info,

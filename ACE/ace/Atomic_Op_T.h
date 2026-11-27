@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Atomic_Op_T.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef ACE_ATOMIC_OP_T_H
 #define ACE_ATOMIC_OP_T_H
@@ -23,7 +19,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 template<typename TYPE>
 struct ACE_Type_Traits
 {
-  using parameter_type = const TYPE &;
+  using parameter_type = TYPE const &;
 };
 
 template<>
@@ -147,12 +143,13 @@ public:
   using arg_type = typename ACE_Type_Traits<TYPE>::parameter_type;
 
   /// Initialize @c value_ to 0.
-  ACE_Atomic_Op_Ex (ACE_LOCK & mtx);
+  explicit ACE_Atomic_Op_Ex (ACE_LOCK & mtx);
 
   /// Initialize @c value_ to c.
   ACE_Atomic_Op_Ex (ACE_LOCK & mtx, arg_type c);
 
-  // = Accessors.
+  /// @name Atomic operations and accessors
+  /// @{
 
   /// Atomically pre-increment @c value_.
   TYPE operator++ ();
@@ -193,7 +190,7 @@ public:
   /// Atomically assign rhs to @c value_.
   ACE_Atomic_Op_Ex<ACE_LOCK, TYPE> &operator= (arg_type rhs);
 
-  /// Atomically assign <rhs> to @c value_.
+  /// Atomically assign @a rhs to @c value_.
   ACE_Atomic_Op_Ex<ACE_LOCK, TYPE> &operator= (
     ACE_Atomic_Op_Ex<ACE_LOCK, TYPE> const & rhs);
 
@@ -202,6 +199,7 @@ public:
 
   /// Explicitly return @c value_.
   TYPE value () const;
+  /// @}
 
   /// Dump the state of an object.
   void dump () const;
@@ -235,7 +233,7 @@ private:
   ACE_LOCK & mutex_;
 
   /// Current object decorated by the atomic op.
-  TYPE value_;
+  TYPE value_ {};
 };
 
 /**
@@ -262,7 +260,7 @@ public:
   ACE_Atomic_Op ();
 
   /// Initialize @c value_ to c.
-  ACE_Atomic_Op (arg_type c);
+  explicit ACE_Atomic_Op (arg_type c);
 
   /// Manage copying...
   ACE_Atomic_Op (ACE_Atomic_Op<ACE_LOCK, TYPE> const & c);

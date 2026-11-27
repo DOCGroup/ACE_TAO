@@ -338,10 +338,10 @@ Driver::run_one_iteration ()
 
   while (!current_iteration_done())
   {
-    ACE_Time_Value start = ACE_OS::gettimeofday();
+    ACE_Time_Value const start = ACE_OS::gettimeofday();
     ACE_Time_Value interval(1,0);
     reactor()->run_reactor_event_loop(interval);
-    ACE_Time_Value end = ACE_OS::gettimeofday();
+    ACE_Time_Value const end = ACE_OS::gettimeofday();
 
     if (end - start >= timeout)
       {
@@ -453,8 +453,6 @@ invariant_failed()
   // Just a good place to set a breakpoint
 }
 
-// ============================================
-
 One_Shot_Handler::One_Shot_Handler(
   Driver * master_handler,
   char const * test_name, int id)
@@ -478,7 +476,7 @@ handle_exception(ACE_HANDLE)
   --expected_notifications_;
   master_handler_->notification_received();
 
-  int r = reactor()->purge_pending_notifications(this);
+  int const r = reactor()->purge_pending_notifications(this);
   if (r >= 0)
     {
       master_handler_->notifications_skipped(r);

@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   OS_Errno.h
  *
  *  @author Doug Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef ACE_OS_ERRNO_H
 #define ACE_OS_ERRNO_H
@@ -44,15 +40,20 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Errno_Guard
 {
 public:
+  ACE_Errno_Guard (ACE_Errno_Guard const &) = delete;
+  ACE_Errno_Guard (ACE_Errno_Guard &&) = delete;
+  ACE_Errno_Guard &operator= (ACE_Errno_Guard const &) = delete;
+  ACE_Errno_Guard &operator= (ACE_Errno_Guard &&) = delete;
+
   ///  Stash the value of @a error into @c error_ and initialize the
   ///  @c errno_ptr_ to the address of @a errno_ref.
   ACE_Errno_Guard (ACE_ERRNO_TYPE &errno_ref,
                    int error);
 
   ///  Initialize the @c errno_ptr_ to the address of @a errno_ref.
-  ACE_Errno_Guard (ACE_ERRNO_TYPE &errno_ref);
+  explicit ACE_Errno_Guard (ACE_ERRNO_TYPE &errno_ref);
 
-  /// Reset the value of @c errno to <error>.
+  /// Reset the value of @c errno to @c error.
   ~ACE_Errno_Guard ();
 
   /// Assign @a erro> to error_.
@@ -65,9 +66,6 @@ public:
   bool operator!= (int error);
 
 private:
-  ACE_Errno_Guard (const ACE_Errno_Guard &) = delete;
-  ACE_Errno_Guard &operator= (const ACE_Errno_Guard &) = delete;
-
 #if defined (ACE_MT_SAFE)
   ACE_ERRNO_TYPE *errno_ptr_;
 #endif /* ACE_MT_SAFE */

@@ -12,15 +12,14 @@
 #include "jaws3/TPOOL_Concurrency.h"
 #include "jaws3/TPR_Concurrency.h"
 
-
 ACE_THR_FUNC_RETURN
 JAWS_Signal_Task_function (void *)
 {
-  int done = 0;
+  bool done = false;
 
   while (! done)
     {
-      int signo = ACE_OS::sigwait (JAWS_Signal_Task::instance ()->sigset ());
+      int const signo = ACE_OS::sigwait (JAWS_Signal_Task::instance ()->sigset ());
 
       switch (signo)
         {
@@ -30,7 +29,7 @@ JAWS_Signal_Task_function (void *)
            JAWS_Concurrency::instance ()->shutdown ();
            JAWS_Event_Dispatcher::end_event_loop ();
 
-           done = 1;
+      done = true;
 
           break;
 # if !defined (ACE_WIN32)
@@ -48,9 +47,8 @@ JAWS_Signal_Task_function (void *)
 
     }
 
-  return 0;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
-
 
 JAWS_Signal_Task::JAWS_Signal_Task ()
 {
@@ -65,11 +63,11 @@ JAWS_Signal_Task::JAWS_Signal_Task ()
   this->sigset_.fill_set ();
 #endif
 
-  ACE_OS::sigprocmask (SIG_BLOCK, this->sigset_, 0);
+  ACE_OS::sigprocmask (SIG_BLOCK, this->sigset_, nullptr);
 
   int result;
   result = ACE_Thread::spawn ( JAWS_Signal_Task_function
-                             , 0
+                             , nullptr
                              , THR_BOUND
                              );
   if (result < 0)

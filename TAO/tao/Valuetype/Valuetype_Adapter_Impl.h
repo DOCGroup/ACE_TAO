@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 /**
  *  @file    Valuetype_Adapter_Impl.h
  *

@@ -1,4 +1,3 @@
-
 #ifndef HELLO_H
 #define HELLO_H
 #include /**/ "ace/pre.h"
@@ -10,21 +9,27 @@ class Hello
   : public virtual POA_Test::Hello
 {
 public:
-  /// Constructor
   Hello (CORBA::ORB_ptr orb,
          ACE_thread_t thr_id);
 
-  // = The skeleton methods
-  virtual char * get_string ();
+  /// @name Skeleton methods
+  /// @{
+  char * get_string () override;
 
-  virtual void shutdown ();
+  void shutdown () override;
+  /// @}
+
+  Hello (Hello const &) = delete;
+  Hello (Hello &&) = delete;
+  Hello &operator= (Hello const &) = delete;
+  Hello &operator= (Hello &&) = delete;
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown
   /// the application.
   CORBA::ORB_var orb_;
 
-  ACE_thread_t thr_id_;
+  ACE_thread_t const thr_id_;
 };
 
 #include /**/ "ace/post.h"

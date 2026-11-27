@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  * @file Server_ORBInitializer.h
  *
  * @author Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
 
 #ifndef BUG_2248_REGRESSION_SERVER_ORB_INITIALIZER_H
 #define BUG_2248_REGRESSION_SERVER_ORB_INITIALIZER_H
@@ -39,8 +35,7 @@ class Server_ORBInitializer :
   public virtual ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
-  Server_ORBInitializer ();
+  Server_ORBInitializer () = default;
 
   Server_ORBInitializer (Server_ORBInitializer const &) = delete;
   Server_ORBInitializer (Server_ORBInitializer &&) = delete;
@@ -58,7 +53,7 @@ public:
 private:
   /// Pointer to the server request interceptor.  ORB is responsible
   /// for storage.
-  PortableInterceptor::ServerRequestInterceptor_var server_interceptor_;
+  PortableInterceptor::ServerRequestInterceptor_var server_interceptor_ {};
 };
 
 #if defined(_MSC_VER)

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
@@ -47,7 +46,7 @@ TAO_EC_Default_Factory::supplier_filtering () const
   return this->supplier_filtering_;
 }
 
-ACE_INLINE const ACE_CString&
+ACE_INLINE ACE_CString const &
 TAO_EC_Default_Factory::orb_id () const
 {
   return this->orbid_;

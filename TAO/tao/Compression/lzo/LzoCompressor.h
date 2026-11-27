@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-// ===================================================================
 /**
  *  @file   LzoCompressor.h
  *
@@ -8,7 +5,6 @@
  *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-// ===================================================================
 
 #ifndef TAO_LZOCOMPRESSOR_H
 #define TAO_LZOCOMPRESSOR_H
@@ -31,6 +27,8 @@ namespace TAO
   class TAO_LZOCOMPRESSOR_Export LzoCompressor : public BaseCompressor
   {
     public:
+      LzoCompressor () = delete;
+
       LzoCompressor (::Compression::CompressorFactory_ptr compressor_factory,
                      ::Compression::CompressionLevel compression_level);
 
@@ -42,7 +40,6 @@ namespace TAO
           ::Compression::Buffer const & source,
           ::Compression::Buffer & target) override;
 
-    private:
       LzoCompressor (LzoCompressor const &) = delete;
       LzoCompressor &operator= (LzoCompressor const &) = delete;
       LzoCompressor (LzoCompressor &&) = delete;

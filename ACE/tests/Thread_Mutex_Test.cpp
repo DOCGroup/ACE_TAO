@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    Thread_Mutex_Test.cpp
  *
@@ -9,15 +7,12 @@
  *
  *  @author Prashant Jain <pjain@cs.wustl.edu> and Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
-
 
 #include "test_config.h"
 #include "ace/Thread_Manager.h"
 #include "ace/OS_NS_sys_time.h"
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_unistd.h"
-
 
 #if defined (ACE_HAS_THREADS)
 
@@ -38,14 +33,14 @@
 static int reported_notsup = 0;
 #endif /* ACE_HAS_MUTEX_TIMEOUTS */
 
-static void *
+static ACE_THR_FUNC_RETURN
 test (void *args)
 {
-  ACE_TEST_MUTEX *mutex = (ACE_TEST_MUTEX *) args;
+  ACE_TEST_MUTEX *mutex = static_cast<ACE_TEST_MUTEX *> (args);
   ACE_UNUSED_ARG (mutex); // Suppress ghs warning about unused local "mutex".
-  u_int seed = (u_int) ACE_OS::time (nullptr);
+  u_int seed = static_cast<u_int> (ACE_OS::time (nullptr));
 
-  for (size_t i = 0; i < ACE_MAX_ITERATIONS / 2; i++)
+  for (size_t i = 0; i < ACE_MAX_ITERATIONS / 2; ++i)
     {
       int result = 0;
 
@@ -54,19 +49,21 @@ test (void *args)
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) = trying timed acquire on ")
-                  ACE_TEXT ("iteration %d\n"),
+                  ACE_TEXT ("iteration %B\n"),
                   i));
 
-      ACE_Time_Value delta (1, 0);  // One second timeout
+      ACE_Time_Value const delta (1, 0);  // One second timeout
       ACE_Time_Value timeout = ACE_OS::gettimeofday ();
       timeout += delta;  // Must pass absolute time to acquire().
 
       if (mutex->acquire (timeout) != 0)
         {
           if (errno == ETIME)
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("(%P|%t) = mutex acquisition ")
-                        ACE_TEXT ("timed out\n")));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("(%P|%t) = mutex acquisition ")
+                          ACE_TEXT ("timed out\n")));
+            }
           else if (errno == ENOTSUP)
             {
 #if !defined (ACE_HAS_MUTEX_TIMEOUTS)
@@ -88,7 +85,7 @@ test (void *args)
               ACE_ERROR ((LM_ERROR,
                           ACE_TEXT ("(%P|%t) %p\n%a"),
                           ACE_TEXT ("mutex timeout failed\n")));
-              return nullptr;
+              return ACE_THR_FUNC_RETURN_NULL;
             }
         }
       else
@@ -100,12 +97,12 @@ test (void *args)
       // Now try the standard mutex.
 
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%P|%t) = trying to acquire on iteration %d\n"),
+                  ACE_TEXT ("(%P|%t) = trying to acquire on iteration %B\n"),
                   i));
       result = mutex->acquire ();
       ACE_TEST_ASSERT (result == 0);
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%P|%t) = acquired on iteration %d\n"),
+                  ACE_TEXT ("(%P|%t) = acquired on iteration %B\n"),
                   i));
 
       // Sleep for a random amount of time between 0 and 2 seconds.
@@ -116,7 +113,7 @@ test (void *args)
       result = mutex->release ();
       ACE_TEST_ASSERT (result == 0);
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%P|%t) = released on iteration %d\n"),
+                  ACE_TEXT ("(%P|%t) = released on iteration %B\n"),
                   i));
 
       // FUZZ: disable check_for_ACE_Guard
@@ -125,7 +122,7 @@ test (void *args)
       // destruction.
       {
         // Construct an ACE_Guard to implicitly acquire the mutex.
-        ACE_Guard<ACE_TEST_MUTEX> guard (*mutex);
+        ACE_Guard<ACE_TEST_MUTEX> const guard (*mutex);
         ACE_TEST_ASSERT (guard.locked () != 0);
 
         // Perform some operation which might exit the current scope
@@ -217,7 +214,7 @@ test (void *args)
           // acquiring the mutex, but instead take ownership of the
           // existing lock.  The third parameter tells the guard that
           // the mutex has already been locked.
-          ACE_Guard<ACE_TEST_MUTEX> guard (*mutex, false, 1);
+          ACE_Guard<ACE_TEST_MUTEX> const guard (*mutex, false, 1);
           ACE_TEST_ASSERT (guard.locked () != 0);
 
           // Perform some operation which might exit the current scope
@@ -230,7 +227,7 @@ test (void *args)
       // FUZZ: enable check_for_ACE_Guard
     }
 
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 #endif /* ACE_HAS_THREADS */
 
@@ -243,12 +240,14 @@ spawn ()
   const u_int n_threads = ACE_MAX_THREADS;
 
   if (ACE_Thread_Manager::instance ()->spawn_n (n_threads,
-                                                ACE_THR_FUNC (test),
-                                                (void *) &mutex,
+                                                test,
+                                                &mutex,
                                                 THR_NEW_LWP | THR_DETACHED) == -1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n%a"),
-                ACE_TEXT ("thread create failed")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("%p\n%a"),
+                  ACE_TEXT ("thread create failed")));
+    }
 
   // Wait for the threads to exit.
   ACE_Thread_Manager::instance ()->wait ();

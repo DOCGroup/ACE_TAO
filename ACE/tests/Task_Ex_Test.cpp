@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    Task_Ex_Test.cpp
  *
@@ -7,7 +6,6 @@
  *
  *  @author Kobi Cohen-Arazi <kobi-co@barak-online.net>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "Task_Ex_Test.h"
@@ -50,7 +48,7 @@ int Consumer::open (void*)
   {
     ACE_ERROR_RETURN((LM_ERROR,
                       ACE_TEXT("Consumer::open Error spanwing thread %p\n"),
-                      "err="),
+                      ACE_TEXT ("err=")),
                      -1);
   }
   return 0;
@@ -58,7 +56,7 @@ int Consumer::open (void*)
 
 int Consumer::svc ()
 {
-  User_Defined_Msg* pMsg=nullptr;
+  User_Defined_Msg* pMsg{};
   while(this->getq (pMsg)!=-1)
   {
     ACE_TEST_ASSERT (pMsg!=nullptr);
@@ -67,7 +65,9 @@ int Consumer::svc ()
                ACE_TEXT("Consumer::svc got msg id=%d\n"),
                pMsg->msg_id ()));
     if(pMsg->msg_id ()==NUMBER_OF_MSGS-1)
+    {
       break;
+    }
   }
 
   ACE_DEBUG((LM_INFO,
@@ -75,7 +75,6 @@ int Consumer::svc ()
 
   return 0;
 }
-
 
 /// producer function produces user defined messages.
 ACE_THR_FUNC_RETURN producer (void *arg)
@@ -90,20 +89,20 @@ ACE_THR_FUNC_RETURN producer (void *arg)
   }
   for (int i=0;i!=NUMBER_OF_MSGS;++i)
   {
-    User_Defined_Msg* pMsg=nullptr;
+    User_Defined_Msg* pMsg{};
     ACE_NEW_NORETURN(pMsg, User_Defined_Msg(i));
     if (pMsg==nullptr)
     {
       ACE_ERROR((LM_ERROR,
                  ACE_TEXT("producer Error allocating data %p\n"),
-                 "err="));
+                 ACE_TEXT ("err=")));
       return (ACE_THR_FUNC_RETURN)-1;
     }
     if(c->putq (pMsg)==-1)
     {
       ACE_ERROR((LM_ERROR,
                  ACE_TEXT("producer Error putq data %p\n"),
-                 "err="));
+                 ACE_TEXT ("err=")));
       return (ACE_THR_FUNC_RETURN)-1;
     }
   }
@@ -121,27 +120,29 @@ run_main (int, ACE_TCHAR *[])
 
   Consumer c;
   if(c.open (nullptr)==-1)
-    ACE_ERROR_RETURN((LM_ERROR,
-                      ACE_TEXT ("main Error opening consumer\n")),-1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("main Error opening consumer\n")),
+                        -1);
+    }
 
-
-  int result=ACE_Thread_Manager::instance()->spawn_n (PRODUCER_THREADS_NO,
-                                                      ACE_THR_FUNC(producer),
-                                                      static_cast<void*> (&c));
+  int const result=ACE_Thread_Manager::instance()->spawn_n (PRODUCER_THREADS_NO,
+                                                      producer,
+                                                      &c);
   if (result==-1)
   {
     ACE_ERROR_RETURN((LM_ERROR,
                       ACE_TEXT ("main Error spawning threads %p\n"),
-                      "err="),-1);
+                      ACE_TEXT ("err=")),-1);
   }
 
   // wait all threads
-  int wait_result=ACE_Thread_Manager::instance()->wait();
+  int const wait_result=ACE_Thread_Manager::instance()->wait();
   if (wait_result==-1)
   {
     ACE_ERROR((LM_ERROR,
                ACE_TEXT("main Error Thread_Manager->wait %p\n"),
-               "err="));
+               ACE_TEXT ("err=")));
     return -1;
   }
 #else

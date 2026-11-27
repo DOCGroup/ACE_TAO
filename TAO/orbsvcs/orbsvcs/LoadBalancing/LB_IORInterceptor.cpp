@@ -8,11 +8,11 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_LB_IORInterceptor::TAO_LB_IORInterceptor (
-  const CORBA::StringSeq & object_groups,
-  const CORBA::StringSeq & repository_ids,
-  const char * location,
+  CORBA::StringSeq const & object_groups,
+  CORBA::StringSeq const & repository_ids,
+  char const *location,
   CosLoadBalancing::LoadManager_ptr lm,
-  const char * orb_id,
+  char const *orb_id,
   TAO_LB_LoadAlert & load_alert)
   : object_groups_ (object_groups),
     repository_ids_ (repository_ids),
@@ -49,8 +49,8 @@ void
 TAO_LB_IORInterceptor::components_established (
     PortableInterceptor::IORInfo_ptr info)
 {
-  int argc = 0;
-  ACE_TCHAR **argv = nullptr;
+  int argc {};
+  ACE_TCHAR **argv {};
   CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                         argv,
                                         this->orb_id_.in ());
@@ -80,7 +80,7 @@ TAO_LB_IORInterceptor::components_established (
 
 void
 TAO_LB_IORInterceptor::adapter_manager_state_changed (
-    const char *,
+    char const *,
     PortableInterceptor::AdapterState state)
 {
   if (state == PortableInterceptor::ACTIVE)
@@ -91,7 +91,7 @@ TAO_LB_IORInterceptor::adapter_manager_state_changed (
 
 void
 TAO_LB_IORInterceptor::adapter_state_changed (
-    const PortableInterceptor::ObjectReferenceTemplateSeq &,
+    PortableInterceptor::ObjectReferenceTemplateSeq const &,
     PortableInterceptor::AdapterState state)
 {
   if (state == PortableInterceptor::ACTIVE)
@@ -107,7 +107,9 @@ TAO_LB_IORInterceptor::register_load_alert ()
     ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->lock_);
 
     if (!CORBA::is_nil (this->la_ref_.in ()))
+    {
       return;
+    }
   }
 
   try
@@ -124,10 +126,12 @@ TAO_LB_IORInterceptor::register_load_alert ()
       }
 
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       if (TAO_debug_level > 0)
+      {
         ex._tao_print_exception ("LoadAlert::_this()");
+      }
     }
 
   try
@@ -139,17 +143,21 @@ TAO_LB_IORInterceptor::register_load_alert ()
       this->lm_->register_load_alert (location,
                                       this->la_ref_.in ());
     }
-  catch (const CosLoadBalancing::LoadAlertAlreadyPresent& ex)
+  catch (CosLoadBalancing::LoadAlertAlreadyPresent const& ex)
     {
       if (TAO_debug_level > 0)
+      {
         ex._tao_print_exception ("LoadManager::register_load_alert");
+      }
 
       throw CORBA::BAD_INV_ORDER ();
     }
-  catch (const CosLoadBalancing::LoadAlertNotAdded& ex)
+  catch (CosLoadBalancing::LoadAlertNotAdded const& ex)
     {
       if (TAO_debug_level > 0)
+      {
         ex._tao_print_exception ("LoadManager::register_load_alert");
+      }
 
       throw CORBA::INTERNAL ();
     }

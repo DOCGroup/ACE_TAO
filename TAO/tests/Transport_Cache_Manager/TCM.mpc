@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*Bug_3549_Regression): taoclient {
   exename = Bug_3549_Regression
   Source_Files {

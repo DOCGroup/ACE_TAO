@@ -5,6 +5,8 @@
 #include "tao/Queued_Message.h"
 #include "tao/ORB_Core.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
@@ -54,19 +56,21 @@ TAO_Leader_Follower_Flushing_Strategy::flush_transport (
 
               // Poll the reactor's queue.
               ACE_Time_Value tv = ACE_Time_Value::zero;
-              orb_core->orb ()->perform_work (&tv);
+              orb_core->orb ()->perform_work (std::addressof (tv));
             }
           else
             {
               orb_core->orb ()->perform_work (max_wait_time);
             }
 
-          if (max_wait_time != nullptr) {
-            if (*max_wait_time <= ACE_Time_Value::zero) {
-              errno = ETIME;
-              return -1;
+          if (max_wait_time != nullptr)
+            {
+              if (*max_wait_time <= ACE_Time_Value::zero)
+                {
+                  errno = ETIME;
+                  return -1;
+                }
             }
-          }
         }
     }
   catch (const ::CORBA::Exception&)

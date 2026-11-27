@@ -16,12 +16,14 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   if (ACE_Service_Config::open (argc,
                                 argv,
                                 ACE_DEFAULT_LOGGER_KEY,
-                                1,
-                                0,
-                                1) < 0)
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("Service Config open")),
-                      1);
+                                true,
+                                false,
+                                true) < 0)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("Service Config open")),
+                        1);
+    }
     ACE_TRACE ("main");
     ACE_DEBUG ((LM_NOTICE, ACE_TEXT ("%t%IHowdy Pardner\n")));
     ACE_DEBUG ((LM_INFO, ACE_TEXT ("%t%IGoodnight\n")));

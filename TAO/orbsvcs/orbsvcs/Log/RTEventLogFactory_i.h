@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   RTEventLogFactory_i.h
  *
@@ -8,7 +5,6 @@
  *
  *  @author David A. Hanvey <d.hanvey@qub.ac.uk>
  */
-//=============================================================================
 
 #ifndef TLS_RTEVENTLOGFACTORY_I_H
 #define TLS_RTEVENTLOGFACTORY_I_H
@@ -28,6 +24,7 @@
 
 #include "orbsvcs/Log/RTEventLog_i.h"
 #include "orbsvcs/Log/rteventlog_serv_export.h"
+#include <memory>
 
 #if defined(_MSC_VER)
 #pragma warning(push)
@@ -49,13 +46,12 @@ class TAO_RTEventLog_Serv_Export TAO_RTEventLogFactory_i :
   public TAO_LogMgr_i
 {
 public:
-  //= Initialization and termination code.
-
-  /// Constructor.
+  /// @name Initialization and termination
+  /// @{
   TAO_RTEventLogFactory_i ();
 
-  /// Destructor.
   ~TAO_RTEventLogFactory_i () override;
+  /// @}
 
   /// Initialise the EventChannel and obtain a
   /// pointer to it.
@@ -81,23 +77,24 @@ public:
         CORBA::ULongLong max_size,
         DsLogAdmin::CapacityAlarmThresholdList const & thresholds) override;
 
-   // = Implementation of the RtecEventChannelAdmin::ConsumerAdmin methods.
-  RtecEventChannelAdmin::ProxyPushSupplier_ptr obtain_push_supplier (
-      );
+  /// @name RtecEventChannelAdmin::ConsumerAdmin operations
+  /// @{
+  RtecEventChannelAdmin::ProxyPushSupplier_ptr obtain_push_supplier () override;
+  /// @}
 
 protected:
   CORBA::RepositoryId create_repositoryid () override;
 
   PortableServer::ServantBase * create_log_servant (DsLogAdmin::LogId id) override;
 
-  /// Our object ref. after <active>ation.
+  /// Our object reference after activation.
   DsLogAdmin::LogMgr_var log_mgr_;
 
   /// The event channel used for log generated events.
-  TAO_EC_Event_Channel * impl;
+  std::unique_ptr<TAO_EC_Event_Channel> impl;
 
   /// The object used for log generated events.
-  TAO_RTEventLogNotification * notifier_;
+  std::unique_ptr<TAO_RTEventLogNotification> notifier_;
 
   /// EventChannel used to obtain the ConsumerAdmin.
   RtecEventChannelAdmin::EventChannel_var event_channel_;

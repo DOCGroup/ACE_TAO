@@ -1,11 +1,8 @@
-/* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file    Gadget.h
  *
  *  @author Christopher Kohlhoff <chris@kohlhoff.com>
  */
-//=============================================================================
 
 #ifndef GADGET_H
 #define GADGET_H
@@ -21,8 +18,14 @@
 class Gadget
 {
 public:
-  /// Destructor.
+  Gadget () = default;
+
   virtual ~Gadget ();
+
+  Gadget (Gadget const &) = delete;
+  Gadget (Gadget &&) = delete;
+  Gadget &operator= (Gadget const &) = delete;
+  Gadget &operator= (Gadget &&) = delete;
 
   /// Add a new part to the gadget. The gadget automatically takes shared
   /// responsibility for the ownership of the part object since we are passing

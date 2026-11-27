@@ -34,11 +34,16 @@ ACE_Stream_Node::apply (ACE_Service_Gestalt *config, int &yyerrno)
 {
   ACE_TRACE ("ACE_Stream_Node::apply");
 
-  const ACE_Service_Type *sst = this->node_->record (config);
+  ACE_Service_Type const *sst = this->node_->record (config);
   if (sst == nullptr)
+  {
     const_cast<ACE_Static_Node *> (this->node_)->apply (config, yyerrno);
+  }
 
-  if (yyerrno != 0) return;
+  if (yyerrno != 0)
+  {
+    return;
+  }
 
   sst = this->node_->record (config);
   ACE_Stream_Type *st =
@@ -49,27 +54,29 @@ ACE_Stream_Node::apply (ACE_Service_Gestalt *config, int &yyerrno)
   // So traverse mods_ and and reverse the list, then iterate over it to push
   // the modules in the stream in the correct order.
 #if defined (ACE_HAS_ALLOC_HOOKS)
-  using list_t = std::list<const ACE_Static_Node *,
-                           ACE_Allocator_Std_Adapter<const ACE_Static_Node *>>;
+  using list_t = std::list<ACE_Static_Node const *,
+                           ACE_Allocator_Std_Adapter<ACE_Static_Node const *>>;
 #else
-  using list_t = std::list<const ACE_Static_Node *>;
+  using list_t = std::list<ACE_Static_Node const *>;
 #endif /* ACE_HAS_ALLOC_HOOKS */
   list_t mod_list;
-  const ACE_Static_Node *module;
-  for (module = dynamic_cast<const ACE_Static_Node*> (this->mods_);
+  ACE_Static_Node const *module;
+  for (module = dynamic_cast<ACE_Static_Node const*> (this->mods_);
        module != nullptr;
        module = dynamic_cast<ACE_Static_Node*> (module->link()))
-    mod_list.push_front (module);
+    {
+      mod_list.push_front (module);
+    }
 
   list_t::const_iterator iter;
   for (iter = mod_list.begin (); iter != mod_list.end (); ++iter)
     {
       module = *iter;
-      ACE_ARGV args (module->parameters ());
-
-      const ACE_Service_Type *mst = module->record (config);
+      ACE_Service_Type const *mst = module->record (config);
       if (mst == nullptr)
+      {
         const_cast<ACE_Static_Node *> (module)->apply (config, yyerrno);
+      }
 
       if (yyerrno != 0)
         {
@@ -103,10 +110,12 @@ ACE_Stream_Node::apply (ACE_Service_Gestalt *config, int &yyerrno)
 
 #ifndef ACE_NLOGGING
   if (ACE::debug ())
-    ACELIB_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%P|%t) Did stream on %s, error = %d\n"),
-                this->node_->name (),
-                yyerrno));
+    {
+      ACELIB_DEBUG ((LM_DEBUG,
+                     ACE_TEXT ("(%P|%t) Did stream on %s, error = %d\n"),
+                     this->node_->name (),
+                     yyerrno));
+    }
 #endif /* ACE_NLOGGING */
 }
 
@@ -120,7 +129,7 @@ ACE_Parse_Node::dump () const
 #endif /* ACE_HAS_DUMP */
 }
 
-const ACE_TCHAR *
+ACE_TCHAR const *
 ACE_Parse_Node::name () const
 {
   ACE_TRACE ("ACE_Parse_Node::name");
@@ -142,21 +151,22 @@ ACE_Parse_Node::link (ACE_Parse_Node *n)
   // Find the last list entry (if any) ...
   ACE_Parse_Node *t = this;
   while (t->next_ != nullptr)
+    {
       t = t->next_;
+    }
 
   // ... and insert n there.
   t->next_ = n;
 }
 
-ACE_Stream_Node::ACE_Stream_Node (const ACE_Static_Node *str_ops,
-                                  const ACE_Parse_Node *str_mods)
+ACE_Stream_Node::ACE_Stream_Node (ACE_Static_Node const *str_ops,
+                                  ACE_Parse_Node const *str_mods)
     : ACE_Parse_Node ((str_ops == nullptr ? ACE_TEXT ("<unknown>") : str_ops->name ())),
       node_ (str_ops),
       mods_ (str_mods)
 {
   ACE_TRACE ("ACE_Stream_Node::ACE_Stream_Node");
 }
-
 
 ACE_Stream_Node::~ACE_Stream_Node ()
 {
@@ -168,16 +178,12 @@ ACE_Stream_Node::~ACE_Stream_Node ()
 }
 
 ACE_Parse_Node::ACE_Parse_Node ()
-  : name_ (nullptr),
-    next_ (nullptr)
 {
   ACE_TRACE ("ACE_Parse_Node::ACE_Parse_Node");
 }
 
-
-ACE_Parse_Node::ACE_Parse_Node (const ACE_TCHAR *nm)
-  : name_ (ACE::strnew (nm)),
-    next_ (nullptr)
+ACE_Parse_Node::ACE_Parse_Node (ACE_TCHAR const *nm)
+  : name_ (ACE::strnew (nm))
 {
   ACE_TRACE ("ACE_Parse_Node::ACE_Parse_Node");
 }
@@ -192,9 +198,10 @@ ACE_Parse_Node::print () const
               this->name ()));
 
   if (this->next_)
+  {
     this->next_->print ();
+  }
 }
-
 
 ACE_Parse_Node::~ACE_Parse_Node ()
 {
@@ -217,7 +224,7 @@ ACE_Suspend_Node::dump () const
 #endif /* ACE_HAS_DUMP */
 }
 
-ACE_Suspend_Node::ACE_Suspend_Node (const ACE_TCHAR *name)
+ACE_Suspend_Node::ACE_Suspend_Node (ACE_TCHAR const *name)
   : ACE_Parse_Node (name)
 {
   ACE_TRACE ("ACE_Suspend_Node::ACE_Suspend_Node");
@@ -235,7 +242,7 @@ ACE_Resume_Node::dump () const
 #endif /* ACE_HAS_DUMP */
 }
 
-ACE_Resume_Node::ACE_Resume_Node (const ACE_TCHAR *name)
+ACE_Resume_Node::ACE_Resume_Node (ACE_TCHAR const *name)
   : ACE_Parse_Node (name)
 {
   ACE_TRACE ("ACE_Resume_Node::ACE_Resume_Node");
@@ -249,14 +256,18 @@ ACE_Suspend_Node::apply (ACE_Service_Gestalt *config, int &yyerrno)
   ACE_TRACE ("ACE_Suspend_Node::apply");
 
   if (config->suspend (this->name ()) == -1)
+  {
     ++yyerrno;
+  }
 
 #ifndef ACE_NLOGGING
   if (ACE::debug ())
-    ACELIB_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("did suspend on %s, error = %d\n"),
-                this->name (),
-                yyerrno));
+    {
+      ACELIB_DEBUG ((LM_DEBUG,
+                     ACE_TEXT ("did suspend on %s, error = %d\n"),
+                     this->name (),
+                     yyerrno));
+    }
 #endif /* ACE_NLOGGING */
 }
 
@@ -266,14 +277,18 @@ ACE_Resume_Node::apply (ACE_Service_Gestalt *config, int &yyerrno)
   ACE_TRACE ("ACE_Resume_Node::apply");
 
   if (config->resume (this->name ()) == -1)
+  {
     ++yyerrno;
+  }
 
 #ifndef ACE_NLOGGING
   if (ACE::debug ())
-    ACELIB_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("did resume on %s, error = %d\n"),
-                this->name (),
-                yyerrno));
+    {
+      ACELIB_DEBUG ((LM_DEBUG,
+                     ACE_TEXT ("did resume on %s, error = %d\n"),
+                     this->name (),
+                     yyerrno));
+    }
 #endif /* ACE_NLOGGING */
 }
 
@@ -287,7 +302,7 @@ ACE_Remove_Node::dump () const
 #endif /* ACE_HAS_DUMP */
 }
 
-ACE_Remove_Node::ACE_Remove_Node (const ACE_TCHAR *name)
+ACE_Remove_Node::ACE_Remove_Node (ACE_TCHAR const *name)
   : ACE_Parse_Node (name)
 {
   ACE_TRACE ("ACE_Remove_Node::ACE_Remove_Node");
@@ -301,18 +316,21 @@ ACE_Remove_Node::apply (ACE_Service_Gestalt *config, int &yyerrno)
   ACE_TRACE ("ACE_Remove_Node::apply");
 
   if (config->remove (this->name ()) == -1)
+  {
     ++yyerrno;
+  }
 
 #ifndef ACE_NLOGGING
   if (ACE::debug ())
-    ACELIB_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("ACE (%P|%t) Remove_Node::apply")
-                ACE_TEXT (" - did remove on %s, error = %d\n"),
-                this->name (),
-                yyerrno));
+    {
+      ACELIB_DEBUG ((LM_DEBUG,
+                     ACE_TEXT ("ACE (%P|%t) Remove_Node::apply")
+                     ACE_TEXT (" - did remove on %s, error = %d\n"),
+                     this->name (),
+                     yyerrno));
+    }
 #endif /* ACE_NLOGGING */
 }
-
 
 ACE_Dynamic_Node::ACE_Dynamic_Node (ACE_Service_Type_Factory const *stf,
                                     ACE_TCHAR *parms)
@@ -329,15 +347,19 @@ ACE_Dynamic_Node::apply (ACE_Service_Gestalt *config, int &yyerrno)
 
   if (config->initialize (this->factory_.get (),
                           this->parameters ()) == -1)
+  {
     ++yyerrno;
+  }
 
 #ifndef ACE_NLOGGING
   if (ACE::debug ())
-    ACELIB_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("ACE (%P|%t) Dynamic_Node::apply")
-                ACE_TEXT (" - Did dynamic on %s (yyerrno=%d)\n"),
-                this->name (),
-                yyerrno));
+    {
+      ACELIB_DEBUG ((LM_DEBUG,
+                     ACE_TEXT ("ACE (%P|%t) Dynamic_Node::apply")
+                     ACE_TEXT (" - Did dynamic on %s (yyerrno=%d)\n"),
+                     this->name (),
+                     yyerrno));
+    }
 #endif /* ACE_NLOGGING */
 }
 
@@ -366,7 +388,7 @@ ACE_Static_Node::dump () const
 #endif /* ACE_HAS_DUMP */
 }
 
-ACE_Static_Node::ACE_Static_Node (const ACE_TCHAR *nm,
+ACE_Static_Node::ACE_Static_Node (ACE_TCHAR const *nm,
                                   ACE_TCHAR *params)
   : ACE_Parse_Node (nm),
     parameters_ (ACE::strnew (params))
@@ -374,14 +396,16 @@ ACE_Static_Node::ACE_Static_Node (const ACE_TCHAR *nm,
   ACE_TRACE ("ACE_Static_Node::ACE_Static_Node");
 }
 
-const ACE_Service_Type *
-ACE_Static_Node::record (const ACE_Service_Gestalt *config) const
+ACE_Service_Type const *
+ACE_Static_Node::record (ACE_Service_Gestalt const *config) const
 {
   ACE_TRACE ("ACE_Static_Node::record");
-  ACE_Service_Type *sr = nullptr;
+  ACE_Service_Type *sr {};
 
-  if (config->find (this->name (), (const ACE_Service_Type **) &sr) == -1)
+  if (config->find (this->name (), (ACE_Service_Type const **) &sr) == -1)
+  {
     return nullptr;
+  }
 
   return sr;
 }
@@ -399,15 +423,19 @@ ACE_Static_Node::apply (ACE_Service_Gestalt *config, int &yyerrno)
   ACE_TRACE ("ACE_Static_Node::apply");
   if (config->initialize (this->name (),
         this->parameters ()) == -1)
+  {
     ++yyerrno;
+  }
 
 #ifndef ACE_NLOGGING
   if (ACE::debug ())
-    ACELIB_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("ACE (%P|%t) Static_Node::apply -")
-                ACE_TEXT (" Did static on %s (yyerrno=%d)\n"),
-                this->name (),
-                yyerrno));
+    {
+      ACELIB_DEBUG ((LM_DEBUG,
+                     ACE_TEXT ("ACE (%P|%t) Static_Node::apply -")
+                     ACE_TEXT (" Did static on %s (yyerrno=%d)\n"),
+                     this->name (),
+                     yyerrno));
+    }
 #endif /* ACE_NLOGGING */
 }
 
@@ -421,7 +449,6 @@ ACE_Static_Node::~ACE_Static_Node ()
 #endif /* ACE_HAS_ALLOC_HOOKS */
 }
 
-
 ACE_ALLOC_HOOK_DEFINE (ACE_Location_Node)
 
   void
@@ -433,10 +460,7 @@ ACE_Location_Node::dump () const
 }
 
 ACE_Location_Node::ACE_Location_Node ()
-  : pathname_ (nullptr),
-    must_delete_ (0),
-    dll_ (),
-    symbol_ (nullptr)
+  : dll_ ()
 {
   ACE_TRACE ("ACE_Location_Node::ACE_Location_Node");
 }
@@ -446,13 +470,13 @@ ACE_Location_Node::~ACE_Location_Node ()
   ACE_TRACE ("ACE_Location_Node::~ACE_Location_Node");
 }
 
-const ACE_DLL &
+ACE_DLL const &
 ACE_Location_Node::dll ()
 {
   return this->dll_;
 }
 
-const ACE_TCHAR *
+ACE_TCHAR const *
 ACE_Location_Node::pathname () const
 {
   ACE_TRACE ("ACE_Location_Node::pathname");
@@ -460,7 +484,7 @@ ACE_Location_Node::pathname () const
 }
 
 void
-ACE_Location_Node::pathname (const ACE_TCHAR *p)
+ACE_Location_Node::pathname (ACE_TCHAR const *p)
 {
   ACE_TRACE ("ACE_Location_Node::pathname");
   this->pathname_ = p;
@@ -480,9 +504,11 @@ ACE_Location_Node::open_dll (int & yyerrno)
 
 #ifndef ACE_NLOGGING
   if (ACE::debug ())
-    ACELIB_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("ACE (%P|%t) LN::open_dll - path=%s\n"),
-                this->pathname ()));
+    {
+      ACELIB_DEBUG ((LM_DEBUG,
+                     ACE_TEXT ("ACE (%P|%t) LN::open_dll - path=%s\n"),
+                     this->pathname ()));
+    }
 #endif /* ACE_NLOGGING */
 
   if (-1 == this->dll_.open (this->pathname ()))
@@ -523,8 +549,8 @@ ACE_Object_Node::dump () const
 #endif /* ACE_HAS_DUMP */
 }
 
-ACE_Object_Node::ACE_Object_Node (const ACE_TCHAR *path,
-                                  const ACE_TCHAR *obj_name)
+ACE_Object_Node::ACE_Object_Node (ACE_TCHAR const *path,
+                                  ACE_TCHAR const *obj_name)
   : object_name_ (ACE::strnew (obj_name))
 {
   ACE_TRACE ("ACE_Object_Node::ACE_Object_Node");
@@ -588,8 +614,8 @@ ACE_Function_Node::dump () const
 #endif /* ACE_HAS_DUMP */
 }
 
-ACE_Function_Node::ACE_Function_Node (const ACE_TCHAR *path,
-                                      const ACE_TCHAR *func_name)
+ACE_Function_Node::ACE_Function_Node (ACE_TCHAR const *path,
+                                      ACE_TCHAR const *func_name)
   : function_name_ (make_func_name (func_name))
 {
   ACE_TRACE ("ACE_Function_Node::ACE_Function_Node");
@@ -639,7 +665,7 @@ ACE_Function_Node::make_func_name (ACE_TCHAR const * func_name)
       ACE_TCHAR * mangled_func_name;
       ACE_NEW_RETURN (mangled_func_name,
                       ACE_TCHAR[len],
-                      0);
+                      nullptr);
 
       std::unique_ptr<ACE_TCHAR[]> safe (mangled_func_name);
 
@@ -738,8 +764,8 @@ ACE_Dummy_Node::dump () const
 #endif /* ACE_HAS_DUMP */
 }
 
-ACE_Dummy_Node::ACE_Dummy_Node (const ACE_Static_Node *static_node,
-                                const ACE_Parse_Node *str_mods)
+ACE_Dummy_Node::ACE_Dummy_Node (ACE_Static_Node const *static_node,
+                                ACE_Parse_Node const *str_mods)
   : ACE_Parse_Node (static_node->name ()),
     node_ (static_node),
     mods_ (str_mods)
@@ -754,10 +780,12 @@ ACE_Dummy_Node::apply (ACE_Service_Gestalt *, int &yyerrno)
 
 #ifndef ACE_NLOGGING
   if (ACE::debug ())
-    ACELIB_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("did operations on stream %s, error = %d\n"),
-                this->name (),
-                yyerrno));
+    {
+      ACELIB_DEBUG ((LM_DEBUG,
+                     ACE_TEXT ("did operations on stream %s, error = %d\n"),
+                     this->name (),
+                     yyerrno));
+    }
 #else
   ACE_UNUSED_ARG (yyerrno);
 #endif /* ACE_NLOGGING */
@@ -782,7 +810,7 @@ ACE_Static_Function_Node::dump () const
 #endif /* ACE_HAS_DUMP */
 }
 
-ACE_Static_Function_Node::ACE_Static_Function_Node (const ACE_TCHAR *func_name)
+ACE_Static_Function_Node::ACE_Static_Function_Node (ACE_TCHAR const *func_name)
   : function_name_ (ACE::strnew (func_name))
 {
   ACE_TRACE ("ACE_Static_Function_Node::ACE_Static_Function_Node");
@@ -801,7 +829,7 @@ ACE_Static_Function_Node::symbol (ACE_Service_Gestalt *config,
   // Locate the factory function <function_name> in the statically
   // linked svcs.
 
-  ACE_Static_Svc_Descriptor *ssd = nullptr;
+  ACE_Static_Svc_Descriptor *ssd {};
   if (config->find_static_svc_descriptor (this->function_name_, &ssd) == -1)
     {
       ++yyerrno;
@@ -875,9 +903,7 @@ ACE_Service_Type_Factory::ACE_Service_Type_Factory (ACE_TCHAR const *name,
 {
 }
 
-
 ACE_Service_Type_Factory::~ACE_Service_Type_Factory () = default;
-
 
 ACE_Service_Type *
 ACE_Service_Type_Factory::make_service_type (ACE_Service_Gestalt *cfg) const
@@ -901,9 +927,11 @@ ACE_Service_Type_Factory::make_service_type (ACE_Service_Gestalt *cfg) const
                                                       flags,
                                                       gobbler);
       if (stp == nullptr)
+      {
         ++yyerrno;
+      }
 
-      ACE_Service_Type *tmp = nullptr;
+      ACE_Service_Type *tmp {};
       ACE_NEW_RETURN (tmp,
                       ACE_Service_Type (this->name (),
                                         stp,
@@ -931,7 +959,6 @@ ACE_Service_Type_Factory::name () const
 {
   return name_.c_str ();
 }
-
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 

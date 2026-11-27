@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//==========================================================================
 /**
  *  @file    Malloc.h
  *
  *  @author Doug Schmidt and Irfan Pyarali
  */
-//==========================================================================
 
 #ifndef ACE_MALLOC_H
 #define ACE_MALLOC_H
@@ -30,7 +26,6 @@
 #    include "ace/SV_Semaphore_Simple.h"
 #    define ACE_PROCESS_MUTEX ACE_SV_Semaphore_Simple
 #  endif /* ACE_HAS_THREADS */
-
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -94,7 +89,6 @@ using ACE_INT = ACE_Atomic_Op<ACE_PROCESS_MUTEX, int>;
    |   // Name Node linked list pointers.    |
    +-----------------------------------------+
 
-
 * Control_Block
 
   Only the first ACE_Malloc instance that uses
@@ -145,7 +139,6 @@ using ACE_INT = ACE_Atomic_Op<ACE_PROCESS_MUTEX, int>;
   than the sizeof Control_Block, the control block is initialized to
   the following diagram:
 
-
    +-------------------------------------
    |name_head_;                          |
    +-------------------------------------+
@@ -191,13 +184,13 @@ struct ACE_Export ACE_Malloc_Stats
   void dump () const;
 
   /// Coarse-grained unit of allocation.
-  ACE_INT nchunks_;
+  ACE_INT nchunks_ {};
 
   /// Fine-grained unit of allocation.
-  ACE_INT nblocks_;
+  ACE_INT nblocks_ {};
 
   /// Number of blocks in use
-  ACE_INT ninuse_;
+  ACE_INT ninuse_ {};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
@@ -241,7 +234,7 @@ union ACE_max_align_info
 /**
  * @class ACE_Control_Block
  *
- * @brief This information is stored in memory allocated by the <Memory_Pool>.
+ * @brief This information is stored in memory allocated by the @c Memory_Pool.
  *
  * This class defines the "old" control block class for use in
  * ACE_Malloc_T.  This control block implementation is
@@ -257,7 +250,7 @@ public:
   /**
    * @class ACE_Malloc_Header
    *
-   * @brief This is the control block header.  It's used by <ACE_Malloc>
+   * @brief This is the control block header.  It's used by @c ACE_Malloc
    * to keep track of each chunk of data when it's in the free
    * list or in use.
    */
@@ -267,7 +260,7 @@ public:
     ACE_Malloc_Header ();
 
     /// Points to next block if on free list.
-    ACE_Malloc_Header *next_block_;
+    ACE_Malloc_Header *next_block_ {};
 
     /// Initialize a malloc header pointer.
     static void init_ptr (ACE_Malloc_Header **ptr,
@@ -275,7 +268,7 @@ public:
                           void *base_addr);
 
     /// Size of this header control block.
-    size_t size_;
+    size_t size_ {};
 
 # if !defined (ACE_MALLOC_PADDING_SIZE)
 #   define ACE_MALLOC_PADDING_SIZE ACE_MALLOC_ROUNDUP (ACE_MALLOC_HEADER_SIZE + sizeof (ACE_Malloc_Header*) + sizeof (size_t), ACE_MALLOC_ALIGN) - (sizeof (ACE_Malloc_Header*) + sizeof (size_t))
@@ -299,17 +292,19 @@ public:
   class ACE_Export ACE_Name_Node
   {
   public:
-    /// Constructor.
-    ACE_Name_Node (const char *name,
+    ACE_Name_Node (char const *name,
                    char *name_ptr,
                    char *pointer,
                    ACE_Name_Node *head);
 
-    /// Constructor.
     ACE_Name_Node ();
 
-    /// Constructor.
     ~ACE_Name_Node ();
+
+    ACE_Name_Node (ACE_Name_Node const &) = delete;
+    ACE_Name_Node (ACE_Name_Node &&) = delete;
+    ACE_Name_Node &operator= (ACE_Name_Node const &) = delete;
+    ACE_Name_Node &operator= (ACE_Name_Node &&) = delete;
 
     /// Initialize a name node pointer.
     static void init_ptr (ACE_Name_Node **ptr,
@@ -317,25 +312,22 @@ public:
                           void *base_addr);
 
     /// Return a pointer to the name of this node.
-    const char *name () const;
+    char const *name () const;
 
     /// Name of the Node.
-    char *name_;
+    char *name_ {};
 
     /// Pointer to the contents.
-    char *pointer_;
+    char *pointer_ {};
 
     /// Pointer to the next node in the doubly-linked list.
-    ACE_Name_Node *next_;
+    ACE_Name_Node *next_ {};
 
     /// Pointer to the previous node in the doubly-linked list.
-    ACE_Name_Node *prev_;
+    ACE_Name_Node *prev_ {};
 
     /// Dump the state of the object.
     void dump () const;
-  private:
-    /// Copy constructor.
-    ACE_Name_Node (const ACE_Name_Node &);
   };
 
   /// Print out a bunch of size info for debugging.

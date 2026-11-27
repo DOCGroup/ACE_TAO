@@ -6,7 +6,7 @@
 #include "ace/High_Res_Timer.h"
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   EC_Reconnect driver;
   return driver.run (argc, argv);
@@ -25,7 +25,9 @@ int
 EC_Reconnect::parse_args (int& argc, ACE_TCHAR* argv[])
 {
   if (this->EC_Driver::parse_args (argc, argv) != 0)
+  {
     return -1;
+  }
 
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("scd:"));
   int opt;
@@ -131,11 +133,11 @@ EC_Reconnect::execute_consumer_test ()
 
           ACE_DEBUG ((LM_ERROR, "Expected exception\n"));
         }
-      catch (const RtecEventChannelAdmin::AlreadyConnected&)
+      catch (RtecEventChannelAdmin::AlreadyConnected const &)
         {
           /* do nothing */
         }
-      catch (const CORBA::Exception& ex)
+      catch (CORBA::Exception const & ex)
         {
           ex._tao_print_exception ("Expected AlreadyConnected exception");
         }
@@ -185,11 +187,11 @@ EC_Reconnect::execute_supplier_test ()
 
           ACE_DEBUG ((LM_ERROR, "Expected exception\n"));
         }
-      catch (const RtecEventChannelAdmin::AlreadyConnected&)
+      catch (RtecEventChannelAdmin::AlreadyConnected const &)
         {
           /* do nothing */
         }
-      catch (const CORBA::Exception& ex)
+      catch (CORBA::Exception const & ex)
         {
           ex._tao_print_exception ("Expected AlreadyConnected exception");
         }

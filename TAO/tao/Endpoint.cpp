@@ -11,8 +11,10 @@ TAO_Endpoint *
 TAO_Endpoint::next_filtered (TAO_ORB_Core *, TAO_Endpoint *root)
 {
   if (root == nullptr)
+  {
     return this;
-  return this->next();
+  }
+  return this->next ();
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

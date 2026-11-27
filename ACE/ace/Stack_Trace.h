@@ -1,11 +1,8 @@
-// -*- C++ -*-
-//=============================================================================
 /**
  *  @file   Stack_Trace.h
  *
  *  @author Chris Cleeland (cleeland.ociweb.com)
  */
-//=============================================================================
 
 #ifndef ACE_STACK_TRACE_H
 #define ACE_STACK_TRACE_H
@@ -87,13 +84,13 @@ public:
    * @return C-style string with string representation of stack trace.
    * @note Lifecycle of string follows lifecycle of ACE_Stack_Trace instance.
    */
-  const char* c_str() const;
+  char const * c_str() const;
 
   static constexpr size_t SYMBUFSIZ = ACE_STACK_TRACE_SYMBUFSIZ;
 
 private:
   char buf_[SYMBUFSIZ];
-  size_t buflen_;
+  size_t buflen_ {};
 
   static const char UNSUPPORTED[];
   static const char UNABLE_TO_GET_TRACE[];

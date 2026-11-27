@@ -12,7 +12,7 @@ Server_Request_Interceptor::~Server_Request_Interceptor ()
   // ORB::destroy() should have been called, which in turn should have
   // called the Interceptor::destroy() method in all registered
   // interceptors.
-  ACE_ASSERT (this->destroy_called_ == true);
+  ACE_ASSERT (this->destroy_called_);
 }
 
 char *
@@ -32,7 +32,7 @@ Server_Request_Interceptor::receive_request_service_contexts (
     PortableInterceptor::ServerRequestInfo_ptr)
 {
   // Interceptor::destroy() should not have been called yet.
-  ACE_ASSERT (this->destroy_called_ == false);
+  ACE_ASSERT (!this->destroy_called_);
 }
 
 void
@@ -41,7 +41,7 @@ Server_Request_Interceptor::receive_request (
 
 {
   // Interceptor::destroy() should not have been called yet.
-  ACE_ASSERT (this->destroy_called_ == false);
+  ACE_ASSERT (!this->destroy_called_);
 }
 
 void
@@ -49,7 +49,7 @@ Server_Request_Interceptor::send_reply (
     PortableInterceptor::ServerRequestInfo_ptr)
 {
   // Interceptor::destroy() should not have been called yet.
-  ACE_ASSERT (this->destroy_called_ == false);
+  ACE_ASSERT (!this->destroy_called_);
 }
 
 void
@@ -57,7 +57,7 @@ Server_Request_Interceptor::send_exception (
     PortableInterceptor::ServerRequestInfo_ptr)
 {
   // Interceptor::destroy() should not have been called yet.
-  ACE_ASSERT (this->destroy_called_ == false);
+  ACE_ASSERT (!this->destroy_called_);
 }
 
 void
@@ -65,5 +65,5 @@ Server_Request_Interceptor::send_other (
     PortableInterceptor::ServerRequestInfo_ptr)
 {
   // Interceptor::destroy() should not have been called yet.
-  ACE_ASSERT (this->destroy_called_ == false);
+  ACE_ASSERT (!this->destroy_called_);
 }

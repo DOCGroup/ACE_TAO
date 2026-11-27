@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    Atomic_Op_Test.cpp
  *
@@ -10,8 +8,6 @@
  *
  *  @author Irfan Pyarali <irfan@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #include "test_config.h"
 
@@ -21,7 +17,6 @@
 #include "ace/OS_NS_sys_time.h"
 #include "ace/Barrier.h"
 #include "ace/Task.h"
-
 
 /*
  * Exchange_Test tests the exchange() operation in ACE_Atomic_Op. It runs
@@ -33,7 +28,7 @@ template <typename T>
 class Exchange_Tester : public ACE_Task<ACE_NULL_SYNCH>
 {
 public:
-  Exchange_Tester (unsigned int thr_count);
+  explicit Exchange_Tester (unsigned int thr_count);
   int result () const;
 
 private:
@@ -65,18 +60,19 @@ int
 Exchange_Tester<T>::svc ()
 {
   this->barrier_.wait ();     // Want all threads to try to claim "at once"
-  bool claimed = this->op_.exchange (1) == 0;
+  bool const claimed = this->op_.exchange (1) == 0;
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Thread %t %s claim.\n"),
               claimed ? ACE_TEXT ("DID") : ACE_TEXT ("DID NOT")));
   if (claimed)
+  {
     ++this->claimed_;
+  }
   return 0;
 }
 
-
 template <typename TYPE, typename dummy>
-int test (const ACE_TCHAR* type, int iterations)
+int test (ACE_TCHAR const * type, int iterations)
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Measuring %d iterations for %s\n"), iterations, type));
 
@@ -158,10 +154,10 @@ int test (const ACE_TCHAR* type, int iterations)
   diff = ACE_OS::gettimeofday ();
   for (i = 0; i < iterations; ++i)
     {
-      foo--;
-      foo--;
-      foo--;
-      foo--;
+      --foo;
+      --foo;
+      --foo;
+      --foo;
     }
   diff = ACE_OS::gettimeofday () - diff;
   diff.to_usec (usec);
@@ -177,10 +173,10 @@ int test (const ACE_TCHAR* type, int iterations)
   diff = ACE_OS::gettimeofday ();
   for (i = 0; i < iterations; ++i)
     {
-      foo++;
-      foo++;
-      foo++;
-      foo++;
+      ++foo;
+      ++foo;
+      ++foo;
+      ++foo;
     }
   diff = ACE_OS::gettimeofday () - diff;
   diff.to_usec (usec);
@@ -253,7 +249,7 @@ int test (const ACE_TCHAR* type, int iterations)
 }
 
 template <typename TYPE>
-int test (const ACE_TCHAR* type, int iterations)
+int test (ACE_TCHAR const * type, int iterations)
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Measuring %d iterations for %s\n"), iterations, type));
 
@@ -279,10 +275,22 @@ int test (const ACE_TCHAR* type, int iterations)
   diff = ACE_OS::gettimeofday ();
   for (i = 0; i < iterations; ++i)
     {
-      if (foo != true) ++retval;
-      if (foo == false) ++retval;
-      if (foo != true) ++retval;
-      if (foo == false) ++retval;
+      if (foo != true)
+      {
+        ++retval;
+      }
+      if (foo == false)
+      {
+        ++retval;
+      }
+      if (foo != true)
+      {
+        ++retval;
+      }
+      if (foo == false)
+      {
+        ++retval;
+      }
     }
   diff = ACE_OS::gettimeofday () - diff;
   diff.to_usec (usec);

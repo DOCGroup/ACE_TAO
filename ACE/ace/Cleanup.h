@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   Cleanup.h
  *
@@ -8,7 +5,6 @@
  *  @author Jesper S. M|ller<stophph@diku.dk>
  *  @author and a cast of thousands...
  */
-//=============================================================================
 
 #ifndef ACE_CLEANUP_H
 # define ACE_CLEANUP_H
@@ -27,7 +23,6 @@
 # include "ace/Intrusive_List_Node.h"
 
 #if (defined (ACE_HAS_VERSIONED_NAMESPACE) && ACE_HAS_VERSIONED_NAMESPACE == 1)
-# include "ace/Global_Macros.h"
 # define ACE_CLEANUP_DESTROYER_NAME ACE_PREPROC_CONCATENATE(ACE_VERSIONED_NAMESPACE_NAME, _ace_cleanup_destroyer)
 #else
 # define ACE_CLEANUP_DESTROYER_NAME ace_cleanup_destroyer
@@ -46,7 +41,6 @@ public:
   /// No-op constructor.
   ACE_Cleanup ();
 
-  /// Destructor.
   virtual ~ACE_Cleanup () = default;
 
   /// Cleanup method that, by default, simply deletes itself.
@@ -71,14 +65,14 @@ public:
   ACE_Cleanup_Info_Node (void *object,
                          ACE_CLEANUP_FUNC cleanup_hook,
                          void *param,
-                         const char *name);
+                         char const *name);
   ~ACE_Cleanup_Info_Node ();
 
   /// Equality operator.
-  bool operator== (const ACE_Cleanup_Info_Node &o) const;
+  bool operator== (ACE_Cleanup_Info_Node const &o) const;
 
   /// Inequality operator.
-  bool operator!= (const ACE_Cleanup_Info_Node &o) const;
+  bool operator!= (ACE_Cleanup_Info_Node const &o) const;
 
   void* object();
 
@@ -89,17 +83,17 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-  /// Point to object that gets passed into the <cleanup_hook_>.
-  void *object_;
+  /// Point to object that gets passed into the @c cleanup_hook_.
+  void *object_ {};
 
   /// Cleanup hook that gets called back.
-  ACE_CLEANUP_FUNC cleanup_hook_;
+  ACE_CLEANUP_FUNC cleanup_hook_ {};
 
-  /// Parameter passed to the <cleanup_hook_>.
-  void *param_;
+  /// Parameter passed to the @c cleanup_hook_.
+  void *param_ {};
 
   /// Name of the cleanup object
-  const char *name_;
+  char const *name_ {};
 };
 
 using ACE_Cleanup_Info_Node_List = ACE_Intrusive_List<ACE_Cleanup_Info_Node>;
@@ -116,14 +110,12 @@ using ACE_Cleanup_Info_Node_List = ACE_Intrusive_List<ACE_Cleanup_Info_Node>;
 class ACE_Export ACE_OS_Exit_Info
 {
 public:
-  /// Default constructor.
   ACE_OS_Exit_Info () = default;
 
-  /// Destructor.
   ~ACE_OS_Exit_Info () = default;
 
   /// Use to register a cleanup hook.
-  int at_exit_i (void *object, ACE_CLEANUP_FUNC cleanup_hook, void *param, const char* name = nullptr);
+  int at_exit_i (void *object, ACE_CLEANUP_FUNC cleanup_hook, void *param, char const * name = nullptr);
 
   /// Look for a registered cleanup hook object.  Returns true if already
   /// registered, false if not.

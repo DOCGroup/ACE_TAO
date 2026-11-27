@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    TP_Reactor_Test.h
  *
@@ -8,8 +6,6 @@
  *  @author Alexander Libman <alibman@ihug.com.au>
  *  @author <alexl@rumblgroup.com>
  */
-//=============================================================================
-
 
 #ifndef ACE_TESTS_TP_REACTOR_TEST_H
 #define ACE_TESTS_TP_REACTOR_TEST_H
@@ -26,7 +22,6 @@
 const  size_t MAX_SENDERS = 1000;
 const  size_t MAX_RECEIVERS = 1000;
 
-
 // *************************************************************
 //   Receiver and Acceptor
 // *************************************************************
@@ -37,7 +32,7 @@ class Receiver : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_MT_SYNCH>
 {
   friend class Acceptor;
 public:
-  Receiver (Acceptor * acceptor=0, size_t index=MAX_RECEIVERS+1);
+  Receiver (Acceptor * acceptor=nullptr, size_t index=MAX_RECEIVERS+1);
 
   ~Receiver ();
 
@@ -46,13 +41,13 @@ public:
   long get_total_w   () { return this->total_w_; }
   long get_total_r   () { return this->total_r_; }
 
-  // virtual from ACE_Svc_Handler<>
-  virtual int open (void * pVoid);
+  /// Overrides ACE_Svc_Handler<>.
+  int open (void * pVoid) override;
 
-  // virtual from ACE_Event_Handler
-  virtual int handle_input (ACE_HANDLE h);
-  virtual int handle_output (ACE_HANDLE h);
-  virtual int handle_close (ACE_HANDLE h , ACE_Reactor_Mask mask);
+  /// Overrides ACE_Event_Handler.
+  int handle_input (ACE_HANDLE h) override;
+  int handle_output (ACE_HANDLE h) override;
+  int handle_close (ACE_HANDLE h , ACE_Reactor_Mask mask) override;
 
 private:
   int  terminate_io (ACE_Reactor_Mask mask);
@@ -86,10 +81,10 @@ public:
   virtual ~Acceptor ();
 
   void stop ();
-  int start (const ACE_INET_Addr & addr);
+  int start (ACE_INET_Addr const & addr);
 
-  // virtual from ACE_Acceptor<Receiver,ACE_SOCK_ACCEPTOR>
-  virtual int make_svc_handler (Receiver * & sh);
+  /// Overrides ACE_Acceptor<Receiver,ACE_SOCK_ACCEPTOR>.
+  int make_svc_handler (Receiver * & sh) override;
 
 private:
   ACE_Recursive_Thread_Mutex mutex_;
@@ -104,7 +99,6 @@ private:
   void on_delete_receiver (Receiver & rcvr);
 };
 
-
 // *******************************************
 //   Sender
 // *******************************************
@@ -116,7 +110,7 @@ class Sender : public ACE_Svc_Handler<ACE_SOCK_STREAM,ACE_MT_SYNCH>
   friend class Connector;
 
 public:
-  Sender (Connector * connector=0, size_t index=MAX_SENDERS+1);
+  Sender (Connector * connector=nullptr, size_t index=MAX_SENDERS+1);
 
   ~Sender ();
 
@@ -125,13 +119,13 @@ public:
   long get_total_w   () { return this->total_w_; }
   long get_total_r   () { return this->total_r_; }
 
-  // virtual from ACE_Svc_Handler<>
-  virtual int open (void * pVoid);
+  /// Overrides ACE_Svc_Handler<>.
+  int open (void * pVoid) override;
 
-  // virtual from ACE_Event_Handler
-  virtual int handle_input (ACE_HANDLE h);
-  virtual int handle_output (ACE_HANDLE h);
-  virtual int handle_close (ACE_HANDLE h , ACE_Reactor_Mask mask);
+  /// Overrides ACE_Event_Handler.
+  int handle_input (ACE_HANDLE h) override;
+  int handle_output (ACE_HANDLE h) override;
+  int handle_close (ACE_HANDLE h , ACE_Reactor_Mask mask) override;
 
 private:
   int  terminate_io (ACE_Reactor_Mask mask);
@@ -164,15 +158,14 @@ public:
   long get_total_w   () { return this->total_w_; }
   long get_total_r   () { return this->total_r_; }
 
-
   Connector ();
   virtual ~Connector ();
 
   void stop ();
-  int  start (const ACE_INET_Addr & addr , int num);
+  int  start (ACE_INET_Addr const & addr , int num);
 
-  // virtual from ACE_Connector<>
-  virtual int make_svc_handler (Sender * & sh);
+  /// Overrides ACE_Connector<>.
+  int make_svc_handler (Sender * & sh) override;
 
 private:
   ACE_Recursive_Thread_Mutex mutex_;
@@ -186,6 +179,5 @@ private:
   void on_new_sender (Sender & sndr);
   void on_delete_sender (Sender & sndr);
 };
-
 
 #endif /* ACE_TESTS_TP_REACTOR_TEST_H */

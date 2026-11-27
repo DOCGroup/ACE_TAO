@@ -3,11 +3,10 @@
 #include "chatter.h"
 #include "police.h"
 
-#include "ace/SString.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_unistd.h"
 
-const ACE_TCHAR *ior_output_file = ACE_TEXT ("client.ior");
+ACE_TCHAR const* ior_output_file = ACE_TEXT ("client.ior");
 int nr_threads = 1;
 
 int
@@ -49,7 +48,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     orb_ = CORBA::ORB_init (argc, argv, "myorb-client");
 
     if (parse_args (argc, argv) != 0)
+    {
       return 1;
+    }
 
     CORBA::Object_var poa_object =
       orb_->resolve_initial_references ("RootPOA");
@@ -65,9 +66,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
     // Creating the monitorable servant and activating it
     //
-    Test_Idl_SharedIntf_i* intf_i = new Test_Idl_SharedIntf_i (orb_.in());
-
-    PortableServer::ServantBase_var base_var = intf_i;
+    PortableServer::ServantBase_var base_var = new Test_Idl_SharedIntf_i (orb_.in());
     PortableServer::ObjectId_var intfId_var =
       poa->activate_object (base_var.in());
 
@@ -84,11 +83,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
     // Output the IOR to the <ior_output_file>
     FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
-    if (output_file == 0)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                          "Cannot open output file for writing IOR: %s\n",
-                          ior_output_file),
-                          1);
+    if (output_file == nullptr)
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                            "Cannot open output file for writing IOR: %s\n",
+                            ior_output_file),
+                            1);
+      }
     ACE_OS::fprintf (output_file, "%s", intfString_var.in ());
     ACE_OS::fclose (output_file);
 
@@ -97,8 +98,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     // Running ORB in separate thread
     Worker worker (orb_.in ());
     if (worker.activate (THR_NEW_LWP | THR_JOINABLE, nr_threads) != 0)
-        ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p\n",
-        "Cannot activate client threads"), -1);
+      {
+          ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p\n",
+          ACE_TEXT ("Cannot activate client threads")), -1);
+      }
 
     ACE_DEBUG((LM_INFO,"(%P|%t) Await server initialization\n"));
     poll ("./server.ior");
@@ -109,12 +112,14 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     {
       ACE_GUARD_RETURN (ACE_Mutex, guard, mutex, -1);
 
-      const ACE_TCHAR* serverior = ACE_TEXT("file://server.ior");
+      ACE_TCHAR const* serverior = ACE_TEXT("file://server.ior");
       Chatter worker2 (orb_.in (), serverior, stop_condition);
 
       if (worker2.activate (THR_NEW_LWP | THR_JOINABLE, 2) != 0)
-        ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p\n",
-        "Cannot activate chatty client threads"), -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p\n",
+          ACE_TEXT ("Cannot activate chatty client threads")), -1);
+        }
 
       do {
         stop_condition.wait ();
@@ -127,16 +132,18 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       {
         CORBA::Object_var rawObject = orb_->string_to_object( serverior);
 
-        Test_Idl::SharedIntf_var intf_var =
+        Test_Idl::SharedIntf_var peer_intf =
         Test_Idl::SharedIntf::_narrow(rawObject.in());
 
-        if (CORBA::is_nil (intf_var.in ()))
+        if (CORBA::is_nil (peer_intf.in ()))
+        {
           ACE_ERROR_RETURN ((LM_ERROR, "Nil reference <%s>\n", serverior), -1);
+        }
 
         // make call on server
         ACE_DEBUG((LM_INFO,"(%P|%t) farewell START for %s\n", serverior));
 
-        intf_var->farewell();
+        peer_intf->farewell();
 
         ACE_DEBUG((LM_INFO,"(%P|%t) farewell COMPLETE for %s\n", serverior));
       }
@@ -148,7 +155,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       worker.thr_mgr()->wait ();
 
-      root_poa->destroy(1,1);
+      root_poa->destroy(true,true);
 
       orb_->destroy();
 
@@ -158,7 +165,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       result = (worker2.nrequests_ == worker2.nreplies_)? 0 : -1;
     }
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
   {
     ex._tao_print_exception ("Error: Exception caught:");
   }

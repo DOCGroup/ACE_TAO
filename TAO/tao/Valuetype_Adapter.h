@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Valuetype_Adapter.h
  *
  *  @author  Jeff Parsons <j.parsons@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef TAO_VALUETYPE_ADAPTER_H
 #define TAO_VALUETYPE_ADAPTER_H
@@ -70,11 +66,11 @@ public:
   virtual CORBA::Boolean is_type_info_list (CORBA::Long) const = 0;
   virtual CORBA::Boolean is_value_chunked (CORBA::Long) const = 0;
 
-  virtual int vf_map_rebind (const char *, CORBA::ValueFactory &) = 0;
+  virtual int vf_map_rebind (char const *, CORBA::ValueFactory &) = 0;
 
-  virtual int vf_map_unbind (const char *) = 0;
+  virtual int vf_map_unbind (char const *) = 0;
 
-  virtual CORBA::ValueFactory vf_map_find (const char *) = 0;
+  virtual CORBA::ValueFactory vf_map_find (char const *) = 0;
 
   virtual CORBA::TypeCode_ptr derived_type (CORBA::ValueBase *) = 0;
 };

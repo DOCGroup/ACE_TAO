@@ -1,4 +1,3 @@
-/* -*- c++ -*- */
 #ifndef JAWS_EVENT_DISPATCHER_H
 #define JAWS_EVENT_DISPATCHER_H
 
@@ -25,7 +24,7 @@ using ACE_Select_NULL_LOCK_Reactor = ACE_Select_Reactor_T<ACE_Select_Reactor_Noo
         do { \
         ACE_Select_NULL_LOCK_Reactor *select_reactor; \
         select_reactor = new ACE_Select_NULL_LOCK_Reactor; \
-        ACE_Reactor::instance (new ACE_Reactor (select_reactor, 1), 1); \
+        ACE_Reactor::instance (new ACE_Reactor (select_reactor, true), true); \
         } while (0)
 
 #else
@@ -39,6 +38,8 @@ class JAWS_Event_Dispatcher;
 class JAWS_Export JAWS_Event_Dispatcher
 {
 public:
+  JAWS_Event_Dispatcher () = delete;
+
   static void end_event_loop ();
   static void run_event_loop ();
 };

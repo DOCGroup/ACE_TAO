@@ -13,7 +13,7 @@ namespace IDL
 {
   template<typename _CharT, const uint32_t _Bound,
            typename _Traits = std::char_traits<_CharT>,
-           typename _Alloc = std::allocator<_CharT> >
+           typename _Alloc = std::allocator<_CharT>>
     class bounded_basic_string : public std::basic_string<_CharT, _Traits, _Alloc>
     {
       using _String = std::basic_string<_CharT, _Traits, _Alloc>;
@@ -50,7 +50,9 @@ run_main (int, ACE_TCHAR *[])
   string100 s100("world");
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("String %C bound %d\n"), s100.c_str(), s100.bound ()));
+              ACE_TEXT ("String %C bound %u\n"),
+              s100.c_str (),
+              static_cast<unsigned int> (s100.bound ())));
 
   ACE_DEBUG ((LM_INFO,
               ACE_TEXT ("Template alias works.\n")));

@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    small_union.h
  *
@@ -7,31 +5,25 @@
  *
  *  @author   Aniruddha Gokhale
  */
-//=============================================================================
-
 
 #ifndef PARAM_TEST_SMALL_UNION_H
 #define PARAM_TEST_SMALL_UNION_H
 
 #include "param_testC.h"
 
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-//                        test Anys
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+/// test Anys
 class Test_Small_Union
 {
 public:
-  /// ctor
   Test_Small_Union ();
 
-  /// dtor
-  ~Test_Small_Union ();
+  ~Test_Small_Union () = default;
 
   /// run the SII test
   int run_sii_test (Param_Test_ptr objref);
 
   /// return operation name
-  const char *opname () const;
+  char const *opname () const;
 
   /// set values for parameters
   int init_parameters (Param_Test_ptr objref);
@@ -53,7 +45,7 @@ public:
 
 private:
   /// operation name
-  char *opname_;
+  char const *opname_;
 
   /// Coffee object used to test Small_Union with object.
   Coffee_var cobj_;

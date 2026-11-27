@@ -1,4 +1,3 @@
-//=============================================================================
 /**
 *  @file   be_visitor_amh_pre_proc.h
 *
@@ -11,7 +10,6 @@
 *  @author Mayur Deshpande <mayur@ics.uci.edu>
 *  @author Carlos O'Ryan   <coryan@uci.edu>
 */
-//=============================================================================
 
 #ifndef TAO_BE_VISITOR_AMH_PRE_PROC_H
 #define TAO_BE_VISITOR_AMH_PRE_PROC_H

@@ -1,13 +1,9 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Dynamic_Service.h
  *
  *  @author Prashant Jain <pjain@cs.wustl.edu>
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef ACE_DYNAMIC_SERVICE_H
 #define ACE_DYNAMIC_SERVICE_H
@@ -41,31 +37,33 @@ class ACE_Dynamic_Service : public ACE_Dynamic_Service_Base
 {
 public:
   /// Return instance using @a name to search the Service_Repository.
-  static TYPE* instance (const ACE_TCHAR *name);
-  static TYPE* instance (const ACE_TCHAR *name, bool no_global);
+  static TYPE *instance (ACE_TCHAR const *name);
+  static TYPE *instance (ACE_TCHAR const *name, bool no_global);
 
-  static TYPE* instance (const ACE_Service_Gestalt* repo,
-                         const ACE_TCHAR *name);
-  static TYPE* instance (const ACE_Service_Gestalt* repo,
-                         const ACE_TCHAR *name, bool no_global);
+  static TYPE *instance (ACE_Service_Gestalt const *repo,
+                         ACE_TCHAR const *name);
+  static TYPE *instance (ACE_Service_Gestalt const *repo,
+                         ACE_TCHAR const *name, bool no_global);
 
 #if defined (ACE_USES_WCHAR)
 
   /// Return instance using @a name to search the Service_Repository.
-  static TYPE* instance (const ACE_ANTI_TCHAR *name);
+  static TYPE *instance (ACE_ANTI_TCHAR const *name);
 
-  static TYPE* instance (const ACE_ANTI_TCHAR *name, bool no_global);
+  static TYPE *instance (ACE_ANTI_TCHAR const *name, bool no_global);
 
-  static TYPE* instance (const ACE_Service_Gestalt* repo,
-                         const ACE_ANTI_TCHAR *name);
-  static TYPE* instance (const ACE_Service_Gestalt* repo,
-                         const ACE_ANTI_TCHAR *name, bool no_global);
+  static TYPE *instance (ACE_Service_Gestalt const *repo,
+                         ACE_ANTI_TCHAR const *name);
+  static TYPE *instance (ACE_Service_Gestalt const *repo,
+                         ACE_ANTI_TCHAR const *name, bool no_global);
 #endif  // ACE_USES_WCHAR
 
 private:
   ACE_Dynamic_Service () = delete;
-  ACE_Dynamic_Service (const ACE_Dynamic_Service&) = delete;
-  ACE_Dynamic_Service& operator= (const ACE_Dynamic_Service&) = delete;
+  ACE_Dynamic_Service (ACE_Dynamic_Service const &) = delete;
+  ACE_Dynamic_Service (ACE_Dynamic_Service &&) = delete;
+  ACE_Dynamic_Service &operator= (ACE_Dynamic_Service const &) = delete;
+  ACE_Dynamic_Service &operator= (ACE_Dynamic_Service &&) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

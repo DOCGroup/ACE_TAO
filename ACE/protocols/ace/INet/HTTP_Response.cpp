@@ -9,34 +9,31 @@
 
 #include "ace/INet/INet_Log.h"
 
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE
 {
   namespace HTTP
   {
-    const ACE_CString Response::COOKIE = "Set-Cookie";
+    ACE_CString const Response::COOKIE = "Set-Cookie";
 
     Response::Response()
       {
       }
 
-    Response::Response(const Status& status)
+    Response::Response(Status const& status)
       : status_ (status)
       {
       }
 
-    Response::Response(const ACE_CString& version, const Status& status)
+    Response::Response(ACE_CString const& version, Status const& status)
       : Header (version), status_ (status)
       {
       }
 
-    Response::~Response()
-      {
-      }
+    Response::~Response() = default;
 
-    void Response::add_cookie(const ACE_CString & cookie)
+    void Response::add_cookie(ACE_CString const & cookie)
       {
         this->add (COOKIE, cookie);
       }
@@ -46,7 +43,7 @@ namespace ACE
         this->get_values (COOKIE, cookies);
       }
 
-    void Response::write(ostream& str) const
+    void Response::write(std::ostream& str) const
       {
         str << this->get_version ().c_str () << " "
             << static_cast<int>(this->status_.get_status ()) << " "
@@ -55,7 +52,7 @@ namespace ACE
         str << "\r\n";
       }
 
-    bool Response::read(istream& str)
+    bool Response::read(std::istream& str)
       {
         ACE_CString version;
         ACE_CString status;
@@ -75,7 +72,9 @@ namespace ACE
         // get version
         ch = this->read_ws_field (str, version, MAX_VERSION_LENGTH);
         if (ch == eof_  || !ACE_OS::ace_isspace (ch))
+        {
           return false; // invalid HTTP version string
+        }
         // skip whitespace
         while (ACE_OS::ace_isspace (str.peek ()))
           {
@@ -84,7 +83,9 @@ namespace ACE
         // get status
         ch = this->read_ws_field (str, status, MAX_STATUS_LENGTH);
         if (ch == eof_ || !ACE_OS::ace_isspace (ch))
+        {
           return false; // invalid HTTP status code
+        }
         // skip whitespace
         while (ACE_OS::ace_isspace (str.peek ()))
           {
@@ -93,9 +94,13 @@ namespace ACE
         // get reason
         ch = this->read_field (str, reason, MAX_REASON_LENGTH, '\r');
         if (ch == '\r')
-          ch = str.get (); // get lf
+          {
+            ch = str.get (); // get lf
+          }
         if (ch != '\n')
-          return false; // HTTP reason string too long
+          {
+            return false; // HTTP reason string too long
+          }
 
         INET_DEBUG (6, (LM_DEBUG, DLINFO
                         ACE_TEXT ("ACE_INet_HTTP: <-- %C %C %C\n"),
@@ -105,7 +110,9 @@ namespace ACE
 
         // get header lines
         if (!Header::read (str))
+        {
           return false;
+        }
         // skip empty line
         ch = str.get ();
         while (ch != '\n' && ch != eof_)

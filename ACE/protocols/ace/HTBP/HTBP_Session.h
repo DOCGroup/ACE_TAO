@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    HTBP_Session.h
  *
  *  @author Phil Mesnier
  */
-//=============================================================================
 
 #ifndef ACE_HTBP_SESSION_H
 #define ACE_HTBP_SESSION_H
@@ -45,13 +41,13 @@ namespace ACE
       Addr    peer_;
 
       u_long hash () const;
-      bool operator ==(const Session_Id_t &other) const;
+      bool operator == (Session_Id_t const& other) const;
     };
 
     /**
      * @class Session
      *
-     * @brief Defines the methods in the <Session> abstraction.
+     * @brief Defines the methods in the @c Session abstraction.
      *
      * A session is an entity that combines two Ht_Channels that connect directly
      * to a proxy to manage communication with a remote peer. The Session may
@@ -70,32 +66,34 @@ namespace ACE
     class HTBP_Export Session
     {
     public:
-      // Initialization and termination methods.
-      /// Constructor.
+      /// @name Initialization and termination
+      /// @{
       Session ();
 
-      /// Constructor (sets the underlying session id with <sid>).
-      Session (const Addr& peer,
-               const Addr& local,
+      /// Constructor (sets the underlying session id with @a sid).
+      Session (Addr const& peer,
+               Addr const& local,
                ACE_UINT32 sid = 0,
-               ACE_INET_Addr *proxy = 0,
+               ACE_INET_Addr *proxy = nullptr,
                bool take_proxy = false);
-      Session (const Session_Id_t &id,
-               ACE_INET_Addr *proxy = 0,
+      explicit Session (Session_Id_t const& id,
+               ACE_INET_Addr *proxy = nullptr,
                bool take_proxy = false);
 
-      Session (const Session &other);
-      Session& operator= (const Session &other);
+      Session (Session const& other) = delete;
+      Session& operator= (Session const& other) = delete;
+      Session (Session&& other) = delete;
+      Session& operator= (Session&& other) = delete;
 
-      /// Destructor.
       ~Session ();
+      /// @}
 
       /// The following methods are specific to the Session
       static ACE_UINT32 next_session_id ();
 
       static int add_session (Session *);
       static int remove_session (Session *);
-      static int find_session (const Session_Id_t&,
+      static int find_session (Session_Id_t const&,
                                Session *&out);
 
       Stream *stream () const;
@@ -124,17 +122,17 @@ namespace ACE
       int enable (int value);
       int disable (int value);
 
-      const Session_Id_t& session_id() const;
+      Session_Id_t const& session_id() const;
       void session_id (ACE_UINT32 );
 
-      const ACE_INET_Addr *proxy_addr () const;
-      void proxy_addr (ACE_INET_Addr *, int destroy = 0);
+      ACE_INET_Addr const* proxy_addr () const;
+      void proxy_addr (ACE_INET_Addr *, bool destroy = false);
 
-      const Addr &peer_addr () const;
-      const Addr &local_addr () const;
+      Addr const& peer_addr () const;
+      Addr const& local_addr () const;
 
-      void peer_addr (const Addr &);
-      void local_addr (const Addr &);
+      void peer_addr (Addr const&);
+      void local_addr (Addr const&);
 
       /// invoke close on both streams, then remove self from session map
       int close ();
@@ -155,15 +153,14 @@ namespace ACE
       void reconnect () const;
       void reconnect_i (Channel *) const;
 
-      typedef ACE_Hash_Map_Manager<Session_Id_t, Session*,
-                                   ACE_SYNCH_MUTEX> Session_Map;
-      typedef ACE_Hash_Map_Entry <Session_Id_t, Session*> Map_Entry;
+      using Session_Map = ACE_Hash_Map_Manager<Session_Id_t, Session*, ACE_SYNCH_MUTEX>;
+      using Map_Entry = ACE_Hash_Map_Entry<Session_Id_t, Session*>;
       static Session_Map session_map_;
       static ACE_UINT32 last_session_id_;
       static ACE_SYNCH_MUTEX session_id_lock_;
 
       ACE_INET_Addr *proxy_addr_;
-      int destroy_proxy_addr_;
+      bool destroy_proxy_addr_;
 
       Session_Id_t session_id_;
 

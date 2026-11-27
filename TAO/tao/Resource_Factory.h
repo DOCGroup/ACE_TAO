@@ -1,13 +1,9 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   Resource_Factory.h
  *
  *  @author Chris Cleeland
  *  @author Carlos O'Ryan
  */
-//=============================================================================
 
 #ifndef TAO_RESOURCE_FACTORY_H
 #define TAO_RESOURCE_FACTORY_H
@@ -24,11 +20,12 @@
 #include "tao/Basic_Types.h"
 
 #include <memory>
+
 #include "ace/Service_Object.h"
 #include "ace/Unbounded_Set.h"
-#include "ace/SString.h"
 #include "ace/CDR_Base.h"
 
+#include <string>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Lock;
@@ -54,7 +51,7 @@ class TAO_Export TAO_Protocol_Item
 public:
   /// Creator method, the protocol name can only be set when the
   /// object is created.
-  TAO_Protocol_Item (const ACE_CString &name);
+  explicit TAO_Protocol_Item (std::string const &name);
 
   /// Destructor that deallocates the factory object if the
   /// Protocol_Item retains ownership.
@@ -62,36 +59,37 @@ public:
 
   /// Return a reference to the character representation of the protocol
   /// factories name.
-  const ACE_CString &protocol_name ();
+  std::string const &protocol_name () const;
 
   /// Return a pointer to the protocol factory.
-  TAO_Protocol_Factory *factory ();
+  TAO_Protocol_Factory *factory () const;
 
   /// Set the factory pointer's value.
   void factory (TAO_Protocol_Factory *factory, int owner = 0);
 
 private:
-  TAO_Protocol_Item (const TAO_Protocol_Item&) = delete;
-  void operator= (const TAO_Protocol_Item&) = delete;
-  TAO_Protocol_Item (TAO_Protocol_Item&&) = delete;
-  void operator= (TAO_Protocol_Item&&) = delete;
+  TAO_Protocol_Item () = delete;
+  TAO_Protocol_Item (TAO_Protocol_Item const &) = delete;
+  TAO_Protocol_Item &operator= (TAO_Protocol_Item const &) = delete;
+  TAO_Protocol_Item (TAO_Protocol_Item &&) = delete;
+  TAO_Protocol_Item &operator= (TAO_Protocol_Item &&) = delete;
 
 private:
   /// Protocol factory name.
-  ACE_CString name_;
+  std::string name_;
 
   /// Pointer to factory object.
-  TAO_Protocol_Factory *factory_;
+  TAO_Protocol_Factory *factory_ {};
 
-  /// Whether we own (and therefore have to delete) the factory object.
-  int factory_owner_;
+  /// Own the factory object when ownership was transferred to this item.
+  std::unique_ptr<TAO_Protocol_Factory> owned_factory_ {};
 };
 
 // typedefs for containers containing the list of loaded protocol
 // factories.
 using TAO_ProtocolFactorySet = ACE_Unbounded_Set<TAO_Protocol_Item*>;
 
-using TAO_ProtocolFactorySetItor = ACE_Unbounded_Set_Iterator<TAO_Protocol_Item*>;
+using TAO_ProtocolFactorySetItor = TAO_ProtocolFactorySet::iterator;
 
 // ****************************************************************
 
@@ -133,8 +131,6 @@ public:
   TAO_Resource_Factory ();
   ~TAO_Resource_Factory () override;
 
-  // = Resource Retrieval
-
   /// @@ Backwards compatibility, return 1 if the ORB core should use
   ///    Locked_Data_Blocks
   virtual int use_locked_data_blocks () const;
@@ -155,21 +151,21 @@ public:
   virtual void use_local_memory_pool (bool);
 
   /// @name Access the input CDR allocators.
-  //@{
+  /// @{
   virtual ACE_Allocator* input_cdr_dblock_allocator ();
   virtual ACE_Allocator* input_cdr_buffer_allocator ();
   virtual ACE_Allocator* input_cdr_msgblock_allocator ();
-  //@}
+  /// @}
 
-  // Return 1 when the input CDR allocator uses a lock else 0.
+  /// Return 1 when the input CDR allocator uses a lock else 0.
   virtual int input_cdr_allocator_type_locked ();
 
   /// @name Access the output CDR allocators.
-  //@{
+  /// @{
   virtual ACE_Allocator* output_cdr_dblock_allocator ();
   virtual ACE_Allocator* output_cdr_buffer_allocator ();
   virtual ACE_Allocator* output_cdr_msgblock_allocator ();
-  //@}
+  /// @}
 
   /// Access the AMH response handler allocator
   virtual ACE_Allocator* amh_response_handler_allocator ();

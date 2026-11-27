@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   OS_NS_signal.h
  *
@@ -8,7 +5,6 @@
  *  @author Jesper S. M|ller<stophph@diku.dk>
  *  @author and a cast of thousands...
  */
-//=============================================================================
 
 #ifndef ACE_OS_NS_SIGNAL_H
 # define ACE_OS_NS_SIGNAL_H
@@ -117,12 +113,12 @@ inline int ace_sigsuspend_helper (const sigset_t *s)
 #   define SIG_SETMASK 3
 # endif /* SIG_SETMASK */
 
-// Create some useful typedefs.
+/// Create some useful typedefs.
 
 # if !defined (ACE_HAS_SIGINFO_T)
 struct ACE_Export siginfo_t
 {
-  siginfo_t (ACE_HANDLE handle);
+  explicit siginfo_t (ACE_HANDLE handle);
 
   /// Win32 HANDLE that has become signaled.
   ACE_HANDLE si_handle_;
@@ -141,7 +137,8 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 typedef struct sigaction ACE_SIGACTION;
 
 namespace ACE_OS {
-  //@{ @name A set of wrappers for Signals.
+  /// @name A set of wrappers for Signals.
+  /// @{
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int kill (pid_t pid,
@@ -158,7 +155,7 @@ namespace ACE_OS {
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int sigaction (int signum,
-                 const ACE_SIGACTION *nsa,
+                 ACE_SIGACTION const *nsa,
                  ACE_SIGACTION *osa);
 
   ACE_NAMESPACE_INLINE_FUNCTION
@@ -193,7 +190,7 @@ namespace ACE_OS {
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int raise (const int signum);
-  //@}
+  /// @}
 
 } /* namespace ACE_OS */
 

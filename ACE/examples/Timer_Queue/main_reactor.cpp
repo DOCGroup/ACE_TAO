@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    main_reactor.cpp
  *
@@ -9,12 +7,12 @@
  *
  *  @author Douglas Schmidt <d.schmidt@vanderbilt.edu> && Sergio Flores-Gaitan <sergio@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "ace/OS_main.h"
 #include "Reactor_Timer_Queue_Test.h"
 #include "Driver.h"
 #include <memory>
+#include <new>
 
 using REACTOR_TIMER_QUEUE_TEST_DRIVER = Timer_Queue_Test_Driver <ACE_Timer_Heap,
                                                                  Input_Handler,
@@ -23,11 +21,12 @@ using REACTOR_TIMER_QUEUE_TEST_DRIVER = Timer_Queue_Test_Driver <ACE_Timer_Heap,
 int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {
-  REACTOR_TIMER_QUEUE_TEST_DRIVER *tqtd;
-  ACE_NEW_RETURN (tqtd, Reactor_Timer_Queue_Test_Driver, -1);
-  // unique ptr ensures that the driver memory is released
-  // automatically.
-  std::unique_ptr <REACTOR_TIMER_QUEUE_TEST_DRIVER> driver (tqtd);
+  std::unique_ptr<REACTOR_TIMER_QUEUE_TEST_DRIVER> driver (
+    new (std::nothrow) Reactor_Timer_Queue_Test_Driver);
+  if (!driver)
+  {
+    return -1;
+  }
 
   return driver->run_test ();
 }

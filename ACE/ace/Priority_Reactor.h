@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Priority_Reactor.h
  *
  *  @author Carlos O'Ryan <coryan@uci.edu>
  */
-//=============================================================================
 
 #ifndef ACE_PRIORITY_REACTOR_H
 #define ACE_PRIORITY_REACTOR_H
@@ -36,14 +32,14 @@ class ACE_Export ACE_Priority_Reactor : public ACE_Select_Reactor
 {
 public:
   /// Initialize ACE_Priority_Reactor with the default size.
-  ACE_Priority_Reactor (ACE_Sig_Handler * = 0,
-                        ACE_Timer_Queue * = 0);
+  ACE_Priority_Reactor (ACE_Sig_Handler * = nullptr,
+                        ACE_Timer_Queue * = nullptr);
 
   /// Initialize ACE_Priority_Reactor with size @a size.
   ACE_Priority_Reactor (size_t size,
                         bool restart = false,
-                        ACE_Sig_Handler * = 0,
-                        ACE_Timer_Queue * = 0);
+                        ACE_Sig_Handler * = nullptr,
+                        ACE_Timer_Queue * = nullptr);
 
   /// Close down the select_reactor and release all of its resources.
   ~ACE_Priority_Reactor () override;
@@ -55,7 +51,8 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-  // = Dispatching methods.
+  /// @name Dispatching methods
+  /// @{
 
   /// We simply override this function to implement the priority
   /// dispatching.
@@ -65,6 +62,7 @@ protected:
                                ACE_Handle_Set &dispatch_mask,
                                ACE_Handle_Set &ready_mask,
                                ACE_EH_PTMF callback) override;
+  /// @}
 
 private:
   /// A small helper to initialize the bucket.
@@ -79,15 +77,15 @@ private:
   /// There is a queue per-priority, which simply holds the
   /// Event_Handlers until we know who goes first.
   using QUEUE = ACE_Unbounded_Queue<ACE_Event_Tuple>;
-  QUEUE** bucket_;
+  QUEUE** bucket_ {};
 
   /// The queues themselves use this allocator to minimize dynamic
   /// memory usage.
-  ACE_Allocator* tuple_allocator_;
+  ACE_Allocator* tuple_allocator_ {};
 
   /// Deny access since member-wise won't work...
-  ACE_Priority_Reactor (const ACE_Priority_Reactor &);
-  ACE_Priority_Reactor &operator = (const ACE_Priority_Reactor &);
+  ACE_Priority_Reactor (ACE_Priority_Reactor const &);
+  ACE_Priority_Reactor &operator = (ACE_Priority_Reactor const &);
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

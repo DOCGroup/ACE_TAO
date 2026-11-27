@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 /**
  *  @file Peer.h
  *
@@ -34,12 +32,15 @@ class TAO_Notify_Peer;
 class TAO_Notify_Serv_Export TAO_Notify_Peer
 {
 public:
-  using Ptr = TAO_Notify_Refcountable_Guard_T< TAO_Notify_Peer >;
-  /// Constructor
+  using Ptr = TAO_Notify_Refcountable_Guard_T<TAO_Notify_Peer>;
   TAO_Notify_Peer ();
 
-  /// Destructor
   virtual ~TAO_Notify_Peer ();
+
+  TAO_Notify_Peer (TAO_Notify_Peer const &) = delete;
+  TAO_Notify_Peer (TAO_Notify_Peer &&) = delete;
+  TAO_Notify_Peer &operator= (TAO_Notify_Peer const &) = delete;
+  TAO_Notify_Peer &operator= (TAO_Notify_Peer &&) = delete;
 
   /// This method sigantures deliberately match the RefCounting methods
   /// required for ESF Proxy
@@ -53,11 +54,11 @@ public:
   virtual TAO_Notify_Proxy* proxy () = 0;
 
   // Dispatch updates
-  virtual void dispatch_updates (const TAO_Notify_EventTypeSeq & added,
-                                 const TAO_Notify_EventTypeSeq & removed);
+  virtual void dispatch_updates (TAO_Notify_EventTypeSeq const & added,
+                                 TAO_Notify_EventTypeSeq const & removed);
 
   /// QoS changed notification from the Peer.
-  virtual void qos_changed (const TAO_Notify_QoSProperties& qos_properties);
+  virtual void qos_changed (TAO_Notify_QoSProperties const& qos_properties);
 
   /// Handle dispatch exceptions.
   void handle_dispatch_exception ();
@@ -67,8 +68,8 @@ public:
 
 protected:
   /// Implementation of Peer specific dispatch_updates
-  virtual void dispatch_updates_i (const CosNotification::EventTypeSeq& added,
-                                   const CosNotification::EventTypeSeq& removed) = 0;
+  virtual void dispatch_updates_i (CosNotification::EventTypeSeq const& added,
+                                   CosNotification::EventTypeSeq const& removed) = 0;
 
 private:
   /// Release

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "ace/OS_Memory.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -6,7 +5,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 template<typename T>
 ACE_INLINE
 TAO_Seq_Var_Base_T<T>::TAO_Seq_Var_Base_T ()
-  : ptr_ (nullptr)
 {}
 
 template<typename T>
@@ -24,7 +22,7 @@ TAO_Seq_Var_Base_T<T>::~TAO_Seq_Var_Base_T ()
 
 template<typename T>
 ACE_INLINE
-const T *
+T const *
 TAO_Seq_Var_Base_T<T>::operator-> () const
 {
   return this->ptr_;
@@ -40,7 +38,7 @@ TAO_Seq_Var_Base_T<T>::operator-> ()
 
 template<typename T>
 ACE_INLINE
-TAO_Seq_Var_Base_T<T>::operator const T & () const
+TAO_Seq_Var_Base_T<T>::operator T const & () const
 {
   return *this->ptr_;
 }
@@ -61,7 +59,7 @@ TAO_Seq_Var_Base_T<T>::operator T & () const
 
 template<typename T>
 ACE_INLINE
-const T &
+T const &
 TAO_Seq_Var_Base_T<T>::in () const
 {
   return *this->ptr_;
@@ -117,7 +115,7 @@ TAO_FixedSeq_Var_T<T>::TAO_FixedSeq_Var_T (T * p)
 {}
 
 template<typename T>
-TAO_FixedSeq_Var_T<T>::TAO_FixedSeq_Var_T (const TAO_FixedSeq_Var_T<T> & p)
+TAO_FixedSeq_Var_T<T>::TAO_FixedSeq_Var_T (TAO_FixedSeq_Var_T<T> const & p)
   : TAO_Seq_Var_Base_T<T> (p)
 {
 }
@@ -125,7 +123,7 @@ TAO_FixedSeq_Var_T<T>::TAO_FixedSeq_Var_T (const TAO_FixedSeq_Var_T<T> & p)
 // Fixed-size base types only.
 template<typename T>
 ACE_INLINE
-TAO_FixedSeq_Var_T<T>::TAO_FixedSeq_Var_T (const T & p)
+TAO_FixedSeq_Var_T<T>::TAO_FixedSeq_Var_T (T const & p)
 {
   ACE_NEW (this->ptr_,
            T (p));
@@ -161,9 +159,7 @@ TAO_FixedSeq_Var_T<T>::operator[] (CORBA::ULong index) const
 
 template<typename T>
 ACE_INLINE
-TAO_VarSeq_Var_T<T>::TAO_VarSeq_Var_T ()
-{
-}
+TAO_VarSeq_Var_T<T>::TAO_VarSeq_Var_T () = default;
 
 template<typename T>
 ACE_INLINE
@@ -173,7 +169,7 @@ TAO_VarSeq_Var_T<T>::TAO_VarSeq_Var_T (T * p)
 }
 
 template<typename T>
-TAO_VarSeq_Var_T<T>::TAO_VarSeq_Var_T (const TAO_VarSeq_Var_T<T> & p)
+TAO_VarSeq_Var_T<T>::TAO_VarSeq_Var_T (TAO_VarSeq_Var_T<T> const & p)
   : TAO_Seq_Var_Base_T<T> (p)
 {
 }
@@ -211,6 +207,5 @@ TAO_VarSeq_Var_T<T>::operator[] (CORBA::ULong index) const
 {
   return this->ptr_->operator[] (index);
 }
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL

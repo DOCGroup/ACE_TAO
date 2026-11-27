@@ -1,13 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    IO_SAP.h
  *
  *  @author Doug Schmidt
  */
-//=============================================================================
-
 
 #ifndef ACE_IO_SAP_H
 #define ACE_IO_SAP_H
@@ -37,13 +32,13 @@ public:
     INVALID_HANDLE = -1
   };
 
-  /// Default dtor.
   ~ACE_IO_SAP ();
 
   /// Interface for ioctl.
   int control (int cmd, void *) const;
 
-  // = Common I/O handle options related to files.
+  /// @name Common I/O handle options
+  /// @{
 
   /**
    * Enable asynchronous I/O (ACE_SIGIO), urgent data (ACE_SIGURG),
@@ -58,6 +53,7 @@ public:
    * which is passed as the @a value.
    */
   int disable (int value) const;
+  /// @}
 
   /// Get the underlying handle.
   ACE_HANDLE get_handle () const;

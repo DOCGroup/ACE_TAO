@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    proxy_impl_xh.h
  *
@@ -6,7 +5,6 @@
  *
  *  @author Angelo Corsaro
  */
-//=============================================================================
 
 #ifndef _BE_VISITOR_OPERATION_PROXY_IMPL_XH_H_
 #define _BE_VISITOR_OPERATION_PROXY_IMPL_XH_H_

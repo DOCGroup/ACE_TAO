@@ -1,30 +1,32 @@
 #include "ace/Get_Opt.h"
+#include "ace/SString.h"
 #include "Receiver_i.h"
 #include "SenderC.h"
 #include "tao/BiDir_GIOP/BiDirGIOP.h"
 #include "tao/AnyTypeCode/Any.h"
 #include "Client_Task.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
+struct Client_Options
+{
+  ACE_TString ior {ACE_TEXT ("file://test.ior")};
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Client_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'k':
-        ior = get_opts.optarg;
+        options.ior = get_opts.opt_arg ();
         break;
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-k <ior> "
-                           "\n",
+                           ACE_TEXT ("usage: %s -k <ior>\n"),
                            argv [0]),
                           -1);
       }
@@ -33,23 +35,28 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  Client_Options options;
   try
     {
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv);
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, options) != 0)
+      {
         return 1;
+      }
 
       CORBA::Object_var poa_object =
         orb->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize the POA.\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Unable to initialize the POA.\n"),
+                            1);
+        }
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
@@ -85,8 +92,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       poa_manager->activate ();
 
-      CORBA::Object_var object =
-        orb->string_to_object (ior);
+      if (options.ior.empty ())
+      {
+        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("The IOR must not be empty.\n")), 1);
+      }
+
+      CORBA::Object_var object = orb->string_to_object (options.ior.c_str ());
 
       Sender_var sender =
         Sender::_narrow (object.in ());
@@ -94,13 +105,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (CORBA::is_nil (sender.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Object reference <%s> is nil.\n",
-                             ior),
+                             ACE_TEXT ("Object reference <%s> is nil.\n"),
+                             options.ior.c_str ()),
                             1);
         }
 
-
-      Receiver_i *receiver;
+      Receiver_i *receiver {};
       ACE_NEW_RETURN (receiver,
                       Receiver_i (),
                       -1);
@@ -122,7 +132,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       Client_Task client_task (orb.in (),
                                ACE_Thread_Manager::instance ());
 
-      if (client_task.activate (THR_NEW_LWP | THR_JOINABLE, 4, 1) == -1)
+      if (client_task.activate (THR_NEW_LWP | THR_JOINABLE, 4, true) == -1)
         {
           ACE_ERROR ((LM_ERROR, "Error activating client task\n"));
         }
@@ -138,7 +148,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       root_poa->destroy (true, true);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return 1;

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #ifndef TAO_TWO_OBJECTS_SECOND_I_H
 #define TAO_TWO_OBJECTS_SECOND_I_H
 
@@ -13,18 +12,23 @@ class Second_i
   : public virtual POA_Two_Objects_Test::Second
 {
 public:
-  Second_i (CORBA::ORB_ptr orb,
+  Second_i (CORBA::ORB_ptr const orb,
             CORBA::ULong len, ACE_Auto_Event &two_way_done);
 
-  Two_Objects_Test::Octet_Seq *twoway_method ();
+  Two_Objects_Test::Octet_Seq *twoway_method () override;
 
-  void shutdown ();
+  void shutdown () override;
+
+  Second_i (Second_i const &) = delete;
+  Second_i (Second_i &&) = delete;
+  Second_i & operator= (Second_i const &) = delete;
+  Second_i & operator= (Second_i &&) = delete;
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown
   /// the application.
-  CORBA::ORB_var orb_;
-  CORBA::ULong length_;
+  CORBA::ORB_var const orb_;
+  CORBA::ULong const length_;
   ACE_Auto_Event &two_way_done_;
 };
 

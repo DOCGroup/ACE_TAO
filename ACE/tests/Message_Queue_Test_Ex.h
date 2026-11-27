@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  * @file Message_Queue_Test_Ex.h
  *
@@ -11,14 +8,13 @@
  * @author David L. Levine <levine@cs.wustl.edu>
  * @author Guy Peleg <guy.peleg@amdocs.com>
  */
-//=============================================================================
 
 #ifndef ACE_TESTS_MESSAGE_QUEUE_TEST_EX_H
 #define ACE_TESTS_MESSAGE_QUEUE_TEST_EX_H
 
 #include "ace/OS_NS_string.h"
 
-// User-defined class used for queue data.
+/// User-defined class used for queue data.
 class User_Class
 {
 public:
@@ -30,12 +26,12 @@ public:
 
   ~User_Class () { delete [] this->message_; }
 
-  const char *message () const
+  char const *message () const
   {
     return this->message_;
   }
 
-  // This is for checking the ACE_Message_Queue_Ex_N
+  /// This is for checking the ACE_Message_Queue_Ex_N
   User_Class *next () const
   {
     return this->next_;
@@ -51,7 +47,7 @@ private:
   User_Class *next_ {};
 };
 
-// The main tests for the ACE_Message_Queue_Ex_N
+/// The main tests for the ACE_Message_Queue_Ex_N
 struct Receive_Messages;
 
 class MQ_Ex_N_Tester

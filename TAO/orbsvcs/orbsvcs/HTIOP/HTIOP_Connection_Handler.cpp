@@ -1,5 +1,4 @@
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/HTIOP/HTIOP_Connection_Handler.h"
 
 #include "orbsvcs/HTIOP/HTIOP_Transport.h"
@@ -22,6 +21,8 @@
 #include "tao/Resume_Handle.h"
 #include "tao/Protocols_Hooks.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::HTIOP::Connection_Handler::Connection_Handler (ACE_Thread_Manager *t)
@@ -40,7 +41,7 @@ TAO::HTIOP::Connection_Handler::Connection_Handler (TAO_ORB_Core *orb_core)
   : SVC_HANDLER (orb_core->thr_mgr (), nullptr, nullptr),
     TAO_Connection_Handler (orb_core)
 {
-  TAO::HTIOP::Transport* specific_transport = nullptr;
+  TAO::HTIOP::Transport* specific_transport {};
   ACE_NEW(specific_transport,
           TAO::HTIOP::Transport (this, orb_core));
 
@@ -72,12 +73,16 @@ int
 TAO::HTIOP::Connection_Handler::open (void*)
 {
   if (this->shared_open() == -1)
+  {
     return -1;
+  }
 
   if (this->transport ()->wait_strategy ()->non_blocking ())
     {
       if (this->peer ().enable (ACE_NONBLOCK) == -1)
+      {
         return -1;
+      }
     }
 
   // Called by the <Strategy_Acceptor> when the handler is
@@ -85,11 +90,15 @@ TAO::HTIOP::Connection_Handler::open (void*)
 
   ACE::HTBP::Addr remote_addr;
   if (this->peer ().get_remote_addr (remote_addr) == -1)
+  {
     return -1;
+  }
 
   ACE::HTBP::Addr local_addr;
   if (this->peer ().get_local_addr (local_addr) == -1)
+  {
     return -1;
+  }
 
   if (local_addr.is_ip_equal (remote_addr)
       && local_addr.get_port_number () == remote_addr.get_port_number ())
@@ -120,18 +129,23 @@ TAO::HTIOP::Connection_Handler::open (void*)
 
       // Verify that we can resolve the peer hostname.
       if (remote_addr.addr_to_string (client, sizeof (client), 0) == -1)
+      {
         return -1;
+      }
 
       ORBSVCS_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) TAO_HTIOP connection to peer ")
-                  ACE_TEXT ("<%s> on %d\n"),
-                  client, this->peer ().get_handle ()));
+                  ACE_TEXT ("<%s> on %H\n"),
+                  client,
+                  this->peer ().get_handle ()));
     }
 
   // Set the id in the transport now that we're active.
   // Use C-style cast b/c otherwise we get warnings on lots of compilers
   if (!this->transport ()->post_open ((size_t) this->get_handle ()))
+  {
     return -1;
+  }
 
   this->state_changed (TAO_LF_Event::LFS_SUCCESS,
                        this->orb_core ()->leader_follower ());
@@ -164,10 +178,12 @@ TAO::HTIOP::Connection_Handler::handle_input (ACE_HANDLE h)
       if (result != -1 && peer().session())
         {
           if (TAO_debug_level > 2)
-            ORBSVCS_DEBUG ((LM_DEBUG,
-                        ACE_TEXT("TAO::HTIOP::Connection_Handler::handle_input: ")
-                        ACE_TEXT("now binding to %d\n"),
-                        peer().get_handle()));
+            {
+              ORBSVCS_DEBUG ((LM_DEBUG,
+                              ACE_TEXT("TAO::HTIOP::Connection_Handler::handle_input: ")
+                              ACE_TEXT("now binding to %H\n"),
+                              peer().get_handle()));
+            }
         }
       return result;
     }
@@ -220,7 +236,9 @@ TAO::HTIOP::Connection_Handler::add_transport_to_cache ()
 
   // Get the peername.
   if (this->peer ().get_remote_addr (addr) == -1)
+  {
     return -1;
+  }
 
   // Construct an  TAO::HTIOP::Endpoint object
   TAO::HTIOP::Endpoint endpoint (addr,
@@ -228,7 +246,7 @@ TAO::HTIOP::Connection_Handler::add_transport_to_cache ()
                                orb_params()->use_dotted_decimal_addresses ());
 
   // Construct a property object
-  TAO_Base_Transport_Property prop (&endpoint);
+  TAO_Base_Transport_Property prop (std::addressof (endpoint));
 
   TAO::Transport_Cache_Manager &cache =
     this->orb_core ()->lane_resources ().transport_cache ();
@@ -244,15 +262,19 @@ TAO::HTIOP::Connection_Handler::process_listen_point_list
   // Get the size of the list
   CORBA::ULong len = listen_list.length ();
 
-  for (CORBA::ULong i = 0; i < len; ++ i)
+  for (CORBA::ULong i {}; i < len; ++i)
     {
       ::HTIOP::ListenPoint listen_point = listen_list[i];
       ACE::HTBP::Addr addr;
       if (listen_point.port)
-        addr.ACE_INET_Addr::set (listen_point.port,
-                  listen_point.host.in ());
+        {
+          addr.ACE_INET_Addr::set (listen_point.port,
+                                   listen_point.host.in ());
+        }
       else
-        addr.set_htid (listen_point.htid);
+        {
+          addr.set_htid (listen_point.htid);
+        }
 
       if (TAO_debug_level > 0)
         {
@@ -268,16 +290,18 @@ TAO::HTIOP::Connection_Handler::process_listen_point_list
         this->orb_core()->orb_params()->use_dotted_decimal_addresses ());
 
       // Construct a property object
-      TAO_Base_Transport_Property prop (&endpoint);
+      TAO_Base_Transport_Property prop (std::addressof (endpoint));
 
       // Mark the connection as bidirectional
-      prop.set_bidir_flag (1);
+      prop.set_bidir_flag (true);
 
       // The property for this handler has changed. Recache the
       // handler with this property
-      int retval = this->transport ()->recache_transport (&prop);
+      int retval = this->transport ()->recache_transport (std::addressof (prop));
       if (retval == -1)
+      {
         return retval;
+      }
 
       // Make the handler idle and ready for use
       this->transport ()->make_idle ();
@@ -300,7 +324,7 @@ TAO::HTIOP::Connection_Handler::set_dscp_codepoint (
 }
 
 int
-TAO::HTIOP::Connection_Handler::handle_write_ready (const ACE_Time_Value *t)
+TAO::HTIOP::Connection_Handler::handle_write_ready (ACE_Time_Value const *t)
 {
   return ACE::handle_write_ready (this->peer ().get_handle (), t);
 }

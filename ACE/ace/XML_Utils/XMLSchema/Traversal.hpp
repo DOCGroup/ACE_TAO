@@ -62,7 +62,7 @@ namespace XMLSchema
     };
 
     template <typename C>
-    struct ID : Traverser<XMLSchema::ID<C> >
+    struct ID : Traverser<XMLSchema::ID<C>>
     {
     };
 

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/ORB_Core.h"
 #include "tao/Codeset_Manager.h"
 #include "tao/Codeset_Manager_Factory_Base.h"

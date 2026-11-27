@@ -1,4 +1,3 @@
-
 interface Test
 {
   /// Print out the CORBA priority of the servant thread and check that

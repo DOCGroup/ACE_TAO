@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//====================================================================
 /**
  *  @file    Service_Gestalt.h
  *
  *  @author Iliyan Jeliazkov <iliyan@ociweb.com>
  */
-//====================================================================
 
 #ifndef ACE_SERVICE_GESTALT_H
 #define ACE_SERVICE_GESTALT_H
@@ -15,6 +11,7 @@
 
 #include /**/ "ace/config-all.h"
 #include "ace/Default_Constants.h"
+#include <atomic>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -27,7 +24,6 @@
 #include "ace/Singleton.h"
 #include "ace/OS_NS_signal.h"
 #include "ace/Synch_Traits.h"
-#include "ace/Atomic_Op.h"
 #include "ace/Guard_T.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -77,9 +73,9 @@ public:
                        bool svc_repo_is_owned = true,
                        bool no_static_svcs = true);
 
-  ACE_Service_Gestalt (const ACE_Service_Gestalt &) = delete;
+  ACE_Service_Gestalt (ACE_Service_Gestalt const &) = delete;
   ACE_Service_Gestalt (ACE_Service_Gestalt &&) = delete;
-  ACE_Service_Gestalt &operator= (const ACE_Service_Gestalt &) = delete;
+  ACE_Service_Gestalt &operator= (ACE_Service_Gestalt const &) = delete;
   ACE_Service_Gestalt &operator= (ACE_Service_Gestalt &&) = delete;
 
   /// Perform user-specified close activities and remove dynamic
@@ -103,8 +99,8 @@ public:
    * true then the application is responsible for setting the
    * ACE_Log_Msg::priority_mask appropriately.
    */
-  int open (const ACE_TCHAR program_name[],
-            const ACE_TCHAR *logger_key = nullptr,
+  int open (ACE_TCHAR const program_name[],
+            ACE_TCHAR const *logger_key = nullptr,
             bool ignore_static_svcs = true,
             bool ignore_default_svc_conf_file = false,
             bool ignore_debug_flag = false);
@@ -142,7 +138,7 @@ public:
    *        specifies service directives without the need for a configuration
    *        file. Can be specified multiple times.
    *
-   * Note: Options '-f' and '-S' complement each other. Directives
+   * @note Options '-f' and '-S' complement each other. Directives
    * from files and from '-S' option are processed together in the
    * following order. First, the default file "./svc.conf" is
    * evaluated if not ignored, then all files are processed in the
@@ -177,7 +173,7 @@ public:
    */
   int open (int argc,
             ACE_TCHAR *argv[],
-            const ACE_TCHAR *logger_key = nullptr,
+            ACE_TCHAR const *logger_key = nullptr,
             bool ignore_static_svcs = true,
             bool ignore_default_svc_conf_file = false,
             bool ignore_debug_flag = false);
@@ -191,7 +187,7 @@ public:
 
   /// Process one service configuration @a directive, which is passed as
   /// a string.  Returns the number of errors that occurred.
-  int process_directive (const ACE_TCHAR directive[]);
+  int process_directive (ACE_TCHAR const directive[]);
 
   /// Process one static service definition.
   /**
@@ -205,12 +201,12 @@ public:
    *
    * @return Returns -1 if the service cannot be 'loaded'.
    */
-  int process_directive (const ACE_Static_Svc_Descriptor &ssd,
+  int process_directive (ACE_Static_Svc_Descriptor const &ssd,
                          bool force_replace = false);
 
   /// Process a file containing a list of service configuration
   /// directives.
-  int process_file (const ACE_TCHAR file[]);
+  int process_file (ACE_TCHAR const file[]);
 
   /**
    * Locate an entry with @a name in the table.  If @a ignore_suspended
@@ -220,8 +216,8 @@ public:
    * If @a name is found, but it is suspended and the caller wants to
    * ignore suspended services a -2 is returned.
    */
-  int find (const ACE_TCHAR name[],
-            const ACE_Service_Type **srp = nullptr,
+  int find (ACE_TCHAR const name[],
+            ACE_Service_Type const **srp = nullptr,
             bool ignore_suspended = true) const;
 
   /**
@@ -257,7 +253,8 @@ public:
   /// Registers a service descriptor for a static service object
   int insert (ACE_Static_Svc_Descriptor *stsd);
 
-  // = Utility methods.
+  /// @name Utility methods
+  /// @{
 
 #if (ACE_USES_CLASSIC_SVC_CONF == 1)
   /// Dynamically link the shared object file and retrieve a pointer to
@@ -266,14 +263,14 @@ public:
   /// ensuring that the dynamic service is registered before any of its
   /// subordinate static services. Thus avoiding any finalization order
   /// problems.
-  int initialize (const ACE_Service_Type_Factory *,
-                  const ACE_TCHAR *parameters);
+  int initialize (ACE_Service_Type_Factory const *,
+                  ACE_TCHAR const *parameters);
 #endif /* (ACE_USES_CLASSIC_SVC_CONF == 1) */
 
   /// Dynamically link the shared object file and retrieve a pointer to
   /// the designated shared object in this file.
   /// @deprecated
-  /// @note This is error-prone in the presense of dynamic services,
+  /// @note This is error-prone in the presence of dynamic services,
   /// which in turn initialize their own static services. This method
   /// will allow those static services to register *before* the dynamic
   /// service that owns them.  Upon finalization of the static services
@@ -282,16 +279,16 @@ public:
   /// which the static services reside.  It may not crash, for
   /// instance, when the first static service to register is the same
   /// as the dynamic service being loaded. You should be so lucky!
-  int initialize (const ACE_Service_Type *,
-                  const ACE_TCHAR *parameters);
+  int initialize (ACE_Service_Type const *,
+                  ACE_TCHAR const *parameters);
 
   /// Initialize and activate a statically @a svc_name service.
-  int initialize (const ACE_TCHAR *svc_name,
-                  const ACE_TCHAR *parameters);
+  int initialize (ACE_TCHAR const *svc_name,
+                  ACE_TCHAR const *parameters);
 
   /// Resume a @a svc_name that was previously suspended or has not yet
   /// been resumed (e.g., a static service).
-  int resume (const ACE_TCHAR svc_name[]);
+  int resume (ACE_TCHAR const svc_name[]);
 
   /**
    * Suspend @a svc_name.  Note that this will not unlink the service
@@ -301,30 +298,31 @@ public:
    * service can be resumed later on by calling the @c resume() member
    * function...
    */
-  int suspend (const ACE_TCHAR svc_name[]);
+  int suspend (ACE_TCHAR const svc_name[]);
 
   /// Totally remove @a svc_name from the daemon by removing it
   /// from the ACE_Reactor, and unlinking it if necessary.
-  int remove (const ACE_TCHAR svc_name[]);
+  int remove (ACE_TCHAR const svc_name[]);
 
   /**
    * Using the supplied name, finds and (if needed) returns a pointer to a
    * static service descriptor. Returns 0 for success and -1 for failure
    */
-  int find_static_svc_descriptor (const ACE_TCHAR* name,
+  int find_static_svc_descriptor (ACE_TCHAR const * name,
                                   ACE_Static_Svc_Descriptor **ssd = nullptr) const;
 
   struct Processed_Static_Svc
   {
-    Processed_Static_Svc (const ACE_Static_Svc_Descriptor *);
+    explicit Processed_Static_Svc (ACE_Static_Svc_Descriptor const *);
     ~Processed_Static_Svc ();
-    ACE_TCHAR * name_;
-    const ACE_Static_Svc_Descriptor *assd_;
+    ACE_TCHAR * name_ {};
+    ACE_Static_Svc_Descriptor const *assd_;
     ACE_ALLOC_HOOK_DECLARE;
   };
 
   /// Get the current ACE_Service_Repository held by this object.
   ACE_Service_Repository* current_service_repository ();
+  /// @}
 
 protected:
   int parse_args_i (int, ACE_TCHAR *argv[],
@@ -340,8 +338,8 @@ protected:
    * ACE_Log_Msg::priority_mask() appropriately.  Returns number of
    * errors that occurred on failure and 0 otherwise.
    */
-  int open_i (const ACE_TCHAR program_name[],
-              const ACE_TCHAR *logger_key = nullptr,
+  int open_i (ACE_TCHAR const program_name[],
+              ACE_TCHAR const *logger_key = nullptr,
               bool ignore_static_svcs = true,
               bool ignore_default_svc_conf_file = false,
               bool ignore_debug_flag = false);
@@ -360,7 +358,7 @@ protected:
   /// Process a static directive without also inserting its descriptor
   /// the global table. This avoids multiple additions when processing
   /// directives in non-global gestalts.
-  int process_directive_i (const ACE_Static_Svc_Descriptor &ssd,
+  int process_directive_i (ACE_Static_Svc_Descriptor const &ssd,
                            bool force_replace = false);
 
 #if (ACE_USES_CLASSIC_SVC_CONF == 1)
@@ -376,14 +374,13 @@ protected:
 
   /// Dynamically link the shared object file and retrieve a pointer to
   /// the designated shared object in this file.
-  int initialize_i (const ACE_Service_Type *sr, const ACE_TCHAR *parameters);
+  int initialize_i (ACE_Service_Type const *sr, ACE_TCHAR const *parameters);
 
-  const ACE_Static_Svc_Descriptor* find_processed_static_svc (const ACE_TCHAR*);
-  void add_processed_static_svc (const ACE_Static_Svc_Descriptor *);
+  ACE_Static_Svc_Descriptor const* find_processed_static_svc (ACE_TCHAR const *);
+  void add_processed_static_svc (ACE_Static_Svc_Descriptor const *);
 
   /// Performs the common initialization tasks for a new or previously
   /// closed instance. Must not be virtual, as it is called from the
-  /// constructor.
   int init_i ();
 
 protected:
@@ -416,48 +413,47 @@ protected:
   size_t svc_repo_size_;
 
   /// Keep track of the number of times the instance has been
-  /// initialized (opened). "If so, we can't allow <yyparse> to be called since
+  /// initialized (opened). "If so, we can't allow @c yyparse to be called since
   /// it's not reentrant" is the original motivation, but that does not seem
   /// to be the case anymore. This variable is incremented by the
-  /// <ACE_Service_Gestalt::open> method and decremented by the
-  /// <ACE_Service_Gestalt::close> method.
-  int is_opened_;
+  /// @c ACE_Service_Gestalt::open method and decremented by the
+  /// @c ACE_Service_Gestalt::close method.
+  int is_opened_ {};
 
   /// Indicates where to write the logging output.  This is typically
   /// either a STREAM pipe or a socket
-  const ACE_TCHAR *logger_key_;
+  ACE_TCHAR const *logger_key_;
 
   /// Should we avoid loading the static services?
   bool no_static_svcs_;
 
   /// Queue of services specified on the command-line.
-  ACE_SVC_QUEUE* svc_queue_;
+  ACE_SVC_QUEUE* svc_queue_ {};
 
   /**
    * Queue of svc.conf files specified on the command-line.
    * @@ This should probably be made to handle unicode filenames...
    */
-  ACE_SVC_QUEUE* svc_conf_file_queue_;
+  ACE_SVC_QUEUE* svc_conf_file_queue_ {};
 
   /// The service repository to hold the services.
-  ACE_Service_Repository* repo_;
+  ACE_Service_Repository* repo_ {};
 
   /// Repository of statically linked services.
-  ACE_STATIC_SVCS* static_svcs_;
+  ACE_STATIC_SVCS* static_svcs_ {};
 
   /// Repository of statically linked services for which process
   /// directive was called, but the service is not already a member of
   /// the static_svcs_ list.
-  ACE_PROCESSED_STATIC_SVCS* processed_static_svcs_;
+  ACE_PROCESSED_STATIC_SVCS* processed_static_svcs_ {};
 
   /// Support for intrusive reference counting
-  ACE_Atomic_Op<ACE_SYNCH_MUTEX, long> refcnt_;
+  std::atomic<long> refcnt_ {0};
 
  public:
   static void intrusive_add_ref (ACE_Service_Gestalt*);
   static void intrusive_remove_ref (ACE_Service_Gestalt*);
 }; /* class ACE_Service_Gestalt */
-
 
 /**
  * @class ACE_Service_Type_Dynamic_Guard
@@ -495,7 +491,7 @@ private:
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 // FUZZ: disable check_for_ACE_Guard
-  ACE_Guard< ACE_Recursive_Thread_Mutex > repo_monitor_;
+  ACE_Guard<ACE_Recursive_Thread_Mutex> repo_monitor_;
 // FUZZ: enable check_for_ACE_Guard
 #endif
 };
@@ -505,7 +501,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #if defined (__ACE_INLINE__)
 #include "ace/Service_Gestalt.inl"
 #endif /* __ACE_INLINE__ */
-
 
 #include /**/ "ace/post.h"
 

@@ -1,15 +1,14 @@
-// -*- C++ -*-
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-//----------------------------------------------------------------------
 // TAO_AV_UDP_Flow_Handler
-//----------------------------------------------------------------------
 
 ACE_INLINE
 ACE_SOCK_Dgram_Mcast_QoS *
 TAO_AV_UDP_QoS_Flow_Handler::get_socket ()
 {
-  return &this->qos_sock_dgram_;
+  return std::addressof (this->qos_sock_dgram_);
 }
 
 ACE_INLINE

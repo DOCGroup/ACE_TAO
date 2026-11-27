@@ -10,7 +10,7 @@
 #include "tao/Transport.h"
 
 #include "common.h"
-static const ACE_TCHAR *ior_output_file = DEFAULT_IOR_FILENAME;
+static ACE_TCHAR const *ior_output_file = DEFAULT_IOR_FILENAME;
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -51,9 +51,11 @@ register_factories (CORBA::ORB_ptr orb)
     ::Compression::CompressionManager::_narrow (compression_manager.in ());
 
   if (CORBA::is_nil(manager.in ()))
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       " (%P|%t) Panic: nil compression manager\n"),
-                      1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         " (%P|%t) Panic: nil compression manager\n"),
+                        1);
+    }
   ::Compression::CompressorFactory_ptr compressor_factory;
   ::Compression::CompressorFactory_var compr_fact;
 
@@ -111,7 +113,7 @@ create_low_value_policy (CORBA::ORB_ptr orb)
   // Setting policy for minimum amount of bytes that needs to be
   // compressed. If a message is smaller than this, it doesn't get
   // compressed
-  CORBA::ULong compression_low_value = 100;
+  CORBA::ULong const compression_low_value = 100;
   CORBA::Any low_value_any;
   low_value_any <<= compression_low_value;
 
@@ -122,7 +124,7 @@ CORBA::Policy_ptr
 create_compression_enabled_policy (CORBA::ORB_ptr orb)
 {
   // Setting policy whether compression is used.
-  CORBA::Boolean compression_enabling = true;
+  CORBA::Boolean const compression_enabling = true;
   CORBA::Any compression_enabling_any;
   compression_enabling_any <<= CORBA::Any::from_boolean(compression_enabling);
 
@@ -150,7 +152,7 @@ prepare_tests (CORBA::ORB_ptr orb, PortableServer::POA_ptr root_poa)
   CORBA::PolicyManager_var policy_manager =
     CORBA::PolicyManager::_narrow (objectman.in ());
 
-  PortableServer::POA_var my_compress_poa = 0;
+  PortableServer::POA_var my_compress_poa {};
   CORBA::PolicyList policies(4);
   policies.length(4);
 
@@ -161,12 +163,12 @@ prepare_tests (CORBA::ORB_ptr orb, PortableServer::POA_ptr root_poa)
       policies[2] = create_compression_enabled_policy (orb);
       policies[3] = create_min_ratio_policy (orb);
 
-      my_compress_poa = root_poa->create_POA("My_Compress_Poa", 0, policies);
+      my_compress_poa = root_poa->create_POA("My_Compress_Poa", nullptr, policies);
     }
-  catch(const CORBA::PolicyError&)
+  catch(CORBA::PolicyError const &)
     {
       policies.length(0);
-      my_compress_poa = root_poa->create_POA("My_Compress_Poa", 0, policies);
+      my_compress_poa = root_poa->create_POA("My_Compress_Poa", nullptr, policies);
     }
 
   policy_manager->set_policy_overrides (policies, CORBA::ADD_OVERRIDE);
@@ -181,7 +183,7 @@ prepare_tests (CORBA::ORB_ptr orb, PortableServer::POA_ptr root_poa)
 
   PortableServer::POAManager_var poa_manager = my_compress_poa->the_POAManager ();
 
-  Hello *hello_impl = 0;
+  Hello *hello_impl {};
   ACE_NEW_RETURN (hello_impl,
                   Hello (orb),
                   0);
@@ -214,12 +216,16 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         PortableServer::POA::_narrow (poa_object.in ());
 
       if (CORBA::is_nil (root_poa.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Panic: nil RootPOA\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Panic: nil RootPOA\n"),
+                            1);
+        }
 
       if (parse_args (argc, argv) != 0)
+      {
         return 1;
+      }
 
       Test::Hello_var hello = prepare_tests (orb.in (), root_poa.in ());
 
@@ -227,11 +233,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // Output the IOR to the <ior_output_file>
       FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
-      if (output_file == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot open output file for writing IOR: %s\n",
-                           ior_output_file),
-                           1);
+      if (output_file == nullptr)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Cannot open output file for writing IOR: %s\n",
+                             ior_output_file),
+                             1);
+        }
       ACE_OS::fprintf (output_file, "%s", ior.in ());
       ACE_OS::fclose (output_file);
 
@@ -243,7 +251,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;

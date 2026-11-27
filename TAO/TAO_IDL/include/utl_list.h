@@ -65,14 +65,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _UTL_LIST_UTL_LIST_HH
 #define _UTL_LIST_UTL_LIST_HH
 
-// General single-linked list.
-
-// NOTE: This list class only works correctly because we use single public
-//       inheritance, as opposed to multiple inheritance or public virtual.
-//       It relies on a type-unsafe cast from UTL_List to subclasses, which
-//       will cease to operate correctly if you use either multiple or
-//       public virtual inheritance.
-
 #include "TAO_IDL_FE_Export.h"
 
 #include "ace/CDR_Base.h"
@@ -82,9 +74,16 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // Forward declare active iterator for UTL_List.
 class  UTL_ListActiveIterator;
 
+/**
+ * @brief General singly linked list.
+ *
+ * @note The type-unsafe cast from UTL_List to subclasses requires single
+ * public inheritance; multiple or virtual inheritance is not supported.
+ */
 class TAO_IDL_FE_Export UTL_List
 {
 public:
+  UTL_List () = delete;
   explicit UTL_List (UTL_List *c);
 
   UTL_List (UTL_List const &) = delete;
@@ -124,22 +123,23 @@ private:
   friend class UTL_ListActiveIterator;
 };
 
-// Active iterator for lists.
+/// Active iterator for lists.
 class TAO_IDL_FE_Export UTL_ListActiveIterator
 {
 public:
+  UTL_ListActiveIterator () = delete;
   explicit UTL_ListActiveIterator (UTL_List *s);
 
   virtual ~UTL_ListActiveIterator () = default;
 
-  // Get next list.
+  /// Advance to the next list item.
   virtual void next ();
 
-  // Are we at the end of this list?
+  /// Whether the iterator is at the end of the list.
   virtual bool is_done () const;
 
 protected:
-  // On what to iterate?
+  /// List position being iterated.
   UTL_List *source;
 };
 

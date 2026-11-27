@@ -11,24 +11,14 @@
 // TITLE, FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT,
 // COMPATIBILITY, AND SECURITY OR ACCURACY.*
 //
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    SOCK_SEQPACK_SCTP_Test.cpp
-//
-// = DESCRIPTION
-//    Performs several tests on the ACE_SOCK_SEQPACK_Connector,
-//    ACE_SOCK_SEQPACK_Acceptor, and ACE_SOCK_SEQPACK_Association classes
-//    specifically for SCTP using the loopback interface.  Attempts to
-//    replicate behavior of SOCK_Test.cpp, but integrating IPv6 tests
-//    directly.
-//
-// = AUTHOR
-//    Dave Craig <dwc@qualcomm.com>
-//
+/// @file SOCK_SEQPACK_SCTP_Test.cpp
+/// Performs several tests on the ACE_SOCK_SEQPACK_Connector,
+/// ACE_SOCK_SEQPACK_Acceptor, and ACE_SOCK_SEQPACK_Association classes
+/// specifically for SCTP using the loopback interface.  Attempts to
+/// replicate behavior of SOCK_Test.cpp, but integrating IPv6 tests
+/// directly.
+///
+/// @author Dave Craig <dwc@qualcomm.com>
 
 #include "test_config.h"
 #include "ace/OS_NS_unistd.h"
@@ -38,6 +28,8 @@
 #include "ace/SOCK_SEQPACK_Acceptor.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Handle_Set.h"
+
+#include <memory>
 
 #define TTCPPORT 5001
 #define BYTE_MESG 0xcd
@@ -67,7 +59,7 @@ Server (void *arg)
 
   ACE_Handle_Set handle_set;
 
-  const ACE_Time_Value def_timeout (ACE_DEFAULT_TIMEOUT);
+  ACE_Time_Value const def_timeout (ACE_DEFAULT_TIMEOUT);
 
   ACE_Time_Value tv (def_timeout);
 
@@ -80,33 +72,49 @@ Server (void *arg)
   // hang tests.
   //
   if (-1 == AcceptorSocket->enable (ACE_NONBLOCK))
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("(%P|%t) %p\n"),
-                ACE_TEXT ("AcceptorSocket.enable (ACE_NONBLOCK)")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%P|%t) %p\n"),
+                  ACE_TEXT ("AcceptorSocket.enable (ACE_NONBLOCK)")));
+    }
 
   //
   // Set up select to wait for I/O events.
   //
-  handle_set.reset ();
-  handle_set.set_bit (AcceptorSocket->get_handle ());
+  ACE_HANDLE const acceptor_handle = AcceptorSocket->get_handle ();
+#if !defined (ACE_WIN32)
+  if (acceptor_handle < 0 || acceptor_handle >= ACE_FD_SETSIZE)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%P|%t) AcceptorSocket handle exceeds FD_SETSIZE\n")),
+                        0);
+    }
+#endif /* ! ACE_WIN32 */
 
-  select_width = SELECT_WIDTH(int (AcceptorSocket->get_handle ()) + 1);
+  handle_set.reset ();
+  handle_set.set_bit (acceptor_handle);
+
+  select_width = SELECT_WIDTH (static_cast<int> (acceptor_handle) + 1);
 
   result = ACE_OS::select(select_width,
                           handle_set,
                           nullptr,
                           nullptr,
-                          &tv);
+                          std::addressof (tv));
 
   if (-1 == result)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) %p\n"),
-                       ACE_TEXT ("select")),
-                      0);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%P|%t) %p\n"),
+                         ACE_TEXT ("select")),
+                        0);
+    }
   if (0 == result)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT("(%P|%t) select timed out, shutting down\n")),
-                      0);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%P|%t) select timed out, shutting down\n")),
+                        0);
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) waiting for client to connect\n")));
@@ -119,17 +127,21 @@ Server (void *arg)
     // Enable non-blocking I/O.
     //
     if (Stream.enable (ACE_NONBLOCK))
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("(%P|%t) %p\n"),
-                         ACE_TEXT ("Stream.enable (ACE_NONBLOCK)")),
-                        0);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("(%P|%t) %p\n"),
+                           ACE_TEXT ("Stream.enable (ACE_NONBLOCK)")),
+                          0);
+      }
 
     unsigned char byte = BYTE_MESG;
 
     if (-1 == Stream.send_n (&byte, 1))
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) %p\n"),
-                  ACE_TEXT ("Stream.send_n")));
+      {
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("(%P|%t) %p\n"),
+                    ACE_TEXT ("Stream.send_n")));
+      }
 
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("(%P|%t) byte sent\n")));
@@ -138,19 +150,23 @@ Server (void *arg)
     // Abruptly terminate the association.
     //
     if (-1 == Stream.abort ())
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) %p\n"),
-                  ACE_TEXT ("Association.abort")));
+      {
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("(%P|%t) %p\n"),
+                    ACE_TEXT ("Association.abort")));
+      }
 
     //
     // Negative test: make sure that we cannot send on a closed association.
     //
     if (-1 != Stream.send_n (&byte, 1))
-      //FUZZ: disable check_for_lack_ACE_OS
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) Negative test fail: Association")
-                  ACE_TEXT(".send_n succeeded after abort()\n")));
-      //FUZZ: enable check_for_lack_ACE_OS
+      {
+        //FUZZ: disable check_for_lack_ACE_OS
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("(%P|%t) Negative test fail: Association")
+                    ACE_TEXT (".send_n succeeded after abort()\n")));
+        //FUZZ: enable check_for_lack_ACE_OS
+      }
 
   }
 
@@ -158,9 +174,11 @@ Server (void *arg)
   // Close server socket.
   //
   if (-1 == AcceptorSocket->close ())
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("(%P|%t) %p\n"),
-                ACE_TEXT ("AcceptorSocket.close")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%P|%t) %p\n"),
+                  ACE_TEXT ("AcceptorSocket.close")));
+    }
 
   return ACE_THR_FUNC_RETURN_NULL;
 }
@@ -182,7 +200,7 @@ Client(void *arg)
 
   if (-1 == Connector.connect (Stream,
                                *ServerAddr,
-                               &tv,
+                               std::addressof (tv),
                                ACE_Addr::sap_any,
                                1))
   {
@@ -201,8 +219,7 @@ Client(void *arg)
                 ACE_TEXT ("Association.disable (ACE_NONBLOCK)")));
   }
 
-
-  if (-1 == Stream.recv_n (&b, 1, &tv, &bytes))
+  if (-1 == Stream.recv_n (&b, 1, std::addressof (tv), &bytes))
   {
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("(%P|%t) %p\n"),
@@ -210,13 +227,17 @@ Client(void *arg)
   }
 
   if (1 == bytes)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%P|%t) Client received %B bytes\n"),
-                bytes));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%P|%t) Client received %B bytes\n"),
+                  bytes));
+    }
   else
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("(%P|%t) Client received %B bytes; expected 1\n"),
-                bytes));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%P|%t) Client received %B bytes; expected 1\n"),
+                  bytes));
+    }
 
   //
   // Give server a little time to abort the association.
@@ -225,12 +246,14 @@ Client(void *arg)
 
   // abort closes the connection, so the recv should either see a closed
   // socket or some failure other than a timeout.
-  ssize_t cnt = Stream.recv_n (&b, 1, &tv, &bytes);
+  ssize_t const cnt = Stream.recv_n (&b, 1, std::addressof (tv), &bytes);
   if (cnt > 0 || (cnt == -1 && errno == ETIME))
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("(%P|%t) Negative test failed; Association")
-                ACE_TEXT (".recv_n returned %b (w/ %m) after abort\n"),
-                cnt));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%P|%t) Negative test failed; Association")
+                  ACE_TEXT (".recv_n returned %b (w/ %m) after abort\n"),
+                  cnt));
+    }
 
   return ACE_THR_FUNC_RETURN_NULL;
 }
@@ -249,7 +272,7 @@ spawn_test(bool ipv6_test)
 
   ACE_SOCK_SEQPACK_Acceptor AcceptorSocket;
 
-  const ACE_TCHAR *addrstr =
+  ACE_TCHAR const *addrstr =
 #ifdef ACE_HAS_IPV6
     ipv6_test ? ACE_IPV6_LOCALHOST : ACE_LOCALHOST;
 #else
@@ -348,7 +371,7 @@ int run_main (int, ACE_TCHAR *[])
   // If not, just pass because there is not a hope of testing
   // SOCK_SEQPACK.
   //
-  int status = 0;
+  int const status = 0;
 
 #ifdef ACE_HAS_SCTP
   status = do_test();

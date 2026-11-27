@@ -17,6 +17,9 @@
 
 #include "ace/OS_NS_sys_sendfile.h"
 
+#include <cstring>
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_IIOP_Transport::TAO_IIOP_Transport (TAO_IIOP_Connection_Handler *handler,
@@ -44,14 +47,16 @@ TAO_IIOP_Transport::connection_handler_i ()
 ssize_t
 TAO_IIOP_Transport::send (iovec *iov, int iovcnt,
                           size_t &bytes_transferred,
-                          const ACE_Time_Value *max_wait_time)
+                          ACE_Time_Value const *max_wait_time)
 {
   ssize_t const retval =
     this->connection_handler_->peer ().sendv (iov,
                                               iovcnt,
                                               max_wait_time);
   if (retval > 0)
-    bytes_transferred = retval;
+    {
+      bytes_transferred = retval;
+    }
   else
     {
       if (TAO_debug_level > 4)
@@ -68,8 +73,8 @@ TAO_IIOP_Transport::send (iovec *iov, int iovcnt,
 
 #if TAO_HAS_SENDFILE == 1
 ssize_t
-TAO_IIOP_Transport::sendfile (TAO_MMAP_Allocator * allocator,
-                              iovec * iov,
+TAO_IIOP_Transport::sendfile (TAO_MMAP_Allocator *allocator,
+                              iovec *iov,
                               int iovcnt,
                               size_t &bytes_transferred,
                               TAO::Transport::Drain_Constraints const & dc)
@@ -81,7 +86,9 @@ TAO_IIOP_Transport::sendfile (TAO_MMAP_Allocator * allocator,
   // If we don't have an allocator, fallback to the regular way of sending
   // data
   if (allocator == nullptr)
-    return this->send (iov, iovcnt, bytes_transferred, this->io_timeout(dc));
+    {
+      return this->send (iov, iovcnt, bytes_transferred, this->io_timeout(dc));
+    }
 
   // We can only use sendfile when all data is coming from the mmap allocator,
   // if not, we just fallback to to the regular way of sending data
@@ -90,8 +97,10 @@ TAO_IIOP_Transport::sendfile (TAO_MMAP_Allocator * allocator,
   for (iovec * index = off_check_begin; index != off_check_end; ++index)
     {
       if (-1 == allocator->offset (index->iov_base))
-        return this->send (iov, iovcnt, bytes_transferred,
-                           this->io_timeout(dc));
+        {
+          return this->send (iov, iovcnt, bytes_transferred,
+                             this->io_timeout (dc));
+        }
     }
 
   ssize_t retval = -1;
@@ -99,7 +108,9 @@ TAO_IIOP_Transport::sendfile (TAO_MMAP_Allocator * allocator,
   ACE_HANDLE const in_fd = allocator->handle ();
 
   if (in_fd == ACE_INVALID_HANDLE)
-    return retval;
+    {
+      return retval;
+    }
 
   ACE_HANDLE const out_fd =
     this->connection_handler_->peer ().get_handle ();
@@ -112,10 +123,12 @@ TAO_IIOP_Transport::sendfile (TAO_MMAP_Allocator * allocator,
 
       if (this->io_timeout(dc))
         {
-          int val = 0;
+          int val {};
           if (ACE::enter_send_timedwait (out_fd,
                                          this->io_timeout(dc), val) == -1)
-            return retval;
+            {
+              return retval;
+            }
           else
             {
               retval =
@@ -129,7 +142,9 @@ TAO_IIOP_Transport::sendfile (TAO_MMAP_Allocator * allocator,
         }
 
       if (retval <= 0)  // Report errors below.
-        break;
+        {
+          break;
+        }
 
       bytes_transferred += static_cast<size_t> (retval);
     }
@@ -150,7 +165,7 @@ TAO_IIOP_Transport::sendfile (TAO_MMAP_Allocator * allocator,
 ssize_t
 TAO_IIOP_Transport::recv (char *buf,
                           size_t len,
-                          const ACE_Time_Value *max_wait_time)
+                          ACE_Time_Value const *max_wait_time)
 {
   this->connection_closed_on_read_ = false;
 
@@ -173,7 +188,9 @@ TAO_IIOP_Transport::recv (char *buf,
   if (n == -1)
     {
       if (errno == EWOULDBLOCK)
+      {
         return 0;
+      }
 
       return -1;
     }
@@ -260,13 +277,17 @@ TAO_IIOP_Transport::tear_listen_point_list (TAO_InputCDR &cdr)
 {
   CORBA::Boolean byte_order;
   if (!(cdr >> ACE_InputCDR::to_boolean (byte_order)))
+  {
     return -1;
+  }
 
   cdr.reset_byte_order (static_cast<int> (byte_order));
 
   IIOP::ListenPointList listen_list;
   if (!(cdr >> listen_list))
+  {
     return -1;
+  }
 
   // As we have received a bidirectional information, set the flag to
   // 0 (i.e., non-originating side)
@@ -279,26 +300,24 @@ void
 TAO_IIOP_Transport::set_bidir_context_info (TAO_Operation_Details &opdetails)
 {
   // Get a handle to the acceptor registry
-  TAO_Acceptor_Registry &ar =
+  TAO_Acceptor_Registry const &ar =
     this->orb_core ()->lane_resources ().acceptor_registry ();
 
   IIOP::ListenPointList listen_point_list;
 
-  TAO_AcceptorSetIterator const end = ar.end ();
-
-  for (TAO_AcceptorSetIterator acceptor = ar.begin ();
-       acceptor != end;
-       ++acceptor)
+  for (std::unique_ptr<TAO_Acceptor> const &acceptor : ar.acceptors ())
     {
       // Check whether it is an IIOP acceptor
-      if ((*acceptor)->tag () == this->tag ())
+      if (acceptor->tag () == this->tag ())
         {
-          if (this->get_listen_point (listen_point_list, *acceptor) == -1)
+          if (this->get_listen_point (listen_point_list, acceptor.get ()) == -1)
             {
               if (TAO_debug_level > 0)
-                TAOLIB_ERROR ((LM_ERROR,
-                            "TAO (%P|%t) - IIOP_Transport::set_bidir_context_info, "
-                            "error getting listen_point\n"));
+                {
+                  TAOLIB_ERROR ((LM_ERROR,
+                                 "TAO (%P|%t) - IIOP_Transport::set_bidir_context_info, "
+                                 "error getting listen_point\n"));
+                }
 
               return;
             }
@@ -308,10 +327,12 @@ TAO_IIOP_Transport::set_bidir_context_info (TAO_Operation_Details &opdetails)
   if (listen_point_list.length () == 0)
     {
       if (TAO_debug_level > 0)
-        TAOLIB_ERROR ((LM_ERROR,
-                    "TAO (%P|%t) - IIOP_Transport::set_bidir_context_info, "
-                    "listen_point list is empty, client should send a list "
-                    "with at least one point\n"));
+        {
+          TAOLIB_ERROR ((LM_ERROR,
+                         "TAO (%P|%t) - IIOP_Transport::set_bidir_context_info, "
+                         "listen_point list is empty, client should send a list "
+                         "with at least one point\n"));
+        }
 
       return;
     }
@@ -323,7 +344,9 @@ TAO_IIOP_Transport::set_bidir_context_info (TAO_Operation_Details &opdetails)
   // Marshal the information into the stream
   if (!(cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER))
       || (!(cdr << listen_point_list)))
+  {
     return;
+  }
 
   // Add this info in to the svc_list
   opdetails.request_service_context ().set_context (IOP::BI_DIR_IIOP, cdr);
@@ -340,12 +363,14 @@ TAO_IIOP_Transport::get_listen_point (
     dynamic_cast<TAO_IIOP_Acceptor *> (acceptor);
 
   if (iiop_acceptor == nullptr)
+  {
     return -1;
+  }
 
   // Get the array of endpoints serviced by TAO_IIOP_Acceptor
-  const ACE_INET_Addr *endpoint_addr =
+  ACE_INET_Addr const *endpoint_addr =
     iiop_acceptor->endpoints ();
-  size_t count = iiop_acceptor->endpoint_count ();
+  size_t const count = iiop_acceptor->endpoint_count ();
 
 #if defined (TAO_USE_BROKEN_BIDIR)
 
@@ -363,7 +388,7 @@ TAO_IIOP_Transport::get_listen_point (
     }
 #endif /* TAO_USE_BROKEN_BIDIR */
 
-  for (size_t index = 0; index < count; index++)
+  for (size_t index {}; index < count; ++index)
     {
 #if defined (TAO_USE_BROKEN_BIDIR)
       // Make sure port numbers are equal so the following comparison
@@ -371,7 +396,9 @@ TAO_IIOP_Transport::get_listen_point (
       local_addr.set_port_number (endpoint_addr[index].get_port_number ());
 
       if (local_addr != endpoint_addr[index])
-        continue;
+        {
+          continue;
+        }
 #endif /* TAO_USE_BROKEN_BIDIR */
 
       // Get the local address of the connection
@@ -391,11 +418,11 @@ TAO_IIOP_Transport::get_listen_point (
 #if defined (ACE_HAS_IPV6)
       // If this is an IPv6 decimal linklocal address containing a scopeid than
       // remove the scopeid from the information being sent.
-      char const *cp_scope = nullptr;
+      char const *cp_scope {};
       if (endpoint_addr[index].get_type () == PF_INET6 &&
-          (cp_scope = ACE_OS::strchr (interface_name.in (), '%')) != nullptr)
+          (cp_scope = std::strchr (interface_name.in (), '%')) != nullptr)
         {
-          CORBA::ULong len = cp_scope - interface_name.in ();
+          CORBA::ULong const len = cp_scope - interface_name.in ();
           interface_name[len] = '\0';
         }
 #endif /* ACE_HAS_IPV6 */
@@ -415,8 +442,8 @@ TAO_IIOP_Transport::get_listen_point (
       if (TAO_debug_level >= 5)
         {
           TAOLIB_DEBUG ((LM_DEBUG,
-                      ACE_TEXT("TAO (%P|%t) - Listen_Point_List[%d] = <%C:%d>\n"),
-                      len,
+                      ACE_TEXT("TAO (%P|%t) - Listen_Point_List[%u] = <%C:%d>\n"),
+                      static_cast<unsigned int> (len),
                       point.host.in (),
                       point.port));
         }

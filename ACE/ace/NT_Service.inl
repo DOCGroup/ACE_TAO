@@ -1,4 +1,3 @@
-// -*- C++ -*-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
@@ -21,10 +20,9 @@ ACE_NT_Service::ACE_NT_Service (DWORD start_timeout,
   svc_status_.dwWaitHint = 0;
 }
 
-
 ACE_INLINE
-ACE_NT_Service::ACE_NT_Service (const ACE_TCHAR *name,
-                                const ACE_TCHAR *desc,
+ACE_NT_Service::ACE_NT_Service (ACE_TCHAR const *name,
+                                ACE_TCHAR const *desc,
                                 DWORD start_timeout,
                                 DWORD service_type,
                                 DWORD controls_mask) :
@@ -43,37 +41,35 @@ ACE_NT_Service::ACE_NT_Service (const ACE_TCHAR *name,
   svc_status_.dwCheckPoint = 0;
 }
 
-
 ACE_INLINE int
 ACE_NT_Service::svc ()
 {
   return -1;
 }
 
-
 ACE_INLINE
-const ACE_TCHAR *
+ACE_TCHAR const *
 ACE_NT_Service::name () const
 {
   return name_;
 }
 
 ACE_INLINE
-const ACE_TCHAR *
+ACE_TCHAR const *
 ACE_NT_Service::desc () const
 {
   return desc_;
 }
 
 ACE_INLINE
-const ACE_TCHAR *
+ACE_TCHAR const *
 ACE_NT_Service::host () const
 {
   return host_;
 }
 
 ACE_INLINE void
-ACE_NT_Service::svc_handle(const SERVICE_STATUS_HANDLE new_svc_handle)
+ACE_NT_Service::svc_handle(SERVICE_STATUS_HANDLE const new_svc_handle)
 {
   this->svc_handle_ = new_svc_handle;
   return;

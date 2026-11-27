@@ -1,13 +1,9 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   Lib_Find.h
  *
  *  All the static function calls needed to search and open shared
  *  libraries.
  */
-//=============================================================================
 
 #ifndef ACE_LIB_FIND_H
 #define ACE_LIB_FIND_H
@@ -21,7 +17,8 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE
 {
-  // = Methods for searching and opening shared libraries.
+  /// @name Shared library and temporary-file operations
+  /// @{
 
   /**
    * Finds the file @a filename either using an absolute path or using
@@ -33,7 +30,7 @@ namespace ACE
    * prefix (e.g., "lib" on UNIX and "" on Win32) if the @a filename
    * doesn't match directly.
    */
-  extern ACE_Export int ldfind (const ACE_TCHAR* filename,
+  extern ACE_Export int ldfind (ACE_TCHAR const * filename,
                                 ACE_TCHAR pathname[],
                                 size_t maxpathnamelen);
 
@@ -42,17 +39,17 @@ namespace ACE
    * returns a pointer to the file, else it returns a NULL
    * pointer. @a type specifies how the file should be open.
    */
-  extern ACE_Export FILE *ldopen (const ACE_TCHAR *filename,
-                                  const ACE_TCHAR *type);
+  extern ACE_Export FILE *ldopen (ACE_TCHAR const *filename,
+                                  ACE_TCHAR const *type);
 
   /**
    * Transforms @a entry_point into a form that can be located in a
-   * dynamic library using <dlsym>. For example, with Win32/Borland
+   * dynamic library using @c dlsym. For example, with Win32/Borland
    * extern "C" functions which use the default calling convention
    * have a '_' prepended. Always returns a buffer that has been
-   * dynamically allocated using <operator new>.
+   * dynamically allocated using @c operator new.
    */
-  extern ACE_Export ACE_TCHAR *ldname (const ACE_TCHAR *entry_point);
+  extern ACE_Export ACE_TCHAR *ldname (ACE_TCHAR const *entry_point);
 
   /**
    * Returns the temporary directory including the trailing slash in
@@ -63,9 +60,10 @@ namespace ACE
 
   /// Opening the temp file.  File is automagically unlinked when it is
   /// closed.  This is useful for have temp files.
-  extern ACE_Export ACE_HANDLE open_temp_file (const ACE_TCHAR *name,
+  extern ACE_Export ACE_HANDLE open_temp_file (ACE_TCHAR const *name,
                                                int mode,
                                                int perm = 0);
+  /// @}
 
   // @@ Though the following functions don't come under the same category as
   // above, these are used only in the functions in this class. So it makes
@@ -83,7 +81,7 @@ namespace ACE
    * it returns pieces one at a time instead of into an array.
    */
   extern ACE_Export char *strsplit_r (char *s,
-                                      const char *token,
+                                      char const *token,
                                       char *&next_start);
 
 #if defined (ACE_HAS_WCHAR)

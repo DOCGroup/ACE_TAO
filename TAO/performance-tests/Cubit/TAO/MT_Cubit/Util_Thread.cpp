@@ -5,8 +5,6 @@
 Util_Thread::Util_Thread (Task_State *ts,
                           ACE_Thread_Manager *thr_mgr)
   : ACE_Task<ACE_NULL_SYNCH> (thr_mgr),
-    done_ (0),
-    number_of_computations_ (0),
     ts_ (ts)
 {
 }
@@ -19,7 +17,9 @@ Util_Thread::svc ()
   int prio;
 
   if (ACE_OS::thr_getprio (thr_handle, prio) == -1)
+  {
     return -1;
+  }
 
   ACE_DEBUG ((LM_DEBUG,
               "(%t) Utilization Thread created with priority %d, "
@@ -88,7 +88,7 @@ Util_Thread::run_computations ()
         }
 
       this->computation ();
-      this->number_of_computations_++;
+      ++this->number_of_computations_;
     }
 
   return 0;

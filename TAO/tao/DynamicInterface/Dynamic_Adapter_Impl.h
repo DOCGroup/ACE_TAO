@@ -1,7 +1,3 @@
-// -*- C++ -*-
-
-
-//=============================================================================
 /**
  *  @file    Dynamic_Adapter_Impl.h
  *
@@ -9,8 +5,6 @@
  *
  *  @author  Jeff Parsons <parsons@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_DYNAMIC_ADAPTER_IMPL_H
 #define TAO_DYNAMIC_ADAPTER_IMPL_H
@@ -40,9 +34,9 @@ class TAO_DynamicInterface_Export TAO_Dynamic_Adapter_Impl
 {
 public:
   TAO_Dynamic_Adapter_Impl () = default;
-  ~TAO_Dynamic_Adapter_Impl () override;
+  ~TAO_Dynamic_Adapter_Impl () override = default;
 
-  // CORBA::Object::_create_request and CORBA::Object::_request.
+  /// CORBA::Object::_create_request and CORBA::Object::_request.
 
   void create_request (CORBA::Object_ptr obj,
                        CORBA::ORB_ptr orb,
@@ -57,7 +51,7 @@ public:
                               CORBA::ORB_ptr orb,
                               char const* op) override;
 
-  // CORBA::is_nil and CORBA::release for Context, Request, and ServerRequest.
+  /// CORBA::is_nil and CORBA::release for Context, Request, and ServerRequest.
 
   CORBA::Boolean context_is_nil (CORBA::Context_ptr ctx) override;
 
@@ -71,11 +65,11 @@ public:
 
   void server_request_release (CORBA::ServerRequest_ptr req) override;
 
-  // CORBA::ORB::create_exception_list.
+  /// CORBA::ORB::create_exception_list.
 
   void create_exception_list (CORBA::ExceptionList_ptr &list) override;
 
-  // Used to force the initialization of the ORB code.
+  /// Used to force the initialization of the ORB code.
   static int Initializer ();
 };
 

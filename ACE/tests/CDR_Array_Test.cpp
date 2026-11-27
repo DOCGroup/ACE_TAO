@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    CDR_Array_Test.cpp
  *
@@ -12,8 +10,6 @@
  *
  *  @author Cristian Ferretti <cristian_ferretti@yahoo.com>
  */
-//=============================================================================
-
 
 // For measuring time, choose your method:
 // Define:
@@ -43,10 +39,12 @@
 #include "ace/High_Res_Timer.h"
 #include "ace/ACE.h"
 
+#include <memory>
+#include <new>
+
 #if defined(USE_GETRUSAGE) && !defined(ACE_HAS_GETRUSAGE)
 #error "Can't define USE_GETRUSAGE on this platform."
 #endif
-
 
 // Default number of elements for check buffer, for each tested CDR type.
 // Be aware that time will be affected by the buffer fitting/not fitting
@@ -67,8 +65,8 @@ static constexpr int default_niter = 10;
 //
 class Crono {
 public:
-  Crono() {}
-  ~Crono() {}
+  Crono() = default;
+  ~Crono() = default;
   void start ()
     {
 #if defined(USE_CLOCK)
@@ -140,7 +138,7 @@ public:
                        int src_offset = 0, int dst_offset = 0);
   ~CDR_Test ();
 
-  static void ttoh (const T& t, char* s);
+  static void ttoh (T const & t, char* s);
   static T checkval(int i);
 
 private:
@@ -182,32 +180,27 @@ CDR_Test<T, H>::CDR_Test (int total, int niter, int use_array)
       return;
     }
 
-  char* srcbuf;
-  char* dstbuf;
-  {
-    const size_t stotal =
-      (total + 10) * H::size () + sizeof(ACE_UINT32) + ACE_CDR::MAX_ALIGNMENT;
+  size_t const stotal =
+    (total + 10) * H::size () + sizeof(ACE_UINT32) + ACE_CDR::MAX_ALIGNMENT;
+  std::unique_ptr<char[]> const srcbuf (new (std::nothrow) char[stotal]);
+  if (!srcbuf)
+    {
+      memabort ();
+    }
+  zero (srcbuf.get (), stotal);
 
-    ACE_NEW(srcbuf, char[stotal]);
-    if (srcbuf == nullptr)
-      {
-        memabort ();
-      }
-    zero(srcbuf, stotal);
-
-    ACE_NEW(dstbuf, char[stotal]);
-    if (dstbuf == nullptr)
-      {
-        memabort ();
-      }
-    zero(dstbuf, stotal);
-  }
+  std::unique_ptr<char[]> const dstbuf (new (std::nothrow) char[stotal]);
+  if (!dstbuf)
+    {
+      memabort ();
+    }
+  zero (dstbuf.get (), stotal);
 
   if (use_array)
     {
       // We want to test all the possible loop unrolling deltas.
       int t;
-      for (t = total - 3; t <= total; t++)
+      for (t = total - 3; t <= total; ++t)
         {
           int delta;
           if (sizeof(long) <= H::size ())
@@ -222,15 +215,15 @@ CDR_Test<T, H>::CDR_Test (int total, int niter, int use_array)
           // We want to test all the posible source/destination buffer
           // alignment combinations.
           int sk;
-          for (sk = 0; sk < delta; sk++)
+          for (sk = 0; sk < delta; ++sk)
             {
               int dk;
-              for (dk = 0; dk < delta; dk++)
+              for (dk = 0; dk < delta; ++dk)
                 {
-                  int tdelta = t - mymax(sk, dk);
+                  int const tdelta = t - mymax(sk, dk);
 
                   CDR_Test<T, H>::do_test(tdelta, niter, 1,
-                                          srcbuf, dstbuf,
+                                          srcbuf.get (), dstbuf.get (),
                                           sk, dk);
                 }
             }
@@ -238,11 +231,8 @@ CDR_Test<T, H>::CDR_Test (int total, int niter, int use_array)
     }
   else
     {
-      do_test(total, niter, use_array, srcbuf, dstbuf);
+      do_test(total, niter, use_array, srcbuf.get (), dstbuf.get ());
     }
-
-  delete[] srcbuf;
-  delete[] dstbuf;
 }
 
 // Generate an ``interesting'' value for testing at pos >i<.
@@ -260,7 +250,7 @@ CDR_Test<T, H>::checkval (int i)
       T v;
       unsigned char* s = reinterpret_cast<unsigned char*> ((&v));
       unsigned int j;
-      for (j = 0; j < H::size (); j++)
+      for (j = 0; j < H::size (); ++j)
         {
           s[j] = (unsigned char) ((j + i * H::size ()) % 256);
         }
@@ -279,12 +269,12 @@ CDR_Test<T, H>::checkval (int i)
 //       s = "ddccbbaa" for little endian machines.
 //
 template<class T, class H> void
-CDR_Test<T, H>::ttoh (const T& t, char* s)
+CDR_Test<T, H>::ttoh (T const & t, char* s)
 {
   const unsigned char *const p =
     reinterpret_cast<const unsigned char*> (&t);
 
-  static char digits[16] = {
+  static char const digits[16] = {
     '0', '1', '2', '3',
     '4', '5', '6', '7',
     '8', '9', 'a', 'b',
@@ -294,7 +284,7 @@ CDR_Test<T, H>::ttoh (const T& t, char* s)
   const unsigned char* q;
   for (q = p; q < p + H::size (); ++q)
     {
-      int k = *q;
+      int const k = *q;
       *s++ = digits[ k >> 4 ];
       *s++ = digits[ k & 15 ];
     }
@@ -326,7 +316,7 @@ check_seal (char* pos)
 // returns the alignment of ptr, wrt ACE_CDR::MAX_ALIGNMENT.
 //
 int
-tellalign (const char* const ptr)
+tellalign (char const * const ptr)
 {
   int align = ACE_CDR::MAX_ALIGNMENT;
   while (ptr != ACE_ptr_align_binary(ptr, align))
@@ -354,10 +344,9 @@ CDR_Test<T, H>::do_test (int total, int niter, int use_array,
              total,
              ((use_array) ? ACE_TEXT( "" ) : ACE_TEXT( "not " ))));
 
-
   if (!use_array && (total % 4) != 0)
     {
-      int lasttotal = total;
+      int const lasttotal = total;
       total -= (total % 4);
       ACE_DEBUG((LM_DEBUG,
                  ACE_TEXT( "Rounding from %d to %d elements.\n" ),
@@ -372,7 +361,7 @@ CDR_Test<T, H>::do_test (int total, int niter, int use_array,
 
   {
     int i;
-    for (i = 0; i < total; i++)
+    for (i = 0; i < total; ++i)
       {
         idata[i] = CDR_Test<T, H>::checkval (i);
       }
@@ -381,15 +370,15 @@ CDR_Test<T, H>::do_test (int total, int niter, int use_array,
   ACE_DEBUG((LM_DEBUG,
              ACE_TEXT( "Writing data...\n" )));
 
-  char* toread = nullptr;
+  char* toread {};
   {
     ACE_TEST_ASSERT(use_array || total % 4 == 0);
 
     double totalsecs = 0.0;
     int n;
-    for (n = 0; n < niter; n++)
+    for (n = 0; n < niter; ++n)
       {
-        size_t size = H::size () * (dst_offset + total) +
+        size_t const size = H::size () * (dst_offset + total) +
                       ACE_CDR::MAX_ALIGNMENT;
         ACE_OutputCDR os (dstbuf, size);
 
@@ -403,7 +392,7 @@ CDR_Test<T, H>::do_test (int total, int niter, int use_array,
           {
             {
               int i;
-              for (i = 0; i < dst_offset; i++)
+              for (i = 0; i < dst_offset; ++i)
                 {
                   os << T(0);
                 }
@@ -426,7 +415,7 @@ CDR_Test<T, H>::do_test (int total, int niter, int use_array,
         else
           {
             int i = 0;
-            for (; i < dst_offset; i++)
+            for (; i < dst_offset; ++i)
               {
                 os << T(0);
               }
@@ -476,7 +465,7 @@ CDR_Test<T, H>::do_test (int total, int niter, int use_array,
 
   {
     int i;
-    for (i = 0; i < total; i++)
+    for (i = 0; i < total; ++i)
       {
         idata[i] = 0;
       }
@@ -490,11 +479,11 @@ CDR_Test<T, H>::do_test (int total, int niter, int use_array,
   {
     double totalsecs = 0.0;
     int n;
-    for (n = 0; n < niter; n++)
+    for (n = 0; n < niter; ++n)
       {
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("====== Read iteration %d\n"), n));
 
-        size_t size = (total + dst_offset) * H::size ();
+        size_t const size = (total + dst_offset) * H::size ();
         ACE_InputCDR is (toread, size, opposite_byte_order);
 
         // This is intrusive...
@@ -507,7 +496,7 @@ CDR_Test<T, H>::do_test (int total, int niter, int use_array,
           {
             {
               int i;
-              for (i = 0; i < dst_offset; i++)
+              for (i = 0; i < dst_offset; ++i)
                 {
                   T v;
                   is >> v;
@@ -533,7 +522,7 @@ CDR_Test<T, H>::do_test (int total, int niter, int use_array,
             // set to 0.
             H::read_array (is, idata, 10 * total);
 
-            if (is.good_bit () != 0)
+            if (is.good_bit ())
               {
                 ACE_ERROR ((LM_ERROR,
                             ACE_TEXT ("Test for good bit failed in %s Array_test\n"),
@@ -554,7 +543,7 @@ CDR_Test<T, H>::do_test (int total, int niter, int use_array,
                 CDR_Test<T,H>::ttoh (v, rs);
                 ACE_DEBUG ((LM_DEBUG, "Read idata[%d] = %s\n", i, rs));
                 idata[i] = v;
-                i++;
+                ++i;
 #else
                 is >> idata[i++];
                 is >> idata[i++];
@@ -593,11 +582,11 @@ CDR_Test<T, H>::do_test (int total, int niter, int use_array,
 
   {
     int i;
-    for (i = 0; i < total; i++)
+    for (i = 0; i < total; ++i)
       {
         T rv;
 
-        const char* src = reinterpret_cast<const char*> ((idata + i));
+        char const * src = reinterpret_cast<char const *> ((idata + i));
         char* dst = reinterpret_cast<char*> ((&rv));
 
         H::swap(src, dst);
@@ -619,7 +608,7 @@ CDR_Test<T, H>::do_test (int total, int niter, int use_array,
                        ACE_TEXT ( "Wrong value at pos %d:" )
                        ACE_TEXT ( " '%C' should be '%C'.\n" ),
                        i, rs, cs));
-            errors++;
+            ++errors;
             if (errors == maxerrors)
               {
                 ACE_ERROR((LM_ERROR,
@@ -646,9 +635,7 @@ CDR_Test<T, H>::do_test (int total, int niter, int use_array,
 }
 
 template <class T, class N>
-CDR_Test<T, N>::~CDR_Test ()
-{
-}
+CDR_Test<T, N>::~CDR_Test () = default;
 
 //
 // Helper Clases for the second template parameter of CDR_Test.
@@ -657,7 +644,7 @@ CDR_Test<T, N>::~CDR_Test ()
 
 struct DoubleHelper
 {
-  static const ACE_TCHAR* name ()
+  static ACE_TCHAR const * name ()
     {
       return ACE_TEXT ("CDR::Double");
     }
@@ -677,7 +664,7 @@ struct DoubleHelper
     {
       os.write_double_array (x, n);
     }
-  static void swap (const char *src, char *dst)
+  static void swap (char const *src, char *dst)
     {
       ACE_CDR::swap_8 (src, dst);
     }
@@ -689,7 +676,7 @@ struct DoubleHelper
 
 struct FloatHelper
 {
-  static const ACE_TCHAR* name ()
+  static ACE_TCHAR const * name ()
     {
       return ACE_TEXT ("CDR::Float");
     }
@@ -709,7 +696,7 @@ struct FloatHelper
     {
       os.write_float_array (x, n);
     }
-  static void swap (const char *src, char *dst)
+  static void swap (char const *src, char *dst)
     {
       ACE_CDR::swap_4 (src, dst);
     }
@@ -721,7 +708,7 @@ struct FloatHelper
 
 struct ShortHelper
 {
-  static const ACE_TCHAR* name ()
+  static ACE_TCHAR const * name ()
     {
       return ACE_TEXT ("CDR::Short");
     }
@@ -741,7 +728,7 @@ struct ShortHelper
     {
       os.write_short_array (x, n);
     }
-  static void swap (const char *src, char *dst)
+  static void swap (char const *src, char *dst)
     {
       ACE_CDR::swap_2 (src, dst);
     }
@@ -753,7 +740,7 @@ struct ShortHelper
 
 struct LongHelper
 {
-  static const ACE_TCHAR* name ()
+  static ACE_TCHAR const * name ()
     {
       return ACE_TEXT ("CDR::Long");
     }
@@ -773,7 +760,7 @@ struct LongHelper
     {
       os.write_long_array (x, n);
     }
-  static void swap (const char *src, char *dst)
+  static void swap (char const *src, char *dst)
     {
       ACE_CDR::swap_4 (src, dst);
     }
@@ -785,7 +772,7 @@ struct LongHelper
 
 struct LongLongHelper
 {
-  static const ACE_TCHAR* name ()
+  static ACE_TCHAR const * name ()
     {
       return ACE_TEXT ("CDR::LongLong");
     }
@@ -806,7 +793,7 @@ struct LongLongHelper
       os.write_longlong_array (x, n);
     }
 
-  static void swap (const char *src, char *dst)
+  static void swap (char const *src, char *dst)
     {
       ACE_CDR::swap_8 (src, dst);
     }
@@ -818,7 +805,7 @@ struct LongLongHelper
 
 struct CharHelper
 {
-  static const ACE_TCHAR* name ()
+  static ACE_TCHAR const * name ()
     {
       return ACE_TEXT ("CDR::Char");
     }
@@ -838,7 +825,7 @@ struct CharHelper
     {
       os.write_char_array (x, n);
     }
-  static void swap (const char *src, char *dst)
+  static void swap (char const *src, char *dst)
     {
       *dst = *src;
     }
@@ -848,7 +835,7 @@ struct CharHelper
     }
 };
 
-void usage (const ACE_TCHAR* cmd)
+void usage (ACE_TCHAR const * cmd)
 {
   ACE_ERROR((LM_ERROR,
              ACE_TEXT ("Usage: %s ")
@@ -914,18 +901,18 @@ run_main (int argc, ACE_TCHAR *argv[])
     { 'n', &niter, validiters },
   };
 
-  int n = sizeof(opts)/sizeof(opts[0]);
+  int const n = sizeof(opts)/sizeof(opts[0]);
 
   int opt;
   while ((opt = get_opt ()) != EOF)
     {
       int got = 0;
       int i;
-      for (i = 0; i < n; i++)
+      for (i = 0; i < n; ++i)
         {
           if (opts[i].c == opt)
             {
-              int v = ACE_OS::atoi (get_opt.opt_arg ());
+              int const v = ACE_OS::atoi (get_opt.opt_arg ());
               if (!(opts[i].checkf) (v))
                 {
                   usage(ACE_TEXT("CDR_Array_Test"));
@@ -964,31 +951,31 @@ run_main (int argc, ACE_TCHAR *argv[])
     }
 
   int use_array;
-  for (use_array = 0; use_array < 2; use_array++)
+  for (use_array = 0; use_array < 2; ++use_array)
     {
       {
         CDR_Test<ACE_CDR::LongLong, LongLongHelper>
-          test (qtotal, niter, use_array);
+          const test (qtotal, niter, use_array);
       }
       {
         CDR_Test<ACE_CDR::Long, LongHelper>
-          test (wtotal, niter, use_array);
+          const test (wtotal, niter, use_array);
       }
       {
         CDR_Test<ACE_CDR::Short, ShortHelper>
-          test (htotal, niter, use_array);
+          const test (htotal, niter, use_array);
       }
       {
         CDR_Test<ACE_CDR::Char, CharHelper>
-          test (ctotal, niter, use_array);
+          const test (ctotal, niter, use_array);
       }
       {
         CDR_Test<ACE_CDR::Double, DoubleHelper>
-          test (dtotal, niter, use_array);
+          const test (dtotal, niter, use_array);
       }
       {
         CDR_Test<ACE_CDR::Float, FloatHelper>
-          test (ftotal, niter, use_array);
+          const test (ftotal, niter, use_array);
       }
     }
 

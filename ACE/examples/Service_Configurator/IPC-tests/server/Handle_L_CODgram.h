@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 // Handles UNIX datagram messages from local host.
 
 #ifndef _HANDLE_L_CODGRAM_H
@@ -22,18 +21,22 @@ class ACE_Svc_Export Handle_L_CODgram : public ACE_Service_Object, public ACE_LS
 {
 public:
   Handle_L_CODgram ();
-  virtual int init (int argc, ACE_TCHAR *argv[]);
-  virtual int info (ACE_TCHAR **, size_t) const;
-  virtual int fini ();
+  Handle_L_CODgram (Handle_L_CODgram const &) = delete;
+  Handle_L_CODgram (Handle_L_CODgram &&) = delete;
+  Handle_L_CODgram &operator= (Handle_L_CODgram const &) = delete;
+  Handle_L_CODgram &operator= (Handle_L_CODgram &&) = delete;
+  int init (int argc, ACE_TCHAR *argv[]) override;
+  int info (ACE_TCHAR **, size_t) const override;
+  int fini () override;
 
 public:
-  int open (const ACE_UNIX_Addr &suad, int async = 0);
-  virtual ACE_HANDLE get_handle () const;
-  virtual int handle_input (ACE_HANDLE);
-  virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask);
+  int open (ACE_UNIX_Addr const &suad, int async = 0);
+  ACE_HANDLE get_handle () const override;
+  int handle_input (ACE_HANDLE) override;
+  int handle_close (ACE_HANDLE, ACE_Reactor_Mask) override;
 
-  ACE_TCHAR rendezvous[MAXPATHLEN + 1];
-  static const ACE_TCHAR *DEFAULT_RENDEZVOUS;
+  ACE_TCHAR rendezvous[MAXPATHLEN + 1] {};
+  static ACE_TCHAR const *DEFAULT_RENDEZVOUS;
 };
 
 extern ACE_Service_Object_Type lc;

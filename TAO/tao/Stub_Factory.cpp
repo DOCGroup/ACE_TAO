@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/Stub_Factory.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

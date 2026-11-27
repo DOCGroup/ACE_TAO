@@ -22,7 +22,7 @@ namespace
   /*                                                               */
   /*****************************************************************/
 
-  const ACE_UINT32 crc_table[] =
+  ACE_UINT32 const crc_table[] =
     {
       0x00000000L, 0x77073096L, 0xEE0E612CL, 0x990951BAL,
       0x076DC419L, 0x706AF48FL, 0xE963A535L, 0x9E6495A3L,
@@ -101,11 +101,11 @@ namespace
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_UINT32
-ACE::crc32 (const char *string)
+ACE::crc32 (char const *string)
 {
   ACE_UINT32 crc = 0xFFFFFFFF;
 
-  for (const char *p = string;
+  for (char const *p = string;
        *p != 0;
        ++p)
     {
@@ -116,12 +116,12 @@ ACE::crc32 (const char *string)
 }
 
 ACE_UINT32
-ACE::crc32 (const void *buffer, size_t len, ACE_UINT32 crc)
+ACE::crc32 (void const *buffer, size_t len, ACE_UINT32 crc)
 {
   crc = ~crc;
 
-  for (const char *p = (const char *) buffer,
-                  *e = (const char *) buffer + len;
+  for (char const *p = static_cast<char const *> (buffer),
+                  *e = static_cast<char const *> (buffer) + len;
        p != e;
        ++p)
     {
@@ -132,17 +132,19 @@ ACE::crc32 (const void *buffer, size_t len, ACE_UINT32 crc)
 }
 
 ACE_UINT32
-ACE::crc32 (const iovec *iov, int len, ACE_UINT32 crc)
+ACE::crc32 (iovec const *iov, int len, ACE_UINT32 crc)
 {
   crc = ~crc;
 
   for (int i = 0; i < len; ++i)
     {
-      for (const char *p = (const char *) iov[i].iov_base,
-                      *e = (const char *) iov[i].iov_base + iov[i].iov_len;
+      for (char const *p = static_cast<char const *> (iov[i].iov_base),
+                      *e = static_cast<char const *> (iov[i].iov_base) + iov[i].iov_len;
            p != e;
            ++p)
-        COMPUTE (crc, *p);
+        {
+          COMPUTE (crc, *p);
+        }
     }
 
   return ~crc;

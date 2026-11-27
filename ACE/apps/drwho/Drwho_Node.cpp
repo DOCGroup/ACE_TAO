@@ -1,59 +1,46 @@
 #include "Drwho_Node.h"
 
-Drwho_Node::Drwho_Node (const char *h_name, Drwho_Node *n)
+Drwho_Node::Drwho_Node (char const *h_name, Drwho_Node *n)
      : key_name1_ (h_name),
-       key_name2_ (0),
-       tty_name_ (0),
-       idle_time_ (0),
-       active_count_ (0),
-       inactive_count_ (0),
        next_ (n)
 {}
 
-Drwho_Node::Drwho_Node ()
-     : key_name1_ (0),
-       key_name2_ (0),
-       tty_name_ (0),
-       idle_time_ (0),
-       active_count_ (0),
-       inactive_count_ (0),
-       next_ (0)
-{}
+Drwho_Node::Drwho_Node () = default;
 
-const char *
+char const *
 Drwho_Node::get_login_name ()
 {
   return this->key_name1_;
 }
 
-const char *
-Drwho_Node::set_login_name (const char *str)
+char const *
+Drwho_Node::set_login_name (char const *str)
 {
   this->key_name1_ = str;
   return str;
 }
 
-const char *
+char const *
 Drwho_Node::get_real_name ()
 {
   return this->key_name2_;
 }
 
-const char *
-Drwho_Node::set_real_name (const char *str)
+char const *
+Drwho_Node::set_real_name (char const *str)
 {
   this->key_name2_ = str;
   return str;
 }
 
-const char *
+char const *
 Drwho_Node::get_host_name ()
 {
   return this->key_name1_;
 }
 
-const char *
-Drwho_Node::set_host_name (const char *str)
+char const *
+Drwho_Node::set_host_name (char const *str)
 {
   this->key_name1_ = str;
   return str;

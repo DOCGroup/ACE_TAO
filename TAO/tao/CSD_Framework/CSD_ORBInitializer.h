@@ -1,13 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file CSD_ORBInitializer.h
  *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-//=============================================================================
-
 
 #ifndef TAO_CSD_ORB_INITIALIZER_H
 #define TAO_CSD_ORB_INITIALIZER_H
@@ -45,7 +40,6 @@ public:
 
   void post_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 
-private:
   TAO_CSD_ORBInitializer (TAO_CSD_ORBInitializer const &) = delete;
   TAO_CSD_ORBInitializer &operator= (TAO_CSD_ORBInitializer const &) = delete;
   TAO_CSD_ORBInitializer (TAO_CSD_ORBInitializer &&) = delete;

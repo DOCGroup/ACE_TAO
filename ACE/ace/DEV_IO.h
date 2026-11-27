@@ -1,13 +1,9 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
  *  @file    DEV_IO.h
  *
  *  @author Gerhard Lenzer
  *  @author Douglas C. Schmidt
  */
-//=============================================================================
 
 #ifndef ACE_DEV_IO_H
 #define ACE_DEV_IO_H
@@ -40,28 +36,30 @@ class ACE_Export ACE_DEV_IO : public ACE_DEV
 public:
   friend class ACE_DEV_Connector;
 
-  /// Default constructor.
   ACE_DEV_IO ();
 
-  // = Various send operations.
+  /// @name Send and receive operations
+  /// @{
+
   /// send upto @a n bytes in @a buf.
-  ssize_t send (const void *buf, size_t n) const;
+  ssize_t send (void const *buf, size_t n) const;
 
   /// Recv upto @a n bytes in @a buf.
   ssize_t recv (void *buf, size_t n) const;
 
   /// Send n bytes, keep trying until n are sent.
-  ssize_t send_n (const void *buf,
+  ssize_t send_n (void const *buf,
                   size_t n) const;
+  /// @}
 
   /**
-   * @name I/O operations
+   * I/O operations.
    *
-   * Notes on common parameters:
+   * @note Common parameters:
    *
    * @a buf is the buffer to write from or receive into.
    *
-   * @a len is the number of bytes to transfer.
+   * @a n is the number of bytes to transfer.
    *
    * The @a timeout parameter in the following methods indicates how
    * long to blocking trying to transfer data.  If @a timeout == 0,
@@ -94,8 +92,11 @@ public:
    */
   ssize_t recv_n (void *buf,
                   size_t n,
-                  const ACE_Time_Value *timeout = nullptr,
+                  ACE_Time_Value const *timeout = nullptr,
                   size_t *bytes_transferred = nullptr) const;
+
+  /// @name I/O operations
+  /// @{
 
 #if defined (ACE_HAS_STREAM_PIPES)
   /// Recv bytes via STREAM pipes using "band" mode.
@@ -105,8 +106,8 @@ public:
                 int *flags) const;
 
   /// Send bytes via STREAM pipes using "band" mode.
-  ssize_t send (const ACE_Str_Buf *cntl,
-                const ACE_Str_Buf *data,
+  ssize_t send (ACE_Str_Buf const *cntl,
+                ACE_Str_Buf const *data,
                 int band,
                 int flags) const;
 
@@ -116,27 +117,28 @@ public:
                 int *flags) const;
 
   /// Send @a cntl and @a data via STREAM pipes.
-  ssize_t send (const ACE_Str_Buf *cntl,
-                const ACE_Str_Buf *data,
+  ssize_t send (ACE_Str_Buf const *cntl,
+                ACE_Str_Buf const *data,
                 int flags = 0) const;
 #endif /* ACE_HAS_STREAM_PIPES */
 
-  /// Send iovecs via <::writev>.
+  /// Send iovecs via @c writev().
   ssize_t send (const iovec iov[], size_t n) const;
 
-  /// Recv iovecs via <::readv>.
+  /// Recv iovecs via @c readv().
   ssize_t recv (iovec iov[], size_t n) const;
 
   /**
-   * Send N char *ptrs and int lengths.  Note that the char *'s
-   * precede the ints (basically, an varargs version of writev).  The
-   * count N is the *total* number of trailing arguments, *not* a
+   * Send N char *ptrs and int lengths (a varargs version of @c writev()).
+   * The count N is the *total* number of trailing arguments, *not* a
    * couple of the number of tuple pairs!
+   *
+   * @note The char pointers precede the ints.
    */
   ssize_t send (size_t n, ...) const;
 
   /**
-   * This is an interface to ::readv, that doesn't use the struct
+   * This is an interface to @c readv(), that doesn't use the struct
    * iovec explicitly.  The ... can be passed as an arbitrary number
    * of (char *ptr, int len) tuples.  However, the count N is the
    * *total* number of trailing arguments, *not* a couple of the
@@ -145,28 +147,34 @@ public:
   ssize_t recv (size_t n, ...) const;
 
   /// Send @a n bytes via Win32 WriteFile using overlapped I/O.
-  ssize_t send (const void *buf, size_t n, ACE_OVERLAPPED *overlapped) const;
+  ssize_t send (void const *buf, size_t n, ACE_OVERLAPPED *overlapped) const;
 
   /// Recv @a n bytes via Win32 ReadFile using overlapped I/O.
   ssize_t recv (void *buf, size_t n, ACE_OVERLAPPED *overlapped) const;
+  /// @}
 
   /// Dump the state of an object.
   void dump () const;
 
-  // = The following two methods are no-ops to keep the
-  // ACE_Connector happy.
+  /// @name Connector compatibility accessors
+  /// These methods are no-ops to keep ACE_Connector happy.
+  /// @{
+
   /// Return the local endpoint address.
   int get_local_addr (ACE_DEV_Addr &) const;
 
   /// Return the address of the remotely connected peer (if there is
   /// one).
   int get_remote_addr (ACE_DEV_Addr &) const;
+  /// @}
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
-  // = Meta-type info
+  /// @name Meta-type traits
+  /// @{
   using PEER_ADDR = ACE_DEV_Addr;
+  /// @}
 
 private:
   /// Address of device we are connected to.

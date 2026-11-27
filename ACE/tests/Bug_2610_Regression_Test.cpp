@@ -18,6 +18,8 @@
 #include "ace/Trace.h"
 #include "ace/Thread_Semaphore.h"
 
+#include <memory>
+
 #if defined (ACE_HAS_THREADS)
 
 # define TEST_TRACE(X) ACE_Trace ____ (ACE_TEXT (X), __LINE__, ACE_TEXT (__FILE__))
@@ -65,7 +67,7 @@ protected:
   int accept_svc_handler (My_Svc_Handler *svc_handler) override
   {
     TEST_TRACE ("accept_svc_handler");
-    int rv = super::accept_svc_handler(svc_handler);
+    int const rv = super::accept_svc_handler(svc_handler);
     if (g_acceptor_accept_fails)
       {
         g_semaphore.release();
@@ -100,7 +102,7 @@ struct My_Task : public ACE_Task_Base
    {
      TEST_TRACE ("My_Task::svc");
      ACE_Reactor::instance()->owner(ACE_OS::thr_self());
-     int rv = ACE_Reactor::instance()->run_reactor_event_loop();
+     int const rv = ACE_Reactor::instance()->run_reactor_event_loop();
      if (rv < 0)
      {
        ACE_ERROR ((LM_ERROR,
@@ -114,7 +116,7 @@ struct My_Task : public ACE_Task_Base
 // event handler used to signal when the reactor started
 struct Timer_Handler : public ACE_Event_Handler
 {
-   int handle_timeout (const ACE_Time_Value&, const void*) override
+   int handle_timeout (ACE_Time_Value const &, void const *) override
    {
      g_semaphore.release(); // signal reactor started
      return 0;
@@ -133,10 +135,10 @@ run_main (int, ACE_TCHAR *[])
   My_Acceptor acceptor;
   Timer_Handler timer_handler;
   ACE_Reactor::instance()->schedule_timer(
-    &timer_handler, nullptr, ACE_Time_Value(0));
+    std::addressof (timer_handler), nullptr, ACE_Time_Value(0));
 
   My_Task task;
-  int activated = task.activate();
+  int const activated = task.activate();
   if (activated < 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -149,10 +151,10 @@ run_main (int, ACE_TCHAR *[])
   ACE_INET_Addr listen_addr;
   acceptor.acceptor ().get_local_addr (listen_addr);
 #if defined (ACE_HAS_IPV6)
-  const ACE_TCHAR *me =
+  ACE_TCHAR const *me =
     listen_addr.get_type () == PF_INET ? ACE_LOCALHOST : ACE_IPV6_LOCALHOST;
 #else
-  const ACE_TCHAR *me = ACE_LOCALHOST;
+  ACE_TCHAR const *me = ACE_LOCALHOST;
 #endif /* ACE_HAS_IPV6 */
   ACE_INET_Addr a1 (listen_addr.get_port_number (),
                     me,
@@ -186,7 +188,7 @@ run_main (int, ACE_TCHAR *[])
   }
 
   {
-    My_Svc_Handler* handler=nullptr;
+    My_Svc_Handler* handler{};
     My_Connector connector;
     connector.connect (handler, a1);
     ACE_Event_Handler_var safe_handler (handler);

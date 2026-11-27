@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   OS_NS_sys_msg.h
  *
@@ -8,7 +5,6 @@
  *  @author Jesper S. M|ller<stophph@diku.dk>
  *  @author and a cast of thousands...
  */
-//=============================================================================
 
 #ifndef ACE_OS_NS_SYS_MSG_H
 # define ACE_OS_NS_SYS_MSG_H
@@ -32,7 +28,8 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE_OS {
-  //@{ @name A set of wrappers for System V message queues.
+  /// @name A set of wrappers for System V message queues.
+  /// @{
   ACE_NAMESPACE_INLINE_FUNCTION
   int msgctl (int msqid,
               int cmd,
@@ -51,10 +48,10 @@ namespace ACE_OS {
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int msgsnd (int int_id,
-              const void *buf,
+              void const *buf,
               size_t len,
               int flags);
-  //@}
+  /// @}
 
 } /* namespace ACE_OS */
 

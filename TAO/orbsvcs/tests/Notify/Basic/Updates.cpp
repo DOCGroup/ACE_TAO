@@ -3,7 +3,6 @@
 #include "tao/debug.h"
 #include "Updates.h"
 
-
 Updates_StructuredPushConsumer::Updates_StructuredPushConsumer (Updates *test_client)
   : test_client_ (test_client)
 {
@@ -11,12 +10,13 @@ Updates_StructuredPushConsumer::Updates_StructuredPushConsumer (Updates *test_cl
 
 void
 Updates_StructuredPushConsumer::offer_change (
-        const CosNotification::EventTypeSeq & added,
-        const CosNotification::EventTypeSeq & removed
-      )
+        CosNotification::EventTypeSeq const &added,
+        CosNotification::EventTypeSeq const &removed)
 {
   if (TAO_debug_level)
+  {
     ACE_DEBUG ((LM_DEBUG, "StructuredPushConsumer::offer_change invoked:\n"));
+  }
   this->test_client_->types_changed (added, removed);
 }
 
@@ -27,18 +27,17 @@ Updates_StructuredPushSupplier::Updates_StructuredPushSupplier (Updates* test_cl
 {
 }
 
-Updates_StructuredPushSupplier::~Updates_StructuredPushSupplier ()
-{
-}
+Updates_StructuredPushSupplier::~Updates_StructuredPushSupplier () = default;
 
 void
 Updates_StructuredPushSupplier::subscription_change (
-    const CosNotification::EventTypeSeq & added,
-    const CosNotification::EventTypeSeq & removed
-  )
+    CosNotification::EventTypeSeq const &added,
+    CosNotification::EventTypeSeq const &removed)
 {
   if (TAO_debug_level)
+  {
     ACE_DEBUG ((LM_DEBUG, "StructuredPushSupplier::subscription_change invoked:\n"));
+  }
   this->test_client_->types_changed (added, removed);
 }
 
@@ -49,9 +48,7 @@ Updates::Updates ()
 {
 }
 
-Updates::~Updates ()
-{
-}
+Updates::~Updates () = default;
 
 int
 Updates::init (int argc,
@@ -108,8 +105,8 @@ Updates::create_EC ()
 }
 
 void
-Updates::types_changed (const CosNotification::EventTypeSeq & added,
-                        const CosNotification::EventTypeSeq & removed)
+Updates::types_changed (CosNotification::EventTypeSeq const &added,
+                        CosNotification::EventTypeSeq const &removed)
 {
   if (TAO_debug_level)
     {
@@ -127,16 +124,16 @@ Updates::types_changed (const CosNotification::EventTypeSeq & added,
 }
 
 void
-Updates::print_event_types (const CosNotification::EventTypeSeq &types)
+Updates::print_event_types (CosNotification::EventTypeSeq const &types)
 {
   for (CORBA::ULong i = 0; i < types.length (); ++i)
     {
-      ACE_DEBUG ((LM_DEBUG, "(%s, %s)\n", types[i].domain_name.in (), types[i].type_name. in()));
+      ACE_DEBUG ((LM_DEBUG, "(%C, %C)\n", types[i].domain_name.in (), types[i].type_name. in()));
     }
 }
 
 void
-Updates::add_type (CosNotification::EventTypeSeq& type_seq, const char* type)
+Updates::add_type (CosNotification::EventTypeSeq &type_seq, char const *type)
 {
   // Make space.
   int index = type_seq.length ();
@@ -149,11 +146,13 @@ Updates::add_type (CosNotification::EventTypeSeq& type_seq, const char* type)
 void
 Updates::wait_for_updates (int expected_added, int expected_removed)
 {
-  while (1)
+  while (true)
     {
       if (added_count_ == expected_added &&
           removed_count_ == expected_removed)
+      {
         break;
+      }
 
       ACE_Time_Value tv(0, 100 * 1000);
       orb_->run(tv);
@@ -174,7 +173,9 @@ Updates::run_test ()
   this->test_subscription_change ();
 
   if (TAO_debug_level)
+  {
     ACE_DEBUG ((LM_DEBUG, "Finished testing subscription_change!\n"));
+  }
 
   this->test_offer_change ();
 
@@ -419,7 +420,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       updates.run_test ();
     }
-  catch (const CORBA::SystemException& se)
+  catch (CORBA::SystemException const &se)
     {
       se._tao_print_exception ("Error: ");
       return 1;

@@ -1,16 +1,11 @@
-// -*- C++ -*-
 #include "orbsvcs/Security/SL2_EstablishTrustPolicy.h"
 #include "tao/ORB_Constants.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::Security::EstablishTrustPolicy::EstablishTrustPolicy (
-  const ::Security::EstablishTrust &trust)
+  ::Security::EstablishTrust const & trust)
   : trust_ (trust)
-{
-}
-
-TAO::Security::EstablishTrustPolicy::~EstablishTrustPolicy ()
 {
 }
 
@@ -23,7 +18,7 @@ TAO::Security::EstablishTrustPolicy::policy_type ()
 CORBA::Policy_ptr
 TAO::Security::EstablishTrustPolicy::copy ()
 {
-  TAO::Security::EstablishTrustPolicy *policy = nullptr;
+  TAO::Security::EstablishTrustPolicy *policy {};
   ACE_NEW_THROW_EX (policy,
                     TAO::Security::EstablishTrustPolicy (this->trust_),
                     CORBA::NO_MEMORY (

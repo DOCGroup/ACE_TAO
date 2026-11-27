@@ -7,7 +7,6 @@
 #include "ace/Argv_Type_Converter.h"
 #include "ace/Task.h"
 
-// Default Constructor.
 TAO_Naming_Service::TAO_Naming_Service () = default;
 
 // Constructor taking command-line arguments.
@@ -15,7 +14,6 @@ TAO_Naming_Service::TAO_Naming_Service (int argc, ACE_TCHAR * argv[])
 {
   this->init (argc, argv);
 }
-
 
 // Initialize the state of the TAO_Naming_Service object
 int
@@ -42,7 +40,9 @@ TAO_Naming_Service::init (int argc, ACE_TCHAR * argv[])
                                                                 this->orb_.in ());
 
       if (result == -1)
+      {
         return result;
+      }
     }
   catch (CORBA::Exception const &ex)
     {
@@ -67,7 +67,9 @@ TAO_Naming_Service::parse_args (int & argc, ACE_TCHAR * argv[])
           {
             int const time = ACE_OS::atoi (get_opts.opt_arg ());
             if (time >= 0)
+            {
               this->time_ = time;
+            }
 
             // Remove the option '-t' from argv []
             // to avoid any confusion that might result.
@@ -83,7 +85,9 @@ TAO_Naming_Service::parse_args (int & argc, ACE_TCHAR * argv[])
           {
             int const nt = ACE_OS::atoi (get_opts.opt_arg ());
             if (nt >= 1)
+            {
               this->num_threads_ = nt;
+            }
 
             // Remove the option '-n' from argv []
             // to avoid any confusion that might result.
@@ -116,6 +120,11 @@ public:
       time_(t)
   {}
 
+  ORB_Runner (ORB_Runner const &) = delete;
+  ORB_Runner (ORB_Runner &&) = delete;
+  ORB_Runner &operator= (ORB_Runner const &) = delete;
+  ORB_Runner &operator= (ORB_Runner &&) = delete;
+
   int svc () override
   {
   if (!CORBA::is_nil (orb_.in ()))
@@ -144,7 +153,9 @@ TAO_Naming_Service::run ()
 {
   ORB_Runner runner (this->orb_.in (), this->time_);
   if (this->num_threads_ == 1)
-    return runner.svc ();
+    {
+      return runner.svc ();
+    }
   else
     {
       int const grpid = runner.activate (THR_NEW_LWP | THR_JOINABLE | THR_INHERIT_SCHED,
@@ -191,5 +202,4 @@ TAO_Naming_Service::fini ()
   return 0;
 }
 
-// Destructor.
 TAO_Naming_Service::~TAO_Naming_Service () = default;

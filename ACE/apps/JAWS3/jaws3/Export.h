@@ -1,7 +1,6 @@
 // Definition for Win32 Export directives.
 // This file is generated automatically by
 // ${TAO_ROOT}/TAO_IDL/GenExportH.BAT
-// ------------------------------
 #ifndef JAWS_EXPORT_H
 #define JAWS_EXPORT_H
 

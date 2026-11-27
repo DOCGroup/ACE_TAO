@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   Storable_Base.inl
  *
@@ -8,7 +5,6 @@
  *  @author Chanaka Liyanaarachchi <chanaka@ociweb.com>
  *  @author Byron Harris <harrisb@ociweb.com>
  */
-//=============================================================================
 
 #include "tao/Storable_Base.h"
 
@@ -18,12 +14,6 @@ ACE_INLINE
 TAO::Storable_Base::Storable_Base (bool use_backup, bool retry_ebadf)
   : use_backup_ (use_backup)
   , retry_on_ebadf_ (retry_ebadf)
-  , state_ (goodbit)
-{
-}
-
-ACE_INLINE
-TAO::Storable_Base::~Storable_Base ()
 {
 }
 

@@ -8,27 +8,22 @@
 #include "orbsvcs/Time_Utilities.h"
 #include "ace/Get_Opt.h"
 #include "ace/Sched_Params.h"
-
+#include <memory>
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   EC_Schedule driver;
   return driver.run (argc, argv);
-}
-
-// ****************************************************************
-
-EC_Schedule::EC_Schedule ()
-  :  scheduler_impl_ (0)
-{
 }
 
 int
 EC_Schedule::parse_args (int& argc, ACE_TCHAR* argv[])
 {
   if (this->EC_Driver::parse_args (argc, argv) != 0)
-    return -1;
+    {
+      return -1;
+    }
 
   return 0;
 }
@@ -48,7 +43,7 @@ EC_Schedule::print_usage ()
 void
 EC_Schedule::initialize_ec_impl ()
 {
-  this->scheduler_impl_ = new ACE_Config_Scheduler;
+  this->scheduler_impl_ = std::make_unique<ACE_Config_Scheduler> ();
   this->scheduler_ = this->scheduler_impl_->_this ();
 
   this->EC_Driver::initialize_ec_impl ();
@@ -64,7 +59,7 @@ void
 EC_Schedule::cleanup_ec ()
 {
   this->EC_Driver::cleanup_ec ();
-  delete this->scheduler_impl_;
+  this->scheduler_impl_.reset ();
 }
 
 void

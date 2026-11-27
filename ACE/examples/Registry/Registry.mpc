@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*iterator) : aceexe, winregistry {
   exename = iterator
 

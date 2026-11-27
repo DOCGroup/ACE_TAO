@@ -1,15 +1,11 @@
-
-//=============================================================================
 /**
  *  @file    Malloc_Test.cpp
  *
- *   This is a test of the position-independent <ACE_Malloc> memory
- *   manager using the <ACE_MMAP_Memory_Pool> and <ACE_Process_Mutex>.
+ *   This is a test of the position-independent @c ACE_Malloc memory
+ *   manager using the @c ACE_MMAP_Memory_Pool and @c ACE_Process_Mutex.
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
-
 
 #include "test_config.h"
 #include "Malloc_Test.h"
@@ -23,7 +19,6 @@
 #include "ace/RW_Thread_Mutex.h"
 #include "ace/Time_Value.h"
 #include "ace/OS_NS_unistd.h"
-
 
 #if defined (ACE_HAS_PROCESS_SPAWN)
 
@@ -60,7 +55,7 @@ using MALLOC = ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex>;
 #endif /*ACE_WIN32*/
 
 // Parents <ACE_Malloc> base address in shared memory.
-static const void *PARENT_BASE_ADDR = ACE_DEFAULT_BASE_ADDR;
+static void const *PARENT_BASE_ADDR = ACE_DEFAULT_BASE_ADDR;
 
 // If the platform supports position-independent malloc, choose
 // another base address that's 1M higher so that <ACE_Malloc> will be
@@ -76,8 +71,8 @@ static const void *PARENT_BASE_ADDR = ACE_DEFAULT_BASE_ADDR;
 # define CHILD_ADDR_DELTA 0
 #endif /* CHILD_ADDR_DELTA */
 
-static const void *CHILD_BASE_ADDR =
-  (const void *)(CHILD_ADDR_DELTA + ACE_DEFAULT_BASE_ADDR);
+static void const *CHILD_BASE_ADDR =
+  (void const *)(CHILD_ADDR_DELTA + ACE_DEFAULT_BASE_ADDR);
 
 // Shared memory allocator.  Hide the allocator inside this function
 // so that it doesn't get constructed until after the
@@ -85,11 +80,11 @@ static const void *CHILD_BASE_ADDR =
 // <ACE_HAS_NONSTATIC_OBJECT_MANAGER>.
 
 static MALLOC *
-myallocator (const void *base_addr = nullptr)
+myallocator (void const *base_addr = nullptr)
 {
   static std::unique_ptr<MALLOC> static_allocator;
 
-  if (static_allocator.get () == nullptr)
+  if (!static_allocator)
     {
       ACE_MMAP_Memory_Pool_Options options (base_addr);
 
@@ -106,11 +101,11 @@ myallocator (const void *base_addr = nullptr)
 }
 
 static void
-init_test (const void *base_addr = nullptr)
+init_test (void const *base_addr = nullptr)
 {
   // Cleanup the MMAP file so we won't trip over the leftover mmap
   // file from the previous crash.
-  ACE_MMAP_Memory_Pool_Options options (base_addr);
+  ACE_MMAP_Memory_Pool_Options const options (base_addr);
   //FUZZ: disable check_for_lack_ACE_OS
   ACE_MMAP_Memory_Pool mmap (MMAP_FILENAME, &options);
   //FUZZ: enable check_for_lack_ACE_OS
@@ -124,15 +119,15 @@ init_test (const void *base_addr = nullptr)
 static Test_Data *
 initialize (MALLOC *allocator)
 {
-  double *temp = nullptr;
+  double *temp {};
   ACE_ALLOCATOR_RETURN (temp,
-                        (double *) allocator->malloc (sizeof (double)),
+                        static_cast<double *> (allocator->malloc (sizeof (double))),
                         nullptr);
   // Make sure that doubles work!
   *temp = 5.0;
   allocator->free (temp);
 
-  void *ptr = nullptr;
+  void *ptr {};
   ACE_ALLOCATOR_RETURN (ptr,
                         allocator->malloc (sizeof (Test_Data)),
                         nullptr);
@@ -143,12 +138,11 @@ initialize (MALLOC *allocator)
   data1->i3_ = 333;
   data1->d1_ = 87.5;
 
-  void *gap = nullptr;
+  void *gap {};
   ACE_ALLOCATOR_RETURN (gap,
                         allocator->malloc (sizeof (256)),
                         nullptr);
   allocator->free (gap);
-
 
   ACE_ALLOCATOR_RETURN (ptr,
                         allocator->malloc (sizeof (Test_Data)),
@@ -177,8 +171,8 @@ initialize (MALLOC *allocator)
 
   data1->long_test_= lt;
 
-  long long_cont_1 = *lt->bpl_;
-  long long_cont_2 = lt->bpl_[3];
+  long const long_cont_1 = *lt->bpl_;
+  long const long_cont_2 = lt->bpl_[3];
 
   ACE_TEST_ASSERT (long_cont_1 == 1000);
   ACE_TEST_ASSERT (long_cont_2 == 1003);
@@ -197,8 +191,8 @@ initialize (MALLOC *allocator)
 
   data2->long_test_= lt;
 
-  long long_cont_3 = *lt->bpl_;
-  long long_cont_4 = lt->bpl_[4];
+  long const long_cont_3 = *lt->bpl_;
+  long const long_cont_4 = lt->bpl_[4];
 
   ACE_TEST_ASSERT (long_cont_3 == 2000);
   ACE_TEST_ASSERT (long_cont_4 == 2004);
@@ -207,7 +201,7 @@ initialize (MALLOC *allocator)
 }
 
 static void
-print (const char *process_name,
+print (char const *process_name,
        Test_Data *data)
 {
   for (Test_Data *t = data; t != nullptr; t = t->next_)
@@ -245,11 +239,11 @@ parent (Test_Data *data)
   int cntr;
 
   for (cntr = 0 ; cntr < 1024; ++cntr)
-    small_buf[cntr] = (char *) myalloc->malloc (1);
-  char *big_buf = (char *) myalloc->malloc (1024 * 4069);
+    small_buf[cntr] = static_cast<char *> (myalloc->malloc (1));
+  char *big_buf = static_cast<char *> (myalloc->malloc (1024 * 4069));
 #endif /* ACE_TEST_REMAP_ON_FAULT */
 
-  int result = myalloc->bind ("bar", data);
+  int const result = myalloc->bind ("bar", data);
 
 #if defined (ACE_TEST_REMAP_ON_FAULT)
   myalloc->free (big_buf);
@@ -264,12 +258,12 @@ parent (Test_Data *data)
 static int
 child ()
 {
-  void *bar = nullptr;
+  void *bar {};
   // Perform "busy waiting" here until the parent stores data under a
   // new name called "bar" in <ACE_Malloc>.  This isn't a good design
   // -- it's just to test that synchronization is working across
   // processes via <ACE_Malloc>.
-  for (ACE_Time_Value timeout (0, 1000 * 10);
+  for (ACE_Time_Value const timeout (0, 1000 * 10);
        myallocator ()->find ("bar",
                              bar) == -1;
        )
@@ -304,7 +298,9 @@ get_base_addrs ()
   OSVERSIONINFO vinfo;
   vinfo.dwOSVersionInfoSize = sizeof (OSVERSIONINFO);
   if (::GetVersionEx(&vinfo) == 0)
-    return;
+    {
+      return;
+    }
 #   if defined(__clang__)
 #     pragma clang diagnostic pop
 #   endif /* __clang__ */
@@ -313,7 +309,9 @@ get_base_addrs ()
       vinfo.dwMajorVersion >= 4)
     PARENT_BASE_ADDR = (char*) (64 * 1024*1024);
   else
-    PARENT_BASE_ADDR = (char*) ((2048UL + 512UL)*(1024UL*1024UL));
+    {
+      PARENT_BASE_ADDR = (char*) ((2048UL + 512UL)*(1024UL*1024UL));
+    }
 
   CHILD_BASE_ADDR = CHILD_ADDR_DELTA + (char*) PARENT_BASE_ADDR;
 }
@@ -356,27 +354,31 @@ run_main (int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P) PARENT allocator at = %@, ")
                   ACE_TEXT ("data allocated at %@\n"),
-                  myalloc,
+                  static_cast<void *> (myalloc),
                   data));
       myalloc->dump ();
       int result = myalloc->bind ("foo", data);
       ACE_TEST_ASSERT (result != -1);
 
       ACE_Process p;
-      pid_t pid = p.spawn (options);
+      pid_t const pid = p.spawn (options);
       if (pid == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("spawn")), 1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("%p\n"),
+                             ACE_TEXT ("spawn")), 1);
+        }
 
       parent (data);
 
       // Synchronize on the exit of the child.
       result = p.wait ();
       if (result == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("wait")), 1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("%p\n"),
+                             ACE_TEXT ("wait")), 1);
+        }
       ACE_TEST_ASSERT (myalloc->ref_counter () == 1);
       myalloc->remove ();
       ACE_Process_Mutex::unlink (MUTEX_NAME);
@@ -388,15 +390,15 @@ run_main (int argc, ACE_TCHAR *argv[])
       // In this case we're the child process.
       ACE_APPEND_LOG (ACE_TEXT ("Malloc_Test-child"));
 
-      void *data = nullptr;
+      void *data {};
       MALLOC *myalloc = myallocator (CHILD_BASE_ADDR);
-      int result = myalloc->find ("foo", data);
+      int const result = myalloc->find ("foo", data);
       ACE_TEST_ASSERT (result != -1);
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P) CHILD allocator at = %@, ")
                   ACE_TEXT ("data allocated at %@\n"),
-                  myalloc,
+                  static_cast<void *> (myalloc),
                   data));
       myalloc->dump ();
       child ();

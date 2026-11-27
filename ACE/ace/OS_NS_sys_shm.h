@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   OS_NS_sys_shm.h
  *
@@ -8,7 +5,6 @@
  *  @author Jesper S. M|ller<stophph@diku.dk>
  *  @author and a cast of thousands...
  */
-//=============================================================================
 
 #ifndef ACE_OS_NS_SYS_SHM_H
 # define ACE_OS_NS_SYS_SHM_H
@@ -33,10 +29,11 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE_OS
 {
-  //@{ @name A set of wrappers for System V shared memory.
+  /// @name A set of wrappers for System V shared memory.
+  /// @{
   ACE_NAMESPACE_INLINE_FUNCTION
   void *shmat (int int_id,
-               const void *shmaddr,
+               void const *shmaddr,
                int shmflg);
 
   ACE_NAMESPACE_INLINE_FUNCTION
@@ -45,13 +42,13 @@ namespace ACE_OS
               struct shmid_ds *buf);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int shmdt (const void *shmaddr);
+  int shmdt (void const *shmaddr);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int shmget (key_t key,
               size_t size,
               int flags);
-  //@}
+  /// @}
 } /* namespace ACE_OS */
 
 ACE_END_VERSIONED_NAMESPACE_DECL

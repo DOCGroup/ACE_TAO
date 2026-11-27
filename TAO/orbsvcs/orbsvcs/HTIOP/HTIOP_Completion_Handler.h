@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-// ===================================================================
 /**
  *  @file   HTIOP_Completion_Handler.h
  *
  *  @author Priyanka Gontla <gontla_p@ociweb.com>
  */
-// ===================================================================
 
 #ifndef HTIOP_COMPLETION_HANDLER_H
 #define HTIOP_COMPLETION_HANDLER_H
@@ -24,6 +20,8 @@
 
 #include "orbsvcs/HTIOP/HTIOP_Export.h"
 #include "orbsvcs/HTIOP/HTIOP_Connection_Handler.h"
+
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -52,33 +50,35 @@ namespace TAO
     class HTIOP_Export Completion_Handler : public COMPLETION_BASE
     {
     public:
-      Completion_Handler (ACE_Thread_Manager* t = nullptr);
-      /// Constructor.
-      Completion_Handler (TAO_ORB_Core *orb_core,
-                          CORBA::Boolean = false);
+      explicit Completion_Handler (ACE_Thread_Manager* t = nullptr);
+      explicit Completion_Handler (TAO_ORB_Core *orb_core,
+                                   CORBA::Boolean = false);
+      Completion_Handler (Completion_Handler const&) = delete;
+      Completion_Handler (Completion_Handler&&) = delete;
+      Completion_Handler& operator= (Completion_Handler const&) = delete;
+      Completion_Handler& operator= (Completion_Handler&&) = delete;
 
-      /// Destructor.
       ~Completion_Handler () override;
 
-      /// Called by the <Strategy_Acceptor> when the handler is completely
+      /// Called by @c Strategy_Acceptor when the handler is completely
       /// connected. Argument is unused.
       int open (void *) override;
 
-      //@{
+      /// @{
       /** @name Event Handler overloads
        */
       int handle_input (ACE_HANDLE) override;
 
       int resume_handler () override;
       int handle_close (ACE_HANDLE, ACE_Reactor_Mask) override;
-      //@}
+      /// @}
 
     private:
       TAO_ORB_Core *orb_core_;
       ACE::HTBP::Channel *channel_;
 
-      CREATION_STRATEGY2 *creation_strategy_;
-      CONCURRENCY_STRATEGY2 *concurrency_strategy_;
+      std::unique_ptr<CREATION_STRATEGY2> creation_strategy_;
+      std::unique_ptr<CONCURRENCY_STRATEGY2> concurrency_strategy_;
     };
   }
 }

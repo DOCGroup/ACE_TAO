@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(Event_Test_Lib): rtevent_serv, naming {
   sharedname   = ECTests
   dynamicflags += EC_TEST_BUILD_DLL

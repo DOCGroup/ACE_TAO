@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/PortableServer/IdUniquenessStrategyMultiple.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

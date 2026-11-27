@@ -1,13 +1,8 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
  *  @file    URL.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
-
 
 #ifndef _URL_H
 #define _URL_H
@@ -23,7 +18,6 @@
 
 #include "ace/SString.h"
 
-
 // Forward declaration.
 class URL_Visitor;
 
@@ -37,7 +31,6 @@ class URL_Visitor;
 class URL
 {
 public:
-  /// Destructor.
   virtual ~URL ();
 
   /**
@@ -47,24 +40,31 @@ public:
    */
   virtual int accept (URL_Visitor *visitor) = 0;
 
-  /// Send a <GET> command to fetch the contents in the URI from the
+  /// Send a @c GET command to fetch the contents in the URI from the
   /// server.
   virtual ssize_t send_request () = 0;
 
   /// Returns the URL that we represent.
-  virtual const ACE_URL_Addr &url_addr () const = 0;
+  virtual ACE_URL_Addr const &url_addr () const = 0;
 
-  /// Returns the <Mem_Map_Stream>.
+  /// Returns the @c Mem_Map_Stream.
   virtual Mem_Map_Stream &stream ();
 
-  // = Get/set the reply status.
-  virtual const URL_Status &reply_status ();
-  virtual void reply_status (const URL_Status &);
+  /// @name Reply status
+  /// @{
 
-  // = Get/set the reply status.
-  virtual const ACE_CString &content_type ();
-  virtual void content_type (const ACE_CString &);
+  virtual URL_Status const &reply_status ();
+  virtual void reply_status (URL_Status const &);
 
+  /// @}
+
+  /// @name Content type
+  /// @{
+
+  virtual ACE_CString const &content_type ();
+  virtual void content_type (ACE_CString const &);
+
+  /// @}
 
 private:
   /// Reply status of the URL.

@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
 *  @file    Reactor_Timer_Queue_Test.cpp
  *
@@ -7,8 +5,6 @@
  *
  *  @author Nanbor Wang <nw1@cs.wustl.edu> and Sergio Flores-Gaitan <sergio@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #include "ace/OS_NS_sys_time.h"
 #include "ace/Thread_Manager.h"
@@ -18,7 +14,8 @@
 
 #include "Driver.h"
 #include "Reactor_Timer_Queue_Test.h"
-
+#include <memory>
+#include <new>
 
 void
 Reactor_Timer_Handler::set_timer_id (long tid)
@@ -27,15 +24,16 @@ Reactor_Timer_Handler::set_timer_id (long tid)
 }
 
 int
-Reactor_Timer_Handler::handle_timeout (const ACE_Time_Value &,
-                                       const void *)
+Reactor_Timer_Handler::handle_timeout (ACE_Time_Value const &,
+                                       void const *)
 {
-  ACE_Time_Value txv = ACE_OS::gettimeofday ();
+  ACE_Time_Value const txv = ACE_OS::gettimeofday ();
   ACE_DEBUG ((LM_DEBUG,
-              "\nTimer #%d fired at %d.%06d (%T)!\n",
+              "\nTimer #%Ld fired at %:.%06d (%T)!\n",
               this->tid_,
               txv.sec (),
-              txv.usec ()));
+              static_cast<int> (txv.usec ())));
+  // Reactor callbacks own and delete their one-shot handler.
   delete this;
 
   return 0;
@@ -43,14 +41,13 @@ Reactor_Timer_Handler::handle_timeout (const ACE_Time_Value &,
 
 Input_Handler::Input_Handler (ACE_Timer_Queue *tq,
                               Reactor_Timer_Queue_Test_Driver &timer_queue_driver)
-  : done_ (0),
+  : tq_ (tq),
     driver_ (timer_queue_driver)
 {
-  this->tq_ = tq;
 }
 
-int
-Input_Handler::done ()
+bool
+Input_Handler::done () const
 {
   return this->done_;
 }
@@ -58,46 +55,53 @@ Input_Handler::done ()
 int
 Input_Handler::schedule_timer (void *argument)
 {
-  int delay = *(int *) argument;
-  Reactor_Timer_Handler *th;
-  long tid;
-
-  th = new Reactor_Timer_Handler;
-  if (th != nullptr)
-    {
-      tid = this->reactor ()->schedule_timer (th,
-                                              0,
-                                              ACE_Time_Value (0, delay));
-      if (tid == -1)
-        ACE_DEBUG ((LM_DEBUG,
-                    "Unable to schedule timer\n"));
-      else
-        {
-          ACE_DEBUG ((LM_DEBUG,
-                      "Timer #%d schedule to fire after %d usec from now.\n",
-                      tid,
-                      delay));
-          th->set_timer_id (tid);
-        }
-    }
-  else
+  u_int const delay = *static_cast<u_int const *> (argument);
+  std::unique_ptr<Reactor_Timer_Handler> handler (
+    new (std::nothrow) Reactor_Timer_Handler);
+  if (!handler)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        "not enough memory?\n"),
                       -1);
-  return tid;
+  }
+
+  long const tid = this->reactor ()->schedule_timer (handler.get (),
+                                                     handler.get (),
+                                                     ACE_Time_Value (0, delay));
+  if (tid == -1)
+  {
+    ACE_ERROR_RETURN ((LM_DEBUG,
+                       "Unable to schedule timer\n"),
+                      -1);
+  }
+
+  handler->set_timer_id (tid);
+  handler.release ();
+  ACE_DEBUG ((LM_DEBUG,
+              "Timer #%Ld scheduled to fire after %u usec from now.\n",
+              tid,
+              delay));
+  return 0;
 }
 
 int
 Input_Handler::cancel_timer (void *argument)
 {
-  int id = *(int *) argument;
-  return this->reactor ()->cancel_timer (id);
+  long const id = *static_cast<long const *> (argument);
+  void const *act {};
+  int const canceled = this->reactor ()->cancel_timer (id, std::addressof (act));
+  if (canceled > 0)
+    {
+      std::unique_ptr<Reactor_Timer_Handler> handler (
+        static_cast<Reactor_Timer_Handler *> (const_cast<void *> (act)));
+    }
+  return canceled;
 }
 
 int
 Input_Handler::shutdown_timer (void *)
 {
-  this->done_ = 1;
+  this->done_ = true;
   ACE_DEBUG ((LM_DEBUG,
               "Shutting down event loop\n"));
   return -1;
@@ -113,10 +117,10 @@ Input_Handler::list_timer (void *)
   for (; !iter.isdone (); iter.next ())
     {
       ACE_Timer_Node *tn = iter.item ();
-      ACE_DEBUG ((LM_DEBUG, "Timer #%d: %d.%06d\n",
+      ACE_DEBUG ((LM_DEBUG, "Timer #%Ld: %:.%06d\n",
                   tn->get_timer_id (),
                   tn->get_timer_value ().sec (),
-                  tn->get_timer_value ().usec ()));
+                  static_cast<int> (tn->get_timer_value ().usec ())));
     }
   return 0;
 }
@@ -135,13 +139,13 @@ Reactor_Timer_Queue_Test_Driver::Reactor_Timer_Queue_Test_Driver ()
 Reactor_Timer_Queue_Test_Driver::~Reactor_Timer_Queue_Test_Driver ()
 {
   // unhook our timer queue
-  ACE_Reactor::instance ()->timer_queue (0);
+  ACE_Reactor::instance ()->timer_queue (nullptr);
 }
 
 int
 Reactor_Timer_Queue_Test_Driver::display_menu ()
 {
-  static char menu[] =
+  static char const menu[] =
     "\n*****\n"
     "1) Schedule timer <usec>\n"
     "2) Cancel timer <id>\n"
@@ -160,24 +164,33 @@ Reactor_Timer_Queue_Test_Driver::init ()
 {
   using CMD = Command<Input_Handler, Input_Handler::ACTION>;
 
-  // initialize <Command>s with their corresponding <Input_Handler>  methods.
-  ACE_NEW_RETURN (schedule_cmd_,
+  // Initialize <Command>s with their corresponding <Input_Handler> methods.
+
+  CMD *raw_schedule_cmd {};
+  ACE_NEW_RETURN (raw_schedule_cmd,
                   CMD (thandler_, &Input_Handler::schedule_timer),
                   -1);
+  schedule_cmd_.reset (raw_schedule_cmd);
 
-  ACE_NEW_RETURN (cancel_cmd_,
+  CMD *raw_cancel_cmd {};
+  ACE_NEW_RETURN (raw_cancel_cmd,
                   CMD (thandler_, &Input_Handler::cancel_timer),
                   -1);
+  cancel_cmd_.reset (raw_cancel_cmd);
 
-  ACE_NEW_RETURN (list_cmd_,
+  CMD *raw_list_cmd {};
+  ACE_NEW_RETURN (raw_list_cmd,
                   CMD (thandler_, &Input_Handler::list_timer),
                   -1);
+  list_cmd_.reset (raw_list_cmd);
 
-  ACE_NEW_RETURN (shutdown_cmd_,
+  CMD *raw_shutdown_cmd {};
+  ACE_NEW_RETURN (raw_shutdown_cmd,
                   CMD (thandler_, &Input_Handler::shutdown_timer),
                   -1);
+  shutdown_cmd_.reset (raw_shutdown_cmd);
 
-  ACE_Reactor::instance ()->timer_queue (&timer_queue_);
+  ACE_Reactor::instance ()->timer_queue (std::addressof (timer_queue_));
 
   ACE_Event_Handler::register_stdin_handler (&thandler_,
                                              ACE_Reactor::instance (),
@@ -197,11 +210,16 @@ Reactor_Timer_Queue_Test_Driver::run_test ()
   ACE_DEBUG ((LM_DEBUG,
               "TIMER TEST STARTED\n"));
 
-  this->init ();
+  if (this->init () == -1)
+  {
+    return -1;
+  }
 
   // Run until we say stop.
-  while (thandler_.done () == 0)
+  while (!thandler_.done ())
+  {
     ACE_Reactor::instance ()->handle_events ();
+  }
 
   ACE_DEBUG ((LM_DEBUG,
               "TIMER TEST ENDED\n"));

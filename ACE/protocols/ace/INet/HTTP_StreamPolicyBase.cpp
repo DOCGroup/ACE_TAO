@@ -11,12 +11,11 @@ namespace ACE
   {
     template <class STREAM_BUFFER>
     StreamPolicyBase<STREAM_BUFFER>::StreamPolicyBase ()
-      : streambuf_ (0)
+      : streambuf_ (nullptr)
       {}
 
     template <class STREAM_BUFFER>
-    StreamPolicyBase<STREAM_BUFFER>::~StreamPolicyBase ()
-      {}
+    StreamPolicyBase<STREAM_BUFFER>::~StreamPolicyBase () = default;
 
     template <class STREAM_BUFFER>
     int StreamPolicyBase<STREAM_BUFFER>::read_from_stream_i (
@@ -28,7 +27,7 @@ namespace ACE
 
     template <class STREAM_BUFFER>
     int StreamPolicyBase<STREAM_BUFFER>::write_to_stream_i (
-        const char_type * buf,
+        char_type const * buf,
         std::streamsize length)
       {
         return this->streambuf_->write_to_stream_i (buf, length);

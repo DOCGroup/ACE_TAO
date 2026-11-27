@@ -1,11 +1,9 @@
-// -*- MPC -*-
 project(*idl): taoidldefaults, ami {
   IDL_Files {
     ami_test.idl
   }
   custom_only = 1
 }
-
 project(*Server): taoserver, messaging, ami {
   after += *idl
   Source_Files {
@@ -17,7 +15,6 @@ project(*Server): taoserver, messaging, ami {
   IDL_Files {
   }
 }
-
 project(*Client): messaging, taoserver, ami {
   exename = client
   after += *idl

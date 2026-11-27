@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 /**
  *  @file Refcountable_Guard_T.h
  *
@@ -31,13 +29,10 @@ template <class T>
 class TAO_Notify_Refcountable_Guard_T
 {
 public:
-  /// Constructor
   explicit TAO_Notify_Refcountable_Guard_T (T* t = nullptr);
 
-  /// Copy constructor
   TAO_Notify_Refcountable_Guard_T (const TAO_Notify_Refcountable_Guard_T<T>& rhs);
 
-  /// Destructor
   ~TAO_Notify_Refcountable_Guard_T ();
 
   /// Redirection operator

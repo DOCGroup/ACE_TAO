@@ -1,11 +1,8 @@
-
-//=============================================================================
 /**
  *  @file    Sched_Params.cpp
  *
  *  @author David Levine
  */
-//=============================================================================
 
 #include "ace/Sched_Params.h"
 
@@ -16,7 +13,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
-ACE_Sched_Params::priority_min (const Policy policy,
+ACE_Sched_Params::priority_min (Policy const policy,
                                 const int scope)
 {
 #if defined(ACE_HAS_PTHREADS) && !defined(ACE_LACKS_SETSCHED)
@@ -68,7 +65,7 @@ ACE_Sched_Params::priority_min (const Policy policy,
 }
 
 int
-ACE_Sched_Params::priority_max (const Policy policy,
+ACE_Sched_Params::priority_max (Policy const policy,
                                 const int scope)
 {
 #if defined(ACE_HAS_PTHREADS) && \
@@ -123,7 +120,7 @@ ACE_Sched_Params::priority_max (const Policy policy,
 }
 
 int
-ACE_Sched_Params::next_priority (const Policy policy,
+ACE_Sched_Params::next_priority (Policy const policy,
                                  const int priority,
                                  const int scope)
 {
@@ -167,7 +164,7 @@ ACE_Sched_Params::next_priority (const Policy policy,
 }
 
 int
-ACE_Sched_Params::previous_priority (const Policy policy,
+ACE_Sched_Params::previous_priority (Policy const policy,
                                      const int priority,
                                      const int scope)
 {

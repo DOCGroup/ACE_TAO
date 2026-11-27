@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #ifndef TAO_CLIENT_INTERCEPTOR_H
 #define TAO_CLIENT_INTERCEPTOR_H
 
@@ -6,6 +5,8 @@
 #include "tao/PortableInterceptorC.h"
 #include "tao/LocalObject.h"
 #include "tao/ORB.h"
+
+#include <string>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -16,24 +17,21 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+/// Client-side echo interceptor, used for visual interceptor checks.
 class Echo_Client_Request_Interceptor
   : public virtual PortableInterceptor::ClientRequestInterceptor,
     public virtual ::CORBA::LocalObject
 {
-  // = Client-side echo interceptor.  For checking interceptor visually only.
 public:
   Echo_Client_Request_Interceptor ();
   Echo_Client_Request_Interceptor (Echo_Client_Request_Interceptor const &) = delete;
   Echo_Client_Request_Interceptor (Echo_Client_Request_Interceptor &&) = delete;
   Echo_Client_Request_Interceptor &operator= (Echo_Client_Request_Interceptor const &) = delete;
   Echo_Client_Request_Interceptor &operator= (Echo_Client_Request_Interceptor &&) = delete;
-  // ctor.
-
   ~Echo_Client_Request_Interceptor () override = default;
-  // dtor.
 
+  /// Canonical name of the interceptor.
   char *name () override;
-  // Canonical name of the interceptor.
 
   void destroy () override;
 
@@ -48,7 +46,7 @@ public:
   void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
 private:
-  char const *myname_;
+  std::string const myname_;
 };
 
 #if defined(_MSC_VER)

@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//==========================================================================
 /**
  *  @file    Condition_Recursive_Thread_Mutex.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//==========================================================================
 
 #ifndef ACE_CONDITION_RECURSIVE_THREAD_MUTEX_H
 #define ACE_CONDITION_RECURSIVE_THREAD_MUTEX_H
@@ -36,41 +32,48 @@ template<>
 class ACE_Export ACE_Condition<ACE_Recursive_Thread_Mutex>
 {
 public:
+  ACE_Condition () = delete;
+  ACE_Condition (ACE_Condition const &) = delete;
+  ACE_Condition (ACE_Condition &&) = delete;
+  ACE_Condition &operator= (ACE_Condition const &) = delete;
+  ACE_Condition &operator= (ACE_Condition &&) = delete;
+
   /// Initialize the condition variable with a recursive mutex.
-  ACE_Condition (ACE_Recursive_Thread_Mutex &m);
+  explicit ACE_Condition (ACE_Recursive_Thread_Mutex &m);
 
   /// Initialize the condition variable.
   ACE_Condition (ACE_Recursive_Thread_Mutex &m,
-                 const ACE_Condition_Attributes &attributes);
+                 ACE_Condition_Attributes const &attributes);
 
   /// Implicitly destroy the condition variable.
   ~ACE_Condition ();
 
   /**
-   * Explicitly destroy the condition variable.  Note that only one
-   * thread should call this method since it doesn't protect against
-   * race conditions.
+   * Explicitly destroy the condition variable.
+   *
+   * @note Only one thread should call this method since it doesn't
+   * protect against race conditions.
    */
   int remove ();
 
   /**
    * Block on condition, or until absolute time-of-day has passed.  If
-   * abstime == 0 use "blocking" <wait> semantics.  Else, if @a abstime
+   * abstime == 0 use "blocking" @c wait semantics.  Else, if @a abstime
    * != 0 and the call times out before the condition is signaled
-   * <wait> returns -1 and sets errno to ETIME.
+   * @c wait returns -1 and sets errno to ETIME.
    */
-  int wait (const ACE_Time_Value *abstime = nullptr);
+  int wait (ACE_Time_Value const *abstime = nullptr);
 
   /**
    * Block on condition or until absolute time-of-day has passed.  If
    * abstime == 0 use "blocking" wait() semantics on the recursive @a mutex
    * passed as a parameter (this is useful if you need to store the
-   * <Condition> in shared memory).  Else, if @a abstime != 0 and the
-   * call times out before the condition is signaled <wait> returns -1
+   * @c Condition in shared memory).  Else, if @a abstime != 0 and the
+   * call times out before the condition is signaled @c wait returns -1
    * and sets errno to ETIME.
    */
   int wait (ACE_Recursive_Thread_Mutex &mutex,
-            const ACE_Time_Value *abstime = nullptr);
+            ACE_Time_Value const *abstime = nullptr);
 
   /// Signal one waiting thread.
   int signal ();
@@ -83,10 +86,6 @@ public:
 
   /// Dump the state of an object.
   void dump () const;
-
-private:
-  void operator= (const ACE_Condition<ACE_Recursive_Thread_Mutex> &) = delete;
-  ACE_Condition (const ACE_Condition<ACE_Recursive_Thread_Mutex> &) = delete;
 
 private:
   /// A normal (i.e., non-recursive) condition variable.

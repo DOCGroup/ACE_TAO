@@ -1,13 +1,9 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Ping_Socket.h
  *
  *  @author Robert S. Iakobashvili <coroberti@gmail.com> <coroberti@walla.co.il>
  *  @author Gonzalo A. Diethelm <gonzalo.diethelm@aditiva.com>
  */
-//=============================================================================
 
 #ifndef ACE_PING_SOCKET_H
 #define ACE_PING_SOCKET_H
@@ -39,14 +35,12 @@ class ACE_Export ACE_Ping_Socket : public ACE_ICMP_Socket
 {
   using inherited = ACE_ICMP_Socket;
 public:
-  /// Default constructor.
   ACE_Ping_Socket ();
 
   ACE_Ping_Socket (ACE_Addr const & local,
                    int protocol    = IPPROTO_ICMP,
                    int reuse_addr  = 0);
 
-  /// Destructor.
   ~ACE_Ping_Socket ();
 
   /// Wrapper around the BSD-style @c socket system call (no QoS).
@@ -89,9 +83,9 @@ private:
   char icmp_send_buff_[PING_BUFFER_SIZE];
   char icmp_recv_buff_[PING_BUFFER_SIZE];
 
-  ACE_UINT16 sequence_number_;
+  ACE_UINT16 sequence_number_ {};
 
-  bool connected_socket_;
+  bool connected_socket_ {};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

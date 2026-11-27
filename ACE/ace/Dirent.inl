@@ -1,10 +1,11 @@
-// -*- C++ -*-
 #include "ace/Log_Category.h"
+#include <memory>
+#include <utility>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE int
-ACE_Dirent::open (const ACE_TCHAR *dirname)
+ACE_Dirent::open (ACE_TCHAR const *dirname)
 {
   // If the directory stream is already open, close it to prevent
   // possible resource leaks.
@@ -17,25 +18,47 @@ ACE_Dirent::open (const ACE_TCHAR *dirname)
   this->dirp_ = ACE_OS::opendir (dirname);
 
   if (!this->dirp_)
-    return -1;
+    {
+      return -1;
+    }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 
 ACE_INLINE
-ACE_Dirent::ACE_Dirent (const ACE_TCHAR *dirname)
+ACE_Dirent::ACE_Dirent (ACE_TCHAR const *dirname)
 {
   if (this->open (dirname) == -1)
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACE_Dirent::ACE_Dirent")));
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("%p\n"),
+                     ACE_TEXT ("ACE_Dirent::ACE_Dirent")));
+    }
 }
 
 ACE_INLINE
 ACE_Dirent::~ACE_Dirent ()
 {
-  if (this->dirp_)
-    ACE_OS::closedir (this->dirp_);
+  this->close ();
+}
+
+ACE_INLINE
+ACE_Dirent::ACE_Dirent (ACE_Dirent &&other) noexcept
+  : dirp_ (std::exchange (other.dirp_, nullptr))
+{
+}
+
+ACE_INLINE ACE_Dirent &
+ACE_Dirent::operator= (ACE_Dirent &&other) noexcept
+{
+  if (this != std::addressof (other))
+    {
+      this->close ();
+      this->dirp_ = std::exchange (other.dirp_, nullptr);
+    }
+  return *this;
 }
 
 ACE_INLINE ACE_DIRENT *
@@ -60,14 +83,18 @@ ACE_INLINE void
 ACE_Dirent::rewind ()
 {
   if (this->dirp_)
-    ACE_OS::rewinddir (this->dirp_);
+    {
+      ACE_OS::rewinddir (this->dirp_);
+    }
 }
 
 ACE_INLINE void
 ACE_Dirent::seek (long loc)
 {
   if (this->dirp_)
-    ACE_OS::seekdir (this->dirp_, loc);
+    {
+      ACE_OS::seekdir (this->dirp_, loc);
+    }
 }
 
 ACE_INLINE long

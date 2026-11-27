@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(Synch_Lib) : acelib {
   sharedname = Synch_Lib
   dynamicflags += SYNCHLIB_BUILD_DLL

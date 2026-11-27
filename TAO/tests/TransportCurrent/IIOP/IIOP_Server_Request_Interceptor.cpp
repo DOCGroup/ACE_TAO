@@ -1,14 +1,59 @@
-// -*- C++ -*-
 #include "ace/Log_Msg.h"
 #include "tao/ORB_Constants.h"
 #include "tao/TransportCurrent/TC_IIOPC.h"
 
 #include "IIOP_Server_Request_Interceptor.h"
 
+#include <string>
+
+namespace
+{
+  long request_id (CORBA::OctetSeq const &data)
+  {
+    if (data.length () == 0)
+      {
+        return 0;
+      }
+
+    std::string const text (
+      reinterpret_cast<char const *> (data.get_buffer ()), data.length ());
+    return ACE_OS::atoi (text.c_str ());
+  }
+
+  bool test_request_id ()
+  {
+    CORBA::OctetSeq data;
+    if (request_id (data) != 0)
+      {
+        return false;
+      }
+
+    data.length (3);
+    data[0] = '1';
+    data[1] = '2';
+    data[2] = '3';
+    if (request_id (data) != 123)
+      {
+        return false;
+      }
+
+    data[0] = '-';
+    data[1] = '4';
+    data[2] = '2';
+    if (request_id (data) != -42)
+      {
+        return false;
+      }
+
+    data[1] = 0;
+    return request_id (data) == 0;
+  }
+}
+
 namespace Test {
   using namespace TAO;
 
-  IIOP_Server_Request_Interceptor::IIOP_Server_Request_Interceptor (const char* orbid, TEST test)
+  IIOP_Server_Request_Interceptor::IIOP_Server_Request_Interceptor (char const *orbid, TEST test)
     : Server_Request_Interceptor (orbid, test)
     , iiop_test_successful_ (true)
   {
@@ -22,12 +67,10 @@ namespace Test {
 
   ///
   TAO::Transport::IIOP::Current_ptr
-  IIOP_Server_Request_Interceptor::resolve_iiop_transport_current (const char* orbid)
+  IIOP_Server_Request_Interceptor::resolve_iiop_transport_current (char const *orbid)
   {
-    CORBA::String_var name (this->name ());
-
     int tmpargc = 0;
-    ACE_TCHAR **tmpargv = 0;
+    ACE_TCHAR **tmpargv {};
     CORBA::ORB_var orb = CORBA::ORB_init (tmpargc,
                                           tmpargv,
                                           orbid);
@@ -48,46 +91,52 @@ namespace Test {
     TAO::Transport::IIOP::Current_var tc =
       resolve_iiop_transport_current (this->orb_id_.in ());
 
-    CORBA::String_var host (tc->remote_host());
+    CORBA::String_var host (tc->remote_host ());
     EndPoint ep (tc->remote_port(), host.in ());
 
-    if (requestID < sizeof (this->endPoints_) / sizeof (*this->endPoints_))
+    if (requestID < this->endPoints_.size ())
       {
         endPoints_[requestID] = ep;
 
         if (TAO_debug_level > 1)
-          ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("%C (%P|%t) ")
-                      ACE_TEXT ("push_request_info: %d ...\n"),
-                      name.in (),
-                      requestID));
+          {
+            ACE_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("%C (%P|%t) ")
+                        ACE_TEXT ("push_request_info: %B ...\n"),
+                        name.in (),
+                        requestID));
+          }
       }
     else
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("%C (%P|%t) ")
-                  ACE_TEXT ("push_request_info: Can't track that many requests %d\n"),
-                  name.in (),
-                  requestID));
+      {
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("%C (%P|%t) ")
+                    ACE_TEXT ("push_request_info: Can't track that many requests %B\n"),
+                    name.in (),
+                    requestID));
+      }
   }
 
   void
   IIOP_Server_Request_Interceptor::pop_request_info (size_t requestID)
   {
-    static EndPoint dummy;
+    static EndPoint const dummy;
     CORBA::String_var name (this->name ());
 
     if (TAO_debug_level > 1)
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("%C (%P|%t) ")
-                  ACE_TEXT ("pop_request_info: %d ...\n"),
-                  name.in (),
-                  requestID));
+      {
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("%C (%P|%t) ")
+                    ACE_TEXT ("pop_request_info: %B ...\n"),
+                    name.in (),
+                    requestID));
+      }
 
-    if (requestID >= sizeof (this->endPoints_) / sizeof (*this->endPoints_))
+    if (requestID >= this->endPoints_.size ())
       {
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("%C (%P|%t) ")
-                    ACE_TEXT ("pop_request_info: Can't track that many requests %d\n"),
+                    ACE_TEXT ("pop_request_info: Can't track that many requests %B\n"),
                     name.in (),
                     requestID));
         return;
@@ -98,20 +147,20 @@ namespace Test {
         TAO::Transport::IIOP::Current_var tc =
           resolve_iiop_transport_current (this->orb_id_.in ());
 
-        CORBA::String_var host (tc->remote_host());
+        CORBA::String_var host (tc->remote_host ());
         EndPoint ep (tc->remote_port(), host.in ());
 
         if (ep != endPoints_[requestID])
           {
             ACE_ERROR ((LM_ERROR,
                         ACE_TEXT ("%C (%P|%t) ")
-                        ACE_TEXT ("pop_request_info: The expected host and port don't match for request %d\n"),
+                        ACE_TEXT ("pop_request_info: The expected host and port don't match for request %B\n"),
                         name.in (),
                         requestID));
             return;
           }
       }
-    catch (const CORBA::BAD_INV_ORDER& )
+    catch (CORBA::BAD_INV_ORDER const &)
       {
         // Last reply after the orb has been shut down. Calling
         // resolve_iiop_transport_current in this case will cause
@@ -122,24 +171,30 @@ namespace Test {
     endPoints_[requestID] = dummy;
   }
 
-
   /// Checks if all the endpoints, encountered on the way in have been
   /// cleaned on the way out of the interception point
   bool
   IIOP_Server_Request_Interceptor::self_test ()
   {
     CORBA::String_var name (this->name ());
+    if (!test_request_id ())
+      {
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("%C: request context parsing failed\n"),
+                    name.in ()));
+        return false;
+      }
+
     bool has_remaining_endpoints = false;
     for (size_t count = 0;
-         count < (sizeof (this->endPoints_) / sizeof (*this->endPoints_));
-         count ++)
+         count < this->endPoints_.size ();
+         ++count)
       {
         if (endPoints_[count].port_ != 0)
           {
             has_remaining_endpoints = true;
             ACE_ERROR ((LM_ERROR,
                         ACE_TEXT ("%C (%P|%t) Endpoint at ")
-                        ACE_TEXT ("index=%d has not been removed yet\n"),
+                        ACE_TEXT ("index=%B has not been removed yet\n"),
                         name.in (),
                         count));
           }
@@ -157,10 +212,12 @@ namespace Test {
     CORBA::String_var op (ri->operation());
 
     if (TAO_debug_level >=1)
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT("%C (%P|%t) Intercepted operation %C ()\n"),
-                  name.in (),
-                  op.in ()));
+      {
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT("%C (%P|%t) Intercepted operation %C ()\n"),
+                    name.in (),
+                    op.in ()));
+      }
 
     try
       {
@@ -168,14 +225,11 @@ namespace Test {
         IOP::ServiceContext_var sc =
           ri->get_request_service_context (id);
 
-        const char *buf =
-          reinterpret_cast <const char *> (sc->context_data.get_buffer ());
-
-        long requestID = ACE_OS::atoi (buf);
+        long const requestID = request_id (sc->context_data);
 
         this->push_request_info (requestID);
       }
-    catch (const CORBA::Exception&)
+    catch (CORBA::Exception const &)
       {
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("%C (%P|%t) Service context")
@@ -196,10 +250,8 @@ namespace Test {
     IOP::ServiceContext_var sc =
       ri->get_request_service_context (id);
 
-    const char *buf =
-      reinterpret_cast <const char *> (sc->context_data.get_buffer ());
-
-    this->pop_request_info (ACE_OS::atoi (buf));
+    long const requestID = request_id (sc->context_data);
+    this->pop_request_info (requestID);
   }
 
   void
@@ -209,7 +261,7 @@ namespace Test {
       {
         inbound_process_context (ri);
       }
-    catch (const CORBA::Exception&)
+    catch (CORBA::Exception const &)
       {
         CORBA::String_var name (this->name ());
         ACE_ERROR ((LM_ERROR,
@@ -228,7 +280,7 @@ namespace Test {
       {
         outbound_process_context (ri);
       }
-    catch (const CORBA::Exception&)
+    catch (CORBA::Exception const &)
       {
         CORBA::String_var name (this->name ());
         ACE_ERROR ((LM_ERROR,
@@ -247,7 +299,7 @@ namespace Test {
       {
         outbound_process_context (ri);
       }
-    catch (const CORBA::Exception&)
+    catch (CORBA::Exception const &)
       {
         CORBA::String_var name (this->name ());
         ACE_ERROR ((LM_ERROR,
@@ -266,7 +318,7 @@ namespace Test {
       {
         outbound_process_context (ri);
       }
-    catch (const CORBA::Exception&)
+    catch (CORBA::Exception const &)
       {
         CORBA::String_var name (this->name ());
         ACE_ERROR ((LM_ERROR,

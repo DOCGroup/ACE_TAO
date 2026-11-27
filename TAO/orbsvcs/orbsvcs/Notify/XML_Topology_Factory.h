@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    XML_Topology_Factory.h
  *
  *  @author Jonathan Pollack <pollack_j@ociweb.com>
  */
-//=============================================================================
 
 #ifndef XML_TOPOLOGY_FACTORY_H
 #define XML_TOPOLOGY_FACTORY_H
@@ -18,7 +14,6 @@
 #include "tao/corba.h"
 #include "ace/SString.h"
 
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -27,7 +22,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Notify
 {
-  extern const char TOPOLOGY_ID_NAME[];
+  extern char const TOPOLOGY_ID_NAME[];
 
   /**
    * \brief Create XML topology savers and loaders
@@ -42,7 +37,7 @@ namespace TAO_Notify
    *    -load_base_path   Base path for loading.
    *    -file_count       How many backup copies to keep.  Default is 1
    *    -no_timestamp     Disable timestamping (makes files diffable)
-   *        Note: you can set both saving and storing to the same file using -base_path
+   *        @note You can set both saving and storing to the same file using -base_path
    *              Or you can set them independently using -save_base_path
    *              and -load_base_path
    *
@@ -50,27 +45,31 @@ namespace TAO_Notify
   class TAO_Notify_Persist_Export XML_Topology_Factory : public Topology_Factory
   {
   public:
-    /// The constructor.
     XML_Topology_Factory ();
-    virtual ~XML_Topology_Factory ();
+    ~XML_Topology_Factory () override;
 
-    ////////////////////////////////////
-    // Override Topology_Factory methods
-    // documented in Topology_Factory.h
-    virtual Topology_Saver* create_saver ();
-    virtual Topology_Loader* create_loader();
+    XML_Topology_Factory (XML_Topology_Factory const &) = delete;
+    XML_Topology_Factory (XML_Topology_Factory &&) = delete;
+    XML_Topology_Factory &operator= (XML_Topology_Factory const &) = delete;
+    XML_Topology_Factory &operator= (XML_Topology_Factory &&) = delete;
 
-    ////////////////////////////////
-    // Override Share_Object methods
-    // documented in ace/Shared_Object.h
-    virtual int init (int argc, ACE_TCHAR *argv[]);
-    virtual int fini ();
+    /// @name Topology_Factory operations
+    /// @{
+    Topology_Saver* create_saver () override;
+    Topology_Loader* create_loader() override;
+    /// @}
+
+    /// @name ACE_Service_Object operations
+    /// @{
+    int init (int argc, ACE_TCHAR *argv[]) override;
+    int fini () override;
+    /// @}
 
    private:
-    ACE_TString save_base_path_;
-    ACE_TString load_base_path_;
-    size_t backup_count_;
-    bool timestamp_;
+    ACE_TString save_base_path_ = ACE_TEXT("./Notification_Service_Topology");
+    ACE_TString load_base_path_ = ACE_TEXT("./Notification_Service_Topology");
+    size_t backup_count_ = 2;
+    bool timestamp_ = true;
   };
 } // namespace TAO_Notify
 

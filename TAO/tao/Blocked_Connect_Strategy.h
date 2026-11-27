@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file Blocked_Connect_Strategy.h
  *
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_BLOCKED_CONNECT_STRATEGY_H
 #define TAO_BLOCKED_CONNECT_STRATEGY_H
@@ -29,8 +25,9 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Export TAO_Blocked_Connect_Strategy : public TAO_Connect_Strategy
 {
 public:
-  /// Constructor
-  TAO_Blocked_Connect_Strategy (TAO_ORB_Core *orb);
+  TAO_Blocked_Connect_Strategy () = delete;
+
+  explicit TAO_Blocked_Connect_Strategy (TAO_ORB_Core *orb);
 
   /*
    * Concrete implementation for this class. Please see

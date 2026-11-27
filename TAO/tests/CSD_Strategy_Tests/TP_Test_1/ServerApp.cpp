@@ -26,7 +26,7 @@ ServerApp::run_i(int argc, ACE_TCHAR* argv[])
   // * Returns -1 if problems are encountered.
   // * Returns 1 if the usage statement was explicitly requested.
   // * Returns 0 otherwise.
-  int result = this->parse_args(argc, argv);
+  const int result = this->parse_args(argc, argv);
   if (result != 0)
     {
       return result;
@@ -54,14 +54,13 @@ ServerApp::run_i(int argc, ACE_TCHAR* argv[])
                                                     poa_manager.in(),
                                                     policies);
 
-
   // Create the thread pool servant dispatching strategy object, and
   // hold it in a (local) smart pointer variable.
   TAO_Intrusive_Ref_Count_Handle<TAO::CSD::TP_Strategy> csd_strategy =
                                                  new TAO::CSD::TP_Strategy();
 
   // Tell the strategy to apply itself to the child poa.
-  if (csd_strategy->apply_to(child_poa.in()) == false)
+  if (!csd_strategy->apply_to(child_poa.in()))
     {
       ACE_ERROR((LM_ERROR,
                  "Failed to apply CSD strategy to child poa.\n"));
@@ -107,7 +106,7 @@ ServerApp::run_i(int argc, ACE_TCHAR* argv[])
   ACE_DEBUG((LM_DEBUG,
              "(%P|%t) ServerApp is destroying the Root POA.\n"));
 
-  root_poa->destroy(1, 1);
+  root_poa->destroy(true, true);
 
   ACE_DEBUG((LM_DEBUG,
              "(%P|%t) ServerApp is destroying the ORB.\n"));
@@ -119,7 +118,6 @@ ServerApp::run_i(int argc, ACE_TCHAR* argv[])
 
   return 0;
 }
-
 
 int
 ServerApp::parse_args(int argc, ACE_TCHAR* argv[])
@@ -138,7 +136,7 @@ ServerApp::parse_args(int argc, ACE_TCHAR* argv[])
 
         case 'n':
           {
-            int tmp = ACE_OS::atoi(get_opts.opt_arg());
+            const int tmp = ACE_OS::atoi(get_opts.opt_arg());
             if (tmp < 1)
               {
                 ACE_ERROR((LM_ERROR,

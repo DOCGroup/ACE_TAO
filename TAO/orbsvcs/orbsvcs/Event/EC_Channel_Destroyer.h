@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 /**
  * @file EC_Channel_Destroyer.h
  *

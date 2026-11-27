@@ -1,13 +1,8 @@
-/* -*- C++ -*- */
-
-// =================================================================
 /**
  * @file IIOP_Current_Loader.cpp
  *
  * @author Iliyan Jeliazkov <iliyan@ociweb.com>
  */
-// =================================================================
-
 
 #include "ace/Service_Config.h"
 #include "tao/ORBInitializer_Registry.h"
@@ -28,13 +23,11 @@ namespace TAO
   {
     namespace IIOP
     {
-      Current_Loader::~Current_Loader () = default;
-
       /// Initializes object when dynamic linking occurs.
       int
       Current_Loader::init (int, ACE_TCHAR *[])
       {
-        PortableInterceptor::ORBInitializer_ptr tmp = nullptr;
+        PortableInterceptor::ORBInitializer_ptr tmp {};
         ACE_NEW_THROW_EX (tmp,
                           Current_ORBInitializer<IIOP_Current_Impl> (ACE_TEXT ("TAO::Transport::IIOP::Current")),
                           CORBA::NO_MEMORY (CORBA::SystemException::_tao_minor_code (TAO::VMCID,
@@ -72,10 +65,9 @@ namespace TAO
       }
     }
   }
+}
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-
-}
 #endif /* defined (TAO_AS_STATIC_LIBS) */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/debug.h"
 #include "orbsvcs/Notify/Peer.h"
 
@@ -8,22 +7,26 @@ template <class SEQ, class PROXY, class SEQ_PARAM, class PROXY_PARAM> ACE_INLINE
 TAO_Notify_Method_Request_Updates_T<SEQ, PROXY, SEQ_PARAM, PROXY_PARAM>::execute_i ()
 {
   if (this->proxy_->has_shutdown ())
-    return 0; // If we were shutdown while waiting in the queue, return with no action.
+    {
+      return 0; // If we were shutdown while waiting in the queue, return with no action.
+    }
 
   try
     {
       TAO_Notify_Peer* peer = this->proxy_->peer();
 
-      if (peer != 0)
+      if (peer != nullptr)
         {
           peer->dispatch_updates (this->added_, this->removed_);
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       if (TAO_debug_level > 0)
-        ex._tao_print_exception (
-          "TAO_Notify_Method_Request_Updates::execute error sending updates\n");
+        {
+          ex._tao_print_exception (
+            "TAO_Notify_Method_Request_Updates::execute error sending updates\n");
+        }
     }
 
   return 0;

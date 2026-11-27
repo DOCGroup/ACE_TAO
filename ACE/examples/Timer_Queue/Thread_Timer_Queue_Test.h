@@ -1,22 +1,18 @@
-/* -*- C++ -*- */
-
-
-//=============================================================================
 /**
  *  @file    Thread_Timer_Queue_Test.h
  *
- *  This code exercises the <ACE_Thread_Timer_Queue_Adapter> using
- *  an <ACE_Timer_Heap_T>.
+ *  This code exercises the @c ACE_Thread_Timer_Queue_Adapter using
+ *  an @c ACE_Timer_Heap_T.
  *
  *  @author Carlos O'Ryan <coryan@cs.wustl.edu> and Sergio Flores-Gaitan <sergio@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef _THREAD_TIMER_QUEUE_TEST_H_
 #define _THREAD_TIMER_QUEUE_TEST_H_
 
 #include "ace/Task.h"
+#include <atomic>
+#include <memory>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -32,7 +28,14 @@
 
 // These aliases ensure that we use the minimal amount of locking
 // necessary.
-using Upcall = ACE_Event_Handler_Handle_Timeout_Upcall;
+class Upcall : public ACE_Event_Handler_Handle_Timeout_Upcall
+{
+public:
+  int deletion (ACE_Timer_Queue &timer_queue,
+                ACE_Event_Handler *handler,
+                void const *arg);
+};
+
 using Timer_Heap = ACE_Timer_Heap_T<ACE_Event_Handler *, Upcall, ACE_Null_Mutex>;
 using Timer_Heap_Iterator = ACE_Timer_Heap_Iterator_T<ACE_Event_Handler *, Upcall, ACE_Null_Mutex>;
 using Thread_Timer_Queue = ACE_Thread_Timer_Queue_Adapter<Timer_Heap>;
@@ -57,15 +60,21 @@ public:
   Input_Task (Thread_Timer_Queue *queue,
               Thread_Timer_Queue_Test_Driver &timer_queue_driver);
 
+  Input_Task (Input_Task const &) = delete;
+  Input_Task (Input_Task &&) = delete;
+  Input_Task &operator= (Input_Task const &) = delete;
+  Input_Task &operator= (Input_Task &&) = delete;
+
   /// This method runs the event loop in the new thread.
-  virtual int svc ();
+  int svc () override;
 
-  // = Some helper methods.
+  /// @name Helper methods
+  /// @{
 
-  /// Add a new timer to expire in <seconds> more.
+  /// Add a new timer to expire in @a seconds more.
   int add_timer (void *);
 
-  /// Cancel timer <id>.
+  /// Cancel timer @a id.
   int cancel_timer (void *);
 
   /// List the current scheduled timers.
@@ -76,13 +85,14 @@ public:
 
   /// Dump the state of the timer queue.
   void dump ();
+  /// @}
 
 private:
   /// The timer queue implementation.
-  Thread_Timer_Queue *queue_;
+  Thread_Timer_Queue *queue_ {};
 
   /// How many micro seconds are in a second.
-  const int usecs_;
+  int const usecs_;
 
   /// The thread timer queue test driver.
   Thread_Timer_Queue_Test_Driver &driver_;
@@ -92,22 +102,25 @@ private:
  * @class Thread_Timer_Queue_Test_Driver
  *
  * @brief Implements an example application that exercises
- * <Thread_Timer_Queue> timer queue.
+ * @c Thread_Timer_Queue timer queue.
  *
  * This class implements a simple test driver for the
- * <Thread_Timer_Queue>.  The <display_menu> hook method is
+ * @c Thread_Timer_Queue.  The @c display_menu hook method is
  * called from the base class to print a menu specific to the
  * thread implementation of the timer queue.
  */
-class ACE_Svc_Export Thread_Timer_Queue_Test_Driver : public Timer_Queue_Test_Driver <Thread_Timer_Queue, Input_Task, Input_Task::ACTION>
+class ACE_Svc_Export Thread_Timer_Queue_Test_Driver
+  : public Timer_Queue_Test_Driver<Thread_Timer_Queue,
+                                   Input_Task,
+                                   Input_Task::ACTION>
 {
 public:
   Thread_Timer_Queue_Test_Driver ();
-  ~Thread_Timer_Queue_Test_Driver ();
+  ~Thread_Timer_Queue_Test_Driver () override = default;
 
-  virtual int display_menu ();
-  virtual int init ();
-  virtual int run_test ();
+  int display_menu () override;
+  int init () override;
+  int run_test () override;
 
 private:
   /// Subclassed from ACE_Task.
@@ -119,22 +132,24 @@ private:
  *
  * @brief Event handler for the timer queue timeout events.
  *
- * The <handle_timeout> hook method prints out the current time,
+ * The @c handle_timeout hook method prints out the current time,
  * prints the time when this timer expired and deletes "this".
  */
 class Handler : public ACE_Event_Handler
 {
 public:
-  Handler (const ACE_Time_Value &expiration_time);
-  ~Handler ();
+  Handler (ACE_Time_Value const &expiration_time,
+           std::shared_ptr<std::atomic<long>> const &id);
+  ~Handler () override = default;
 
-  /// Store an "id" for the Handler, which is only use to print better
-  /// messages.
-  void set_id (int id);
+  Handler (Handler const &) = delete;
+  Handler (Handler &&) = delete;
+  Handler &operator= (Handler const &) = delete;
+  Handler &operator= (Handler &&) = delete;
 
   /// Call back hook.
-  virtual int handle_timeout (const ACE_Time_Value &current_time,
-                              const void *arg);
+  int handle_timeout (ACE_Time_Value const &current_time,
+                      void const *arg) override;
 
 private:
   /// Store the expected time of expiration, it is used to print a nice
@@ -143,7 +158,7 @@ private:
 
   /// Store an "id" for the Handler, which is only use to print better
   /// messages.
-  int id_;
+  std::shared_ptr<std::atomic<long>> id_;
 };
 
 #endif /* _THREAD_TIMER_QUEUE_TEST_H_ */

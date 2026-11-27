@@ -1,13 +1,9 @@
-// -*- C++ -*-
-
-// ===================================================================
 /**
  *  @file   HTIOP_Transport.h
  *
  *  @author Originally by Fred Kuhns <fredk@cs.wustl.edu>
  *  @author Modified by Balachandran Natarajan <bala@cs.wustl.edu>
  */
-// ===================================================================
 
 #ifndef TAO_HTIOP_TRANSPORT_H
 #define TAO_HTIOP_TRANSPORT_H
@@ -58,11 +54,13 @@ namespace TAO
     class HTIOP_Export Transport : public TAO_Transport
     {
     public:
-      /// Constructor.
       Transport (Connection_Handler *handler,
                  TAO_ORB_Core *orb_core);
+      Transport (Transport const&) = delete;
+      Transport (Transport&&) = delete;
+      Transport& operator= (Transport const&) = delete;
+      Transport& operator= (Transport&&) = delete;
 
-      /// Default destructor.
       ~Transport () override;
 
     protected:
@@ -71,7 +69,7 @@ namespace TAO
        * Please check the documentation in "tao/Transport.h" for more
        * details.
        */
-      //@{
+      /// @{
       ACE_Event_Handler * event_handler_i () override;
       virtual TAO_Connection_Handler * invalidate_event_handler_i ();
 
@@ -81,10 +79,9 @@ namespace TAO
 
       ssize_t recv (char *buf,
                             size_t len,
-                            const ACE_Time_Value *s = nullptr) override;
+                            ACE_Time_Value const *s = nullptr) override;
 
       int register_handler () override;
-
 
     public:
       /// @@TODO: These methods IMHO should have more meaningful
@@ -106,15 +103,15 @@ namespace TAO
 
       TAO_Connection_Handler * connection_handler_i () override;
 
-      //@}
+      /// @}
 
     private:
       /// Set the Bidirectional context info in the service context list
-      void set_bidir_context_info (TAO_Operation_Details &opdetails);
+      void set_bidir_context_info (TAO_Operation_Details &opdetails) override;
 
-      /// Add the listen points in <acceptor> to the <listen_point_list>
+      /// Add the listen points in @a acceptor to the @a listen_point_list
       /// if this connection is in the same interface as that of the
-      /// endpoints in the <acceptor>
+      /// endpoints in @a acceptor
       int get_listen_point (::HTIOP::ListenPointList &listen_point_list,
                             TAO_Acceptor *acceptor);
 

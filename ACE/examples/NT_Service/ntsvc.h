@@ -1,6 +1,3 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
  *  @file    ntsvc.h
  *
@@ -9,8 +6,6 @@
  *
  *  @author Gonzalo Diethelm and Steve Huston
  */
-//=============================================================================
-
 
 #ifndef NTSVC_H_
 #define NTSVC_H_
@@ -28,29 +23,33 @@ class Service : public ACE_NT_Service
 {
 public:
   Service ();
+  Service (Service const &) = delete;
+  Service (Service &&) = delete;
+  Service &operator= (Service const &) = delete;
+  Service &operator= (Service &&) = delete;
 
-  ~Service ();
+  ~Service () override;
 
-  /// We override <handle_control> because it handles stop requests
+  /// We override @c handle_control() because it handles stop requests
   /// privately.
-  virtual void handle_control (DWORD control_code);
+  void handle_control (DWORD control_code) override;
 
-  /// We override <handle_exception> so a 'stop' control code can pop
+  /// We override @c handle_exception() so a 'stop' control code can pop
   /// the reactor off of its wait.
-  virtual int  handle_exception (ACE_HANDLE h);
+  int handle_exception (ACE_HANDLE h) override;
 
   /// This is a virtual method inherited from ACE_NT_Service.
-  virtual int svc ();
+  int svc () override;
 
   /// Where the real work is done:
-  virtual int handle_timeout (const ACE_Time_Value& tv,
-                              const void *arg = 0);
+  int handle_timeout (ACE_Time_Value const &tv,
+                      void const *arg = nullptr) override;
 
 private:
   using inherited = ACE_NT_Service;
 
 private:
-  int stop_;
+  bool stop_ {};
 };
 
 // Define a singleton class as a way to insure that there's only one

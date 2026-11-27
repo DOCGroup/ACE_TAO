@@ -1,4 +1,3 @@
-// -*- C++ -*-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE ACE_Service_Object_Ptr::ACE_Service_Object_Ptr (ACE_Service_Object *so)
@@ -6,26 +5,20 @@ ACE_INLINE ACE_Service_Object_Ptr::ACE_Service_Object_Ptr (ACE_Service_Object *s
 {
 }
 
-ACE_INLINE ACE_Service_Object_Ptr::~ACE_Service_Object_Ptr ()
-{
-  this->service_object_->fini ();
-  delete this->service_object_;
-}
-
 ACE_INLINE ACE_Service_Object *
-ACE_Service_Object_Ptr::operator-> ()
+ACE_Service_Object_Ptr::operator-> () const
 {
-  return this->service_object_;
+  return this->service_object_.get ();
 }
 
-ACE_INLINE const ACE_TCHAR *
+ACE_INLINE ACE_TCHAR const *
 ACE_Service_Type::name () const
 {
   ACE_TRACE ("ACE_Service_Type::name");
-  return this->name_;
+  return this->name_.get ();
 }
 
-ACE_INLINE const ACE_Service_Type_Impl *
+ACE_INLINE ACE_Service_Type_Impl const *
 ACE_Service_Type::type () const
 {
   ACE_TRACE ("ACE_Service_Type::type");
@@ -33,11 +26,11 @@ ACE_Service_Type::type () const
 }
 
 ACE_INLINE void
-ACE_Service_Type::type (const ACE_Service_Type_Impl *o, bool enabled)
+ACE_Service_Type::type (ACE_Service_Type_Impl const *o, bool enabled)
 {
   ACE_TRACE ("ACE_Service_Type::type");
   this->type_ = o;
-  ((ACE_Service_Type *) this)->active_ = enabled;
+  this->active_ = enabled;
 }
 
 ACE_INLINE bool
@@ -61,13 +54,13 @@ ACE_Service_Type::fini_called () const
   return this->fini_already_called_;
 }
 
-ACE_INLINE const ACE_DLL & ACE_Service_Type::dll () const
+ACE_INLINE ACE_DLL const & ACE_Service_Type::dll () const
 {
   ACE_TRACE ("ACE_Service_Type::dll");
   return this->dll_;
 }
 
-ACE_INLINE void ACE_Service_Type::dll (const ACE_DLL &adll)
+ACE_INLINE void ACE_Service_Type::dll (ACE_DLL const &adll)
 {
   ACE_TRACE ("ACE_Service_Type::dll");
   this->dll_ = adll;

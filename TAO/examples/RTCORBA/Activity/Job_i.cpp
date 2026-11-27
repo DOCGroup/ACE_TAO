@@ -4,18 +4,14 @@
 
 #include "Activity.h"
 
-Job_i::Job_i ()
-{
-}
-
-const ACE_CString&
-Job_i::name ()
+ACE_CString const &
+Job_i::name () const
 {
   return job_name_;
 }
 
-const ACE_CString&
-Job_i::poa ()
+ACE_CString const &
+Job_i::poa () const
 {
   return POA_name_;
 }
@@ -40,14 +36,19 @@ Job_i::work (CORBA::ULong work)
   static CORBA::ULong prime_number = 9619;
 
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "test_i::method: %hd units of work\n",
-                work));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "test_i::method: %u units of work\n",
+                  work));
+    }
 
-  for (; work != 0; work--)
-    ACE::is_prime (prime_number,
-                   2,
-                   prime_number / 2);
+  while (work != 0)
+    {
+      ACE::is_prime (prime_number,
+                     2,
+                     prime_number / 2);
+      --work;
+    }
 }
 
 void

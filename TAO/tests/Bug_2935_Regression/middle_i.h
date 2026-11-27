@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    middle_i.h
  *
@@ -8,8 +5,6 @@
  *
  *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef MIDDLE_I_H
 #define MIDDLE_I_H
@@ -30,8 +25,10 @@ class Middle_i : public POA_ThreeTier
 public:
   Middle_i (CORBA::ORB_ptr orb, ThreeTier_ptr target);
   ~Middle_i () override = default;
-
-  bool parse_args (int argc, ACE_TCHAR *argv[]);
+  Middle_i (Middle_i const &) = delete;
+  Middle_i &operator= (Middle_i const &) = delete;
+  Middle_i (Middle_i &&) = delete;
+  Middle_i &operator= (Middle_i &&) = delete;
 
   //////////////////////////////////////
   /// Implement the ThreeTier interface
@@ -42,7 +39,7 @@ public:
   void shutdown () override;
 
 private:
-  CORBA::ORB_var orb_;
-  ThreeTier_var target_;
+  CORBA::ORB_var const orb_;
+  ThreeTier_var const target_;
 };
 #endif /* MIDDLE_I_H */

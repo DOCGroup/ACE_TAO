@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*Ntf Perf Throughput): notifytest, strategies, messaging, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
   exename  = Throughput
 }

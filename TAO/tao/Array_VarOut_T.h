@@ -1,20 +1,16 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Array_VarOut_T.h
  *
  *  @author Jeff Parsons
  *  @author Johnny Willemsen
  */
-//=============================================================================
 
 #ifndef TAO_ARRAY_VAROUT_T_H
 #define TAO_ARRAY_VAROUT_T_H
 
 #include /**/ "ace/pre.h"
 
-#include /**/ "tao/Versioned_Namespace.h"
+#include "tao/orbconf.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -49,10 +45,10 @@ public:
   using _slice_type = T_slice;
   using _tag_type = TAG;
 
-  TAO_Array_Forany_T ();
+  TAO_Array_Forany_T () = default;
   TAO_Array_Forany_T (_slice_type *, CORBA::Boolean nocopy = false);
   TAO_Array_Forany_T (TAO_Array_Forany_T<T,T_slice,TAG> const &);
-  ~TAO_Array_Forany_T ();
+  ~TAO_Array_Forany_T () = default;
 
   static void _tao_any_destructor (void *);
 
@@ -71,7 +67,7 @@ public:
   using _retn_type = _slice_type *;
   using _retn_arg_type = _slice_type *&;
 
-  // in, inout, out, _retn
+  /// in, inout, out, _retn
   _in_type      in () const;
   _inout_type   inout ();
   _out_type     out ();
@@ -82,8 +78,8 @@ public:
   static _slice_type * tao_alloc ();
 private:
   using FORANY = TAO_Array_Forany_T<T, T_slice, TAG>;
-  _slice_type * ptr_;
-  CORBA::Boolean nocopy_;
+  _slice_type *ptr_ {};
+  CORBA::Boolean nocopy_ {};
 };
 
 /**
@@ -113,17 +109,17 @@ public:
   using _retn_type = _slice_type *;
   using _retn_arg_type = _slice_type *&;
 
-  // in, inout, out, _retn
+  /// in, inout, out, _retn
   _in_type      in () const;
   _inout_type   inout ();
   _retn_type    _retn ();
   _retn_arg_type  _retn_arg ();
 
-  // TAO extension.
+  /// TAO extension.
   _retn_type    ptr () const;
 protected:
   using FORANY = TAO_Array_Forany_T<T, T_slice, TAG>;
-  _slice_type * ptr_;
+  _slice_type * ptr_ {};
 };
 
 /**
@@ -214,10 +210,9 @@ public:
   _slice_type const & operator[] (CORBA::ULong index) const;
 private:
   using FORANY = TAO_Array_Forany_T<T, T_slice, TAG>;
-  using THIS_OUT_TYPE = TAO_Array_Out_T<T, T_var, T_slice, TAG>;
   _slice_type *& ptr_;
 
-  // Assignment from T_var not allowed.
+  /// Assignment from T_var is not allowed.
   void operator= (_value_type const &);
 };
 

@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    TLI_Connector.h
  *
  *  @author Doug Schmidt
  */
-//=============================================================================
 
 #ifndef ACE_TLI_CONNECTOR_H
 #define ACE_TLI_CONNECTOR_H
@@ -32,11 +28,10 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_TLI_Connector
 {
 public:
-  /// Default constructor.
   ACE_TLI_Connector ();
 
   /**
-   * Actively connect and produce a <new_stream> if things go well.
+   * Actively connect and produce a @c new_stream if things go well.
    * The @a remote_sap is the address that we are trying to connect
    * with.  The @a timeout is the amount of time to wait to connect.
    * If it's 0 then we block indefinitely.  If *timeout == {0, 0} then
@@ -48,23 +43,23 @@ public:
    * @a local_sap is the value of local address to bind to.  If it's
    * the default value of ACE_Addr::sap_any then the user is letting
    * the OS do the binding.  If @a reuse_addr == 1 then the
-   * <local_addr> is reused, even if it hasn't been cleanedup yet.
+   * @c local_addr is reused, even if it hasn't been cleanedup yet.
    */
   ACE_TLI_Connector (ACE_TLI_Stream &new_stream,
-                     const ACE_Addr &remote_sap,
+                     ACE_Addr const &remote_sap,
                      ACE_Time_Value *timeout = nullptr,
-                     const ACE_Addr &local_sap = ACE_Addr::sap_any,
+                     ACE_Addr const &local_sap = ACE_Addr::sap_any,
                      int reuse_addr = 0,
                      int flags = O_RDWR,
                      int perms = 0,
-                     const char device[] = ACE_TLI_TCP_DEVICE,
+                     char const device[] = ACE_TLI_TCP_DEVICE,
                      struct t_info *info = nullptr,
                      int rw_flag = 1,
                      struct netbuf *udata = nullptr,
                      struct netbuf *opt = nullptr);
 
   /**
-   * Actively connect and produce a <new_stream> if things go well.
+   * Actively connect and produce a @c new_stream if things go well.
    * The @a remote_sap is the address that we are trying to connect
    * with.  The @a timeout is the amount of time to wait to connect.
    * If it's 0 then we block indefinitely.  If *timeout == {0, 0} then
@@ -76,16 +71,16 @@ public:
    * @a local_sap is the value of local address to bind to.  If it's
    * the default value of ACE_Addr::sap_any then the user is letting
    * the OS do the binding.  If @a reuse_addr == 1 then the
-   * <local_addr> is reused, even if it hasn't been cleanedup yet.
+   * @c local_addr is reused, even if it hasn't been cleanedup yet.
    */
   int connect (ACE_TLI_Stream &new_stream,
-               const ACE_Addr &remote_sap,
+               ACE_Addr const &remote_sap,
                ACE_Time_Value *timeout = nullptr,
-               const ACE_Addr &local_sap = ACE_Addr::sap_any,
+               ACE_Addr const &local_sap = ACE_Addr::sap_any,
                int reuse_addr = 0,
                int flags = O_RDWR,
                int perms = 0,
-               const char device[] = ACE_TLI_TCP_DEVICE,
+               char const device[] = ACE_TLI_TCP_DEVICE,
                struct t_info *info = nullptr,
                int rw_flag = 1,
                struct netbuf *udata = nullptr,
@@ -104,9 +99,11 @@ public:
   /// Resets any event associations on this handle
   bool reset_new_handle (ACE_HANDLE handle);
 
-  // = Meta-type info
+  /// @name Peer types
+  /// @{
   using PEER_ADDR = ACE_INET_Addr;
   using PEER_STREAM = ACE_TLI_Stream;
+  /// @}
 
   /// Dump the state of an object.
   void dump () const;

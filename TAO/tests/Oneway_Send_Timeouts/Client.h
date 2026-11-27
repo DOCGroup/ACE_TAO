@@ -10,16 +10,21 @@
 class Client
 {
  public:
-  Client (int argc, ACE_TCHAR* argv[]);
+  Client (int argc, ACE_TCHAR *argv[]);
   ~Client ();
+
+  Client (Client const &) = delete;
+  Client &operator= (Client const &) = delete;
+  Client (Client &&) = delete;
+  Client &operator= (Client &&) = delete;
 
   bool run ();
 
  private:
-  bool init (int argc, ACE_TCHAR* argv[]);
-  bool parse_args (int argc, ACE_TCHAR* argv[]);
+  bool init (int argc, ACE_TCHAR *argv[]);
+  bool parse_args (int argc, ACE_TCHAR *argv[]);
 
-  enum Flushing_Strategy
+  enum class Flushing_Strategy
   {
     LF,
     BLOCKING,
@@ -31,7 +36,7 @@ class Client
   CORBA::ORB_var orb_;
   Test_var test_obj_;
   Test_var management_;
-  Flushing_Strategy flush_strategy_;
+  Flushing_Strategy flush_strategy_ {};
 
   Test_var test_obj_none_timeout_;
   Test_var test_obj_eager_timeout_;
@@ -40,8 +45,8 @@ class Client
   Test_var test_obj_server_timeout_;
   Test_var test_obj_target_timeout_;
 
-  // flood up connection for 'tv' time.
-  //  if tv is 0, remember to unsleep server.
+  /// flood up connection for 'tv' time.
+  ///  if tv is 0, remember to unsleep server.
   bool flood_connection (ACE_Time_Value& tv);
   bool unplug_transport ();
   bool test_oneway_timeout (bool flood);

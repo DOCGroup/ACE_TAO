@@ -1,13 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Servant_Dispatcher.h
  *
  *  @author Frank Hunleth <fhunleth@cs.wustl.edu>
  */
-//=============================================================================
-
 #ifndef TAO_SERVANT_DISPATCHER_H
 #define TAO_SERVANT_DISPATCHER_H
 #include /**/ "ace/pre.h"
@@ -70,9 +65,9 @@ public:
 
   /// Factory method for creating new POA's.
   virtual TAO_Root_POA *create_Root_POA (
-      const ACE_CString &name,
+      ACE_CString const &name,
       PortableServer::POAManager_ptr poa_manager,
-      const TAO_POA_Policy_Set &policies,
+      TAO_POA_Policy_Set const &policies,
       ACE_Lock &lock,
       TAO_SYNCH_MUTEX &thread_lock,
       TAO_ORB_Core &orb_core,

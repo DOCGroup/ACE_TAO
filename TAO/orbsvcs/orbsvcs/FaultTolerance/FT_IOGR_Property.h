@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    FT_IOGR_Property.h
  *
@@ -8,8 +5,6 @@
  *
  *  @author  Bala Natarajan <bala@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_FT_IOGR_PROPERTY_H
 #define TAO_FT_IOGR_PROPERTY_H
@@ -44,7 +39,7 @@ class TAO_Profile;
  * user can make an instance of this class with the right
  * properties and use the helper methods in the IORManipulation
  *
- * NOTE: This class is NOT thread safe. The range of services that
+ * @note This class is NOT thread safe. The range of services that
  * use this class (like the RM) should use them in a thread safe
  * manner.
  */
@@ -53,28 +48,31 @@ class TAO_FT_ORB_Utils_Export TAO_FT_IOGR_Property
     public virtual ::CORBA::LocalObject
 {
 public:
-  /// Our Constructor
-  TAO_FT_IOGR_Property (FT::TagFTGroupTaggedComponent &ft_group);
+  explicit TAO_FT_IOGR_Property (FT::TagFTGroupTaggedComponent &ft_group);
 
   TAO_FT_IOGR_Property ();
 
-  /// Destructor
-  ~TAO_FT_IOGR_Property ();
+  ~TAO_FT_IOGR_Property () override;
+
+  TAO_FT_IOGR_Property (TAO_FT_IOGR_Property const&) = delete;
+  TAO_FT_IOGR_Property& operator= (TAO_FT_IOGR_Property const&) = delete;
+  TAO_FT_IOGR_Property (TAO_FT_IOGR_Property&&) = delete;
+  TAO_FT_IOGR_Property& operator= (TAO_FT_IOGR_Property&&) = delete;
 
   /// Set the property for the IOGR
   CORBA::Boolean set_property (
       CORBA::Object_ptr& ior) override;
 
-  /// Set <ior1> as  primary which is a part of <ior2>
+  /// Set @a ior1 as the primary, which is a part of @a ior2.
   CORBA::Boolean set_primary (
       CORBA::Object_ptr& ior1,
       CORBA::Object_ptr ior2) override;
 
-  /// Get the primary member from the IOGR <ior>
+  /// Get the primary member from the IOGR @a ior.
   CORBA::Object_ptr get_primary (
       CORBA::Object_ptr ior) override;
 
-  /// Is there a primary available for <ior>
+  /// Is there a primary available for @a ior?
   CORBA::Boolean is_primary_set (
       CORBA::Object_ptr ior) override;
 
@@ -85,21 +83,19 @@ public:
   CORBA::Boolean reset_tagged_components (
       FT::TagFTGroupTaggedComponent& ft_group);
 
-  /// Extract the TagFTGroupTaggedComponent inside the <ior>
+  /// Extract the TagFTGroupTaggedComponent inside @a iogr.
   CORBA::Boolean get_tagged_component (
       CORBA::Object_ptr const iogr,
-      FT::TagFTGroupTaggedComponent& ft_group) const;
+      FT::TagFTGroupTaggedComponent &ft_group) const;
 
 private:
-  /// An helper function that gets the primary profile from the <ior>
-  TAO_Profile *get_primary_profile (CORBA::Object_ptr ior);
+  /// An helper function that gets the primary profile from @a ior.
+  TAO_Profile *get_primary_profile (CORBA::Object_ptr const ior) const;
 
   /// An helper method for encoding the proeprties
   CORBA::Boolean encode_properties (
       TAO_OutputCDR &cdr,
-      IOP::TaggedComponent& tagged_components);
-
-private:
+      IOP::TaggedComponent& tagged_components) const;
   /// Hold the reference to the FT group tagged component
   FT::TagFTGroupTaggedComponent *ft_group_tagged_component_ {};
 };

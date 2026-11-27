@@ -1,5 +1,3 @@
-/* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file    FT_ReplicationManager.h
  *
@@ -7,8 +5,6 @@
  *
  *  @author Curt Hibbs <hibbs_c@ociweb.com>
  */
-//=============================================================================
-
 
 #ifndef FT_REPLICATION_MANAGER_H_
 #define FT_REPLICATION_MANAGER_H_
@@ -21,6 +17,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include <orbsvcs/FT_ReplicationManagerS.h>
+#include <string>
 //#include <orbsvcs/PortableGroup/PG_PropertyManager.h>
 //#include <orbsvcs/PortableGroup/PG_GenericFactory.h>
 //#include <orbsvcs/PortableGroup/PG_ObjectGroupManager.h>
@@ -123,12 +120,11 @@ namespace TAO
      */
     int idle (int & result);
 
-
     /**
      * Identify this fault detector factory.
      * @return a string to identify this object for logging/console message purposes.
      */
-    const char * identity () const;
+    char const * identity () const;
 
     /**
      * Get the type_id associated with an object group.
@@ -136,7 +132,6 @@ namespace TAO
      * @return String identifying the type id associated with the ObjectGroup.
      */
     char * type_id (PortableGroup::ObjectGroup_ptr object_group);
-
 
   //////////////////////
   // CORBA interface(s)
@@ -147,7 +142,7 @@ namespace TAO
     *
     * Methods required by the POA_FT::ReplicationManager interface.
     */
-    //@{
+    /// @{
     /// Registers the Fault Notifier with the Replication Manager.
     void register_fault_notifier (
         FT::FaultNotifier_ptr fault_notifier) override;
@@ -162,14 +157,14 @@ namespace TAO
     /// TAO-specific shutdown operation.
     void shutdown () override;
 
-    //@}
+    /// @}
 
     /**
     * @name PortableGroup::PropertyManager Methods
     *
     * Methods required by the PortableGroup::PropertyManager interface.
     */
-    //@{
+    /// @{
     /// Set the default properties to be used by all object groups.
     void set_default_properties (
         PortableGroup::Properties const & props) override;
@@ -222,7 +217,7 @@ namespace TAO
     PortableGroup::Properties * get_properties (
         PortableGroup::ObjectGroup_ptr object_group) override;
 
-    //@}
+    /// @}
 
     /**
      * @name FT::FTObjectGroupManager methods
@@ -230,7 +225,7 @@ namespace TAO
      * Methods required by the FT::FTObjectGroupManager
      * interface.
      */
-    //@{
+    /// @{
     /// Create a member in an object group.
     PortableGroup::ObjectGroup_ptr create_member (
         PortableGroup::ObjectGroup_ptr object_group,
@@ -299,14 +294,14 @@ namespace TAO
         PortableGroup::ObjectGroup_ptr object_group,
         PortableGroup::Location const & the_location) override;
 
-    //@}
+    /// @}
 
     /**
      * @name PortableGroup::GenericFactory methods
      *
      * Methods required by the PortableGroup::GenericFactory interface.
      */
-    //@{
+    /// @{
     /**
      * Create an object of the specified type that adheres to the
      * restrictions defined by the provided Criteria.  The out
@@ -333,11 +328,11 @@ namespace TAO
         PortableGroup::GenericFactory::FactoryCreationId const &
           factory_creation_id) override;
 
-    //@}
+    /// @}
 
-    /////////////////////////
-    // Implementation methods
   private:
+    /// @name Implementation methods
+    /// @{
     /**
      * Write this factory's IOR to a file
      */
@@ -345,19 +340,20 @@ namespace TAO
 
     /// Registers the Fault Notifier with the Replication Manager.
     void register_fault_notifier_i (
-        FT::FaultNotifier_ptr fault_notifier
-      );
+        FT::FaultNotifier_ptr fault_notifier);
+    /// @}
 
-    ////////////////
-    // Forbidden methods
+    /// @name Disabled operations
+    /// @{
     FT_ReplicationManager (FT_ReplicationManager const &) = delete;
     FT_ReplicationManager (FT_ReplicationManager &&) = delete;
     FT_ReplicationManager & operator= (FT_ReplicationManager const &) = delete;
     FT_ReplicationManager & operator= (FT_ReplicationManager &&) = delete;
+    /// @}
 
-    ///////////////
-    // Data Members
   private:
+    /// @name Data members
+    /// @{
     /// The orb
     CORBA::ORB_var orb_;
 
@@ -365,10 +361,10 @@ namespace TAO
     PortableServer::POA_var poa_;
 
     /// A file to which the factory's IOR should be written.
-    ACE_TCHAR const * ior_output_file_;
+    std::basic_string<ACE_TCHAR> ior_output_file_;
 
     /// A name to be used to register the factory with the name service.
-    ACE_CString ns_name_;
+    std::string ns_name_;
     CosNaming::NamingContext_var naming_context_;
     CosNaming::Name this_name_;
 
@@ -376,7 +372,7 @@ namespace TAO
     FT::ReplicationManager_var replication_manager_ref_;
 
     /// A human-readable string to identify this Replication Manager.
-    ACE_CString identity_;
+    std::string identity_;
 
     /// an object that manages a collection of object groups
     TAO::PG_Group_Factory group_factory_;
@@ -387,7 +383,7 @@ namespace TAO
     /// The fault notifier.
     FT::FaultNotifier_var fault_notifier_;
     /// set by command line -f option
-    ACE_TCHAR const * fault_notifier_ior_string_;
+    std::basic_string<ACE_TCHAR> fault_notifier_ior_string_;
 
     /// The fault consumer.
     TAO::FT_FaultConsumer fault_consumer_;
@@ -396,7 +392,8 @@ namespace TAO
     TAO::PG_FactoryRegistry factory_registry_;
 
     /// Quit flag.
-    int quit_;
+    bool quit_ {};
+    /// @}
   };
 } // namespace TAO
 

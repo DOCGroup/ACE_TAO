@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 #ifndef _ConfigurationViewer_MainFrame_H
 #define _ConfigurationViewer_MainFrame_H
 
@@ -20,19 +19,17 @@ enum
     FRAME_TREE
 };
 
-
 class MainFrame : public wxFrame
 {
 public:
-  ///////////////////////////////////////////
-  // Initializers
-  ///////////////////////////////////////////
+  /// @name Initializers
+  /// @{
   MainFrame(const wxString& title, const wxPoint& pos, const wxSize& size);
   virtual ~MainFrame();
+  /// @}
 
-  ///////////////////////////////////////////
-  // Methods
-  ///////////////////////////////////////////
+  /// @name Methods
+  /// @{
   static MainFrame* Instance();
   void OnQuit(wxCommandEvent& event);
   void OnAbout(wxCommandEvent& event);
@@ -43,23 +40,28 @@ public:
   void OnFileExport(wxCommandEvent& event);
   void OnFileImport(wxCommandEvent& event);
   void OnSize(wxSizeEvent& event);
+  /// @}
 
-  ///////////////////////////////////////////
-  // Attribute Accessors
-  ///////////////////////////////////////////
+  /// @name Attribute Accessors
+  /// @{
   ACE_Configuration* GetpConfig() {return m_pConfig;};
+  /// @}
 protected:
-  // Not Used
+  /// @name Operations
+  /// @{
+  /// Not Used
   MainFrame(const MainFrame& RHS);
   const MainFrame& operator=(const MainFrame& RHS);
 
-  // Operations
   void SetNewConfig(ACE_Configuration* pConfig);
+  /// @}
 
-  // Attributes
+  /// @name Attributes
+  /// @{
   wxSplitterWindow*         m_pSplitter;
   ConfigTreeCtrl*           m_pTreeCtrl;
   ValueListCtrl*            m_pListCtrl;
+  /// @}
 private:
   DECLARE_EVENT_TABLE()
   ACE_Configuration*        m_pConfig;

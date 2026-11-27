@@ -1,19 +1,10 @@
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = DESCRIPTION
-//    This program exercises the ACE_Arg_Shifter class.
-//
-// = AUTHOR
-//    Steve Huston  <shuston@riverace.com>
-//
-// ============================================================================
+/// @file Arg_Shifter_Test.cpp
+/// This program exercises the ACE_Arg_Shifter class.
+///
+/// @author Steve Huston  <shuston@riverace.com>
 
 #include "ace/Arg_Shifter.h"
 #include "test_config.h"
-
 
 int
 run_main (int, ACE_TCHAR *[])
@@ -21,7 +12,7 @@ run_main (int, ACE_TCHAR *[])
   ACE_START_TEST (ACE_TEXT ("Arg_Shifter_Test"));
   const int test_argc_size1 = 5;
   int argl (test_argc_size1);
-  const ACE_TCHAR *args1[test_argc_size1] = {
+  ACE_TCHAR const *args1[test_argc_size1] = {
     ACE_TEXT ("-known"),
     ACE_TEXT ("-huh"),
     ACE_TEXT ("-arg"),
@@ -32,11 +23,25 @@ run_main (int, ACE_TCHAR *[])
   ACE_Arg_Shifter shifter1 (argl, args1);
 
   if (!shifter1.is_anything_left ())
+  {
     ACE_ERROR ((LM_ERROR, "is_anything_left() returned 0 at start.\n"));
+  }
+
+  int supplied_argc = 1;
+  ACE_TCHAR const * const supplied_arg = ACE_TEXT ("-supplied");
+  ACE_TCHAR const *supplied_args[] = {supplied_arg};
+  ACE_TCHAR const *supplied_temp[1] {};
+  {
+    ACE_Arg_Shifter supplied_shifter (supplied_argc, supplied_args, supplied_temp);
+    if (supplied_temp[0] != supplied_arg)
+    {
+      ACE_ERROR ((LM_ERROR, "caller-provided temporary array was not populated\n"));
+    }
+  }
 
   const int test_argc_size2 = 4;
   int arg2 = test_argc_size2;
-  const ACE_TCHAR *args2[test_argc_size2] = {
+  ACE_TCHAR const *args2[test_argc_size2] = {
     ACE_TEXT ("-ORBDebugLevel"),
     ACE_TEXT ("-0"),
     ACE_TEXT ("-o"),
@@ -68,7 +73,7 @@ run_main (int, ACE_TCHAR *[])
     }
 
 #ifdef ACE_USES_WCHAR
-  const char *args3[] = {
+  char const *args3[] = {
     "-ORBDebugLevel 0",
     "-o",
     "server.ior",

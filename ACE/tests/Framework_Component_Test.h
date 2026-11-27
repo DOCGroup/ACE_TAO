@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    Framework_Component_Test.h
  *
@@ -7,8 +5,6 @@
  *
  *  @author Don Hinton <dhinton@ieee.org>
  */
-//=============================================================================
-
 
 #ifndef ACE_TESTS_FRAMEWORK_COMPONENT_TEST_H
 #define ACE_TESTS_FRAMEWORK_COMPONENT_TEST_H

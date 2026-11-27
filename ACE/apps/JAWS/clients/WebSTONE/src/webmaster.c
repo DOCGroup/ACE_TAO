@@ -81,7 +81,8 @@ THREAD FILE *debugfile = stderr;
 struct hostent  *master_phe;   /* IP addresses for webmaster */
 struct timeval sumedh_start, sumedh_end;
 
-void HostEntCpy(struct hostent *dest, struct hostent *src);
+int HostEntCpy(struct hostent *dest, struct hostent *src);
+void HostEntFree(struct hostent *host);
 
 static void
 usage(const char *progname)
@@ -204,7 +205,7 @@ void echo_client(void *stream)
     FILE *outfile;
     int which_stream = (int) stream;
     char buf[BUFSIZ];
-    int i, len, rv;
+    int i, len;
     fd_set readfds;
 
     /* This code which handles the timeout may need
@@ -227,29 +228,45 @@ void echo_client(void *stream)
          for SIGINT */
 
     while (1) {
+  int rv;
+
   FD_ZERO(&readfds);
-  for (i = 0; i < num_rexecs; i++)
+  for (i = 0; i < num_rexecs; ++i)
+    {
       if (sockarr[i] != BADSOCKET_VALUE)
-    FD_SET(sockarr[i], &readfds);
+        {
+          FD_SET(sockarr[i], &readfds);
+        }
+    }
   rv = select(num_rexecs, &readfds, 0, 0, &timeout);
   if ( rv == 0)
-    continue;
+    {
+      continue;
+    }
   if (rv < 0 && WSAGetLastError() == WSANOTINITIALISED)
+    {
       return;
+    }
   if (rv < 0)
+    {
       errexit("Error in echo_client(): select() returns %d: %s\n", rv, neterrstr());
+    }
 
   /* loop over the sockets that are ready with data */
-  for (i = 0; i < num_rexecs; i++) {
+  for (i = 0; i < num_rexecs; ++i) {
       if (sockarr[i] != BADSOCKET_VALUE && FD_ISSET(sockarr[i], &readfds)) {
     len = NETREAD(sockarr[i], buf, sizeof(buf));
     if (len <= 0) {
         /* mark connection closed */
         sockarr[i] = BADSOCKET_VALUE;
         if (len < 0 && WSAGetLastError() == WSANOTINITIALISED)
-      return;
+          {
+            return;
+          }
         if (len < 0)
-      fprintf(stderr, "Error in echo_client() after NETREAD(): %s\n", neterrstr());
+          {
+            fprintf(stderr, "Error in echo_client() after NETREAD(): %s\n", neterrstr());
+          }
         continue;
     }
 
@@ -269,12 +286,12 @@ echo_client(char *hostname, const int fd)
    * WRITE TEXT FROM FILE DESCRIPTOR INTO STDOUT
    */
   char buf[BUFSIZ];
-  int  cc;
   D_PRINTF( "echo_client running\n" );
 
   while (getppid() != 1)
     {
-      cc = NETREAD(fd, buf, sizeof(buf));
+      int cc = NETREAD(fd, buf, sizeof(buf));
+
       if (cc > 0)
       {
     write(STDOUT_FILENO, buf, cc);
@@ -301,13 +318,15 @@ int i;
   /* we have an IP address */
   client_addr = inet_addr(client_hostname);
   if (client_addr == INADDR_NONE)
+    {
       return 0;
+    }
     } else {
   /* we have a hostname, use the webserver hostname */
   return master_phe->h_name;
     }
 
-    for (i = 0; master_phe->h_addr_list[i] != 0; i++) {
+    for (i = 0; master_phe->h_addr_list[i] != 0; ++i) {
   if ((*(int *)(master_phe->h_addr_list[i]) & netmask) ==
     (client_addr & netmask))
       goto gotit;
@@ -327,7 +346,6 @@ gotit:
 void ParseCmdLine(int argc, char **argv )
 {
 char    getoptch;
-int   currarg;
 extern char *optarg;
 extern int  optind;
 
@@ -395,7 +413,9 @@ extern int  optind;
       } /* end while */
 
     if (numloops && testtime)
-  errexit("Can't have both -l and -t\n");
+      {
+        errexit("Can't have both -l and -t\n");
+      }
 
     if(!havewebserver && !servaddrin_config)
     {
@@ -435,7 +455,7 @@ extern int  optind;
      */
     if (uil_filelist_f == 0)
     {
-  currarg = optind;
+  int currarg = optind;
   number_of_pages = 0;
   while(currarg != argc)
   {
@@ -443,9 +463,17 @@ extern int  optind;
       * GET THE UILS TO RETRIEVE.
       */
 
-      sscanf(argv[currarg],"%s",filelist[number_of_pages]);
-      number_of_pages++;
-      currarg++;
+      if (number_of_pages >= sizeof(filelist) / sizeof(filelist[0]))
+      {
+        errexit("Too many URL resources specified\n");
+      }
+      if (strlen(argv[currarg]) >= sizeof(filelist[0]))
+      {
+        errexit("URL resource exceeds maximum length\n");
+      }
+      strcpy(filelist[number_of_pages], argv[currarg]);
+      ++number_of_pages;
+      ++currarg;
   }
     }
     else
@@ -453,6 +481,10 @@ extern int  optind;
   /* have filelist; take a stab at the number of valid URLs */
   D_PRINTF( "About to parse filelist %s\n", uil_filelist );
   number_of_pages = count_file_list(uil_filelist);
+  if (number_of_pages < 0)
+  {
+      errexit("Could not count pages in filelist %s\n", uil_filelist);
+  }
     }
     if (number_of_pages == 0)
     {
@@ -507,7 +539,10 @@ char *commandline;
 {
     char tmpcommandline[NCCARGS];
     char hostname[MAXHOSTNAMELEN];
-    char *webclient_path, *temp;
+    char *webclient_path;
+#ifndef WIN32
+    char *temp;
+#endif
     int  cnt;
     struct hostent  *master_phe_tmp; /* temp. variable added by - Rajesh Shah*/
 
@@ -537,8 +572,18 @@ char *commandline;
 
   /* master_phe = gethostbyname(hostname); */
   master_phe_tmp = gethostbyname(hostname);
-  master_phe = (struct hostent *)malloc(sizeof(struct hostent));
-  HostEntCpy(master_phe, master_phe_tmp);
+  if (master_phe_tmp == 0)
+  {
+      errexit("Could not resolve local host name %s\n", hostname);
+  }
+  master_phe = (struct hostent *)calloc(1, sizeof(struct hostent));
+  if (master_phe == 0 || HostEntCpy(master_phe, master_phe_tmp) != 0)
+  {
+      HostEntFree(master_phe);
+      free(master_phe);
+      master_phe = 0;
+      errexit("Could not copy local host address information\n");
+  }
     }
 
     /* set up executable pathname */
@@ -552,8 +597,6 @@ char *commandline;
       strcat(webclient_path, "/webclient");
 
     } else
-#else
-    temp = temp;
 #endif /* WIN32 */
       webclient_path = PROGPATH;
 
@@ -620,7 +663,7 @@ char *commandline;
       */
       strcat(commandline," ");
       strcat(commandline,filelist[cnt]);
-      cnt++;
+      ++cnt;
   }
     }
     puts(commandline);
@@ -676,11 +719,19 @@ struct sockaddr_in  *serveraddr;
   char *primename;
 
   if (0 == fgets(linebuf, sizeof(linebuf), fp))
+    {
       break;
-  num = sscanf(linebuf,"%s %s %s %d %s",clienthostname[cnt],login,password,
-              &numclients, webserver2);
+    }
+  if (cnt >= MAXCLIENTS || cnt >= FD_SETSIZE)
+  {
+    errexit("Number of Clients can't exceed %d\n", MAXCLIENTS);
+  }
+  num = sscanf(linebuf, "%63s %24s %19s %d %63s",
+               clienthostname[cnt], login, password, &numclients, webserver2);
   if (num < 4)
+    {
       break;
+    }
   if (servaddrin_config) {
       if (num == 4) {
     errexit("No webserver specified in config file for %s\n", clienthostname[cnt]);
@@ -689,7 +740,9 @@ struct sockaddr_in  *serveraddr;
   }
 
   if (numclients <= 0)
+    {
       errexit("Number of clients must be >= 0\n");
+    }
   if (numclients > MAXPROCSPERNODE)
   {
       errexit("Number of clients per node can't exceed %d\n", MAXPROCSPERNODE);
@@ -736,11 +789,7 @@ struct sockaddr_in  *serveraddr;
   }
 
 
-  cnt++;
-  if (cnt > MAXCLIENTS || cnt > FD_SETSIZE)
-  {
-      errexit("Number of Clients can't exceed %d\n", MAXCLIENTS);
-  }
+  ++cnt;
     }
 
     num_rexecs = cnt;
@@ -793,15 +842,13 @@ int sock;
      */
 
     D_PRINTF( "Beginning accept loop\n" );
-    for (cnt = 0; cnt < totalnumclients; cnt++)
+    for (cnt = 0; cnt < totalnumclients; ++cnt)
     {
   D_PRINTF( "Client %d:\t", cnt );
 
   {
       fd_set readfds;
       struct timeval timeout;
-      int rv;
-
       timeout.tv_sec = MAX_ACCEPT_SECS;
       timeout.tv_usec = 0;
       FD_ZERO(&readfds);
@@ -809,7 +856,8 @@ int sock;
 
       /* if we're hung, quit */
       D_PRINTF("Before select() on listen() socket\n");
-      if (!(rv = select(FD_SETSIZE, &readfds, 0, 0, &timeout)))  {
+      if (select(FD_SETSIZE, &readfds, 0, 0, &timeout) == 0)
+      {
     fprintf(stdout,
         "Listen timeout after %d seconds (%d clients so far)\n",
         MAX_ACCEPT_SECS, cnt);
@@ -857,7 +905,6 @@ int sock;
             abort_clients();
             errexit("Error accepting from one of the clients: %s\n",
       neterrstr());
-            break;
         }
 #else
     /* I don't see why a select is needed at all--all clients must respond
@@ -867,7 +914,7 @@ int sock;
     {
 #endif /* WIN32 */
 
-        for (cnt = 0; cnt < totalnumclients; cnt++)
+        for (cnt = 0; cnt < totalnumclients; ++cnt)
         {
             /*
              * SEE WHICH SOCKETS HAVE A INPUT ON THEM PENDING
@@ -912,7 +959,7 @@ int *socknum;
 {
   int cnt;
   fprintf(stdout,"Sending GO to all clients\n");
-  for(cnt = 0; cnt < totalnumclients; cnt++)
+  for(cnt = 0; cnt < totalnumclients; ++cnt)
     {
       if(socknum[cnt] > 0)
         {
@@ -934,7 +981,7 @@ int *socknum;
 
 void GetResults(fdset, page_stats, endtime, timestr, totalnumclients,
     statarray)
-fd_set *fdset;
+const fd_set *fdset;
 page_stats_t **page_stats;
 time_t *endtime;
 char *timestr;
@@ -955,7 +1002,6 @@ stats_t statarray[MAXCLIENTS];
    * COPY THE FILE DESCRIPTORS TO A TMP LIST,
    * ALLOCATE MEMORY FOR STATS, PAGESTATS IN TEXT FORM
    */
-  leftfdset = *fdset;
   stats_as_text = (char *)mymalloc(SIZEOF_STATSTEXT+1);
   page_stats_as_text = (char *)mymalloc(SIZEOF_PAGESTATSTEXT+1);
 
@@ -990,7 +1036,7 @@ stats_t statarray[MAXCLIENTS];
     tmpfdset = leftfdset;
     {
 #endif /* WIN32 */
-  for(cnt = 0; cnt < totalnumclients; cnt++)
+  for(cnt = 0; cnt < totalnumclients; ++cnt)
   {
       /*
        * SEE WHICH SOCKETS HAVE A INPUT ON THEM PENDING AND
@@ -1035,7 +1081,7 @@ stats_t statarray[MAXCLIENTS];
 
     if(uil_filelist_f) /* READ PAGE STATS */
     {
-      for (i = 0; i < number_of_pages; i++)
+      for (i = 0; i < number_of_pages; ++i)
         {
           D_PRINTF( "On page_stats[%d][%d]\n", cnt, i );
           returnval = recvdata(socknum[cnt], page_stats_as_text,
@@ -1106,13 +1152,13 @@ page_stats_t *page_stats_total;
      * PRINT EVERYTHING OUT
      */
     stats_init(&masterstat);
-    for(cnt = 0; cnt < totalnumclients; cnt++)
+    for(cnt = 0; cnt < totalnumclients; ++cnt)
     {
         if((statarray[cnt].rs.totalconnects > 0) && (dumpall))
         {
             fprintf(stdout,"----------------------------------\n");
             /* fprintf(stdout,"Test for host: %s\n",statarray[cnt].hostname); */
-            fprintf(stdout,"Total number of pages retrieved from server: %u\n",
+            fprintf(stdout,"Total number of pages retrieved from server: %lu\n",
         statarray[cnt].totalpages);
 
       rqstat_fprint(stdout, &(statarray[cnt].rs));
@@ -1135,9 +1181,9 @@ page_stats_t *page_stats_total;
   }
     }
 
-    for (i=0; i < totalnumclients; i++)
+    for (i=0; i < totalnumclients; ++i)
     {
-  for (j=0; j < number_of_pages; j++)
+  for (j=0; j < number_of_pages; ++j)
   {
       D_PRINTF( "Summing page stats for %d, page %d, with %d connects\n",
         i, j, statarray[i].page_numbers[j] );
@@ -1165,7 +1211,7 @@ page_stats_t *page_stats_total;
 
     /* print page statistics */
     if (verbose) {
-  for (i = 0; i < number_of_pages; i++)
+  for (i = 0; i < number_of_pages; ++i)
   {
       if (page_stats_total[i].page_valid == 1)
       {
@@ -1175,7 +1221,7 @@ page_stats_t *page_stats_total;
 
     printf ("===============================================================================\n");
     printf ("Page # %d\n\n", i);
-    printf ("Total number of times page was hit %u\n",
+    printf ("Total number of times page was hit %lu\n",
           pst->totalpages);
 
     rqstat_print(&(pst->rs));
@@ -1192,7 +1238,7 @@ page_stats_t *page_stats_total;
      * Validate run.
      */
     masterstat.total_num_of_files = statarray[0].total_num_of_files;
-    for (i=1; i < totalnumclients; i++)
+    for (i=1; i < totalnumclients; ++i)
     {
         if ((statarray[i].rs.totalconnects > 0) &&
       (statarray[i].total_num_of_files != masterstat.total_num_of_files))
@@ -1248,7 +1294,7 @@ page_stats_t *page_stats_total;
       masterstat.rs.totalresponsetime.tv_sec,
       masterstat.rs.totalresponsetime.tv_usec);
 
-    fprintf(stdout,"Total number of pages read:\t%u\n\n",
+    fprintf(stdout,"Total number of pages read:\t%lu\n\n",
         masterstat.totalpages);
 
     /* Remaining stats are the same as usual */
@@ -1311,7 +1357,7 @@ main(const int argc, char *argv[])
     FD_ZERO(&zerofdset);
     FD_ZERO(&fdset);
 
-    for(i = 0; i < MAXCLIENTS; i++)
+    for(i = 0; i < MAXCLIENTS; ++i)
     {
         socknum[i] = BADSOCKET_VALUE;
         statarray[i].rs.totalconnects = 0;
@@ -1331,7 +1377,7 @@ main(const int argc, char *argv[])
     page_stats =
       (page_stats_t **)
       mymalloc(totalnumclients*sizeof(page_stats_t *));
-    for (i=0; i < totalnumclients; i++)
+    for (i=0; i < totalnumclients; ++i)
       {
   page_stats[i] = (page_stats_t *)
     mymalloc(number_of_pages*sizeof(page_stats_t));
@@ -1339,19 +1385,19 @@ main(const int argc, char *argv[])
     page_stats_total =
       (page_stats_t *)mymalloc(number_of_pages*sizeof(page_stats_t));
 
-    for (i=0; i < totalnumclients; i++) {
+    for (i=0; i < totalnumclients; ++i) {
         stats_init(&(statarray[i]));
     }
-    for (i=0; i < totalnumclients; i++) {
-        for (j=0; j < number_of_pages; j++) {
+    for (i=0; i < totalnumclients; ++i) {
+        for (j=0; j < number_of_pages; ++j) {
             page_stats_init(&(page_stats[i][j]));
   }
     }
-    for (i=0; i < number_of_pages; i++) {
+    for (i=0; i < number_of_pages; ++i) {
         page_stats_init(&(page_stats_total[i]));
     }
 
-    for(i = 0; i < totalnumclients; i++)
+    for(i = 0; i < totalnumclients; ++i)
     {
         socknum[i] = BADSOCKET_VALUE;
         statarray[i].rs.totalconnects = 0;
@@ -1393,26 +1439,90 @@ main(const int argc, char *argv[])
      page_stats_total);
 
     /* free memory */
-    for (i = 0; i < totalnumclients; i++)
+    for (i = 0; i < totalnumclients; ++i)
       {
   free(page_stats[i]);
       }
     free(page_stats);
     free(page_stats_total);
 
+    HostEntFree(master_phe);
+    free(master_phe);
+    master_phe = 0;
     exit(0);
 }
 
 /* Added by Rajesh Shah 5/18/96 */
-void
+int
 HostEntCpy(struct hostent *dest, struct hostent *src)
 {
+  size_t address_count = 0;
+  size_t i;
 
-  dest->h_name = (char *)malloc(strlen(src->h_name)+1);
+  if (dest == 0 || src == 0 || src->h_name == 0 ||
+      src->h_addr_list == 0 || src->h_length <= 0)
+  {
+      return -1;
+  }
+
+  dest->h_name = (char *)malloc(strlen(src->h_name) + 1);
+  if (dest->h_name == 0)
+  {
+      return -1;
+  }
   strcpy(dest->h_name, src->h_name);
   printf("WebMaster name = %s\n", dest->h_name);
-  dest->h_aliases = src->h_aliases;
+  dest->h_aliases = 0;
   dest->h_addrtype = src->h_addrtype;
   dest->h_length = src->h_length;
-  dest->h_addr_list = src->h_addr_list;
+
+  while (src->h_addr_list[address_count] != 0)
+  {
+      ++address_count;
+  }
+  if (address_count == 0)
+  {
+      return -1;
+  }
+
+  dest->h_addr_list = (char **)calloc(address_count + 1,
+                                      sizeof(*dest->h_addr_list));
+  if (dest->h_addr_list == 0)
+  {
+      return -1;
+  }
+
+  for (i = 0; i < address_count; ++i)
+  {
+      dest->h_addr_list[i] = (char *)malloc((size_t)src->h_length);
+      if (dest->h_addr_list[i] == 0)
+      {
+          return -1;
+      }
+      memcpy(dest->h_addr_list[i], src->h_addr_list[i],
+             (size_t)src->h_length);
+  }
+
+  return 0;
+}
+
+void
+HostEntFree(struct hostent *host)
+{
+  if (host == 0)
+  {
+      return;
+  }
+
+  free(host->h_name);
+  if (host->h_addr_list != 0)
+  {
+      size_t i;
+
+      for (i = 0; host->h_addr_list[i] != 0; ++i)
+      {
+          free(host->h_addr_list[i]);
+      }
+      free(host->h_addr_list);
+  }
 }

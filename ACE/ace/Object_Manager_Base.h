@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Object_Manager_Base.h
  *
@@ -8,7 +5,6 @@
  *  @author Jesper S. M|ller<stophph@diku.dk>
  *  @author and a cast of thousands...
  */
-//=============================================================================
 
 #ifndef ACE_OBJECT_MANAGER_BASE_H
 #define ACE_OBJECT_MANAGER_BASE_H
@@ -44,10 +40,8 @@ class ACE_Thread_Hook;
 class ACE_Export ACE_Object_Manager_Base
 {
 protected:
-  /// Default constructor.
   ACE_Object_Manager_Base ();
 
-  /// Destructor.
   virtual ~ACE_Object_Manager_Base ();
 
 public:
@@ -96,7 +90,7 @@ protected:
   bool shutting_down_i ();
 
   /// State of the Object_Manager;
-  Object_Manager_State object_manager_state_;
+  Object_Manager_State object_manager_state_ {OBJ_MAN_UNINITIALIZED};
 
   /**
    * Flag indicating whether the ACE_Object_Manager was dynamically
@@ -104,13 +98,13 @@ protected:
    * application, then the application is responsible for destroying
    * it.)
    */
-  bool dynamically_allocated_;
+  bool dynamically_allocated_ {};
 
   /// Link to next Object_Manager, for chaining.
-  ACE_Object_Manager_Base *next_;
+  ACE_Object_Manager_Base *next_ {};
 private:
-  ACE_Object_Manager_Base (const ACE_Object_Manager_Base &) = delete;
-  ACE_Object_Manager_Base &operator= (const ACE_Object_Manager_Base &) = delete;
+  ACE_Object_Manager_Base (ACE_Object_Manager_Base const &) = delete;
+  ACE_Object_Manager_Base &operator= (ACE_Object_Manager_Base const &) = delete;
   ACE_Object_Manager_Base (ACE_Object_Manager_Base &&) = delete;
   ACE_Object_Manager_Base &operator= (ACE_Object_Manager_Base &&) = delete;
 };
@@ -174,7 +168,7 @@ public:
   /// Returns the current thread hook for the process.
   static ACE_Thread_Hook *thread_hook ();
 
-  /// Returns the existing thread hook and assign a <new_thread_hook>.
+  /// Returns the existing thread hook and assign a @c new_thread_hook.
   static ACE_Thread_Hook *thread_hook (ACE_Thread_Hook *new_thread_hook);
 
 #if defined (ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS)
@@ -187,22 +181,17 @@ public:
 #endif /* ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS */
 
 public:
-  // = Applications shouldn't use these so they're hidden here.
-
-  // They're public so that the ACE_Object_Manager can be
-  // constructed/destructed in <main> with
-  // <ACE_HAS_NONSTATIC_OBJECT_MANAGER>.
-  /// Constructor.
+  /// These remain public so ACE_Object_Manager can be constructed and
+  /// destroyed in @c main when @c ACE_HAS_NONSTATIC_OBJECT_MANAGER is enabled.
   ACE_OS_Object_Manager ();
 
-  /// Destructor.
   ~ACE_OS_Object_Manager () override;
 
   /// Accessor to singleton instance.
   static ACE_OS_Object_Manager *instance ();
 
-  /// For <ACE_OS::atexit> support.
-  int at_exit (ACE_EXIT_HOOK func, const char* name = nullptr);
+  /// For @c ACE_OS::atexit support.
+  int at_exit (ACE_EXIT_HOOK func, char const * name = nullptr);
 
 //private:
   /// Singleton instance pointer.
@@ -212,10 +201,10 @@ public:
   static void *preallocated_object[ACE_OS_PREALLOCATED_OBJECTS];
 
   /// Default signal set used, for example, in ACE_Sig_Guard.
-  sigset_t *default_mask_;
+  sigset_t *default_mask_ {};
 
   /// Thread hook that's used by this process.
-  ACE_Thread_Hook *thread_hook_;
+  ACE_Thread_Hook *thread_hook_ {};
 
   /// For at_exit support.
   ACE_OS_Exit_Info exit_info_;
@@ -228,7 +217,7 @@ public:
 #endif /* ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS */
 
   /// For use by init () and fini (), to consolidate error reporting.
-  static void print_error_message (unsigned int line_number, const ACE_TCHAR *message);
+  static void print_error_message (unsigned int line_number, ACE_TCHAR const *message);
 
   /// This class is for internal use by ACE_OS, etc., only.
   friend class ACE_Object_Manager;

@@ -11,7 +11,6 @@
 static char THIS_FILE[] = __FILE__;
 #endif
 
-
 /////////////////////////////////////////////////////////////////////////////
 // CAboutDlg dialog used for App About
 
@@ -109,7 +108,7 @@ BOOL CNamingViewerDlg::OnInitDialog()
 
 #if !defined (_WIN32_WCE)
   CMenu* pSysMenu = GetSystemMenu(FALSE);
-  if (pSysMenu != 0)
+  if (pSysMenu != nullptr)
   {
     CString strAboutMenu;
     strAboutMenu.LoadString(IDS_ABOUTBOX);

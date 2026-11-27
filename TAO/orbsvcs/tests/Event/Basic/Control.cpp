@@ -8,11 +8,11 @@
 #include "orbsvcs/Event/EC_Event_Channel.h"
 #include "orbsvcs/Event/EC_Default_Factory.h"
 
-const int event_type = 20;
-const int event_source = 10;
+constexpr int event_type = 20;
+constexpr int event_source = 10;
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   TAO_EC_Default_Factory::init_svcs ();
 
@@ -34,15 +34,14 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       TAO_EC_Event_Channel_Attributes attributes (poa.in (),
                                                   poa.in ());
-      attributes.consumer_reconnect = 1;
-      attributes.supplier_reconnect = 1;
+      attributes.consumer_reconnect = true;
+      attributes.supplier_reconnect = true;
 
       TAO_EC_Event_Channel ec_impl (attributes);
       ec_impl.activate ();
 
       RtecEventChannelAdmin::EventChannel_var event_channel =
         ec_impl._this ();
-
 
       // ****************************************************************
 
@@ -134,7 +133,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       consumer0.dump_results (100, 5);
       consumer1.dump_results (200, 5);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Service");
       return 1;
@@ -144,7 +143,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
 // ****************************************************************
 
-Consumer::Consumer (const char* name,
+Consumer::Consumer (char const *name,
                     int shutdown_count)
   : EC_Counting_Consumer (name),
     shutdown_count_ (shutdown_count)
@@ -152,7 +151,7 @@ Consumer::Consumer (const char* name,
 }
 
 void
-Consumer::push (const RtecEventComm::EventSet& events)
+Consumer::push (RtecEventComm::EventSet const & events)
 {
   if (events.length () == 0)
     {
@@ -163,10 +162,12 @@ Consumer::push (const RtecEventComm::EventSet& events)
 
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
-    this->event_count++;
+    ++this->event_count;
 
     if (this->event_count != this->shutdown_count_)
+    {
       return;
+    }
   }
 
   this->deactivate ();

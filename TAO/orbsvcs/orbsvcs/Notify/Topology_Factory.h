@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 /**
  *  @file Topology_Factory.h
  *
@@ -34,6 +32,12 @@ namespace TAO_Notify
   class TAO_Notify_Serv_Export Topology_Factory : public ACE_Service_Object
   {
   public:
+    Topology_Factory () = default;
+    Topology_Factory (Topology_Factory const &) = delete;
+    Topology_Factory (Topology_Factory &&) = delete;
+    Topology_Factory &operator= (Topology_Factory const &) = delete;
+    Topology_Factory &operator= (Topology_Factory &&) = delete;
+
     /// Create a Saver.
     /// \return a pointer to a Topology_Saver which must be deleted
     /// by the caller.
@@ -42,7 +46,7 @@ namespace TAO_Notify
     /// \return a pointer to a Topology_Loader which must be deleted
     /// by the caller.
     virtual Topology_Loader* create_loader () = 0;
-    virtual ~Topology_Factory ();
+    ~Topology_Factory () override;
   };
 }
 

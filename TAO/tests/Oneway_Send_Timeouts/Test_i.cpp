@@ -55,16 +55,16 @@ Test_i::unsleep ()
 
   ACE_Time_Value sleep_time;
   sleep_time.msec (10);
-  while (unsleep_ == false) {
+  while (!unsleep_) {
     ACE_OS::sleep (sleep_time);
   }
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Test_i::unsleep>\n"));
 }
 
 void
-Test_i::dummy_one_way (const char* msg)
+Test_i::dummy_one_way (char const *msg)
 {
-  if (msg != 0) {
+  if (msg != nullptr) {
     ACE_DEBUG ((LM_DEBUG, "(%P|%t) Test_i::dummy_one_way> %.25C\n", msg));
   }
   // do nothing

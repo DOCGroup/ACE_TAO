@@ -1,5 +1,3 @@
-/* -*- C++ -*-  */
-
 #include "Test_i.h"
 #include "ace/OS_NS_unistd.h"
 
@@ -10,9 +8,7 @@ Test_i::Test_i (CORBA::Short server_num,
 {
 }
 
-Test_i::~Test_i ()
-{
-}
+Test_i::~Test_i () = default;
 
 CORBA::Short
 Test_i::get_server_num ()

@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project : taolib, portableserver, pi, objreftemplate, valuetype {
   after += IORInterceptor
   libs  += TAO_IORInterceptor

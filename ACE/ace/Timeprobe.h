@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Timeprobe.h
  *
@@ -31,7 +28,6 @@
  * compiling ACE. ACE_ENABLE_TIMEPROBES means that the
  * ACE_TIMEPROBE_* macros should spring to life.
  */
-//=============================================================================
 
 #ifndef ACE_TIMEPROBE_H
 #define ACE_TIMEPROBE_H
@@ -68,13 +64,13 @@ class ACE_Export ACE_Event_Descriptions
 {
 public:
   /// Event descriptions
-  const char **descriptions_;
+  char const **descriptions_;
 
   /// Minimum id of this description set
   u_long minimum_id_;
 
   /// Comparison
-  bool operator== (const ACE_Event_Descriptions &rhs) const;
+  bool operator== (ACE_Event_Descriptions const &rhs) const;
 };
 
 /**
@@ -89,7 +85,7 @@ public:
   union event
   {
     u_long event_number_;
-    const char *event_description_;
+    char const *event_description_;
   };
 
   /// Type of event.

@@ -1,5 +1,3 @@
-# -*- Makefile -*-
-
 ifeq ($(insure),1)
   CC  = insure
   CXX = insure

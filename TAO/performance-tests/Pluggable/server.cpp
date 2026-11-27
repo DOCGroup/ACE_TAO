@@ -11,7 +11,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   ACE_DEBUG ((LM_DEBUG,
               "\n\tPluggable_Test: server\n\n"));
 
-
   try
     {
       int status = pp_test_server.init (argc,

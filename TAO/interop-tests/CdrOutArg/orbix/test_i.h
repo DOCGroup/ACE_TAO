@@ -1,13 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   test_i.h
  *
  *  @author Phil Mesnier
  */
-//=============================================================================
-
 
 #ifndef CDR_OUT_ARG_TEST_I_H
 #define CDR_OUT_ARG_TEST_I_H
@@ -22,7 +17,7 @@
 class CDR_Out_Arg_i : public POA_Interop::CDR_Out_Arg
 {
 public:
-  CDR_Out_Arg_i (CORBA::ORB_ptr orb);
+  explicit CDR_Out_Arg_i (CORBA::ORB_ptr orb);
 
   void get_out (CORBA::Long_out arg) IT_THROW_DECL((CORBA::SystemException));
 

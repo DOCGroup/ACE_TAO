@@ -1,5 +1,3 @@
-/* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file   Notify_Test_Client.h
  *
@@ -7,18 +5,15 @@
  *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef NOTIFY_TEST_CLIENT_H
 #define NOTIFY_TEST_CLIENT_H
 
-#include "ace/Atomic_Op_T.h"
-#include "ace/Thread_Mutex.h"
 #include "orbsvcs/CosNotifyChannelAdminS.h"
 #include "orbsvcs/CosNotifyCommC.h"
 #include "orbsvcs/CosNamingC.h"
 #include "notify_test_export.h"
+#include <atomic>
 
 class TAO_Notify_Tests_Peer;
 
@@ -68,7 +63,7 @@ public:
 
   /// Create an Event Channel.  Ownership is passed to the caller.
   CosNotifyChannelAdmin::EventChannel_ptr create_event_channel (
-                                              const char* name,
+                                              char const *name,
                                               bool resolve);
 
 protected:
@@ -82,7 +77,8 @@ protected:
   /// Try to resolve the Notify factory from the Naming service.
   void resolve_Notify_factory ();
 
-  // = Data Members
+  /// @name Data members
+  /// @{
   /// Reference to the root poa.
   PortableServer::POA_var root_poa_;
 
@@ -103,10 +99,11 @@ protected:
 
   /// Initial admin props specified to the factory when creating the EC.
   CosNotification::AdminProperties initial_admin_;
+  /// @}
 
 private:
-  ACE_Atomic_Op< TAO_SYNCH_MUTEX, int > num_clients_;
-  bool done_;
+  std::atomic<int> num_clients_ {0};
+  std::atomic<bool> done_ {false};
 };
 
 #endif /* NOTIFY_TEST_CLIENT_H */

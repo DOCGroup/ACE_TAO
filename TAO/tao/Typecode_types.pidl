@@ -1,5 +1,4 @@
-// -*- IDL -*-
-// Typecode stuff, originally in orb.idl
+/// @brief Typecode definitions originally in orb.idl.
 
 #ifndef TAO_TYPECODE_TYPES_IDL
 #define TAO_TYPECODE_TYPES_IDL

@@ -13,7 +13,6 @@
 #include "orbsvcs/Event/EC_Per_Supplier_Filter.inl"
 #endif /* __ACE_INLINE__ */
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EC_Per_Supplier_Filter::
@@ -48,7 +47,9 @@ TAO_EC_Per_Supplier_Filter::unbind (TAO_EC_ProxyPushConsumer* consumer)
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
   if (this->consumer_ == nullptr || this->consumer_ != consumer)
+  {
     return;
+  }
 
   this->consumer_ = nullptr;
 
@@ -56,7 +57,7 @@ TAO_EC_Per_Supplier_Filter::unbind (TAO_EC_ProxyPushConsumer* consumer)
     {
       this->shutdown ();
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       // @@ Ignore exceptions
     }
@@ -69,16 +70,16 @@ TAO_EC_Per_Supplier_Filter::connected (TAO_EC_ProxyPushSupplier* supplier)
 
   if (this->consumer_ != nullptr)
     {
-      const RtecEventChannelAdmin::SupplierQOS& pub =
+      RtecEventChannelAdmin::SupplierQOS const &pub =
         this->consumer_->publications_i ();
 
-      for (CORBA::ULong j = 0; j < pub.publications.length (); ++j)
+      for (CORBA::ULong j {}; j < pub.publications.length (); ++j)
         {
-          const RtecEventComm::Event& event =
+          RtecEventComm::Event const &event =
             pub.publications[j].event;
 
 #if TAO_EC_ENABLE_DEBUG_MESSAGES
-          ORBSVCS_DEBUG ((LM_DEBUG, "Connecting consumer <%x> to <%x>, "
+          ORBSVCS_DEBUG ((LM_DEBUG, "Connecting consumer <%@> to <%@>, "
                       "trying event <%d:%d>  ",
                       supplier, this,
                       event.header.source, event.header.type));
@@ -105,12 +106,12 @@ TAO_EC_Per_Supplier_Filter::reconnected (TAO_EC_ProxyPushSupplier* supplier)
 
   if (this->consumer_ != nullptr)
     {
-      const RtecEventChannelAdmin::SupplierQOS& pub =
+      RtecEventChannelAdmin::SupplierQOS const &pub =
         this->consumer_->publications_i ();
 
-      for (CORBA::ULong j = 0; j < pub.publications.length (); ++j)
+      for (CORBA::ULong j {}; j < pub.publications.length (); ++j)
         {
-          const RtecEventComm::Event& event =
+          RtecEventComm::Event const &event =
             pub.publications[j].event;
 
           //      ORBSVCS_DEBUG ((LM_DEBUG, "Trying %d:%d in %x\n",
@@ -140,7 +141,7 @@ TAO_EC_Per_Supplier_Filter::shutdown ()
 }
 
 void
-TAO_EC_Per_Supplier_Filter::push (const RtecEventComm::EventSet& event,
+TAO_EC_Per_Supplier_Filter::push (RtecEventComm::EventSet const &event,
                                   TAO_EC_ProxyPushConsumer *consumer)
 {
   TAO_EC_Scheduling_Strategy* scheduling_strategy =
@@ -151,8 +152,8 @@ TAO_EC_Per_Supplier_Filter::push (const RtecEventComm::EventSet& event,
 }
 
 void
-TAO_EC_Per_Supplier_Filter::push_scheduled_event (RtecEventComm::EventSet &event,
-                                                  const TAO_EC_QOS_Info &event_info)
+TAO_EC_Per_Supplier_Filter::push_scheduled_event (RtecEventComm::EventSet const &event,
+                                                  TAO_EC_QOS_Info const &event_info)
 {
   TAO_EC_Filter_Worker worker (event, event_info);
   this->collection_->for_each (&worker);
@@ -163,7 +164,7 @@ TAO_EC_Per_Supplier_Filter::_incr_refcnt ()
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
 
-  this->refcnt_++;
+  ++this->refcnt_;
   return this->refcnt_;
 }
 
@@ -173,9 +174,11 @@ TAO_EC_Per_Supplier_Filter::_decr_refcnt ()
   {
     ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
 
-    this->refcnt_--;
+    --this->refcnt_;
     if (this->refcnt_ != 0)
+    {
       return this->refcnt_;
+    }
   }
   this->event_channel_->supplier_filter_builder ()->destroy (this);
   return 0;

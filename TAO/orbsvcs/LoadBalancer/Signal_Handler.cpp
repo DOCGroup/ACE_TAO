@@ -118,12 +118,12 @@ TAO_LB_Signal_Handler::perform_cleanup (int signum)
       // Shutting down the POA will cause servants "owned" by the POA
       // to be destroyed.  Servants will then have the opportunity to
       // clean up all resources they are responsible for.
-      this->poa_->destroy (1, 1);
+      this->poa_->destroy (true, true);
 
       // Now shutdown the ORB.
       this->orb_->shutdown (true);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught exception");
 

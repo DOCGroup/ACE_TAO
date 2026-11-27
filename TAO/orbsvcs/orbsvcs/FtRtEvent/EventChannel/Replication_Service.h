@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   Replication_Service.h
  *
  *  @author Huang-Ming Huang <hh1@cse.wustl.edu>
  */
-//=============================================================================
 
 #ifndef REPLCATION_SERVICE_H
 #define REPLCATION_SERVICE_H
@@ -35,6 +31,11 @@ namespace FTRTEC
     Replication_Service();
     ~Replication_Service () override;
 
+    Replication_Service(Replication_Service const&) = delete;
+    Replication_Service(Replication_Service&&) = delete;
+    Replication_Service& operator=(Replication_Service const&) = delete;
+    Replication_Service& operator=(Replication_Service&&) = delete;
+
     int init (int argc,
       ACE_TCHAR* []) override;
 
@@ -51,17 +52,17 @@ namespace FTRTEC
    /**
     * Replicate a request.
     *
-    * @param state The request to be replicated.
+    * @param update The request to be replicated.
     * @param rollback The rollback operation when the replication failed.
     */
-    void replicate_request(const FtRtecEventChannelAdmin::Operation& update,
+    void replicate_request(FtRtecEventChannelAdmin::Operation const& update,
       RollbackOperation rollback);
 
    /**
     * Inform the backup replicas that a new replica has joined the object
     * group.
     */
-    void add_member(const FTRT::ManagerInfo & info,
+    void add_member(FTRT::ManagerInfo const &info,
                     CORBA::ULong object_group_ref_version);
 
     int  acquire_read ();

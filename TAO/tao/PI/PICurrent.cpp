@@ -11,6 +11,8 @@
 #include "tao/TAO_Server_Request.h"
 #include "ace/CORBA_macros.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::PICurrent::PICurrent (TAO_ORB_Core &orb_core)
@@ -28,7 +30,7 @@ TAO::PICurrent::get_slot (PortableInterceptor::SlotId identifier)
 
 void
 TAO::PICurrent::set_slot (PortableInterceptor::SlotId identifier,
-                         const CORBA::Any &data)
+                         CORBA::Any const &data)
 {
   this->check_validity (identifier);
 
@@ -54,7 +56,7 @@ TAO::PICurrent::tsc ()
   if (!impl)
   {
     ACE_NEW_THROW_EX (impl,
-                      TAO::PICurrent_Impl (&this->orb_core_, this->tss_slot_),
+                      TAO::PICurrent_Impl (std::addressof (this->orb_core_), this->tss_slot_),
                       CORBA::NO_MEMORY (
                         CORBA::SystemException::_tao_minor_code (
                           TAO::VMCID,
@@ -68,18 +70,22 @@ TAO::PICurrent::tsc ()
 }
 
 void
-TAO::PICurrent::check_validity (const PortableInterceptor::SlotId &identifier)
+TAO::PICurrent::check_validity (PortableInterceptor::SlotId const &identifier)
 {
   // If the slot_count is zero, no initialization has been done (if there are
   // no slots, then the PICurrent_impl object is not created as there is no
   // data to copy).
   if (0 == this->slot_count_)
+  {
     throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
+  }
 
   // No need to acquire a lock for this check.  At this point, these
   // attributes are read only.
   if (identifier >= this->slot_count_)
+  {
     throw PortableInterceptor::InvalidSlot ();
+  }
 }
 
 CORBA::ORB_ptr
@@ -101,11 +107,13 @@ TAO::PICurrent::initialize (PortableInterceptor::SlotId sc)
     // It MUST be called BEFORE we attempt to get/set any
     // PICurrent slot data.
     if (0 != orb_core_.add_tss_cleanup_func (CleanUpPICurrent, this->tss_slot_))
-      throw ::CORBA::NO_MEMORY (
+      {
+        throw ::CORBA::NO_MEMORY (
                    CORBA::SystemException::_tao_minor_code (
                      TAO::VMCID,
                      ENOMEM),
                    CORBA::COMPLETED_NO);
+      }
 
     this->slot_count_ = sc;
   }

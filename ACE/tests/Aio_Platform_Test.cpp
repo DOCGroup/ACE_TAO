@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    Aio_Platform_Test.cpp
  *
@@ -11,8 +9,6 @@
  *
  *  @author Programming for the Real World. Bill O. GallMeister.  Modified by Alexander Babu Arulanthu <alex@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #include "test_config.h"
 #include "ace/OS_NS_unistd.h"
@@ -73,7 +69,6 @@ static int do_sysconf ()
   ACE_ERROR ((LM_ERROR,
               "_SC_REALTIME_SIGNALS does not exist on this platform\n"));
 #endif /* _SC_REALTIME_SIGNALS */
-
 
 #if defined (_SC_RTSIG_MAX)
   errno = 0;
@@ -177,14 +172,18 @@ run_main (int, ACE_TCHAR *[])
   // Test the #defined and constants and runtime values.
   errno = 0;
   if (have_asynchio () == 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "Basic test successful"
-                "Check the run time values of the predefined constants\n"
-                "ACE_HAS_AIO_CALLS can be defined for this platform\n"
-                "Further tests at $ACE_ROOT/examples/Reactor/Proactor\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Basic test successful"
+                  "Check the run time values of the predefined constants\n"
+                  "ACE_HAS_AIO_CALLS can be defined for this platform\n"
+                  "Further tests at $ACE_ROOT/examples/Reactor/Proactor\n"));
+    }
   else
-    ACE_ERROR ((LM_INFO,
-                "AIO not supported on this platform\n"));
+    {
+      ACE_ERROR ((LM_INFO,
+                  "AIO not supported on this platform\n"));
+    }
 
   ACE_END_TEST;
 

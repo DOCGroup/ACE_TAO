@@ -1,10 +1,6 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   Log_Flush_Handler.h
  */
-//=============================================================================
 
 #ifndef TAO_TLS_FLUSH_HANDLER_H
 #define TAO_TLS_FLUSH_HANDLER_H
@@ -35,12 +31,10 @@ class TAO_Log_Serv_Export TAO_Log_Flush_Handler
   : public ACE_Event_Handler
 {
 public:
-  /// Constructor.
   TAO_Log_Flush_Handler (ACE_Reactor * reactor,
                          TAO_Log_i * log,
                          ACE_Time_Value const & interval);
 
-  /// Destructor.
   ~TAO_Log_Flush_Handler () override;
 
   /// Schedule Timer.

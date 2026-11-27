@@ -2,12 +2,16 @@
 #include "test.h"
 #include "FP_Task.h"
 
+#include <cerrno>
+#include <new>
+#include <memory>
+
 FP_DT_Creator::FP_DT_Creator ()
 {
   DT_TEST::instance ()->dt_creator (this);
 }
 
-Thread_Task*
+std::unique_ptr<Thread_Task>
 FP_DT_Creator::create_thr_task (int importance,
                                 time_t start_time,
                                 int load,
@@ -15,16 +19,18 @@ FP_DT_Creator::create_thr_task (int importance,
                                 int dist,
                                 char *job_name)
 {
-  FP_Task* task = 0;
-  ACE_NEW_RETURN (task,
-                  FP_Task (importance,
-                           start_time,
-                           load,
-                           iter,
-                           dist,
-                           job_name,
-                           this),
-                  0);
+  std::unique_ptr<Thread_Task> task (
+    new (std::nothrow) FP_Task (importance,
+                                start_time,
+                                load,
+                                iter,
+                                dist,
+                                job_name,
+                                this));
+  if (!task)
+    {
+      errno = ENOMEM;
+    }
   return task;
 }
 
@@ -35,7 +41,6 @@ FP_DT_Creator::sched_param (int importance)
     DT_TEST::instance ()->scheduler ()->create_segment_scheduling_parameter (
                                           importance);
 }
-
 
 void
 FP_DT_Creator::yield (time_t suspend_time,
@@ -63,5 +68,4 @@ ACE_STATIC_SVC_DEFINE(FP_DT_Creator,
                       0)
 
 ACE_FACTORY_DEFINE (ACE_Local_Service, FP_DT_Creator)
-
 

@@ -11,7 +11,7 @@
 #include "ace/OS_NS_unistd.h"
 
 PortableServer::POA_ptr
-createPOA(PortableServer::POA_ptr root_poa, const char* poa_name)
+createPOA(PortableServer::POA_ptr root_poa, char const *poa_name)
 {
   PortableServer::LifespanPolicy_var life =
     root_poa->create_lifespan_policy(PortableServer::PERSISTENT);
@@ -134,14 +134,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     orb->run();
 
-    root_poa->destroy(1,1);
+    root_poa->destroy(true,true);
     orb->destroy();
 
     ACE_DEBUG ((LM_DEBUG,
       "(%P|%t) Server: ended <%C>\n",
       poa_name.c_str()));
   }
-  catch(const CORBA::Exception& ex) {
+  catch(CORBA::Exception const & ex) {
     ex._tao_print_exception ("Server main()");
     return 1;
   }

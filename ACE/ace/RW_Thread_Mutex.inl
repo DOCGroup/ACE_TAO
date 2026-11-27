@@ -1,4 +1,3 @@
-// -*- C++ -*-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE int
@@ -9,8 +8,6 @@ ACE_RW_Thread_Mutex::tryacquire_write_upgrade ()
 }
 
 ACE_INLINE
-ACE_RW_Thread_Mutex::~ACE_RW_Thread_Mutex ()
-{
-}
+ACE_RW_Thread_Mutex::~ACE_RW_Thread_Mutex () = default;
 
 ACE_END_VERSIONED_NAMESPACE_DECL

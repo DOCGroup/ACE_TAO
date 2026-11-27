@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 /**
  * @file ECG_UDP_Sender.h
  *
@@ -75,17 +73,16 @@ public:
               RtecEventChannelAdmin::ProxyPushSupplier_ptr proxy);
 
   TAO_ECG_UDP_Sender_Disconnect_Command (
-              const TAO_ECG_UDP_Sender_Disconnect_Command & rhs);
+              TAO_ECG_UDP_Sender_Disconnect_Command const & rhs);
 
   TAO_ECG_UDP_Sender_Disconnect_Command &
-   operator= (const TAO_ECG_UDP_Sender_Disconnect_Command & rhs);
+   operator= (TAO_ECG_UDP_Sender_Disconnect_Command const & rhs);
 
   void execute ();
 
 private:
   RtecEventChannelAdmin::ProxyPushSupplier_var proxy_;
 };
-
 
 /**
  * @class TAO_ECG_UDP_Sender
@@ -101,13 +98,13 @@ class TAO_RTEvent_Serv_Export TAO_ECG_UDP_Sender :
 {
 public:
   /// Initialization and termination methods.
-  //@{
+  /// @{
   /// Create a new TAO_ECG_UDP_Sender object.
   /// (Constructor access is restricted to insure that all
   /// TAO_ECG_UDP_Sender objects are heap-allocated.)
-  static PortableServer::Servant_var<TAO_ECG_UDP_Sender> create (CORBA::Boolean crc = 0);
+  static PortableServer::Servant_var<TAO_ECG_UDP_Sender> create (CORBA::Boolean crc = false);
 
-  ~TAO_ECG_UDP_Sender () override;
+  ~TAO_ECG_UDP_Sender () override = default;
 
   /**
    * @param lcl_ec Event Channel to which we will act as a consumer of events.
@@ -133,11 +130,11 @@ public:
 
   /// Connect or reconnect to the EC with the given subscriptions.
   /**
-   * @note if we are already connected to EC and a reconnection is
+   * @note If we are already connected to EC and a reconnection is
    * necessary, the EC must have reconnects enabled in order for this
    * method to succeed.
    */
-  void connect (const RtecEventChannelAdmin::ConsumerQOS &sub);
+  void connect (RtecEventChannelAdmin::ConsumerQOS const &sub);
 
   /// Deactivate from POA and disconnect from EC, if necessary.  Shut
   /// down all sender components.
@@ -146,10 +143,10 @@ public:
    * count (due to deactivation) and deletion of the object.
    */
   void shutdown ();
-  //@}
+  /// @}
 
   /// Accessors.
-  //@{
+  /// @{
   /**
    * The sender may need to fragment the message, otherwise the
    * network may drop the packets.
@@ -161,30 +158,30 @@ public:
 
   /// Get the local endpoint used to send the events.
   int get_local_addr (ACE_INET_Addr& addr);
-  //@}
+  /// @}
 
   /// The PushConsumer methods.
-  //@{
+  /// @{
   /// Invokes shutdown (), which may result in the object being deleted, if
   /// refcounting is used to manage its lifetime.
-  virtual void disconnect_push_consumer () override;
-  virtual void push (const RtecEventComm::EventSet &events) override;
-  //@}
+  void disconnect_push_consumer () override;
+  void push (RtecEventComm::EventSet const &events) override;
+  /// @}
 
 protected:
   /// Constructor (protected).  Clients can create new
   /// TAO_ECG_UDP_Sender objects using the static create() method.
-  TAO_ECG_UDP_Sender (CORBA::Boolean crc = 0);
+  explicit TAO_ECG_UDP_Sender (CORBA::Boolean crc = false);
 
 private:
   /// Helpers for the connect() method.
-  //@{
-  // Establishes connection to the Event Channel for the first time.
-  void new_connect (const RtecEventChannelAdmin::ConsumerQOS& sub);
+  /// @{
+  /// Establishes connection to the Event Channel for the first time.
+  void new_connect (RtecEventChannelAdmin::ConsumerQOS const &sub);
 
-  // Updates existing connection to the Event Channel.
-  void reconnect (const RtecEventChannelAdmin::ConsumerQOS& sub);
-  //@}
+  /// Updates existing connection to the Event Channel.
+  void reconnect (RtecEventChannelAdmin::ConsumerQOS const &sub);
+  /// @}
 
   /// Proxy used to receive events from the Event Channel.
   RtecEventChannelAdmin::ProxyPushSupplier_var supplier_proxy_;

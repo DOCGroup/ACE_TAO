@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    TypeCode_Traits.h
  *
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef TAO_TYPECODE_TRAITS_H
 #define TAO_TYPECODE_TRAITS_H
@@ -29,17 +25,10 @@ namespace TAO
 
   namespace TypeCode
   {
-//     enum Storage { STATIC_TYPECODE, DYNAMIC_TYPECODE };
-
-//     template<Storage S> struct Traits;
-
-    // ----
-    // @@ Work around limitations in MSVC++ 6.
     using STATIC_TYPECODE = char const *;
     using DYNAMIC_TYPECODE = CORBA::String_var;
 
     template<typename S> struct Traits;
-    // ----
 
     template<>
     struct Traits<STATIC_TYPECODE>
@@ -86,9 +75,7 @@ namespace TAO
       }
     };
 
-    // ---------------
-
-    // Traits based on TypeCode type template parameters.
+    /// Traits based on TypeCode type template parameters.
 
     template<>
     struct Traits<Traits<STATIC_TYPECODE>::typecode_type>

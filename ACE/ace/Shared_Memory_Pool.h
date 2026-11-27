@@ -1,13 +1,9 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file     Shared_Memory_Pool.h
  *
  *  @author Dougls C. Schmidt <d.schmidt@vanderbilt.edu>
  *  @author Prashant Jain <pjain@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef ACE_SHARED_MEMORY_POOL_H
 #define ACE_SHARED_MEMORY_POOL_H
@@ -43,14 +39,14 @@ class ACE_Export ACE_Shared_Memory_Pool_Options
 public:
   /// Initialization method.
   ACE_Shared_Memory_Pool_Options (
-    const char *base_addr = ACE_DEFAULT_BASE_ADDR,
+    char const *base_addr = ACE_DEFAULT_BASE_ADDR,
     size_t max_segments = ACE_DEFAULT_MAX_SEGMENTS,
     size_t file_perms = ACE_DEFAULT_FILE_PERMS,
     ACE_OFF_T minimum_bytes = 0,
     size_t segment_size = ACE_DEFAULT_SEGMENT_SIZE);
 
   /// Base address of the memory-mapped backing store.
-  const char *base_addr_;
+  char const *base_addr_;
 
   /// Number of shared memory segments to allocate.
   size_t max_segments_;
@@ -84,10 +80,14 @@ public:
   using OPTIONS = ACE_Shared_Memory_Pool_Options;
 
   /// Initialize the pool.
-  ACE_Shared_Memory_Pool (const ACE_TCHAR *backing_store_name = nullptr,
-                          const OPTIONS *options = nullptr);
+  ACE_Shared_Memory_Pool (ACE_TCHAR const *backing_store_name = nullptr,
+                          OPTIONS const *options = nullptr);
 
   ~ACE_Shared_Memory_Pool () override = default;
+  ACE_Shared_Memory_Pool (ACE_Shared_Memory_Pool const &) = delete;
+  ACE_Shared_Memory_Pool &operator= (ACE_Shared_Memory_Pool const &) = delete;
+  ACE_Shared_Memory_Pool (ACE_Shared_Memory_Pool &&) = delete;
+  ACE_Shared_Memory_Pool &operator= (ACE_Shared_Memory_Pool &&) = delete;
 
   /// Ask system for initial chunk of local memory.
   virtual void *init_acquire (size_t nbytes,
@@ -181,7 +181,7 @@ protected:
   std::unique_ptr<void *[]> const shm_addr_table_;
 
   /// Find the segment that contains the @a searchPtr
-  virtual int find_seg (const void *const searchPtr,
+  virtual int find_seg (void const *const searchPtr,
                         ACE_OFF_T &offset,
                         size_t &counter);
 

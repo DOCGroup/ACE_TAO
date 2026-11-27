@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  * @file Linux_Network_Interface_Monitor.h
  *
  * @author Jeff Parsons <j.parsons@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef LINUX_NETWORK_INTERFACE_MONITOR_H
 #define LINUX_NETWORK_INTERFACE_MONITOR_H
@@ -41,7 +37,7 @@ namespace ACE
       /// The Linux system file /proc/net/dev stores a wealth of
       /// network information about the system. To get the specific
       /// value we want to monitor, we just vary the scan format string.
-      Linux_Network_Interface_Monitor (const char *scan_format);
+      explicit Linux_Network_Interface_Monitor (char const *scan_format);
 
       /// Platform-specific implementation.
       void update_i ();
@@ -50,7 +46,7 @@ namespace ACE
       void clear_impl ();
 
     protected:
-      ACE_UINT64 value_;
+      ACE_UINT64 value_ {};
 
     private:
       /// Common code.
@@ -58,8 +54,8 @@ namespace ACE
 
     private:
       static constexpr unsigned long MAX_INTERFACES = 10UL;
-      ACE_UINT64 value_array_[MAX_INTERFACES];
-      ACE_UINT64 start_;
+      ACE_UINT64 value_array_[MAX_INTERFACES] {};
+      ACE_UINT64 start_ {};
       ACE_CString scan_format_;
     };
   }

@@ -19,12 +19,11 @@ TAO_Port_Desc_Seq_Utils<CORBA::ComponentIR::UsesDescriptionSeq>::get_is_multiple
     CORBA::ComponentIR::UsesDescriptionSeq &desc_seq,
     ACE_Configuration *config,
     ACE_Configuration_Section_Key &key,
-    CORBA::ULong index
-  )
+    CORBA::ULong index)
 {
   CORBA::ULong is_multiple {};
   config->get_integer_value (key,
-                             "is_multiple",
+                             ACE_TEXT ("is_multiple"),
                              is_multiple);
   desc_seq[index].is_multiple =
     static_cast<CORBA::Boolean> (is_multiple);
@@ -36,10 +35,9 @@ void
 TAO_Port_Desc_Seq_Utils<CORBA::ComponentIR::EventPortDescriptionSeq>::port_base_type (
     CORBA::ComponentIR::EventPortDescriptionSeq &desc_seq,
     ACE_TString &holder,
-    CORBA::ULong index
-  )
+    CORBA::ULong index)
 {
-  desc_seq[index].event = holder.fast_rep ();
+  desc_seq[index].event = static_cast<char const *> (ACE_TEXT_ALWAYS_CHAR (holder.fast_rep ()));
 }
 
 /// Specialization.
@@ -48,15 +46,12 @@ void
 TAO_Port_Utils<CORBA::ComponentIR::UsesDef>::set_is_multiple (
     CORBA::Boolean is_multiple,
     ACE_Configuration *config,
-    ACE_Configuration_Section_Key &key
-  )
+    ACE_Configuration_Section_Key &key)
 {
   config->set_integer_value (key,
-                             "is_multiple",
+                             ACE_TEXT ("is_multiple"),
                              is_multiple);
 }
-
-// ==============================================================
 
 TAO_ComponentDef_i::TAO_ComponentDef_i (TAO_Repository_i *repo)
   : TAO_IRObject_i (repo),
@@ -94,31 +89,31 @@ TAO_ComponentDef_i::destroy_i ()
   // on our base class.
 
   TAO_IFR_Generic_Utils<TAO_ProvidesDef_i>::destroy_special (
-      "provides",
+      ACE_TEXT ("provides"),
       this->repo_,
       this->section_key_
     );
 
   TAO_IFR_Generic_Utils<TAO_UsesDef_i>::destroy_special (
-      "uses",
+      ACE_TEXT ("uses"),
       this->repo_,
       this->section_key_
     );
 
   TAO_IFR_Generic_Utils<TAO_EmitsDef_i>::destroy_special (
-      "emits",
+      ACE_TEXT ("emits"),
       this->repo_,
       this->section_key_
     );
 
   TAO_IFR_Generic_Utils<TAO_PublishesDef_i>::destroy_special (
-      "publishes",
+      ACE_TEXT ("publishes"),
       this->repo_,
       this->section_key_
     );
 
   TAO_IFR_Generic_Utils<TAO_ConsumesDef_i>::destroy_special (
-      "consumes",
+      ACE_TEXT ("consumes"),
       this->repo_,
       this->section_key_
     );
@@ -159,31 +154,31 @@ TAO_ComponentDef_i::describe_i ()
       this->repo_->config ()->expand_path (this->repo_->root_key (),
                                            holder,
                                            base_key,
-                                           0);
+                                           false);
       this->repo_->config ()->get_string_value (base_key,
                                                 ACE_TEXT("id"),
                                                 holder);
     }
 
   // If status wasn't 0, holder will contain the empty string.
-  cd.base_component = holder.fast_rep ();
+  cd.base_component = static_cast<char const *> (ACE_TEXT_ALWAYS_CHAR (holder.fast_rep ()));
 
   CORBA::ULong count {};
   ACE_Configuration_Section_Key supports_key;
   status = this->repo_->config ()->open_section (this->section_key_,
-                                                 "supported",
-                                                 0,
+                                                 ACE_TEXT ("supported"),
+                                                 false,
                                                  supports_key);
 
   if (status == 0)
     {
       this->repo_->config ()->get_integer_value (supports_key,
-                                                 "count",
+                                                 ACE_TEXT ("count"),
                                                  count);
     }
 
   cd.supported_interfaces.length (count);
-  char *stringified {};
+  ACE_TCHAR *stringified {};
   CORBA::ULong i {};
 
   for (i = 0; i < count; ++i)
@@ -193,7 +188,7 @@ TAO_ComponentDef_i::describe_i ()
                                                 stringified,
                                                 holder);
 
-      cd.supported_interfaces[i] = holder.c_str ();
+      cd.supported_interfaces[i] = static_cast<char const *> (ACE_TEXT_ALWAYS_CHAR (holder.c_str ()));
     }
 
   TAO_Port_Desc_Seq_Utils<
@@ -235,13 +230,13 @@ TAO_ComponentDef_i::describe_i ()
   ACE_Configuration_Section_Key attrs_key;
   status =
     this->repo_->config ()->open_section (this->section_key_,
-                                          "attrs",
-                                          0,
+                                          ACE_TEXT ("attrs"),
+                                          false,
                                           attrs_key);
   if (status == 0)
     {
       this->repo_->config ()->get_integer_value (attrs_key,
-                                                 "count",
+                                                 ACE_TEXT ("count"),
                                                  count);
     }
 
@@ -253,7 +248,7 @@ TAO_ComponentDef_i::describe_i ()
       stringified = TAO_IFR_Service_Utils::int_to_string (i);
       this->repo_->config ()->open_section (attrs_key,
                                             stringified,
-                                            0,
+                                            false,
                                             attr_key);
 
       TAO_ExtAttributeDef_i impl (this->repo_);
@@ -299,8 +294,8 @@ TAO_ComponentDef_i::type_i ()
                                             name);
 
   return this->repo_->tc_factory ()->create_component_tc (
-                                         id.c_str (),
-                                         name.c_str ()
+                                         ACE_TEXT_ALWAYS_CHAR (id.c_str ()),
+                                         ACE_TEXT_ALWAYS_CHAR (name.c_str ())
                                        );
 }
 
@@ -328,17 +323,17 @@ TAO_ComponentDef_i::supported_interfaces_i ()
   ACE_Configuration_Section_Key supported_key;
   int status =
     this->repo_->config ()->open_section (this->section_key_,
-                                          "supported",
-                                          0,
+                                          ACE_TEXT ("supported"),
+                                          false,
                                           supported_key);
 
   if (status == 0)
     {
       this->repo_->config ()->get_integer_value (supported_key,
-                                                 "count",
+                                                 ACE_TEXT ("count"),
                                                  count);
       retval->length (count);
-      char *stringified {};
+      ACE_TCHAR *stringified {};
       ACE_TString path;
       CORBA::Object_var tmp;
 
@@ -361,8 +356,7 @@ TAO_ComponentDef_i::supported_interfaces_i ()
 
 void
 TAO_ComponentDef_i::supported_interfaces (
-    CORBA::InterfaceDefSeq const &supported_interfaces
-  )
+    CORBA::InterfaceDefSeq const &supported_interfaces)
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -373,24 +367,26 @@ TAO_ComponentDef_i::supported_interfaces (
 
 void
 TAO_ComponentDef_i::supported_interfaces_i (
-    CORBA::InterfaceDefSeq const &supported_interfaces
-  )
+    CORBA::InterfaceDefSeq const &supported_interfaces)
 {
   // Remove the old supported interfaces.
   this->repo_->config ()->remove_section (this->section_key_,
-                                          "supported",
-                                          0);
+                                          ACE_TEXT ("supported"),
+                                          false);
 
   CORBA::ULong length = supported_interfaces.length ();
-  ACE_Configuration_Section_Key inherited_key;
+  ACE_Configuration_Section_Key supported_key;
   this->repo_->config ()->open_section (this->section_key_,
-                                        "supported",
-                                        1,
-                                        inherited_key);
+                                        ACE_TEXT ("supported"),
+                                        true,
+                                        supported_key);
+
+  this->repo_->config ()->set_integer_value (supported_key,
+                                             ACE_TEXT ("count"),
+                                             length);
 
   CORBA::String_var name;
   char *supported_path {};
-  ACE_Configuration_Section_Key supported_key;
 
   for (CORBA::ULong i {}; i < length; ++i)
     {
@@ -403,18 +399,18 @@ TAO_ComponentDef_i::supported_interfaces_i (
       // the name clash checker for base interfaces is static, and has
       // no other way to know about a specific key.
       this->repo_->config ()->expand_path (this->repo_->root_key (),
-                                            supported_path,
+                                            ACE_TEXT_CHAR_TO_TCHAR (supported_path),
                                             TAO_IFR_Service_Utils::tmp_key_,
-                                            0);
+                                            false);
       TAO_IFR_Service_Utils::name_exists (&TAO_InterfaceDef_i::name_clash,
                                           this->section_key_,
                                           this->repo_,
                                           this->def_kind ());
 
-      char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
+      ACE_TCHAR *stringified = TAO_IFR_Service_Utils::int_to_string (i);
       this->repo_->config ()->set_string_value (supported_key,
                                                 stringified,
-                                                supported_path);
+                                                ACE_TEXT_CHAR_TO_TCHAR (supported_path));
     }
 }
 
@@ -451,8 +447,7 @@ TAO_ComponentDef_i::base_component_i ()
 
 void
 TAO_ComponentDef_i::base_component (
-    CORBA::ComponentIR::ComponentDef_ptr base_component
-  )
+    CORBA::ComponentIR::ComponentDef_ptr base_component)
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -463,13 +458,12 @@ TAO_ComponentDef_i::base_component (
 
 void
 TAO_ComponentDef_i::base_component_i (
-    CORBA::ComponentIR::ComponentDef_ptr base_component
-  )
+    CORBA::ComponentIR::ComponentDef_ptr base_component)
 {
   if (CORBA::is_nil (base_component))
     {
       this->repo_->config ()->remove_value (this->section_key_,
-                                            "base_component");
+                                            ACE_TEXT ("base_component"));
       return;
     }
 
@@ -481,9 +475,9 @@ TAO_ComponentDef_i::base_component_i (
   // no other way to know about a specific key.
   this->repo_->config ()->expand_path (
                               this->repo_->root_key (),
-                              base_path,
+                              ACE_TEXT_CHAR_TO_TCHAR (base_path),
                               TAO_IFR_Service_Utils::tmp_key_,
-                              0
+                              false
                             );
   TAO_IFR_Service_Utils::name_exists (&TAO_ComponentDef_i::name_clash,
                                       this->section_key_,
@@ -492,8 +486,8 @@ TAO_ComponentDef_i::base_component_i (
 
   this->repo_->config ()->set_string_value (
                               this->section_key_,
-                              "base_component",
-                              base_path
+                              ACE_TEXT ("base_component"),
+                              ACE_TEXT_CHAR_TO_TCHAR (base_path)
                             );
 }
 
@@ -502,8 +496,7 @@ TAO_ComponentDef_i::create_provides (
     char const *id,
     char const *name,
     char const *version,
-    CORBA::InterfaceDef_ptr interface_type
-  )
+    CORBA::InterfaceDef_ptr interface_type)
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::ComponentIR::ProvidesDef::_nil ());
 
@@ -520,8 +513,7 @@ TAO_ComponentDef_i::create_provides_i (
     char const *id,
     char const *name,
     char const *version,
-    CORBA::InterfaceDef_ptr interface_type
-  )
+    CORBA::InterfaceDef_ptr interface_type)
 {
   return
     TAO_Port_Utils<

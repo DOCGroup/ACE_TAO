@@ -1,18 +1,15 @@
-
-//=============================================================================
 /**
  *  @file      Reactor_Notify_Test.cpp
  *
- *    This is a test that illustrates how the <ACE_Reactor>'s
- *    <notify> method works under various <max_notify_iterations>
- *    settings.  It also tests that the <disable_notify_pipe> option
+ *    This is a test that illustrates how the @c ACE_Reactor's
+ *    @a notify method works under various @a max_notify_iterations
+ *    settings.  It also tests that the @a disable_notify_pipe option
  *    works correctly.  Moreover, if the $ACE_ROOT/ace/config.h file
  *    has the ACE_HAS_REACTOR_NOTIFICATION_QUEUE option enabled this
  *    test will also exercise this feature.
  *
  *  @author   Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "ace/OS_NS_unistd.h"
@@ -56,7 +53,7 @@ private:
 int
 Quiet_Notify_Tester::open (void *)
 {
-  this->reactor (&this->r_);
+  this->reactor (std::addressof (this->r_));
   return this->activate ();
 }
 
@@ -68,7 +65,7 @@ Quiet_Notify_Tester::svc ()
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Starting quiet event loop\n")));
   this->r_.owner (ACE_Thread::self ());
   ACE_Time_Value tmo (LONG_TIMEOUT);
-  int status = this->r_.handle_events (&tmo);
+  int const status = this->r_.handle_events (&tmo);
   time_t remain = tmo.sec ();
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) event loop status %d, %: secs remain\n"),
@@ -92,10 +89,12 @@ run_quiet_notify_test ()
   ACE_DEBUG ((LM_DEBUG, "(%t) Starting quiet notify test\n"));
   Quiet_Notify_Tester t;
   if (t.open () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("Quiet notify activate")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("Quiet notify activate")),
+                        -1);
+    }
   // Now sleep a bit, then do a simple, reactor wake-up
   ACE_OS::sleep (SHORT_TIMEOUT);
   t.reactor ()->notify ();
@@ -104,15 +103,12 @@ run_quiet_notify_test ()
   return t.result ();
 }
 
-
 class Supplier_Task : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
-  /// Constructor.
   Supplier_Task (int disable_notify_pipe,
-                 const ACE_Time_Value &tv);
+                 ACE_Time_Value const &tv);
 
-  /// Destructor.
   ~Supplier_Task () override;
 
   //FUZZ: disable check_for_lack_ACE_OS
@@ -123,45 +119,45 @@ public:
   ///FUZZ: enable check_for_lack_ACE_OS
   int close (u_long) override;
 
-  /// Generates events and sends them to the <Reactor>'s <notify>
+  /// Generates events and sends them to the @c ACE_Reactor's @c notify()
   /// method.
   int svc () override;
 
-  /// Releases the <waiter_> semaphore when called by the <Reactor>'s
+  /// Releases the @c waiter_ semaphore when called by the @c ACE_Reactor's
   /// notify handler.
   int handle_exception (ACE_HANDLE) override;
 
   /**
-   * Called every time through the main <ACE_Reactor> event loop to
+   * Called every time through the main @c ACE_Reactor event loop to
    * illustrate the difference between "limited" and "unlimited"
    * notification.
    */
   int handle_output (ACE_HANDLE) override;
 
-  /// Release the <waiter_>.
+  /// Release the @c waiter_.
   void release ();
 
 private:
   /// Perform the notifications.
   int perform_notifications (int notifications);
 
-  /// Used to hand-shake between the <Supplier_Task> and the
-  /// <Reactor>'s notify mechanism.
+  /// Used to hand-shake between the @c Supplier_Task and the
+  /// @c ACE_Reactor's notify mechanism.
   ACE_Thread_Semaphore waiter_;
 
   /**
    * We use this pipe just to get a handle that is always "active,"
-   * i.e., the <ACE_Reactor> will always dispatch its <handle_output>
+   * i.e., the @c ACE_Reactor will always dispatch its @c handle_output()
    * method.
    */
   ACE_Pipe pipe_;
 
-  /// Keeps track of whether the notification pipe in the <ACE_Reactor>
+  /// Keeps track of whether the notification pipe in the @c ACE_Reactor
   /// has been diabled or not.
   int disable_notify_pipe_;
 
   /**
-   * Keeps track of whether we're running with a <LONG_TIMEOUT>, which
+   * Keeps track of whether we're running with a @c LONG_TIMEOUT, which
    * is used for the ACE_HAS_REACTOR_NOTIFICATION_QUEUE portion of
    * this test.
    */
@@ -175,7 +171,7 @@ Supplier_Task::release ()
 }
 
 Supplier_Task::Supplier_Task (int disable_notify_pipe,
-                              const ACE_Time_Value &tv)
+                              ACE_Time_Value const &tv)
   : waiter_ ((unsigned int) 0), // Make semaphore "locked" by default.
     disable_notify_pipe_ (disable_notify_pipe),
     long_timeout_ (tv.sec () == LONG_TIMEOUT)
@@ -258,10 +254,10 @@ Supplier_Task::perform_notifications (int notifications)
 #endif
     }
 
-  for (size_t i = 0; i < iterations; i++)
+  for (size_t i = 0; i < iterations; ++i)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%t) notifying reactor on iteration %d\n"),
+                  ACE_TEXT ("(%t) notifying reactor on iteration %B\n"),
                   i));
 
       int result;
@@ -271,11 +267,15 @@ Supplier_Task::perform_notifications (int notifications)
       if (result == -1)
         {
           if (errno == ETIME)
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("(%t) %p\n"),
-                        ACE_TEXT ("notify")));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("(%t) %p\n"),
+                          ACE_TEXT ("notify")));
+            }
           else
+          {
             ACE_TEST_ASSERT (result != -1);
+          }
         }
 
       // Wait for our <handle_exception> method to release the
@@ -344,27 +344,31 @@ Supplier_Task::handle_output (ACE_HANDLE handle)
 
 static int
 run_test (int disable_notify_pipe,
-          const ACE_Time_Value &tv)
+          ACE_Time_Value const &tv)
 {
   // Create special reactors with the appropriate flags enabled.
 
-  ACE_Select_Reactor *reactor_impl = nullptr;
+  ACE_Select_Reactor *reactor_impl {};
   if (disable_notify_pipe)
-    ACE_NEW_RETURN (reactor_impl,
-                    ACE_Select_Reactor (nullptr, nullptr, 1),
-                    -1);
+    {
+      ACE_NEW_RETURN (reactor_impl,
+                      ACE_Select_Reactor (nullptr, nullptr, 1),
+                      -1);
+    }
   else
-    ACE_NEW_RETURN (reactor_impl,
-                    ACE_Select_Reactor,
-                    -1);
+    {
+      ACE_NEW_RETURN (reactor_impl,
+                      ACE_Select_Reactor,
+                      -1);
+    }
 
   ACE_Reactor *reactor;
   ACE_NEW_RETURN (reactor,
-                  ACE_Reactor (reactor_impl, 1),    // Delete implementation
+                  ACE_Reactor (reactor_impl, true),    // Delete implementation
                   -1);
 
   // Make sure this stuff gets cleaned up when this function exits.
-  std::unique_ptr<ACE_Reactor> r (reactor);
+  std::unique_ptr<ACE_Reactor> const r (reactor);
 
   // Set the Singleton Reactor.
   ACE_Reactor *orig_reactor = ACE_Reactor::instance (reactor);
@@ -381,9 +385,11 @@ run_test (int disable_notify_pipe,
   ACE_TEST_ASSERT (result != -1);
 
   if (tv.sec () == LONG_TIMEOUT)
-    // Sleep for a while so that the <ACE_Reactor>'s notification
-    // buffers will fill up!
-    ACE_OS::sleep (tv);
+    {
+      // Sleep for a while so that the <ACE_Reactor>'s notification
+      // buffers will fill up!
+      ACE_OS::sleep (tv);
+    }
 
   int shutdown = 0;
 
@@ -391,13 +397,13 @@ run_test (int disable_notify_pipe,
   // <handle_exception> notifications.
   for (int iteration = 1;
        shutdown == 0;
-       iteration++)
+       ++iteration)
     {
       ACE_Time_Value timeout (tv);
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%t) starting handle_events() on iteration %d")
-                  ACE_TEXT (" with time-out = %d seconds\n"),
+                  ACE_TEXT (" with time-out = %: seconds\n"),
                   iteration,
                   timeout.sec ()));
 
@@ -406,9 +412,11 @@ run_test (int disable_notify_pipe,
         {
         case -1:
           if (! disable_notify_pipe)
-            ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("(%t) %p\n"),
-                        ACE_TEXT ("reactor")));
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("(%t) %p\n"),
+                          ACE_TEXT ("reactor")));
+            }
           shutdown = 1;
           break;
           /* NOTREACHED */
@@ -439,7 +447,7 @@ run_test (int disable_notify_pipe,
 /**
  * @class Purged_Notify
  *
- * @brief <run_notify_purge_test> tests the reactor's
+ * @brief @c run_notify_purge_test tests the reactor's
  * purge_pending_notifications function. It does 2 notifications,
  * and explicitly cancels one, and deletes the other's event
  * handler, which should cause it to be cancelled as well.
@@ -458,56 +466,66 @@ static int
 run_notify_purge_test ()
 {
   int status;
-  ACE_Reactor *r = ACE_Reactor::instance ();
+  ACE_Reactor * const r = ACE_Reactor::instance ();
   {
     Purged_Notify n1;
     Purged_Notify *n2;
 
     ACE_NEW_RETURN (n2, Purged_Notify, -1);
-    std::unique_ptr<Purged_Notify> ap (n2);
+    std::unique_ptr<Purged_Notify> const ap (n2);
 
     // First test:
     // Notify EXCEPT, and purge ALL
-    r->notify (&n1); // the mask is EXCEPT_MASK
+    r->notify (std::addressof (n1)); // the mask is EXCEPT_MASK
 
-    status = r->purge_pending_notifications (&n1);
+    status = r->purge_pending_notifications (std::addressof (n1));
     if (status == -1 && errno == ENOTSUP)
+    {
       return 0;         // Select Reactor w/o ACE_HAS_REACTOR_NOTIFICATION_QUEUE
+    }
     if (status != 1)
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("Purged %d notifies; expected 1\n"),
-                  status));
+      {
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("Purged %d notifies; expected 1\n"),
+                    status));
+      }
     // Second test:
     // Notify READ twice, and WRITE once, and purge READ and WRITE - should purge 3 times.
-    r->notify (&n1, ACE_Event_Handler::READ_MASK);
-    r->notify (&n1, ACE_Event_Handler::READ_MASK);
-    r->notify (&n1, ACE_Event_Handler::WRITE_MASK);
+    r->notify (std::addressof (n1), ACE_Event_Handler::READ_MASK);
+    r->notify (std::addressof (n1), ACE_Event_Handler::READ_MASK);
+    r->notify (std::addressof (n1), ACE_Event_Handler::WRITE_MASK);
     status = r->purge_pending_notifications
-      (&n1, ACE_Event_Handler::READ_MASK | ACE_Event_Handler::WRITE_MASK);
+      (std::addressof (n1), ACE_Event_Handler::READ_MASK | ACE_Event_Handler::WRITE_MASK);
     if (status != 3)
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("Purged %d notifies; expected 3\n"),
-                  status));
+      {
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("Purged %d notifies; expected 3\n"),
+                    status));
+      }
     // Third test:
     // Notify READ on 2 handlers, and purge READ|WRITE on all handlers. Should purge 2
-    r->notify (&n1, ACE_Event_Handler::READ_MASK);
+    r->notify (std::addressof (n1), ACE_Event_Handler::READ_MASK);
     r->notify (n2, ACE_Event_Handler::READ_MASK);
     status = r->purge_pending_notifications
       (nullptr, ACE_Event_Handler::READ_MASK | ACE_Event_Handler::WRITE_MASK);
     if (status != 2)
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("Purged %d notifies; expected 2\n"),
-                  status));
+      {
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("Purged %d notifies; expected 2\n"),
+                    status));
+      }
     // Forth test:
     // Notify EXCEPT and WRITE, purge READ. Should not purge
-    r->notify (&n1); // the mask is EXCEPT_MASK
-    r->notify (&n1, ACE_Event_Handler::WRITE_MASK);
+    r->notify (std::addressof (n1)); // the mask is EXCEPT_MASK
+    r->notify (std::addressof (n1), ACE_Event_Handler::WRITE_MASK);
     status = r->purge_pending_notifications
-      (&n1, ACE_Event_Handler::READ_MASK);
+      (std::addressof (n1), ACE_Event_Handler::READ_MASK);
     if (status != 0)
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("Purged %d notifies; expected 0\n"),
-                  status));
+      {
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("Purged %d notifies; expected 0\n"),
+                    status));
+      }
     // Fifth test:
     r->notify (n2);
 
@@ -516,7 +534,7 @@ run_notify_purge_test ()
     // so.
     r->purge_pending_notifications(n2,
                                    ACE_Event_Handler::ALL_EVENTS_MASK);
-    r->purge_pending_notifications(&n1,
+    r->purge_pending_notifications (std::addressof (n1),
                                    ACE_Event_Handler::ALL_EVENTS_MASK);
   }
 
@@ -524,7 +542,6 @@ run_notify_purge_test ()
   status = r->handle_events (t);  // Should be nothing to do, and time out
   return status < 0 ? 1 : 0;     // Return 0 for all ok, else error
 }
-
 
 int
 run_main (int, ACE_TCHAR *[])
@@ -547,19 +564,21 @@ run_main (int, ACE_TCHAR *[])
 
 #if defined (ACE_HAS_THREADS)
   if (0 != run_quiet_notify_test ())
+  {
     test_result = 1;
+  }
 
   ACE_Time_Value timeout (SHORT_TIMEOUT);
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) running tests with notify pipe enabled")
-              ACE_TEXT (" and time-out = %d seconds\n"),
+              ACE_TEXT (" and time-out = %: seconds\n"),
               timeout.sec ()));
   run_test (0, timeout);
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) running tests with notify pipe disabled")
-              ACE_TEXT (" and time-out = %d seconds\n"),
+              ACE_TEXT (" and time-out = %: seconds\n"),
               timeout.sec ()));
   run_test (1, timeout);
 
@@ -567,7 +586,7 @@ run_main (int, ACE_TCHAR *[])
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) running tests with reactor notification ")
               ACE_TEXT ("pipe enabled\n")
-              ACE_TEXT (" and time-out = %d seconds\n"),
+              ACE_TEXT (" and time-out = %: seconds\n"),
               timeout.sec ()));
   run_test (0, timeout);
 

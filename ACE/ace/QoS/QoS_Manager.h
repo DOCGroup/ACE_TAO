@@ -1,13 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    QoS_Manager.h
  *
  *  @author Vishal Kachroo
  */
-//=============================================================================
-
 
 #ifndef ACE_QOS_MANAGER_H
 #define ACE_QOS_MANAGER_H
@@ -23,7 +18,6 @@
 #include "ace/Containers_T.h"
 #include "ACE_QoS_Export.h"
 #include "QoS_Session.h"
-
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -41,12 +35,15 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_QoS_Export ACE_QoS_Manager
 {
 public:
-  /// Default constructor.
   ACE_QoS_Manager ();
 
-  /// Default destructor.
   ~ACE_QoS_Manager ();
 
+  /// Copies hold an independent snapshot of the session pointer set.
+  ACE_QoS_Manager (ACE_QoS_Manager const &) = default;
+  ACE_QoS_Manager (ACE_QoS_Manager &&) = default;
+  ACE_QoS_Manager &operator= (ACE_QoS_Manager const &) = default;
+  ACE_QoS_Manager &operator= (ACE_QoS_Manager &&) = default;
   /**
    * Join the given QoS session. A socket can join multiple QoS
    * sessions.  This call adds the given QoS session to the list of
@@ -57,7 +54,7 @@ public:
   using ACE_QOS_SESSION_SET = ACE_Unbounded_Set<ACE_QoS_Session *>;
 
   /// Get the QoS session set.
-  ACE_QOS_SESSION_SET qos_session_set ();
+  ACE_QOS_SESSION_SET qos_session_set () const;
 
 private:
   /// Set of QoS sessions that this socket has joined.

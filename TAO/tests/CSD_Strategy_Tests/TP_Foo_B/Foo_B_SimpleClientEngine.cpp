@@ -5,7 +5,7 @@
 #include "AppHelper.h"
 #include "ace/Log_Msg.h"
 
-extern const char* ONEWAY_ARG_TEST_STR;
+extern char const *ONEWAY_ARG_TEST_STR;
 
 Foo_B_SimpleClientEngine::Foo_B_SimpleClientEngine(Foo_B_ptr obj,
                                                    Callback_ptr callback,
@@ -21,7 +21,7 @@ Foo_B_SimpleClientEngine::execute()
 {
   // Make sure the connection is established before making
   // remote invocations.
-  if (AppHelper::validate_connection (this->obj_.in ()) == false)
+  if (!AppHelper::validate_connection (this->obj_.in ()))
     {
       ACE_ERROR((LM_ERROR, "(%P|%t)Foo_A_SimpleClientEngine::execute  " \
                           "client %d connect failed.\n", this->client_id_));
@@ -42,7 +42,7 @@ Foo_B_SimpleClientEngine::execute()
 
     this->obj_->op7 (this->callback_.in ());
   }
-  catch (const FooException& )
+  catch (FooException const & )
   {
     ACE_ERROR((LM_ERROR, "(%P|%t)Foo_A_SimpleClientEngine::execute  " \
                "FooException raised by op7() call.\n"));
@@ -55,13 +55,11 @@ Foo_B_SimpleClientEngine::execute()
   return check_validity;
 }
 
-
 void
 Foo_B_SimpleClientEngine::expected_results(Foo_B_Statistics& stats)
 {
   stats.expected(7, 1, Foo_B_Statistics::FOO_B_STAT_NONE);
 }
-
 
 unsigned
 Foo_B_SimpleClientEngine::expected_callbacks ()

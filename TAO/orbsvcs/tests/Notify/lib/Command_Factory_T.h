@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file Command_Factory_T.h
  *
@@ -29,18 +28,18 @@ template <class COMMAND>
 class TAO_Notify_Tests_Command_Factory_T : public TAO_Notify_Tests_Command_Factory, public ACE_Service_Object
 {
 public:
-  /// Constructor
   TAO_Notify_Tests_Command_Factory_T ();
 
-  /// Destructor
   ~TAO_Notify_Tests_Command_Factory_T ();
 
-  /// = Service_Object virtual method overloads.
-  virtual int init (int argc, ACE_TCHAR *argv[]);
-  virtual int fini ();
+  /// @name Service_Object virtual method overloads
+  /// @{
+  int init (int argc, ACE_TCHAR *argv[]) override;
+  int fini () override;
+  /// @}
 
-  /// Create the <COMMAND> command.
-  TAO_Notify_Tests_Command* create ();
+  /// Create the @c COMMAND command.
+  TAO_Notify_Tests_Command* create () override;
 };
 
 #include "Command_Factory_T.cpp"

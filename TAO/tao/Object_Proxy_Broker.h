@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Object_Proxy_Broker.h
  *
@@ -11,8 +8,6 @@
  *  Modified by
  *  @author Balachandran Natarajan <bala@dre.vanderbilt.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_OBJECT_PROXY_BROKER_H
 #define TAO_OBJECT_PROXY_BROKER_H
@@ -49,11 +44,10 @@ namespace TAO
   class TAO_Export Object_Proxy_Broker
   {
   public:
-    /// Destructor
     virtual ~Object_Proxy_Broker ();
 
     virtual CORBA::Boolean _is_a (CORBA::Object_ptr target,
-                                  const char *logical_type_id) = 0;
+                                  char const *logical_type_id) = 0;
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 

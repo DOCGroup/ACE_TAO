@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//==========================================================================
 /**
  *  @file   config-all.h
  *
@@ -8,7 +5,6 @@
  *  @author Jesper S. M|ller<stophph@diku.dk>
  *  @author and a cast of thousands...
  */
-//==========================================================================
 
 #ifndef ACE_CONFIG_ALL_H
 #define ACE_CONFIG_ALL_H
@@ -34,7 +30,6 @@
 # define ACE_NOTSUP do { errno = ENOTSUP; return; } while (0)
 #endif /* ! ACE_HAS_VERBOSE_NOTSUP */
 
-// ----------------------------------------------------------------
 
 # define ACE_TRACE_IMPL(X) ACE_Trace ____ (ACE_TEXT (X), __LINE__, ACE_TEXT (__FILE__))
 
@@ -118,7 +113,6 @@
 #if defined (ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS)
 # define ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS
 #endif /* ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS */
-
 
 // These includes are here to avoid circular dependencies.
 // Keep this at the bottom of the file.  It contains the main macros.

@@ -4,4 +4,3 @@
 #include "ace/Functor_String.inl"
 #endif /* __ACE_INLINE__ */
 
-

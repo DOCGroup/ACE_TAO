@@ -1,4 +1,3 @@
-// -*- MPC -*-
 feature(negotiate_codesets) {
   after += Codeset
   libs   += TAO_Codeset

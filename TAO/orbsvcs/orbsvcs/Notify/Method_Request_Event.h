@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 /**
  *  @file Method_Request_Event.h
  *
@@ -34,29 +32,28 @@ class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Event
 {
 public:
   /// Construct from event
-  TAO_Notify_Method_Request_Event (const TAO_Notify_Event *);
+  explicit TAO_Notify_Method_Request_Event (TAO_Notify_Event const *);
 
   /// Construct from a delivery request
-  TAO_Notify_Method_Request_Event (
-    const TAO_Notify::Delivery_Request_Ptr & delivery_request);
+  explicit TAO_Notify_Method_Request_Event (
+    TAO_Notify::Delivery_Request_Ptr const & delivery_request);
 
   /// Construct from another Method Request
   /// Event is passed separately because it may be a copy of the one in request.
-  TAO_Notify_Method_Request_Event (const TAO_Notify_Method_Request_Event & rhs,
-    const TAO_Notify_Event * event);
+  TAO_Notify_Method_Request_Event (TAO_Notify_Method_Request_Event const & rhs,
+    TAO_Notify_Event const * event);
 
 public:
-  /// Destructor
   virtual ~TAO_Notify_Method_Request_Event ();
 
-  const TAO_Notify_Event * event() const;
+  TAO_Notify_Event const * event() const;
   void complete ();
   unsigned long sequence ();
   bool should_retry ();
 
 protected:
   /// The Event
-  const TAO_Notify_Event * event_;
+  TAO_Notify_Event const * event_;
 
   /// Pointer to the routing slip's delivery request (if any)
   TAO_Notify::Delivery_Request_Ptr delivery_request_;
@@ -74,18 +71,16 @@ class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Event_Queueable
   , public TAO_Notify_Method_Request_Event
 {
 public:
-  /// Constructor
   /// Not the event_var is passed as a separate parameter to avoid throwing
   /// exceptions from the constructor if it's necessary to copy the event.
   TAO_Notify_Method_Request_Event_Queueable (
-    const TAO_Notify_Method_Request_Event & prev_request,
-    const TAO_Notify_Event::Ptr & event);
+    TAO_Notify_Method_Request_Event const & prev_request,
+    TAO_Notify_Event::Ptr const & event);
 
-  TAO_Notify_Method_Request_Event_Queueable (
+  explicit TAO_Notify_Method_Request_Event_Queueable (
     TAO_Notify::Delivery_Request_Ptr & request);
 
-  /// Destructor
-  virtual ~TAO_Notify_Method_Request_Event_Queueable ();
+  ~TAO_Notify_Method_Request_Event_Queueable () override = default;
 
   /// satisfy the pure virtual method.  Should never be called.
   int execute () override;

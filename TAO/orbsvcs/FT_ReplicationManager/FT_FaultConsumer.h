@@ -1,5 +1,3 @@
-/* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file    FT_FaultConsumer.h
  *
@@ -7,8 +5,6 @@
  *
  *  @author Steve Totten <totten_s@ociweb.com>
  */
-//=============================================================================
-
 
 #ifndef FT_FAULT_CONSUMER_H_
 #define FT_FAULT_CONSUMER_H_
@@ -43,19 +39,13 @@ namespace TAO
     // non-CORBA interface
 
   public:
-    /**
-    * Default constructor.
-    */
     FT_FaultConsumer ();
 
-    /**
-    * Destructor.
-    */
     ~FT_FaultConsumer () override;
 
     /**
     * Connect to the FT::FaultNotifier.
-    * Note: We make the following assumptions about what the
+    * @note We make the following assumptions about what the
     * application will do:
     * - Create an instance of this consumer class.
     * - Obtain the object reference of the FaultNotifier to which this
@@ -94,7 +84,7 @@ namespace TAO
     * Methods required by the POA_CosNotifyComm::StructuredPushConsumer
     * interface.
     */
-    //@{
+    /// @{
     ////////////////
     // CORBA methods
     void push_structured_event (
@@ -106,21 +96,19 @@ namespace TAO
 
    void disconnect_structured_push_consumer () override;
 
-    //@}
+    /// @}
 
-    ////////////////////
-    // Forbidden methods
   private:
-    /// Copy constructor.
+    /// @name Disabled operations
+    /// @{
     FT_FaultConsumer (FT_FaultConsumer const &) = delete;
-    /// Assignment operator.
     FT_FaultConsumer (FT_FaultConsumer &&) = delete;
     FT_FaultConsumer & operator= (FT_FaultConsumer const &) = delete;
     FT_FaultConsumer & operator= (FT_FaultConsumer &&) = delete;
+    /// @}
 
-    ///////////////
-    // Data Members
-  private:
+    /// @name Data members
+    /// @{
     /// The POA with which we are activated.
     PortableServer::POA_var poa_;
 
@@ -131,17 +119,18 @@ namespace TAO
     FT::FaultNotifier_var fault_notifier_;
 
     /// Application-specific Fault Analyzer.
-    TAO::FT_FaultAnalyzer * fault_analyzer_;
+    TAO::FT_FaultAnalyzer * fault_analyzer_ {};
 
     /// ConsumerId assigned by the notifier.
-    FT::FaultNotifier::ConsumerId consumer_id_;
+    FT::FaultNotifier::ConsumerId consumer_id_ {};
 
     /// Our consumer object reference.
     CosNotifyComm::StructuredPushConsumer_var consumer_ref_;
 
     ///TODO: Remove this later, it is just for testing.
-    // Keep track of how many notifications we have received.
-    size_t notifications_;
+    /// Keep track of how many notifications we have received.
+    size_t notifications_ {};
+    /// @}
   };
 } // namespace TAO
 

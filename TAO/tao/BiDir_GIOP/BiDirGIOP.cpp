@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/BiDir_GIOP/BiDir_ORBInitializer.h"
 #include "tao/BiDir_GIOP/BiDirGIOP.h"
 #include "tao/BiDir_GIOP/BiDirPolicy_Validator.h"
@@ -13,7 +12,9 @@ int
 TAO_BiDirGIOP_Loader::init (int, ACE_TCHAR* [])
 {
   if (this->initialized_)
+  {
     return 0;
+  }
 
   this->initialized_ = true;
 
@@ -69,7 +70,9 @@ TAO_BiDirGIOP_Loader::load_policy_validators (TAO_Policy_Validator &val)
 {
   // Is this true? Does the GIOP protocol version matter here?
   if (TAO_DEF_GIOP_MINOR < 2)
+  {
     return;
+  }
 
   TAO_BiDirPolicy_Validator *validator {};
   ACE_NEW_THROW_EX (validator,

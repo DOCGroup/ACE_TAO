@@ -5,7 +5,6 @@
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::SSLIOP::Current_ptr
@@ -25,15 +24,19 @@ TAO::SSLIOP::Util::current (TAO_ORB_Core *orb_core)
         TAO::SSLIOP::Current::_narrow (obj.in ());
 
       if (CORBA::is_nil (tao_current.in ()))
+      {
         throw CORBA::INV_OBJREF ();
+      }
 
       return tao_current._retn ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       if (TAO_debug_level > 0)
+      {
         ex._tao_print_exception (
           "Could not resolve \"SSLIOPCurrent\" object");
+      }
 
       return nullptr;
     }

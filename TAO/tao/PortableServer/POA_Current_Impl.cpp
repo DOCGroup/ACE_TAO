@@ -5,6 +5,8 @@
 
 #include "tao/TSS_Resources.h"
 
+#include <memory>
+
 #if !defined (__ACE_INLINE__)
 # include "tao/PortableServer/POA_Current_Impl.inl"
 #endif /* __ACE_INLINE__ */
@@ -25,7 +27,7 @@ namespace TAO
     {
       // Remember information about this upcall.
       this->poa_ = p;
-      this->object_key_ = &key;
+      this->object_key_ = std::addressof (key);
 
       // Set the current context and remember the old one.
       this->tss_resources_ = TAO_TSS_Resources::instance ();

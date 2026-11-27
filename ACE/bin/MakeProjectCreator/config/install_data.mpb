@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project {
   // With gnuace, when install_this_target = 1 (see install_bin or install_lib)
   // files listed as InstallData_Files { ... } will be installed to the "data"

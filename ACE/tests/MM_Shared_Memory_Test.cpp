@@ -1,9 +1,7 @@
-
-//=============================================================================
 /**
  *  @file    MM_Shared_Memory_Test.cpp
  *
- *   This is a simple test of <ACE_Shared_Memory_MM>.  The test
+ *   This is a simple test of @c ACE_Shared_Memory_MM.  The test
  *   forks two processes or spawns two threads (depending upon the
  *   platform) and then executes child and parent allowing them to
  *   exchange data using shared memory. No user input is required as
@@ -11,7 +9,6 @@
  *
  *  @author Prashant Jain <pjain@cs.wustl.edu> and Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "ace/Shared_Memory_MM.h"
@@ -41,7 +38,7 @@ class SYNCHRONIZER : public ACE_SV_Semaphore_Simple
 {
 public:
   SYNCHRONIZER (int initial_value)
-    : ACE_SV_Semaphore_Simple ((const char *) nullptr,
+    : ACE_SV_Semaphore_Simple ((char const *) nullptr,
                                ACE_SV_Semaphore_Simple::ACE_CREATE,
                                initial_value)
   {}
@@ -54,7 +51,7 @@ using SYNCHRONIZER = ACE_Process_Semaphore;
 #define SYNC_EXTRA_ARGS , sem_name ()
 ACE_TCHAR sem_name_[ACE_UNIQUE_NAME_LEN] = ACE_TEXT ("/");
 
-const ACE_TCHAR *sem_name ()
+ACE_TCHAR const *sem_name ()
 {
   ACE::unique_name (sem_name_, sem_name_ + 1, ACE_UNIQUE_NAME_LEN - 1);
   return sem_name_;
@@ -67,9 +64,9 @@ const int SHMSZ = 27;
 static ACE_TCHAR *shm_key;
 
 // Synchronize the start of the parent and the child.
-static SYNCHRONIZER *synchronizer = nullptr;
+static SYNCHRONIZER *synchronizer {};
 
-static void *
+static ACE_THR_FUNC_RETURN
 child (void * = nullptr)
 {
   int result;
@@ -78,29 +75,29 @@ child (void * = nullptr)
   result = synchronizer->acquire ();
   ACE_TEST_ASSERT (result != -1);
 
-  const char *t = ACE_ALPHABET;
+  char const *t = ACE_ALPHABET;
   ACE_Shared_Memory_MM shm_child;
 
   result = shm_child.open (shm_key);
   ACE_TEST_ASSERT (result != -1);
 
-  char *shm = (char *) shm_child.malloc ();
+  char *shm = static_cast<char *> (shm_child.malloc ());
 
   ACE_TEST_ASSERT (shm != nullptr);
 
-  for (char *s = shm; *s != '\0'; s++)
+  for (char *s = shm; *s != '\0'; ++s)
     {
       ACE_TEST_ASSERT (*t == s[0]);
-      t++;
+      ++t;
     }
 
   // Indicate to the parent that we're done.
   *shm = '*';
 
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
-static void *
+static ACE_THR_FUNC_RETURN
 parent (void * = nullptr)
 {
   int result;
@@ -109,14 +106,16 @@ parent (void * = nullptr)
   result = shm_parent.open (shm_key, SHMSZ);
   ACE_TEST_ASSERT (result != -1);
 
-  char *shm = (char *) shm_parent.malloc ();
+  char *shm = static_cast<char *> (shm_parent.malloc ());
 
   ACE_TEST_ASSERT (shm != nullptr);
 
   char *s = shm;
 
-  for (const char *c = ACE_ALPHABET; *c != '\0'; c++)
-    *s++ = *c;
+  for (char const *c = ACE_ALPHABET; *c != '\0'; ++c)
+    {
+      *s++ = *c;
+    }
 
   *s = '\0';
 
@@ -126,14 +125,16 @@ parent (void * = nullptr)
 
   // Perform a "busy wait" until the child sets the character to '*'.
   while (*shm != '*')
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%P) spinning in parent!\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%P) spinning in parent!\n")));
+    }
 
   result = shm_parent.remove ();
   ACE_TEST_ASSERT (result != -1);
 
   ACE_OS::unlink (shm_key);
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 static int
@@ -170,16 +171,16 @@ spawn ()
     }
 #elif defined (ACE_HAS_THREADS)
   if (ACE_Thread_Manager::instance ()->spawn
-      (ACE_THR_FUNC (child),
-       (void *) 0,
+      (child,
+       nullptr,
        THR_NEW_LWP | THR_DETACHED) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("(%P|%t) %p\n"),
                        ACE_TEXT ("thread create failed")),
                       1);
   else if (ACE_Thread_Manager::instance ()->spawn
-      (ACE_THR_FUNC (parent),
-       (void *) 0,
+      (parent,
+       nullptr,
        THR_NEW_LWP | THR_DETACHED) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("(%P|%t) %p\n"),
@@ -209,7 +210,9 @@ run_main (int, ACE_TCHAR *[])
   // Get the temporary directory,
   // The - 24 is for the filename, mm_shared_mem_testXXXXXX
   if (ACE::get_temp_dir (temp_file, MAXPATHLEN - 24) == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Temporary path too long\n")), -1);
+  }
 
   // Add the filename to the end
   ACE_OS::strcat (temp_file, ACE_TEXT ("mm_shared_mem_testXXXXXX"));
@@ -220,10 +223,12 @@ run_main (int, ACE_TCHAR *[])
   if (ACE_OS::mktemp (shm_key) == nullptr
       || (ACE_OS::unlink (shm_key) == -1
           && errno == EPERM))
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) %p\n"),
-                       shm_key),
-                      1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%P|%t) %p\n"),
+                         shm_key),
+                        1);
+    }
   spawn ();
 
 #else /* !ACE_LACKS_MMAP */

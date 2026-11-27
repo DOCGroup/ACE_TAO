@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #ifndef BIG_ONEWAYS_SESSION_H
 #define BIG_ONEWAYS_SESSION_H
 
@@ -18,7 +17,6 @@ class Session
   : public virtual POA_Test::Session
 {
 public:
-  /// Constructor
   Session (Test::Session_Control_ptr control,
            CORBA::ULong payload_size,
            CORBA::ULong thread_count,
@@ -29,13 +27,13 @@ public:
   Session &operator= (Session const &) = delete;
   Session &operator= (Session &&) = delete;
 
-  /// Destructor
-  ~Session () override;
+  ~Session () override = default;
 
   /// Run one of the experiment threads
   int svc ();
 
-  // = The skeleton methods
+  /// @name Skeleton methods
+  /// @{
   void start (Test::Session_List const &other_sessions) override;
 
   void ping () override;
@@ -43,6 +41,7 @@ public:
   void receive_payload (Test::Payload const &the_payload) override;
 
   void destroy () override;
+  /// @}
 
 private:
   /// Helper function used to report any problems and destroy local
@@ -50,13 +49,12 @@ private:
   void terminate (CORBA::Boolean success);
 
   /// Return 1 if all the work in this session has been completed
-  int more_work () const;
+  bool more_work () const;
 
-  /// Make sure that all threads have connections avaiable to the
+  /// Make sure that all threads have connections available to the
   /// other sessions.
   void validate_connections ();
 
-private:
   /// Synchronize the internal state
   TAO_SYNCH_MUTEX mutex_;
 
@@ -64,24 +62,24 @@ private:
   /// when the test finishes.
   Test::Session_Control_var control_;
 
-  /// Keep track of wether the test is running.
-  int running_;
+  /// Keep track of whether the test is running.
+  bool running_ {};
 
   /// The other session objects participating in the test
   Test::Session_List other_sessions_;
 
   /// Size of each message
-  CORBA::ULong payload_size_;
+  CORBA::ULong const payload_size_;
 
   /// Number of threads
-  CORBA::ULong thread_count_;
+  CORBA::ULong const thread_count_;
 
   /// Number of messages to send
-  CORBA::ULong message_count_;
+  CORBA::ULong const message_count_;
 
   /// The number of threads currently running, when this reaches 0 the
   /// session destroys itself.
-  CORBA::ULong active_thread_count_;
+  CORBA::ULong active_thread_count_ {};
 
   /// Number of messages expected
   CORBA::ULong expected_messages_;

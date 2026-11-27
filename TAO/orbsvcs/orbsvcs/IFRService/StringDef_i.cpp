@@ -34,12 +34,12 @@ TAO_StringDef_i::destroy_i ()
 {
   ACE_TString name;
   this->repo_->config ()->get_string_value (this->section_key_,
-                                            "name",
+                                            ACE_TEXT ("name"),
                                             name);
 
   this->repo_->config ()->remove_section (this->repo_->strings_key (),
                                           name.c_str (),
-                                          0);
+                                          false);
 }
 
 CORBA::TypeCode_ptr
@@ -77,7 +77,7 @@ TAO_StringDef_i::bound_i ()
 {
   u_int retval = 0;
   this->repo_->config ()->get_integer_value (this->section_key_,
-                                             "bound",
+                                             ACE_TEXT ("bound"),
                                              retval);
 
   return static_cast<CORBA::ULong> (retval);
@@ -97,7 +97,7 @@ void
 TAO_StringDef_i::bound_i (CORBA::ULong bound)
 {
   this->repo_->config ()->set_integer_value (this->section_key_,
-                                             "bound",
+                                             ACE_TEXT ("bound"),
                                              bound);
 }
 

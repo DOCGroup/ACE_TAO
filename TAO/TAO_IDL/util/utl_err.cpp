@@ -279,10 +279,8 @@ get_lineno (AST_Decl *node = nullptr)
   return node ? node->line () : idl_global->lineno ();
 }
 
-/**
- * Common Error Message Header
- */
-///{
+/// @name Common error message header
+/// @{
 static void
 idl_error_header (UTL_Error::ErrorCode c, long lineno, std::string const& filename)
 {
@@ -291,7 +289,7 @@ idl_error_header (UTL_Error::ErrorCode c, long lineno, std::string const& filena
   long const line_number = lineno == -1 ? idl_global->lineno () : lineno;
   idl_global->err ()->last_error_lineno = line_number;
   ACE_ERROR ((LM_ERROR,
-              "Error - %C: \"%C\", line %d: %C",
+              "Error - %C: \"%C\", line %Ld: %C",
               idl_global->prog_name ().c_str (),
               filename.c_str (),
               line_number,
@@ -303,12 +301,10 @@ idl_error_header (UTL_Error::ErrorCode c, AST_Decl *node = nullptr)
 {
   idl_error_header (c, get_lineno (node), get_filename (node));
 }
-///}
+/// @}
 
-/**
- * Common Warning Message Header
- */
-///{
+/// @name Common warning message header
+/// @{
 static void
 idl_warning_header (UTL_Error::ErrorCode c, long lineno, std::string const& filename)
 {
@@ -317,7 +313,7 @@ idl_warning_header (UTL_Error::ErrorCode c, long lineno, std::string const& file
   long const line_number = lineno == -1 ? idl_global->lineno () : lineno;
   idl_global->err ()->last_warning_lineno = lineno;
   ACE_ERROR ((LM_WARNING,
-              "Warning - %C: \"%C\", line %d: %C",
+              "Warning - %C: \"%C\", line %Ld: %C",
               idl_global->prog_name ().c_str (),
               filename.c_str (),
               line_number,
@@ -328,7 +324,7 @@ idl_warning_header (UTL_Error::ErrorCode c, AST_Decl *node = nullptr)
 {
   idl_warning_header (c, get_lineno (node), get_filename (node));
 }
-///}
+/// @}
 
 // Convert a parse state into a possible error message
 static std::string
@@ -1379,7 +1375,7 @@ UTL_Error::scope_masking_error (AST_Decl *masked,
     }
 
   ACE_ERROR ((LM_ERROR,
-              ACE_TEXT ("line %d but hidden by local \""),
+              ACE_TEXT ("line %Ld but hidden by local \""),
               masked->line ()));
 
   ACE_ERROR ((LM_ERROR,
@@ -1404,8 +1400,8 @@ UTL_Error::scope_masking_error (AST_Decl *masked,
     }
 
   ACE_ERROR ((LM_ERROR,
-              ACE_TEXT ("line %d ?\n"),
-              masking->line () ));
+              ACE_TEXT ("line %Ld ?\n"),
+              masking->line ()));
 }
 
 void
@@ -1502,7 +1498,7 @@ UTL_Error::invalid_annotation_param_error (
   decl->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
   if (!is_builtin)
     {
-      ACE_ERROR ((LM_ERROR, ACE_TEXT (" declared in \"%C\" on line %d"),
+      ACE_ERROR ((LM_ERROR, ACE_TEXT (" declared in \"%C\" on line %Ld"),
         filename.c_str (), get_lineno (decl)));
     }
   ACE_ERROR ((LM_ERROR, ACE_TEXT ("\n")));
@@ -1525,7 +1521,7 @@ UTL_Error::invalid_annotation_param_type (
   if (!is_builtin)
     {
       ACE_ERROR ((LM_ERROR,
-        ACE_TEXT (" declared in \"%C\" on line %d"),
+        ACE_TEXT (" declared in \"%C\" on line %Ld"),
         filename.c_str (), get_lineno (member)));
     }
   ACE_ERROR ((LM_ERROR, ACE_TEXT (" can not be set to ")));

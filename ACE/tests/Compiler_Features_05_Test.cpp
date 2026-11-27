@@ -28,7 +28,7 @@ run_main (int, ACE_TCHAR *[])
   using collection = std::queue<int>;
   // ... if the previous line compiles, the default template
   // parameters work.  The declaration of queue<> is something like:
-  //   template<typename T, typename Sequence = deque<T> >
+  //   template<typename T, typename Sequence = deque<T>>
   // notice that this is not a template template parameter...
   collection c;
 
@@ -59,5 +59,4 @@ run_main (int, ACE_TCHAR *[])
   ACE_END_TEST;
   return status;
 }
-
 

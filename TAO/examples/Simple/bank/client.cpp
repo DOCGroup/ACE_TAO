@@ -10,7 +10,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
               ACE_TEXT ("\nBank client\n\n")));
 
   if (client.run ("Bank", argc, argv) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
-    return 0;
+    {
+      return 0;
+    }
 }

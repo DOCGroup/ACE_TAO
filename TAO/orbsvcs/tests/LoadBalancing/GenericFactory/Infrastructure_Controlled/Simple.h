@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #ifndef SIMPLE_H
 #define SIMPLE_H
 
@@ -13,10 +12,14 @@ class Simple
   : public virtual POA_Test::Simple
 {
 public:
-  Simple ();
-  /// Constructor
+  Simple () = default;
 
-  char* get_string () override;
+  Simple (Simple const &) = delete;
+  Simple &operator= (Simple const &) = delete;
+  Simple (Simple &&) = delete;
+  Simple &operator= (Simple &&) = delete;
+
+  char *get_string () override;
 };
 
 #if defined(_MSC_VER)

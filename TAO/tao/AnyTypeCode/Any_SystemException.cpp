@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/AnyTypeCode/Any_SystemException.h"
 #include "tao/AnyTypeCode/Any.h"
 #include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
@@ -25,7 +24,7 @@ TAO::Any_SystemException::Any_SystemException (_tao_destructor destructor,
 
 TAO::Any_SystemException::Any_SystemException (_tao_destructor destructor,
                                                CORBA::TypeCode_ptr tc,
-                                               const CORBA::SystemException & val)
+                                               CORBA::SystemException const & val)
   : Any_Impl (destructor,
               tc)
 {
@@ -45,7 +44,7 @@ TAO::Any_SystemException::insert (CORBA::Any & any,
                                   CORBA::TypeCode_ptr tc,
                                   CORBA::SystemException * const value)
 {
-  Any_SystemException *new_impl = nullptr;
+  Any_SystemException *new_impl {};
   ACE_NEW (new_impl,
            Any_SystemException (destructor,
                                 tc,
@@ -57,9 +56,9 @@ void
 TAO::Any_SystemException::insert_copy (CORBA::Any & any,
                                        _tao_destructor destructor,
                                        CORBA::TypeCode_ptr tc,
-                                       const CORBA::SystemException & value)
+                                       CORBA::SystemException const & value)
 {
-  Any_SystemException *new_impl = nullptr;
+  Any_SystemException *new_impl {};
   ACE_NEW (new_impl,
            Any_SystemException (destructor,
                                 tc,
@@ -68,10 +67,10 @@ TAO::Any_SystemException::insert_copy (CORBA::Any & any,
 }
 
 CORBA::Boolean
-TAO::Any_SystemException::extract (const CORBA::Any & any,
+TAO::Any_SystemException::extract (CORBA::Any const & any,
                                    _tao_destructor destructor,
                                    CORBA::TypeCode_ptr tc,
-                                   const CORBA::SystemException *& _tao_elem,
+                                   CORBA::SystemException const *& _tao_elem,
                                    TAO::excp_factory f)
 {
   _tao_elem = nullptr;
@@ -81,7 +80,7 @@ TAO::Any_SystemException::extract (const CORBA::Any & any,
       CORBA::TypeCode_ptr any_tc = any._tao_get_typecode ();
       CORBA::Boolean const _tao_equiv = any_tc->equivalent (tc);
 
-      if (_tao_equiv == false)
+      if (!_tao_equiv)
         {
           return false;
         }
@@ -104,21 +103,23 @@ TAO::Any_SystemException::extract (const CORBA::Any & any,
 
       CORBA::SystemException *empty_value =  (*f) ();
 
-      TAO::Any_SystemException *replacement = nullptr;
+      TAO::Any_SystemException *replacement {};
       ACE_NEW_RETURN (replacement,
                       TAO::Any_SystemException (destructor,
                                                 any_tc,
                                                 empty_value),
                       false);
 
-      std::unique_ptr<TAO::Any_SystemException > replacement_safety (replacement);
+      std::unique_ptr<TAO::Any_SystemException> replacement_safety (replacement);
 
       // We know this will work since the unencoded case is covered above.
       TAO::Unknown_IDL_Type * const unk =
         dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
 
       if (!unk)
+      {
         return false;
+      }
 
       // We don't want the rd_ptr of unk to move, in case it is
       // shared by another Any. This copies the state, not the buffer.
@@ -135,7 +136,7 @@ TAO::Any_SystemException::extract (const CORBA::Any & any,
           return true;
         }
     }
-  catch (const ::CORBA::Exception&)
+  catch (::CORBA::Exception const &)
     {
     }
 
@@ -155,7 +156,7 @@ TAO::Any_SystemException::free_value ()
   this->value_ = nullptr;
 }
 
-const void *
+void const *
 TAO::Any_SystemException::value () const
 {
   return this->value_;
@@ -169,7 +170,7 @@ TAO::Any_SystemException::marshal_value (TAO_OutputCDR &cdr)
       this->value_->_tao_encode (cdr);
       return true;
     }
-  catch (const ::CORBA::Exception&)
+  catch (::CORBA::Exception const &)
     {
     }
   return false;
@@ -183,7 +184,7 @@ TAO::Any_SystemException::demarshal_value (TAO_InputCDR &cdr)
       this->value_->_tao_decode (cdr);
       return true;
     }
-  catch (const ::CORBA::Exception&)
+  catch (::CORBA::Exception const &)
     {
     }
   return false;

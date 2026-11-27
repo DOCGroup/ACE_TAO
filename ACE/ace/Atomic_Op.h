@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Atomic_Op.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef ACE_ATOMIC_OP_H
 #define ACE_ATOMIC_OP_H
@@ -73,10 +69,10 @@ public:
   ACE_Atomic_Op ();
 
   /// Initialize @c value_ to c.
-  ACE_Atomic_Op (long c);
+  explicit ACE_Atomic_Op (long c);
 
   /// Manage copying...
-  ACE_Atomic_Op (const ACE_Atomic_Op<ACE_Thread_Mutex, long> &c);
+  ACE_Atomic_Op (ACE_Atomic_Op<ACE_Thread_Mutex, long> const &c);
 
   /// Atomically pre-increment @c value_.
   long operator++ ();
@@ -117,8 +113,8 @@ public:
   /// Atomically assign rhs to @c value_.
   ACE_Atomic_Op<ACE_Thread_Mutex, long> &operator= (long rhs);
 
-  /// Atomically assign <rhs> to @c value_.
-  ACE_Atomic_Op<ACE_Thread_Mutex, long> &operator= (const ACE_Atomic_Op<ACE_Thread_Mutex, long> &rhs);
+  /// Atomically assign @a rhs to @c value_.
+  ACE_Atomic_Op<ACE_Thread_Mutex, long> &operator= (ACE_Atomic_Op<ACE_Thread_Mutex, long> const &rhs);
 
   /// Exchange value with @a newval.
   long exchange (long newval);
@@ -132,9 +128,6 @@ public:
   /// Explicitly return @c value_ (by reference).
   volatile long &value_i ();
 
-  // ACE_ALLOC_HOOK_DECLARE;
-  // Declare the dynamic allocation hooks.
-
   /// Used during ACE object manager initialization to optimize the fast
   /// atomic op implementation according to the number of CPUs.
   static void init_functions ();
@@ -147,7 +140,7 @@ private:
 
 private:
   /// Current object decorated by the atomic op.
-  volatile long value_;
+  volatile long value_ {};
 
   /// Pointers to selected atomic op implementations.
   static long (*increment_fn_) (volatile long *);
@@ -171,10 +164,10 @@ public:
   ACE_Atomic_Op ();
 
   /// Initialize @c value_ to c.
-  ACE_Atomic_Op (unsigned long c);
+  explicit ACE_Atomic_Op (unsigned long c);
 
   /// Manage copying...
-  ACE_Atomic_Op (const ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long> &c);
+  ACE_Atomic_Op (ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long> const &c);
 
   /// Atomically pre-increment @c value_.
   unsigned long operator++ ();
@@ -215,8 +208,8 @@ public:
   /// Atomically assign rhs to @c value_.
   ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long> &operator= (unsigned long rhs);
 
-  /// Atomically assign <rhs> to @c value_.
-  ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long> &operator= (const ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long> &rhs);
+  /// Atomically assign @a rhs to @c value_.
+  ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long> &operator= (ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long> const &rhs);
 
   /// Exchange value with @a newval.
   unsigned long exchange (unsigned long newval);
@@ -230,9 +223,6 @@ public:
   /// Explicitly return @c value_ (by reference).
   volatile unsigned long &value_i ();
 
-  // ACE_ALLOC_HOOK_DECLARE;
-  // Declare the dynamic allocation hooks.
-
   /// Used during ACE object manager initialization to optimize the fast
   /// atomic op implementation according to the number of CPUs.
   static void init_functions ();
@@ -245,9 +235,9 @@ private:
 
 private:
   /// Current object decorated by the atomic op.
-  volatile unsigned long value_;
+  volatile unsigned long value_ {};
 
-  // Pointers to selected atomic op implementations.
+  /// Pointers to selected atomic op implementations.
   static long (*increment_fn_) (volatile long *);
   static long (*decrement_fn_) (volatile long *);
   static long (*exchange_fn_) (volatile long *, long);
@@ -264,10 +254,10 @@ class ACE_Export ACE_Atomic_Op<ACE_Thread_Mutex, int>
 {
 public:
   ACE_Atomic_Op ();
-  ACE_Atomic_Op (int c);
-  ACE_Atomic_Op (const ACE_Atomic_Op<ACE_Thread_Mutex, int> &c);
+  explicit ACE_Atomic_Op (int c);
+  ACE_Atomic_Op (ACE_Atomic_Op<ACE_Thread_Mutex, int> const &c);
   ACE_Atomic_Op<ACE_Thread_Mutex, int> &operator= (int rhs);
-  ACE_Atomic_Op<ACE_Thread_Mutex, int> &operator= (const ACE_Atomic_Op<ACE_Thread_Mutex, int> &rhs);
+  ACE_Atomic_Op<ACE_Thread_Mutex, int> &operator= (ACE_Atomic_Op<ACE_Thread_Mutex, int> const &rhs);
 };
 
 template<>
@@ -276,10 +266,10 @@ class ACE_Export ACE_Atomic_Op<ACE_Thread_Mutex, unsigned int>
 {
 public:
   ACE_Atomic_Op ();
-  ACE_Atomic_Op (unsigned int c);
-  ACE_Atomic_Op (const ACE_Atomic_Op<ACE_Thread_Mutex, unsigned> &c);
+  explicit ACE_Atomic_Op (unsigned int c);
+  ACE_Atomic_Op (ACE_Atomic_Op<ACE_Thread_Mutex, unsigned> const &c);
   ACE_Atomic_Op<ACE_Thread_Mutex, unsigned int> &operator= (unsigned int rhs);
-  ACE_Atomic_Op<ACE_Thread_Mutex, unsigned int> &operator= (const ACE_Atomic_Op<ACE_Thread_Mutex, unsigned int> &rhs);
+  ACE_Atomic_Op<ACE_Thread_Mutex, unsigned int> &operator= (ACE_Atomic_Op<ACE_Thread_Mutex, unsigned int> const &rhs);
 };
 
 // If we have built in atomic op, use that, the assignment operator
@@ -290,10 +280,10 @@ class ACE_Export ACE_Atomic_Op<ACE_Thread_Mutex, long>
 {
 public:
   ACE_Atomic_Op ();
-  ACE_Atomic_Op (long c);
-  ACE_Atomic_Op (const ACE_Atomic_Op<ACE_Thread_Mutex, long> &c);
+  explicit ACE_Atomic_Op (long c);
+  ACE_Atomic_Op (ACE_Atomic_Op<ACE_Thread_Mutex, long> const &c);
   ACE_Atomic_Op<ACE_Thread_Mutex, long> &operator= (long rhs);
-  ACE_Atomic_Op<ACE_Thread_Mutex, long> &operator= (const ACE_Atomic_Op<ACE_Thread_Mutex, long> &rhs);
+  ACE_Atomic_Op<ACE_Thread_Mutex, long> &operator= (ACE_Atomic_Op<ACE_Thread_Mutex, long> const &rhs);
 };
 
 template<>
@@ -302,10 +292,10 @@ class ACE_Export ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>
 {
 public:
   ACE_Atomic_Op ();
-  ACE_Atomic_Op (unsigned long c);
-  ACE_Atomic_Op (const ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long> &c);
+  explicit ACE_Atomic_Op (unsigned long c);
+  ACE_Atomic_Op (ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long> const &c);
   ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long> &operator= (unsigned long rhs);
-  ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long> &operator= (const ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long> &c);
+  ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long> &operator= (ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long> const &c);
 };
 
 // The long long intrinsics are not available on PPC
@@ -316,10 +306,10 @@ class ACE_Export ACE_Atomic_Op<ACE_Thread_Mutex, long long>
 {
 public:
   ACE_Atomic_Op ();
-  ACE_Atomic_Op (long long c);
-  ACE_Atomic_Op (const ACE_Atomic_Op<ACE_Thread_Mutex, long long> &c);
+  explicit ACE_Atomic_Op (long long c);
+  ACE_Atomic_Op (ACE_Atomic_Op<ACE_Thread_Mutex, long long> const &c);
   ACE_Atomic_Op<ACE_Thread_Mutex, long long> &operator= (long long rhs);
-  ACE_Atomic_Op<ACE_Thread_Mutex, long long> &operator= (const ACE_Atomic_Op<ACE_Thread_Mutex, long long> &c);
+  ACE_Atomic_Op<ACE_Thread_Mutex, long long> &operator= (ACE_Atomic_Op<ACE_Thread_Mutex, long long> const &c);
 };
 
 template<>
@@ -328,10 +318,10 @@ class ACE_Export ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long long>
 {
 public:
   ACE_Atomic_Op ();
-  ACE_Atomic_Op (unsigned long long c);
-  ACE_Atomic_Op (const ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long long> &c);
+  explicit ACE_Atomic_Op (unsigned long long c);
+  ACE_Atomic_Op (ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long long> const &c);
   ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long long> &operator= (unsigned long long rhs);
-  ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long long> &operator= (const ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long long> &c);
+  ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long long> &operator= (ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long long> const &c);
 };
 #endif /* !__powerpc__ */
 
@@ -342,10 +332,10 @@ class ACE_Export ACE_Atomic_Op<ACE_Thread_Mutex, short>
 {
 public:
   ACE_Atomic_Op ();
-  ACE_Atomic_Op (short c);
-  ACE_Atomic_Op (const ACE_Atomic_Op<ACE_Thread_Mutex, short> &c);
+  explicit ACE_Atomic_Op (short c);
+  ACE_Atomic_Op (ACE_Atomic_Op<ACE_Thread_Mutex, short> const &c);
   ACE_Atomic_Op<ACE_Thread_Mutex, short> &operator= (short rhs);
-  ACE_Atomic_Op<ACE_Thread_Mutex, short> &operator= (const ACE_Atomic_Op<ACE_Thread_Mutex, short> &c);
+  ACE_Atomic_Op<ACE_Thread_Mutex, short> &operator= (ACE_Atomic_Op<ACE_Thread_Mutex, short> const &c);
 };
 
 template<>
@@ -354,10 +344,10 @@ class ACE_Export ACE_Atomic_Op<ACE_Thread_Mutex, unsigned short>
 {
 public:
   ACE_Atomic_Op ();
-  ACE_Atomic_Op (unsigned short c);
-  ACE_Atomic_Op (const ACE_Atomic_Op<ACE_Thread_Mutex, unsigned short> &c);
+  explicit ACE_Atomic_Op (unsigned short c);
+  ACE_Atomic_Op (ACE_Atomic_Op<ACE_Thread_Mutex, unsigned short> const &c);
   ACE_Atomic_Op<ACE_Thread_Mutex, unsigned short> &operator= (unsigned short rhs);
-  ACE_Atomic_Op<ACE_Thread_Mutex, unsigned short> &operator= (const ACE_Atomic_Op<ACE_Thread_Mutex, unsigned short> &c);
+  ACE_Atomic_Op<ACE_Thread_Mutex, unsigned short> &operator= (ACE_Atomic_Op<ACE_Thread_Mutex, unsigned short> const &c);
 };
 #endif
 
@@ -368,10 +358,10 @@ class ACE_Export ACE_Atomic_Op<ACE_Thread_Mutex, bool>
 {
 public:
   ACE_Atomic_Op ();
-  ACE_Atomic_Op (bool c);
-  ACE_Atomic_Op (const ACE_Atomic_Op<ACE_Thread_Mutex, bool> &c);
+  explicit ACE_Atomic_Op (bool c);
+  ACE_Atomic_Op (ACE_Atomic_Op<ACE_Thread_Mutex, bool> const &c);
   ACE_Atomic_Op<ACE_Thread_Mutex, bool> &operator= (bool rhs);
-  ACE_Atomic_Op<ACE_Thread_Mutex, bool> &operator= (const ACE_Atomic_Op<ACE_Thread_Mutex, bool> &c);
+  ACE_Atomic_Op<ACE_Thread_Mutex, bool> &operator= (ACE_Atomic_Op<ACE_Thread_Mutex, bool> const &c);
 };
 #endif
 

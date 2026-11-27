@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file Name.h
  *
@@ -23,35 +22,35 @@
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Name
 {
 public:
-  static const char* const root_poa;
-  static const char* const event_channel_factory;
-  static const char* const naming_service;
+  static char const *const root_poa;
+  static char const *const event_channel_factory;
+  static char const *const naming_service;
 
-  static const ACE_TCHAR* const command_builder;
+  static ACE_TCHAR const *const command_builder;
 
-  static const ACE_TCHAR* const application_command_factory;
-  static const char* const application_command;
+  static ACE_TCHAR const *const application_command_factory;
+  static char const *const application_command;
 
-  static const ACE_TCHAR* const event_channel_command_factory;
-  static const char* const event_channel_command;
+  static ACE_TCHAR const *const event_channel_command_factory;
+  static char const *const event_channel_command;
 
-  static const ACE_TCHAR* const supplier_admin_command_factory;
-  static const char* const supplier_admin_command;
+  static ACE_TCHAR const *const supplier_admin_command_factory;
+  static char const *const supplier_admin_command;
 
-  static const ACE_TCHAR* const consumer_admin_command_factory;
-  static const char* const consumer_admin_command;
+  static ACE_TCHAR const *const consumer_admin_command_factory;
+  static char const *const consumer_admin_command;
 
-  static const char* const periodic_supplier_command;
-  static const ACE_TCHAR* const periodic_supplier_command_factory;
+  static char const *const periodic_supplier_command;
+  static ACE_TCHAR const *const periodic_supplier_command_factory;
 
-  static const char* const periodic_consumer_command;
-  static const ACE_TCHAR* const periodic_consumer_command_factory;
+  static char const *const periodic_consumer_command;
+  static ACE_TCHAR const *const periodic_consumer_command_factory;
 
-  static const char* const poa_command;
-  static const ACE_TCHAR* const poa_command_factory;
+  static char const *const poa_command;
+  static ACE_TCHAR const *const poa_command_factory;
 
-  static const char* const filter_command;
-  static const ACE_TCHAR* const filter_command_factory;
+  static char const *const filter_command;
+  static ACE_TCHAR const *const filter_command_factory;
 };
 
 #include /**/ "ace/post.h"

@@ -1,13 +1,9 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   FT_Storable_Naming_Context.h
  *
  *
  *  @author Kevin Stanley <stanleyk@ociweb.com>
  */
-//=============================================================================
 
 #ifndef TAO_FT_STORABLE_NAMING_CONTEXT_H
 #define TAO_FT_STORABLE_NAMING_CONTEXT_H
@@ -24,7 +20,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_FT_Naming_Replication_Manager;
 
 /**
- * @class FT_TAO_Storable_Naming_Context
+ * @class TAO_FT_Storable_Naming_Context
  *
  * @brief This class specializes the TAO_Storable_Naming_Context
  * 'ConcreteImplementor' in the Bridge pattern architecture of the
@@ -43,12 +39,18 @@ public:
    */
   TAO_FT_Storable_Naming_Context (CORBA::ORB_ptr orb,
                                   PortableServer::POA_ptr poa,
-                                  const char *poa_id,
+                                  char const *poa_id,
                                   TAO_Storable_Naming_Context_Factory *cxt_factory,
                                   TAO::Storable_Factory *factory);
 
-  /// Destructor.
   ~TAO_FT_Storable_Naming_Context () override = default;
+
+  TAO_FT_Storable_Naming_Context (TAO_FT_Storable_Naming_Context const &) = delete;
+  TAO_FT_Storable_Naming_Context (TAO_FT_Storable_Naming_Context &&) = delete;
+  TAO_FT_Storable_Naming_Context &operator= (
+    TAO_FT_Storable_Naming_Context const &) = delete;
+  TAO_FT_Storable_Naming_Context &operator= (
+    TAO_FT_Storable_Naming_Context &&) = delete;
 
   /**
    * Override the resolve operation to support load balancing using
@@ -56,11 +58,10 @@ public:
    */
   CORBA::Object_ptr resolve (CosNaming::Name const &n) override;
 
-  // Set the Naming Manager as a static so that it is available for all
-  // naming context implementations.
+  /// Set the Naming Manager shared by all naming context implementations.
   static void set_naming_manager (TAO_FT_Naming_Manager *mgr_impl);
 
-  bool is_object_group (const CORBA::Object_ptr obj) const;
+  bool is_object_group (CORBA::Object_ptr const obj) const;
 
  /**
   * Queues a request to update the peer replica instance of this
@@ -73,7 +74,7 @@ public:
   * if it cannot be found.
   */
   TAO_FT_Storable_Naming_Context* find_relative_context (
-                              const CosNaming::Name &n);
+                              CosNaming::Name const &n);
 
   /**
    * Mark the implementation as stale for replicated persistence support.
@@ -98,13 +99,8 @@ public:
 protected:
   static TAO_FT_Naming_Manager *naming_manager_;
   bool stale_;
+  /// Borrowed from the server-owned replication manager.
   TAO_FT_Naming_Replication_Manager *replicator_;
-
-private:
-  TAO_FT_Storable_Naming_Context (TAO_FT_Storable_Naming_Context const &) = delete;
-  TAO_FT_Storable_Naming_Context (TAO_FT_Storable_Naming_Context &&) = delete;
-  TAO_FT_Storable_Naming_Context &operator= (TAO_FT_Storable_Naming_Context const &) = delete;
-  TAO_FT_Storable_Naming_Context &operator= (TAO_FT_Storable_Naming_Context &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

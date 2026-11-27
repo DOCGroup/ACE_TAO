@@ -2,7 +2,6 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
      & eval 'exec perl -S $0 $argv:q'
      if 0;
 
-# -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::TestTarget;
@@ -21,6 +20,7 @@ my @testsToRun = qw(unbounded_value_sequence_ut
                unbounded_object_reference_sequence_ut
                unbounded_fwd_object_reference_sequence_ut
                bounded_object_reference_sequence_ut
+               sequence_move_maximum_ut
                bounded_sequence_cdr_ut
                unbounded_sequence_cdr_ut
                sequence_move_maximum_ut

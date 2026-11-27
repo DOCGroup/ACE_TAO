@@ -1,14 +1,13 @@
-/* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file    Widget_Factory.h
  *
  *  @author Christopher Kohlhoff <chris@kohlhoff.com>
  */
-//=============================================================================
 
 #ifndef WIDGET_FACTORY_H
 #define WIDGET_FACTORY_H
+
+#include <memory>
 
 #include "Widget.h"
 
@@ -20,9 +19,11 @@
 class Widget_Factory
 {
 public:
+  Widget_Factory () = delete;
+
   /// Create an instance of a widget. Ownership of the newly created object is
   /// transferred to the caller.
-  static Widget *create_widget ();
+  static std::unique_ptr<Widget> create_widget ();
 };
 
 #endif /* WIDGET_FACTORY_H */

@@ -8,7 +8,9 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/Get_Opt.h"
 
-const ACE_TCHAR *ior_output_file = ACE_TEXT ("messenger.ior");
+#include <memory>
+
+ACE_TCHAR const *ior_output_file = ACE_TEXT ("messenger.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -37,7 +39,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 PortableServer::POA_ptr
-createPersistentPOA (PortableServer::POA_ptr root_poa, const char *poa_name)
+createPersistentPOA (PortableServer::POA_ptr root_poa, char const *poa_name)
 {
   CORBA::PolicyList policies;
   policies.length (2);
@@ -57,7 +59,7 @@ createPersistentPOA (PortableServer::POA_ptr root_poa, const char *poa_name)
 }
 
 void
-writeIORFile (const char* ior)
+writeIORFile (char const *ior)
 {
   FILE *out = ACE_OS::fopen (ACE_TEXT_ALWAYS_CHAR(ior_output_file), "w");
   if (out)
@@ -75,7 +77,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) != 0)
+      {
         return 1;
+      }
 
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Server Process started\n")));
 
@@ -85,7 +89,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       PortableServer::POAManager_var mgr = root_poa->the_POAManager ();
 
-      const char* poa_name = "MessengerService";
+      char const *poa_name = "MessengerService";
 
       PortableServer::POA_var poa = createPersistentPOA (root_poa.in (),
                                                          poa_name);
@@ -94,7 +98,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       PortableServer::ObjectId_var object_id =
         PortableServer::string_to_ObjectId ("object");
 
-      poa->activate_object_with_id (object_id.in (), &servant);
+      poa->activate_object_with_id (object_id.in (), std::addressof (servant));
       obj = poa->id_to_reference (object_id.in ());
       CORBA::String_var ior = orb->object_to_string (obj.in ());
 
@@ -115,7 +119,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       orb->destroy ();
       return 0;
     }
-  catch (const CORBA::Exception &ex)
+  catch (CORBA::Exception const &ex)
     {
       ACE_CString str = ex._info ();
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("Server main() caught: %C\n"),

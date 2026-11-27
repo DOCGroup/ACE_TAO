@@ -10,6 +10,9 @@
 
 #include "orbsvcs/Notify/Topology_Saver.h"
 
+#include <cstring>
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_EventType
@@ -19,16 +22,15 @@ TAO_Notify_EventType::special ()
 }
 
 TAO_Notify_EventType::TAO_Notify_EventType ()
-{
-}
+= default;
 
 void
-TAO_Notify_EventType::init_i (const char* domain_name, const char* type_name)
+TAO_Notify_EventType::init_i (char const *domain_name, char const *type_name)
 {
   this->event_type_.domain_name = domain_name;
   this->event_type_.type_name = type_name;
 
-  if (this->is_special () == 1)
+  if (this->is_special ())
     {
       this->event_type_.domain_name = CORBA::string_dup ("*");
       this->event_type_.type_name = CORBA::string_dup ("%ALL");
@@ -37,22 +39,21 @@ TAO_Notify_EventType::init_i (const char* domain_name, const char* type_name)
   this->recompute_hash ();
 }
 
-TAO_Notify_EventType::TAO_Notify_EventType (const char* domain_name,
-                                            const char* type_name)
+TAO_Notify_EventType::TAO_Notify_EventType (char const *domain_name,
+                                            char const *type_name)
 {
   this->init_i (domain_name, type_name);
 }
 
 TAO_Notify_EventType::TAO_Notify_EventType (
-    const CosNotification::EventType& event_type
-  )
+    CosNotification::EventType const& event_type)
 {
   this->init_i (event_type.domain_name.in (), event_type.type_name.in ());
 }
 
-TAO_Notify_EventType::~TAO_Notify_EventType ()
-{
-}
+TAO_Notify_EventType::TAO_Notify_EventType (TAO_Notify_EventType const& event_type) = default;
+
+TAO_Notify_EventType::~TAO_Notify_EventType () = default;
 
 void
 TAO_Notify_EventType::recompute_hash ()
@@ -67,14 +68,14 @@ TAO_Notify_EventType::recompute_hash ()
   // values or something, but fix this code!
   //
   char buffer[BUFSIZ];
-  ACE_OS::strcpy (buffer, this->event_type_.domain_name.in ());
-  ACE_OS::strcat (buffer, this->event_type_.type_name.in ());
+  std::strcpy (buffer, this->event_type_.domain_name.in ());
+  std::strcat (buffer, this->event_type_.type_name.in ());
 
   this->hash_value_ =  ACE::hash_pjw (buffer);
 }
 
 TAO_Notify_EventType&
-TAO_Notify_EventType::operator=(const CosNotification::EventType& event_type)
+TAO_Notify_EventType::operator=(CosNotification::EventType const& event_type)
 {
   this->init_i (event_type.domain_name.in (),event_type.type_name.in ());
 
@@ -82,10 +83,12 @@ TAO_Notify_EventType::operator=(const CosNotification::EventType& event_type)
 }
 
 TAO_Notify_EventType&
-TAO_Notify_EventType::operator=(const TAO_Notify_EventType& event_type)
+TAO_Notify_EventType::operator=(TAO_Notify_EventType const& event_type)
 {
-  if (this == &event_type)
+  if (this == std::addressof (event_type))
+  {
     return *this;
+  }
 
   this->init_i (event_type.event_type_.domain_name.in (),event_type.event_type_.type_name.in ());
 
@@ -93,20 +96,20 @@ TAO_Notify_EventType::operator=(const TAO_Notify_EventType& event_type)
 }
 
 bool
-TAO_Notify_EventType::operator==(const TAO_Notify_EventType& event_type) const
+TAO_Notify_EventType::operator==(TAO_Notify_EventType const& event_type) const
 {
-  return (ACE_OS::strcmp (this->event_type_.domain_name,
+  return (std::strcmp (this->event_type_.domain_name,
                           event_type.event_type_.domain_name) == 0 ||
           this->domain_is_wildcard (this->event_type_.domain_name) ||
           this->domain_is_wildcard (event_type.event_type_.type_name)) &&
-         (ACE_OS::strcmp (this->event_type_.type_name,
+         (std::strcmp (this->event_type_.type_name,
                           event_type.event_type_.type_name) == 0 ||
           this->type_is_wildcard (this->event_type_.type_name)   ||
           this->type_is_wildcard (event_type.event_type_.type_name));
 }
 
 bool
-TAO_Notify_EventType::operator!=(const TAO_Notify_EventType& event_type) const
+TAO_Notify_EventType::operator!=(TAO_Notify_EventType const& event_type) const
 {
   return !(*this == event_type);
 }
@@ -122,15 +125,15 @@ void
 TAO_Notify_EventType::dump () const
 {
   ORBSVCS_DEBUG ((LM_DEBUG,
-              "(%s,%s)",
+              "(%C,%C)",
               this->event_type_.domain_name.in (),
               this->event_type_.type_name.in ()));
 }
 
 /// Initialize from an NVPList, return false on failure
-bool TAO_Notify_EventType::init(const TAO_Notify::NVPList& attrs)
+bool TAO_Notify_EventType::init(TAO_Notify::NVPList const& attrs)
 {
-  bool result = false;
+  bool result {};
 
   ACE_CString domain;
   ACE_CString type;

@@ -1,3 +1,7 @@
 project {
   includes += .
+
+  specific(gnuace) {
+    build_dir_per_project = 1
+  }
 }

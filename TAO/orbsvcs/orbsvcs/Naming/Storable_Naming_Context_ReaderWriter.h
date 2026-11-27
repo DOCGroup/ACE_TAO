@@ -1,13 +1,9 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  * @file  Storable_Naming_Context_ReaderWriter.h
  *
  * @author Marina Spivak <marina@cs.wustl.edu>
  * @author Byron Harris <harrisb@ociweb.com>
  */
-//=============================================================================
 
 #ifndef TAO_STORABLE_NAMING_CONTEXT_READERWRITER_H
 #define TAO_STORABLE_NAMING_CONTEXT_READERWRITER_H
@@ -36,20 +32,20 @@ class TAO_NS_Persistence_Global;
 class TAO_Storable_Naming_Context_ReaderWriter
 {
 public:
-  TAO_Storable_Naming_Context_ReaderWriter (TAO::Storable_Base & stream);
+  explicit TAO_Storable_Naming_Context_ReaderWriter (TAO::Storable_Base & stream);
 
   int read (TAO_Storable_Naming_Context & context);
 
   void write (TAO_Storable_Naming_Context & context);
 
-  void write_global (const TAO_NS_Persistence_Global & global);
+  void write_global (TAO_NS_Persistence_Global const &global);
   void read_global (TAO_NS_Persistence_Global & global);
 
 private:
-  void write_header (const TAO_NS_Persistence_Header & header);
+  void write_header (TAO_NS_Persistence_Header const &header);
   void read_header (TAO_NS_Persistence_Header & header);
 
-  void write_record (const TAO_NS_Persistence_Record & record);
+  void write_record (TAO_NS_Persistence_Record const &record);
   void read_record (TAO_NS_Persistence_Record & record);
 
   TAO::Storable_Base &stream_;

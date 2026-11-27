@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /**
  *  @file   EC_Reactive_ConsumerControl.h
  *
@@ -46,12 +45,11 @@ class TAO_EC_Reactive_ConsumerControl;
 class TAO_RTEvent_Serv_Export TAO_EC_ConsumerControl_Adapter : public ACE_Event_Handler
 {
 public:
-  /// Constructor
-  TAO_EC_ConsumerControl_Adapter (TAO_EC_Reactive_ConsumerControl *adaptee);
+  explicit TAO_EC_ConsumerControl_Adapter (TAO_EC_Reactive_ConsumerControl *adaptee);
 
-  // = Documented in ACE_Event_Handler.
-  virtual int handle_timeout (const ACE_Time_Value &tv,
-                              void const *arg = nullptr);
+  /// Documented in ACE_Event_Handler.
+  int handle_timeout (ACE_Time_Value const &tv,
+                      void const *arg = nullptr) override;
 
 private:
   /// The adapted object
@@ -71,24 +69,23 @@ class TAO_RTEvent_Serv_Export TAO_EC_Reactive_ConsumerControl : public TAO_EC_Co
 public:
   /// Constructor.  It does not assume ownership of the @a event_channel
   /// parameter.
-  TAO_EC_Reactive_ConsumerControl (const ACE_Time_Value &rate,
-                                   const ACE_Time_Value &timeout,
+  TAO_EC_Reactive_ConsumerControl (ACE_Time_Value const &rate,
+                                   ACE_Time_Value const &timeout,
                                    TAO_EC_Event_Channel_Base *event_channel,
                                    CORBA::ORB_ptr orb);
 
-  /// Destructor.
-  virtual ~TAO_EC_Reactive_ConsumerControl () override;
+  ~TAO_EC_Reactive_ConsumerControl () override = default;
 
   /// Receive the timeout from the adapter
-  void handle_timeout (const ACE_Time_Value &tv,
-                       const void* arg);
+  void handle_timeout (ACE_Time_Value const &tv,
+                       void const* arg);
 
-  // = Documented in TAO_EC_ConsumerControl
-  virtual int activate () override;
-  virtual int shutdown () override;
-  virtual void consumer_not_exist (TAO_EC_ProxyPushSupplier *proxy) override;
-  virtual void system_exception (TAO_EC_ProxyPushSupplier *proxy,
-                                 CORBA::SystemException &);
+  /// Documented in TAO_EC_ConsumerControl
+  int activate () override;
+  int shutdown () override;
+  void consumer_not_exist (TAO_EC_ProxyPushSupplier *proxy) override;
+  void system_exception (TAO_EC_ProxyPushSupplier *proxy,
+                         CORBA::SystemException &) override;
 
 private:
   /// Check if the consumers still exists.  It is a helper method for
@@ -131,9 +128,9 @@ private:
 class TAO_EC_Ping_Consumer : public TAO_ESF_Worker<TAO_EC_ProxyPushSupplier>
 {
 public:
-  TAO_EC_Ping_Consumer (TAO_EC_ConsumerControl *control);
+  explicit TAO_EC_Ping_Consumer (TAO_EC_ConsumerControl *control);
 
-  virtual void work (TAO_EC_ProxyPushSupplier *supplier) override;
+  void work (TAO_EC_ProxyPushSupplier *supplier) override;
 
 private:
   TAO_EC_ConsumerControl *control_;

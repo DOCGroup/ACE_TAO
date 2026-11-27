@@ -1,13 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   FILE_Parser.h
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  */
-//=============================================================================
-
 
 #ifndef TAO_FILE_PARSER_H
 #define TAO_FILE_PARSER_H
@@ -40,10 +35,8 @@ class TAO_FILE_Parser : public TAO_IOR_Parser
 public:
   ~TAO_FILE_Parser () override = default;
 
-  // = The IOR_Parser methods, please read the documentation in
-  //   IOR_Parser.h
-  bool match_prefix (const char *ior_string) const override;
-  CORBA::Object_ptr parse_string (const char *ior, CORBA::ORB_ptr orb) override;
+  bool match_prefix (char const *ior_string) const override;
+  CORBA::Object_ptr parse_string (char const *ior, CORBA::ORB_ptr orb) override;
 };
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO, TAO_FILE_Parser)

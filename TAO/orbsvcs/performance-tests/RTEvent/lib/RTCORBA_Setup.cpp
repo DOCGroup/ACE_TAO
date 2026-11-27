@@ -55,7 +55,9 @@ RTCORBA_Setup::setup_lane (int priority,
 {
   if (!this->priority_mapping_->to_CORBA (priority,
                                           lane.lane_priority))
+  {
     throw CORBA::BAD_PARAM ();
+  }
 
   lane.static_threads  = 1;
   lane.dynamic_threads = 0;

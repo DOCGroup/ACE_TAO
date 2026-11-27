@@ -1,17 +1,13 @@
-
-//=============================================================================
 /**
  *  @file    OrdMultiSet_Test.cpp
  *
- *  This is a simple test of the <ACE_Ordered_MultiSet> and
- *  <ACE_Ordered_MultiSet_Iterator> class templates, instantiating
+ *  This is a simple test of the @c ACE_Ordered_MultiSet and
+ *  @c ACE_Ordered_MultiSet_Iterator class templates, instantiating
  *  them with type int.  No command line arguments are needed to run
  *  the test.
  *
  *  @author Chris Gill <cdgill@cs.wustl.edu>
  */
-//=============================================================================
-
 
 // Note, for this test the config.h file *must* come first!
 #include "ace/config-all.h"
@@ -19,12 +15,11 @@
 #include "test_config.h"
 #include "ace/Containers.h"
 
-
 int
 run_main (int, ACE_TCHAR *[])
 {
-  int ret = 0;
-  int *ptr = nullptr;
+  int const ret = 0;
+  int *ptr {};
 
   ACE_START_TEST (ACE_TEXT ("OrdMultiSet_Test"));
 
@@ -35,11 +30,15 @@ run_main (int, ACE_TCHAR *[])
   // Put in a range of odd ints, without an iterator.
   int i;
   for (i = -10; i < 10; ++i)
-    set.insert (2 * i + 1);
+    {
+      set.insert (2 * i + 1);
+    }
 
   // Put in an interleaved range of even ints, using an iterator.
   for (i = -10; i <= 10; ++i)
-    set.insert (2 * i, iter);
+    {
+      set.insert (2 * i, iter);
+    }
 
   // Remove the first and last elements of range.
   while (set.remove (-20) == 0)
@@ -53,7 +52,7 @@ run_main (int, ACE_TCHAR *[])
     }
 
   // Should still have 39 elements in the set.
-  ACE_TEST_ASSERT (set.is_empty () == 0);
+  ACE_TEST_ASSERT (!set.is_empty ());
   ACE_TEST_ASSERT (set.size () == 39);
 
   // Iterate forward through the range we created: should be one of
@@ -87,10 +86,10 @@ run_main (int, ACE_TCHAR *[])
       ACE_TEST_ASSERT (iter.done () == 0);
 
       // Make sure the current element is what we expect.
-      int *ptr = nullptr;
-      iter.next (ptr);
-      ACE_TEST_ASSERT (ptr != nullptr);
-      ACE_TEST_ASSERT (*ptr == i);
+      int *reverse_ptr {};
+      iter.next (reverse_ptr);
+      ACE_TEST_ASSERT (reverse_ptr != nullptr);
+      ACE_TEST_ASSERT (*reverse_ptr == i);
 
       // Move to the previous element in the set.
       iter.retreat ();
@@ -108,7 +107,7 @@ run_main (int, ACE_TCHAR *[])
       ACE_TEST_ASSERT (iter.done () == 0);
 
       // make sure the current element is what we expect
-      int& l = *iter;
+      int const & l = *iter;
       ACE_TEST_ASSERT (l == i);
 
       // move to the next element in the set
@@ -123,7 +122,7 @@ run_main (int, ACE_TCHAR *[])
   // advance or retreat on an out of range iterator does not cause
   // problems
   set.reset ();
-  ACE_TEST_ASSERT (set.is_empty () != 0);
+  ACE_TEST_ASSERT (set.is_empty ());
   iter.first ();
   ACE_TEST_ASSERT (iter.done () != 0);
   iter.retreat ();
@@ -227,7 +226,7 @@ run_main (int, ACE_TCHAR *[])
     }
 
   // Should have no more elements in the set.
-  ACE_TEST_ASSERT (set.is_empty () != 0);
+  ACE_TEST_ASSERT (set.is_empty ());
   ACE_TEST_ASSERT (set.size () == 0);
   iter.first ();
   ACE_TEST_ASSERT (iter.done () != 0);

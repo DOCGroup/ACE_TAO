@@ -1,6 +1,5 @@
 #include "SLevel1_TestC.h"
 
-
 const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
 
 int
@@ -37,7 +36,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) != 0)
-        return 1;
+        {
+          return 1;
+        }
 
       CORBA::Object_var object =
         orb->string_to_object (ior);

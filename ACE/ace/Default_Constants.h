@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   Default_Constants.h
  *
@@ -10,7 +7,6 @@
  *
  *  This one is split from the famous OS.h
  */
-//=============================================================================
 
 #ifndef ACE_DEFAULT_CONSTANTS_H
 #define ACE_DEFAULT_CONSTANTS_H
@@ -34,7 +30,7 @@
 #   define ACE_DEFAULT_CLOSE_ALL_HANDLES true
 # endif /* ACE_DEFAULT_CLOSE_ALL_HANDLES */
 
-// The maximum length for a fully qualified Internet name.
+/// The maximum length for a fully qualified Internet name.
 # if !defined(ACE_MAX_FULLY_QUALIFIED_NAME_LEN)
 #   define ACE_MAX_FULLY_QUALIFIED_NAME_LEN 256
 # endif /* ACE_MAX_FULLY_QUALIFIED_NAME_LEN */
@@ -396,7 +392,7 @@
 /**
  * @name Default values to control CDR classes memory allocation strategies
  */
-//@{
+/// @{
 /// Control the initial size of all CDR buffers, application
 /// developers may want to optimize this value to fit their request
 /// size
@@ -418,7 +414,7 @@
 #if !defined (ACE_DEFAULT_CDR_LINEAR_GROWTH_CHUNK)
 #  define ACE_DEFAULT_CDR_LINEAR_GROWTH_CHUNK 65536
 #endif /* ACE_DEFAULT_CDR_LINEAR_GROWTH_CHUNK */
-//@}
+/// @}
 
 /// Control the zero-copy optimizations for octet sequences
 /**

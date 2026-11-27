@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 /**
  *  @file ProxyConsumer.h
  *
@@ -37,11 +35,14 @@ class TAO_Notify_Serv_Export TAO_Notify_ProxyConsumer
 {
 public:
   using Ptr = TAO_Notify_Refcountable_Guard_T<TAO_Notify_ProxyConsumer>;
-  /// Constructor
   TAO_Notify_ProxyConsumer ();
 
-  /// Destructor
-  virtual ~TAO_Notify_ProxyConsumer ();
+  ~TAO_Notify_ProxyConsumer () override;
+
+  TAO_Notify_ProxyConsumer (TAO_Notify_ProxyConsumer const &) = delete;
+  TAO_Notify_ProxyConsumer (TAO_Notify_ProxyConsumer &&) = delete;
+  TAO_Notify_ProxyConsumer &operator= (TAO_Notify_ProxyConsumer const &) = delete;
+  TAO_Notify_ProxyConsumer &operator= (TAO_Notify_ProxyConsumer &&) = delete;
 
   /// init: overrides Topology_Object method
   virtual void init (TAO_Notify::Topology_Parent * topology_parent);
@@ -53,10 +54,10 @@ public:
   void disconnect ();
 
   /// Shutdown  (TAO_Notify_Container_T method)
-  virtual int shutdown ();
+  int shutdown () override;
 
   /// Destroy this object.
-  virtual void destroy ();
+  void destroy () override;
 
   /// Return true if connected
   bool is_connected () const;
@@ -65,7 +66,7 @@ public:
   TAO_Notify_SupplierAdmin& supplier_admin ();
 
   ACE_Time_Value last_ping() const;
-  void last_ping(const ACE_Time_Value& tv);
+  void last_ping(ACE_Time_Value const& tv);
 
 protected:
   /// Access the Supplier
@@ -82,15 +83,17 @@ private:
   /// Is this part of a reliable channel
   bool supports_reliable_events () const;
 
-  ///= Data Members.
+  /// @name Data members
+  /// @{
   /// The SA parent.
-  TAO_Notify_SupplierAdmin::Ptr supplier_admin_;
+  TAO_Notify_SupplierAdmin::Ptr supplier_admin_ {};
 
   /// The Supplier that we're connect to.
   std::unique_ptr<TAO_Notify_Supplier> supplier_;
+  /// @}
 
   /// Access our Peer.
-  virtual TAO_Notify_Peer* peer ();
+  TAO_Notify_Peer* peer () override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

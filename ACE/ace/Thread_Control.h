@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Thread_Control.h
  *
  *  @author Carlos O'Ryan <coryan@uci.edu>
  */
-//=============================================================================
 
 #ifndef ACE_THREAD_CONTROL_H
 #define ACE_THREAD_CONTROL_H
@@ -33,7 +29,7 @@ class ACE_Thread_Manager;
  * with it.
  * This class can be stored in thread-specific storage using the
  * ACE_TSS wrapper.  When a thread exits the
- * <ACE_TSS::cleanup> function deletes this object, thereby
+ * @c ACE_TSS::cleanup function deletes this object, thereby
  * ensuring that it gets removed from its associated
  * ACE_Thread_Manager.
  */
@@ -46,7 +42,7 @@ public:
                       int insert = 0);
 
   /// Remove the thread from its associated Thread_Manager and exit
-  /// the thread if <do_thr_exit> is enabled.
+  /// the thread if @c do_thr_exit is enabled.
   ~ACE_Thread_Control ();
 
   /// Remove this thread from its associated ACE_Thread_Manager and exit
@@ -82,7 +78,7 @@ private:
   ACE_Thread_Manager *tm_;
 
   /// Keeps track of the exit status for the thread.
-  ACE_THR_FUNC_RETURN status_;
+  ACE_THR_FUNC_RETURN status_ {ACE_THR_FUNC_RETURN_NULL};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

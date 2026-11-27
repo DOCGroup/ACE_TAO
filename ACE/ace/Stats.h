@@ -1,13 +1,8 @@
-// -*- C++ -*-
-
-//==========================================================================
 /**
  *  @file    Stats.h
  *
  *  @author David L. Levine
  */
-//==========================================================================
-
 
 #ifndef ACE_STATS_H
 #define ACE_STATS_H
@@ -47,19 +42,19 @@ public:
    * good value, or maybe 4.  5 will probably be too large for
    * non-trivial data sets.
    */
-  ACE_Stats_Value (const u_int precision);
+  explicit ACE_Stats_Value (u_int const precision);
 
   /// Accessor for precision.
   u_int precision () const;
 
   /// Set the whole_ field.
-  void whole (const ACE_UINT32);
+  void whole (ACE_UINT32 const);
 
   /// Accessor for the whole_ field.
   ACE_UINT32 whole () const;
 
   /// Set the fractional_ field.
-  void fractional (const ACE_UINT32);
+  void fractional (ACE_UINT32 const);
 
   /// Accessor for the fractional_ field.
   ACE_UINT32 fractional () const;
@@ -83,10 +78,10 @@ private:
 
 private:
   /// The integer portion of the value.
-  ACE_UINT32 whole_;
+  ACE_UINT32 whole_ {};
 
   /// The fractional portion of the value.
-  ACE_UINT32 fractional_;
+  ACE_UINT32 fractional_ {};
 
   /**
    * The number of decimal digits of precision represented by
@@ -125,7 +120,6 @@ private:
 class ACE_Export ACE_Stats
 {
 public:
-  /// Default constructor.
   ACE_Stats ();
 
   /// Provide a new sample.  Returns 0 on success, -1 if it fails due
@@ -147,12 +141,12 @@ public:
    * digits specifies that the fractional part is in thousandths.
    */
   void mean (ACE_Stats_Value &mean,
-             const ACE_UINT32 scale_factor = 1);
+             ACE_UINT32 const scale_factor = 1);
 
   /// Access the standard deviation, whole and fractional parts.  See
   /// description of {mean} method for argument descriptions.
   int std_dev (ACE_Stats_Value &std_dev,
-               const ACE_UINT32 scale_factor = 1);
+               ACE_UINT32 const scale_factor = 1);
 
   /**
    * Print summary statistics.  If scale_factor is not 1, then the
@@ -161,8 +155,8 @@ public:
    * scale factor, it successively tries to reduce it.  Returns -1 if
    * there is overflow even with a 0 scale factor.
    */
-  int print_summary (const u_int precision,
-                     const ACE_UINT32 scale_factor = 1,
+  int print_summary (u_int const precision,
+                     ACE_UINT32 const scale_factor = 1,
                      FILE *
 #ifdef ACE_LACKS_STDOUT
                      = 0
@@ -175,13 +169,13 @@ public:
   void reset ();
 
   /// Utility division function, for ACE_UINT64 dividend.
-  static void quotient (const ACE_UINT64 dividend,
-                        const ACE_UINT32 divisor,
+  static void quotient (ACE_UINT64 const dividend,
+                        ACE_UINT32 const divisor,
                         ACE_Stats_Value &quotient);
 
   /// Utility division function, for ACE_Stats_Value dividend.
-  static void quotient (const ACE_Stats_Value &dividend,
-                        const ACE_UINT32 divisor,
+  static void quotient (ACE_Stats_Value const &dividend,
+                        ACE_UINT32 const divisor,
                         ACE_Stats_Value &quotient);
 
   /**
@@ -189,7 +183,7 @@ public:
    * method.  It's not fast, but it doesn't require floating point
    * support.
    */
-  static void square_root (const ACE_UINT64 n,
+  static void square_root (ACE_UINT64 const n,
                            ACE_Stats_Value &square_root);
 
   /// Print summary statistics to stdout.

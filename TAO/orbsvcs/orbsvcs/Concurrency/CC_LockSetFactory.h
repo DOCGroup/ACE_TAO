@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    CC_LockSetFactory.h
  *
@@ -9,8 +6,6 @@
  *
  *  @author Torben Worm <tworm@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef _CC_LOCKSETFACTORY_H
 #define _CC_LOCKSETFACTORY_H
@@ -36,11 +31,14 @@ class TAO_Concurrency_Serv_Export CC_LockSetFactory
   : public POA_CosConcurrencyControl::LockSetFactory
 {
 public:
-  /// Default constructor.
-  CC_LockSetFactory ();
+  CC_LockSetFactory () = default;
 
-  /// Destructor.
-  ~CC_LockSetFactory () override;
+  ~CC_LockSetFactory () override = default;
+
+  CC_LockSetFactory (CC_LockSetFactory const &) = delete;
+  CC_LockSetFactory &operator = (CC_LockSetFactory const &) = delete;
+  CC_LockSetFactory (CC_LockSetFactory &&) = delete;
+  CC_LockSetFactory &operator = (CC_LockSetFactory &&) = delete;
 
   CosConcurrencyControl::LockSet_ptr create () override;
 

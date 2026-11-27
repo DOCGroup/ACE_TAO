@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  * @file LB_IORInterceptor.h
  *
  * @author Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
 
 #ifndef TAO_LB_IOR_INTERCEPTOR_H
 #define TAO_LB_IOR_INTERCEPTOR_H
@@ -26,12 +22,10 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// Forward declarations.
 class TAO_LB_LoadAlert;
-
 
 /**
  * @class TAO_LB_IORInterceptor
@@ -51,7 +45,6 @@ class TAO_LB_IORInterceptor
     public virtual ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
   TAO_LB_IORInterceptor (CORBA::StringSeq const & object_groups,
                          CORBA::StringSeq const & repository_ids,
                          char const * location,
@@ -66,7 +59,7 @@ public:
    * virtual in the abstract base class.  They are the canonical
    * methods required for all IOR interceptors.
    */
-  //@{
+  /// @{
   /// Return the name of this IORInterceptor.
   char * name () override;
 
@@ -90,7 +83,7 @@ public:
   TAO_LB_IORInterceptor & operator= (TAO_LB_IORInterceptor const &) = delete;
   TAO_LB_IORInterceptor & operator= (TAO_LB_IORInterceptor &&) = delete;
 
-  //@}
+  /// @}
 
 private:
   /// Create and register the LoadAlert object with the LoadManager.

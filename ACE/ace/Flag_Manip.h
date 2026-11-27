@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   Flag_Manip.h
  *
@@ -8,7 +5,6 @@
  *
  *  @author Priyanka Gontla <pgontla@doc.ece.uci.edu>
  */
-//=============================================================================
 
 #ifndef ACE_FLAG_MANIP_H
 #define ACE_FLAG_MANIP_H
@@ -33,7 +29,9 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE
 {
-  // = Set/get/clear various flags related to I/O HANDLE.
+  /// @name Handle flag operations.
+  /// @{
+
   /// Set flags associated with @a handle.
   extern ACE_Export int set_flags (ACE_HANDLE handle,
                                    int flags);
@@ -44,6 +42,7 @@ namespace ACE
 
   /// Return the current setting of flags associated with @a handle.
   ACE_NAMESPACE_INLINE_FUNCTION int get_flags (ACE_HANDLE handle);
+  /// @}
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

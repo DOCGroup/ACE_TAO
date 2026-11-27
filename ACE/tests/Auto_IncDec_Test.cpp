@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file     Auto_IncDec_Test.cpp
  *
@@ -8,15 +6,12 @@
  *
  *  @author  Edan Ayal <EdanA@cti2.com>
  */
-//=============================================================================
-
 
 #include "test_config.h"
 #include "ace/Auto_IncDec_T.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Atomic_Op.h"
 #include "ace/OS_NS_unistd.h"
-
 
 #if defined (ACE_HAS_THREADS)
 
@@ -27,7 +22,7 @@ using INTERLOCKED_INT = ACE_Atomic_Op<ACE_Thread_Mutex, int>;
 static INTERLOCKED_INT current_threads_in_first_section;
 static INTERLOCKED_INT current_threads_in_second_section;
 
-static void *
+static ACE_THR_FUNC_RETURN
 worker (void *)
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -38,8 +33,8 @@ worker (void *)
       (current_threads_in_first_section);
 
     // Wait according to the number of threads...
-    ACE_Time_Value pause (current_threads_in_first_section.value (),
-                          0);
+    ACE_Time_Value const pause (current_threads_in_first_section.value (),
+                                0);
     ACE_OS::sleep (pause);
   }
 
@@ -49,14 +44,14 @@ worker (void *)
 
     // Wait according to the number of threads inside the previous
     // section...
-      ACE_Time_Value pause (current_threads_in_first_section.value (),
-                            0);
+    ACE_Time_Value const pause (current_threads_in_first_section.value (),
+                                0);
     ACE_OS::sleep (pause);
   }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT (" (%t) worker exiting\n")));
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 #endif /* ACE_HAS_THREADS */
@@ -77,13 +72,15 @@ run_main (int, ACE_TCHAR *[])
 
   if (ACE_Thread_Manager::instance ()->spawn_n
       (n_threads,
-       ACE_THR_FUNC (worker),
+       worker,
        nullptr,
        THR_NEW_LWP) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("spawn_n")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("spawn_n")),
+                        -1);
+    }
   // Make sure at least one thread is started...
   ACE_Thread::yield ();
 
@@ -96,7 +93,7 @@ run_main (int, ACE_TCHAR *[])
                   current_threads_in_second_section.value (),
                   ACE_Thread_Manager::instance ()->count_threads ()));
 
-      ACE_Time_Value pause (1, 0);
+      ACE_Time_Value const pause (1, 0);
       ACE_OS::sleep (pause);
     }
 

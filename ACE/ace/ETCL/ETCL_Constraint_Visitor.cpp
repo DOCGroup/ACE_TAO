@@ -1,11 +1,8 @@
-// -*- C++ -*-
-//=============================================================================
 /**
  * @file ETCL_Constraint_Visitor.cpp
  *
  * @author Jeff Parsons <j.parsons@vanderbilt.edu>
  */
-//=============================================================================
 
 #include "ace/ETCL/ETCL_Constraint_Visitor.h"
 

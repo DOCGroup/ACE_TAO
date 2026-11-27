@@ -1,10 +1,8 @@
-//=============================================================================
 /**
 *  @file    Save_Persist_Worker_T.cpp
 *
 *  @author Jonathan Pollack <pollack_j@ociweb.com>
 */
-//=============================================================================
 
 #ifndef SAVE_PERSIST_WORKER_CPP
 #define SAVE_PERSIST_WORKER_CPP

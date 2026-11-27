@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    XML_Types.h
  *
@@ -9,7 +6,6 @@
  *
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef _ACEXML_XML_TYPES_H_
 #define _ACEXML_XML_TYPES_H_
@@ -74,7 +70,6 @@ using ACEXML_String = ACE_CString;
 # else
 #   define ACEXML_INLINE
 # endif /* __ACEXML_INLINE */
-
 
 #include /**/ "ace/post.h"
 

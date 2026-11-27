@@ -5,13 +5,13 @@
 unsigned Annotation_Test::failed_test_count_ = 0;
 unsigned Annotation_Test::total_test_count_ = 0;
 
-Annotation_Test::Annotation_Test (const std::string &name)
+Annotation_Test::Annotation_Test (std::string const &name)
   : name_ (name),
     failed_ (false),
     error_count_ (0),
     last_error_ (UTL_Error::EIDL_OK),
     last_warning_ (UTL_Error::EIDL_OK),
-    scope_ (0),
+    scope_ (nullptr),
     disable_output_ (false)
 {
   ++total_test_count_;
@@ -46,7 +46,7 @@ Annotation_Test::~Annotation_Test ()
 }
 
 void
-Annotation_Test::failed (const std::string &message)
+Annotation_Test::failed (std::string const &message)
 {
   if (message.length ())
     {
@@ -85,7 +85,7 @@ Annotation_Test::last_warning (UTL_Error::ErrorCode last_warning)
 }
 
 Annotation_Test &
-Annotation_Test::run (const std::string &idl)
+Annotation_Test::run (std::string const &idl)
 {
   // Reset Error State
   idl_global->set_err_count (0);
@@ -167,7 +167,7 @@ Annotation_Test::run (const std::string &idl)
 }
 
 AST_Decl *
-Annotation_Test::assert_node (const char *name, UTL_Scope *from)
+Annotation_Test::assert_node (char const *name, UTL_Scope *from)
 {
   AST_Decl *node {};
   UTL_ScopedName *scoped_name = FE_Utils::string_to_scoped_name (name);
@@ -198,7 +198,7 @@ Annotation_Test::assert_node (const char *name, UTL_Scope *from)
 }
 
 AST_Annotation_Decl *
-Annotation_Test::assert_annotation_decl (const char *name)
+Annotation_Test::assert_annotation_decl (char const *name)
 {
   AST_Annotation_Decl *node = assert_node<AST_Annotation_Decl> (name);
 
@@ -305,7 +305,7 @@ Annotation_Test::assert_annotation_member_count (
       failed ();
     }
 
-  size_t actual_count = anno_decl->member_count ();
+  size_t const actual_count = anno_decl->member_count ();
   if (actual_count != count)
     {
       std::string const anno_decl_name = anno_decl->name ()->get_string_copy ();
@@ -327,11 +327,11 @@ Annotation_Test::assert_annotation_member_count (
 
 AST_Annotation_Member *
 Annotation_Test::get_annotation_member (
-  AST_Annotation_Decl *anno_decl, const char *name)
+  AST_Annotation_Decl *anno_decl, char const *name)
 {
   AST_Decl *decl = (*anno_decl)[name];
   AST_Annotation_Member *member = decl ?
-    dynamic_cast<AST_Annotation_Member *> (decl) : 0;
+    dynamic_cast<AST_Annotation_Member *> (decl) : nullptr;
   if (!member)
     {
       ACE_ERROR ((LM_ERROR,
@@ -345,7 +345,7 @@ Annotation_Test::get_annotation_member (
 
 AST_Annotation_Member *
 Annotation_Test::get_annotation_member (
-  AST_Annotation_Appl *anno_appl, const char *name)
+  AST_Annotation_Appl *anno_appl, char const *name)
 {
   return get_annotation_member (
     dynamic_cast<AST_Annotation_Decl *> (anno_appl), name);
@@ -482,12 +482,12 @@ Annotation_Test::results ()
 void
 Annotation_Test::print_idl_with_line_numbers ()
 {
-  static const char* start_marker =
+  static char const *start_marker =
 #ifndef ACE_WIN32
     "\x1b[31m"
 #endif
     ">";
-  static const char* end_marker =
+  static char const *end_marker =
 #ifndef ACE_WIN32
     "\x1b[0m"
 #endif
@@ -495,19 +495,19 @@ Annotation_Test::print_idl_with_line_numbers ()
   const long last_error_line = idl_global->err ()->last_error_lineno;
   const long marked_line = last_error_line != -1 ?
     last_error_line : idl_global->err ()->last_warning_lineno;
-  const size_t char_count = idl_.length ();
+  size_t const char_count = idl_.length ();
 
   long line_number = 0;
   for (size_t start = 0; start < char_count;)
     {
       ++line_number;
-      const size_t end = idl_.find ('\n', start);
-      const std::string line = idl_.substr (start, end - start);
-      const bool mark_line = line_number == marked_line;
+      size_t const end = idl_.find ('\n', start);
+      std::string const line = idl_.substr (start, end - start);
+      bool const mark_line = line_number == marked_line;
       ACE_DEBUG ((LM_DEBUG,
-        ACE_TEXT ("%C%4u: %C%C\n"),
+        ACE_TEXT ("%C%4q: %C%C\n"),
         mark_line ? start_marker : " ",
-        line_number, line.c_str (),
+        static_cast<ssize_t> (line_number), line.c_str (),
         mark_line ? end_marker : ""));
       if (end == std::string::npos) {
         break;

@@ -1,14 +1,10 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    STL_algorithm_Test_T.h
  *
- *  Test ACE containers compatibility with STL <algorithm> header.
+ *  Test ACE containers compatibility with STL @a algorithm header.
  *
  *  @author  James H. Hill <j.hill@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef ACE_TESTS_STL_ALGORITHM_TEST_T_H
 #define ACE_TESTS_STL_ALGORITHM_TEST_T_H

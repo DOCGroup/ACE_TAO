@@ -1,12 +1,8 @@
-/* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file   MT_Disconnect.h
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  */
-//=============================================================================
-
 
 #ifndef EC_MT_DISCONNECT_H
 #define EC_MT_DISCONNECT_H
@@ -23,10 +19,13 @@ class Task : public ACE_Task_Base
 public:
   /// Create the task...
   Task (RtecEventChannelAdmin::EventChannel_ptr ec,
-        int use_callbacks);
+        bool use_callbacks);
+  Task (Task const &) = delete;
+  Task &operator= (Task const &) = delete;
+  Task (Task &&) = delete;
+  Task &operator= (Task &&) = delete;
 
-  // = Check the ACE_Task_Base documentation.
-  int svc ();
+  int svc () override;
 
   /// Run a single iteration of the test
   void run_iteration ();
@@ -37,7 +36,7 @@ private:
 
   /// Does the event channel send any callback messages when a client
   /// diconnects
-  int use_callbacks;
+  bool use_callbacks;
 };
 
 #endif /* EC_DISCONNECT_H */

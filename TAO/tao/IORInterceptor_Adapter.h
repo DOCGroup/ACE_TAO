@@ -1,13 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    IORInterceptor_Adapter.h
  *
  *  @author  Jeff Parsons <parsons@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_IORINTERCEPTOR_ADAPTER_H
 #define TAO_IORINTERCEPTOR_ADAPTER_H
@@ -24,9 +19,7 @@
 #include "tao/Policy_ForwardC.h"
 #include "tao/TAO_Export.h"
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-template <class T> class ACE_Array_Base;
-ACE_END_VERSIONED_NAMESPACE_DECL
+#include <vector>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -42,7 +35,7 @@ namespace PortableInterceptor
 namespace TAO
 {
   using ObjectReferenceTemplate_Array =
-    ACE_Array_Base< ::PortableInterceptor::ObjectReferenceTemplate*>;
+    std::vector<::PortableInterceptor::ObjectReferenceTemplate*>;
 }
 
 class TAO_Root_POA;
@@ -66,7 +59,7 @@ public:
 
   virtual void add_interceptor (
       PortableInterceptor::IORInterceptor_ptr interceptor,
-      const CORBA::PolicyList& policies) = 0;
+      CORBA::PolicyList const & policies) = 0;
 
   virtual void destroy_interceptors () = 0;
 
@@ -85,11 +78,11 @@ public:
   virtual void components_established (PortableInterceptor::IORInfo_ptr info) = 0;
 
   virtual void adapter_state_changed (
-      const TAO::ObjectReferenceTemplate_Array &array_obj_ref_template,
+      TAO::ObjectReferenceTemplate_Array const &array_obj_ref_template,
       PortableInterceptor::AdapterState state) = 0;
 
   virtual void adapter_manager_state_changed (
-      const char * id,
+      char const *id,
       PortableInterceptor::AdapterState state) = 0;
 };
 

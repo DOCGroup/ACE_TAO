@@ -1,14 +1,9 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Handle_Gobbler.h
  *
  *  @author Kirthika Parameswaran <kirthika@cs.wustl.edu>
  *  @author Irfan Pyarali <irfan@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef ACE_HANDLE_GOBBLER_H
 #define ACE_HANDLE_GOBBLER_H

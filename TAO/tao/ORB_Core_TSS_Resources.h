@@ -1,13 +1,9 @@
-// -*- C++ -*-
-
-// ===================================================================
 /**
  *  @file   ORB_Core_TSS_Resources.h
  *
  *  @author DOC Center - Washington University at St. Louis
  *  @author DOC Laboratory - University of California at Irvine
  */
-// ===================================================================
 
 #ifndef TAO_ORB_CORE_TSS_RESOURCES_H
 #define TAO_ORB_CORE_TSS_RESOURCES_H
@@ -39,19 +35,17 @@ class TAO_ORB_Core;
 class TAO_Export TAO_ORB_Core_TSS_Resources
 {
 public:
-  /// Constructor
   TAO_ORB_Core_TSS_Resources ();
 
-  /// destructor
   ~TAO_ORB_Core_TSS_Resources ();
+
+  TAO_ORB_Core_TSS_Resources (TAO_ORB_Core_TSS_Resources const &) = delete;
+  TAO_ORB_Core_TSS_Resources (TAO_ORB_Core_TSS_Resources &&) = delete;
+  TAO_ORB_Core_TSS_Resources &operator= (TAO_ORB_Core_TSS_Resources const &) = delete;
+  TAO_ORB_Core_TSS_Resources &operator= (TAO_ORB_Core_TSS_Resources &&) = delete;
 
   /// Cleans TSS resources.
   void fini ();
-
-private:
-  /// The ORB Core TSS resources should not be copied
-  TAO_ORB_Core_TSS_Resources (const TAO_ORB_Core_TSS_Resources&);
-  void operator= (const TAO_ORB_Core_TSS_Resources&);
 
 public:
   /**
@@ -61,26 +55,26 @@ public:
    */
   /// Counter for how (nested) calls this thread has made to run the
   /// event loop.
-  int event_loop_thread_;
+  int event_loop_thread_ {};
 
   /// Counter for how many times this thread has become a client
   /// leader.
-  int client_leader_thread_;
+  int client_leader_thread_ {};
 
   /// Lane for this thread.
-  void *lane_;
+  void *lane_ {};
 
   /// Generic container for thread-specific objects.
   ACE_Array_Base<void *> ts_objects_;
 
-  // Set to true by the wait_on_lf_no_nested_upcall wait strategy
-  // @CJC@  maybe we should use allocate_tss_slot_id() instead?
-  bool upcalls_temporarily_suspended_on_this_thread_;
+  /// Set to true by the wait_on_lf_no_nested_upcall wait strategy.
+  /// @todo Maybe we should use allocate_tss_slot_id() instead?
+  bool upcalls_temporarily_suspended_on_this_thread_ {};
 
   /// Pointer to the ORB core.  Needed to get access to the TSS
   /// cleanup functions for the TSS objects stored in the TSS object
   /// array in this class.
-  TAO_ORB_Core *orb_core_;
+  TAO_ORB_Core *orb_core_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

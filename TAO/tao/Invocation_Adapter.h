@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Invocation_Adapter.h
  *
  *  @author Balachandran Natarajan <bala@dre.vanderbilt.edu>
  */
-//=============================================================================
 #ifndef TAO_INVOCATION_ADAPTER_H
 #define TAO_INVOCATION_ADAPTER_H
 
@@ -100,11 +96,12 @@ namespace TAO
      *
      * @param mode Invocation mode. This information is also available
      * in the IDL file and in the generated code.
+     * @param has_in_args Whether the operation has input arguments.
      */
     Invocation_Adapter (CORBA::Object_ptr target,
                         Argument **args,
                         int arg_number,
-                        const char *operation,
+                        char const *operation,
                         size_t op_len,
                         int collocation_opportunity,
                         TAO::Invocation_Type type = TAO_TWOWAY_INVOCATION,
@@ -123,7 +120,7 @@ namespace TAO
      *
      * @param ex_count Number of elements in the array.
      */
-    virtual void invoke (const TAO::Exception_Data *ex, unsigned long ex_count);
+    virtual void invoke (TAO::Exception_Data const *ex, unsigned long ex_count);
 
     /**
      * @param byte_order The intended byte order for the message output
@@ -157,7 +154,8 @@ namespace TAO
      * SII, AMI, DII and DSI. All the subclasses implement these
      * methods to get the right behavior at their level.
      */
-    //@{
+    /// @{
+
     /// Helper method that prepares the necessary stuff for a remote
     /// invocation.
 
@@ -190,6 +188,8 @@ namespace TAO
      *
      * @param details The operations details of the operation that is being
      * invoked.
+     * @param effective_target The effective object reference for the call.
+     * @param strat The strategy used for collocation.
      */
     virtual Invocation_Status invoke_collocated_i (
         TAO_Stub *stub,
@@ -223,7 +223,7 @@ namespace TAO
         CORBA::Object_var &effective_target,
         Profile_Transport_Resolver &r,
         ACE_Time_Value *&max_wait_time);
-    //@}
+    /// @}
 
     /// Helper function that extracts the roundtrip timeout policies
     /// set in the ORB.
@@ -257,7 +257,6 @@ namespace TAO
     * No-Collocation is a special case of collocation.
     */
     TAO::Collocation_Strategy collocation_strategy (CORBA::Object_ptr object);
-    //@}
 
   protected:
     /// The target object on which this invocation is carried out.

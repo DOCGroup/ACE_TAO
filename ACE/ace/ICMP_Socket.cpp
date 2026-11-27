@@ -15,7 +15,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE (ACE_ICMP_Socket)
 
-
 void
 ACE_ICMP_Socket::dump () const
 {
@@ -36,10 +35,10 @@ ACE_ICMP_Socket::send (void const * buf,
   ACE_TRACE ("ACE_ICMP_Socket::send");
 
   return ACE_OS::sendto (this->get_handle (),
-                         (char const *) buf,
+                         static_cast<char const *> (buf),
                          n,
                          flags,
-                         (sockaddr const *) addr.get_addr (),
+                         static_cast<sockaddr const *> (addr.get_addr ()),
                          addr.get_size ());
 }
 
@@ -52,12 +51,12 @@ ACE_ICMP_Socket::recv (void * buf,
   ACE_TRACE ("ACE_ICMP_Socket::recv");
 
   int addr_len = addr.get_size ();
-  ssize_t status = ACE_OS::recvfrom (this->get_handle (),
-                                     (char *) buf,
+  ssize_t const status = ACE_OS::recvfrom (this->get_handle (),
+                                     static_cast<char *> (buf),
                                      n,
                                      flags,
-                                     (sockaddr *) addr.get_addr (),
-                                     (int*) &addr_len);
+                                     static_cast<sockaddr *> (addr.get_addr ()),
+                                     &addr_len);
   addr.set_size (addr_len);
 
   return status;
@@ -126,7 +125,7 @@ ACE_ICMP_Socket::shared_open (ACE_Addr const & local)
 {
   ACE_TRACE ("ACE_ICMP_Socket::shared_open");
 
-  bool error = false;
+  bool error {};
   if (local == ACE_Addr::sap_any)
     {
       if (ACE::bind_port (this->get_handle ()) == -1)
@@ -154,9 +153,9 @@ ACE_ICMP_Socket::calculate_checksum (unsigned short * paddress,
                                      int len)
 {
   int nleft = len;
-  int sum = 0;
+  int sum {};
   unsigned short * w = paddress;
-  unsigned short answer = 0;
+  unsigned short answer {};
   while (nleft > 1)
     {
       sum += *w++;

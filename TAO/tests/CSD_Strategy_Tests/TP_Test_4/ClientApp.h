@@ -6,36 +6,38 @@
 #include "tao/ORB.h"
 #include "ace/SString.h"
 
-
 class ClientApp : public TestAppBase
 {
   public:
     ClientApp();
-    virtual ~ClientApp();
+    ~ClientApp() override;
 
   protected:
-    virtual int run_i(int argc, ACE_TCHAR* argv[]);
+    int run_i(int argc, ACE_TCHAR* argv[]) override;
 
+    ClientApp (ClientApp const &) = delete;
+    ClientApp (ClientApp &&) = delete;
+    ClientApp & operator= (ClientApp const &) = delete;
+    ClientApp & operator= (ClientApp &&) = delete;
 
   private:
-    // These are all called, in order, by the run_i() method.
+    /// These are all called, in order, by the run_i() method.
     int init(int argc, ACE_TCHAR* argv[]);
     void client_setup();
     int  run_engine();
     void cleanup();
 
-    // Helper methods used by the methods above.
+    /// Helper methods used by the methods above.
     int parse_args(int argc, ACE_TCHAR* argv[]);
 
     int set_arg(unsigned&   value,
-                 const ACE_TCHAR* arg,
+                 ACE_TCHAR const *arg,
                  char        opt,
-                 const char* name,
+                 char const *name,
                  int         min = 0);
 
     void usage_statement();
     int arg_dependency_checks();
-
 
     CORBA::ORB_var      orb_;
     ACE_TString         exe_name_;

@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 // This configuration file is designed to work with the MacOS X operating system, version 10.2 (Jaguar).
 
 #ifndef ACE_CONFIG_MACOSX_H

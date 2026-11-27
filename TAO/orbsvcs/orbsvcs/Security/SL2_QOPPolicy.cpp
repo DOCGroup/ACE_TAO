@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "orbsvcs/Security/SL2_QOPPolicy.h"
 #include "tao/ORB_Constants.h"
 
@@ -6,10 +5,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::Security::QOPPolicy::QOPPolicy (::Security::QOP qop)
   : qop_ (qop)
-{
-}
-
-TAO::Security::QOPPolicy::~QOPPolicy ()
 {
 }
 
@@ -22,7 +17,7 @@ TAO::Security::QOPPolicy::policy_type ()
 CORBA::Policy_ptr
 TAO::Security::QOPPolicy::copy ()
 {
-  TAO::Security::QOPPolicy * policy = nullptr;
+  TAO::Security::QOPPolicy * policy {};
   ACE_NEW_THROW_EX (policy,
                     TAO::Security::QOPPolicy (this->qop_),
                     CORBA::NO_MEMORY (

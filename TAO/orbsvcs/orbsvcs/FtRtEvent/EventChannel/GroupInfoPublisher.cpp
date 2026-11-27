@@ -6,12 +6,15 @@
 #include "orbsvcs/FtRtEvent/EventChannel/FTEC_Become_Primary_Listener.h"
 #include "../Utils/Log.h"
 
+#include <utility>
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 GroupInfoPublisherBase::GroupInfoPublisherBase()
-  : info_(new Info)
+  : info_ (std::make_unique<Info> ())
 {
-  info_->primary = false;
+  subscribers_.reserve (2);
 }
 
 void
@@ -43,30 +46,28 @@ GroupInfoPublisherBase::successor() const
   return info_->successor;
 }
 
-
-const GroupInfoPublisherBase::BackupList&
+GroupInfoPublisherBase::BackupList const&
 GroupInfoPublisherBase::backups() const
 {
   return info_->backups;
 }
 
 GroupInfoPublisherBase::Info*
-GroupInfoPublisherBase::setup_info(const FTRT::ManagerInfoList & info_list,
+GroupInfoPublisherBase::setup_info(FTRT::ManagerInfoList const & info_list,
                                    int my_position,
                                    CORBA::ULong object_group_ref_version)
 {
-  Info_ptr result(new Info);
+  Info_ptr result = std::make_unique<Info> ();
 
   result->primary = (my_position == 0);
 
   /// create the object group
-  size_t len = info_list.length();
+  size_t const len = info_list.length();
 
   TAO_IOP::TAO_IOR_Manipulation::IORList iors;
   iors.length(len);
 
-  size_t i;
-  for (i = 0; i < len; ++i) {
+  for (size_t i {}; i < len; ++i) {
     iors[i] = CORBA::Object::_duplicate(info_list[i].ior.in());
   }
 
@@ -80,12 +81,12 @@ GroupInfoPublisherBase::setup_info(const FTRT::ManagerInfoList & info_list,
   //log_obj_endpoints(result->iogr.in());
 
   /// check if sucessor changed
-  size_t successors_length = info_list.length() - my_position -1;
+  size_t const successors_length = info_list.length() - my_position -1;
 
   if (successors_length /*!= info_->backups.length() */)  {
     // successor changed, update successor
     iors.length(successors_length);
-    for (i = 0; i < successors_length; ++i) {
+    for (size_t i {}; i < successors_length; ++i) {
       iors[i] = CORBA::Object::_duplicate(info_list[i+ my_position+1].ior.in());
     }
 
@@ -108,7 +109,7 @@ GroupInfoPublisherBase::setup_info(const FTRT::ManagerInfoList & info_list,
 
   // update backups
   result->backups.length(successors_length);
-  for (i = 0; i < successors_length; ++i)  {
+  for (size_t i {}; i < successors_length; ++i)  {
     result->backups[i] =
       FtRtecEventChannelAdmin::EventChannel::_narrow(
       info_list[i+ my_position+1].ior.in());
@@ -124,7 +125,7 @@ GroupInfoPublisherBase::update_info(GroupInfoPublisherBase::Info_ptr& info)
   if (info->primary) {
     if (!info_->primary) {
       // now we become the primary, notify the subscribers
-      for (size_t i = 0; i < subscribers_.size(); ++i)
+      for (size_t i {}; i < subscribers_.size(); ++i)
         subscribers_[i]->become_primary();
     }
 
@@ -139,7 +140,7 @@ GroupInfoPublisherBase::update_info(GroupInfoPublisherBase::Info_ptr& info)
       }
     }
   }
-  info_ = std::move(info);
+  info_ = std::move (info);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -26,5 +26,4 @@ typedef union {
 #define Q_STRING  276
 #define T_NUM 277
 
-
 extern ACE_CC_YYSTYPE ace_cc_yylval;

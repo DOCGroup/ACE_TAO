@@ -1,10 +1,8 @@
-// -*- IDL -*-
-
 /**
  *  @file   orb_types.pidl
  */
 
-// Basic types
+/// Basic types.
 
 #ifndef TAO_ORB_TYPES_IDL
 #define TAO_ORB_TYPES_IDL

@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  * @file    Array_Map.h
  *
@@ -12,8 +9,6 @@
  *
  * @author  Ossama Othman
  */
-//=============================================================================
-
 
 #ifndef ACE_ARRAY_MAP_H
 #define ACE_ARRAY_MAP_H
@@ -33,7 +28,7 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-#define ACE_ARRAY_MAP_DEFAULT_ALLOCATOR(K, V) std::allocator<std::pair<K, V> >
+#define ACE_ARRAY_MAP_DEFAULT_ALLOCATOR(K, V) std::allocator<std::pair<K, V>>
 
 /**
  * @class ACE_Array_Map
@@ -90,24 +85,23 @@ template<typename Key, typename Value, class EqualTo = std::equal_to<Key>,
 class ACE_Array_Map
 {
 public:
-  // STL-style typedefs/traits.
+  /// STL-style typedefs/traits.
   using key_type = Key;
   using mapped_type = Value;
   using data_type = Value;
   using value_type = std::pair<key_type, mapped_type>;
   using allocator_type = Alloc;
   using reference = value_type &;
-  using const_reference = const value_type &;
+  using const_reference = value_type const &;
   using pointer = value_type *;
-  using const_pointer = const value_type *;
+  using const_pointer = value_type const *;
   using iterator = value_type *;
-  using const_iterator = const value_type *;
+  using const_iterator = value_type const *;
   using difference_type = ptrdiff_t;
   using size_type = size_t;
   using reverse_iterator = std::reverse_iterator<iterator>;
   using const_reverse_iterator = std::reverse_iterator<const_iterator>;
 
-  /// Default Constructor.
   /**
    * Create an empty map with a preallocated buffer of size @a s.
    */
@@ -119,7 +113,6 @@ public:
   ACE_Array_Map (ACE_Array_Map const & map);
   ACE_Array_Map & operator= (ACE_Array_Map const & map);
 
-  /// Destructor.
   ~ACE_Array_Map ();
 
   /**
@@ -127,24 +120,24 @@ public:
    *
    * Forward iterator accessors.
    */
-  //@{
+  /// @{
   iterator begin ();
   iterator end   ();
   const_iterator begin () const;
   const_iterator end   () const;
-  //@}
+  /// @}
 
   /**
    * @name Reverse Iterator Accessors
    *
    * Reverse iterator accessors.
    */
-  //@{
+  /// @{
   reverse_iterator rbegin ();
   reverse_iterator rend   ();
   const_reverse_iterator rbegin () const;
   const_reverse_iterator rend   () const;
-  //@}
+  /// @}
 
   /// Return current size of map.
   /**
@@ -156,14 +149,16 @@ public:
   size_type max_size () const;
 
   /// Return @c true if the map is empty, else @c false.
-  bool is_empty () const;  // ACE style
+  /// ACE-style empty check.
+  bool is_empty () const;
 
   /**
    * Return @c true if the map is empty, else @c false.  We recommend
    * using @c is_empty() instead since it's more consistent with the
    * ACE container naming conventions.
    */
-  bool empty () const;  // STL style
+  /// STL-style empty check.
+  bool empty () const;
 
   /// Swap the contents of this map with the given @a map in an
   /// exception-safe manner.
@@ -201,7 +196,7 @@ public:
 
   /// Clear contents of map.
   /**
-   * @note This a constant time (O(1)) operation.
+   * @note This is a constant-time (O(1)) operation.
    */
   void clear ();
 
@@ -210,7 +205,7 @@ public:
    *
    * Search the map for data corresponding to key @a k.
    */
-  //@{
+  /// @{
   /**
    * @return @c end() if data corresponding to key @a k is not in the
    *         map.
@@ -222,7 +217,7 @@ public:
    *         map.
    */
   const_iterator find (key_type const & k) const;
-  //@}
+  /// @}
 
   /// Count the number of elements corresponding to key @a k.
   /**
@@ -250,7 +245,7 @@ private:
   allocator_type alloc_;
 
   /// Number of elements in the map.
-  size_type size_;
+  size_type size_ {};
 
   /// Current size of underlying array.
   /**
@@ -262,8 +257,6 @@ private:
   value_type * nodes_;
 };
 
-// --------------------------------------------------------------
-
 /// @c ACE_Array_Map equality operator.
 template <typename Key, typename Value, class EqualTo, class Alloc>
 bool operator== (ACE_Array_Map<Key, Value, EqualTo, Alloc> const & lhs,
@@ -273,8 +266,6 @@ bool operator== (ACE_Array_Map<Key, Value, EqualTo, Alloc> const & lhs,
 template <typename Key, typename Value, class EqualTo, class Alloc>
 bool operator<  (ACE_Array_Map<Key, Value, EqualTo, Alloc> const & lhs,
                  ACE_Array_Map<Key, Value, EqualTo, Alloc> const & rhs);
-
-// --------------------------------------------------------------
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 

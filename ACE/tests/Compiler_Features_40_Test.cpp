@@ -23,7 +23,7 @@ public:
     this_pointer = this;
 
     // Generate a sequence of numbers (0 - 255)
-    for (int i = 0; i < 256; i++)
+    for (int i = 0; i < 256; ++i)
     {
       data[i] = i;
     }
@@ -34,11 +34,13 @@ public:
     if (this != this_pointer)
     {
       isDataCorrupt = true;
-      ACE_ERROR ((LM_ERROR, "ERROR: Invalid this %@ != %@\n", this, this_pointer));
+      ACE_ERROR ((LM_ERROR, "ERROR: Invalid this %@ != %@\n",
+                  static_cast<void *> (this),
+                  static_cast<void *> (this_pointer)));
     }
 
     // Check if number sequence is still the same
-    for (int i = 0; i < 256; i++)
+    for (int i = 0; i < 256; ++i)
     {
       if (data[i] != i)
       {

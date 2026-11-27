@@ -6,8 +6,8 @@
 
 #include "ace/SOCK_Dgram.h"
 #include "ace/ACE.h"
-#include "ace/OS_NS_string.h"
 
+#include <cstring>
 #include <memory>
 
 #if !defined(__ACE_INLINE__)
@@ -16,19 +16,9 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_ECG_CDR_Processor::~TAO_ECG_CDR_Processor ()
-{
-}
 // ****************************************************************
 
-TAO_ECG_UDP_Request_Entry::~TAO_ECG_UDP_Request_Entry ()
-{
-  if (this->own_received_fragments_)
-    {
-      this->own_received_fragments_ = 0;
-      delete[] this->received_fragments_;
-    }
-}
+TAO_ECG_UDP_Request_Entry::~TAO_ECG_UDP_Request_Entry () = default;
 
 TAO_ECG_UDP_Request_Entry::
 TAO_ECG_UDP_Request_Entry (CORBA::Boolean byte_order,
@@ -40,25 +30,28 @@ TAO_ECG_UDP_Request_Entry (CORBA::Boolean byte_order,
   , request_size_ (request_size)
   , fragment_count_ (fragment_count)
 {
-  ACE_CDR::grow (&this->payload_, this->request_size_);
+  ACE_CDR::grow (std::addressof (this->payload_), this->request_size_);
   this->payload_.wr_ptr (request_size_);
 
   this->received_fragments_ = this->default_received_fragments_;
-  this->own_received_fragments_ = 0;
-  const int bits_per_ulong = sizeof(CORBA::ULong) * CHAR_BIT;
+  constexpr int bits_per_ulong = sizeof(CORBA::ULong) * CHAR_BIT;
   this->received_fragments_size_ =
     this->fragment_count_ / bits_per_ulong + 1;
   if (this->received_fragments_size_ > ECG_DEFAULT_FRAGMENT_BUFSIZ)
     {
-      ACE_NEW (this->received_fragments_,
+      CORBA::ULong* received_fragments {};
+      ACE_NEW (received_fragments,
                CORBA::ULong[this->received_fragments_size_]);
-      this->own_received_fragments_ = 1;
+      this->owned_received_fragments_.reset (received_fragments);
+      this->received_fragments_ = this->owned_received_fragments_.get ();
     }
 
-  for (CORBA::ULong i = 0; i < this->received_fragments_size_; ++i)
-    this->received_fragments_[i] = 0;
-  CORBA::ULong idx = this->fragment_count_ / bits_per_ulong;
-  CORBA::ULong bit = this->fragment_count_ % bits_per_ulong;
+  for (CORBA::ULong i {}; i < this->received_fragments_size_; ++i)
+    {
+      this->received_fragments_[i] = 0;
+    }
+  CORBA::ULong const idx = this->fragment_count_ / bits_per_ulong;
+  CORBA::ULong const bit = this->fragment_count_ % bits_per_ulong;
   this->received_fragments_[idx] = (0xFFFFFFFF << bit);
 }
 
@@ -73,11 +66,15 @@ TAO_ECG_UDP_Request_Entry::validate_fragment (CORBA::Boolean byte_order,
   if (byte_order != this->byte_order_
       || request_size != this->request_size_
       || fragment_count != this->fragment_count_)
+  {
     return 0;
+  }
 
   if (fragment_offset >= request_size
       || fragment_offset + fragment_size > request_size)
+  {
     return 0;
+  }
 
   return 1;
 }
@@ -87,11 +84,13 @@ TAO_ECG_UDP_Request_Entry::test_received (CORBA::ULong fragment_id) const
 {
   // Assume out-of-range fragments as received, so they are dropped...
   if (fragment_id > this->fragment_count_)
+  {
     return 1;
+  }
 
-  const int bits_per_ulong = sizeof(CORBA::ULong) * CHAR_BIT;
-  CORBA::ULong idx = fragment_id / bits_per_ulong;
-  CORBA::ULong bit = fragment_id % bits_per_ulong;
+  constexpr int bits_per_ulong = sizeof(CORBA::ULong) * CHAR_BIT;
+  CORBA::ULong const idx = fragment_id / bits_per_ulong;
+  CORBA::ULong const bit = fragment_id % bits_per_ulong;
   return ACE_BIT_ENABLED (this->received_fragments_[idx], 1<<bit);
 }
 
@@ -100,23 +99,27 @@ TAO_ECG_UDP_Request_Entry::mark_received (CORBA::ULong fragment_id)
 {
   // Assume out-of-range fragments as received, so they are dropped...
   if (fragment_id > this->fragment_count_)
+  {
     return;
+  }
 
-  const int bits_per_ulong = sizeof(CORBA::ULong) * CHAR_BIT;
-  CORBA::ULong idx = fragment_id / bits_per_ulong;
-  CORBA::ULong bit = fragment_id % bits_per_ulong;
+  constexpr int bits_per_ulong = sizeof(CORBA::ULong) * CHAR_BIT;
+  CORBA::ULong const idx = fragment_id / bits_per_ulong;
+  CORBA::ULong const bit = fragment_id % bits_per_ulong;
   ACE_SET_BITS (this->received_fragments_[idx], 1<<bit);
 }
 
 int
 TAO_ECG_UDP_Request_Entry::complete () const
 {
-  for (CORBA::ULong i = 0;
+  for (CORBA::ULong i {};
        i < this->received_fragments_size_;
        ++i)
     {
       if (this->received_fragments_[i] != 0xFFFFFFFF)
+      {
         return 0;
+      }
     }
   return 1;
 }
@@ -134,18 +137,22 @@ TAO_ECG_CDR_Message_Receiver::Requests::init (size_t size,
 {
   // Already initialized.
   if (this->fragmented_requests_)
+  {
     return -1;
+  }
 
-  ACE_NEW_RETURN (this->fragmented_requests_,
-                  TAO_ECG_UDP_Request_Entry*[size],
+  TAO_ECG_UDP_Request_Entry** fragmented_requests {};
+  ACE_NEW_RETURN (fragmented_requests,
+                  TAO_ECG_UDP_Request_Entry* [size],
                   -1);
+  this->fragmented_requests_.reset (fragmented_requests);
 
   this->size_ = size;
   this->id_range_low_ = 0;
   this->id_range_high_ = size - 1;
   this->min_purge_count_ = min_purge_count;
 
-  for (size_t i = 0; i < size; ++i)
+  for (size_t i {}; i < size; ++i)
     {
       this->fragmented_requests_[i] = nullptr;
     }
@@ -155,18 +162,18 @@ TAO_ECG_CDR_Message_Receiver::Requests::init (size_t size,
 
 TAO_ECG_CDR_Message_Receiver::Requests::~Requests ()
 {
-  for (size_t i = 0; i < this->size_; ++i)
+  for (size_t i {}; i < this->size_; ++i)
     {
       TAO_ECG_UDP_Request_Entry* request =
         this->fragmented_requests_[i];
 
-      if (request != &TAO_ECG_CDR_Message_Receiver::Request_Completed_)
+      if (request != std::addressof (TAO_ECG_CDR_Message_Receiver::Request_Completed_))
+      {
         delete request;
+      }
     }
 
-  delete [] this->fragmented_requests_;
-
-  this->fragmented_requests_ = nullptr;
+  this->fragmented_requests_.reset ();
   this->size_ = 0;
   this->id_range_low_ = 0;
   this->id_range_high_ = 0;
@@ -188,7 +195,9 @@ TAO_ECG_CDR_Message_Receiver::Requests::get_request (CORBA::ULong request_id)
       CORBA::ULong new_slots_needed = request_id - this->id_range_high_;
 
       if (new_slots_needed < this->min_purge_count_)
+      {
         new_slots_needed = this->min_purge_count_;
+      }
 
       if (new_slots_needed > this->size_)
         // Shifting the range by more than the size of array.
@@ -207,10 +216,9 @@ TAO_ECG_CDR_Message_Receiver::Requests::get_request (CORBA::ULong request_id)
     }
 
   // Return array location for <request_id>.
-  int index = request_id % this->size_;
-  return this->fragmented_requests_ + index;
+  int const index = request_id % this->size_;
+  return this->fragmented_requests_.get () + index;
 }
-
 
 void
 TAO_ECG_CDR_Message_Receiver::Requests::purge_requests (
@@ -219,9 +227,9 @@ TAO_ECG_CDR_Message_Receiver::Requests::purge_requests (
 {
   for (CORBA::ULong i = purge_first; i <= purge_last; ++i)
     {
-      size_t index = i % this->size_;
+      size_t const index = i % this->size_;
       if (this->fragmented_requests_[index]
-          != &TAO_ECG_CDR_Message_Receiver::Request_Completed_)
+          != std::addressof (TAO_ECG_CDR_Message_Receiver::Request_Completed_))
         {
           delete this->fragmented_requests_[index];
         }
@@ -249,7 +257,7 @@ TAO_ECG_CDR_Message_Receiver::handle_input (
 
   // Read the message from dgram.
 
-  const int iovcnt = 2;
+  constexpr int iovcnt = 2;
   iovec iov[iovcnt];
   iov[0].iov_base = header_buf;
   iov[0].iov_len  = TAO_ECG_CDR_Message_Sender::ECG_HEADER_SIZE;
@@ -257,12 +265,14 @@ TAO_ECG_CDR_Message_Receiver::handle_input (
   iov[1].iov_len  = ACE_MAX_DGRAM_SIZE;
 
   ACE_INET_Addr from;
-  ssize_t n = dgram.recv (iov, iovcnt, from);
+  ssize_t const n = dgram.recv (iov, iovcnt, from);
 
   if (n == -1)
     {
       if (errno == EWOULDBLOCK)
+      {
         return 0;
+      }
 
       ORBSVCS_ERROR_RETURN ((LM_ERROR, "Error reading mcast fragment (%m).\n"),
                         -1);
@@ -301,11 +311,13 @@ TAO_ECG_CDR_Message_Receiver::handle_input (
   // Decode and validate mcast header.
   Mcast_Header header;
   if (header.read (header_buf, n, this->check_crc_) == -1)
+  {
     return -1;
+  }
 
   if ( this->check_crc_ && header.crc != crc)
     {
-      static unsigned int err_count = 0;
+      static unsigned int err_count {};
       ORBSVCS_ERROR ((LM_ERROR,
                   "******************************\n"));
 
@@ -324,7 +336,7 @@ TAO_ECG_CDR_Message_Receiver::handle_input (
         }
 
       ORBSVCS_ERROR ((LM_ERROR,
-                  "Message was received from [%s:%s:%d]\n",
+                  "Message was received from [%C:%C:%d]\n",
                   from.get_host_name (),
                   from.get_host_addr (),
                   from.get_port_number()));
@@ -345,27 +357,35 @@ TAO_ECG_CDR_Message_Receiver::handle_input (
       // needed if we don't care about duplicates.)
       int const result = this->mark_received (from, header.request_id);
       if (result != 1)
+      {
         return result;
+      }
 
       TAO_InputCDR cdr (data_buf, header.request_size, header.byte_order);
       if (cdr_processor->decode (cdr) == -1)
-        return -1;
+        {
+          return -1;
+        }
       else
+      {
         return 1;
+      }
     }
 
   return this->process_fragment (from, header, data_buf, cdr_processor);
 }
 
 int
-TAO_ECG_CDR_Message_Receiver::mark_received (const ACE_INET_Addr &from,
+TAO_ECG_CDR_Message_Receiver::mark_received (ACE_INET_Addr const &from,
                                              CORBA::ULong request_id)
 {
   // ACE_GUARD_RETURN (ACE_Lock, guard, *this->lock_, -1);
 
   Request_Map::ENTRY * entry = this->get_source_entry (from);
   if (!entry)
+  {
     return -1;
+  }
 
   TAO_ECG_UDP_Request_Entry ** request =
     entry->int_id_->get_request (request_id);
@@ -376,7 +396,7 @@ TAO_ECG_CDR_Message_Receiver::mark_received (const ACE_INET_Addr &from,
                               "below currently expected range.\n"));
       return 0;
     }
-  if (*request == &Request_Completed_)
+  if (*request == std::addressof (Request_Completed_))
     {
       ORBSVCS_DEBUG ((LM_INFO, "Received duplicate mcast fragment. "
                            "(Request already complete).\n"));
@@ -395,8 +415,8 @@ TAO_ECG_CDR_Message_Receiver::mark_received (const ACE_INET_Addr &from,
 
 int
 TAO_ECG_CDR_Message_Receiver::process_fragment (
-                                   const ACE_INET_Addr &from,
-                                   const Mcast_Header &header,
+                                   ACE_INET_Addr const &from,
+                                   Mcast_Header const &header,
                                    char * data_buf,
                                    TAO_ECG_CDR_Processor *cdr_processor)
 {
@@ -404,7 +424,9 @@ TAO_ECG_CDR_Message_Receiver::process_fragment (
 
   Request_Map::ENTRY * source_entry = this->get_source_entry (from);
   if (!source_entry)
+  {
     return -1;
+  }
 
   TAO_ECG_UDP_Request_Entry ** request =
     source_entry->int_id_->get_request (header.request_id);
@@ -415,7 +437,7 @@ TAO_ECG_CDR_Message_Receiver::process_fragment (
                               "below currently expected range.\n"));
       return 0;
     }
-  if (*request == &Request_Completed_)
+  if (*request == std::addressof (Request_Completed_))
     {
       ORBSVCS_DEBUG ((LM_INFO, "Received duplicate mcast fragment. "
                            "(Request already complete).\n"));
@@ -454,9 +476,7 @@ TAO_ECG_CDR_Message_Receiver::process_fragment (
 
   // Add the fragment to the request entry.
   (*request)->mark_received (header.fragment_id);
-  ACE_OS::memcpy ((*request)->fragment_buffer (header.fragment_offset),
-                  data_buf,
-                  header.fragment_size);
+  std::memcpy ((*request)->fragment_buffer (header.fragment_offset), data_buf, header.fragment_size);
 
   // The request is not yet complete.
   if (!(*request)->complete ())
@@ -470,7 +490,9 @@ TAO_ECG_CDR_Message_Receiver::process_fragment (
                     header.byte_order);
 
   if (cdr_processor->decode (cdr) == -1)
+  {
     return -1;
+  }
 
   delete *request;
   *request = &Request_Completed_;
@@ -478,15 +500,15 @@ TAO_ECG_CDR_Message_Receiver::process_fragment (
 }
 
 TAO_ECG_CDR_Message_Receiver::Request_Map::ENTRY*
-TAO_ECG_CDR_Message_Receiver::get_source_entry (const ACE_INET_Addr &from)
+TAO_ECG_CDR_Message_Receiver::get_source_entry (ACE_INET_Addr const &from)
 {
   // Get the entry for <from> from the <request_map_>.
-  Request_Map::ENTRY * entry = nullptr;
+  Request_Map::ENTRY * entry {};
 
   if (this->request_map_.find (from, entry) == -1)
     {
       // Create an entry if one doesn't exist.
-      Requests *requests = nullptr;
+      Requests *requests {};
       ACE_NEW_RETURN (requests,
                       Requests,
                       nullptr);
@@ -516,7 +538,7 @@ TAO_ECG_CDR_Message_Receiver::shutdown ()
        ++i)
     {
       delete (*i).int_id_;
-      (*i).int_id_ = 0;
+      (*i).int_id_ = nullptr;
     }
 
   this->ignore_from_.reset ();
@@ -573,7 +595,7 @@ TAO_ECG_CDR_Message_Receiver::Mcast_Header::read (char *header,
 
       unsigned char *crcparts = (unsigned char *)(&this->crc);
 
-      for (int cnt=0; cnt != 4; ++cnt)
+      for (int cnt {}; cnt != 4; ++cnt)
         {
           crcparts[cnt] = padding[cnt];
         }

@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file Array_Base.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef ACE_ARRAY_BASE_H
 #define ACE_ARRAY_BASE_H
@@ -41,53 +37,62 @@ template<class T>
 class ACE_Array_Base
 {
 public:
-  // Old/ACE-style traits.
+  /// @name ACE style traits
+  /// @{
   using TYPE = T;
   using ITERATOR = ACE_Array_Iterator<T>;
+  /// @}
 
-  // STL-style typedefs/traits.
+  /// @name STL typedefs and traits
+  /// @{
   using value_type = T;
   using iterator = value_type *;
-  using const_iterator = const value_type *;
+  using const_iterator = value_type const *;
   using reference = value_type &;
-  using const_reference = const value_type &;
+  using const_reference = value_type const &;
   using pointer = value_type *;
-  using const_pointer = const value_type *;
+  using const_pointer = value_type const *;
   using difference_type = ptrdiff_t;
   using size_type = ACE_Allocator::size_type;
   using reverse_iterator = std::reverse_iterator<iterator>;
   using const_reverse_iterator = std::reverse_iterator<const_iterator>;
+  /// @}
 
   /// Dynamically create an uninitialized array.
   ACE_Array_Base (size_type size = 0,
-                  ACE_Allocator * the_allocator = nullptr);
+                           ACE_Allocator *the_allocator = nullptr);
 
   /// Dynamically initialize the entire array to the @a default_value.
   ACE_Array_Base (size_type size,
-                  T const & default_value,
-                  ACE_Allocator * the_allocator = nullptr);
+                  T const &default_value,
+                  ACE_Allocator *the_allocator = nullptr);
 
   /**
    * The copy constructor performs initialization by making an exact
    * copy of the contents of parameter @a s, i.e., *this == s will
    * return true.
    */
-  ACE_Array_Base (ACE_Array_Base<T> const & s);
+  ACE_Array_Base (ACE_Array_Base<T> const &s);
+  ACE_Array_Base (ACE_Array_Base<T> &&) = delete;
 
   /**
    * Assignment operator performs an assignment by making an exact
    * copy of the contents of parameter @a s, i.e., *this == s will
-   * return true.  Note that if the <max_size_> of <array_> is >= than
-   * <s.max_size_> we can copy it without reallocating.  However, if
-   * <max_size_> is < <s.max_size_> we must delete the <array_>,
-   * reallocate a new <array_>, and then copy the contents of <s>.
+   * return true.
+   *
+   * @note If the @c max_size_ of @c array_ is at least @c s.max_size_,
+   * we can copy it without reallocating.  If @c max_size_ is less than
+   * @c s.max_size_, we must delete the @c array_,
+   * reallocate a new @c array_, and then copy the contents of @a s.
    */
-  void operator= (ACE_Array_Base<T> const & s);
+  void operator= (ACE_Array_Base<T> const &s);
+  void operator= (ACE_Array_Base<T> &&) = delete;
 
   /// Clean up the array (e.g., delete dynamically allocated memory).
   ~ACE_Array_Base ();
 
-  // = Set/get methods.
+  /// @name Element access and size management
+  /// @{
 
   /// Set item in the array at location @a slot.  Doesn't
   /// perform range checking.
@@ -99,17 +104,18 @@ public:
 
   /// Set an item in the array at location @a slot.  Returns
   /// -1 if @a slot is not in range, else returns 0.
-  int set (T const & new_item, size_type slot);
+  int set (T const &new_item, size_type slot);
 
   /**
    * Get an item in the array at location @a slot.  Returns -1 if
-   * @a slot is not in range, else returns 0.  Note that this function
-   * copies the item.  If you want to avoid the copy, you can use
+   * @a slot is not in range, else returns 0.
+   *
+   * @note This function copies the item.  To avoid the copy, use
    * the const operator [], but then you'll be responsible for range checking.
    */
-  int get (T & item, size_type slot) const;
+  int get (T &item, size_type slot) const;
 
-  /// Returns the <cur_size_> of the array.
+  /// Returns the @c cur_size_ of the array.
   size_type size () const;
 
   /**
@@ -119,7 +125,7 @@ public:
    */
   int size (size_type new_size);
 
-  /// Returns the <max_size_> of the array.
+  /// Returns the @c max_size_ of the array.
   size_type max_size () const;
 
   /**
@@ -129,30 +135,23 @@ public:
    * It does not affect new_size
    */
   int max_size (size_type new_size);
+  /// @}
 
-  /**
-   * @name Forward Iterator Accessors
-   *
-   * Forward iterator accessors.
-   */
-  //@{
+  /// @name Forward iterator accessors
+  /// @{
   iterator begin ();
   iterator end   ();
   const_iterator begin () const;
   const_iterator end   () const;
-  //@}
+  /// @}
 
-  /**
-   * @name Reverse Iterator Accessors
-   *
-   * Reverse iterator accessors.
-   */
-  //@{
+  /// @name Reverse iterator accessors
+  /// @{
   reverse_iterator rbegin ();
   reverse_iterator rend   ();
   const_reverse_iterator rbegin () const;
   const_reverse_iterator rend   () const;
-  //@}
+  /// @}
 
   /// Swap the contents of this array with the given @a array in
   /// an exception-safe manner.
@@ -165,22 +164,22 @@ protected:
 
   /// Maximum size of the array, i.e., the total number of @c T elements
   /// in @c array_.
-  size_type max_size_;
+  size_type max_size_ {};
 
   /**
    * Current size of the array.  This starts out being == to
-   * <max_size_>.  However, if we are assigned a smaller array, then
-   * <cur_size_> will become less than <max_size_>.  The purpose of
+   * @c max_size_.  However, if we are assigned a smaller array, then
+   * @c cur_size_ will become less than @c max_size_.  The purpose of
    * keeping track of both sizes is to avoid reallocating memory if we
    * don't have to.
    */
-  size_type cur_size_;
+  size_type cur_size_ {};
 
   /// Pointer to the array's storage buffer.
-  value_type * array_;
+  value_type *array_ {};
 
   /// Allocation strategy of the ACE_Array_Base.
-  ACE_Allocator * allocator_;
+  ACE_Allocator *allocator_ {};
 
   friend class ACE_Array_Iterator<T>;
 };
@@ -201,9 +200,10 @@ template <class T>
 class ACE_Array_Iterator
 {
 public:
-  ACE_Array_Iterator (ACE_Array_Base<T> &);
+  explicit ACE_Array_Iterator (ACE_Array_Base<T> &);
 
-  // = Iteration methods.
+  /// @name Iteration methods
+  /// @{
 
   /// Pass back the @a next_item that hasn't been seen in the Array.
   /// Returns 0 when all items have been seen, else 1.
@@ -218,13 +218,14 @@ public:
 
   /// Dump the state of an object.
   void dump () const;
+  /// @}
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
   /// Pointer to the current item in the iteration.
-  size_t current_;
+  size_t current_ {};
 
   /// Pointer to the Array we're iterating over.
   ACE_Array_Base<T> &array_;

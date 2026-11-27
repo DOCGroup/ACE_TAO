@@ -1,5 +1,3 @@
-/* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file    Fault_Detector_i.h
  *
@@ -13,19 +11,17 @@
  *
  *  @author Dale Wilson <wilson_d@ociweb.com>
  */
-//=============================================================================
-
 
 #ifndef FAULT_DETECTOR_I_H_
 #define FAULT_DETECTOR_I_H_
 #include /**/ <ace/pre.h>
 #include <ace/ACE.h>
+#include <atomic>
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include <ace/Manual_Event.h>
-
 
 #include "orbsvcs/FT_NotifierC.h"
 #include "orbsvcs/FT_ReplicaC.h"
@@ -66,7 +62,7 @@ namespace TAO
       FT::FaultNotifier_ptr & notifier,
       FT::PullMonitorable_ptr & monitorable,
       FT::FTDomainId domain_id,
-      const PortableGroup::Location & object_location,
+      PortableGroup::Location const & object_location,
       PortableGroup::TypeId object_type,
       PortableGroup::ObjectGroupId group_id);
     /**
@@ -78,9 +74,9 @@ namespace TAO
 
     /**
      * Start the thread associated with this fault detector.
-     * @param threadManager to track this thread.
+     * @param thread_manager to track this thread.
      */
-    void start(ACE_Thread_Manager & threadManager);
+    int start (ACE_Thread_Manager & thread_manager);
 
     /**
      * Request that this detector shut itself down.
@@ -114,26 +110,26 @@ namespace TAO
      */
     static ACE_THR_FUNC_RETURN thr_func (void * arg);
 
-    ////////////////////
-    // Forbidden methods
   private:
+    /// @name Disabled operations
+    /// @{
     Fault_Detector_i () = delete;
     Fault_Detector_i (Fault_Detector_i const &) = delete;
     Fault_Detector_i (Fault_Detector_i &&) = delete;
     Fault_Detector_i & operator= (Fault_Detector_i const &) = delete;
     Fault_Detector_i & operator= (Fault_Detector_i &&) = delete;
+    /// @}
 
-    ///////////////
-    // Static data
-  private:
+    /// @name Static data
+    /// @{
     /**
      * Time between polls for all fault detectors in this process.
      */
     static ACE_Time_Value sleep_time_;
+    /// @}
 
-    ///////////////
-    // Data members
-  private:
+    /// @name Data members
+    /// @{
     /**
      * The factory that "owns" us."
      */
@@ -170,9 +166,10 @@ namespace TAO
     ACE_Manual_Event sleep_;
 
     /**
-     * A boolean flag.  If true, this fault detector should leave.
+     * An atomic flag.  If true, this fault detector should leave.
      */
-    int quit_requested_;
+    std::atomic<bool> quit_requested_ {};
+    /// @}
   };
 }   // namespace TAO
 

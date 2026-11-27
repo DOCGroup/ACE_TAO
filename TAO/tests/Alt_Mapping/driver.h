@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    driver.h
  *
@@ -7,9 +5,6 @@
  *
  *  @author Aniruddha Gokhale
  */
-//=============================================================================
-
-
 #ifndef DRIVER_H
 #define DRIVER_H
 
@@ -26,9 +21,12 @@
 class Driver
 {
 public:
-  // = Constructor and destructor.
-  Driver ();
-  ~Driver ();
+  Driver () = default;
+  ~Driver () = default;
+  Driver (Driver const &) = delete;
+  Driver (Driver &&) = delete;
+  Driver &operator= (Driver const &) = delete;
+  Driver &operator= (Driver &&) = delete;
 
   /// Initialize the driver object
   int init (int argc, ACE_TCHAR **argv);

@@ -7,7 +7,7 @@
 #include "orbsvcs/Event/EC_Gateway_IIOP.h"
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   TAO_EC_Default_Factory::init_svcs ();
 
@@ -29,8 +29,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       TAO_EC_Event_Channel_Attributes attributes (poa.in (),
                                                   poa.in ());
-      attributes.consumer_reconnect = 1;
-      attributes.supplier_reconnect = 1;
+      attributes.consumer_reconnect = true;
+      attributes.supplier_reconnect = true;
 
       TAO_EC_Event_Channel ec_impl_1 (attributes);
       ec_impl_1.activate ();
@@ -82,9 +82,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // ****************************************************************
 
-      const int event_type = 20;
-      const int event_source = 10;
-      const int milliseconds = 50;
+      constexpr int event_type = 20;
+      constexpr int event_source = 10;
+      constexpr int milliseconds = 50;
 
       EC_Counting_Supplier supplier_00;
 
@@ -111,7 +111,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       EC_Counting_Consumer consumer_00 ("Consumer/00");
       // Create a consumer, intialize its RT_Info structures, and
       // connnect to the event channel....
-
 
       {
         ACE_ConsumerQOS_Factory consumer_qos;
@@ -295,7 +294,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Service");
       return 1;

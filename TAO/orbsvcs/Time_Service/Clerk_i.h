@@ -1,23 +1,23 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Clerk_i.h
  *
  *  @author Vishal Kachroo <vishal@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef CLERK_I_H
 #define CLERK_I_H
 
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"
+#include "ace/OS_NS_stdio.h"
 #include "tao/Utils/ORB_Manager.h"
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/Naming/Naming_Client.h"
 #include "orbsvcs/Time/TAO_Time_Service_Clerk.h"
+
+#include <cstddef>
+#include <memory>
+#include <vector>
 
 /**
  * @class Clerk_i
@@ -30,17 +30,11 @@
 class Clerk_i
 {
 public:
-  enum {
-    // Pre-allocate slots for this many servers. The capacity grows on
-    // demand.
-    DEFAULT_SERVER_COUNT = 8
-  };
+  static constexpr size_t DEFAULT_SERVER_COUNT {8};
 
-  /// Constructor.
-  Clerk_i ();
+  Clerk_i () = default;
 
-  /// Destructor.
-  ~Clerk_i ();
+  ~Clerk_i () = default;
 
   Clerk_i (Clerk_i const &) = delete;
   Clerk_i (Clerk_i &&) = delete;
@@ -48,7 +42,7 @@ public:
   Clerk_i &operator= (Clerk_i &&) = delete;
 
   /// Set of available Time servers.
-  using IORS = ACE_Array_Base<CosTime::TimeService_var>;
+  using IORS = std::vector<CosTime::TimeService_var>;
 
   /// Initialize the Clerk state - parsing arguments and waiting.
   int init (int argc,
@@ -74,9 +68,10 @@ private:
   TAO_ORB_Manager orb_manager_;
 
   /// File where the IOR of the Clerk object is stored.
-  FILE *ior_output_file_ {};
+  using File_Handle = std::unique_ptr<FILE, int (*) (FILE *)>;
+  File_Handle ior_output_file_ {nullptr, ACE_OS::fclose};
 
-  /// Initialises the name client and registers the <TimeService> Clerk
+  /// Initialises the name client and registers the @c TimeService Clerk
   /// object with it.
   int init_naming_service ();
 
@@ -86,38 +81,28 @@ private:
   /// Bind the clerk in the appropriate context in the Naming Service.
   int register_clerk ();
 
-  /// Initialise the Interface Repository and register the clerk
-  /// implementation with it.
-  int init_IR ();
-
   /// Get the reference to the server naming context and the first
   /// server IOR.
   int get_first_IOR ();
 
   /// Iterate over the given server context to get the rest of the
   /// server IORs.
-  int next_n_IORs (CosNaming::BindingIterator_var iter,
-                   CosNaming::NamingContext_var server_context);
+  int next_n_IORs (CosNaming::BindingIterator_var const &iter,
+                   CosNaming::NamingContext_var const &server_context);
 
   /**
    * An instance of the name server used for registering the
-   * <TimeService Clerk> object. The same instance is used by the
+   * @c TimeService Clerk object. The same instance is used by the
    * Clerk to periodically iterate through the Server Naming Context
    * and get IORs of the available servers.
    */
   TAO_Naming_Client naming_client_;
 
-  /// Implementation of the <TimeService> Clerk object.
-  TAO_Time_Service_Clerk *time_service_clerk_impl_ {};
-
   /// Reference of the time service clerk.
-  CosTime::TimeService_var time_service_clerk_;
-
-  /// Naming context for the Naming Service.
-  CosNaming::NamingContext_var time_service_clerk_context_;
+  CosTime::TimeService_var time_service_clerk_ {};
 
   /// My orb.
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var orb_ {};
 
   /// Clerk seeks time periodically after this interval in secs. from the
   /// servers in the network.
@@ -126,11 +111,8 @@ private:
   /// Continues the precision of timer_value_ in microseconds.
   int timer_value_usecs_ {};
 
-  //  IR_Helper *ir_helper_;
-  // Helper class for using the IR.
-
   /// The unbounded set of server IORS.
-  IORS server_ {Clerk_i::DEFAULT_SERVER_COUNT};
+  IORS server_ {};
 
   /// Read IORs from a file.
   bool ior_file_provided_ {};

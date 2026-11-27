@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /**
  *  @file   EC_Factory.h
  *
@@ -66,9 +65,8 @@ using TAO_EC_ProxyPushSupplier_Collection = TAO_ESF_Proxy_Collection<TAO_EC_Prox
 class TAO_RTEvent_Serv_Export TAO_EC_Factory : public ACE_Service_Object
 {
 public:
-  /// destructor...
   TAO_EC_Factory ();
-  virtual ~TAO_EC_Factory ();
+  virtual ~TAO_EC_Factory () = default;
 
   /// Create and destroy the dispatching module.
   virtual TAO_EC_Dispatching*

@@ -1,13 +1,8 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
  *  @file    TS_Server_Handler.h
  *
  *  @author Prashant Jain
  */
-//=============================================================================
-
 
 #ifndef ACE_TS_SERVER_HANDLER_H
 #define ACE_TS_SERVER_HANDLER_H
@@ -31,30 +26,33 @@ template class ACE_Svc_Export ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
 /**
  * @class ACE_TS_Server_Handler
  *
- * @brief Product object created by <ACE_TS_Server_Acceptor>.
+ * @brief Product object created by @c ACE_TS_Server_Acceptor.
  */
 class ACE_Svc_Export ACE_TS_Server_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 {
 public:
-  /// Default constructor.
-  ACE_TS_Server_Handler (ACE_Thread_Manager * = 0);
+  explicit ACE_TS_Server_Handler (ACE_Thread_Manager * = nullptr);
 
-  /// Activate this instance of the <ACE_TS_Server_Handler> (called by the
-  /// <ACE_Strategy_Acceptor>).
-  virtual int open (void * = 0);
+  /// Activate this instance of @c ACE_TS_Server_Handler (called by the
+  /// @c ACE_Strategy_Acceptor).
+  int open (void * = nullptr) override;
 
 protected:
   /// Must be allocated dynamically.
   ~ACE_TS_Server_Handler ();
 
-  // = Helper routines for the operations exported to clients.
+  /// @name Helper routines for the operations exported to clients.
+  /// @{
 
   /// Give up waiting (e.g., when a timeout occurs or a client shuts
   /// down unexpectedly).
   virtual int abandon ();
 
-  // = Low level routines for framing requests, dispatching
-  // operations, and returning replies.
+  /// @}
+
+  /// @name Low-level routines for framing requests, dispatching operations,
+  /// and returning replies.
+  /// @{
 
   /// Receive, frame, and decode the client's request.
   virtual int recv_request ();
@@ -65,18 +63,25 @@ protected:
 
   /// Special kind of reply
   virtual int send_request (ACE_Time_Request &);
+  /// @}
 
-  // = Demultiplexing hooks.
-  /// Return the underlying <ACE_HANDLE>.
-  virtual ACE_HANDLE get_handle () const;
+  /// @name Demultiplexing hooks.
+  /// @{
 
-  /// Callback method invoked by the <ACE_Reactor> when client events
+  /// Return the underlying @c ACE_HANDLE.
+  ACE_HANDLE get_handle () const override;
+
+  /// Callback method invoked by the @c ACE_Reactor when client events
   /// arrive.
-  virtual int handle_input (ACE_HANDLE);
+  int handle_input (ACE_HANDLE) override;
+  /// @}
 
-  // = Timer hook.
+  /// @name Timer hook.
+  /// @{
+
   /// Enable clients to limit the amount of time they wait.
-  virtual int handle_timeout (const ACE_Time_Value &tv, const void *arg);
+  int handle_timeout (ACE_Time_Value const &tv, void const *arg) override;
+  /// @}
 
 private:
   /// Cache request from the client.
@@ -90,13 +95,13 @@ private:
  * @class ACE_TS_Server_Acceptor
  *
  * @brief This class contains the service-specific methods that can't
- * easily be factored into the <ACE_Strategy_Acceptor>.
+ * easily be factored into the @c ACE_Strategy_Acceptor.
  */
 class ACE_TS_Server_Acceptor : public ACE_Strategy_Acceptor<ACE_TS_Server_Handler, ACE_SOCK_ACCEPTOR>
 {
 public:
   /// Dynamic linking hook.
-  virtual int init (int argc, ACE_TCHAR *argv[]);
+  int init (int argc, ACE_TCHAR *argv[]) override;
 
   /// Parse svc.conf arguments.
   int parse_args (int argc, ACE_TCHAR *argv[]);

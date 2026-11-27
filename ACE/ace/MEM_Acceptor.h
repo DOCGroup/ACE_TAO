@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    MEM_Acceptor.h
  *
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef ACE_MEM_ACCEPTOR_H
 #define ACE_MEM_ACCEPTOR_H
@@ -41,7 +37,7 @@ class ACE_Reactor;
  * non-localhost endpoint as the acceptor listen point because
  * it doesn't make any sense at all to make the listening
  * endpoint visible (or connectable) anywhere outside of this
- * machine.  However, the type of endpoint is left as <ACE_Addr>
+ * machine.  However, the type of endpoint is left as @c ACE_Addr
  * so we can later changed to use UNIX-domain sockets with mmap stream
  * if so desired.  (Currently, using UNIX-domain sockets, i.e.,
  * ACE_LSOCK_*, with this class will not work.)
@@ -49,14 +45,12 @@ class ACE_Reactor;
 class ACE_Export ACE_MEM_Acceptor : public ACE_SOCK_Acceptor
 {
 public:
-  /// Default constructor.
   ACE_MEM_Acceptor ();
 
-  /// Destructor.
   ~ACE_MEM_Acceptor ();
 
   /// Initiate a passive mode socket.
-  ACE_MEM_Acceptor (const ACE_MEM_Addr &remote_sap,
+  ACE_MEM_Acceptor (ACE_MEM_Addr const &remote_sap,
                     int reuse_addr = 0,
                     int backlog = ACE_DEFAULT_BACKLOG,
                     int protocol = 0);
@@ -68,7 +62,7 @@ public:
    * @c SO_REUSEADDR to reuse this address.  Returns 0 on success and
    * -1 on failure.
    */
-  int open (const ACE_MEM_Addr &local_sap,
+  int open (ACE_MEM_Addr const &local_sap,
             int reuse_addr = 0,
             int backlog = ACE_DEFAULT_BACKLOG,
             int protocol = 0);
@@ -80,23 +74,23 @@ public:
               bool restart = true,
               bool reset_new_handle = false);
 
-  /// Perform operations that must occur after <ACE_OS::accept> is
+  /// Perform operations that must occur after @c ACE_OS::accept is
   /// called.
-  int shared_accept_finish (ACE_MEM_Stream new_stream,
+  int shared_accept_finish (ACE_MEM_Stream const &new_stream,
                             int in_blocking_mode,
                             bool reset_new_handle) const;
 
   /**
    * Accessor/mutator of mmap filename prefix.  By default, the
-   * <mmap_prefix_> is not set and the mmap filename is
+   * @c mmap_prefix_ is not set and the mmap filename is
    * ${(TMP|TEMP)}//ACE_MEM_Acceptor_(port-number)_(&stream),
-   * otherwise, it is <mmap_prefix_>_(port-number)_(&stream),
-   * <mmap_prefix_> should include _absolute_ path so the connector
+   * otherwise, it is @c mmap_prefix__(port-number)_(&stream),
+   * @c mmap_prefix_ should include _absolute_ path so the connector
    * within the same host can located the mmap file.  Example:
    * /tmp/mmapfile.
    */
-  const ACE_TCHAR *mmap_prefix () const;
-  void mmap_prefix (const ACE_TCHAR *prefix);
+  ACE_TCHAR const *mmap_prefix () const;
+  void mmap_prefix (ACE_TCHAR const *prefix);
 
   /**
    * Change the initial MMAP buffer size (in bytes) of the MEM_Stream
@@ -110,13 +104,15 @@ public:
   /// Set the preferred signaling strategy.
   void preferred_strategy (ACE_MEM_IO::Signal_Strategy strategy);
 
-  /// Return the local endpoint address in the referenced <ACE_Addr>.
+  /// Return the local endpoint address in the referenced @c ACE_Addr.
   /// Returns 0 if successful, else -1.
   int get_local_addr (ACE_MEM_Addr &) const;
 
-  // = Meta-type info
+  /// @name Peer types
+  /// @{
   using PEER_ADDR = ACE_MEM_Addr;
   using PEER_STREAM = ACE_MEM_Stream;
+  /// @}
 
   /// Dump the state of an object.
   void dump () const;
@@ -125,15 +121,18 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-  // = The following methods should not be accessable externally
-  //   because MEM_Acceptor do not support their semantics.
-  int open (const ACE_Addr &local_sap,
+  /** @name Unsupported inherited operations
+   * These inherited operations are protected because MEM_Acceptor does not
+   * support their semantics.
+   */
+  /// @{
+  int open (ACE_Addr const &local_sap,
             int reuse_addr = 0,
             int protocol_family = PF_INET,
             int backlog = ACE_DEFAULT_BACKLOG,
             int protocol = 0);
 
-  int open (const ACE_Addr &local_sap,
+  int open (ACE_Addr const &local_sap,
             ACE_Protocol_Info *protocolinfo,
             ACE_SOCK_GROUP g,
             u_long flags,
@@ -154,11 +153,12 @@ protected:
               ACE_Time_Value *timeout = nullptr,
               bool restart = true,
               bool reset_new_handle = false) const;
+  /// @}
 
 private:
   /// The filename prefix of the created mmap files.  It should
   /// contains the absolute path name of the file.
-  ACE_TCHAR *mmap_prefix_;
+  ACE_TCHAR *mmap_prefix_ {};
 
   /// A cached MALLOC_OPTIONS.  MEM_Accaptor use it to create the shared
   /// mamory malloc upon every incoming connection.

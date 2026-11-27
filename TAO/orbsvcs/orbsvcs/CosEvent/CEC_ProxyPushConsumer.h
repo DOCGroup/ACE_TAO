@@ -1,13 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   CEC_ProxyPushConsumer.h
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  */
-//=============================================================================
-
 
 #ifndef TAO_CEC_PROXYPUSHCONSUMER_H
 #define TAO_CEC_PROXYPUSHCONSUMER_H
@@ -38,7 +33,7 @@ class TAO_CEC_ProxyPushSupplier;
  * remember that this class is used to communicate with a
  * PushSupplier, so, in effect, this is the ambassador for a
  * supplier inside the event channel.
- * = MEMORY MANAGEMENT
+ * @par Memory Management
  * The object commits suicide when disconnect_push_consumer() is
  * called.
  */
@@ -49,11 +44,9 @@ public:
   using _ptr_type = CosEventChannelAdmin::ProxyPushConsumer_ptr;
   using _var_type = CosEventChannelAdmin::ProxyPushConsumer_var;
 
-  /// constructor...
   TAO_CEC_ProxyPushConsumer (TAO_CEC_EventChannel* event_channel,
-                             const ACE_Time_Value &timeout);
+                             ACE_Time_Value const &timeout);
 
-  /// destructor...
   ~TAO_CEC_ProxyPushConsumer () override;
 
   TAO_CEC_ProxyPushConsumer (TAO_CEC_ProxyPushConsumer const &) = delete;
@@ -89,16 +82,20 @@ public:
   CORBA::ULong _incr_refcnt ();
   CORBA::ULong _decr_refcnt ();
 
-  // = The CosEventChannelAdmin::ProxyPushConsumer methods...
+  /// @name The CosEventChannelAdmin::ProxyPushConsumer methods
+  /// @{
   void connect_push_supplier (CosEventComm::PushSupplier_ptr push_supplier) override;
   void push (CORBA::Any const &event) override;
   void disconnect_push_consumer () override;
 
-  // = The Servant methods
+  /// @}
+  /// @name The Servant methods
+  /// @{
   PortableServer::POA_ptr _default_POA () override;
   void _add_ref () override;
   void _remove_ref () override;
 
+  /// @}
 protected:
   /// Set the supplier, used by some implementations to change the
   /// policies used when invoking operations on the supplier.
@@ -106,8 +103,8 @@ protected:
   void supplier_i (CosEventComm::PushSupplier_ptr supplier);
 
   friend class TAO_CEC_ProxyPushConsumer_Guard;
-  // The guard needs access to the following protected methods.
 
+  /// The guard needs access to the following protected methods.
   /// The private version (without locking) of is_connected().
   CORBA::Boolean is_connected_i () const;
 
@@ -121,15 +118,15 @@ protected:
 
 private:
   /// The supplier admin, used for activation and memory management.
-  TAO_CEC_EventChannel* event_channel_;
+  TAO_CEC_EventChannel* event_channel_ {};
 
   ACE_Time_Value timeout_;
 
   /// The locking strategy.
-  ACE_Lock* lock_;
+  ACE_Lock* lock_ {};
 
   /// The reference count.
-  CORBA::ULong refcount_;
+  CORBA::ULong refcount_ { 1 };
 
   /// The supplier -- use apply_policy() instead of assigning directly to
   /// supplier_.  This will keep supplier_ and nopolicy_supplier_ in sync.
@@ -140,7 +137,7 @@ private:
 
   /// If the flag is true then we are connected, notice that the
   /// supplier can be nil.
-  bool connected_;
+  bool connected_ {};
 
   /// Store the default POA.
   PortableServer::POA_var default_POA_;
@@ -161,13 +158,11 @@ private:
 class TAO_Event_Serv_Export TAO_CEC_ProxyPushConsumer_Guard
 {
 public:
-  /// Constructor
   TAO_CEC_ProxyPushConsumer_Guard (ACE_Lock *lock,
                                    CORBA::ULong &refcount,
                                    TAO_CEC_EventChannel *ec,
                                    TAO_CEC_ProxyPushConsumer *proxy);
 
-  /// Destructor
   ~TAO_CEC_ProxyPushConsumer_Guard ();
 
   TAO_CEC_ProxyPushConsumer_Guard (TAO_CEC_ProxyPushConsumer_Guard const &) = delete;
@@ -193,7 +188,7 @@ private:
 
   /// This flag is set to true if the reference count was successfully
   /// acquired.
-  bool locked_;
+  bool locked_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

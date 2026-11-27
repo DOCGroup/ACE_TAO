@@ -12,8 +12,9 @@
 #include <QtGui/qslider.h>
 #include "ace/OS_NS_stdio.h"
 
+#include <memory>
 
-const ACE_TCHAR *ior_output_file = 0;
+ACE_TCHAR const *ior_output_file {};
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -48,7 +49,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   // We do the command line parsing first
   if (parse_args (argc, argv) != 0)
-    return 1;
+    {
+      return 1;
+    }
 
   // Qt specific stuff for running with TAO...
   ACE_Argv_Type_Converter ct (argc, argv);
@@ -79,7 +82,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       LCD_Display_imp display_impl (orb.in ());
 
       PortableServer::ObjectId_var id =
-        root_poa->activate_object (&display_impl);
+        root_poa->activate_object (std::addressof (display_impl));
 
       CORBA::Object_var object = root_poa->id_to_reference (id.in ());
 
@@ -132,7 +135,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // We choose to run the main Qt event loop..
       app.exec ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return 1;

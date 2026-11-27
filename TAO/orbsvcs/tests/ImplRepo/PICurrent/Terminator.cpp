@@ -19,9 +19,9 @@ Terminator::open(void*)
 int
 Terminator::svc()
 {
-  while (1)
+  while (true)
     {
-      ACE_Message_Block* mb = 0;
+      ACE_Message_Block* mb {};
       if (this->getq(mb) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,

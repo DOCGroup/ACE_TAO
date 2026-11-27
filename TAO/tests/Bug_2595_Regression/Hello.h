@@ -1,4 +1,3 @@
-
 #ifndef HELLO_H
 #define HELLO_H
 #include /**/ "ace/pre.h"
@@ -10,7 +9,6 @@ class Hello
   : public virtual POA_Test::Hello
 {
 public:
-  /// Constructor
   explicit Hello (CORBA::ORB_ptr orb);
 
   Hello (Hello const &) = delete;

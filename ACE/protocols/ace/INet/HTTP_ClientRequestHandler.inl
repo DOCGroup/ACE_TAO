@@ -1,4 +1,5 @@
-// -*- C++ -*-
+#include <memory>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE
@@ -14,7 +15,7 @@ namespace ACE
     ACE_INLINE
     SessionBase* SessionHolder::operator -> ()
       {
-        return &this->session ();
+        return std::addressof (this->session ());
       }
 
     ACE_INLINE
@@ -24,7 +25,7 @@ namespace ACE
       }
 
     ACE_INLINE
-    const ACE_CString& ClientRequestHandler::HttpConnectionKey::proxy_target_host () const
+    ACE_CString const& ClientRequestHandler::HttpConnectionKey::proxy_target_host () const
       {
         return this->proxy_target_host_;
       }
@@ -42,7 +43,7 @@ namespace ACE
       }
 
     ACE_INLINE
-    const Request& ClientRequestHandler::request () const
+    Request const& ClientRequestHandler::request () const
       {
         return this->request_;
       }
@@ -54,7 +55,7 @@ namespace ACE
       }
 
     ACE_INLINE
-    const Response& ClientRequestHandler::response () const
+    Response const& ClientRequestHandler::response () const
       {
         return this->response_;
       }

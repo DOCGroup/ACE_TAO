@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    tss1.cpp
  *
@@ -12,13 +10,10 @@
  *
  *  @author Detlef Becker <Detlef.Becker@med.siemens.de>
  */
-//=============================================================================
-
 
 #include "ace/OS_main.h"
 #include "ace/Service_Config.h"
 #include "ace/Task.h"
-
 
 #if defined (ACE_HAS_THREADS)
 
@@ -61,12 +56,16 @@ Tester<ACE_SYNCH_USE>::svc ()
               "(%t) svc: setting error code to 1\n"));
   TSS_Error->error (1);
 
-  for (int i = 0; i < iterations; i++)
-    // Print out every tenth iteration.
-    if ((i % 10) == 1)
-      ACE_DEBUG ((LM_DEBUG,
-                  "(%t) error = %d\n",
-                  TSS_Error->error ()));
+  for (int i = 0; i < iterations; ++i)
+    {
+      // Print out every tenth iteration.
+      if ((i % 10) == 1)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "(%t) error = %d\n",
+                      TSS_Error->error ()));
+        }
+    }
   this->close ();
 
   return 0;
@@ -111,7 +110,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   tester.open ();
 
   // Keep looping until <Tester::close> is called.
-  for (int i = 0; !close_started; i++) {
+  for (int i = 0; !close_started; ++i) {
   // while (!close_started)
     if ((i % 100) == 0) {
       ACE_DEBUG ((LM_DEBUG,
@@ -128,9 +127,11 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 
   // Keep looping until <Tester::close> finishes.
   while (close_started != 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "(%t) error = %d\n",
-                TSS_Error->error ()));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%t) error = %d\n",
+                  TSS_Error->error ()));
+    }
   return 0;
 }
 #else

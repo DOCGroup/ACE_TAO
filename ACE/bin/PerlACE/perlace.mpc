@@ -1,4 +1,3 @@
-//  -*- MPC -*-
 project(PerlACE) : script {
   Script_Files {
     ConfigList.pm

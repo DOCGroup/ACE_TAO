@@ -97,7 +97,7 @@ class UTL_Error;
 class UTL_Indenter;
 
 /**
- * \file Defines a class containing all front end global data.
+ * @brief Defines a class containing all front end global data.
  *
  * Corresponding source file is util/utl_global.cpp.
  */
@@ -107,9 +107,8 @@ class TAO_IDL_FE_Export IDL_GlobalData
 public:
   // Types
 
-  // The ParseState type encodes the state of the Yacc parser so that
-  // better error messages can be produced, and for use by BEs in situations
-  // where context sensitive behavior is required
+  /// Encodes the Yacc parser state for error messages and backend operations
+  /// that require context-sensitive behavior.
   enum ParseState {
       PS_NoState                // No state
     , PS_TypeDeclSeen           // Seen complete type declaration
@@ -332,44 +331,82 @@ public:
   IDL_GlobalData& operator= (IDL_GlobalData&&) = delete;
 
   // Operations
-  UTL_ScopeStack   &scopes ();              // Scopes stack
+  /// Scope stack.
+  UTL_ScopeStack &scopes ();
 
-  AST_Root         *root () const;          // Root of AST
-  void             set_root (std::unique_ptr<AST_Root>);
+  /// @name AST root accessors
+  /// @{
+  AST_Root *root () const;
+  void set_root (std::unique_ptr<AST_Root>);
+  /// @}
 
-  AST_Generator    *gen () const;           // Generator
-  void             set_gen (std::unique_ptr<AST_Generator>);
+  /// @name Generator accessors
+  /// @{
+  AST_Generator *gen () const;
+  void set_gen (std::unique_ptr<AST_Generator>);
+  /// @}
 
-  AST_ValueType    *primary_key_base () const; // PrimaryKeyBase
-  void             primary_key_base (AST_ValueType *);   // Set it
+  /// @name PrimaryKeyBase accessors
+  /// @{
+  AST_ValueType *primary_key_base () const;
+  void primary_key_base (AST_ValueType *);
+  /// @}
 
-  UTL_Error        *err () const;           // Error reporter
-  void             set_err (std::unique_ptr<UTL_Error>);
+  /// @name Error reporter accessors
+  /// @{
+  UTL_Error *err () const;
+  void set_err (std::unique_ptr<UTL_Error>);
+  /// @}
 
-  int              err_count () const;      // How many errors?
-  void             set_err_count (int);         // Set it
+  /// @name Error count accessors
+  /// @{
+  int err_count () const;
+  void set_err_count (int);
+  /// @}
 
-  long             lineno () const;         // Where in file?
-  void             set_lineno (long);           // Set it
+  /// @name Current line number accessors
+  /// @{
+  long lineno () const;
+  void set_lineno (long);
+  /// @}
 
-  std::string const& filename () const;      // What file?
+  /// @name Current filename accessors
+  /// @{
+  std::string const& filename () const;
   void set_filename (std::string const& filename);
+  /// @}
 
-  std::string const& main_filename () const; // What's the main file name?
+  /// @name Main filename accessors
+  /// @{
+  std::string const& main_filename () const;
   void set_main_filename (std::string const& filename);
+  /// @}
 
-  std::string const& real_filename () const; // What's the real file name?
+  /// @name Real filename accessors
+  /// @{
+  std::string const& real_filename () const;
   void set_real_filename (std::string const& filename);
+  /// @}
 
-  std::string const& stripped_filename () const; // Stripped filename
+  /// @name Stripped filename accessors
+  /// @{
+  std::string const& stripped_filename () const;
   void set_stripped_filename (std::string const& filename);
+  /// @}
 
-  bool             imported () const;       // Are we imported?
-  bool             import () const;         // Is import on?
-  void             set_import (bool);           // Set it
+  /// Whether the current file is imported.
+  bool imported () const;
+  /// @name Import flag accessors
+  /// @{
+  bool import () const;
+  void set_import (bool);
+  /// @}
 
-  bool             in_main_file () const;   // Are we?
-  void             set_in_main_file (bool);     // Set it
+  /// @name Main-file flag accessors
+  /// @{
+  bool in_main_file () const;
+  void set_in_main_file (bool);
+  /// @}
 
   std::string const& prog_name () const;
   void set_prog_name (std::string const& name);
@@ -378,15 +415,21 @@ public:
   std::string const& cpp_location () const;
   void set_cpp_location (std::string const& location);
 
-  long             compile_flags () const;  // What flags are on?
-  void             set_compile_flags (long);    // Turn some on or off
+  /// @name Compiler flag accessors
+  /// @{
+  long compile_flags () const;
+  void set_compile_flags (long);
+  /// @}
 
   std::string const& local_escapes () const;
   void             append_local_escape (std::string const& escape);
   void             set_local_escapes (std::string const& escapes);
 
-  UTL_Indenter     *indent () const;        // Get indenter
-  void             set_indent (std::unique_ptr<UTL_Indenter>);
+  /// @name Indenter accessors
+  /// @{
+  UTL_Indenter *indent () const;
+  void set_indent (std::unique_ptr<UTL_Indenter>);
+  /// @}
 
   void store_include_file_name (std::string const& filename);
 
@@ -461,216 +504,248 @@ public:
 
   /// @}
 
-  ParseState parse_state ();       // What state we're in
-  void set_parse_state (ParseState s); // Set it
+  /// Return the current parse state.
+  ParseState parse_state ();
+  /// Set the current parse state.
+  void set_parse_state (ParseState s);
 
+  /// Return the IDL source file being compiled.
   std::string const& idl_src_file () const;
-  // Returns the IDL source file being compiled.
 
+  /// Set the source IDL file that is being parsed.
   void idl_src_file (std::string const& filename);
-  // Set the source IDL file that is being parsed.
 
+  /// Set the directory for temporary files. By default, the IDL compiler
+  /// uses the TEMP environment variable or "/tmp/" if it is not set.
   void temp_dir (std::string const& s);
-  // Set the directory where the IDL compiler can keep all its temp
-  // files. By default, IDL compiler looks for TEMP env variable and
-  // if it is not set,  "/tmp/" is assigned.
 
+  /// Return the directory for temporary files. By default, the IDL compiler
+  /// uses the TEMP environment variable or "/tmp/" if it is not set.
   std::string const& temp_dir () const;
-  // Get the directory where the IDL compiler can keep all its temp
-  // files. By default, IDL compiler looks for TEMP env variable and
-  // if it is not set,  "/tmp/" is assigned.
 
+  /// Set the path of TAO_ROOT.
   void tao_root (std::string const& s);
-  // Set the path of TAO_ROOT.
 
+  /// Return the path of TAO_ROOT.
   std::string const& tao_root () const;
-  // Get the path for TAO_ROOT.
 
+  /// Set the path for the perfect hashing program (GPERF).
   void gperf_path (std::string const& s);
-  // Set the path for the perfect hashing program (GPERF).
 
+  /// Return the path for the perfect hashing program (GPERF).
   std::string const& gperf_path () const;
-  // Get the path for the perfect hashing program (GPERF).
 
+  /// Set the value of the \#ident string.
   void ident_string (std::string const& s);
-  // Set the value of the #ident string.
 
+  /// Return the value of the \#ident string.
   std::string const& ident_string () const;
-  // Get the value of the #ident string.
 
+  /// Report an error when true, or a warning when false, for identifiers
+  /// in the same scope that differ only by case.
   void case_diff_error (bool);
-  // report an error (1) for indentifiers in the same scope
-  // that differ only by case, or report a warning (0).
 
+  /// Return whether case-only differences are errors.
   bool case_diff_error ();
-  // are we strict about case-only differences or not?
 
+  /// Set whether we are using the NEST ORB.
   void nest_orb (bool);
-  // Set on or off whether we are using the NEST ORB.
 
+  /// Return whether we are being used with the NEST ORB.
   bool nest_orb ();
-  // are we beIng used with the NEST ORB?
 
+  /// Clean up.
   void destroy ();
-  // Cleanup function.
 
+  /// Save each flag passed to the IDL compiler.
   void append_idl_flag (std::string const& s);
-  // Save each flag passed to the IDL compiler.
 
+  /// Return a string representation of the flags passed to the IDL compiler.
   std::string const& idl_flags () const;
-  // Get a string representation of the flags
-  // passed to the idl compiler.
 
+  /// Access the IDL keyword container.
   std::unordered_set<std::string> &
   idl_keywords ();
-  // Accessor for the IDL keyword container.
 
+  /// Access the pragma prefix container.
   std::vector<std::string> &pragma_prefixes ();
-  // Accessor for the pragma prefix container.
 
+  /// Update repository ID prefix bookkeeping when the file changes.
   void update_prefix (std::string const& filename);
-  // Do repo id prefix bookkeeping when the file changes.
 
+  /// Return whether this include has been seen before.
   long seen_include_file_before (std::string const& filename);
-  // Seen this include before?
 
+  /// @name Accessors for the last-seen include index
+  /// @{
   long last_seen_index () const;
   void last_seen_index (long val);
-  // Accessors for last_seen_index_ member.
+  /// @}
 
+  /// Return whether IDL names that are C++ keywords retain their names
+  /// instead of receiving an _cxx_ prefix. This should be true for the IFR service.
   bool preserve_cpp_keywords ();
-  // Whether we should not mung idl element names that are
-  // C++ keywords e.g. delete, operator etc. with _cxx_ prefix.
-  // Should be true when being used by the IFR Service
 
+  /// Set whether IDL names that are C++ keywords retain their names.
+  /// This is set by the IFR service.
   void preserve_cpp_keywords (bool);
-  // Set whether we should not mung idl element names that are C++
-  // keywords e.g. delete, operator etc. with _cxx_ prefix.
-  // Is set by the IFR Service.
 
+  /// Add an include path. @a is_system is true for TAO/CIAO paths and
+  /// false for paths provided by the user.
   void add_include_path (std::string const& path, bool is_system);
-  // Add another path to 'include_paths_'. is_system is true for TAO/CIAO
-  // specific paths and false for paths provided by user.
 
+  /// @name Relative include paths
+  /// @{
   void add_rel_include_path (std::string const& path);
   std::vector<std::string> const & rel_include_paths () const;
-  // Accessor/mutator for the rel_include_paths_ member.
+  /// @}
 
+  /// @name CIAO LEM file names
+  /// @{
   void add_ciao_lem_file_names (std::string const& s);
   std::vector<std::string> const & ciao_lem_file_names () const;
-  // Accessor/mutator for the ciao_lem_file_names_ member.
+  /// @}
 
+  /// @name CIAO RTI type support file names
+  /// @{
   void add_ciao_rti_ts_file_names (std::string const& s);
   std::vector<std::string> const & ciao_rti_ts_file_names () const;
-  // Accessor/mutator for the ciao_rti_ts_file_names_ member.
+  /// @}
 
+  /// @name CIAO OpenSplice type support file names
+  /// @{
   void add_ciao_spl_ts_file_names (std::string const& s);
   std::vector<std::string> const & ciao_spl_ts_file_names () const;
-  // Accessor/mutator for the ciao_spl_ts_file_names_ member.
+  /// @}
 
+  /// @name CIAO OpenDDS type support file names
+  /// @{
   void add_ciao_oci_ts_file_names (std::string const& s);
   std::vector<std::string> const & ciao_oci_ts_file_names () const;
-  // Accessor/mutator for the ciao_oci_ts_file_names_ member.
+  /// @}
 
+  /// @name CIAO CoreDX type support file names
+  /// @{
   void add_ciao_coredx_ts_file_names (std::string const& s);
   std::vector<std::string> const & ciao_coredx_ts_file_names () const;
-  // Accessor/mutator for the ciao_coredx_ts_file_names_ member.
+  /// @}
 
+  /// @name CIAO AMI interface names
+  /// @{
   void add_ciao_ami_iface_names (std::string const& s);
   std::vector<std::string> const & ciao_ami_iface_names () const;
-  // Accessor/mutator for the ciao_ami_iface_names_ member.
+  /// @}
 
+  /// @name CIAO AMI receptacle names
+  /// @{
   void add_ciao_ami_recep_names (std::string const& s);
   std::vector<std::string> const & ciao_ami_recep_names () const;
-  // Accessor/mutator for the ciao_ami_recep_names_ member.
+  /// @}
 
+  /// @name Included AMI receptacle names
+  /// @{
   void add_included_ami_recep_names (std::string const& s);
   std::vector<std::string> const & included_ami_recep_names () const;
-  // Accessor/mutator for the included_ami_recep_names_ member.
+  /// @}
 
   bool included_ami_receps_done () const;
   void included_ami_receps_done (bool val);
 
+  /// @name CIAO AMI IDL file names
+  /// @{
   void add_ciao_ami_idl_fnames (std::string const& s);
   std::vector<std::string> const & ciao_ami_idl_fnames () const;
-  // Accessor/mutator for the included_ami_idl_fnames_ member.
+  /// @}
 
+  /// @name DDS4CCM implementation file names
+  /// @{
   void add_dds4ccm_impl_fnames (std::string const& s);
   std::vector<std::string> const & dds4ccm_impl_fnames () const;
-  // Accessor mutator for the dds4ccm_impl_fnames_ member.
+  /// @}
 
+  /// Access the interfaces with mixed parentage.
   std::deque<AST_Interface *> & mixed_parentage_interfaces ();
-  // Accessor for the member
 
   using File_Prefix_Map = std::unordered_map<std::string, std::string>;
 
+  /// Access the IDL file prefix container.
   File_Prefix_Map &file_prefixes ();
-  // Accessor for the IDL file prefix container.
 
+  /// @name ORB IDL processing
+  /// @{
   bool pass_orb_idl () const;
   void pass_orb_idl (bool val);
-  // Accessor for the pass_orb_idl_ member.
+  /// @}
 
+  /// @name IFR backend selection
+  /// @{
   bool using_ifr_backend () const;
   void using_ifr_backend (bool val);
-  // Accessor for the using_ifr_backend_ member.
+  /// @}
 
+  /// @name IDL3 processing
+  /// @{
   bool ignore_idl3 () const;
   void ignore_idl3 (bool val);
-  // Accessor for the ignore_idl3_ member.
+  /// @}
 
+  /// Currently called only from the IDL backend, but could be useful elsewhere.
   int check_gperf ();
-  // Currently called only from IDL backend, but could be useful elsewhere.
 
+  /// Perform final cleanup before the process exits.
   void fini ();
-  // Do final cleanup just before process exits.
 
+  /// Access the primary key list.
   std::deque<AST_ValueType *> &primary_keys ();
-  // Accessor for the member.
 
+  /// Check the primary key list after yy_parse() returns, when forward-declared
+  /// structs or unions used in a valuetype have been fully defined.
   void check_primary_keys ();
-  // Called affer yy_parse() returns - iterates over our list
-  // of primary keys. Must be called this late so that we can
-  // be sure that all forward declared stucts or unions that
-  // might be used in such a valuetype are fully defined.
 
+  /// @name Recursion start
+  /// @{
   std::optional<std::string> const& recursion_start () const;
   void recursion_start (std::string const& val);
-  // Accessors for the member.
+  /// @}
 
+  /// @name Multiple-file input
+  /// @{
   bool multi_file_input () const;
   void multi_file_input (bool val);
-  // Accessors for the member.
+  /// @}
 
+  /// Return the combined input file name.
   std::string const& big_file_name () const;
-  // Just get the const string.
 
+  /// @name Current template module parameters
+  /// If UTL_Scope::lookup_by_name() finds no match, it checks this list
+  /// when processing a referenced parameter of the enclosing template module.
+  /// @{
   FE_Utils::T_PARAMLIST_INFO const *current_params () const;
   void current_params (FE_Utils::T_PARAMLIST_INFO *params);
-  // Accessors for the member. If UTL_Scope::lookup_by_name()
-  // has a 0 result, it will check this param list (if it is not
-  // 0, meaning we are in the scope of a template module) for a
-  // match before returning, in case it is processing a
-  // referenced template parameter of the eclosing template
-  // module.
+  /// @}
 
+  /// @name Template module reference aliases
+  /// When parsing a reference, the referenced template module's scope is
+  /// traversed, but parameter holders are created with the alias names.
+  /// @{
   std::optional<UTL_StrList> const& alias_params () const;
   void alias_params (std::optional<UTL_StrList> params);
-  // Accessors for the member. If we are parsing a template
-  // module reference, we traverse the scope of the referenced
-  // template module, but create param holders with the
-  // alias names.
+  /// @}
 
+  /// @name Parameter holders for lookup
+  /// If a lookup matches current_params(), the created parameter holder
+  /// must match the corresponding element of this list when it is present.
+  /// @{
   std::optional<UTL_StrList> const& for_new_holder () const;
   void for_new_holder (std::optional<UTL_StrList> params);
-  // Accessors for the member. If a lookup matches something
-  // from current_params(), the actual created param holder must
-  // match the corresponding element on this list, if it is
-  // non-zero.
+  /// @}
 
+  /// @name CORBA module
+  /// @{
   AST_Module *corba_module () const;
   void corba_module (AST_Module *m);
-  // Accessors for the member.
+  /// @}
 
   struct Include_Path_Info
   {
@@ -678,40 +753,47 @@ public:
     bool is_system_ {};
   };
 
+  /// Access the include paths.
   std::vector<Include_Path_Info> const& include_paths () const;
-  // Accessor for the member.
 
+  /// Determines which diagnostic, if any, to emit for an anonymous IDL construct.
   enum class Anon_Type_Diagnostic
   {
     Error,
     Warning,
     Silent
   };
-  // Determines which type of diagnostic to emit, if any, upon
-  // detecting the presence of an anonymous IDL construct.
 
+  /// Set the anonymous type diagnostic.
   void anon_type_diagnostic (Anon_Type_Diagnostic val);
-  // Mutator for the member.
 
   /// Has anon_type_diagnostic () been called?
   bool explicit_anon_type_diagnostic () const;
 
+  /// @name Anonymous type diagnostic checks
+  /// @{
   bool anon_error () const;
   bool anon_warning () const;
   bool anon_silent () const;
-  // Simple checks for the value of anon_type_diagnostic_.
+  /// @}
 
+  /// @name Typedef context
+  /// @{
   bool in_typedef () const;
   void in_typedef (bool val);
-  // Accessors for the member.
+  /// @}
 
+  /// @name Template module context without an alias
+  /// @{
   bool in_tmpl_mod_no_alias () const;
   void in_tmpl_mod_no_alias (bool val);
-  // Accessors for the member.
+  /// @}
 
+  /// @name Template module alias context
+  /// @{
   bool in_tmpl_mod_alias () const;
   void in_tmpl_mod_alias (bool val);
-  // Accessors for the member.
+  /// @}
 
   /**
    * Convenience function that causes the program to exit with the given return
@@ -748,8 +830,8 @@ public:
    */
   void dump_ast ();
 
-  /// flags for types of declarations seen while parsing.
-  ///{
+  /// @name Flags for types of declarations seen while parsing
+  /// @{
   bool abstract_iface_seen_ {};
   bool abstractbase_seen_ {};
   bool aggregate_seen_ {};
@@ -813,7 +895,7 @@ public:
   bool wstring_seen_ {};
   bool dds_connector_seen_ {};
   bool ami_connector_seen_ {};
-  ///}
+  /// @}
 
   /// flag to force generation of skeleton includes (see bug #2419).
   bool need_skeleton_includes_ {};
@@ -921,140 +1003,125 @@ private:
   std::vector<std::string> pd_include_file_names_;
   std::vector<long> include_file_seen_count_;
 
+  /// IDL files included with \#include.
   std::vector<std::string> included_idl_files_;
-  // IDL files that are "#include'd.
 
   ParseState                pd_parse_state {PS_NoState}; // Parse state we're in.
 
   std::string                pd_idl_src_file;    // IDL source file.
 
+  /// Needed if orb.idl is included.
   std::string tao_root_;
-  // Needed if orb.idl is included.
 
+  /// Path to the perfect hash generator. By default this is
+  /// $ACE_ROOT/bin/ace_gperf unless ACE_GPERF specifies another name.
   std::string gperf_path_;
-  // Path for the perfect hash generator(gperf) program. Default
-  // is $ACE_ROOT/bin/gperf.
 
+  /// Temporary directory selected from TEMP or defaulting to /tmp/.
   std::string temp_dir_;
-  // Temp directory where which we can rewsolve in drv_preproc.cpp by
-  // checking for  TEMP env variable otherwise we assign to /tmp/.
 
+  /// A string beginning with \#ident, passed from IDL to generated files.
   std::string ident_string_;
-  // Holds a string that begins with #ident, to be passed from the IDL
-  // file to the generated files.
 
+  /// Whether case-only identifier differences produce an error, not a warning.
   bool case_diff_error_ {true};
-  // Do we report an error for indentifiers in the same scope that differ
-  // only by case? or just a warning?
 
+  /// Whether this front end is being used for the NEST ORB.
   bool nest_orb_ {};
-  // Is this front end being used for the NEST ORB?
 
+  /// Concatenation of all command-line options.
   std::string idl_flags_;
-  // Concatenation of all the command line options.
 
+  /// IDL keywords used to check local names.
   std::unordered_set<std::string> idl_keywords_;
-  // Container for all the IDL keywords so local names can be checked.
 
+  /// Container for all \#pragma prefix declarations.
   std::vector<std::string> pragma_prefixes_;
-  // Container for all the #pragma prefix declarations.
 
+  /// Whether C++ keywords are retained as IDL identifiers.
   bool preserve_cpp_keywords_ {true};
-  // Do we allow C++ keywords as identifiers in the idl to stay as they are ?
 
+  /// Include paths passed with -I.
   std::vector<Include_Path_Info> include_paths_;
-  // List of -I options passed to us.
 
+  /// Include paths used by backends with the -r option.
   std::vector<std::string> rel_include_paths_;
-  // Used by backends with the -r option.
 
+  /// Associates a prefix with a file.
   File_Prefix_Map file_prefixes_;
-  // Associates a prefix with a file.
 
+  /// Treat orb.idl like any other included IDL file.
   bool pass_orb_idl_ {};
-  // Treat orb.idl like any other included IDL file.
 
+  /// Set by the IFR backend itself.
   bool using_ifr_backend_ {};
-  // Set by the IFR backend itself.
 
+  /// Avoid generating another event consumer for eventtypes left by idl3_to_idl2.
   bool ignore_idl3_ {};
-  // Need this for eventtypes left over after running idl3_to_idl2,
-  // we don't want to try to generate another event consumer.
+
+  /// Map of \#pragma DCPS_DATA_TYPE and DCPS_DATA_KEY information.
   DCPS_Type_Info_Map dcps_type_info_map_;
-  // Map of #pragma DCPS_DATA_TYPE and DCPS_DATA_KEY infomation.
 
   std::vector<std::string> dcps_sequence_types_list_ {};
 
+  /// Whether DCPS zero-copy read support is enabled. This avoids generating
+  /// incorrect code for DDS versions before 0.12 with a newer TAO_IDL.
   bool dcps_support_zero_copy_read_ {};
-  // Are we enabled to support DCPS zero-copy read.
-  // Need this flag to avoid generating wrong code for pre v0.12 DDS
-  // with new TAO_IDL compiler.
 
+  /// Whether to generate support for DCPS zero-copy read sequences.
   bool dcps_gen_zero_copy_read_ {};
-  // Are we generating code insupport of DCPS zero-copy read data sequences?
 
+  /// Valuetypes used as primary keys.
   std::deque<AST_ValueType *> primary_keys_;
-  // List of valuetypes used as a primary key.
 
+  /// Directory subtree being traversed; not used by all backends.
   std::optional<std::string> recursion_start_;
-  // Path to directory subtree we are iterating/recursing over.
-  // Not used by all backends.
 
+  /// Whether multiple input files are processed into one output.
   bool multi_file_input_ {};
-  // Some backends process multiple files to a single output.
 
-  // Used if the above flag is set.
-
+  /// Parameters of the template module being parsed, or of the referenced
+  /// module when traversing an alias; null outside a template module scope.
   FE_Utils::T_PARAMLIST_INFO *current_params_ {};
-  // Stored if we are parsing the scope of a template module,
-  // 0 otherwise. Contains the params of the referenced
-  // template module if we are traversing an alias.
 
+  /// Alias names for parameter holders when parsing a template module reference.
   std::optional<UTL_StrList> alias_params_;
-  // Stored if we are parsing a template module reference. The
-  // scope traversed will be that of the referenced template
-  // module, but the param holder(s) created will use the
-  // aliased names.
 
+  /// Enclosing template parameters used to name holders while traversing an alias.
   std::optional<UTL_StrList> for_new_holder_;
-  // Stored if we are traversing an alias, this is a list of
-  // the enclosing template module's params. When we create
-  // a param holder, it will need this name rather than the
-  // name of the alias's referenced param.
 
+  /// Files parsed with the ciao lem pragma.
   std::vector<std::string> ciao_lem_file_names_;
-  // Files parsed with ciao lem pragma
 
+  /// Files parsed with the RTI type support pragma.
   std::vector<std::string> ciao_rti_ts_file_names_;
-  // Files parsed with RTI typesupport pragma
 
+  /// Files parsed with the OpenSplice type support pragma.
   std::vector<std::string> ciao_spl_ts_file_names_;
-  // Files parsed with OpenSplice typesupport pragma
 
+  /// Files parsed with the OpenDDS type support pragma.
   std::vector<std::string> ciao_oci_ts_file_names_;
-  // Files parsed with OpenDDS typesupport pragma
 
+  /// Files parsed with the CoreDX type support pragma.
   std::vector<std::string> ciao_coredx_ts_file_names_;
-  // Files parsed with CoreDX typesupport pragma
 
+  /// Interfaces that get a reply handler generated for AMI4CCM.
   std::vector<std::string> ciao_ami_iface_names_;
-  // Interfaces that get a reply handler generated for AMI4CCM.
 
+  /// Receptacles that get a sendc_ version added for AMI4CCM.
   std::vector<std::string> ciao_ami_recep_names_;
-  // Receptacles that get a sendc_ version added for AMI4CCM.
 
+  /// Included AMI receptacles that require different handling.
   std::vector<std::string> included_ami_recep_names_;
-  // We need to do something different with these...
 
+  /// Whether the included AMI receptacles have been handled.
   bool included_ami_receps_done_ {};
-  // ...but we need to do it only once.
 
+  /// Directives from \#pragma ciao ami4ccm idl or \#pragma ami4ccm idl.
   std::vector<std::string> ciao_ami_idl_fnames_;
-  // Stores directives from #pragma ciao ami4ccm idl "xxx"
-  // or  #pragma ami4ccm idl "xxx".
 
+  /// Directives from \#pragma dds4ccm impl.
   std::vector<std::string> dds4ccm_impl_fnames_;
-  // Stores directives from #pragma dds4ccm impl "xxx".
 
   /**
    * Used in the generation of overrides for CORBA::release and

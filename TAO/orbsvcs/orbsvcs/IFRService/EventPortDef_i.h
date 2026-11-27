@@ -1,7 +1,3 @@
-// -*- C++ -*-
-
-
-//=============================================================================
 /**
  *  @file    EventPortDef_i.h
  *
@@ -9,8 +5,6 @@
  *
  *  @author Jeff Parsons <j.parsons@vanderbilt.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_EVENTPORTDEF_I_H
 #define TAO_EVENTPORTDEF_I_H
@@ -77,5 +71,4 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #endif /* _MSC_VER */
 
 #endif /* TAO_EVENTPORTDEF_I_H */
-
 

@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project (*Test) : taoserver {
   exename = test
   idlflags += -t ./mytmp

@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    nested_struct.cpp
  *
@@ -7,10 +5,10 @@
  *
  *  @author   Aniruddha Gokhale
  */
-//=============================================================================
-
 
 #include "helper.h"
+
+#include <cstring>
 #include "nested_struct.h"
 
 // ************************************************************************
@@ -18,22 +16,14 @@
 // ************************************************************************
 
 Test_Nested_Struct::Test_Nested_Struct ()
-  : opname_ (CORBA::string_dup ("test_nested_struct")),
+  : opname_ ("test_nested_struct"),
     inout_ (new Param_Test::Nested_Struct),
     out_ (new Param_Test::Nested_Struct),
     ret_ (new Param_Test::Nested_Struct)
 {
 }
 
-Test_Nested_Struct::~Test_Nested_Struct ()
-{
-  CORBA::string_free (this->opname_);
-  this->opname_ = 0;
-  // the other data members will be freed as they are "_var"s and objects
-  // (rather than pointers to objects)
-}
-
-const char *
+char const *
 Test_Nested_Struct::opname () const
 {
   return this->opname_;
@@ -49,7 +39,7 @@ Test_Nested_Struct::dii_req_invoke (CORBA::Request *req)
 
   req->invoke ();
 
-  const Param_Test::Nested_Struct *tmp = 0;
+  Param_Test::Nested_Struct const *tmp {};
   req->return_value () >>= tmp;
   this->ret_ = new Param_Test::Nested_Struct (*tmp);
 
@@ -70,11 +60,11 @@ Test_Nested_Struct::init_parameters (Param_Test_ptr)
   Generator *gen = GENERATOR::instance (); // value generator
 
   // get some sequence length (not more than 10)
-  CORBA::ULong len = (CORBA::ULong) (gen->gen_long () % 10) + 1;
+  CORBA::ULong const len = (CORBA::ULong) (gen->gen_long () % 10) + 1;
 
   this->in_.vs.dbl = 0.0;
   this->in_.vs.dummy1 = CORBA::string_dup ("");
-  this->in_.vs.boole = 0;
+  this->in_.vs.boole = false;
   this->in_.vs.dummy2 = CORBA::string_dup ("");
   this->in_.vs.shrt = 0;
   // set the length of the sequence
@@ -90,7 +80,7 @@ Test_Nested_Struct::init_parameters (Param_Test_ptr)
 
   this->inout_->vs.dbl = 0.0;
   this->inout_->vs.dummy1 = CORBA::string_dup ("");
-  this->inout_->vs.boole = 0;
+  this->inout_->vs.boole = false;
   this->inout_->vs.dummy2 = CORBA::string_dup ("");
   this->inout_->vs.shrt = 0;
   // set the length of the sequence
@@ -108,7 +98,7 @@ Test_Nested_Struct::reset_parameters ()
 
   this->inout_->vs.dbl = 0.0;
   this->inout_->vs.dummy1 = CORBA::string_dup ("");
-  this->inout_->vs.boole = 0;
+  this->inout_->vs.boole = false;
   this->inout_->vs.dummy2 = CORBA::string_dup ("");
   this->inout_->vs.shrt = 0;
   // set the length of the sequence
@@ -122,14 +112,14 @@ Test_Nested_Struct::run_sii_test (Param_Test_ptr objref)
 {
   try
     {
-      Param_Test::Nested_Struct_out out (this->out_.out ());
+      Param_Test::Nested_Struct_out const out (this->out_.out ());
       this->ret_ = objref->test_nested_struct (this->in_,
                                                this->inout_.inout (),
                                                out);
 
       return 0;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Test_Nested_Struct::run_sii_test\n");
     }
@@ -139,20 +129,20 @@ Test_Nested_Struct::run_sii_test (Param_Test_ptr objref)
 CORBA::Boolean
 Test_Nested_Struct::check_validity ()
 {
-  CORBA::Boolean flag = 0;
+  CORBA::Boolean flag = false;
   if ((this->in_.vs.seq.length () == this->inout_->vs.seq.length ()) &&
       (this->in_.vs.seq.length () == this->out_->vs.seq.length ()) &&
       (this->in_.vs.seq.length () == this->ret_->vs.seq.length ()))
     {
-      flag = 1; // assume all are equal
+      flag = true; // assume all are equal
       // lengths are same. Now compare the contents
-      for (CORBA::ULong i=0; i < this->in_.vs.seq.length () && flag; i++)
+      for (CORBA::ULong i=0; i < this->in_.vs.seq.length () && flag; ++i)
         {
-          if (ACE_OS::strcmp (this->in_.vs.seq[i], this->inout_->vs.seq[i]) ||
-              ACE_OS::strcmp (this->in_.vs.seq[i], this->out_->vs.seq[i]) ||
-              ACE_OS::strcmp (this->in_.vs.seq[i], this->ret_->vs.seq[i]))
+          if (std::strcmp (this->in_.vs.seq[i], this->inout_->vs.seq[i]) ||
+              std::strcmp (this->in_.vs.seq[i], this->out_->vs.seq[i]) ||
+              std::strcmp (this->in_.vs.seq[i], this->ret_->vs.seq[i]))
             // not equal
-            flag = 0;
+            flag = false;
         }
     }
   return flag;
@@ -168,23 +158,23 @@ Test_Nested_Struct::check_validity (CORBA::Request_ptr /*req*/)
 void
 Test_Nested_Struct::print_values ()
 {
-  for (CORBA::ULong i=0; i < this->in_.vs.seq.length (); i++)
+  for (CORBA::ULong i=0; i < this->in_.vs.seq.length (); ++i)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "\n*=*=*=*=*=*=*=*=*=*=\n"
                   "Element # %d\n"
-                  "in (len = %d): %C\n"
-                  "inout (len = %d): %C\n"
-                  "out (len = %d): %C\n"
-                  "ret (len = %d): %C\n",
+                  "in (len = %u): %C\n"
+                  "inout (len = %u): %C\n"
+                  "out (len = %u): %C\n"
+                  "ret (len = %u): %C\n",
                   i,
                   this->in_.vs.seq.length (),
-                  (this->in_.vs.seq.length ()? (const char *)this->in_.vs.seq[i]:"<nul>"),
+                  (this->in_.vs.seq.length ()? (char const *)this->in_.vs.seq[i]:"<nul>"),
                   this->inout_->vs.seq.length (),
-                  (this->inout_->vs.seq.length ()? (const char *)this->inout_->vs.seq[i]:"<nul>"),
+                  (this->inout_->vs.seq.length ()? (char const *)this->inout_->vs.seq[i]:"<nul>"),
                   this->out_->vs.seq.length (),
-                  (this->out_->vs.seq.length ()? (const char *)this->out_->vs.seq[i]:"<nul>"),
+                  (this->out_->vs.seq.length ()? (char const *)this->out_->vs.seq[i]:"<nul>"),
                   this->ret_->vs.seq.length (),
-                  (this->ret_->vs.seq.length ()? (const char *)this->ret_->vs.seq[i]:"<nul>")));
+                  (this->ret_->vs.seq.length ()? (char const *)this->ret_->vs.seq[i]:"<nul>")));
     }
 }

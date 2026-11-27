@@ -1,7 +1,5 @@
-/* -*-C++-*- */
 #ifndef OID_DEF
 #define OID_DEF
-//=============================================================================
 /**
  *  @file    oid_def.h
  *
@@ -9,7 +7,6 @@
  *
  *  @author Peter E Mellquist
  */
-//=============================================================================
 
 /*===================================================================
 
@@ -28,54 +25,52 @@
   derivatives based upon this software code base.
 =====================================================================*/
 
-// SMI trap oid def
+/// SMI trap OID definition.
 class snmpTrapsOid: public Oid {
 public:
   snmpTrapsOid ():Oid("1.3.6.1.6.3.1.1.5"){};
 };
 
-// SMI Enterprose Oid
+/// SMI enterprise trap OID.
 class snmpTrapEnterpriseOid: public Oid {
 public:
   snmpTrapEnterpriseOid():Oid("1.3.6.1.6.3.1.1.4.3.0"){};
 };
 
-// SMI Cold Start Oid
+/// SMI cold start OID.
 class coldStartOid: public snmpTrapsOid {
 public:
   coldStartOid(){*this+=".1";};
 };
 
-// SMI WarmStart Oid
+/// SMI warm start OID.
 class warmStartOid: public snmpTrapsOid {
 public:
   warmStartOid(){*this+=".2";};
 };
 
-// SMI LinkDown Oid
+/// SMI link down OID.
 class linkDownOid: public snmpTrapsOid {
 public:
   linkDownOid(){*this+=".3";};
 };
 
-
-// SMI LinkUp Oid
+/// SMI link up OID.
 class linkUpOid: public snmpTrapsOid {
 public:
   linkUpOid(){*this+=".4";};
 };
 
-// SMI Authentication Failure Oid
+/// SMI authentication failure OID.
 class authenticationFailureOid: public snmpTrapsOid {
 public:
   authenticationFailureOid(){*this+=".5";};
 };
 
-// SMI egpneighborloss Oid
+/// SMI EGP neighbor loss OID.
 class egpNeighborLossOid: public snmpTrapsOid {
 public:
   egpNeighborLossOid(){*this+=".6";};
 };
-
 
 #endif // OID_DEF

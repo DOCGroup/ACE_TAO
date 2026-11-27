@@ -1,5 +1,3 @@
-/* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file   Notify_Structured_Push_Consumer.h
  *
@@ -7,7 +5,6 @@
  *
  *  @author Chad Elliott <elliott_c@ociweb.com>
  */
-//=============================================================================
 
 #ifndef TAO_NOTIFY_STRUCTURED_PUSH_CONSUMER_H
 #define TAO_NOTIFY_STRUCTURED_PUSH_CONSUMER_H
@@ -19,8 +16,13 @@ class Notify_Test_Client;
 class Notify_Structured_Push_Consumer: public TAO_Notify_Tests_StructuredPushConsumer
 {
 public:
+  Notify_Structured_Push_Consumer (Notify_Structured_Push_Consumer const&) = delete;
+  Notify_Structured_Push_Consumer (Notify_Structured_Push_Consumer&&) = delete;
+  Notify_Structured_Push_Consumer& operator= (Notify_Structured_Push_Consumer const&) = delete;
+  Notify_Structured_Push_Consumer& operator= (Notify_Structured_Push_Consumer&&) = delete;
+
   Notify_Structured_Push_Consumer (
-                        const char* name,
+                        char const* name,
                         CORBA::Short policy,
                         CORBA::Long max_events_per_consumer,
                         Notify_Test_Client& client);
@@ -28,15 +30,15 @@ public:
   void _connect (CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin);
 
 protected:
-  void push_structured_event (const CosNotification::StructuredEvent&);
+  void push_structured_event (CosNotification::StructuredEvent const&) override;
 
   ACE_CString name_;
   CORBA::Short discard_policy_;
   CORBA::Long max_events_per_consumer_;
-  CORBA::Long count_;
-  CORBA::Long first_;
+  CORBA::Long count_ {};
+  CORBA::Long first_ {};
   Notify_Test_Client& client_;
-  CORBA::Long sent_;
+  CORBA::Long sent_ { 40 };
 };
 
 #endif /* TAO_NOTIFY_STRUCTURED_PUSH_CONSUMER_H */

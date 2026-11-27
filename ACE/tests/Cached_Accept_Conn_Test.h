@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    Cached_Accept_Conn_Test.h
  *
@@ -7,8 +5,6 @@
  *
  *  @author Kirthika Parameswaran  <kirthika@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef ACE_TESTS_CACHED_ACCEPT_CONN_TEST_H
 #define ACE_TESTS_CACHED_ACCEPT_CONN_TEST_H
@@ -27,16 +23,16 @@
 class Client_Svc_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 {
 public:
-  Client_Svc_Handler (ACE_Thread_Manager *t = 0);
-  int open (void *v = 0);
-  int close (u_long flags = 0);
+  Client_Svc_Handler (ACE_Thread_Manager *t = nullptr);
+  int open (void *v = nullptr) override;
+  int close (u_long flags = 0) override;
 };
 
 class Server_Svc_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 {
 public:
-  Server_Svc_Handler (ACE_Thread_Manager *t = 0);
-  int open (void *v = 0);
+  Server_Svc_Handler (ACE_Thread_Manager *t = nullptr);
+  int open (void *v = nullptr) override;
 };
 
 using ATTRIBUTES = size_t;
@@ -85,24 +81,23 @@ template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1>
 class Accept_Strategy : public ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>
 {
 public:
-  /// Constructor.
   Accept_Strategy (CACHED_CONNECT_STRATEGY &caching_connect_strategy);
 
   /**
-   * Initialize the <peer_acceptor_> with <local_addr>.  If the
+   * Initialize the @c peer_acceptor_ with @a local_addr.  If the
    * process runs out of descriptors, the unsed svc_handlers from the
    * CONNECTION CACHE are removed.
    */
-  int open (const ACE_PEER_ACCEPTOR_ADDR &local_addr,
-            bool restart = false);
+  int open (ACE_PEER_ACCEPTOR_ADDR const &local_addr,
+            bool restart = false) override;
 
   /**
-   * The default behavior delegates to the <accept> method of the
+   * The default behavior delegates to the @a accept method of the
    * PEER_ACCEPTOR. A check is made here for the process running out
    * of file descriptors. If so, the CONNECTION CACHE is purged of
    * some idle svc_handlers.
    */
-  int accept_svc_handler (SVC_HANDLER *svc_handler);
+  int accept_svc_handler (SVC_HANDLER *svc_handler) override;
 
 protected:
   using ACCEPT_STRATEGY_BASE = ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>;

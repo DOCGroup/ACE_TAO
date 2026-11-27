@@ -3,7 +3,6 @@
 #include "MainFrame.h"
 #include "ValueDlg.h"
 
-
 enum {VALUEMODIFY=200, VALUEDELETE, VALUERENAME};
 
 BEGIN_EVENT_TABLE(ValueListCtrl, wxListCtrl)
@@ -13,7 +12,6 @@ BEGIN_EVENT_TABLE(ValueListCtrl, wxListCtrl)
   EVT_MENU(VALUERENAME, ValueListCtrl::OnRename)
 END_EVENT_TABLE()
 
-
 ValueListCtrl::ValueListCtrl(wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style, const wxValidator& validator, const wxString& name)
 : wxListCtrl(parent, id, pos, size, style | wxLC_REPORT | wxLC_SINGLE_SEL, validator, name)
 {
@@ -22,9 +20,7 @@ ValueListCtrl::ValueListCtrl(wxWindow* parent, wxWindowID id, const wxPoint& pos
   InsertColumn(2, "Data");
 }
 
-ValueListCtrl::~ValueListCtrl()
-{
-}
+ValueListCtrl::~ValueListCtrl() = default;
 
 void ValueListCtrl::DisplaySection(const ACE_Configuration_Section_Key& Key)
 {
@@ -221,5 +217,4 @@ void ValueListCtrl::ChangeConfig(ACE_Configuration* pConfig)
   m_pConfig = pConfig;
   DisplaySection(pConfig->root_section());
 }
-
 

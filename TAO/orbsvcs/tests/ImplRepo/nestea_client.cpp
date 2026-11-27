@@ -12,8 +12,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   ACE_DEBUG ((LM_DEBUG, "\n\tNestea Bookshelf Client\n\n"));
 
   if (client.init (argc, argv) == -1)
-    return 1;
+    {
+      return 1;
+    }
   else
-    return client.run ();
+    {
+      return client.run ();
+    }
 }
 

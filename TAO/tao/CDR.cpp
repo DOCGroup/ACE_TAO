@@ -6,13 +6,15 @@
 
 #include "ace/Truncate.h"
 
+#include <cstring>
+
 #if !defined (__ACE_INLINE__)
 # include "tao/CDR.inl"
 #endif /* ! __ACE_INLINE__ */
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 
-static const char *TAO_CDR_Timeprobe_Description[] =
+static char const *TAO_CDR_Timeprobe_Description[] =
 {
   "OutputCDR::ctor[1] - enter",
   "OutputCDR::ctor[1] - leave",
@@ -65,20 +67,17 @@ TAO_OutputCDR::TAO_OutputCDR (size_t size,
                    major_version,
                    minor_version)
   , fragmentation_strategy_ (nullptr)
-  , more_fragments_ (false)
-  , request_id_ (0)
-  , stub_ (nullptr)
-  , message_semantics_ (TAO_Message_Semantics::TAO_TWOWAY_REQUEST)
-  , timeout_ (nullptr)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_OUTPUT_CDR_CTOR1_ENTER);
 
 #if defined (TAO_ZERO_TAO_OUTPUTCDR_ALLOCATED_BUFFERS)
   // Zero out the buffer if we allocated the buffer.
   if (size == 0)
-    (void) ACE_OS::memset (this->current()->wr_ptr(),
-                           0,
-                           this->current()->space());
+    {
+      (void) std::memset (this->current()->wr_ptr(),
+                          0,
+                          this->current()->space());
+    }
 #endif /* TAO_ZERO_TAO_OUTPUTCDR_ALLOCATED_BUFFERS */
 }
 
@@ -101,11 +100,6 @@ TAO_OutputCDR::TAO_OutputCDR (char *data,
                    major_version,
                    minor_version)
   , fragmentation_strategy_ (nullptr)
-  , more_fragments_ (false)
-  , request_id_ (0)
-  , stub_ (nullptr)
-  , message_semantics_ (TAO_Message_Semantics::TAO_TWOWAY_REQUEST)
-  , timeout_ (nullptr)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_OUTPUT_CDR_CTOR2_ENTER);
 }
@@ -130,11 +124,6 @@ TAO_OutputCDR::TAO_OutputCDR (char *data,
                    major_version,
                    minor_version)
   , fragmentation_strategy_ (fs)
-  , more_fragments_ (false)
-  , request_id_ (0)
-  , stub_ (nullptr)
-  , message_semantics_ (TAO_Message_Semantics::TAO_TWOWAY_REQUEST)
-  , timeout_ (nullptr)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_OUTPUT_CDR_CTOR3_ENTER);
 }
@@ -150,11 +139,6 @@ TAO_OutputCDR::TAO_OutputCDR (ACE_Message_Block *data,
                    major_version,
                    minor_version)
   , fragmentation_strategy_ (nullptr)
-  , more_fragments_ (false)
-  , request_id_ (0)
-  , stub_ (nullptr)
-  , message_semantics_ (TAO_Message_Semantics::TAO_TWOWAY_REQUEST)
-  , timeout_ (nullptr)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_OUTPUT_CDR_CTOR4_ENTER);
 }
@@ -173,11 +157,6 @@ TAO_OutputCDR::TAO_OutputCDR (ACE_Data_Block *data_block,
                     major_version,
                     minor_version)
   , fragmentation_strategy_ (fs)
-  , more_fragments_ (false)
-  , request_id_ (0)
-  , stub_ (nullptr)
-  , message_semantics_ (TAO_Message_Semantics::TAO_TWOWAY_REQUEST)
-  , timeout_ (nullptr)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_OUTPUT_CDR_CTOR5_ENTER);
 }
@@ -221,14 +200,13 @@ TAO_OutputCDR::fragment_stream (ACE_CDR::ULong pending_alignment,
   return true;  // Success.
 }
 
-
 int
 TAO_OutputCDR::offset (char* pos)
 {
-  int offset = 0;
-  const ACE_Message_Block * cur_mb = this->begin ();
+  int offset {};
+  ACE_Message_Block const * cur_mb = this->begin ();
   char* wr_ptr = this->current ()->wr_ptr ();
-  bool found = false;
+  bool found {};
 
   while (cur_mb != this->end ())
   {
@@ -243,7 +221,9 @@ TAO_OutputCDR::offset (char* pos)
     }
 
     if (wr_ptr == cur_mb->wr_ptr ())
+    {
       break;
+    }
 
     cur_mb = cur_mb->cont();
   }
@@ -256,10 +236,9 @@ TAO_OutputCDR::offset (char* pos)
   return offset;
 }
 
-
 // ****************************************************************
 
-TAO_InputCDR::TAO_InputCDR (const TAO_OutputCDR& rhs,
+TAO_InputCDR::TAO_InputCDR (TAO_OutputCDR const& rhs,
                             ACE_Allocator* buffer_allocator,
                             ACE_Allocator* data_block_allocator,
                             ACE_Allocator* message_block_allocator,
@@ -309,6 +288,5 @@ TAO_InputCDR::clr_mb_flags( ACE_Message_Block::Message_Flags less_flags )
 {
   return start_.clr_self_flags( less_flags );
 }
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL

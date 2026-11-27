@@ -1,4 +1,3 @@
-// -*- MPC -*-
 feature(!minimum_corba) {
   Source_Files(TAO_ANYTYPECODE_COMPONENTS) {
     ServicesA.cpp

@@ -27,7 +27,7 @@ ACE_FIFO_Send::ACE_FIFO_Send ()
 }
 
 int
-ACE_FIFO_Send::open (const ACE_TCHAR *rendezvous_name,
+ACE_FIFO_Send::open (ACE_TCHAR const *rendezvous_name,
                      int flags,
                      mode_t perms,
                      LPSECURITY_ATTRIBUTES sa)
@@ -39,7 +39,7 @@ ACE_FIFO_Send::open (const ACE_TCHAR *rendezvous_name,
                          sa);
 }
 
-ACE_FIFO_Send::ACE_FIFO_Send (const ACE_TCHAR *fifo_name,
+ACE_FIFO_Send::ACE_FIFO_Send (ACE_TCHAR const *fifo_name,
                               int flags,
                               mode_t perms,
                               LPSECURITY_ATTRIBUTES sa)
@@ -49,9 +49,11 @@ ACE_FIFO_Send::ACE_FIFO_Send (const ACE_TCHAR *fifo_name,
                                  flags,
                                  perms,
                                  sa) == -1)
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACE_FIFO_Send::ACE_FIFO_Send")));
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("%p\n"),
+                     ACE_TEXT ("ACE_FIFO_Send::ACE_FIFO_Send")));
+    }
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

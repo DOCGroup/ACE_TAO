@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file     SHMIOP_Profile.h
  *
@@ -8,8 +5,6 @@
  *
  *  @author  Nanbor Wang <nanbor@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_SHMIOP_PROFILE_H
 #define TAO_SHMIOP_PROFILE_H
@@ -30,7 +25,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// TAO SHMIOP_Profile concrete Profile definitions
 /**
  * @class TAO_SHMIOP_Profile
  *
@@ -66,12 +60,10 @@ public:
                       TAO_GIOP_Message_Version const &version,
                       TAO_ORB_Core *orb_core);
 
-  /// Profile constructor, default.
   explicit TAO_SHMIOP_Profile (TAO_ORB_Core *orb_core);
 
-  /// Destructor is to be called only through <_decr_refcnt>.
+  /// Destructor is to be called only through @c _decr_refcnt.
   ~TAO_SHMIOP_Profile ();
-
 
   /// Template methods, please see Profile.h for documentation.
   char *to_string () const override;
@@ -80,9 +72,9 @@ public:
   CORBA::ULong endpoint_count () const override;
   CORBA::ULong hash (CORBA::ULong max) override;
   /**
-   * Add <endp> to this profile's list of endpoints (it is inserted
+   * Add @c endp to this profile's list of endpoints (it is inserted
    * next to the head of the list).  This profiles takes ownership of
-   * <endp>.
+   * @c endp.
    */
   void add_endpoint (TAO_SHMIOP_Endpoint *endp);
 
@@ -95,6 +87,7 @@ protected:
   CORBA::Boolean do_is_equivalent (TAO_Profile const *other_profile) override;
 
 private:
+  TAO_SHMIOP_Profile () = delete;
   TAO_SHMIOP_Profile (TAO_SHMIOP_Profile const &) = delete;
   TAO_SHMIOP_Profile &operator= (TAO_SHMIOP_Profile const &) = delete;
   TAO_SHMIOP_Profile (TAO_SHMIOP_Profile &&) = delete;
@@ -112,12 +105,12 @@ private:
    * feature.
    * Addressing info of the default endpoint, i.e., head of the list,
    * is transmitted using standard SHMIOP ProfileBody components.  See
-   * <encode_endpoints> method documentation above for how the rest of
+   * @c encode_endpoints method documentation above for how the rest of
    * the endpoint list is transmitted.
    */
   TAO_SHMIOP_Endpoint endpoint_;
 
-  /// Number of endpoints in the list headed by <endpoint_>.
+  /// Number of endpoints in the list headed by @c endpoint_.
   CORBA::ULong count_ {1};
 };
 

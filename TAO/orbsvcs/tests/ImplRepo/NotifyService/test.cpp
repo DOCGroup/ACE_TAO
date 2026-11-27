@@ -6,21 +6,23 @@
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   bool success = false;
-  int retries = 5;
 
   try
     {
+      int retries = 5;
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
       CORBA::Object_var obj =
         orb->resolve_initial_references ("NotifyService");
 
       if (CORBA::is_nil (obj.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Could not resolve Notify Service")),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Could not resolve Notify Service")),
+                            1);
+        }
 
-      for (int i = 0; !success && i < retries; i++)
+      for (int i = 0; !success && i < retries; ++i)
         {
           try
             {
@@ -28,7 +30,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                 CosNotifyChannelAdmin::EventChannelFactory::_narrow (obj.in ());
               success = true;
             }
-          catch (const CORBA::OBJECT_NOT_EXIST &)
+          catch (CORBA::OBJECT_NOT_EXIST const &)
             {
               ACE_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("Test caught Object Not Exist, retry %d\n"),
@@ -47,7 +49,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Test Retries exceeded\n")));
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Test");
       return 1;

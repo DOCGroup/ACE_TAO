@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*idl): taoidldefaults {
   IDL_Files {
     Test.idl
@@ -6,7 +5,7 @@ project(*idl): taoidldefaults {
   custom_only = 1
 }
 
-project(*Server): taoserver, messaging {
+project(*Server): taoserver, messaging, utils {
   after += *idl
   Source_Files {
     Service.cpp
@@ -20,7 +19,7 @@ project(*Server): taoserver, messaging {
   }
 }
 
-project(*Client): taoclient, portableserver, messaging {
+project(*Client): taoclient, portableserver, messaging, utils {
   after += *idl
   Source_Files {
     Callback.cpp

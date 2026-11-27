@@ -10,14 +10,13 @@
 #include "orbsvcs/Shutdown_Utilities.h"
 #include "tao/debug.h"
 
-
 class Notify_Service_Shutdown_Functor
   : public Shutdown_Functor
 {
 public:
-  Notify_Service_Shutdown_Functor (TAO_Notify_Service_Driver& svc);
+  explicit Notify_Service_Shutdown_Functor (TAO_Notify_Service_Driver& svc);
 
-  void operator() (int which_signal);
+  void operator() (int which_signal) override;
 
 private:
   TAO_Notify_Service_Driver&        svc_;
@@ -32,8 +31,10 @@ void
 Notify_Service_Shutdown_Functor::operator() (int which_signal)
 {
   if (TAO_debug_level > 0)
+  {
     ORBSVCS_DEBUG ((LM_DEBUG,
                 "shutting down on signal %d\n", which_signal));
+  }
   (void) this->svc_.fini ();
 }
 
@@ -50,13 +51,15 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   try
     {
       if (notify_service.init (argc, argv) == -1)
+      {
         ORBSVCS_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT("Failed to initialize the Notification Service.\n")),
                           1);
+      }
 
       notify_service.run ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception (
         ACE_TEXT ("Failed to run the Notification Service\n"));

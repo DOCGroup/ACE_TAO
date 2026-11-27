@@ -1,4 +1,3 @@
-
 #ifndef MT_BIDIR_RECEIVER_I_H
 #define MT_BIDIR_RECEIVER_I_H
 #include /**/ "ace/pre.h"
@@ -12,20 +11,23 @@ class Receiver_i
   : public virtual POA_Receiver
 {
 public:
-  /// Constructor
-  Receiver_i ();
-
+  Receiver_i () = default;
 
   /// Get the number of events that have been received, local method
   CORBA::Long get_event_count ();
 
-  // = The skeleton methods
-  virtual void receive_payload (const Receiver::Payload &payload);
+  /// The skeleton methods
+  void receive_payload (Receiver::Payload const &payload) override;
+
+  Receiver_i (Receiver_i const &) = delete;
+  Receiver_i (Receiver_i &&) = delete;
+  Receiver_i & operator= (Receiver_i const &) = delete;
+  Receiver_i & operator= (Receiver_i &&) = delete;
 
 private:
   TAO_SYNCH_MUTEX mutex_;
-  CORBA::ULong message_count_;
-  CORBA::ULong byte_count_;
+  CORBA::ULong message_count_ {};
+  CORBA::ULong byte_count_ {};
 };
 
 #include /**/ "ace/post.h"

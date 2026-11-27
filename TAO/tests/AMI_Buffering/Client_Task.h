@@ -1,4 +1,3 @@
-
 #ifndef AMI_BUFFERING_CLIENT_TASK_H
 #define AMI_BUFFERING_CLIENT_TASK_H
 #include /**/ "ace/pre.h"
@@ -14,8 +13,7 @@
 class Client_Task : public ACE_Task_Base
 {
 public:
-  /// Constructor
-  Client_Task (CORBA::ORB_ptr orb);
+  explicit Client_Task (CORBA::ORB_ptr orb);
   Client_Task (Client_Task const &) = delete;
   Client_Task &operator= (Client_Task const &) = delete;
   Client_Task (Client_Task &&) = delete;

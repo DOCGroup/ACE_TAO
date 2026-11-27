@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file ORB_Objects.h
  *
@@ -22,19 +21,23 @@
 class TAO_Notify_ORB_Objects
 {
 public:
-  /// Constructor
-  TAO_Notify_ORB_Objects ();
+  TAO_Notify_ORB_Objects () = default;
 
-  /// Destructor
-  ~TAO_Notify_ORB_Objects ();
+  TAO_Notify_ORB_Objects (TAO_Notify_ORB_Objects const&) = delete;
+  TAO_Notify_ORB_Objects (TAO_Notify_ORB_Objects&&) = delete;
+  TAO_Notify_ORB_Objects& operator= (TAO_Notify_ORB_Objects const&) = delete;
+  TAO_Notify_ORB_Objects& operator= (TAO_Notify_ORB_Objects&&) = delete;
+
+  ~TAO_Notify_ORB_Objects () = default;
 
   /// Resolves all the references.
-  void init (CORBA::ORB_var& orb);
+  void init (CORBA::ORB_ptr orb);
 
   /// Resolve Notification
-  CosNotifyChannelAdmin::EventChannelFactory_ptr notify_factory ();
+  CosNotifyChannelAdmin::EventChannelFactory_ptr notify_factory () const;
 
-  ///= Public Data
+  /// @name Public data
+  /// @{
   CORBA::ORB_var orb_;
 
   PortableServer::POA_var root_poa_;
@@ -44,6 +47,7 @@ public:
   RTCORBA::Current_var current_;
 
   CosNaming::NamingContextExt_var naming_;
+  /// @}
 };
 
 #include /**/ "ace/post.h"

@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    multdim_array.h
  *
@@ -7,31 +5,25 @@
  *
  *  @author Bala
  */
-//=============================================================================
-
 
 #ifndef PARAM_TEST_MULTDIM_ARRAY_H
 #define PARAM_TEST_MULTDIM_ARRAY_H
 
 #include "param_testC.h"
 
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-//                        test fixed size multidimensional arrays
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+/// test fixed size multidimensional arrays
 class Test_Multdim_Array
 {
 public:
-  /// ctor
   Test_Multdim_Array ();
 
-  /// dtor
-  ~Test_Multdim_Array ();
+  ~Test_Multdim_Array () = default;
 
   /// run the SII test
   int run_sii_test (Param_Test_ptr objref);
 
   /// return operation name
-  const char *opname () const;
+  char const *opname () const;
 
   /// set values for parameters
   int init_parameters (Param_Test_ptr objref);
@@ -60,7 +52,7 @@ private:
   void print (const Param_Test::Multdim_Array_slice *a);
 
   /// operation name
-  char *opname_;
+  char const *opname_;
 
   /// in parameter
   Param_Test::Multdim_Array_var in_;

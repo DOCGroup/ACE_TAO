@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   SCTP_Fault_Detector.h
  *
  *  @author Huang-Ming Huang <hh1@cse.wustl.edu>
  */
-//=============================================================================
 
 #ifndef SCTP_FAULT_DETECTOR_H
 #define SCTP_FAULT_DETECTOR_H
@@ -31,7 +27,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
 extern "C" {
 #include <netinet/sctp.h>
 };
@@ -54,16 +49,20 @@ class SCTP_Connector : public ACE_SOCK_SEQPACK_Connector
 public:
   SCTP_Connector();
   int connect (ACE_SOCK_SEQPACK_Association &new_association,
-               const ACE_Addr &remote_sap,
+               ACE_Addr const &remote_sap,
                ACE_Time_Value const *timeout = nullptr,
-               const ACE_Addr &local_sap = ACE_Addr::sap_any,
+               ACE_Addr const &local_sap = ACE_Addr::sap_any,
                int reuse_addr = 0,
                int flags = 0,
                int perms = 0,
                int protocol = 132);
   void set_heart_beat(int hb);
+  SCTP_Connector(SCTP_Connector const&) = delete;
+  SCTP_Connector(SCTP_Connector&&) = delete;
+  SCTP_Connector& operator=(SCTP_Connector const&) = delete;
+  SCTP_Connector& operator=(SCTP_Connector&&) = delete;
 private:
-  int heart_beat_;
+  int heart_beat_ {};
 };
 
 class SCTP_Fault_Detector : public Fault_Detector_T<
@@ -72,7 +71,11 @@ class SCTP_Fault_Detector : public Fault_Detector_T<
           SCTP_ConnectionDetectHandler >
 {
 public:
-    ~SCTP_Fault_Detector() override;
+    ~SCTP_Fault_Detector() override = default;
+    SCTP_Fault_Detector(SCTP_Fault_Detector const&) = delete;
+    SCTP_Fault_Detector(SCTP_Fault_Detector&&) = delete;
+    SCTP_Fault_Detector& operator=(SCTP_Fault_Detector const&) = delete;
+    SCTP_Fault_Detector& operator=(SCTP_Fault_Detector&&) = delete;
 private:
     int parse_conf(int argc, ACE_TCHAR** argv) override;
 };

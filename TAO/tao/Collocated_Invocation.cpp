@@ -8,6 +8,8 @@
 #include "tao/SystemException.h"
 #include "tao/Abstract_Servant_Base.h"
 
+#include <memory>
+
 #if TAO_HAS_INTERCEPTORS == 1
 # include "tao/PortableInterceptorC.h"
 #endif /*TAO_HAS_INTERCEPTORS */
@@ -40,7 +42,9 @@ namespace TAO
     s = this->send_request_interception ();
 
     if (s != TAO_INVOKE_SUCCESS)
+    {
       return s;
+    }
 #endif /*TAO_HAS_INTERCEPTORS */
 
     try
@@ -48,7 +52,7 @@ namespace TAO
         if (strat == TAO_CS_THRU_POA_STRATEGY)
           {
             // Perform invocations on the servant through the servant's ORB.
-            CORBA::ORB_var servant_orb =
+            CORBA::ORB_var const servant_orb =
               this->effective_target ()->_stubobj ()->servant_orb_ptr ();
             TAO_ORB_Core * const orb_core = servant_orb->orb_core ();
 
@@ -64,7 +68,7 @@ namespace TAO
             // CORBA::ORB::destroy()) before this thread complete the
             // invocation.
             orb_core->_incr_refcnt ();
-            TAO_ORB_Core_Auto_Ptr my_orb_core (orb_core);
+            TAO_ORB_Core_Auto_Ptr const my_orb_core (orb_core);
 
             dispatcher->dispatch (orb_core, request, this->forwarded_to_.out ());
 
@@ -75,7 +79,7 @@ namespace TAO
           }
         else
           {
-            bool is_forwarded = false;
+            bool is_forwarded {};
 
             this->effective_target ()->_servant()->_collocated_dispatch (
                            this->effective_target (),
@@ -98,10 +102,12 @@ namespace TAO
 
 #if TAO_HAS_INTERCEPTORS == 1
         if (this->reply_status_ == GIOP::LOCATION_FORWARD ||
-            this->response_expected_ == false)
+            !this->response_expected_)
           {
             if (this->reply_status_ == GIOP::LOCATION_FORWARD)
+            {
               this->invoke_status (TAO_INVOKE_RESTART);
+            }
 
             s = this->receive_other_interception ();
           }
@@ -113,22 +119,28 @@ namespace TAO
             s = this->receive_reply_interception ();
           }
         if (s != TAO_INVOKE_SUCCESS)
+        {
           return s;
+        }
 #endif /*TAO_HAS_INTERCEPTORS */
       }
     catch ( ::CORBA::UserException& ex)
       {
         // Ignore CORBA exceptions for oneways
-        if (this->response_expected_ == false)
+        if (!this->response_expected_)
+        {
           return TAO_INVOKE_SUCCESS;
+        }
 
 #if TAO_HAS_INTERCEPTORS == 1
         PortableInterceptor::ReplyStatus const status =
-          this->handle_any_exception (&ex);
+          this->handle_any_exception (std::addressof (ex));
 
         if (status == PortableInterceptor::LOCATION_FORWARD ||
             status == PortableInterceptor::TRANSPORT_RETRY)
-          s = TAO_INVOKE_RESTART;
+          {
+            s = TAO_INVOKE_RESTART;
+          }
         else
 #endif /* TAO_HAS_INTERCEPTORS */
           {
@@ -148,19 +160,25 @@ namespace TAO
     catch ( ::CORBA::SystemException& TAO_INTERCEPTOR (ex))
       {
         // Ignore CORBA exceptions for oneways
-        if (this->response_expected_ == false)
+        if (!this->response_expected_)
+        {
           return TAO_INVOKE_SUCCESS;
+        }
 
 #if TAO_HAS_INTERCEPTORS == 1
         PortableInterceptor::ReplyStatus const status =
-          this->handle_any_exception (&ex);
+          this->handle_any_exception (std::addressof (ex));
 
         if (status == PortableInterceptor::LOCATION_FORWARD ||
             status == PortableInterceptor::TRANSPORT_RETRY)
-          s = TAO_INVOKE_RESTART;
+          {
+            s = TAO_INVOKE_RESTART;
+          }
         else
 #endif /* TAO_HAS_INTERCEPTORS */
-          throw;
+          {
+            throw;
+          }
       }
 #if TAO_HAS_INTERCEPTORS == 1
     catch (...)
@@ -172,14 +190,20 @@ namespace TAO
 
         if (st == PortableInterceptor::LOCATION_FORWARD ||
             st == PortableInterceptor::TRANSPORT_RETRY)
-          s = TAO_INVOKE_RESTART;
+          {
+            s = TAO_INVOKE_RESTART;
+          }
         else
+        {
           throw;
+        }
       }
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
     if (this->reply_status_ == GIOP::LOCATION_FORWARD)
+    {
       s =  TAO_INVOKE_RESTART;
+    }
 
     return s;
   }

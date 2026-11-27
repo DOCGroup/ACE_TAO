@@ -1,12 +1,8 @@
-
-//=============================================================================
 /**
  *  @file    Timeprobe.h
  *
  *  @author Irfan Pyarali <irfan@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_TIMEPROBE_H
 #define TAO_TIMEPROBE_H
@@ -46,7 +42,6 @@
 // They should not both be defined at the same time.
 //#define TAO_SELECT_MINIMAL_TIMEPROBES
 
-
 #if defined (ACE_ENABLE_TIMEPROBES)
 
 # define TAO_PP_TIMEPROBE(id) \
@@ -58,7 +53,7 @@
 
 # if defined (TAO_SELECT_PP_TIMEPROBES)
 #   if defined TAO_SELECT_MINIMAL_TIMEPROBES
-#     undef TAO_SELECT_MINIMIAL_TIMEPROBES
+#     undef TAO_SELECT_MINIMAL_TIMEPROBES
 #   endif /* TAO_SELECT_MINIMAL_TIMEPROBES */
 #   undef ACE_TIMEPROBE
 #   define ACE_TIMEPROBE(id)
@@ -88,7 +83,6 @@
 # define TAO_MINIMAL_TIMEPROBE(id)
 
 #endif /* ACE_ENABLE_TIMEPROBES */
-
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

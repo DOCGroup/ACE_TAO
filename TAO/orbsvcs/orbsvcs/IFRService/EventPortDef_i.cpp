@@ -17,8 +17,7 @@ TAO_EventPortDef_i::TAO_EventPortDef_i (TAO_Repository_i *repo)
 TAO_EventPortDef_i::~TAO_EventPortDef_i () = default;
 
 CORBA::ComponentIR::EventDef_ptr
-TAO_EventPortDef_i::event (
-  )
+TAO_EventPortDef_i::event ()
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::ComponentIR::EventDef::_nil ());
 
@@ -28,22 +27,20 @@ TAO_EventPortDef_i::event (
 }
 
 CORBA::ComponentIR::EventDef_ptr
-TAO_EventPortDef_i::event_i (
-  )
+TAO_EventPortDef_i::event_i ()
 {
   ACE_TString holder;
   this->repo_->config ()->get_string_value (this->section_key_,
-                                            "base_type",
+                                            ACE_TEXT ("base_type"),
                                             holder);
-  CORBA::Contained_var obj = this->repo_->lookup_id (holder.fast_rep ());
+  CORBA::Contained_var obj = this->repo_->lookup_id (ACE_TEXT_ALWAYS_CHAR (holder.fast_rep ()));
 
   return CORBA::ComponentIR::EventDef::_narrow (obj.in ());
 }
 
 void
 TAO_EventPortDef_i::event (
-    CORBA::ComponentIR::EventDef_ptr event
-  )
+    CORBA::ComponentIR::EventDef_ptr event)
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -54,11 +51,10 @@ TAO_EventPortDef_i::event (
 
 void
 TAO_EventPortDef_i::event_i (
-    CORBA::ComponentIR::EventDef_ptr event
-  )
+    CORBA::ComponentIR::EventDef_ptr event)
 {
   this->repo_->config ()->remove_value (this->section_key_,
-                                        "base_type");
+                                        ACE_TEXT ("base_type"));
 
   if (CORBA::is_nil (event))
     {
@@ -70,24 +66,23 @@ TAO_EventPortDef_i::event_i (
 
   ACE_Configuration_Section_Key new_key;
   this->repo_->config ()->expand_path (this->repo_->root_key (),
-                                       tmp,
+                                       ACE_TEXT_CHAR_TO_TCHAR (tmp),
                                        new_key,
-                                       0);
+                                       false);
 
   ACE_TString holder;
   this->repo_->config ()->get_string_value (new_key,
-                                            "id",
+                                            ACE_TEXT ("id"),
                                             holder);
 
   this->repo_->config ()->set_string_value (this->section_key_,
-                                            "base_type",
+                                            ACE_TEXT ("base_type"),
                                             holder);
 }
 
 CORBA::Boolean
 TAO_EventPortDef_i::is_a (
-    char const *event_id
-  )
+    char const *event_id)
 {
   TAO_IFR_READ_GUARD_RETURN (false);
 
@@ -98,12 +93,11 @@ TAO_EventPortDef_i::is_a (
 
 CORBA::Boolean
 TAO_EventPortDef_i::is_a_i (
-    char const *event_id
-  )
+    char const *event_id)
 {
   ACE_TString holder;
   this->repo_->config ()->get_string_value (this->section_key_,
-                                            "base_type",
+                                            ACE_TEXT ("base_type"),
                                             holder);
   this->repo_->config ()->get_string_value (this->repo_->repo_ids_key (),
                                             holder.fast_rep (),
@@ -112,7 +106,7 @@ TAO_EventPortDef_i::is_a_i (
   this->repo_->config ()->expand_path (this->repo_->root_key (),
                                        holder,
                                        key,
-                                       0);
+                                       false);
   TAO_EventDef_i impl (this->repo_);
   impl.section_key (key);
   return impl.is_a_i (event_id);
@@ -141,9 +135,9 @@ TAO_EventPortDef_i::describe_i ()
 
   ACE_TString holder;
   this->repo_->config ()->get_string_value (this->section_key_,
-                            "base_type",
+                            ACE_TEXT ("base_type"),
                             holder);
-  epd.event = holder.fast_rep ();
+  epd.event = static_cast<char const *> (ACE_TEXT_ALWAYS_CHAR (holder.fast_rep ()));
 
   CORBA::Contained::Description *retval {};
   ACE_NEW_RETURN (retval,

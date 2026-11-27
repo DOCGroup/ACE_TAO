@@ -1,13 +1,9 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   QtResource_Factory.h
  *
  *  @author Balachandran Natarajan <bala@dre.vanderbilt.edu>
  *  @author Marek Brudka <mbrudka@aster.pl>
  */
-//=============================================================================
 #ifndef TAO_QTRESOURCE_FACTORY_H
 #define TAO_QTRESOURCE_FACTORY_H
 #include /**/ "ace/pre.h"
@@ -40,23 +36,24 @@ namespace TAO
   class TAO_QtResource_Export QtResource_Factory : public GUIResource_Factory
   {
   public:
-    QtResource_Factory (QApplication *qapp_);
+    explicit QtResource_Factory (QApplication *qapp);
+
+    QtResource_Factory () = delete;
+    QtResource_Factory (QtResource_Factory const &) = delete;
+    QtResource_Factory &operator= (QtResource_Factory const &) = delete;
+    QtResource_Factory (QtResource_Factory &&) = delete;
+    QtResource_Factory &operator= (QtResource_Factory &&) = delete;
 
   protected:
     /// Create or obtain current reactor implementation
     ACE_Reactor_Impl *reactor_impl () override;
 
   private:
-    QtResource_Factory (QtResource_Factory const &) = delete;
-    QtResource_Factory &operator= (QtResource_Factory const &) = delete;
-    QtResource_Factory (QtResource_Factory &&) = delete;
-    QtResource_Factory &operator= (QtResource_Factory &&) = delete;
-
-    /// Reactor created by this factory.
+    /// Non-owning cache; ACE_Reactor owns the implementation after wrapping it.
     ACE_QtReactor *reactor_impl_ {};
 
-    /// QApplication running reactor
-    QApplication *qapp_;
+    /// Borrowed QApplication; it must outlive the reactor.
+    QApplication * const qapp_;
   };
 }
 

@@ -1,14 +1,10 @@
-
-//=============================================================================
 /**
  *  @file    Bound_Ptr_Test.h
  *
  *  Define class needed for generating templates.
  *
- *  @author @author Christopher Kohlhoff <chris@kohlhoff.com>
+ *  @author Christopher Kohlhoff <chris@kohlhoff.com>
  */
-//=============================================================================
-
 
 #ifndef ACE_TESTS_BOUND_PTR_TEST_H
 #define ACE_TESTS_BOUND_PTR_TEST_H
@@ -20,12 +16,12 @@
 
 struct Printer
 {
-  Printer (const char *message);
+  explicit Printer (char const *message);
   ~Printer () ;
 
   void print ();
 
-  const char *message_;
+  char const *message_;
   static size_t instance_count_;
 };
 
@@ -47,29 +43,28 @@ class Scheduler : public ACE_Task<ACE_SYNCH>
   friend class Method_Request_print;
   friend class Method_Request_end;
 public:
-  /// Constructor.
   Scheduler ();
 
   /// Initializer.
-  virtual int open (void *args = 0);
+  int open (void *args = nullptr) override;
 
   /// Terminator.
-  virtual int close (u_long flags = 0);
+  int close (u_long flags = 0) override;
 
-  /// Destructor.
   virtual ~Scheduler ();
 
-  // = These methods are part of the Active Object Proxy interface.
+  /// @name Active Object proxy methods
+  /// @{
   void print (Printer_var &printer);
   void end ();
+  /// @}
 
 protected:
-  /// Runs the Scheduler's event loop, which dequeues <Method_Requests>
+  /// Runs the Scheduler's event loop, which dequeues method requests
   /// and dispatches them.
-  virtual int svc ();
+  int svc () override;
 
 private:
-  // = These are the <Scheduler> implementation details.
   ACE_Activation_Queue activation_queue_;
 };
 

@@ -1,19 +1,16 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    params.h
  *
  *  @author Chris Cleeland
  */
-//=============================================================================
 
 #ifndef TAO_PARAMS_H
 #define TAO_PARAMS_H
 
 #include /**/ "ace/pre.h"
 #include "tao/Invocation_Retry_Params.h"
-#include "ace/Unbounded_Queue.h"
+#include <string>
+#include <vector>
 #include "ace/Array_Map.h"
 #include "ace/Synch.h"
 #include "ace/Time_Value.h"
@@ -31,16 +28,9 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward decls.
 
-// @@ Using an ACE_Unbounded_Queue to contain the endpoints and
-//    preconnects may not be the best container to use.  However, it
-//    will only be used during ORB bootstrapping.  Also, a template
-//    instantiation of ACE_Unbounded_Queue<ACE_CString> already exists
-//    in ACE so we do not have to worry about increasing TAO's
-//    footprint by using this container.
-using TAO_EndpointSet = ACE_Unbounded_Queue<ACE_CString>;
-using TAO_EndpointSetIterator = ACE_Unbounded_Queue_Const_Iterator<ACE_CString>;
+using TAO_EndpointSet = std::vector<ACE_CString>;
+using TAO_EndpointSetIterator = TAO_EndpointSet::const_iterator;
 
-// -------------------------------------------------------------------
 
 /**
  * @class TAO_ORB_Parameters
@@ -53,14 +43,13 @@ class TAO_Export TAO_ORB_Parameters
 public:
   using endpoints_map_type = ACE_Array_Map<ACE_CString, ACE_CString>;
 
-  /// Constructor.
   TAO_ORB_Parameters ();
 
   /// Specifies the endpoints on which this server is willing to
   /// listen for requests.
-  int add_endpoints (const ACE_CString &lane,
-                     const ACE_CString &endpoints);
-  void get_endpoint_set (const ACE_CString &lane,
+  int add_endpoints (ACE_CString const &lane,
+                     ACE_CString const &endpoints);
+  void get_endpoint_set (ACE_CString const &lane,
                          TAO_EndpointSet &endpoint_set);
 
   /// Set/Get the port of services locatable through multicast.
@@ -69,8 +58,8 @@ public:
 
   /// Get/Set address:port for Multicast Discovery Protocol for
   /// the Naming Service.
-  const char *mcast_discovery_endpoint () const;
-  void mcast_discovery_endpoint (const char *mde);
+  char const *mcast_discovery_endpoint () const;
+  void mcast_discovery_endpoint (char const *mde);
 
   /// Set/Get the size to be used for a socket's receive buffer.
   int sock_rcvbuf_size () const;
@@ -119,10 +108,10 @@ public:
    * Maximum size of a GIOP message before outgoing fragmentation
    * kicks in.
    */
-  //@{
+  /// @{
   ACE_CDR::ULong max_message_size () const;
   void max_message_size (ACE_CDR::ULong size);
-  //@}
+  /// @}
 
   /// The ORB will use the dotted decimal notation for addresses. By
   /// default we use the full ascii names.
@@ -145,7 +134,7 @@ public:
 
   /// Set/Get the Init Reference of an arbitrary ObjectID.
   char *default_init_ref () const;
-  void default_init_ref (const char *default_init_ref);
+  void default_init_ref (char const *default_init_ref);
 
   /// Disable the OMG standard profile components, useful for
   /// homogenous environments.
@@ -213,11 +202,11 @@ public:
 
   /// Accepts the list of preferred interfaces and does a simple
   /// semantic check on the string before setting. Also the getter.
-  bool preferred_interfaces (const char *s);
-  const char *preferred_interfaces () const;
+  bool preferred_interfaces (char const *s);
+  char const *preferred_interfaces () const;
 
   /// Utility function called by the preferred interfaces setter
-  static bool check_preferred_interfaces_string (const char *);
+  static bool check_preferred_interfaces_string (char const *);
 
   void enforce_pref_interfaces (bool p);
   bool enforce_pref_interfaces () const;
@@ -239,38 +228,38 @@ public:
   void ami_collication (bool opt);
   bool ami_collication () const;
 
-  void protocols_hooks_name (const char *s);
-  const char *protocols_hooks_name () const;
+  void protocols_hooks_name (char const *s);
+  char const *protocols_hooks_name () const;
 
-  void thread_lane_resources_manager_factory_name (const char *s);
-  const char *thread_lane_resources_manager_factory_name () const;
+  void thread_lane_resources_manager_factory_name (char const *s);
+  char const *thread_lane_resources_manager_factory_name () const;
 
-  void dynamic_thread_pool_config_name (const char *s);
-  const char *dynamic_thread_pool_config_name () const;
+  void dynamic_thread_pool_config_name (char const *s);
+  char const *dynamic_thread_pool_config_name () const;
 
-  void stub_factory_name (const char *s);
-  const char *stub_factory_name () const;
+  void stub_factory_name (char const *s);
+  char const *stub_factory_name () const;
 
-  void poa_factory_name (const char *s);
-  const char *poa_factory_name () const;
+  void poa_factory_name (char const *s);
+  char const *poa_factory_name () const;
 
-  void poa_factory_directive (const ACE_TCHAR *s);
-  const ACE_TCHAR *poa_factory_directive () const;
+  void poa_factory_directive (ACE_TCHAR const *s);
+  ACE_TCHAR const *poa_factory_directive () const;
 
-  void endpoint_selector_factory_name (const char *s);
-  const char *endpoint_selector_factory_name () const;
+  void endpoint_selector_factory_name (char const *s);
+  char const *endpoint_selector_factory_name () const;
 
-  void collocation_resolver_name (const char *s);
-  const char *collocation_resolver_name () const;
+  void collocation_resolver_name (char const *s);
+  char const *collocation_resolver_name () const;
 
   void forward_invocation_on_object_not_exist (bool opt);
   bool forward_invocation_on_object_not_exist () const;
 
   void forward_on_exception_limit (const int ef, const int limit);
-  void forward_on_exception_delay (const ACE_Time_Value &delay);
+  void forward_on_exception_delay (ACE_Time_Value const &delay);
 
   TAO::Invocation_Retry_Params &invocation_retry_params ();
-  const TAO::Invocation_Retry_Params &invocation_retry_params () const;
+  TAO::Invocation_Retry_Params const &invocation_retry_params () const;
 
   void forward_once_exception (const int ef);
   int forward_once_exception () const;
@@ -280,12 +269,16 @@ public:
 
 private:
   /// Each "endpoint" is of the form:
+  /// @code{.text}
   ///
-  ///   protocol://V.v@addr1,...,W.w@addrN/
+  /// protocol://V.v@addr1,...,W.w@addrN/
+  /// @endcode
   ///
   /// or:
   ///
-  ///   protocol://addr1,addr2,...,addrN/
+  /// @code{.text}
+  /// protocol://addr1,addr2,...,addrN/
+  /// @endcode
   ///
   /// where "V.v" and "W.w" are optional versions.
   ///
@@ -295,7 +288,7 @@ private:
   ///   iiop://space:2001,odyssey:2010;uiop://foo,bar
   ///
   /// All preconnect or endpoint strings should be of the above form(s).
-  int parse_and_add_endpoints (const ACE_CString &endpoints,
+  int parse_and_add_endpoints (ACE_CString const &endpoints,
                                TAO_EndpointSet &endpoint_set);
 
   /// Map of endpoints this server is willing to accept requests on.
@@ -309,7 +302,7 @@ private:
   CORBA::String_var mcast_discovery_endpoint_;
 
   /// List of comma separated prefixes from ORBDefaultInitRef.
-  ACE_CString default_init_ref_;
+  std::string default_init_ref_;
 
   /// Size to be used for a socket's receive buffer.
   int sock_rcvbuf_size_;
@@ -409,7 +402,7 @@ private:
   unsigned long parallel_connect_delay_;
 
   /// Preferred network interfaces as a string
-  ACE_CString pref_network_;
+  std::string pref_network_;
 
   /// Default collocation resolver
   /**
@@ -451,7 +444,7 @@ private:
    * The default value is "Protocols_Hooks". If RTCORBA option is
    * set, its value will be set to be "RT_Protocols_Hooks".
    */
-  ACE_CString protocols_hooks_name_;
+  std::string protocols_hooks_name_;
 
   /**
    * Name of the stub factory that needs to be instantiated.
@@ -459,7 +452,7 @@ private:
    * linked, the set_stub_factory will be called to set the value
    * to be "RT_Stub_Factory".
    */
-  ACE_CString stub_factory_name_;
+  std::string stub_factory_name_;
 
   /**
    * Name of the endpoint selector factory that needs to be instantiated.
@@ -467,7 +460,7 @@ private:
    * TAO_RTCORBA is linked, the set_endpoint_selector_factory will be
    * called to set the value to be "RT_Endpoint_Selector_Factory".
    */
-  ACE_CString endpoint_selector_factory_name_;
+  std::string endpoint_selector_factory_name_;
 
   /**
    * Name of the thread lane resources manager that needs to be
@@ -477,14 +470,14 @@ private:
    * to set the value to be
    * "RT_Thread_Lane_Resources_Manager_Factory".
    */
-  ACE_CString thread_lane_resources_manager_factory_name_;
+  std::string thread_lane_resources_manager_factory_name_;
 
   /**
    * Name of the non-RT dynamic thread pool configuration set to load.
    * This is only used if the Dynamic_TP library is linked. Default
    * is an empty string.
    */
-  ACE_CString dynamic_thread_pool_config_name_;
+  std::string dynamic_thread_pool_config_name_;
 
   /**
    * Name of the service object used to create the RootPOA.  The
@@ -492,14 +485,13 @@ private:
    * will be changed to TAO_RT_POA so that a POA equipped with
    * realtime extensions will be returned.
    */
-  ACE_CString poa_factory_name_;
+  std::string poa_factory_name_;
 
   /**
    * The service configurator directive used to load
    * poa_factory_name_ dynamically.
    */
   ACE_TString poa_factory_directive_;
-
 
   /**
    * Do we need forward invocation to next avaiable profile upon
@@ -521,16 +513,16 @@ private:
    * TAO_RTCORBA is linked, the set_collocation_resolver will be
    * called to set the value to be "RT_Collocation_Resolver".
    */
-  ACE_CString collocation_resolver_name_;
+  std::string collocation_resolver_name_;
 
-  // Allows a client to ZIOP compress without having any server
-  // ZIOP available compressor's list policies. THIS IS GOING DIRECTLY
-  // AGAINST THE CORBA Compressed GIOP (ZIOP) V1.0 specification, but
-  // allows us to use ZIOP with MIOP and/or CORBALOCs.
-  // We have to trust the end user knows what his system is configured to allow;
-  // Any servers that cannot decompress the client's used ZIOP compressor will
-  // reject the request as they simply cannot decode or handle it (comms will
-  // simply timeout or lock-up at the client for any such incorrect two-way requests).
+  /// Allows a client to ZIOP compress without having any server
+  /// ZIOP available compressor's list policies. THIS IS GOING DIRECTLY
+  /// AGAINST THE CORBA Compressed GIOP (ZIOP) V1.0 specification, but
+  /// allows us to use ZIOP with MIOP and/or CORBALOCs.
+  /// We have to trust the end user knows what his system is configured to allow;
+  /// Any servers that cannot decompress the client's used ZIOP compressor will
+  /// reject the request as they simply cannot decode or handle it (comms will
+  /// simply timeout or lock-up at the client for any such incorrect two-way requests).
   bool allow_ziop_no_server_policies_;
 };
 

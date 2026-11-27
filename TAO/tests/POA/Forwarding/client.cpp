@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file     client.cpp
  *
@@ -8,35 +6,35 @@
  *
  *  @author  Irfan Pyarali
  */
-//=============================================================================
-
 
 #include "ace/streams.h"
 #include "ace/Get_Opt.h"
-#include "ace/Read_Buffer.h"
 #include "testC.h"
 
-static ACE_TCHAR *IOR = 0;
-static int servers = 2;
-static int iterations = 3;
+struct Client_Options
+{
+  ACE_TCHAR const *ior {};
+  int servers { 2 };
+  int iterations { 3 };
+};
 
 static int
-parse_args (int argc, ACE_TCHAR **argv)
+parse_args (int argc, ACE_TCHAR **argv, Client_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("s:i:k:"));
-  int c;
+  int option {};
 
-  while ((c = get_opts ()) != -1)
-    switch (c)
+  while ((option = get_opts ()) != -1)
+    switch (option)
       {
       case 'k':
-        IOR = get_opts.opt_arg ();
+        options.ior = get_opts.opt_arg ();
         break;
       case 's':
-        servers = ACE_OS::atoi (get_opts.opt_arg ());
+        options.servers = ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case 'i':
-        iterations = ACE_OS::atoi (get_opts.opt_arg ());
+        options.iterations = ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case '?':
       default:
@@ -49,24 +47,26 @@ parse_args (int argc, ACE_TCHAR **argv)
                           -1);
       }
 
-  if (IOR == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Please specify the IOR for the servant\n"),
-                      -1);
+  if (options.ior == nullptr)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Please specify the IOR for the servant\n"),
+                        -1);
+    }
 
   // Indicates successful parsing of command line.
   return 0;
 }
 
 void
-do_calls (test_ptr test)
+do_calls (test_ptr test, int servers, int iterations)
 {
-  for (int j = 1; j <= servers; j++)
+  for (int server = 1; server <= servers; ++server)
     {
-      for (int i = 1; i <= iterations; i++)
+      for (int iteration = 1; iteration <= iterations; ++iteration)
         {
           // Invoke the doit() method of the test reference.
-          CORBA::Long result = test->doit ();
+          CORBA::Long const result = test->doit ();
 
           // Print the result of doit () method of the test reference.
           ACE_DEBUG ((LM_DEBUG,
@@ -75,7 +75,7 @@ do_calls (test_ptr test)
         }
 
       // Don't forward the last server
-      if (j != servers)
+      if (server != servers)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "Asking server to forward next time\n"));
@@ -84,36 +84,37 @@ do_calls (test_ptr test)
     }
 }
 
-
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
       // Initialize the ORB
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
+      Client_Options options;
       // Initialize options based on command-line arguments.
-      int parse_args_result =
-        parse_args (argc, argv);
+      int const parse_args_result = parse_args (argc, argv, options);
       if (parse_args_result != 0)
+      {
         return parse_args_result;
+      }
 
       // Get an object reference from the argument string.
-      CORBA::Object_var object =
-        orb->string_to_object (IOR);
+      CORBA::Object_var const object =
+        orb->string_to_object (options.ior);
 
       // Try to narrow the object reference to a test reference.
-      test_var test =
+      test_var const test =
         test::_narrow (object.in ());
 
-      do_calls (test.in ());
+      do_calls (test.in (), options.servers, options.iterations);
 
       test->shutdown ();
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught in client");
       return -1;

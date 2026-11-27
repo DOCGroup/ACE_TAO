@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file     MT_Servant_Locator.cpp
  *
@@ -8,8 +6,6 @@
  *
  *  @author  Irfan Pyarali
  */
-//=============================================================================
-
 
 #include "testS.h"
 #include "ace/Task.h"
@@ -17,13 +13,20 @@
 #include "tao/PortableServer/ServantLocatorC.h"
 #include "tao/CDR.h"
 
+#include <cstring>
+#include <memory>
+
 class test_i :
   public virtual POA_test
 {
 public:
-  test_i (PortableServer::POA_ptr poa);
+  explicit test_i (PortableServer::POA_ptr poa);
+  test_i (test_i const &) = delete;
+  test_i (test_i &&) = delete;
+  test_i &operator= (test_i const &) = delete;
+  test_i &operator= (test_i &&) = delete;
 
-  void method ();
+  void method () override;
 
   PortableServer::POA_var poa_;
 };
@@ -41,9 +44,15 @@ test_i::method ()
 class Task : public ACE_Task_Base
 {
 public:
+  Task () = default;
+  Task (Task const &) = delete;
+  Task (Task &&) = delete;
+  Task &operator= (Task const &) = delete;
+  Task &operator= (Task &&) = delete;
+
   void object (test_ptr test);
 
-  int svc ();
+  int svc () override;
 
   test_var test_;
 
@@ -74,18 +83,22 @@ class Servant_Locator :
   public PortableServer::ServantLocator
 {
 public:
-  Servant_Locator (PortableServer::POA_ptr poa);
+  explicit Servant_Locator (PortableServer::POA_ptr poa);
+  Servant_Locator (Servant_Locator const &) = delete;
+  Servant_Locator (Servant_Locator &&) = delete;
+  Servant_Locator &operator= (Servant_Locator const &) = delete;
+  Servant_Locator &operator= (Servant_Locator &&) = delete;
 
-  ::PortableServer::Servant preinvoke (const PortableServer::ObjectId &,
+  ::PortableServer::Servant preinvoke (PortableServer::ObjectId const &,
                                        PortableServer::POA_ptr,
-                                       const char *,
-                                       PortableServer::ServantLocator::Cookie &);
+                                       char const *,
+                                       PortableServer::ServantLocator::Cookie &) override;
 
-  void postinvoke (const PortableServer::ObjectId &,
+  void postinvoke (PortableServer::ObjectId const &,
                    PortableServer::POA_ptr,
-                   const char *,
+                   char const *,
                    PortableServer::ServantLocator::Cookie,
-                   PortableServer::Servant);
+                   PortableServer::Servant) override;
 
   test_i servant_;
 };
@@ -96,9 +109,9 @@ Servant_Locator::Servant_Locator (PortableServer::POA_ptr poa)
 }
 
 ::PortableServer::Servant
-Servant_Locator::preinvoke (const PortableServer::ObjectId &oid,
+Servant_Locator::preinvoke (PortableServer::ObjectId const &oid,
                             PortableServer::POA_ptr,
-                            const char *,
+                            char const *,
                             PortableServer::ServantLocator::Cookie &)
 {
   CORBA::String_var name =
@@ -108,7 +121,7 @@ Servant_Locator::preinvoke (const PortableServer::ObjectId &oid,
               "(%t) Starting Servant_Locator::preinvoke for %C servant\n",
               name.in ()));
 
-  if (ACE_OS::strcmp (name.in (), "first") == 0)
+  if (std::strcmp (name.in (), "first") == 0)
     {
       second_task.pre_invoke_event_.signal ();
       first_task.pre_invoke_event_.wait ();
@@ -123,13 +136,13 @@ Servant_Locator::preinvoke (const PortableServer::ObjectId &oid,
               "(%t) Ending Servant_Locator::preinvoke for %C servant\n",
               name.in ()));
 
-  return &this->servant_;
+  return std::addressof (this->servant_);
 }
 
 void
-Servant_Locator::postinvoke (const PortableServer::ObjectId &oid,
+Servant_Locator::postinvoke (PortableServer::ObjectId const &oid,
                              PortableServer::POA_ptr,
-                             const char *,
+                             char const *,
                              PortableServer::ServantLocator::Cookie,
                              PortableServer::Servant)
 {
@@ -140,7 +153,7 @@ Servant_Locator::postinvoke (const PortableServer::ObjectId &oid,
               "(%t) Starting Servant_Locator::postinvoke for %C servant\n",
               name.in ()));
 
-  if (ACE_OS::strcmp (name.in (), "first") == 0)
+  if (std::strcmp (name.in (), "first") == 0)
     {
       second_task.post_invoke_event_.signal ();
       first_task.post_invoke_event_.wait ();
@@ -159,21 +172,21 @@ Servant_Locator::postinvoke (const PortableServer::ObjectId &oid,
 bool
 set_nil_servant_manager (PortableServer::POA_ptr poa)
 {
-  bool succeed = false;
+  bool succeed {};
   try
     {
       // Setting a nil servant manager should give an OBJ_Adapter exception with
       // minor code 4
       poa->set_servant_manager (PortableServer::ServantManager::_nil());
     }
-  catch (const CORBA::OBJ_ADAPTER& ex)
+  catch (CORBA::OBJ_ADAPTER const& ex)
     {
       if ((ex.minor() & 0xFFFU) == 4)
         {
           succeed = true;
         }
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const&)
     {
     }
 
@@ -189,7 +202,7 @@ set_nil_servant_manager (PortableServer::POA_ptr poa)
 bool
 overwrite_servant_manager (PortableServer::POA_ptr poa)
 {
-  bool succeed = false;
+  bool succeed {};
   try
     {
       Servant_Locator servant_locator (poa);
@@ -198,14 +211,14 @@ overwrite_servant_manager (PortableServer::POA_ptr poa)
       // obj_adapter with minor code 6
       poa->set_servant_manager (&servant_locator);
     }
-  catch (const CORBA::BAD_INV_ORDER& ex)
+  catch (CORBA::BAD_INV_ORDER const& ex)
     {
       if ((ex.minor() & 0xFFFU) == 6)
         {
           succeed = true;
         }
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const&)
     {
     }
 
@@ -221,7 +234,7 @@ overwrite_servant_manager (PortableServer::POA_ptr poa)
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  int retval = 0;
+  int retval {};
 
   try
     {
@@ -240,18 +253,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       poa_manager->activate ();
 
       CORBA::PolicyList policies;
-      CORBA::ULong current_length = 0;
-
-      policies.length (current_length + 1);
-      policies[current_length++] =
+      policies.length (3);
+      policies[0] =
         root_poa->create_request_processing_policy (PortableServer::USE_SERVANT_MANAGER);
-
-      policies.length (current_length + 1);
-      policies[current_length++] =
+      policies[1] =
         root_poa->create_servant_retention_policy (PortableServer::NON_RETAIN);
-
-      policies.length (current_length + 1);
-      policies[current_length++] =
+      policies[2] =
         root_poa->create_id_assignment_policy (PortableServer::USER_ID);
 
       PortableServer::POA_var child_poa =
@@ -259,14 +266,18 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                               poa_manager.in (),
                               policies);
 
-      if (!set_nil_servant_manager (child_poa.in()))
+      if (!set_nil_servant_manager (child_poa.in ()))
+      {
         retval = -1;
+      }
 
       Servant_Locator servant_locator (child_poa.in ());
       child_poa->set_servant_manager (&servant_locator);
 
-      if (!overwrite_servant_manager (child_poa.in()))
+      if (!overwrite_servant_manager (child_poa.in ()))
+      {
         retval = -1;
+      }
 
       PortableServer::ObjectId_var first_oid =
         PortableServer::string_to_ObjectId ("first");
@@ -305,7 +316,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                   "%s successful\n",
                   argv[0]));
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Exception caught");
       retval = -1;

@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 /**
  *  @file    Value_VarOut_T.h
  *
@@ -72,7 +70,7 @@ public:
   T * ptr () const;
 
 private:
-  // Prevent widening assignment.
+  /// Prevent widening assignment.
   TAO_Value_Var_T (TAO_Base_var const &) = delete;
   void operator= (TAO_Base_var const &) = delete;
 

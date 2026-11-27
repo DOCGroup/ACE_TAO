@@ -1,5 +1,4 @@
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/HTIOP/HTIOP_Connector.h"
 #include "orbsvcs/HTIOP/HTIOP_Profile.h"
 
@@ -19,6 +18,8 @@
 #include "ace/Strategies_T.h"
 #include "ace/OS_NS_strings.h"
 
+#include <cstring>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::HTIOP::Connector::Connector (ACE::HTBP::Environment *ht_env)
@@ -29,9 +30,7 @@ TAO::HTIOP::Connector::Connector (ACE::HTBP::Environment *ht_env)
 {
 }
 
-TAO::HTIOP::Connector::~Connector ()
-{
-}
+TAO::HTIOP::Connector::~Connector () = default;
 
 int
 TAO::HTIOP::Connector::open (TAO_ORB_Core *orb_core)
@@ -41,19 +40,24 @@ TAO::HTIOP::Connector::open (TAO_ORB_Core *orb_core)
 
   // Create our connect strategy
   if (this->create_connect_strategy () == -1)
+  {
     return -1;
+  }
 
   /// Our connect creation strategy
-  ACE_NEW_RETURN (this->connect_creation_strategy_,
+  CONNECT_CREATION_STRATEGY *connect_creation_strategy {};
+  ACE_NEW_RETURN (connect_creation_strategy,
                   CONNECT_CREATION_STRATEGY
                       (orb_core->thr_mgr (),
                        orb_core),
                   -1);
+  this->connect_creation_strategy_.reset (connect_creation_strategy);
 
-
-  ACE_NEW_RETURN (this->concurrency_strategy_,
+  CONNECT_CONCURRENCY_STRATEGY *concurrency_strategy {};
+  ACE_NEW_RETURN (concurrency_strategy,
                   CONNECT_CONCURRENCY_STRATEGY (orb_core),
                   -1);
+  this->concurrency_strategy_.reset (concurrency_strategy);
 
   return 0;
 }
@@ -61,8 +65,8 @@ TAO::HTIOP::Connector::open (TAO_ORB_Core *orb_core)
 int
 TAO::HTIOP::Connector::close ()
 {
-  delete this->concurrency_strategy_;
-  delete this->connect_creation_strategy_;
+  this->concurrency_strategy_.reset ();
+  this->connect_creation_strategy_.reset ();
 
   return 0;
 }
@@ -83,9 +87,11 @@ TAO::HTIOP::Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
     this->remote_endpoint (endpoint);
 
   if (htiop_endpoint == nullptr)
+  {
     return -1;
+  }
 
-   const ACE::HTBP::Addr &remote_address =
+   ACE::HTBP::Addr const &remote_address =
      htiop_endpoint->object_addr ();
 
    // Verify that the remote ACE::HTBP::Addr was initialized properly.
@@ -93,7 +99,7 @@ TAO::HTIOP::Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
    // remote ACE::HTBP::Addr.
    if (remote_address.get_type () != AF_INET &&
        (remote_address.get_htid() == 0 ||
-        ACE_OS::strlen(remote_address.get_htid()) == 0))
+        std::strlen (remote_address.get_htid ()) == 0))
      {
        if (TAO_debug_level > 0)
          {
@@ -136,8 +142,9 @@ TAO::HTIOP::Connector::make_connection (TAO::Profile_Transport_Resolver *,
     this->remote_endpoint (desc.endpoint ());
 
   if (htiop_endpoint == nullptr)
+  {
     return nullptr;
-
+  }
 
   ACE::HTBP::Session_Id_t session_id;
   ACE_TString proxy_host;
@@ -154,11 +161,13 @@ TAO::HTIOP::Connector::make_connection (TAO::Profile_Transport_Resolver *,
   else
     {
       ACE::HTBP::ID_Requestor req(ht_env_);
-      session_id.local_ = ACE_TEXT_ALWAYS_CHAR(req.get_HTID());
+      session_id.local_.set_htid (ACE_TEXT_ALWAYS_CHAR (req.get_HTID ()));
     }
 
   if (proxy_port == 0)
+  {
     return nullptr;
+  }
 
   session_id.peer_ = htiop_endpoint->object_addr ();
   session_id.id_ = ACE::HTBP::Session::next_session_id();
@@ -185,26 +194,28 @@ TAO::HTIOP::Connector::make_connection (TAO::Profile_Transport_Resolver *,
 
   // This is where we need to set the ACE::HTBP::Stream to the connection
   // handler.
-  TAO::HTIOP::Connection_Handler *svc_handler = nullptr;
+  TAO::HTIOP::Connection_Handler *svc_handler {};
 
   // In more traditional connectors, the following code would be part of a
   // strategized connector's connect() method. This include making the
   // handler, attaching the session, and activating the handler.
 
   // Instantiate a ACE::HTBP::Session
-  ACE::HTBP::Session *session = nullptr;
+  ACE::HTBP::Session *session {};
   if (ACE::HTBP::Session::find_session (session_id, session) == -1)
     {
-      ACE_INET_Addr *proxy = nullptr;
+      ACE_INET_Addr *proxy {};
       ACE_NEW_RETURN (proxy,
                       ACE_INET_Addr(static_cast<u_short> (proxy_port),proxy_host.c_str()),
                       0);
-      ACE_NEW_RETURN (session, ACE::HTBP::Session (session_id,proxy, 1), 0);
+      ACE_NEW_RETURN (session, ACE::HTBP::Session (session_id, proxy, true), 0);
       if (ACE::HTBP::Session::add_session (session) == -1)
-        ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                           "ACE::HTBP::Initial_Filter::recv_data_header %p",
-                           "add_session"),
-                          0);
+        {
+          ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                                 "ACE::HTBP::Initial_Filter::recv_data_header %p",
+                                 ACE_TEXT ("add_session")),
+                                0);
+        }
     }
 
   // Make the svc_handler
@@ -244,11 +255,13 @@ TAO::HTIOP::Connector::make_connection (TAO::Profile_Transport_Resolver *,
     }
 
   if (TAO_debug_level > 2)
-    ORBSVCS_DEBUG ((LM_DEBUG,
-                ACE_TEXT("(%P|%t) - TAO::HTIOP::Connector::make_connection, ")
-                ACE_TEXT("new connection to <%s:%d> on Transport[%B]\n"),
-                htiop_endpoint->host (), htiop_endpoint->port (),
-                svc_handler->peer ().get_handle ()));
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG,
+                      ACE_TEXT("(%P|%t) - TAO::HTIOP::Connector::make_connection, ")
+                      ACE_TEXT("new connection to <%s:%d> on handle %H\n"),
+                      htiop_endpoint->host (), htiop_endpoint->port (),
+                      svc_handler->peer ().get_handle ()));
+    }
 
   TAO_Transport *transport = svc_handler->transport ();
 
@@ -296,7 +309,6 @@ TAO::HTIOP::Connector::make_connection (TAO::Profile_Transport_Resolver *,
   return transport;
 }
 
-
 int
 TAO::HTIOP::Connector::cancel_svc_handler (
   TAO_Connection_Handler * svc_handler)
@@ -305,13 +317,14 @@ TAO::HTIOP::Connector::cancel_svc_handler (
     dynamic_cast<TAO::HTIOP::Connection_Handler*> (svc_handler);
 
   if (handler)
+    {
       // Cancel from the connector
       //      this->base_connector_.cancel (handler);
-    return 0;
+      return 0;
+    }
 
   return -1;
 }
-
 
 /**
  * @brief Create a profile and initialize it based on the
@@ -323,7 +336,7 @@ TAO::HTIOP::Connector::create_profile (TAO_InputCDR& cdr)
   TAO_Profile *pfile;
   ACE_NEW_RETURN (pfile,
                   TAO::HTIOP::Profile (this->orb_core ()),
-                  0);
+                  nullptr);
 
   int r = pfile->decode (cdr);
   if (r == -1)
@@ -346,7 +359,7 @@ TAO::HTIOP::Connector::make_profile ()
   // or:
   //    host:port/object_key
 
-  TAO_Profile *profile = nullptr;
+  TAO_Profile *profile {};
   ACE_NEW_THROW_EX (profile,
                     TAO::HTIOP::Profile (this->orb_core ()),
                     CORBA::NO_MEMORY (
@@ -359,23 +372,27 @@ TAO::HTIOP::Connector::make_profile ()
 }
 
 int
-TAO::HTIOP::Connector::check_prefix (const char *endpoint)
+TAO::HTIOP::Connector::check_prefix (char const *endpoint)
 {
   // Check for a valid string
   if (!endpoint || !*endpoint)
+  {
     return -1;  // Failure
+  }
 
-  const char *protocol[] = { "htiop" };
+  char const *protocol[] = { "htiop" };
 
-  size_t slot = ACE_OS::strchr (endpoint, ':') - endpoint;
+  size_t slot = std::strchr (endpoint, ':') - endpoint;
 
-  size_t len0 = ACE_OS::strlen (protocol[0]);
+  size_t const len0 = std::strlen (protocol[0]);
 
   // Check for the proper prefix in the IOR.  If the proper prefix
   // isn't in the IOR then it is not an IOR we can use.
   if (slot == len0
       && ACE_OS::strncasecmp (endpoint, protocol[0], len0) == 0)
+  {
     return 0;
+  }
 
   return -1;
   // Failure: not an TAO_HTIOP IOR
@@ -392,13 +409,17 @@ TAO::HTIOP::Endpoint *
 TAO::HTIOP::Connector::remote_endpoint (TAO_Endpoint *endpoint)
 {
   if (endpoint->tag () != OCI_TAG_HTIOP_PROFILE)
-    return 0;
+  {
+    return nullptr;
+  }
 
   TAO::HTIOP::Endpoint *htiop_endpoint =
     dynamic_cast<TAO::HTIOP::Endpoint *> (endpoint );
 
  if (htiop_endpoint == nullptr)
-    return nullptr;
+ {
+   return nullptr;
+ }
 
   return htiop_endpoint;
 }

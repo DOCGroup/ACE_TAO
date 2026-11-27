@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 /**
  *  @file Object.h
  *
@@ -48,7 +46,6 @@ public:
   /// Id for Objects.
   using ID = CORBA::Long;
 
-  /// Destructor
   virtual ~TAO_Notify_Object ();
 
   /// This Object's ID
@@ -74,13 +71,13 @@ public:
   CORBA::Object_ptr ref ();
 
   /// Set the QoS Properties.
-  virtual void set_qos (const CosNotification::QoSProperties & qos);
+  virtual void set_qos (CosNotification::QoSProperties const & qos);
 
   /// Get the QoS Properties.
   CosNotification::QoSProperties* get_qos ();
 
   bool find_qos_property_value (
-    const char * name,
+    char const *name,
     CosNotification::PropertyValue & value)const;
 
   /// Obtain the Timer manager associated with this object.
@@ -94,16 +91,15 @@ public:
 
   /// Load our attributes. Each derived type should call the superclass
   /// load first before loading its own attributes.
-  virtual void load_attrs(const TAO_Notify::NVPList& attrs);
+  virtual void load_attrs(TAO_Notify::NVPList const& attrs);
 
   /// Allow access to the underlying worker task.
   TAO_Notify_Worker_Task* get_worker_task ();
 
 protected:
-  /// Constructor
   TAO_Notify_Object ();
 
-  /// Init this object with data from <rhs>.
+  /// Init this object with data from @a parent.
   void initialize (TAO_Notify_Object* parent);
 
   /// Uses the poas from the supplied object
@@ -124,25 +120,23 @@ protected:
   /// Get the POA assigned to us.
   TAO_Notify_POA_Helper* poa ();
 
-  // Sets the admin properties
+  /// Set the event manager.
   void set_event_manager(TAO_Notify_Event_Manager* event_manager);
 
-  // Sets the admin properties
+  /// Set the admin properties.
   void set_admin_properties(TAO_Notify_AdminProperties* admin_properties);
 
   /// Accessor for the Admin Properties
   TAO_Notify_AdminProperties& admin_properties ();
 
   /// Notification that can be overridden by subclasses to be informed that
-  /// <qos_properties_> have been modified.
-  virtual void qos_changed (const TAO_Notify_QoSProperties& qos_properties);
+  /// @c qos_properties_ have been modified.
+  virtual void qos_changed (TAO_Notify_QoSProperties const& qos_properties);
 
   /// Called by derived types to save their attributes. Each
   /// derived type should call its superclass version before
   /// saving its own attrs.
   virtual void save_attrs(TAO_Notify::NVPList& attrs);
-
-  ///= Protected data members.
 
   /// QoS Properties.
   TAO_Notify_QoSProperties qos_properties_;
@@ -178,32 +172,32 @@ protected:
 
 private:
   /// The POA in which the object is activated.
-  TAO_Notify_POA_Helper* poa_;
+  TAO_Notify_POA_Helper* poa_ {};
 
   /// The POA in which the proxys are activated.
-  TAO_Notify_POA_Helper* proxy_poa_;
-  bool own_proxy_poa_;
+  TAO_Notify_POA_Helper* proxy_poa_ {};
+  bool own_proxy_poa_ {};
 
   /// The POA in which the object's children are activated.
-  TAO_Notify_POA_Helper* object_poa_;
-  bool own_object_poa_;
+  TAO_Notify_POA_Helper* object_poa_ {};
+  bool own_object_poa_ {};
 
   /// Id assigned to this object
-  ID id_;
+  ID id_ {};
 
   /// The event manager.
   /// TAO_Notify_Event_Manager inl includes Object.h
-  TAO_Notify_Refcountable_Guard_T< TAO_Notify_Event_Manager > event_manager_;
+  TAO_Notify_Refcountable_Guard_T<TAO_Notify_Event_Manager> event_manager_;
 
   /// Admin Properties.
   TAO_Notify_AdminProperties::Ptr admin_properties_;
 
   /// Worker Task.
   TAO_Notify_Worker_Task::Ptr worker_task_;
-  bool own_worker_task_;
+  bool own_worker_task_ {};
 
   /// Are we shutdown (i,e. scheduled for destroy).
-  bool shutdown_;
+  bool shutdown_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

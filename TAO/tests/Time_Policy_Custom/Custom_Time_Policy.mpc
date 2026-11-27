@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*Lib): taolib {
   sharedname = CustomTimePolicy
   dynamicflags  = TPTEST_BUILD_DLL

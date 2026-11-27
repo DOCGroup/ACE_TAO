@@ -17,16 +17,19 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 #if (defined (ACE_LACKS_STRDUP) && !defined (ACE_STRDUP_EQUIVALENT)) \
   || defined (ACE_HAS_STRDUP_EMULATION)
 char *
-ACE_OS::strdup_emulation (const char *s)
+ACE_OS::strdup_emulation (char const *s)
 {
 #if defined (ACE_HAS_ALLOC_HOOKS)
-  char *t = (char *) ACE_Allocator::instance()->malloc (ACE_OS::strlen (s) + 1);
+  char *t = static_cast<char *> (
+    ACE_Allocator::instance()->malloc (ACE_OS::strlen (s) + 1));
 #else
-  char *t = (char *) ACE_OS::malloc (ACE_OS::strlen (s) + 1);
+  char *t = static_cast<char *> (ACE_OS::malloc (ACE_OS::strlen (s) + 1));
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
-  if (t == 0)
-    return 0;
+  if (t == nullptr)
+    {
+      return nullptr;
+    }
 
   return ACE_OS::strcpy (t, s);
 }
@@ -38,11 +41,12 @@ ACE_OS::strdup_emulation (const char *s)
 wchar_t *
 ACE_OS::strdup_emulation (const wchar_t *s)
 {
-  wchar_t *buffer =
-    (wchar_t *) ACE_OS::malloc ((ACE_OS::strlen (s) + 1)
-                                * sizeof (wchar_t));
+  wchar_t *buffer = static_cast<wchar_t *> (
+    ACE_OS::malloc ((ACE_OS::strlen (s) + 1) * sizeof (wchar_t)));
   if (buffer == nullptr)
+  {
     return nullptr;
+  }
 
   return ACE_OS::strcpy (buffer, s);
 }
@@ -50,13 +54,14 @@ ACE_OS::strdup_emulation (const wchar_t *s)
 #endif /* ACE_HAS_WCHAR */
 
 char *
-ACE_OS::strecpy (char *s, const char *t)
+ACE_OS::strecpy (char *s, char const *t)
 {
   char *dscan = s;
-  const char *sscan = t;
+  char const *sscan = t;
 
   while ((*dscan++ = *sscan++) != '\0')
-    continue;
+    {
+    }
 
   return dscan;
 }
@@ -69,7 +74,8 @@ ACE_OS::strecpy (wchar_t *s, const wchar_t *t)
   const wchar_t *sscan = t;
 
   while ((*dscan++ = *sscan++) != ACE_TEXT_WIDE ('\0'))
-    continue;
+    {
+    }
 
   return dscan;
 }
@@ -82,7 +88,7 @@ ACE_OS::strerror (int errnum)
 
   if (ACE::is_sock_error (errnum))
     {
-      const ACE_TCHAR *errortext = ACE::sock_error (errnum);
+      ACE_TCHAR const *errortext = ACE::sock_error (errnum);
       ACE_OS::strsncpy (ret_errortext,
                         ACE_TEXT_ALWAYS_CHAR (errortext),
                         sizeof (ret_errortext));
@@ -99,20 +105,24 @@ ACE_OS::strerror (int errnum)
   // and set errno to EINVAL.
   ACE_Errno_Guard g (errno);
   errno = 0;
-  char *errmsg = nullptr;
+  char *errmsg {};
 
 # if defined (ACE_HAS_TR24731_2005_CRT)
   errmsg = ret_errortext;
   ACE_SECURECRTCALL (strerror_s (ret_errortext, sizeof(ret_errortext), errnum),
                      char *, 0, errmsg);
   if (errnum < 0 || errnum >= _sys_nerr)
-    g = EINVAL;
+    {
+      g = EINVAL;
+    }
 
   return errmsg;
 # else
 #  if defined (ACE_WIN32)
   if (errnum < 0 || errnum >= _sys_nerr)
-    errno = EINVAL;
+    {
+      errno = EINVAL;
+    }
 #  endif /* ACE_WIN32 */
   errmsg = ::strerror (errnum);
 
@@ -143,16 +153,18 @@ ACE_OS::strsignal (int signum)
 {
   static char signal_text[128];
 #if defined (ACE_HAS_STRSIGNAL)
-  char *ret_val = nullptr;
+  char *ret_val {};
 
 # if defined (ACE_NEEDS_STRSIGNAL_RANGE_CHECK)
   if (signum < 0 || signum >= ACE_NSIG)
-    ret_val = 0;
+    {
+      ret_val = nullptr;
+    }
   else
 # endif /* (ACE_NEEDS_STRSIGNAL_RANGE_CHECK */
   ret_val = ::strsignal (signum);
 
-  if (ret_val <= reinterpret_cast<char *> (0))
+  if (ret_val == nullptr)
     {
       ACE_OS::snprintf (signal_text, 128, "Unknown signal: %d", signum);
       ret_val = signal_text;
@@ -179,28 +191,34 @@ ACE_OS::strerror_r (int errnum, char *buf, size_t buflen)
 #ifdef ACE_HAS_STRERROR_R
 # ifdef ACE_HAS_STRERROR_R_XSI
   if (::strerror_r (errnum, buf, buflen) == 0)
-    return buf;
+    {
+      return buf;
+    }
   return const_cast <char*> ("Unknown Error");
 # else
   return ::strerror_r (errnum, buf, buflen);
 # endif
 #else
-  return ACE_OS::strncpy (buf, strerror (errnum), buflen);
+  return ACE_OS::strsncpy (buf, strerror (errnum), buflen);
 #endif
 }
 
-const char *
-ACE_OS::strnchr (const char *s, int c, size_t len)
+char const *
+ACE_OS::strnchr (char const *s, int c, size_t len)
 {
   for (size_t i = 0; i < len; ++i)
-    if (s[i] == c)
-      return s + i;
+      {
+        if (s[i] == c)
+          {
+            return s + i;
+          }
+      }
 
   return nullptr;
 }
 
-const ACE_WCHAR_T *
-ACE_OS::strnchr (const ACE_WCHAR_T *s, ACE_WCHAR_T c, size_t len)
+ACE_WCHAR_T const *
+ACE_OS::strnchr (ACE_WCHAR_T const *s, ACE_WCHAR_T c, size_t len)
 {
   for (size_t i = 0; i < len; ++i)
     {
@@ -213,20 +231,22 @@ ACE_OS::strnchr (const ACE_WCHAR_T *s, ACE_WCHAR_T c, size_t len)
   return nullptr;
 }
 
-const char *
-ACE_OS::strnstr (const char *s1, const char *s2, size_t len2)
+char const *
+ACE_OS::strnstr (char const *s1, char const *s2, size_t len2)
 {
   // Substring length
   size_t const len1 = ACE_OS::strlen (s1);
 
   // Check if the substring is longer than the string being searched.
   if (len2 > len1)
+  {
     return nullptr;
+  }
 
   // Go upto <len>
   size_t const len = len1 - len2;
 
-  for (size_t i = 0; i <= len; i++)
+  for (size_t i = 0; i <= len; ++i)
     {
       if (ACE_OS::memcmp (s1 + i, s2, len2) == 0)
         {
@@ -238,20 +258,22 @@ ACE_OS::strnstr (const char *s1, const char *s2, size_t len2)
   return nullptr;
 }
 
-const ACE_WCHAR_T *
-ACE_OS::strnstr (const ACE_WCHAR_T *s1, const ACE_WCHAR_T *s2, size_t len2)
+ACE_WCHAR_T const *
+ACE_OS::strnstr (ACE_WCHAR_T const *s1, ACE_WCHAR_T const *s2, size_t len2)
 {
   // Substring length
   size_t const len1 = ACE_OS::strlen (s1);
 
   // Check if the substring is longer than the string being searched.
   if (len2 > len1)
+  {
     return nullptr;
+  }
 
   // Go upto <len>
   size_t const len = len1 - len2;
 
-  for (size_t i = 0; i <= len; i++)
+  for (size_t i = 0; i <= len; ++i)
     {
       if (ACE_OS::memcmp (s1 + i, s2, len2 * sizeof (ACE_WCHAR_T)) == 0)
         {
@@ -264,10 +286,10 @@ ACE_OS::strnstr (const ACE_WCHAR_T *s1, const ACE_WCHAR_T *s2, size_t len2)
 }
 
 char *
-ACE_OS::strsncpy (char *dst, const char *src, size_t maxlen)
+ACE_OS::strsncpy (char *dst, char const *src, size_t maxlen)
 {
   char *rdst = dst;
-  const char *rsrc = src;
+  char const *rsrc = src;
   size_t rmaxlen = maxlen;
 
   if (rmaxlen > 0)
@@ -290,10 +312,10 @@ ACE_OS::strsncpy (char *dst, const char *src, size_t maxlen)
 }
 
 ACE_WCHAR_T *
-ACE_OS::strsncpy (ACE_WCHAR_T *dst, const ACE_WCHAR_T *src, size_t maxlen)
+ACE_OS::strsncpy (ACE_WCHAR_T *dst, ACE_WCHAR_T const *src, size_t maxlen)
 {
   ACE_WCHAR_T *rdst = dst;
-  const ACE_WCHAR_T *rsrc = src;
+  ACE_WCHAR_T const *rsrc = src;
   size_t rmaxlen = maxlen;
 
   if (rmaxlen > 0)
@@ -317,23 +339,35 @@ ACE_OS::strsncpy (ACE_WCHAR_T *dst, const ACE_WCHAR_T *src, size_t maxlen)
 
 #if defined (ACE_LACKS_STRTOK_R)
 char *
-ACE_OS::strtok_r_emulation (char *s, const char *tokens, char **lasts)
+ACE_OS::strtok_r_emulation (char *s, char const *tokens, char **lasts)
 {
-  if (s == 0)
-    s = *lasts;
+  if (s == nullptr)
+    {
+      s = *lasts;
+    }
   else
-    *lasts = s;
+    {
+      *lasts = s;
+    }
   if (*s == 0)                  // We have reached the end
-    return 0;
+    {
+      return nullptr;
+    }
   size_t const l_org = ACE_OS::strlen (s);
   s = ::strtok (s, tokens);
-  if (s == 0)
-    return 0;
+  if (s == nullptr)
+    {
+      return nullptr;
+    }
   size_t const l_sub = ACE_OS::strlen (s);
   if (s + l_sub < *lasts + l_org)
-    *lasts = s + l_sub + 1;
+    {
+      *lasts = s + l_sub + 1;
+    }
   else
-    *lasts = s + l_sub;
+    {
+      *lasts = s + l_sub;
+    }
   return s ;
 }
 #endif /* ACE_LACKS_STRTOK_R */
@@ -341,20 +375,22 @@ ACE_OS::strtok_r_emulation (char *s, const char *tokens, char **lasts)
 # if defined (ACE_HAS_WCHAR) && defined (ACE_LACKS_WCSTOK)
 wchar_t*
 ACE_OS::strtok_r_emulation (ACE_WCHAR_T *s,
-                            const ACE_WCHAR_T *tokens,
+                            ACE_WCHAR_T const *tokens,
                             ACE_WCHAR_T **lasts)
 {
-  ACE_WCHAR_T* sbegin = s ? s : *lasts;
+  ACE_WCHAR_T* sbegin = s != nullptr ? s : *lasts;
   sbegin += ACE_OS::strspn(sbegin, tokens);
   if (*sbegin == 0)
     {
       static ACE_WCHAR_T empty[1] = { 0 };
       *lasts = empty;
-      return 0;
+      return nullptr;
   }
   ACE_WCHAR_T*send = sbegin + ACE_OS::strcspn(sbegin, tokens);
   if (*send != 0)
+    {
       *send++ = 0;
+    }
   *lasts = send;
   return sbegin;
 }

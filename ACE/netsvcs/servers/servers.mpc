@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(Netsvcs_server) : aceexe, avoids_ace_for_tao {
   exename  = ace_netsvcs
   libs     += netsvcs

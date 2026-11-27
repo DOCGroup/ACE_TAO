@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 /**
  *  @file   EC_Gateway_IIOP.h
  *
@@ -26,6 +24,8 @@
 
 #include "ace/Map_Manager.h"
 #include "ace/Null_Mutex.h"
+
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -64,7 +64,7 @@ class TAO_RTEvent_Serv_Export TAO_EC_Gateway_IIOP : public TAO_EC_Gateway
 {
 public:
   TAO_EC_Gateway_IIOP ();
-  virtual ~TAO_EC_Gateway_IIOP () override;
+  ~TAO_EC_Gateway_IIOP () override;
 
   /**
    * To do its job this class requires to know the local and remote ECs it will
@@ -82,17 +82,17 @@ public:
 
   /// This is the consumer side behavior, it pushes the events to the
   /// local event channel.
-  void push (const RtecEventComm::EventSet &events);
+  void push (RtecEventComm::EventSet const &events);
 
   /// Disconnect and shutdown the gateway
   int shutdown ();
 
-  // The following methods are documented in the base class.
-  virtual void close () override;
-  virtual void update_consumer (const RtecEventChannelAdmin::ConsumerQOS& sub) override;
-  virtual void update_supplier (const RtecEventChannelAdmin::SupplierQOS& pub) override;
+  /// These methods are documented in the base class.
+  void close () override;
+  void update_consumer (RtecEventChannelAdmin::ConsumerQOS const &sub) override;
+  void update_supplier (RtecEventChannelAdmin::SupplierQOS const &pub) override;
 
-  // Let the gateway reconnect itself to the consumer ec given exisiting QoS
+  /// Reconnect the gateway to the consumer event channel using the existing QoS.
   void reconnect_consumer_ec();
 
   /// Check whether the consumer event channel is non existent or not
@@ -132,17 +132,17 @@ private:
   /// Remove all consumer proxies without calling disconnect on them
   void cleanup_consumer_proxies_i ();
 
-  void update_consumer_i (const RtecEventChannelAdmin::ConsumerQOS& sub);
+  void update_consumer_i (RtecEventChannelAdmin::ConsumerQOS const &sub);
 
   /// Create all connections to consumer ec and to supplier ec.
-  void open_i (const RtecEventChannelAdmin::ConsumerQOS& sub);
+  void open_i (RtecEventChannelAdmin::ConsumerQOS const &sub);
 
   /// Helper method to see if consumer ec is connected
   CORBA::Boolean is_consumer_ec_connected_i () const;
 
   /// Push the @a event to the @a consumer.
   void push_to_consumer (RtecEventChannelAdmin::ProxyPushConsumer_ptr consumer,
-                         const RtecEventComm::EventSet& event);
+                         RtecEventComm::EventSet const &event);
 
   void cleanup_consumer_ec_i ();
 
@@ -166,19 +166,19 @@ protected:
    * push() the modification is stored, if multiple update_consumer messages
    * arrive only the last one is executed.
    */
-  int update_posted_;
+  bool update_posted_ {};
   RtecEventChannelAdmin::ConsumerQOS c_qos_;
 
   /**
    * We have a cleanup outstanding and must wait doing cleanup until all pushes
    * are ready.
    */
-  int cleanup_posted_;
+  bool cleanup_posted_ {};
 
   /**
    * Is the supplier ec suspended?
    */
-  int supplier_ec_suspended_;
+  bool supplier_ec_suspended_ {};
 
   /// The event channel acting as supplier for this gateway so we can reconnect
   /// when the list changes.
@@ -224,7 +224,7 @@ protected:
 
   /// The consumer ec control which controls the behaviour in case of a
   /// misbehaving consumer ec
-  TAO_ECG_ConsumerEC_Control* ec_control_;
+  std::unique_ptr<TAO_ECG_ConsumerEC_Control> ec_control_;
 
   /// The Gateway IIOP Factory for all the settings
   TAO_EC_Gateway_IIOP_Factory* factory_;

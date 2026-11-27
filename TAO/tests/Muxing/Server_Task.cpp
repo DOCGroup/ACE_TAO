@@ -1,4 +1,3 @@
-
 #include "Server_Task.h"
 
 Server_Task::Server_Task (CORBA::ORB_ptr orb,
@@ -19,7 +18,7 @@ Server_Task::svc ()
 
       this->orb_->run (tv);
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       return -1;
     }

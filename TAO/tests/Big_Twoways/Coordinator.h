@@ -1,8 +1,8 @@
-
 #ifndef BIG_ONEWAYS_COORDINATOR_H
 #define BIG_ONEWAYS_COORDINATOR_H
 #include /**/ "ace/pre.h"
 
+#include <vector>
 #include "TestS.h"
 
 /// Implement the Test::Coordinator interface
@@ -10,15 +10,14 @@ class Coordinator
   : public virtual POA_Test::Coordinator
 {
 public:
-  /// Constructor
-  Coordinator (CORBA::ULong peer_count);
+  explicit Coordinator (CORBA::ULong peer_count);
   Coordinator (Coordinator const &) = delete;
   Coordinator (Coordinator &&) = delete;
   Coordinator &operator= (Coordinator const &) = delete;
   Coordinator &operator= (Coordinator &&) = delete;
 
   /// Check if all the peers have registered already
-  int has_all_peers () const;
+  bool has_all_peers () const;
 
   /// Check a session on each peer
   void create_session_list (Test::Session_Control_ptr session_control,
@@ -30,22 +29,21 @@ public:
   /// Shutdown all the peers
   void shutdown_all_peers ();
 
-  // = The skeleton methods
+  /// @name Skeleton methods
+  /// @{
   void add_peer (Test::Peer_ptr peer) override;
+  /// @}
 
 protected:
   /// Protected destructor, call _remove_ref() to delete
-  ~Coordinator () override;
+  ~Coordinator () override = default;
 
 private:
   /// Store a reference to each peer
-  Test::Peer_var *peers_;
-
-  /// Current number of elements in the array
-  size_t peer_count_;
+  std::vector<Test::Peer_var> peers_;
 
   /// Array's capacity
-  size_t peer_max_;
+  size_t const peer_max_;
 };
 
 #include /**/ "ace/post.h"

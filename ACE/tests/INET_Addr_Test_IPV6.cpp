@@ -1,4 +1,3 @@
-// ============================================================================
 /**
  * @file INET_Addr_Test_IPV6.cpp
  *
@@ -9,7 +8,6 @@
  * @author John Aughey <jha@aughey.com>
  *         Brian Buesker <bbuesker@qualcomm.com>
  */
-// ============================================================================
 
 #include "test_config.h"
 #include "ace/OS_NS_string.h"
@@ -25,7 +23,7 @@
 
 // Make sure that ACE_Addr::addr_type_ is the same
 // as the family of the inet_addr_.
-static int check_type_consistency (const ACE_INET_Addr &addr)
+static int check_type_consistency (ACE_INET_Addr const &addr)
 {
   int family = -1;
 
@@ -102,7 +100,6 @@ static bool check_both_families()
   return good;
 }
 #endif /* ACE_HAS_IPV6 */
-
 
 int run_main (int, ACE_TCHAR *[])
 {
@@ -197,7 +194,7 @@ int run_main (int, ACE_TCHAR *[])
                                LINK_LOCAL_ADDR))
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("IPv6 get_host_addr failed: %s != %s\n"),
+                      ACE_TEXT ("IPv6 get_host_addr failed: %C != %s\n"),
                       link_local_addr.get_host_addr (),
                       LINK_LOCAL_ADDR));
           status = 1;
@@ -224,7 +221,9 @@ int run_main (int, ACE_TCHAR *[])
     }
 
   if (!check_both_families())
-    status = 1;
+    {
+      status = 1;
+    }
 
 #endif /* ACE_HAS_IPV6 */
 

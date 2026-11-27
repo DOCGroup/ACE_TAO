@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file RTCORBA.h
  *
@@ -9,7 +6,6 @@
  *  @author  Angelo Corsaro <corsaro@cs.wustl.edu>
  *  @author  Frank Hunleth <fhunleth@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_RTCORBA_H_
 #define TAO_RTCORBA_H_
@@ -31,7 +27,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_RTCORBA_Export TAO_RTCORBA_Initializer
 {
 public:
-  // Constructor.
   TAO_RTCORBA_Initializer ();
 };
 

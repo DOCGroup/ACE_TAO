@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file     GIOP_Utils.h
  *
@@ -9,7 +6,6 @@
  *  @author  Chris Cleeland <cleeland@cs.wustl.edu>
  *  @author  Carlos O' Ryan <coryan@uci.edu>
  */
-//=============================================================================
 
 #ifndef TAO_GIOP_UTILS_H
 #define TAO_GIOP_UTILS_H
@@ -43,7 +39,7 @@ public:
   CORBA::Object_var forward_location_var;
 
   /// Type of Locate status message
-  GIOP::LocateStatusType status;
+  GIOP::LocateStatusType status {GIOP::UNKNOWN_OBJECT};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

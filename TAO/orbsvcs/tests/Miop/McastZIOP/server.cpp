@@ -6,13 +6,13 @@
 #include "tao/ZIOP/ZIOP.h"
 #include "tao/Compression/zlib/ZlibCompressor_Factory.h"
 
-static const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
+static ACE_TCHAR const *ior_output_file = ACE_TEXT("test.ior");
 
 // Use a multicast address in the administrative "site local" range, 239.255.0.0 to
 // 239.255.255.255.  The range 224.255.0.0 to 238.255.255.255 should also be valid
 // too.
-//static const char *group_ior = "corbaloc:miop:1.0@1.0-TestDomain-1/239.255.0.1:16000";
-static const ACE_TCHAR *group_ior = ACE_TEXT("corbaloc:miop:1.0@1.0-TestDomain-1/224.1.239.2:1234");
+//static char const *group_ior = "corbaloc:miop:1.0@1.0-TestDomain-1/239.255.0.1:16000";
+static ACE_TCHAR const *group_ior = ACE_TEXT("corbaloc:miop:1.0@1.0-TestDomain-1/224.1.239.2:1234");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -62,9 +62,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         PortableGroup::GOA::_narrow (poa_object.in ()));
 
       if (CORBA::is_nil (root_poa.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Panic: nil RootPOA\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Panic: nil RootPOA\n"),
+                            1);
+        }
 
       // Obtain the root POA's manager
       PortableServer::POAManager_var poa_manager (
@@ -78,9 +80,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         ::Compression::CompressionManager::_narrow (compression_manager.in ()));
 
       if (CORBA::is_nil(comp_manager.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Panic: nil compression manager\n"),
-                           1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Panic: nil compression manager\n"),
+                             1);
+        }
 
       //register Zlib compressor
       ::Compression::CompressorFactory_ptr compressor_factory;
@@ -90,7 +94,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // Parse our own specific arguments
       if (parse_args (argc, argv) != 0)
+      {
         return 1;
+      }
 
       // Create the servant on the group ior
       CORBA::Object_var group1 =
@@ -126,7 +132,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
             {
               orb->run ();
             }
-          catch (const CORBA::Exception& ex)
+          catch (CORBA::Exception const & ex)
             {
               ex._tao_print_exception ("(%P|%t) server - Orb->run Exception caught:");
               exit_status = 1;
@@ -152,9 +158,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           exit_status = 1;
         }
       else
+      {
         ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - Success!\n"));
+      }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("(%P|%t) server - Exception caught:");
       exit_status = 1;

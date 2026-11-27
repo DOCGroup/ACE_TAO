@@ -4,19 +4,11 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
 
 # This is a Perl script that runs a Naming Service test.  It starts
 # all the servers and clients as necessary.
-# -*- perl -*-
-
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::TestTarget;
-use Cwd;
 
 $status = 0;
 $debug_level = '0';
-$quiet = 0;
-
-if ($ARGV[0] eq '-q') {
-    $quiet = 1;
-}
 
 foreach $i (@ARGV) {
     if ($i eq '-debug') {

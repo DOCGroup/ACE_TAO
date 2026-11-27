@@ -1,13 +1,15 @@
 #include "testC.h"
 #include "tao/CDR.h"
 
+#include <string>
+
 namespace
 {
   void
-  start_test (char const *&current_test, char const *name)
+  start_test (std::string &current_test, std::string const &name)
   {
     current_test = name;
-    ACE_DEBUG ((LM_DEBUG, "testing: %C\n", current_test));
+    ACE_DEBUG ((LM_DEBUG, "testing: %C\n", current_test.c_str ()));
   }
 
   template <typename T>
@@ -116,7 +118,7 @@ int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {
   int error {};
-  char const *current_test = "initialization";
+  std::string current_test {"initialization"};
 
   try
     {
@@ -187,18 +189,18 @@ ACE_TMAIN (int, ACE_TCHAR *[])
       start_test (current_test, "uac_bd_out");
       test::UnionAllCovered_BooleanDiscriminant uac_bd_out;
       // uac_bd_out._default (); // no _default() since all labels are covered.
-      uac_bd_out._d (static_cast<CORBA::Boolean> (3));
+      uac_bd_out._d (true);
       marshal (cdr_out, uac_bd_out);
 
       start_test (current_test, "uac_bd2_out");
       test::UnionAllCovered_BooleanDiscriminant uac_bd2_out;
-      uac_bd2_out._d (static_cast<CORBA::Boolean> (5));
+      uac_bd2_out._d (true);
       marshal (cdr_out, uac_bd2_out);
 
       start_test (current_test, "uwd_bd_out");
       test::UnionWithDefault_BooleanDiscriminant uwd_bd_out;
       uwd_bd_out.e_true (0);
-      uwd_bd_out._d (static_cast<CORBA::Boolean> (7));
+      uwd_bd_out._d (true);
       marshal (cdr_out, uwd_bd_out);
 
       start_test (current_test, "uwid_bd_out");
@@ -209,7 +211,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
       start_test (current_test, "uwid_bd2_out");
       test::UnionWithImplicitDefault_BooleanDiscriminant uwid_bd2_out;
       uwid_bd2_out.e_true (16);
-      uwid_bd2_out._d (static_cast<CORBA::Boolean> (9));
+      uwid_bd2_out._d (true);
       marshal (cdr_out, uwid_bd2_out);
 
       start_test (current_test, "uwid_bdf_out");
@@ -429,7 +431,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
     {
       ACE_ERROR ((LM_ERROR,
                   "ERROR: CORBA exception while testing %C\n",
-                  current_test));
+                  current_test.c_str ()));
       ex._tao_print_exception ("Exception caught:");
       error = 1;
     }

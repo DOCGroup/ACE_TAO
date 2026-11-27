@@ -11,7 +11,7 @@ namespace TAO
   }
 
   int
-  Transport_Timer::handle_timeout (const ACE_Time_Value &current_time, const void *act)
+  Transport_Timer::handle_timeout (ACE_Time_Value const &current_time, void const *act)
   {
     return this->transport_->handle_timeout (current_time, act);
   }

@@ -11,7 +11,7 @@
 #include <iostream>
 
 PortableServer::POA_ptr
-createPOA(PortableServer::POA_ptr root_poa, const char* poa_name)
+createPOA(PortableServer::POA_ptr root_poa, char const *poa_name)
 {
   PortableServer::LifespanPolicy_var life =
     root_poa->create_lifespan_policy(PortableServer::PERSISTENT);
@@ -45,14 +45,16 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     PortableServer::POAManager_var mgr = root_poa->the_POAManager();
 
-    const char* poa_name = "MessengerService";
+    char const *poa_name = "MessengerService";
 
     PortableServer::POA_var messenger_poa = createPOA(root_poa.in(), poa_name);
 
     Terminator terminator;
     if (terminator.open (0) == -1)
-      ACE_ERROR_RETURN((LM_ERROR,
-                        ACE_TEXT ("main Error opening terminator\n")),-1);
+      {
+        ACE_ERROR_RETURN((LM_ERROR,
+                          ACE_TEXT ("main Error opening terminator\n")),-1);
+      }
 
     PortableServer::Servant_var<Messenger_i> messenger_servant =
       new Messenger_i(orb.in(), terminator);
@@ -99,7 +101,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     std::cout << "Messenger server shutting down." << std::endl;
 
-    root_poa->destroy(1,1);
+    root_poa->destroy(true,true);
     orb->destroy();
 
     ACE_Message_Block *mb;
@@ -107,7 +109,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     terminator.putq(mb);
     terminator.wait();
   }
-  catch(const CORBA::Exception& ex) {
+  catch(CORBA::Exception const & ex) {
     std::cerr << "Server main() Caught CORBA::Exception" << ex << std::endl;
     return 1;
   }

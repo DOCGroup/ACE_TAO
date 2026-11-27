@@ -1,8 +1,6 @@
-// -*- C++ -*-
 // Definition for Win32 Export directives.
 // This file is generated automatically by
 // ${ACE_ROOT}/GenExportH.BAT
-// ------------------------------
 #if !defined (SYNCHLIB_EXPORT_H)
 #define SYNCHLIB_EXPORT_H
 

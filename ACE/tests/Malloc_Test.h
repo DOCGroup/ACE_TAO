@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    Malloc_Test.h
  *
@@ -6,8 +5,6 @@
  *
  *  @author   Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
-
 
 #ifndef ACE_TESTS_MALLOC_TEST_H
 #define ACE_TESTS_MALLOC_TEST_H

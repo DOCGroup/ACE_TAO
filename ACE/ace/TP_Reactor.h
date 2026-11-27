@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    TP_Reactor.h
  *
@@ -21,8 +18,6 @@
  *  @author Irfan Pyarali <irfan@cs.wustl.edu>
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef ACE_TP_REACTOR_H
 #define ACE_TP_REACTOR_H
@@ -66,12 +61,11 @@ public:
 private:
   bool dispatch_;
 
-  ACE_EH_Dispatch_Info (const ACE_EH_Dispatch_Info &) = delete;
-  ACE_EH_Dispatch_Info &operator= (const ACE_EH_Dispatch_Info &) = delete;
+  ACE_EH_Dispatch_Info (ACE_EH_Dispatch_Info const &) = delete;
+  ACE_EH_Dispatch_Info &operator= (ACE_EH_Dispatch_Info const &) = delete;
   ACE_EH_Dispatch_Info (ACE_EH_Dispatch_Info &&) = delete;
   ACE_EH_Dispatch_Info &operator= (ACE_EH_Dispatch_Info &&) = delete;
 };
-
 
 /**
  * @class ACE_TP_Token_Guard
@@ -88,7 +82,7 @@ class ACE_TP_Token_Guard
 {
 public:
   /// Constructor that will grab the token for us
-  ACE_TP_Token_Guard (ACE_Select_Reactor_Token &token);
+  explicit ACE_TP_Token_Guard (ACE_Select_Reactor_Token &token);
 
   /// Destructor. This will release the token if it hasnt been
   /// released till this point
@@ -115,8 +109,8 @@ public:
 
 private:
   ACE_TP_Token_Guard () = delete;
-  ACE_TP_Token_Guard (const ACE_TP_Token_Guard &) = delete;
-  ACE_TP_Token_Guard &operator= (const ACE_TP_Token_Guard &) = delete;
+  ACE_TP_Token_Guard (ACE_TP_Token_Guard const &) = delete;
+  ACE_TP_Token_Guard &operator= (ACE_TP_Token_Guard const &) = delete;
   ACE_TP_Token_Guard (ACE_TP_Token_Guard &&) = delete;
   ACE_TP_Token_Guard &operator= (ACE_TP_Token_Guard &&) = delete;
 
@@ -170,9 +164,14 @@ private:
 class ACE_Export ACE_TP_Reactor : public ACE_Select_Reactor
 {
 public:
+  ACE_TP_Reactor (ACE_TP_Reactor const &) = delete;
+  ACE_TP_Reactor (ACE_TP_Reactor &&) = delete;
+  ACE_TP_Reactor &operator= (ACE_TP_Reactor const &) = delete;
+  ACE_TP_Reactor &operator= (ACE_TP_Reactor &&) = delete;
+
   /// Initialize ACE_TP_Reactor with the default size.
-  ACE_TP_Reactor (ACE_Sig_Handler * = 0,
-                  ACE_Timer_Queue * = 0,
+  ACE_TP_Reactor (ACE_Sig_Handler * = nullptr,
+                  ACE_Timer_Queue * = nullptr,
                   bool mask_signals = true,
                   int s_queue = ACE_Select_Reactor_Token::FIFO);
 
@@ -233,7 +232,9 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-  // = Internal methods that do the actual work.
+
+  /// @name Internal methods
+  /// @{
 
   /// Template method from the base class.
   void clear_dispatch_mask (ACE_HANDLE handle,
@@ -278,6 +279,9 @@ protected:
                               ACE_Handle_Set &,
                               ACE_Event_Handler *eh,
                               ACE_EH_PTMF callback) override;
+
+  /// @}
+
 private:
   /// Get the handle of the notify pipe from the ready set if there is
   /// an event in the notify pipe.
@@ -286,18 +290,14 @@ private:
   /// Get socket event dispatch information.
   int get_socket_event_info (ACE_EH_Dispatch_Info &info);
 
-  /// Notify the appropriate <callback> in the context of the <eh>
-  /// associated with <handle> that a particular event has occurred.
+  /// Notify the appropriate @c callback in the context of the @c eh
+  /// associated with @c handle that a particular event has occurred.
   int dispatch_socket_event (ACE_EH_Dispatch_Info &dispatch_info);
 
   /// Clear the @a handle from the read_set
   void clear_handle_read_set (ACE_HANDLE handle);
 
   int post_process_socket_event (ACE_EH_Dispatch_Info &dispatch_info,int status);
-
-private:
-  ACE_TP_Reactor (const ACE_TP_Reactor &) = delete;
-  ACE_TP_Reactor &operator = (const ACE_TP_Reactor &) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    Thread_Pool_Reactor_Test.h
  *
@@ -7,8 +5,6 @@
  *
  *  @author   Irfan Pyarali <irfan@cs.wustl.edu>   Nanbor Wang <nanbor@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef ACE_TESTS_THREAD_POOL_REACTOR_TEST_H
 #define ACE_TESTS_THREAD_POOL_REACTOR_TEST_H
@@ -24,17 +20,17 @@
 /**
  * @class Request_Handler
  *
- * @brief This class is the Svc_Handler used by <Acceptor>.
+ * @brief This class is the Svc_Handler used by @c Acceptor.
  */
 class Request_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_MT_SYNCH>
 {
 public:
   /// The default constructor makes sure the right reactor is used.
-  Request_Handler (ACE_Thread_Manager *tm = 0);
+  Request_Handler (ACE_Thread_Manager *tm = nullptr);
 
 protected:
-  virtual int handle_input (ACE_HANDLE fd = ACE_INVALID_HANDLE);
-  virtual int handle_close (ACE_HANDLE fd, ACE_Reactor_Mask = 0);
+  int handle_input (ACE_HANDLE fd = ACE_INVALID_HANDLE) override;
+  int handle_close (ACE_HANDLE fd, ACE_Reactor_Mask = 0) override;
 
 private:
   size_t  nr_msgs_rcvd_;

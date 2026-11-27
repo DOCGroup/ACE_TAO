@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    typecode.cpp
  *
@@ -7,8 +5,6 @@
  *
  *  @author   Aniruddha Gokhale
  */
-//=============================================================================
-
 
 #include "helper.h"
 #include "typecode.h"
@@ -18,17 +14,11 @@
 // ************************************************************************
 
 Test_TypeCode::Test_TypeCode ()
-  : opname_ (CORBA::string_dup ("test_typecode"))
+  : opname_ ("test_typecode")
 {
 }
 
-Test_TypeCode::~Test_TypeCode ()
-{
-  CORBA::string_free (this->opname_);
-  this->opname_ = 0;
-}
-
-const char *
+char const *
 Test_TypeCode::opname () const
 {
   return this->opname_;
@@ -86,9 +76,11 @@ Test_TypeCode::init_parameters (Param_Test_ptr)
   this->out_ = CORBA::TypeCode::_nil ();
   this->ret_ = CORBA::TypeCode::_nil ();
 
-  index++;
+  ++index;
   if (index >= sizeof(tc_table)/sizeof(tc_table[0]))
+  {
     index = 0;
+  }
 
   return 0;
 }
@@ -108,7 +100,7 @@ Test_TypeCode::run_sii_test (Param_Test_ptr objref)
     {
       this->init_parameters (objref);
 
-      CORBA::TypeCode_out out (this->out_);
+      CORBA::TypeCode_out const out (this->out_);
 
       this->ret_ = objref->test_typecode (this->in_.in (),
                                           this->inout_.inout (),
@@ -116,7 +108,7 @@ Test_TypeCode::run_sii_test (Param_Test_ptr objref)
 
       return 0;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Test_TypeCode::run_sii_test\n");
     }
@@ -137,15 +129,19 @@ Test_TypeCode::check_validity ()
       three = this->in_.in ()->equal (this->ret_.in ());
 
       if (one && two && three)
-        return 1;
+        {
+          return true;
+        }
       else
-        return 0;
+      {
+        return false;
+      }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Test_TypeCode::check_validity\n");
     }
-  return 0;
+  return false;
 }
 
 CORBA::Boolean

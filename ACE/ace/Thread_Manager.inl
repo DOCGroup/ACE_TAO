@@ -1,14 +1,7 @@
-// -*- C++ -*-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
-ACE_At_Thread_Exit::ACE_At_Thread_Exit ()
-  : next_ (0),
-    td_ (0),
-    was_applied_ (false),
-    is_owner_ (true)
-{
-}
+ACE_At_Thread_Exit::ACE_At_Thread_Exit () = default;
 
 ACE_INLINE bool
 ACE_At_Thread_Exit::was_applied() const
@@ -21,7 +14,9 @@ ACE_At_Thread_Exit::was_applied (bool applied)
 {
   was_applied_ = applied;
   if (was_applied_)
-    td_ = 0;
+    {
+      td_ = nullptr;
+    }
   return was_applied_;
 }
 
@@ -42,7 +37,9 @@ ACE_INLINE void
 ACE_At_Thread_Exit::do_apply ()
 {
   if (!this->was_applied_ && this->is_owner_)
-    td_->at_pop();
+    {
+      td_->at_pop();
+    }
 }
 
 ACE_INLINE
@@ -60,22 +57,16 @@ ACE_Thread_Descriptor_Base::ACE_Thread_Descriptor_Base ()
   : ACE_OS_Thread_Descriptor (),
     thr_id_ (ACE_OS::NULL_thread),
     thr_handle_ (ACE_OS::NULL_hthread),
-    grp_id_ (0),
-    thr_state_ (ACE_Thread_Manager::ACE_THR_IDLE),
-    task_ (0),
-    next_ (0),
-    prev_ (0)
+    thr_state_ (ACE_Thread_Manager::ACE_THR_IDLE)
 {
 }
 
 ACE_INLINE
-ACE_Thread_Descriptor_Base::~ACE_Thread_Descriptor_Base ()
-{
-}
+ACE_Thread_Descriptor_Base::~ACE_Thread_Descriptor_Base () = default;
 
 ACE_INLINE bool
 ACE_Thread_Descriptor_Base::operator== (
-  const ACE_Thread_Descriptor_Base &rhs) const
+  ACE_Thread_Descriptor_Base const &rhs) const
 {
   return
     ACE_OS::thr_cmp (this->thr_handle_, rhs.thr_handle_)
@@ -83,7 +74,7 @@ ACE_Thread_Descriptor_Base::operator== (
 }
 
 ACE_INLINE bool
-ACE_Thread_Descriptor_Base::operator!=(const ACE_Thread_Descriptor_Base &rhs) const
+ACE_Thread_Descriptor_Base::operator!=(ACE_Thread_Descriptor_Base const &rhs) const
 {
   return !(*this == rhs);
 }
@@ -121,7 +112,7 @@ ACE_Thread_Descriptor_Base::reset ()
   this->thr_handle_ = ACE_OS::NULL_hthread;
   this->grp_id_ = 0;
   this->thr_state_ = ACE_Thread_Manager::ACE_THR_IDLE;
-  this->task_ = 0;
+  this->task_ = nullptr;
   this->flags_ = 0;
 }
 
@@ -133,7 +124,7 @@ ACE_Thread_Descriptor::self () const
   return this->thr_id_;
 }
 
-// Unique kernel-level thread handle.
+/// Unique kernel-level thread handle.
 
 ACE_INLINE void
 ACE_Thread_Descriptor::self (ACE_hthread_t &handle)
@@ -149,7 +140,7 @@ ACE_Thread_Descriptor::log_msg_cleanup (ACE_Log_Msg* log_msg)
   log_msg_ = log_msg;
 }
 
-// Set the <next_> pointer
+/// Set the @c next_ pointer
 ACE_INLINE void
 ACE_Thread_Descriptor::set_next (ACE_Thread_Descriptor *td)
 {
@@ -157,7 +148,7 @@ ACE_Thread_Descriptor::set_next (ACE_Thread_Descriptor *td)
   this->next_ = td;
 }
 
-// Get the <next_> pointer
+/// Get the @c next_ pointer
 ACE_INLINE ACE_Thread_Descriptor *
 ACE_Thread_Descriptor::get_next () const
 {
@@ -165,17 +156,17 @@ ACE_Thread_Descriptor::get_next () const
   return static_cast<ACE_Thread_Descriptor *> (this->next_);
 }
 
-// Reset this thread descriptor
+/// Reset this thread descriptor
 ACE_INLINE void
 ACE_Thread_Descriptor::reset (ACE_Thread_Manager *tm)
 {
   ACE_TRACE ("ACE_Thread_Descriptor::reset");
   this->ACE_Thread_Descriptor_Base::reset ();
-  this->at_exit_list_ = 0;
+  this->at_exit_list_ = nullptr;
     // Start the at_exit hook list.
   this->tm_ = tm;
     // Setup the Thread_Manager.
-  this->log_msg_ = 0;
+  this->log_msg_ = nullptr;
   this->terminated_ = false;
 }
 
@@ -200,14 +191,16 @@ ACE_Thread_Manager::thread_desc_self ()
       // Thread descriptor adapter might not have been put into the
       // list yet.
       if (desc != 0)
-        // Update the TSS cache.
-        ACE_LOG_MSG->thr_desc (desc);
+        {
+          // Update the TSS cache.
+          ACE_LOG_MSG->thr_desc (desc);
+        }
     }
 #endif
   return desc;
 }
 
-// Return the unique ID of the thread.
+/// Return the unique ID of the thread.
 
 ACE_INLINE ACE_thread_t
 ACE_Thread_Manager::thr_self ()
@@ -223,10 +216,14 @@ ACE_Thread_Manager::task ()
 
   ACE_Thread_Descriptor *td = this->thread_desc_self () ;
 
-  if (td == 0)
-    return 0;
+  if (td == nullptr)
+    {
+      return nullptr;
+    }
   else
-    return td->task ();
+    {
+      return td->task ();
+    }
 }
 
 ACE_INLINE int
@@ -240,20 +237,28 @@ ACE_INLINE int
 ACE_Thread_Manager::at_exit (ACE_At_Thread_Exit* at)
 {
   ACE_Thread_Descriptor *td = this->thread_desc_self ();
-  if (td == 0)
-    return -1;
+  if (td == nullptr)
+    {
+      return -1;
+    }
   else
-    return td->at_exit (at);
+    {
+      return td->at_exit (at);
+    }
 }
 
 ACE_INLINE int
 ACE_Thread_Manager::at_exit (ACE_At_Thread_Exit& at)
 {
   ACE_Thread_Descriptor *td = this->thread_desc_self ();
-  if (td == 0)
-    return -1;
+  if (td == nullptr)
+    {
+      return -1;
+    }
   else
-    return td->at_exit (at);
+    {
+      return td->at_exit (at);
+    }
 }
 
 ACE_INLINE int
@@ -262,10 +267,14 @@ ACE_Thread_Manager::at_exit (void *object,
                              void *param)
 {
   ACE_Thread_Descriptor *td = this->thread_desc_self ();
-  if (td == 0)
-    return -1;
+  if (td == nullptr)
+    {
+      return -1;
+    }
   else
-    return td->at_exit (object, cleanup_hook, param);
+    {
+      return td->at_exit (object, cleanup_hook, param);
+    }
 }
 
 ACE_INLINE void
@@ -286,7 +295,7 @@ ACE_Thread_Manager::register_as_terminated (ACE_Thread_Descriptor *td)
 #if defined (ACE_HAS_VXTHREADS)
   ACE_UNUSED_ARG (td);
 #else  /* ! ACE_HAS_VXTHREADS */
-  ACE_Thread_Descriptor_Base *tdb = nullptr;
+  ACE_Thread_Descriptor_Base *tdb {};
   ACE_NEW_RETURN (tdb, ACE_Thread_Descriptor_Base (*td), -1);
   this->terminated_thr_list_.insert_tail (tdb);
 #endif /* !ACE_HAS_VXTHREADS */

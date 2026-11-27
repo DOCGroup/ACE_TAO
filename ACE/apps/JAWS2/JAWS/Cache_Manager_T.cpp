@@ -38,23 +38,33 @@ JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
 {
   // Some sanity checking needed here --
   if (this->lowwater_ > this->highwater_)
-    this->lowwater_ = this->highwater_ / 2;
+    {
+      this->lowwater_ = this->highwater_ / 2;
+    }
 
   if (this->maxobjsize_ > (this->highwater_ - this->lowwater_) * 1024)
-    this->maxobjsize_ = (this->highwater_ - this->lowwater_) * (1024/2);
+    {
+      this->maxobjsize_ = (this->highwater_ - this->lowwater_) * (1024/2);
+    }
 
   if (this->minobjsize_ > this->maxobjsize_)
-    this->minobjsize_ = this->maxobjsize_ / 2;
+    {
+      this->minobjsize_ = this->maxobjsize_ / 2;
+    }
 
   if (this->allocator_ == 0)
-    this->allocator_ = ACE_Allocator::instance ();
+    {
+      this->allocator_ = ACE_Allocator::instance ();
+    }
 
   if (this->factory_ == 0)
-    this->factory_ = Object_Factory::instance ();
+    {
+      this->factory_ = Object_Factory::instance ();
+    }
 
   ACE_NEW_MALLOC (this->hash_,
-                  (Cache_Hash *)
-                  this->allocator_->malloc (sizeof (Cache_Hash)),
+                  static_cast<Cache_Hash *> (
+                    this->allocator_->malloc (sizeof (Cache_Hash))),
                   Cache_Hash (alloc, hashsize));
 
   if (this->hash_ == 0)
@@ -64,25 +74,22 @@ JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
     }
 
   ACE_NEW_MALLOC (this->heap_,
-                  (Cache_Heap *)
-                  this->allocator_->malloc (sizeof (Cache_Heap)),
+                  static_cast<Cache_Heap *> (
+                    this->allocator_->malloc (sizeof (Cache_Heap))),
                   Cache_Heap (alloc, maxsize));
 
   if (this->heap_ == 0)
     {
       this->maxsize_ = 0;
 
-
       ACE_DES_FREE_TEMPLATE3(this->hash_, this->allocator_->free,
                              JAWS_Cache_Hash,
                              KEY, HASH_FUNC, EQ_FUNC);
-
 
       this->hash_ = 0;
       this->hashsize_ = 0;
     }
 }
-
 
 template <class KEY, class FACTORY, class HASH_FUNC, class EQ_FUNC> int
 JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
@@ -113,21 +120,32 @@ JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
 
   // Some sanity checking needed here --
   if (this->lowwater_ > this->highwater_)
-    this->lowwater_ = this->highwater_ / 2;
+    {
+      this->lowwater_ = this->highwater_ / 2;
+    }
 
   if (this->maxobjsize_ > (this->highwater_ - this->lowwater_) * 1024)
-    this->maxobjsize_ = (this->highwater_ - this->lowwater_) * (1024/2);
+    {
+      this->maxobjsize_ = (this->highwater_ - this->lowwater_) * (1024/2);
+    }
 
   if (this->minobjsize_ > this->maxobjsize_)
-    this->minobjsize_ = this->maxobjsize_ / 2;
+    {
+      this->minobjsize_ = this->maxobjsize_ / 2;
+    }
 
   if (this->allocator_ == 0)
-    this->allocator_ = ACE_Allocator::instance ();
+    {
+      this->allocator_ = ACE_Allocator::instance ();
+    }
 
   if (this->factory_ == 0)
-    this->factory_ = Object_Factory::instance ();
+    {
+      this->factory_ = Object_Factory::instance ();
+    }
 
-  this->hash_ = (Cache_Hash *) this->allocator_->malloc (sizeof (Cache_Hash));
+  this->hash_ = static_cast<Cache_Hash *> (
+    this->allocator_->malloc (sizeof (Cache_Hash)));
   if (this->hash_ == 0)
     {
       errno = ENOMEM;
@@ -137,17 +155,16 @@ JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
     }
   new (this->hash_) Cache_Hash (alloc, hashsize);
 
-  this->heap_ = (Cache_Heap *) this->allocator_->malloc (sizeof (Cache_Heap));
+  this->heap_ = static_cast<Cache_Heap *> (
+    this->allocator_->malloc (sizeof (Cache_Heap)));
   if (this->heap_ == 0)
     {
       errno = ENOMEM;
       this->maxsize_ = 0;
 
-
       ACE_DES_FREE_TEMPLATE3(this->hash_, this->allocator_->free,
                              JAWS_Cache_Hash,
                              KEY, HASH_FUNC, EQ_FUNC);
-
 
       this->hash_ = 0;
       this->hashsize_ = 0;
@@ -177,7 +194,6 @@ JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>::close ()
                              JAWS_Cache_Hash,
                              KEY, HASH_FUNC, EQ_FUNC);
 
-
       this->hash_ = 0;
     }
 
@@ -187,7 +203,6 @@ JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>::close ()
                              JAWS_Cache_List,
                              KEY, FACTORY, HASH_FUNC, EQ_FUNC);
 
-
       this->heap_ = 0;
     }
 
@@ -196,21 +211,25 @@ JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>::close ()
 
 template <class KEY, class FACTORY, class HASH_FUNC, class EQ_FUNC> int
 JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
-::GET_i (const KEY &key, JAWS_Cache_Object *&object)
+::GET_i (KEY const &key, JAWS_Cache_Object *&object)
 {
   int const result = this->hash_->find (key, object);
 
   if (result == 0)
-    this->TAKE (object);
+    {
+      this->TAKE (object);
+    }
   else
-    object = 0;
+    {
+      object = 0;
+    }
 
   return result;
 }
 
 template <class KEY, class FACTORY, class HASH_FUNC, class EQ_FUNC> int
 JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
-::PUT_i (const KEY &key, const void *data, size_t size, JAWS_Cache_Object *&obj)
+::PUT_i (KEY const &key, void const *data, size_t size, JAWS_Cache_Object *&obj)
 {
   int result = 0;
 
@@ -225,9 +244,13 @@ JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
   if (result == -1)
     {
       if (size/1024 <= this->maxobjsize_)
-        cerr << "MAKE failed.  Bummer!" << endl;
+        {
+          cerr << "MAKE failed.  Bummer!" << endl;
+        }
       else
-        this->DROP_i (obj);
+        {
+          this->DROP_i (obj);
+        }
       return -1;
     }
 
@@ -272,7 +295,7 @@ JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
 
 template <class KEY, class FACTORY, class HASH_FUNC, class EQ_FUNC> int
 JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
-::FLUSH_i (const KEY &key)
+::FLUSH_i (KEY const &key)
 {
   JAWS_Cache_Object *temp_object;
 
@@ -284,12 +307,16 @@ JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
     {
       this->waterlevel_ -= temp_object->size ();
       if (this->heap_->remove (temp_object->heap_item ()) == -1)
-        cerr << "*** flush key heap remove failed: " << endl;
+        {
+          cerr << "*** flush key heap remove failed: " << endl;
+        }
       temp_object->release ();
       this->DROP_i (temp_object);
     }
   else
-    cerr << "*** flush key hash unbind failed: " << key << endl;
+    {
+      cerr << "*** flush key hash unbind failed: " << key << endl;
+    }
 
   return result;
 }
@@ -309,7 +336,9 @@ JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
 #endif
       result = this->hash_->unbind (temp_key);
       if (result == -1)
-        cerr << "*** flush hash unbind failed: " << temp_key << endl;
+        {
+          cerr << "*** flush hash unbind failed: " << temp_key << endl;
+        }
       result = 0;
       this->waterlevel_ -= temp_object->size ();
       temp_object->release ();
@@ -331,21 +360,23 @@ JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
 
   if (obj->count () == 0)
     {
-      KEY *key = (KEY *) obj->internal ();
+      KEY *key = static_cast<KEY *> (obj->internal ());
       this->factory_->destroy (obj);
       delete key;
       obj = 0;
       result = 1;
     }
   else
-    result = this->heap_->adjust (obj->heap_item ());
+    {
+      result = this->heap_->adjust (obj->heap_item ());
+    }
 
   return result;
 }
 
 template <class KEY, class FACTORY, class HASH_FUNC, class EQ_FUNC> int
 JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
-::GET (const KEY &key, JAWS_Cache_Object *&object)
+::GET (KEY const &key, JAWS_Cache_Object *&object)
 {
   ACE_READ_GUARD_RETURN (ACE_SYNCH_RW_MUTEX, g,this->lock_, -1);
 
@@ -354,7 +385,7 @@ JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
 
 template <class KEY, class FACTORY, class HASH_FUNC, class EQ_FUNC> int
 JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
-::PUT (const KEY &key, const void *data, size_t size, JAWS_Cache_Object *&obj)
+::PUT (KEY const &key, void const *data, size_t size, JAWS_Cache_Object *&obj)
 {
   ACE_WRITE_GUARD_RETURN (ACE_SYNCH_RW_MUTEX, g,this->lock_, -1);
 
@@ -363,7 +394,7 @@ JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
 
 template <class KEY, class FACTORY, class HASH_FUNC, class EQ_FUNC> int
 JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
-::MAKE (const void *data, size_t size, JAWS_Cache_Object *&obj)
+::MAKE (void const *data, size_t size, JAWS_Cache_Object *&obj)
 {
   // verify object is within cacheable range
   if (size/1024 > this->maxobjsize_)
@@ -432,7 +463,9 @@ JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
 ::TAKE (JAWS_Cache_Object *const &obj)
 {
   if (obj == 0)
-    return -1;
+    {
+      return -1;
+    }
 
   return obj->acquire ();
 }
@@ -442,7 +475,9 @@ JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
 ::DROP (JAWS_Cache_Object *&obj)
 {
   if (obj == 0)
-    return -1;
+    {
+      return -1;
+    }
 
   ACE_WRITE_GUARD_RETURN (ACE_SYNCH_RW_MUTEX, g, this->lock_, -1);
 
@@ -452,7 +487,7 @@ JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
     {
       if (obj->count () == 0)
         {
-          KEY *key = (KEY *) obj->internal ();
+          KEY *key = static_cast<KEY *> (obj->internal ());
           this->factory_->destroy (obj);
           delete key;
           obj = 0;
@@ -476,34 +511,41 @@ JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
   return this->FLUSH_i ();
 }
 
-
 template <class KEY, class DATA, class CACHE_MANAGER>
 JAWS_Cache_Proxy<KEY, DATA, CACHE_MANAGER>
-::JAWS_Cache_Proxy (const KEY &key, Cache_Manager *manager)
+::JAWS_Cache_Proxy (KEY const &key, Cache_Manager *manager)
   : object_ (0),
     manager_ (manager)
 {
   if (this->manager_ == 0)
-    this->manager_ = Cache_Manager_Singleton::instance ();
+    {
+      this->manager_ = Cache_Manager_Singleton::instance ();
+    }
 
   int const result = this->manager_->GET (key, this->object_);
   if (result == -1)
-    this->object_ = 0;
+    {
+      this->object_ = 0;
+    }
 }
 
 template <class KEY, class DATA, class CACHE_MANAGER>
 JAWS_Cache_Proxy<KEY, DATA, CACHE_MANAGER>
-::JAWS_Cache_Proxy (const KEY &key, DATA *data, size_t size,
+::JAWS_Cache_Proxy (KEY const &key, DATA *data, size_t size,
                    Cache_Manager *manager)
   : object_ (0),
     manager_ (manager)
 {
   if (this->manager_ == 0)
-    this->manager_ = Cache_Manager_Singleton::instance ();
+    {
+      this->manager_ = Cache_Manager_Singleton::instance ();
+    }
 
   int result = this->manager_->PUT (key, data, size, this->object_);
   if (result == -1)
-    this->object_ = 0;
+    {
+      this->object_ = 0;
+    }
 }
 
 template <class KEY, class DATA, class CACHE_MANAGER>
@@ -512,13 +554,17 @@ JAWS_Cache_Proxy<KEY, DATA, CACHE_MANAGER>::~JAWS_Cache_Proxy ()
   DATA *data = this->data ();
   this->manager_->DROP (this->object_);
   if (this->object_ == 0)
-    this->close (data);
+    {
+      this->close (data);
+    }
 }
 
 template <class KEY, class DATA, class CACHE_MANAGER> DATA *
 JAWS_Cache_Proxy<KEY, DATA, CACHE_MANAGER>::data () const
 {
-  return this->object_ ? (DATA *) this->object_->data () : 0;
+  return this->object_
+    ? static_cast<DATA *> (const_cast<void *> (this->object_->data ()))
+    : nullptr;
 }
 
 template <class KEY, class DATA, class CACHE_MANAGER>
@@ -532,6 +578,5 @@ JAWS_Cache_Proxy<KEY, DATA, CACHE_MANAGER>::close (DATA *)
 {
   return 0;
 }
-
 
 #endif /* JAWS_CACHE_MANAGER_T_CPP */

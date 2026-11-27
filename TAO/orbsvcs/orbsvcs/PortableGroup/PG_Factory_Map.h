@@ -1,13 +1,8 @@
-// -*- C++ -*-
-
-//=======================================================================
 /**
  *  @file     PG_Factory_Map.h
  *
  *  @author  Ossama Othman <ossama@uci.edu>
  */
-//=======================================================================
-
 
 #ifndef TAO_PG_FACTORY_MAP_H
 #define TAO_PG_FACTORY_MAP_H

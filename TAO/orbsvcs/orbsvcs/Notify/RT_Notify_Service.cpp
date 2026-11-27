@@ -1,5 +1,4 @@
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Notify/RT_Notify_Service.h"
 #include "ace/Dynamic_Service.h"
 #include "orbsvcs/Notify/Properties.h"
@@ -9,13 +8,9 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_RT_Notify_Service::TAO_RT_Notify_Service ()
-{
-}
+TAO_RT_Notify_Service::TAO_RT_Notify_Service () = default;
 
-TAO_RT_Notify_Service::~TAO_RT_Notify_Service ()
-{
-}
+TAO_RT_Notify_Service::~TAO_RT_Notify_Service () = default;
 
 void
 TAO_RT_Notify_Service::init_service (CORBA::ORB_ptr orb)
@@ -58,7 +53,7 @@ TAO_RT_Notify_Service::create_factory ()
   TAO_Notify_Factory* factory =
     ACE_Dynamic_Service<TAO_Notify_Factory>::instance ("TAO_Notify_Factory");
 
-  if (factory == 0)
+  if (factory == nullptr)
     {
       ACE_NEW_THROW_EX (factory,
                         TAO_Notify_RT_Factory (),
@@ -70,7 +65,7 @@ TAO_RT_Notify_Service::create_factory ()
 TAO_Notify_Builder*
 TAO_RT_Notify_Service::create_builder ()
 {
-  TAO_Notify_Builder* builder = nullptr;
+  TAO_Notify_Builder* builder {};
   ACE_NEW_THROW_EX (builder,
                     TAO_Notify_RT_Builder (),
                     CORBA::NO_MEMORY ());

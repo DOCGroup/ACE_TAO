@@ -1,7 +1,3 @@
-// -*- C++ -*-
-
-
-//=============================================================================
 /**
  *  @file    PrimitiveDef_i.h
  *
@@ -9,8 +5,6 @@
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_PRIMITIVEDEF_I_H
 #define TAO_PRIMITIVEDEF_I_H

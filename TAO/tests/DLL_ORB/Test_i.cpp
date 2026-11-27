@@ -1,10 +1,4 @@
-// -*- C++ -*-
 #include "Test_i.h"
-
-Test_i::Test_i ()
-  : orb_ ()
-{
-}
 
 void
 Test_i::invoke_me ()
@@ -20,7 +14,9 @@ Test_i::shutdown ()
               "Server is shutting down.\n"));
 
   if (!CORBA::is_nil (this->orb_.in ()))
+  {
     this->orb_->shutdown (false);
+  }
 }
 
 void

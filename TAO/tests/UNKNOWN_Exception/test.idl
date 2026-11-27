@@ -1,5 +1,3 @@
-
-
 interface test
 {
   void normal_method ();

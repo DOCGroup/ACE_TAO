@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   SV_Semaphore_Complex.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef ACE_SV_SEMAPHORE_COMPLEX_H
 #define ACE_SV_SEMAPHORE_COMPLEX_H
@@ -37,7 +33,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * to a large number, decremented on every create or open and
  * incremented on every close. This way we can use the "adjust"
  * feature provided by System V so that any process that exit's
- * without calling <close> is accounted for. It doesn't help us
+ * without calling @c close is accounted for. It doesn't help us
  * if the last process does this (as we have no way of getting
  * control to remove the ACE_SV_Semaphore_Complex) but it
  * will work if any process other than the last does an exit
@@ -64,7 +60,7 @@ public:
                             int initial_value = 1,
                             u_short nsems = 1,
                             mode_t perms = ACE_DEFAULT_FILE_PERMS);
-  ACE_SV_Semaphore_Complex (const char *name,
+  ACE_SV_Semaphore_Complex (char const *name,
                             short create = ACE_SV_Semaphore_Complex::ACE_CREATE,
                             int initial_value = 1,
                             u_short nsems = 1,
@@ -73,7 +69,7 @@ public:
 
   /// Open or create an array of SV_Semaphores.  We return 0 if all is
   /// OK, else -1.
-  int open (const char *name,
+  int open (char const *name,
             short flags = ACE_SV_Semaphore_Simple::ACE_CREATE,
             int initial_value = 1,
             u_short nsems = 1,
@@ -96,7 +92,8 @@ public:
    */
   int close ();
 
-  // = Semaphore acquire and release methods.
+  /// @name Semaphore acquire and release
+  /// @{
 
   /// Acquire the semaphore.
   int acquire (u_short n = 0, short flags = 0) const;
@@ -118,16 +115,21 @@ public:
 
   /// Release the semaphore.
   int release (u_short n = 0, short flags = 0) const;
+  /// @}
 
-  // = Semaphore operation methods.
+  /// @name Semaphore operations
+  /// @{
   int op (short val, u_short n = 0, short flags = 0) const;
   int op (sembuf op_vec[], u_short n) const;
+  /// @}
 
-  // = Semaphore control methods.
+  /// @name Semaphore control
+  /// @{
   int control (int cmd, semun arg, u_short n = 0) const;
   int control (int cmd, int value = 0, u_short n = 0) const;
+  /// @}
 
-  // = Upgrade access control...
+  /// Re-export the base-class identifier and removal operations.
   using ACE_SV_Semaphore_Simple::get_id;
   using ACE_SV_Semaphore_Simple::remove;
 

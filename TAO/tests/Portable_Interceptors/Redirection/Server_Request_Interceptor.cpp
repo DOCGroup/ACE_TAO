@@ -1,17 +1,9 @@
-// -*- C++ -*-
 #include "Server_Request_Interceptor.h"
 #include "tao/ORB_Constants.h"
 #include "ace/Log_Msg.h"
 #include "CrashPoint.h"
 
-Server_Request_Interceptor::Server_Request_Interceptor ()
-  : request_count_ (0)
-{
-}
-
-Server_Request_Interceptor::~Server_Request_Interceptor ()
-{
-}
+Server_Request_Interceptor::~Server_Request_Interceptor () = default;
 
 char *
 Server_Request_Interceptor::name ()
@@ -28,7 +20,7 @@ void
 Server_Request_Interceptor::receive_request_service_contexts (
     PortableInterceptor::ServerRequestInfo_ptr)
 {
-  this->request_count_++;
+  ++this->request_count_;
 }
 
 void
@@ -41,7 +33,10 @@ void
 Server_Request_Interceptor::send_reply (
     PortableInterceptor::ServerRequestInfo_ptr)
 {
-  if (crash_point == 1 && this->request_count_ == 2) ACE_OS::exit (1);
+  if (crash_point == 1 && this->request_count_ == 2)
+  {
+    ACE_OS::exit (1);
+  }
 }
 
 void

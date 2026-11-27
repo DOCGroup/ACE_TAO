@@ -1,10 +1,8 @@
-//=============================================================================
 /**
  *  Implementation of the Supplier_Time_Handler class.
  *
  *  @author Kirthika Parameswaran <kirthika@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "ace/ACE.h"
 #include "Supplier_Timer_Handler.h"
@@ -22,16 +20,17 @@ Supplier_Timer_Handler:: Supplier_Timer_Handler (Supplier *supplier,
 
 // Method which will be called by the reactor on timeout.
 int
-Supplier_Timer_Handler:: handle_timeout (const ACE_Time_Value & /* tv */,
-                                         const void * /* arg */)
+Supplier_Timer_Handler::handle_timeout (ACE_Time_Value const & /* tv */,
+                                        void const * /* arg */)
 {
   ACE_DEBUG ((LM_DEBUG,
               "Sending Stock Market Information to Notifier...\n"));
 
   // The next current stock rates are obtained from a file.
   if (this->get_stock_information () == -1)
+  {
     return 0;
-
+  }
 
   // Send the stock information to the notifier.  Graceful exit when
   // the notifier doesnt accept the information.

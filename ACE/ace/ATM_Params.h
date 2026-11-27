@@ -1,13 +1,8 @@
-// -*- C++ -*-
-
-//==========================================================================
 /**
  *  @file    ATM_Params.h
  *
  *  @author Joe Hoffert <joeh@cs.wustl.edu>
  */
-//==========================================================================
-
 
 #ifndef ACE_ATM_PARAMS_H
 #define ACE_ATM_PARAMS_H
@@ -60,13 +55,13 @@ class ACE_Export ACE_ATM_Params
 public:
   /**
    * Initialize the data members.  This class combines options from
-   * ACE_SOCK_Connector (@a protocol_family, @a protocol, <type>,
-   * @a protocol_info, <group>, and @a flags) and
-   * ACE_TLI_Connector (<device>, <info>, <rw_flag>, <oflag>, and <udata>)
+   * ACE_SOCK_Connector (@a protocol_family, @a protocol, @c type,
+   * @a protocol_info, @c group, and @a flags) and
+   * ACE_TLI_Connector (@c device, @c info, @c rw_flag, @c oflag, and @c udata)
    * so that either mechanism can be used transparently for ATM.
    */
   ACE_ATM_Params (int rw_flag = 1,
-                  const char device[] = ACE_XTI_ATM_DEVICE,
+                  char const device[] = ACE_XTI_ATM_DEVICE,
                   Param_Info *info = nullptr,
                   Param_Udata *udata = nullptr,
                   int oflag = O_RDWR,
@@ -85,7 +80,6 @@ public:
                     | ACE_FLAG_MULTIPOINT_D_ROOT, // connector by default
                   int reuse_addr = 0);
 
-  /// Destructor.
   ~ACE_ATM_Params ();
 
   /// Get protocol family.
@@ -131,7 +125,7 @@ public:
   void set_reuse_addr (int);
 
   /// Get device.
-  const char* get_device () const;
+  char const* get_device () const;
 
   /// Get info.
   Param_Info* get_info () const;
@@ -186,7 +180,7 @@ private:
   int reuse_addr_;
 
   /// Device name for XTI/ATM connections.
-  const char *device_;
+  char const *device_;
 
   /// Info for XTI/ATM connections.
   Param_Info *info_;

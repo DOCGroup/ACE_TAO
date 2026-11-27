@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 /**
  *  @file   XML_Codecs.h
  *
@@ -35,32 +33,31 @@
 class ACEXML_Export ACEXML_Base64 : public ACE_Base64
 {
 public:
-  //@{
+  /// @{
   /**
    * Encodes a stream of octets to Base64 data
    *
    * @param input Binary data in ACEXML_Char stream.
    * @param output_len Length of the encoded Base64 ACEXML_Char stream.
-   * @return Encoded Base64 data in ACEXML_Char stream or NULL if input data
+   * @return Encoded Base64 data in ACEXML_Char stream or nullptr if input data
    *         cannot be encoded.
    */
 
-  static ACEXML_Char* encode (const ACEXML_Char* input,
+  static ACEXML_Char* encode (ACEXML_Char const * input,
                               size_t* output_len);
   /**
    * Decodes a stream of Base64 to octets data
    *
    * @param input Encoded Base64 data in ACEXML_Char stream.
    * @param output_len Length of the binary ACEXML_Char stream.
-   * @return Binary data in ACEXML_Char stream or NULL if input data cannot
-   *         be encoded.
+   * @return Binary data in ACEXML_Char stream or nullptr if input data cannot
+   *         be decoded.
    */
-  static ACEXML_Char* decode (const ACEXML_Char* input,
+  static ACEXML_Char* decode (ACEXML_Char const * input,
                               size_t* output_len);
 
-  //@}
+  /// @}
 };
-
 
 #include /**/ "ace/post.h"
 

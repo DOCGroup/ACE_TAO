@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    client.cpp
  *
@@ -7,8 +5,6 @@
  *
  *  @author Douglas C. Schmidt
  */
-//=============================================================================
-
 
 #include "ace/Log_Msg.h"
 
@@ -22,16 +18,20 @@
 static SM_Client *
 make_client ()
 {
-  SM_Client *client = 0;
+  SM_Client *client {};
 
-  if (Options::get_opt (Options::REMOTE_USAGE) == 0)
-    ACE_NEW_RETURN (client,
-                    SML_Client,
-                    0);
+  if (!Options::get_opt (Options::REMOTE_USAGE))
+    {
+      ACE_NEW_RETURN (client,
+                      SML_Client,
+                      nullptr);
+    }
   else
-    ACE_NEW_RETURN (client,
-                    SMR_Client (Options::port_number),
-                    0);
+    {
+      ACE_NEW_RETURN (client,
+                      SMR_Client (Options::port_number),
+                      nullptr);
+    }
   return client;
 }
 
@@ -43,16 +43,20 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   SM_Client *sm_client = make_client ();
 
   if (sm_client->send () < 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       Options::program_name),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         Options::program_name),
+                        -1);
+    }
 
   if (sm_client->receive (Options::max_server_timeout) < 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       Options::program_name),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         Options::program_name),
+                        -1);
+    }
 
   sm_client->process ();
 

@@ -1,12 +1,10 @@
-
-//=============================================================================
 /**
  *  @file    Dynamic_Priority_Test.cpp (based on Priority_Buffer_Test.cpp)
  *
  *  This is a test to verify and illustrate the static and dynamic
- *  priority mechanisms of the <ACE_Message_Queue> class and the
- *  <ACE_Dynamic_Message_Queue> class.  As in the
- *  <Priority_Buffer_Test>, a producer generates messages and
+ *  priority mechanisms of the @c ACE_Message_Queue class and the
+ *  @c ACE_Dynamic_Message_Queue class.  As in the
+ *  @c Priority_Buffer_Test, a producer generates messages and
  *  enqueues them, and a consumer dequeues them and checks their
  *  ordering.
  *
@@ -38,8 +36,6 @@
  *
  *  @author Chris Gill <cdgill@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #include "test_config.h" /* Include first to enable ACE_TEST_ASSERT. */
 #include "ace/Message_Queue.h"
@@ -47,10 +43,11 @@
 #include "ace/High_Res_Timer.h"
 #include "ace/Sched_Params.h"
 
+#include <cstring>
+
 #if defined (VXWORKS) || defined (INTEGRITY)
 # include "ace/OS_NS_string.h"
 #endif
-
 
 #if defined (ACE_HAS_TIMED_MESSAGE_BLOCKS)
 enum Test_Type {BEST, WORST, RANDOM};
@@ -67,13 +64,13 @@ public:
   ACE_Message_Queue<ACE_SYNCH> *queue_;
 
   /// string of characters to indicate message order
-  const char *order_string_;
+  char const *order_string_;
 
   /// array of message blocks to use
   ACE_Message_Block **array_;
 
   /// expected message count
-  u_int expected_count_;
+  size_t expected_count_;
 };
 
 // Order in which messages are sent.
@@ -95,8 +92,8 @@ static const char laxity_receipt_order [] = "hfgedbcapnomljki";
 // Fast and slow execution time values (sec, usec), kept very small to
 // allow comparison of deadline, laxity, and static strategies across
 // a very wide range of message counts.
-static const ACE_Time_Value fast_execution (0, 1);
-static const ACE_Time_Value slow_execution (0, 2);
+static ACE_Time_Value const fast_execution (0, 1);
+static ACE_Time_Value const slow_execution (0, 2);
 
 // Make the queue be capable of being *very* large.
 static const long max_queue = LONG_MAX;
@@ -116,9 +113,9 @@ static int LOAD_STEP = 20;
 // Time offsets for a minute in the past (for the best case test) and
 // two seconds in the future (for the worst case and randomized
 // tests).
-static const ACE_Time_Value far_past_offset (-60, 0);
-static const ACE_Time_Value near_future_offset (2, 0);
-static const ACE_Time_Value offset_step (0, 5);
+static ACE_Time_Value const far_past_offset (-60, 0);
+static ACE_Time_Value const near_future_offset (2, 0);
+static ACE_Time_Value const offset_step (0, 5);
 
 // The order consumer dequeues a message from the passed
 // Message_Queue, and checks its data character against the passed
@@ -136,7 +133,7 @@ order_consumer (void *args)
 
   ACE_Message_Queue<ACE_SYNCH> *msg_queue =
     static_cast<ArgStruct *> (args)->queue_;
-  const char *receipt_order =
+  char const *receipt_order =
     static_cast<ArgStruct *> (args)->order_string_;
   u_int expected_count =
     static_cast<ArgStruct *> (args)->expected_count_;
@@ -144,28 +141,30 @@ order_consumer (void *args)
   ACE_TEST_ASSERT (receipt_order != 0);
   ACE_TEST_ASSERT (msg_queue != 0);
 
-  u_int local_count = 0;
+  size_t local_count = 0;
 
   // Keep looping, reading a message out of the queue, until we reach
   // the end of the receipt order string, which signals us to quit.
 
-  for (const char *expected = receipt_order;
+  for (char const *expected = receipt_order;
        *expected != '\0';
        ++expected)
   {
-    ACE_Message_Block *mb = 0;
+    ACE_Message_Block *mb {};
 
     int result = msg_queue->dequeue_head (mb);
 
     if (result == -1)
-      break;
+      {
+        break;
+      }
 
-    local_count++;
+    ++local_count;
 
     ACE_TEST_ASSERT (*expected == *mb->rd_ptr ());
   }
 
-  ACE_TEST_ASSERT (local_count == ACE_OS::strlen (receipt_order));
+  ACE_TEST_ASSERT (local_count == std::strlen (receipt_order));
   ACE_TEST_ASSERT (local_count == expected_count);
   return 0;
 }
@@ -182,7 +181,7 @@ order_producer (void *args)
 
   ACE_Message_Queue<ACE_SYNCH> *msg_queue =
     static_cast<ArgStruct *> (args)->queue_;
-  const char *send_order =
+  char const *send_order =
     static_cast<ArgStruct *> (args)->order_string_;
   ACE_Message_Block **block_array =
     static_cast<ArgStruct *> (args)->array_;
@@ -195,8 +194,8 @@ order_producer (void *args)
   // Iterate through the send order string and the message block
   // array, setting the current message block's read pointer to the
   // current position in the send order string.
-  int local_count = 0;
-  const char *c;
+  size_t local_count = 0;
+  char const *c;
 
   for (local_count = 0, c = send_order; *c != '\0'; ++local_count, ++c)
     {
@@ -209,10 +208,11 @@ order_producer (void *args)
       *mb->wr_ptr () = *c;
       mb->wr_ptr (1);
 
-
       // Enqueue the message block in priority order.
       if (msg_queue->enqueue_prio (mb) == -1)
-        break;
+        {
+          break;
+        }
     }
 
   ACE_TEST_ASSERT (local_count == expected_count);
@@ -222,22 +222,22 @@ order_producer (void *args)
 
 static int
 run_order_test (ACE_Message_Queue<ACE_SYNCH>* msg_queue,
-                const char *send_order,
-                const char *receipt_order)
+                char const *send_order,
+                char const *receipt_order)
 {
-  u_int i;
-  u_int array_size = ACE_OS::strlen (send_order);
+  size_t i;
+  size_t const array_size = std::strlen (send_order);
 
   ACE_TEST_ASSERT (msg_queue != 0);
   ACE_TEST_ASSERT (send_order != 0);
   ACE_TEST_ASSERT (receipt_order != 0);
-  ACE_TEST_ASSERT (ACE_OS::strlen (send_order) == ACE_OS::strlen (receipt_order));
+  ACE_TEST_ASSERT (std::strlen (send_order) == std::strlen (receipt_order));
 
   ArgStruct supplier_args, consumer_args;
 
   supplier_args.queue_ = msg_queue;
   supplier_args.order_string_ = send_order;
-  supplier_args.expected_count_ = ACE_OS::strlen (send_order);
+  supplier_args.expected_count_ = std::strlen (send_order);
 
   // Allocate message blocks, fill in pointer array, set static
   // information.
@@ -264,7 +264,7 @@ run_order_test (ACE_Message_Queue<ACE_SYNCH>* msg_queue,
 
   consumer_args.queue_ = msg_queue;
   consumer_args.order_string_ = receipt_order;
-  consumer_args.expected_count_ = ACE_OS::strlen (receipt_order);
+  consumer_args.expected_count_ = std::strlen (receipt_order);
   consumer_args.array_ = 0;
 
   // Construct pending and late absolute deadline times.
@@ -345,7 +345,7 @@ performance_consumer (void * args)
   ACE_TEST_ASSERT (msg_queue != 0);
 
   u_int local_count = 0;
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb {};
 
   // reset, then start timer
   timer.reset ();
@@ -355,13 +355,15 @@ performance_consumer (void * args)
   // expected number of messages have been dequeued.
   for (local_count = 0; local_count < expected_count; ++local_count)
     if (msg_queue->dequeue_head (mb) == -1)
-      break;
+      {
+        break;
+      }
 
   // Stop timer, obtain and report its elapsed time.x
   timer.stop ();
   ACE_Time_Value tv;
   timer.elapsed_time (tv);
-  ACE_DEBUG ((LM_INFO, ACE_TEXT ("%6u, %6u, %f"),
+  ACE_DEBUG ((LM_INFO, ACE_TEXT ("%6u, %6Lu, %f"),
               local_count,
               tv.msec (),
               (ACE_timer_t) tv.msec () / local_count));
@@ -416,14 +418,16 @@ performance_producer (void *args)
 
       // Enqueue the message block in priority order.
       if (msg_queue->enqueue_prio (mb) == -1)
-        break;
+        {
+          break;
+        }
     }
 
   // Stop timer, obtain and report its elapsed time.
   timer.stop ();
   ACE_Time_Value tv;
   timer.elapsed_time (tv);
-  ACE_DEBUG ((LM_INFO, ACE_TEXT ("%6u, %6u, %f, "),
+  ACE_DEBUG ((LM_INFO, ACE_TEXT ("%6d, %6Lu, %f, "),
               local_count,
               tv.msec (),
               (ACE_timer_t) tv.msec () / local_count));
@@ -705,17 +709,23 @@ run_main (int, ACE_TCHAR *[])
           ACE_SCOPE_PROCESS)) != 0)
   {
     if (ACE_OS::last_error () == EPERM)
-      ACE_DEBUG ((LM_MAX,
-                  ACE_TEXT ("user is not superuser, ")
-                  ACE_TEXT ("so remain in time-sharing class\n")));
+      {
+        ACE_DEBUG ((LM_MAX,
+                    ACE_TEXT ("user is not superuser, ")
+                    ACE_TEXT ("so remain in time-sharing class\n")));
+      }
     else if (ACE_OS::last_error () == ENOTSUP)
-      ACE_DEBUG ((LM_MAX,
-                  ACE_TEXT ("process scope scheduling is not available, ")
-                  ACE_TEXT ("so remain in time-sharing class\n")));
+      {
+        ACE_DEBUG ((LM_MAX,
+                    ACE_TEXT ("process scope scheduling is not available, ")
+                    ACE_TEXT ("so remain in time-sharing class\n")));
+      }
     else
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("%n: ACE_OS::sched_params failed\n%a")),
-                        -1);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("%n: ACE_OS::sched_params failed\n%a")),
+                          -1);
+      }
   }
 
   // Test factory, static message queue.

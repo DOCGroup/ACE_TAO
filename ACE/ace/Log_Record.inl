@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "ace/Global_Macros.h"
 #include "ace/os_include/arpa/os_inet.h"
 #include "ace/Time_Value.h"
@@ -14,11 +13,13 @@ ACE_INLINE
 ACE_Log_Record::~ACE_Log_Record ()
 {
   if (this->msg_data_)
+    {
 #if defined (ACE_HAS_ALLOC_HOOKS)
-    ACE_Allocator::instance()->free(this->msg_data_);
+      ACE_Allocator::instance()->free(this->msg_data_);
 #else
-    delete [] this->msg_data_;
+      delete [] this->msg_data_;
 #endif /* ACE_HAS_ALLOC_HOOKS */
+    }
 }
 
 ACE_INLINE ACE_UINT32
@@ -34,7 +35,6 @@ ACE_Log_Record::category (ACE_Log_Category_TSS* t)
   ACE_TRACE ("ACE_Log_Record::category");
   this->category_ = t;
 }
-
 
 ACE_INLINE ACE_Log_Category_TSS*
 ACE_Log_Record::category () const
@@ -72,7 +72,7 @@ ACE_Log_Record::time_stamp () const
 }
 
 ACE_INLINE void
-ACE_Log_Record::time_stamp (const ACE_Time_Value &ts)
+ACE_Log_Record::time_stamp (ACE_Time_Value const &ts)
 {
   ACE_TRACE ("ACE_Log_Record::time_stamp");
   this->secs_ = ts.sec ();
@@ -93,7 +93,7 @@ ACE_Log_Record::pid (long p)
   this->pid_ = (ACE_UINT32) p;
 }
 
-ACE_INLINE const ACE_TCHAR *
+ACE_INLINE ACE_TCHAR const *
 ACE_Log_Record::msg_data () const
 {
   ACE_TRACE ("ACE_Log_Record::msg_data");

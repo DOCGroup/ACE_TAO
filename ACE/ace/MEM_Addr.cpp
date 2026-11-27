@@ -28,7 +28,7 @@ ACE_MEM_Addr::ACE_MEM_Addr ()
   this->initialize_local (0);
 }
 
-ACE_MEM_Addr::ACE_MEM_Addr (const ACE_MEM_Addr &sa)
+ACE_MEM_Addr::ACE_MEM_Addr (ACE_MEM_Addr const &sa)
   : ACE_Addr (AF_INET, sizeof (ACE_MEM_Addr))
 {
   ACE_TRACE ("ACE_MEM_Addr::ACE_MEM_Addr");
@@ -36,7 +36,7 @@ ACE_MEM_Addr::ACE_MEM_Addr (const ACE_MEM_Addr &sa)
   this->internal_.set (sa.internal_);
 }
 
-ACE_MEM_Addr::ACE_MEM_Addr (const ACE_TCHAR port_number[])
+ACE_MEM_Addr::ACE_MEM_Addr (ACE_TCHAR const port_number[])
   : ACE_Addr (AF_INET, sizeof (ACE_MEM_Addr))
 {
   ACE_TRACE ("ACE_MEM_Addr::ACE_MEM_Addr");
@@ -56,7 +56,9 @@ ACE_MEM_Addr::initialize_local (u_short port_number)
 {
   ACE_TCHAR name[MAXHOSTNAMELEN + 1];
   if (ACE_OS::hostname (name, MAXHOSTNAMELEN+1) == -1)
+  {
     return -1;
+  }
 
   this->external_.set (port_number, name);
   this->internal_.set (port_number, ACE_LOCALHOST);
@@ -64,7 +66,7 @@ ACE_MEM_Addr::initialize_local (u_short port_number)
 }
 
 int
-ACE_MEM_Addr::same_host (const ACE_INET_Addr &sap)
+ACE_MEM_Addr::same_host (ACE_INET_Addr const &sap)
 {
   ACE_TRACE ("ACE_MEM_Addr::same_host");
 
@@ -89,11 +91,11 @@ ACE_MEM_Addr::addr_to_string (ACE_TCHAR s[],
 
 // Transform the string into the current addressing format.
 int
-ACE_MEM_Addr::string_to_addr (const ACE_TCHAR s[])
+ACE_MEM_Addr::string_to_addr (ACE_TCHAR const s[])
 {
   ACE_TRACE ("ACE_MEM_Addr::string_to_addr");
 
-  u_short pn = static_cast<u_short> (ACE_OS::strtoul (s, nullptr, 10));
+  u_short const pn = static_cast<u_short> (ACE_OS::strtoul (s, nullptr, 10));
   return this->set (pn);
 }
 
@@ -107,7 +109,7 @@ ACE_MEM_Addr::get_addr () const
 
 /// Set a pointer to the address.
 void
-ACE_MEM_Addr::set_addr (const void *addr, int len)
+ACE_MEM_Addr::set_addr (void const *addr, int len)
 {
   ACE_TRACE ("ACE_MEM_Addr::set_addr");
 
@@ -124,7 +126,7 @@ ACE_MEM_Addr::get_host_name (ACE_TCHAR hostname[],
 }
 
 /// Return the character representation of the hostname.
-const char *
+char const *
 ACE_MEM_Addr::get_host_name () const
 {
   ACE_TRACE ("ACE_MEM_Addr::get_host_name");

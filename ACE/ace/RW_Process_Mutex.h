@@ -1,12 +1,8 @@
-// -*- C++ -*-
-//
-//=============================================================================
 /**
  *  @file    RW_Process_Mutex.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef ACE_RW_PROCESS_MUTEX_H
 #define ACE_RW_PROCESS_MUTEX_H
@@ -43,16 +39,17 @@ public:
   /// @a name, @a flags and @a mode \sa ACE_File_Lock.
   /// If not specified, a name is generated and flags and mode are set
   /// to default platform values.
-  ACE_RW_Process_Mutex (const ACE_TCHAR *name = nullptr,
+  ACE_RW_Process_Mutex (ACE_TCHAR const *name = nullptr,
                         int flags = O_CREAT|O_RDWR,
                         mode_t mode =  ACE_DEFAULT_RW_PROCESS_MUTEX_PERMS);
 
   ~ACE_RW_Process_Mutex ();
 
   /**
-   * Explicitly destroy the mutex.  Note that only one thread should
-   * call this method since it doesn't protect against race
-   * conditions.
+   * Explicitly destroy the mutex.
+   *
+   * @note Only one thread should call this method since it doesn't
+   * protect against race conditions.
    */
   int remove ();
 
@@ -105,7 +102,7 @@ public:
   int tryacquire_write_upgrade ();
 
   /// Return the underlying lock.
-  const ACE_File_Lock &lock () const;
+  ACE_File_Lock const &lock () const;
 
   /// Dump the state of an object.
   void dump () const;
@@ -119,7 +116,7 @@ private:
   ACE_TCHAR name_[ACE_UNIQUE_NAME_LEN];
 
   /// Create and return the unique name.
-  const ACE_TCHAR *unique_name ();
+  ACE_TCHAR const *unique_name ();
 
   /// We need this to get the readers/writer semantics...
   ACE_File_Lock lock_;

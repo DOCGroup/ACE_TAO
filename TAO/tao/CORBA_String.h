@@ -1,5 +1,3 @@
-// -*- C++ -*-
-//=============================================================================
 /**
  *  @file    CORBA_String.h
  *
@@ -7,7 +5,6 @@
  *
  *  @author DOC Group at Wash U, UCI, and Vanderbilt U.
  */
-//=============================================================================
 
 #ifndef TAO_CORBA_STRING_H
 #define TAO_CORBA_STRING_H
@@ -51,10 +48,7 @@ namespace TAO
     using character_type = charT;
     using s_traits = TAO::details::string_traits_base<character_type>;
 
-    /// Default constructor.
-    inline String_var () : ptr_ (0)
-    {
-    }
+    String_var () = default;
 
     /// Constructor, owns p.
     inline String_var (character_type *p) : ptr_ (p)
@@ -62,22 +56,19 @@ namespace TAO
     }
 
     /// Constructor. Makes a copy of p.
-    inline String_var (const character_type *p) : ptr_ (s_traits::duplicate (p))
+    inline String_var (character_type const *p) : ptr_ (s_traits::duplicate (p))
     {
     }
 
-    /// Copy constructor.
     inline String_var (String_var<charT> const &s) : ptr_(s_traits::duplicate(s.ptr_))
     {
     }
 
-    /// Destructor.
     inline ~String_var ()
     {
       s_traits::release (this->ptr_);
     }
 
-    /// Assignment operator.
     inline String_var &operator= (character_type *p)
     {
       String_var <charT> tmp (p);
@@ -85,15 +76,14 @@ namespace TAO
       return *this;
     }
 
-    /// Assignment to a const char*.  Makes a copy.
-    inline String_var &operator= (const character_type *p)
+    /// Assignment to a char const *.  Makes a copy.
+    inline String_var &operator= (character_type const *p)
     {
       String_var <charT> tmp (p);
       std::swap (this->ptr_, tmp.ptr_);
       return *this;
     }
 
-    /// Assignment operator.
     inline String_var &operator= (String_var<character_type> const &s)
     {
       String_var <charT> tmp (s);
@@ -108,7 +98,7 @@ namespace TAO
     }
 
     /// Only read privileges.
-    inline operator const character_type *() const
+    inline operator character_type const *() const
     {
       return this->ptr_;
     }
@@ -128,7 +118,7 @@ namespace TAO
     }
 
     /// For in parameter.
-    inline const character_type *in () const
+    inline character_type const *in () const
     {
       return this->ptr_;
     }
@@ -143,7 +133,7 @@ namespace TAO
     inline character_type *&out ()
     {
       s_traits::release (this->ptr_);
-      this->ptr_ = 0;
+      this->ptr_ = nullptr;
       return this->ptr_;
     }
 
@@ -151,13 +141,13 @@ namespace TAO
     inline character_type *_retn ()
     {
       character_type *temp = this->ptr_;
-      this->ptr_ = 0;
+      this->ptr_ = nullptr;
       return temp;
     }
 
   private:
     /// Instance.
-    character_type *ptr_;
+    character_type *ptr_ {};
   };
 
   /**
@@ -179,7 +169,7 @@ namespace TAO
     /// Construction from a reference to a string.
     inline String_out (character_type *&p) : ptr_ (p)
     {
-      this->ptr_ = 0;
+      this->ptr_ = nullptr;
     }
 
     /// Construction from a var.
@@ -192,10 +182,7 @@ namespace TAO
     {
     }
 
-    /// Copy constructor.
-    inline String_out (const String_out<charT> &s) : ptr_ (s.ptr_)
-    {
-    }
+    String_out (String_out<charT> const &) = default;
 
     /// Assignment from a string_out.
     inline String_out &operator= (String_out<charT> const &s)
@@ -212,7 +199,7 @@ namespace TAO
     }
 
     /// Assignment from a constant char*.
-    inline String_out& operator= (const character_type* p)
+    inline String_out& operator= (character_type const *p)
     {
       this->ptr_ = s_traits::duplicate (p);
       return *this;
@@ -235,14 +222,14 @@ namespace TAO
     character_type *&ptr_;
 
     // Assignment from _var disallowed
-    void operator= (const typename s_traits::string_var &);
+    void operator= (typename s_traits::string_var const &) = delete;
   };
 
   /**
-   * @struct TAO-specific @c {W}String_var Equality Functor
+   * @struct String_Var_Equal_To
    *
-   * This functor exist to simplify usage of @c {W}String_var in
-   * containers.
+   * TAO-specific equality functor for using @c String_var and
+   * @c WString_var in containers.
    */
   struct String_Var_Equal_To
   {
@@ -262,11 +249,10 @@ namespace CORBA
   using WString_out = TAO::String_out<CORBA::WChar>;
 }
 
-
 # if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
 
 TAO_Export ostream &
-operator<< (ostream &, const CORBA::String_var &);
+operator<< (ostream &, CORBA::String_var const &);
 TAO_Export istream &
 operator>> (istream &, CORBA::String_var &);
 TAO_Export ostream &
@@ -276,7 +262,7 @@ operator>> (istream &, CORBA::String_out &);
 
 #  ifndef ACE_HAS_CPP20
 TAO_Export ostream &
-operator<< (ostream &, const CORBA::WString_var &);
+operator<< (ostream &, CORBA::WString_var const &);
 TAO_Export istream &
 operator>> (istream &, CORBA::WString_var &);
 TAO_Export ostream &

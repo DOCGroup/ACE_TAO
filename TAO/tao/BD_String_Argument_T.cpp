@@ -4,6 +4,9 @@
 #include "tao/BD_String_Argument_T.h"
 #include "tao/SystemException.h"
 
+#include <memory>
+#include <utility>
+
 #if !defined (__ACE_INLINE__)
 #include "tao/BD_String_Argument_T.inl"
 #endif /* __ACE_INLINE__ */
@@ -44,32 +47,23 @@ TAO::In_BD_String_Argument_T<S_var,BOUND,Insert_Policy>::interceptor_value (
 template<typename S_var,
          size_t BOUND,
          template <typename> class Insert_Policy>
-TAO::In_BD_String_Clonable_Argument_T<S_var,BOUND,Insert_Policy>::~In_BD_String_Clonable_Argument_T ()
-{
-  if (this->is_clone_)
-    {
-      typename S_var::s_traits::char_type * tmp =
-            const_cast<typename S_var::s_traits::char_type *> (this->x_);
-      delete [] tmp;
-    }
-}
-
-template<typename S_var,
-         size_t BOUND,
-         template <typename> class Insert_Policy>
 TAO::Argument*
 TAO::In_BD_String_Clonable_Argument_T<S_var,BOUND,Insert_Policy>::clone ()
 {
-  typename S_var::s_traits::char_type * clone_x =
-             new typename S_var::s_traits::char_type [BOUND];
-  ACE_OS::strncpy (clone_x, this->x_, BOUND);
-  In_BD_String_Clonable_Argument_T<S_var,BOUND,Insert_Policy>* clone_arg =
-    new In_BD_String_Clonable_Argument_T<S_var,BOUND,Insert_Policy> (clone_x);
-  clone_arg->is_clone_ = true;
-  return clone_arg;
+  using char_type = typename S_var::s_traits::char_type;
+  std::unique_ptr<char_type[]> clone_x;
+  if (this->x_ != nullptr)
+    {
+      size_t const length = ACE_OS::strlen (this->x_);
+      clone_x.reset (new char_type[length + 1]);
+      ACE_OS::strcpy (clone_x.get (), this->x_);
+    }
+  std::unique_ptr<In_BD_String_Clonable_Argument_T<S_var,BOUND,Insert_Policy>> clone_arg =
+    std::make_unique<In_BD_String_Clonable_Argument_T<S_var,BOUND,Insert_Policy>> (
+      clone_x.get ());
+  clone_arg->clone_buffer_ = std::move (clone_x);
+  return clone_arg.release ();
 }
-
-// ===========================================================
 
 template<typename S_var,
          size_t BOUND,
@@ -120,8 +114,6 @@ TAO::Inout_BD_String_Argument_T<S_var,BOUND,Insert_Policy>::interceptor_value (
 
 #endif /* TAO_HAS_INTERCEPTORS */
 
-// ==============================================================
-
 template<typename S_var,
          size_t BOUND,
          template <typename> class Insert_Policy>
@@ -130,7 +122,7 @@ TAO::Out_BD_String_Argument_T<S_var,BOUND,Insert_Policy>::demarshal (
     TAO_InputCDR & cdr)
 {
   CORBA::Boolean const demarshalled = cdr >> this->x_;
-  if (this->x_ != 0 && ACE_OS::strlen (this->x_) > BOUND)
+  if (this->x_ != nullptr && ACE_OS::strlen (this->x_) > BOUND)
     {
       throw ::CORBA::BAD_PARAM ();
     }
@@ -153,8 +145,6 @@ TAO::Out_BD_String_Argument_T<S_var,BOUND,Insert_Policy>::interceptor_value (
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
-
-// ============================================================
 
 template<typename S_var,
          size_t BOUND,

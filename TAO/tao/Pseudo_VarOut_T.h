@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Pseudo_VarOut_T.h
  *
@@ -25,8 +22,6 @@
  *
  * @author Jeff Parsons
  */
-//=============================================================================
-
 
 #ifndef TAO_PSEUDO_VAROUT_T_H
 #define TAO_PSEUDO_VAROUT_T_H
@@ -55,12 +50,14 @@ class TAO_Pseudo_Var_T : private TAO_Base_var
 public:
   TAO_Pseudo_Var_T ();
   TAO_Pseudo_Var_T (typename T::_ptr_type);
-  TAO_Pseudo_Var_T (const TAO_Pseudo_Var_T<T> &);
+  TAO_Pseudo_Var_T (TAO_Pseudo_Var_T<T> const &);
 
   ~TAO_Pseudo_Var_T ();
 
   TAO_Pseudo_Var_T<T> & operator= (typename T::_ptr_type);
-  TAO_Pseudo_Var_T<T> & operator= (const TAO_Pseudo_Var_T<T> &);
+  TAO_Pseudo_Var_T<T> & operator= (TAO_Pseudo_Var_T<T> const &);
+  TAO_Pseudo_Var_T (TAO_Base_var const &) = delete;
+  TAO_Pseudo_Var_T &operator= (TAO_Base_var const &) = delete;
 
   typename T::_ptr_type operator-> () const;
 
@@ -80,11 +77,6 @@ public:
   // TAO extension.
   _retn_type    ptr () const;
 private:
-  // Unimplemented - prevents widening assignment.
-  TAO_Pseudo_Var_T (const TAO_Base_var &);
-  void operator= (const TAO_Base_var &);
-
-private:
   typename T::_ptr_type ptr_;
 };
 
@@ -102,9 +94,9 @@ class TAO_Pseudo_Out_T
 public:
   TAO_Pseudo_Out_T (typename T::_ptr_type &);
   TAO_Pseudo_Out_T (typename T::_var_type &);
-  TAO_Pseudo_Out_T (const TAO_Pseudo_Out_T<T> &);
+  TAO_Pseudo_Out_T (TAO_Pseudo_Out_T<T> const &);
 
-  TAO_Pseudo_Out_T<T> & operator= (const TAO_Pseudo_Out_T<T> &);
+  TAO_Pseudo_Out_T<T> & operator= (TAO_Pseudo_Out_T<T> const &);
   TAO_Pseudo_Out_T<T> & operator= (typename T::_ptr_type);
 
   operator typename T::_ptr_type & ();

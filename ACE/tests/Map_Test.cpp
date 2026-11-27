@@ -1,21 +1,19 @@
-
-//=============================================================================
 /**
  *  @file    Map_Test.cpp
  *
- *   This is a simple test of the <ACE_Map> and illustrates how to
+ *   This is a simple test of the @c ACE_Map and illustrates how to
  *   use the forward and reverse iterators.
  *
  *  @author Irfan Pyarali <irfan@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #include "test_config.h"
 #include "Map_Test.h"
 #include "ace/Map_T.h"
 #include "ace/Profile_Timer.h"
 
+#include <memory>
+#include <vector>
 
 #undef THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL
 #define THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL(X) \
@@ -44,8 +42,8 @@ functionality_test (TEST_MAP &map,
 {
   size_t counter;
   VALUE i;
-  KEY *original_keys = new KEY[iterations];
-  KEY *modified_keys = new KEY[iterations];
+  std::vector<KEY> original_keys (iterations);
+  std::vector<KEY> modified_keys (iterations);
 
   // Setup the keys to have some initial data.
   for (i = 0;
@@ -53,9 +51,7 @@ functionality_test (TEST_MAP &map,
        ++i)
     {
       original_keys[i].size (sizeof i / sizeof (KEY::TYPE));
-      ACE_OS::memcpy (&original_keys[i][0],
-                      &i,
-                      sizeof i);
+      ACE_OS::memcpy (std::addressof (original_keys[i][0]), &i, sizeof i);
     }
 
   // Make a copy of the keys so that we can compare with the original
@@ -77,13 +73,13 @@ functionality_test (TEST_MAP &map,
   // Forward iteration...
   {
     counter = 0;
-    TEST_MAP::iterator end = map.end ();
+    TEST_MAP::iterator const end = map.end ();
 
     for (TEST_MAP::iterator iter = map.begin ();
          iter != end;
          ++iter, ++counter)
       {
-        TEST_MAP::value_type entry = *iter;
+        TEST_MAP::value_type const entry = *iter;
 
         // Recover original key.
         KEY original_key;
@@ -95,13 +91,11 @@ functionality_test (TEST_MAP &map,
 
         // Obtain value from key.
         VALUE original_value;
-        ACE_OS::memcpy (&original_value,
-                        &original_key[0],
-                        sizeof original_value);
+        ACE_OS::memcpy (&original_value, std::addressof (original_key[0]), sizeof original_value);
 
         // Debugging info.
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%d|%d|%d)"),
+                    ACE_TEXT ("(%B|%B|%B)"),
                     counter,
                     original_value,
                     entry.second ()));
@@ -115,14 +109,14 @@ functionality_test (TEST_MAP &map,
   // Reverse iteration...
   {
     counter = iterations;
-    TEST_MAP::reverse_iterator end = map.rend ();
+    TEST_MAP::reverse_iterator const end = map.rend ();
 
     for (TEST_MAP::reverse_iterator iter = map.rbegin ();
          iter != end;
          ++iter)
       {
         --counter;
-        TEST_MAP::value_type entry = *iter;
+        TEST_MAP::value_type const entry = *iter;
 
         // Recover original key.
         KEY original_key;
@@ -134,13 +128,11 @@ functionality_test (TEST_MAP &map,
 
         // Obtain value from key.
         VALUE original_value;
-        ACE_OS::memcpy (&original_value,
-                        &original_key[0],
-                        sizeof original_value);
+        ACE_OS::memcpy (&original_value, std::addressof (original_key[0]), sizeof original_value);
 
         // Debugging info.
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%d|%d|%d)"),
+                    ACE_TEXT ("(%B|%B|%B)"),
                     counter,
                     original_value,
                     entry.second ()));
@@ -167,10 +159,6 @@ functionality_test (TEST_MAP &map,
       --counter;
       THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL (map.current_size () == counter);
     }
-
-  // Cleanup.
-  delete[] modified_keys;
-  delete[] original_keys;
 }
 
 static void
@@ -223,7 +211,7 @@ performance_test (void (*ptf) (TEST_MAP &, size_t, KEY *),
                   size_t iterations,
                   KEY *keys,
                   size_t table_size,
-                  const ACE_TCHAR *test_name)
+                  ACE_TCHAR const *test_name)
 {
   ACE_Profile_Timer timer;
   timer.start ();
@@ -237,7 +225,7 @@ performance_test (void (*ptf) (TEST_MAP &, size_t, KEY *),
   timer.elapsed_time (et);
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("time to run %s of size %d for %d iterations\n"),
+              ACE_TEXT ("time to run %s of size %B for %B iterations\n"),
               test_name,
               table_size,
               iterations));
@@ -264,13 +252,19 @@ run_main (int argc, ACE_TCHAR *argv[])
   size_t functionality_tests = 1;
 
   if (argc > 1)
+  {
     functionality_tests = ACE_OS::atoi (argv[1]);
+  }
 
   if (argc > 2)
+  {
     table_size = ACE_OS::atoi (argv[2]);
+  }
 
   if (argc > 3)
+  {
     iterations = ACE_OS::atoi (argv[3]);
+  }
 
   MAP_MANAGER_ADAPTER map1 (table_size);
   HASH_MAP_MANAGER_ADAPTER map2 (table_size);
@@ -292,25 +286,25 @@ run_main (int argc, ACE_TCHAR *argv[])
     }
 
   // Performance test of the maps.
-  KEY *keys = new KEY[iterations];
+  std::vector<KEY> keys (iterations);
 
   // Map Manager
   performance_test (&insert_test,
                     map1,
                     iterations,
-                    keys,
+                    keys.data (),
                     table_size,
                     ACE_TEXT ("Map Manager (insert test)"));
   performance_test (&find_test,
                     map1,
                     iterations,
-                    keys,
+                    keys.data (),
                     table_size,
                     ACE_TEXT ("Map Manager (find test)"));
   performance_test (&unbind_test,
                     map1,
                     iterations,
-                    keys,
+                    keys.data (),
                     table_size,
                     ACE_TEXT ("Map Manager (unbind test)"));
 
@@ -320,19 +314,19 @@ run_main (int argc, ACE_TCHAR *argv[])
   performance_test (&insert_test,
                     map2,
                     iterations,
-                    keys,
+                    keys.data (),
                     table_size,
                     ACE_TEXT ("Hash Map Manager (insert test)"));
   performance_test (&find_test,
                     map2,
                     iterations,
-                    keys,
+                    keys.data (),
                     table_size,
                     ACE_TEXT ("Hash Map Manager (find test)"));
   performance_test (&unbind_test,
                     map2,
                     iterations,
-                    keys,
+                    keys.data (),
                     table_size,
                     ACE_TEXT ("Hash Map Manager (unbind test)"));
 
@@ -342,23 +336,21 @@ run_main (int argc, ACE_TCHAR *argv[])
   performance_test (&insert_test,
                     map3,
                     iterations,
-                    keys,
+                    keys.data (),
                     table_size,
                     ACE_TEXT ("Active Map Manager (insert test)"));
   performance_test (&find_test,
                     map3,
                     iterations,
-                    keys,
+                    keys.data (),
                     table_size,
                     ACE_TEXT ("Active Map Manager (find test)"));
   performance_test (&unbind_test,
                     map3,
                     iterations,
-                    keys,
+                    keys.data (),
                     table_size,
                     ACE_TEXT ("Active Map Manager (unbind test)"));
-
-  delete[] keys;
 
   ACE_LOG_MSG->set_flags (ACE_Log_Msg::VERBOSE_LITE);
   ACE_END_TEST;

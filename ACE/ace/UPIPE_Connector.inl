@@ -1,12 +1,11 @@
-// -*- C++ -*-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// Creates a Local ACE_UPIPE.
+/// Creates a local ACE_UPIPE.
 ACE_INLINE
 ACE_UPIPE_Connector::ACE_UPIPE_Connector (ACE_UPIPE_Stream &new_stream,
-                                          const ACE_UPIPE_Addr &addr,
+                                          ACE_UPIPE_Addr const &addr,
                                           ACE_Time_Value *timeout,
-                                          const ACE_Addr &local_sap,
+                                          ACE_Addr const &local_sap,
                                           int reuse_addr,
                                           int flags,
                                           int perms)
@@ -14,11 +13,13 @@ ACE_UPIPE_Connector::ACE_UPIPE_Connector (ACE_UPIPE_Stream &new_stream,
   ACE_TRACE ("ACE_UPIPE_Connector::ACE_UPIPE_Connector");
   if (this->connect (new_stream, addr, timeout, local_sap,
                      reuse_addr, flags, perms) == -1
-      && timeout != 0 && !(errno == EWOULDBLOCK || errno == ETIME))
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("address %s, %p\n"),
-                addr.get_path_name (),
-                ACE_TEXT ("ACE_UPIPE_Connector")));
+      && timeout != nullptr && !(errno == EWOULDBLOCK || errno == ETIME))
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("address %s, %p\n"),
+                     addr.get_path_name (),
+                     ACE_TEXT ("ACE_UPIPE_Connector")));
+    }
 }
 
 ACE_INLINE bool

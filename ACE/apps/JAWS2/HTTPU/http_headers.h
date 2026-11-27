@@ -1,5 +1,4 @@
-// by James Hu
-// Borrowed from HTTP_Headers.*, which appears to be irrelevent now anyway.
+/// Originally contributed by James Hu.
 
 #ifndef HTTPU_HTTP_HEADERS_H
 #define HTTPU_HTTP_HEADERS_H
@@ -23,29 +22,28 @@
 
 class HTTP_Headers;
 
+/// A header token and its formatting string; both are non-owning literals.
 class HTTPU_Export HTTP_Hdr_Node
 {
-  // Constructor should be passed literal strings.
   friend class HTTP_HCodes;
 
 public:
   operator int () const;
-  operator const char * () const;
-  const char * format () const;
+  operator char const * () const;
+  char const * format () const;
 
 private:
-  HTTP_Hdr_Node (const char *token, const char *format);
+  HTTP_Hdr_Node (char const *token, char const *format);
 
 private:
   int index_;
-  const char *token_;
-  const char *format_;
+  char const *token_;
+  char const *format_;
 };
-
 
 class HTTP_HCodes;
 
-class HTTPU_Export HTTP_Header_Nodes : public ACE_RB_Tree<int, const HTTP_Hdr_Node *, ACE_Less_Than<int>, ACE_Null_Mutex>
+class HTTPU_Export HTTP_Header_Nodes : public ACE_RB_Tree<int, HTTP_Hdr_Node const *, ACE_Less_Than<int>, ACE_Null_Mutex>
 {
   friend class HTTP_HCodes;
   friend class HTTP_Hdr_Node;
@@ -129,10 +127,10 @@ public:
   static HTTP_Hdr_Node SCRIPT;
   static HTTP_Hdr_Node APPLET;
 
-  static const int &NUM_HEADER_STRINGS;
+  static int const &NUM_HEADER_STRINGS;
 
 protected:
-  const HTTP_Hdr_Node &hcode (int type) const;
+  HTTP_Hdr_Node const &hcode (int type) const;
 
 protected:
   HTTP_Header_Nodes *header_nodes_;
@@ -141,18 +139,17 @@ protected:
 class HTTPU_Export HTTP_Headers : public JAWS_Header_Info, public HTTP_HCodes
 {
 public:
-  const char *header(int name) const;
-  const char *value(int name);
-  const char *value_next(int name);
+  char const *header(int name) const;
+  char const *value(int name);
+  char const *value_next(int name);
   void value_reset ();
 
 public:
   HTTP_Headers ();
 
-  const char *header_token (int name) const;
-  const char *header_strings (int name) const;
+  char const *header_token (int name) const;
+  char const *header_strings (int name) const;
 };
-
 
 #if defined (ACE_HAS_INLINED_OSCALLS)
 #   if defined (ACE_INLINE)

@@ -1,6 +1,5 @@
-// -*- C++ -*-
-// This file defines the Options class for SSL-client-simple. IBM C++
-// compiler's template auto-instantiator needs this in a separate file.
+/// This file defines the Options class for SSL-client-simple. IBM C++
+/// compiler's template auto-instantiator needs this in a separate file.
 
 #ifndef ACE_SSL_CLIENT_SIMPLE_H
 #define ACE_SSL_CLIENT_SIMPLE_H
@@ -8,88 +7,83 @@
 #include "ace/SSL/SSL_SOCK_Stream.h"
 #include "ace/Time_Value.h"
 
+/// Defines the options for this test.
 class Options
-  // = TITLE
-  //   Define the options for this test.
 {
 public:
   Options ();
-  // Constructor.
 
   ~Options ();
-  // Destructor.
 
+  /// Parses the command-line arguments.
   int parse_args (int argc, ACE_TCHAR *argv[]);
-  // Parse the command-line arguments.
 
-  const ACE_Time_Value &sleep_time () const;
-  // Return the amount of time to sleep in order to implement the
-  // proper transmission rates.
+  /// Returns how long to sleep to implement the proper transmission rates.
+  ACE_Time_Value const &sleep_time () const;
 
+  /// Returns the server port.
   u_short port () const;
-  // Port of the server.
 
-  const ACE_TCHAR *host () const;
-  // Host of the server.
+  /// Returns the server host.
+  ACE_TCHAR const *host () const;
 
-  const char *quit_string () const;
-  // String that shuts down the client/server.
+  /// Returns the string that shuts down the client or server.
+  char const *quit_string () const;
 
+  /// Reads from the appropriate location.
   ssize_t read (void *buf, size_t len, size_t &iterations);
-  // Read from the appropriate location.
 
+  /// Returns the length of the message to send.
   size_t message_len () const;
-  // Returns the length of the message to send.
 
-  const void *message_buf () const;
-  // Returns a pointer to the message.
+  /// Returns a pointer to the message.
+  void const *message_buf () const;
 
+  /// Runs the test.
   void run ();
-  // Run the test
 
 private:
+  /// Initializes the message and sets up the barrier.
   int init ();
-  // Initialize the message we're sending to the user and set up the
-  // barrier.
 
+  /// Performs behavior shared by the oneway and twoway client tests.
   char *shared_client_test (u_short port,
                             ACE_SSL_SOCK_Stream &cli_stream);
-  // Performs the shared behavior of the oneway and twoway client
-  // tests.
 
+  /// Performs the twoway test.
   void twoway_client_test ();
-  // Performs the twoway test.
 
+  /// Performs the oneway test.
   void oneway_client_test ();
-  // Performs the oneway test.
 
-  const ACE_TCHAR *host_;
-  // Host of the server.
+  /// Host of the server.
+  ACE_TCHAR const *host_;
 
+  /// Port of the server.
   u_short port_;
-  // Port of the server.
 
+  /// Sleep interval.
   ACE_Time_Value sleep_time_;
-  // Sleep_Time value.
 
   enum {QUIT_STRING_SIZE = 128};
+
+  /// String that shuts down the client or server.
   char quit_string_[QUIT_STRING_SIZE + 1];
-  // String that shuts down the client/server.
 
+  /// Size of the message sent to the server.
   size_t message_len_;
-  // Size of the message we send to the server.
 
+  /// Message sent to the server.
   char *message_buf_;
-  // Pointer to the message we send to the server.
 
+  /// Source of input, either ACE_STDIN or the generator.
   ACE_HANDLE io_source_;
-  // Are we reading I/O from ACE_STDIN or from our generator?
 
+  /// Number of iterations.
   size_t iterations_;
-  // Number of iterations.
 
+  /// Whether the test uses oneway or twoway communication.
   char oneway_;
-  // Are we running oneway or twoway?
 };
 
 #endif /* ACE_SSL_CLIENT_SIMPLE_H */

@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 /**
  *  @file     AbstractBase_T.h
  *

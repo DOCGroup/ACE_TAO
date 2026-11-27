@@ -45,7 +45,7 @@ ACE_Log_Msg_Android_Logcat::~ACE_Log_Msg_Android_Logcat ()
 }
 
 int
-ACE_Log_Msg_Android_Logcat::open (const ACE_TCHAR *)
+ACE_Log_Msg_Android_Logcat::open (ACE_TCHAR const *)
 {
   return 0;
 }

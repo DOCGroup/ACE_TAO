@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_errno.h"
 #include "ace/Time_Value.h"
@@ -26,7 +25,7 @@ ACE_OS::asctime_r (const struct tm *t, char *buf, int buflen)
   ACE_OS_TRACE ("ACE_OS::asctime_r");
 #if defined (ACE_HAS_REENTRANT_FUNCTIONS)
 # if defined (ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R)
-  char *result = nullptr;
+  char *result {};
   ace_asctime_r_helper (t, buf);
   ACE_OS::strsncpy (buf, result, static_cast<size_t> (buflen));
   return buf;
@@ -48,7 +47,7 @@ ACE_OS::asctime_r (const struct tm *t, char *buf, int buflen)
   ACE_UNUSED_ARG (buflen);
   ACE_NOTSUP_RETURN (0);
 #else
-  char *result = nullptr;
+  char *result {};
   ACE_OSCALL (std::asctime (t), char *, result);
   ACE_OS::strsncpy (buf, result, buflen);
   return buf;
@@ -100,15 +99,19 @@ ACE_OS::ctime (const time_t *t)
 #  if defined (ACE_USES_WCHAR)   /* Not Win32, else it would do the above */
   char *narrow_time;
   ACE_OSCALL (::ctime (t), char *, narrow_time);
-  if (narrow_time == 0)
-    return 0;
+  if (narrow_time == nullptr)
+    {
+      return nullptr;
+    }
   // ACE_Ascii_To_Wide::convert allocates (via new []) a wchar_t[]. If
   // we've done this before, free the previous one. Yes, this leaves a
   // small memory leak (26 characters) but there's no way around this
   // that I know of. (Steve Huston, 12-Feb-2003).
-  static wchar_t *wide_time = nullptr;
+  static wchar_t *wide_time {};
   if (wide_time != nullptr)
-    delete [] wide_time;
+    {
+      delete [] wide_time;
+    }
   wide_time = ACE_Ascii_To_Wide::convert (narrow_time);
   return wide_time;
 #  else
@@ -124,7 +127,7 @@ ACE_OS::ctime_r (const time_t *t, ACE_TCHAR *buf, int buflen)
 
 #if defined (ACE_HAS_REENTRANT_FUNCTIONS)
 
-  char *bufp = nullptr;
+  char *bufp {};
 #   if defined (ACE_USES_WCHAR)
   char narrow_buf[ctime_buf_size];
   bufp = narrow_buf;
@@ -135,7 +138,7 @@ ACE_OS::ctime_r (const time_t *t, ACE_TCHAR *buf, int buflen)
   if (buflen < ctime_buf_size)
     {
       errno = ERANGE;
-      return 0;
+      return nullptr;
     }
 #   if defined (ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R)
   ACE_OSCALL (::ctime_r (t, bufp), char *, bufp);
@@ -150,7 +153,9 @@ ACE_OS::ctime_r (const time_t *t, ACE_TCHAR *buf, int buflen)
 #   endif /* ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R */
 
   if (bufp == nullptr)
-    return nullptr;
+    {
+      return nullptr;
+    }
 
 #   if defined (ACE_USES_WCHAR)
   ACE_Ascii_To_Wide wide_buf (bufp);
@@ -181,14 +186,16 @@ ACE_OS::ctime_r (const time_t *t, ACE_TCHAR *buf, int buflen)
       return nullptr;
     }
 
-  ACE_TCHAR *result = nullptr;
+  ACE_TCHAR *result {};
 #     if defined (ACE_USES_WCHAR)
   ACE_OSCALL (::_wctime (t), wchar_t *, result);
 #     else /* ACE_USES_WCHAR */
   ACE_OSCALL (::ctime (t), char *, result);
 #     endif /* ACE_USES_WCHAR */
   if (result != nullptr)
-    ACE_OS::strsncpy (buf, result, buflen);
+    {
+      ACE_OS::strsncpy (buf, result, buflen);
+    }
   return buf;
 #endif /* ACE_HAS_REENTRANT_FUNCTIONS */
 }
@@ -232,7 +239,6 @@ ACE_OS::localtime_r (const unsigned long *clock,
   return ACE_OS::localtime_r (reinterpret_cast<const time_t *>(clock), res);
 }
 
-
 #endif
 
 ACE_INLINE double
@@ -242,7 +248,7 @@ ACE_OS::difftime (time_t t1, time_t t0)
 }
 
 ACE_INLINE ACE_hrtime_t
-ACE_OS::gethrtime (const ACE_HRTimer_Op op)
+ACE_OS::gethrtime (ACE_HRTimer_Op const op)
 {
   ACE_OS_TRACE ("ACE_OS::gethrtime");
 #if defined (ACE_HAS_HI_RES_TIMER)
@@ -356,7 +362,9 @@ ACE_OS::gmtime_r (const time_t *t, struct tm *res)
   struct tm *result;
   ACE_OSCALL (::gmtime (t), struct tm *, result) ;
   if (result != 0)
-    *res = *result;
+    {
+      *res = *result;
+    }
   return res;
 #endif /* ACE_HAS_REENTRANT_FUNCTIONS */
 }
@@ -394,7 +402,7 @@ ACE_OS::nanosleep (const struct timespec *requested,
 }
 
 ACE_INLINE size_t
-ACE_OS::strftime (char *s, size_t maxsize, const char *format,
+ACE_OS::strftime (char *s, size_t maxsize, char const *format,
                   const struct tm *timeptr)
 {
 #if defined (ACE_LACKS_STRFTIME)
@@ -416,7 +424,7 @@ ACE_OS::strftime (char *s, size_t maxsize, const char *format,
 }
 
 ACE_INLINE char *
-ACE_OS::strptime (const char *buf, const char *format, struct tm *tm)
+ACE_OS::strptime (char const *buf, char const *format, struct tm *tm)
 {
   ACE_OS::memset (tm, 0, sizeof (struct tm));
 #if defined (ACE_LACKS_STRPTIME)
@@ -433,7 +441,9 @@ ACE_OS::time (time_t *tloc)
 #if defined (ACE_LACKS_TIME)
   time_t const retv = ACE_OS::gettimeofday ().sec ();
   if (tloc)
-    *tloc = retv;
+    {
+      *tloc = retv;
+    }
   return retv;
 #else
   return ::time (tloc);

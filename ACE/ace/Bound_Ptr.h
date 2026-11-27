@@ -1,13 +1,9 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Bound_Ptr.h
  *
  *  @author Christopher Kohlhoff <chris@kohlhoff.com>
  *  @author Boris Kolpackov <boris@codesynthesis.com>
  */
-//=============================================================================
 
 #ifndef ACE_BOUND_PTR_H
 #define ACE_BOUND_PTR_H
@@ -15,6 +11,9 @@
 #include /**/ "ace/pre.h"
 
 #include /**/ "ace/config-all.h"
+
+#include <memory>
+#include <type_traits>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -25,7 +24,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 /**
  * @class ACE_Bound_Ptr_Counter
  *
- * @brief An ACE_Bound_Ptr_Counter<ACE_LOCK> object encapsulates an
+ * @brief An ACE_Bound_Ptr_Counter&lt;ACE_LOCK&gt; object encapsulates an
  *        object reference count.
  *
  * Do not use this class directly, use ACE_Strong_Bound_Ptr or
@@ -41,7 +40,7 @@ public:
   ACE_Bound_Ptr_Counter (long init_obj_ref_count = 0);
   ~ACE_Bound_Ptr_Counter () = default;
 
-  /// Create a ACE_Bound_Ptr_Counter<ACE_LOCK> and initialize the
+  /// Create an @c ACE_Bound_Ptr_Counter with @c ACE_LOCK and initialize the
   /// reference count to indicate ownership by a strong pointer.
   static ACE_Bound_Ptr_Counter<ACE_LOCK> *create_strong ();
 
@@ -55,7 +54,7 @@ public:
   /// reference count.
   static long detach_strong (ACE_Bound_Ptr_Counter<ACE_LOCK> *counter);
 
-  /// Create a ACE_Bound_Ptr_Counter<ACE_LOCK> and initialize the
+  /// Create an @c ACE_Bound_Ptr_Counter with @c ACE_LOCK and initialize the
   /// reference count to indicate no ownership.
   static ACE_Bound_Ptr_Counter<ACE_LOCK> *create_weak ();
 
@@ -70,7 +69,7 @@ public:
   static bool object_was_deleted (ACE_Bound_Ptr_Counter<ACE_LOCK> *counter);
 
 private:
-  /// Allocate a new ACE_Bound_Ptr_Counter<ACE_LOCK> instance,
+  /// Allocate a new @c ACE_Bound_Ptr_Counter instance with @c ACE_LOCK,
   /// returning NULL if it cannot be created.
   static ACE_Bound_Ptr_Counter<ACE_LOCK> *internal_create (long init_obj_ref_count);
 
@@ -101,6 +100,8 @@ template <class X, class ACE_LOCK> class ACE_Weak_Bound_Ptr;
  * When the last instance of an ACE_Strong_Bound_Ptr that references a
  * particular object is destroyed or overwritten, it will invoke delete
  * on its underlying pointer.
+ * Explicit static and dynamic pointer casts share the reference count;
+ * a failed dynamic cast returns an empty pointer.
  */
 template <class X, class ACE_LOCK>
 class ACE_Strong_Bound_Ptr
@@ -111,50 +112,62 @@ public:
   explicit ACE_Strong_Bound_Ptr (X *p = nullptr);
 
   /// Copy constructor binds @c this and @a r to the same object.
-  ACE_Strong_Bound_Ptr (const ACE_Strong_Bound_Ptr<X, ACE_LOCK> &r);
+  ACE_Strong_Bound_Ptr (ACE_Strong_Bound_Ptr<X, ACE_LOCK> const &r);
 
   /// Constructor binds @c this and @a r to the same object.
-  ACE_Strong_Bound_Ptr (const ACE_Weak_Bound_Ptr<X, ACE_LOCK> &r);
+  ACE_Strong_Bound_Ptr (ACE_Weak_Bound_Ptr<X, ACE_LOCK> const &r);
 
   /// Copy constructor binds @c this and @a r to the same object if
   /// Y* can be implicitly converted to X*.
-  template <class Y>
-  ACE_Strong_Bound_Ptr (const ACE_Strong_Bound_Ptr<Y, ACE_LOCK> &r)
+  template <class Y, std::enable_if_t<std::is_convertible_v<Y *, X *>, int> = 0>
+  ACE_Strong_Bound_Ptr (ACE_Strong_Bound_Ptr<Y, ACE_LOCK> const &r)
       : counter_ (r.counter_),
-        ptr_ (dynamic_cast<X*>(r.ptr_))
+        ptr_ (r.ptr_)
   {
-    // This ctor is temporarily defined here to increase our chances
-    // of being accepted by broken compilers.
-    //
     COUNTER::attach_strong (this->counter_);
   }
 
-  /// Destructor.
+  /// Cast with static_cast while sharing the source's reference count.
+  template <class Y>
+  static ACE_Strong_Bound_Ptr static_pointer_cast (
+    ACE_Strong_Bound_Ptr<Y, ACE_LOCK> const &r)
+  {
+    return ACE_Strong_Bound_Ptr (r, static_cast<X *> (r.ptr_));
+  }
+
+  template <class Y>
+  static ACE_Strong_Bound_Ptr dynamic_pointer_cast (
+    ACE_Strong_Bound_Ptr<Y, ACE_LOCK> const &r)
+  {
+    X * const p = dynamic_cast<X *> (r.ptr_);
+    if (p != nullptr)
+      {
+        return ACE_Strong_Bound_Ptr (r, p);
+      }
+    return ACE_Strong_Bound_Ptr ();
+  }
+
   ~ACE_Strong_Bound_Ptr ();
 
   /// Assignment operator that binds @c this and @a r to the same object.
-  void operator = (const ACE_Strong_Bound_Ptr<X, ACE_LOCK> &r);
+  void operator = (ACE_Strong_Bound_Ptr<X, ACE_LOCK> const &r);
 
   /// Assignment operator that binds @c this and @a r to the same object.
-  void operator = (const ACE_Weak_Bound_Ptr<X, ACE_LOCK> &r);
+  void operator = (ACE_Weak_Bound_Ptr<X, ACE_LOCK> const &r);
 
   /// Assignment operator that binds @c this and @a r to the same object
   /// if Y* can be implicitly converted to X*.
-  template <class Y>
-  ACE_Weak_Bound_Ptr<X, ACE_LOCK>&
-  operator= (const ACE_Strong_Bound_Ptr<Y, ACE_LOCK> &r)
+  template <class Y, std::enable_if_t<std::is_convertible_v<Y *, X *>, int> = 0>
+  ACE_Strong_Bound_Ptr<X, ACE_LOCK>&
+  operator= (ACE_Strong_Bound_Ptr<Y, ACE_LOCK> const &r)
   {
-    // This operator is temporarily defined here to increase our chances
-    // of being accepted by broken compilers.
-    //
-
-    // This will work if &r == this, by first increasing the ref count
-
     COUNTER *new_counter = r.counter_;
-    X* new_ptr = dynamic_cast<X*> (r.ptr_);
+    X* new_ptr = r.ptr_;
     COUNTER::attach_strong (new_counter);
     if (COUNTER::detach_strong (this->counter_) == 0)
-      delete this->ptr_;
+      {
+        delete this->ptr_;
+      }
     this->counter_ = new_counter;
     this->ptr_ = new_ptr;
 
@@ -168,7 +181,7 @@ public:
    * @note It also returns @c true if both objects have just been
    *       instantiated and not used yet.
    */
-  bool operator == (const ACE_Strong_Bound_Ptr<X, ACE_LOCK> &r) const;
+  bool operator == (ACE_Strong_Bound_Ptr<X, ACE_LOCK> const &r) const;
 
   /// Equality operator that returns true if the ACE_Strong_Bound_Ptr
   /// and ACE_Weak_Bound_Ptr objects point to the same underlying
@@ -177,7 +190,7 @@ public:
    * @note It also returns @c true if both objects have just been
    *       instantiated and not used yet.
    */
-  bool operator == (const ACE_Weak_Bound_Ptr<X, ACE_LOCK> &r) const;
+  bool operator == (ACE_Weak_Bound_Ptr<X, ACE_LOCK> const &r) const;
 
   /// Equality operator that returns @c true if the
   /// ACE_Strong_Bound_Ptr and the raw pointer point to the same
@@ -185,10 +198,10 @@ public:
   bool operator == (X *p) const;
 
   /// Inequality operator, which is the opposite of equality.
-  bool operator != (const ACE_Strong_Bound_Ptr<X, ACE_LOCK> &r) const;
+  bool operator != (ACE_Strong_Bound_Ptr<X, ACE_LOCK> const &r) const;
 
   /// Inequality operator, which is the opposite of equality.
-  bool operator != (const ACE_Weak_Bound_Ptr<X, ACE_LOCK> &r) const;
+  bool operator != (ACE_Weak_Bound_Ptr<X, ACE_LOCK> const &r) const;
 
   /// Inequality operator, which is the opposite of equality.
   bool operator != (X *p) const;
@@ -222,6 +235,13 @@ private:
   /// The ACE_Bound_Ptr_Counter type.
   using COUNTER = ACE_Bound_Ptr_Counter<ACE_LOCK>;
 
+  template <class Y>
+  ACE_Strong_Bound_Ptr (ACE_Strong_Bound_Ptr<Y, ACE_LOCK> const &r, X *p)
+    : counter_ (r.counter_), ptr_ (p)
+  {
+    COUNTER::attach_strong (this->counter_);
+  }
+
   /// The reference counter.
   COUNTER *counter_;
 
@@ -254,19 +274,18 @@ public:
   explicit ACE_Weak_Bound_Ptr (X *p = nullptr);
 
   /// Copy constructor binds @c this and @a r to the same object.
-  ACE_Weak_Bound_Ptr (const ACE_Weak_Bound_Ptr<X, ACE_LOCK> &r);
+  ACE_Weak_Bound_Ptr (ACE_Weak_Bound_Ptr<X, ACE_LOCK> const &r);
 
   /// Constructor binds @c this and @a r to the same object.
-  ACE_Weak_Bound_Ptr (const ACE_Strong_Bound_Ptr<X, ACE_LOCK> &r);
+  ACE_Weak_Bound_Ptr (ACE_Strong_Bound_Ptr<X, ACE_LOCK> const &r);
 
-  /// Destructor.
   ~ACE_Weak_Bound_Ptr ();
 
   /// Assignment operator that binds @c this and @a r to the same object.
-  void operator = (const ACE_Weak_Bound_Ptr<X, ACE_LOCK> &r);
+  void operator = (ACE_Weak_Bound_Ptr<X, ACE_LOCK> const &r);
 
   /// Assignment operator that binds @c this and @a r to the same object.
-  void operator = (const ACE_Strong_Bound_Ptr<X, ACE_LOCK> &r);
+  void operator = (ACE_Strong_Bound_Ptr<X, ACE_LOCK> const &r);
 
   /// Equality operator that returns @c true if both
   /// ACE_Weak_Bound_Ptr objects point to the same underlying object.
@@ -274,7 +293,7 @@ public:
    * @note It also returns @c true if both objects have just been
    *       instantiated and not used yet.
    */
-  bool operator == (const ACE_Weak_Bound_Ptr<X, ACE_LOCK> &r) const;
+  bool operator == (ACE_Weak_Bound_Ptr<X, ACE_LOCK> const &r) const;
 
   /// Equality operator that returns @c true if the ACE_Weak_Bound_Ptr
   /// and ACE_Strong_Bound_Ptr objects point to the same underlying
@@ -283,17 +302,17 @@ public:
    * @note It also returns @c true if both objects have just been
    *       instantiated and not used yet.
    */
-  bool operator == (const ACE_Strong_Bound_Ptr<X, ACE_LOCK> &r) const;
+  bool operator == (ACE_Strong_Bound_Ptr<X, ACE_LOCK> const &r) const;
 
   /// Equality operator that returns @c true if the ACE_Weak_Bound_Ptr
   /// and the raw pointer point to the same underlying object.
   bool operator == (X *p) const;
 
   /// Inequality operator, which is the opposite of equality.
-  bool operator != (const ACE_Weak_Bound_Ptr<X, ACE_LOCK> &r) const;
+  bool operator != (ACE_Weak_Bound_Ptr<X, ACE_LOCK> const &r) const;
 
   /// Inequality operator, which is the opposite of equality.
-  bool operator != (const ACE_Strong_Bound_Ptr<X, ACE_LOCK> &r) const;
+  bool operator != (ACE_Strong_Bound_Ptr<X, ACE_LOCK> const &r) const;
 
   /// Inequality operator, which is the opposite of equality.
   bool operator != (X *p) const;

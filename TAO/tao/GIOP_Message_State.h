@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file     GIOP_Message_State.h
  *
@@ -11,7 +8,6 @@
  *  @author  Balachandran Natarajan <bala@cs.wustl.edu>
  *  @author  Johnny Willemsen <jwillemsen@remedy.nl>
  */
-//=============================================================================
 #ifndef TAO_GIOP_MESSAGE_STATE_H
 #define TAO_GIOP_MESSAGE_STATE_H
 
@@ -38,22 +34,20 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Export TAO_GIOP_Message_State
 {
 public:
-  /// Constructor
   TAO_GIOP_Message_State () = default;
   ~TAO_GIOP_Message_State () = default;
 
   /// Parse the message header.
   ///
-  /// \return -1 There was some error parsing the GIOP header
-  /// \return 0  The GIOP header was parsed correctly
-  /// \return 1  There was not enough data in the message block to
-  ///            parse the header
+  /// @retval -1 There was an error parsing the GIOP header.
+  /// @retval 0 The GIOP header was parsed correctly.
+  /// @retval 1 The message block did not contain enough data to parse the header.
   int parse_message_header (ACE_Message_Block &incoming);
 
-  /// Return the message size
+  /// Return the message size, including the GIOP header.
   CORBA::ULong message_size () const;
 
-  /// Return the message size
+  /// Return the message payload size, excluding the GIOP header.
   CORBA::ULong payload_size () const;
 
   /// Return the byte order information
@@ -62,7 +56,7 @@ public:
   /// Return the message type
   GIOP::MsgType message_type () const;
 
-  /// Return the more fragments
+  /// Return whether more fragments follow this message.
   CORBA::Boolean more_fragments () const;
 
   void more_fragments (CORBA::Boolean fragment);
@@ -70,7 +64,7 @@ public:
   /// Get the GIOP version
   TAO_GIOP_Message_Version const &giop_version () const;
 
-  /// Return the compressed information
+  /// Return whether the message is compressed.
   CORBA::Boolean compressed () const;
 
 private:
@@ -79,46 +73,44 @@ private:
 
   /// Checks for the magic word 'GIOP' in the start of the incoming
   /// stream
-  int parse_magic_bytes (char *buf);
+  int parse_magic_bytes (char const *buf);
 
-  /// Extracts the version information from the incoming
-  /// stream. Performs a check for  whether the version information is
-  /// right and sets the information in the <state>
-  int get_version_info (char *buf);
+  /// Extracts and validates the version information from the incoming
+  /// stream, then stores it in this object.
+  int get_version_info (char const *buf);
 
-  /// Extracts the byte order information from the incoming
-  /// stream. Performs a check for  whether the byte order information
-  /// right and sets the information in the <state>
-  int get_byte_order_info (char *buf);
+  /// Extracts and validates the byte order information from the incoming
+  /// stream, then stores it in this object.
+  int get_byte_order_info (char const *buf);
 
-  /// Gets the size of the payload and set the size in the <state>
-  void get_payload_size (char *buf);
+  /// Gets the payload size and stores it in this object.
+  void get_payload_size (char const *buf);
 
   /// Read the unsigned long from the buffer. The @a buf should just
   /// point to the next 4 bytes data that represent the ULong
-  CORBA::ULong read_ulong (const char *buf) const;
+  CORBA::ULong read_ulong (char const *buf) const;
 
 private:
-  /// GIOP version information..
+  /// GIOP version information.
   TAO_GIOP_Message_Version giop_version_ {TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR};
 
   /// 0 = big, 1 = little
-  CORBA::Octet byte_order_ {0};
+  CORBA::Octet byte_order_ {};
 
   /// MsgType above
   GIOP::MsgType message_type_ {GIOP::Request};
 
   /// In byte_order!
-  CORBA::ULong payload_size_ {0};
+  CORBA::ULong payload_size_ {};
 
-  /// (Requests and Replys)
+  /// Requests and replies.
   /// A value of zero indicates that this message does not have any
   /// fragments.  A value of non-zero indicates that it does have
   /// fragments.
-  CORBA::Boolean more_fragments_ {false};
+  CORBA::Boolean more_fragments_ {};
 
   /// Compressed
-  CORBA::Boolean compressed_ {false};
+  CORBA::Boolean compressed_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

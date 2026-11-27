@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 /**
  * @file PortableServer_PolicyFactory.h
  *

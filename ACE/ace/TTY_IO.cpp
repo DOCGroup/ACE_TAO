@@ -11,14 +11,14 @@
 
 namespace
 {
-  const char ACE_TTY_IO_NONE[]  = "none";
+  char const ACE_TTY_IO_NONE[]  = "none";
 #if defined (ACE_HAS_TERMIOS) || defined (ACE_HAS_TERMIO) || defined (ACE_WIN32)
-  const char ACE_TTY_IO_ODD[]   = "odd";
-  const char ACE_TTY_IO_EVEN[]  = "even";
+  char const ACE_TTY_IO_ODD[]   = "odd";
+  char const ACE_TTY_IO_EVEN[]  = "even";
 #endif
 #if defined (ACE_WIN32)
-  const char ACE_TTY_IO_MARK[]  = "mark";
-  const char ACE_TTY_IO_SPACE[] = "space";
+  char const ACE_TTY_IO_MARK[]  = "mark";
+  char const ACE_TTY_IO_SPACE[] = "space";
 #endif /* ACE_WIN32 */
 }
 
@@ -57,18 +57,27 @@ int ACE_TTY_IO::control (Control_Mode cmd, Serial_Params *arg) const
   struct termios devpar;
   speed_t newbaudrate = 0;
   if (tcgetattr (get_handle () , &devpar) == -1)
+    {
+      return -1;
+    }
 #elif defined (TCGETS)
   struct termios devpar;
   unsigned int newbaudrate = 0;
   if (this->ACE_IO_SAP::control (TCGETS, static_cast<void*>(&devpar)) == -1)
+    {
+      return -1;
+    }
 #elif defined (TCGETA)
   struct termio devpar;
   unsigned int newbaudrate = 0;
   if (this->ACE_IO_SAP::control (TCGETA, static_cast<void*>(&devpar)) == -1)
+    {
+      return -1;
+    }
 #else
   errno = ENOSYS;
-#endif /* ACE_HAS_TERMIOS */
   return -1;
+#endif /* ACE_HAS_TERMIOS */
 
   switch (cmd)
     {
@@ -193,9 +202,13 @@ int ACE_TTY_IO::control (Control_Mode cmd, Serial_Params *arg) const
 #if defined (ACE_HAS_TERMIOS)
       // Can you really have different input and output baud rates?!
       if (cfsetospeed (&devpar, newbaudrate) == -1)
+      {
         return -1;
+      }
       if (cfsetispeed (&devpar, newbaudrate) == -1)
+      {
         return -1;
+      }
 #else
       devpar.c_cflag &= ~CBAUD;
 # if defined (CBAUDEX)
@@ -243,9 +256,13 @@ int ACE_TTY_IO::control (Control_Mode cmd, Serial_Params *arg) const
               devpar.c_cflag |=  PARODD;
               devpar.c_iflag &= ~IGNPAR;
               if (arg->inpckenb)
-                devpar.c_iflag |= INPCK | PARMRK;
+                {
+                  devpar.c_iflag |= INPCK | PARMRK;
+                }
               else
+              {
                 devpar.c_iflag &= ~(INPCK | PARMRK);
+              }
             }
           else if (ACE_OS::strcasecmp (arg->paritymode, ACE_TTY_IO_EVEN) == 0)
             {
@@ -253,9 +270,13 @@ int ACE_TTY_IO::control (Control_Mode cmd, Serial_Params *arg) const
               devpar.c_cflag &= ~PARODD;
               devpar.c_iflag &= ~IGNPAR;
               if (arg->inpckenb)
-                devpar.c_iflag |= INPCK | PARMRK;
+                {
+                  devpar.c_iflag |= INPCK | PARMRK;
+                }
               else
+              {
                 devpar.c_iflag &= ~(INPCK | PARMRK);
+              }
             }
           else if (ACE_OS::strcasecmp (arg->paritymode, ACE_TTY_IO_NONE) == 0)
             {
@@ -273,22 +294,34 @@ int ACE_TTY_IO::control (Control_Mode cmd, Serial_Params *arg) const
 
 #if defined (CNEW_RTSCTS)
       if ((arg->ctsenb) || (arg->rtsenb)) // Enable RTS/CTS protocol
-        devpar.c_cflag |= CNEW_RTSCTS;
+        {
+          devpar.c_cflag |= CNEW_RTSCTS;
+        }
       else
-        devpar.c_cflag &= ~CNEW_RTSCTS;
+        {
+          devpar.c_cflag &= ~CNEW_RTSCTS;
+        }
 #elif defined (CRTSCTS)
       if ((arg->ctsenb) || (arg->rtsenb)) // Enable RTS/CTS protocol
-        devpar.c_cflag |= CRTSCTS;
+        {
+          devpar.c_cflag |= CRTSCTS;
+        }
       else
+      {
         devpar.c_cflag &= ~CRTSCTS;
+      }
 #endif /* NEW_RTSCTS || CRTSCTS */
 
 #if defined (CREAD)
       // Enable/disable receiver
       if (arg->rcvenb)
-        devpar.c_cflag |= CREAD;
+        {
+          devpar.c_cflag |= CREAD;
+        }
       else
+      {
         devpar.c_cflag &= ~CREAD;
+      }
 #endif /* CREAD */
 
 #if defined (HUPCL)
@@ -299,38 +332,58 @@ int ACE_TTY_IO::control (Control_Mode cmd, Serial_Params *arg) const
 #if defined (CLOCAL)
       // If device is not a modem set to local device.
       if (arg->modem)
-        devpar.c_cflag &= ~CLOCAL;
+        {
+          devpar.c_cflag &= ~CLOCAL;
+        }
       else
+      {
         devpar.c_cflag |= CLOCAL;
+      }
 #endif /* CLOCAL */
 
       if (arg->databits < 8)
-        devpar.c_iflag |= ISTRIP;
+        {
+          devpar.c_iflag |= ISTRIP;
+        }
       else
+      {
         devpar.c_iflag &= ~ISTRIP;
+      }
 
 #if defined (IGNBRK)
       // If device is not a modem set to ignore break points
       if(arg->modem)
-        devpar.c_iflag &= ~IGNBRK;
+        {
+          devpar.c_iflag &= ~IGNBRK;
+        }
       else
+      {
         devpar.c_iflag |= IGNBRK;
+      }
 #endif /* IGNBRK */
 
 #if defined (IXOFF)
       // Enable/disable software flow control on input
       if (arg->xinenb)
-        devpar.c_iflag |= IXOFF;
+        {
+          devpar.c_iflag |= IXOFF;
+        }
       else
+      {
         devpar.c_iflag &= ~IXOFF;
+      }
 #endif /* IXOFF */
 
 #if defined (IXON)
       // Enable/disable software flow control on output
       if (arg->xoutenb)
-        devpar.c_iflag |= IXON;
+        {
+          devpar.c_iflag |= IXON;
+        }
       else
+      {
         devpar.c_iflag &= ~IXON;
+      }
 #endif /* IXON */
 
 #if defined (ICANON)
@@ -379,22 +432,34 @@ int ACE_TTY_IO::control (Control_Mode cmd, Serial_Params *arg) const
           devpar.c_cc[VTIME] = 0;
           // In case of infinite timeout [VMIN] must be at least 1.
           if (arg->readmincharacters > UCHAR_MAX)
-            devpar.c_cc[VMIN] = UCHAR_MAX;
+            {
+              devpar.c_cc[VMIN] = UCHAR_MAX;
+            }
           else if (arg->readmincharacters < 1)
-            devpar.c_cc[VMIN] = 1;
+            {
+              devpar.c_cc[VMIN] = 1;
+            }
           else
+          {
             devpar.c_cc[VMIN] = static_cast<unsigned char>(arg->readmincharacters);
+          }
         }
       else
         {
           devpar.c_cc[VTIME] = static_cast<unsigned char>(arg->readtimeoutmsec / 100);
 
           if (arg->readmincharacters > UCHAR_MAX)
-            devpar.c_cc[VMIN] = UCHAR_MAX;
+            {
+              devpar.c_cc[VMIN] = UCHAR_MAX;
+            }
           else if (arg->readmincharacters < 1)
-            devpar.c_cc[VMIN] = 0;
+            {
+              devpar.c_cc[VMIN] = 0;
+            }
           else
+          {
             devpar.c_cc[VMIN] = static_cast<unsigned char>(arg->readmincharacters);
+          }
         }
 
 #if defined (TIOCMGET)
@@ -402,9 +467,13 @@ int ACE_TTY_IO::control (Control_Mode cmd, Serial_Params *arg) const
       this->ACE_IO_SAP::control (TIOCMGET, &status);
 
       if (arg->dtrdisable)
-        status &= ~TIOCM_DTR;
+        {
+          status &= ~TIOCM_DTR;
+        }
       else
-        status |=  TIOCM_DTR;
+        {
+          status |=  TIOCM_DTR;
+        }
 
       this->ACE_IO_SAP::control (TIOCMSET, &status);
 #endif /* definded (TIOCMGET) */
@@ -475,17 +544,29 @@ int ACE_TTY_IO::control (Control_Mode cmd, Serial_Params *arg) const
         {
           dcb.fParity = TRUE;
           if (ACE_OS::strcasecmp (arg->paritymode, ACE_TTY_IO_ODD) == 0)
-            dcb.Parity = ODDPARITY;
+            {
+              dcb.Parity = ODDPARITY;
+            }
           else if (ACE_OS::strcasecmp (arg->paritymode, ACE_TTY_IO_EVEN) == 0)
-            dcb.Parity = EVENPARITY;
+            {
+              dcb.Parity = EVENPARITY;
+            }
           else if (ACE_OS::strcasecmp (arg->paritymode, ACE_TTY_IO_NONE) == 0)
-            dcb.Parity = NOPARITY;
+            {
+              dcb.Parity = NOPARITY;
+            }
           else if (ACE_OS::strcasecmp (arg->paritymode, ACE_TTY_IO_MARK) == 0)
-            dcb.Parity = MARKPARITY;
+            {
+              dcb.Parity = MARKPARITY;
+            }
           else if (ACE_OS::strcasecmp (arg->paritymode, ACE_TTY_IO_SPACE) == 0)
-            dcb.Parity = SPACEPARITY;
+            {
+              dcb.Parity = SPACEPARITY;
+            }
           else
-            return -1;
+            {
+              return -1;
+            }
         }
       else
         {
@@ -511,39 +592,63 @@ int ACE_TTY_IO::control (Control_Mode cmd, Serial_Params *arg) const
 
       // Enable/disable CTS protocol.
       if (arg->ctsenb)
-        dcb.fOutxCtsFlow = TRUE;
+        {
+          dcb.fOutxCtsFlow = TRUE;
+        }
       else
-        dcb.fOutxCtsFlow = FALSE;
+        {
+          dcb.fOutxCtsFlow = FALSE;
+        }
 
       // Enable/disable DSR protocol.
       if (arg->dsrenb)
-        dcb.fOutxDsrFlow = TRUE;
+        {
+          dcb.fOutxDsrFlow = TRUE;
+        }
       else
-        dcb.fOutxDsrFlow = FALSE;
+        {
+          dcb.fOutxDsrFlow = FALSE;
+        }
 
       // Disable/enable DTR protocol
       if (arg->dtrdisable)
-        dcb.fDtrControl = DTR_CONTROL_DISABLE;
+        {
+          dcb.fDtrControl = DTR_CONTROL_DISABLE;
+        }
       else
-        dcb.fDtrControl = DTR_CONTROL_ENABLE;
+        {
+          dcb.fDtrControl = DTR_CONTROL_ENABLE;
+        }
 
       // Enable/disable software flow control on input
       if (arg->xinenb)
-        dcb.fInX = TRUE;
+        {
+          dcb.fInX = TRUE;
+        }
       else
-        dcb.fInX = FALSE;
+        {
+          dcb.fInX = FALSE;
+        }
 
       // Enable/disable software flow control on output
       if (arg->xoutenb)
-        dcb.fOutX = TRUE;
+        {
+          dcb.fOutX = TRUE;
+        }
       else
-        dcb.fOutX = FALSE;
+        {
+          dcb.fOutX = FALSE;
+        }
 
       // Always set limits unless set to negative to use default.
       if (arg->xonlim >= 0)
-        dcb.XonLim  = static_cast<WORD>(arg->xonlim);
+        {
+          dcb.XonLim  = static_cast<WORD>(arg->xonlim);
+        }
       if (arg->xofflim >= 0)
-        dcb.XoffLim = static_cast<WORD>(arg->xofflim);
+        {
+          dcb.XoffLim = static_cast<WORD>(arg->xofflim);
+        }
 
       dcb.fAbortOnError = FALSE;
       dcb.fErrorChar = FALSE;
@@ -663,15 +768,23 @@ int ACE_TTY_IO::control (Control_Mode cmd, Serial_Params *arg) const
 
       // Enable/disable CTS protocol.
       if (dcb.fOutxCtsFlow)
-        arg->ctsenb = true;
+        {
+          arg->ctsenb = true;
+        }
       else
-        arg->ctsenb = false;
+        {
+          arg->ctsenb = false;
+        }
 
       // Enable/disable DSR protocol.
       if (dcb.fOutxDsrFlow)
-        arg->dsrenb = true;
+        {
+          arg->dsrenb = true;
+        }
       else
-        arg->dsrenb = false;
+        {
+          arg->dsrenb = false;
+        }
 
       // Disable/enable DTR protocol
       // Attention: DTR_CONTROL_HANDSHAKE is not supported.
@@ -689,15 +802,23 @@ int ACE_TTY_IO::control (Control_Mode cmd, Serial_Params *arg) const
 
       // Enable/disable software flow control on input
       if (dcb.fInX)
-        arg->xinenb = true;
+        {
+          arg->xinenb = true;
+        }
       else
-        arg->xinenb = false;
+        {
+          arg->xinenb = false;
+        }
 
       // Enable/disable software flow control on output
       if (dcb.fOutX)
-        arg->xoutenb = true;
+        {
+          arg->xoutenb = true;
+        }
       else
-        arg->xoutenb = false;
+        {
+          arg->xoutenb = false;
+        }
 
       arg->xonlim = static_cast<int>(dcb.XonLim);
       arg->xofflim = static_cast<int>(dcb.XoffLim);
@@ -707,7 +828,9 @@ int ACE_TTY_IO::control (Control_Mode cmd, Serial_Params *arg) const
         timeouts.ReadTotalTimeoutConstant == 0)
           arg->readtimeoutmsec = -1;
       else
-        arg->readtimeoutmsec = timeouts.ReadTotalTimeoutConstant;
+        {
+          arg->readtimeoutmsec = timeouts.ReadTotalTimeoutConstant;
+        }
 
       return 0;
 

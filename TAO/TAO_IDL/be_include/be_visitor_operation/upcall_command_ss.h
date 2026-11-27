@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    upcall_command_ss.h
  *
@@ -9,7 +6,6 @@
  *
  *  @author Ossama Othman
  */
-//=============================================================================
 
 #ifndef _BE_VISITOR_OPERATION_UPCALL_COMMAND_SS_H_
 #define _BE_VISITOR_OPERATION_UPCALL_COMMAND_SS_H_

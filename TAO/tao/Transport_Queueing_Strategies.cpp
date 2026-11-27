@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/Transport_Queueing_Strategies.h"
 #include "tao/Stub.h"
 #include "tao/debug.h"
@@ -10,9 +9,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-  Transport_Queueing_Strategy::~Transport_Queueing_Strategy ()
-  {
-  }
+  Transport_Queueing_Strategy::~Transport_Queueing_Strategy () = default;
 
 // ****************************************************************
 
@@ -28,7 +25,7 @@ namespace TAO
     size_t ,
     size_t ,
     bool &must_flush,
-    const ACE_Time_Value &,
+    ACE_Time_Value const &,
     bool &set_timer,
     ACE_Time_Value &) const
   {

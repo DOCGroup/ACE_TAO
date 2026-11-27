@@ -5,11 +5,7 @@
 # include "tao/CSD_ThreadPool/CSD_TP_Cancel_Visitor.inl"
 #endif /* ! __ACE_INLINE__ */
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-TAO::CSD::TP_Cancel_Visitor::~TP_Cancel_Visitor () = default;
-
 
 bool
 TAO::CSD::TP_Cancel_Visitor::visit_request(TP_Request* request,

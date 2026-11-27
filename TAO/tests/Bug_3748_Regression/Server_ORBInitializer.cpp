@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 #include "Server_ORBInitializer.h"
 #include "Test_Protocols_Hooks.h"
 #include "tao/ORB_Core.h"
@@ -11,7 +9,7 @@ Server_ORBInitializer::pre_init (
 {
   // Narrow to a TAO_ORBInitInfo object to get access to the
   // orb_core() TAO extension.
-  TAO_ORBInitInfo_var tao_info = TAO_ORBInitInfo::_narrow (info);
+  TAO_ORBInitInfo_var const tao_info = TAO_ORBInitInfo::_narrow (info);
 
   if (CORBA::is_nil (tao_info.in ()))
     {

@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//==========================================================================
 /**
  *  @file    Functor.h
  *
@@ -22,8 +19,6 @@
  *  @author and on STL-style functor implementations originally done by
  *  @author Irfan Pyarali  <irfan@cs.wustl.edu>
  */
-//==========================================================================
-
 
 #ifndef ACE_FUNCTOR_H
 #define ACE_FUNCTOR_H
@@ -57,10 +52,8 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Command_Base
 {
 public:
-  /// Default constructor.
   ACE_Command_Base ();
 
-  /// Virtual destructor.
   virtual ~ACE_Command_Base () = default;
 
   /**
@@ -83,7 +76,6 @@ class ACE_Export ACE_Noop_Command
   : public ACE_Command_Base
 {
 public:
-  /// Constructor
   ACE_Noop_Command() = default;
 
   /// Implement the empty execute() member function
@@ -248,7 +240,7 @@ class ACE_Export ACE_Hash<ACE_UINT64>
 {
 public:
   /// Simply returns t
-  unsigned long operator () (const ACE_UINT64 &t) const;
+  unsigned long operator () (ACE_UINT64 const &t) const;
 };
 #endif /* ACE_SIZEOF_LONG < 8 */
 
@@ -256,11 +248,11 @@ public:
  * @brief Function object for hashing a const string
  */
 template<>
-class ACE_Export ACE_Hash<const char *>
+class ACE_Export ACE_Hash<char const *>
 {
 public:
   /// Calls ACE::hash_pjw
-  unsigned long operator () (const char *t) const;
+  unsigned long operator () (char const *t) const;
 };
 
 /**
@@ -271,7 +263,7 @@ class ACE_Export ACE_Hash<char *>
 {
 public:
   /// Calls ACE::hash_pjw
-  unsigned long operator () (const char *t) const;
+  unsigned long operator () (char const *t) const;
 };
 
 /**
@@ -280,19 +272,19 @@ template<>
 class ACE_Export ACE_Hash<void *>
 {
 public:
-  unsigned long operator () (const void *) const;
+  unsigned long operator () (void const *) const;
 };
 
 /**
  * @brief Function object for determining whether two const strings are equal.
  */
 template<>
-class ACE_Export ACE_Equal_To<const char *>
+class ACE_Export ACE_Equal_To<char const *>
 {
 public:
-  /// Simply calls ACE_OS::strcmp
-  int operator () (const char *lhs,
-                   const char *rhs) const;
+  /// Simply calls std::strcmp
+  int operator () (char const *lhs,
+                   char const *rhs) const;
 };
 
 /**
@@ -303,9 +295,9 @@ template<>
 class ACE_Export ACE_Equal_To<char *>
 {
 public:
-  /// Simply calls ACE_OS::strcmp
-  int operator () (const char *lhs,
-                   const char *rhs) const;
+  /// Simply calls std::strcmp
+  int operator () (char const *lhs,
+                   char const *rhs) const;
 };
 
 /**
@@ -317,8 +309,8 @@ class ACE_Export ACE_Equal_To<ACE_UINT16>
 {
 public:
   /// Simply calls built-in operators
-  int operator () (const ACE_UINT16 lhs,
-                   const ACE_UINT16 rhs) const;
+  int operator () (ACE_UINT16 const lhs,
+                   ACE_UINT16 const rhs) const;
 };
 
 /**
@@ -330,8 +322,8 @@ class ACE_Export ACE_Equal_To<ACE_INT16>
 {
 public:
   /// Simply calls built-in operators
-  int operator () (const ACE_INT16 lhs,
-                   const ACE_INT16 rhs) const;
+  int operator () (ACE_INT16 const lhs,
+                   ACE_INT16 const rhs) const;
 };
 
 /**
@@ -343,8 +335,8 @@ class ACE_Export ACE_Equal_To<ACE_UINT32>
 {
 public:
   /// Simply calls built-in operators
-  int operator () (const ACE_UINT32 lhs,
-                   const ACE_UINT32 rhs) const;
+  int operator () (ACE_UINT32 const lhs,
+                   ACE_UINT32 const rhs) const;
 };
 
 /**
@@ -356,8 +348,8 @@ class ACE_Export ACE_Equal_To<ACE_INT32>
 {
 public:
   /// Simply calls built-in operators
-  int operator () (const ACE_INT32 lhs,
-                   const ACE_INT32 rhs) const;
+  int operator () (ACE_INT32 const lhs,
+                   ACE_INT32 const rhs) const;
 };
 
 /**
@@ -369,8 +361,8 @@ class ACE_Export ACE_Equal_To<ACE_UINT64>
 {
 public:
   /// Simply calls built-in operators
-  int operator () (const ACE_UINT64 lhs,
-                   const ACE_UINT64 rhs) const;
+  int operator () (ACE_UINT64 const lhs,
+                   ACE_UINT64 const rhs) const;
 };
 
 /**
@@ -378,12 +370,12 @@ public:
  * is less than the second const string.
  */
 template<>
-class ACE_Export ACE_Less_Than<const char *>
+class ACE_Export ACE_Less_Than<char const *>
 {
 public:
-  /// Simply calls ACE_OS::strcmp
-  int operator () (const char *lhs,
-                   const char *rhs) const;
+  /// Simply calls std::strcmp
+  int operator () (char const *lhs,
+                   char const *rhs) const;
 };
 
 /**
@@ -394,9 +386,9 @@ template<>
 class ACE_Export ACE_Less_Than<char *>
 {
 public:
-  /// Simply calls ACE_OS::strcmp
-  int operator () (const char *lhs,
-                   const char *rhs) const;
+  /// Simply calls std::strcmp
+  int operator () (char const *lhs,
+                   char const *rhs) const;
 };
 
 #if defined (ACE_HAS_WCHAR)
@@ -442,7 +434,7 @@ template<>
 class ACE_Export ACE_Equal_To<const wchar_t *>
 {
 public:
-  /// Simply calls ACE_OS::strcmp
+  /// Simply calls std::wcscmp
   int operator () (const wchar_t *lhs,
                    const wchar_t *rhs) const;
 };
@@ -455,7 +447,7 @@ template<>
 class ACE_Export ACE_Equal_To<wchar_t *>
 {
 public:
-  /// Simply calls ACE_OS::strcmp
+  /// Simply calls std::wcscmp
   int operator () (const wchar_t *lhs,
                    const wchar_t *rhs) const;
 };
@@ -468,7 +460,7 @@ template<>
 class ACE_Export ACE_Less_Than<const wchar_t *>
 {
 public:
-  /// Simply calls ACE_OS::strcmp
+  /// Simply calls std::wcscmp
   int operator () (const wchar_t *lhs,
                    const wchar_t *rhs) const;
 };
@@ -481,7 +473,7 @@ template<>
 class ACE_Export ACE_Less_Than<wchar_t *>
 {
 public:
-  /// Simply calls ACE_OS::strcmp
+  /// Simply calls std::wcscmp
   int operator () (const wchar_t *lhs,
                    const wchar_t *rhs) const;
 };

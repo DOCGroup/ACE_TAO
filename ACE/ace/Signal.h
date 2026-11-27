@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Signal.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef ACE_SIGNAL_H
 #define ACE_SIGNAL_H
@@ -25,6 +21,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/OS_NS_signal.h"
+
+#include <memory>
 
 /// Type of the extended signal handler.
 using ACE_Sig_Handler_Ex = void (*) (int, siginfo_t *siginfo, ucontext_t *ucontext);
@@ -45,11 +43,11 @@ class ACE_Export ACE_Sig_Set
 public:
   /// Initialize sigset_ with @a sigset.  If @a sigset == 0 then fill
   /// the set.
-  ACE_Sig_Set (sigset_t *sigset);
+  explicit ACE_Sig_Set (sigset_t *sigset);
 
   /// Initialize sigset_ with @a sigset.  If @a sigset == 0 then fill
   /// the set.
-  ACE_Sig_Set (ACE_Sig_Set *sigset);
+  explicit ACE_Sig_Set (ACE_Sig_Set *sigset);
 
   /// If @a fill == false then initialize the sigset_ to be empty, else
   /// full.
@@ -109,7 +107,7 @@ public:
   /// Assigns the various fields of a @c sigaction struct but doesn't
   /// register for signal handling via the @c sigaction function.
   ACE_Sig_Action (ACE_SignalHandler handler,
-                  const ACE_Sig_Set &sigmask,
+                  ACE_Sig_Set const &sigmask,
                   int flags = 0);
 
   /**
@@ -129,7 +127,7 @@ public:
    */
   ACE_Sig_Action (ACE_SignalHandler handler,
                   int signum,
-                  const ACE_Sig_Set &sigmask,
+                  ACE_Sig_Set const &sigmask,
                   int flags = 0);
 
   /**
@@ -137,9 +135,9 @@ public:
    * the @a handler to process all @a signalss via the @c sigaction
    * function.
    */
-  ACE_Sig_Action (const ACE_Sig_Set &signalss,
+  ACE_Sig_Action (ACE_Sig_Set const &signalss,
                   ACE_SignalHandler handler,
-                  const ACE_Sig_Set &sigmask,
+                  ACE_Sig_Set const &sigmask,
                   int flags = 0);
 
   /**
@@ -147,20 +145,20 @@ public:
    * the @a handler to process all @a signalss via the @c sigaction
    * function.
    */
-  ACE_Sig_Action (const ACE_Sig_Set &signalss,
+  ACE_Sig_Action (ACE_Sig_Set const &signalss,
                   ACE_SignalHandler handler,
                   sigset_t *sigmask = nullptr,
                   int flags = 0);
 
-  ACE_Sig_Action (const ACE_Sig_Action&) = default;
+  ACE_Sig_Action (ACE_Sig_Action const&) = default;
   ACE_Sig_Action (ACE_Sig_Action&&) = default;
   ACE_Sig_Action& operator = (ACE_Sig_Action const &) = default;
   ACE_Sig_Action &operator = (ACE_Sig_Action&&)  = default;
 
-  /// Default dtor.
   ~ACE_Sig_Action ();
 
-  // = Signal action management.
+  /// @name Signal action management
+  /// @{
   /// Register @c this as the current disposition and store old
   /// disposition into @a oaction if it is non-NULL.
   int register_action (int signum,
@@ -199,6 +197,7 @@ public:
 
   /// Get current signal handler (pointer to function).
   ACE_SignalHandler handler ();
+  /// @}
 
   /// Dump the state of an object.
   void dump () const;
@@ -215,7 +214,7 @@ private:
  * @class ACE_Sig_Guard
  *
  * @brief Hold signals in MASK for duration of a C++ statement block.
- * Note that a "0" for mask causes all signals to be held.
+ * @note A "0" for mask causes all signals to be held.
  */
 class ACE_Export ACE_Sig_Guard
 {

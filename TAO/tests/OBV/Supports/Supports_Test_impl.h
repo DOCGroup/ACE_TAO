@@ -19,7 +19,7 @@ class node_impl :
 public:
   node_impl ();
 
-  node_impl (const char * name);
+  node_impl (char const *name);
 
   virtual void add_edge (Supports_Test::Node * neighbor);
 
@@ -55,7 +55,7 @@ class vt_graph_impl :
 
   virtual CORBA::Long size ();
 
-  virtual void add_node (const char * name);
+  virtual void add_node (char const *name);
 
   virtual void print ();
 

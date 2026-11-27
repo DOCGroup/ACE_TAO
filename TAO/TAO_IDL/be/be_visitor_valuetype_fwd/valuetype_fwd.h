@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    valuetype_fwd.h
  *
@@ -7,7 +5,6 @@
  *
  *  @author Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
  */
-//=============================================================================
 
 #include "be_valuetype.h"
 #include "be_valuetype_fwd.h"

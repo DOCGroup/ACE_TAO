@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file LF_Connect_Strategy.h
  *
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_LF_CONNECT_STRATEGY_H
 #define TAO_LF_CONNECT_STRATEGY_H
@@ -38,10 +34,8 @@ class TAO_LF_Event;
 class TAO_Export TAO_LF_Connect_Strategy : public TAO_Connect_Strategy
 {
 public:
-  /// Constructor
   TAO_LF_Connect_Strategy (TAO_ORB_Core *orb, bool no_upcall);
 
-  /// Destructor
   ~TAO_LF_Connect_Strategy () override;
 
   /**

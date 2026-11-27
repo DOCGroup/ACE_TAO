@@ -1,6 +1,5 @@
 #include "Relay_Consumer.h"
 
-
 #include "LookupManager.h"
 
 TAO_Notify_Tests_Relay_Consumer::TAO_Notify_Tests_Relay_Consumer (ACE_CString& destination)
@@ -8,9 +7,7 @@ TAO_Notify_Tests_Relay_Consumer::TAO_Notify_Tests_Relay_Consumer (ACE_CString& d
 {
 }
 
-TAO_Notify_Tests_Relay_Consumer::~TAO_Notify_Tests_Relay_Consumer ()
-{
-}
+TAO_Notify_Tests_Relay_Consumer::~TAO_Notify_Tests_Relay_Consumer () = default;
 
 void
 TAO_Notify_Tests_Relay_Consumer::connect ()
@@ -22,14 +19,18 @@ TAO_Notify_Tests_Relay_Consumer::connect ()
 }
 
 void
-TAO_Notify_Tests_Relay_Consumer::push_structured_event (const CosNotification::StructuredEvent &notification)
+TAO_Notify_Tests_Relay_Consumer::push_structured_event (CosNotification::StructuredEvent const &notification)
 {
   // The Periodic Consumer will record the run statistics.
   //TAO_Notify_Tests_Periodic_Consumer::push_structured_event (notification);
 
   // Forward the event.
   if (CORBA::is_nil (this->destination_object_.in ()))
-    ACE_DEBUG ((LM_DEBUG, "(%P,%t) Cannot Relay - Destination object %s is nil", this->destination_.c_str ()));
+    {
+      ACE_DEBUG ((LM_DEBUG, "(%P,%t) Cannot Relay - Destination object %s is nil", this->destination_.c_str ()));
+    }
   else
+  {
     this->destination_object_->push_structured_event (notification);
+  }
 }

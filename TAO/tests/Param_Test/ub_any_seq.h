@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    ub_any_seq.h
  *
@@ -7,31 +5,25 @@
  *
  *  @author   Aniruddha Gokhale
  */
-//=============================================================================
-
 
 #ifndef PARAM_TEST_UNBOUNDED_ANY_SEQUENCE_H
 #define PARAM_TEST_UNBOUNDED_ANY_SEQUENCE_H
 
 #include "param_testC.h"
 
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-//                        test sequences of Anys
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+/// test sequences of Anys
 class Test_AnySeq
 {
 public:
-  /// ctor
   Test_AnySeq ();
 
-  /// dtor
-  ~Test_AnySeq ();
+  ~Test_AnySeq () = default;
 
   /// run the SII test
   int run_sii_test (Param_Test_ptr objref);
 
   /// return operation name
-  const char *opname () const;
+  char const *opname () const;
 
   /// set values for parameters
   int init_parameters (Param_Test_ptr objref);
@@ -53,15 +45,15 @@ public:
 
 protected:
   /// compare
-  CORBA::Boolean compare (const CORBA::AnySeq &s1,
+  CORBA::Boolean compare (CORBA::AnySeq const &s1,
                           const Param_Test::StructSeq &s2);
 
   /// print individual sequence
-  void print_sequence (const CORBA::AnySeq &s);
+  void print_sequence (CORBA::AnySeq const &s);
 
 private:
   /// operation name
-  char *opname_;
+  char const *opname_;
 
   /// in parameter
   CORBA::AnySeq_var in_;

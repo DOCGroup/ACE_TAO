@@ -1,4 +1,3 @@
-
 module Quoter
 {
   /// Used to report an invalid stock name

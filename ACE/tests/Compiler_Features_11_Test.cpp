@@ -37,7 +37,7 @@ run_main (int, ACE_TCHAR *[])
   if (os.str() != expected)
     {
       status = 1;
-      ACE_ERROR ((LM_ERROR, ACE_TEXT("Expected %s got %s\n"),
+      ACE_ERROR ((LM_ERROR, ACE_TEXT("Expected %C got %C\n"),
                   expected.c_str(), os.str().c_str()));
     }
 
@@ -60,5 +60,4 @@ run_main (int, ACE_TCHAR *[])
   ACE_END_TEST;
   return status;
 }
-
 

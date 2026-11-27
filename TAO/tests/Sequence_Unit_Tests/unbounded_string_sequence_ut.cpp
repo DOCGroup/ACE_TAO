@@ -23,10 +23,10 @@
 using namespace TAO_VERSIONED_NAMESPACE_NAME::TAO;
 
 using unbounded_bd_sequence = TAO::unbounded_bd_string_sequence<char, 16>;
-static_assert (std::is_move_constructible<unbounded_bd_sequence>::value);
-static_assert (!std::is_nothrow_move_constructible<unbounded_bd_sequence>::value);
-static_assert (std::is_move_assignable<unbounded_bd_sequence>::value);
-static_assert (!std::is_nothrow_move_assignable<unbounded_bd_sequence>::value);
+static_assert (std::is_move_constructible_v<unbounded_bd_sequence>);
+static_assert (!std::is_nothrow_move_constructible_v<unbounded_bd_sequence>);
+static_assert (std::is_move_assignable_v<unbounded_bd_sequence>);
+static_assert (!std::is_nothrow_move_assignable_v<unbounded_bd_sequence>);
 
 template<class tested_sequence>
 struct Tester
@@ -424,7 +424,7 @@ struct Tester
   {
     value_type * buffer = alloc_and_init_buffer();
     tested_sequence a(8, 4, buffer, false);
-    CHECK(0 == a.get_buffer(true));
+    CHECK(nullptr == a.get_buffer(true));
     tested_sequence::freebuf(buffer);
     return 0;
   }
@@ -442,7 +442,7 @@ struct Tester
       tested_sequence const & b = a;
       CHECK_EQUAL(0UL, b.maximum());
       CHECK_EQUAL(0UL, b.length());
-      CHECK(0 != b.get_buffer());
+      CHECK(nullptr != b.get_buffer());
       CHECK_EQUAL(true, b.release());
 
       FAIL_RETURN_IF_NOT(c.expect(1), c);
@@ -519,14 +519,14 @@ int ACE_TMAIN(int,ACE_TCHAR*[])
   try
     {
       {
-        using nTester = Tester<unbounded_basic_string_sequence <char> >;
+        using nTester = Tester<unbounded_basic_string_sequence <char>>;
         nTester ntester;
         status += ntester.test_all ();
       }
 
 #if defined(ACE_HAS_WCHAR) && !defined(TAO_LACKS_WCHAR_CXX_STDLIB)
       {
-        using wTester = Tester<unbounded_basic_string_sequence <CORBA::WChar> >;
+        using wTester = Tester<unbounded_basic_string_sequence <CORBA::WChar>>;
         wTester wtester;
         status += wtester.test_all ();
       }

@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-// ===================================================================
 /**
  *  @file   Cleanup_Func_Registry.h
  *
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
-// ===================================================================
 
 #ifndef TAO_CLEANUP_FUNC_REGISTRY_H
 #define TAO_CLEANUP_FUNC_REGISTRY_H
@@ -39,7 +35,6 @@ class TAO_Export TAO_Cleanup_Func_Registry
   friend class TAO_ORB_Core;
 
 public:
-  /// Constructor.
   TAO_Cleanup_Func_Registry () = default;
 
   /// Return the number of registered cleanup functions.
@@ -58,10 +53,12 @@ protected:
   void cleanup (ACE_Array_Base<void *> &ts_objects);
 
 private:
-  TAO_Cleanup_Func_Registry (const TAO_Cleanup_Func_Registry &) = delete;
-  TAO_Cleanup_Func_Registry &operator= (const TAO_Cleanup_Func_Registry &) = delete;
+  TAO_Cleanup_Func_Registry (TAO_Cleanup_Func_Registry const &) = delete;
+  TAO_Cleanup_Func_Registry &operator= (TAO_Cleanup_Func_Registry const &) = delete;
+  TAO_Cleanup_Func_Registry (TAO_Cleanup_Func_Registry &&) = delete;
+  TAO_Cleanup_Func_Registry &operator= (TAO_Cleanup_Func_Registry &&) = delete;
 
-  /// Array of registered cleanup functions.  The number of
+  /// Vector of registered cleanup functions.  The number of
   /// registered cleanup functions should be the same as the number
   /// of registered thread-specific objects in the ORB Core TSS
   /// resources.
@@ -73,7 +70,6 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #if defined (__ACE_INLINE__)
 # include "tao/Cleanup_Func_Registry.inl"
 #endif  /* __ACE_INLINE__ */
-
 
 #include /**/ "ace/post.h"
 

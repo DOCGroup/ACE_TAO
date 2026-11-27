@@ -1,8 +1,9 @@
-// -*- C++ -*-
 #include "tao/Connect_Strategy.h"
 #include "tao/Transport.h"
 #include "tao/Connection_Handler.h"
 #include "tao/LF_Multi_Event.h"
+
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -16,7 +17,9 @@ TAO_Connect_Strategy::wait (TAO_Connection_Handler *ch,
                             ACE_Time_Value *max_wait_time)
 {
   if (ch == nullptr)
+  {
     return -1;
+  }
 
   return this->wait_i (ch, ch->transport (), max_wait_time);
 }
@@ -28,7 +31,9 @@ TAO_Connect_Strategy::wait (TAO_Transport *t, ACE_Time_Value *max_wait_time)
   // wait for it some other thread detected a failure and cleaned up
   // the connection handler.
   if (t == nullptr)
+  {
     return -1;
+  }
 
   return this->wait_i (t->connection_handler (), t, max_wait_time);
 }
@@ -44,7 +49,7 @@ int
 TAO_Connect_Strategy::poll (TAO_LF_Multi_Event *mev)
 {
   ACE_Time_Value zero (ACE_Time_Value::zero);
-  return this->wait_i (mev, mev->base_transport (), &zero);
+  return this->wait_i (mev, mev->base_transport (), std::addressof (zero));
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

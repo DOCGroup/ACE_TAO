@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    POAManager.h
  *
@@ -8,8 +5,6 @@
  *
  *  @author  Irfan Pyarali
  */
-//=============================================================================
-
 #ifndef TAO_POAMANAGER_H
 #define TAO_POAMANAGER_H
 #include /**/ "ace/pre.h"
@@ -26,6 +21,7 @@
 // Local Object
 #include "tao/LocalObject.h"
 #include "tao/PI_ForwardC.h"
+
 #include "ace/Unbounded_Set.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.
@@ -78,14 +74,19 @@ public:
 
   TAO_POA_Manager (TAO_Object_Adapter &object_adapter,
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
-                   const char * id,
+                   char const *id,
                    const ::CORBA::PolicyList & policies,
                    PortableServer::POAManagerFactory_ptr poa_manager_factory);
 #else
-                   const char * id);
+                   char const *id);
 #endif
 
   ~TAO_POA_Manager ();
+  TAO_POA_Manager () = delete;
+  TAO_POA_Manager (TAO_POA_Manager const &) = delete;
+  TAO_POA_Manager &operator= (TAO_POA_Manager const &) = delete;
+  TAO_POA_Manager (TAO_POA_Manager &&) = delete;
+  TAO_POA_Manager &operator= (TAO_POA_Manager &&) = delete;
 
   /// Check the state of this POA manager
   void check_state ();
@@ -145,7 +146,7 @@ private :
    * Generate an id for this POAManager.
    * @return A value that uniquely identifies the POAManager within a
    *         given process.
-   * @note: The id_ has the ownership of the memory allocated in this method.
+   * @note The id_ has the ownership of the memory allocated in this method.
    */
   char* generate_manager_id () const;
 };

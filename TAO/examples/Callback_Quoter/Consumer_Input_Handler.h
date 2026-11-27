@@ -1,6 +1,3 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
  *  @file    Consumer_Input_Handler.h
  *
@@ -8,8 +5,6 @@
  *
  *  @author Kirthika Parameswaran <kirthika@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef CONSUMER_INPUT_HANDLER_H
 #define CONSUMER_INPUT_HANDLER_H
@@ -39,8 +34,12 @@ class Consumer_Handler;
 class Consumer_Input_Handler : public ACE_Event_Handler
 {
 public:
-  /// Constructor.
-  Consumer_Input_Handler (Consumer_Handler *consumer_handler);
+  explicit Consumer_Input_Handler (Consumer_Handler *consumer_handler);
+
+  Consumer_Input_Handler (Consumer_Input_Handler const &) = delete;
+  Consumer_Input_Handler &operator= (Consumer_Input_Handler const &) = delete;
+  Consumer_Input_Handler (Consumer_Input_Handler &&) = delete;
+  Consumer_Input_Handler &operator= (Consumer_Input_Handler &&) = delete;
 
   /// Handle the user input.
   int handle_input (ACE_HANDLE) override;
@@ -57,8 +56,8 @@ public:
   ///   A set of values for the execution of the consumer.
   ///
   ///   Used so that the process of registering, unregistering
-  ///   and exiting neednt be dependent on 'r' 'u' and 'q'.
-  ///   Also, #define clutters up the global namespace.
+  ///   and exiting need not depend on 'r' 'u' and 'q'.
+  ///   Also, \#define clutters up the global namespace.
 enum
   {
     /// The character that the user must type to register the consumer with
@@ -75,12 +74,11 @@ enum
   };
 
 protected:
-  /// Destructor.
   ~Consumer_Input_Handler () = default;
 
 private:
   /// The Consumer_Handler object.
-  Consumer_Handler *consumer_handler_;
+  Consumer_Handler *consumer_handler_ {};
 };
 
 #endif /* CONSUMER_INPUT_HANDLER_H */

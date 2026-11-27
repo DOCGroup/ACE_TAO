@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file PI_ORBInitializer.h
  *
  *  @author Tim Bradley <bradley_t@ociweb.com>
  */
-//=============================================================================
 
 #ifndef TAO_PI_ORB_INITIALIZER_H
 #define TAO_PI_ORB_INITIALIZER_H
@@ -43,11 +39,11 @@ public:
    * The following methods are required by the
    * PortableInterceptor::ORBInitializer interface.
    */
-  //@{
+  /// @{
   void pre_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 
   void post_init (PortableInterceptor::ORBInitInfo_ptr info) override;
-  //@}
+  /// @}
 
 private:
   /// Register PortableInterceptor policy factories.

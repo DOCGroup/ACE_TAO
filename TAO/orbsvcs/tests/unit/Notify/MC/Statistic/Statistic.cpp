@@ -7,7 +7,7 @@
 using namespace ACE_VERSIONED_NAMESPACE_NAME::ACE::Monitor_Control;
 
 void
-error (const char* msg)
+error (char const *msg)
 {
 #if defined (ACE_NLOGGING)
   ACE_UNUSED_ARG (msg);
@@ -127,7 +127,7 @@ ACE_TMAIN (int, ACE_TCHAR*[])
       list.clear ();
       list.receive (l);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Statistic: ");
       error ("Caught a CORBA exception");

@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    New_Leader_Generator.h
  *
  *  @author Irfan Pyarali
  */
-// ===================================================================
 
 #ifndef TAO_NEW_LEADER_GENERATOR_H
 #define TAO_NEW_LEADER_GENERATOR_H
@@ -33,7 +29,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Export TAO_New_Leader_Generator
 {
 public:
-  /// Destructor.
   virtual ~TAO_New_Leader_Generator ();
 
   /// Leader/Follower class uses this method to notify the system that

@@ -1,7 +1,3 @@
-
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    FactoryDriver.h
  *
@@ -9,14 +5,14 @@
  *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_FACTORYDRIVER_H
 #define TAO_FACTORYDRIVER_H
 
 #include "CosEventChannelFactory_i.h"
 #include "orbsvcs/Naming/Naming_Client.h"
+
+#include <string>
 
 // @@ Pradeep: I know this is just an example, but could you talk to
 //    Vishal about making this a service that could be bootstraped
@@ -34,10 +30,12 @@
 class FactoryDriver
 {
  public:
-  /// Constructor.
-  FactoryDriver (const ACE_TCHAR* factory = ACE_TEXT("CosEC_Factory"));
+  explicit FactoryDriver (ACE_TCHAR const *factory = ACE_TEXT ("CosEC_Factory"));
+  FactoryDriver (FactoryDriver const &) = delete;
+  FactoryDriver (FactoryDriver &&) = delete;
+  FactoryDriver &operator= (FactoryDriver const &) = delete;
+  FactoryDriver &operator= (FactoryDriver &&) = delete;
 
-  /// Destructor.
   ~FactoryDriver () = default;
 
   /// Start the driver.
@@ -51,22 +49,19 @@ class FactoryDriver
   int parse_args (int argc, ACE_TCHAR *argv []);
 
   /// The name of the factory registered with the naming service.
-  const ACE_TCHAR *factoryName_;
+  std::basic_string<ACE_TCHAR> factory_name_;
 
   /// The name of the Child POA.
-  const char* child_poa_name_;
+  char const *const child_poa_name_ {"CosEC_ChildPOA"};
 
   /// The ORB that we use.
-  CORBA::ORB_var orb_;
-
-  /// The factory servant.
-  TAO_CosEventChannelFactory_i *factory_servant_;
+  CORBA::ORB_var orb_ {};
 
   /// Reference to the root poa.
-  PortableServer::POA_var root_poa_;
+  PortableServer::POA_var root_poa_ {};
 
   /// The corba object after activation.
-  CosEventChannelFactory::ChannelFactory_var factory_;
+  CosEventChannelFactory::ChannelFactory_var factory_ {};
 
   /// Use a naming client.
   TAO_Naming_Client naming_client_;

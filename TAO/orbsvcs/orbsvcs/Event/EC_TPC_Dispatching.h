@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 /**
  *  @file   EC_TPC_Dispatching.h
  *
@@ -41,25 +39,32 @@ public:
                           int thread_priority,
                           int force_activate,
                           TAO_EC_Queue_Full_Service_Object* so);
-  ~TAO_EC_TPC_Dispatching ();
+  ~TAO_EC_TPC_Dispatching () override;
 
-  // = The EC_Dispatching methods.
-  virtual void activate ();
-  virtual void shutdown ();
-  virtual void push (TAO_EC_ProxyPushSupplier* proxy,
+  TAO_EC_TPC_Dispatching (TAO_EC_TPC_Dispatching const &) = delete;
+  TAO_EC_TPC_Dispatching (TAO_EC_TPC_Dispatching &&) = delete;
+  TAO_EC_TPC_Dispatching &operator= (TAO_EC_TPC_Dispatching const &) = delete;
+  TAO_EC_TPC_Dispatching &operator= (TAO_EC_TPC_Dispatching &&) = delete;
+
+  /// @name The EC_Dispatching methods
+  /// @{
+  void activate () override;
+  void shutdown () override;
+  void push (TAO_EC_ProxyPushSupplier* proxy,
                      RtecEventComm::PushConsumer_ptr consumer,
-                     const RtecEventComm::EventSet& event,
-                     TAO_EC_QOS_Info& qos_info);
-  virtual void push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
+                     RtecEventComm::EventSet const &event,
+                     TAO_EC_QOS_Info& qos_info) override;
+  void push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
                             RtecEventComm::PushConsumer_ptr consumer,
                             RtecEventComm::EventSet& event,
-                            TAO_EC_QOS_Info& qos_info);
+                            TAO_EC_QOS_Info& qos_info) override;
 
   int add_consumer (RtecEventComm::PushConsumer_ptr consumer);
   int remove_consumer (RtecEventComm::PushConsumer_ptr consumer);
 
+  /// @}
 private:
-  // Use our own thread manager
+  /// Use our own thread manager.
   ACE_Thread_Manager thread_manager_;
 
   /// The flags (THR_BOUND, THR_NEW_LWP, etc.) used to create the
@@ -74,17 +79,18 @@ private:
                             ACE_Pointer_Hash<RtecEventComm::PushConsumer_ptr>,
                             ACE_Equal_To<RtecEventComm::PushConsumer_ptr>, ACE_Null_Mutex>;
 
-  // Tweak the default size of this map by #defining
-  //    TAO_EC_TPC_DISPATCHING_DEFAULT_MAP_SIZE
+  /// Tweak the default size of this map by defining
+  /// TAO_EC_TPC_DISPATCHING_DEFAULT_MAP_SIZE.
   MAPTYPE consumer_task_map_;
 
-  // Lock for modifying the map.  It's not enough to have a lock only
-  // on the map, because we have to hold the map constant while doing
-  // multiple distinct map manipulations, such as in remove_consumer().
+  /// Lock for modifying the map.  It's not enough to have a lock only
+  /// on the map, because we have to hold the map constant while doing
+  /// multiple distinct map manipulations, such as in remove_consumer().
   TAO_SYNCH_MUTEX lock_;
 
   // Service object information
-  TAO_EC_Queue_Full_Service_Object* queue_full_service_object_;  // @@ who will release?
+  /// @todo Determine who releases this service object.
+  TAO_EC_Queue_Full_Service_Object* queue_full_service_object_;
                                 // @@ check to see how the factory gets released...
 };
 

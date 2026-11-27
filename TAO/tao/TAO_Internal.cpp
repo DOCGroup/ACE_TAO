@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/TAO_Internal.h"
 #include "tao/TAO_Singleton.h"
 #include "tao/default_server.h"
@@ -156,7 +155,7 @@ namespace
    *
    * @note In/decrement operations are atomic.
    */
-  long service_open_count = 0;
+  long service_open_count {};
 
   /**
    * Part of a condition variable, which helps to ensure non-default
@@ -165,7 +164,7 @@ namespace
    * ORB. Usually, the first ORB to be created is designated the
    * default ORB (reference the CORBA spec)
    */
-  bool is_ubergestalt_ready = false;
+  bool is_ubergestalt_ready {};
 
   char const * resource_factory_args =
     TAO_DEFAULT_RESOURCE_FACTORY_ARGS;
@@ -175,9 +174,9 @@ namespace
     TAO_DEFAULT_CLIENT_STRATEGY_FACTORY_ARGS;
 
 #if (TAO_NEGOTIATE_CODESETS == 1)
-  bool negotiate_codesets = true;
+  bool negotiate_codesets {true};
 #else
-  bool negotiate_codesets = false;
+  bool negotiate_codesets {};
 #endif /* TAO_NEGOTIATE_CODESETS */
 } // anonymous namespace
 
@@ -211,13 +210,13 @@ private:
 #endif // ACE_HAS_THREADS
 
 // ****************************************************************
-/// Note that the argument vector will be corrupted upon return
+/// @note The argument vector will be corrupted upon return
 int
 TAO::ORB::open_global_services (int argc, ACE_TCHAR **argv)
 {
   {
     // Count of the number of (times we did this for all) ORBs.
-    static int orb_init_count = 0;
+    static int orb_init_count {};
 
     // Using ACE_Static_Object_Lock::instance() precludes ORB_init()
     // from being called within a static object CTOR.
@@ -230,11 +229,15 @@ TAO::ORB::open_global_services (int argc, ACE_TCHAR **argv)
     // We need to initialize before TAO_default_environment() is called
     // since that call instantiates a TAO_TSS_Singleton.
     if (TAO_Singleton_Manager::instance ()->init () == -1)
+    {
       return -1;
+    }
 
     // Prevent multiple initializations.
     if (++orb_init_count > 1)
+    {
       return 0;
+    }
   }
 
   // Prevent any other thread from going through ORB initialization before the
@@ -281,9 +284,11 @@ TAO::ORB::open_global_services (int argc, ACE_TCHAR **argv)
          tmpargv,
          global_svc_config_argv,
          true) == -1)
+  {
     return -1;
+  }
 
-  bool skip_service_config_open = false; // by default we shouldn't
+  bool skip_service_config_open {}; // by default we shouldn't
 
   if (using_global_gestalt_i (tmpargc,
                               tmpargv,
@@ -292,17 +297,21 @@ TAO::ORB::open_global_services (int argc, ACE_TCHAR **argv)
       if (parse_svcconf_args_i (tmpargc,
               tmpargv,
               global_svc_config_argv) == -1)
+      {
         return -1;
+      }
     }
 
-  bool ignore_default_svc_conf_file = false;
+  bool ignore_default_svc_conf_file {};
 
   if (parse_private_args_i (tmpargc,
           tmpargv,
           global_svc_config_argv,
           skip_service_config_open,
           ignore_default_svc_conf_file) == -1)
+  {
     return -1;
+  }
 
   // register_global_services_i depends on the parsing of at least the
   // -ORBNegotiateCodesets option, and must be invoked after all the
@@ -312,7 +321,8 @@ TAO::ORB::open_global_services (int argc, ACE_TCHAR **argv)
 
   // Perform the open magic (unless SC::open() has been called already)
   int global_svc_config_argc = global_svc_config_argv.argc ();
-  int status = open_private_services_i (theone,
+  int status = open_private_services_i (
+                                        ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> {theone},
                                         global_svc_config_argc,
                                         global_svc_config_argv.argv (),
                                         skip_service_config_open,
@@ -334,9 +344,11 @@ TAO::ORB::open_global_services (int argc, ACE_TCHAR **argv)
       else
         {
           if (TAO_debug_level > 4)
-            TAOLIB_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("TAO (%P|%t) - Did not find default ")
-                        ACE_TEXT ("svc.conf\n")));
+            {
+              TAOLIB_DEBUG ((LM_DEBUG,
+                             ACE_TEXT ("TAO (%P|%t) - Did not find default ")
+                             ACE_TEXT ("svc.conf\n")));
+            }
           status = 0;
         }
     }
@@ -354,20 +366,26 @@ TAO::ORB::open_global_services (int argc, ACE_TCHAR **argv)
     }
 
   if (TAO_debug_level > 2)
-    TAOLIB_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("TAO (%P|%t) - Completed initializing the ")
-                ACE_TEXT ("process-wide service context\n")));
+    {
+      TAOLIB_DEBUG ((LM_DEBUG,
+                     ACE_TEXT ("TAO (%P|%t) - Completed initializing the ")
+                     ACE_TEXT ("process-wide service context\n")));
+    }
 
   if (TAO_debug_level > 4)
-    TAOLIB_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("TAO (%P|%t) - Default ORB services initialization begins\n")));
+    {
+      TAOLIB_DEBUG ((LM_DEBUG,
+                     ACE_TEXT ("TAO (%P|%t) - Default ORB services initialization begins\n")));
+    }
 
   // Load more ORB-related services
   register_additional_services_i (theone);
 
   if (TAO_debug_level > 4)
-    TAOLIB_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("TAO (%P|%t) - Default ORB services initialization completed\n")));
+    {
+      TAOLIB_DEBUG ((LM_DEBUG,
+                     ACE_TEXT ("TAO (%P|%t) - Default ORB services initialization completed\n")));
+    }
 
   // Notify all other threads that may be waiting, that the global
   // gestalt has been initialized.
@@ -395,28 +413,34 @@ TAO::ORB::open_services (ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> pcfg,
     if (service_open_count == 1)
       {
         if (TAO_debug_level > 4)
-          TAOLIB_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) - Waiting for the default ")
-                      ACE_TEXT ("ORB to complete the global ")
-                      ACE_TEXT ("initialization\n")));
+          {
+            TAOLIB_DEBUG ((LM_DEBUG,
+                           ACE_TEXT ("TAO (%P|%t) - Waiting for the default ")
+                           ACE_TEXT ("ORB to complete the global ")
+                           ACE_TEXT ("initialization\n")));
+          }
 
       ACE_MT (while (!is_ubergestalt_ready)
       TAO_Ubergestalt_Ready_Condition::instance ()->wait ());
 
         if (TAO_debug_level > 4)
-          TAOLIB_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) - The default ")
-                      ACE_TEXT ("ORB must have completed the global ")
-                      ACE_TEXT ("initialization...\n")));
+          {
+            TAOLIB_DEBUG ((LM_DEBUG,
+                           ACE_TEXT ("TAO (%P|%t) - The default ")
+                           ACE_TEXT ("ORB must have completed the global ")
+                           ACE_TEXT ("initialization...\n")));
+          }
       }
     else
       {
         if (TAO_debug_level > 4)
-          TAOLIB_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) - We are%Cthe default ")
-                      ACE_TEXT ("%C ORB ...\n"),
-                      (service_open_count == 0) ? " " : " not ",
-                      TAO_VERSION));
+          {
+            TAOLIB_DEBUG ((LM_DEBUG,
+                           ACE_TEXT ("TAO (%P|%t) - We are%Cthe default ")
+                           ACE_TEXT ("%C ORB ...\n"),
+                           (service_open_count == 0) ? " " : " not ",
+                           TAO_VERSION));
+          }
       }
 
     ++service_open_count;
@@ -432,8 +456,8 @@ TAO::ORB::open_services (ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> pcfg,
 
   // Should we skip the ACE_Service_Config::open() method?,
   // e.g., because of -ORBSkipServiceConfigOpen
-  bool skip_service_config_open = false;
-  bool ignore_default_svc_conf_file = false;
+  bool skip_service_config_open {};
+  bool ignore_default_svc_conf_file {};
 
   // Extract any ORB options from the argument vector.
   if (parse_private_args_i (argc,
@@ -456,20 +480,26 @@ TAO::ORB::open_services (ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> pcfg,
   int status = parse_global_args_i(argc, argv, global_svc_config_argv, false);
 
   if (status == -1 && TAO_debug_level > 0)
-    TAOLIB_DEBUG ((LM_DEBUG,
-    ACE_TEXT ("TAO (%P|%t) - Skipping the process-wide ")
-    ACE_TEXT ("service configuration, service_open_count ")
-    ACE_TEXT ("= %d, status = %d\n"),
-    service_open_count,
-    status));
+    {
+      TAOLIB_DEBUG ((LM_DEBUG,
+                     ACE_TEXT ("TAO (%P|%t) - Skipping the process-wide ")
+                     ACE_TEXT ("service configuration, service_open_count ")
+                     ACE_TEXT ("= %d, status = %d\n"),
+                     service_open_count,
+                     status));
+    }
 
   if (TAO_debug_level > 2)
-    TAOLIB_DEBUG ((LM_DEBUG,
-    ACE_TEXT ("TAO (%P|%t) - Initializing the ")
-    ACE_TEXT ("orb-specific services\n")));
+    {
+      TAOLIB_DEBUG ((LM_DEBUG,
+                     ACE_TEXT ("TAO (%P|%t) - Initializing the ")
+                     ACE_TEXT ("orb-specific services\n")));
+    }
 
   if (parse_svcconf_args_i (argc, argv, svc_config_argv) == -1)
+  {
     return -1;
+  }
   // Not a big deal to call open_private_services_i() again (if it was the global one). The SG::open() would not run if it has already been executed.
   // only open the private context if it is not also the global context
   if (pcfg != ACE_Service_Config::global())
@@ -488,17 +518,21 @@ TAO::ORB::open_services (ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> pcfg,
       if (errno != ENOENT)
         {
           if (TAO_debug_level > 0)
-            TAOLIB_ERROR ((LM_ERROR,
-                        ACE_TEXT ("TAO (%P|%t) - Failed to open ORB-specific ")
-                        ACE_TEXT ("service configuration\n")));
+            {
+              TAOLIB_ERROR ((LM_ERROR,
+                             ACE_TEXT ("TAO (%P|%t) - Failed to open ORB-specific ")
+                             ACE_TEXT ("service configuration\n")));
+            }
           return -1;
         }
       else
         {
           if (TAO_debug_level > 4)
-            TAOLIB_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("TAO (%P|%t) - Did not find default ")
-                        ACE_TEXT ("svc.conf\n")));
+            {
+              TAOLIB_DEBUG ((LM_DEBUG,
+                             ACE_TEXT ("TAO (%P|%t) - Did not find default ")
+                             ACE_TEXT ("svc.conf\n")));
+            }
           status = 0;
         }
     }
@@ -515,7 +549,6 @@ TAO::ORB::open_services (ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> pcfg,
         }
     }
 
-
   return status;
 }
 
@@ -528,7 +561,7 @@ TAO::ORB::close_services (ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> pcfg)
                             -1));
   --service_open_count;
 
-  int result = 0;
+  int result {};
 
   if (pcfg != ACE_Service_Config::global())
     {
@@ -559,9 +592,17 @@ TAO::ORB::default_svc_conf_entries (char const * rf_args,
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-// -----------------------------------------------------
 namespace
 {
+  bool
+  extract_parameter (ACE_Arg_Shifter &arg_shifter,
+                     ACE_TCHAR const *option,
+                     ACE_TCHAR const *&parameter)
+  {
+    parameter = arg_shifter.get_the_parameter (option);
+    return parameter != nullptr;
+  }
+
   /// Open services, belonging to the gestalt instance.
 
   int
@@ -829,7 +870,7 @@ namespace
         // Can't interpret this argument.  Move on to the next argument.
         if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT ("-ORBSvcConf")) == 0)
           {
-            const ACE_TCHAR *current_arg =
+            ACE_TCHAR const *current_arg =
                         arg_shifter.get_the_parameter (ACE_TEXT ("-ORBSvcConf"));
             arg_shifter.consume_arg ();
 
@@ -860,7 +901,7 @@ namespace
         else if (arg_shifter.cur_arg_strncasecmp
                  (ACE_TEXT ("-ORBSvcConfDirective")) == 0)
           {
-            const ACE_TCHAR *current_arg =
+            ACE_TCHAR const *current_arg =
               arg_shifter.get_the_parameter (ACE_TEXT ("-ORBSvcConfDirective"));
 
             // This is used to pass arguments to the Service
@@ -896,7 +937,7 @@ namespace
 
     while (arg_shifter.is_anything_left ())
       {
-        const ACE_TCHAR *current_arg = nullptr;
+        ACE_TCHAR const *current_arg {};
         if (0 == arg_shifter.cur_arg_strncasecmp
             (ACE_TEXT ("-ORBSkipServiceConfigOpen")))
           {
@@ -911,8 +952,9 @@ namespace
 
             arg_shifter.consume_arg ();
           }
-        else if (nullptr != (current_arg = arg_shifter.get_the_parameter
-                       (ACE_TEXT ("-ORBServiceConfigLoggerKey"))))
+        else if (extract_parameter (arg_shifter,
+                                    ACE_TEXT ("-ORBServiceConfigLoggerKey"),
+                                    current_arg))
           {
             svc_config_argv.add (ACE_TEXT ("-k"));
             svc_config_argv.add (current_arg, true); // quote args!
@@ -928,14 +970,17 @@ namespace
             // Don't consume, the ORB_Core::init will use it again.
             arg_shifter.ignore_arg();
 
-            if (nullptr != (current_arg = arg_shifter.get_current()))
-              negotiate_codesets = (ACE_OS::atoi (current_arg));
+            current_arg = arg_shifter.get_current ();
+            if (current_arg != nullptr)
+              {
+                negotiate_codesets = (ACE_OS::atoi (current_arg));
+              }
 
             arg_shifter.ignore_arg();
           }
-        else if (nullptr != (current_arg =
-                       arg_shifter.get_the_parameter
-                       (ACE_TEXT ("-ORBDebugLevel"))))
+        else if (extract_parameter (arg_shifter,
+                                    ACE_TEXT ("-ORBDebugLevel"),
+                                    current_arg))
           {
             // Allowing different ORBs to change the global debug
             // level may be unexpected, but since this
@@ -996,7 +1041,7 @@ namespace
               {
                 // Later, replace all of these
                 // warning this turns on a daemon.
-                ACE::debug (1);
+                ACE::debug (true);
               }
 
             arg_shifter.consume_arg ();
@@ -1028,7 +1073,7 @@ namespace
                           ACE_TCHAR **argv,
                           bool &skip_service_config_open)
   {
-    bool with_global_gestalt = true;
+    bool with_global_gestalt {true};
 
     ACE_Arg_Shifter arg_shifter (argc, argv);
 
@@ -1040,7 +1085,7 @@ namespace
             arg_shifter.ignore_arg ();
 
             // This should set current_arg to the value of ORBGestalt option.
-            const ACE_TCHAR *current_arg = arg_shifter.get_current ();
+            ACE_TCHAR const *current_arg = arg_shifter.get_current ();
 
             if (nullptr != current_arg &&
                 ACE_OS::strcasecmp (current_arg, ACE_TEXT("GLOBAL")) != 0)

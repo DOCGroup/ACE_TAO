@@ -1,4 +1,3 @@
-/* -*- c++ -*- */
 #ifndef JAWS_SYMBOL_TABLE_H
 #define JAWS_SYMBOL_TABLE_H
 
@@ -8,39 +7,38 @@
 #include "jaws3/Export.h"
 
 #define JAWS_SYMBOL_TABLE_ENTRY \
-        ACE_Hash_Map_Entry <const ACE_TCHAR *, const ACE_TCHAR *>
+        ACE_Hash_Map_Entry <ACE_TCHAR const *, ACE_TCHAR const *>
 
 #define JAWS_SYMBOL_TABLE_BASE \
-        ACE_Hash_Map_Manager_Ex<const ACE_TCHAR *, const ACE_TCHAR *, \
-                                ACE_Hash<const ACE_TCHAR *>, ACE_Equal_To<const ACE_TCHAR *>, \
+        ACE_Hash_Map_Manager_Ex<ACE_TCHAR const *, ACE_TCHAR const *, \
+                                ACE_Hash<ACE_TCHAR const *>, ACE_Equal_To<ACE_TCHAR const *>, \
                                 ACE_SYNCH_NULL_MUTEX>
 
 #define JAWS_SYMBOL_TABLE_ITERATOR_BASE \
-        ACE_Hash_Map_Iterator_Base_Ex<const ACE_TCHAR *, const ACE_TCHAR *, \
-                                      ACE_Hash<const ACE_TCHAR *>, \
-                                      ACE_Equal_To<const ACE_TCHAR *>, \
+        ACE_Hash_Map_Iterator_Base_Ex<ACE_TCHAR const *, ACE_TCHAR const *, \
+                                      ACE_Hash<ACE_TCHAR const *>, \
+                                      ACE_Equal_To<ACE_TCHAR const *>, \
                                       ACE_SYNCH_NULL_MUTEX>
 
 #define JAWS_SYMBOL_TABLE_ITERATOR \
-        ACE_Hash_Map_Iterator_Ex<const ACE_TCHAR *, const ACE_TCHAR *, \
-                                 ACE_Hash<const ACE_TCHAR *>, ACE_Equal_To<const ACE_TCHAR *>, \
+        ACE_Hash_Map_Iterator_Ex<ACE_TCHAR const *, ACE_TCHAR const *, \
+                                 ACE_Hash<ACE_TCHAR const *>, ACE_Equal_To<ACE_TCHAR const *>, \
                                  ACE_SYNCH_NULL_MUTEX>
 
 #define JAWS_SYMBOL_TABLE_REVERSE_ITERATOR \
-        ACE_Hash_Map_Reverse_Iterator_Ex<const ACE_TCHAR *, const ACE_TCHAR *, \
-                                         ACE_Hash<const ACE_TCHAR *>, \
-                                         ACE_Equal_To<const ACE_TCHAR *>, \
+        ACE_Hash_Map_Reverse_Iterator_Ex<ACE_TCHAR const *, ACE_TCHAR const *, \
+                                         ACE_Hash<ACE_TCHAR const *>, \
+                                         ACE_Equal_To<ACE_TCHAR const *>, \
                                          ACE_SYNCH_NULL_MUTEX>
 
 class JAWS_Symbol_Table;
 
+/// Associates an ACE string key with an ACE string value.
 class JAWS_Export JAWS_Symbol_Table : public JAWS_SYMBOL_TABLE_BASE
-// = TITLE
-//     A class the associates a string with another string.
 {
 public:
+  /// The hash table size should be a prime number.
   JAWS_Symbol_Table (size_t size = 211);
-  // Hash table <size> should be a prime.
 };
 
 #endif /* JAWS_SYMBOL_TABLE_H */

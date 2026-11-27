@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 /**
  *  @file PropertySeq.h
  *
@@ -33,17 +31,20 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Notify_Serv_Export TAO_Notify_PropertySeq
 {
 public:
-  /// Constructor
   TAO_Notify_PropertySeq ();
 
-  /// Destructor
   ~TAO_Notify_PropertySeq ();
 
-  /// Return 0 on success, -1 on error.
-  int init (const CosNotification::PropertySeq& prop_seq);
+  TAO_Notify_PropertySeq (TAO_Notify_PropertySeq const &) = delete;
+  TAO_Notify_PropertySeq (TAO_Notify_PropertySeq &&) = delete;
+  TAO_Notify_PropertySeq &operator= (TAO_Notify_PropertySeq const &) = delete;
+  TAO_Notify_PropertySeq &operator= (TAO_Notify_PropertySeq &&) = delete;
 
-  /// Find the <value> for property <name>. Returns 0 on success.
-  int find (const char* name, CosNotification::PropertyValue& value) const;
+  /// Return 0 on success, -1 on error.
+  int init (CosNotification::PropertySeq const& prop_seq);
+
+  /// Find the @a value for property @a name. Returns 0 on success.
+  int find (char const *name, CosNotification::PropertyValue& value) const;
 
   /// Return -1 on error.
   int populate (CosNotification::PropertySeq_var& prop_seq) const;
@@ -54,7 +55,7 @@ public:
 protected:
   /// Add the value. Used by subclasses to initialize the property map from their
   /// member variables.
-  void add(const ACE_CString& name, const CORBA::Any& val);
+  void add(ACE_CString const& name, CORBA::Any const& val);
 
 protected:
   /// Property Map.

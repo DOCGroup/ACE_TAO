@@ -1,11 +1,8 @@
-// -*- C++ -*-
-//=============================================================================
 /**
  * @file Auto_Functor.h
  *
  * @author Carlos O'Ryan <coryan@atdesk.com>
  */
-//=============================================================================
 #ifndef ACE_AUTO_FUNCTOR_H
 #define ACE_AUTO_FUNCTOR_H
 #include /**/ "ace/pre.h"
@@ -17,6 +14,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Global_Macros.h"
+#include <utility>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -58,43 +56,68 @@ public:
   using element_type = X;
   using functor_type = Functor;
 
-  /// Constructor
+  /// noexcept
   explicit Auto_Functor (X * p = nullptr,
-      Functor functor = Functor()); // noexcept
+      Functor functor = Functor());
 
-  Auto_Functor (Auto_Functor & rhs); // noexcept
+  /// noexcept
+  Auto_Functor (Auto_Functor & rhs);
+  Auto_Functor (Auto_Functor && rhs);
 
-  Auto_Functor<X,Functor>& operator= (Auto_Functor & rhs); // noexcept
+  /// noexcept
+  Auto_Functor<X,Functor>& operator= (Auto_Functor & rhs);
+  Auto_Functor<X,Functor>& operator= (Auto_Functor && rhs);
+
+  /// noexcept
+  template<typename Y>
+  Auto_Functor(Auto_Functor<Y,Functor>& rhs);
 
   template<typename Y>
-  Auto_Functor(Auto_Functor<Y,Functor>& rhs); // noexcept
+  Auto_Functor(Auto_Functor<Y,Functor>&& rhs);
+
+  /// noexcept
+  template<typename Y>
+  Auto_Functor<X,Functor>& operator= (Auto_Functor<Y,Functor>& rhs);
 
   template<typename Y>
-  Auto_Functor<X,Functor>& operator= (Auto_Functor<Y,Functor>& rhs); // noexcept
+  Auto_Functor<X,Functor>& operator= (Auto_Functor<Y,Functor>&& rhs);
 
-  ~Auto_Functor(); // noexcept
+  /// noexcept
+  ~Auto_Functor();
 
-  X & operator*() const; // noexcept
+  /// noexcept
+  X & operator*() const;
 
-  X * operator->() const; // noexcept
+  /// noexcept
+  X * operator->() const;
 
-  X * get(); // noexcept
+  /// noexcept
+  X * get();
+  X * get() const;
 
-  X * release(); // noexcept
+  /// noexcept
+  X * release();
 
-  void reset (X * p = nullptr); // noexcept
+  /// noexcept
+  void reset (X * p = nullptr);
 
-  void reset (X * p, Functor f); // noexcept
+  /// noexcept
+  void reset (X * p, Functor f);
 
-  Functor const & functor() const; // noexcept
+  /// noexcept
+  Functor const & functor() const;
 
-  Auto_Functor(Auto_Functor_Ref<X,Functor> rhs); // noexcept
+  /// noexcept
+  Auto_Functor(Auto_Functor_Ref<X,Functor> rhs);
 
-  Auto_Functor<X,Functor> & operator=(Auto_Functor_Ref<X,Functor> rhs); // noexcept
+  /// noexcept
+  Auto_Functor<X,Functor> & operator=(Auto_Functor_Ref<X,Functor> rhs);
 
-  template<typename Y> operator Auto_Functor_Ref<Y,Functor>(); // noexcept
+  /// noexcept
+  template<typename Y> operator Auto_Functor_Ref<Y,Functor>();
 
-  template<typename Y> operator Auto_Functor<Y,Functor>(); // noexcept
+  /// noexcept
+  template<typename Y> operator Auto_Functor<Y,Functor>();
 
 private:
   X * p_;

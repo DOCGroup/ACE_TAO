@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    be_visitor_component_scope.cpp
  *
@@ -7,7 +5,6 @@
  *
  *  @author Jeff Parsons
  */
-//=============================================================================
 
 #include "be_visitor_component_scope.h"
 #include "be_visitor_context.h"

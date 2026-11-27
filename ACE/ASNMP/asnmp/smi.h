@@ -1,14 +1,11 @@
-/* -*-C++-*- */
 #ifndef SMIDEF_
 #define SMIDEF_
-//=============================================================================
 /**
  *  @file    smi.h
  *
  * Address class definition. Encapsulates various network
  * addresses into easy to use, safe and portable classes.
  */
-//=============================================================================
 
 /*===================================================================
   Copyright (c) 1996
@@ -33,25 +30,25 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-//----------[ ASN/BER Base Types ]-----------------------------------------
-// Basic Encoding Rules (BER)
-// (used in forming SYNTAXes and certain SNMP types/values)
+/// @name ASN/BER base types.
+/// @{
+/// Basic Encoding Rules (BER), used in forming syntax values and certain
+/// SNMP types and values.
 #define aSN_UNIVERSAL    (0x00)
 #define aSN_APPLICATION  (0x40)
 #define aSN_CONTEXT      (0x80)
 #define aSN_PRIVATE      (0xC0)
 #define aSN_PRIMITIVE    (0x00)
 #define aSN_CONSTRUCTOR  (0x20)
+/// @}
 
-//------[ SNMP ObjectSyntax Values ]---------------------------------------
+/// @name SNMP ObjectSyntax values.
+/// @{
 #define sNMP_SYNTAX_SEQUENCE  (aSN_CONTEXT | aSN_CONSTRUCTOR | 0x10)
 
-
-//-------------------------------------------------------------------------
-// These values are used in the "syntax" member
-// of the smiVALUE structure which follows.
-// Note: UInt32 is indistinguishable from Gauge32 per SNMPv2 Draft Standard
-//       NsapAddr is obsoleted as unique SMI type per SNMPv2 Draft Standard
+/// These values are used in the syntax member of the following smiVALUE
+/// structure. UInt32 is indistinguishable from Gauge32 per SNMPv2; NsapAddr
+/// is obsolete as a unique SMI type.
 #define sNMP_SYNTAX_INT         (aSN_UNIVERSAL | aSN_PRIMITIVE | 0x02)
 #define sNMP_SYNTAX_BITS        (aSN_UNIVERSAL | aSN_PRIMITIVE | 0x03)
 #define sNMP_SYNTAX_OCTETS      (aSN_UNIVERSAL | aSN_PRIMITIVE | 0x04)
@@ -65,17 +62,18 @@
 #define sNMP_SYNTAX_OPAQUE      (aSN_APPLICATION | aSN_PRIMITIVE | 0x04)
 #define sNMP_SYNTAX_CNTR64      (aSN_APPLICATION | aSN_PRIMITIVE | 0x06)
 #define sNMP_SYNTAX_UINT32      (aSN_APPLICATION | aSN_PRIMITIVE | 0x07)
+/// @}
 
-//-------------------------------------------------------------------------
-
-//---------------[ Exception conditions for SNMPv2 ]-----------------------
-// support SNMP v2
+/// @name SNMPv2 exception conditions.
+/// @{
+/// Syntax values for SNMPv2 exception conditions.
 #define sNMP_SYNTAX_NOSUCHOBJECT    (aSN_CONTEXT | aSN_PRIMITIVE | 0x00)
 #define sNMP_SYNTAX_NOSUCHINSTANCE  (aSN_CONTEXT | aSN_PRIMITIVE | 0x01)
 #define sNMP_SYNTAX_ENDOFMIBVIEW    (aSN_CONTEXT | aSN_PRIMITIVE | 0x02)
+/// @}
 
-
-//--------------[ different types of PDU's ]-------------------------------
+/// @name PDU types.
+/// @{
 #define sNMP_PDU_GET            (aSN_CONTEXT | aSN_CONSTRUCTOR | 0x0)
 #define sNMP_PDU_GETNEXT        (aSN_CONTEXT | aSN_CONSTRUCTOR | 0x1)
 #define sNMP_PDU_RESPONSE       (aSN_CONTEXT | aSN_CONSTRUCTOR | 0x2)
@@ -84,62 +82,60 @@
 #define sNMP_PDU_GETBULK    (aSN_CONTEXT | aSN_CONSTRUCTOR | 0x5)
 #define sNMP_PDU_INFORM     (aSN_CONTEXT | aSN_CONSTRUCTOR | 0x6)
 #define sNMP_PDU_TRAP       (aSN_CONTEXT | aSN_CONSTRUCTOR | 0x7)
+/// @}
 
-
-//------[ smi typedefs ]---------------------------------------------------
-// SNMP-related types from RFC1442 (SMI)
+/// @name SMI types.
+/// @{
+/// SNMP-related types from RFC 1442 (SMI).
 
 typedef unsigned char    SmiBYTE,        *SmiLPBYTE;
 
-//-------------------------------------------------------------------------
-// SNMP-related types from RFC1442 (SMI)
-
-// int
+/// Integer type.
 typedef long             SmiINT,         *SmiLPINT;
 
-// int 32
+/// 32-bit integer type.
 typedef SmiINT           SmiINT32,       *SmiLPINT32;
 
-// unit32
+/// Unsigned 32-bit integer type.
 typedef unsigned long    SmiUINT32,      *SmiLPUINT32;
 
-// octet struct
+/// Octet string type.
 typedef struct {
      SmiUINT32 len;
      SmiLPBYTE ptr;}     SmiOCTETS,      *SmiLPOCTETS;
 
-// bits
+/// Bit string type.
 typedef SmiOCTETS        SmiBITS,        *SmiLPBITS;
 
-// SMI oid struct
+/// SMI object identifier type.
 typedef struct {
      SmiUINT32   len;
      SmiLPUINT32 ptr;}   SmiOID,         *SmiLPOID;
 
-// ipaddr
+/// IP address type.
 typedef SmiOCTETS        SmiIPADDR,      *SmiLPIPADDR;
 
-// 32bit counter
+/// 32-bit counter type.
 typedef SmiUINT32        SmiCNTR32,      *SmiLPCNTR32;
 
-// gauge
+/// Gauge type.
 typedef SmiUINT32        SmiGAUGE32,     *SmiLPGAUGE32;
 
-// timeticks
+/// TimeTicks type.
 typedef SmiUINT32        SmiTIMETICKS,   *SmiLPTIMETICKS;
 
-// opaque
+/// Opaque type.
 typedef SmiOCTETS        SmiOPAQUE,      *SmiLPOPAQUE;
 
-// nsapaddr
+/// NSAP address type.
 typedef SmiOCTETS        SmiNSAPADDR,    *SmiLPNSAPADDR;
 
-// 64 bit counter
+/// 64-bit counter type.
 typedef struct {
         SmiUINT32 hipart;
         SmiUINT32 lopart;
 } SmiCNTR64,    *SmiLPCNTR64;
+/// @}
 
 #endif // SMIDEF_
-
 

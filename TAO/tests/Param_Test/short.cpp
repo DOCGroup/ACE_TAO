@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    short.cpp
  *
@@ -7,8 +5,6 @@
  *
  *  @author   Aniruddha Gokhale
  */
-//=============================================================================
-
 
 #include "helper.h"
 #include "short.h"
@@ -18,17 +14,11 @@
 // ************************************************************************
 
 Test_Short::Test_Short ()
-  : opname_ (CORBA::string_dup ("test_short"))
+  : opname_ ("test_short")
 {
 }
 
-Test_Short::~Test_Short ()
-{
-  CORBA::string_free (this->opname_);
-  this->opname_ = 0;
-}
-
-const char *
+char const *
 Test_Short::opname () const
 {
   return this->opname_;
@@ -86,7 +76,7 @@ Test_Short::run_sii_test (Param_Test_ptr objref)
 
       return 0;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Test_Short::run_sii_test\n");
     }
@@ -99,9 +89,11 @@ Test_Short::check_validity ()
   if (this->inout_ == this->in_ * 2 &&
       this->out_ == this->in_ * 3 &&
       this->ret_ == this->in_ * 4)
-    return 1; // success
+    return true; // success
   else
-    return 0;
+  {
+    return false;
+  }
 }
 
 CORBA::Boolean

@@ -18,7 +18,7 @@ work (void *n)
   while (1)
     {
       thr_yield ();
-      count[ni]++;
+      ++count[ni];
     }
   return 0;
 }
@@ -36,26 +36,40 @@ main (int argc, char *argv[])
     }
   t0arg = THR_DETACHED;
   if (atoi (argv[1]))
-    t0arg |= THR_BOUND;
+    {
+      t0arg |= THR_BOUND;
+    }
   if (atoi (argv[2]))
-    t0arg |= THR_NEW_LWP;
+    {
+      t0arg |= THR_NEW_LWP;
+    }
 
   t1arg = THR_DETACHED;
   if (atoi (argv[3]))
-    t1arg |= THR_BOUND;
+    {
+      t1arg |= THR_BOUND;
+    }
   if (atoi (argv[4]))
-    t1arg |= THR_NEW_LWP;
+    {
+      t1arg |= THR_NEW_LWP;
+    }
 
   ncorr = atoi (argv[5]);
 
   if (thr_create (0, 0, work, 0, t0arg, &tid0) != 0)
-    perror ("couldn't create thread 0");
+    {
+      perror ("couldn't create thread 0");
+    }
   if (thr_create (0, 0, work, (void *) 1, t1arg, &tid1) != 0)
-    perror ("couldn't create thread 1");
+    {
+      perror ("couldn't create thread 1");
+    }
 
   orig_ncorr = thr_getconcurrency ();
   if (ncorr)
-    thr_setconcurrency (ncorr);
+    {
+      thr_setconcurrency (ncorr);
+    }
   sleep (NSLEEP);
   rate = (count[0] + count[1]) / ((float) NSLEEP);
     printf ("\n------------------------------------------------------------------------\n");

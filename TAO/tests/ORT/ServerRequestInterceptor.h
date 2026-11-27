@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  * @file ServerRequestInterceptor.h
  *
@@ -9,7 +6,6 @@
  *
  * @author Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
 
 #ifndef SERVER_REQUEST_INTERCEPTOR_H
 #define SERVER_REQUEST_INTERCEPTOR_H
@@ -27,12 +23,10 @@
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/PI_Server/PI_Server.h"
 
-
 #if defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
-
 
 /**
  * @class ServerRequestInterceptor
@@ -48,9 +42,13 @@ class ServerRequestInterceptor
     public virtual ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
-  ServerRequestInterceptor (const char * orb_id,
+  ServerRequestInterceptor (char const *orb_id,
                             PortableServer::Current_ptr poa_current);
+
+  ServerRequestInterceptor (ServerRequestInterceptor const &) = delete;
+  ServerRequestInterceptor &operator= (ServerRequestInterceptor const &) = delete;
+  ServerRequestInterceptor (ServerRequestInterceptor &&) = delete;
+  ServerRequestInterceptor &operator= (ServerRequestInterceptor &&) = delete;
 
   /**
    * @name Methods Required by the Server Request Interceptor
@@ -60,27 +58,24 @@ public:
    * virtual in the abstract base class.  They are the canonical
    * methods required for all server request interceptors.
    */
-  //@{
+  /// @{
   /// Return the name of this ServerRequestinterceptor.
-  virtual char * name ();
+  char *name () override;
 
-  virtual void destroy ();
+  void destroy () override;
 
-  virtual void receive_request_service_contexts (
-      PortableInterceptor::ServerRequestInfo_ptr ri);
+  void receive_request_service_contexts (
+      PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void receive_request (
-      PortableInterceptor::ServerRequestInfo_ptr ri);
+  void receive_request (
+      PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void send_reply (
-      PortableInterceptor::ServerRequestInfo_ptr ri);
+  void send_reply (PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void send_exception (
-      PortableInterceptor::ServerRequestInfo_ptr ri);
+  void send_exception (PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void send_other (
-      PortableInterceptor::ServerRequestInfo_ptr ri);
-  //@}
+  void send_other (PortableInterceptor::ServerRequestInfo_ptr ri) override;
+  /// @}
 
 private:
   /// The ORBid of the ORB with which this interceptor is registered.
@@ -94,7 +89,6 @@ private:
    */
   PortableServer::Current_var poa_current_;
 };
-
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

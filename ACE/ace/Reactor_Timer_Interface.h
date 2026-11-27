@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Reactor_Timer_Interface.h
  *
  *  @author Irfan Pyarali <irfan@oomworks.com>
  */
-//=============================================================================
 
 #ifndef ACE_REACTOR_TIMER_INTERFACE_H
 #define ACE_REACTOR_TIMER_INTERFACE_H
@@ -34,15 +30,15 @@ public:
   virtual ~ACE_Reactor_Timer_Interface ();
 
   virtual long schedule_timer (ACE_Event_Handler *event_handler,
-                               const void *arg,
-                               const ACE_Time_Value &delay,
-                               const ACE_Time_Value &interval = ACE_Time_Value::zero) = 0;
+                               void const *arg,
+                               ACE_Time_Value const &delay,
+                               ACE_Time_Value const &interval = ACE_Time_Value::zero) = 0;
 
   template<class Rep1, class Period1, class Rep2 = int, class Period2 = std::ratio<1>>
   long schedule_timer (ACE_Event_Handler *event_handler,
-                       const void *arg,
-                       const std::chrono::duration<Rep1, Period1>& delay,
-                       const std::chrono::duration<Rep2, Period2>& interval = std::chrono::duration<Rep2, Period2>::zero ())
+                       void const *arg,
+                       std::chrono::duration<Rep1, Period1> const & delay,
+                       std::chrono::duration<Rep2, Period2> const & interval = std::chrono::duration<Rep2, Period2>::zero ())
   {
     ACE_Time_Value const tv_delay (delay);
     ACE_Time_Value const tv_interval (interval);
@@ -50,18 +46,18 @@ public:
   }
 
   virtual int reset_timer_interval (long timer_id,
-                                    const ACE_Time_Value &interval) = 0;
+                                    ACE_Time_Value const &interval) = 0;
 
   template<class Rep, class Period>
   int reset_timer_interval (long timer_id,
-                            const std::chrono::duration<Rep, Period>& interval)
+                            std::chrono::duration<Rep, Period> const & interval)
   {
     ACE_Time_Value const tv_interval (interval);
     return this->reset_timer_interval (timer_id, tv_interval);
   }
 
   virtual int cancel_timer (long timer_id,
-                            const void **arg = nullptr,
+                            void const **arg = nullptr,
                             int dont_call_handle_close = 1) = 0;
 
   virtual int cancel_timer (ACE_Event_Handler *event_handler,

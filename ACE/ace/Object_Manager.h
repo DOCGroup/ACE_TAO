@@ -1,6 +1,3 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
  *  @file    Object_Manager.h
  *
@@ -8,7 +5,6 @@
  *  @author Matthias Kerkhoff
  *  @author Per Andersson
  */
-//=============================================================================
 
 #ifndef ACE_OBJECT_MANAGER_H
 #define ACE_OBJECT_MANAGER_H
@@ -53,7 +49,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // only used by ACE_OS_Object_Manager::ctor
 # if defined (ACE_WIN32)
-// Default WIN32 structured exception handler.
+/// Default WIN32 structured exception handler.
 int ACE_SEH_Default_Exception_Selector (void *);
 int ACE_SEH_Default_Exception_Handler (void *);
 # endif /* ACE_WIN32 */
@@ -61,7 +57,8 @@ int ACE_SEH_Default_Exception_Handler (void *);
 class ACE_Cleanup_Info_Node;
 template <class T> class ACE_Cleanup_Adapter;
 
-// Configuration parameters.
+/// @name Configuration parameters
+/// @{
 #if !defined (ACE_MAX_MANAGED_OBJECTS)
 # define ACE_MAX_MANAGED_OBJECTS 128
 #endif /* ! ACE_MAX_MANAGED_OBJECTS */
@@ -73,6 +70,7 @@ template <class T> class ACE_Cleanup_Adapter;
 #if !defined (ACE_APPLICATION_PREALLOCATED_ARRAY_DECLARATIONS)
 # define ACE_APPLICATION_PREALLOCATED_ARRAY_DECLARATIONS
 #endif /* ! ACE_APPLICATION_PREALLOCATED_ARRAY_DECLARATIONS */
+/// @}
 
 /**
  * @class ACE_Object_Manager
@@ -105,7 +103,7 @@ template <class T> class ACE_Cleanup_Adapter;
  * 1) Derive the object's class from ACE_Cleanup.
  * 2) Allow the ACE_Object_Manager to both dynamically allocate
  * and deallocate the object.
- * 3) Provide an <ACE_CLEANUP_FUNC> cleanup hook for the object or
+ * 3) Provide an @c ACE_CLEANUP_FUNC cleanup hook for the object or
  * array.
  * 4) Allow the ACE_Object_Manager to both preallocate the object
  * or array, either statically in global data or dynamically on
@@ -136,24 +134,24 @@ template <class T> class ACE_Cleanup_Adapter;
  * time).  These are intended to replace static locks, etc.
  * Instead of creating a static ACE_Object_Manager instance, one
  * can alternatively be created on the stack of the main program
- * thread.  It is created just after entry to ::main (int, char
- * *[]), and before any existing code in that function is
- * executed.  To enable this alternative, add #define
+ * thread.  It is created just after entry to @c main(), and before
+ * any existing code in that function is executed. To enable this
+ * alternative, define
  * ACE_HAS_NONSTATIC_OBJECT_MANAGER before including the platform
  * specific config-* file in ace/config.h prior to
- * building the ACE library and your applications.  This #define
+ * building the ACE library and your applications.  This definition
  * is enabled in some config files that are supplied with ACE.
  *
- * To ensure a static object manager is used, #undef
+ * To ensure a static object manager is used, undefine
  * ACE_HAS_NONSTATIC_OBJECT_MANAGER *after* including the platform
  * specific config-* file.
- * Note that the ACE_Object_Manager _must_ be created before
+ * @note The ACE_Object_Manager _must_ be created before
  * any threads are spawned by the program.
- * If ACE_HAS_NONSTATIC_OBJECT_MANAGER is not #defined, the ACE
+ * If ACE_HAS_NONSTATIC_OBJECT_MANAGER is not defined, the ACE
  * library creates a static, singleton ACE_Object_Manager instance.
  * The instance is placed in global program data, and constructed
  * via a static object constructor.  If ACE_HAS_NONSTATIC_OBJECT_MANAGER
- * is #defined, the ACE_Object_Manager instance is created on the stack
+ * is defined, the ACE_Object_Manager instance is created on the stack
  * of the main program thread, as noted above.
  *
  * With ACE_HAS_NONSTATIC_OBJECT_MANAGER enabled, the ACE
@@ -166,33 +164,33 @@ template <class T> class ACE_Cleanup_Adapter;
  * cleaned up by the Object_Manager, they'll get cleaned up too
  * late.  The ACE tests do not violate this requirement.
  * However, applications may have trouble with it.
- * NOTE on the use of <::exit> -- <::exit> does not destroy
+ * @note On the use of @c exit(): @c exit() does not destroy
  * automatic objects.  Therefore, if
  * ACE_HAS_NONSTATIC_OBJECT_MANAGER is enabled, the
  * ACE_Object_Manager instance will *not* be destroyed if
- * <::exit> is called!  However, <ACE_OS::exit> will properly
+ * @c exit() is called!  However, @c ACE_OS::exit() will properly
  * destroy the ACE_Object_Manager.  It is highly recommended
- * that <ACE_OS::exit> be used instead of <::exit>.
+ * that @c ACE_OS::exit() be used instead of @c exit().
  *
- * However, <::exit> and <ACE_OS::exit> are tricky to use
+ * However, @c exit() and @c ACE_OS::exit() are tricky to use
  * properly, especially in multithread programs.  It is much
  * safer to throw an exception (or simulate that effect) that
- * will be caught by <main> instead of calling exit.  Then,
- * <main> can perform any necessary application-specific cleanup
+ * will be caught by @c main instead of calling exit.  Then,
+ * @c main can perform any necessary application-specific cleanup
  * and return the status value.  In addition, it's usually best
- * to avoid calling <::exit> and <ACE_OS::exit> from threads
+ * to avoid calling @c exit() and @c ACE_OS::exit() from threads
  * other than the main thread.  Thanks to Jeff Greif
- * <jmg@trivida.com> for pointing out that <::exit> doesn't
+ * <jmg@trivida.com> for pointing out that @c exit() doesn't
  * destroy automatic objects, and for developing the
  * recommendations in this paragraph.
  *
  * Instead of creating a static ACE_Object_Manager, or letting
- * ACE create it on the stack of <main> for you, another
- * alternative is to #define
- * ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER.  With that
- * #define, the application must create the ACE_Object_Manager.
- * The recommended way is to call <ACE::init> at the start of
- * the program, and call <ACE::fini> at the end.  Alternatively,
+ * ACE create it on the stack of @c main for you, another
+ * alternative is to define
+ * @c ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER. With that
+ * definition, the application must create the ACE_Object_Manager.
+ * The recommended way is to call @c ACE::init() at the start of
+ * the program, and call @c ACE::fini() at the end.  Alternatively,
  * the application could explicity construct an
  * ACE_Object_Manager.
  */
@@ -238,14 +236,14 @@ public:
   /**
    * Register an ACE_Cleanup object for cleanup at process
    * termination.  The object is deleted via the
-   * <ace_cleanup_destroyer>.  If you need more flexibility, see the
+   * @c ace_cleanup_destroyer.  If you need more flexibility, see the
    * @c other at_exit method below.  For OS's that do not have
-   * processes, cleanup takes place at the end of <main>.  Returns 0
+   * processes, cleanup takes place at the end of @c main.  Returns 0
    * on success.  On failure, returns -1 and sets errno to: EAGAIN if
    * shutting down, ENOMEM if insufficient virtual memory, or EEXIST
    * if the object (or array) had already been registered.
    */
-  static int at_exit (ACE_Cleanup *object, void *param = nullptr, const char* name = nullptr);
+  static int at_exit (ACE_Cleanup *object, void *param = nullptr, char const * name = nullptr);
 
 #if defined (ACE_HAS_TSS_EMULATION)
   static int init_tss ();
@@ -261,7 +259,7 @@ public:
    * @a cleanup_hook function; the first parameter is the object (or
    * array) to be destroyed.  @a cleanup_hook, for example, may delete
    * the object (or array).  For OS's that do not have processes, this
-   * function is the same as <at_thread_exit>.  Returns 0 on success.
+   * function is the same as @c at_thread_exit.  Returns 0 on success.
    * On failure, returns -1 and sets errno to: EAGAIN if shutting
    * down, ENOMEM if insufficient virtual memory, or EEXIST if the
    * object (or array) had already been registered.
@@ -269,7 +267,7 @@ public:
   static int at_exit (void *object,
                       ACE_CLEANUP_FUNC cleanup_hook,
                       void *param,
-                      const char* name = nullptr);
+                      char const * name = nullptr);
 
   static int remove_at_exit (void *object);
 
@@ -279,7 +277,7 @@ public:
   static int at_thread_exit (void *object,
                              ACE_CLEANUP_FUNC cleanup_hook,
                              void *param,
-                             const char* name);
+                             char const * name);
 #endif /* 0 */
 
   /// Unique identifiers for preallocated objects.  Please see
@@ -308,7 +306,7 @@ public:
 #endif
 #endif /* ACE_MT_SAFE */
 
-      // Hook for preallocated objects provided by application.
+      /// Hook for preallocated objects provided by application.
       ACE_APPLICATION_PREALLOCATED_OBJECT_DECLARATIONS
 
       ACE_PREALLOCATED_OBJECTS  // This enum value must be last!
@@ -345,15 +343,15 @@ private:
 
 #if !defined (ACE_LACKS_ACE_SVCCONF)
   /// Preallocated objects collection.
-  ACE_Object_Manager_Preallocations *preallocations_;
+  ACE_Object_Manager_Preallocations *preallocations_ {};
 
   /// ACE_Service_Config signal handler.
-  ACE_Sig_Adapter *ace_service_config_sig_handler_;
+  ACE_Sig_Adapter *ace_service_config_sig_handler_ {};
 #endif /* ! ACE_LACKS_ACE_SVCCONF */
 
   /// Register an object or array for deletion at program termination.
   /// See description of static version above for return values.
-  int at_exit_i (void *object, ACE_CLEANUP_FUNC cleanup_hook, void *param, const char* name);
+  int at_exit_i (void *object, ACE_CLEANUP_FUNC cleanup_hook, void *param, char const * name);
 
   /// Remove an object for deletion at program termination.
   /// See description of static version above for return values.
@@ -361,8 +359,9 @@ private:
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 public:
-  // = The <get_singleton_lock> accessors are for internal
-  // use by ACE_Singleton _only_.
+  /// @name Internal singleton lock accessors
+  /// Used only by ACE_Singleton.
+  /// @{
 
   /**
    * Accesses an ACE_Null_Mutex to be used for construction of
@@ -391,6 +390,7 @@ public:
    * argument, on success; returns -1 on failure.
    */
   static int get_singleton_lock (ACE_Recursive_Thread_Mutex *&);
+  /// @}
 
   /**
    * Accesses a readers/writer ACE_RW_Thread_Mutex to be used for
@@ -419,7 +419,7 @@ public:
 public:
   /// Application code should not use these explicitly, so they're
   /// hidden here.  They're public so that the ACE_Object_Manager can
-  /// be constructed/destructed in <main> with
+  /// be constructed/destructed in @c main with
   /// ACE_HAS_NONSTATIC_OBJECT_MANAGER.
   ACE_Object_Manager ();
   ~ACE_Object_Manager () override;
@@ -430,28 +430,28 @@ private:
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   /// Lock that is used to guard internal structures.
-  ACE_Recursive_Thread_Mutex *internal_lock_;
+  ACE_Recursive_Thread_Mutex *internal_lock_ {};
 
   /// Null lock for guarding singleton creation.
-  ACE_Cleanup_Adapter<ACE_Null_Mutex> *singleton_null_lock_;
+  ACE_Cleanup_Adapter<ACE_Null_Mutex> *singleton_null_lock_ {};
 
   /// Lock for guarding singleton creation, when Object_Manager
   /// hasn't been started up, or has already been shut down.
-  ACE_Cleanup_Adapter<ACE_Recursive_Thread_Mutex> *singleton_recursive_lock_;
+  ACE_Cleanup_Adapter<ACE_Recursive_Thread_Mutex> *singleton_recursive_lock_ {};
 #endif /* ACE_MT_SAFE */
 
 #if defined (ACE_HAS_TSS_EMULATION)
   /// Main thread's thread-specific storage array.
   void *ts_storage_[ACE_TSS_Emulation::ACE_TSS_THREAD_KEYS_MAX];
-  bool ts_storage_initialized_;
+  bool ts_storage_initialized_ {};
 #endif /* ACE_HAS_TSS_EMULATION */
 
 #if !defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER)
   friend class ACE_Object_Manager_Manager;
 #endif /* ACE_HAS_NONSTATIC_OBJECT_MANAGER */
 
-  ACE_Object_Manager (const ACE_Object_Manager &) = delete;
-  ACE_Object_Manager &operator= (const ACE_Object_Manager &) = delete;
+  ACE_Object_Manager (ACE_Object_Manager const &) = delete;
+  ACE_Object_Manager &operator= (ACE_Object_Manager const &) = delete;
   ACE_Object_Manager (ACE_Object_Manager &&) = delete;
   ACE_Object_Manager &operator= (ACE_Object_Manager &&) = delete;
 };
@@ -475,7 +475,6 @@ class ACE_Service_Object;
 ACE_END_VERSIONED_NAMESPACE_DECL
 ACE_FACTORY_DECLARE (ACE, ACE_Service_Manager)
 #endif /* ! ACE_LACKS_ACE_SVCCONF */
-
 
 #include /**/ "ace/post.h"
 #endif /* ACE_OBJECT_MANAGER_H */

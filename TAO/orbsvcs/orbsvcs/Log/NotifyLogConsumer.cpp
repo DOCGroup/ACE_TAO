@@ -9,19 +9,17 @@ TAO_Notify_LogConsumer::TAO_Notify_LogConsumer (TAO_NotifyLog_i * log)
 {
 }
 
-TAO_Notify_LogConsumer::~TAO_Notify_LogConsumer ()
-{
-}
+TAO_Notify_LogConsumer::~TAO_Notify_LogConsumer () = default;
 
 void
 TAO_Notify_LogConsumer::connect (
   CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin)
 {
   // Activate the consumer with the default_POA_
-  CosNotifyComm::PushConsumer_var objref =
+  CosNotifyComm::PushConsumer_var const objref =
     this->_this ();
 
-  CosNotifyChannelAdmin::ProxySupplier_var proxysupplier =
+  CosNotifyChannelAdmin::ProxySupplier_var const proxysupplier =
     consumer_admin->obtain_notification_push_supplier (CosNotifyChannelAdmin::ANY_EVENT, proxy_supplier_id_);
 
   ACE_ASSERT (!CORBA::is_nil (proxysupplier.in ()));
@@ -90,19 +88,19 @@ TAO_Notify_LogConsumer::push
       // log the RecordList.
       this->log_->write_recordlist (recList);
     }
-  catch (const DsLogAdmin::LogFull& )
+  catch (DsLogAdmin::LogFull const &)
     {
       throw CORBA::NO_RESOURCES ();
     }
-  catch (const DsLogAdmin::LogOffDuty& )
+  catch (DsLogAdmin::LogOffDuty const &)
     {
       throw CORBA::NO_RESOURCES ();
     }
-  catch (const DsLogAdmin::LogLocked& )
+  catch (DsLogAdmin::LogLocked const &)
     {
       throw CORBA::NO_PERMISSION ();
     }
-  catch (const DsLogAdmin::LogDisabled& )
+  catch (DsLogAdmin::LogDisabled const &)
     {
       throw CORBA::TRANSIENT ();
     }

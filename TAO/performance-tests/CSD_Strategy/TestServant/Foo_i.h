@@ -1,35 +1,38 @@
 #ifndef FOO_I_H
 #define FOO_I_H
 
+#include <array>
 #include "CSD_PT_TestServant_Export.h"
 #include "TestServant/FooS.h"
 #include "Foo_Statistics.h"
 
-
 class CSD_PT_TestServant_Export Foo_i : public virtual POA_Foo
 {
-  public:
-    Foo_i();
-    virtual ~Foo_i();
+public:
+  Foo_i ();
+  ~Foo_i () override;
 
-    virtual void op1();
+  Foo_i (Foo_i const &) = delete;
+  Foo_i (Foo_i &&) = delete;
+  Foo_i &operator= (Foo_i const &) = delete;
+  Foo_i &operator= (Foo_i &&) = delete;
 
-    virtual void op2(CORBA::Long value);
+  void op1 () override;
 
-    virtual CORBA::Long op3(CORBA::Long value);
+  void op2 (CORBA::Long value) override;
 
-    virtual void op4(CORBA::Long value);
+  CORBA::Long op3 (CORBA::Long value) override;
 
-    virtual void op5();
+  void op4 (CORBA::Long value) override;
 
-    virtual void done();
+  void op5 () override;
 
+  void done () override;
 
-    void gather_stats(Foo_Statistics& stats);
+  void gather_stats (Foo_Statistics& stats);
 
-
-  private:
-    unsigned op_count_[5];
+private:
+  std::array<unsigned, 5> op_count_ {};
 };
 
 #endif

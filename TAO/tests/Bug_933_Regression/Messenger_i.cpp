@@ -1,26 +1,21 @@
 #include "Messenger_i.h"
 #include "tao/CodecFactory/CodecFactory.h"
 
-Messenger_i::Messenger_i (CORBA::ORB_ptr orb)
+Messenger_i::Messenger_i (CORBA::ORB_ptr const orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
 
-Messenger_i::~Messenger_i ()
-{
-}
-
-
 void
-Messenger_i::send_message (const CORBA::OctetSeq & user_name)
+Messenger_i::send_message (CORBA::OctetSeq const &user_name)
 {
   try
     {
       // Obtain a reference to the CodecFactory.
-      CORBA::Object_var obj =
+      CORBA::Object_var const obj =
         orb_->resolve_initial_references ("CodecFactory");
 
-      IOP::CodecFactory_var codec_factory =
+      IOP::CodecFactory_var const codec_factory =
         IOP::CodecFactory::_narrow (obj.in ());
 
       // Set up a structure that contains information necessary to
@@ -31,21 +26,21 @@ Messenger_i::send_message (const CORBA::OctetSeq & user_name)
       encoding.minor_version = 2;
 
       // Obtain the CDR encapsulation Codec.
-      IOP::Codec_var codec =
+      IOP::Codec_var const codec =
         codec_factory->create_codec (encoding);
 
-      CORBA::Any_var user_name_as_any;
-      user_name_as_any = codec->decode(user_name);
+      CORBA::Any_var user_name_as_any {};
+      user_name_as_any = codec->decode (user_name);
 
-      const char * name = 0;
+      char const *name {};
       user_name_as_any >>= name;
-      ACE_DEBUG ((LM_DEBUG,  "User's name: %C\n", name));
+      ACE_DEBUG ((LM_DEBUG, "User's name: %C\n", name));
     }
-  catch (const CORBA::SystemException &ex)
+  catch (CORBA::SystemException const &ex)
     {
       ex._tao_print_exception ("ERROR");
     }
-  catch (const CORBA::Exception &e)
+  catch (CORBA::Exception const &e)
     {
       e._tao_print_exception ("ERROR");
     }

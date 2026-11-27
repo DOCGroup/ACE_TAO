@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   Bindings_Iterator_T.h
  *
  *  @author Marina Spivak <marina@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_BINDINGS_ITERATOR_T_H
 #define TAO_BINDINGS_ITERATOR_T_H
@@ -14,13 +10,15 @@
 
 #include "orbsvcs/Naming/Hash_Naming_Context.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class TAO_Bindings_Iterator
  *
- * @brief This class implements the <BindingIterator> interface that is
- * part of the <CosNaming> idl module.   This class works with Hash_Map-based
+ * @brief This class implements the @c BindingIterator interface that is
+ * part of the @c CosNaming idl module.   This class works with Hash_Map-based
  * implementations of CosNaming::NamingContext.
  *
  * This class is templatized by the types of the underlying
@@ -30,13 +28,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * underlying data structures supporting
  * ACE_Hash_Map_Manager/Iterator - like interfaces).
  *
- * Instances of <TAO_Bindings_Iterator>s affect reference counts
+ * Instances of @c TAO_Bindings_Iterators affect reference counts
  * of corresponding Naming Contexts. Reference count on a
  * Naming Context is incremented by one for a lifetime of each
- * instance of <TAO_Bindings_Iterator> created for that
+ * instance of @c TAO_Bindings_Iterator created for that
  * context, i.e., a Naming Context cannot
  * be cleaned up (but, of course, it can be invalidated) before
- * all of its iterators have been cleaned up.  When <destroy>
+ * all of its iterators have been cleaned up.  When @c destroy
  * method is invoked on a Naming Context, all of its iterators are
  * destroyed in a "lazy evaluation" fashion, i.e., whenever a next
  * operation is invoked on an iterator, and it can detect that
@@ -47,30 +45,35 @@ template <class ITERATOR, class TABLE_ENTRY>
 class TAO_Bindings_Iterator : public virtual POA_CosNaming::BindingIterator
 {
 public:
-  // = Intialization and termination methods.
+  /// @name Initialization and termination methods
+  /// @{
   /**
-   * Constructor expects a pointer to a
-   * dynamically allocated hash map iterator (destructor
-   * deallocates hash map iterator).
+   * Constructor takes ownership of a dynamically allocated hash map iterator.
    */
   TAO_Bindings_Iterator (TAO_Hash_Naming_Context *context,
-                         ITERATOR *hash_iter,
+                         std::unique_ptr<ITERATOR> hash_iter,
                          PortableServer::POA_ptr poa);
 
-  /// Destructor.
   ~TAO_Bindings_Iterator () override;
+
+  TAO_Bindings_Iterator (TAO_Bindings_Iterator const &) = delete;
+  TAO_Bindings_Iterator (TAO_Bindings_Iterator &&) = delete;
+  TAO_Bindings_Iterator &operator= (TAO_Bindings_Iterator const &) = delete;
+  TAO_Bindings_Iterator &operator= (TAO_Bindings_Iterator &&) = delete;
 
   /// Returns the Default POA of this Servant object
   PortableServer::POA_ptr _default_POA () override;
 
-  // = Idl methods.
+  /// @}
+  /// @name Idl methods
+  /// @{
 
   /// This operation passes back the next unseen binding.  True is
   /// returned if a binding is passed back, and false is returned otherwise.
   CORBA::Boolean next_one (CosNaming::Binding_out b) override;
 
   /**
-   * This operation passes back at most <how_many> unseen bindings.
+   * This operation passes back at most @c how_many unseen bindings.
    * True is returned if bindings were passed back, and false is
    * returned if no bindings were passed back.
    */
@@ -80,26 +83,24 @@ public:
   /// This operation destroys the iterator.
   void destroy () override;
 
-  // = Helper method.
+  /// @}
+  /// @name Helper method
+  /// @{
 
   /**
    * Helper function used by TAO_*_Naming_Context and
-   * TAO_BindingIterator: populate a binding <b> with info contained
-   * in <hash_entry>.  Return 1 if everything went smoothly, 0 if an
+   * TAO_BindingIterator: populate a binding @c b with info contained
+   * in @c hash_entry.  Return 1 if everything went smoothly, 0 if an
    * allocation failed.
    */
   static int populate_binding (TABLE_ENTRY *hash_entry, CosNaming::Binding &b);
 
+  /// @}
 private:
-  TAO_Bindings_Iterator (TAO_Bindings_Iterator const &) = delete;
-  TAO_Bindings_Iterator (TAO_Bindings_Iterator &&) = delete;
-  TAO_Bindings_Iterator &operator= (TAO_Bindings_Iterator const &) = delete;
-  TAO_Bindings_Iterator &operator= (TAO_Bindings_Iterator &&) = delete;
-
   /**
    * Flag indicating whether this iterator is still valid.  (The
-   * iterator becomes invalid when <destroy> method has been invoked
-   * on it, or when <destroy> method has been invoked on the
+   * iterator becomes invalid when @c destroy method has been invoked
+   * on it, or when @c destroy method has been invoked on the
    * corresponding Naming Context.) This flag is necessary
    * because immediate destruction of this servant might not be possible
    * due to pending requests in the POA.
@@ -109,12 +110,12 @@ private:
   /**
    * Pointer to the Naming Context we are iterating over.  We need
    * this pointer to make sure the context is still valid before
-   * each iteration, and to decrement its reference count once we are <destroyed>.
+   * each iteration, and to decrement its reference count once we are @c destroyed.
    */
   TAO_Hash_Naming_Context *context_;
 
-  /// A pointer to the hash map iterator.
-  ITERATOR *hash_iter_;
+  /// Owned hash map iterator.
+  std::unique_ptr<ITERATOR> hash_iter_;
 
   /// Implement a different _default_POA().
   PortableServer::POA_var poa_;

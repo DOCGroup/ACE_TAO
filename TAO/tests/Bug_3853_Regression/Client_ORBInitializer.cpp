@@ -19,7 +19,7 @@ Client_ORBInitializer::post_init (
                     Echo_Client_Request_Interceptor (),
                     CORBA::NO_MEMORY ());
 
-  PortableInterceptor::ClientRequestInterceptor_var
+  PortableInterceptor::ClientRequestInterceptor_var const
     client_interceptor = interceptor;
 
   info->add_client_request_interceptor (client_interceptor.in ());

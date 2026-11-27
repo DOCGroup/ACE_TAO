@@ -1,5 +1,3 @@
-// -*- C++ -*-
-//=============================================================================
 /**
  *  @file   INS_Locator.h
  *
@@ -7,7 +5,6 @@
  *
  *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef IMR_INS_LOCATOR_H
 #define IMR_INS_LOCATOR_H
@@ -28,7 +25,7 @@ class ImR_Locator_i;
 class INS_Loc_ResponseHandler : public ImR_ResponseHandler
 {
 public:
-  INS_Loc_ResponseHandler (const char *key, ::IORTable::Locate_ResponseHandler rh);
+  INS_Loc_ResponseHandler (char const *key, ::IORTable::Locate_ResponseHandler rh);
 
   // dummy implementations used for internal operations
   void send_ior (char const* pior) override;
@@ -52,12 +49,12 @@ class INS_Locator
     public virtual ::CORBA::LocalObject
 {
 public:
-  INS_Locator (ImR_Locator_i& loc);
+  explicit INS_Locator (ImR_Locator_i& loc);
 
   /// Locate the appropriate IOR.
-  char* locate (const char *object_key);
+  char* locate (char const *object_key) override;
   void async_locate (::IORTable::Locate_ResponseHandler handler,
-                     const char *object_key);
+                     char const *object_key) override;
 
 private:
   ImR_Locator_i& imr_locator_;

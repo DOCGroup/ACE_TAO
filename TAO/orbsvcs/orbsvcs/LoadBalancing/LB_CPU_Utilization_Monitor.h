@@ -1,14 +1,9 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file LB_CPU_Utilization_Monitor.h
  *
  *  @author Jaiganesh Balasubramanian <jai@dre.vanderbilt.edu>
  *  @author Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_LB_CPU_UTILIZATION_MONITOR_H
 #define TAO_LB_CPU_UTILIZATION_MONITOR_H
@@ -38,7 +33,6 @@ class TAO_LoadBalancing_Export TAO_LB_CPU_Utilization_Monitor
   : public virtual POA_CosLoadBalancing::LoadMonitor
 {
 public:
-  /// Constructor
   /**
    * If no location is supplied the hostname or IP address is used by
    * default.
@@ -51,7 +45,7 @@ public:
    *
    * Methods required by the CosLoadBalancing::LoadMonitor interface.
    */
-  //@{
+  /// @{
   /// Return the location at which the LoadMonitor resides.
   /**
    * The returned "Location" is a sequence of length 1.
@@ -72,10 +66,9 @@ public:
   TAO_LB_CPU_Utilization_Monitor & operator= (TAO_LB_CPU_Utilization_Monitor const &) = delete;
   TAO_LB_CPU_Utilization_Monitor & operator= (TAO_LB_CPU_Utilization_Monitor &&) = delete;
 
-  //@}
+  /// @}
 
 protected:
-  /// Destructor
   /**
    * Protected destructor to enforce proper memory management through
    * reference counting.

@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Creation_Time.h
  *
@@ -8,8 +5,6 @@
  *
  *  @author  Irfan Pyarali <irfan@cs.wustl.edu>
  */
-//=============================================================================
-
 #ifndef TAO_CREATION_TIME_H
 #define TAO_CREATION_TIME_H
 
@@ -82,6 +77,7 @@ namespace TAO
       bool operator!= (Creation_Time const &rhs) const;
 
     protected:
+      /// Non-owning pointer to creation-time data valid for the enclosing upcall.
       void const *time_stamp_ {};
     };
   }

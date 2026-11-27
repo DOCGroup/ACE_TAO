@@ -20,6 +20,9 @@
 #include "ace/OS_NS_stdlib.h"
 #include "ace/Truncate.h"
 
+#include <cstdlib>
+#include <cstring>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_High_Res_Timer)
@@ -100,27 +103,27 @@ ACE_High_Res_Timer::get_cpuinfo ()
           char arg[128];
 
           // CPU type?
-          if (::sscanf (buf, "cpu : %s\n", arg) == 1)
+          if (::sscanf (buf, "cpu : %127s\n", arg) == 1)
             {
               // If this is an Alpha chip, then the BogoMips rating is
               // usable...
-              if (ACE_OS::strncmp (arg,
-                                   "Alpha",
-                                   5) == 0)
+              if (std::strncmp (arg,
+                                "Alpha",
+                                5) == 0)
                 {
                   supported = true;
                 }
             }
           // Pentium CPU model?
           else if (!supported
-                   && ::sscanf (buf, "model name : Pentium %s\n", arg) == 1)
+                   && ::sscanf (buf, "model name : Pentium %127s\n", arg) == 1)
             {
               // But if we don't have the right kind of Intel chip,
               // just quit.
-              if (ACE_OS::strcmp (arg, "II") == 0
-                  || ACE_OS::strcmp (arg, "III") == 0
-                  || ACE_OS::strcmp (arg, "IV") == 0
-                  || ACE_OS::strcmp (arg, "Pro") == 0)
+              if (std::strcmp (arg, "II") == 0
+                  || std::strcmp (arg, "III") == 0
+                  || std::strcmp (arg, "IV") == 0
+                  || std::strcmp (arg, "Pro") == 0)
                 {
                   supported = true;
                 }
@@ -211,8 +214,10 @@ ACE_High_Res_Timer::global_scale_factor ()
 
 #         if !defined (ACE_WIN32)
           if (ACE_High_Res_Timer::global_scale_factor_ <= 1u)
-            // Failed to retrieve CPU speed from system, so calculate it.
-            ACE_High_Res_Timer::calibrate ();
+            {
+              // Failed to retrieve CPU speed from system, so calculate it.
+              ACE_High_Res_Timer::calibrate ();
+            }
 
           // We have set the global scale factor so set out status
           // to 1, this way we only set the global_scale_factor_ once.
@@ -243,10 +248,10 @@ ACE_High_Res_Timer::ACE_High_Res_Timer ()
 }
 
 ACE_UINT32
-ACE_High_Res_Timer::calibrate (const ACE_UINT32 usec,
-                               const u_int iterations)
+ACE_High_Res_Timer::calibrate (ACE_UINT32 const usec,
+                               u_int const iterations)
 {
-  const ACE_Time_Value sleep_time (0, usec);
+  ACE_Time_Value const sleep_time (0, usec);
   ACE_Stats delta_hrtime;
   // In units of 100 usec, to avoid overflow.
   ACE_Stats actual_sleeps;
@@ -276,7 +281,7 @@ ACE_High_Res_Timer::calibrate (const ACE_UINT32 usec,
   actual_sleeps.mean (actual_sleep);
 
   // The addition of 5 below rounds instead of truncates.
-  const ACE_UINT32 scale_factor =
+  ACE_UINT32 const scale_factor =
     (ticks.whole () / actual_sleep.whole () + 5) /
     10u /* usec/100 usec */;
   ACE_High_Res_Timer::global_scale_factor (scale_factor);
@@ -343,14 +348,14 @@ ACE_High_Res_Timer::elapsed_time (struct timespec &elapsed_time) const
   // Then it converts that to nanoseconds by dividing by the scale
   // factor to convert to usec, and multiplying by 1000.)  The cast
   // avoids a MSVC 4.1 compiler warning about narrowing.
-  ACE_hrtime_t elapsed =
+  ACE_hrtime_t const elapsed =
     ACE_High_Res_Timer::elapsed_hrtime (this->end_, this->start_);
-  u_long nseconds = static_cast<u_long> (elapsed %
+  u_long const nseconds = static_cast<u_long> (elapsed %
                                          global_scale_factor () * 1000u /
                                          global_scale_factor ());
 
   // Get just the microseconds (dropping any left over nanoseconds).
-  ACE_UINT32 useconds = (ACE_UINT32) (elapsed / global_scale_factor ());
+  ACE_UINT32 const useconds = (ACE_UINT32) (elapsed / global_scale_factor ());
 
   elapsed_time.tv_sec = (time_t) (useconds / ACE_ONE_SECOND_IN_USECS);
   // Transforms one second in microseconds into nanoseconds.
@@ -399,8 +404,8 @@ ACE_High_Res_Timer::elapsed_time_incr (ACE_hrtime_t &nanoseconds) const
 }
 
 void
-ACE_High_Res_Timer::print_ave (const ACE_TCHAR *str,
-                               const int count,
+ACE_High_Res_Timer::print_ave (ACE_TCHAR const *str,
+                               int const count,
                                ACE_HANDLE handle) const
 {
   ACE_TRACE ("ACE_High_Res_Timer::print_ave");
@@ -410,15 +415,15 @@ ACE_High_Res_Timer::print_ave (const ACE_TCHAR *str,
   this->elapsed_time (total_nanoseconds);
 
   // Separate to seconds and nanoseconds.
-  u_long total_secs =
+  u_long const total_secs =
     static_cast<u_long> (total_nanoseconds / (ACE_UINT32) ACE_ONE_SECOND_IN_NSECS);
-  ACE_UINT32 extra_nsecs =
+  ACE_UINT32 const extra_nsecs =
     static_cast<ACE_UINT32> (total_nanoseconds % (ACE_UINT32) ACE_ONE_SECOND_IN_NSECS);
 
   ACE_TCHAR buf[100];
   if (count > 1)
     {
-      ACE_hrtime_t avg_nsecs = total_nanoseconds / (ACE_UINT32) count;
+      ACE_hrtime_t const avg_nsecs = total_nanoseconds / (ACE_UINT32) count;
       ACE_OS::snprintf (buf, 100,
                         ACE_TEXT (" count = %d, total (secs %lu, usecs %u), avg usecs = %lu\n"),
                         count,
@@ -427,10 +432,12 @@ ACE_High_Res_Timer::print_ave (const ACE_TCHAR *str,
                         (u_long) ((avg_nsecs + 500u) / 1000u));
     }
   else
-    ACE_OS::snprintf (buf, 100,
-                      ACE_TEXT (" total %3lu.%06lu secs\n"),
-                      total_secs,
-                      (extra_nsecs + 500lu) / 1000lu);
+    {
+      ACE_OS::snprintf (buf, 100,
+                        ACE_TEXT (" total %3lu.%06lu secs\n"),
+                        total_secs,
+                        (extra_nsecs + 500lu) / 1000lu);
+    }
 
   ACE_OS::write (handle,
                  str,
@@ -441,8 +448,8 @@ ACE_High_Res_Timer::print_ave (const ACE_TCHAR *str,
 }
 
 void
-ACE_High_Res_Timer::print_total (const ACE_TCHAR *str,
-                                 const int count,
+ACE_High_Res_Timer::print_total (ACE_TCHAR const *str,
+                                 int const count,
                                  ACE_HANDLE handle) const
 {
   ACE_TRACE ("ACE_High_Res_Timer::print_total");
@@ -452,15 +459,15 @@ ACE_High_Res_Timer::print_total (const ACE_TCHAR *str,
   this->elapsed_time (total_nanoseconds);
 
   // Separate to seconds and nanoseconds.
-  u_long total_secs =
+  u_long const total_secs =
     static_cast<u_long> (total_nanoseconds / (ACE_UINT32) ACE_ONE_SECOND_IN_NSECS);
-  ACE_UINT32 extra_nsecs =
+  ACE_UINT32 const extra_nsecs =
     static_cast<ACE_UINT32> (total_nanoseconds % (ACE_UINT32) ACE_ONE_SECOND_IN_NSECS);
 
   ACE_TCHAR buf[100];
   if (count > 1)
     {
-      ACE_hrtime_t avg_nsecs = this->total_ / (ACE_UINT32) count;
+      ACE_hrtime_t const avg_nsecs = this->total_ / (ACE_UINT32) count;
 
       ACE_OS::snprintf (buf, 100,
                         ACE_TEXT (" count = %d, total (secs %lu, usecs %u), avg usecs = %lu\n"),
@@ -470,10 +477,12 @@ ACE_High_Res_Timer::print_total (const ACE_TCHAR *str,
                         (u_long) ((avg_nsecs + 500u) / 1000u));
     }
   else
-    ACE_OS::snprintf (buf, 100,
-                      ACE_TEXT (" total %3lu.%06u secs\n"),
-                      total_secs,
-                      (extra_nsecs + 500u) / 1000u);
+    {
+      ACE_OS::snprintf (buf, 100,
+                        ACE_TEXT (" total %3lu.%06u secs\n"),
+                        total_secs,
+                        (extra_nsecs + 500u) / 1000u);
+    }
 
   ACE_OS::write (handle,
                  str,
@@ -484,14 +493,14 @@ ACE_High_Res_Timer::print_total (const ACE_TCHAR *str,
 }
 
 int
-ACE_High_Res_Timer::get_env_global_scale_factor (const ACE_TCHAR *env)
+ACE_High_Res_Timer::get_env_global_scale_factor (ACE_TCHAR const *env)
 {
   if (env != nullptr)
     {
-      const char *env_value = ACE_OS::getenv (ACE_TEXT_ALWAYS_CHAR (env));
+      char const *env_value = ACE_OS::getenv (ACE_TEXT_ALWAYS_CHAR (env));
       if (env_value != nullptr)
         {
-          int const value = ACE_OS::atoi (env_value);
+          int const value = std::atoi (env_value);
           if (value > 0)
             {
               ACE_High_Res_Timer::global_scale_factor (value);

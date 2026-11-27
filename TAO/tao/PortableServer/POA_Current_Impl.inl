@@ -1,5 +1,7 @@
-// -*- C++ -*-
 #include "tao/SystemException.h"
+
+#include <cstring>
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -20,7 +22,7 @@ namespace TAO
     }
 
     ACE_INLINE void
-    POA_Current_Impl::object_id (const PortableServer::ObjectId &id)
+    POA_Current_Impl::object_id (PortableServer::ObjectId const &id)
     {
       if (this->object_id_.release () ||
           this->object_id_.get_buffer() == this->object_id_buf_)
@@ -31,8 +33,7 @@ namespace TAO
           this->object_id_.length (id_size);
 
           // Get the buffer and copy the new object id in it's place.
-          ACE_OS::memcpy (this->object_id_.get_buffer (),
-                          id.get_buffer (), id_size);
+          std::memcpy (this->object_id_.get_buffer (), id.get_buffer (), id_size);
         }
       else
         {
@@ -40,7 +41,7 @@ namespace TAO
         }
     }
 
-    ACE_INLINE const PortableServer::ObjectId &
+    ACE_INLINE PortableServer::ObjectId const &
     POA_Current_Impl::object_id () const
     {
       return this->object_id_;
@@ -48,23 +49,23 @@ namespace TAO
 
     ACE_INLINE void
     POA_Current_Impl::replace_object_id (
-      const PortableServer::ObjectId &system_id)
+      PortableServer::ObjectId const &system_id)
     {
       // This has the effect of replacing the underlying buffer
       // with that of another object id without copying.
       object_id_.replace (system_id.maximum (),
                           system_id.length (),
                           const_cast <CORBA::Octet *> (system_id.get_buffer ()),
-                          0);
+                          false);
     }
 
     ACE_INLINE void
-    POA_Current_Impl::object_key (const TAO::ObjectKey &key)
+    POA_Current_Impl::object_key (TAO::ObjectKey const &key)
     {
-      this->object_key_ = &key;
+      this->object_key_ = std::addressof (key);
     }
 
-    ACE_INLINE const TAO::ObjectKey &
+    ACE_INLINE TAO::ObjectKey const &
     POA_Current_Impl::object_key () const
     {
       return *this->object_key_;

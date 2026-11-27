@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Message_Queue_NT.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef ACE_MESSAGE_QUEUE_NT_H
 #define ACE_MESSAGE_QUEUE_NT_H
@@ -35,12 +31,12 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * IO completion port mechanism.
  * @note *Many* ACE_Message_Queue features are not supported with
  * this implementation, including:
- * * <open> method have different signatures.
- * * <dequeue_head> *requires* that the ACE_Message_Block
+ * * @c open method have different signatures.
+ * * @c dequeue_head *requires* that the ACE_Message_Block
  * pointer argument point to an ACE_Message_Block that was
  * allocated by the caller.
- * * <peek_dequeue_head>.
- * * <ACE_Message_Queue_Iterators>.
+ * * @c peek_dequeue_head.
+ * * @c ACE_Message_Queue_Iterators.
  * * No flow control.
  */
 class ACE_Export ACE_Message_Queue_NT : public ACE_Message_Queue_Base
@@ -63,7 +59,8 @@ public:
   /// Close down the message queue and release all resources.
   virtual ~ACE_Message_Queue_NT ();
 
-  // = Enqueue and dequeue methods.
+  /// @name Enqueue and dequeue methods
+  /// @{
 
   /**
    * Enqueue an ACE_Message_Block * at the end of the queue.
@@ -84,8 +81,10 @@ public:
                             ACE_Time_Value *timeout = nullptr);
   virtual int dequeue (ACE_Message_Block *&first_item,
                        ACE_Time_Value *timeout = nullptr);
+  /// @}
 
-  // = Check if queue is full/empty.
+  /// @name Queue boundary conditions
+  /// @{
   /**
    * Always return false.
    */
@@ -96,8 +95,10 @@ public:
    * only transient.
    */
   virtual bool is_empty ();
+  /// @}
 
-  // = Queue statistic methods (transient.)
+  /// @name Queue statistics
+  /// @{
   /**
    * Number of total bytes on the queue, i.e., sum of the message
    * block sizes.
@@ -114,9 +115,10 @@ public:
    * Number of total messages on the queue.
    */
   virtual size_t message_count ();
+  /// @}
 
-  // = Manual changes to these stats (used when queued message blocks
-  // change size or lengths).
+  /// @name Manual queue-statistic updates
+  /// @{
   /**
    * New value of the number of total bytes on the queue, i.e., sum of
    * the message block sizes.
@@ -128,11 +130,13 @@ public:
    * of the message block lengths.
    */
   virtual void message_length (size_t new_length);
+  /// @}
 
   /// Get the max concurrent thread number.
   virtual DWORD max_threads ();
 
-  // = Activation control methods.
+  /// @name Queue activation control
+  /// @{
 
   /**
    * Deactivate the queue and wake up all threads waiting on the queue
@@ -160,17 +164,18 @@ public:
    */
   virtual int pulse ();
 
-  /// Returns true if the state of the queue is <DEACTIVATED>,
-  /// but false if the queue's is <ACTIVATED> or <PULSED>.
+  /// Returns true if the state of the queue is @c DEACTIVATED,
+  /// but false if the queue's is @c ACTIVATED or @c PULSED.
   virtual int deactivated ();
+  /// @}
 
-  // = Not currently implemented...
+  /// @name Unsupported operations
+  /// @{
   int peek_dequeue_head (ACE_Message_Block *&first_item,
                          ACE_Time_Value *timeout = nullptr);
   ACE_Notification_Strategy *notification_strategy ();
   void notification_strategy (ACE_Notification_Strategy *s);
-
-  // = Notification hook.
+  /// @}
 
   /// Dump the state of an object.
   virtual void dump () const;
@@ -182,28 +187,29 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-  ACE_Message_Queue_NT (const ACE_Message_Queue_NT &) = delete;
-  void operator= (const ACE_Message_Queue_NT &) = delete;
+  ACE_Message_Queue_NT (ACE_Message_Queue_NT const &) = delete;
+  void operator= (ACE_Message_Queue_NT const &) = delete;
   ACE_Message_Queue_NT (ACE_Message_Queue_NT &&) = delete;
   void operator= (ACE_Message_Queue_NT &&) = delete;
 
 private:
-  // = Internal states.
+  /// @name Internal state
+  /// @{
 
   /// Maximum threads that can be released (and run) concurrently.
   DWORD max_cthrs_;
 
   /// Current number of threads waiting to dequeue messages.
-  DWORD cur_thrs_;
+  DWORD cur_thrs_ {};
 
   /// Current number of bytes in queue.
-  size_t cur_bytes_;
+  size_t cur_bytes_ {};
 
   /// Current length of messages in queue.
-  size_t cur_length_;
+  size_t cur_length_ {};
 
   /// Current number of messages in the queue.
-  size_t cur_count_;
+  size_t cur_count_ {};
 
   /**
    * Synchronizer.  This should really be an ACE_Recursive_Thread_Mutex
@@ -214,6 +220,7 @@ private:
 
   /// Underlying NT IoCompletionPort.
   ACE_HANDLE completion_port_;
+  /// @}
 };
 #endif /* ACE_HAS_WIN32_OVERLAPPED_IO */
 

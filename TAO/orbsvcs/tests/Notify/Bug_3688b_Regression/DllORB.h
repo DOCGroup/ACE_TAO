@@ -1,6 +1,8 @@
 #ifndef DLLORB_H
 #define DLLORB_H
 
+#include <memory>
+
 #include "ace/Task.h"
 #include "tao/ORB.h"
 #include "tao/PortableServer/PortableServer.h"
@@ -14,26 +16,30 @@ class bug3688_Export DllORB: public ACE_Task_Base
 {
 public:
   DllORB ();
-  virtual ~DllORB ();
+  DllORB (DllORB const&) = delete;
+  DllORB (DllORB&&) = delete;
+  DllORB& operator= (DllORB const&) = delete;
+  DllORB& operator= (DllORB&&) = delete;
+  ~DllORB () override;
 
-  inline CORBA::ORB_ptr orb () const
+  CORBA::ORB_ptr orb () const
   {
-    return CORBA::ORB::_duplicate (mv_orb_.in ());
+    return CORBA::ORB::_duplicate (this->orb_.in ());
   }
 
-  virtual int init (int argc, ACE_TCHAR *argv[]);
+  int init (int argc, ACE_TCHAR *argv[]) override;
 
-  virtual int fini ();
+  int fini () override;
 
 protected:
-  virtual int svc ();
+  int svc () override;
 
 private:
-  unsigned int                   failPrePostInit_;
-  ACE_Thread_Barrier*            mp_barrier_;
-  CORBA::ORB_var                 mv_orb_;
-  PortableServer::POA_var        mv_rootPOA_;
-  PortableServer::POAManager_var mv_poaManager_;
+  unsigned int fail_pre_post_init_ { 3 };
+  std::unique_ptr<ACE_Thread_Barrier> barrier_ {};
+  CORBA::ORB_var orb_ {};
+  PortableServer::POA_var root_poa_ {};
+  PortableServer::POAManager_var poa_manager_ {};
 };
 
 ACE_FACTORY_DECLARE (bug3688, DllORB)

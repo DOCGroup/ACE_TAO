@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    TAO_Singleton_Manager.h
  *
@@ -9,7 +6,6 @@
  *
  *  @author  Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
 
 #ifndef TAO_SINGLETON_MANAGER_H
 #define TAO_SINGLETON_MANAGER_H
@@ -48,7 +44,7 @@ class TAO_Export TAO_Singleton_Manager : public ACE_Object_Manager_Base
 {
 public:
   /// Explicitly initialize.
-  virtual int init ();
+  int init () override;
 
   /**
    * Explicitly initialize the TAO_Singleton_Manager, in addition to
@@ -58,7 +54,7 @@ public:
   int init (int register_with_object_manager);
 
   /// Explicitly destroy.
-  virtual int fini ();
+  int fini () override;
 
   /**
    * Returns true before the TAO_Singleton_Manager has been constructed.
@@ -94,7 +90,7 @@ public:
    * memory, or EEXIST if the object (or array) had already been
    * registered.
    */
-  static int at_exit (ACE_Cleanup *object, void *param = nullptr, const char* name = nullptr);
+  static int at_exit (ACE_Cleanup *object, void *param = nullptr, char const *name = nullptr);
 
   /// Register an object (or array) for cleanup at process
   /// termination.
@@ -114,42 +110,42 @@ public:
   static int at_exit (void *object,
                       ACE_CLEANUP_FUNC cleanup_hook,
                       void *param,
-                      const char* name);
+                      char const *name);
 
 protected:
   /// Force allocation on the heap.
-  //@{
+  /// @{
   TAO_Singleton_Manager ();
   ~TAO_Singleton_Manager ();
-  //@}
+  /// @}
 
 private:
-  TAO_Singleton_Manager (const TAO_Singleton_Manager &) = delete;
-  TAO_Singleton_Manager &operator= (const TAO_Singleton_Manager &) = delete;
+  TAO_Singleton_Manager (TAO_Singleton_Manager const &) = delete;
+  TAO_Singleton_Manager &operator= (TAO_Singleton_Manager const &) = delete;
   TAO_Singleton_Manager (TAO_Singleton_Manager &&) = delete;
   TAO_Singleton_Manager &operator= (TAO_Singleton_Manager &&) = delete;
 
   /// Register an object or array for deletion at program termination.
   /// See description of static version above for return values.
-  int at_exit_i (void *object, ACE_CLEANUP_FUNC cleanup_hook, void *param, const char* name);
+  int at_exit_i (void *object, ACE_CLEANUP_FUNC cleanup_hook, void *param, char const *name);
 
 private:
   /// Default signal set used, for example, in ACE_Sig_Guard.
-  sigset_t *default_mask_;
+  sigset_t *default_mask_ {};
 
   /// Thread hook that's used by this process.
-  ACE_Thread_Hook *thread_hook_;
+  ACE_Thread_Hook *thread_hook_ {};
 
   /// For at_exit support.
   ACE_OS_Exit_Info exit_info_;
 
   /// Indicates if TAO_Singleton_Manager is registered with the
   /// ACE_Object_Manager.
-  int registered_with_object_manager_;
+  int registered_with_object_manager_ {-1};
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   /// Lock that is used to guard internal structures.
-  TAO_SYNCH_RECURSIVE_MUTEX *internal_lock_;
+  TAO_SYNCH_RECURSIVE_MUTEX *internal_lock_ {};
 #endif /* ACE_MT_SAFE */
 };
 

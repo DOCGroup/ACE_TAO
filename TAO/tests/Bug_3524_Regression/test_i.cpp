@@ -1,6 +1,4 @@
-// -*- C++ -*-
 #include "test_i.h"
-#include <memory>
 
 A_i::A_i (CORBA::ORB_ptr orb,
           CORBA::ValueFactoryBase *vtp_factory)
@@ -67,13 +65,14 @@ A_i::seq_method (::Test::A::FailOn where,
                  ::Test::seq_bd_str_out arg2,
                  ::Test::seq_bd_str & arg3)
 {
-  ::Test::seq_bd_str *arg2_val = nullptr;
+  ::Test::seq_bd_str *arg2_val {};
   ACE_NEW_THROW_EX (arg2_val,
                     ::Test::seq_bd_str,
                     CORBA::NO_MEMORY ());
+  // The out wrapper owns this pointer; use the raw alias below to populate it.
   arg2 = arg2_val;
 
-  ::Test::seq_bd_str *res_val = nullptr;
+  ::Test::seq_bd_str *res_val {};
   ACE_NEW_THROW_EX (res_val,
                     ::Test::seq_bd_str,
                     CORBA::NO_MEMORY ());
@@ -106,13 +105,14 @@ A_i::seq_method_s (::Test::A::FailOn where,
                    ::Test::seq_bds_str_out arg2,
                    ::Test::seq_bds_str & arg3)
 {
-  ::Test::seq_bds_str *arg2_val = nullptr;
+  ::Test::seq_bds_str *arg2_val {};
   ACE_NEW_THROW_EX (arg2_val,
                     ::Test::seq_bds_str,
                     CORBA::NO_MEMORY ());
+  // The out wrapper owns this pointer; use the raw alias below to populate it.
   arg2 = arg2_val;
 
-  ::Test::seq_bds_str *res_val = nullptr;
+  ::Test::seq_bds_str *res_val {};
   ACE_NEW_THROW_EX (res_val,
                     ::Test::seq_bds_str,
                     CORBA::NO_MEMORY ());
@@ -147,9 +147,8 @@ A_i::arr_method (::Test::A::FailOn where,
 {
   arg2 = ::Test::arr_bd_str_alloc ();
 
-  ::Test::arr_bd_str_slice *res =
-    ::Test::arr_bd_str_alloc ();
-  std::unique_ptr< ::Test::arr_bd_str_slice> safe (res);
+  ::Test::arr_bd_str_var safe (::Test::arr_bd_str_alloc ());
+  ::Test::arr_bd_str_slice * const res = safe.inout ();
 
   switch (where)
     {
@@ -170,8 +169,7 @@ A_i::arr_method (::Test::A::FailOn where,
       break;
     }
 
-  safe.release ();
-  return res;
+  return safe._retn ();
 }
 
 ::Test::arr_bds_str_slice *
@@ -182,9 +180,8 @@ A_i::arr_method_s (::Test::A::FailOn where,
 {
   arg2 = ::Test::arr_bds_str_alloc ();
 
-  ::Test::arr_bds_str_slice *res =
-    ::Test::arr_bds_str_alloc ();
-  std::unique_ptr< ::Test::arr_bds_str_slice > safe (res);
+  ::Test::arr_bds_str_var safe (::Test::arr_bds_str_alloc ());
+  ::Test::arr_bds_str_slice * const res = safe.inout ();
 
   switch (where)
     {
@@ -205,8 +202,7 @@ A_i::arr_method_s (::Test::A::FailOn where,
       break;
     }
 
-  safe.release ();
-  return res;
+  return safe._retn ();
 }
 
 ::Test::sct *
@@ -215,13 +211,14 @@ A_i::sct_method (::Test::A::FailOn where,
                  ::Test::sct_out arg2,
                  ::Test::sct & arg3)
 {
-  ::Test::sct *arg2_val = nullptr;
+  ::Test::sct *arg2_val {};
   ACE_NEW_THROW_EX (arg2_val,
                     ::Test::sct,
                     CORBA::NO_MEMORY ());
+  // The out wrapper owns this pointer; use the raw alias below to populate it.
   arg2 = arg2_val;
 
-  ::Test::sct *res_val = nullptr;
+  ::Test::sct *res_val {};
   ACE_NEW_THROW_EX (res_val,
                     ::Test::sct,
                     CORBA::NO_MEMORY ());
@@ -254,13 +251,14 @@ A_i::unn_method (::Test::A::FailOn where,
                  ::Test::unn_out arg2,
                  ::Test::unn & arg3)
 {
-  ::Test::unn *arg2_val = nullptr;
+  ::Test::unn *arg2_val {};
   ACE_NEW_THROW_EX (arg2_val,
                     ::Test::unn,
                     CORBA::NO_MEMORY ());
+  // The out wrapper owns this pointer; use the raw alias below to populate it.
   arg2 = arg2_val;
 
-  ::Test::unn *res_val = nullptr;
+  ::Test::unn *res_val {};
   ACE_NEW_THROW_EX (res_val,
                     ::Test::unn,
                     CORBA::NO_MEMORY ());
@@ -301,31 +299,34 @@ A_i::vbx_method (::Test::A::FailOn where,
       break;
     case ::Test::A::ARG2:
       {
-        ::Test::val_bd_str *arg2_val = nullptr;
+        ::Test::val_bd_str *arg2_val {};
         ACE_NEW_THROW_EX (arg2_val,
                           ::Test::val_bd_str,
                           CORBA::NO_MEMORY ());
+        // The out wrapper adopts this newly allocated valuetype.
         arg2 = arg2_val;
         *arg2 = CORBA::string_dup (::Test::FailStr);
       }
       break;
     case ::Test::A::ARG3:
       {
-        ::Test::val_bd_str_var arg3_cleaner = arg3;
-        ::Test::val_bd_str *arg3_val = nullptr;
+        ::Test::val_bd_str_var const arg3_cleaner = arg3;
+        ::Test::val_bd_str *arg3_val {};
         ACE_NEW_THROW_EX (arg3_val,
                           ::Test::val_bd_str,
                           CORBA::NO_MEMORY ());
+        // Preserve the old value above while transferring the new one to arg3.
         arg3 = arg3_val;
         *arg3 = CORBA::string_dup (::Test::FailStr);
       }
       break;
     case ::Test::A::RETN:
       {
-        ::Test::val_bd_str *res_val = nullptr;
+        ::Test::val_bd_str *res_val {};
         ACE_NEW_THROW_EX (res_val,
                           ::Test::val_bd_str,
                           CORBA::NO_MEMORY ());
+        // The return _var owns the raw allocation until _retn transfers it.
         res = res_val;
         *res_val = CORBA::string_dup (::Test::FailStr);
       }
@@ -348,31 +349,34 @@ A_i::vbx_method_s (::Test::A::FailOn where,
       break;
     case ::Test::A::ARG2:
       {
-        ::Test::val_bds_str *arg2_val = nullptr;
+        ::Test::val_bds_str *arg2_val {};
         ACE_NEW_THROW_EX (arg2_val,
                           ::Test::val_bds_str,
                           CORBA::NO_MEMORY ());
+        // The out wrapper adopts this newly allocated valuetype.
         arg2 = arg2_val;
         *arg2 = CORBA::string_dup (::Test::FailStr);
       }
       break;
     case ::Test::A::ARG3:
       {
-        ::Test::val_bds_str_var arg3_cleaner = arg3;
-        ::Test::val_bds_str *arg3_val = nullptr;
+        ::Test::val_bds_str_var const arg3_cleaner = arg3;
+        ::Test::val_bds_str *arg3_val {};
         ACE_NEW_THROW_EX (arg3_val,
                           ::Test::val_bds_str,
                           CORBA::NO_MEMORY ());
+        // Preserve the old value above while transferring the new one to arg3.
         arg3 = arg3_val;
         *arg3 = CORBA::string_dup (::Test::FailStr);
       }
       break;
     case ::Test::A::RETN:
       {
-        ::Test::val_bds_str *res_val = nullptr;
+        ::Test::val_bds_str *res_val {};
         ACE_NEW_THROW_EX (res_val,
                           ::Test::val_bds_str,
                           CORBA::NO_MEMORY ());
+        // The return _var owns the raw allocation until _retn transfers it.
         res = res_val;
         *res_val = CORBA::string_dup (::Test::FailStr);
       }
@@ -387,7 +391,7 @@ A_i::vtp_method (::Test::A::FailOn where,
                  ::Test::vtp_out arg2,
                  ::Test::vtp *& arg3)
 {
-  ::Test::vtp *res = nullptr;
+  ::Test::vtp *res {};
   switch (where)
     {
     case ::Test::A::ARG1:
@@ -397,6 +401,7 @@ A_i::vtp_method (::Test::A::FailOn where,
       {
         CORBA::ValueBase_var arg2_base =
           this->vtp_factory_->create_for_unmarshal ();
+        // Transfer the factory-created value to the out argument.
         arg2 = ::Test::vtp::_downcast (arg2_base.in ());
         arg2->b (CORBA::string_dup (::Test::FailStr));
         arg2->c (CORBA::string_dup (::Test::FailStr));
@@ -405,9 +410,10 @@ A_i::vtp_method (::Test::A::FailOn where,
       break;
     case ::Test::A::ARG3:
       {
-        ::Test::vtp_var arg3_cleaner = arg3;
+        ::Test::vtp_var const arg3_cleaner = arg3;
         CORBA::ValueBase_var arg3_base =
           this->vtp_factory_->create_for_unmarshal ();
+        // Preserve the old value above while transferring the new one to arg3.
         arg3 = ::Test::vtp::_downcast (arg3_base.in ());
         arg3->b (CORBA::string_dup (::Test::FailStr));
         arg3->c (CORBA::string_dup (::Test::FailStr));
@@ -418,6 +424,7 @@ A_i::vtp_method (::Test::A::FailOn where,
       {
         CORBA::ValueBase_var res_base =
           this->vtp_factory_->create_for_unmarshal ();
+        // Transfer ownership through the raw return required by the generated API.
         res = ::Test::vtp::_downcast (res_base.in ());
         res->b (CORBA::string_dup (::Test::FailStr));
         res->c (CORBA::string_dup (::Test::FailStr));
@@ -437,13 +444,13 @@ A_i::exc_method (::Test::string_field f)
       // not really tested.
       break;
     case ::Test::BOUNDED:
-      throw ::Test::exc (0,
+      throw ::Test::exc (nullptr,
                          ::Test::FailStr,
-                         0);
+                         nullptr);
       break;
     case ::Test::TYPEDEFED:
-      throw ::Test::exc (0,
-                         0,
+      throw ::Test::exc (nullptr,
+                         nullptr,
                          ::Test::FailStr);
       break;
     }

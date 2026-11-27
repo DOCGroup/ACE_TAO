@@ -27,8 +27,7 @@ ACE_OS_Thread_Adapter::ACE_OS_Thread_Adapter (
                              , selector
                              , handler
 #endif /* ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS */
-                             , cancel_flags
-                             )
+                             , cancel_flags)
 {
 }
 
@@ -44,12 +43,11 @@ ACE_OS_Thread_Adapter::invoke ()
   this->inherit_log_msg ();
 
   // Extract the arguments.
-  ACE_THR_FUNC_INTERNAL func =
-    reinterpret_cast<ACE_THR_FUNC_INTERNAL> (this->user_func_);
+  ACE_THR_FUNC_INTERNAL func = reinterpret_cast<ACE_THR_FUNC_INTERNAL> (this->user_func_);
   void *arg = this->arg_;
 
   // Pick up the cancel-related flags before deleting this.
-  long cancel_flags = this->flags_;
+  long const cancel_flags = this->flags_;
 
   // Delete ourselves since we don't need <this> anymore.  Make sure
   // not to access <this> anywhere below this point.
@@ -61,10 +59,14 @@ ACE_OS_Thread_Adapter::invoke ()
       int old = 0;
       int val = cancel_flags & (THR_CANCEL_ENABLE | THR_CANCEL_DISABLE);
       if (val == THR_CANCEL_ENABLE || val == THR_CANCEL_DISABLE)
+      {
         ACE_OS::thr_setcancelstate (val, &old);
+      }
       val = cancel_flags & (THR_CANCEL_DEFERRED | THR_CANCEL_ASYNCHRONOUS);
       if (val == THR_CANCEL_DEFERRED || val == THR_CANCEL_ASYNCHRONOUS)
+      {
         ACE_OS::thr_setcanceltype (val, &old);
+      }
     }
 
   ACE_THR_FUNC_RETURN status = ACE_THR_FUNC_RETURN_NULL;
@@ -77,11 +79,13 @@ ACE_OS_Thread_Adapter::invoke ()
             ACE_OS_Object_Manager::thread_hook ();
 
           if (hook)
-            // Invoke the start hook to give the user a chance to
-            // perform some initialization processing before the
-            // <func> is invoked.
-            status = hook->start (reinterpret_cast<ACE_THR_FUNC> (func),
-                                  arg);
+            {
+              // Invoke the start hook to give the user a chance to
+              // perform some initialization processing before the
+              // <func> is invoked.
+              status = hook->start (reinterpret_cast<ACE_THR_FUNC> (func),
+                                    arg);
+            }
           else
             {
               // Call thread entry point.
@@ -135,9 +139,13 @@ ACE_OS_Thread_Adapter::invoke ()
       CWinThread *pThread = ::AfxGetThread ();
 
       if (!pThread || pThread->m_nThreadID != ACE_OS::thr_self ())
-        ACE_ENDTHREADEX (status);
+        {
+          ACE_ENDTHREADEX (status);
+        }
       else
-        ::AfxEndThread (status);
+        {
+          ::AfxEndThread (status);
+        }
 #   else
       ACE_ENDTHREADEX (status);
 #   endif /* ACE_HAS_MFC && ACE_HAS_MFS != 0*/

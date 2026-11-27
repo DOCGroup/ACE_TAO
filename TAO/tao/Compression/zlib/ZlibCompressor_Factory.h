@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-// ===================================================================
 /**
  *  @file   ZlibCompressor_Factory.h
  *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-// ===================================================================
 
 #ifndef TAO_ZLIBCOMPRESSOR_FACTORY_H
 #define TAO_ZLIBCOMPRESSOR_FACTORY_H
@@ -30,8 +26,8 @@ namespace TAO
   class TAO_ZLIBCOMPRESSOR_Export Zlib_CompressorFactory :
     public ::TAO::CompressorFactory
   {
-    using ZlibCompressorMap = std::map< ::Compression::CompressionLevel,
-                                        const ::Compression::Compressor_var>;
+    using ZlibCompressorMap = std::map<::Compression::CompressionLevel,
+                                        ::Compression::Compressor_var const>;
 
   public:
     Zlib_CompressorFactory ();
@@ -39,13 +35,13 @@ namespace TAO
     ::Compression::Compressor_ptr get_compressor (
         ::Compression::CompressionLevel compression_level) override;
 
-  private:
     Zlib_CompressorFactory (Zlib_CompressorFactory const &) = delete;
     Zlib_CompressorFactory &operator= (Zlib_CompressorFactory const &) = delete;
     Zlib_CompressorFactory (Zlib_CompressorFactory &&) = delete;
     Zlib_CompressorFactory &operator= (Zlib_CompressorFactory &&) = delete;
 
-    // Ensure we can lock with imutability (i.e. const)
+  private:
+    /// Allows const methods to lock the mutex.
     mutable TAO_SYNCH_MUTEX mutex_;
     ZlibCompressorMap       compressors_;
   };

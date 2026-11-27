@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   Identification_Service.h
  *
  *  @author Huang-Ming Huang <hh1@cse.wustl.edu>
  */
-//=============================================================================
 
 #ifndef IDENTIFICATION_SERVICE_H
 #define IDENTIFICATION_SERVICE_H
@@ -28,18 +24,23 @@ namespace FTRTEC
   class Identification_Service : public ACE_Service_Object
   {
   public:
-    Identification_Service();
+    Identification_Service() = default;
     ~Identification_Service() override = default;
+
+    Identification_Service(Identification_Service const&) = delete;
+    Identification_Service(Identification_Service&&) = delete;
+    Identification_Service& operator=(Identification_Service const&) = delete;
+    Identification_Service& operator=(Identification_Service&&) = delete;
 
     /**
     * This function returns 0 when init is not called yet.
     */
     static Identification_Service* instance();
 
-    int init(int argc, ACE_TCHAR* argv[]);
+    int init(int argc, ACE_TCHAR* argv[]) override;
 
-    const FtRtecEventComm::ObjectId& object_id() const;
-    const CosNaming::Name& name() const;
+    FtRtecEventComm::ObjectId const& object_id() const;
+    CosNaming::Name const& name() const;
   private:
     FtRtecEventComm::ObjectId object_id_;
     CosNaming::Name name_;

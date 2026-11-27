@@ -72,10 +72,10 @@ TAO_ModuleDef_i::describe_i ()
 
   ACE_TString container_id;
   this->repo_->config ()->get_string_value (this->section_key_,
-                                            "container_id",
+                                            ACE_TEXT ("container_id"),
                                             container_id);
 
-  md.defined_in = container_id.c_str ();
+  md.defined_in = static_cast<char const *> (ACE_TEXT_ALWAYS_CHAR (container_id.c_str ()));
 
   md.version = this->version_i ();
 

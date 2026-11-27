@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    Monotonic_Message_Queue_Test.cpp
  *
@@ -11,8 +9,6 @@
  *
  *  @author Martin Corino <mcorino@remedy.nl>
  */
-//=============================================================================
-
 
 #include "test_config.h"
 #include "ace/Reactor.h"
@@ -32,6 +28,8 @@
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_unistd.h"
 
+#include <memory>
+
 #if defined (ACE_HAS_MONOTONIC_TIME_POLICY) && defined (ACE_HAS_MONOTONIC_CONDITIONS)
 
 #  if defined (ACE_WIN32)
@@ -45,7 +43,7 @@ using SYNCH_QUEUE = ACE_Message_Queue<ACE_MT_SYNCH, ACE_Monotonic_Time_Policy>;
 ACE_Timer_Queue *
 create_timer_queue ()
 {
-  ACE_Timer_Queue * tmq = nullptr;
+  ACE_Timer_Queue * tmq {};
 
   using timer_queue_type = ACE_Timer_Heap_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall, ACE_MT_SYNCH::RECURSIVE_MUTEX, ACE_HR_Time_Policy>;
   ACE_NEW_RETURN (tmq, timer_queue_type (), nullptr);
@@ -93,12 +91,12 @@ MyTask::create_reactor ()
 
   this->my_tq_ = create_timer_queue ();
 
-  ACE_TP_Reactor * pImpl = nullptr;
+  ACE_TP_Reactor * pImpl {};
 
   ACE_NEW_RETURN (pImpl,ACE_TP_Reactor (nullptr, this->my_tq_), -1);
 
   ACE_NEW_RETURN (my_reactor_,
-                   ACE_Reactor (pImpl ,1),
+                   ACE_Reactor (pImpl ,true),
                    -1);
 
   ACE_DEBUG ((LM_DEBUG,
@@ -132,14 +130,15 @@ int
 MyTask::start (int num_threads)
 {
   if (this->activate (THR_NEW_LWP, num_threads) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p.\n"),
-                       ACE_TEXT ("unable to activate thread pool")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p.\n"),
+                         ACE_TEXT ("unable to activate thread pool")),
+                        -1);
+    }
 
   return 0;
 }
-
 
 int
 MyTask::stop ()
@@ -153,14 +152,18 @@ MyTask::stop ()
     }
 
   if (this->wait () == -1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p.\n"),
-                ACE_TEXT ("unable to stop thread pool")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("%p.\n"),
+                  ACE_TEXT ("unable to stop thread pool")));
+    }
 
   if (this->delete_reactor () == -1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p.\n"),
-                ACE_TEXT ("unable to delete reactor")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("%p.\n"),
+                  ACE_TEXT ("unable to delete reactor")));
+    }
 
   return 0;
 }
@@ -171,7 +174,9 @@ MyTask::svc ()
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" (%P|%t) MyTask started\n")));
 
   while (this->my_reactor_->reactor_event_loop_done () == 0)
-    this->my_reactor_->run_reactor_event_loop ();
+    {
+      this->my_reactor_->run_reactor_event_loop ();
+    }
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" (%t) MyTask finished\n")));
   return 0;
@@ -186,18 +191,18 @@ public:
       mq_ (mq)
   {}
 
-  int handle_timeout (const ACE_Time_Value &tv,
-                              const void *arg) override;
+  int handle_timeout (ACE_Time_Value const &tv,
+                              void const *arg) override;
 
-  bool trigger_in(const ACE_Time_Value &delay);
+  bool trigger_in(ACE_Time_Value const &delay);
 
 private:
   ACE_Reactor* reactor_;
   SYNCH_QUEUE& mq_;
 };
 
-int TestHandler::handle_timeout (const ACE_Time_Value &,
-                                 const void *)
+int TestHandler::handle_timeout (ACE_Time_Value const &,
+                                 void const *)
 {
   const char S1[] = "message";
 
@@ -210,13 +215,13 @@ int TestHandler::handle_timeout (const ACE_Time_Value &,
   return 0;
 }
 
-bool TestHandler::trigger_in(const ACE_Time_Value &delay)
+bool TestHandler::trigger_in(ACE_Time_Value const &delay)
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) TestHandler::trigger_in - scheduling timer\n"));
   return -1 != reactor_->schedule_timer (this, nullptr, delay, ACE_Time_Value (0));
 }
 
-void set_system_time(const ACE_Time_Value& tv)
+void set_system_time(ACE_Time_Value const & tv)
 {
 #    if defined (ACE_WIN32)
   ACE_Date_Time curdt (tv);
@@ -268,9 +273,11 @@ timeout_test ()
   // the test should succeed.
 
   if (!test_handler.trigger_in (ACE_Time_Value (5, 0)))
-    ACE_ERROR_RETURN ((LM_ERROR,
-                        "(%P|%t) Unable to schedule trigger.\n"),
-                      false);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%P|%t) Unable to schedule trigger.\n"),
+                        false);
+    }
 
   if (!mq.is_empty ())
     {
@@ -280,14 +287,14 @@ timeout_test ()
     }
   else
     {
-      ACE_Message_Block *b = nullptr;
+      ACE_Message_Block *b {};
       ACE_Time_Value_T<ACE_Monotonic_Time_Policy> tv;
       tv = (tv.now () + ACE_Time_Value (3,0)); // Now (monotonic time) + 3 sec
 
       // shift back in time 4 sec
       set_system_time (ACE_OS::gettimeofday () - ACE_Time_Value (4, 0));
 
-      if (mq.dequeue_head (b, &tv) != -1)
+      if (mq.dequeue_head (b, std::addressof (tv)) != -1)
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("Dequeued before timeout elapsed!\n")));
@@ -306,7 +313,7 @@ timeout_test ()
                       ACE_TEXT ("First dequeue timed out: OK\n")));
 
           tv = (tv.now () + ACE_Time_Value (3,0)); // Now (monotonic time) + 3 sec
-          if (mq.dequeue_head (b, &tv) != -1)
+          if (mq.dequeue_head (b, std::addressof (tv)) != -1)
             {
               ACE_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("Second dequeue succeeded: OK\n")));

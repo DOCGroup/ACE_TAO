@@ -7,6 +7,8 @@
 
 #include "ace/Dynamic_Service.h"
 
+#include <memory>
+
 #if TAO_HAS_INTERCEPTORS == 1
 # include "tao/PortableInterceptorC.h"
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
@@ -42,9 +44,7 @@ namespace TAO
 #if TAO_HAS_INTERCEPTORS == 1
     , cri_adapter_ (stub_->orb_core ()->clientrequestinterceptor_adapter ())
     , sri_adapter_ (stub_->orb_core ()->serverrequestinterceptor_adapter ())
-    , stack_size_ (0)
     , invoke_status_ (TAO_INVOKE_START)
-    , caught_exception_ (nullptr)
     , is_remote_request_ (request_is_remote)
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
   {
@@ -81,7 +81,7 @@ namespace TAO
           }
         catch ( ::CORBA::Exception& ex)
           {
-            (void) this->handle_any_exception (&ex);
+            (void) this->handle_any_exception (std::addressof (ex));
             throw;
           }
         catch (...)
@@ -91,7 +91,9 @@ namespace TAO
           }
 
         if (this->reply_status_ == GIOP::LOCATION_FORWARD)
+        {
           return TAO_INVOKE_RESTART;
+        }
 
         this->cri_adapter_->pushTSC (this->stub_->orb_core ());
       }
@@ -116,7 +118,7 @@ namespace TAO
           }
         catch ( ::CORBA::Exception& ex)
           {
-            (void) this->handle_any_exception (&ex);
+            (void) this->handle_any_exception (std::addressof (ex));
             throw;
           }
         catch (...)
@@ -126,7 +128,9 @@ namespace TAO
           }
 
         if (this->reply_status_ == GIOP::LOCATION_FORWARD)
+        {
           return TAO_INVOKE_RESTART;
+        }
       }
     else if (sri_adapter_)
       {
@@ -148,7 +152,7 @@ namespace TAO
           }
         catch ( ::CORBA::Exception& ex)
           {
-            (void) this->handle_any_exception (&ex);
+            (void) this->handle_any_exception (std::addressof (ex));
             throw;
           }
         catch (...)
@@ -158,7 +162,9 @@ namespace TAO
           }
 
         if (this->reply_status_ == GIOP::LOCATION_FORWARD)
+        {
           return TAO_INVOKE_RESTART;
+        }
       }
     else if (sri_adapter_)
       {
@@ -201,7 +207,7 @@ namespace TAO
   PortableInterceptor::ReplyStatus
   Invocation_Base::handle_all_exception ()
   {
-    this->exception (&unknown_exception);
+    this->exception (std::addressof (unknown_exception));
 
     PortableInterceptor::ReplyStatus status =
       PortableInterceptor::SYSTEM_EXCEPTION;
@@ -225,9 +231,13 @@ namespace TAO
   Invocation_Base::exception (CORBA::Exception *exception)
   {
     if (CORBA::SystemException::_downcast (exception) != nullptr)
-      this->invoke_status_ = TAO::TAO_INVOKE_SYSTEM_EXCEPTION;
+      {
+        this->invoke_status_ = TAO::TAO_INVOKE_SYSTEM_EXCEPTION;
+      }
     else if (CORBA::UserException::_downcast (exception) != nullptr)
-      this->invoke_status_ = TAO::TAO_INVOKE_USER_EXCEPTION;
+      {
+        this->invoke_status_ = TAO::TAO_INVOKE_USER_EXCEPTION;
+      }
 
     this->forwarded_to_ = CORBA::Object::_nil ();
     this->reply_status_ = GIOP::NO_EXCEPTION;

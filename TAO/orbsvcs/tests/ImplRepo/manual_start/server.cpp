@@ -8,7 +8,7 @@
 #include "ace/OS_NS_stdio.h"
 
 PortableServer::POA_ptr
-createPOA (PortableServer::POA_ptr root_poa, const ACE_TCHAR* poa_name)
+createPOA (PortableServer::POA_ptr root_poa, ACE_TCHAR const *poa_name)
 {
   PortableServer::LifespanPolicy_var life =
     root_poa->create_lifespan_policy(PortableServer::PERSISTENT);
@@ -38,8 +38,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
       CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
 
-      const ACE_TCHAR *ior_file_name = ACE_TEXT ("test.ior");
-      const ACE_TCHAR *poa_name = ACE_TEXT ("manual_test");
+      ACE_TCHAR const *ior_file_name = ACE_TEXT ("test.ior");
+      ACE_TCHAR const *poa_name = ACE_TEXT ("manual_test");
       ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("o:p:"));
       int c;
 
@@ -86,13 +86,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       ACE_Time_Value tv (1,0);
       orb->run (tv);
-      root_poa->destroy(1,1);
+      root_poa->destroy(true,true);
       orb->destroy();
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) Server <%s> orb destroyed\n"),
                   poa_name));
     }
-  catch(const CORBA::Exception& ex) {
+  catch(CORBA::Exception const & ex) {
     ex._tao_print_exception (ACE_TEXT ("Server main()"));
     return 1;
   }

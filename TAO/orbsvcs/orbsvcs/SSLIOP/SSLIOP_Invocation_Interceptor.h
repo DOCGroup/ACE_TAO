@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-// ===================================================================
 /**
  *  @file   SSLIOP_Invocation_Interceptor.h
  *
  *  @author Ossama Othman <ossama@uci.edu>
  */
-// ===================================================================
 
 #ifndef TAO_SSLIOP_INVOCATION_INTERCEPTOR_H
 #define TAO_SSLIOP_INVOCATION_INTERCEPTOR_H
@@ -33,7 +29,6 @@
 #pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -71,13 +66,18 @@ namespace TAO
                                      size_t tss_slot,
                                      bool collocated);
 
+      Server_Invocation_Interceptor (Server_Invocation_Interceptor const &) = delete;
+      Server_Invocation_Interceptor (Server_Invocation_Interceptor &&) = delete;
+      Server_Invocation_Interceptor &operator= (Server_Invocation_Interceptor const &) = delete;
+      Server_Invocation_Interceptor &operator= (Server_Invocation_Interceptor &&) = delete;
+
       /**
        * @name PortableInterceptor::ServerRequestInterceptor Methods
        *
        * Methods required by the
        * PortableInterceptor::ServerRequestInterceptor interface.
        */
-      //@{
+      /// @{
       char * name () override;
 
       void destroy () override;
@@ -96,29 +96,14 @@ namespace TAO
 
       void send_other (
           PortableInterceptor::ServerRequestInfo_ptr ri) override;
-      //@}
+      /// @}
 
     protected:
-      /// Destructor
       /**
        * Protected destructor to force deallocation by the reference
        * counting mechanism.
        */
-      ~Server_Invocation_Interceptor ();
-
-    private:
-      /**
-       * @name Copying and Assignment
-       *
-       * Protected to prevent copying through the copy constructor and the
-       * assignment operator.
-       */
-      //@{
-      Server_Invocation_Interceptor (Server_Invocation_Interceptor const &) = delete;
-      Server_Invocation_Interceptor (Server_Invocation_Interceptor &&) = delete;
-      Server_Invocation_Interceptor &operator= (Server_Invocation_Interceptor const &) = delete;
-      Server_Invocation_Interceptor &operator= (Server_Invocation_Interceptor &&) = delete;
-      //@}
+      ~Server_Invocation_Interceptor () override = default;
 
     private:
       /// Reference to the current SSLIOP execution context.
@@ -131,7 +116,7 @@ namespace TAO
       ::Security::QOP qop_;
 
       /// Are we handling collocated calls
-      bool collocated_;
+      bool const collocated_;
 
       /// SecurityLevel2 security manager reference
       SecurityLevel2::SecurityManager_var sec2manager_;

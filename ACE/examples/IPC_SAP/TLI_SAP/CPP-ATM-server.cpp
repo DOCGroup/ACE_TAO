@@ -2,6 +2,7 @@
 #include "ace/ATM_Addr.h"
 #include "ace/Log_Msg.h"
 
+#include <memory>
 
 #if defined (ACE_HAS_FORE_ATM_XTI)
 // ACE_TLI Server
@@ -16,24 +17,26 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   int opt;
   while ((opt = ACE_OS::getopt (argc, argv, "s:?h")) != EOF)
     {
-    switch(opt)
-      {
-      case 's':
-        selector = ACE_OS::atoi (optarg);
-        selector_specified = 1;
-        break;
-      case '?':
-      case 'h':
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Usage: %s [-s selector]\n", argv[0]),
-                          1);
-      } // switch
+      switch (opt)
+        {
+        case 's':
+          selector = ACE_OS::atoi (optarg);
+          selector_specified = 1;
+          break;
+        case '?':
+        case 'h':
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Usage: %s [-s selector]\n", argv[0]),
+                            1);
+        }
     } // while getopt
 
   // Create a server address.
   ACE_ATM_Addr addr;
   if (selector_specified)
-    addr.set_selector(selector);
+    {
+      addr.set_selector (selector);
+    }
 
   // Create a server, reuse the addr.
   ACE_TLI_Acceptor peer_acceptor;
@@ -46,17 +49,18 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                           0,
                           5,
                           ACE_XTI_ATM_DEVICE) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "open"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "open"),
+                        -1);
+    }
 
   ACE_TLI_Stream new_stream;
 
   ACE_DEBUG ((LM_DEBUG,
               "starting server at address %s\n",
               addr.addr_to_string ()));
-
 
   // Performs the iterative server activities
 
@@ -68,7 +72,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // if errno == EINTR).
       if (peer_acceptor.accept (new_stream,
                                 &addr,
-                                &timeout) == -1)
+                                std::addressof (timeout)) == -1)
         {
           ACE_ERROR ((LM_ERROR,
                       "%p\n",
@@ -84,18 +88,24 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       for (int r_bytes;
            (r_bytes = new_stream.recv (buf, sizeof buf, 0)) > 0; )
-        if (ACE_OS::write (ACE_STDOUT,
-                           buf,
-                           r_bytes) != r_bytes)
-          ACE_ERROR ((LM_ERROR,
-                      "%p\n",
-                      "ACE::send_n"));
+        {
+          if (ACE_OS::write (ACE_STDOUT,
+                             buf,
+                             r_bytes) != r_bytes)
+            {
+              ACE_ERROR ((LM_ERROR,
+                          "%p\n",
+                          "ACE::send_n"));
+            }
+        }
 
       // Close new endpoint (listening endpoint stays open).
       if (new_stream.close () == -1)
-        ACE_ERROR ((LM_ERROR,
-                    "%p\n",
-                    "close"));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "%p\n",
+                      "close"));
+        }
     }
   /* NOTREACHED */
   return 0;

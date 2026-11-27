@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file   except.cpp
  *
@@ -7,8 +5,6 @@
  *
  *  @author Carlos O'Ryan
  */
-//=============================================================================
-
 
 #include "helper.h"
 #include "except.h"
@@ -21,18 +17,12 @@
 // ************************************************************************
 
 Test_Exception::Test_Exception ()
-  : opname_ (CORBA::string_dup ("test_exception")),
+  : opname_ ("test_exception"),
     iterations_ (0)
 {
 }
 
-Test_Exception::~Test_Exception ()
-{
-  CORBA::string_free (this->opname_);
-  this->opname_ = 0;
-}
-
-const char *
+char const *
 Test_Exception::opname () const
 {
   return this->opname_;
@@ -43,7 +33,7 @@ Test_Exception::dii_req_invoke (CORBA::Request_ptr req)
 {
   try
     {
-      this->in_++;
+      ++this->in_;
       req->add_in_arg ("s1") <<= this->in_;
       req->add_inout_arg ("s2") <<= this->inout_;
       req->add_out_arg ("s3") <<= this->out_;
@@ -68,13 +58,13 @@ Test_Exception::dii_req_invoke (CORBA::Request_ptr req)
     }
   catch (CORBA::UnknownUserException& user_ex)
     {
-      const Param_Test::Ooops* oops = 0;
-      const Param_Test::BadBoy* bad_boy = 0;
+      Param_Test::Ooops const *oops {};
+      Param_Test::BadBoy const *bad_boy {};
 
       if (user_ex.exception () >>= oops)
         {
-          const char *reason = oops->reason.in ();
-          CORBA::ULong mod_value = oops->input;
+          char const *reason = oops->reason.in ();
+          CORBA::ULong const mod_value = oops->input;
 
           if (TAO_debug_level > 0)
             {
@@ -86,7 +76,7 @@ Test_Exception::dii_req_invoke (CORBA::Request_ptr req)
                           mod_value));
             }
 
-          if (reason != 0 && mod_value == 1)
+          if (reason != nullptr && mod_value == 1)
             {
               this->inout_ = this->in_ * 2;
               this->out_ = this->in_ * 3;
@@ -116,7 +106,7 @@ Test_Exception::dii_req_invoke (CORBA::Request_ptr req)
     }
   // Catch the SystemException type CORBA::NO_MEMORY thrown by the
   // server to test the system exception.
-  catch (const CORBA::NO_MEMORY&)
+  catch (CORBA::NO_MEMORY const&)
     {
       // 'NO_MEMORY' system exception should be caught here. This
       // happens when the IN arg == 2.
@@ -168,7 +158,7 @@ Test_Exception::dii_req_invoke (CORBA::Request_ptr req)
             }
         }
     }
-  catch (const CORBA::UNKNOWN&)
+  catch (CORBA::UNKNOWN const&)
     {
       // 'BadBoy' should be caught here. This happens when the IN arg == 3.
       // Otherwise we don't set the other arg values so the validity
@@ -243,16 +233,16 @@ Test_Exception::run_sii_test (Param_Test_ptr objref)
 {
   try
     {
-      this->in_++;
+      ++this->in_;
       this->ret_ = objref->test_exception (this->in_,
                                            this->inout_,
                                            this->out_);
     }
   catch (const Param_Test::Ooops& ex)
     {
-      const char *reason = ex.reason.in ();
+      char const *reason = ex.reason.in ();
 
-      if (reason == 0)
+      if (reason == nullptr)
         {
           return -1;
         }
@@ -283,12 +273,12 @@ Test_Exception::run_sii_test (Param_Test_ptr objref)
       this->ret_ = this->in_ * 4;
       return 0;
     }
-  catch (const CORBA::NO_MEMORY& ex)
+  catch (CORBA::NO_MEMORY const& ex)
     {
       // 'SystemException' should be caught here, 'CORBA::NO_MEMORY'
       // system exception is thrown by the servant when the
           // IN argument == 2.
-      int d = this->in_ % 4;
+      int const d = this->in_ % 4;
 
       if (d != 2)
         {
@@ -324,13 +314,13 @@ Test_Exception::run_sii_test (Param_Test_ptr objref)
       this->ret_ = this->in_ * 4;
       return 0;
     }
-  catch (const CORBA::UNKNOWN& ex)
+  catch (CORBA::UNKNOWN const& ex)
     {
       // 'BadBoy' should be caught here, since generated code for
       // Param_Test::test_exception() knows nothing about it.
       // 'Ooops' however, should not be caught here. 'BadBoy'
       // is thrown by the servant when the IN argument == 3.
-      int d = this->in_ % 4;
+      int const d = this->in_ % 4;
 
       if (d != 3)
         {
@@ -386,10 +376,10 @@ Test_Exception::check_validity ()
       this->out_ == this->in_ * 3 &&
       this->ret_ == this->in_ * 4)
     {
-      return 1;
+      return true;
     }
 
-  return 0;
+  return false;
 }
 
 CORBA::Boolean

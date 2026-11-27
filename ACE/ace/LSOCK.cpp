@@ -23,7 +23,8 @@ ACE_LSOCK::dump () const
   ACE_TRACE ("ACE_LSOCK::dump");
 
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("aux_handle_ = %d"), this->aux_handle_));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("aux_handle_ = %H"),
+                 this->aux_handle_));
   ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
@@ -32,7 +33,7 @@ ACE_LSOCK::dump () const
 // This routine sends an open file descriptor to <this->handle_>.
 
 ssize_t
-ACE_LSOCK::send_handle (const ACE_HANDLE handle) const
+ACE_LSOCK::send_handle (ACE_HANDLE const handle) const
 {
   ACE_TRACE ("ACE_LSOCK::send_handle");
   u_char a[2];
@@ -45,7 +46,7 @@ ACE_LSOCK::send_handle (const ACE_HANDLE handle) const
 
   a[0] = 0xab;
   a[1] = 0xcd;
-  iov.iov_base = (char *) a;
+  iov.iov_base = reinterpret_cast<char *> (a);
   iov.iov_len = sizeof a;
   send_msg.msg_iov = &iov;
   send_msg.msg_iovlen = 1;
@@ -96,7 +97,7 @@ ACE_LSOCK::recv_handle (ACE_HANDLE &handle, char *pbuf, ssize_t *len) const
     }
   else
     {
-      iov.iov_base = (char *) a;
+      iov.iov_base = reinterpret_cast<char *> (a);
       iov.iov_len  = sizeof a;
     }
 
@@ -122,7 +123,9 @@ ACE_LSOCK::recv_handle (ACE_HANDLE &handle, char *pbuf, ssize_t *len) const
   if (nbytes != ACE_INVALID_HANDLE)
     {
       if (len != 0)
-        *len = nbytes;
+        {
+          *len = nbytes;
+        }
 
       if (nbytes == sizeof a
           && ((u_char *) iov.iov_base)[0] == 0xab
@@ -135,10 +138,12 @@ ACE_LSOCK::recv_handle (ACE_HANDLE &handle, char *pbuf, ssize_t *len) const
           return 1;
         }
       else
-        return 0;
+        {
+          return 0;
+        }
     }
 #else
-  ssize_t nbytes = ACE_OS::recvmsg (this->get_handle (),
+  ssize_t const nbytes = ACE_OS::recvmsg (this->get_handle (),
                                     &recv_msg,
                                     MSG_PEEK);
 
@@ -163,7 +168,9 @@ ACE_LSOCK::recv_handle (ACE_HANDLE &handle, char *pbuf, ssize_t *len) const
 #endif /* ACE_LACKS_SENDMSG */
           if (ACE_OS::recvmsg (this->get_handle (),
                                &recv_msg, 0) == ACE_INVALID_HANDLE)
-            return ACE_INVALID_HANDLE;
+            {
+              return ACE_INVALID_HANDLE;
+            }
           else
             {
 #if defined (ACE_HAS_4_4BSD_SENDMSG_RECVMSG)
@@ -177,13 +184,17 @@ ACE_LSOCK::recv_handle (ACE_HANDLE &handle, char *pbuf, ssize_t *len) const
       else
         {
           if (len != nullptr)
+          {
             *len = nbytes;
+          }
           return 0;
         }
     }
 #endif /* ACE_HAS_STREAMS */
   else
+  {
     return ACE_INVALID_HANDLE;
+  }
 }
 #endif /* ACE_HAS_MSG */
 

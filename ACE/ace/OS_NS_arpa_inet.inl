@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_stdio.h"
@@ -6,7 +5,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE unsigned long
-ACE_OS::inet_addr (const char *name)
+ACE_OS::inet_addr (char const *name)
 {
   ACE_OS_TRACE ("ACE_OS::inet_addr");
 #if defined (ACE_LACKS_INET_ADDR)
@@ -65,8 +64,8 @@ ACE_OS::inet_ntoa (const struct in_addr addr)
 # endif
 }
 
-ACE_INLINE const char *
-ACE_OS::inet_ntop (int family, const void *addrptr, char *strptr, size_t len)
+ACE_INLINE char const *
+ACE_OS::inet_ntop (int family, void const *addrptr, char *strptr, size_t len)
 {
   ACE_OS_TRACE ("ACE_OS::inet_ntop");
 
@@ -85,18 +84,18 @@ ACE_OS::inet_ntop (int family, const void *addrptr, char *strptr, size_t len)
           > static_cast<int> (len))
         {
           errno = ENOSPC;
-          return 0; // Failure
+          return nullptr; // Failure
         }
       return strptr;
     }
 
   errno = EAFNOSUPPORT;
-  return 0;
+  return nullptr;
 #endif
 }
 
 ACE_INLINE int
-ACE_OS::inet_pton (int family, const char *strptr, void *addrptr)
+ACE_OS::inet_pton (int family, char const *strptr, void *addrptr)
 {
   ACE_OS_TRACE ("ACE_OS::inet_pton");
 
@@ -106,7 +105,9 @@ ACE_OS::inet_pton (int family, const char *strptr, void *addrptr)
   if (family == AF_INET)
     {
       if (ACE_OS::inet_aton (strptr, static_cast<in_addr *> (addrptr)))
-        return 1; // Success
+        {
+          return 1; // Success
+        }
 
       return 0; // Input is not a valid presentation format
     }

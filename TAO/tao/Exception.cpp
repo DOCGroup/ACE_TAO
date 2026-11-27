@@ -1,5 +1,5 @@
-// -*- C++ -*-
 #include "tao/Exception.h"
+#include <memory>
 #include "tao/SystemException.h"
 #include "tao/Environment.h"
 #include "tao/ORB_Constants.h"
@@ -10,7 +10,6 @@
 #include "ace/Malloc.h"
 #include "ace/SString.h"
 #include "ace/OS_NS_string.h"
-
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
 // Needed for ostream& operator<< (ostream &os, const CORBA::Exception &e)
@@ -28,14 +27,14 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-CORBA::Exception::Exception (const char * repository_id,
-                             const char * local_name)
+CORBA::Exception::Exception (char const *repository_id,
+                             char const *local_name)
   : id_ (CORBA::string_dup (repository_id)),
     name_ (CORBA::string_dup (local_name))
 {
 }
 
-CORBA::Exception::Exception (const CORBA::Exception &src)
+CORBA::Exception::Exception (CORBA::Exception const &src)
   : id_ (CORBA::string_dup (src.id_)),
     name_ (CORBA::string_dup (src.name_))
 {
@@ -46,9 +45,9 @@ CORBA::Exception::Exception (const CORBA::Exception &src)
 // can do this because it's got the local name and the id.
 
 CORBA::Exception &
-CORBA::Exception::operator= (const CORBA::Exception &src)
+CORBA::Exception::operator= (CORBA::Exception const &src)
 {
-  if (this != &src)
+  if (this != std::addressof (src))
     {
       this->id_ = CORBA::string_dup (src.id_);
       this->name_ = CORBA::string_dup (src.name_);
@@ -57,20 +56,20 @@ CORBA::Exception::operator= (const CORBA::Exception &src)
   return *this;
 }
 
-const char *
+char const *
 CORBA::Exception::_rep_id () const
 {
   return this->id_.in ();
 }
 
-const char *
+char const *
 CORBA::Exception::_name () const
 {
   return this->name_.in ();
 }
 
 void
-CORBA::Exception::_tao_print_exception (const char *user_provided_info,
+CORBA::Exception::_tao_print_exception (char const *user_provided_info,
                                         FILE *) const
 {
   TAOLIB_ERROR ((LM_ERROR,
@@ -82,7 +81,7 @@ CORBA::Exception::_tao_print_exception (const char *user_provided_info,
 
 #if defined (ACE_USES_WCHAR)
 void
-CORBA::Exception::_tao_print_exception (const ACE_WCHAR_T *info,
+CORBA::Exception::_tao_print_exception (ACE_WCHAR_T const *info,
                                         FILE *f) const
 {
   // Even though this call causes additional type conversions, this is
@@ -104,7 +103,7 @@ CORBA::Exception::_tao_any_destructor (void *x)
 namespace CORBA
 {
   ACE_OSTREAM_TYPE& operator<< (ACE_OSTREAM_TYPE &os,
-                                const CORBA::Exception &e)
+                                CORBA::Exception const &e)
   {
     os << e._name () << " (" << e._rep_id () << ')';
 
@@ -112,7 +111,7 @@ namespace CORBA
   }
 
   ACE_OSTREAM_TYPE& operator<< (ACE_OSTREAM_TYPE &os,
-                                const CORBA::Exception *e)
+                                CORBA::Exception const *e)
   {
     os << e->_name () << " (" << e->_rep_id () << ')';
 

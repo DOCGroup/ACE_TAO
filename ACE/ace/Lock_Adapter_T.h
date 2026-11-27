@@ -1,18 +1,15 @@
-// -*- C++ -*-
-
-//==========================================================================
 /**
  *  @file    Lock_Adapter_T.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//==========================================================================
 
 #ifndef ACE_LOCK_ADAPTER_T_H
 #define ACE_LOCK_ADAPTER_T_H
 #include /**/ "ace/pre.h"
 
 #include "ace/Lock.h"
+#include <memory>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -37,10 +34,11 @@ class ACE_Lock_Adapter : public ACE_Lock
 public:
   using ACE_LOCK = ACE_LOCKING_MECHANISM;
 
-  // = Initialization/Finalization methods.
+  /// @name Initialization and finalization
+  /// @{
 
   /// Constructor. All locking requests will be forwarded to @a lock.
-  ACE_Lock_Adapter (ACE_LOCKING_MECHANISM &lock);
+  explicit ACE_Lock_Adapter (ACE_LOCKING_MECHANISM &lock);
 
   /// Constructor. Since no lock is provided by the user, one will be
   /// created internally.
@@ -50,7 +48,15 @@ public:
   /// deleted.
   ~ACE_Lock_Adapter () override;
 
-  // = Lock accessors.
+  ACE_Lock_Adapter (ACE_Lock_Adapter const &) = delete;
+  ACE_Lock_Adapter &operator= (ACE_Lock_Adapter const &) = delete;
+  ACE_Lock_Adapter (ACE_Lock_Adapter &&) = delete;
+  ACE_Lock_Adapter &operator= (ACE_Lock_Adapter &&) = delete;
+  /// @}
+
+  /// @name Lock accessors
+  /// @{
+
   /// Block the thread until the lock is acquired.
   int acquire () override;
 
@@ -81,6 +87,7 @@ public:
   /// Conditionally acquire a write lock.  If the locking mechanism
   /// doesn't support read locks then this just calls acquire().
   int tryacquire_write () override;
+  /// @}
 
   /**
    * Conditionally try to upgrade a lock held for read to a write lock.
@@ -94,11 +101,10 @@ public:
 
 private:
   /// The concrete locking mechanism that all the methods delegate to.
-  ACE_LOCKING_MECHANISM *lock_;
+  std::unique_ptr<ACE_LOCKING_MECHANISM> owned_lock_;
 
-  /// This flag keep track of whether we are responsible for deleting
-  /// the lock
-  bool delete_lock_;
+  /// The lock to which all operations are delegated.
+  ACE_LOCKING_MECHANISM *lock_ {};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

@@ -1,13 +1,9 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    String_Base.h
  *
  *  @author Douglas C. Schmidt (d.schmidt@vanderbilt.edu)
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef ACE_STRING_BASE_H
 #define ACE_STRING_BASE_H
@@ -22,6 +18,7 @@
 
 #include "ace/String_Base_Const.h"
 #include <iterator>
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -82,7 +79,6 @@ public:
     *  Default constructor.
     *
     *  @param the_allocator ACE_Allocator associated with string
-    *  @return Default ACE_String_Base string.
     */
   ACE_String_Base (ACE_Allocator *the_allocator = nullptr);
 
@@ -99,9 +95,8 @@ public:
    * @param the_allocator ACE_Allocator associated with string
    * @param release Allocator responsible(true)/not responsible(false) for
    *    freeing memory.
-   * @return ACE_String_Base containing const ACE_CHAR_T *s
    */
-  ACE_String_Base (const ACE_CHAR_T *s,
+  ACE_String_Base (ACE_CHAR_T const *s,
                    ACE_Allocator *the_allocator = nullptr,
                    bool release = true);
 
@@ -120,9 +115,8 @@ public:
    * @param the_allocator ACE_Allocator associated with string
    * @param release Allocator responsible(true)/not responsible(false) for
    *    freeing memory.
-   * @return ACE_String_Base containing const ACE_CHAR_T *s
    */
-  ACE_String_Base (const ACE_CHAR_T *s,
+  ACE_String_Base (ACE_CHAR_T const *s,
                    size_type len,
                    ACE_Allocator *the_allocator = nullptr,
                    bool release = true);
@@ -131,7 +125,6 @@ public:
    *  Copy constructor.
    *
    *  @param s Input ACE_String_Base string to copy
-   *  @return Copy of input string @a s
    */
   ACE_String_Base (const ACE_String_Base <ACE_CHAR_T> &s);
 
@@ -140,7 +133,6 @@ public:
    *
    *  @param c Single input character.
    *  @param the_allocator ACE_Allocator associated with string
-   *  @return ACE_String_Base containing ACE_CHAR_T 'c'
    */
   ACE_String_Base (ACE_CHAR_T c, ACE_Allocator *the_allocator = nullptr);
 
@@ -155,7 +147,6 @@ public:
    *  @param len Amount of space to reserve for the string.
    *  @param c The array is filled with c's
    *  @param the_allocator ACE_Allocator associated with string
-   *  @return Empty ACE_String_Base with room for len CHARs
    */
   ACE_String_Base (size_type len,
                    ACE_CHAR_T c = 0,
@@ -173,7 +164,7 @@ public:
    * @param slot Index of the desired character
    * @return The character at index @a slot
    */
-  const ACE_CHAR_T & operator[] (size_type slot) const;
+  ACE_CHAR_T const & operator[] (size_type slot) const;
 
   /**
    * Return the slot'th character by reference in the string
@@ -190,7 +181,7 @@ public:
    *  @param s Input null-terminated ACE_CHAR_T string to assign to this object.
    *  @return Return a copy of the this string.
    */
-  ACE_String_Base <ACE_CHAR_T> &operator = (const ACE_CHAR_T * s);
+  ACE_String_Base <ACE_CHAR_T> &operator = (ACE_CHAR_T const * s);
 
   /**
    *  Assignment operator (does copy memory).
@@ -225,7 +216,7 @@ public:
    * @param release Allocator responsible(true)/not responsible(false) for
    *    freeing memory.
    */
-  void set (const ACE_CHAR_T * s, bool release = true);
+  void set (ACE_CHAR_T const * s, bool release = true);
 
   /**
    *  Copy @a len bytes of @a s (will zero terminate the result).
@@ -245,7 +236,7 @@ public:
    *  @param release Allocator responsible(true)/not responsible(false) for
    *    freeing memory.
    */
-  void set (const ACE_CHAR_T * s, size_type len, bool release);
+  void set (ACE_CHAR_T const * s, size_type len, bool release);
 
   /**
    * Clear this string. Memory is _not_ freed if @a release is false.
@@ -293,7 +284,7 @@ public:
                                           size_type length = npos) const;
 
   /**
-   *  Same as <substring>.
+   *  Same as @c substring.
    *
    * @param offset Index of first desired character of the substring.
    * @param length How many characters to return starting at the offset.
@@ -318,7 +309,7 @@ public:
    *  @return The combined string (input append to the end of the old). New
    *    string is zero terminated.
    */
-  ACE_String_Base <ACE_CHAR_T>& operator += (const ACE_CHAR_T* s);
+  ACE_String_Base <ACE_CHAR_T>& operator += (ACE_CHAR_T const * s);
 
   /**
    *  Concat operator (copies memory).
@@ -337,7 +328,7 @@ public:
    *  @return The combined string (input append to the end of the old). New
    *    string is zero terminated.
    */
-  ACE_String_Base <ACE_CHAR_T>& append (const ACE_CHAR_T* s, size_type slen);
+  ACE_String_Base <ACE_CHAR_T>& append (ACE_CHAR_T const * s, size_type slen);
 
   /**
    *  Returns a hash value for this string.
@@ -395,12 +386,12 @@ public:
    *    that the string is zero terminated.
    *
    */
-  const ACE_CHAR_T *fast_rep () const;
+  ACE_CHAR_T const *fast_rep () const;
 
   /**
    *  Same as STL String's c_str() and fast_rep().
    */
-  const ACE_CHAR_T *c_str () const;
+  ACE_CHAR_T const *c_str () const;
 
   /**
    *  Comparison operator that will match substrings.  Returns the
@@ -410,7 +401,7 @@ public:
    *  @return Integer index value of the first location of string @a s or
    *          @c npos (not found).
    */
-  size_type strstr (const ACE_String_Base<ACE_CHAR_T> &s) const;
+  size_type strstr (ACE_String_Base<ACE_CHAR_T> const &s) const;
 
   /**
    *  Find @a str starting at pos.  Returns the slot of the first
@@ -421,7 +412,7 @@ public:
    *  @return Index value of the first location of string @a str else
    *          @c npos.
    */
-  size_type find (const ACE_String_Base<ACE_CHAR_T> &str, size_type pos = 0) const;
+  size_type find (ACE_String_Base<ACE_CHAR_T> const &str, size_type pos = 0) const;
 
   /**
    *  Find @a s starting at @a pos.  Returns the slot of the first
@@ -432,7 +423,7 @@ public:
    *  @return Index value of the first location of string @a str else
    *          @c npos.
    */
-  size_type find (const ACE_CHAR_T *s, size_type pos = 0) const;
+  size_type find (ACE_CHAR_T const *s, size_type pos = 0) const;
 
   /**
    *  Find @a c starting at @a pos.  Returns the slot of the first
@@ -462,7 +453,7 @@ public:
    * @param s Input ACE_String_Base string to compare against stored string.
    * @return @c true if equal, @c false otherwise.
    */
-  bool operator == (const ACE_String_Base<ACE_CHAR_T> &s) const;
+  bool operator == (ACE_String_Base<ACE_CHAR_T> const &s) const;
 
   /**
    *  Equality comparison operator (must match entire string).
@@ -470,7 +461,7 @@ public:
    * @param s Null terminated string to compare against stored string.
    * @return @c true if equal, @c false otherwise.
    */
-  bool operator == (const ACE_CHAR_T *s) const;
+  bool operator == (ACE_CHAR_T const *s) const;
 
   /**
    *  Less than comparison operator.
@@ -478,7 +469,7 @@ public:
    *  @param s Input ACE_String_Base string to compare against stored string.
    *  @return @c true if less than, @c false otherwise.
    */
-  bool operator < (const ACE_String_Base<ACE_CHAR_T> &s) const;
+  bool operator < (ACE_String_Base<ACE_CHAR_T> const &s) const;
 
   /**
    *  Greater than comparison operator.
@@ -486,7 +477,7 @@ public:
    *  @param s Input ACE_String_Base string to compare against stored string.
    *  @return @c true if greater than, @c false otherwise.
    */
-  bool operator > (const ACE_String_Base<ACE_CHAR_T> &s) const;
+  bool operator > (ACE_String_Base<ACE_CHAR_T> const &s) const;
 
   /**
    *  Inequality comparison operator.
@@ -494,7 +485,7 @@ public:
    *  @param s String to compare against stored string.
    *  @return @c true if not equal, @c false otherwise.
    */
-  bool operator != (const ACE_String_Base<ACE_CHAR_T> &s) const;
+  bool operator != (ACE_String_Base<ACE_CHAR_T> const &s) const;
 
   /**
    *  Inequality comparison operator.
@@ -502,7 +493,7 @@ public:
    *  @param s Null terminated string to compare against stored string.
    *  @return @c true if not equal, @c false otherwise.
    */
-  bool operator != (const ACE_CHAR_T *s) const;
+  bool operator != (ACE_CHAR_T const *s) const;
 
   /**
    *  Performs a strncmp comparison.
@@ -511,7 +502,7 @@ public:
    *  @return Integer value of result (less than 0, 0, greater than 0)
    *    depending on how input string @a s is to the stored string.
    */
-  int compare (const ACE_String_Base<ACE_CHAR_T> &s) const;
+  int compare (ACE_String_Base<ACE_CHAR_T> const &s) const;
 
   /**
    *  Dump the state of an object.
@@ -566,23 +557,23 @@ protected:
   /**
    *  Length of the ACE_String_Base data (not counting the trailing '\0').
    */
-  size_type len_;
+  size_type len_ {};
 
   /**
    *  Length of the ACE_String_Base data buffer.  Keeping track of the
    *  length allows to avoid unnecessary dynamic allocations.
    */
-  size_type buf_len_;
+  size_type buf_len_ {};
 
   /**
    *  Pointer to data.
    */
-  ACE_CHAR_T *rep_;
+  ACE_CHAR_T *rep_ {};
 
   /**
    *  Flag that indicates if we own the memory
    */
-  bool release_;
+  bool release_ {};
 
   /**
    *  Represents the "NULL" string to simplify the internal logic.
@@ -605,17 +596,20 @@ template <class ACE_CHAR_T>
 class ACE_String_Base_Iterator
 {
 public:
-  // = std::iterator_traits typedefs/traits.
+  /// @name Iterator traits
+  /// @{
   using iterator_category = std::bidirectional_iterator_tag;
   using value_type = ACE_CHAR_T;
   using reference = ACE_CHAR_T &;
   using pointer = ACE_CHAR_T *;
   using difference_type = ptrdiff_t;
+  /// @}
 
   /**
    * Initializing constructor
    *
    * @param[in]       str         Target string for iterator.
+   * @param[in]       end         If nonzero, initialize at the end.
    */
   ACE_String_Base_Iterator (ACE_String_Base <ACE_CHAR_T> & str, int end = 0);
 
@@ -626,7 +620,6 @@ public:
    */
   ACE_String_Base_Iterator (const ACE_String_Base_Iterator <ACE_CHAR_T> & iter);
 
-  /// Destructor.
   ~ACE_String_Base_Iterator ();
 
   /**
@@ -732,17 +725,20 @@ template <class ACE_CHAR_T>
 class ACE_String_Base_Const_Iterator
 {
 public:
-  // = std::iterator_traits typedefs/traits.
+  /// @name Iterator traits
+  /// @{
   using iterator_category = std::bidirectional_iterator_tag;
   using value_type = const ACE_CHAR_T;
-  using reference = const ACE_CHAR_T &;
-  using pointer = const ACE_CHAR_T *;
+  using reference = ACE_CHAR_T const &;
+  using pointer = ACE_CHAR_T const *;
   using difference_type = ptrdiff_t;
+  /// @}
 
   /**
    * Initializing constructor
    *
    * @param[in]       str         Target string for iterator.
+   * @param[in]       end         If nonzero, initialize at the end.
    */
   ACE_String_Base_Const_Iterator (const ACE_String_Base <ACE_CHAR_T> & str, int end = 0);
 
@@ -753,7 +749,6 @@ public:
    */
   ACE_String_Base_Const_Iterator (const ACE_String_Base_Const_Iterator <ACE_CHAR_T> & iter);
 
-  /// Destructor.
   ~ACE_String_Base_Const_Iterator ();
 
   /**
@@ -771,7 +766,7 @@ public:
    * @retval         0          All characters have been seen.
    * @retval         1          Items still remain to be seen.
    */
-  int next (const ACE_CHAR_T * & ch) const;
+  int next (ACE_CHAR_T const * & ch) const;
 
   /**
    * Move to the next character in the string.
@@ -794,7 +789,7 @@ public:
    *
    * @return          Reference to current character seen by iterator.
    */
-  const ACE_CHAR_T & operator * ();
+  ACE_CHAR_T const & operator * ();
 
   /**
    * Prefix operator
@@ -849,9 +844,9 @@ template < class ACE_CHAR_T >
                                        const ACE_String_Base <ACE_CHAR_T> &);
 template < class ACE_CHAR_T >
   ACE_String_Base <ACE_CHAR_T> operator + (const ACE_String_Base <ACE_CHAR_T> &,
-                                       const ACE_CHAR_T *);
+                                       ACE_CHAR_T const *);
 template < class ACE_CHAR_T >
-  ACE_String_Base <ACE_CHAR_T> operator + (const ACE_CHAR_T *,
+  ACE_String_Base <ACE_CHAR_T> operator + (ACE_CHAR_T const *,
                                        const ACE_String_Base <ACE_CHAR_T> &);
 
 template < class ACE_CHAR_T >
@@ -863,12 +858,12 @@ template < class ACE_CHAR_T >
                                        const ACE_String_Base <ACE_CHAR_T> &t);
 
 template <class ACE_CHAR_T>
-  bool operator == (const ACE_CHAR_T *s,
-                    const ACE_String_Base<ACE_CHAR_T> &t);
+  bool operator == (ACE_CHAR_T const *s,
+                    ACE_String_Base<ACE_CHAR_T> const &t);
 
 template <class ACE_CHAR_T>
-  bool operator != (const ACE_CHAR_T *s,
-                    const ACE_String_Base<ACE_CHAR_T> &t);
+  bool operator != (ACE_CHAR_T const *s,
+                    ACE_String_Base<ACE_CHAR_T> const &t);
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 

@@ -1,13 +1,9 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   Acceptor_Impl.h
  *
  *  @author Carlos O'Ryan <coryan@cs.wustl.edu>
  *  @author Ossama Othman <othman@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_ACCEPTOR_IMPL_H
 #define TAO_ACCEPTOR_IMPL_H
@@ -36,10 +32,9 @@ template <class SVC_HANDLER>
 class TAO_Creation_Strategy : public ACE_Creation_Strategy<SVC_HANDLER>
 {
 public:
-  /**
-   * Constructor.
-   */
-  TAO_Creation_Strategy (TAO_ORB_Core *orb_core);
+  TAO_Creation_Strategy () = delete;
+
+  explicit TAO_Creation_Strategy (TAO_ORB_Core *orb_core);
 
   /// Create a SVC_HANDLER  and set the ORB_Core pointer on it.
   int make_svc_handler (SVC_HANDLER *&sh) override;
@@ -60,8 +55,9 @@ template <class SVC_HANDLER>
 class TAO_Concurrency_Strategy : public ACE_Concurrency_Strategy<SVC_HANDLER>
 {
 public:
-  /// Constructor.
-  TAO_Concurrency_Strategy (TAO_ORB_Core *orb_core);
+  TAO_Concurrency_Strategy () = delete;
+
+  explicit TAO_Concurrency_Strategy (TAO_ORB_Core *orb_core);
 
   /**
    * Activates the Svc_Handler, and then if specified by the
@@ -79,15 +75,16 @@ template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1>
 class TAO_Accept_Strategy : public ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>
 {
 public:
-  /// Constructor.
-  TAO_Accept_Strategy (TAO_ORB_Core *orb_core);
+  TAO_Accept_Strategy () = delete;
 
-  /// Initialize the <peer_acceptor_> with @a local_addr.  If the
+  explicit TAO_Accept_Strategy (TAO_ORB_Core *orb_core);
+
+  /// Initialize @c peer_acceptor_ with @a local_addr.  If the
   /// process runs out of handles, purge some "old" connections.
   int open (ACE_PEER_ACCEPTOR_ADDR const &local_addr,
             bool restart = false) override;
 
-  /// Delegates to the <accept> method of the PEER_ACCEPTOR. If the
+  /// Delegates to @c accept in PEER_ACCEPTOR. If the
   /// process runs out of handles, purge some "old" connections.
   int accept_svc_handler (SVC_HANDLER *svc_handler) override;
 

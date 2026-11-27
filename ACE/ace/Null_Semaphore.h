@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//==========================================================================
 /**
  *  @file    Null_Semaphore.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//==========================================================================
 
 #ifndef ACE_NULL_SEMAPHORE_H
 #define ACE_NULL_SEMAPHORE_H
@@ -46,7 +42,7 @@ class ACE_Null_Semaphore
 public:
   ACE_Null_Semaphore (unsigned int = 1,
                        int = 0,
-                       const ACE_TCHAR * = nullptr,
+                       ACE_TCHAR const * = nullptr,
                        void * = nullptr,
                        int = 0x7fffffff) {}
   ~ACE_Null_Semaphore () = default;

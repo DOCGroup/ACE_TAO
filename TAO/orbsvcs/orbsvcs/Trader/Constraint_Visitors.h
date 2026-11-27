@@ -1,13 +1,8 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
  *  @file Constraint_Visitors.h
  *
  *  @author Seth Widoff <sbw1@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_CONSTRAINT_VISITOR_H
 #define TAO_CONSTRAINT_VISITOR_H
@@ -15,7 +10,8 @@
 
 #include "orbsvcs/Trader/Interpreter_Utils.h"
 #include "orbsvcs/Trader/trading_serv_export.h"
-#include "ace/Containers.h"
+
+#include <deque>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -113,20 +109,21 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Trading_Serv_Export TAO_Constraint_Validator : public TAO_Constraint_Visitor
 {
 public:
-  /// Constructor.
+  TAO_Constraint_Validator (TAO_Constraint_Validator const&) = delete;
+  TAO_Constraint_Validator& operator= (TAO_Constraint_Validator const&) = delete;
+  TAO_Constraint_Validator (TAO_Constraint_Validator&&) = delete;
+  TAO_Constraint_Validator& operator= (TAO_Constraint_Validator&&) = delete;
+
   TAO_Constraint_Validator ();
 
-  /// Destructor.
   ~TAO_Constraint_Validator () override;
 
   /**
-   * Validate returns 1 if the expression tree whose root is <root>
+   * Validate returns 1 if the expression tree whose root is @c root
    * makes semantic sense, in that the operands for each operation
    * comply with each other and the types accepted by the operator.
    */
   int validate (TAO_Constraint* root);
-
-  // = Visitor Methods
 
   int visit_constraint (TAO_Unary_Constraint* constraint) override;
 
@@ -184,22 +181,17 @@ private:
   CORBA::TypeCode* extract_type (TAO_Constraint* expr_type,
                                  TAO_Expression_Type& type);
 
-  /// expr_returns_boolean returns 1 if <expr_type>, when evaluated, will
+  /// expr_returns_boolean returns 1 if @c expr_type, when evaluated, will
   /// return a boolean.
   int expr_returns_boolean (TAO_Expression_Type expr_type);
 
-  /// expr_returns_boolean returns 1 if <expr_type>, when evaluated, will
+  /// expr_returns_boolean returns 1 if @c expr_type, when evaluated, will
   /// return a number.
   int expr_returns_number (TAO_Expression_Type expr_type);
 
-  /// expr_returns_boolean returns 1 if <expr_type>, when evaluated, will
+  /// expr_returns_boolean returns 1 if @c expr_type, when evaluated, will
   /// return a string.
   int expr_returns_string (TAO_Expression_Type expr_type);
-
-  TAO_Constraint_Validator (TAO_Constraint_Validator const&) = delete;
-  TAO_Constraint_Validator& operator= (TAO_Constraint_Validator const&) = delete;
-  TAO_Constraint_Validator (TAO_Constraint_Validator&&) = delete;
-  TAO_Constraint_Validator& operator= (TAO_Constraint_Validator&&) = delete;
 };
 
 /**
@@ -213,8 +205,8 @@ private:
  * each node of the expression tree call back to it with the
  * method designated for its type. In that method, the visitor
  * will evaluate its operands and perform the operation
- * designated by that node's type, and return the result. Note:
- * the TAO_Constraint_Evaluator assumes the tree is semantically
+ * designated by that node's type, and return the result.
+ * @note The TAO_Constraint_Evaluator assumes the tree is semantically
  * correct, that is, the validate method on
  * TAO_Constraint_Validator return true. The only possible
  * evaluation time errors are a divide by a property whose value
@@ -223,12 +215,16 @@ private:
 class TAO_Trading_Serv_Export TAO_Constraint_Evaluator : public TAO_Constraint_Visitor
 {
 public:
-  /// Constructor.
+  TAO_Constraint_Evaluator (TAO_Constraint_Evaluator const&) = delete;
+  TAO_Constraint_Evaluator& operator= (TAO_Constraint_Evaluator const&) = delete;
+  TAO_Constraint_Evaluator (TAO_Constraint_Evaluator&&) = delete;
+  TAO_Constraint_Evaluator& operator= (TAO_Constraint_Evaluator&&) = delete;
+
   TAO_Constraint_Evaluator ();
 
   /**
    * Evaluate returns 1 if the offer satisfies the constraints
-   * represented by the the expression tree rooted at <root>, 0 if it
+   * represented by the the expression tree rooted at @c root, 0 if it
    * doesn't. If an error occurs during process, the constraint
    * automatically fails.
    */
@@ -239,8 +235,6 @@ public:
   int evaluate_preference (TAO_Constraint* root,
                            TAO_Literal_Constraint& result);
 
-  // = Visitor Methods
-
   int visit_constraint (TAO_Unary_Constraint* constraint) override;
 
   int visit_with (TAO_Unary_Constraint* unary_with) override;
@@ -250,16 +244,16 @@ public:
   int visit_random (TAO_Noop_Constraint* noop_random) override;
 
   /**
-   * Takes the logical and of the results of both operands. Note that
-   * in the case where the left operand returns zero, the result is
-   * immediately known.
+   * Takes the logical and of the results of both operands.
+   *
+   * @note If the left operand returns zero, the result is immediately known.
    */
   int visit_and (TAO_Binary_Constraint* boolean_and) override;
 
   /**
-   * Takes the logical or of the results of both operands. Note that
-   * in the case where the left operand returns one, the result is
-   * immediately known.
+   * Takes the logical or of the results of both operands.
+   *
+   * @note If the left operand returns one, the result is immediately known.
    */
   int visit_or (TAO_Binary_Constraint* boolean_or) override;
 
@@ -267,7 +261,7 @@ public:
   int visit_not (TAO_Unary_Constraint* unary_not) override;
 
   /// The property exists if its name is bound to a value in the
-  /// <props_> map.
+  /// @c props_ map.
   int visit_exist (TAO_Unary_Constraint* unary_exist) override;
 
   /// Mathematically negates the return value the operand.
@@ -292,7 +286,7 @@ public:
   /// contains the left operand.
   int visit_in (TAO_Binary_Constraint* binary_in) override;
 
-  // = Compare the results of evaluating left and right operands.
+  /// Compare the results of evaluating left and right operands.
   int visit_less_than (TAO_Binary_Constraint* boolean_lt) override;
   int visit_less_than_equal (TAO_Binary_Constraint* boolean_lte) override;
   int visit_greater_than (TAO_Binary_Constraint* boolean_gt) override;
@@ -307,14 +301,15 @@ public:
   int visit_property (TAO_Property_Constraint* literal) override;
 
 private:
-  class TAO_Trading_Serv_Export Operand_Queue :
-    public ACE_Unbounded_Queue <TAO_Literal_Constraint>
-  // = TITLE
-  // A queue adapter with methods to setting and getting operands
-  // from the expression evaluation results.
+  /// A queue adapter for setting and getting expression operands.
+  class TAO_Trading_Serv_Export Operand_Queue
   {
   public:
-    Operand_Queue  ();
+    Operand_Queue ();
+
+    bool empty () const;
+    void clear ();
+    void push_front (TAO_Literal_Constraint const & operand);
 
     /// In a binary operation, obtain the left operand.
     TAO_Literal_Constraint& get_left_operand ();
@@ -327,6 +322,9 @@ private:
 
     /// Remove an operand from the queue.
     void dequeue_operand ();
+
+  private:
+    std::deque<TAO_Literal_Constraint> operands_;
   };
 
   /// Method for performing a arithmetic or comparison operation.
@@ -336,14 +334,11 @@ private:
   int visit_bin_op (TAO_Binary_Constraint* op, int operation);
 
   /// Determine if sequence contains @a element, a literal of the same
-  /// simple type as <sequence_type>. Return true in this eventuality.
+  /// simple type as @c sequence_type. Return true in this eventuality.
   CORBA::Boolean sequence_does_contain (CORBA::Any* sequence,
                                         TAO_Literal_Constraint& element);
-
-  TAO_Constraint_Evaluator (const TAO_Constraint_Evaluator&) = delete;
-  TAO_Constraint_Evaluator& operator= (const TAO_Constraint_Evaluator&) = delete;
-  TAO_Constraint_Evaluator (TAO_Constraint_Evaluator&&) = delete;
-  TAO_Constraint_Evaluator& operator= (TAO_Constraint_Evaluator&&) = delete;
+  CORBA::Boolean sequence_does_contain (CORBA::Any const* sequence,
+                                        TAO_Literal_Constraint& element);
 
 protected:
   /// The map of property names to their values for a property.
@@ -447,13 +442,13 @@ public:
 };
 
 template<>
-class TAO_Element_Equal<const char*>
+class TAO_Element_Equal<char const *>
 {
 public:
   /// Calls the correct method on dyn_seq to extract the element type,
   /// then uses the appropriate form of equals comparison.
   int operator () (TAO_DynSequence_i& dyn_any,
-                   const char* element) const;
+                   char const *element) const;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

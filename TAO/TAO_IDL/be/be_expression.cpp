@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    be_expression.cpp
  *
@@ -9,7 +7,6 @@
  *  @author Copyright 1994-1995 by Sun Microsystems
  *  @author Inc. and Aniruddha Gokhale
  */
-//=============================================================================
 
 #include "be_expression.h"
 #include "be_visitor.h"
@@ -92,7 +89,7 @@ be_expression::be_expression (ACE_CDR::Double d)
 {
 }
 
-be_expression::be_expression (const ACE_CDR::Fixed &f)
+be_expression::be_expression (ACE_CDR::Fixed const &f)
   : AST_Expression (f)
 {
 }

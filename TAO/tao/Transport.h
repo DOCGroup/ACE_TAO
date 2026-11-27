@@ -23,9 +23,12 @@
 #include "tao/Incoming_Message_Stack.h"
 #include "tao/Message_Semantics.h"
 #include "ace/Time_Value.h"
+#include "ace/Message_Block.h"
 #include "ace/Basic_Stats.h"
 #include <atomic>
 #include <cstdint>
+#include <memory>
+#include <memory>
 
 struct iovec;
 
@@ -90,14 +93,12 @@ namespace TAO
   class Drain_Constraints
   {
   public:
-    /// Default constructor
     Drain_Constraints()
       : timeout_(nullptr)
       , block_on_io_(false)
     {
     }
 
-    /// Constructor
     Drain_Constraints(
         ACE_Time_Value * timeout,
         bool block_on_io)
@@ -125,8 +126,8 @@ namespace TAO
     }
 
   private:
-    Drain_Constraints (const Drain_Constraints &) = delete;
-    Drain_Constraints &operator= (const Drain_Constraints &) = delete;
+    Drain_Constraints (Drain_Constraints const &) = delete;
+    Drain_Constraints &operator= (Drain_Constraints const &) = delete;
 
     ACE_Time_Value * timeout_;
     bool block_on_io_;
@@ -307,7 +308,6 @@ public:
                  TAO_ORB_Core *orb_core,
                  size_t input_cdr_size = ACE_CDR::DEFAULT_BUFSIZE);
 
-  /// Destructor
   virtual ~TAO_Transport ();
 
   /// Return the protocol tag.
@@ -416,7 +416,6 @@ public:
   /// Register with the reactor via the wait strategy
   bool register_if_necessary ();
 
-
   /// Added event handler to the handlers set.
   /**
    * Called by the cache when the cache is closing.
@@ -471,6 +470,7 @@ public:
    * compress the stream.
    *
    * @param iov contains the data that must be sent.
+   * @param iovcnt The number of entries in @a iov.
    *
    * @param timeout is the maximum time that the application is
    * willing to wait for the data to be sent, useful in platforms that
@@ -522,13 +522,14 @@ public:
    * thread can execute it on the same instance concurrently.
    *
    * @param buffer ORB allocated buffer where the data should be
+   * @param len Number of bytes to read into @a buffer.
    * @param timeout The ACE_Time_Value *s is just a place holder for now. It is
    * not clear this this is the best place to specify this. The actual
    * timeout values will be kept in the Policies.
    */
   virtual ssize_t recv (char *buffer,
                         size_t len,
-                        const ACE_Time_Value *timeout = nullptr) = 0;
+                        ACE_Time_Value const *timeout = nullptr) = 0;
 
   /**
    * @name Control connection lifecycle
@@ -536,7 +537,8 @@ public:
    * These methods are routed through the TMS object. The TMS
    * strategies implement them correctly.
    */
-  //@{
+  /// @{
+
   /// Request has been just sent, but the reply is not received. Idle
   /// the transport now.
   bool idle_after_send ();
@@ -547,7 +549,7 @@ public:
 
   /// Call the implementation method after obtaining the lock.
   virtual void close_connection ();
-  //@}
+  /// @}
 
   /** @name Template methods
    *
@@ -600,7 +602,8 @@ public:
    * Implementors of a pluggable protocol should override the
    * following methods with the semantics documented below.
    */
-  //@{
+  /// @{
+
   /// Return the event handler used to receive notifications from the
   /// Reactor.
   /**
@@ -677,6 +680,8 @@ public:
    * the Messaging layer to invoke the right upcall (on the server) or
    * the TAO_Reply_Dispatcher (on the client side).
    *
+   * @param rh The handle used to resume the connection handler when
+   * processing is complete.
    * @param max_wait_time In some cases the I/O is synchronous, e.g. a
    * thread-per-connection server or when Wait_On_Read is enabled.  In
    * those cases a maximum read time can be specified.
@@ -748,7 +753,7 @@ public:
    */
   virtual int send_message_shared (TAO_Stub *stub,
                                    TAO_Message_Semantics message_semantics,
-                                   const ACE_Message_Block *message_block,
+                                   ACE_Message_Block const *message_block,
                                    ACE_Time_Value *max_wait_time);
 
 protected:
@@ -761,15 +766,16 @@ protected:
   /// held.
   int send_message_shared_i (TAO_Stub *stub,
                              TAO_Message_Semantics message_semantics,
-                             const ACE_Message_Block *message_block,
+                             ACE_Message_Block const *message_block,
                              ACE_Time_Value *max_wait_time);
 
   /// Queue a message for @a message_block
+  /// @param message_block The message block chain to queue.
   /// @param max_wait_time The maximum time that the operation can
   ///            block, used in the implementation of timeouts.
   /// @param back If true, the message will be pushed to the back of the queue.
   ///        If false, the message will be pushed to the front of the queue.
-  int queue_message_i (const ACE_Message_Block *message_block,
+  int queue_message_i (ACE_Message_Block const *message_block,
                        ACE_Time_Value *max_wait_time, bool back=true);
 
   /**
@@ -789,8 +795,10 @@ protected:
 
 public:
   /// Format and queue a message for @a stream
+  /// @param stream The CDR stream containing the request.
   /// @param max_wait_time The maximum time that the operation can
   ///            block, used in the implementation of timeouts.
+  /// @param stub The object stub for the request.
   int format_queue_message (TAO_OutputCDR &stream,
                             ACE_Time_Value *max_wait_time,
                             TAO_Stub* stub);
@@ -803,12 +811,12 @@ public:
    * the connection.
    *
    */
-  int send_message_block_chain (const ACE_Message_Block *message_block,
+  int send_message_block_chain (ACE_Message_Block const *message_block,
                                 size_t &bytes_transferred,
                                 ACE_Time_Value *max_wait_time = nullptr);
 
   /// Send a message block chain, assuming the lock is held
-  int send_message_block_chain_i (const ACE_Message_Block *message_block,
+  int send_message_block_chain_i (ACE_Message_Block const *message_block,
                                   size_t &bytes_transferred,
                                   TAO::Transport::Drain_Constraints const & dc);
 
@@ -838,7 +846,7 @@ public:
    *       messages (oneways) that have been sitting for too long on
    *       the queue.
    */
-  int handle_timeout (const ACE_Time_Value &current_time, const void* act);
+  int handle_timeout (ACE_Time_Value const &current_time, void const* act);
 
   /// Accessor to recv_buffer_size_
   size_t recv_buffer_size () const;
@@ -943,18 +951,18 @@ private:
 
   /// Send a synchronous message, i.e. block until the message is on
   /// the wire
-  int send_synchronous_message_i (const ACE_Message_Block *message_block,
+  int send_synchronous_message_i (ACE_Message_Block const *message_block,
                                   ACE_Time_Value *max_wait_time);
 
   /// Send a reply message, i.e. do not block until the message is on
   /// the wire, but just return after adding them to the queue.
-  int send_reply_message_i (const ACE_Message_Block *message_block,
+  int send_reply_message_i (ACE_Message_Block const *message_block,
                             ACE_Time_Value *max_wait_time);
 
   /// Send an asynchronous message, i.e. do not block until the message is on
   /// the wire
   int send_asynchronous_message_i (TAO_Stub *stub,
-                                   const ACE_Message_Block *message_block,
+                                   ACE_Message_Block const *message_block,
                                    ACE_Time_Value *max_wait_time);
 
   /// A helper method used by send_synchronous_message_i() and
@@ -971,7 +979,7 @@ private:
   void reset_flush_timer ();
 
   /// Print out error messages if the event handler is not valid
-  void report_invalid_event_handler (const char *caller);
+  void report_invalid_event_handler (char const *caller);
 
   /// Is invoked by handle_input operation. It consolidate message on
   /// top of incoming_message_stack.  The amount of missing data is
@@ -1021,8 +1029,11 @@ protected:
   int notify_reactor_now ();
 
 private:
-  TAO_Transport (const TAO_Transport &) = delete;
-  TAO_Transport &operator= (const TAO_Transport &) = delete;
+  TAO_Transport () = delete;
+  TAO_Transport (TAO_Transport const &) = delete;
+  TAO_Transport (TAO_Transport &&) = delete;
+  TAO_Transport &operator= (TAO_Transport const &) = delete;
+  TAO_Transport &operator= (TAO_Transport &&) = delete;
 
   /// Assume the lock is held
   void send_connection_closed_notifications_i ();
@@ -1058,10 +1069,10 @@ protected:
 
   /// Strategy to decide whether multiple requests can be sent over the
   /// same connection or the connection is exclusive for a request.
-  TAO_Transport_Mux_Strategy *tms_;
+  std::unique_ptr<TAO_Transport_Mux_Strategy> tms_;
 
   /// Strategy for waiting for the reply after sending the request.
-  TAO_Wait_Strategy *ws_;
+  std::unique_ptr<TAO_Wait_Strategy> ws_;
 
   /// Use to check if bidirectional info has been synchronized with
   /// the peer.
@@ -1097,7 +1108,7 @@ protected:
   /// are going to be enqueued in "incoming_message_queue_"
   TAO::Incoming_Message_Stack incoming_message_stack_;
 
-  /// The queue will start draining no later than <queeing_deadline_>
+  /// The queue will start draining no later than @c current_deadline_
   /// *if* the deadline is
   ACE_Time_Value current_deadline_;
 
@@ -1122,7 +1133,7 @@ protected:
    * a null lock for single-threaded systems, and a real lock for
    * multi-threaded systems.
    */
-  mutable ACE_Lock *handler_lock_;
+  std::unique_ptr<ACE_Lock> handler_lock_;
 
   /// A unique identifier for the transport.
   /**
@@ -1150,7 +1161,7 @@ protected:
 
   /// Track if connection was seen as closed during a read so that
   /// invocation can optionally be retried using a different profile.
-  /// Note that this could result in violate the "at most once" CORBA
+  /// @note This could violate the "at most once" CORBA
   /// semantics.
   bool connection_closed_on_read_;
 
@@ -1173,6 +1184,7 @@ private:
 
   private:
     /// A guard represents one dispatch and cannot transfer ownership.
+    Active_Request_Guard () = delete;
     Active_Request_Guard (Active_Request_Guard const &) = delete;
     Active_Request_Guard &operator= (Active_Request_Guard const &) = delete;
     Active_Request_Guard (Active_Request_Guard &&) = delete;
@@ -1201,10 +1213,9 @@ private:
   /// Caller must hold the owning transport cache manager's lock.
   bool is_idle ();
 
-
 private:
   /// Our messaging object.
-  TAO_GIOP_Message_Base *messaging_object_;
+  std::unique_ptr<TAO_GIOP_Message_Base> messaging_object_;
 
   /// @@Phil, I think it would be nice if we could think of a way to
   /// do the following.
@@ -1234,7 +1245,7 @@ private:
   bool first_request_;
 
   /// Holds the partial GIOP message (if there is one)
-  ACE_Message_Block* partial_message_;
+  ACE_Message_Block_Unique_Ptr partial_message_;
 
 #if TAO_HAS_SENDFILE == 1
   /// mmap()-based allocator used to allocator output CDR buffers.
@@ -1247,7 +1258,7 @@ private:
 
 #if TAO_HAS_TRANSPORT_CURRENT == 1
   /// Statistics
-  TAO::Transport::Stats* stats_;
+  std::unique_ptr<TAO::Transport::Stats> stats_;
 #endif /* TAO_HAS_TRANSPORT_CURRENT == 1 */
 
   /// Indicate that flushing needs to be done in post_open()
@@ -1256,6 +1267,22 @@ private:
   /// lock for synchronizing Transport OutputCDR access
   mutable TAO_SYNCH_MUTEX output_cdr_mutex_;
 };
+
+/// Decrements a transport's reference count when invoked.
+struct TAO_Export TAO_Transport_Deleter
+{
+  void operator() (TAO_Transport *transport) const noexcept
+  {
+    if (transport != nullptr)
+      {
+        transport->remove_reference ();
+      }
+  }
+};
+
+/// Owning transport pointer that releases its reference on destruction.
+using TAO_Transport_Auto_Ptr =
+  std::unique_ptr<TAO_Transport, TAO_Transport_Deleter>;
 
 #if TAO_HAS_TRANSPORT_CURRENT == 1
 namespace TAO
@@ -1292,8 +1319,8 @@ namespace TAO
       CORBA::LongLong messages_received () const;
       CORBA::LongLong bytes_received () const;
 
-      void opened_since (const ACE_Time_Value& tv);
-      const ACE_Time_Value& opened_since () const;
+      void opened_since (ACE_Time_Value const& tv);
+      ACE_Time_Value const& opened_since () const;
 
     private:
       /// Mutex guarding the internal state of the statistics
@@ -1302,12 +1329,12 @@ namespace TAO
       /// The bytes_rcvd_.samples_count() could have been used instead,
       /// however there was a suspicion that 32 bits would be
       /// insufficient.
-      CORBA::LongLong messages_rcvd_;
+      CORBA::LongLong messages_rcvd_ {};
 
       /// The bytes_sent_.samples_count() could have been used instead,
       /// however there was a suspicion that 32 bits would be
       /// insufficient.
-      CORBA::LongLong messages_sent_;
+      CORBA::LongLong messages_sent_ {};
 
       ACE_Basic_Stats bytes_rcvd_;
       ACE_Basic_Stats bytes_sent_;

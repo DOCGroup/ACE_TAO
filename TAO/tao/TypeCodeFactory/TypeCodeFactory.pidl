@@ -8,8 +8,6 @@
  * parts.
  */
 
-// ================================================================
-
 #ifndef _TYPECODEFACTORY_IDL_
 #define _TYPECODEFACTORY_IDL_
 

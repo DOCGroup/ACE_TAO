@@ -38,9 +38,11 @@
 #include "ace/Log_Msg.h"
 #include "ace/ACE.h"
 #include "ace/Test_and_Set.h"
-#include "ace/OS_NS_string.h"
 #include "ace/Null_Mutex.h"
 #include "ace/OS_NS_unistd.h"
+
+#include <cstring>
+#include <memory>
 #if defined (ACE_WIN32)
 #  include "ace/Barrier.h"
 #  include "ace/Thread.h"
@@ -49,38 +51,42 @@
 class Ping_Pong : public ACE_Test_and_Set<ACE_Null_Mutex, sig_atomic_t>
 {
 public:
-  Ping_Pong (char b[], ACE_HANDLE f);
+  Ping_Pong (char const *b, ACE_HANDLE f);
+  Ping_Pong (Ping_Pong const &) = delete;
+  Ping_Pong (Ping_Pong &&) = delete;
+  Ping_Pong &operator= (Ping_Pong const &) = delete;
+  Ping_Pong &operator= (Ping_Pong &&) = delete;
   ACE_HANDLE get_handle () const override;
   int handle_input (ACE_HANDLE) override;
   int handle_output (ACE_HANDLE) override;
-  int handle_timeout (const ACE_Time_Value &,
-                              const void *) override;
+  int handle_timeout (ACE_Time_Value const &, void const *) override;
   int handle_close (ACE_HANDLE handle,
                             ACE_Reactor_Mask close_mask) override;
 private:
-  char buf_[BUFSIZ];
+  char buf_[BUFSIZ] {};
   // Buffer to send.
 
-  size_t buflen_;
+  size_t buflen_ {};
   // Length of the buffer to send.
 
-  int pid_;
+  int pid_ {};
   // Process ID.
 
-  ACE_HANDLE handle_;
+  int count_ {};
+  // Number of messages sent on stream pipes.
+
+  ACE_HANDLE handle_ {};
   // Open handle.
 };
 
-Ping_Pong::Ping_Pong (char b[], ACE_HANDLE f)
-  : buflen_ (ACE_OS::strlen (b) + 1 + (2 * sizeof (int))),
-    pid_ (ACE_OS::getpid ()),
+Ping_Pong::Ping_Pong (char const *b, ACE_HANDLE f)
+  : buflen_ (std::strlen (b) + 1 + (2 * sizeof (int))),
+    pid_ (static_cast<int> (ACE_OS::getpid ())),
     handle_ (f)
 {
-  int *pi_buf = (int *) this->buf_;
-  *(pi_buf) = (int) this->pid_;
-  pi_buf = (int *) (this->buf_ + sizeof (int));
-  *(pi_buf) = 0;
-  ACE_OS::strcpy (this->buf_ + (2 * sizeof (int)), b);
+  std::memcpy (this->buf_, std::addressof (this->pid_), sizeof (this->pid_));
+  std::memcpy (this->buf_ + sizeof (this->pid_), std::addressof (this->count_), sizeof (this->count_));
+  std::memcpy (this->buf_ + (2 * sizeof (int)), b, std::strlen (b) + 1);
   this->buf_[this->buflen_ - 1] = '\n';
   this->buf_[this->buflen_] = '\0';
 }
@@ -92,9 +98,9 @@ Ping_Pong::get_handle () const
 }
 
 int
-Ping_Pong::handle_close (ACE_HANDLE,
-                         ACE_Reactor_Mask)
+Ping_Pong::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
 {
+  // This handler is self-owned and deletes itself when the reactor closes it.
   delete this; // Cleanup when we're removed from the reactor.
   return 0;
 }
@@ -105,38 +111,46 @@ Ping_Pong::handle_input (ACE_HANDLE)
 #if defined (ACE_HAS_STREAM_PIPES)
   // We can rely on record-oriented reads...
 
-  ssize_t n = ACE::recv (this->handle_, this->buf_, this->buflen_);
+  ssize_t const n = ACE::recv (this->handle_, this->buf_, this->buflen_);
 
   if (n != (ssize_t) this->buflen_)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) reading [%d] %p\n"),
-                       handle_,
-                       ACE_TEXT ("read")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%P|%t) reading [%H] %p\n"),
+                         handle_,
+                         ACE_TEXT ("read")),
+                        -1);
+    }
+
+  int process_id {};
+  int count {};
+  std::memcpy (&process_id, this->buf_, sizeof (process_id));
+  std::memcpy (&count, this->buf_ + sizeof (process_id), sizeof (count));
+  char const *message = this->buf_ + (2 * sizeof (int));
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%P|%t) reading <%d> (%d) [%d] = %C\n"),
+              ACE_TEXT ("(%P|%t) reading <%H> (%d) [%d] = %C\n"),
               this->handle_,
-              *(int *) this->buf_,
-              *(int *) (this->buf_ + sizeof (int)),
-              this->buf_ + (2 * sizeof (int))));
+              process_id,
+              count,
+              message));
 #else
-  ssize_t n = ACE::recv (this->handle_,
+  ssize_t const n = ACE::recv (this->handle_,
                          this->buf_,
                          this->buflen_);
   if (n == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("[%d] %p\n"),
-                       handle_,
-                       ACE_TEXT ("read")),
-                      -1);
-  n -= (2 * sizeof (int));
-  char *buf = this->buf_ + (2 * sizeof (int));
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("[%H] %p\n"),
+                         handle_,
+                         ACE_TEXT ("read")),
+                        -1);
+    }
+  char const *buf = this->buf_ + (2 * sizeof (int));
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%P|%t) reading <%d> = %*C\n"),
+              ACE_TEXT ("(%P|%t) reading <%H> = %C\n"),
               this->handle_,
-              n,
               buf));
 #endif /* ACE_HAS_STREAM_PIPES */
   return 0;
@@ -148,16 +162,19 @@ Ping_Pong::handle_output (ACE_HANDLE)
 #if defined (ACE_HAS_STREAM_PIPES)
   // We can rely on record-oriented reads...
 
-  (*(int *) (this->buf_)) = this->pid_;
-  (*(int *) (this->buf_ + sizeof (int)))++;
+  ++this->count_;
+  std::memcpy (this->buf_, std::addressof (this->pid_), sizeof (this->pid_));
+  std::memcpy (this->buf_ + sizeof (this->pid_), std::addressof (this->count_), sizeof (this->count_));
   if (ACE::send (this->handle_,
                  this->buf_,
                  this->buflen_) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%P|%t) writing <%d> [%d]\n"),
+                  ACE_TEXT ("(%P|%t) writing <%H> [%d]\n"),
                   this->handle_,
                   this->pid_));
       return 0;
@@ -166,11 +183,13 @@ Ping_Pong::handle_output (ACE_HANDLE)
   if (ACE::send (this->handle_,
                  this->buf_,
                  this->buflen_) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%P|%t) writing <%d>\n"),
+                  ACE_TEXT ("(%P|%t) writing <%H>\n"),
                   this->handle_));
       return 0;
     }
@@ -178,23 +197,23 @@ Ping_Pong::handle_output (ACE_HANDLE)
 }
 
 int
-Ping_Pong::handle_timeout (const ACE_Time_Value &,
-                           const void *)
+Ping_Pong::handle_timeout (ACE_Time_Value const &, void const *)
 {
   this->set (1);
   return 0;
 }
 
 // Contains the string to "pingpong" back and forth...
-static ACE_TCHAR *string_name;
+static ACE_TCHAR const *string_name {};
 
 // Wait for 10 seconds and then shut down.
-static const ACE_Time_Value SHUTDOWN_TIME (10);
+static ACE_Time_Value const SHUTDOWN_TIME (10);
 
 static void
 run_svc (ACE_HANDLE handle)
 {
-  Ping_Pong *callback = nullptr;
+  Ping_Pong *callback {};
+  // The reactor calls handle_close(), which deletes the registered handler.
   ACE_NEW (callback,
            Ping_Pong (ACE_TEXT_ALWAYS_CHAR (string_name),
                       handle));
@@ -222,10 +241,14 @@ run_svc (ACE_HANDLE handle)
   // Main event loop (one per process).
 
   while (callback->is_set () == 0)
-    if (reactor.handle_events () == -1)
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("%p\n"),
-                  ACE_TEXT ("handle_events")));
+    {
+      if (reactor.handle_events () == -1)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("%p\n"),
+                      ACE_TEXT ("handle_events")));
+        }
+    }
 }
 
 #if defined (ACE_WIN32)
@@ -234,7 +257,7 @@ static ACE_Barrier barrier (3);
 static void *
 worker (void *arg)
 {
-  ACE_HANDLE handle = (ACE_HANDLE) arg;
+  ACE_HANDLE handle = reinterpret_cast<ACE_HANDLE> (arg);
 
   run_svc (handle);
 
@@ -243,7 +266,7 @@ worker (void *arg)
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) %n: shutting down tester\n")));
-  return 0;
+  return nullptr;
 }
 #endif /* ACE_WIN32 */
 
@@ -251,15 +274,17 @@ int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   if (argc != 2)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("usage: pingpong <string>\n")),
-                       -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("usage: pingpong <string>\n")),
+                         -1);
+    }
 
   ACE_LOG_MSG->open (argv[0]);
 
   string_name = argv[1];
 
-  ACE_HANDLE handles[2];
+  ACE_HANDLE handles[2] {};
 
   //FUZZ: disable check_for_lack_ACE_OS
   // Create a pipe and initialize the handles.
@@ -268,10 +293,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
 #if defined (ACE_WIN32)
   if (ACE_Thread::spawn (ACE_THR_FUNC (worker),
-                         (void *) handles[0],
+                         reinterpret_cast<void *> (handles[0]),
                          THR_DETACHED) == -1
       || ACE_Thread::spawn (ACE_THR_FUNC (worker),
-                            (void *) handles[1],
+                            reinterpret_cast<void *> (handles[1]),
                             THR_DETACHED) == -1)
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("%p\n%a"),
@@ -279,13 +304,15 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                   1));
   barrier.wait ();
 #else
-  pid_t pid = ACE_OS::fork (argv[0]);
+  pid_t const pid = ACE_OS::fork (argv[0]);
 
   if (pid == -1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n%a"),
-                ACE_TEXT ("fork"),
-                1));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("%p\n%a"),
+                  ACE_TEXT ("fork"),
+                  1));
+    }
   run_svc (handles[pid == 0]);
 
   ACE_DEBUG ((LM_DEBUG,
@@ -293,8 +320,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 #endif /* ACE_WIN32 */
 
   if (pipe.close () == -1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("close")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("%p\n"),
+                  ACE_TEXT ("close")));
+    }
   return 0;
 }

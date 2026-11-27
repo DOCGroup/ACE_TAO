@@ -1,10 +1,8 @@
-//=============================================================================
 /**
  *  @file     default_server.h
  *
  *  @author  Chris Cleeland
  */
-//=============================================================================
 
 #ifndef TAO_DEFAULT_SERVER_FACTORY_H
 #define TAO_DEFAULT_SERVER_FACTORY_H
@@ -36,11 +34,8 @@ public:
   TAO_Default_Server_Strategy_Factory ();
   ~TAO_Default_Server_Strategy_Factory () override;
 
-  // = Service Configurator hooks.
   int init (int argc, ACE_TCHAR *argv[]) override;
 
-  // = The TAO_Server_Strategy_Factory methods, please read the
-  //   documentation in "tao/Server_Strategy_Factory.h"
   int open (TAO_ORB_Core *) override;
   int activate_server_connections () override;
   int thread_per_connection_timeout (ACE_Time_Value &timeout) override;
@@ -54,18 +49,18 @@ public:
 protected:
   void tokenize (ACE_TCHAR* flag_string);
 
-  void report_option_value_error (const ACE_TCHAR* option_name,
-                                  const ACE_TCHAR* option_value);
+  void report_option_value_error (ACE_TCHAR const *option_name,
+                                  ACE_TCHAR const *option_value);
 
 protected:
   /// Should the server connection handlers run in their own thread?
-  int activate_server_connections_;
+  int activate_server_connections_ {};
 
   /// Default thread flags passed to thr_create().
-  int thread_flags_;
+  int thread_flags_ {THR_BOUND | THR_DETACHED};
 
   /// The timeout flag and value for the thread-per-connection model
-  int thread_per_connection_use_timeout_;
+  int thread_per_connection_use_timeout_ {-1};
   ACE_Time_Value thread_per_connection_timeout_;
 };
 

@@ -17,6 +17,7 @@
 #endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 
 #include "ace/OS_Memory.h"
+#include "ace/Malloc_Base.h"
 #include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -63,7 +64,7 @@ namespace
     };
 }
 
-const ACE_TCHAR *
+ACE_TCHAR const *
 ACE_Log_Record::priority_name (ACE_Log_Priority p)
 {
   return ace_priority_names[ACE::log2 (p)];
@@ -71,7 +72,7 @@ ACE_Log_Record::priority_name (ACE_Log_Priority p)
 
 void
 ACE_Log_Record::priority_name (ACE_Log_Priority p,
-                               const ACE_TCHAR *name)
+                               ACE_TCHAR const *name)
 {
   // Name must be a statically allocated string
   ace_priority_names[ACE::log2 (p)] = name;
@@ -105,11 +106,14 @@ ACE_Log_Record::dump () const
   // ACE_TRACE ("ACE_Log_Record::dump");
 
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("length_ = %d\n"), this->length_));
-  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\ntype_ = %u\n"), this->type_));
-  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\ntime_stamp_ = (%:, %d)\n"),
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("length_ = %d\n"),
+                 this->length_));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\ntype_ = %u\n"),
+                 this->type_));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\ntime_stamp_ = (%:, %u)\n"),
               this->secs_, this->usecs_));
-  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\npid_ = %u\n"), this->pid_));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\npid_ = %u\n"),
+                 this->pid_));
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nmsg_data_ (0x%@) = %s\n"),
               this->msg_data_, this->msg_data_));
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nmsg_data_size_ = %B\n"),
@@ -119,7 +123,7 @@ ACE_Log_Record::dump () const
 }
 
 int
-ACE_Log_Record::msg_data (const ACE_TCHAR *data)
+ACE_Log_Record::msg_data (ACE_TCHAR const *data)
 {
   // ACE_TRACE ("ACE_Log_Record::msg_data");
   size_t const newlen = ACE_OS::strlen (data) + 1;  // Will need room for '\0'
@@ -143,14 +147,9 @@ ACE_Log_Record::msg_data (const ACE_TCHAR *data)
 ACE_Log_Record::ACE_Log_Record (ACE_Log_Priority lp,
                                 time_t ts_sec,
                                 long p)
-  : length_ (0),
-    type_ (ACE_UINT32 (lp)),
+  : type_ (ACE_UINT32 (lp)),
     secs_ (ts_sec),
-    usecs_ (0),
-    pid_ (ACE_UINT32 (p)),
-    msg_data_ (nullptr),
-    msg_data_size_ (0),
-    category_(nullptr)
+    pid_ (ACE_UINT32 (p))
 {
   // ACE_TRACE ("ACE_Log_Record::ACE_Log_Record");
 #if defined (ACE_HAS_ALLOC_HOOKS)
@@ -166,16 +165,12 @@ ACE_Log_Record::ACE_Log_Record (ACE_Log_Priority lp,
 }
 
 ACE_Log_Record::ACE_Log_Record (ACE_Log_Priority lp,
-                                const ACE_Time_Value &ts,
+                                ACE_Time_Value const &ts,
                                 long p)
-  : length_ (0),
-    type_ (ACE_UINT32 (lp)),
+  : type_ (ACE_UINT32 (lp)),
     secs_ (ts.sec ()),
     usecs_ ((ACE_UINT32) ts.usec ()),
-    pid_ (ACE_UINT32 (p)),
-    msg_data_ (nullptr),
-    msg_data_size_ (0),
-    category_(nullptr)
+    pid_ (ACE_UINT32 (p))
 {
   // ACE_TRACE ("ACE_Log_Record::ACE_Log_Record");
 #if defined (ACE_HAS_ALLOC_HOOKS)
@@ -204,14 +199,6 @@ ACE_Log_Record::round_up ()
 }
 
 ACE_Log_Record::ACE_Log_Record ()
-  : length_ (0),
-    type_ (0),
-    secs_ (0),
-    usecs_ (0),
-    pid_ (0),
-    msg_data_ (nullptr),
-    msg_data_size_ (0),
-    category_(nullptr)
 {
   // ACE_TRACE ("ACE_Log_Record::ACE_Log_Record");
 #if defined (ACE_HAS_ALLOC_HOOKS)
@@ -227,7 +214,7 @@ ACE_Log_Record::ACE_Log_Record ()
 }
 
 int
-ACE_Log_Record::format_msg (const ACE_TCHAR host_name[],
+ACE_Log_Record::format_msg (ACE_TCHAR const host_name[],
                             u_long verbose_flag,
                             ACE_TCHAR *verbose_msg, size_t verbose_msg_size)
 {
@@ -240,11 +227,13 @@ ACE_Log_Record::format_msg (const ACE_TCHAR host_name[],
       || ACE_BIT_ENABLED (verbose_flag,
                           ACE_Log_Msg::VERBOSE_LITE))
     {
-      ACE_Time_Value reftime (this->secs_, this->usecs_);
+      ACE_Time_Value const reftime (this->secs_, this->usecs_);
       if (nullptr == ACE::timestamp (reftime,
                                timestamp,
                                sizeof (timestamp) / sizeof (ACE_TCHAR)))
+      {
         return -1;
+      }
 
       // Historical timestamp in VERBOSE[_LITE] used 3 places for partial sec.
       // 012345678901234567890123456
@@ -255,7 +244,7 @@ ACE_Log_Record::format_msg (const ACE_TCHAR host_name[],
   if (ACE_BIT_ENABLED (verbose_flag,
                        ACE_Log_Msg::VERBOSE))
     {
-      const ACE_TCHAR *lhost_name = ((host_name == nullptr)
+      ACE_TCHAR const *lhost_name = ((host_name == nullptr)
                                       ? ACE_TEXT ("<local_host>")
                                       : host_name);
       ACE_OS::snprintf (verbose_msg, verbose_msg_size,
@@ -270,15 +259,19 @@ ACE_Log_Record::format_msg (const ACE_TCHAR host_name[],
                        this->msg_data_);
     }
   else if (ACE_BIT_ENABLED (verbose_flag, ACE_Log_Msg::VERBOSE_LITE))
-    ACE_OS::snprintf (verbose_msg, verbose_msg_size,
-                     ACE_TEXT ("%") ACE_TEXT_PRIs
-                     ACE_TEXT ("@%") ACE_TEXT_PRIs
-                     ACE_TEXT ("@%") ACE_TEXT_PRIs,
-                     timestamp,
-                     ACE_Log_Record::priority_name (ACE_Log_Priority (this->type_)),
-                     this->msg_data_);
+    {
+      ACE_OS::snprintf (verbose_msg, verbose_msg_size,
+                       ACE_TEXT ("%") ACE_TEXT_PRIs
+                       ACE_TEXT ("@%") ACE_TEXT_PRIs
+                       ACE_TEXT ("@%") ACE_TEXT_PRIs,
+                       timestamp,
+                       ACE_Log_Record::priority_name (ACE_Log_Priority (this->type_)),
+                       this->msg_data_);
+    }
   else
-    ACE_OS::strcpy (verbose_msg, this->msg_data_);
+  {
+    ACE_OS::strsncpy (verbose_msg, this->msg_data_, verbose_msg_size);
+  }
   return 0;
 }
 
@@ -286,63 +279,68 @@ inline bool
 log_priority_enabled(ACE_Log_Category_TSS* category, ACE_Log_Priority priority)
 {
   if (category && !category->log_priority_enabled (priority))
+  {
     return false;
+  }
   return ACE_LOG_MSG->log_priority_enabled (priority);
 }
 
 int
-ACE_Log_Record::print (const ACE_TCHAR host_name[],
+ACE_Log_Record::print (ACE_TCHAR const host_name[],
                        u_long verbose_flag,
                        FILE *fp)
 {
   if ( log_priority_enabled(this->category(), ACE_Log_Priority (this->type_)) )
     {
-      ACE_TCHAR *verbose_msg = nullptr;
+      ACE_TCHAR *verbose_msg {};
 #if defined (ACE_HAS_ALLOC_HOOKS)
       ACE_ALLOCATOR_RETURN (verbose_msg, static_cast<ACE_TCHAR *>(ACE_Allocator::instance()->malloc(sizeof(ACE_TCHAR) * MAXVERBOSELOGMSGLEN)), -1);
 #else
       ACE_NEW_RETURN (verbose_msg, ACE_TCHAR[MAXVERBOSELOGMSGLEN], -1);
 #endif /* ACE_HAS_ALLOC_HOOKS */
+      std::unique_ptr<ACE_TCHAR[], ACE_Array_Deleter<ACE_TCHAR>> const safe_verbose_msg (
+        verbose_msg);
 
-      int result = this->format_msg (host_name, verbose_flag, verbose_msg,
+      int result = this->format_msg (host_name, verbose_flag,
+                                     safe_verbose_msg.get (),
                                      MAXVERBOSELOGMSGLEN);
 
       if (result == 0)
         {
           if (fp != nullptr)
             {
-              int const verbose_msg_len =
-                static_cast<int> (ACE_OS::strlen (verbose_msg));
+              int const verbose_msg_len = static_cast<int> (
+                ACE_OS::strlen (safe_verbose_msg.get ()));
               int const fwrite_result = ACE_OS::fprintf (fp,
                                                          ACE_TEXT ("%") ACE_TEXT_PRIs,
-                                                         verbose_msg);
+                                                         safe_verbose_msg.get ());
               // We should have written everything
               if (fwrite_result != verbose_msg_len)
-                result = -1;
+                {
+                  result = -1;
+                }
               else
-                ACE_OS::fflush (fp);
+                {
+                  ACE_OS::fflush (fp);
+                }
             }
         }
-
-#if defined (ACE_HAS_ALLOC_HOOKS)
-      ACE_Allocator::instance()->free(verbose_msg);
-#else
-      delete [] verbose_msg;
-#endif /* ACE_HAS_ALLOC_HOOKS */
 
       return result;
     }
   else
+  {
     return 0;
+  }
 }
 
 int
 operator<< (ACE_OutputCDR &cdr,
-            const ACE_Log_Record &log_record)
+            ACE_Log_Record const &log_record)
 {
   // The written message length can't be more than 32 bits (ACE_CDR::ULong)
   // so reduce it here if needed.
-  ACE_CDR::ULong u_msglen =
+  ACE_CDR::ULong const u_msglen =
     ACE_Utils::truncate_cast<ACE_CDR::ULong> (log_record.msg_data_len ());
 
   // Insert each field from <log_record> into the output CDR stream.
@@ -378,7 +376,8 @@ operator>> (ACE_InputCDR &cdr,
 #else
     ACE_NEW_RETURN (log_msg, ACE_TCHAR[buffer_len + 1], -1);
 #endif /* ACE_HAS_ALLOC_HOOKS */
-    std::unique_ptr<ACE_TCHAR[]> log_msg_p (log_msg);
+    std::unique_ptr<ACE_TCHAR[], ACE_Array_Deleter<ACE_TCHAR>> const log_msg_p (
+      log_msg);
     log_record.type (type);
     log_record.pid (pid);
     log_record.time_stamp (ACE_Time_Value (ACE_Utils::truncate_cast<time_t> (sec),
@@ -390,7 +389,9 @@ operator>> (ACE_InputCDR &cdr,
 #endif /* ACE_USES_WCHAR */
     log_msg[buffer_len] = '\0';
     if (-1 == log_record.msg_data (log_msg))
+    {
       return -1;
+    }
   }
   return cdr.good_bit ();
 }
@@ -398,26 +399,26 @@ operator>> (ACE_InputCDR &cdr,
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
 
 int
-ACE_Log_Record::print (const ACE_TCHAR host_name[],
+ACE_Log_Record::print (ACE_TCHAR const host_name[],
                        u_long verbose_flag,
                        ACE_OSTREAM_TYPE &s)
 {
   if ( log_priority_enabled(this->category(), ACE_Log_Priority (this->type_)) )
     {
-      ACE_TCHAR* verbose_msg = nullptr;
+      ACE_TCHAR* verbose_msg {};
       ACE_NEW_RETURN (verbose_msg, ACE_TCHAR[MAXVERBOSELOGMSGLEN], -1);
+      std::unique_ptr<ACE_TCHAR[]> const safe_verbose_msg (verbose_msg);
 
-      int const result = this->format_msg (host_name, verbose_flag, verbose_msg,
+      int const result = this->format_msg (host_name, verbose_flag,
+                                           safe_verbose_msg.get (),
                                            MAXVERBOSELOGMSGLEN);
 
       if (result == 0)
         {
           // Since ostream expects only chars, we cannot pass wchar_t's
-          s << ACE_TEXT_ALWAYS_CHAR (verbose_msg);
+          s << ACE_TEXT_ALWAYS_CHAR (safe_verbose_msg.get ());
           s.flush ();
         }
-
-      delete [] verbose_msg;
 
       return result;
     }

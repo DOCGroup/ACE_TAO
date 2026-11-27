@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   Log.h
  *
  *  @author Huang-Ming Huang <hh1@cse.wustl.edu>
  */
-//=============================================================================
 #ifndef FTRTEC_LOG_H
 #define FTRTEC_LOG_H
 
@@ -24,10 +20,11 @@ namespace TAO_FTRTEC {
   class  TAO_FtRtEvent_Export Log
   {
   public:
-    Log (unsigned int log_level, const ACE_TCHAR* format, ...);
+    Log (unsigned int log_level, ACE_TCHAR const *format, ...);
     static void level(unsigned int log_level);
     static unsigned int level();
-    static void hexdump(unsigned int log_level, const char* buf, size_t len, const ACE_TCHAR* msg);
+    static void hexdump(unsigned int log_level, char const *buf, size_t len,
+                        ACE_TCHAR const *msg);
   private:
     friend class Trace;
     static unsigned log_level_;

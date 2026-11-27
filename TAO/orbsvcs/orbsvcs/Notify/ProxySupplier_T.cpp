@@ -14,60 +14,53 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-template <class SERVANT_TYPE>
-TAO_Notify_ProxySupplier_T<SERVANT_TYPE>::TAO_Notify_ProxySupplier_T ()
-  : is_suspended_ (0)
-{
-}
-
-template <class SERVANT_TYPE>
-TAO_Notify_ProxySupplier_T<SERVANT_TYPE>::~TAO_Notify_ProxySupplier_T ()
-{
-}
-
 template <class SERVANT_TYPE> void
-TAO_Notify_ProxySupplier_T<SERVANT_TYPE>::admin_types_changed (const CosNotification::EventTypeSeq & added,
-                                                           const CosNotification::EventTypeSeq & removed)
+TAO_Notify_ProxySupplier_T<SERVANT_TYPE>::admin_types_changed (CosNotification::EventTypeSeq const &added,
+                                                           CosNotification::EventTypeSeq const &removed)
 {
   this->subscription_change (added, removed);
 }
 
 template <class SERVANT_TYPE> void
-TAO_Notify_ProxySupplier_T<SERVANT_TYPE>::forward_structured (const CosNotification::StructuredEvent& notification)
+TAO_Notify_ProxySupplier_T<SERVANT_TYPE>::forward_structured (CosNotification::StructuredEvent const &notification)
 {
   TAO_Notify_StructuredEvent_No_Copy event (notification);
+  TAO_Notify_Method_Request_Event event_request (&event);
 
-  TAO_Notify_Method_Request_Dispatch_No_Copy request (&event, this, 1);
+  TAO_Notify_Method_Request_Dispatch_No_Copy request (event_request, this, true);
 
   this->execute_task (request);
 }
 
 template <class SERVANT_TYPE> void
-TAO_Notify_ProxySupplier_T<SERVANT_TYPE>::forward_structured_no_filtering (const CosNotification::StructuredEvent& notification)
+TAO_Notify_ProxySupplier_T<SERVANT_TYPE>::forward_structured_no_filtering (CosNotification::StructuredEvent const &notification)
 {
   TAO_Notify_StructuredEvent_No_Copy event(notification);
+  TAO_Notify_Method_Request_Event event_request (&event);
 
-  TAO_Notify_Method_Request_Dispatch_No_Copy request (&event, this, 0);
+  TAO_Notify_Method_Request_Dispatch_No_Copy request (event_request, this, false);
 
   this->execute_task (request);
 }
 
 template <class SERVANT_TYPE> void
-TAO_Notify_ProxySupplier_T<SERVANT_TYPE>::forward_any (const CORBA::Any & any)
+TAO_Notify_ProxySupplier_T<SERVANT_TYPE>::forward_any (CORBA::Any const &any)
 {
   TAO_Notify_AnyEvent_No_Copy event (any);
+  TAO_Notify_Method_Request_Event event_request (&event);
 
-  TAO_Notify_Method_Request_Dispatch_No_Copy request (&event, this, 1);
+  TAO_Notify_Method_Request_Dispatch_No_Copy request (event_request, this, true);
 
   this->execute_task (request);
 }
 
 template <class SERVANT_TYPE> void
-TAO_Notify_ProxySupplier_T<SERVANT_TYPE>::forward_any_no_filtering (const CORBA::Any& any)
+TAO_Notify_ProxySupplier_T<SERVANT_TYPE>::forward_any_no_filtering (CORBA::Any const &any)
 {
   TAO_Notify_AnyEvent_No_Copy event(any);
+  TAO_Notify_Method_Request_Event event_request (&event);
 
-  TAO_Notify_Method_Request_Dispatch_No_Copy request (&event, this, 0);
+  TAO_Notify_Method_Request_Dispatch_No_Copy request (event_request, this, false);
 
   this->execute_task (request);
 }
@@ -79,8 +72,8 @@ TAO_Notify_ProxySupplier_T<SERVANT_TYPE>::obtain_offered_types (CosNotifyChannel
 }
 
 template <class SERVANT_TYPE> void
-TAO_Notify_ProxySupplier_T<SERVANT_TYPE>::subscription_change (const CosNotification::EventTypeSeq & added,
-                                                           const CosNotification::EventTypeSeq & removed)
+TAO_Notify_ProxySupplier_T<SERVANT_TYPE>::subscription_change (CosNotification::EventTypeSeq const &added,
+                                                           CosNotification::EventTypeSeq const &removed)
 {
   TAO_Notify_EventTypeSeq seq_added (added);
   TAO_Notify_EventTypeSeq seq_removed (removed);
@@ -101,11 +94,15 @@ TAO_Notify_ProxySupplier_T<SERVANT_TYPE>::suspend_connection ()
   {
     ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_, CORBA::INTERNAL ());
 
-    if (this->is_connected () == 0)
-      throw CosNotifyChannelAdmin::NotConnected ();
+    if (!this->is_connected ())
+      {
+        throw CosNotifyChannelAdmin::NotConnected ();
+      }
 
-    if (this->consumer()->is_suspended () == 1)
-      throw CosNotifyChannelAdmin::ConnectionAlreadyInactive ();
+    if (this->consumer()->is_suspended ())
+      {
+        throw CosNotifyChannelAdmin::ConnectionAlreadyInactive ();
+      }
   }
 
   this->consumer()->suspend ();
@@ -118,11 +115,15 @@ TAO_Notify_ProxySupplier_T<SERVANT_TYPE>::resume_connection ()
   {
     ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_, CORBA::INTERNAL ());
 
-    if (this->is_connected () == 0)
-      throw CosNotifyChannelAdmin::NotConnected ();
+    if (!this->is_connected ())
+      {
+        throw CosNotifyChannelAdmin::NotConnected ();
+      }
 
-    if (this->consumer()->is_suspended () == 0)
-      throw CosNotifyChannelAdmin::ConnectionAlreadyActive ();
+    if (!this->consumer()->is_suspended ())
+      {
+        throw CosNotifyChannelAdmin::ConnectionAlreadyActive ();
+      }
   }
 
   this->consumer()->resume ();

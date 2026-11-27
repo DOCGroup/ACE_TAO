@@ -16,6 +16,8 @@
 #include "ace/os_include/os_netdb.h"
 #include "ace/SSL/SSL_Context.h"
 
+#include <memory>
+
 #if !defined (__ACE_INLINE__)
 # include "orbsvcs/SSLIOP/SSLIOP_Connection_Handler.inl"
 #endif /* ! __ACE_INLINE__ */
@@ -24,8 +26,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::SSLIOP::Connection_Handler::Connection_Handler (
     ACE_Thread_Manager *t)
-  : SVC_HANDLER (t, 0 , 0),
-    TAO_Connection_Handler (0),
+  : SVC_HANDLER (t, nullptr, nullptr),
+    TAO_Connection_Handler (nullptr),
     current_ ()
 {
   // This constructor should *never* get called, it is just here to
@@ -37,13 +39,13 @@ TAO::SSLIOP::Connection_Handler::Connection_Handler (
 }
 
 TAO::SSLIOP::Connection_Handler::Connection_Handler (TAO_ORB_Core *orb_core)
-  : SVC_HANDLER (orb_core->thr_mgr (), 0, 0),
+  : SVC_HANDLER (orb_core->thr_mgr (), nullptr, nullptr),
     TAO_Connection_Handler (orb_core),
     current_ ()
 {
   this->current_ = TAO::SSLIOP::Util::current (orb_core);
 
-  TAO::SSLIOP::Transport *specific_transport = nullptr;
+  TAO::SSLIOP::Transport *specific_transport {};
   ACE_NEW (specific_transport,
           TAO::SSLIOP::Transport (this, orb_core));
 
@@ -76,7 +78,9 @@ int
 TAO::SSLIOP::Connection_Handler::open (void *)
 {
   if (this->shared_open() == -1)
+  {
     return -1;
+  }
 
   TAO_IIOP_Protocol_Properties protocol_properties;
 
@@ -105,7 +109,7 @@ TAO::SSLIOP::Connection_Handler::open (void *)
               tph->server_protocol_properties_at_orb_level (protocol_properties);
             }
         }
-      catch (const CORBA::Exception&)
+      catch (CORBA::Exception const&)
         {
           return -1;
         }
@@ -114,14 +118,18 @@ TAO::SSLIOP::Connection_Handler::open (void *)
   if (this->set_socket_option (this->peer (),
                                protocol_properties.send_buffer_size_,
                                protocol_properties.recv_buffer_size_) == -1)
+  {
     return -1;
+  }
 
 #if !defined (ACE_LACKS_TCP_NODELAY)
   if (this->peer ().set_option (ACE_IPPROTO_TCP,
                                 TCP_NODELAY,
-                                (void *) &protocol_properties.no_delay_,
+                                std::addressof (protocol_properties.no_delay_),
                                 sizeof (protocol_properties.no_delay_)) == -1)
+  {
     return -1;
+  }
 #endif /* ! ACE_LACKS_TCP_NODELAY */
 
   //support ORBKeepalive in SSL mode
@@ -130,7 +138,7 @@ TAO::SSLIOP::Connection_Handler::open (void *)
       if (this->peer ().
           set_option (SOL_SOCKET,
                       SO_KEEPALIVE,
-                      (void *) &protocol_properties.keep_alive_,
+                      std::addressof (protocol_properties.keep_alive_),
                       sizeof (protocol_properties.keep_alive_)) == -1
           && errno != ENOTSUP)
         {
@@ -141,7 +149,9 @@ TAO::SSLIOP::Connection_Handler::open (void *)
   if (this->transport ()->wait_strategy ()->non_blocking ())
     {
       if (this->peer ().enable (ACE_NONBLOCK) == -1)
+      {
         return -1;
+      }
 
       // Enable partial SSL writes.
       //
@@ -173,11 +183,15 @@ TAO::SSLIOP::Connection_Handler::open (void *)
   // completely connected.
   ACE_INET_Addr remote_addr;
   if (this->peer ().get_remote_addr (remote_addr) == -1)
+  {
     return -1;
+  }
 
   ACE_INET_Addr local_addr;
   if (this->peer ().get_local_addr (local_addr) == -1)
+  {
     return -1;
+  }
 
   if (local_addr == remote_addr)
     {
@@ -213,7 +227,7 @@ TAO::SSLIOP::Connection_Handler::open (void *)
 
       ORBSVCS_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) SSLIOP connection from ")
-                  ACE_TEXT ("client <%s> on [%d]\n"),
+                  ACE_TEXT ("client <%s> on [%H]\n"),
                   client,
                   this->peer ().get_handle ()));
 
@@ -226,7 +240,7 @@ TAO::SSLIOP::Connection_Handler::open (void *)
 
       ORBSVCS_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) SSLIOP connection accepted from ")
-                  ACE_TEXT ("server <%s> on [%d]\n"),
+                  ACE_TEXT ("server <%s> on [%H]\n"),
                   client,
                   this->get_handle ()));
     }
@@ -235,7 +249,9 @@ TAO::SSLIOP::Connection_Handler::open (void *)
   // Use C-style cast b/c otherwise we get warnings on lots of
   // compilers
   if (!this->transport ()->post_open ((size_t) this->get_handle ()))
+  {
     return -1;
+  }
 
   // @@ Not needed
   this->state_changed (TAO_LF_Event::LFS_SUCCESS,
@@ -277,8 +293,8 @@ TAO::SSLIOP::Connection_Handler::handle_output (ACE_HANDLE handle)
 }
 
 int
-TAO::SSLIOP::Connection_Handler::handle_timeout (const ACE_Time_Value &,
-                                                 const void *)
+TAO::SSLIOP::Connection_Handler::handle_timeout (ACE_Time_Value const &,
+                                                 void const *)
 {
   // Using this to ensure this instance will be deleted (if necessary)
   // only after reset_state(). Without this, when this refcount==1 -
@@ -322,7 +338,9 @@ void
 TAO::SSLIOP::Connection_Handler::pos_io_hook (int & return_value)
 {
   if (return_value == 0 && ::SSL_pending (this->peer ().ssl ()))
+  {
     return_value = 1;
+  }
 }
 
 int
@@ -335,7 +353,9 @@ TAO::SSLIOP::Connection_Handler::add_transport_to_cache ()
   // Note that the port set in the ACE_INET_Addr is actually the SSL
   // port!
   if (this->peer ().get_remote_addr (addr) == -1)
+  {
     return -1;
+  }
 
   // Construct an  IIOP_Endpoint object
   TAO_IIOP_Endpoint tmpoint (
@@ -345,7 +365,7 @@ TAO::SSLIOP::Connection_Handler::add_transport_to_cache ()
   // @@ This is broken.  We need to include the SecurityAssociation
   //    options to be able to truly distinguish cached SSLIOP
   //    transports.
-  const ::SSLIOP::SSL ssl =
+  ::SSLIOP::SSL const ssl =
     {
       0,                        // target_supports
       0,                        // target_requires
@@ -355,7 +375,7 @@ TAO::SSLIOP::Connection_Handler::add_transport_to_cache ()
   TAO_SSLIOP_Endpoint endpoint (&ssl, &tmpoint);
 
   // Construct a property object
-  TAO_Base_Transport_Property prop (&endpoint);
+  TAO_Base_Transport_Property prop (std::addressof (endpoint));
 
   TAO::Transport_Cache_Manager &cache =
     this->orb_core ()->lane_resources ().transport_cache ();
@@ -371,12 +391,11 @@ TAO::SSLIOP::Connection_Handler::process_listen_point_list (
   // Get the size of the list
   CORBA::ULong const len = listen_list.length ();
 
-  for (CORBA::ULong i = 0; i < len; ++i)
+  for (CORBA::ULong i {}; i < len; ++i)
     {
       IIOP::ListenPoint listen_point = listen_list[i];
       ACE_INET_Addr addr (listen_point.port,
                           listen_point.host.in ());
-
 
       if (TAO_debug_level > 0)
         {
@@ -406,18 +425,20 @@ TAO::SSLIOP::Connection_Handler::process_listen_point_list (
       // send the SecurityAssociation options with the
       //    IIOP::ListenPointList.  Presumably the new Firewall
       //    specification will address this deficiency.
-      TAO_SSLIOP_Synthetic_Endpoint endpoint (&tmpoint);
+      TAO_SSLIOP_Synthetic_Endpoint endpoint (std::addressof (tmpoint));
 
       // Construct a property object
-      TAO_Base_Transport_Property prop (&endpoint);
+      TAO_Base_Transport_Property prop (std::addressof (endpoint));
 
       // Mark the connection as bidirectional
-      prop.set_bidir_flag (1);
+      prop.set_bidir_flag (true);
 
       // The property for this handler has changed. Recache the
       // handler with this property
-      if (this->transport ()->recache_transport (&prop) == -1)
+      if (this->transport ()->recache_transport (std::addressof (prop)) == -1)
+      {
         return -1;
+      }
 
       // Make the handler idle and ready for use
       this->transport ()->make_idle ();
@@ -453,7 +474,7 @@ TAO::SSLIOP::Connection_Handler::teardown_ssl_state (
 }
 
 int
-TAO::SSLIOP::Connection_Handler::handle_write_ready (const ACE_Time_Value *t)
+TAO::SSLIOP::Connection_Handler::handle_write_ready (ACE_Time_Value const *t)
 {
   return ACE::handle_write_ready (this->peer ().get_handle (), t);
 }

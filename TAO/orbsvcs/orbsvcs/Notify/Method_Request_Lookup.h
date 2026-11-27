@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 /**
  *  @file Method_Request_Lookup.h
  *
@@ -22,8 +20,6 @@
 #include "orbsvcs/Notify/Consumer_Map.h"
 #include "orbsvcs/Notify/Delivery_Request.h"
 
-#include "orbsvcs/ESF/ESF_Worker.h"
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Notify_Method_Request_Lookup_Queueable;
@@ -40,10 +36,9 @@ class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Lookup
 {
 public:
   /// an arbitrary code (Octet) to identify this type of request in persistent storage
-  enum {persistence_code = 2};
+  static constexpr int persistence_code = 2;
 
-  /// Destructor
-  virtual ~TAO_Notify_Method_Request_Lookup ();
+  ~TAO_Notify_Method_Request_Lookup () override = default;
 
   /// Static method used to reconstruct a Method Request Dispatch
   static TAO_Notify_Method_Request_Lookup_Queueable * unmarshal (
@@ -52,17 +47,14 @@ public:
     TAO_InputCDR & cdr);
 
 protected:
-  /// Constructor
-  TAO_Notify_Method_Request_Lookup (const TAO_Notify_Event * event, TAO_Notify_ProxyConsumer * proxy);
+  TAO_Notify_Method_Request_Lookup (TAO_Notify_Event const * event, TAO_Notify_ProxyConsumer * proxy);
 
-  /// Constructor
-  TAO_Notify_Method_Request_Lookup (const TAO_Notify::Delivery_Request_Ptr& delivery, TAO_Notify_ProxyConsumer * proxy);
+  TAO_Notify_Method_Request_Lookup (TAO_Notify::Delivery_Request_Ptr const& delivery, TAO_Notify_ProxyConsumer * proxy);
 
   /// Execute the dispatch operation.
   int execute_i ();
 
-  ///= TAO_ESF_Worker method
-  virtual void work (TAO_Notify_ProxySupplier* proxy_supplier);
+  void work (TAO_Notify_ProxySupplier* proxy_supplier) override;
 
 protected:
   /// The Proxy
@@ -83,7 +75,7 @@ class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Lookup_Queueable
 public:
   /// Constructor from event
   TAO_Notify_Method_Request_Lookup_Queueable (
-    const TAO_Notify_Event::Ptr& event,
+    TAO_Notify_Event::Ptr const& event,
     TAO_Notify_ProxyConsumer * proxy_consumer);
 
   /// Constructor from delivery request
@@ -91,8 +83,7 @@ public:
     TAO_Notify::Delivery_Request_Ptr & request,
     TAO_Notify_ProxyConsumer * proxy_consumer);
 
-  /// Destructor
-  virtual ~TAO_Notify_Method_Request_Lookup_Queueable ();
+  ~TAO_Notify_Method_Request_Lookup_Queueable () override = default;
 
   /// Execute the Request
   int execute () override;
@@ -114,13 +105,11 @@ class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Lookup_No_Copy
   , public TAO_Notify_Method_Request
 {
 public:
-  /// Constructor
   TAO_Notify_Method_Request_Lookup_No_Copy (
-    const TAO_Notify_Event* event,
+    TAO_Notify_Event const* event,
     TAO_Notify_ProxyConsumer* proxy_consumer);
 
-  /// Destructor
-  virtual ~TAO_Notify_Method_Request_Lookup_No_Copy ();
+  ~TAO_Notify_Method_Request_Lookup_No_Copy () override = default;
 
   /// Execute the Request
   int execute () override;

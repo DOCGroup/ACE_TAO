@@ -1,11 +1,6 @@
-// -*- IDL -*-
-
-/**
- *  @file   Dynamic_Parameter.pidl
- */
-
-// Piece of module Dynamic generated separately for use by
-// template argument helper classes.
+/// @file Dynamic_Parameter.pidl
+/// @brief Piece of the Dynamic module generated separately for use by
+/// template argument helper classes.
 
 #ifndef _DYNAMIC_PARAMETER_IDL_
 #define _DYNAMIC_PARAMETER_IDL_

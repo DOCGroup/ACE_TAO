@@ -18,6 +18,8 @@
 #include "ace/OS_NS_sys_select.h"
 #include "ace/OS_NS_sys_stat.h"
 
+#include <memory>
+
 // For timer_queue_
 #include "ace/Recursive_Thread_Mutex.h"
 
@@ -58,10 +60,12 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::any_ready_i
     + this->ready_set_.ex_mask_.num_set ();
 
   // number_ready > 0 meaning there are handles in the ready_set
-  // &wait_set != &(this->ready_set_) means that we need to copy
+  // std::addressof (wait_set) != std::addressof (this->ready_set_)
+  // means that we need to copy
   // the handles from the ready_set to the wait set because the
   // wait_set_ doesn't contain all the handles in the ready_set_
-  if (number_ready > 0 && &wait_set != &(this->ready_set_))
+  if (number_ready > 0 && std::addressof (wait_set)
+      != std::addressof (this->ready_set_))
     {
       wait_set.rd_mask_ = this->ready_set_.rd_mask_;
       wait_set.wr_mask_ = this->ready_set_.wr_mask_;
@@ -83,9 +87,13 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::handler_i (int signum,
   ACE_Event_Handler *handler = this->signal_handler_->handler (signum);
 
   if (handler == nullptr)
-    return -1;
+    {
+      return -1;
+    }
   else if (eh != nullptr)
+  {
     *eh = handler;
+  }
   return 0;
 }
 
@@ -96,7 +104,6 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::initialized ()
   ACE_MT (ACE_GUARD_RETURN (ACE_SELECT_REACTOR_TOKEN, ace_mon, this->token_, false));
   return this->initialized_;
 }
-
 
 template <class ACE_SELECT_REACTOR_TOKEN> int
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::owner (ACE_thread_t tid,
@@ -186,7 +193,9 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::renew ()
   ACE_TRACE ("ACE_Select_Reactor_T::renew");
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   if (!this->supress_notify_renew ())
-    this->token_.renew (this->requeue_position_);
+    {
+      this->token_.renew (this->requeue_position_);
+    }
 #endif /* defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0) */
 }
 
@@ -230,9 +239,9 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::suspend_handlers ()
   ACE_TRACE ("ACE_Select_Reactor_T::suspend_handlers");
   ACE_MT (ACE_GUARD_RETURN (ACE_SELECT_REACTOR_TOKEN, ace_mon, this->token_, -1));
 
-  ACE_Event_Handler *eh = nullptr;
+  ACE_Event_Handler *eh {};
 
-  for (ACE_Select_Reactor_Handler_Repository_Iterator iter (&this->handler_rep_);
+  for (ACE_Select_Reactor_Handler_Repository_Iterator iter (std::addressof (this->handler_rep_));
        iter.next (eh) != 0;
        iter.advance ())
     {
@@ -248,9 +257,9 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::resume_handlers ()
   ACE_TRACE ("ACE_Select_Reactor_T::resume_handlers");
   ACE_MT (ACE_GUARD_RETURN (ACE_SELECT_REACTOR_TOKEN, ace_mon, this->token_, -1));
 
-  ACE_Event_Handler *eh = nullptr;
+  ACE_Event_Handler *eh {};
 
-  for (ACE_Select_Reactor_Handler_Repository_Iterator iter (&this->handler_rep_);
+  for (ACE_Select_Reactor_Handler_Repository_Iterator iter (std::addressof (this->handler_rep_));
        iter.next (eh) != 0;
        iter.advance ())
     {
@@ -283,7 +292,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::register_handler
 
 template <class ACE_SELECT_REACTOR_TOKEN> int
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::register_handler
-  (const ACE_Handle_Set &handles,
+  (ACE_Handle_Set const &handles,
    ACE_Event_Handler *handler,
    ACE_Reactor_Mask mask)
 {
@@ -314,7 +323,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::handler
 
 template <class ACE_SELECT_REACTOR_TOKEN> int
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::remove_handler
-  (const ACE_Handle_Set &handles,
+  (ACE_Handle_Set const &handles,
    ACE_Reactor_Mask mask)
 {
   ACE_TRACE ("ACE_Select_Reactor_T::remove_handler");
@@ -372,7 +381,9 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::open
 
   // Can't initialize ourselves more than once.
   if (this->initialized_)
-    return -1;
+    {
+      return -1;
+    }
 
   this->owner_ = ACE_Thread::self ();
   this->restart_ = restart;
@@ -383,7 +394,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::open
   int result = 0;
 
   // Allows the signal handler to be overridden.
-  if (this->signal_handler_ == 0)
+  if (this->signal_handler_ == nullptr)
     {
       ACE_NEW_RETURN (this->signal_handler_,
                       ACE_Sig_Handler,
@@ -393,7 +404,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::open
     }
 
   // Allows the timer queue to be overridden.
-  if (result != -1 && this->timer_queue_ == 0)
+  if (result != -1 && this->timer_queue_ == nullptr)
     {
       ACE_NEW_RETURN (this->timer_queue_,
                       ACE_Timer_Heap,
@@ -403,7 +414,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::open
     }
 
   // Allows the Notify_Handler to be overridden.
-  if (result != -1 && this->notify_handler_ == 0)
+  if (result != -1 && this->notify_handler_ == nullptr)
     {
       ACE_NEW_RETURN (this->notify_handler_,
                       ACE_Select_Reactor_Notify,
@@ -413,9 +424,11 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::open
     }
 
   if (result != -1 && this->handler_rep_.open (size) == -1)
-    result = -1;
+    {
+      result = -1;
+    }
   else if (this->notify_handler_->open (this,
-                                        0,
+                                        nullptr,
                                         disable_notify_pipe) == -1)
     {
       ACELIB_ERROR ((LM_ERROR,
@@ -426,11 +439,15 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::open
     }
 
   if (result != -1)
+  {
     // We're all set to go.
     this->initialized_ = true;
+  }
   else
+  {
     // This will close down all the allocated resources properly.
     this->close ();
+  }
 
   return result;
 }
@@ -479,14 +496,13 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::ACE_Select_Reactor_T
     : ACE_Select_Reactor_Impl (mask_signals)
     , token_ (s_queue)
     , lock_adapter_ (token_)
-    , deactivated_ (0)
 {
   ACE_TRACE ("ACE_Select_Reactor_T::ACE_Select_Reactor_T");
 
   this->token_.reactor (*this);
   // First try to open the Reactor with the hard-coded default.
   if (this->open (ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::DEFAULT_SIZE,
-                  0,
+                  false,
                   sh,
                   tq,
                   disable_notify_pipe,
@@ -507,16 +523,18 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::ACE_Select_Reactor_T
       // number of file descriptors available to the process.  This
       // size is not necessarily the maximum limit.
       if (this->open (static_cast<size_t> (ACE::max_handles ()),
-                      0,
+                      false,
                       sh,
                       tq,
                       disable_notify_pipe,
                       notify) == -1)
+      {
         ACELIB_ERROR ((LM_ERROR,
                     ACE_TEXT ("%p\n"),
                     ACE_TEXT ("ACE_Select_Reactor_T::open ")
                     ACE_TEXT ("failed inside ")
                     ACE_TEXT ("ACE_Select_Reactor_T::CTOR")));
+      }
     }
 }
 
@@ -535,7 +553,6 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::ACE_Select_Reactor_T
     : ACE_Select_Reactor_Impl (mask_signals)
     , token_ (s_queue)
     , lock_adapter_ (token_)
-    , deactivated_ (0)
 {
   ACE_TRACE ("ACE_Select_Reactor_T::ACE_Select_Reactor_T");
 
@@ -546,10 +563,12 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::ACE_Select_Reactor_T
                   tq,
                   disable_notify_pipe,
                   notify) == -1)
+  {
     ACELIB_ERROR ((LM_ERROR,
                 ACE_TEXT ("%p\n"),
                 ACE_TEXT ("ACE_Select_Reactor_T::open ")
                 ACE_TEXT ("failed inside ACE_Select_Reactor_T::CTOR")));
+  }
 }
 
 // Close down the ACE_Select_Reactor_T instance, detaching any
@@ -565,7 +584,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::close ()
   if (this->delete_signal_handler_)
     {
       delete this->signal_handler_;
-      this->signal_handler_ = 0;
+      this->signal_handler_ = nullptr;
       this->delete_signal_handler_ = false;
     }
 
@@ -574,22 +593,24 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::close ()
   if (this->delete_timer_queue_)
     {
       delete this->timer_queue_;
-      this->timer_queue_ = 0;
+      this->timer_queue_ = nullptr;
       this->delete_timer_queue_ = false;
     }
   else if (this->timer_queue_)
     {
       this->timer_queue_->close ();
-      this->timer_queue_ = 0;
+      this->timer_queue_ = nullptr;
     }
 
-  if (this->notify_handler_ != 0)
-    this->notify_handler_->close ();
+  if (this->notify_handler_ != nullptr)
+    {
+      this->notify_handler_->close ();
+    }
 
   if (this->delete_notify_handler_)
     {
       delete this->notify_handler_;
-      this->notify_handler_ = 0;
+      this->notify_handler_ = nullptr;
       this->delete_notify_handler_ = false;
     }
 
@@ -614,7 +635,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::~ACE_Select_Reactor_T ()
 
 template <class ACE_SELECT_REACTOR_TOKEN> int
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::remove_handler_i
-  (const ACE_Handle_Set &handles,
+  (ACE_Handle_Set const &handles,
    ACE_Reactor_Mask mask)
 {
   ACE_TRACE ("ACE_Select_Reactor_T::remove_handler_i");
@@ -623,15 +644,19 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::remove_handler_i
   ACE_Handle_Set_Iterator handle_iter (handles);
 
   while ((h = handle_iter ()) != ACE_INVALID_HANDLE)
+  {
     if (this->remove_handler_i (h, mask) == -1)
-      return -1;
+      {
+        return -1;
+      }
+  }
 
   return 0;
 }
 
 template <class ACE_SELECT_REACTOR_TOKEN> int
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::register_handler_i
-  (const ACE_Handle_Set &handles,
+  (ACE_Handle_Set const &handles,
    ACE_Event_Handler *handler,
    ACE_Reactor_Mask mask)
 {
@@ -640,15 +665,19 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::register_handler_i
 
   ACE_Handle_Set_Iterator handle_iter (handles);
   while ((h = handle_iter ()) != ACE_INVALID_HANDLE)
+  {
     if (this->register_handler_i (h, handler, mask) == -1)
-      return -1;
+      {
+        return -1;
+      }
+  }
 
   return 0;
 }
 
 template <class ACE_SELECT_REACTOR_TOKEN> int
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::register_handler
-  (const ACE_Sig_Set &sigset,
+  (ACE_Sig_Set const &sigset,
    ACE_Event_Handler *new_sh,
    ACE_Sig_Action *new_disp)
 {
@@ -658,11 +687,15 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::register_handler
 
 #if (ACE_NSIG > 0)
   for (int s = 1; s < ACE_NSIG; ++s)
+  {
     if ((sigset.is_member (s) == 1)
         && this->signal_handler_->register_handler (s,
                                                     new_sh,
                                                     new_disp) == -1)
+    {
       result = -1;
+    }
+  }
 #else  /* ACE_NSIG <= 0 */
   ACE_UNUSED_ARG (sigset);
   ACE_UNUSED_ARG (new_sh);
@@ -673,16 +706,20 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::register_handler
 
 template <class ACE_SELECT_REACTOR_TOKEN> int
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::remove_handler
-  (const ACE_Sig_Set &sigset)
+  (ACE_Sig_Set const &sigset)
 {
   ACE_TRACE ("ACE_Select_Reactor_T::remove_handler");
   int result = 0;
 
 #if (ACE_NSIG > 0)
   for (int s = 1; s < ACE_NSIG; ++s)
+  {
     if ((sigset.is_member (s) == 1)
         && this->signal_handler_->remove_handler (s) == -1)
+    {
       result = -1;
+    }
+  }
 #else  /* ACE_NSIG <= 0 */
   ACE_UNUSED_ARG (sigset);
 #endif /* ACE_NSIG <= 0 */
@@ -697,44 +734,54 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::cancel_timer (ACE_Event_Handler 
   ACE_TRACE ("ACE_Select_Reactor_T::cancel_timer");
   ACE_MT (ACE_GUARD_RETURN (ACE_SELECT_REACTOR_TOKEN, ace_mon, this->token_, -1));
 
-  if ((this->timer_queue_ != 0) && (handler != nullptr))
-    return this->timer_queue_->cancel (handler, dont_call_handle_close);
+  if ((this->timer_queue_ != nullptr) && (handler != nullptr))
+    {
+      return this->timer_queue_->cancel (handler, dont_call_handle_close);
+    }
   else
+  {
     return 0;
+  }
 }
 
 template <class ACE_SELECT_REACTOR_TOKEN> int
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::cancel_timer (long timer_id,
-                                                              const void **arg,
+                                                              void const **arg,
                                                               int dont_call_handle_close)
 {
   ACE_TRACE ("ACE_Select_Reactor_T::cancel_timer");
   ACE_MT (ACE_GUARD_RETURN (ACE_SELECT_REACTOR_TOKEN, ace_mon, this->token_, -1));
 
-  if (this->timer_queue_ != 0)
+  if (this->timer_queue_ != nullptr)
+  {
     return this->timer_queue_->cancel (timer_id,
                                        arg,
                                        dont_call_handle_close);
+  }
   else
+  {
     return 0;
+  }
 }
 
 template <class ACE_SELECT_REACTOR_TOKEN> long
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::schedule_timer
   (ACE_Event_Handler *handler,
-   const void *arg,
-   const ACE_Time_Value &delay_time,
-   const ACE_Time_Value &interval)
+   void const *arg,
+   ACE_Time_Value const &delay_time,
+   ACE_Time_Value const &interval)
 {
   ACE_TRACE ("ACE_Select_Reactor_T::schedule_timer");
   ACE_MT (ACE_GUARD_RETURN (ACE_SELECT_REACTOR_TOKEN, ace_mon, this->token_, -1));
 
-  if (0 != this->timer_queue_)
+  if (nullptr != this->timer_queue_)
+  {
     return this->timer_queue_->schedule
       (handler,
        arg,
        timer_queue_->gettimeofday () + delay_time,
        interval);
+  }
 
   errno = ESHUTDOWN;
   return -1;
@@ -743,12 +790,12 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::schedule_timer
 template <class ACE_SELECT_REACTOR_TOKEN> int
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::reset_timer_interval
   (long timer_id,
-   const ACE_Time_Value &interval)
+   ACE_Time_Value const &interval)
 {
   ACE_TRACE ("ACE_Select_Reactor_T::reset_timer_interval");
   ACE_MT (ACE_GUARD_RETURN (ACE_SELECT_REACTOR_TOKEN, ace_mon, this->token_, -1));
 
-  if (0 != this->timer_queue_)
+  if (nullptr != this->timer_queue_)
     {
       return this->timer_queue_->reset_interval (timer_id, interval);
     }
@@ -766,7 +813,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::handle_events
 {
   ACE_TRACE ("ACE_Select_Reactor_T::handle_events");
 
-  return this->handle_events (&max_wait_time);
+  return this->handle_events (std::addressof (max_wait_time));
 }
 
 template <class ACE_SELECT_REACTOR_TOKEN> int
@@ -776,10 +823,14 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::handle_error ()
 #if defined (ACE_LINUX) && defined (ERESTARTNOHAND)
   int const error = errno; // Avoid multiple TSS accesses.
   if (error == EINTR || error == ERESTARTNOHAND)
-    return this->restart_;
+    {
+      return this->restart_;
+    }
 #else
   if (errno == EINTR)
-    return this->restart_;
+    {
+      return this->restart_;
+    }
 #endif /* ACE_LINUX && ERESTARTNOHAND */
 #if defined (__MVS__) || defined (ACE_WIN32) || defined (ACE_VXWORKS)
   // On MVS Open Edition and Win32, there can be a number of failure
@@ -787,12 +838,18 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::handle_error ()
   // EINTR.  VxWorks doesn't even bother to always set errno on error
   // in select (specifically, it doesn't return EBADF for bad FDs).
   else
-    return this->check_handles ();
+    {
+      return this->check_handles ();
+    }
 #else
   else if (errno == EBADF)
-    return this->check_handles ();
+    {
+      return this->check_handles ();
+    }
   else
-    return -1;
+    {
+      return -1;
+    }
 #endif  /* __MVS__ || ACE_WIN32 */
 }
 
@@ -807,7 +864,9 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::notify_handle
   ACE_TRACE ("ACE_Select_Reactor_T::notify_handle");
   // Check for removed handlers.
   if (event_handler == nullptr)
-    return;
+    {
+      return;
+    }
 
   bool const reference_counting_required =
     event_handler->reference_counting_policy ().value () ==
@@ -822,13 +881,19 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::notify_handle
   int const status = (event_handler->*ptmf) (handle);
 
   if (status < 0)
-    this->remove_handler_i (handle, mask);
+    {
+      this->remove_handler_i (handle, mask);
+    }
   else if (status > 0)
+  {
     ready_mask.set_bit (handle);
+  }
 
   // Call remove_reference() if needed.
   if (reference_counting_required)
-    event_handler->remove_reference ();
+    {
+      event_handler->remove_reference ();
+    }
 }
 
 // Perform GET, CLR, SET, and ADD operations on the select()
@@ -856,9 +921,13 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::mask_ops
   // <wait_set_>, otherwise set the <suspend_set_>.
 
   if (this->is_suspended_i (handle))
-    return this->bit_ops (handle, mask, this->suspend_set_, ops);
+    {
+      return this->bit_ops (handle, mask, this->suspend_set_, ops);
+    }
   else
+  {
     return this->bit_ops (handle, mask, this->wait_set_, ops);
+  }
 }
 
 template <class ACE_SELECT_REACTOR_TOKEN> ACE_Event_Handler *
@@ -889,19 +958,27 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::handler_i
   ACE_Event_Handler *event_handler = this->handler_rep_.find (handle);
 
   if (event_handler == nullptr)
-    return -1;
+    {
+      return -1;
+    }
   else
     {
       if ((ACE_BIT_ENABLED (mask, ACE_Event_Handler::READ_MASK)
            || ACE_BIT_ENABLED (mask, ACE_Event_Handler::ACCEPT_MASK))
-          && this->wait_set_.rd_mask_.is_set (handle) == 0)
+          && !this->wait_set_.rd_mask_.is_set (handle))
+      {
         return -1;
+      }
       if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::WRITE_MASK)
-          && this->wait_set_.wr_mask_.is_set (handle) == 0)
+          && !this->wait_set_.wr_mask_.is_set (handle))
+      {
         return -1;
+      }
       if (ACE_BIT_ENABLED (mask, ACE_Event_Handler::EXCEPT_MASK)
-          && this->wait_set_.ex_mask_.is_set (handle) == 0)
+          && !this->wait_set_.ex_mask_.is_set (handle))
+      {
         return -1;
+      }
     }
 
   if (eh != nullptr)
@@ -919,8 +996,10 @@ template <class ACE_SELECT_REACTOR_TOKEN> int
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::resume_i (ACE_HANDLE handle)
 {
   ACE_TRACE ("ACE_Select_Reactor_T::resume_i");
-  if (this->handler_rep_.find (handle) == 0)
-    return -1;
+  if (this->handler_rep_.find (handle) == nullptr)
+    {
+      return -1;
+    }
 
   if (this->suspend_set_.rd_mask_.is_set (handle))
     {
@@ -946,8 +1025,10 @@ template <class ACE_SELECT_REACTOR_TOKEN> int
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::suspend_i (ACE_HANDLE handle)
 {
   ACE_TRACE ("ACE_Select_Reactor_T::suspend_i");
-  if (this->handler_rep_.find (handle) == 0)
-    return -1;
+  if (this->handler_rep_.find (handle) == nullptr)
+    {
+      return -1;
+    }
 
   if (this->wait_set_.rd_mask_.is_set (handle))
     {
@@ -974,12 +1055,14 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::suspend_i (ACE_HANDLE handle)
 
 // Must be called with locks held
 
-template <class ACE_SELECT_REACTOR_TOKEN> int
+template <class ACE_SELECT_REACTOR_TOKEN> bool
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::is_suspended_i (ACE_HANDLE handle)
 {
   ACE_TRACE ("ACE_Select_Reactor_T::is_suspended_i");
-  if (this->handler_rep_.find (handle) == 0)
-    return 0;
+  if (this->handler_rep_.find (handle) == nullptr)
+    {
+      return false;
+    }
 
   return this->suspend_set_.rd_mask_.is_set (handle) ||
          this->suspend_set_.wr_mask_.is_set (handle) ||
@@ -1014,12 +1097,12 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::remove_handler_i
 
 template <class ACE_SELECT_REACTOR_TOKEN> int
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::work_pending
-  (const ACE_Time_Value &max_wait_time)
+  (ACE_Time_Value const &max_wait_time)
 {
   ACE_TRACE ("ACE_Select_Reactor_T::work_pending");
 
   ACE_Time_Value mwt (max_wait_time);
-  ACE_MT (ACE_Countdown_Time countdown (&mwt));
+  ACE_MT (ACE_Countdown_Time countdown (std::addressof (mwt)));
 
   ACE_MT (ACE_GUARD_RETURN (ACE_SELECT_REACTOR_TOKEN,
                             ace_mon,
@@ -1027,7 +1110,9 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::work_pending
                             -1));
 
   if (this->deactivated_)
-    return 0;
+    {
+      return 0;
+    }
 
   // Update the countdown to reflect time waiting for the mutex.
   ACE_MT (countdown.update ());
@@ -1038,7 +1123,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::work_pending
 
   // Check if we have timers to fire.
   bool const timers_pending =
-    (this_timeout != nullptr && *this_timeout != mwt ? true : false);
+    this_timeout != nullptr && *this_timeout != mwt;
 
 #ifdef ACE_WIN32
   // This arg is ignored on Windows and causes pointer truncation
@@ -1073,7 +1158,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::wait_for_multiple_events
 {
   ACE_TRACE ("ACE_Select_Reactor_T::wait_for_multiple_events");
   ACE_Time_Value timer_buf (0);
-  ACE_Time_Value *this_timeout = nullptr;
+  ACE_Time_Value *this_timeout {};
 
   int number_of_active_handles = this->any_ready (dispatch_set);
 
@@ -1084,8 +1169,10 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::wait_for_multiple_events
     {
       do
         {
-          if (this->timer_queue_ == 0)
-            return 0;
+          if (this->timer_queue_ == nullptr)
+            {
+              return 0;
+            }
 
           this_timeout =
             this->timer_queue_->calculate_timeout (max_wait_time,
@@ -1167,7 +1254,9 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::dispatch_notification_handlers
                                                    dispatch_set.rd_mask_);
 
   if (n == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
     {
       number_of_handlers_dispatched += n;
@@ -1296,7 +1385,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::dispatch
       // inconsistent in the state of the Reactor and we should avoid
       // the loop.  Please read the comments on bug 2540 for more
       // details.
-      int initial_handle_count = active_handle_count;
+      int const initial_handle_count = active_handle_count;
 
       // Note that we keep track of changes to our state.  If any of
       // the dispatch_*() methods below return -1 it means that the
@@ -1333,42 +1422,51 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::dispatch
               signal_occurred = 1;
             }
           else
+          {
             return -1;
+          }
         }
 
       // Handle timers early since they may have higher latency
       // constraints than I/O handlers.  Ideally, the order of
       // dispatching should be a strategy...
       else if (this->dispatch_timer_handlers (other_handlers_dispatched) == -1)
+      {
         // State has changed or timer queue has failed, exit loop.
         break;
+      }
 
       // Check to see if there are no more I/O handles left to
       // dispatch AFTER we've handled the timers...
       else if (active_handle_count == 0)
+      {
         return io_handlers_dispatched
           + other_handlers_dispatched
           + signal_occurred;
+      }
 
       // Next dispatch the notification handlers (if there are any to
       // dispatch).  These are required to handle multi-threads that
       // are trying to update the <Reactor>.
-
       else if (this->dispatch_notification_handlers
                (dispatch_set,
                 active_handle_count,
                 other_handlers_dispatched) == -1)
+      {
         // State has changed or a serious failure has occurred, so exit
         // loop.
         break;
+      }
 
       // Finally, dispatch the I/O handlers.
       else if (this->dispatch_io_handlers
                (dispatch_set,
                 active_handle_count,
                 io_handlers_dispatched) == -1)
+      {
         // State has changed, so exit loop.
         break;
+      }
 
       // if state changed, we need to re-eval active_handle_count,
       // so we will not end with an endless loop
@@ -1490,10 +1588,14 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::check_handles ()
   ACE_Handle_Set check_set (this->wait_set_.rd_mask_);
   ACE_Handle_Set_Iterator wr_iter (this->wait_set_.wr_mask_);
   while ((h = wr_iter ()) != ACE_INVALID_HANDLE)
-    check_set.set_bit (h);
+    {
+      check_set.set_bit (h);
+    }
   ACE_Handle_Set_Iterator ex_iter (this->wait_set_.ex_mask_);
   while ((h = ex_iter ()) != ACE_INVALID_HANDLE)
-    check_set.set_bit (h);
+    {
+      check_set.set_bit (h);
+    }
 
   ACE_Handle_Set_Iterator check_iter (check_set);
   while ((h = check_iter ()) != ACE_INVALID_HANDLE)
@@ -1560,39 +1662,39 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::dump () const
 
   for (ACE_Handle_Set_Iterator handle_iter_wr (this->wait_set_.wr_mask_);
        (h = handle_iter_wr ()) != ACE_INVALID_HANDLE;)
-    ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("write_handle = %d\n"), h));
+    ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("write_handle = %H\n"), h));
 
   for (ACE_Handle_Set_Iterator handle_iter_rd (this->wait_set_.rd_mask_);
        (h = handle_iter_rd ()) != ACE_INVALID_HANDLE;)
-    ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("read_handle = %d\n"), h));
+    ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("read_handle = %H\n"), h));
 
   for (ACE_Handle_Set_Iterator handle_iter_ex (this->wait_set_.ex_mask_);
        (h = handle_iter_ex ()) != ACE_INVALID_HANDLE;)
-    ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("except_handle = %d\n"), h));
+    ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("except_handle = %H\n"), h));
 
   for (ACE_Handle_Set_Iterator handle_iter_wr_ready (this->ready_set_.wr_mask_);
        (h = handle_iter_wr_ready ()) != ACE_INVALID_HANDLE;)
-    ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("write_handle_ready = %d\n"), h));
+    ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("write_handle_ready = %H\n"), h));
 
   for (ACE_Handle_Set_Iterator handle_iter_rd_ready (this->ready_set_.rd_mask_);
        (h = handle_iter_rd_ready ()) != ACE_INVALID_HANDLE;)
-    ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("read_handle_ready = %d\n"), h));
+    ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("read_handle_ready = %H\n"), h));
 
   for (ACE_Handle_Set_Iterator handle_iter_ex_ready (this->ready_set_.ex_mask_);
        (h = handle_iter_ex_ready ()) != ACE_INVALID_HANDLE;)
-    ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("except_handle_ready = %d\n"), h));
+    ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("except_handle_ready = %H\n"), h));
 
   for (ACE_Handle_Set_Iterator handle_iter_su_ready (this->suspend_set_.wr_mask_);
        (h = handle_iter_su_ready ()) != ACE_INVALID_HANDLE;)
-    ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("write_handle_suspend = %d\n"), h));
+    ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("write_handle_suspend = %H\n"), h));
 
   for (ACE_Handle_Set_Iterator handle_iter_su_ready (this->suspend_set_.rd_mask_);
        (h = handle_iter_su_ready ()) != ACE_INVALID_HANDLE;)
-    ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("read_handle_suspend = %d\n"), h));
+    ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("read_handle_suspend = %H\n"), h));
 
   for (ACE_Handle_Set_Iterator handle_iter_su_ready (this->suspend_set_.ex_mask_);
        (h = handle_iter_su_ready ()) != ACE_INVALID_HANDLE;)
-    ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("except_handle_suspend = %d\n"), h));
+    ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("except_handle_suspend = %H\n"), h));
 
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("restart_ = %d\n"), this->restart_));
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("requeue_position_ = %d\n"), this->requeue_position_));

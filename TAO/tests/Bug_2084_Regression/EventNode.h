@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 #ifndef EVENT_NODE_H
 #define EVENT_NODE_H
 #include /**/ "ace/pre.h"
@@ -13,7 +11,6 @@ class EventNode
   : public virtual POA_Test::EventNode
 {
 public:
-  /// Constructor
   EventNode (CORBA::ORB_ptr orb,
              ACE_thread_t thr_id);
   EventNode (EventNode const &) = delete;
@@ -21,15 +18,18 @@ public:
   EventNode (EventNode &&) = delete;
   EventNode &operator= (EventNode &&) = delete;
 
-  // = The skeleton methods
-  void registerHello (::Test::Hello_ptr h) override;
+  /// @name Skeleton methods
+  /// @{
+  /// The Hello reference is borrowed for the duration of this upcall.
+  void registerHello (::Test::Hello_ptr hello) override;
 
   void shutdown () override;
+  /// @}
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown
   /// the application.
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var const orb_;
 
   ACE_thread_t const thr_id_;
 };

@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(bug_1535_regression) : taoserver, utils, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
   exename = bug_1535_regression
   Source_Files {

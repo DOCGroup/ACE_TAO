@@ -1,16 +1,8 @@
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = DESCRIPTION
-//      This is a simple test to make sure the Env_Value template is
-//      working correctly.
-//
-// = AUTHOR
-//    Chris Cleeland <cleeland@cs.wustl.edu>
-//
-// ============================================================================
+/// @file Env_Value_Test.cpp
+/// This is a simple test to make sure the Env_Value template is
+/// working correctly.
+///
+/// @author Chris Cleeland <cleeland@cs.wustl.edu>
 
 #include "test_config.h"
 #include "ace/OS_NS_stdlib.h"
@@ -48,6 +40,13 @@ run_main (int, ACE_TCHAR* [])
     {
     ACE_START_TEST (ACE_TEXT ("Env_Value_Test"));
 
+      ACE_Env_Value<int> unbound;
+      if (unbound.varname () != nullptr || static_cast<int> (unbound) != 0)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("Default Env_Value state was not initialized\n")));
+        }
+
       TEST_THIS (int, ACE_TEXT ("TEST_VALUE_POSITIVE"), 4, 10);
       TEST_THIS (double, ACE_TEXT ("TEST_VALUE_POSITIVE"), -1.0, 10.2);
       TEST_THIS (long, ACE_TEXT ("TEST_VALUE_POSITIVE"), 0, 10);
@@ -62,7 +61,27 @@ run_main (int, ACE_TCHAR* [])
       TEST_THIS (short, ACE_TEXT ("TEST_VALUE_NEGATIVE"), 0, -10);
       TEST_THIS (unsigned short, ACE_TEXT ("TEST_VALUE_NEGATIVE"), 0, (unsigned short) -10);
 
-      const ACE_TCHAR* const defstr = ACE_TEXT ("Sarah Cleeland is Two!");
+      struct Expansion_Case
+      {
+        ACE_TCHAR const *input;
+        ACE_TCHAR const *expected;
+      };
+      Expansion_Case const expansion_cases[] = {
+        {ACE_TEXT ("$TEST_VALUE_POSITIVE"), ACE_TEXT ("10.2")},
+        {ACE_TEXT ("prefix/$TEST_VALUE_NEGATIVE/suffix"),
+         ACE_TEXT ("prefix/-10.2/suffix")},
+        {ACE_TEXT ("plain text"), ACE_TEXT ("plain text")},
+        {ACE_TEXT (""), ACE_TEXT ("")}
+      };
+      for (Expansion_Case const &test_case : expansion_cases)
+        {
+          ACE_TCHAR *expanded = ACE_OS::strenvdup (test_case.input);
+          ACE_TEST_ASSERT (expanded != nullptr);
+          ACE_TEST_ASSERT (ACE_OS::strcmp (expanded, test_case.expected) == 0);
+          ACE_OS::free (expanded);
+        }
+
+      ACE_TCHAR const* const defstr = ACE_TEXT ("Sarah Cleeland is Two!");
 
       ACE_Env_Value<ACE_TString> sval1 (ACE_TEXT ("This_Shouldnt_Be_Set_Hopefully"),
                                         defstr);

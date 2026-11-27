@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    Cubit_Client.h
  *
@@ -10,8 +8,6 @@
  *  @author Sumedh Mungee
  *  @author and Sergio Flores-Gaitan
  */
-//=============================================================================
-
 
 #ifndef _CUBIT_CLIENT_H
 #define _CUBIT_CLIENT_H
@@ -40,7 +36,6 @@
 class Cubit_Client
 {
 public:
-  // = Constructor and destructor.
   Cubit_Client (int shutdown = 0);
 
   ~Cubit_Client ();
@@ -49,7 +44,6 @@ public:
   int run ();
 
   /// Initialize the client communication endpoint with server.
-  /// <collocation_test_ior> is used to pass in the ior file name.
   int init (int argc, ACE_TCHAR **argv);
 
 private:
@@ -100,16 +94,16 @@ private:
   /// Cube a short.
   void cube_short (int i);
 
-  /// Cube a sequence <l> is the length of the sequence.
+  /// Cube a sequence @a l is the length of the sequence.
   void cube_long_sequence (int i, int l);
 
-  /// Cube a sequence of octets, <l> is the length of the sequence.
+  /// Cube a sequence of octets, @a l is the length of the sequence.
   void cube_octet_sequence (int i, int l);
 
-  /// Cube a sequence of manys, <l> is the length of the sequence.
+  /// Cube a sequence of manys, @a l is the length of the sequence.
   void cube_many_sequence (int i, int l);
 
-  /// Cube a sequence <l> is the length of the sequence.
+  /// Exercise RTI data with @a numUpdates updates and @a numAttrs attributes each.
   void cube_rti_data (int i, int numUpdates, int numAttrs);
 
   /// calculate the cube from a struct in an any.
@@ -118,7 +112,7 @@ private:
   /// calculate the cube from a long in an any.
   void cube_any (int i);
 
-  /// Invoke the method with <do_shutdown> != 0 to shutdown the server.
+  /// Invoke the method with @a do_shutdown != 0 to shutdown the server.
   int shutdown_server (int do_shutdown);
 
   /// # of arguments on the command line.

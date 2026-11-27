@@ -65,9 +65,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _AST_FACTORY_AST_FACTORY_HH
 #define _AST_FACTORY_AST_FACTORY_HH
 
-// Representation of OBV and component home factory
-// construct declaration.
-
 #include "ast_decl.h"
 #include "utl_scope.h"
 #include "utl_scoped_name.h"
@@ -75,27 +72,28 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include <cstddef>
 
+/// Represents an OBV or component home factory declaration.
 class TAO_IDL_FE_Export AST_Factory : public virtual AST_Decl,
                                       public virtual UTL_Scope
 {
 public:
+  AST_Factory () = delete;
   explicit AST_Factory (UTL_ScopedName *n);
 
   ~AST_Factory () override;
 
+  /// Return the exception list.
   UTL_ExceptList *exceptions () const;
-  // Return exception list.
 
+  /// Return the exception count.
   size_t n_exceptions () const;
-  // Return exception count.
 
+  /// Return the count of arguments.
   virtual int argument_count ();
-  // Return the count of members.
 
+  /// Check whether an argument has a native type, for which stub code
+  /// should not be generated.
   virtual bool has_native ();
-  // Any of the arguments or the return value is a <native> type.
-  // This is important because in that case no code should be
-  // generated for the stubs.
 
   // AST Dumping.
   void dump (ACE_OSTREAM_TYPE &o) override;
@@ -114,23 +112,23 @@ public:
 protected:
   // Data.
 
+  /// Exceptions raised.
   UTL_ExceptList_Owner pd_exceptions;
-  // Exceptions raised
 
+  /// Exception count.
   size_t pd_n_exceptions {};
-  // Exception count.
 
+  /// Number of arguments.
   int argument_count_ {-1};
-  // Number of arguments.
 
+  /// Whether any argument has a native type.
   bool has_native_ {};
-  // Is any argument of type native.
 
 private:
   // Operations.
 
+  /// Count the number of arguments.
   int compute_argument_attr ();
-  // Count the number of arguments.
 
   // Scope Management Protocol.
 

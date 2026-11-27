@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    Message_Block_Large_Copy_Test.cpp
  *
@@ -7,17 +5,15 @@
  *
  *  @author Phillip LaBanca <labancap@ociweb.com>
  */
-//=============================================================================
-
 
 #include "test_config.h"
 #include "ace/Message_Block.h"
 #include "ace/OS_NS_string.h"
 
 size_t
-run_duplicate_test (const size_t msg_block_count,
-                    const char * block,
-                    const size_t msg_block_size)
+run_duplicate_test (size_t const msg_block_count,
+                    char const * block,
+                    size_t const msg_block_size)
 {
     size_t rc = 0;
 
@@ -37,18 +33,18 @@ run_duplicate_test (const size_t msg_block_count,
     {
       rc = mb_test->total_size();
       ACE_ERROR ((LM_DEBUG,
-                  ACE_TEXT ("(%P|%t) %u top reference_count ()\n"),
+                  ACE_TEXT ("(%P|%t) %d top reference_count ()\n"),
                   mb_top->reference_count ()));
       ACE_ERROR ((LM_DEBUG,
-                  ACE_TEXT ("(%P|%t) duplicated: %@ %d %d\n"),
-                  mb_test,
+                  ACE_TEXT ("(%P|%t) duplicated: %@ %B %B\n"),
+                  static_cast<void *> (mb_test),
                   mb_test->total_size(),
                   mb_test->total_length()));
       mb_test-> release();
     }
 
     ACE_ERROR ((LM_DEBUG,
-                ACE_TEXT ("(%P|%t) %u top reference_count ()\n"),
+                ACE_TEXT ("(%P|%t) %d top reference_count ()\n"),
                 mb_top->reference_count ()));
 
     mb_top-> release ();
@@ -56,9 +52,9 @@ run_duplicate_test (const size_t msg_block_count,
 }
 
 size_t
-run_clone_test (const size_t msg_block_count,
-                const char * block,
-                const size_t msg_block_size)
+run_clone_test (size_t const msg_block_count,
+                char const * block,
+                size_t const msg_block_size)
 {
     size_t rc = 0;
 
@@ -78,18 +74,18 @@ run_clone_test (const size_t msg_block_count,
     {
       rc = mb_test->total_size();
       ACE_ERROR ((LM_DEBUG,
-                  ACE_TEXT ("(%P|%t) %u top reference_count ()\n"),
+                  ACE_TEXT ("(%P|%t) %d top reference_count ()\n"),
                   mb_top->reference_count ()));
       ACE_ERROR ((LM_DEBUG,
-                  ACE_TEXT ("(%P|%t) cloned: %@ %d %d\n"),
-                  mb_test,
+                  ACE_TEXT ("(%P|%t) cloned: %@ %B %B\n"),
+                  static_cast<void *> (mb_test),
                   mb_test->total_size(),
                   mb_test->total_length()));
       mb_test-> release();
     }
 
     ACE_ERROR ((LM_DEBUG,
-                ACE_TEXT ("(%P|%t) %u top reference_count ()\n"),
+                ACE_TEXT ("(%P|%t) %d top reference_count ()\n"),
                 mb_top->reference_count ()));
 
     mb_top-> release();
@@ -104,12 +100,12 @@ run_main (int , ACE_TCHAR *[])
   ACE_START_TEST (ACE_TEXT ("Message_Block_Large_Copy_Test"));
   {
     // Message_Block size() and Length() of 24,000,000
-    const size_t MSG_BLOCK_COUNT = 8000;
-    const size_t MSG_BLOCK_SIZE  = 3000;
-    const size_t MSG_BLOCK_TOTAL = MSG_BLOCK_COUNT * MSG_BLOCK_SIZE;
+    size_t const MSG_BLOCK_COUNT = 8000;
+    size_t const MSG_BLOCK_SIZE  = 3000;
+    size_t const MSG_BLOCK_TOTAL = MSG_BLOCK_COUNT * MSG_BLOCK_SIZE;
 
     ACE_ERROR ((LM_DEBUG,
-                ACE_TEXT ("(%P|%t) %u blocks %u bytes each, total %u\n"),
+                ACE_TEXT ("(%P|%t) %B blocks %B bytes each, total %B\n"),
                 MSG_BLOCK_COUNT,
                 MSG_BLOCK_SIZE,
                 MSG_BLOCK_TOTAL));
@@ -124,7 +120,7 @@ run_main (int , ACE_TCHAR *[])
     if (duplicate_total != MSG_BLOCK_TOTAL )
     {
       ACE_ERROR ((LM_ERROR,
-        ACE_TEXT ("(%P|%t) duplicate(): returned total of %u\n"),
+        ACE_TEXT ("(%P|%t) duplicate(): returned total of %B\n"),
         duplicate_total));
       rc = 1;
     }
@@ -136,7 +132,7 @@ run_main (int , ACE_TCHAR *[])
     if (clone_total != MSG_BLOCK_TOTAL )
     {
       ACE_ERROR ((LM_ERROR,
-        ACE_TEXT ("(%P|%t) clone(): returned total of %u \n"),
+        ACE_TEXT ("(%P|%t) clone(): returned total of %B \n"),
         clone_total));
       rc = 1;
     }

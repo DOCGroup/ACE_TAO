@@ -1,4 +1,3 @@
-
 #ifndef ROUNDTRIP_H
 #define ROUNDTRIP_H
 #include /**/ "ace/pre.h"
@@ -15,10 +14,9 @@ class Roundtrip
   : public virtual POA_Test::AMH_Roundtrip
 {
  public:
-    /// Constructor
-    Roundtrip (CORBA::ORB_ptr orb);
+    explicit Roundtrip (CORBA::ORB_ptr orb);
 
-    // = The skeleton methods
+    /// The skeleton methods
     void test_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
                       Test::Timestamp send_time);
 

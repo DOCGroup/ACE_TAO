@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Routing_Slip_Persistence_Manager.h
  *
@@ -10,7 +7,6 @@
  *
  *  @author Jonathan Pollack <pollack_j@ociweb.com>
  */
-//=============================================================================
 
 #ifndef ROUTING_SLIP_PERSISTENCE_MANAGER_H
 #define ROUTING_SLIP_PERSISTENCE_MANAGER_H
@@ -56,32 +52,35 @@ public:
   /// A code to indicate the type of block in persistent storage.
   using Block_Type = ACE_UINT16;
 
-  /// The constructor.
-  Routing_Slip_Persistence_Manager(Standard_Event_Persistence_Factory* factory);
+  explicit Routing_Slip_Persistence_Manager(Standard_Event_Persistence_Factory* factory);
 
-  /// The destructor.
+  Routing_Slip_Persistence_Manager (Routing_Slip_Persistence_Manager const &) = delete;
+  Routing_Slip_Persistence_Manager (Routing_Slip_Persistence_Manager &&) = delete;
+  Routing_Slip_Persistence_Manager &operator= (Routing_Slip_Persistence_Manager const &) = delete;
+  Routing_Slip_Persistence_Manager &operator= (Routing_Slip_Persistence_Manager &&) = delete;
+
   ~Routing_Slip_Persistence_Manager();
 
   /// Set up callbacks
   void set_callback(Persistent_Callback* callback);
 
   /// Store an event + routing slip.
-  bool store(const ACE_Message_Block& event,
-    const ACE_Message_Block& routing_slip);
+  bool store(ACE_Message_Block const& event,
+    ACE_Message_Block const& routing_slip);
 
   /// \brief Update the routing slip.
   ///
   /// We must always overwrite the first block
   /// last, and it may not chance.  Other blocks should be freed and
   /// reallocated.
-  bool update(const ACE_Message_Block& routing_slip);
+  bool update(ACE_Message_Block const& routing_slip);
 
   /// \brief Remove our associated event and routing slip from the
   /// Persistent_File_Allocator.
   bool remove();
 
-  /////////////////////////////////////////
-  // Methods to be used during reload only.
+  /// @name Methods used during reload
+  /// @{
 
   /// \brief Call this method to recover data during event reload.
   ///
@@ -97,10 +96,11 @@ public:
   /// method to get the next RSPM.  It returns a null pointer
   /// when all persistent events have been reloaded.
   Routing_Slip_Persistence_Manager * load_next ();
+  /// @}
 
-  /////////////////////////
-  // Implementation methods.
-  // Should not be called by Routing_Slip
+  /// @name Routing slip implementation methods
+  /// Should not be called by Routing_Slip.
+  /// @{
 
   /// \brief Commit root data to disk, which should only be done for a root node.
   bool store_root();
@@ -115,6 +115,7 @@ public:
 
   /// \brief During cleanup for shut down, release all chained RSPMs.
   void release_all ();
+  /// @}
 
 private:
   /**
@@ -129,7 +130,7 @@ private:
       BT_Overflow
       };
 
-    Block_Header(Header_Type type);
+    explicit Block_Header(Header_Type type);
     virtual ~Block_Header ();
     virtual size_t extract_header(Persistent_Storage_Block& psb,
       size_t offset = 0);
@@ -154,10 +155,10 @@ private:
   {
   public:
     Routing_Slip_Header();
-    virtual size_t extract_header(Persistent_Storage_Block& psb,
-      size_t offset = 0);
-    virtual size_t put_header(Persistent_Storage_Block& psb,
-      size_t offset = 0);
+    size_t extract_header(Persistent_Storage_Block& psb,
+      size_t offset = 0) override;
+    size_t put_header(Persistent_Storage_Block& psb,
+      size_t offset = 0) override;
 
   public:
     /// The next event in the system
@@ -187,17 +188,17 @@ private:
     Overflow_Header ();
   };
 
-  bool store_i(const ACE_Message_Block& event,
-    const ACE_Message_Block& routing_slip);
+  bool store_i(ACE_Message_Block const& event,
+    ACE_Message_Block const& routing_slip);
 
-  bool update_i(const ACE_Message_Block& routing_slip);
+  bool update_i(ACE_Message_Block const& routing_slip);
 
-  bool store_event(const ACE_Message_Block& event);
+  bool store_event(ACE_Message_Block const& event);
 
   /// Fill in a block with data, and return the number of bytes
   /// of data remaining to be written.
   size_t fill_block(Persistent_Storage_Block& psb,
-    size_t offset_into_block, const ACE_Message_Block* data,
+    size_t offset_into_block, ACE_Message_Block const* data,
     size_t offset_into_msg);
   size_t fill_block(Persistent_Storage_Block& psb,
     size_t offset_into_block, unsigned char* data,
@@ -208,7 +209,7 @@ private:
     Persistent_Storage_Block* first_block,
     Block_Header& first_header,
     ACE_Unbounded_Stack<size_t>& allocated_blocks,
-    const ACE_Message_Block& data);
+    ACE_Message_Block const& data);
 
   /// Reload a chain from persistent store.
   bool reload_chain(Persistent_Storage_Block* first_block,
@@ -236,24 +237,24 @@ private:
 
 private:
   TAO_SYNCH_MUTEX lock_;
-  bool removed_;
-  ACE_UINT64 serial_number_;
+  bool removed_ {};
+  ACE_UINT64 serial_number_ {};
   Persistent_File_Allocator* allocator_;
   Standard_Event_Persistence_Factory* factory_;
   Event_Header event_header_;
   Routing_Slip_Header routing_slip_header_;
-  Persistent_Storage_Block* first_event_block_;
-  Persistent_Storage_Block* first_routing_slip_block_;
+  Persistent_Storage_Block* first_event_block_ {};
+  Persistent_Storage_Block* first_routing_slip_block_ {};
   /// We are part of a doubly-linked list
   Routing_Slip_Persistence_Manager* prev_manager_;
   Routing_Slip_Persistence_Manager* next_manager_;
   ACE_Unbounded_Stack<size_t> allocated_event_blocks_;
   ACE_Unbounded_Stack<size_t> allocated_routing_slip_blocks_;
-  Persistent_Callback* callback_;
+  Persistent_Callback* callback_ {};
 
-  /// If these are non-zero we own 'em
-  ACE_Message_Block * event_mb_;
-  ACE_Message_Block * routing_slip_mb_;
+  /// If these are non-null, we own them.
+  ACE_Message_Block_Unique_Ptr event_mb_ {};
+  ACE_Message_Block_Unique_Ptr routing_slip_mb_ {};
 };
 } /* namespace TAO_Notify */
 

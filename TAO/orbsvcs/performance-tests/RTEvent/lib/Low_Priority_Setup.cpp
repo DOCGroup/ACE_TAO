@@ -12,6 +12,8 @@
 #include "ace/Basic_Stats.h"
 #include "ace/Sample_History.h"
 
+#include <memory>
+
 template<class Client_Type> Low_Priority_Setup<Client_Type>::
 Low_Priority_Setup (int consumer_count,
                     int iterations,
@@ -40,12 +42,16 @@ Low_Priority_Setup (int consumer_count,
       int per_consumer_workload =
         workload / this->consumer_count_;
       if (workload != 0 && per_consumer_workload == 0)
-        per_consumer_workload = 1;
+        {
+          per_consumer_workload = 1;
+        }
 
       CORBA::Long event_type =
         base_event_type;
       if (use_different_types)
-        event_type = base_event_type + 2 * i;
+        {
+          event_type = base_event_type + 2 * i;
+        }
 
       this->clients_[i].init (experiment_id,
                               event_type,
@@ -65,7 +71,9 @@ Low_Priority_Setup (int consumer_count,
       CORBA::Long event_type =
         base_event_type;
       if (use_different_types)
-        event_type = base_event_type + 2 * j;
+        {
+          event_type = base_event_type + 2 * j;
+        }
 
       this->tasks_[j].init (0,
                             per_thread_period,
@@ -75,7 +83,9 @@ Low_Priority_Setup (int consumer_count,
                             this->clients_[j].supplier (),
                             barrier);
       this->tasks_[j].thr_mgr (&this->thr_mgr_);
-      this->stoppers_[j].reset (new Send_Task_Stopper (thread_priority, thread_sched_class, &this->tasks_[j]));
+      this->stoppers_[j] = std::make_unique<Send_Task_Stopper> (thread_priority,
+                                                               thread_sched_class,
+                                                               &this->tasks_[j]);
     }
 }
 
@@ -95,7 +105,7 @@ Low_Priority_Setup<Client_Type>::stop_all_threads ()
   /// destructors automatically stop and wait for all the threads.
   /// Depending on your personal bias this is either "super neat" or
   /// "a horrible kludge", IMHO is just good use of the language :-)
-  this->stoppers_.reset (0);
+  this->stoppers_.reset (nullptr);
 }
 
 template<class Client_Type> void

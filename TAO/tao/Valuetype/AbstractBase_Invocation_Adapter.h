@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 /**
  *  @file    AbstractBase_Invocation_Adapter.h
  *

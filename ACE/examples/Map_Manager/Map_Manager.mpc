@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project: aceexe {
   exename = Map_Manager
 }

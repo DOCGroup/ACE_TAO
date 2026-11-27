@@ -2,16 +2,18 @@
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
 
-static const ACE_TCHAR *ior = ACE_TEXT ("file://test.ior");
+#include <memory>
+
+static ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
 // Server IOR.
 
-static int shutdown_server = 0;
+static bool shutdown_server {};
 // Flag to tell server to shutdown.
 
-static CORBA::UShort call_count = 5;
+static CORBA::UShort call_count {5};
 // # of nested calls to be made.
 
-static int quiet = 0;
+static bool quiet {};
 // The test is quiet...
 
 class Client_Task
@@ -20,6 +22,11 @@ public:
   Client_Task (client_ptr c,
                server_ptr s);
   int svc ();
+
+  Client_Task (Client_Task const &) = delete;
+  Client_Task (Client_Task &&) = delete;
+  Client_Task &operator= (Client_Task const &) = delete;
+  Client_Task &operator= (Client_Task &&) = delete;
 
 private:
   client_var client_;
@@ -39,15 +46,17 @@ Client_Task::svc ()
   try
     {
       if (!quiet)
-        ACE_DEBUG ((LM_DEBUG,
-                    "(%t) Client_Task::svc calling start -> time to live = %d\n",
-                    call_count));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "(%t) Client_Task::svc calling start -> time to live = %d\n",
+                      call_count));
+        }
 
       // Now, we can invoke an operation on the remote side.
       this->server_->start (this->client_.in (),
                             call_count);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Client_Task::svc");
       return -1;
@@ -66,11 +75,11 @@ parse_args (int argc,
     switch (c)
       {
       case 'q':
-        quiet = 1;
+        quiet = true;
         break;
 
       case 'x':
-        shutdown_server = 1;
+        shutdown_server = true;
         break;
 
       case 'n':
@@ -94,11 +103,13 @@ parse_args (int argc,
                           -1);
       }
 
-  if (ior == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%s: no nested up calls server ior specified\n",
-                       argv[0]),
-                      -1);
+  if (ior == nullptr)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%s: no nested up calls server ior specified\n",
+                         argv[0]),
+                        -1);
+    }
 
   // Indicates successful parsing of command line.
   return 0;
@@ -112,9 +123,11 @@ ACE_TMAIN (int argc,
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
-      int result = parse_args (argc, argv);
+      int const result = parse_args (argc, argv);
       if (result != 0)
+      {
         return result;
+      }
 
       CORBA::Object_var object = orb->resolve_initial_references ("RootPOA");
 
@@ -135,7 +148,7 @@ ACE_TMAIN (int argc,
                                server.in ());
 
       PortableServer::ObjectId_var id =
-        root_poa->activate_object (&client_servant);
+        root_poa->activate_object (std::addressof (client_servant));
 
       CORBA::Object_var object_act = root_poa->id_to_reference (id.in ());
 
@@ -153,7 +166,7 @@ ACE_TMAIN (int argc,
 
       root_poa->destroy (true, true);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("client::main");
       return -1;

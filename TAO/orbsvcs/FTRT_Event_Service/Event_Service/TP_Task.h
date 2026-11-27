@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   TP_Task.h
  *
  *  @author Huang-Ming Huang <hh1@cse.wustl.edu>
  */
-//=============================================================================
 #ifndef TP_TASK_H
 #define TP_TASK_H
 
@@ -20,7 +16,7 @@
 class TP_Task : public ACE_Task_Base
 {
 public:
-  explicit TP_Task (CORBA::ORB_var &orb)
+  explicit TP_Task (CORBA::ORB_var const &orb)
     : orb_ (orb)
   {
   }
@@ -39,7 +35,7 @@ private:
   TP_Task (TP_Task &&) = delete;
   TP_Task &operator= (TP_Task &&) = delete;
 
-  CORBA::ORB_var &orb_;
+  CORBA::ORB_var const &orb_;
 };
 
 #endif

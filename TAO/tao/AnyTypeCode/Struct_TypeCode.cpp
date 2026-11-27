@@ -9,13 +9,15 @@
 #include "tao/CDR.h"
 #include "tao/SystemException.h"
 
-
 #ifndef __ACE_INLINE__
 # include "tao/AnyTypeCode/Struct_TypeCode.inl"
 #endif  /* !__ACE_INLINE__ */
 
 #include "ace/Dynamic_Service.h"
 #include "ace/Truncate.h"
+
+#include <cstring>
+#include <vector>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -54,16 +56,13 @@ TAO::TypeCode::Struct<StringType,
     && (enc << this->nfields_);
 
   if (!success)
-    return false;
-
-  Struct_Field<StringType, TypeCodeType> const * const begin =
-    &this->fields_[0];
-  Struct_Field<StringType, TypeCodeType> const * const end =
-    begin + this->nfields_;
-
-  for (Struct_Field<StringType, TypeCodeType> const * i = begin; i != end; ++i)
     {
-      Struct_Field<StringType, TypeCodeType> const & field = *i;
+      return false;
+    }
+
+  for (CORBA::ULong i {}; i < this->nfields_; ++i)
+    {
+      Struct_Field<StringType, TypeCodeType> const & field = this->fields_[i];
 
       if (!(enc << TAO_OutputCDR::from_string (
                        Traits<StringType>::get_string (field.name), 0))
@@ -71,7 +70,9 @@ TAO::TypeCode::Struct<StringType,
                        Traits<StringType>::get_typecode (field.type),
                        ACE_Utils::truncate_cast<CORBA::ULong> (
                            offset + enc.total_length ())))
-        return false;
+        {
+          return false;
+        }
     }
 
   return
@@ -109,7 +110,7 @@ template <typename StringType,
           typename TypeCodeType,
           class FieldArrayType,
           class RefCountPolicy>
-const FieldArrayType&
+FieldArrayType const &
 TAO::TypeCode::Struct<StringType,
                       TypeCodeType,
                       FieldArrayType,
@@ -136,9 +137,11 @@ TAO::TypeCode::Struct<StringType,
     tc->member_count ();
 
   if (tc_nfields != this->nfields_)
-    return false;
+    {
+      return false;
+    }
 
-  for (CORBA::ULong i = 0; i < this->nfields_; ++i)
+  for (CORBA::ULong i {}; i < this->nfields_; ++i)
     {
       Struct_Field<StringType, TypeCodeType> const & lhs_field =
         this->fields_[i];
@@ -148,7 +151,9 @@ TAO::TypeCode::Struct<StringType,
       char const * const rhs_name = tc->member_name (i);
 
       if (std::strcmp (lhs_name, rhs_name) != 0)
-        return false;
+        {
+          return false;
+        }
 
       CORBA::TypeCode_ptr const lhs_tc =
         Traits<StringType>::get_typecode (lhs_field.type);
@@ -159,7 +164,9 @@ TAO::TypeCode::Struct<StringType,
         lhs_tc->equal (rhs_tc.in ());
 
       if (!equal_members)
-        return false;
+        {
+          return false;
+        }
     }
 
   return true;
@@ -183,9 +190,11 @@ TAO::TypeCode::Struct<StringType,
     tc->member_count ();
 
   if (tc_nfields != this->nfields_)
-    return false;
+    {
+      return false;
+    }
 
-  for (CORBA::ULong i = 0; i < this->nfields_; ++i)
+  for (CORBA::ULong i {}; i < this->nfields_; ++i)
     {
       CORBA::TypeCode_ptr const lhs =
         Traits<StringType>::get_typecode (this->fields_[i].type);
@@ -196,7 +205,9 @@ TAO::TypeCode::Struct<StringType,
         lhs->equivalent (rhs.in ());
 
       if (!equiv_members)
-        return false;
+        {
+          return false;
+        }
     }
 
   return true;
@@ -212,9 +223,8 @@ TAO::TypeCode::Struct<StringType,
                       FieldArrayType,
                       RefCountPolicy>::get_compact_typecode_i () const
 {
-  ACE_Array_Base<Struct_Field<CORBA::String_var,
-                              CORBA::TypeCode_var> >
-    tc_fields (this->nfields_);
+  std::vector<Struct_Field<CORBA::String_var,
+                           CORBA::TypeCode_var>> tc_fields (this->nfields_);
 
   if (this->nfields_ > 0)
     {
@@ -223,7 +233,7 @@ TAO::TypeCode::Struct<StringType,
 
       static char const empty_name[] = "";
 
-      for (CORBA::ULong i = 0; i < this->nfields_; ++i)
+      for (CORBA::ULong i {}; i < this->nfields_; ++i)
         {
           // Member names will be stripped, i.e. not embedded within
           // the compact TypeCode.
@@ -308,7 +318,9 @@ TAO::TypeCode::Struct<StringType,
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.
   if (index >= this->nfields_)
-    throw ::CORBA::TypeCode::Bounds ();
+    {
+      throw ::CORBA::TypeCode::Bounds ();
+    }
 
   return Traits<StringType>::get_string (this->fields_[index].name);
 }
@@ -324,7 +336,9 @@ TAO::TypeCode::Struct<StringType,
                       RefCountPolicy>::member_type_i (CORBA::ULong index) const
 {
   if (index >= this->nfields_)
-    throw ::CORBA::TypeCode::Bounds ();
+    {
+      throw ::CORBA::TypeCode::Bounds ();
+    }
 
   return
     CORBA::TypeCode::_duplicate (

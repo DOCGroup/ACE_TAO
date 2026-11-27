@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    XMLFilter.h
  *
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  */
-//=============================================================================
 #ifndef _ACEXML_XMLFILTER_H_
 #define _ACEXML_XMLFILTER_H_
 
@@ -47,7 +43,6 @@ public:
    */
   virtual void setParent (ACEXML_XMLReader *parent) = 0;
 };
-
 
 #include /**/ "ace/post.h"
 

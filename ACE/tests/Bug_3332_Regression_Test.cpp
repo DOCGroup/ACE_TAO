@@ -1,25 +1,14 @@
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = FILENAME
-//    Bug_3332_Regression_Test.cpp
-//
-// = DESCRIPTION
-//    This is a test to verify the node unbind/remove stability.
-//    Originally the deletion of a node from the rb_tree would cause some nodes
-//    to be "swapped" and the node being deleted to be reused to hold data still
-//    in the rb_tree, whilst the original "still in the tree" data node would be
-//    unbound instead. This caused externally held pointers to existing data that
-//    should still be in the tree to become invalidated unnecessarily. This test
-//    ensures that the node NOT being deleted always keep their original entries
-//    (and thus only the deleted node is actually unbound and released).
-//
-// = AUTHOR
-//    Simon Massey <sma@prismtech.com>
-//
-// ============================================================================
+/// @file Bug_3332_Regression_Test.cpp
+/// This is a test to verify the node unbind/remove stability.
+/// Originally the deletion of a node from the rb_tree would cause some nodes
+/// to be "swapped" and the node being deleted to be reused to hold data still
+/// in the rb_tree, whilst the original "still in the tree" data node would be
+/// unbound instead. This caused externally held pointers to existing data that
+/// should still be in the tree to become invalidated unnecessarily. This test
+/// ensures that the node NOT being deleted always keep their original entries
+/// (and thus only the deleted node is actually unbound and released).
+///
+/// @author Simon Massey <sma@prismtech.com>
 
 #include "test_config.h" /* Include first to enable ACE_TEST_ASSERT. */
 #include "ace/RB_Tree.h"
@@ -56,11 +45,11 @@ run_main (int, ACE_TCHAR *[])
   ACE_RB_Tree<char, int, ACE_Less_Than<char>, ACE_Null_Mutex> tree;
 
   ACE_DEBUG ((LM_DEBUG, "Creating Tree\n"));
-  {for (size_t i= 0u; i < sizeof(nodes)/sizeof(Nodes); ++i)
+  {for (Nodes& node : nodes)
   {
-    if (0 != tree.bind (nodes[i].key, nodes[i].value, nodes[i].node))
+    if (0 != tree.bind (node.key, node.value, node.node))
     {
-      ACE_DEBUG ((LM_ERROR, ": Binding failed for %c=%d\n", nodes[i].key, nodes[i].value));
+      ACE_DEBUG ((LM_ERROR, ": Binding failed for %c=%d\n", node.key, node.value));
       result = 1;
     }
   }}
@@ -70,7 +59,7 @@ run_main (int, ACE_TCHAR *[])
     ACE_DEBUG ((LM_DEBUG, "Validating Tree\n"));
     {for (size_t i= 0u; i < sizeof(nodes)/sizeof(Nodes); ++i)
     {
-      ACE_RB_Tree_Node<char, int> *node = nullptr;
+      ACE_RB_Tree_Node<char, int> *node {};
 
       if (tree.find (nodes[i].key, node))
       {
@@ -79,24 +68,32 @@ run_main (int, ACE_TCHAR *[])
       }
       else if (nodes[i].node != node)
       {
-        ACE_DEBUG ((LM_ERROR, ": entry %c=%d has ALREADY moved from %@ to %@\n", nodes[i].key, nodes[i].value, nodes[i].node, node));
+        ACE_DEBUG ((LM_ERROR, ": entry %c=%d has ALREADY moved from %@ to %@\n",
+                    nodes[i].key, nodes[i].value,
+                    static_cast<void *> (nodes[i].node), static_cast<void *> (node)));
         result = 3;
       }
-      else for (size_t j= i+1u; j < sizeof(nodes)/sizeof(Nodes); ++j)
-      {
-        if (nodes[i].node == nodes[j].node)
+      else
         {
-          ACE_DEBUG ((LM_ERROR, ": Duplicate Binding (%@) for %c=%d and %c=%d\n", nodes[i].node, nodes[i].key, nodes[i].value, nodes[j].key, nodes[j].value));
-          result = 4;
-       }
-      }
+          for (size_t j= i+1u; j < sizeof(nodes)/sizeof(Nodes); ++j)
+            {
+              if (nodes[i].node == nodes[j].node)
+                {
+                  ACE_DEBUG ((LM_ERROR, ": Duplicate Binding (%@) for %c=%d and %c=%d\n",
+                              static_cast<void *> (nodes[i].node), nodes[i].key, nodes[i].value,
+                              nodes[j].key, nodes[j].value));
+                  result = 4;
+                }
+            }
+        }
     }}
 
     if (!result)
     {
       {for (size_t i= 0u; i < sizeof(nodes)/sizeof(Nodes); ++i)
       {
-        ACE_DEBUG ((LM_DEBUG, "Deleting node %c=%d @ %@\n", nodes[i].key, nodes[i].value, nodes[i].node));
+        ACE_DEBUG ((LM_DEBUG, "Deleting node %c=%d @ %@\n",
+                    nodes[i].key, nodes[i].value, static_cast<void *> (nodes[i].node)));
         if (tree.unbind (nodes[i].key))
         {
           ACE_DEBUG ((LM_ERROR, ": Can't unbind key %c from tree\n", nodes[i].key));
@@ -104,11 +101,12 @@ run_main (int, ACE_TCHAR *[])
         }
         else
         {
-          ACE_RB_Tree_Node<char, int> *node = nullptr;
+          ACE_RB_Tree_Node<char, int> *node {};
 
           if (0 == tree.find (nodes[i].key, node))
           {
-            ACE_DEBUG ((LM_ERROR, ": Found %c=%d @ %@ in tree\n", node->key(), node->item(), node));
+            ACE_DEBUG ((LM_ERROR, ": Found %c=%d @ %@ in tree\n",
+                        node->key(), node->item(), static_cast<void *> (node)));
             result = 6;
           }
           else {for (size_t j= i+1u; j < sizeof(nodes)/sizeof(Nodes); ++j)
@@ -120,7 +118,9 @@ run_main (int, ACE_TCHAR *[])
             }
             else if (nodes[j].node != node)
             {
-              ACE_DEBUG ((LM_ERROR, ": entry %c=%d has moved from %@ to %@\n", nodes[j].key, nodes[j].value, nodes[j].node, node));
+              ACE_DEBUG ((LM_ERROR, ": entry %c=%d has moved from %@ to %@\n",
+                          nodes[j].key, nodes[j].value,
+                          static_cast<void *> (nodes[j].node), static_cast<void *> (node)));
               nodes[j].node = node;  // Don't keep reporting this same issue on further deletions.
               result = 8;
             }

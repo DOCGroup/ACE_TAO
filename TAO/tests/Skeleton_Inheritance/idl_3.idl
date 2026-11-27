@@ -1,4 +1,3 @@
-
 #include "idl_2.idl"
 
 module Skeleton_Inheritance

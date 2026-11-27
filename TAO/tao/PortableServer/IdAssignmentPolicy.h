@@ -1,13 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file IdAssignmentPolicy.h
  *
  *  @author  Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-//=============================================================================
-
 #ifndef TAO_PORTABLESERVER_IDASSIGNMENTPOLICY_H
 #define TAO_PORTABLESERVER_IDASSIGNMENTPOLICY_H
 #include /**/ "ace/pre.h"
@@ -41,7 +36,7 @@ namespace TAO
         public virtual ::CORBA::LocalObject
     {
     public:
-      IdAssignmentPolicy (::PortableServer::IdAssignmentPolicyValue value);
+      explicit IdAssignmentPolicy (::PortableServer::IdAssignmentPolicyValue value);
 
       CORBA::Policy_ptr copy () override;
 

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "ClientORBInitializer.h"
 #include "ClientRequestInterceptor.h"
 
@@ -10,8 +9,7 @@ PortableInterceptor::SlotId slot_id = 2093843211;
 
 void
 ClientORBInitializer::pre_init (
-    PortableInterceptor::ORBInitInfo_ptr /* info */
-    )
+    PortableInterceptor::ORBInitInfo_ptr /* info */)
 {
 }
 
@@ -19,10 +17,10 @@ void
 ClientORBInitializer::post_init (
     PortableInterceptor::ORBInitInfo_ptr info)
 {
-  CORBA::Object_var obj =
+  CORBA::Object_var const obj =
     info->resolve_initial_references ("PICurrent");
 
-  PortableInterceptor::Current_var pi_current =
+  PortableInterceptor::Current_var const pi_current =
     PortableInterceptor::Current::_narrow (obj.in ());
 
   if (CORBA::is_nil (pi_current.in ()))
@@ -35,7 +33,7 @@ ClientORBInitializer::post_init (
 
   ::slot_id = info->allocate_slot_id ();
 
-  PortableInterceptor::ClientRequestInterceptor_ptr foo;
+  PortableInterceptor::ClientRequestInterceptor_ptr foo {};
   ACE_NEW_THROW_EX (foo,
                     ClientRequestInterceptor (::slot_id,
                                               pi_current.in ()),
@@ -45,7 +43,7 @@ ClientORBInitializer::post_init (
                         ENOMEM),
                       CORBA::COMPLETED_NO));
 
-  PortableInterceptor::ClientRequestInterceptor_var interceptor =
+  PortableInterceptor::ClientRequestInterceptor_var const interceptor =
     foo;
 
   info->add_client_request_interceptor (interceptor.in ());

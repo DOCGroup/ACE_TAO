@@ -1,6 +1,3 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
 *  @file FT_Naming_Replication_Manager.h
 *
@@ -8,7 +5,6 @@
 *  Based on the replicator class used in the ImR.
 *
 */
-//=============================================================================
 
 #ifndef FT_REPLICATOR_H
 #define FT_REPLICATOR_H
@@ -25,6 +21,7 @@
 #include "ace/Task.h"
 
 #include <set>
+#include <string>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -34,7 +31,7 @@ class TAO_FT_Naming_Server;
 class FT_Update_Replicant_i : public virtual POA_FT_Naming::UpdatePushNotifier
 {
 public:
-  FT_Update_Replicant_i (TAO_FT_Naming_Replication_Manager &owner);
+  explicit FT_Update_Replicant_i (TAO_FT_Naming_Replication_Manager &owner);
 
   void register_peer (::FT_Naming::UpdatePushNotifier_ptr peer,
                       ::FT_Naming::ReplicaInfo const &info,
@@ -43,17 +40,17 @@ public:
   void notify_update (CORBA::ULongLong seq_num,
                       FT_Naming::UpdateInfoSeq &info) override;
 
-private:
   FT_Update_Replicant_i (FT_Update_Replicant_i const &) = delete;
   FT_Update_Replicant_i (FT_Update_Replicant_i &&) = delete;
   FT_Update_Replicant_i &operator= (FT_Update_Replicant_i const &) = delete;
   FT_Update_Replicant_i &operator= (FT_Update_Replicant_i &&) = delete;
 
+private:
   TAO_FT_Naming_Replication_Manager &owner_;
 };
 
 /**
-* @class Replicator
+* @class TAO_FT_Naming_Replication_Manager
 *
 * @brief Manages the notification between the peers whenever a
 * context or object group changes state. The goal is to ensure
@@ -73,15 +70,22 @@ public:
   using Replica_var = FT_Naming::UpdatePushNotifier_var;
   using Replica_ptr = FT_Naming::UpdatePushNotifier_ptr;
 
-  TAO_FT_Naming_Replication_Manager (TAO_FT_Naming_Server &owner);
+  explicit TAO_FT_Naming_Replication_Manager (TAO_FT_Naming_Server &owner);
 
-  ~TAO_FT_Naming_Replication_Manager () override;
+  ~TAO_FT_Naming_Replication_Manager () override = default;
+
+  TAO_FT_Naming_Replication_Manager (TAO_FT_Naming_Replication_Manager const &) = delete;
+  TAO_FT_Naming_Replication_Manager (TAO_FT_Naming_Replication_Manager &&) = delete;
+  TAO_FT_Naming_Replication_Manager &operator= (
+    TAO_FT_Naming_Replication_Manager const &) = delete;
+  TAO_FT_Naming_Replication_Manager &operator= (
+    TAO_FT_Naming_Replication_Manager &&) = delete;
 
   int svc () override;
   int handle_exception (ACE_HANDLE) override;
 
   void stop ();
-  void send_context_update (const ACE_CString &ctx,
+  void send_context_update (std::string const &ctx,
                             FT_Naming::ChangeType update);
   void send_objgrp_update (PortableGroup::ObjectGroupId id,
                            FT_Naming::ChangeType update);
@@ -97,19 +101,13 @@ public:
   char * ior ();
 
 private:
-  TAO_FT_Naming_Replication_Manager (TAO_FT_Naming_Replication_Manager const &) = delete;
-  TAO_FT_Naming_Replication_Manager (TAO_FT_Naming_Replication_Manager &&) = delete;
-  TAO_FT_Naming_Replication_Manager &operator= (
-    TAO_FT_Naming_Replication_Manager const &) = delete;
-  TAO_FT_Naming_Replication_Manager &operator= (
-    TAO_FT_Naming_Replication_Manager &&) = delete;
-
   Replica_var me_;
   Replica_var peer_;
   CORBA::ULongLong seq_num_;
   CORBA::ULongLong replica_seq_num_;
   TAO_FT_Naming_Server &server_;
   CORBA::ORB_var orb_;
+  /// Borrowed from the ORB core; the core owns the reactor.
   ACE_Reactor *reactor_ {};
   TAO_SYNCH_MUTEX lock_;
   bool notified_;

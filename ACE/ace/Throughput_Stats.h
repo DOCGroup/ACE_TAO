@@ -1,13 +1,8 @@
-// -*- C++ -*-
-
-//==========================================================================
 /**
  *  @file    Throughput_Stats.h
  *
  *  @author David L. Levine
  */
-//==========================================================================
-
 
 #ifndef ACE_THROUGHPUT_STATS_H
 #define ACE_THROUGHPUT_STATS_H
@@ -43,20 +38,19 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Throughput_Stats : public ACE_Basic_Stats
 {
 public:
-  /// Constructor
   ACE_Throughput_Stats () = default;
 
   /// Store one sample
   void sample (ACE_UINT64 throughput, ACE_UINT64 latency);
 
   /// Update the values to reflect the stats in @a throughput
-  void accumulate (const ACE_Throughput_Stats &throughput);
+  void accumulate (ACE_Throughput_Stats const &throughput);
 
   /// Print down the stats
-  void dump_results (const ACE_TCHAR* msg, scale_factor_type scale_factor);
+  void dump_results (ACE_TCHAR const *msg, scale_factor_type scale_factor);
 
   /// Dump the average throughput stats.
-  static void dump_throughput (const ACE_TCHAR *msg,
+  static void dump_throughput (ACE_TCHAR const *msg,
                                scale_factor_type scale_factor,
                                ACE_UINT64 elapsed_time,
                                ACE_UINT32 samples_count);

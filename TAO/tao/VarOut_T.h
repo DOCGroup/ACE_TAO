@@ -1,19 +1,15 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    VarOut_T.h
  *
  *  @author Jeff Parsons
  */
-//=============================================================================
 
 #ifndef TAO_VAROUT_T_H
 #define TAO_VAROUT_T_H
 
 #include /**/ "ace/pre.h"
 
-#include /**/ "tao/Versioned_Namespace.h"
+#include "tao/orbconf.h"
 
 #include "ace/OS_Memory.h"
 
@@ -35,12 +31,12 @@ class TAO_Var_Base_T
 public:
   TAO_Var_Base_T ();
   TAO_Var_Base_T (T *);
-  TAO_Var_Base_T (const TAO_Var_Base_T<T> &);
+  TAO_Var_Base_T (TAO_Var_Base_T<T> const &);
 
   ~TAO_Var_Base_T ();
 
   T * operator-> ();
-  const T * operator-> () const;
+  T const * operator-> () const;
 
   using _in_type = T const &;
   using _inout_type = T &;
@@ -54,7 +50,7 @@ public:
   operator T *& ();
 
 protected:
-  T * ptr_;
+  T * ptr_ {};
 };
 
 /**
@@ -69,18 +65,18 @@ class TAO_Fixed_Var_T : public TAO_Var_Base_T<T>
 public:
   TAO_Fixed_Var_T ();
   TAO_Fixed_Var_T (T *);
-  TAO_Fixed_Var_T (const TAO_Fixed_Var_T<T> &);
+  TAO_Fixed_Var_T (TAO_Fixed_Var_T<T> const &);
 
-  // Fixed-size types only.
-  TAO_Fixed_Var_T (const T &);
+  /// Fixed-size types only.
+  TAO_Fixed_Var_T (T const &);
 
   TAO_Fixed_Var_T & operator= (T *);
-  TAO_Fixed_Var_T & operator= (const TAO_Fixed_Var_T<T> &);
+  TAO_Fixed_Var_T & operator= (TAO_Fixed_Var_T<T> const &);
 
-  // Fixed-size types only.
-  TAO_Fixed_Var_T & operator= (const T &);
+  /// Fixed-size types only.
+  TAO_Fixed_Var_T & operator= (T const &);
 
-  operator const T & () const;
+  operator T const & () const;
   operator T & ();
   operator T & () const;
 
@@ -104,12 +100,12 @@ class TAO_Var_Var_T : public TAO_Var_Base_T<T>
 public:
   TAO_Var_Var_T ();
   TAO_Var_Var_T (T *);
-  TAO_Var_Var_T (const TAO_Var_Var_T<T> &);
+  TAO_Var_Var_T (TAO_Var_Var_T<T> const &);
 
   TAO_Var_Var_T & operator= (T *);
-  TAO_Var_Var_T & operator= (const TAO_Var_Var_T<T> &);
+  TAO_Var_Var_T & operator= (TAO_Var_Var_T<T> const &);
 
-  operator const T & () const;
+  operator T const & () const;
   operator T & ();
   operator T & () const;
 
@@ -135,10 +131,11 @@ public:
 
   TAO_Out_T (T *&);
   TAO_Out_T (T_var &);
-  TAO_Out_T (const TAO_Out_T<T> &);
+  TAO_Out_T (TAO_Out_T<T> const &);
 
-  TAO_Out_T &operator= (const TAO_Out_T<T> &);
+  TAO_Out_T &operator= (TAO_Out_T<T> const &);
   TAO_Out_T &operator= (T *);
+  TAO_Out_T &operator= (T_var const &) = delete;
 
   operator T *& ();
   T *& ptr ();
@@ -146,9 +143,6 @@ public:
 
 private:
   T *& ptr_;
-
-  /// Assignment from T_var not allowed.
-  void operator= (const T_var &);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

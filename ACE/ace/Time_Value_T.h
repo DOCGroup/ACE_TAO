@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Time_Value_T.h
  *
  *  @author Martin Corino <mcorino@remedy.nl>
  */
-//=============================================================================
 
 #ifndef ACE_TIME_VALUE_T_H
 #define ACE_TIME_VALUE_T_H
@@ -22,14 +18,14 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
- * @class ACE_Time_Value
+ * @class ACE_Time_Value_T
  *
  * @brief Operations on "timeval" structures, which express time in
  * seconds (secs) and microseconds (usecs).
  *
  * This class centralizes all the time related processing in
  * ACE.  These time values are typically used in conjunction with OS
- * mechanisms like <select>, <poll>, or <cond_timedwait>.
+ * mechanisms like @c select, @c poll, or @c cond_timedwait.
  */
 template <class TIME_POLICY>
 class ACE_Time_Value_T : public ACE_Time_Value
@@ -37,14 +33,13 @@ class ACE_Time_Value_T : public ACE_Time_Value
 public:
   using time_policy_t = TIME_POLICY;
 
-  /// Default Constructor.
   ACE_Time_Value_T () {}
 
-  /// Constructor.
   explicit ACE_Time_Value_T (time_t sec, suseconds_t usec = 0)
     : ACE_Time_Value (sec, usec) {}
 
-  // = Methods for converting to/from various time formats.
+  /// @name Time format conversions
+  /// @{
 
   /// Construct the ACE_Time_Value from a timeval.
   explicit ACE_Time_Value_T (const struct timeval &t)
@@ -53,47 +48,47 @@ public:
   /// Construct the ACE_Time_Value object from a timespec_t.
   explicit ACE_Time_Value_T (const timespec_t &t)
     : ACE_Time_Value (t) {}
+  /// @}
 
-  /// Construct from ACE_Time_Value_T<TIME_POLICY>
-  ACE_Time_Value_T(const ACE_Time_Value_T<TIME_POLICY>& tv)
+  /// Construct from an @c ACE_Time_Value_T with the same time policy.
+  ACE_Time_Value_T(ACE_Time_Value_T<TIME_POLICY> const & tv)
     : ACE_Time_Value (tv),
       time_policy_ (tv.time_policy_)
   {}
 
   /// Construct from ACE_Time_Value
-  explicit ACE_Time_Value_T(const ACE_Time_Value& tv,
-                            const TIME_POLICY& tp = TIME_POLICY ())
+  explicit ACE_Time_Value_T(ACE_Time_Value const& tv,
+                            TIME_POLICY const& tp = TIME_POLICY ())
     : ACE_Time_Value (tv),
       time_policy_ (tp)
   {}
 
-  /// Destructor
-  ~ACE_Time_Value_T () override {}
+  ~ACE_Time_Value_T () override = default;
 
   /// Add @a tv to this.
-  ACE_Time_Value_T<TIME_POLICY> &operator += (const ACE_Time_Value &tv);
+  ACE_Time_Value_T<TIME_POLICY> &operator += (ACE_Time_Value const &tv);
 
   /// Add @a tv to this.
   ACE_Time_Value_T<TIME_POLICY> &operator += (time_t tv);
 
-  /// Assign @ tv to this
-  ACE_Time_Value_T<TIME_POLICY> &operator = (const ACE_Time_Value_T<TIME_POLICY> &tv);
+  /// Assign @a tv to this.
+  ACE_Time_Value_T<TIME_POLICY> &operator = (ACE_Time_Value_T<TIME_POLICY> const &tv);
 
-  /// Assign @ tv to this
-  ACE_Time_Value_T<TIME_POLICY> &operator = (const ACE_Time_Value &tv);
+  /// Assign @a tv to this.
+  ACE_Time_Value_T<TIME_POLICY> &operator = (ACE_Time_Value const &tv);
 
-  /// Assign @ tv to this
+  /// Assign @a tv to this.
   ACE_Time_Value_T<TIME_POLICY> &operator = (time_t tv);
 
   /// Subtract @a tv to this.
-  ACE_Time_Value_T<TIME_POLICY> &operator -= (const ACE_Time_Value &tv);
+  ACE_Time_Value_T<TIME_POLICY> &operator -= (ACE_Time_Value const &tv);
 
   /// Subtract @a tv to this.
   ACE_Time_Value_T<TIME_POLICY> &operator -= (time_t tv);
 
   /**
     \brief Multiply the time value by the @a d factor.
-    \note The result of the operator is valid for results from range
+    @note The result of the operator is valid for results from range
     < (ACE_INT32_MIN, -999999), (ACE_INT32_MAX, 999999) >. Result
     outside this range are saturated to a limit.
      */
@@ -137,11 +132,11 @@ public:
   /**
    * @return  Relative time value.
    *
-   * @note    This method uses it's time_policy_ member to get the current
+   * @note    This method uses its time_policy_ member to get the current
    *          time of day.
    *          The developer is responsible for making sure this is an absolute
    *          time value compatible with the active time policy.
-   *          Note that the returned time value has no notion of the time policy
+   *          @note The returned time value has no notion of the time policy
    *          on which it is based anymore.
    */
   ACE_Time_Value to_relative_time () const override;
@@ -150,11 +145,11 @@ public:
   /**
    * @return  Absolute time value.
    *
-   * @note    This method uses it's time_policy_ member to get the current
+   * @note    This method uses its time_policy_ member to get the current
    *          time of day.
    *          The developer is responsible for making sure this is a relative
    *          time value.
-   *          Note that the returned time value has no notion of the time policy
+   *          @note The returned time value has no notion of the time policy
    *          on which it is based anymore.
    */
   ACE_Time_Value to_absolute_time () const override;

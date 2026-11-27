@@ -10,16 +10,15 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv[])
 
   try
     {
-      int const check = trader.init (argc, argv);
-
-      if (check != -1)
+      int const result = trader.init (argc, argv);
+      if (result == -1)
         {
-          trader.run ();
+          ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                             "Failed to initialize the trader.\n"),
+                            1);
         }
-      else
-        ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                           "Failed to initialize the trader.\n"),
-                          1);
+
+      trader.run ();
     }
   catch (CORBA::Exception const &ex)
     {

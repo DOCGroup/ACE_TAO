@@ -9,8 +9,8 @@
 #include "ace/TP_Reactor.h"
 #include "ace/Get_Opt.h"
 
-int use_rt   = 0;
-int nthreads = 1;
+bool use_rt {};
+int nthreads {1};
 ACE_TCHAR const * hi_endpoint = ACE_TEXT ("localhost:12345");
 ACE_TCHAR const * lo_endpoint = ACE_TEXT ("localhost:23456");
 
@@ -20,9 +20,13 @@ parse_args (int argc, ACE_TCHAR *argv[]);
 class Task : public ACE_Task_Base
 {
 public:
-  Task (ACE_TCHAR const *endpoint);
+  explicit Task (ACE_TCHAR const *endpoint);
+  Task (Task const &) = delete;
+  Task (Task &&) = delete;
+  Task &operator= (Task const &) = delete;
+  Task &operator= (Task &&) = delete;
 
-  virtual int svc();
+  int svc () override;
 
 private:
   ACE_TCHAR const *endpoint_;
@@ -36,7 +40,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   RT_Class rt_class;
 
   if (parse_args (argc, argv) != 0)
+  {
     return 1;
+  }
 
   Task hi_task (hi_endpoint);
   Task lo_task (lo_endpoint);
@@ -58,16 +64,20 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 class Svc_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_SYNCH>
 {
 public:
-  Svc_Handler(ACE_Reactor * reactor = 0);
+  explicit Svc_Handler (ACE_Reactor *reactor = nullptr);
+  Svc_Handler (Svc_Handler const &) = delete;
+  Svc_Handler (Svc_Handler &&) = delete;
+  Svc_Handler &operator= (Svc_Handler const &) = delete;
+  Svc_Handler &operator= (Svc_Handler &&) = delete;
 
-  virtual int handle_input(ACE_HANDLE);
-  virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask);
+  int handle_input (ACE_HANDLE) override;
+  int handle_close (ACE_HANDLE, ACE_Reactor_Mask) override;
 };
 
-typedef ACE_Acceptor<Svc_Handler,ACE_SOCK_ACCEPTOR> Acceptor;
+using Acceptor = ACE_Acceptor<Svc_Handler, ACE_SOCK_ACCEPTOR>;
 
 Svc_Handler::Svc_Handler (ACE_Reactor * reactor)
-  : ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_SYNCH> (0, 0, reactor)
+  : ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_SYNCH> (0, nullptr, reactor)
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Accepted connection\n"));
 }
@@ -75,23 +85,25 @@ Svc_Handler::Svc_Handler (ACE_Reactor * reactor)
 int
 Svc_Handler::handle_input(ACE_HANDLE h)
 {
-  const size_t bufsize = BUFSIZ;
+  size_t const bufsize = BUFSIZ;
   char buf[bufsize];
 
-  while(1)
+  while (true)
     {
       ssize_t n = this->peer().recv(buf, bufsize);
       if (n == 0) {
         ACE_ERROR((LM_ERROR,
-                   "Connection %d closed while reading data\n",
+                   "Connection %H closed while reading data\n",
                    h, ""));
         break;
       } else if (n == -1) {
         if(errno == EWOULDBLOCK)
+        {
           return 0;
+        }
 
         ACE_ERROR((LM_ERROR,
-                   "Error on <%d> while reading %p\n",
+                   "Error on <%H> while reading %p\n",
                    h, ""));
         break;
       }
@@ -99,20 +111,22 @@ Svc_Handler::handle_input(ACE_HANDLE h)
       ssize_t k = this->peer().send(buf, n);
       if(k == 0) {
         ACE_ERROR((LM_ERROR,
-                   "Connection <%d> closed while writing\n",
+                   "Connection <%H> closed while writing\n",
                    h, ""));
         break;
       } else if (k == -1) {
         if(errno == EWOULDBLOCK)
+        {
           return 0;
+        }
 
         ACE_ERROR((LM_ERROR,
-                   "Error on <%d> while writing %p\n",
+                   "Error on <%H> while writing %p\n",
                    h, ""));
         break;
       } else if (k != n) {
         ACE_ERROR((LM_ERROR,
-                   "Short write on <%d>\n",
+                   "Short write on <%H>\n",
                    h, ""));
         break;
       }
@@ -178,7 +192,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
         break;
 
       case 'r':
-        use_rt = 1;
+        use_rt = true;
         break;
 
       case '?':

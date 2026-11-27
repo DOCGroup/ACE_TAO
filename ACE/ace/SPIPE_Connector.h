@@ -1,13 +1,9 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    SPIPE_Connector.h
  *
  *  @author Doug Schmidt <d.schmidt@vanderbilt.edu>
  *  @author Prashant Jain <pjain@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef ACE_SPIPE_CONNECTOR_H
 #define ACE_SPIPE_CONNECTOR_H
@@ -32,11 +28,10 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_SPIPE_Connector
 {
 public:
-  /// Default constructor.
   ACE_SPIPE_Connector ();
 
   /**
-   * Actively connect and produce a <new_stream> if things go well.
+   * Actively connect and produce a @c new_stream if things go well.
    * The @a remote_sap is the address that we are trying to connect
    * with.  The @a timeout is the amount of time to wait to connect.
    * If it's 0 then we block indefinitely.  If *timeout == {0, 0} then
@@ -48,15 +43,15 @@ public:
    * @a local_sap is the value of local address to bind to.  If it's
    * the default value of ACE_Addr::sap_any then the user is letting
    * the OS do the binding.  If @a reuse_addr == 1 then the
-   * <local_addr> is reused, even if it hasn't been cleanedup yet.
-   * The @a flags and @a perms arguments are passed down to the <open>
+   * @c local_addr is reused, even if it hasn't been cleanedup yet.
+   * The @a flags and @a perms arguments are passed down to the @c open
    * method.  The @a pipe_mode argument is only used in NT and is used to
    * establish the NT pipe mode.
    */
   ACE_SPIPE_Connector (ACE_SPIPE_Stream &new_io,
-                       const ACE_SPIPE_Addr &remote_sap,
+                       ACE_SPIPE_Addr const &remote_sap,
                        ACE_Time_Value *timeout = nullptr,
-                       const ACE_Addr &local_sap = ACE_Addr::sap_any,
+                       ACE_Addr const &local_sap = ACE_Addr::sap_any,
                        int reuse_addr = 0,
                        int flags = O_RDWR,
                        int perms = 0,
@@ -64,7 +59,7 @@ public:
                        int pipe_mode = PIPE_READMODE_MESSAGE | PIPE_WAIT);
 
   /**
-   * Actively connect and produce a <new_stream> if things go well.
+   * Actively connect and produce a @c new_stream if things go well.
    * The @a remote_sap is the address that we are trying to connect
    * with.  The @a timeout is the amount of time to wait to connect.
    * If it's 0 then we block indefinitely.  If *timeout == {0, 0} then
@@ -76,15 +71,15 @@ public:
    * @a local_sap is the value of local address to bind to.  If it's
    * the default value of ACE_Addr::sap_any then the user is letting
    * the OS do the binding.  If @a reuse_addr == 1 then the
-   * <local_addr> is reused, even if it hasn't been cleanedup yet.
-   * The @a flags and @a perms arguments are passed down to the <open>
+   * @c local_addr is reused, even if it hasn't been cleanedup yet.
+   * The @a flags and @a perms arguments are passed down to the @c open
    * method.  The @a pipe_mode argument is only used in NT and is used to
    * establish the NT pipe mode.
    */
   int connect (ACE_SPIPE_Stream &new_io,
-               const ACE_SPIPE_Addr &remote_sap,
+               ACE_SPIPE_Addr const &remote_sap,
                ACE_Time_Value *timeout = nullptr,
-               const ACE_Addr &local_sap = ACE_Addr::sap_any,
+               ACE_Addr const &local_sap = ACE_Addr::sap_any,
                int reuse_addr = 0,
                int flags = O_RDWR,
                int perms = 0,
@@ -94,9 +89,11 @@ public:
   /// Resets any event associations on this handle
   bool reset_new_handle (ACE_HANDLE handle);
 
-  // = Meta-type info
+  /// @name Peer types
+  /// @{
   using PEER_ADDR = ACE_SPIPE_Addr;
   using PEER_STREAM = ACE_SPIPE_Stream;
+  /// @}
 
   /// Dump the state of an object.
   void dump () const;

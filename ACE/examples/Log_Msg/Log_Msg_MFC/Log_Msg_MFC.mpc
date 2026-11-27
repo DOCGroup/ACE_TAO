@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project : aceexe, ace_mfc {
   exename = Log_Msg_MFC
   Source_Files {

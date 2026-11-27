@@ -16,6 +16,10 @@ struct B
 {
   B() : b(new A<int>[0]) {}
   ~B() { delete [] b; }
+
+  B (B const &) = delete;
+  B &operator= (B const &) = delete;
+
   A<int> *b;
 };
 
@@ -33,7 +37,7 @@ run_main (int, ACE_TCHAR *[])
   ACE_DEBUG ((LM_INFO,
               ACE_TEXT ("Compiler Feature 21 Test does compile and run.\n")));
 
-  int retval = xxx();
+  int const retval = xxx();
 
   ACE_END_TEST;
 

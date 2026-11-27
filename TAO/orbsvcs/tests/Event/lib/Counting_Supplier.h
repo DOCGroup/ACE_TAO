@@ -1,12 +1,8 @@
-/* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file   Counting_Supplier.h
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  */
-//=============================================================================
-
 
 #ifndef EC_COUNTING_SUPPLIER_H
 #define EC_COUNTING_SUPPLIER_H
@@ -31,13 +27,10 @@
 class EC_Test_Export EC_Counting_Supplier : public POA_RtecEventComm::PushSupplier
 {
 public:
-  /// Constructor
   EC_Counting_Supplier ();
 
-  // = The RtecEventComm::PushSupplier methods
-
   /**
-   * Connect as a consumer to receive a TIMEOUT every <period>
+   * Connect as a consumer to receive a TIMEOUT every @a period
    * milliseconds.
    * The class pushes an event (in its supplier role) every time it
    * receives the timeout.
@@ -53,15 +46,15 @@ public:
                 int event_source,
                 int event_type);
   void connect (RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin,
-                const RtecEventChannelAdmin::SupplierQOS &qos);
+                RtecEventChannelAdmin::SupplierQOS const &qos);
   void disconnect ();
 
   /// The Consumer side methods.
-  void push (const RtecEventComm::EventSet& events);
+  void push (RtecEventComm::EventSet const & events);
   void disconnect_push_consumer ();
 
   /// The skeleton methods.
-  virtual void disconnect_push_supplier ();
+  void disconnect_push_supplier () override;
 
   /// Count the number of events sent
   CORBA::ULong event_count;
@@ -90,10 +83,9 @@ class EC_Test_Export EC_Counting_Supplier_Task : public ACE_Task_Base
 {
 public:
   /// Create the task...
-  EC_Counting_Supplier_Task (EC_Counting_Supplier *supplier);
+  explicit EC_Counting_Supplier_Task (EC_Counting_Supplier *supplier);
 
-  // = Check the ACE_Task_Base documentation.
-  int svc ();
+  int svc () override;
 
   void stop ();
   CORBA::ULong push_count ();

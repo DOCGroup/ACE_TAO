@@ -1,13 +1,8 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
  *  @file    LSOCK_Acceptor.h
  *
  *  @author Doug Schmidt
  */
-//=============================================================================
-
 
 #ifndef ACE_LOCAL_SOCK_ACCEPTOR_H
 #define ACE_LOCAL_SOCK_ACCEPTOR_H
@@ -39,18 +34,17 @@ class ACE_Reactor;
 class ACE_Export ACE_LSOCK_Acceptor : public ACE_SOCK_Acceptor
 {
 public:
-  /// Default constructor.
   ACE_LSOCK_Acceptor ();
 
   /// Initiate a passive mode socket.
-  ACE_LSOCK_Acceptor (const ACE_Addr &local_sap,
+  ACE_LSOCK_Acceptor (ACE_Addr const &local_sap,
                       int reuse_addr = 0,
                       int protocol_family = PF_UNIX,
                       int backlog = ACE_DEFAULT_BACKLOG,
                       int protocol = 0);
 
   /// Initiate a passive mode socket.
-  int open (const ACE_Addr &local_sap,
+  int open (ACE_Addr const &local_sap,
             int reuse_addr = 0,
             int protocol_family = PF_UNIX,
             int backlog = ACE_DEFAULT_BACKLOG,
@@ -58,7 +52,7 @@ public:
 
   /// Accept a new data transfer connection.
   int accept (ACE_LSOCK_Stream &new_ipc_sap,
-              ACE_Addr * = 0,
+              ACE_Addr * = nullptr,
               ACE_Time_Value *timeout = nullptr,
               bool restart = true,
               bool reset_new_handle = false) const;
@@ -70,9 +64,11 @@ public:
   /// Return the local endpoint address.
   int get_local_addr (ACE_Addr &) const;
 
-  // = Meta-type info
+  /// @name Peer types
+  /// @{
   using PEER_ADDR = ACE_UNIX_Addr;
   using PEER_STREAM = ACE_LSOCK_Stream;
+  /// @}
 
   /// Dump the state of an object.
   void dump () const;

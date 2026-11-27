@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   CEC_Reactive_SupplierControl.h
  *
@@ -10,7 +7,6 @@
  *
  * http://doc.ece.uci.edu/~coryan/EC/
  */
-//=============================================================================
 
 #ifndef TAO_CEC_REACTIVE_SUPPLIERCONTROL_H
 #define TAO_CEC_REACTIVE_SUPPLIERCONTROL_H
@@ -51,15 +47,14 @@ class TAO_Event_Serv_Export TAO_CEC_SupplierControl_Adapter
   : public ACE_Event_Handler
 {
 public:
-  /// Constructor
-  TAO_CEC_SupplierControl_Adapter (TAO_CEC_Reactive_SupplierControl *adaptee);
+  explicit TAO_CEC_SupplierControl_Adapter (TAO_CEC_Reactive_SupplierControl *adaptee);
 
   TAO_CEC_SupplierControl_Adapter (TAO_CEC_SupplierControl_Adapter const &) = delete;
   TAO_CEC_SupplierControl_Adapter (TAO_CEC_SupplierControl_Adapter &&) = delete;
   TAO_CEC_SupplierControl_Adapter &operator= (TAO_CEC_SupplierControl_Adapter const &) = delete;
   TAO_CEC_SupplierControl_Adapter &operator= (TAO_CEC_SupplierControl_Adapter &&) = delete;
 
-  // = Documented in ACE_Event_Handler.
+  /// Documented in ACE_Event_Handler.
   int handle_timeout (ACE_Time_Value const &tv,
                       void const *arg = nullptr) override;
 
@@ -75,9 +70,6 @@ private:
  *
  * Defines the interface for the supplier control strategy.
  * This strategy handles misbehaving or failing suppliers.
- * = MEMORY MANAGEMENT
- * = LOCKING
- * = TODO
  */
 class TAO_Event_Serv_Export TAO_CEC_Reactive_SupplierControl
   : public TAO_CEC_SupplierControl
@@ -85,8 +77,8 @@ class TAO_Event_Serv_Export TAO_CEC_Reactive_SupplierControl
 public:
   /// Constructor.  It does not assume ownership of the @a event_channel
   /// parameter.
-  TAO_CEC_Reactive_SupplierControl (const ACE_Time_Value &rate,
-                                    const ACE_Time_Value &timeout,
+  TAO_CEC_Reactive_SupplierControl (ACE_Time_Value const &rate,
+                                    ACE_Time_Value const &timeout,
                                     unsigned int retries,
                                     TAO_CEC_EventChannel *event_channel,
                                     CORBA::ORB_ptr orb);
@@ -94,14 +86,13 @@ public:
   /// Constructor for the typed ec.
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
   TAO_CEC_Reactive_SupplierControl (
-      const ACE_Time_Value &rate,
-      const ACE_Time_Value &timeout,
+      ACE_Time_Value const &rate,
+      ACE_Time_Value const &timeout,
       unsigned int retries,
       TAO_CEC_TypedEventChannel *typed_event_channel,
       CORBA::ORB_ptr orb);
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
-  /// destructor...
   ~TAO_CEC_Reactive_SupplierControl () override = default;
 
   TAO_CEC_Reactive_SupplierControl (TAO_CEC_Reactive_SupplierControl const &) = delete;
@@ -110,10 +101,10 @@ public:
   TAO_CEC_Reactive_SupplierControl &operator= (TAO_CEC_Reactive_SupplierControl &&) = delete;
 
   /// Receive the timeout from the adapter
-  void handle_timeout (const ACE_Time_Value &tv,
-                       const void* arg);
+  void handle_timeout (ACE_Time_Value const &tv,
+                       void const *arg);
 
-  // = Documented in TAO_CEC_SupplierControl
+  /// Documented in TAO_CEC_SupplierControl
   int activate () override;
   int shutdown () override;
   void supplier_not_exist (TAO_CEC_ProxyPushConsumer *proxy) override;
@@ -182,7 +173,7 @@ private:
 class TAO_CEC_Ping_Push_Supplier : public TAO_ESF_Worker<TAO_CEC_ProxyPushConsumer>
 {
 public:
-  TAO_CEC_Ping_Push_Supplier (TAO_CEC_SupplierControl *control);
+  explicit TAO_CEC_Ping_Push_Supplier (TAO_CEC_SupplierControl *control);
 
   TAO_CEC_Ping_Push_Supplier (TAO_CEC_Ping_Push_Supplier const &) = delete;
   TAO_CEC_Ping_Push_Supplier (TAO_CEC_Ping_Push_Supplier &&) = delete;
@@ -201,7 +192,7 @@ private:
 class TAO_CEC_Ping_Typed_Push_Supplier : public TAO_ESF_Worker<TAO_CEC_TypedProxyPushConsumer>
 {
 public:
-  TAO_CEC_Ping_Typed_Push_Supplier (TAO_CEC_SupplierControl *control);
+  explicit TAO_CEC_Ping_Typed_Push_Supplier (TAO_CEC_SupplierControl *control);
 
   TAO_CEC_Ping_Typed_Push_Supplier (TAO_CEC_Ping_Typed_Push_Supplier const &) = delete;
   TAO_CEC_Ping_Typed_Push_Supplier (TAO_CEC_Ping_Typed_Push_Supplier &&) = delete;
@@ -221,7 +212,7 @@ private:
 class TAO_CEC_Ping_Pull_Supplier : public TAO_ESF_Worker<TAO_CEC_ProxyPullConsumer>
 {
 public:
-  TAO_CEC_Ping_Pull_Supplier (TAO_CEC_SupplierControl *control);
+  explicit TAO_CEC_Ping_Pull_Supplier (TAO_CEC_SupplierControl *control);
 
   TAO_CEC_Ping_Pull_Supplier (TAO_CEC_Ping_Pull_Supplier const &) = delete;
   TAO_CEC_Ping_Pull_Supplier (TAO_CEC_Ping_Pull_Supplier &&) = delete;

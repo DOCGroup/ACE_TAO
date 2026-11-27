@@ -3,6 +3,6 @@
 void
 Client::reply (char const *msg)
 {
-  this->reply_count_++;
+  ++this->reply_count_;
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Client::reply -> %s\n", msg));
 }

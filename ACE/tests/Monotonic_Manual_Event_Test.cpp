@@ -1,15 +1,11 @@
-
-//=============================================================================
 /**
  *  @file    Monotonic_Manual_Event_Test.cpp
  *
  *  This test verifies the functionality of the time policy support
- *  for the <ACE_Manual_Event> implementation.
+ *  for the @c ACE_Manual_Event implementation.
  *
  *  @author Martin Corino <mcorino@remedy.nl>
  */
-//=============================================================================
-
 
 #include "test_config.h"
 #include "ace/Manual_Event.h"
@@ -20,6 +16,7 @@
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/Atomic_Op.h"
+#include <memory>
 
 #if defined (ACE_HAS_MONOTONIC_TIME_POLICY) && defined (ACE_HAS_MONOTONIC_CONDITIONS)
 #  include "ace/Monotonic_Time_Policy.h"
@@ -35,7 +32,7 @@ static int test_result = 0;
 
 // Event used in the tests.  Start it "unsignalled" (i.e., its initial
 // state is 0).
-static ACE_Event_Base *evt = nullptr;
+static ACE_Event_Base *evt {};
 
 // use monotonic or system time policy
 static bool use_monotonic = true;
@@ -72,21 +69,23 @@ parse_args (int argc, ACE_TCHAR *argv[])
   int c;
 
   while ((c = get_opt ()) != -1)
-    switch (c)
       {
-      case 'w':
-        n_workers = ACE_OS::atoi (get_opt.opt_arg ());
-        break;
-      case 's':
-        use_monotonic = false;
-        break;
-      default:
-        print_usage_and_die ();
-        break;
+        switch (c)
+          {
+          case 'w':
+            n_workers = ACE_OS::atoi (get_opt.opt_arg ());
+            break;
+          case 's':
+            use_monotonic = false;
+            break;
+          default:
+            print_usage_and_die ();
+            break;
+          }
       }
 }
 
-void set_system_time(const ACE_Time_Value& tv)
+void set_system_time(ACE_Time_Value const & tv)
 {
 #    if defined (ACE_WIN32)
   ACE_Date_Time curdt (tv);
@@ -113,7 +112,7 @@ void set_system_time(const ACE_Time_Value& tv)
 // Worker tries to acquire the semaphore, hold it for a while, and
 // then manually releases it.
 
-static void *
+static ACE_THR_FUNC_RETURN
 worker (void *)
 {
   if (evt->wait (initial_timeout) == -1)
@@ -121,21 +120,23 @@ worker (void *)
       if (ACE_OS::last_error () == ETIME)
         {
           ACE_Time_Value tm_now = initial_timeout->now ();
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT (" (%P|%t) Timed out waiting for start pulse at %#T\n"),
-                             &tm_now),
-                            0);
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT (" (%P|%t) Timed out waiting for start pulse at %#T\n"),
+                      std::addressof (tm_now)));
+          return ACE_THR_FUNC_RETURN_NULL;
         }
       else
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT (" (%P|%t) %p\n"),
-                           ACE_TEXT ("Failed waiting for pulse ()")),
-                          0);
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT (" (%P|%t) %p\n"),
+                      ACE_TEXT ("Failed waiting for pulse ()")));
+          return ACE_THR_FUNC_RETURN_NULL;
+        }
     }
 
   ACE_Time_Value tm_now = initial_timeout->now ();
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT (" (%P|%t) awake at %#T\n"), &tm_now));
+              ACE_TEXT (" (%P|%t) awake at %#T\n"), std::addressof (tm_now)));
 
   if (++n_awoken < n_workers)
     {
@@ -144,7 +145,7 @@ worker (void *)
       ACE_Time_Value tm_sys;
 
       //FUZZ: disable check_for_lack_ACE_OS
-      ACE_Time_Value wait (1, 0);   // Wait 1 sec
+      ACE_Time_Value const wait (1, 0);   // Wait 1 sec
       //FUZZ: enable check_for_lack_ACE_OS
 
       if (use_monotonic)
@@ -162,11 +163,15 @@ worker (void *)
         {
           // verify that we have ETIME
           if (ACE_OS::last_error () == ETIME)
-            ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" (%P|%t) timeout\n")));
+            {
+              ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" (%P|%t) timeout\n")));
+            }
           else
-            ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT (" (%P|%t) wait failed %p\n"),
-                        ACE_TEXT ("but not with ETIME")));
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT (" (%P|%t) wait failed %p\n"),
+                          ACE_TEXT ("but not with ETIME")));
+            }
         }
       else
         {
@@ -174,7 +179,9 @@ worker (void *)
                       ACE_TEXT (" (%P|%t) awake in time\n")));
 
           if (++n_awoken2 >= (n_workers/2))
+          {
             evt->reset ();    // reset signal (rest times out)
+          }
         }
 
       // Check to ensure that an "infinite timeout" will work.
@@ -193,7 +200,9 @@ worker (void *)
                   ACE_TEXT (" (%P|%t) last awake; send signal\n")));
       // last one wakes others
       if (evt->signal () == -1)
+      {
         ACE_ERROR ((LM_ERROR, ACE_TEXT (" (%P|%t) %p\n"), ACE_TEXT ("signal")));
+      }
 
       ACE_OS::sleep (ACE_Time_Value (0, 200 * 1000 * 100));  // 200 msec
     }
@@ -209,7 +218,7 @@ worker (void *)
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" (%P|%t) worker finished\n")));
 
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 #  endif /* ACE_HAS_THREADS */
@@ -229,7 +238,7 @@ int run_main (int argc, ACE_TCHAR *argv[])
   parse_args (argc, argv);
 
   //FUZZ: disable check_for_lack_ACE_OS
-  ACE_Time_Value wait (7, 0);   // Wait 7 sec
+  ACE_Time_Value const wait (7, 0);   // Wait 7 sec
   //FUZZ: enable check_for_lack_ACE_OS
 
   if (use_monotonic)
@@ -247,7 +256,7 @@ int run_main (int argc, ACE_TCHAR *argv[])
 
   // shift forward in time 3 sec; this will mess up timeouts if
   // monotonic timer is not used
-  ACE_Time_Value tv_shift (3, 0);
+  ACE_Time_Value const tv_shift (3, 0);
   set_system_time (ACE_OS::gettimeofday () + tv_shift);
 
   ACE_DEBUG ((LM_DEBUG,
@@ -255,13 +264,15 @@ int run_main (int argc, ACE_TCHAR *argv[])
 
   if (ACE_Thread_Manager::instance ()->spawn_n
       (static_cast<size_t> (n_workers),
-       ACE_THR_FUNC (worker),
+       worker,
        nullptr,
        THR_NEW_LWP) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("spawn_n")),
-                      1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("spawn_n")),
+                        1);
+    }
 
   // gives all workers chance to start
   ACE_OS::sleep (5);
@@ -277,10 +288,12 @@ int run_main (int argc, ACE_TCHAR *argv[])
 
   // Release the all workers.
   if (evt->pulse () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("pulse")),
-                      1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("pulse")),
+                        1);
+    }
 
   // Wait 2 sec
   ACE_OS::sleep (2);
@@ -292,10 +305,12 @@ int run_main (int argc, ACE_TCHAR *argv[])
 
   // Signal
   if (evt->signal () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("signal")),
-                      1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("signal")),
+                        1);
+    }
 
   ACE_Thread_Manager::instance ()->wait ();
 #  else

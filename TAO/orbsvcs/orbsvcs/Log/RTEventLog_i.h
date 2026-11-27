@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   RTEventLog_i.h
  *
@@ -8,7 +5,6 @@
  *
  *  @author David A. Hanvey <d.hanvey@qub.ac.uk>
  */
-//=============================================================================
 
 #ifndef TAO_TLS_RTEVENTLOG_I_H
 #define TAO_TLS_RTEVENTLOG_I_H
@@ -29,6 +25,7 @@
 #include "orbsvcs/Log/RTEventLogConsumer.h"
 
 #include "orbsvcs/Log/rteventlog_serv_export.h"
+#include <memory>
 
 #if defined(_MSC_VER)
 #pragma warning(push)
@@ -54,7 +51,6 @@ class TAO_RTEventLog_Serv_Export TAO_RTEventLog_i :
   public POA_RTEventLogAdmin::EventLog
 {
 public:
-  /// Constructor.
   TAO_RTEventLog_i (CORBA::ORB_ptr orb,
                     PortableServer::POA_ptr poa,
                     PortableServer::POA_ptr log_poa,
@@ -63,7 +59,6 @@ public:
                     TAO_LogNotification * log_notifier,
                     DsLogAdmin::LogId id);
 
-  /// Destructor.
   ~TAO_RTEventLog_i () override;
 
   /// Duplicate the log.
@@ -78,7 +73,8 @@ public:
   /// Activate the RTEventLog.
   void activate ();
 
-  // = The RtecEventChannelAdmin::EventChannel interface methods.
+  /// @name RtecEventChannelAdmin::EventChannel operations
+  /// @{
   RtecEventChannelAdmin::ConsumerAdmin_ptr for_consumers () override;
 
   RtecEventChannelAdmin::SupplierAdmin_ptr for_suppliers () override;
@@ -86,17 +82,18 @@ public:
   RtecEventChannelAdmin::Observer_Handle append_observer (
     RtecEventChannelAdmin::Observer_ptr) override;
   void remove_observer (RtecEventChannelAdmin::Observer_Handle) override;
+  /// @}
 
  private:
   /// The EventChannel used.
-  TAO_EC_Event_Channel * event_channel_;
+  std::unique_ptr<TAO_EC_Event_Channel> event_channel_;
 
   /// The LogConsumer which logs the events the EventChannel above
   /// receives.
-  TAO_Rtec_LogConsumer * my_log_consumer_;
+  TAO_Rtec_LogConsumer * my_log_consumer_ {};
 
   /// The observer strategy
-  TAO_EC_ObserverStrategy * observer_strategy_;
+  TAO_EC_ObserverStrategy * observer_strategy_ {};
 
   PortableServer::POA_var poa_;
 

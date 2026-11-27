@@ -1,4 +1,3 @@
-// -*- C++ -
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
@@ -9,7 +8,6 @@ TAO::CSD::TP_Custom_Request::TP_Custom_Request
     op_(op, false)
 {
 }
-
 
 ACE_INLINE
 void
@@ -30,7 +28,6 @@ TAO::CSD::TP_Custom_Request::execute_op()
   // be performed now.
   this->op_ = nullptr;
 }
-
 
 ACE_INLINE
 void

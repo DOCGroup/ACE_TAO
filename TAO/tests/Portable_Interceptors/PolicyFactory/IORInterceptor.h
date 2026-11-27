@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  * @file IORInterceptor.h
  *
@@ -8,7 +5,6 @@
  *
  * @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef IOR_INTERCEPTOR_H
 #define IOR_INTERCEPTOR_H
@@ -43,8 +39,11 @@ class IORInterceptor
     public virtual ::CORBA::LocalObject
 {
 public:
-  /// Constructor
-  IORInterceptor ();
+  IORInterceptor () = default;
+  IORInterceptor (IORInterceptor const &) = delete;
+  IORInterceptor (IORInterceptor &&) = delete;
+  IORInterceptor &operator= (IORInterceptor const &) = delete;
+  IORInterceptor &operator= (IORInterceptor &&) = delete;
 
   /**
    * @name Methods Required by the IOR Interceptor Interface
@@ -53,29 +52,28 @@ public:
    * virtual in the abstract base class.  They are the canonical
    * methods required for all IOR interceptors.
    */
-  //@{
+  /// @{
   /// Return the name of this IORInterceptor.
-  virtual char * name ();
+  char * name () override;
 
   /// Cleanup resources acquired by this IORInterceptor.
-  virtual void destroy ();
+  void destroy () override;
 
   /// Add the tagged components to the IOR.
-  virtual void establish_components (
-      PortableInterceptor::IORInfo_ptr info);
-  //@}
+  void establish_components (
+      PortableInterceptor::IORInfo_ptr info) override;
+  /// @}
 
 protected:
-  /// Destructor.
   /**
    * Protected destructor to enforce proper memory management through
    * the reference counting mechanism.
    */
-  ~IORInterceptor ();
+  ~IORInterceptor () override;
 
 private:
   /// IORInterceptor successfully called and executed.
-  bool success_;
+  bool success_ {};
 };
 
 #if defined(_MSC_VER)

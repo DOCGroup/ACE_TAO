@@ -6,6 +6,7 @@
 #define _REACTIVE_LOGGING_SERVER_H
 
 #include "ace/INET_Addr.h"
+#include "ace/OS_NS_errno.h"
 #include "ace/SOCK_Acceptor.h"
 #include "ace/SOCK_Stream.h"
 #include "ace/Log_Record.h"
@@ -17,40 +18,75 @@
 
 class Reactive_Logging_Server : public Iterative_Logging_Server
 {
+public:
+  Reactive_Logging_Server () = default;
+  Reactive_Logging_Server (Reactive_Logging_Server const &) = delete;
+  Reactive_Logging_Server (Reactive_Logging_Server &&) = delete;
+  Reactive_Logging_Server &operator= (Reactive_Logging_Server const &) = delete;
+  Reactive_Logging_Server &operator= (Reactive_Logging_Server &&) = delete;
+
 protected:
-  // Keep track of the acceptor socket handle and all the
-  // connected stream socket handles.
+  /// Keep track of the acceptor socket handle and all the
+  /// connected stream socket handles.
   ACE_Handle_Set master_handle_set_;
 
-  // Keep track of handles marked as active by <select>.
+  /// Keep track of handles marked as active by @c select.
   ACE_Handle_Set active_handles_;
 
-  virtual int open (u_short logger_port) {
+  int open (u_short logger_port) override {
     Iterative_Logging_Server::open (logger_port);
-    master_handle_set_.set_bit (acceptor ().get_handle ());
+    ACE_HANDLE const handle = acceptor ().get_handle ();
+#if !defined (ACE_WIN32)
+    if (handle < 0 || handle >= ACE_FD_SETSIZE)
+      {
+        errno = EINVAL;
+        acceptor ().close ();
+        return -1;
+      }
+#endif /* ! ACE_WIN32 */
+    master_handle_set_.set_bit (handle);
     acceptor ().enable (ACE_NONBLOCK);
     return 0;
   }
 
-  virtual int wait_for_multiple_events () {
+  int wait_for_multiple_events () override {
     active_handles_ = master_handle_set_;
-    int width = ACE_Utils::truncate_cast<int> ((intptr_t)active_handles_.max_set ()) + 1;
+#if defined (ACE_WIN32)
+    int const width = 0;
+#else
+    int const width = ACE_Utils::truncate_cast<int> (
+      static_cast<intptr_t> (active_handles_.max_set ())) + 1;
+#endif
     if (select (width,
                 active_handles_.fdset (),
-                0,        // no write_fds
-                0,        // no except_fds
-                0) == -1) // no timeout
-      return -1;
-    active_handles_.sync
-      ((ACE_HANDLE) ((intptr_t) active_handles_.max_set () + 1));
+                nullptr,  // no write_fds
+                nullptr,  // no except_fds
+                nullptr) == -1) // no timeout
+      {
+        return -1;
+      }
+#if !defined (ACE_WIN32)
+    active_handles_.sync (static_cast<ACE_HANDLE> (
+      static_cast<intptr_t> (active_handles_.max_set ()) + 1));
+#endif
     return 0;
   }
 
-  virtual int handle_connections () {
+  int handle_connections () override {
     if (active_handles_.is_set (acceptor ().get_handle ())) {
       while (acceptor ().accept (logging_handler ().peer ()) == 0)
-        master_handle_set_.set_bit
-          (logging_handler ().peer ().get_handle ());
+        {
+          ACE_HANDLE const handle = logging_handler ().peer ().get_handle ();
+#if !defined (ACE_WIN32)
+          if (handle < 0 || handle >= ACE_FD_SETSIZE)
+            {
+              errno = EINVAL;
+              logging_handler ().peer ().close ();
+              continue;
+            }
+#endif /* ! ACE_WIN32 */
+          master_handle_set_.set_bit (handle);
+        }
 
       // Remove acceptor handle from further consideration.
       active_handles_.clr_bit (acceptor ().get_handle ());
@@ -58,7 +94,7 @@ protected:
     return 0;
   }
 
-  virtual int handle_data (ACE_SOCK_Stream *) {
+  int handle_data (ACE_SOCK_Stream *) override {
     ACE_Handle_Set_Iterator peer_iterator (active_handles_);
 
     for (ACE_HANDLE handle;

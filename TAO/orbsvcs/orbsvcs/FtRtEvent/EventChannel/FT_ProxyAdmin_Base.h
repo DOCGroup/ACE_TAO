@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   FT_ProxyAdmin_Base.h
  *
  *  @author Huang-Ming Huang <hh1@cse.wustl.edu>
  */
-//=============================================================================
 #ifndef FT_PROXYADMIN_BASE_H
 #define FT_PROXYADMIN_BASE_H
 
@@ -33,9 +29,9 @@ public:
   FT_ProxyAdmin_Base(FT_ProxyAdmin_Base&&) = delete;
   FT_ProxyAdmin_Base& operator=(FT_ProxyAdmin_Base const&) = delete;
   FT_ProxyAdmin_Base& operator=(FT_ProxyAdmin_Base&&) = delete;
-  void activate(const FtRtecEventComm::ObjectId& oid);
+  void activate(FtRtecEventComm::ObjectId const& oid);
 
-  const FtRtecEventComm::ObjectId& object_id() const;
+  FtRtecEventComm::ObjectId const& object_id() const;
 
   /// Returns an CORBA object reference when the servant is activated
   CORBA::Object_var reference() const;

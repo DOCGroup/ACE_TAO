@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   AMI_Primary_Replication_Strategy.h
  *
  *  @author Huang-Ming Huang <hh1@cse.wustl.edu>
  */
-//=============================================================================
 
 #ifndef AMI_PRIMARY_REPLICATION_STRATEGY_H
 #define AMI_PRIMARY_REPLICATION_STRATEGY_H
@@ -15,6 +11,7 @@
 #include "orbsvcs/FtRtEvent/EventChannel/Replication_Strategy.h"
 #include "orbsvcs/FtRtecEventChannelAdminC.h"
 #include "ace/Task.h"
+#include <memory>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -35,8 +32,13 @@ public:
   /**
    * @param mt Specifies whether multithreaded ORB is used.
    */
-  AMI_Primary_Replication_Strategy(bool mt);
+  explicit AMI_Primary_Replication_Strategy (bool mt);
   ~AMI_Primary_Replication_Strategy() override;
+  AMI_Primary_Replication_Strategy (AMI_Primary_Replication_Strategy const &) = delete;
+  AMI_Primary_Replication_Strategy (AMI_Primary_Replication_Strategy &&) = delete;
+  AMI_Primary_Replication_Strategy & operator= (AMI_Primary_Replication_Strategy const &) = delete;
+  AMI_Primary_Replication_Strategy & operator= (AMI_Primary_Replication_Strategy &&) = delete;
+
   void replicate_request(FTRT::State const& state,
                                    RollbackOperation rollback,
                                    FtRtecEventChannelAdmin::ObjectId const& oid) override;
@@ -48,19 +50,14 @@ public:
   PortableServer::POA_ptr poa() { return poa_.in(); }
   CORBA::ORB_ptr orb() { return orb_.in();}
 private:
-  AMI_Primary_Replication_Strategy(AMI_Primary_Replication_Strategy const&) = delete;
-  AMI_Primary_Replication_Strategy(AMI_Primary_Replication_Strategy&&) = delete;
-  AMI_Primary_Replication_Strategy& operator=(AMI_Primary_Replication_Strategy const&) = delete;
-  AMI_Primary_Replication_Strategy& operator=(AMI_Primary_Replication_Strategy&&) = delete;
-
   int svc () override;
   CORBA::ORB_var orb_;
   PortableServer::POA_var root_poa_;
   PortableServer::POA_var poa_;
   PortableServer::POAManager_var mgr_;
-  bool running_;
+  bool running_ {};
   UpdateableHandler handler_;
-  ACE_SYNCH_RW_MUTEX* mutex_;
+  std::unique_ptr<ACE_SYNCH_RW_MUTEX> mutex_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

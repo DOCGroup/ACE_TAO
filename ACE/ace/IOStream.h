@@ -1,13 +1,9 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    IOStream.h
  *
  *  @author James CE Johnson <jcej@lads.com>
  *  @author Jim Crossley <jim@lads.com>
  */
-//=============================================================================
 
 #ifndef ACE_IOSTREAM_H
 #define ACE_IOSTREAM_H
@@ -46,20 +42,21 @@ class ACE_Export ACE_Quoted_String : public ACE_IOStream_String
 {
 public:
   inline ACE_Quoted_String () { *this = ""; }
-  inline ACE_Quoted_String (const char *c) { *this = ACE_IOStream_String (c); }
-  inline ACE_Quoted_String (const ACE_IOStream_String &s) { *this = s; }
-  inline ACE_Quoted_String &operator= (const ACE_IOStream_String& s)
+  inline ACE_Quoted_String (char const *c) { *this = ACE_IOStream_String (c); }
+  inline ACE_Quoted_String (ACE_IOStream_String const &s) { *this = s; }
+  inline ACE_Quoted_String &operator= (ACE_IOStream_String const& s)
   {
-    return (ACE_Quoted_String &) ACE_IOStream_String::operator= (s);
+    return static_cast<ACE_Quoted_String &> (ACE_IOStream_String::operator= (s));
   }
-  inline ACE_Quoted_String &operator = (const char c) {
-    return (ACE_Quoted_String &) ACE_IOStream_String::operator= (c);
+  inline ACE_Quoted_String &operator = (char const c) {
+    return static_cast<ACE_Quoted_String &> (ACE_IOStream_String::operator= (c));
   }
-  inline ACE_Quoted_String &operator = (const char *c) {
-    return (ACE_Quoted_String &) ACE_IOStream_String::operator= (c);
+  inline ACE_Quoted_String &operator = (char const *c) {
+    return static_cast<ACE_Quoted_String &> (ACE_IOStream_String::operator= (c));
   }
-  inline bool operator < (const ACE_Quoted_String &s) const {
-    return *(ACE_IOStream_String *) this < (ACE_IOStream_String) s;
+  inline bool operator < (ACE_Quoted_String const &s) const {
+    return static_cast<ACE_IOStream_String const &> (*this)
+      < static_cast<ACE_IOStream_String const &> (s);
   }
 #    if defined (ACE_WIN32) && defined (_MSC_VER)
   inline int length () { return this->GetLength (); }
@@ -193,29 +190,26 @@ protected:
   /// descriptions.
   virtual int sync ();
 
-  // = Signatures for the underflow/overflow discussed above.
   virtual int underflow ();
 
   /// The overflow function receives the character which caused the
   /// overflow.
   virtual int overflow (int c = EOF);
 
-  /// Resets the <base> pointer and streambuf mode.  This is used
-  /// internally when get/put buffers are allocatd.
+  /// Resets the base pointer and streambuf mode.  This is used
+  /// internally when get/put buffers are allocated.
   void reset_base ();
 
 protected:
-  // = Two pointer sets for manipulating the read/write areas.
-  char *eback_saved_;
+  /// Saved pointers used to manipulate the read/write areas.
+  char *eback_saved_ {};
   char *gptr_saved_;
   char *egptr_saved_;
-  char *pbase_saved_;
+  char *pbase_saved_ {};
   char *pptr_saved_;
   char *epptr_saved_;
 
-  // = With cur_mode_ we keep track of our current IO mode.
-
-  // This helps us to optimize the underflow/overflow functions.
+  /// Track the current I/O mode to optimize underflow/overflow.
   u_char cur_mode_;
   const u_char get_mode_;
   const u_char put_mode_;
@@ -238,11 +232,11 @@ protected:
 
   /**
    * syncin is called when the input needs to be synced with the
-   * source file.  In a filebuf, this results in the <seek> system
+   * source file.  In a filebuf, this results in the @c seek system
    * call being used.  We can't do that on socket-like connections, so
    * this does basically nothing.  That's safe because we have a
    * separate read buffer to maintain the already-read data.  In a
-   * filebuf, the single common buffer is used forcing the <seek>
+   * filebuf, the single common buffer is used forcing the @c seek
    * call.
    */
   int syncin ();
@@ -329,9 +323,9 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 // trailing '_'.  Since we can't count on 'em, I've defined them to
 // what GNU wants here.
 //
-typedef ios& (*__manip_)(ios&);
-typedef istream& (*__imanip_)(istream&);
-typedef ostream& (*__omanip_)(ostream&);
+using __manip_ = ios& (*)(ios&);
+using __imanip_ = istream& (*)(istream&);
+using __omanip_ = ostream& (*)(ostream&);
 
 // Trying to do something like is shown below instead of using the
 // __*manip typedefs causes Linux do segfault when "<<endl" is done.
@@ -400,7 +394,7 @@ typedef ostream& (*__omanip_)(ostream&);
         PUT_PROT(MT,double,CODE) \
         PUT_PROT(MT,char,CODE) \
         PUT_PROT(MT,u_char,CODE) \
-        PUT_PROT(MT,const char *,CODE) \
+        PUT_PROT(MT,char const *,CODE) \
         PUT_PROT(MT,u_char *,CODE) \
         PUT_PROT(MT,void *,CODE) \
         inline virtual MT& operator<<(__omanip_ func) CODE2 \

@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*Server): taoexe, portableserver, namingexe, notification_skel {
   Source_Files {
     StructuredEventSupplier_i.cpp

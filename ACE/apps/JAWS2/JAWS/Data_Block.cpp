@@ -1,13 +1,12 @@
 #include "JAWS/Data_Block.h"
 #include "JAWS/Policy.h"
 
-
 JAWS_Data_Block::JAWS_Data_Block ()
   : ACE_Message_Block (JAWS_DATA_BLOCK_SIZE),
-    io_handler_ (0),
-    policy_ (0),
-    task_ (0),
-    payload_ (0)
+    io_handler_ (nullptr),
+    policy_ (nullptr),
+    task_ (nullptr),
+    payload_ (nullptr)
 {
 }
 
@@ -20,9 +19,7 @@ JAWS_Data_Block::JAWS_Data_Block (JAWS_Data_Block &db)
 {
 }
 
-JAWS_Data_Block::~JAWS_Data_Block ()
-{
-}
+JAWS_Data_Block::~JAWS_Data_Block () = default;
 
 JAWS_Pipeline_Handler *
 JAWS_Data_Block::task ()

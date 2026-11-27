@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 /**
  *  @file Timer_Reactor.h
  *
@@ -32,29 +30,32 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Notify_Serv_Export TAO_Notify_Timer_Reactor : public TAO_Notify_Timer
 {
 public:
-  using Ptr = TAO_Notify_Refcountable_Guard_T< TAO_Notify_Timer_Reactor >;
+  using Ptr = TAO_Notify_Refcountable_Guard_T<TAO_Notify_Timer_Reactor>;
 
-  /// Constructor
   TAO_Notify_Timer_Reactor ();
 
-  /// Destructor
-  virtual ~TAO_Notify_Timer_Reactor ();
+  ~TAO_Notify_Timer_Reactor () override;
+
+  TAO_Notify_Timer_Reactor (TAO_Notify_Timer_Reactor const &) = delete;
+  TAO_Notify_Timer_Reactor (TAO_Notify_Timer_Reactor &&) = delete;
+  TAO_Notify_Timer_Reactor &operator= (TAO_Notify_Timer_Reactor const &) = delete;
+  TAO_Notify_Timer_Reactor &operator= (TAO_Notify_Timer_Reactor &&) = delete;
 
   /// Schedule a timer
   long schedule_timer (ACE_Event_Handler *handler,
-                       const ACE_Time_Value &delay_time,
-                       const ACE_Time_Value &interval) override;
+                       ACE_Time_Value const &delay_time,
+                       ACE_Time_Value const &interval) override;
 
   /// Cancel Timer
   int cancel_timer (long timer_id) override;
 
 protected:
   /// The instance reactor that we use.
-  ACE_Reactor* reactor_;
+  ACE_Reactor* reactor_ {};
 
 private:
   /// Release
-  virtual void release ();
+  void release () override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

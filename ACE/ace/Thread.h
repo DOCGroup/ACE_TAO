@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//==========================================================================
 /**
  *  @file    Thread.h
  *
  *  @author Douglas Schmidt <d.schmidt@vanderbilt.edu>
  */
-//==========================================================================
 
 #ifndef ACE_THREAD_H
 #define ACE_THREAD_H
@@ -41,10 +37,10 @@ struct cancel_state
  *
  * This class provides a common interface that is mapped onto
  * POSIX Pthreads, Win32 threads, VxWorks
- * threads, or pSoS threads.  Note, however, that it is
- * generally a better idea to use the ACE_Thread_Manager
- * programming API rather than the <ACE_Thread> API since the
- * thread manager is more powerful.
+ * threads, or pSoS threads.
+ * @note It is generally a better idea to use the ACE_Thread_Manager
+ * programming API rather than the @c ACE_Thread API since the thread
+ * manager is more powerful.
  */
 class ACE_Export ACE_Thread
 {
@@ -52,19 +48,19 @@ public:
   /**
    * Creates a new thread having @a flags attributes and running @a func
    * with @a args (if @a thread_adapter is non-0 then @a func and @a args
-   * are ignored and are obtained from @a thread_adapter>.  @a thr_id
+   * are ignored and are obtained from @a thread_adapter).  @a thr_id
    * and @a t_handle are set to the thread's ID and handle (?),
    * respectively.  The thread runs at @a priority priority (see
    * below).
    *
    * The @a flags are a bitwise-OR of the following:
-   * = BEGIN<INDENT>
+   * @code
    * THR_CANCEL_DISABLE, THR_CANCEL_ENABLE, THR_CANCEL_DEFERRED,
    * THR_CANCEL_ASYNCHRONOUS, THR_BOUND, THR_NEW_LWP, THR_DETACHED,
    * THR_SUSPENDED, THR_DAEMON, THR_JOINABLE, THR_SCHED_FIFO,
    * THR_SCHED_RR, THR_SCHED_DEFAULT, THR_EXPLICIT_SCHED,
    * THR_SCOPE_SYSTEM, THR_SCOPE_PROCESS
-   * = END<INDENT>
+   * @endcode
    *
    * By default, or if @a priority is set to
    * ACE_DEFAULT_THREAD_PRIORITY, an "appropriate" priority value for
@@ -76,7 +72,7 @@ public:
    * EXTREMELY implementation-dependent, and are probably best
    * avoided.
    *
-   * Note that @a thread_adapter is always deleted when @a spawn
+   * @note @a thread_adapter is always deleted when @a spawn
    * is called, so it must be allocated with global operator new.
    */
   static int spawn (ACE_THR_FUNC func,
@@ -88,7 +84,7 @@ public:
                     void *stack = nullptr,
                     size_t stack_size = ACE_DEFAULT_THREAD_STACKSIZE,
                     ACE_Thread_Adapter *thread_adapter = nullptr,
-                    const char **thr_name = nullptr);
+                    char const **thr_name = nullptr);
 
   /**
    * Spawn N new threads, which execute @a func with argument @a arg (if
@@ -109,10 +105,10 @@ public:
                          void *arg = nullptr,
                          long flags = THR_NEW_LWP | THR_JOINABLE,
                          long priority = ACE_DEFAULT_THREAD_PRIORITY,
-                         void *stack[] = 0,
-                         size_t stack_size[] = 0,
+                         void *stack[] = nullptr,
+                         size_t stack_size[] = nullptr,
                          ACE_Thread_Adapter *thread_adapter = nullptr,
-                         const char *thr_name[] = 0);
+                         char const *thr_name[] = nullptr);
 
   /**
    * Spawn @a n new threads, which execute @a func with argument @a arg
@@ -138,11 +134,11 @@ public:
                          void *arg,
                          long flags,
                          long priority = ACE_DEFAULT_THREAD_PRIORITY,
-                         void *stack[] = 0,
-                         size_t stack_size[] = 0,
-                         ACE_hthread_t thread_handles[] = 0,
+                         void *stack[] = nullptr,
+                         size_t stack_size[] = nullptr,
+                         ACE_hthread_t thread_handles[] = nullptr,
                          ACE_Thread_Adapter *thread_adapter = nullptr,
-                         const char *thr_name[] = 0);
+                         char const *thr_name[] = nullptr);
 
   /**
    * Wait for one or more threads to exit and reap their exit status.
@@ -167,7 +163,7 @@ public:
 
   /// Wait for one thread to exit and reap its exit status.
   static int join (ACE_hthread_t,
-                   ACE_THR_FUNC_RETURN * = 0);
+                   ACE_THR_FUNC_RETURN * = nullptr);
 
   /// Continue the execution of a previously suspended thread.
   static int resume (ACE_hthread_t);
@@ -213,7 +209,7 @@ public:
 
   /// Change and/or examine calling thread's signal mask.
   static int sigsetmask (int how,
-                         const sigset_t *sigset,
+                         sigset_t const *sigset,
                          sigset_t *osigset = nullptr);
 
   /**

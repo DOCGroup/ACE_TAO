@@ -1,15 +1,7 @@
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = DESCRIPTION
-//    Test bug 2772 regression
-//
-// = AUTHOR
-//    Johnny Willemsen
-//
-// ============================================================================
+/// @file Bug_2772_Regression_Test.cpp
+/// Test bug 2772 regression
+///
+/// @author Johnny Willemsen
 
 #include "test_config.h"
 #include "ace/Recursive_Thread_Mutex.h"
@@ -24,7 +16,7 @@ class ThreadTest
     int run(bool doubleLock);
 
  private:
-    static void * workerThreadWrapper(void *);
+    static ACE_THR_FUNC_RETURN workerThreadWrapper(void *);
     void workerThread();
     ACE_Recursive_Thread_Mutex m_mutex;
     ACE_Condition_Recursive_Thread_Mutex m_startedCondition;
@@ -41,9 +33,7 @@ ThreadTest::ThreadTest() :
 {
 }
 
-ThreadTest::~ThreadTest()
-{
-}
+ThreadTest::~ThreadTest() = default;
 
 int
 ThreadTest::run(bool doubleLock)
@@ -56,7 +46,7 @@ ThreadTest::run(bool doubleLock)
   m_mutex.acquire();
 
   // Start worker thread
-  int rval = ACE_Thread::spawn((ACE_THR_FUNC) workerThreadWrapper, this,
+  int const rval = ACE_Thread::spawn(workerThreadWrapper, this,
      THR_JOINABLE | THR_NEW_LWP, &m_workerThreadId, &m_workerThreadHandle,
      ACE_DEFAULT_THREAD_PRIORITY);
 
@@ -94,11 +84,11 @@ ThreadTest::run(bool doubleLock)
   return 0;
 }
 
-void* ThreadTest::workerThreadWrapper(void *data)
+ACE_THR_FUNC_RETURN ThreadTest::workerThreadWrapper(void *data)
 {
    ThreadTest *thisPtr = reinterpret_cast<ThreadTest *>(data);
    thisPtr->workerThread();
-   return nullptr;
+   return ACE_THR_FUNC_RETURN_NULL;
 }
 
 void ThreadTest::workerThread()
@@ -118,7 +108,6 @@ void ThreadTest::workerThread()
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("%t Thread finished double acquire.\n")));
     }
-
 
    // Wait for the STOP condition to occur
    m_stopCondition.wait();

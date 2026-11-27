@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    Aio_Platform_Test_C.cpp
  *
@@ -8,7 +7,6 @@
  *
  *  @author Programming for the Real World. Bill O. GallMeister. Modified by Alexander Babu Arulanthu <alex@cs.wustl.edu>
  */
-//=============================================================================
 
 
 #include <unistd.h>
@@ -125,8 +123,12 @@ int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {
   if (have_asynchio () == 0)
-    printf ("Test successful\n");
+    {
+      printf ("Test successful\n");
+    }
   else
-    printf ("Test not successful\n");
+    {
+      printf ("Test not successful\n");
+    }
   return 0;
 }

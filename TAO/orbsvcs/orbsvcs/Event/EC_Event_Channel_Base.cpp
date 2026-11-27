@@ -15,13 +15,13 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EC_Event_Channel_Base::
-TAO_EC_Event_Channel_Base (const TAO_EC_Event_Channel_Attributes& attr,
+TAO_EC_Event_Channel_Base (TAO_EC_Event_Channel_Attributes const& attr,
                            TAO_EC_Factory* factory,
                            int own_factory)
   : supplier_poa_ (PortableServer::POA::_duplicate (attr.supplier_poa)),
     consumer_poa_ (PortableServer::POA::_duplicate (attr.consumer_poa)),
+    owned_factory_ (own_factory != 0 ? factory : nullptr),
     factory_ (factory),
-    own_factory_ (own_factory),
     dispatching_ (nullptr),
     filter_builder_ (nullptr),
     supplier_filter_builder_ (nullptr),
@@ -34,8 +34,7 @@ TAO_EC_Event_Channel_Base (const TAO_EC_Event_Channel_Attributes& attr,
     supplier_reconnect_ (attr.supplier_reconnect),
     disconnect_callbacks_ (attr.disconnect_callbacks),
     consumer_control_ (nullptr),
-    supplier_control_ (nullptr),
-    status_ (EC_S_IDLE)
+    supplier_control_ (nullptr)
 {
   this->scheduler_ =
     CORBA::Object::_duplicate (attr.scheduler);
@@ -74,7 +73,7 @@ TAO_EC_Event_Channel_Base::~TAO_EC_Event_Channel_Base ()
   this->factory_->destroy_dispatching (this->dispatching_);
   this->dispatching_ = nullptr;
 
-  this->factory (nullptr, this->own_factory_);
+  this->factory (nullptr, false);
 }
 
 void
@@ -111,9 +110,11 @@ TAO_EC_Event_Channel_Base::activate ()
     // First check if the EC is idle, if it is not then we need to
     // return right away...
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
-    if (this->status_ != EC_S_IDLE)
+    if (this->status_ != Status::idle)
+    {
       return;
-    this->status_ = EC_S_ACTIVATING;
+    }
+    this->status_ = Status::activating;
   }
   this->dispatching_->activate ();
   this->timeout_generator_->activate ();
@@ -123,8 +124,8 @@ TAO_EC_Event_Channel_Base::activate ()
     // Only when all the operations complete successfully we can mark
     // the EC as active...
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
-    ACE_ASSERT (this->status_ == EC_S_ACTIVATING);
-    this->status_ = EC_S_ACTIVE;
+    ACE_ASSERT (this->status_ == Status::activating);
+    this->status_ = Status::active;
   }
 }
 
@@ -135,9 +136,11 @@ TAO_EC_Event_Channel_Base::shutdown ()
     // First check if the EC is already active, if it is not then we
     // need to return right away...
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
-    if (this->status_ != EC_S_ACTIVE)
+    if (this->status_ != Status::active)
+    {
       return;
-    this->status_ = EC_S_DESTROYING;
+    }
+    this->status_ = Status::destroying;
   }
   this->dispatching_->shutdown ();
   this->timeout_generator_->shutdown ();
@@ -155,8 +158,8 @@ TAO_EC_Event_Channel_Base::shutdown ()
     // Wait until all the shutdown() operations return before marking
     // the EC as destroyed...
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
-    ACE_ASSERT (this->status_ == EC_S_DESTROYING);
-    this->status_ = EC_S_DESTROYED;
+    ACE_ASSERT (this->status_ == Status::destroying);
+    this->status_ = Status::destroyed;
   }
 }
 
@@ -165,13 +168,13 @@ TAO_EC_Event_Channel_Base::deactivate_supplier_admin ()
 {
   try
     {
-      PortableServer::POA_var supplier_poa =
+      PortableServer::POA_var const supplier_poa =
         this->supplier_admin_->_default_POA ();
-      PortableServer::ObjectId_var supplier_id =
+      PortableServer::ObjectId_var const supplier_id =
         supplier_poa->servant_to_id (this->supplier_admin_);
       supplier_poa->deactivate_object (supplier_id.in ());
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const&)
     {
             // The deactivation can throw...
     }
@@ -182,13 +185,13 @@ TAO_EC_Event_Channel_Base::deactivate_consumer_admin ()
 {
   try
     {
-      PortableServer::POA_var consumer_poa =
+      PortableServer::POA_var const consumer_poa =
         this->consumer_admin_->_default_POA ();
-      PortableServer::ObjectId_var consumer_id =
+      PortableServer::ObjectId_var const consumer_id =
         consumer_poa->servant_to_id (this->consumer_admin_);
       consumer_poa->deactivate_object (consumer_id.in ());
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const&)
     {
             // The deactivation can throw...
     }

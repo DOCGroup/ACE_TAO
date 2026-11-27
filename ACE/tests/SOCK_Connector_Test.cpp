@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    SOCK_Connector_Test.cpp
  *
@@ -8,8 +6,6 @@
  *
  *  @author Steve Huston <shuston@riverace.com>
  */
-//=============================================================================
-
 
 #include "test_config.h"
 #include "ace/OS_NS_string.h"
@@ -19,6 +15,8 @@
 #include "ace/SOCK_Stream.h"
 #include "ace/OS_NS_sys_utsname.h"
 #include "ace/OS_NS_netdb.h"
+
+#include <cstring>
 
 #if defined(ACE_LACKS_GETHOSTENT) || defined(ACE_LACKS_SETHOSTENT) || defined(ACE_LACKS_ENDHOSTENT)
 #  define MISSING_HOSTENT_FUNCTIONS
@@ -77,7 +75,7 @@ find_another_host (ACE_TCHAR other_host[])
 
 #ifndef MISSING_HOSTENT_FUNCTIONS
       // These gethost-type things don't work everywhere.
-      struct hostent *h = nullptr;
+      struct hostent *h {};
       ACE_utsname un;
 
       ACE_OS::uname (&un);
@@ -85,10 +83,14 @@ find_another_host (ACE_TCHAR other_host[])
       h = ACE_OS::gethostbyname (un.nodename);
 
       if (h == nullptr)
-        ACE_OS::strcpy (other_host, ACE_LOCALHOST);
+        {
+          ACE_OS::strcpy (other_host, ACE_LOCALHOST);
+        }
       else
-        // Use me if can't find another
-        ACE_OS::strcpy (other_host, ACE_TEXT_CHAR_TO_TCHAR (h->h_name));
+        {
+          // Use me if can't find another
+          ACE_OS::strcpy (other_host, ACE_TEXT_CHAR_TO_TCHAR (h->h_name));
+        }
 
       // @@ We really need to add wrappers for these hostent methods.
 
@@ -103,31 +105,39 @@ find_another_host (ACE_TCHAR other_host[])
       // an infinite loop on Linux --mas 03-08-2001
       while ((h = gethostent ()) != nullptr)
         {
-          if (ACE_OS::strcmp (h->h_name, ACE_TEXT_ALWAYS_CHAR (ACE_DEFAULT_SERVER_HOST)) == 0)
+          if (std::strcmp (h->h_name, ACE_TEXT_ALWAYS_CHAR (ACE_DEFAULT_SERVER_HOST)) == 0)
+          {
             continue;
+          }
 
-          if (ACE_OS::strcmp (h->h_name, "loopback") == 0)
+          if (std::strcmp (h->h_name, "loopback") == 0)
+          {
             continue;
+          }
 
           // If not me.
-          if (ACE_OS::strcmp
+          if (std::strcmp
                 (h->h_name, ACE_TEXT_ALWAYS_CHAR (other_host)) != 0
-              && ACE_OS::strcmp (h->h_name, un.nodename) != 0)
+              && std::strcmp (h->h_name, un.nodename) != 0)
             {
                ACE_OS::strcpy (candidate[candidate_count].host_name,
                                ACE_TEXT_CHAR_TO_TCHAR (h->h_name));
                if (++candidate_count >= MAX_CANDIDATES)
+               {
                  break;
+               }
             }
         }
 
       // Now try to connect to candidates
-      for (int i = 0; i < candidate_count; i++)
-        if (host_is_up (candidate[i].host_name))
+      for (int i = 0; i < candidate_count; ++i)
+        {
+          if (host_is_up (candidate[i].host_name))
           {
             ACE_OS::strcpy (other_host, candidate[i].host_name);
             break;
           }
+        }
 
       sethostent (0);
       endhostent ();
@@ -136,7 +146,9 @@ find_another_host (ACE_TCHAR other_host[])
       ACE_OS::strcpy (cached_other_host, other_host);
     }
   else
+  {
     ACE_OS::strcpy (other_host, cached_other_host);
+  }
 }
 
 static int
@@ -182,7 +194,9 @@ fail_no_listener_nonblocking ()
            errno == ENETUNREACH)
     {
       if (sock.get_handle () != ACE_INVALID_HANDLE)
+      {
         status = con.complete (sock);
+      }
 
       if (status != -1)
         {
@@ -212,7 +226,6 @@ fail_no_listener_nonblocking ()
 
   return status;
 }
-
 
 // This test tries to hit a port that's listening.  Echo (7) is pretty
 // popular.  Just in case, though, it won't report a failure if it
@@ -286,8 +299,10 @@ succeed_nonblocking ()
             }
         }
       else
-        ACE_DEBUG((LM_DEBUG,
-                   ACE_TEXT("Connect which should succeed, did\n")));
+        {
+          ACE_DEBUG((LM_DEBUG,
+                     ACE_TEXT("Connect which should succeed, did\n")));
+        }
     }
 
   // Just in case.
@@ -304,13 +319,16 @@ run_main (int, ACE_TCHAR *[])
   int status = 0;
 
   if (fail_no_listener_nonblocking () == -1)
+  {
     status = 1;
+  }
 
   if (succeed_nonblocking () == -1)
+  {
     status = 1;
+  }
 
   ACE_END_TEST;
   return status;
 }
-
 

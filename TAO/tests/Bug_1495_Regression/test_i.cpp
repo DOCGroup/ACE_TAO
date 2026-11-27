@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /**
  * @file test_i.cpp
  * @author Will Otte <wotte@dre.vanderbilt.edu>
@@ -7,7 +6,6 @@
 #include "test_i.h"
 #include "tid_to_int.h"
 #include "ace/Thread.h"
-
 
 Bug1495_i::Bug1495_i (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))

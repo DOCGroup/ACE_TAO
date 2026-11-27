@@ -1,13 +1,9 @@
-// -*- C++ -*-
-
-//==========================================================================
 /**
  *  @file    Vector_T.h
  *
  *  @author Craig L. Ching <cching@mqsoftware.com>
  *  @author Gonzalo Diethelm <gonzalo.diethelm@aditiva.com>
  */
-//==========================================================================
 
 #ifndef ACE_VECTOR_T_H
 #define ACE_VECTOR_T_H
@@ -73,7 +69,6 @@ public:
    */
   using Iterator = ACE_Vector_Iterator<T, DEFAULT_SIZE>;
 
-
   /**
    * General constructor.
    *
@@ -82,12 +77,9 @@ public:
    * @param alloc Pointer to an ACE allocator.  If it is NULL then the
    *              default ACE allocator is used
    */
-  ACE_Vector (const size_t init_size = DEFAULT_SIZE,
-              ACE_Allocator* alloc = nullptr);
+  ACE_Vector (size_t const init_size = DEFAULT_SIZE,
+                       ACE_Allocator *alloc = nullptr);
 
-  /**
-   * Destructor.
-   */
   ~ACE_Vector () = default;
 
   /// Declare the dynamic allocation hooks.
@@ -130,8 +122,8 @@ public:
    *          class T will be used (for more detail, see the
    *          initialization clause for this parameter).
    */
-  void resize (const size_t new_size,
-               const T& t);
+  void resize (size_t const new_size,
+               T const &t);
 
   /**
    * Appends a new element to the vector ("push back").  If the
@@ -143,7 +135,7 @@ public:
    *             default, this parameters gets initialized with the
    *             default value of the class T.
    */
-  void push_back (const T& elem);
+  void push_back (T const &elem);
 
   /**
    * Deletes the last element from the vector ("pop back").  What this
@@ -169,14 +161,14 @@ public:
    */
   void dump () const;
 
-  // = Compare operators
-
+  /// @name Comparison operators
+  /// @{
   /// Equality comparison operator.
   /**
    * Compare this vector with @arg s for equality.  Two vectors are equal
    * if their sizes are equal and all the elements are equal.
    */
-  bool operator== (const ACE_Vector<T, DEFAULT_SIZE> &s) const;
+  bool operator== (ACE_Vector<T, DEFAULT_SIZE> const &s) const;
 
   /// Inequality comparison operator.
   /**
@@ -184,25 +176,23 @@ public:
    * @arg s is always the complement of the boolean return value of
    * @c *this == @arg s.
    */
-  bool operator!= (const ACE_Vector<T, DEFAULT_SIZE> &s) const;
+  bool operator!= (ACE_Vector<T, DEFAULT_SIZE> const &s) const;
+  /// @}
 
   void swap (ACE_Vector &rhs);
 
-  /*
-   * Implement our own end functions because Array_Base's end functions use the
-   * current capacity, not the Vector's actual element count!
-   */
-  /// C++ Standard End Iterator
-  ///{
+  /// @name C++ standard end iterators
+  /// These use the vector's element count; Array_Base uses its capacity.
+  /// @{
   typename ACE_Array_Base<T>::iterator end ();
   typename ACE_Array_Base<T>::const_iterator end () const;
-  ///}
+  /// @}
 
 protected:
   /**
    * Dynamic size (length) of the vector.
    */
-  size_t length_;
+  size_t length_ {};
 
   /**
    * Current capacity (buffer size) of the vector.
@@ -225,10 +215,10 @@ template <class T, size_t DEFAULT_SIZE = ACE_VECTOR_DEFAULT_SIZE>
 class ACE_Vector_Iterator
 {
 public:
-  ACE_Vector_Iterator (ACE_Vector<T, DEFAULT_SIZE> &);
+  explicit ACE_Vector_Iterator (ACE_Vector<T, DEFAULT_SIZE> &);
 
-  // = Iteration methods.
-
+  /// @name Iteration methods
+  /// @{
   /// Pass back the @a next_item that hasn't been seen in the vector.
   /// Returns 0 when all items have been seen, else 1.
   int next (T *&next_item);
@@ -239,6 +229,7 @@ public:
 
   /// Returns 1 when all items have been seen, else 0.
   int done () const;
+  /// @}
 
   /// Dump the state of an object.
   void dump () const;
@@ -248,7 +239,7 @@ public:
 
 private:
   /// Pointer to the current item in the iteration.
-  size_t current_;
+  size_t current_ {};
 
   /// Reference to the vector we're iterating over.
   ACE_Vector<T, DEFAULT_SIZE> &vector_;

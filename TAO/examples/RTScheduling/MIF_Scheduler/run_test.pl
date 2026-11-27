@@ -2,7 +2,6 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
      & eval 'exec perl -S $0 $argv:q'
      if 0;
 
-# -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::TestTarget;
@@ -24,6 +23,12 @@ my $starter = PerlACE::TestTarget::create_target (4) || die "Create target 4 fai
 $server->AddLibPath ('..');
 $client->AddLibPath ('..');
 $starter->AddLibPath ('..');
+
+my $guid_test = $server->CreateProcess ("test", "-test-guid");
+if ($guid_test->SpawnWaitKill ($server->ProcessStartWaitInterval ()) != 0) {
+    print STDERR "ERROR: GUID validation test failed\n";
+    exit 1;
+}
 
 my $iorbase = "ns.ior";
 my $s_svcbase = "svc$PerlACE::svcconf_ext.server";

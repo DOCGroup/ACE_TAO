@@ -1,4 +1,3 @@
-// -*- C++ -*-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
@@ -23,7 +22,7 @@ namespace TAO
       return *this->object_adapter_;
     }
 
-    ACE_INLINE const PortableServer::ObjectId &
+    ACE_INLINE PortableServer::ObjectId const &
     Servant_Upcall::id () const
     {
       return this->system_id_;
@@ -31,12 +30,12 @@ namespace TAO
 
     ACE_INLINE void
     Servant_Upcall::user_id (
-      const PortableServer::ObjectId *id)
+      PortableServer::ObjectId const *id)
     {
       this->user_id_ = id;
     }
 
-    ACE_INLINE const PortableServer::ObjectId &
+    ACE_INLINE PortableServer::ObjectId const &
     Servant_Upcall::user_id () const
     {
       return *(this->user_id_);
@@ -56,14 +55,14 @@ namespace TAO
       this->cookie_ = cookie;
     }
 
-    ACE_INLINE const char *
+    ACE_INLINE char const *
     Servant_Upcall::operation () const
     {
       return this->operation_;
     }
 
     ACE_INLINE void
-    Servant_Upcall::operation (const char *name)
+    Servant_Upcall::operation (char const *name)
     {
       this->operation_ = name;
     }

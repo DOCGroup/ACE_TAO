@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   FT_Endpoint_Selector_Factory.h
  *
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  */
-//=============================================================================
 #ifndef TAO_FT_ENDPOINT_SELECTOR_FACTORY_H
 #define TAO_FT_ENDPOINT_SELECTOR_FACTORY_H
 
@@ -24,14 +20,16 @@
 
 #include "ace/Service_Config.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_FT_Invocation_Endpoint_Selector;
 /**
  * @class TAO_FT_Endpoint_Selector_Factory
  *
- * @brief Factory for initializing <Endpoint_Selection_State> and
- * obtaining appropriate <Invocation_Endpoint_Selector>.
+ * @brief Factory for initializing @c Endpoint_Selection_State and
+ * obtaining the appropriate @c Invocation_Endpoint_Selector.
  *
  * This class is specifically for the FT_Service in TAO to return the
  * right factory
@@ -41,10 +39,8 @@ class TAO_FT_ClientORB_Export TAO_FT_Endpoint_Selector_Factory
   : public TAO_Endpoint_Selector_Factory
 {
 public:
-  /// Constructor.
   TAO_FT_Endpoint_Selector_Factory ();
 
-  /// Destructor.
   ~TAO_FT_Endpoint_Selector_Factory () override;
 
   /// Get an Invocation's endpoint selection strategy and
@@ -54,7 +50,7 @@ public:
 private:
   /// The possible endpoint selector strategies that can be
   /// returned by this factory
-  TAO_FT_Invocation_Endpoint_Selector *ft_endpoint_selector_ {};
+  std::unique_ptr<TAO_FT_Invocation_Endpoint_Selector> ft_endpoint_selector_;
 
   /// Mutex to prevent multiple initializations
   TAO_SYNCH_MUTEX mutex_;

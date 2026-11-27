@@ -26,8 +26,8 @@ ACE_Hash_Cache_Map_Manager<KEY, VALUE,  HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY
 }
 
 template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class CACHING_STRATEGY, class ATTRIBUTES> int
-ACE_Hash_Cache_Map_Manager<KEY, VALUE,  HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY, ATTRIBUTES>::bind (const KEY &key,
-                                          const VALUE &value,
+ACE_Hash_Cache_Map_Manager<KEY, VALUE,  HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY, ATTRIBUTES>::bind (KEY const &key,
+                                          VALUE const &value,
                                           CACHE_ENTRY *&entry)
 {
   // Insert a entry which has the <key> and the <cache_value> which is
@@ -59,8 +59,8 @@ ACE_Hash_Cache_Map_Manager<KEY, VALUE,  HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY
 }
 
 template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class CACHING_STRATEGY, class ATTRIBUTES> int
-ACE_Hash_Cache_Map_Manager<KEY, VALUE,  HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY, ATTRIBUTES>::rebind (const KEY &key,
-                                         const VALUE &value,
+ACE_Hash_Cache_Map_Manager<KEY, VALUE,  HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY, ATTRIBUTES>::rebind (KEY const &key,
+                                         VALUE const &value,
                                          CACHE_ENTRY *&entry)
 {
   CACHE_VALUE cache_value (value,
@@ -81,7 +81,9 @@ ACE_Hash_Cache_Map_Manager<KEY, VALUE,  HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY
           // notification fails after a bind which is denoted by
           // rebind_result = 0
           if (rebind_result == 0)
-            this->map_.unbind (key);
+            {
+              this->map_.unbind (key);
+            }
 
           // Unless the notification goes thru the rebind operation is
           // not complete.
@@ -94,7 +96,7 @@ ACE_Hash_Cache_Map_Manager<KEY, VALUE,  HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY
 }
 
 template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class CACHING_STRATEGY, class ATTRIBUTES> int
-ACE_Hash_Cache_Map_Manager<KEY, VALUE,  HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY, ATTRIBUTES>::trybind (const KEY &key,
+ACE_Hash_Cache_Map_Manager<KEY, VALUE,  HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY, ATTRIBUTES>::trybind (KEY const &key,
                                           VALUE &value,
                                           CACHE_ENTRY *&entry)
 {
@@ -115,7 +117,9 @@ ACE_Hash_Cache_Map_Manager<KEY, VALUE,  HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY
           // If the entry has got inserted into the map, it is removed
           // due to failure.
           if (trybind_result == 0)
-            this->map_.unbind (key);
+            {
+              this->map_.unbind (key);
+            }
 
           trybind_result = -1;
         }
@@ -124,7 +128,9 @@ ACE_Hash_Cache_Map_Manager<KEY, VALUE,  HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY
           // If an attempt is made to bind an existing entry the value
           // is overwritten with the value from the map.
           if (trybind_result == 1)
-            value = cache_value.first ();
+            {
+              value = cache_value.first ();
+            }
         }
 
     }
@@ -133,7 +139,7 @@ ACE_Hash_Cache_Map_Manager<KEY, VALUE,  HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY
 }
 
 template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class CACHING_STRATEGY, class ATTRIBUTES> int
-ACE_Hash_Cache_Map_Manager<KEY, VALUE,  HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY, ATTRIBUTES>::find (const KEY &key,
+ACE_Hash_Cache_Map_Manager<KEY, VALUE,  HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY, ATTRIBUTES>::find (KEY const &key,
                                        CACHE_ENTRY *&entry)
 {
   // Lookup the key and populate the <value>.
@@ -148,19 +154,23 @@ ACE_Hash_Cache_Map_Manager<KEY, VALUE,  HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY
       // Unless the find and notification operations go thru, this
       // method is not successful.
       if (result == -1)
-        find_result = -1;
+        {
+          find_result = -1;
+        }
       else
-        find_result = 0;
+        {
+          find_result = 0;
+        }
     }
 
   return find_result;
 }
 
 template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class CACHING_STRATEGY, class ATTRIBUTES> int
-ACE_Hash_Cache_Map_Manager<KEY, VALUE,  HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY, ATTRIBUTES>::find (const KEY &key,
+ACE_Hash_Cache_Map_Manager<KEY, VALUE,  HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY, ATTRIBUTES>::find (KEY const &key,
                                        VALUE &value)
 {
-  CACHE_ENTRY *entry = nullptr;
+  CACHE_ENTRY *entry {};
 
   int result = this->find (key,
                            entry);
@@ -174,9 +184,9 @@ ACE_Hash_Cache_Map_Manager<KEY, VALUE,  HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY
 }
 
 template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class CACHING_STRATEGY, class ATTRIBUTES> int
-ACE_Hash_Cache_Map_Manager<KEY, VALUE,  HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY, ATTRIBUTES>::find (const KEY &key)
+ACE_Hash_Cache_Map_Manager<KEY, VALUE,  HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY, ATTRIBUTES>::find (KEY const &key)
 {
-  CACHE_ENTRY *entry = nullptr;
+  CACHE_ENTRY *entry {};
 
   return this->find (key,
                      entry);
@@ -194,7 +204,9 @@ ACE_Hash_Cache_Map_Manager<KEY, VALUE,  HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY
                                                           entry->int_id_.second);
 
       if (result == -1)
-        unbind_result = -1;
+        {
+          unbind_result = -1;
+        }
     }
 
   return unbind_result;

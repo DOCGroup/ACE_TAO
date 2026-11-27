@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    imore.cpp (imore stands for indirect more.)
  *
@@ -13,8 +12,6 @@
  *
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_errno.h"
@@ -27,18 +24,18 @@
 #include "ace/Log_Msg.h"
 #include "ace/Process.h"
 #include "ace/Signal.h"
-
+#include <memory>
 
 #if defined (ACE_WIN32)
-static const ACE_TCHAR *executable = ACE_TEXT("MORE.COM");
+static ACE_TCHAR const *const executable = ACE_TEXT ("MORE.COM");
 #else
-static const char * executable = "more"; // I like less better.
-static const ACE_TCHAR *rendezvous_dir = ACE_TEXT("/tmp");
-static const ACE_TCHAR *rendezvous_pfx = ACE_TEXT("imore");
+static ACE_TCHAR const *const executable = ACE_TEXT ("more"); // I like less better.
+static ACE_TCHAR const *const rendezvous_dir = ACE_TEXT ("/tmp");
+static ACE_TCHAR const *const rendezvous_pfx = ACE_TEXT ("imore");
 #endif /* ACE_WIN32 */
 
-static ACE_TCHAR *fname = nullptr;   // File you want to view.
-static int use_named_pipe = 0; // Do we want to use named pipe?
+static ACE_TCHAR const *fname {};  // File you want to view.
+static bool use_named_pipe {};  // Do we want to use named pipe?
 
 static void
 usage ()
@@ -52,7 +49,7 @@ static int
 parse_args (int argc, ACE_TCHAR **argv)
 {
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("un"));
-  int c;
+  int c {};
 
   while ((c = get_opt ()) != -1)
     {
@@ -60,13 +57,13 @@ parse_args (int argc, ACE_TCHAR **argv)
       {
       case 'n': // We want to use named pipe.
 #if !defined (ACE_WIN32)
-        use_named_pipe = 1;
+        use_named_pipe = true;
 #else
         ACE_ERROR_RETURN ((LM_ERROR, "Named pipes not supported on Win32\n"), -1);
 #endif /* !ACE_WIN32 */
         break;
       case 'u':  // Use unnamed pipe.
-        use_named_pipe = 0;
+        use_named_pipe = false;
         break;
       default:  // What are you talking about?
         usage ();
@@ -80,7 +77,9 @@ parse_args (int argc, ACE_TCHAR **argv)
       return -1;
     }
   else
+  {
     fname = argv[get_opt.opt_ind ()]; // Alright.
+  }
 
   return 0;
 }
@@ -90,12 +89,21 @@ static int
 setup_named_pipes (ACE_Process_Options &opt)
 {
   // Create a unique temporary name for named pipe.
-  ACE_TCHAR *rendezvous = ACE_OS::tempnam (rendezvous_dir,
-                                           rendezvous_pfx);
+  struct ACE_OS_Free
+  {
+    void operator() (ACE_TCHAR *memory) const
+    {
+      ACE_OS::free (memory);
+    }
+  };
+  std::unique_ptr<ACE_TCHAR, ACE_OS_Free> const rendezvous (
+    ACE_OS::tempnam (rendezvous_dir, rendezvous_pfx));
 
   // Out of memory?
-  if (rendezvous == nullptr)
+  if (!rendezvous)
+  {
     return -1;
+  }
 
   // Alright, this is indeed strange.  Named pipes are meant to be
   // used for unrelated processes.  Because of the constraints in
@@ -104,15 +112,13 @@ setup_named_pipes (ACE_Process_Options &opt)
   ACE_FIFO_Send wfifo;          // write end fifo.
 
   // Check if the pipes are created successfully.
-  if (rfifo.open (rendezvous) == -1 || wfifo.open (rendezvous) == -1)
+  if (rfifo.open (rendezvous.get ()) == -1 || wfifo.open (rendezvous.get ()) == -1)
     {
-      ACE_OS::free (rendezvous);
       ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "fifo.open"), -1);
     }
 
   // Remove (rm, del) the file after no one uses it any more.
-  ACE_OS::unlink (rendezvous);
-  ACE_OS::free (rendezvous);
+  ACE_OS::unlink (rendezvous.get ());
 
   // Setting up pipe between parent and child process.  Use the read
   // end of the named pipe as child process'es ACE_STDIN.
@@ -145,7 +151,9 @@ setup_unnamed_pipe (ACE_Process_Options &opt)
 
   // Check if the pipe is created successfully.
   if (pipe.open () == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "pipe.open"), -1);
+  }
 
   // Setting up pipe between parent and child process.  Use the pipe
   // as child process'es ACE_STDIN.  ACE_Process_Options will keep
@@ -203,17 +211,23 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 #if !defined (ACE_WIN32)
   ACE_Sig_Action sig_act (SIG_IGN);
   if (sig_act.register_action (SIGPIPE) == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_Sig_Action::register_action"), -1);
+  }
 #endif /* ACE_WIN32 */
 
   // Alright, what you want me to do now?
   if (::parse_args (argc, argv) == -1)
+  {
     return -1;
+  }
 
   // Can I find the file you want?
-  ACE_HANDLE infile = ACE_OS::open (fname, O_RDONLY);
+  ACE_HANDLE const infile = ACE_OS::open (fname, O_RDONLY);
   if (infile == ACE_INVALID_HANDLE)
-      ACE_ERROR_RETURN ((LM_DEBUG, "%p\n", fname), -1);
+  {
+    ACE_ERROR_RETURN ((LM_DEBUG, "%p\n", fname), -1);
+  }
 
   ACE_Process new_process;
 
@@ -231,13 +245,17 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                         -1);
 #  else
       if (::setup_named_pipes (options) == -1)
+      {
         ACE_ERROR_RETURN ((LM_ERROR, "Error, bailing out!\n"), -1);
+      }
 #  endif /* ACE_DISABLE_TEMPNAM */
     }
   else
     {
       if (::setup_unnamed_pipe (options) == -1)
+      {
         ACE_ERROR_RETURN ((LM_ERROR, "Error, bailing out!\n"), -1);
+      }
     }
 
   options.command_line (ACE_TEXT("%") ACE_TEXT_PRIs, executable);
@@ -250,7 +268,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   // write file to ACE_STDOUT.
   if (::print_file (infile) == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, "Error, bailing out!\n"), -1);
+  }
 
   // Close the STDOUT to inform child eof.
   ACE_OS::close (ACE_STDOUT);
@@ -264,14 +284,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   options.set_handles (infile);
   if (new_process.spawn (options) == -1)
     {
-      int error = ACE_OS::last_error ();
+      int const error = ACE_OS::last_error ();
       ACE_ERROR_RETURN ((LM_ERROR, "%p errno = %d.\n",
                          "test_more", error), -1);
     }
 #endif /* ! ACE_WIN32 */
 
   // Wait till we are done.
-  ACE_exitcode status;
+  ACE_exitcode status {};
   new_process.wait (&status);
   ACE_DEBUG ((LM_DEBUG, "Process exit with status %d\n", status));
 

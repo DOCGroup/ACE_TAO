@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   Notify_Constraint_Interpreter.h
  *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_NOTIFY_CONSTRAINT_INTERPRETER_H
 #define TAO_NOTIFY_CONSTRAINT_INTERPRETER_H
@@ -39,8 +35,12 @@ class TAO_Notify_Serv_Export TAO_Notify_Constraint_Interpreter
 public:
   TAO_Notify_Constraint_Interpreter ();
 
-  /// Destructor
-  virtual ~TAO_Notify_Constraint_Interpreter ();
+  ~TAO_Notify_Constraint_Interpreter () override;
+
+  TAO_Notify_Constraint_Interpreter (TAO_Notify_Constraint_Interpreter const&) = delete;
+  TAO_Notify_Constraint_Interpreter (TAO_Notify_Constraint_Interpreter&&) = delete;
+  TAO_Notify_Constraint_Interpreter& operator= (TAO_Notify_Constraint_Interpreter const&) = delete;
+  TAO_Notify_Constraint_Interpreter& operator= (TAO_Notify_Constraint_Interpreter&&) = delete;
 
   /**
    * This method builds an expression tree representing the
@@ -48,14 +48,14 @@ public:
    * Constraint exception if the constraint given has syntax errors or
    * semantic errors, such as mismatched types.
    */
-  void build_tree (const CosNotifyFilter::ConstraintExp& exp);
+  void build_tree (CosNotifyFilter::ConstraintExp const& exp);
 
   /// Returns true if the constraint is evaluated successfully by
   /// the evaluator.
   CORBA::Boolean evaluate (TAO_Notify_Constraint_Visitor &evaluator);
 
 private:
-  void build_tree (const char* constraints);
+  void build_tree (char const *constraints);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

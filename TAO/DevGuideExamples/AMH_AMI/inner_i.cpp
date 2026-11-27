@@ -1,4 +1,3 @@
-/* -*- C++ -*-  */
 #include "amh_ami_pch.h"
 
 #include "inner_i.h"
@@ -10,15 +9,15 @@ Inner_i::Inner_i (int d)
 }
 
 char *
-Inner_i::answer (const char * question)
+Inner_i::answer (char const *question)
 {
-  ACE_UNUSED_ARG (question); // doesn't matter
+  ACE_UNUSED_ARG (question);
 
-  CORBA::String_var answer =
-    CORBA::string_dup ("I didn't know dogs could talk!");
+  CORBA::String_var answer (
+    CORBA::string_dup ("I didn't know dogs could talk!"));
 
-  int delay = 5/this->divisor_; // throw exception if divisor = 0
+  int const delay = 5 / this->divisor_;
 
-  ACE_OS::sleep(delay); // make the caller wait a bit
-  return answer._retn();
+  ACE_OS::sleep (delay);
+  return answer._retn ();
 }

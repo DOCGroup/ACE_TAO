@@ -1,6 +1,5 @@
 #define ACE_BUILD_SVC_DLL
 
-#include "ace/OS_NS_string.h"
 #include "Event_Channel.h"
 #include "Concrete_Connection_Handlers.h"
 
@@ -42,23 +41,22 @@ Connection_Handler::total_bytes (size_t bytes)
   this->total_bytes_ += bytes;
 }
 
-Connection_Handler::Connection_Handler ()
-{
-}
+Connection_Handler::Connection_Handler () = default;
 
-Connection_Handler::Connection_Handler (const Connection_Config_Info &pci)
+Connection_Handler::Connection_Handler (Connection_Config_Info const &pci)
   : local_addr_ (pci.local_port_),
     connection_id_ (pci.connection_id_),
-    total_bytes_ (0),
-    state_ (Connection_Handler::IDLE),
-    timeout_ (1),
     max_timeout_ (pci.max_retry_timeout_),
     event_channel_ (pci.event_channel_)
 {
-  if (ACE_OS::strlen (pci.host_) > 0)
-    this->remote_addr_.set (pci.remote_port_, pci.host_);
+  if (pci.host_[0] != '\0')
+    {
+      this->remote_addr_.set (pci.remote_port_, pci.host_);
+    }
   else
+  {
     this->remote_addr_.set (pci.remote_port_, ACE_DEFAULT_SERVER_HOST);
+  }
   // Set the priority of the Proxy.
   this->priority (int (pci.priority_));
 }
@@ -85,7 +83,9 @@ void
 Connection_Handler::timeout (long to)
 {
   if (to > this->max_timeout_)
+  {
     to = this->max_timeout_;
+  }
 
   this->timeout_ = to;
 }
@@ -97,11 +97,13 @@ Connection_Handler::timeout (long to)
 long
 Connection_Handler::timeout ()
 {
-  long old_timeout = this->timeout_;
+  long const old_timeout = this->timeout_;
   this->timeout_ *= 2;
 
   if (this->timeout_ > this->max_timeout_)
+  {
     this->timeout_ = this->max_timeout_;
+  }
 
   return old_timeout;
 }
@@ -125,11 +127,11 @@ Connection_Handler::max_timeout () const
 // Restart connection asynchronously when timeout occurs.
 
 int
-Connection_Handler::handle_timeout (const ACE_Time_Value &,
-                                    const void *)
+Connection_Handler::handle_timeout (ACE_Time_Value const &,
+                                    void const *)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "(%t) attempting to reconnect Connection_Handler %d with timeout = %d\n",
+              "(%t) attempting to reconnect Connection_Handler %d with timeout = %Ld\n",
               this->connection_id (),
               this->timeout_));
 
@@ -145,7 +147,7 @@ int
 Connection_Handler::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "(%t) shutting down %s Connection_Handler %d on handle %d\n",
+              "(%t) shutting down %C Connection_Handler %d on handle %H\n",
               this->connection_role () == 'C' ? "Consumer" : "Supplier",
               this->connection_id (),
               this->get_handle ()));
@@ -176,46 +178,54 @@ Connection_Handler::state () const
 int
 Connection_Handler::open (void *)
 {
-  ACE_DEBUG ((LM_DEBUG, "(%t) %s Connection_Handler's handle = %d\n",
+  ACE_DEBUG ((LM_DEBUG, "(%t) %C Connection_Handler's handle = %H\n",
               this->connection_role () == 'C' ? "Consumer" : "Supplier",
               this->peer ().get_handle ()));
 
   // Call back to the <Event_Channel> to complete our initialization.
   if (this->event_channel_->complete_connection_connection (this) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "complete_connection_connection"), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "complete_connection_connection"), -1);
+    }
 
   // Turn on non-blocking I/O.
   else if (this->peer ().enable (ACE_NONBLOCK) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "enable"), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "enable"), -1);
+    }
 
   // Register ourselves to receive input events.
   else if (ACE_Reactor::instance ()->register_handler
       (this, ACE_Event_Handler::READ_MASK) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "register_handler"), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "(%t) %p\n", "register_handler"), -1);
+    }
   else
+  {
     return 0;
+  }
 }
 
-const ACE_INET_Addr &
+ACE_INET_Addr const &
 Connection_Handler::remote_addr () const
 {
   return this->remote_addr_;
 }
 
 void
-Connection_Handler::remote_addr (ACE_INET_Addr &ra)
+Connection_Handler::remote_addr (ACE_INET_Addr const &ra)
 {
   this->remote_addr_ = ra;
 }
 
-const ACE_INET_Addr &
+ACE_INET_Addr const &
 Connection_Handler::local_addr () const
 {
   return this->local_addr_;
 }
 
 void
-Connection_Handler::local_addr (ACE_INET_Addr &la)
+Connection_Handler::local_addr (ACE_INET_Addr const &la)
 {
   this->local_addr_ = la;
 }
@@ -225,9 +235,9 @@ Connection_Handler::local_addr (ACE_INET_Addr &la)
 // <Thr_Supplier_Handler>).
 
 Connection_Handler *
-Connection_Handler_Factory::make_connection_handler (const Connection_Config_Info &pci)
+Connection_Handler_Factory::make_connection_handler (Connection_Config_Info const &pci)
 {
-  Connection_Handler *connection_handler = 0;
+  Connection_Handler *connection_handler {};
 
   // The next few lines of code are dependent on whether we are making
   // a threaded/reactive Supplier_Handler/Consumer_Handler.
@@ -237,30 +247,38 @@ Connection_Handler_Factory::make_connection_handler (const Connection_Config_Inf
       // Create a threaded Consumer_Handler.
       if (ACE_BIT_ENABLED (Options::instance ()->threading_strategy (),
                            Options::OUTPUT_MT))
-        ACE_NEW_RETURN (connection_handler,
-                        Thr_Consumer_Handler (pci),
-                        0);
+        {
+          ACE_NEW_RETURN (connection_handler,
+                          Thr_Consumer_Handler (pci),
+                          nullptr);
+        }
 
       // Create a reactive Consumer_Handler.
       else
-        ACE_NEW_RETURN (connection_handler,
-                        Consumer_Handler (pci),
-                        0);
+        {
+          ACE_NEW_RETURN (connection_handler,
+                          Consumer_Handler (pci),
+                          nullptr);
+        }
     }
   else // connection_role == 'S', so configure a Supplier_Handler.
     {
       // Create a threaded Supplier_Handler.
       if (ACE_BIT_ENABLED (Options::instance ()->threading_strategy (),
                            Options::INPUT_MT))
-        ACE_NEW_RETURN (connection_handler,
-                        Thr_Supplier_Handler (pci),
-                        0);
+        {
+          ACE_NEW_RETURN (connection_handler,
+                          Thr_Supplier_Handler (pci),
+                          nullptr);
+        }
 
       // Create a reactive Supplier_Handler.
       else
-        ACE_NEW_RETURN (connection_handler,
-                        Supplier_Handler (pci),
-                        0);
+        {
+          ACE_NEW_RETURN (connection_handler,
+                          Supplier_Handler (pci),
+                          nullptr);
+        }
     }
 
   return connection_handler;

@@ -6,11 +6,13 @@
 #include "tao/PortableServer/PortableServer.h"
 #include "bug3486_export.h"
 
+#include <memory>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Thread_Barrier;
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-class bug3486_Export DllORB: public ACE_Task_Base
+class bug3486_Export DllORB : public ACE_Task_Base
 {
 public:
   DllORB ();
@@ -35,10 +37,10 @@ protected:
   int svc () override;
 
 private:
-  unsigned int                   failPrePostInit_;
-  ACE_Thread_Barrier *           mp_barrier_;
-  CORBA::ORB_var                 mv_orb_;
-  PortableServer::POA_var        mv_rootPOA_;
+  unsigned int const failPrePostInit_ { 3 };
+  std::unique_ptr<ACE_Thread_Barrier> mp_barrier_;
+  CORBA::ORB_var mv_orb_;
+  PortableServer::POA_var mv_rootPOA_;
   PortableServer::POAManager_var mv_poaManager_;
 };
 

@@ -3,13 +3,9 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_BasicLogFactory_i::TAO_BasicLogFactory_i ()
-{
-}
+TAO_BasicLogFactory_i::TAO_BasicLogFactory_i () = default;
 
-TAO_BasicLogFactory_i::~TAO_BasicLogFactory_i ()
-{
-}
+TAO_BasicLogFactory_i::~TAO_BasicLogFactory_i () = default;
 
 DsLogAdmin::BasicLogFactory_ptr
 TAO_BasicLogFactory_i::activate (CORBA::ORB_ptr orb,
@@ -17,10 +13,10 @@ TAO_BasicLogFactory_i::activate (CORBA::ORB_ptr orb,
 {
   TAO_LogMgr_i::init (orb, poa);
 
-  PortableServer::ObjectId_var oid =
+  PortableServer::ObjectId_var const oid =
     this->factory_poa_->activate_object (this);
 
-  CORBA::Object_var obj =
+  CORBA::Object_var const obj =
     this->factory_poa_->id_to_reference (oid.in ());
 
   // narrow and store the result..
@@ -42,13 +38,13 @@ TAO_BasicLogFactory_i::create (DsLogAdmin::LogFullActionType full_action,
                   max_size,
                   nullptr,
                   id_out);
-  DsLogAdmin::LogId id = id_out;
+  DsLogAdmin::LogId const id = id_out;
 
 #if (TAO_HAS_MINIMUM_POA == 0)
-  DsLogAdmin::Log_var log =
+  DsLogAdmin::Log_var const log =
     this->create_log_reference (id);
 #else
-  DsLogAdmin::Log_var log =
+  DsLogAdmin::Log_var const log =
     this->create_log_object (id);
 #endif
 
@@ -93,7 +89,7 @@ TAO_BasicLogFactory_i::create_repositoryid ()
 PortableServer::ServantBase *
 TAO_BasicLogFactory_i::create_log_servant (DsLogAdmin::LogId id)
 {
-  TAO_BasicLog_i *basic_log_i = nullptr;
+  TAO_BasicLog_i *basic_log_i {};
 
   ACE_NEW_THROW_EX (basic_log_i,
                     TAO_BasicLog_i (this->orb_.in (),

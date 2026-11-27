@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Collocation_Strategy.h
  *
  *  @author  DOC Group - Wash U and UCI
  */
-//=============================================================================
 
 #ifndef TAO_COLLOCATION_STRATEGY_H
 #define TAO_COLLOCATION_STRATEGY_H
@@ -38,7 +34,7 @@ namespace TAO
       TAO_CS_LAST
     };
 
-  inline const char * translate_collocation_strategy (Collocation_Strategy cs)
+  inline char const *translate_collocation_strategy (Collocation_Strategy cs)
     {
 #define TAO_CS(X) case X: return #X
       switch (cs)

@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    HTBP_Filter.h
  *
  *  @author Phil Mesnier
  */
-//=============================================================================
 
 #ifndef ACE_HTBP_FILTER_H
 #define ACE_HTBP_FILTER_H
@@ -32,7 +28,7 @@ namespace ACE
     /**
      * @class ACE_HTBP_Filter
      *
-     * @brief Defines the methods in the <ACE_HTBP_Filter> abstraction.
+     * @brief Defines the methods in the @c ACE_HTBP_Filter abstraction.
      *
      * A filter is responsible for wrapping / unwrapping messages
      * depending on direction of flow on each stream. There will be 4
@@ -78,7 +74,7 @@ namespace ACE
       void reset_http_code ();
 
       /// get the value of the most recent http result code
-      int http_code ();
+      int http_code () const;
 
     protected:
       char *header_complete (Channel *ch);

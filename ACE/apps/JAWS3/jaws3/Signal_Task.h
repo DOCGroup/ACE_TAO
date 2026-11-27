@@ -1,4 +1,3 @@
-/* -*- c++ -*- */
 #ifndef JAWS_SIGNAL_TASK_H
 #define JAWS_SIGNAL_TASK_H
 

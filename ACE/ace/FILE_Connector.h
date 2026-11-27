@@ -1,12 +1,8 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
  *  @file    FILE_Connector.h
  *
  *  @author Doug Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef ACE_FILE_CONNECTOR_H
 #define ACE_FILE_CONNECTOR_H
@@ -27,7 +23,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  * @brief Defines an active connection factory for the ACE_FILE wrappers.
  *
- * Note that the O_APPEND flag is only partly supported on Win32. If
+ * @note The O_APPEND flag is only partly supported on Win32. If
  * you specify O_APPEND, then the file pointer will be positioned at
  * the end of the file initially during open, but it is not
  * re-positioned at the end prior to each write, as specified by
@@ -37,7 +33,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_FILE_Connector
 {
 public:
-  /// Default constructor.
   ACE_FILE_Connector ();
 
   /**
@@ -45,43 +40,43 @@ public:
    * if things go well.  The @a remote_sap is the file that we are
    * trying to create/open.  If it's the default value of
    * ACE_Addr::sap_any then the user is letting the OS create the
-   * filename (via <ACE_OS::mkstemp>).  The @a timeout is the amount of
+   * filename (via @c ACE_OS::mkstemp).  The @a timeout is the amount of
    * time to wait to create/open the file.  If it's 0 then we block
    * indefinitely.  If *timeout == {0, 0} then the file is created
    * using non-blocking mode.  If *timeout > {0, 0} then this is the
    * maximum amount of time to wait before timing out.  The
    * @a local_sap and @a reuse_addr parameters are ignored.  The @a flags
-   * and @a perms arguments are passed down to the <ACE_OS::open>
+   * and @a perms arguments are passed down to the @c ACE_OS::open
    * method.
    */
   ACE_FILE_Connector (ACE_FILE_IO &new_io,
-                      const ACE_FILE_Addr &remote_sap,
+                      ACE_FILE_Addr const &remote_sap,
                       ACE_Time_Value *timeout = nullptr,
-                      const ACE_Addr &local_sap = ACE_Addr::sap_any,
+                      ACE_Addr const &local_sap = ACE_Addr::sap_any,
                       int reuse_addr = 0,
                       int flags = O_RDWR | O_CREAT,
                       int perms = ACE_DEFAULT_FILE_PERMS);
 
   /**
-   * Actively ``connect'' and produce a @a new_io <ACE_FILE_IO> object
+   * Actively ``connect'' and produce a @a new_io @c ACE_FILE_IO object
    * if things go well.  The @a remote_sap is the file that we are
    * trying to create/open.  If it's the default value of
    * ACE_Addr::sap_any then the user is letting the OS create the
-   * filename (via <ACE_OS::mkstemp>).  The @a timeout is the amount of
+   * filename (via @c ACE_OS::mkstemp).  The @a timeout is the amount of
    * time to wait to create/open the file.  If it's 0 then we block
    * indefinitely.  If *timeout == {0, 0} then the file is created
    * using non-blocking mode.  In this case, if the create/open can't
-   * be done immediately the value of -1 is returned with <errno ==
-   * EWOULDBLOCK>.  If *timeout > {0, 0} then this is the maximum amount of
+   * be done immediately the value of -1 is returned with @c errno set to
+   * @c EWOULDBLOCK. If *timeout > {0, 0} then this is the maximum amount of
    * time to wait before timing out.  If the time expires before the
    * connection is made @c errno == ETIME.  The @a local_sap and
    * @a reuse_addr parameters are ignored.  The @a flags and @a perms
-   * arguments are passed down to the <ACE_OS::open> method.
+   * arguments are passed down to the @c ACE_OS::open method.
    */
   int connect (ACE_FILE_IO &new_io,
-               const ACE_FILE_Addr &remote_sap,
+               ACE_FILE_Addr const &remote_sap,
                ACE_Time_Value *timeout = nullptr,
-               const ACE_Addr &local_sap = ACE_Addr::sap_any,
+               ACE_Addr const &local_sap = ACE_Addr::sap_any,
                int reuse_addr = 0,
                int flags = O_RDWR | O_CREAT,
                int perms = ACE_DEFAULT_FILE_PERMS);
@@ -95,9 +90,11 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
-  // = Meta-type "trait" information.
+  /// @name Meta-type traits
+  /// @{
   using PEER_ADDR = ACE_FILE_Addr;
   using PEER_STREAM = ACE_FILE_IO;
+  /// @}
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

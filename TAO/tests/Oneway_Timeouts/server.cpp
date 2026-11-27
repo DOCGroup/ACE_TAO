@@ -9,6 +9,8 @@
 #include "ace/High_Res_Timer.h"
 #include "ace/Reactor.h"
 
+#include <memory>
+
 int activate_delay = 0000;
 int run_delay = 00;
 int request_delay = 00;
@@ -18,14 +20,14 @@ int elapsed_max = 0;
 int elapsed_min = 0;
 int first_min = 0;
 int first_max = 0;
-const ACE_TCHAR *server_ior = ACE_TEXT ("test.ior");
+ACE_TCHAR const *server_ior = ACE_TEXT ("test.ior");
 
 class Tester_i
   : public virtual POA_Tester
   , public virtual ACE_Event_Handler
 {
 public:
-  Tester_i (CORBA::ORB_ptr orb)
+  explicit Tester_i (CORBA::ORB_ptr orb)
     : orb_ (orb)
     , count_ (0)
     , failed_ (false)
@@ -33,19 +35,26 @@ public:
     this->start_ = ACE_High_Res_Timer::gettimeofday_hr ();
   }
 
-  virtual ~Tester_i () = default;
+  ~Tester_i () override = default;
 
-  virtual void test (CORBA::Long id)
+  Tester_i (Tester_i const &) = delete;
+  Tester_i &operator= (Tester_i const &) = delete;
+  Tester_i (Tester_i &&) = delete;
+  Tester_i &operator= (Tester_i &&) = delete;
+
+  void test (CORBA::Long id) override
   {
     // Ignore the extra message that were used for making messages
     // queued for SYNC_DELAYED_BUFFERING test cases.
     if (id == -3)
+    {
       return;
+    }
 
     testShared (id);
   }
 
-  virtual CORBA::Long test2 (CORBA::Long id)
+  CORBA::Long test2 (CORBA::Long id) override
   {
     if (id == -2)
       {
@@ -95,10 +104,9 @@ public:
             this->failed_ = true;
           }
         ACE_Time_Value timeout (0, 50 * 1000);
-        this->orb_->orb_core ()->reactor ()->schedule_timer (this, 0, timeout);
+        this->orb_->orb_core ()->reactor ()->schedule_timer (this, nullptr, timeout);
         return id;
       }
-
 
     this->last_ = now;
     if (id == 0)
@@ -119,13 +127,14 @@ public:
     return id;
   }
 
-  int handle_timeout (const ACE_Time_Value &, const void *)
+  int handle_timeout (ACE_Time_Value const &, void const *) override
   {
     this->orb_->shutdown (false);
     return 0;
   }
 
-  bool failed () const {
+  bool failed () const
+  {
     return this->failed_;
   }
 
@@ -242,7 +251,7 @@ namespace {
     return true;
   }
 
-  void WriteIOR (const char *ior)
+  void WriteIOR (char const *ior)
   {
     ofstream out (ACE_TEXT_ALWAYS_CHAR (server_ior));
     out << ior;
@@ -281,7 +290,7 @@ int ACE_TMAIN (int ac, ACE_TCHAR *av[])
 
       ObjectId_var id = string_to_ObjectId ("tester");
 
-      poa->activate_object_with_id (id.in (), &svt);
+      poa->activate_object_with_id (id.in (), std::addressof (svt));
       Object_var obj = poa->id_to_reference (id.in ());
       String_var ior = orb->object_to_string (obj.in ());
       WriteIOR (ior.in ());
@@ -312,7 +321,7 @@ int ACE_TMAIN (int ac, ACE_TCHAR *av[])
 
       return 0;
     }
-  catch (const CORBA::Exception &ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("server:");
     }

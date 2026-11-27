@@ -2,7 +2,6 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
      & eval 'exec perl -S $0 $argv:q'
      if 0;
 
-# -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::TestTarget;
@@ -110,7 +109,6 @@ if ($client->PutFile ($iorbase) == -1) {
     exit 1;
 }
 
-# -*- perl -*-
 ###############################################################################
 
 if ($all == 1) {

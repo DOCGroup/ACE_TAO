@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file     Object_Reactivation.cpp
  *
@@ -8,8 +6,6 @@
  *
  *  @author  Irfan Pyarali
  */
-//=============================================================================
-
 
 #include "testS.h"
 #include "ace/Task.h"
@@ -18,7 +14,9 @@
 #include "ace/Auto_Event.h"
 #include "ace/OS_NS_unistd.h"
 
-static int debug = 1;
+#include <memory>
+
+static int debug {1};
 
 static int
 parse_args (int argc, ACE_TCHAR **argv)
@@ -48,9 +46,13 @@ parse_args (int argc, ACE_TCHAR **argv)
 class test_i : public POA_test
 {
 public:
-  test_i (ACE_Auto_Event &event);
+  explicit test_i (ACE_Auto_Event &event);
+  test_i (test_i const &) = delete;
+  test_i (test_i &&) = delete;
+  test_i &operator= (test_i const &) = delete;
+  test_i &operator= (test_i &&) = delete;
 
-  void deactivate_self ();
+  void deactivate_self () override;
 
 private:
   ACE_Auto_Event &event_;
@@ -69,12 +71,16 @@ test_i::deactivate_self ()
   PortableServer::ObjectId_var id = poa->servant_to_id (this);
 
   if (debug)
+  {
     ACE_DEBUG ((LM_DEBUG, "(%t) Deactivating servant\n"));
+  }
 
   poa->deactivate_object (id.in ());
 
   if (debug)
+  {
     ACE_DEBUG ((LM_DEBUG, "(%t) Deactivation complete: signaling main thread and going to sleep\n"));
+  }
 
   int result = this->event_.signal ();
   ACE_ASSERT (result == 0);
@@ -83,7 +89,9 @@ test_i::deactivate_self ()
   ACE_OS::sleep (3);
 
   if (debug)
+  {
     ACE_DEBUG ((LM_DEBUG, "(%t) test_i::deactivate_self complete\n"));
+  }
 }
 
 class Activator : public ACE_Task_Base
@@ -93,9 +101,13 @@ public:
              ACE_Auto_Event &event,
              PortableServer::POA_ptr poa,
              PortableServer::Servant servant,
-             const ACE_CString &task_id,
-             const PortableServer::ObjectId &id);
-  int svc ();
+             ACE_CString const &task_id,
+             PortableServer::ObjectId const &id);
+  Activator (Activator const &) = delete;
+  Activator (Activator &&) = delete;
+  Activator &operator= (Activator const &) = delete;
+  Activator &operator= (Activator &&) = delete;
+  int svc () override;
 
 private:
   test_var test_;
@@ -110,8 +122,8 @@ Activator::Activator (test_ptr t,
                       ACE_Auto_Event &event,
                       PortableServer::POA_ptr poa,
                       PortableServer::Servant servant,
-                      const ACE_CString &task_id,
-                      const PortableServer::ObjectId &id)
+                      ACE_CString const &task_id,
+                      PortableServer::ObjectId const &id)
   : test_ (test::_duplicate (t)),
     event_ (event),
     poa_ (PortableServer::POA::_duplicate (poa)),
@@ -125,14 +137,18 @@ int
 Activator::svc ()
 {
   if (debug)
+  {
     ACE_DEBUG ((LM_DEBUG, "(%t) Waiting for deactivation to complete\n"));
+  }
 
   int result = this->event_.wait ();
   ACE_ASSERT (result == 0);
   ACE_UNUSED_ARG (result);
 
   if (debug)
+  {
     ACE_DEBUG ((LM_DEBUG, "(%t) Deactivation complete, trying to activate\n"));
+  }
 
   try
     {
@@ -148,9 +164,11 @@ Activator::svc ()
         }
 
       if (debug)
+      {
         ACE_DEBUG ((LM_DEBUG, "(%t) Activation complete\n"));
+      }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Activator::svc");
       return -1;
@@ -161,8 +179,12 @@ Activator::svc ()
 class Deactivator : public ACE_Task_Base
 {
 public:
-  Deactivator (test_ptr t);
-  int svc ();
+  explicit Deactivator (test_ptr t);
+  Deactivator (Deactivator const &) = delete;
+  Deactivator (Deactivator &&) = delete;
+  Deactivator &operator= (Deactivator const &) = delete;
+  Deactivator &operator= (Deactivator &&) = delete;
+  int svc () override;
 
 private:
   test_var test_;
@@ -180,7 +202,7 @@ Deactivator::svc ()
     {
       this->test_->deactivate_self ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Deactivator::svc");
       return -1;
@@ -189,7 +211,7 @@ Deactivator::svc ()
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
@@ -200,7 +222,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         parse_args (argc, argv);
 
       if (parse_args_result != 0)
+      {
         return parse_args_result;
+      }
 
       // Obtain the RootPOA.
       CORBA::Object_var obj =
@@ -223,13 +247,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       test_i servant2 (event2);
 
       PortableServer::ObjectId_var id_act =
-        root_poa->activate_object (&servant1);
+        root_poa->activate_object (std::addressof (servant1));
 
       CORBA::Object_var object_act = root_poa->id_to_reference (id_act.in ());
 
       test_var test_object1 = test::_narrow (object_act.in ());
 
-      id_act = root_poa->activate_object (&servant2);
+      id_act = root_poa->activate_object (std::addressof (servant2));
 
       object_act = root_poa->id_to_reference (id_act.in ());
 
@@ -263,18 +287,22 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           activator2.activate () != 0 ||
           deactivator1.activate () != 0 ||
           deactivator2.activate () != 0)
+      {
         return -1;
+      }
 
       int result = ACE_Thread_Manager::instance ()->wait ();
 
       if (result != 0)
+      {
         return result;
+      }
 
       root_poa->destroy (true, true);
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught");
       return -1;

@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    Broadcaster_i.cpp
  *
@@ -7,12 +6,11 @@
  *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "Broadcaster_i.h"
 
 bool
-Broadcaster_i::Receiver_Data::operator == (const Broadcaster_i::Receiver_Data &receiver_data) const
+Broadcaster_i::Receiver_Data::operator == (Broadcaster_i::Receiver_Data const &receiver_data) const
 {
   // The <_is_equivalent> function checks if the _var and _ptr objects
   // are the same.  NOTE: this call might not behave well on other
@@ -25,7 +23,7 @@ Broadcaster_i::Receiver_Data::operator == (const Broadcaster_i::Receiver_Data &r
 
 void
 Broadcaster_i::add (Receiver_ptr receiver,
-                    const char *nickname)
+                    char const *nickname)
 {
   Broadcaster_i::Receiver_Data receiver_data;
 
@@ -35,7 +33,9 @@ Broadcaster_i::add (Receiver_ptr receiver,
 
   // Insert the Receiver reference to the set
   if (receiver_set_.insert (receiver_data) == -1)
+  {
     throw Broadcaster::CannotAdd ("failed to add to the receiver set\n");
+  }
 
   // Tell everyone which person just joined the chat.
   ACE_CString broadcast_string =
@@ -47,7 +47,7 @@ Broadcaster_i::add (Receiver_ptr receiver,
     {
       this->broadcast (broadcast_string.fast_rep ());
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Broadcaster_i::broadcast failed.\t\n");
     }
@@ -62,13 +62,13 @@ Broadcaster_i::remove (Receiver_ptr receiver)
   // wants to be removed.
   for (RECEIVER_SET_ITERATOR iter = this->receiver_set_.begin ();
        iter != this->receiver_set_.end ();
-       iter++)
+       ++iter)
     {
       // The <_is_equivalent> function checks if the _var and _ptr objects
       // are the same.  NOTE: this call might not behave well on other
       // ORBs since <_is_equivalent> isn't guaranteed to differentiate
       // object references.
-      if ((*iter).receiver_.in ()->_is_equivalent (receiver) == 1)
+      if ((*iter).receiver_.in ()->_is_equivalent (receiver))
         {
           receiver_data_to_remove = *iter;
           break;
@@ -77,7 +77,9 @@ Broadcaster_i::remove (Receiver_ptr receiver)
 
   // Remove the reference from our list.
   if (this->receiver_set_.remove (receiver_data_to_remove) == -1)
+  {
     throw Broadcaster::CannotRemove ("failed to remove from receiver set\n");
+  }
 
   // Tell everyone, which person left the chat.
   ACE_CString broadcast_string = "**** "
@@ -90,7 +92,7 @@ Broadcaster_i::remove (Receiver_ptr receiver)
 
 void
 Broadcaster_i::say (Receiver_ptr receiver,
-                    const char *text)
+                    char const *text)
 {
   try
     {
@@ -100,14 +102,16 @@ Broadcaster_i::say (Receiver_ptr receiver,
 
       for (RECEIVER_SET_ITERATOR iter = this->receiver_set_.begin ();
            iter != this->receiver_set_.end ();
-           iter++)
+           ++iter)
         {
            // The <_is_equivalent> function checks if the _var and
            // _ptr objects are the same.  NOTE: this call might not
            // behave well on other ORBs since <_is_equivalent> isn't
            // guaranteed to differentiate object references.
-          if ((*iter).receiver_.in ()->_is_equivalent (receiver) == 1)
+          if ((*iter).receiver_.in ()->_is_equivalent (receiver))
+          {
             sender_nickname = (*iter).nickname_;
+          }
         }
 
       // Broadcast the message to all registered clients
@@ -115,26 +119,26 @@ Broadcaster_i::say (Receiver_ptr receiver,
 
       this->broadcast (broadcast_string.fast_rep ());
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Broadcaster_i::say\t\n");
     }
 }
 
 void
-Broadcaster_i::broadcast (const char *text)
+Broadcaster_i::broadcast (char const *text)
 {
   // Broadcast the message to all registered clients.
 
   for (RECEIVER_SET_ITERATOR iter = this->receiver_set_.begin ();
        iter != this->receiver_set_.end ();
-       iter++)
+       ++iter)
     {
       try
         {
           (*iter).receiver_->message (text);
         }
-      catch (const CORBA::Exception& ex)
+      catch (CORBA::Exception const &ex)
         {
           ex._tao_print_exception ("Failed to send a message\n");
         }

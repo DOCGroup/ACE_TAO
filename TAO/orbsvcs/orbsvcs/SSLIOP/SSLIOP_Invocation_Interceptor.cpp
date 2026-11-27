@@ -36,28 +36,32 @@ TAO::SSLIOP::Server_Invocation_Interceptor::Server_Invocation_Interceptor (
       if (tao_current != nullptr)
         {
           if (TAO_debug_level > 3)
+          {
             ORBSVCS_DEBUG ((LM_DEBUG, "TAO (%P|%t) SSLIOP_Invocation_Interceptor::CTOR--setting up SSLIOP Current with slot %d\n", tss_slot));
+          }
           tao_current->tss_slot (tss_slot);
         }
       else
+      {
         throw CORBA::INTERNAL ();
+      }
     }
 
   obj = info->resolve_initial_references ("SecurityLevel2:SecurityManager");
   this->sec2manager_ = SecurityLevel2::SecurityManager::_narrow (obj.in ());
 }
 
-TAO::SSLIOP::Server_Invocation_Interceptor::~Server_Invocation_Interceptor ()
-{
-}
-
 char *
 TAO::SSLIOP::Server_Invocation_Interceptor::name ()
 {
   if (this->collocated_)
-    return CORBA::string_dup ("TAO::SSLIOP::Server_Invocation_Interceptor::Collocated");
+    {
+      return CORBA::string_dup ("TAO::SSLIOP::Server_Invocation_Interceptor::Collocated");
+    }
   else
+  {
     return CORBA::string_dup ("TAO::SSLIOP::Server_Invocation_Interceptor::Remote");
+  }
 }
 
 void
@@ -84,7 +88,9 @@ TAO::SSLIOP::Server_Invocation_Interceptor::receive_request (
     this->ssliop_current_->no_context ();
 
   if (TAO_debug_level >= 3)
+  {
     ORBSVCS_DEBUG ((LM_DEBUG, "SSLIOP (%P|%t) Interceptor (context), ssl=%d collocated=%d\n", !(no_ssl), this->collocated_));
+  }
 
   // if
   // (1) no SSL session state is available (which means that the
@@ -147,7 +153,9 @@ TAO::SSLIOP::Server_Invocation_Interceptor::receive_request (
         }
 
       if (! it_should_happen)
+      {
         throw CORBA::NO_PERMISSION ();
+      }
     }
 }
 

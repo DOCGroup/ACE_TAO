@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 /**
  *  @file Supplier_Map.h
  *
@@ -21,11 +19,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-/**
- * @typedef TAO_Notify_Supplier_Map
- *
- * @brief The Event Map for Suppliers.
- */
+/// The event map for suppliers.
 using TAO_Notify_Supplier_Map =
   TAO_Notify_Event_Map_T<TAO_Notify_ProxyConsumer, TAO_SYNCH_RW_MUTEX>;
 

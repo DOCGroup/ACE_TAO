@@ -1,13 +1,9 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   Log_Constraint_Interpreter.h
  *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  *  @author D A Hanvey <d.hanvey@qub.ac.uk>
  */
-//=============================================================================
 
 #ifndef TAO_LOG_CONSTRAINT_INTERPRETER_H
 #define TAO_LOG_CONSTRAINT_INTERPRETER_H
@@ -39,13 +35,12 @@ class TAO_Log_Serv_Export TAO_Log_Constraint_Interpreter :
 public:
   /**
    * This constructor builds an expression tree representing the
-   * constraint specified in <constraints>, and throws an Illegal
+   * constraint specified in @a constraints, and throws an Illegal
    * Constraint exception if the constraint given has syntax errors or
    * semantic errors, such as mismatched types.
    */
-  TAO_Log_Constraint_Interpreter (char const * constraints);
+  explicit TAO_Log_Constraint_Interpreter (char const * constraints);
 
-  /// Destructor.
   ~TAO_Log_Constraint_Interpreter () override;
 
   /// Returns true if the constraint is evaluated successfully by

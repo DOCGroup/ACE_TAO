@@ -1831,8 +1831,8 @@ interface_forward :
           if (s != 0)
             {
               f = idl_global->gen ()->create_interface_fwd (&n,
-                                                            0,
-                                                            0);
+                                                            false,
+                                                            false);
               (void) s->fe_add_interface_fwd (f);
             }
 
@@ -1857,8 +1857,8 @@ interface_forward :
           if (s != 0)
             {
               f = idl_global->gen ()->create_interface_fwd (&n,
-                                                            1,
-                                                            0);
+                                                            true,
+                                                            false);
               (void) s->fe_add_interface_fwd (f);
             }
 
@@ -1883,8 +1883,8 @@ interface_forward :
           if (s != 0)
             {
               f = idl_global->gen ()->create_interface_fwd (&n,
-                                                            0,
-                                                            1);
+                                                            false,
+                                                            true);
               (void) s->fe_add_interface_fwd (f);
             }
 
@@ -4453,8 +4453,8 @@ array_declarator :
                                         &sn,
                                         array_dims->length (),
                                         array_dims,
-                                        0,
-                                        0
+                                        false,
+                                        false
                                       );
               array->base_type_annotations (*base_type_annotations);
               sn.destroy ();
@@ -7025,7 +7025,7 @@ porttype_decl
           idl_global->set_parse_state (IDL_GlobalData::PS_PorttypeSqSeen);
         }
         /**
-         * NOTE: IDL4.2 spec has a different definition of what can go inside a
+         * @note IDL4.2 spec has a different definition of what can go inside a
          * portype.
          */
         at_least_one_port_export

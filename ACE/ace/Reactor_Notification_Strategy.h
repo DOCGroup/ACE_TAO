@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   Reactor_Notification_Strategy.h
  *
  *  @author Doug Schmidt
  */
-//=============================================================================
 #ifndef ACE_REACTOR_NOTIFICATION_STRATEGY_H
 #define ACE_REACTOR_NOTIFICATION_STRATEGY_H
 
@@ -35,7 +31,6 @@ public:
                                      ACE_Event_Handler *eh,
                                      ACE_Reactor_Mask mask);
 
-  /// Default destructor.
   ~ACE_Reactor_Notification_Strategy () override;
 
   int notify () override;

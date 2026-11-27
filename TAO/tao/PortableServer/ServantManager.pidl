@@ -15,7 +15,6 @@ module PortableServer
 {
 # pragma version PortableServer 2.3
 
-  // ServantManager interface.
   local interface ServantManager {};
 };
 

@@ -1,13 +1,9 @@
-// -*- C++ -*-
-
-// ===================================================================
 /**
  *  @file GIOP_Message_Base.h
  *
  *  @author Initially Copyrighted by Sun Microsystems Inc., 1994-1995,
  *  @author modified by Balachandran Natarajan <bala@cs.wustl.edu>
  */
-// ===================================================================
 
 #ifndef TAO_GIOP_MESSAGE_BASE_H
 #define TAO_GIOP_MESSAGE_BASE_H
@@ -28,6 +24,7 @@
 #include "tao/GIOP_Fragmentation_Strategy.h"
 #include "tao/CDR.h"
 #include "tao/Incoming_Message_Stack.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -48,12 +45,10 @@ class TAO_ServerRequest;
 class TAO_Export TAO_GIOP_Message_Base
 {
 public:
-  /// Constructor
   TAO_GIOP_Message_Base (TAO_ORB_Core *orb_core,
                          TAO_Transport * transport,
                          size_t input_cdr_size = ACE_CDR::DEFAULT_BUFSIZE);
 
-  /// Destructor
   ~TAO_GIOP_Message_Base ();
 
   /// Initialize the underlying state object based on the @a major and
@@ -118,14 +113,14 @@ public:
   int generate_exception_reply (
       TAO_OutputCDR &cdr,
       TAO_Pluggable_Reply_Params_Base &params,
-      const CORBA::Exception &x);
+      CORBA::Exception const &x);
 
   /// Header length
   size_t header_length () const;
 
   /// The header length of a fragment
   size_t fragment_header_length (
-    const TAO_GIOP_Message_Version& giop_version) const;
+    TAO_GIOP_Message_Version const & giop_version) const;
 
   TAO_OutputCDR &out_stream ();
 
@@ -146,7 +141,7 @@ public:
   /// concurrently by multiple threads nor concurrently to
   /// consolidate_fragmented_message @return -1 on failure, 0 on
   /// success, 1 no fragment on stack relating to CancelRequest.
-  int discard_fragmented_message (const TAO_Queued_Data *cancel_request);
+  int discard_fragmented_message (TAO_Queued_Data const *cancel_request);
 
   /// Outgoing GIOP message fragmentation strategy.
   TAO_GIOP_Fragmentation_Strategy * fragmentation_strategy ();
@@ -185,20 +180,20 @@ private:
 
   /// Get the parser
   TAO_GIOP_Message_Generator_Parser *get_parser (
-    const TAO_GIOP_Message_Version &version) const;
+    TAO_GIOP_Message_Version const &version) const;
 
   /// Print out consolidate messages
   int dump_consolidated_msg (TAO_OutputCDR &stream);
 
   /// Print out a debug messages..
-  void dump_msg (const char *label, const u_char *ptr,
+  void dump_msg (char const *label, u_char const *ptr,
                  size_t len);
 
   /// Writes the GIOP header in to @a msg
   /// @note If the GIOP header happens to change in the future, we can
   /// push this method in to the generator_parser classes.
   int write_protocol_header (GIOP::MsgType t,
-                             const TAO_GIOP_Message_Version& version,
+                             TAO_GIOP_Message_Version const & version,
                              TAO_OutputCDR &msg);
 
   /// Make a GIOP_LOCATEREPLY and hand that over to the transport so
@@ -233,11 +228,11 @@ private:
 
   /// Parse GIOP request-id of TAO_Queued_Data @a qd
   /// @return 0 on success, otherwise -1
-  int parse_request_id (const TAO_Queued_Data *qd, CORBA::ULong &request_id) const;
+  int parse_request_id (TAO_Queued_Data const *qd, CORBA::ULong &request_id) const;
 
   /// Parse GIOP request-id of TAO_InputCDR @a cdr.
   /// @return 0 on success, otherwise -1
-  int parse_request_id (const TAO_InputCDR &cdr, CORBA::ULong &request_id) const;
+  int parse_request_id (TAO_InputCDR const &cdr, CORBA::ULong &request_id) const;
 
   /// Set GIOP message flags in message that has been marshaled into
   /// the output CDR stream @a msg.
@@ -248,8 +243,14 @@ private:
   void set_giop_flags (TAO_OutputCDR & msg) const;
 
 private:
-  /// Cached ORB_Core pointer...
-  TAO_ORB_Core *orb_core_;
+  TAO_GIOP_Message_Base () = delete;
+  TAO_GIOP_Message_Base (TAO_GIOP_Message_Base const &) = delete;
+  TAO_GIOP_Message_Base &operator= (TAO_GIOP_Message_Base const &) = delete;
+  TAO_GIOP_Message_Base (TAO_GIOP_Message_Base &&) = delete;
+  TAO_GIOP_Message_Base &operator= (TAO_GIOP_Message_Base &&) = delete;
+
+  /// Borrowed ORB core pointer.
+  TAO_ORB_Core * const orb_core_;
 
   /// All the implementations of GIOP message generator and parsers
   TAO_GIOP_Message_Generator_Parser_Impl tao_giop_impl_;
@@ -265,10 +266,12 @@ protected:
    * These attributes are only used when fragmenting outgoing GIOP
    * requests and replies.
    */
-  //@{
+  /// @{
+
   /// Strategy that sends data currently marshaled into this
   /// TAO_OutputCDR stream if necessary.
-  TAO_GIOP_Fragmentation_Strategy* fragmentation_strategy_;
+  std::unique_ptr<TAO_GIOP_Fragmentation_Strategy> fragmentation_strategy_;
+  /// @}
 
   /// Buffer where the request is placed.
   TAO_OutputCDR out_stream_;

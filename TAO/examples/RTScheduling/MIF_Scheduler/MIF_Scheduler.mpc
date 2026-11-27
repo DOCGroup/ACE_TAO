@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*Starter): portableserver, namingexe {
   after += RTSchedSynch
   libs += RTSchedSynch

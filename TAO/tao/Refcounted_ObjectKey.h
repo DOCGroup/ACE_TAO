@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file Refcounted_ObjectKey.h
  *
  *  @author Balachandran Natarajan <bala@dre.vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef TAO_REFCOUNTED_OBJECTKEY_H
 #define TAO_REFCOUNTED_OBJECTKEY_H
@@ -38,7 +34,6 @@ namespace TAO
   class TAO_Export Refcounted_ObjectKey
   {
   public:
-    /// Constructor
     Refcounted_ObjectKey (ObjectKey const &ref);
 
     /// Accessor for the underlying ObjectKey.
@@ -58,6 +53,7 @@ namespace TAO
     CORBA::ULong decr_refcount ();
 
   private:
+    Refcounted_ObjectKey () = delete;
     Refcounted_ObjectKey (Refcounted_ObjectKey const &) = delete;
     Refcounted_ObjectKey &operator= (Refcounted_ObjectKey const &) = delete;
     Refcounted_ObjectKey (Refcounted_ObjectKey &&) = delete;
@@ -67,7 +63,7 @@ namespace TAO
     ObjectKey object_key_;
 
     /// The refcount on the object key..
-    CORBA::ULong refcount_ {};
+    CORBA::ULong refcount_ {1};
   };
 }
 

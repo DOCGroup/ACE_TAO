@@ -27,7 +27,6 @@ class RT_Class;
 class TAO_RTEC_Perf_Export RTClient_Setup
 {
 public:
-  /// Constructor
   RTClient_Setup (int use_rt_corba,
                   CORBA::ORB_ptr orb,
                   const RT_Class &rt_class,

@@ -1,4 +1,5 @@
 #include "ace/UUID.h"
+#include "ace/Malloc_Base.h"
 #include "ace/Guard_T.h"
 
 #if !defined (__ACE_INLINE__)
@@ -7,11 +8,13 @@
 
 #include "ace/Log_Category.h"
 #include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_string.h"
 #include "ace/OS_NS_sys_time.h"
 #include "ace/OS_NS_netdb.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/ACE.h"
+
+#include <cstring>
+
 #include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -19,10 +22,10 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace ACE_Utils
 {
   // NIL version of the UUID
-  const UUID UUID::NIL_UUID;
+  UUID const UUID::NIL_UUID;
 
 #ifndef ACE_LACKS_SSCANF
-  UUID::UUID (const ACE_CString& uuid_string)
+  UUID::UUID (ACE_CString const& uuid_string)
   {
     this->init ();
     this->from_string_i (uuid_string);
@@ -31,21 +34,23 @@ namespace ACE_Utils
 
   ACE_ALLOC_HOOK_DEFINE(UUID);
 
-  const UUID &
-  UUID::operator = (const UUID & rhs)
+  UUID const &
+  UUID::operator = (UUID const & rhs)
   {
-    if (this != &rhs)
+    if (this != std::addressof (rhs))
       {
         // Reset the string version of the UUID a string version
         // exist, and the UUID is not equal to the old UUID.
-        if (nullptr != this->as_string_.get ())
+        if (this->as_string_)
           {
-            if (nullptr == rhs.as_string_.get () || *this != rhs)
-              this->as_string_.reset ();
+            if (!rhs.as_string_ || *this != rhs)
+              {
+                this->as_string_.reset ();
+              }
           }
 
         // Copy the contents of the UUID.
-        ACE_OS::memcpy (&this->uuid_, &rhs.uuid_, BINARY_SIZE);
+        std::memcpy (std::addressof (this->uuid_), std::addressof (rhs.uuid_), BINARY_SIZE);
 
         /// @todo We should create an UUID_Ex class for UUIDs that
         ///       contain the thread id and process id.
@@ -56,24 +61,26 @@ namespace ACE_Utils
     return *this;
   }
 
-  const ACE_CString * UUID::to_string () const
+  ACE_CString const * UUID::to_string () const
   {
     // Compute the string representation only once.
-    if (nullptr != this->as_string_.get ())
-      return this->as_string_.get ();
+    if (this->as_string_)
+      {
+        return this->as_string_.get ();
+      }
 
     // Get a buffer exactly the correct size. Use the nil UUID as a
     // gauge.  Don't forget the trailing nul.
-    std::unique_ptr <char[]> auto_clean;
+    std::unique_ptr<char[], ACE_Array_Deleter<char>> auto_clean;
     size_t UUID_STRING_LENGTH = 36 + thr_id_.length () + pid_.length ();
-    char *buf = nullptr;
+    char *buf {};
 
     if (36 == UUID_STRING_LENGTH)
       {
 #if defined (ACE_HAS_ALLOC_HOOKS)
         ACE_ALLOCATOR_RETURN (buf,
                               static_cast<char*> (ACE_Allocator::instance()->malloc(sizeof (char) * (UUID_STRING_LENGTH + 1))),
-                              0);
+                              nullptr);
 #else
         ACE_NEW_RETURN (buf,
                         char[UUID_STRING_LENGTH + 1],
@@ -104,7 +111,7 @@ namespace ACE_Utils
 #if defined (ACE_HAS_ALLOC_HOOKS)
         ACE_ALLOCATOR_RETURN (buf,
                               static_cast<char*> (ACE_Allocator::instance()->malloc(sizeof (char) * (UUID_STRING_LENGTH + 1))),
-                              0);
+                              nullptr);
 #else
         ACE_NEW_RETURN (buf,
                         char[UUID_STRING_LENGTH + 1],
@@ -132,7 +139,7 @@ namespace ACE_Utils
       }
 
     // Save the string.
-    ACE_CString * as_string = nullptr;
+    ACE_CString * as_string {};
 
     ACE_NEW_RETURN (as_string,
                     ACE_CString (buf, UUID_STRING_LENGTH),
@@ -144,7 +151,7 @@ namespace ACE_Utils
 
 #ifndef ACE_LACKS_SSCANF
   void
-  UUID::from_string_i (const ACE_CString& uuid_string)
+  UUID::from_string_i (ACE_CString const& uuid_string)
   {
     if (uuid_string.length () < NIL_UUID.to_string ()->length ())
       {
@@ -167,7 +174,17 @@ namespace ACE_Utils
     unsigned int clock_seq_hi_and_reserved;
     unsigned int clock_seq_low;
     unsigned int node [UUID_Node::NODE_ID_SIZE];
-    char thr_pid_buf [BUFSIZ];
+    size_t const uuid_length = NIL_UUID.to_string ()->length ();
+
+    if (uuid_string.length () > uuid_length &&
+        (uuid_string.length () <= uuid_length + 1 ||
+         uuid_string.c_str ()[uuid_length] != '-'))
+      {
+        ACELIB_DEBUG ((LM_DEBUG,
+                    "ACE_UUID::from_string_i - "
+                    "IllegalArgument (invalid thread/process suffix)\n"));
+        return;
+      }
 
     if (uuid_string.length () == NIL_UUID.to_string ()->length ())
       {
@@ -176,7 +193,7 @@ namespace ACE_Utils
         // because some compilers dont support vsscanf, including
         // MSVC. It appears that most platforms support sscanf though
         // so we need to use it directly.
-        const int nScanned =
+        int const nScanned =
 #if defined (ACE_HAS_TR24731_2005_CRT)
           sscanf_s (
                    uuid_string.c_str (),
@@ -186,12 +203,12 @@ namespace ACE_Utils
                    &time_hi_and_version,
                    &clock_seq_hi_and_reserved,
                    &clock_seq_low,
-                   &node[0],
-                   &node[1],
-                   &node[2],
-                   &node[3],
-                   &node[4],
-                   &node[5]
+                   std::addressof (node[0]),
+                   std::addressof (node[1]),
+                   std::addressof (node[2]),
+                   std::addressof (node[3]),
+                   std::addressof (node[4]),
+                   std::addressof (node[5])
                    );
 #else
           ::sscanf (
@@ -202,12 +219,12 @@ namespace ACE_Utils
                    &time_hi_and_version,
                    &clock_seq_hi_and_reserved,
                    &clock_seq_low,
-                   &node[0],
-                   &node[1],
-                   &node[2],
-                   &node[3],
-                   &node[4],
-                   &node[5]
+                   std::addressof (node[0]),
+                   std::addressof (node[1]),
+                   std::addressof (node[2]),
+                   std::addressof (node[3]),
+                   std::addressof (node[4]),
+                   std::addressof (node[5])
                    );
 #endif /* ACE_HAS_TR24731_2005_CRT */
 
@@ -221,43 +238,40 @@ namespace ACE_Utils
       }
     else
       {
-        const int nScanned =
+        int const nScanned =
 #if defined (ACE_HAS_TR24731_2005_CRT)
           sscanf_s (uuid_string.c_str (),
-                    "%8x-%4x-%4x-%2x%2x-%2x%2x%2x%2x%2x%2x-%s",
+                    "%8x-%4x-%4x-%2x%2x-%2x%2x%2x%2x%2x%2x",
                     &time_low,
                     &time_mid,
                     &time_hi_and_version,
                     &clock_seq_hi_and_reserved,
                     &clock_seq_low,
-                    &node[0],
-                    &node[1],
-                    &node[2],
-                    &node[3],
-                    &node[4],
-                    &node[5],
-                    thr_pid_buf,
-                    BUFSIZ
+                    std::addressof (node[0]),
+                    std::addressof (node[1]),
+                    std::addressof (node[2]),
+                    std::addressof (node[3]),
+                    std::addressof (node[4]),
+                    std::addressof (node[5])
                     );
 #else
           ::sscanf (uuid_string.c_str (),
-                    "%8x-%4x-%4x-%2x%2x-%2x%2x%2x%2x%2x%2x-%s",
+                    "%8x-%4x-%4x-%2x%2x-%2x%2x%2x%2x%2x%2x",
                     &time_low,
                     &time_mid,
                     &time_hi_and_version,
                     &clock_seq_hi_and_reserved,
                     &clock_seq_low,
-                    &node[0],
-                    &node[1],
-                    &node[2],
-                    &node[3],
-                    &node[4],
-                    &node[5],
-                    thr_pid_buf
+                    std::addressof (node[0]),
+                    std::addressof (node[1]),
+                    std::addressof (node[2]),
+                    std::addressof (node[3]),
+                    std::addressof (node[4]),
+                    std::addressof (node[5])
                     );
 #endif /* ACE_HAS_TR24731_2005_CRT */
 
-        if (nScanned != 12)
+        if (nScanned != 11)
           {
             ACELIB_DEBUG ((LM_DEBUG,
                         "ACE_UUID::from_string_i - "
@@ -273,7 +287,9 @@ namespace ACE_Utils
     this->uuid_.clock_seq_low_ = static_cast<u_char> (clock_seq_low);
 
     for (size_t i = 0; i < UUID_Node::NODE_ID_SIZE; ++ i)
-      this->uuid_.node_.node_ID ()[i] = static_cast <u_char> (node[i]);
+      {
+        this->uuid_.node_.node_ID ()[i] = static_cast <u_char> (node[i]);
+      }
 
     // Support varient 10- only
     if ((this->uuid_.clock_seq_hi_and_reserved_ & 0xc0) != 0x80 &&
@@ -286,7 +302,7 @@ namespace ACE_Utils
       }
 
     /// Support versions 1, 3, and 4 only
-    ACE_UINT16 V1 = this->uuid_.time_hi_and_version_;
+    ACE_UINT16 const V1 = this->uuid_.time_hi_and_version_;
 
     if ((V1 & 0xF000) != 0x1000 &&
         (V1 & 0xF000) != 0x3000 &&
@@ -300,19 +316,22 @@ namespace ACE_Utils
 
     if ((this->uuid_.clock_seq_hi_and_reserved_ & 0xc0) == 0xc0)
       {
-        if (uuid_string.length () == NIL_UUID.to_string ()->length ())
+        if (uuid_string.length () == uuid_length)
           {
             ACELIB_DEBUG ((LM_DEBUG,
                       "ACE_UUID::from_string_i - "
                         "IllegalArgument (Missing Thread and Process Id)\n"));
             return;
           }
-        ACE_CString thr_pid_str (thr_pid_buf);
-        ssize_t pos = static_cast<ssize_t> (thr_pid_str.find ('-'));
-        if (pos == -1)
-          ACELIB_DEBUG ((LM_DEBUG,
-                      "ACE_UUID::from_string_i - "
-                      "IllegalArgument (Thread and Process Id format incorrect)\n"));
+        ACE_CString const thr_pid_str (uuid_string.c_str () + uuid_length + 1);
+        ssize_t const pos = static_cast<ssize_t> (thr_pid_str.find ('-'));
+        if (pos <= 0 || static_cast<size_t> (pos) + 1 >= thr_pid_str.length ())
+          {
+            ACELIB_DEBUG ((LM_DEBUG,
+                        "ACE_UUID::from_string_i - "
+                        "IllegalArgument (Thread and Process Id format incorrect)\n"));
+            return;
+          }
 
         this->thr_id_ = thr_pid_str.substr (0, pos);
         this->pid_ = thr_pid_str.substr (pos+1, thr_pid_str.length ()-pos-1);
@@ -321,25 +340,23 @@ namespace ACE_Utils
 #endif // ACE_LACKS_SSCANF
 
   UUID_Generator::UUID_Generator ()
-    : time_last_ (0),
-      destroy_lock_ (true),
-      is_init_ (false)
   {
-    ACE_NEW (lock_, ACE_SYNCH_MUTEX);
+    ACE_SYNCH_MUTEX* lock {};
+    ACE_NEW (lock, ACE_SYNCH_MUTEX);
+    this->owned_lock_.reset (lock);
+    this->lock_ = this->owned_lock_.get ();
     this->init ();
   }
 
-  UUID_Generator::~UUID_Generator ()
-  {
-    if (destroy_lock_)
-      delete lock_;
-  }
+  UUID_Generator::~UUID_Generator () = default;
 
   void
   UUID_Generator::init ()
   {
     if (this->is_init_)
-      return;
+      {
+        return;
+      }
 
     ACE_OS::macaddr_node_t macaddress;
     int const result = ACE_OS::getmacaddress (&macaddress);
@@ -348,9 +365,7 @@ namespace ACE_Utils
 
     if (-1 != result)
       {
-        ACE_OS::memcpy (node_id,
-                        macaddress.node,
-                        UUID_Node::NODE_ID_SIZE);
+        std::memcpy (node_id, macaddress.node, UUID_Node::NODE_ID_SIZE);
       }
     else
       {
@@ -368,9 +383,7 @@ namespace ACE_Utils
       ACE_GUARD (ACE_SYNCH_MUTEX, ace_mon, *lock_);
       uuid_state_.timestamp = time_last_;
 
-      ACE_OS::memcpy (uuid_state_.node.node_ID (),
-                      node_id,
-                      UUID_Node::NODE_ID_SIZE);
+      std::memcpy (uuid_state_.node.node_ID (), node_id, UUID_Node::NODE_ID_SIZE);
     }
 
     this->is_init_ = true;
@@ -405,7 +418,7 @@ namespace ACE_Utils
 
     if (variant == 0xc0)
       {
-        ACE_Thread_ID thread_id;
+        ACE_Thread_ID const thread_id;
         char buf [BUFSIZ];
         thread_id.to_string (buf, BUFSIZ);
         uuid.thr_id (buf);
@@ -419,7 +432,7 @@ namespace ACE_Utils
   UUID*
   UUID_Generator::generate_UUID (ACE_UINT16 version, u_char variant)
   {
-    UUID* uuid = nullptr;
+    UUID* uuid {};
     ACE_NEW_RETURN (uuid,
                     UUID,
                     nullptr);
@@ -465,12 +478,16 @@ namespace ACE_Utils
     // Account for the clock being set back. Increment the clock /
     // sequence.
     if (timestamp <= time_last_)
-      uuid_state_.clock_sequence = static_cast<ACE_UINT16> ((uuid_state_.clock_sequence + 1) & ACE_UUID_CLOCK_SEQ_MASK);
+      {
+        uuid_state_.clock_sequence = static_cast<ACE_UINT16> ((uuid_state_.clock_sequence + 1) & ACE_UUID_CLOCK_SEQ_MASK);
+      }
 
     // If the system time ticked since the last UUID was
     // generated. Set / the clock sequence back.
     else if (timestamp > time_last_)
-      uuid_state_.clock_sequence = 0;
+      {
+        uuid_state_.clock_sequence = 0;
+      }
 
     time_last_ = timestamp;
     clock_sequence = uuid_state_.clock_sequence;
@@ -490,11 +507,11 @@ namespace ACE_Utils
   void
   UUID_Generator::get_systemtime (UUID_Time & timestamp)
   {
-    const UUID_Time timeOffset =
+    UUID_Time const timeOffset =
       ACE_UINT64_LITERAL (0x1B21DD213814000);
 
     /// Get the time of day, convert to 100ns ticks then add the offset.
-    ACE_Time_Value now = ACE_OS::gettimeofday ();
+    ACE_Time_Value const now = ACE_OS::gettimeofday ();
     ACE_UINT64 time;
     now.to_usec (time);
     time = time * 10;
@@ -510,11 +527,23 @@ namespace ACE_Utils
   void
   UUID_Generator::lock (ACE_SYNCH_MUTEX* lock, bool release_lock)
   {
-    if (this->destroy_lock_)
-      delete this->lock_;
+    if (this->owned_lock_.get () == lock)
+      {
+        if (!release_lock)
+          {
+            this->owned_lock_.release ();
+          }
+      }
+    else if (release_lock)
+      {
+        this->owned_lock_.reset (lock);
+      }
+    else
+    {
+      this->owned_lock_.reset ();
+    }
 
     this->lock_ = lock;
-    this->destroy_lock_ = release_lock;
   }
 }
 

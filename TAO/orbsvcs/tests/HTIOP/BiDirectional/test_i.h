@@ -1,12 +1,8 @@
-
-//=============================================================================
 /**
  *  @file   test_i.h
  *
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_BIDIRECTIONAL_TEST_I_H
 #define TAO_BIDIRECTIONAL_TEST_I_H
@@ -24,8 +20,7 @@
 class Callback_i : public POA_Callback
 {
 public:
-  /// ctor
-  Callback_i (CORBA::ORB_ptr orb);
+  explicit Callback_i (CORBA::ORB_ptr orb);
 
   /// Safe way to shutdown
   void shutdown () override;
@@ -48,15 +43,16 @@ private:
 class Simple_Server_i : public POA_Simple_Server
 {
 public:
-  /// ctor
   Simple_Server_i (CORBA::ORB_ptr orb, int no_iterations);
 
-  // = The Simple_Server methods.
+  /// @name Simple_Server operations
+  /// @{
   CORBA::Long test_method (CORBA::Boolean do_callback) override;
 
   void callback_object (Callback_ptr callback) override;
 
   void shutdown () override;
+  /// @}
 
   int call_client ();
 

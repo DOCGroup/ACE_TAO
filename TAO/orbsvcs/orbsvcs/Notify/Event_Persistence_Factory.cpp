@@ -2,8 +2,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Notify::Event_Persistence_Factory::~Event_Persistence_Factory ()
-{
-}
+TAO_Notify::Event_Persistence_Factory::~Event_Persistence_Factory () = default;
 
 TAO_END_VERSIONED_NAMESPACE_DECL

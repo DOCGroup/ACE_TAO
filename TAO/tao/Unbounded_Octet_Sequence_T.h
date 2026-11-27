@@ -72,14 +72,18 @@ public:
   {}
   inline ~unbounded_value_sequence() {
     if (mb_)
-      ACE_Message_Block::release (mb_);
+      {
+        ACE_Message_Block::release (mb_);
+      }
     if (release_)
-      freebuf(buffer_);
+      {
+        freebuf(buffer_);
+      }
   }
   /// Create a sequence of octets from a single message block (i.e. it
   /// ignores any chaining in the message block).
   inline unbounded_value_sequence (CORBA::ULong length,
-                                                 const ACE_Message_Block* mb)
+                                                 ACE_Message_Block const *mb)
     : maximum_ (length)
     , length_ (length)
     , buffer_ (reinterpret_cast <CORBA::Octet *>(mb->rd_ptr ()))
@@ -206,7 +210,7 @@ public:
 
   // moved inside the class to resolve namespace lookup issues.
   // This is a replacement for the commented block below.
-  inline bool operator== (const unbounded_value_sequence & rhs) const {
+  inline bool operator== (unbounded_value_sequence const &rhs) const {
     unbounded_value_sequence const & lhs = *this;
     CORBA::ULong const len = lhs.length();
 
@@ -219,7 +223,7 @@ public:
            : ACE_OS::memcmp(&lhs[0], &rhs[0], len) == 0));
   }
 
-  inline bool operator!= (const unbounded_value_sequence & rhs) const
+  inline bool operator!= (unbounded_value_sequence const &rhs) const
   {
     return !this->operator==(rhs);
   }
@@ -245,14 +249,14 @@ public:
   }
 
   /// Replaces the current buffer with @a mb, using only @a length bytes.
-  /// It takes a duplicate of <mb> so the user still owns it.
-  inline void replace (CORBA::ULong length, const ACE_Message_Block* mb) {
+  /// It takes a duplicate of @a mb so the user still owns it.
+  inline void replace (CORBA::ULong length, ACE_Message_Block const *mb) {
     unbounded_value_sequence s (length, mb);
     swap (s);
   }
 
   unbounded_value_sequence (
-    const unbounded_value_sequence &rhs)
+    unbounded_value_sequence const &rhs)
     : maximum_ (0)
     , length_ (0)
     , buffer_(nullptr)
@@ -276,7 +280,7 @@ public:
     else
       {
         size_t offset = 0;
-        for (const ACE_Message_Block *i = rhs.mb_; i != nullptr; i = i->cont ())
+        for (ACE_Message_Block const *i = rhs.mb_; i != nullptr; i = i->cont ())
           {
             ACE_OS::memcpy (tmp.buffer_ + offset,
                             i->rd_ptr (),
@@ -289,7 +293,7 @@ public:
   }
 
   unbounded_value_sequence &
-  operator= (const unbounded_value_sequence & rhs)
+  operator= (unbounded_value_sequence const &rhs)
   {
     unbounded_value_sequence tmp(rhs);
     swap(tmp);
@@ -363,8 +367,8 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 // resurrected if need be
 inline
 bool
-operator== (const TAO_VERSIONED_NAMESPACE_NAME::TAO::unbounded_value_sequence<CORBA::Octet> & lhs,
-            const TAO_VERSIONED_NAMESPACE_NAME::TAO::unbounded_value_sequence<CORBA::Octet> & rhs)
+operator== (TAO_VERSIONED_NAMESPACE_NAME::TAO::unbounded_value_sequence<CORBA::Octet> const & lhs,
+            TAO_VERSIONED_NAMESPACE_NAME::TAO::unbounded_value_sequence<CORBA::Octet> const & rhs)
 {
   ::CORBA::ULong const rlen = rhs.length ();
 
@@ -372,18 +376,22 @@ operator== (const TAO_VERSIONED_NAMESPACE_NAME::TAO::unbounded_value_sequence<CO
     {
       return false;
     }
+  if (rlen == 0)
+    {
+      return true;
+    }
 
-  const CORBA::Octet * rhs_buff = rhs.get_buffer ();
-  const CORBA::Octet * lhs_buff = lhs.get_buffer ();
-  const bool result = (ACE_OS::memcmp (lhs_buff, rhs_buff, rlen) == 0);
+  CORBA::Octet const *rhs_buff = rhs.get_buffer ();
+  CORBA::Octet const *lhs_buff = lhs.get_buffer ();
+  bool const result = (ACE_OS::memcmp (lhs_buff, rhs_buff, rlen) == 0);
 
   return result;
 }
 
 inline
 bool
-operator!= (const TAO_VERSIONED_NAMESPACE_NAME::TAO::unbounded_value_sequence<CORBA::Octet> & lhs,
-            const TAO_VERSIONED_NAMESPACE_NAME::TAO::unbounded_value_sequence<CORBA::Octet> & rhs)
+operator!= (TAO_VERSIONED_NAMESPACE_NAME::TAO::unbounded_value_sequence<CORBA::Octet> const & lhs,
+            TAO_VERSIONED_NAMESPACE_NAME::TAO::unbounded_value_sequence<CORBA::Octet> const & rhs)
 {
   return !(lhs == rhs);
 }

@@ -1,13 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    XTI_ATM_Mcast.h
  *
  *  @author Joe Hoffert
  */
-//=============================================================================
-
 
 #ifndef ACE_XTI_ATM_MCAST_H
 #define ACE_XTI_ATM_MCAST_H
@@ -35,7 +30,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_XTI_ATM_Mcast : public ACE_TLI_Connector
 {
 public:
-  /// Default constructor.
   ACE_XTI_ATM_Mcast ();
 
   /**
@@ -51,16 +45,16 @@ public:
    * @a local_sap is the value of local address to bind to.  If it's
    * the default value of ACE_Addr::sap_any then the user is letting
    * the OS do the binding.  If @a reuse_addr == 1 then the
-   * <local_addr> is reused, even if it hasn't been cleanedup yet.
+   * @a local_sap is reused, even if it hasn't been cleanedup yet.
    */
   ACE_XTI_ATM_Mcast (ACE_TLI_Stream &new_stream,
-                     const ACE_Addr &remote_sap,
+                     ACE_Addr const &remote_sap,
                      ACE_Time_Value *timeout = nullptr,
-                     const ACE_Addr &local_sap = ACE_Addr::sap_any,
+                     ACE_Addr const &local_sap = ACE_Addr::sap_any,
                      int reuse_addr = 0,
                      int flags = O_RDWR,
                      int perms = 0,
-                     const char device[] = ACE_XTI_ATM_DEVICE,
+                     char const device[] = ACE_XTI_ATM_DEVICE,
                      struct t_info *info = nullptr,
                      int rw_flag = 1,
                      struct netbuf *udata = nullptr,
@@ -79,16 +73,16 @@ public:
    * @a local_sap is the value of local address to bind to.  If it's
    * the default value of ACE_Addr::sap_any then the user is letting
    * the OS do the binding.  If @a reuse_addr == 1 then the
-   * <local_addr> is reused, even if it hasn't been cleanedup yet.
+   * @a local_sap is reused, even if it hasn't been cleanedup yet.
    */
   int connect (ACE_TLI_Stream &new_stream,
-               const ACE_Addr &remote_sap,
+               ACE_Addr const &remote_sap,
                ACE_Time_Value *timeout = nullptr,
-               const ACE_Addr &local_sap = ACE_Addr::sap_any,
+               ACE_Addr const &local_sap = ACE_Addr::sap_any,
                int reuse_addr = 0,
                int flags = O_RDWR,
                int perms = 0,
-               const char device[] = ACE_XTI_ATM_DEVICE,
+               char const device[] = ACE_XTI_ATM_DEVICE,
                struct t_info *info = nullptr,
                int rw_flag = 1,
                struct netbuf *udata = nullptr,
@@ -106,13 +100,15 @@ public:
    * If the time expires before the connection is made @c errno == ETIME.
    */
   int add_leaf (ACE_TLI_Stream &current_stream,
-                const ACE_Addr &remote_sap,
+                ACE_Addr const &remote_sap,
                 ACE_INT32 leaf_id,
                 ACE_Time_Value *timeout = nullptr);
 
-  // = Meta-type info
+  /// @name Meta types
+  /// @{
   using PEER_ADDR = ACE_ATM_Addr;
   using PEER_STREAM = ACE_TLI_Stream;
+  /// @}
 
   /// Dump the state of an object.
   void dump () const;

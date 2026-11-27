@@ -1,4 +1,3 @@
-
 #ifndef ONEWAY_BUFFERING_ADMIN_H
 #define ONEWAY_BUFFERING_ADMIN_H
 #include /**/ "ace/pre.h"
@@ -10,19 +9,23 @@ class Oneway_Buffering_Admin
   : public virtual POA_Test::Oneway_Buffering_Admin
 {
 public:
-  /// Constructor
-  Oneway_Buffering_Admin (CORBA::ORB_ptr orb);
+  explicit Oneway_Buffering_Admin (CORBA::ORB_ptr orb);
 
-  // = The skeleton methods
-  virtual CORBA::ULong request_count (CORBA::ULong expected_request_count);
+  Oneway_Buffering_Admin (Oneway_Buffering_Admin const &) = delete;
+  Oneway_Buffering_Admin &operator= (Oneway_Buffering_Admin const &) = delete;
+  Oneway_Buffering_Admin (Oneway_Buffering_Admin &&) = delete;
+  Oneway_Buffering_Admin &operator= (Oneway_Buffering_Admin &&) = delete;
 
-  virtual CORBA::ULong bytes_received_count (CORBA::ULong expected_bytes_received_count);
+  /// The skeleton methods
+  CORBA::ULong request_count (CORBA::ULong expected_request_count) override;
 
-  virtual void request_received (CORBA::ULong payload_length);
+  CORBA::ULong bytes_received_count (CORBA::ULong expected_bytes_received_count) override;
 
-  virtual void flush ();
+  void request_received (CORBA::ULong payload_length) override;
 
-  virtual void shutdown ();
+  void flush () override;
+
+  void shutdown () override;
 
 private:
   /// Use an ORB reference to shutdown the application.

@@ -10,7 +10,7 @@ test_i::method (CORBA::ULong request_number,
                 CORBA::ULong_out reply_number)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "server: Iteration %d @ %T\n",
+              ACE_TEXT ("server: Iteration %u @ %T\n"),
               request_number));
 
   reply_number = request_number;

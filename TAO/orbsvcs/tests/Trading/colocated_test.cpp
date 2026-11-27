@@ -11,14 +11,14 @@ int
 parse_args (int argc, ACE_TCHAR *argv[],
             CORBA::Boolean& verbose)
 {
-  verbose = 1;
+  verbose = true;
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("qh"));
   for (int opt; (opt = get_opts()) != -1;)
   {
     switch (opt)
     {
       case 'q':
-        verbose = 0;
+        verbose = false;
         break;
 
       case 'h':
@@ -50,15 +50,16 @@ int failure = 0;
   try
     {
       // Command line argument interpretation.
-      CORBA::Boolean verbose = 0;
+      CORBA::Boolean verbose {};
       if (parse_args (argc, argv, verbose) != 0)
+      {
         return 1;
+      }
 
       ACE_DEBUG ((LM_DEBUG, "*** Initialize ORB and POA manager.\n"));
       TAO_ORB_Manager orb_manager;
       orb_manager.init (argc, argv);
 
-      //-------------------------------------------------------------------------
       ACE_DEBUG ((LM_DEBUG, "*** Setup an embedded TradingService.\n"));
       // Create a Service Type Repository and a Trader Object so the test can
       // run without an external trading service.
@@ -122,11 +123,10 @@ int failure = 0;
 
         offer_importer.perform_queries ();
       }; // End of Trading service scope.
-      //-----------------------------------------------------------------------
       ACE_DEBUG ((LM_DEBUG, "*** Shutting down.\n"));
       orb_manager.fini();
     }
-  catch (const CORBA::Exception& e)
+  catch (CORBA::Exception const & e)
     {
       e._tao_print_exception ("Trader colocated test ERROR!");
       failure = 1;

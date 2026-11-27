@@ -1,13 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    IFR_Client_Adapter.h
  *
  *  @author  Jeff Parsons <parsons@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_IFR_CLIENT_ADAPTER_H
 #define TAO_IFR_CLIENT_ADAPTER_H
@@ -57,7 +52,6 @@ namespace CORBA
 class TAO_Export TAO_IFR_Client_Adapter : public ACE_Service_Object
 {
 public:
-    /// Destructor.
     /**
      * @note Even though this class only defines an interface, a
      *       destructor is necessary to avoid dynamic_cast<> failures
@@ -79,7 +73,7 @@ public:
 
   virtual CORBA::InterfaceDef_ptr get_interface (
       CORBA::ORB_ptr orb,
-      const char *repo_id) = 0;
+      char const *repo_id) = 0;
 
   virtual CORBA::InterfaceDef_ptr get_interface_remote (
       CORBA::Object_ptr target) = 0;

@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   OS_NS_sys_stat.h
  *
@@ -8,7 +5,6 @@
  *  @author Jesper S. M|ller<stophph@diku.dk>
  *  @author and a cast of thousands...
  */
-//=============================================================================
 
 #ifndef ACE_OS_NS_SYS_STAT_H
 # define ACE_OS_NS_SYS_STAT_H
@@ -66,25 +62,26 @@ using ACE_stat = struct stat;
 namespace ACE_OS
 {
   ACE_NAMESPACE_INLINE_FUNCTION
-  ACE_HANDLE creat (const ACE_TCHAR *filename,
+  ACE_HANDLE creat (ACE_TCHAR const *filename,
                     mode_t mode);
 
-  //@{ @name A set of wrappers for low-level file operations.
+  /// @name A set of wrappers for low-level file operations.
+  /// @{
 
-  // non-standard
+  /// Non-standard.
   ACE_NAMESPACE_INLINE_FUNCTION
   ACE_OFF_T filesize (ACE_HANDLE handle);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  ACE_OFF_T filesize (const ACE_TCHAR *handle);
-  //@}
+  ACE_OFF_T filesize (ACE_TCHAR const *handle);
+  /// @}
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int fstat (ACE_HANDLE,
              ACE_stat *);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int lstat (const char *,
+  int lstat (char const *,
              ACE_stat *);
 
 #if defined (ACE_HAS_WCHAR)
@@ -94,7 +91,7 @@ namespace ACE_OS
 #endif /* ACE_HAS_WCHAR */
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int mkdir (const char *path,
+  int mkdir (char const *path,
              mode_t mode = ACE_DEFAULT_DIR_PERMS);
 
 #if defined (ACE_HAS_WCHAR)
@@ -104,11 +101,11 @@ namespace ACE_OS
 #endif /* ACE_HAS_WCHAR */
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int mkfifo (const ACE_TCHAR *file,
+  int mkfifo (ACE_TCHAR const *file,
               mode_t mode = ACE_DEFAULT_FILE_PERMS);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int stat (const char *file, ACE_stat *);
+  int stat (char const *file, ACE_stat *);
 
 #if defined (ACE_HAS_WCHAR)
   ACE_NAMESPACE_INLINE_FUNCTION

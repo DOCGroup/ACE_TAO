@@ -124,7 +124,7 @@ run_main (int, ACE_TCHAR *[])
   {
     // Just test these compile ...
     double x = 42.0;
-    int y = static_cast<int>(x);
+    int const y = static_cast<int>(x);
     void * z = reinterpret_cast<void*>(y);
 
     if (z == nullptr)

@@ -8,7 +8,9 @@
 #include "tao/TSS_Resources.h"
 #include "tao/debug.h"
 #include "tao/ORB_Constants.h"
-#include "ace/OS_NS_string.h"
+
+#include <cstring>
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -19,12 +21,14 @@ void
 Client_Interceptor::send_request (PortableInterceptor::ClientRequestInfo_ptr ri)
 {
   if (TAO_debug_level > 0)
-    TAOLIB_DEBUG ((LM_DEBUG,
+    {
+      TAOLIB_DEBUG ((LM_DEBUG,
                 "Client_Interceptor::send_request\n"));
+    }
 
   // Temporary current.
-  TAO_RTScheduler_Current_i *new_current = nullptr;
-  TAO_RTScheduler_Current_i *current = nullptr;
+  TAO_RTScheduler_Current_i *new_current {};
+  TAO_RTScheduler_Current_i *current {};
 
   TAO_TSS_Resources *tss = TAO_TSS_Resources::instance ();
 
@@ -39,28 +43,23 @@ Client_Interceptor::send_request (PortableInterceptor::ClientRequestInfo_ptr ri)
           RTScheduling::Current::IdType guid;
           guid.length (sizeof(size_t));
 
-          size_t temp = ++TAO_RTScheduler_Current::guid_counter;
-          ACE_OS::memcpy (guid.get_buffer (),
-                          &temp,
-                          sizeof(size_t));
-
-          size_t id;
-          ACE_OS::memcpy (&id,
-                          guid.get_buffer (),
-                          guid.length ());
+          size_t const temp = ++TAO_RTScheduler_Current::guid_counter;
+          std::memcpy (guid.get_buffer (), &temp, sizeof(size_t));
 
           if (TAO_debug_level > 0)
-            TAOLIB_DEBUG ((LM_DEBUG,
-                        "The Guid is %d %d\n",
-                        id,
+            {
+              TAOLIB_DEBUG ((LM_DEBUG,
+                        "The Guid is %B %Ld\n",
+                        temp,
                         TAO_RTScheduler_Current::guid_counter.load ()));
+            }
 
           // Create new DT.
-          RTScheduling::DistributableThread_var dt =
+          RTScheduling::DistributableThread_var const dt =
             TAO_DistributableThread_Factory::create_DT ();
 
           // Add new DT to map.
-          int result = current->dt_hash ()->bind (guid, dt);
+          int const result = current->dt_hash ()->bind (guid, dt);
           if (result != 0)
             {
               TAOLIB_DEBUG ((LM_DEBUG,
@@ -74,7 +73,7 @@ Client_Interceptor::send_request (PortableInterceptor::ClientRequestInfo_ptr ri)
           // the new <sched_param> is the current
           // <implicit_sched_param> and there is no
           // segment name.
-          CORBA::Policy_var implicit_sched_param =
+          CORBA::Policy_var const implicit_sched_param =
             current->implicit_scheduling_parameter ();
           ACE_NEW (new_current,
                    TAO_RTScheduler_Current_i (current->orb (),
@@ -93,7 +92,7 @@ Client_Interceptor::send_request (PortableInterceptor::ClientRequestInfo_ptr ri)
 
       // Scheduler populates the service context with
       // scheduling parameters.
-      RTScheduling::Scheduler_var scheduler = current->scheduler ();
+      RTScheduling::Scheduler_var const scheduler = current->scheduler ();
       scheduler->send_request (ri);
 
       // If this is a one way request
@@ -117,14 +116,14 @@ Client_Interceptor::send_poll (PortableInterceptor::ClientRequestInfo_ptr ri)
                   "Client_Interceptor::send_poll\n"));
     }
 
-  TAO_RTScheduler_Current_i *current = nullptr;
+  TAO_RTScheduler_Current_i *current {};
 
   TAO_TSS_Resources *tss = TAO_TSS_Resources::instance ();
 
   current = static_cast<TAO_RTScheduler_Current_i *> (tss->rtscheduler_current_impl_);
   if (current != nullptr)
     {
-      RTScheduling::Scheduler_var scheduler = current->scheduler ();
+      RTScheduling::Scheduler_var const scheduler = current->scheduler ();
       scheduler->send_poll (ri);
     }
 }
@@ -138,14 +137,14 @@ Client_Interceptor::receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri
                   "Client_Interceptor::receive_reply\n"));
     }
 
-  TAO_RTScheduler_Current_i *current = nullptr;
+  TAO_RTScheduler_Current_i *current {};
 
   TAO_TSS_Resources *tss = TAO_TSS_Resources::instance ();
 
   current = static_cast<TAO_RTScheduler_Current_i *> (tss->rtscheduler_current_impl_);
   if (current != nullptr)
     {
-      RTScheduling::Scheduler_var scheduler = current->scheduler ();
+      RTScheduling::Scheduler_var const scheduler = current->scheduler ();
       scheduler->receive_reply (ri);
     }
 }
@@ -174,7 +173,7 @@ Client_Interceptor::receive_exception (PortableInterceptor::ClientRequestInfo_pt
         }
 
       CORBA::Any_var ex = ri->received_exception ();
-      CORBA::TypeCode_var type = ex->type ();
+      CORBA::TypeCode_var const type = ex->type ();
 
       if (CORBA::is_nil (type.in ()))
         {
@@ -182,17 +181,19 @@ Client_Interceptor::receive_exception (PortableInterceptor::ClientRequestInfo_pt
                       "type = 0\n"));
           return;
         }
-      const char * id = type->id ();
+      char const *id = type->id ();
 
       if (TAO_debug_level > 0)
-        TAOLIB_DEBUG ((LM_DEBUG,
+        {
+          TAOLIB_DEBUG ((LM_DEBUG,
                     "Received Exception %C\n",
                     id));
+        }
 
       // If the remote host threw a THREAD_CANCELLED
       // exception, make sure to take the appropriate
       // local action.
-      if (ACE_OS::strstr (id, "CORBA::THREAD_CANCELLED") == nullptr)
+      if (std::strstr (id, "CORBA::THREAD_CANCELLED") == nullptr)
         {
           // Perform the necessary cleanup as the
           // thread was cancelled.
@@ -202,7 +203,7 @@ Client_Interceptor::receive_exception (PortableInterceptor::ClientRequestInfo_pt
         {
           // Inform scheduler that exception was
           // received.
-          RTScheduling::Scheduler_var scheduler = current->scheduler ();
+          RTScheduling::Scheduler_var const scheduler = current->scheduler ();
           scheduler->receive_exception (ri);
         }
     }
@@ -217,14 +218,14 @@ Client_Interceptor::receive_other (PortableInterceptor::ClientRequestInfo_ptr ri
                   "Client_Interceptor::receive_other\n"));
     }
 
-  TAO_RTScheduler_Current_i *current = nullptr;
+  TAO_RTScheduler_Current_i *current {};
 
   TAO_TSS_Resources *tss = TAO_TSS_Resources::instance ();
 
   current = static_cast<TAO_RTScheduler_Current_i *> (tss->rtscheduler_current_impl_);
   if (current != nullptr)
     {
-      RTScheduling::Scheduler_var scheduler = current->scheduler ();
+      RTScheduling::Scheduler_var const scheduler = current->scheduler ();
       scheduler->receive_other (ri);
     }
 }
@@ -278,21 +279,25 @@ Server_Interceptor::receive_request (PortableInterceptor::ServerRequestInfo_ptr 
   catch (const ::CORBA::Exception&)
     {
       if (TAO_debug_level > 0)
-        TAOLIB_DEBUG ((LM_DEBUG,
+        {
+          TAOLIB_DEBUG ((LM_DEBUG,
                     "Invalid Service Request\n"));
+        }
       return;
     }
 
   if (TAO_debug_level > 0)
-    TAOLIB_DEBUG ((LM_DEBUG,
+    {
+      TAOLIB_DEBUG ((LM_DEBUG,
                 "Request from Distributable Thread\n"));
+    }
 
   RTScheduling::Current::IdType_var guid_var;
-  char *name = nullptr;
-  CORBA::Policy_var sched_param = nullptr;
-  CORBA::Policy_var implicit_sched_param = nullptr;
+  CORBA::String_var name;
+  CORBA::Policy_var sched_param {};
+  CORBA::Policy_var implicit_sched_param {};
 
-  TAO_RTScheduler_Current_i *new_current = nullptr;
+  TAO_RTScheduler_Current_i *new_current {};
   ACE_NEW_THROW_EX (new_current,
                     TAO_RTScheduler_Current_i (this->current_->orb (),
                                                this->current_->dt_hash ()),
@@ -301,45 +306,44 @@ Server_Interceptor::receive_request (PortableInterceptor::ServerRequestInfo_ptr 
                              TAO::VMCID,
                              ENOMEM),
                            CORBA::COMPLETED_NO));
+  std::unique_ptr<TAO_RTScheduler_Current_i> current_owner {new_current};
 
   // Scheduler retrieves scheduling parameters
   // from request and populates the out
   // parameters.
-  RTScheduling::Scheduler_var scheduler = new_current->scheduler();
+  RTScheduling::Scheduler_var const scheduler = new_current->scheduler();
   scheduler->receive_request (ri,
                               guid_var.out (),
-                              name,
+                              name.out (),
                               sched_param.out (),
                               implicit_sched_param.out ());
 
-  if (guid_var->length () == 0)
+  if (guid_var.ptr () == nullptr || guid_var->length () < sizeof (size_t))
     {
       TAOLIB_ERROR ((LM_ERROR,
-                  "The scheduler MUST retrieve and return the "
-                  "GUID from the service context\n"));
+                     "The scheduler must return a GUID of at least %B bytes\n",
+                     sizeof (size_t)));
       return;
     }
   RTScheduling::Current::IdType guid;
   guid.length (sizeof (size_t));
-  ACE_OS::memcpy (guid.get_buffer (),
-                  guid_var->get_buffer (),
-                  sizeof (size_t));
+  std::memcpy (guid.get_buffer (), guid_var->get_buffer (), sizeof (size_t));
 
   size_t id;
-  ACE_OS::memcpy (&id,
-                  guid.get_buffer (),
-                  guid.length ());
+  std::memcpy (&id, guid.get_buffer (), guid.length ());
 
   if (TAO_debug_level > 0)
-    TAOLIB_DEBUG ((LM_DEBUG,
-                "The Guid is %d\n",
+    {
+      TAOLIB_DEBUG ((LM_DEBUG,
+                "The Guid is %B\n",
                 id));
+    }
 
   // Create new DT.
-  RTScheduling::DistributableThread_var dt = TAO_DistributableThread_Factory::create_DT ();
+  RTScheduling::DistributableThread_var const dt = TAO_DistributableThread_Factory::create_DT ();
 
   // Add new DT to map.
-  int result = new_current->dt_hash ()->bind (guid, dt);
+  int const result = new_current->dt_hash ()->bind (guid, dt);
 
   if (result != 0)
     {
@@ -349,7 +353,7 @@ Server_Interceptor::receive_request (PortableInterceptor::ServerRequestInfo_ptr 
   // Create new temporary current. Note that the new <sched_param> is
   // the current <implicit_sched_param> and there is no segment name.
   new_current->id (guid);
-  new_current->name (name);
+  new_current->name (name.in ());
   new_current->scheduling_parameter (sched_param.in ());
   new_current->implicit_scheduling_parameter (implicit_sched_param.in ());
   new_current->DT (dt.in ());
@@ -359,7 +363,9 @@ Server_Interceptor::receive_request (PortableInterceptor::ServerRequestInfo_ptr 
   // current->implementation (new_current)
   TAO_TSS_Resources *tss = TAO_TSS_Resources::instance ();
 
-  tss->rtscheduler_previous_current_impl_ = this->current_->implementation (new_current);
+  tss->rtscheduler_previous_current_impl_ =
+    this->current_->implementation (current_owner.get ());
+  current_owner.release ();
 }
 
 void
@@ -371,27 +377,29 @@ Server_Interceptor::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri)
                   "Server_Interceptor::send_reply\n"));
     }
 
-  TAO_RTScheduler_Current_i *current = nullptr;
-  TAO_RTScheduler_Current_i *prev_current = nullptr;
+  TAO_RTScheduler_Current_i *current {};
+  TAO_RTScheduler_Current_i *prev_current {};
 
   TAO_TSS_Resources *tss = TAO_TSS_Resources::instance ();
 
   current = static_cast<TAO_RTScheduler_Current_i *> (tss->rtscheduler_current_impl_);
   if (current != nullptr)
     {
-      RTScheduling::DistributableThread_var dt = current->DT ();
+      RTScheduling::DistributableThread_var const dt = current->DT ();
       if (dt->state () == RTScheduling::DistributableThread::CANCELLED)
         {
           current->cancel_thread ();
 
           return;
         }
-      else TAOLIB_DEBUG ((LM_DEBUG,
-                       "Thread Not Cancelled\n"));
-
+      else
+        {
+          TAOLIB_DEBUG ((LM_DEBUG,
+                         "Thread Not Cancelled\n"));
+        }
 
       // Inform scheduler that upcall is complete.
-      RTScheduling::Scheduler_var scheduler = current->scheduler ();
+      RTScheduling::Scheduler_var const scheduler = current->scheduler ();
       scheduler->send_reply (ri);
 
       current->cleanup_DT ();
@@ -406,8 +414,11 @@ Server_Interceptor::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri)
       // Reset the previous current pointer.
       tss->rtscheduler_previous_current_impl_ = nullptr;
     }
-  else TAOLIB_DEBUG ((LM_DEBUG,
-                   "Send Reply Current is 0\n"));
+  else
+    {
+      TAOLIB_DEBUG ((LM_DEBUG,
+                     "Send Reply Current is 0\n"));
+    }
 }
 
 void
@@ -419,7 +430,7 @@ Server_Interceptor::send_exception (PortableInterceptor::ServerRequestInfo_ptr r
                   "Server_Interceptor::send_exception\n"));
     }
 
-  TAO_RTScheduler_Current_i *current = nullptr;
+  TAO_RTScheduler_Current_i *current {};
 
   TAO_TSS_Resources *tss = TAO_TSS_Resources::instance ();
 
@@ -427,7 +438,7 @@ Server_Interceptor::send_exception (PortableInterceptor::ServerRequestInfo_ptr r
   if (current != nullptr)
     {
       // Inform scheduler that upcall is complete.
-      RTScheduling::Scheduler_var scheduler = current->scheduler ();
+      RTScheduling::Scheduler_var const scheduler = current->scheduler ();
       scheduler->send_exception (ri);
 
       current->cleanup_DT ();
@@ -444,7 +455,7 @@ Server_Interceptor::send_other (PortableInterceptor::ServerRequestInfo_ptr ri)
                   "Server_Interceptor::send_other\n"));
     }
 
-  TAO_RTScheduler_Current_i *current = nullptr;
+  TAO_RTScheduler_Current_i *current {};
 
   TAO_TSS_Resources *tss = TAO_TSS_Resources::instance ();
 
@@ -452,7 +463,7 @@ Server_Interceptor::send_other (PortableInterceptor::ServerRequestInfo_ptr ri)
   if (current != nullptr)
     {
       // Inform scheduler that upcall is complete.
-      RTScheduling::Scheduler_var scheduler = current->scheduler ();
+      RTScheduling::Scheduler_var const scheduler = current->scheduler ();
       scheduler->send_other (ri);
 
       current->cleanup_DT ();

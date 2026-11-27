@@ -1,5 +1,3 @@
-// -*- C++ -*-
-//
 /**
  *  @file BiDir_ORBInitializer.h
  *

@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    PortableServer_Functions.h
  *
@@ -8,8 +5,6 @@
  *
  *  @author  Irfan Pyarali <irfan@cs.wustl.edu>
  */
-//=============================================================================
-
 #ifndef TAO_PORTABLESERVER_FUNCTIONS_H
 #define TAO_PORTABLESERVER_FUNCTIONS_H
 
@@ -32,10 +27,10 @@ namespace PortableServer
 {
   /// Utility functions for the other
   extern TAO_PortableServer_Export char* ObjectId_to_string (
-    const PortableServer::ObjectId &id);
+    PortableServer::ObjectId const &id);
 
   extern TAO_PortableServer_Export PortableServer::ObjectId *string_to_ObjectId (
-    const char *id);
+    char const *id);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

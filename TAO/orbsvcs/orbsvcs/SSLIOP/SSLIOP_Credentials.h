@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   SSLIOP_Credentials.h
  *
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef TAO_SSLIOP_CREDENTIALS_H
 #define TAO_SSLIOP_CREDENTIALS_H
@@ -23,7 +19,6 @@
 #include "orbsvcs/SSLIOP/SSLIOP_EVP_PKEY.h"
 #include "orbsvcs/SecurityLevel3C.h"
 #include "tao/LocalObject.h"
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -46,12 +41,6 @@ namespace TAO
      *
      * This class encapsulates the X.509 certificate associated with a
      * given a principal.
-     *
-     * @note Why is this class not the TAO::SSLIOP namespace?  Because
-     *       brain damaged MSVC++ 6 cannot call a base class
-     *       constructor of class declared in a namespace that is more
-     *       than one level deep in a sub-class base member
-     *       initializer list.
      */
     class TAO_SSLIOP_Export SSLIOP_Credentials
       : public virtual SecurityLevel3::Credentials,
@@ -62,7 +51,6 @@ namespace TAO
       using _var_type = SSLIOP::Credentials_var;
       using _out_type = SSLIOP::Credentials_out;
 
-      /// Constructor
       SSLIOP_Credentials (::X509 * cert, ::EVP_PKEY * evp);
 
       /**
@@ -71,7 +59,7 @@ namespace TAO
        * Methods required by the SecurityLevel3::Credentials
        * interface.
        */
-      //@{
+      /// @{
       char * creds_id () override;
 
       SecurityLevel3::CredentialsType creds_type () override = 0;
@@ -85,18 +73,17 @@ namespace TAO
       char * add_relinquished_listener (
           SecurityLevel3::RelinquishedCredentialsListener_ptr listener) override;
 
-      void remove_relinquished_listener (const char * id) override;
-      //@}
+      void remove_relinquished_listener (char const * id) override;
+      /// @}
 
-
-      //@{
+      /// @{
       /// Return a pointer to the underlying X.509 certificate.
       /**
        * @note Caller owns the returned object.  Use a
        *       TAO::SSLIOP::X509_var.
        */
-      ::X509 *x509 ();
-      //@}
+      ::X509 *x509 () const;
+      /// @}
 
       /// Return a pointer to the underlying private key.
       /**
@@ -105,32 +92,31 @@ namespace TAO
        * @note Caller owns the returned object.  Use a
        *       TAO::SSLIOP::EVP_PKEY_var.
        */
-      ::EVP_PKEY *evp ();
-      //@}
+      ::EVP_PKEY *evp () const;
 
-      bool operator== (const SSLIOP_Credentials &rhs);
+      bool operator== (SSLIOP_Credentials const &rhs);
 
       CORBA::ULong hash () const;
 
-      // The static operations.
+      /// @name Static operations
+      /// @{
       static SSLIOP::Credentials_ptr _duplicate (SSLIOP::Credentials_ptr obj);
 
       static SSLIOP::Credentials_ptr _narrow (CORBA::Object_ptr obj);
 
       static SSLIOP::Credentials_ptr _nil ()
       {
-        return (SSLIOP::Credentials_ptr) 0;
+        return nullptr;
       }
 
-      //@}
+      /// @}
 
     protected:
-      /// Destructor.
       /**
        * Protected destructor to enforce proper memory management
        * through the reference counting  mechanism.
        */
-      ~SSLIOP_Credentials ();
+      ~SSLIOP_Credentials () override = default;
 
     protected:
       /// Reference to the X.509 certificate associated with this SSLIOP

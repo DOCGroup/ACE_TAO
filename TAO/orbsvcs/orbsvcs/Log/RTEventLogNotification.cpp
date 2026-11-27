@@ -28,10 +28,7 @@ TAO_RTEventLogNotification::TAO_RTEventLogNotification (
   obtainProxyConsumer ();
 }
 
-TAO_RTEventLogNotification::~TAO_RTEventLogNotification ()
-{
-  // No-Op.
-}
+TAO_RTEventLogNotification::~TAO_RTEventLogNotification () = default;
 
 void
 TAO_RTEventLogNotification::disconnect_push_supplier ()
@@ -42,12 +39,12 @@ TAO_RTEventLogNotification::disconnect_push_supplier ()
 void
 TAO_RTEventLogNotification::obtainProxyConsumer ()
 {
-  RtecEventChannelAdmin::SupplierAdmin_var supplier_admin =
+  RtecEventChannelAdmin::SupplierAdmin_var const supplier_admin =
     event_channel_->for_suppliers();
 
   consumer_ = supplier_admin->obtain_push_consumer();
 
-  RtecEventComm::PushSupplier_var supplier =
+  RtecEventComm::PushSupplier_var const supplier =
   this->_this ();
 
   // Simple publication, but usually the helper classes in

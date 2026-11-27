@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "ace/OS_NS_signal.h"
 #include "ace/config-all.h"
 #include "ace/Trace.h"
@@ -14,10 +13,14 @@ ACE_Sig_Set::ACE_Sig_Set (sigset_t *ss)
   ACE_TRACE ("ACE_Sig_Set::ACE_Sig_Set");
 
   if (ss == nullptr)
-    ACE_OS::sigfillset (&this->sigset_);
+    {
+      ACE_OS::sigfillset (&this->sigset_);
+    }
   else
-    // Structure assignment.
-    this->sigset_ = *ss;
+    {
+      // Structure assignment.
+      this->sigset_ = *ss;
+    }
 }
 
 ACE_INLINE
@@ -27,9 +30,13 @@ ACE_Sig_Set::ACE_Sig_Set (bool fill)
   ACE_TRACE ("ACE_Sig_Set::ACE_Sig_Set");
 
   if (fill)
-    ACE_OS::sigfillset (&this->sigset_);
+    {
+      ACE_OS::sigfillset (&this->sigset_);
+    }
   else
-    ACE_OS::sigemptyset (&this->sigset_);
+    {
+      ACE_OS::sigemptyset (&this->sigset_);
+    }
 }
 
 ACE_INLINE
@@ -39,9 +46,13 @@ ACE_Sig_Set::ACE_Sig_Set (ACE_Sig_Set *ss)
   ACE_TRACE ("ACE_Sig_Set::ACE_Sig_Set");
 
   if (ss == nullptr)
-    ACE_OS::sigfillset (&this->sigset_);
+    {
+      ACE_OS::sigfillset (&this->sigset_);
+    }
   else
-    this->sigset_ = ss->sigset_;
+    {
+      this->sigset_ = ss->sigset_;
+    }
 }
 
 ACE_INLINE int
@@ -76,14 +87,14 @@ ACE_INLINE int
 ACE_Sig_Set::is_member (int signo) const
 {
   ACE_TRACE ("ACE_Sig_Set::is_member");
-  return ACE_OS::sigismember (const_cast<sigset_t *> (&this->sigset_), signo);
+  return ACE_OS::sigismember (const_cast<sigset_t *> (std::addressof (this->sigset_)), signo);
 }
 
 ACE_INLINE
 ACE_Sig_Set::operator sigset_t *()
 {
   ACE_TRACE ("ACE_Sig_Set::operator sigset_t *");
-  return &this->sigset_;
+  return std::addressof (this->sigset_);
 }
 
 ACE_INLINE sigset_t
@@ -118,8 +129,10 @@ ACE_INLINE void
 ACE_Sig_Action::mask (sigset_t *ss)
 {
   ACE_TRACE ("ACE_Sig_Action::mask");
-  if (ss != 0)
-    this->sa_.sa_mask = *ss; // Structure assignment
+  if (ss != nullptr)
+    {
+      this->sa_.sa_mask = *ss; // Structure assignment
+    }
 }
 
 ACE_INLINE void
@@ -154,14 +167,14 @@ ACE_INLINE struct sigaction *
 ACE_Sig_Action::get ()
 {
   ACE_TRACE ("ACE_Sig_Action::get");
-  return &this->sa_;
+  return std::addressof (this->sa_);
 }
 
 ACE_INLINE
 ACE_Sig_Action::operator struct sigaction * ()
 {
   ACE_TRACE ("ACE_Sig_Action::operator struct sigaction *");
-  return &this->sa_;
+  return std::addressof (this->sa_);
 }
 
 ACE_INLINE int
@@ -177,7 +190,7 @@ ACE_INLINE int
 ACE_Sig_Action::retrieve_action (int signum)
 {
   ACE_TRACE ("ACE_Sig_Action::retrieve_action");
-  return ACE_OS::sigaction (signum, 0, &this->sa_);
+  return ACE_OS::sigaction (signum, nullptr, &this->sa_);
 }
 
 ACE_INLINE int
@@ -185,7 +198,7 @@ ACE_Sig_Action::restore_action (int signum, ACE_Sig_Action &oaction)
 {
   ACE_TRACE ("ACE_Sig_Action::restore_action");
   this->sa_ = *oaction.get (); // Structure assignment
-  return ACE_OS::sigaction (signum, &this->sa_, 0);
+  return ACE_OS::sigaction (signum, &this->sa_, nullptr);
 }
 
 // Block out the signal MASK until the destructor is called.
@@ -198,7 +211,9 @@ ACE_Sig_Guard::ACE_Sig_Guard (ACE_Sig_Set *mask,
 {
   //ACE_TRACE ("ACE_Sig_Guard::ACE_Sig_Guard");
   if (!this->condition_)
-    return;
+    {
+      return;
+    }
 
 #if defined (ACE_LACKS_UNIX_SIGNALS)
   ACE_UNUSED_ARG (mask);
@@ -217,6 +232,7 @@ ACE_Sig_Guard::ACE_Sig_Guard (ACE_Sig_Set *mask,
 #  endif /* ACE_LACKS_PTHREAD_THR_SIGSETMASK */
     }
   else
+    {
 #  if defined (ACE_LACKS_PTHREAD_THR_SIGSETMASK)
     ACE_OS::sigprocmask (SIG_BLOCK,
                          (sigset_t *) *mask,
@@ -228,6 +244,7 @@ ACE_Sig_Guard::ACE_Sig_Guard (ACE_Sig_Set *mask,
                             (sigset_t *)
                             this->omask_);
 #  endif /* ACE_LACKS_PTHREAD_THR_SIGSETMASK */
+    }
 #endif /* ACE_LACKS_UNIX_SIGNALS */
 }
 

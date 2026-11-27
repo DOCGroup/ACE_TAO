@@ -1,12 +1,8 @@
-
-//=============================================================================
 /**
  *  @file   Client_Worker.h
  *
  *  @author Anand Krishnan
  */
-//=============================================================================
-
 
 #ifndef MT_SSLIOP_CLIENT_WORKER_H
 #define MT_SSLIOP_CLIENT_WORKER_H
@@ -20,7 +16,6 @@
 
 #include "testC.h"
 
-
 /**
  * @class Client_Worker
  *
@@ -31,11 +26,14 @@
 class Client_Worker : public ACE_Task_Base
 {
 public:
-  /// ctor
   Client_Worker (Simple_Server_ptr server, int niterations);
+  Client_Worker (Client_Worker const &) = delete;
+  Client_Worker (Client_Worker &&) = delete;
+  Client_Worker &operator= (Client_Worker const &) = delete;
+  Client_Worker &operator= (Client_Worker &&) = delete;
 
   /// thread entry point
-  virtual int svc ();
+  int svc () override;
 
 private:
   /// Validate the connection
@@ -46,7 +44,7 @@ private:
   Simple_Server_var server_;
 
   /// The number of iterations on each client thread.
-  int niterations_;
+  int const niterations_;
 };
 
 #if defined(_MSC_VER)

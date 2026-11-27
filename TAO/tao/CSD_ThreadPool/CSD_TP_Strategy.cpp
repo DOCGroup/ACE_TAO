@@ -7,6 +7,7 @@
 #include "tao/CSD_ThreadPool/CSD_TP_Collocated_Synch_With_Server_Request.h"
 #include "ace/Trace.h"
 #include "tao/ORB_Core.h"
+#include <memory>
 
 #if !defined (__ACE_INLINE__)
 # include "tao/CSD_ThreadPool/CSD_TP_Strategy.inl"
@@ -14,17 +15,14 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO::CSD::TP_Strategy::~TP_Strategy () = default;
-
-
 TAO::CSD::TP_Strategy::CustomRequestOutcome
 TAO::CSD::TP_Strategy::custom_synch_request(TP_Custom_Request_Operation* op)
 {
-  TP_Servant_State::HandleType servant_state =
+  TP_Servant_State::HandleType const servant_state =
                         this->get_servant_state(op->servant());
 
-  TP_Custom_Synch_Request_Handle request = new
-                          TP_Custom_Synch_Request(op, servant_state.in());
+  TP_Custom_Synch_Request_Handle const request {
+    new TP_Custom_Synch_Request(op, servant_state.in())};
 
   if (!this->task_.add_request(request.in()))
     {
@@ -36,29 +34,26 @@ TAO::CSD::TP_Strategy::custom_synch_request(TP_Custom_Request_Operation* op)
   return (request->wait()) ? REQUEST_EXECUTED : REQUEST_CANCELLED;
 }
 
-
 TAO::CSD::TP_Strategy::CustomRequestOutcome
 TAO::CSD::TP_Strategy::custom_asynch_request(TP_Custom_Request_Operation* op)
 {
-  TP_Servant_State::HandleType servant_state =
+  TP_Servant_State::HandleType const servant_state =
                         this->get_servant_state(op->servant());
 
-  TP_Custom_Asynch_Request_Handle request = new
-                          TP_Custom_Asynch_Request(op, servant_state.in());
+  TP_Custom_Asynch_Request_Handle const request {
+    new TP_Custom_Asynch_Request(op, servant_state.in())};
 
   return (this->task_.add_request(request.in()))
          ? REQUEST_DISPATCHED : REQUEST_REJECTED;
 }
-
 
 bool
 TAO::CSD::TP_Strategy::poa_activated_event_i(TAO_ORB_Core& orb_core)
 {
   this->task_.thr_mgr(orb_core.thr_mgr());
   // Activates the worker threads, and waits until all have been started.
-  return (this->task_.open(&(this->num_threads_)) == 0);
+  return (this->task_.open (std::addressof (this->num_threads_)) == 0);
 }
-
 
 void
 TAO::CSD::TP_Strategy::poa_deactivated_event_i()
@@ -71,23 +66,22 @@ TAO::CSD::TP_Strategy::poa_deactivated_event_i()
   this->task_.close(1);
 }
 
-
 TAO::CSD::Strategy_Base::DispatchResult
-TAO::CSD::TP_Strategy::dispatch_remote_request_i
-                             (TAO_ServerRequest&              server_request,
-                              const PortableServer::ObjectId& object_id,
-                              PortableServer::POA_ptr         poa,
-                              const char*                     operation,
-                              PortableServer::Servant         servant)
+TAO::CSD::TP_Strategy::dispatch_remote_request_i (
+  TAO_ServerRequest &server_request,
+  PortableServer::ObjectId const &object_id,
+  PortableServer::POA_ptr poa,
+  char const *operation,
+  PortableServer::Servant servant)
 {
-  TP_Servant_State::HandleType servant_state =
+  TP_Servant_State::HandleType const servant_state =
                         this->get_servant_state(servant);
 
   // Handle the one ways that are SYNC_WITH_SERVER and not collocated.
   // before queuing the request and thus avoid delaying the client.
   // This is a problem if the servant ends up throwing a Location Forward
   // exception. If necessary, add an override config option here.
-  CORBA::Boolean early_sync = true;
+  CORBA::Boolean const early_sync {true};
   server_request.is_queued (early_sync);
   server_request.sync_before_dispatch ();
 
@@ -96,13 +90,13 @@ TAO::CSD::TP_Strategy::dispatch_remote_request_i
   //
   // TBD-CSD: Need to use a Cached Allocator to "create" the
   //          TP_Remote_Request objects.  For now, use the heap.
-  TP_Remote_Request_Handle request =
-                            new TP_Remote_Request(server_request,
-                                                  object_id,
-                                                  poa,
-                                                  operation,
-                                                  servant,
-                                                  servant_state.in());
+  TP_Remote_Request_Handle const request {
+    new TP_Remote_Request(server_request,
+                          object_id,
+                          poa,
+                          operation,
+                          servant,
+                          servant_state.in())};
 
   // Hand the request object to our task so that it can add the request
   // to its "request queue".
@@ -117,20 +111,19 @@ TAO::CSD::TP_Strategy::dispatch_remote_request_i
     return TAO::CSD::Strategy_Base::DISPATCH_HANDLED;
 }
 
-
 TAO::CSD::Strategy_Base::DispatchResult
-TAO::CSD::TP_Strategy::dispatch_collocated_request_i
-                             (TAO_ServerRequest&              server_request,
-                              const PortableServer::ObjectId& object_id,
-                              PortableServer::POA_ptr         poa,
-                              const char*                     operation,
-                              PortableServer::Servant         servant)
+TAO::CSD::TP_Strategy::dispatch_collocated_request_i (
+  TAO_ServerRequest &server_request,
+  PortableServer::ObjectId const &object_id,
+  PortableServer::POA_ptr poa,
+  char const *operation,
+  PortableServer::Servant servant)
 {
-  TP_Servant_State::HandleType servant_state =
+  TP_Servant_State::HandleType const servant_state =
                         this->get_servant_state(servant);
 
-  bool is_sync_with_server = server_request.sync_with_server();
-  bool is_synchronous      = server_request.response_expected();
+  bool const is_sync_with_server = server_request.sync_with_server();
+  bool const is_synchronous = server_request.response_expected();
 
   TP_Collocated_Synch_Request_Handle             synch_request;
   TP_Collocated_Synch_With_Server_Request_Handle synch_with_server_request;
@@ -190,8 +183,8 @@ TAO::CSD::TP_Strategy::dispatch_collocated_request_i
   // synchronous request.
   if (!synch_request.is_nil())
     {
-      int srw = synch_request->wait();
-      if (srw == false)
+      int const srw = synch_request->wait();
+      if (!srw)
         {
           // Raise exception when request was cancelled.
           throw ::CORBA::NO_IMPLEMENT();
@@ -199,8 +192,8 @@ TAO::CSD::TP_Strategy::dispatch_collocated_request_i
     }
   else if (!synch_with_server_request.is_nil())
     {
-      bool swsr = synch_with_server_request->wait();
-      if (swsr == false)
+      bool const swsr = synch_with_server_request->wait();
+      if (!swsr)
         {
           // Raise exception when request was cancelled.
           throw ::CORBA::NO_IMPLEMENT();
@@ -210,11 +203,10 @@ TAO::CSD::TP_Strategy::dispatch_collocated_request_i
   return DISPATCH_HANDLED;
 }
 
-
 void
-TAO::CSD::TP_Strategy::servant_activated_event_i
-                                (PortableServer::Servant servant,
-                                 const PortableServer::ObjectId&)
+TAO::CSD::TP_Strategy::servant_activated_event_i (
+  PortableServer::Servant servant,
+  PortableServer::ObjectId const &)
 {
   if (this->serialize_servants_)
     {
@@ -223,11 +215,10 @@ TAO::CSD::TP_Strategy::servant_activated_event_i
     }
 }
 
-
 void
-TAO::CSD::TP_Strategy::servant_deactivated_event_i
-                                (PortableServer::Servant servant,
-                                 const PortableServer::ObjectId&)
+TAO::CSD::TP_Strategy::servant_deactivated_event_i (
+  PortableServer::Servant servant,
+  PortableServer::ObjectId const &)
 {
   // Cancel all requests stuck in the queue for the specified servant.
   this->task_.cancel_servant(servant);
@@ -239,14 +230,12 @@ TAO::CSD::TP_Strategy::servant_deactivated_event_i
     }
 }
 
-
 void
 TAO::CSD::TP_Strategy::cancel_requests(PortableServer::Servant servant)
 {
   // Cancel all requests stuck in the queue for the specified servant.
   this->task_.cancel_servant(servant);
 }
-
 
 TAO::CSD::TP_Servant_State::HandleType
 TAO::CSD::TP_Strategy::get_servant_state(PortableServer::Servant servant)

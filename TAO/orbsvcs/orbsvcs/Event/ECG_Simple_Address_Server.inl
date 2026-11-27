@@ -1,4 +1,3 @@
-// -*- C++ -*-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE PortableServer::Servant_var<TAO_ECG_Simple_Address_Server>

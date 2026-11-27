@@ -1,4 +1,3 @@
-// -*- C++ -*-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE
@@ -18,7 +17,7 @@ namespace ACE
       }
 
     ACE_INLINE
-    void SessionBase::set_host (const ACE_CString& host, u_short port)
+    void SessionBase::set_host (ACE_CString const& host, u_short port)
       {
         if (!this->is_connected ())
           {
@@ -29,7 +28,7 @@ namespace ACE
       }
 
     ACE_INLINE
-    void SessionBase::set_host (const ACE_CString& host)
+    void SessionBase::set_host (ACE_CString const& host)
       {
         if (!this->is_connected ())
           {
@@ -48,7 +47,7 @@ namespace ACE
       }
 
     ACE_INLINE
-    void SessionBase::set_proxy_target (const ACE_CString& host, u_short port)
+    void SessionBase::set_proxy_target (ACE_CString const& host, u_short port)
       {
         if (!this->is_connected ())
           {
@@ -59,7 +58,7 @@ namespace ACE
       }
 
     ACE_INLINE
-    const ACE_CString& SessionBase::get_host () const
+    ACE_CString const& SessionBase::get_host () const
       {
         return this->host_;
       }
@@ -77,7 +76,7 @@ namespace ACE
       }
 
     ACE_INLINE
-    const ACE_CString& SessionBase::get_proxy_target_host () const
+    ACE_CString const& SessionBase::get_proxy_target_host () const
       {
         return this->proxy_target_host_;
       }
@@ -92,7 +91,9 @@ namespace ACE
     bool SessionBase::reconnect_needed ()
       {
         if (this->cannot_reconnect_)
-          return false;
+          {
+            return false;
+          }
         if (!this->needs_reconnect_)
           {
             this->reconnect_countdown_.update ();
@@ -104,16 +105,8 @@ namespace ACE
     ACE_INLINE
     void SessionBase::close_streams ()
       {
-        if (this->in_stream_)
-          {
-            delete this->in_stream_;
-            this->in_stream_ = 0;
-          }
-        if (this->out_stream_)
-          {
-            delete this->out_stream_;
-            this->out_stream_ = 0;
-          }
+        this->in_stream_.reset ();
+        this->out_stream_.reset ();
       }
   }
 }

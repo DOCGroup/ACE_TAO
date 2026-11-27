@@ -3,6 +3,8 @@
 #include "Log_Msg_MFC.h"
 #include "ace/Init_ACE.h"
 
+#include <memory>
+
 #if defined (ACE_WIN32)
 
 #include "stdafx.h"
@@ -60,7 +62,7 @@ BOOL CLog_Msg_MFCApp::InitInstance()
   //  Call to set the ACE Log_Msg class here.
   //  From now on, whenever we use ACE_DEBUG macros, the output
   //  will be sent to the log() method of our MFC_Log class.
-  ACE_Log_Msg::instance()->msg_callback( &m_mfc_logger );
+  ACE_Log_Msg::instance()->msg_callback (std::addressof (m_mfc_logger));
   ACE_Log_Msg::instance()->set_flags( ACE_Log_Msg::MSG_CALLBACK );
 
   CLog_Msg_MFCDlg dlg;

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 // Ossama Othman <ossama@uci.edu>
 
 #include "orbsvcs/CosNamingC.h"
@@ -51,7 +50,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // Some debugging output.
       CORBA::String_var IOR = orb->object_to_string (factory.in ());
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("Bound <%s> to <%s> in Name Service.\n"),
+                  ACE_TEXT ("Bound <%C> to <%C> in Name Service.\n"),
                   name[0].id.in (),
                   IOR.in ()));
 
@@ -61,7 +60,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // Accept requests.
       orb->run ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception (ACE_TEXT ("Caught unexpected exception:"));
 

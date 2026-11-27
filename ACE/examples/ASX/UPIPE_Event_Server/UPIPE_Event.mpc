@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*Server) : aceexe, avoids_ace_for_tao {
   exename = UPIPE_Event_Server
   Source_Files {

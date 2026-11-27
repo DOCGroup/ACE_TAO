@@ -1,22 +1,17 @@
-
-//=============================================================================
 /**
  *  @file    Priority_Buffer_Test.cpp
  *
  *    This is a simple test to illustrate the priority mechanism of
- *    <ACE_Message_Queue>s. The producer uses an <ACE_Message_Queue>
+ *    @c ACE_Message_Queues. The producer uses an @c ACE_Message_Queue
  *    to enqueue a bunch of messages with different priorities which
  *    are then dequeued by the consumer.
  *
  *  @author Prashant Jain <pjain@cs.wustl.edu> and Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
-
 
 #include "test_config.h"
 #include "ace/Message_Queue.h"
 #include "ace/Thread_Manager.h"
-
 
 #if defined (ACE_HAS_THREADS)
 
@@ -37,7 +32,7 @@ static void *
 consumer (void *args)
 {
   ACE_Message_Queue<ACE_MT_SYNCH> *msg_queue =
-    reinterpret_cast<ACE_Message_Queue<ACE_MT_SYNCH> *> (args);
+    static_cast<ACE_Message_Queue<ACE_MT_SYNCH> *> (args);
 
   u_long cur_priority = 27;
   ACE_UNUSED_ARG (cur_priority);
@@ -48,18 +43,20 @@ consumer (void *args)
 
   // Keep looping, reading a message out of the queue, until we get a
   // message with a length == 0, which signals us to quit.
-  for (char c = 'z'; ; c--)
+  for (char c = 'z'; ; --c)
     {
-      ACE_Message_Block *mb = nullptr;
+      ACE_Message_Block *mb {};
 
-      int result = msg_queue->dequeue_head (mb);
+      int const result = msg_queue->dequeue_head (mb);
 
       if (result == -1)
+      {
         break;
+      }
 
-      local_count++;
+      ++local_count;
 
-      size_t length = mb->length ();
+      size_t const length = mb->length ();
 
       if (length > 0)
         {
@@ -76,8 +73,10 @@ consumer (void *args)
       mb->release ();
 
       if (length == 0)
-        // This was a "shutdown" message, so break out of the loop.
-        break;
+        {
+          // This was a "shutdown" message, so break out of the loop.
+          break;
+        }
     }
 
   ACE_TEST_ASSERT (local_count == message_count);
@@ -90,15 +89,15 @@ consumer (void *args)
 // there is no more data to read.  The consumer uses this as a flag to
 // know when to exit.
 
-static void *
+static ACE_THR_FUNC_RETURN
 producer (void *args)
 {
   ACE_Message_Queue<ACE_MT_SYNCH> *msg_queue =
-    reinterpret_cast<ACE_Message_Queue<ACE_MT_SYNCH> *> (args);
+    static_cast<ACE_Message_Queue<ACE_MT_SYNCH> *> (args);
 
-  ACE_Message_Block *mb = nullptr;
+  ACE_Message_Block *mb {};
 
-  for (const char *c = ACE_ALPHABET; *c != '\0'; c++)
+  for (char const *c = ACE_ALPHABET; *c != '\0'; ++c)
     {
       ++message_count;
 
@@ -106,7 +105,7 @@ producer (void *args)
 
       ACE_NEW_RETURN (mb,
                       ACE_Message_Block (1),
-                      nullptr);
+                      ACE_THR_FUNC_RETURN_NULL);
       *mb->wr_ptr () = *c;
 
       // Set the priority.
@@ -115,21 +114,25 @@ producer (void *args)
 
       // Enqueue in priority order.
       if (msg_queue->enqueue_prio (mb) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("(%t) %p\n"),
-                           ACE_TEXT ("put_next")),
-                          0);
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("(%t) %p\n"),
+                      ACE_TEXT ("put_next")));
+          return ACE_THR_FUNC_RETURN_NULL;
+        }
     }
 
   // Now send a 0-sized shutdown message to the other thread
   ACE_NEW_RETURN (mb,
-                  ACE_Message_Block ((size_t) 0),
-                  nullptr);
+                  ACE_Message_Block (size_t {0}),
+                  ACE_THR_FUNC_RETURN_NULL);
 
   if (msg_queue->enqueue_tail (mb) == -1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("(%t) %p\n"),
-                ACE_TEXT ("put_next")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%t) %p\n"),
+                  ACE_TEXT ("put_next")));
+    }
 
   ++message_count;
 
@@ -137,7 +140,7 @@ producer (void *args)
   // the size of the lines!).
   consumer (msg_queue);
 
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 #endif /* ACE_HAS_THREADS */
@@ -155,13 +158,15 @@ run_main (int, ACE_TCHAR *[])
   ACE_Message_Queue<ACE_MT_SYNCH> msg_queue (max_queue);
 
   if (ACE_Thread_Manager::instance ()->spawn
-      (ACE_THR_FUNC (producer),
-       (void *) &msg_queue,
+      (producer,
+       &msg_queue,
        THR_NEW_LWP | THR_DETACHED) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("spawn")),
-                      1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("spawn")),
+                        1);
+    }
 
   // Wait for producer and consumer threads to exit.
   ACE_Thread_Manager::instance ()->wait ();

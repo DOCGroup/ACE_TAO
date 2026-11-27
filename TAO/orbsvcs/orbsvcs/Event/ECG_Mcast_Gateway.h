@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 /**
  *  @file   ECG_Mcast_Gateway.h
  *
@@ -43,7 +41,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * all components needed to federate an Event Channel.
  * Configuration options are described below.
  *
- * NOTE: This class does not own any of the components it creates and
+ * @note This class does not own any of the components it creates and
  * its lifetime is independent of theirs.  This class acts purely as a
  * wrapper facade for creating and wiring appropriate components
  * together.
@@ -64,12 +62,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  * Service config file options:
  *
- * -ECGService <service>
+ * -ECGService service
  *  Valid values: sender, receiver, two_way
  *  Specifies whether this gateway should act as a multicast sender of
  *  the events or multicast receiver, or both.
  *
- * -ECGAddressServer <server_type>
+ * -ECGAddressServer server_type
  *  Valid values: basic, source, type
  *  Specifies what implementation of the address server should be used
  *  by the gateway.  basic - the same multicast address is returned for
@@ -79,7 +77,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  *  on the event type, according to the mapping provided at
  *  initialization.
  *
- * -ECGAddressServerArg <arg>
+ * -ECGAddressServerArg arg
  *  Valid value: arg is a string, whose format requirements are
  *  specific to the implementation of address server used.
  *  Arg is not interpreted by the gateway, but simply passed to the
@@ -87,7 +85,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  *  THIS OPTION MUST ALWAYS BE SPECIFIED BY THE USER (there is no
  *  default value for it)
  *
- * -ECGHandler <handler_type>
+ * -ECGHandler handler_type
  *  Valid values: basic, complex, udp
  *  Specifies what implementation of event handler should be used if
  *  gateway is acting as events receiver. basic - a simple event
@@ -96,20 +94,20 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  *  events of interest to consumers.  udp - similar to basic handler,
  *  except listens on udp address as opposed to a multicast group.
  *
- * -ECGTTL <ttl>
+ * -ECGTTL ttl
  *  Valid values: a number > 0
  *  IP_Multicast time to live value that should be set on a sending socket.
  *  This option matters only if the gateway is acting as a sender of
  *  mcast messages.
  *
- * -ECGNIC <nic>
+ * -ECGNIC nic
  *  Valid values: name of the network interface
  *  This interface is used for sending and/or receiving multicast messages.
  *
  * -ECGNonBlocking
  *  Boolean flag to configure if the socket is in blocking or
  *  non-blocking code.  The default is non-blocking.
- *  NOTE: Certain device drivers block the process if the physical
+ *  @note Certain device drivers block the process if the physical
  *        link fails.
  *
  * 2) Create an instance of TAO_ECG_Mcast_Gateway in your code, on the stack or
@@ -126,20 +124,19 @@ class TAO_RTEvent_Serv_Export TAO_ECG_Mcast_Gateway
 {
 public:
   /// The Service_Object entry points.
-  //@{
-  virtual int init (int argc, ACE_TCHAR* argv[]) override;
-  virtual int fini () override;
-  //@}
+  /// @{
+  int init (int argc, ACE_TCHAR* argv[]) override;
+  int fini () override;
+  /// @}
 
   /// Helper function to register the Gateway into the service
   /// configurator.
   static int init_svcs ();
 
-  /// Constructor.
   TAO_ECG_Mcast_Gateway ();
 
   /// Values for some configuration parameters to init ().
-  //@{
+  /// @{
   enum Service_Type {ECG_MCAST_SENDER,
                      ECG_MCAST_RECEIVER,
                      ECG_MCAST_TWO_WAY};
@@ -151,7 +148,7 @@ public:
   enum Handler_Type {ECG_HANDLER_BASIC,
                      ECG_HANDLER_COMPLEX,
                      ECG_HANDLER_UDP};
-  //@}
+  /// @}
 
   /**
    * @struct Attributes
@@ -196,21 +193,18 @@ public:
   /// be used when NOT using service configurator to obtain/configure
   /// TAO_ECG_Mcast_Gateway.  See class documentation above for more
   /// info.
-  int init (const char * address_server_arg,
-            const Attributes & attributes = Attributes());
+  int init (char const *address_server_arg,
+            Attributes const & attributes = Attributes());
 
   /// Same as the method above, but also gives the client an opportunity to
   /// specify consumer qos, i.e., which EC traffic should get multicasted.
-  /*
-   * By default, multicast sender subscribes to all events in the
-   * Event Channel, i.e., all events pushed to the EC get multicasted
-   * (as long as their ttl is > 0).  This method allows clients to
-   * specify a more restrictive qos, hence limiting which EC traffic
-   * gets multicasted.
-   */
-  int init (const RtecEventChannelAdmin::ConsumerQOS & consumer_qos,
-            const char * address_server_arg,
-            const Attributes & attributes = Attributes());
+  /// By default, the multicast sender subscribes to all events in the
+  /// Event Channel, i.e., all events pushed to the EC get multicasted
+  /// (as long as their TTL is greater than zero). This method allows clients
+  /// to specify a more restrictive QoS, limiting which traffic gets multicasted.
+  int init (RtecEventChannelAdmin::ConsumerQOS const & consumer_qos,
+            char const *address_server_arg,
+            Attributes const & attributes = Attributes());
 
   /// The main method - create, configure and run federation
   /// components according to the specified configuration.
@@ -219,17 +213,17 @@ public:
 
 private:
   /// Helpers.
-  //@{
+  /// @{
   /// Check that arguments to run() are not nil.
   void verify_args (CORBA::ORB_ptr orb,
                     RtecEventChannelAdmin::EventChannel_ptr ec);
 
   /// Verifies configuration values specified through init() make sense.
   int validate_configuration ();
-  //@}
+  /// @}
 
   /// Allocate and initialize appropriate objects.
-  //@{
+  /// @{
   PortableServer::ServantBase *
         init_address_server ();
 
@@ -249,10 +243,10 @@ private:
         init_handler (TAO_ECG_Dgram_Handler *recv,
                       RtecEventChannelAdmin::EventChannel_ptr ec,
                       ACE_Reactor * reactor);
-  //@}
+  /// @}
 
   /// Flags controlling configuration.
-  //@{
+  /// @{
   Service_Type service_type_;
   Handler_Type handler_type_;
   Address_Server_Type address_server_type_;
@@ -263,7 +257,7 @@ private:
   int non_blocking_;
 
   RtecEventChannelAdmin::ConsumerQOS consumer_qos_;
-  //@}
+  /// @}
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

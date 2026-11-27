@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   OS_NS_sys_mman.h
  *
@@ -8,7 +5,6 @@
  *  @author Jesper S. M|ller<stophph@diku.dk>
  *  @author and a cast of thousands...
  */
-//=============================================================================
 
 #ifndef ACE_OS_NS_SYS_MMAN_H
 # define ACE_OS_NS_SYS_MMAN_H
@@ -35,7 +31,8 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE_OS
 {
-  //@{ @name A set of wrappers for memory mapped files.
+  /// @name A set of wrappers for memory mapped files.
+  /// @{
   ACE_NAMESPACE_INLINE_FUNCTION
   int madvise (caddr_t addr,
                size_t len,
@@ -50,7 +47,7 @@ namespace ACE_OS
               ACE_OFF_T off = 0,
               ACE_HANDLE *file_mapping = nullptr,
               LPSECURITY_ATTRIBUTES sa = 0,
-              const ACE_TCHAR *file_mapping_name = nullptr);
+              ACE_TCHAR const *file_mapping_name = nullptr);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int mprotect (void *addr,
@@ -65,16 +62,16 @@ namespace ACE_OS
   ACE_NAMESPACE_INLINE_FUNCTION
   int munmap (void *addr,
               size_t len);
-  //@}
+  /// @}
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  ACE_HANDLE shm_open (const ACE_TCHAR *filename,
+  ACE_HANDLE shm_open (ACE_TCHAR const *filename,
                        int mode,
                        mode_t perms = 0,
                        LPSECURITY_ATTRIBUTES sa = 0);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int shm_unlink (const ACE_TCHAR *path);
+  int shm_unlink (ACE_TCHAR const *path);
 } /* namespace ACE_OS */
 
 ACE_END_VERSIONED_NAMESPACE_DECL

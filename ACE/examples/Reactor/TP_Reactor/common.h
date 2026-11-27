@@ -22,6 +22,6 @@ static constexpr int BASE = 0x100000;
 /**
  * The timeout value for connections. (30 seconds)
  */
-static const ACE_Time_Value connTimeout(30);
+static ACE_Time_Value const connTimeout (30);
 
 #endif /* __COMMON_H__ */

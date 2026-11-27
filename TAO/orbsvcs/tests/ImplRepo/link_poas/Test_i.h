@@ -1,5 +1,3 @@
-/* -*- C++ -*-  */
-
 #ifndef TEST_I_H_
 #define TEST_I_H_
 
@@ -12,7 +10,7 @@
 class  Test_i : public virtual POA_Test
 {
 public:
-  virtual CORBA::Long server_pid ();
+  CORBA::Long server_pid () override;
 };
 
 #endif /* TEST_I_H_ */

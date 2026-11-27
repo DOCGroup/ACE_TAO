@@ -1,11 +1,9 @@
-
 #include "Client_Task.h"
 
 Client_Task::Client_Task (Test::Process_Factory_ptr process_factory,
-                          int iterations)
+                          int const iterations)
   : process_factory_ (Test::Process_Factory::_duplicate (process_factory))
   , iterations_ (iterations)
-  , successful_calls_ (0)
 {
 }
 
@@ -20,7 +18,7 @@ Client_Task::svc ()
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Starting client task\n"));
 
-  int successful_calls = 0;
+  int successful_call_count {};
 
   try
     {
@@ -28,10 +26,12 @@ Client_Task::svc ()
 
       for (int i = 0; i != this->iterations_; ++i)
         {
-          int retval = this->one_iteration ();
+          int const retval = this->one_iteration ();
 
           if (retval != 0)
-            successful_calls++;
+          {
+            ++successful_call_count;
+          }
 
           if (i % 10 == 0)
             {
@@ -41,7 +41,7 @@ Client_Task::svc ()
             }
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return -1;
@@ -49,7 +49,7 @@ Client_Task::svc ()
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Client task finished\n"));
 
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, -1);
-  this->successful_calls_ += successful_calls;
+  this->successful_calls_ += successful_call_count;
 
   return 0;
 }
@@ -63,8 +63,8 @@ Client_Task::validate_connection ()
         {
           (void) this->process_factory_->noop ();
         }
-    }
-  catch (const CORBA::TRANSIENT& )
+  }
+  catch (CORBA::TRANSIENT const &)
     {
       // Ignore transient exceptions
     }
@@ -84,12 +84,12 @@ Client_Task::one_iteration ()
 
       return 1;
     }
-  catch (const Test::Spawn_Failed& )
+  catch (Test::Spawn_Failed const &)
     {
       // Ignore this exception, it is usually caused by a transient
       // condition
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
     }

@@ -6,6 +6,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_time.h"
 #include "ace/os_include/os_netdb.h"
+#include <memory>
 
 ACE_TS_Clerk_Handler::ACE_TS_Clerk_Handler (ACE_TS_Clerk_Processor *processor,
                                             ACE_INET_Addr &addr)
@@ -42,7 +43,9 @@ ACE_TS_Clerk_Handler::timeout (long to)
 {
   ACE_TRACE ("ACE_TS_Clerk_Handler::timeout");
   if (to > this->max_timeout_)
+  {
     to = this->max_timeout_;
+  }
 
   this->timeout_ = to;
 }
@@ -54,11 +57,13 @@ long
 ACE_TS_Clerk_Handler::timeout ()
 {
   ACE_TRACE ("ACE_TS_Clerk_Handler::timeout");
-  long old_timeout = this->timeout_;
+  long const old_timeout = this->timeout_;
   this->timeout_ *= 2;
 
   if (this->timeout_ > this->max_timeout_)
+  {
     this->timeout_ = this->max_timeout_;
+  }
 
   return old_timeout;
 }
@@ -99,8 +104,10 @@ ACE_TS_Clerk_Handler::open (void *)
   // reconnections.
 #if !defined (ACE_WIN32)
   if (ACE_Reactor::instance ()->register_handler (SIGPIPE, this) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%n: %p\n"),
-                       ACE_TEXT ("register_handler (SIGPIPE)")), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%n: %p\n"),
+                         ACE_TEXT ("register_handler (SIGPIPE)")), -1);
+    }
 #endif /* ACE_WIN32 */
 
   // Register ourselves with the reactor to receive input
@@ -108,17 +115,21 @@ ACE_TS_Clerk_Handler::open (void *)
                                                   this,
                                                         ACE_Event_Handler::READ_MASK |
                                                         ACE_Event_Handler::EXCEPT_MASK) == -1)
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("%n: %p\n"),
-                ACE_TEXT ("register_handler (this)")));
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("%n: %p\n"),
+                  ACE_TEXT ("register_handler (this)")));
+    }
 
   // Figure out what remote port we're really bound to.
   else if (this->peer ().get_remote_addr (server_addr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("get_remote_addr")),
-                       -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("get_remote_addr")),
+                        -1);
+    }
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("TS Clerk Daemon connected to port %d on handle %d\n"),
+              ACE_TEXT ("TS Clerk Daemon connected to port %d on handle %H\n"),
               server_addr.get_port_number (),
               this->peer ().get_handle ()));
 
@@ -139,7 +150,7 @@ ACE_TS_Clerk_Handler::handle_close (ACE_HANDLE,
   ACE_TRACE ("ACE_TS_Clerk_Handler::handle_close");
   ACE_UNUSED_ARG (mask);
 
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) shutting down on handle %d\n"),
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) shutting down on handle %H\n"),
               this->get_handle ()));
 
   return this->reinitiate_connection ();
@@ -161,10 +172,12 @@ ACE_TS_Clerk_Handler::reinitiate_connection ()
 
       // Reschedule ourselves to try and connect again.
       ACE_Time_Value const timeout (this->timeout ());
-      if (ACE_Reactor::instance ()->schedule_timer (this, 0,
+      if (ACE_Reactor::instance ()->schedule_timer (this, nullptr,
                                                     timeout) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
-                           ACE_TEXT ("schedule_timer")), -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
+                             ACE_TEXT ("schedule_timer")), -1);
+        }
     }
   return 0;
 }
@@ -177,18 +190,20 @@ ACE_TS_Clerk_Handler::handle_input (ACE_HANDLE)
   // We're getting a time update message from a server
   ACE_Time_Request reply;
   if (this->recv_reply (reply) != 0)
-    return -1;
+    {
+      return -1;
+    }
   else
     {
       // Get current local time
-      time_t local_time = ACE_OS::time (0);
+      time_t const local_time = ACE_OS::time (nullptr);
 
       // Compure delta time (difference between current local time and
       // system time obtained from the server)
       time_t t = reply.time () - local_time;
 
       // Compute round trip delay and adjust time accordingly
-      time_t one_way_time = (local_time - this->start_time_)/2;
+      time_t const one_way_time = (local_time - this->start_time_)/2;
       t += one_way_time;
 
       // Now update time info (to be retrieved by Clerk_Processor)
@@ -200,8 +215,8 @@ ACE_TS_Clerk_Handler::handle_input (ACE_HANDLE)
 
 // Restart connection asynchronously when timeout occurs.
 int
-ACE_TS_Clerk_Handler::handle_timeout (const ACE_Time_Value &,
-                                      const void *)
+ACE_TS_Clerk_Handler::handle_timeout (ACE_Time_Value const &,
+                                      void const *)
 {
   ACE_TRACE ("ACE_TS_Clerk_Handler::handle_timeout");
   ACE_DEBUG ((LM_DEBUG,
@@ -237,7 +252,7 @@ ACE_TS_Clerk_Handler::recv_reply (ACE_Time_Request &reply)
 
   // Since Time_Request messages are fixed size, read the entire
   // message in one go.
-  ssize_t n = this->peer ().recv ((void *) &reply, bytes_expected);
+  ssize_t const n = this->peer ().recv (std::addressof (reply), bytes_expected);
 
   if (n != bytes_expected)
     {
@@ -247,7 +262,7 @@ ACE_TS_Clerk_Handler::recv_reply (ACE_Time_Request &reply)
           ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("****************** recv_reply returned -1\n")));
           ACE_FALLTHROUGH;
         default:
-          ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p got %d bytes, expected %d bytes\n"),
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p got %b bytes, expected %d bytes\n"),
                       ACE_TEXT ("recv failed"), n, bytes_expected));
           ACE_FALLTHROUGH;
         case 0:
@@ -257,18 +272,18 @@ ACE_TS_Clerk_Handler::recv_reply (ACE_Time_Request &reply)
         }
     }
   else if (reply.decode () == -1)       // Decode the request into host byte order.
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("decode failed")), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("decode failed")), -1);
+    }
   return 0;
 }
-
 
 int
 ACE_TS_Clerk_Handler::send_request (ACE_UINT32 sequence_num, ACE_Time_Info &time_info)
 {
   ACE_TRACE ("ACE_TS_Clerk_Handler::send_request");
   void    *buffer;
-  ssize_t length;
 
   // Update current sequence number
   this->cur_sequence_num_ = sequence_num;
@@ -278,21 +293,26 @@ ACE_TS_Clerk_Handler::send_request (ACE_UINT32 sequence_num, ACE_Time_Info &time
   time_info.sequence_num_ = this->time_info_.sequence_num_;
 
   // Now prepare a new time update request
-  ACE_Time_Request request (ACE_Time_Request::TIME_UPDATE, 0, 0);
+  ACE_Time_Request request (ACE_Time_Request::TIME_UPDATE, 0, nullptr);
 
-  if ((length = request.encode (buffer)) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("encode failed")), -1);
+  ssize_t const length = request.encode (buffer);
+  if (length == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("encode failed")), -1);
+    }
 
   // Compute start time of sending request (needed to compute
   // roundtrip delay)
-  this->start_time_ = ACE_OS::time (0);
+  this->start_time_ = ACE_OS::time (nullptr);
 
   // Send the request
   if (this->peer ().send_n (buffer, length) != length)
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("send_n failed")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("send_n failed")),
+                        -1);
+    }
 
   return 0;
 }
@@ -328,7 +348,7 @@ ACE_TS_Clerk_Processor::alloc ()
   ACE_TRACE ("ACE_TS_Clerk_Processor::alloc");
   ACE_NEW (this->shmem_, ALLOCATOR (this->poolname_));
 
-  void *temp = 0;
+  void *temp {};
 
   // Only create the state if it doesn't already exist.
   if (this->shmem_->find (ACE_DEFAULT_TIME_SERVER_STR, temp) ==  -1)
@@ -348,13 +368,13 @@ ACE_TS_Clerk_Processor::alloc ()
 
   // Initialize
   *(this->system_time_.delta_time_) = 0;
-  *(this->system_time_.last_local_time_) = ACE_OS::time (0);
+  *(this->system_time_.last_local_time_) = ACE_OS::time (nullptr);
 }
 
 // Query the servers for the latest time
 int
-ACE_TS_Clerk_Processor::handle_timeout (const ACE_Time_Value &,
-                                        const void *)
+ACE_TS_Clerk_Processor::handle_timeout (ACE_Time_Value const &,
+                                        void const *)
 {
   ACE_TRACE ("ACE_TS_Clerk_Processor::handle_timeout");
   return this->update_time ();
@@ -364,17 +384,17 @@ int
 ACE_TS_Clerk_Processor::update_time ()
 {
   ACE_TRACE ("ACE_TS_Clerk_Processor::update_time");
-  ACE_UINT32 expected_sequence_num = this->cur_sequence_num_;
+  ACE_UINT32 const expected_sequence_num = this->cur_sequence_num_;
 
   // Increment sequence number
-  this->cur_sequence_num_++;
+  ++this->cur_sequence_num_;
 
   int count = 0;
   time_t total_delta = 0;
   ACE_Time_Info time_info;
 
   //  Call send_request() on all handlers
-  ACE_TS_Clerk_Handler **handler = 0;
+  ACE_TS_Clerk_Handler **handler {};
 
   for (HANDLER_SET_ITERATOR set_iterator (this->handler_set_);
        set_iterator.next (handler) != 0;
@@ -383,12 +403,14 @@ ACE_TS_Clerk_Processor::update_time ()
       if ((*handler)->state () == ACE_TS_Clerk_Handler::ESTABLISHED)
         {
           if ((*handler)->send_request (this->cur_sequence_num_, time_info) == -1)
-            return -1;
+            {
+              return -1;
+            }
           // Check if sequence numbers match; otherwise discard
           else if (expected_sequence_num != 0 &&
                    time_info.sequence_num_ == expected_sequence_num)
             {
-              count++;
+              ++count;
               ACE_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("[%d] Delta time: %d\n"),
                           count, time_info.delta_time_));
@@ -415,13 +437,12 @@ ACE_TS_Clerk_Processor::update_time ()
     *(this->system_time_.delta_time_) = 0;
   }
   // Update the last local time
-  *(this->system_time_.last_local_time_) = ACE_OS::time (0);
+  *(this->system_time_.last_local_time_) = ACE_OS::time (nullptr);
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Average delta time: %d\n"),
               (int)(*(this->system_time_.delta_time_))));
   return 0;
 }
-
 
 int
 ACE_TS_Clerk_Processor::fini ()
@@ -430,18 +451,22 @@ ACE_TS_Clerk_Processor::fini ()
 
   // Cancel the timer
   if (this->timer_id_ != -1)
+  {
     ACE_Reactor::instance ()->cancel_timer (this->timer_id_);
+  }
 
   // Destroy all the handlers
-  ACE_TS_Clerk_Handler **handler = 0;
+  ACE_TS_Clerk_Handler **handler {};
 
   for (HANDLER_SET_ITERATOR set_iterator (this->handler_set_);
        set_iterator.next (handler) != 0;
        set_iterator.advance ())
     {
       if ((*handler)->state () != ACE_TS_Clerk_Handler::IDLE)
-        // Mark state as DISCONNECTING so we don't try to reconnect...
-        (*handler)->state (ACE_TS_Clerk_Handler::DISCONNECTING);
+        {
+          // Mark state as DISCONNECTING so we don't try to reconnect...
+          (*handler)->state (ACE_TS_Clerk_Handler::DISCONNECTING);
+        }
 
       // Deallocate resources.
       (*handler)->destroy (); // Will trigger a delete
@@ -474,7 +499,7 @@ ACE_TS_Clerk_Processor::init (int argc, ACE_TCHAR *argv[])
 
 #if !defined (ACE_WIN32)
   // Ignore SIPPIPE so each Output_Channel can handle it.
-  ACE_Sig_Action sig ((ACE_SignalHandler) SIG_IGN, SIGPIPE);
+  ACE_Sig_Action const sig ((ACE_SignalHandler) SIG_IGN, SIGPIPE);
   ACE_UNUSED_ARG (sig);
 #endif /* ACE_WIN32 */
 
@@ -482,7 +507,7 @@ ACE_TS_Clerk_Processor::init (int argc, ACE_TCHAR *argv[])
     ? ACE_Synch_Options::asynch : ACE_Synch_Options::synch;
 
   // Now set up connections to all servers
-  ACE_TS_Clerk_Handler **handler = 0;
+  ACE_TS_Clerk_Handler **handler {};
 
   for (HANDLER_SET_ITERATOR set_iterator (this->handler_set_);
        set_iterator.next (handler) != 0;
@@ -493,7 +518,7 @@ ACE_TS_Clerk_Processor::init (int argc, ACE_TCHAR *argv[])
   // Now set up timer to receive updates from server
   // set the timer to go off after timeout value
   this->timer_id_ = ACE_Reactor::instance ()->schedule_timer (this,
-                                                              0,
+                                                              nullptr,
                                                               ACE_Time_Value (this->timeout_),
                                                               ACE_Time_Value (this->timeout_));
   return 0;
@@ -511,8 +536,10 @@ ACE_TS_Clerk_Processor::initiate_connection (ACE_TS_Clerk_Handler *handler,
   handler->state (ACE_TS_Clerk_Handler::IDLE);
 
   if (handler->remote_addr ().addr_to_string (buf, MAXHOSTNAMELEN) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
-                      ACE_TEXT ("can't obtain peer's address")), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
+                        ACE_TEXT ("can't obtain peer's address")), -1);
+    }
 
   // Establish connection with the server.
   if (this->connect (handler,
@@ -530,15 +557,19 @@ ACE_TS_Clerk_Processor::initiate_connection (ACE_TS_Clerk_Handler *handler,
             {
               ACE_Time_Value const handler_timeout (handler->timeout ());
               if (ACE_Reactor::instance ()->schedule_timer (handler,
-                                                            0,
+                                                            nullptr,
                                                             handler_timeout) == -1)
-                ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
-                                   ACE_TEXT ("schedule_timer")), -1);
+                {
+                  ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
+                                     ACE_TEXT ("schedule_timer")), -1);
+                }
             }
           else
-            // Failures on synchronous connects are reported as errors
-            // so that the caller can decide how to proceed.
-            return -1;
+            {
+              // Failures on synchronous connects are reported as errors
+              // so that the caller can decide how to proceed.
+              return -1;
+            }
         }
       else
         {
@@ -553,7 +584,7 @@ ACE_TS_Clerk_Processor::initiate_connection (ACE_TS_Clerk_Handler *handler,
   else
     {
       handler->state (ACE_TS_Clerk_Handler::ESTABLISHED);
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) connected to %s on %d\n"),
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) connected to %s on %H\n"),
                   buf, handler->get_handle ()));
     }
   return 0;
@@ -590,9 +621,9 @@ ACE_TS_Clerk_Processor::parse_args (int argc, ACE_TCHAR *argv[])
           break;
         case 'p':
           // Get the poolname
-          ACE_OS::strncpy (this->poolname_,
-                           get_opt.opt_arg (),
-                           sizeof this->poolname_ / sizeof (ACE_TCHAR));
+          ACE_OS::strsncpy (this->poolname_,
+                            get_opt.opt_arg (),
+                            sizeof this->poolname_ / sizeof *this->poolname_);
           break;
         case 'b':
           // Blocking semantics

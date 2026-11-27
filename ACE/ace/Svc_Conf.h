@@ -1,13 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Svc_Conf.h
  *
  *  @author Doug Schmidt
  */
-//=============================================================================
-
 
 #ifndef ACE_SVC_CONF_H
 #define ACE_SVC_CONF_H
@@ -40,7 +35,6 @@ int ace_yyparse ();
 int ace_yyparse ();
 #endif
 #endif /* ! YYPARSE_PARAM */
-
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -98,8 +92,7 @@ ace_create_service_type (ACE_TCHAR const *,
                          int,
                          void *,
                          unsigned int,
-                         ACE_Service_Object_Exterminator = 0);
-
+                         ACE_Service_Object_Exterminator = nullptr);
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 

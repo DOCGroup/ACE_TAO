@@ -1,5 +1,3 @@
-
-// -*- C++ -*-
 // Definition for Win32 Export directives.
 // This file is generated automatically by generate_export_file.pl TAO_Dynamic_TP
 // ------------------------------

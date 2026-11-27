@@ -1,4 +1,3 @@
-//=============================================================================
 /**
 *  @file   INS_Locator.cpp
 *
@@ -6,7 +5,6 @@
 *
 *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
 */
-//=============================================================================
 
 #include "INS_Locator.h"
 #include "ImR_Locator_i.h"
@@ -20,7 +18,7 @@ INS_Locator::INS_Locator (ImR_Locator_i& loc)
 }
 
 char *
-INS_Locator::locate (const char* object_key)
+INS_Locator::locate (char const *object_key)
 {
   ACE_ASSERT (object_key != nullptr);
   try
@@ -29,7 +27,7 @@ INS_Locator::locate (const char* object_key)
         this->imr_locator_.activate_server_by_object (object_key);
       return located._retn();
     }
-  catch (const CORBA::Exception &)
+  catch (CORBA::Exception const &)
     {
       throw CORBA::TRANSIENT (CORBA::SystemException::_tao_minor_code
                               (TAO_IMPLREPO_MINOR_CODE, 0),
@@ -39,7 +37,7 @@ INS_Locator::locate (const char* object_key)
 
 void
 INS_Locator::async_locate (::IORTable::Locate_ResponseHandler handler,
-                           const char* object_key)
+                           char const *object_key)
 {
   ACE_ASSERT (object_key != nullptr);
 
@@ -48,7 +46,7 @@ INS_Locator::async_locate (::IORTable::Locate_ResponseHandler handler,
   ACE_CString full (object_key);
   if (this->imr_locator_.split_key (full, key, si))
     {
-      ImR_ResponseHandler *rh = nullptr;
+      ImR_ResponseHandler *rh {};
       ACE_NEW (rh, INS_Loc_ResponseHandler (key.c_str(), handler));
       this->imr_locator_.activate_server_by_info (si, rh);
     }
@@ -60,9 +58,7 @@ INS_Locator::async_locate (::IORTable::Locate_ResponseHandler handler,
     }
 }
 
-
-//----------------------------------------------------------------------------------------
-INS_Loc_ResponseHandler::INS_Loc_ResponseHandler (const char *key,
+INS_Loc_ResponseHandler::INS_Loc_ResponseHandler (char const *key,
                             ::IORTable::Locate_ResponseHandler handler)
   : key_str_(key),
     rh_ (handler)
@@ -70,7 +66,7 @@ INS_Loc_ResponseHandler::INS_Loc_ResponseHandler (const char *key,
 }
 
 void
-INS_Loc_ResponseHandler::send_ior (const char *pior)
+INS_Loc_ResponseHandler::send_ior (char const *pior)
 {
   ACE_CString ior = pior;
 

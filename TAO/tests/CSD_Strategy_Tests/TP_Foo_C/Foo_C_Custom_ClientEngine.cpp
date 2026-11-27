@@ -2,7 +2,6 @@
 #include "CustomExceptionC.h"
 #include "ace/Log_Msg.h"
 
-
 Foo_C_Custom_ClientEngine::Foo_C_Custom_ClientEngine
                                         (Foo_C_i*               servant,
                                          Foo_C_ptr              objref,
@@ -13,18 +12,14 @@ Foo_C_Custom_ClientEngine::Foo_C_Custom_ClientEngine
 {
 }
 
-
-Foo_C_Custom_ClientEngine::~Foo_C_Custom_ClientEngine()
-{
-}
-
+Foo_C_Custom_ClientEngine::~Foo_C_Custom_ClientEngine() = default;
 
 bool
 Foo_C_Custom_ClientEngine::execute()
 {
   // Make sure the connection is established before making
   // remote invocations.
-  if (this->proxy_.validate_connection () == false)
+  if (!this->proxy_.validate_connection ())
     {
       ACE_ERROR((LM_ERROR, "(%P|%t)Foo_A_ClientEngine::execute  " \
                           "client %d connect failed.\n", this->client_id_));
@@ -32,19 +27,18 @@ Foo_C_Custom_ClientEngine::execute()
     }
 
   bool check_validity = true;
-  CORBA::Long i = this->client_id_;
+  CORBA::Long const i = this->client_id_;
 
   this->proxy_.op1();
   this->proxy_.op2(i);
-  CORBA::Long value = this->proxy_.op3(i);
+  CORBA::Long const value = this->proxy_.op3(i);
 
   if (value != i)
     {
       check_validity = false;
     }
 
-
-  for (CORBA::Long j = 1; j <= 5; j++)
+  for (CORBA::Long j = 1; j <= 5; ++j)
     {
       this->proxy_.op4(495 + (i * 5) + j);
     }
@@ -54,7 +48,7 @@ Foo_C_Custom_ClientEngine::execute()
     {
       this->proxy_.op5();
     }
-  catch (const FooException& )
+  catch (FooException const & )
     {
       // Expected
       caught_exception = true;
@@ -76,7 +70,7 @@ Foo_C_Custom_ClientEngine::execute()
       check_validity = false;
     }
 
-  for (long cust_j = 1; cust_j <= 5; cust_j++)
+  for (long cust_j = 1; cust_j <= 5; ++cust_j)
     {
       this->proxy_.cust_op4(495 + (cust_i * 5) + cust_j);
     }
@@ -87,7 +81,7 @@ Foo_C_Custom_ClientEngine::execute()
     {
       this->proxy_.cust_op5();
     }
-  catch (const CORBA::Exception&)//(CustomException, ex)
+  catch (CORBA::Exception const &)//(CustomException, ex)
     {
       // Expected
       caught_exception = true;
@@ -102,7 +96,6 @@ Foo_C_Custom_ClientEngine::execute()
 
   return check_validity;
 }
-
 
 void
 Foo_C_Custom_ClientEngine::expected_results(Foo_C_Statistics& stats)

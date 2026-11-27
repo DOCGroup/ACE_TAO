@@ -1,12 +1,8 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
  *  @file    Handle_Set.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef ACE_HANDLE_SET_H
 #define ACE_HANDLE_SET_H
@@ -66,9 +62,11 @@ public:
   /**
    * Constructor, initializes the handle set from a given mask.
    */
-  ACE_Handle_Set (const fd_set &mask);
+  explicit ACE_Handle_Set (fd_set const &mask);
 
-  // = Methods for manipulating bitsets.
+  /// @name Methods for manipulating bitsets
+  /// @{
+
   /// Initialize the bitmask to all 0s and reset the associated fields.
   void reset ();
 
@@ -77,7 +75,7 @@ public:
    * performed so @a handle must be less than
    * @c ACE_DEFAULT_SELECT_REACTOR_SIZE.
    */
-  int is_set (ACE_HANDLE handle) const;
+  bool is_set (ACE_HANDLE handle) const;
 
   /// Enables the @a handle.  No range checking is performed so @a handle
   /// must be less than @c ACE_DEFAULT_SELECT_REACTOR_SIZE.
@@ -95,29 +93,31 @@ public:
 
   /**
    * Rescan the underlying @c fd_set up to handle @a max to find the new
-   * <max_handle> (highest bit set) and <size> (how many bits set) values.
+   * @c max_handle (highest bit set) and @c size (how many bits set) values.
    * This is useful for evaluating the changes after the handle set has
    * been manipulated in some way other than member functions; for example,
-   * after <select> modifies the @c fd_set.
+   * after @c select() modifies @c fd_set.
    */
   void sync (ACE_HANDLE max);
 
-  /// Returns a pointer to the underlying @c fd_set.  Returns 0 if
-  /// there are no handle bits set (<size_> == 0).
+  /// @}
+
+  /// Returns a pointer to the underlying @c fd_set.  Returns nullptr if
+  /// there are no handle bits set (@c size_ == 0).
   operator fd_set *();
 
-  /// Returns a pointer to the underlying @c fd_set.  Returns 0 if
-  /// there are no handle bits set (<size_> == 0).
+  /// Returns a pointer to the underlying @c fd_set.  Returns nullptr if
+  /// there are no handle bits set (@c size_ == 0).
   fd_set *fdset ();
 
 #if defined (ACE_HAS_BIG_FD_SET)
   /// Assignment operator optimizes for cases where size_ == 0.
-  ACE_Handle_Set & operator= (const ACE_Handle_Set &rhs);
+  ACE_Handle_Set &operator= (ACE_Handle_Set const &rhs);
   /// Copy constructor optimizes for cases where size_ == 0
-  ACE_Handle_Set (const ACE_Handle_Set &rhs);
+  ACE_Handle_Set (ACE_Handle_Set const &rhs);
 #else
-  ACE_Handle_Set & operator= (const ACE_Handle_Set &) = default;
-  ACE_Handle_Set (const ACE_Handle_Set &) = default;
+  ACE_Handle_Set &operator= (ACE_Handle_Set const &) = default;
+  ACE_Handle_Set (ACE_Handle_Set const &) = default;
 #endif /* ACE_HAS_BIG_FD_SET */
 
   ACE_Handle_Set & operator= (ACE_Handle_Set &&) = default;
@@ -159,13 +159,13 @@ private:
   static int bitpos (u_long bit);
 #endif /* ACE_HAS_BIG_FD_SET */
 
-  /// Resets the <max_handle_> after a clear of the original
-  /// <max_handle_>.
+  /// Resets the @c max_handle_ after a clear of the original
+  /// @c max_handle_.
   void set_max (ACE_HANDLE max);
 
   /// Table that maps bytes to counts of the enabled bits in each value
   /// from 0 to 255.
-  static const char nbits_[NBITS];
+  static char const nbits_[NBITS];
 };
 
 /**
@@ -176,8 +176,7 @@ private:
 class ACE_Export ACE_Handle_Set_Iterator
 {
 public:
-  /// Constructor.
-  ACE_Handle_Set_Iterator (const ACE_Handle_Set &hs);
+  ACE_Handle_Set_Iterator (ACE_Handle_Set const &hs);
   ACE_Handle_Set_Iterator () = delete;
   ~ACE_Handle_Set_Iterator () = default;
 
@@ -187,8 +186,8 @@ public:
 
   /**
    * "Next" operator.  Returns the next unseen ACE_HANDLE in the
-   * <Handle_Set> up to <handle_set_.max_handle_>).  When all the
-   * handles have been seen returns <ACE_INVALID_HANDLE>.  Advances
+   * @c Handle_Set up to <handle_set_.max_handle_>).  When all the
+   * handles have been seen returns @c ACE_INVALID_HANDLE.  Advances
    * the iterator automatically, so you need not call <operator++>
    * (which is now obsolete).
    */
@@ -202,16 +201,16 @@ public:
 
 private:
   /// The Handle_Set we are iterating through.
-  const ACE_Handle_Set &handles_;
+  ACE_Handle_Set const &handles_;
 
   /// Index of the bit we're examining in the current word_num_() word.
 #if defined (ACE_HANDLE_SET_USES_FD_ARRAY)
-  u_int handle_index_;
+  u_int handle_index_ {};
 #elif !defined (ACE_HAS_BIG_FD_SET)
-  int handle_index_;
+  int handle_index_ {};
 #elif defined (ACE_HAS_BIG_FD_SET)
-  int handle_index_;
-  u_long oldlsb_;
+  int handle_index_ {};
+  u_long oldlsb_ {};
 #endif /* ACE_HANDLE_SET_USES_FD_ARRAY */
 
   /// Number of the word we're iterating over (typically between 0..7).

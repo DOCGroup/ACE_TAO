@@ -1,22 +1,23 @@
-//=============================================================================
 /**
  *  @file    Bound_Ptr_Test.cpp
  *
- *  This example tests the <ACE_Strong_Bound_Ptr> and
- *  <ACE_Weak_Bound_Ptr> and illustrates how they may be dispersed
+ *  This example tests the @c ACE_Strong_Bound_Ptr and
+ *  @c ACE_Weak_Bound_Ptr and illustrates how they may be dispersed
  *  between multiple threads using an implementation of the Active
  *  Object pattern, which is available in the POSA2 book
  *  <http://www.dre.vanderbilt.edu/~schmidt/POSA>.
  *
  *  @author Christopher Kohlhoff <chris@kohlhoff.com>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "ace/Null_Mutex.h"
 #include "ace/Method_Request.h"
 #include "Bound_Ptr_Test.h"
 #include "ace/Task.h"
+
+#include <memory>
+#include <type_traits>
 
 // The following Parent and Child classes illustrate how you might use the
 // ACE_Strong_Bound_Ptr and ACE_Weak_Bound_Ptr together in cyclic
@@ -67,9 +68,59 @@ struct Child : public Child_Base
   static size_t instance_count_;
 };
 
-Child_Base::~Child_Base ()
+using Child_Ptr = ACE_Strong_Bound_Ptr<Child, ACE_Null_Mutex>;
+using Child_Base_Ptr = ACE_Strong_Bound_Ptr<Child_Base, ACE_Null_Mutex>;
+static_assert (std::is_constructible_v<Child_Base_Ptr, Child_Ptr const &>);
+static_assert (std::is_assignable_v<Child_Base_Ptr &, Child_Ptr const &>);
+static_assert (!std::is_constructible_v<Child_Ptr, Child_Base_Ptr const &>);
+static_assert (!std::is_assignable_v<Child_Ptr &, Child_Base_Ptr const &>);
+
+struct Cast_Base
 {
-}
+  virtual ~Cast_Base () = default;
+};
+
+struct Cast_Derived : virtual Cast_Base
+{
+  explicit Cast_Derived (int &destroyed) : destroyed_ (destroyed)
+  {
+  }
+  ~Cast_Derived () override
+  {
+    ++this->destroyed_;
+  }
+  int &destroyed_;
+};
+
+struct Cast_Other : virtual Cast_Base
+{
+};
+
+class Throwing_Lock : public ACE_Null_Mutex
+{
+public:
+  Throwing_Lock ()
+  {
+    if (fail_)
+      {
+        throw std::bad_alloc ();
+      }
+  }
+  static bool fail_;
+};
+
+bool Throwing_Lock::fail_ {true};
+
+class Construction_Probe
+{
+public:
+  explicit Construction_Probe (int &destroyed) : destroyed_ (destroyed) {}
+  ~Construction_Probe () { ++this->destroyed_; }
+private:
+  int &destroyed_;
+};
+
+Child_Base::~Child_Base () = default;
 
 size_t Parent::instance_count_ = 0;
 
@@ -125,21 +176,25 @@ void Child::do_something ()
   // In cases where we may need to call operations on the weak pointer
   // many times, we can reduce the overhead by explicitly converting to a
   // strong pointer first.
-  ACE_Strong_Bound_Ptr<Parent, ACE_Null_Mutex> strong_parent (parent_);
+  ACE_Strong_Bound_Ptr<Parent, ACE_Null_Mutex> const strong_parent (parent_);
 
   // You can check for null to see if the parent object still exists (in this
   // case it is not strictly necessary since the child will only exist if the
   // parent still exists).
   if (strong_parent == nullptr)
+  {
     return;
+  }
 
   for (int i = 0; i < 5; ++i)
-    strong_parent->do_something ();
+    {
+      strong_parent->do_something ();
+    }
 }
 
 size_t Printer::instance_count_ = 0;
 
-Printer::Printer (const char *message)
+Printer::Printer (char const *message)
   : message_ (message)
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -167,7 +222,7 @@ Printer::print ()
 /**
  * @class Method_Request_print
  *
- * @brief Reification of the <print> method.
+ * @brief Reification of the @c print() method.
  */
 class Method_Request_print : public ACE_Method_Request
 {
@@ -200,7 +255,7 @@ Method_Request_print::call ()
 {
   // Dispatch the Servant's operation and store the result into the
   // Future.
-  Printer_var temp = printer_;
+  Printer_var const temp = printer_;
 
   temp->print ();
 
@@ -210,7 +265,7 @@ Method_Request_print::call ()
 /**
  * @class Method_Request_end
  *
- * @brief Reification of the <end> method.
+ * @brief Reification of the @c end() method.
  */
 class Method_Request_end : public ACE_Method_Request
 {
@@ -228,9 +283,7 @@ Method_Request_end::Method_Request_end (Scheduler *scheduler)
 {
 }
 
-Method_Request_end::~Method_Request_end ()
-{
-}
+Method_Request_end::~Method_Request_end () = default;
 
 int
 Method_Request_end::call ()
@@ -242,7 +295,6 @@ Method_Request_end::call ()
   return -1;
 }
 
-// Constructor
 // Associates the activation queue with this task's message queue,
 // allowing easy access to the message queue for shutting it down
 // when it's time to stop this object's service threads.
@@ -252,8 +304,6 @@ Scheduler::Scheduler ()
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Scheduler created\n")));
 }
-
-// Destructor
 
 Scheduler::~Scheduler ()
 {
@@ -269,7 +319,7 @@ Scheduler::open (void *)
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Scheduler open\n")));
   // Become an Active Object.
-  int num_threads = 3;
+  int const num_threads = 3;
   return this->activate (THR_BOUND | THR_JOINABLE, num_threads);
 }
 
@@ -291,7 +341,7 @@ Scheduler::svc ()
     {
       // Dequeue the next method request (we use an strong pointer in
       // case an exception is thrown in the <call>).
-      ACE_Strong_Bound_Ptr<ACE_Method_Request, ACE_Null_Mutex> mo (this->activation_queue_.dequeue ());
+      ACE_Strong_Bound_Ptr<ACE_Method_Request, ACE_Null_Mutex> const mo (this->activation_queue_.dequeue ());
       if (mo == nullptr)
         {
           ACE_DEBUG ((LM_DEBUG,
@@ -303,7 +353,9 @@ Scheduler::svc ()
                   ACE_TEXT ("(%t) calling method request\n")));
       // Call it.
       if (mo->call () == -1)
+      {
         break;
+      }
 
       // Destructor automatically deletes it.
     }
@@ -335,35 +387,112 @@ int
 run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Bound_Ptr_Test"));
+  {
+    int destroyed {};
+    bool caught {};
+    try
+      {
+        ACE_Strong_Bound_Ptr<Construction_Probe, Throwing_Lock> ptr (
+          new Construction_Probe (destroyed));
+      }
+    catch (std::bad_alloc const &)
+      {
+        caught = true;
+      }
+    if (!caught || destroyed != 1)
+      {
+        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Bound pointer construction leaked its object\n")), -1);
+      }
+  }
+  {
+    int destroyed {};
+    Throwing_Lock::fail_ = false;
+    ACE_Strong_Bound_Ptr<Construction_Probe, Throwing_Lock> ptr (
+      new Construction_Probe (destroyed));
+    Construction_Probe * const original = ptr.get ();
+    ptr.reset (original);
+    Throwing_Lock::fail_ = true;
+    bool caught {};
+    try
+      {
+        ptr.reset (new Construction_Probe (destroyed));
+      }
+    catch (std::bad_alloc const &)
+      {
+        caught = true;
+      }
+    Throwing_Lock::fail_ = false;
+    if (!caught || destroyed != 1 || ptr.get () != original)
+      {
+        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Bound pointer reset lost ownership on failure\n")), -1);
+      }
+  }
 
-
-  // =========================================================================
   // The following test uses the ACE_Strong_Bound_Ptr in a single
   // thread of control, hence we use the ACE_Null_Mutex
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) performing synchronous test...\n")));
 
-  Parent *parent1 = nullptr;
+  Parent *parent1 {};
   ACE_NEW_RETURN (parent1,
                   Parent,
                   -1);
+  size_t const children_before = Child::instance_count_;
+  {
+    ACE_Strong_Bound_Ptr<Child_Base, ACE_Null_Mutex> base;
+    Child_Ptr const empty_downcast = Child_Ptr::static_pointer_cast (base);
+    ACE_TEST_ASSERT (empty_downcast == nullptr);
+    Child_Ptr downcast;
+    {
+      ACE_Strong_Bound_Ptr<Child, ACE_Null_Mutex> const derived (
+        new Child (parent1->weak_self_));
+      ACE_Strong_Bound_Ptr<Child_Base, ACE_Null_Mutex> const converted (derived);
+      ACE_Strong_Bound_Ptr<Child_Base, ACE_Null_Mutex> &result = (base = derived);
+      ACE_TEST_ASSERT (std::addressof (result) == std::addressof (base));
+      ACE_TEST_ASSERT (base.get () == derived.get ());
+      ACE_TEST_ASSERT (converted.get () == derived.get ());
+      downcast = Child_Ptr::static_pointer_cast (base);
+      ACE_TEST_ASSERT (downcast.get () == derived.get ());
+    }
+    ACE_TEST_ASSERT (Child::instance_count_ == children_before + 1);
+    base.reset ();
+    ACE_TEST_ASSERT (Child::instance_count_ == children_before + 1);
+    downcast.reset ();
+    ACE_TEST_ASSERT (Child::instance_count_ == children_before);
+  }
+  ACE_TEST_ASSERT (Child::instance_count_ == children_before);
+  {
+    int destroyed {};
+    using Base_Ptr = ACE_Strong_Bound_Ptr<Cast_Base, ACE_Null_Mutex>;
+    using Derived_Ptr = ACE_Strong_Bound_Ptr<Cast_Derived, ACE_Null_Mutex>;
+    using Other_Ptr = ACE_Strong_Bound_Ptr<Cast_Other, ACE_Null_Mutex>;
+    Base_Ptr base (new Cast_Derived (destroyed));
+    Derived_Ptr derived = Derived_Ptr::dynamic_pointer_cast (base);
+    Other_Ptr const other = Other_Ptr::dynamic_pointer_cast (base);
+    ACE_TEST_ASSERT (derived != nullptr);
+    ACE_TEST_ASSERT (other == nullptr);
+    base.reset ();
+    ACE_TEST_ASSERT (destroyed == 0);
+    derived.reset ();
+    ACE_TEST_ASSERT (destroyed == 1);
+  }
   ACE_Weak_Bound_Ptr<Parent, ACE_Null_Mutex> p8;
   {
     // Must get the pointer from the parent object's weak_self_ member.
-    ACE_Strong_Bound_Ptr<Parent, ACE_Null_Mutex> p(parent1->weak_self_);
-    ACE_Strong_Bound_Ptr<Parent, ACE_Null_Mutex> p1(p);
-    ACE_Strong_Bound_Ptr<Parent, ACE_Null_Mutex> p2(p);
-    ACE_Weak_Bound_Ptr<Parent, ACE_Null_Mutex> p3(p);
-    ACE_Strong_Bound_Ptr<Parent, ACE_Null_Mutex> p4(p);
-    ACE_Strong_Bound_Ptr<Parent, ACE_Null_Mutex> p5 = p2;
-    ACE_Strong_Bound_Ptr<Parent, ACE_Null_Mutex> p6 = p3;
-    ACE_Weak_Bound_Ptr<Parent, ACE_Null_Mutex> p7(p1);
+    ACE_Strong_Bound_Ptr<Parent, ACE_Null_Mutex> const p(parent1->weak_self_);
+    ACE_Strong_Bound_Ptr<Parent, ACE_Null_Mutex> const p1(p);
+    ACE_Strong_Bound_Ptr<Parent, ACE_Null_Mutex> const p2(p);
+    ACE_Weak_Bound_Ptr<Parent, ACE_Null_Mutex> const p3(p);
+    ACE_Strong_Bound_Ptr<Parent, ACE_Null_Mutex> const p4(p);
+    ACE_Strong_Bound_Ptr<Parent, ACE_Null_Mutex> const p5 = p2;
+    ACE_Strong_Bound_Ptr<Parent, ACE_Null_Mutex> const p6 = p3;
+    ACE_Weak_Bound_Ptr<Parent, ACE_Null_Mutex> const p7(p1);
     p8 = p2;
     p->child_->do_something ();
   }
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%t) Parent instance count is %d, expecting 0\n"),
+              ACE_TEXT ("(%t) Parent instance count is %B, expecting 0\n"),
               Parent::instance_count_));
   if (Parent::instance_count_ != 0)
     {
@@ -372,7 +501,7 @@ run_main (int, ACE_TCHAR *[])
                          -1);
     }
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%t) Child instance count is %d, expecting 0\n"),
+              ACE_TEXT ("(%t) Child instance count is %B, expecting 0\n"),
               Child::instance_count_));
   if (Child::instance_count_ != 0)
     {
@@ -388,26 +517,26 @@ run_main (int, ACE_TCHAR *[])
                          -1);
     }
 
-  Printer *printer1 = nullptr;
+  Printer *printer1 {};
   ACE_NEW_RETURN (printer1,
                   Printer ("I am printer 1"),
                   -1);
   ACE_Weak_Bound_Ptr<Printer, ACE_Null_Mutex> r9;
   {
-    ACE_Strong_Bound_Ptr<Printer, ACE_Null_Mutex> r(printer1);
-    ACE_Strong_Bound_Ptr<Printer, ACE_Null_Mutex> r1(r);
-    ACE_Strong_Bound_Ptr<Printer, ACE_Null_Mutex> r2(r);
-    ACE_Strong_Bound_Ptr<Printer, ACE_Null_Mutex> r3(r);
-    ACE_Strong_Bound_Ptr<Printer, ACE_Null_Mutex> r4(r);
-    ACE_Strong_Bound_Ptr<Printer, ACE_Null_Mutex> r5 = r2;
-    ACE_Strong_Bound_Ptr<Printer, ACE_Null_Mutex> r6 = r1;
-    ACE_Weak_Bound_Ptr<Printer, ACE_Null_Mutex> r7(r1);
-    ACE_Weak_Bound_Ptr<Printer, ACE_Null_Mutex> r8 = r2;
+    ACE_Strong_Bound_Ptr<Printer, ACE_Null_Mutex> const r(printer1);
+    ACE_Strong_Bound_Ptr<Printer, ACE_Null_Mutex> const r1(r);
+    ACE_Strong_Bound_Ptr<Printer, ACE_Null_Mutex> const r2(r);
+    ACE_Strong_Bound_Ptr<Printer, ACE_Null_Mutex> const r3(r);
+    ACE_Strong_Bound_Ptr<Printer, ACE_Null_Mutex> const r4(r);
+    ACE_Strong_Bound_Ptr<Printer, ACE_Null_Mutex> const r5 = r2;
+    ACE_Strong_Bound_Ptr<Printer, ACE_Null_Mutex> const r6 = r1;
+    ACE_Weak_Bound_Ptr<Printer, ACE_Null_Mutex> const r7(r1);
+    ACE_Weak_Bound_Ptr<Printer, ACE_Null_Mutex> const r8 = r2;
     r9 = r3;
     r9->print ();
   }
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%t) Printer instance count is %d, expecting 0\n"),
+              ACE_TEXT ("(%t) Printer instance count is %B, expecting 0\n"),
               Printer::instance_count_));
   if (Printer::instance_count_ != 0)
     {
@@ -425,21 +554,20 @@ run_main (int, ACE_TCHAR *[])
 
 #if defined (ACE_HAS_THREADS)
 
-  // =========================================================================
   // The following test uses the ACE_Strong_Bound_Ptr in multiple
   // threads of control.
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) performing asynchronous test...\n")));
 
-  Scheduler *scheduler_ptr = nullptr;
+  Scheduler *scheduler_ptr {};
 
   // Create active objects..
   ACE_NEW_RETURN (scheduler_ptr,
                   Scheduler (),
                   -1);
 
-  ACE_Strong_Bound_Ptr<Scheduler, ACE_Null_Mutex> scheduler(scheduler_ptr);
+  ACE_Strong_Bound_Ptr<Scheduler, ACE_Null_Mutex> const scheduler(scheduler_ptr);
 
   if (scheduler->open () == -1)
     {
@@ -449,17 +577,19 @@ run_main (int, ACE_TCHAR *[])
     }
 
   {
-    Printer *printer2 = nullptr;
+    Printer *printer2 {};
     ACE_NEW_RETURN (printer2,
                     Printer ("I am printer 2"),
                     -1);
 
     Printer_var r (printer2);
 
-    for (int i = 0; i < n_loops; i++)
-      // Spawn off the methods, which run in a separate thread as
-      // active object invocations.
-      scheduler->print (r);
+    for (int i = 0; i < n_loops; ++i)
+      {
+        // Spawn off the methods, which run in a separate thread as
+        // active object invocations.
+        scheduler->print (r);
+      }
   }
 
   // Close things down.
@@ -468,10 +598,12 @@ run_main (int, ACE_TCHAR *[])
   scheduler->wait ();
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%t) Printer instance count is %d, expecting 0\n"),
+              ACE_TEXT ("(%t) Printer instance count is %B, expecting 0\n"),
               Printer::instance_count_));
   if (Printer::instance_count_ != 0)
+  {
     return -1;
+  }
 
 #endif /* ACE_HAS_THREADS */
   ACE_END_TEST;

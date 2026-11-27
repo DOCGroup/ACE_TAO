@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include <algorithm>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -6,7 +5,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 template<class T> ACE_INLINE bool
 ACE_Intrusive_List<T>::is_empty () const
 {
-  return this->head_ == 0;
+  return this->head_ == nullptr;
 }
 
 template<class T> ACE_INLINE T *
@@ -22,7 +21,7 @@ ACE_Intrusive_List<T>::tail () const
 }
 
 template<class T> ACE_INLINE void
-ACE_Intrusive_List<T>::swap(ACE_Intrusive_List<T> & rhs)
+ACE_Intrusive_List<T>::swap (ACE_Intrusive_List<T> &rhs)
 {
   std::swap(head_, rhs.head_);
   std::swap(tail_, rhs.tail_);

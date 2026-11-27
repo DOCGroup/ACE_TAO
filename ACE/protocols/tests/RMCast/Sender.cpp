@@ -6,6 +6,7 @@
 #include "ace/RMCast/Socket.h"
 
 #include "Protocol.h"
+#include <memory>
 
 class args {};
 
@@ -14,27 +15,29 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
   try
   {
-    if (argc < 2) throw args ();
+    if (argc < 2)
+    {
+      throw args ();
+    }
 
     ACE_INET_Addr addr (argv[1]);
 
     //FUZZ: disable check_for_lack_ACE_OS
     // Turn on message loss and reordering simulation.
     //
-    ACE_RMCast::Socket socket (addr, false, true);
+    ACE_RMCast::Socket socket (addr, false, ACE_RMCast::Parameters {true});
     //FUZZ: enable check_for_lack_ACE_OS
 
-    Message msg;
-    msg.sn = 0;
+    Message msg {};
 
-    for (unsigned short i = 0; i < payload_size; i++)
+    for (unsigned short i = 0; i < payload_size; ++i)
     {
       msg.payload[i] = i;
     }
 
-    for (; msg.sn < message_count; msg.sn++)
+    for (; msg.sn < message_count; ++msg.sn)
     {
-      socket.send (&msg, sizeof (msg));
+      socket.send (std::addressof (msg), sizeof (msg));
     }
 
     // Keep running in case retransmissions are needed.

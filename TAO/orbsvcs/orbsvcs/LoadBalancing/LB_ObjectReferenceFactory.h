@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  * @file LB_ObjectReferenceFactory.h
  *
  * @author Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
 
 #ifndef TAO_LB_OBJECT_REFERENCE_FACTORY_H
 #define TAO_LB_OBJECT_REFERENCE_FACTORY_H
@@ -31,6 +27,8 @@
 #include "ace/Null_Mutex.h"
 #include "ace/SString.h"
 
+#include <vector>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
@@ -49,7 +47,6 @@ class TAO_LB_ObjectReferenceFactory
   , public virtual OBV_TAO_LB::ObjectReferenceFactory
 {
  public:
-  /// Constructor
   TAO_LB_ObjectReferenceFactory (
     PortableInterceptor::ObjectReferenceFactory * old_orf,
     CORBA::StringSeq const & object_groups,
@@ -66,11 +63,11 @@ class TAO_LB_ObjectReferenceFactory
    * Methods required by the
    * PortableInterceptor::ObjectReferenceFactory interface.
    */
-  //@{
+  /// @{
   CORBA::Object_ptr make_object (
       char const * repository_id,
       PortableInterceptor::ObjectId const & id) override;
-  //@}
+  /// @}
 
   using Table = ACE_Hash_Map_Manager_Ex<
     ACE_CString,
@@ -88,7 +85,6 @@ class TAO_LB_ObjectReferenceFactory
   TAO_LB_ObjectReferenceFactory & operator= (TAO_LB_ObjectReferenceFactory &&) = delete;
 
 protected:
-  /// Destructor
   /**
    * Protected destructor to enforce proper memory management via
    * reference counting.
@@ -159,7 +155,7 @@ private:
    * The values are cached here to avoid querying the LoadManager,
    * which can be costly.
    */
-  CORBA::Boolean * registered_members_ {};
+  std::vector<CORBA::Boolean> registered_members_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

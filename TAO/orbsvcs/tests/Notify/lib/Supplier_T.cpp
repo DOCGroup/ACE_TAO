@@ -3,16 +3,13 @@
 
 #include "Supplier_T.h"
 
-
 template <class Supplier_Traits>
 TAO_Notify_Tests_Supplier_T<Supplier_Traits>::TAO_Notify_Tests_Supplier_T ()
 {
 }
 
 template <class Supplier_Traits>
-TAO_Notify_Tests_Supplier_T<Supplier_Traits>::~TAO_Notify_Tests_Supplier_T ()
-{
-}
+TAO_Notify_Tests_Supplier_T<Supplier_Traits>::~TAO_Notify_Tests_Supplier_T () = default;
 
 template <class Supplier_Traits> typename TAO_Notify_Tests_Supplier_T<Supplier_Traits>::Proxy_Traits_PTR
 TAO_Notify_Tests_Supplier_T<Supplier_Traits>::get_proxy_consumer ()
@@ -28,7 +25,6 @@ TAO_Notify_Tests_Supplier_T<Supplier_Traits>::obtain_proxy (typename TAO_Notify_
   CosNotifyChannelAdmin::ProxyConsumer_var proxy_consumer =
     admin_ptr->obtain_notification_push_consumer (traits.type_
                                                   , this->proxy_id_);
-
 
   ACE_ASSERT (!CORBA::is_nil (proxy_consumer.in ()));
 
@@ -62,11 +58,11 @@ TAO_Notify_Tests_Supplier_T<Supplier_Traits>::offer_change (CosNotification::Eve
 
   for (; i < added.length (); ++i)
     {
-      ACE_DEBUG ((LM_DEBUG, "+(%s,%s), ", added[i].domain_name.in (), added[i].type_name.in ()));
+      ACE_DEBUG ((LM_DEBUG, "+(%C,%C), ", added[i].domain_name.in (), added[i].type_name.in ()));
     }
   for (i = 0; i < removed.length (); ++i)
     {
-      ACE_DEBUG ((LM_DEBUG, "-(%s,%s), ", removed[i].domain_name.in (), removed[i].type_name.in ()));
+      ACE_DEBUG ((LM_DEBUG, "-(%C,%C), ", removed[i].domain_name.in (), removed[i].type_name.in ()));
     }
 
   ACE_DEBUG ((LM_DEBUG, "\n"));
@@ -79,9 +75,8 @@ TAO_Notify_Tests_Supplier_T<Supplier_Traits>::offer_change (CosNotification::Eve
 
 template <class Supplier_Traits> void
 TAO_Notify_Tests_Supplier_T<Supplier_Traits>::subscription_change (
-                                                         const CosNotification::EventTypeSeq & /*added*/,
-                                                         const CosNotification::EventTypeSeq & /*removed*/
-        )
+                                                         CosNotification::EventTypeSeq const & /*added*/,
+                                                         CosNotification::EventTypeSeq const & /*removed*/)
 {
   // No op.
 }

@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    InputSource.h
  *
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef _ACEXML_INPUTSOURCE_H_
 #define _ACEXML_INPUTSOURCE_H_
@@ -19,6 +15,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ACEXML/common/CharStream.h"
+#include <memory>
 
 /**
  * @class ACEXML_InputSource
@@ -51,31 +48,25 @@
 class ACEXML_Export ACEXML_InputSource
 {
 public:
-  /**
-   * Default constructor.
-   */
   ACEXML_InputSource ();
 
-  ACEXML_InputSource (const ACEXML_InputSource &) = delete;
+  ACEXML_InputSource (ACEXML_InputSource const &) = delete;
   ACEXML_InputSource (ACEXML_InputSource &&) = delete;
-  ACEXML_InputSource &operator= (const ACEXML_InputSource &) = delete;
+  ACEXML_InputSource &operator= (ACEXML_InputSource const &) = delete;
   ACEXML_InputSource &operator= (ACEXML_InputSource &&) = delete;
 
   /**
    * Create a new input source with a ACEXML_Char stream.
    * Notice that ACEXML_InputSource assumes the ownership
-   * of <stream>
+   * of @a stream.
    */
   explicit ACEXML_InputSource (ACEXML_CharStream *stream);
 
   /**
    * Create a new input source with a system identifier.
    */
-  ACEXML_InputSource (const ACEXML_Char *systemId);
+  explicit ACEXML_InputSource (ACEXML_Char const *systemId);
 
-  /**
-   * Default destructor.
-   */
   virtual ~ACEXML_InputSource ();
 
   /**
@@ -86,47 +77,46 @@ public:
   /**
    * Get the character encoding for a byte stream or URI.
    */
-  virtual const ACEXML_Char *getEncoding () const;
+  virtual ACEXML_Char const *getEncoding () const;
 
   /**
    * Get the public identifier for this input source.
    */
-  virtual const ACEXML_Char *getPublicId () const;
+  virtual ACEXML_Char const *getPublicId () const;
 
   /**
    * Get the system identifier for this input source.
    */
-  virtual const ACEXML_Char *getSystemId () const;
+  virtual ACEXML_Char const *getSystemId () const;
 
   /**
    * Set the ACEXML_Char stream for this input source.
    * Notice that ACEXML_InputSource assumes the ownership
-   * of <stream>
+   * of @a charStream.
    */
   virtual void setCharStream (ACEXML_CharStream *charStream);
 
   /**
    * Set the character encoding, if known.
    */
-  virtual void setEncoding (const ACEXML_Char *encoding);
+  virtual void setEncoding (ACEXML_Char const *encoding);
 
   /**
    * Set the public identifier for this input source.
    */
-  virtual void setPublicId (const ACEXML_Char *publicId);
+  virtual void setPublicId (ACEXML_Char const *publicId);
 
   /**
    * Set the public identifier for this input source.
    */
-  virtual void setSystemId (const ACEXML_Char *systemId);
+  virtual void setSystemId (ACEXML_Char const *systemId);
 
 private:
-  ACEXML_CharStream *charStream_;
-  ACEXML_Char *encoding_;
-  ACEXML_Char *publicId_;
-  ACEXML_Char *systemId_;
+  std::unique_ptr<ACEXML_CharStream> charStream_ {};
+  std::unique_ptr<ACEXML_Char[]> encoding_ {};
+  std::unique_ptr<ACEXML_Char[]> publicId_ {};
+  std::unique_ptr<ACEXML_Char[]> systemId_ {};
 };
-
 
 #include /**/ "ace/post.h"
 

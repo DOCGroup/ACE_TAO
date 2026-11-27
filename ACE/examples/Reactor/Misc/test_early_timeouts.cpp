@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    test_early_timeouts.cpp
  *
@@ -9,8 +7,6 @@
  *
  *  @author Irfan Pyarali <irfan@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #include "ace/Handle_Set.h"
 #include "ace/Pipe.h"
@@ -20,15 +16,16 @@
 #include "ace/OS_NS_sys_select.h"
 #include "ace/Truncate.h"
 
+#include <memory>
 
 int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {
   // Mumber of seconds this test should run
-  int runtime_in_seconds = 10;
+  constexpr int runtime_in_seconds = 10;
 
   // Iterations
-  int iterations = runtime_in_seconds * 10;
+  constexpr int iterations = runtime_in_seconds * 10;
 
   // 100 millisecond timeout
   ACE_Time_Value timeout (0, 100000);
@@ -40,7 +37,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   ACE_Time_Value ending_time_of_day;
 
   // Number of times the timer expired early
-  int no_of_early_timers = 0;
+  int no_of_early_timers {};
 
   // Maximum early timeout
   ACE_Time_Value maximum_early_timeout;
@@ -58,34 +55,52 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   int result = dummy_pipe.open ();
   ACE_ASSERT (result == 0);
   ACE_UNUSED_ARG (result); // To avoid compile warning with ACE_NDEBUG.
-
-  for (int i = 1; i <= iterations; i++)
+  ACE_HANDLE const read_handle = dummy_pipe.read_handle ();
+#if !defined (ACE_WIN32)
+  if (read_handle < 0 || read_handle >= ACE_FD_SETSIZE)
     {
-      // Add dummy handle to dummy set
-      dummy_handle_set.set_bit (dummy_pipe.read_handle ());
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("pipe handle exceeds FD_SETSIZE\n")),
+                        1);
+    }
+#endif /* ! ACE_WIN32 */
+  dummy_handle_set.set_bit (read_handle);
 
+  for (int i = 1; i <= iterations; ++i)
+    {
       // Note the time before select
       starting_time_of_day = ACE_OS::gettimeofday ();
 
       // Wait for timeout
-      result = ACE_OS::select (ACE_Utils::truncate_cast<int> ((intptr_t)dummy_pipe.read_handle ()), dummy_handle_set, nullptr, nullptr, &timeout);
+#if defined (ACE_WIN32)
+      int const width = 0;
+#else
+      int const width = ACE_Utils::truncate_cast<int> (
+        static_cast<intptr_t> (read_handle));
+#endif
+      result = ACE_OS::select (
+        width,
+        dummy_handle_set,
+        nullptr,
+        nullptr,
+        std::addressof (timeout));
       ACE_ASSERT (result == 0);
 
       // Note the time after select
       ending_time_of_day = ACE_OS::gettimeofday ();
 
       // Expected ending time
-      ACE_Time_Value expected_ending_time_of_day =
+      ACE_Time_Value const expected_ending_time_of_day =
         starting_time_of_day + timeout;
 
       // If the timer expired early
       if (ending_time_of_day < expected_ending_time_of_day)
         {
           // How early
-          ACE_Time_Value early_timeout = expected_ending_time_of_day - ending_time_of_day;
+          ACE_Time_Value const early_timeout = expected_ending_time_of_day - ending_time_of_day;
 
           // Increment number of early timers
-          no_of_early_timers++;
+          ++no_of_early_timers;
 
           // Check max early timeout
           if (early_timeout > maximum_early_timeout)
@@ -98,12 +113,12 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   //FUZZ: disable check_for_lack_ACE_OS
   ACE_DEBUG ((LM_DEBUG,
               "There were %d early timers out of %d calls to select() (%f%%)\n"
-              "The max early timeout was: %dsec %dusec\n",
+              "The max early timeout was: %:sec %qusec\n",
               no_of_early_timers,
               iterations,
-              float (no_of_early_timers) / iterations * 100,
+              static_cast<float> (no_of_early_timers) / iterations * 100,
               maximum_early_timeout.sec (),
-              maximum_early_timeout.usec ()));
+              static_cast<ACE_INT64> (maximum_early_timeout.usec ())));
   //FUZZ: enable check_for_lack_ACE_OS
 
   return 0;

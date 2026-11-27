@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Message_Queue_Vx.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef ACE_MESSAGE_QUEUE_VX_H
 #define ACE_MESSAGE_QUEUE_VX_H
@@ -41,37 +37,33 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * it is suitable for use in interrupt service routines.
  * @note *Many* ACE_Message_Queue features are not supported with
  * this specialization, including:
- * * The two size arguments to the constructor and <open> are
- * interpreted differently.  The first is interpreted as the
- * maximum number of bytes in a message.  The second is
- * interpreted as the maximum number of messages that can be
- * queued.
- * * <dequeue_head> *requires* that the ACE_Message_Block
- * pointer argument point to an ACE_Message_Block that was
- * allocated by the caller.  It must be big enough to support
- * the received message, without using continuation. The
- * pointer argument is not modified.
+ * * The two size arguments to the constructor and @c open are
+ *   interpreted differently. The first is the maximum number of bytes
+ *   in a message; the second is the maximum number of queued messages.
+ * * @c dequeue_head *requires* that the ACE_Message_Block pointer
+ *   argument point to an ACE_Message_Block allocated by the caller.
+ *   It must be big enough to support the received message without
+ *   using continuation. The pointer argument is not modified.
  * * Message priority.  MSG_Q_FIFO is hard-coded.
  * * enqueue method timeouts.
- * * <peek_dequeue_head>.
- * * <ACE_Message_Queue_Iterators>.
+ * * @c peek_dequeue_head.
+ * * @c ACE_Message_Queue_Iterators.
  * * The ability to change low and high water marks after creation.
  * * Message_Block chains.  The continuation field of ACE_Message_Block
- * *   is ignored; only the first block of a fragment chain is
- * *   recognized.
+ *   is ignored; only the first block of a fragment chain is
+ *   recognized.
  */
 class ACE_Export ACE_Message_Queue_Vx: public ACE_Message_Queue<ACE_NULL_SYNCH>
 {
 public:
   ACE_Message_Queue_Vx (size_t max_messages,
                         size_t max_message_length,
-                        ACE_Notification_Strategy * = 0);
+                        ACE_Notification_Strategy * = nullptr);
 
-  // Create a message queue with all the defaults.
   /// Create a message queue with all the defaults.
   virtual int open (size_t max_messages,
                     size_t max_message_length,
-                    ACE_Notification_Strategy * = 0);
+                    ACE_Notification_Strategy * = nullptr);
 
   /// Close down the message queue and release all resources.
   virtual int close ();
@@ -79,7 +71,8 @@ public:
   /// Close down the message queue and release all resources.
   virtual ~ACE_Message_Queue_Vx ();
 
-  // = Queue statistic methods.
+  /// @name Queue statistics
+  /// @{
   /**
    * Number of total bytes on the queue, i.e., sum of the message
    * block sizes.
@@ -96,9 +89,10 @@ public:
    * Number of total messages on the queue.
    */
   virtual size_t message_count ();
+  /// @}
 
-  // = Manual changes to these stats (used when queued message blocks
-  // change size or lengths).
+  /// @name Manual queue-statistic updates
+  /// @{
   /**
    * New value of the number of total bytes on the queue, i.e., sum of
    * the message block sizes.
@@ -110,8 +104,10 @@ public:
    * of the message block lengths.
    */
   virtual void message_length (size_t new_length);
+  /// @}
 
-  // = Flow control routines
+  /// @name Flow control
+  /// @{
 
   /// Get high watermark.
   virtual size_t high_water_mark ();
@@ -124,8 +120,7 @@ public:
 
   /// Set low watermark.
   virtual void low_water_mark (size_t lwm);
-
-  // = Activation control methods.
+  /// @}
 
   /// Dump the state of an object.
   void dump () const;
@@ -140,40 +135,42 @@ protected:
   /// Enqueue an ACE_Message_Block * in accordance with its deadline time.
   virtual int enqueue_deadline_i (ACE_Message_Block *new_item);
 
-  /// Enqueue an <ACE_Message_Block *> at the end of the queue.
+  /// Enqueue an @c ACE_Message_Block pointer at the end of the queue.
   virtual int enqueue_tail_i (ACE_Message_Block *new_item);
 
-  /// Enqueue an <ACE_Message_Block *> at the head of the queue.
+  /// Enqueue an @c ACE_Message_Block pointer at the head of the queue.
   virtual int enqueue_head_i (ACE_Message_Block *new_item);
 
-  /// Dequeue and return the <ACE_Message_Block *> at the head of the
+  /// Dequeue and return the @c ACE_Message_Block pointer at the head of the
   /// queue.
   virtual int dequeue_head_i (ACE_Message_Block *&first_item);
 
-  /// Dequeue and return the <ACE_Message_Block *> with the lowest
+  /// Dequeue and return the @c ACE_Message_Block pointer with the lowest
   /// priority.
   virtual int dequeue_prio_i (ACE_Message_Block *&dequeued);
 
-  /// Dequeue and return the <ACE_Message_Block *> at the tail of the
+  /// Dequeue and return the @c ACE_Message_Block pointer at the tail of the
   /// queue.
   virtual int dequeue_tail_i (ACE_Message_Block *&dequeued);
 
-  /// Dequeue and return the <ACE_Message_Block *> that has the lowest
+  /// Dequeue and return the @c ACE_Message_Block pointer that has the lowest
   /// deadline time.
   virtual int dequeue_deadline_i (ACE_Message_Block *&dequeued);
 
-  // = Check the boundary conditions (assumes locks are held).
+  /// @name Queue boundary conditions
+  /// @{
+
   /// True if queue is full, else false.
   virtual bool is_full_i ();
 
   /// True if queue is empty, else false.
   virtual bool is_empty_i ();
+  /// @}
 
-  // = Implementation of public <activate>/<deactivate> methods above.
+  /// @name Queue synchronization helpers
+  /// These methods assume the queue locks are held.
+  /// @{
 
-  // These methods assume locks are held.
-
-  // = Helper methods to factor out common #ifdef code.
   /// Wait for the queue to become non-full.
   virtual int wait_not_full_cond (ACE_Time_Value *tv);
 
@@ -188,10 +185,11 @@ protected:
 
   /// Access the underlying msgQ.
   MSG_Q_ID msgq ();
+  /// @}
 
 private:
-  ACE_Message_Queue_Vx (const ACE_Message_Queue_Vx &) = delete;
-  void operator= (const ACE_Message_Queue_Vx &) = delete;
+  ACE_Message_Queue_Vx (ACE_Message_Queue_Vx const &) = delete;
+  void operator= (ACE_Message_Queue_Vx const &) = delete;
   ACE_Message_Queue_Vx (ACE_Message_Queue_Vx &&) = delete;
   void operator= (ACE_Message_Queue_Vx &&) = delete;
 

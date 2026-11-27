@@ -1,5 +1,8 @@
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
 
+#ifndef TMCAST_FAULT_DETECTOR_HPP
+#define TMCAST_FAULT_DETECTOR_HPP
+
 #include "Protocol.hpp"
 
 namespace ACE_TMCast
@@ -7,10 +10,7 @@ namespace ACE_TMCast
   class FaultDetector
   {
   public:
-    FaultDetector ()
-        : alone_ (true), silence_period_ (-1)
-    {
-    }
+    FaultDetector () = default;
 
   public:
     class Failed {};
@@ -20,7 +20,9 @@ namespace ACE_TMCast
     insync ()
     {
       if (alone_)
-        alone_ = false;
+        {
+          alone_ = false;
+        }
 
       silence_period_ = 0;
     }
@@ -37,7 +39,10 @@ namespace ACE_TMCast
     }
 
   private:
-    bool alone_; // true if we haven't heard from any members yet.
-    short silence_period_;
+    /// True until a message has been received from another member.
+    bool alone_ {true};
+    short silence_period_ {-1};
   };
 }
+
+#endif // TMCAST_FAULT_DETECTOR_HPP

@@ -1,6 +1,3 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
  *  @file    server.h
  *
@@ -8,8 +5,6 @@
  *
  *  @author Alexander Babu Arulanthu <alex.cs.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef COSPROPERTYSERVICE_SERVER_H
 #define COSPROPERTYSERVICE_SERVER_H

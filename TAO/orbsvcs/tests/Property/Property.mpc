@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*server): namingexe, property_serv, avoids_corba_e_micro {
   exename = server
   Source_Files {

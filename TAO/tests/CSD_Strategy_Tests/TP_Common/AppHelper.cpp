@@ -3,13 +3,13 @@
 void
 AppHelper::ref_to_file(CORBA::ORB_ptr    orb,
                        CORBA::Object_ptr obj,
-                       const ACE_TCHAR*  filename)
+                       ACE_TCHAR const *filename)
 {
   CORBA::String_var ior = orb->object_to_string(obj);
 
   FILE* ior_file = ACE_OS::fopen(filename, ACE_TEXT("w"));
 
-  if (ior_file == 0)
+  if (ior_file == nullptr)
     {
       ACE_ERROR((LM_ERROR,
                  "(%P|%t) Cannot open output file [%s] to write IOR.\n",
@@ -21,9 +21,8 @@ AppHelper::ref_to_file(CORBA::ORB_ptr    orb,
   ACE_OS::fclose(ior_file);
 }
 
-
 PortableServer::POA_ptr
-AppHelper::create_poa(const char*                    name,
+AppHelper::create_poa(char const *name,
                       PortableServer::POA_ptr        root_poa,
                       PortableServer::POAManager_ptr mgr,
                       CORBA::PolicyList&             policies)
@@ -41,7 +40,6 @@ AppHelper::create_poa(const char*                    name,
 
   return child_poa._retn();
 }
-
 
 CORBA::Object_ptr
 AppHelper::activate_servant(PortableServer::POA_ptr poa,
@@ -64,7 +62,6 @@ AppHelper::activate_servant(PortableServer::POA_ptr poa,
   return obj._retn();
 }
 
-
 bool
 AppHelper::validate_connection (CORBA::Object_ptr obj)
 {
@@ -80,7 +77,7 @@ AppHelper::validate_connection (CORBA::Object_ptr obj)
 #endif /* TAO_HAS_MESSAGING == 1 */
           return true;
         }
-      catch (const CORBA::Exception&)
+      catch (CORBA::Exception const &)
         {
         }
     }

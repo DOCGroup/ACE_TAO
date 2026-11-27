@@ -25,11 +25,9 @@ ACE_Locked_Free_List<T, ACE_LOCK>::ACE_Locked_Free_List (int mode,
                                                      size_t hwm,
                                                      size_t inc)
   : mode_ (mode),
-    free_list_ (0),
     lwm_ (lwm),
     hwm_ (hwm),
-    inc_ (inc),
-    size_ (0)
+    inc_ (inc)
 {
   this->alloc (prealloc);
 }
@@ -40,12 +38,14 @@ template <class T, class ACE_LOCK>
 ACE_Locked_Free_List<T, ACE_LOCK>::~ACE_Locked_Free_List ()
 {
   if (this->mode_ != ACE_PURE_FREE_LIST)
-    while (this->free_list_ != 0)
-      {
-        T *temp = this->free_list_;
-        this->free_list_ = this->free_list_->get_next ();
-        delete temp;
-      }
+    {
+      while (this->free_list_ != nullptr)
+        {
+          T *temp = this->free_list_;
+          this->free_list_ = this->free_list_->get_next ();
+          delete temp;
+        }
+    }
 }
 
 // Inserts an element onto the free list (if we are allowed to manage
@@ -57,16 +57,33 @@ ACE_Locked_Free_List<T, ACE_LOCK>::add (T *element)
 {
   ACE_MT (ACE_GUARD (ACE_LOCK, ace_mon, this->mutex_));
 
-  // Check to see that we not at the high water mark.
-  if (this->mode_ == ACE_PURE_FREE_LIST
-      || this->size_ < this->hwm_)
+  // A pure free list never owns its elements, so it must not delete them
+  // when the high water mark is reached.
+  if (this->mode_ == ACE_PURE_FREE_LIST)
     {
       element->set_next (this->free_list_);
       this->free_list_ = element;
-      this->size_++;
+      ++this->size_;
+      return;
+    }
+
+  // Check to see that we are not at the high water mark.
+  if (this->size_ < this->hwm_)
+    {
+      element->set_next (this->free_list_);
+      this->free_list_ = element;
+      ++this->size_;
     }
   else
-    delete element;
+    {
+      ACE_Locked_Free_List<T, ACE_LOCK>::delete_element (element);
+    }
+}
+
+template <class T, class ACE_LOCK> void
+ACE_Locked_Free_List<T, ACE_LOCK>::delete_element (T *element)
+{
+  delete element;
 }
 
 // Takes a element off the freelist and returns it.  It creates <inc>
@@ -76,24 +93,25 @@ ACE_Locked_Free_List<T, ACE_LOCK>::add (T *element)
 template <class T, class ACE_LOCK> T *
 ACE_Locked_Free_List<T, ACE_LOCK>::remove ()
 {
-  ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, 0));
+  ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, nullptr));
 
   // If we are at the low water mark, add some nodes
   if (this->mode_ != ACE_PURE_FREE_LIST && this->size_ <= this->lwm_)
-    this->alloc (this->inc_);
+    {
+      this->alloc (this->inc_);
+    }
 
   // Remove a node
   T *temp = this->free_list_;
 
-  if (temp != 0)
+  if (temp != nullptr)
     {
       this->free_list_ = this->free_list_->get_next ();
-      this->size_--;
+      --this->size_;
     }
 
   return temp;
 }
-
 
 // Returns the current size of the free list
 
@@ -130,13 +148,13 @@ ACE_Locked_Free_List<T, ACE_LOCK>::resize (size_t newsize)
 template <class T, class ACE_LOCK> void
 ACE_Locked_Free_List<T, ACE_LOCK>::alloc (size_t n)
 {
-  for (; n > 0; n--)
+  for (; n > 0; --n)
     {
-      T *temp = nullptr;
+      T *temp {};
       ACE_NEW (temp, T);
       temp->set_next (this->free_list_);
       this->free_list_ = temp;
-      this->size_++;
+      ++this->size_;
     }
 }
 
@@ -145,13 +163,13 @@ ACE_Locked_Free_List<T, ACE_LOCK>::alloc (size_t n)
 template <class T, class ACE_LOCK> void
 ACE_Locked_Free_List<T, ACE_LOCK>::dealloc (size_t n)
 {
-  for (; this->free_list_ != 0 && n > 0;
-       n--)
+  for (; this->free_list_ != nullptr && n > 0;
+       --n)
     {
       T *temp = this->free_list_;
       this->free_list_ = this->free_list_->get_next ();
       delete temp;
-      this->size_--;
+      --this->size_;
     }
 }
 

@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   OS_NS_wctype.h
  *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-//=============================================================================
 
 #ifndef ACE_OS_NS_WCTYPE_H
 # define ACE_OS_NS_WCTYPE_H
@@ -38,19 +34,19 @@ namespace ACE_OS {
 
   /** @name Functions from <cctype>
    *
-   *  Included are the functions defined in <cctype> and their <cwctype>
+   *  Included are the functions defined in @c cctype and their @c cwctype
    *  equivalents.
    *
    *  Since they are often implemented as macros, we don't use the same name
    *  here.  Instead, we change by prepending "ace_".
    */
-  //@{
+  /// @{
 #if defined (ACE_HAS_WCHAR)
   /// Tests @a c for the property specified by the @a desc argument
   ACE_NAMESPACE_INLINE_FUNCTION
   int ace_iswctype(wint_t c, wctype_t desc);
 #endif /* ACE_HAS_WCHAR */
-  //@}
+  /// @}
 
 } /* namespace ACE_OS */
 

@@ -23,7 +23,7 @@ namespace CORBA
      * These are for the corresponding types defined in IDL4, but they are not
      * standard in CORBA.
      */
-    //@{
+    /// @{
     using Int8 = ACE_CDR::Int8;
     using Int8_out = Int8 &;
     struct Int8_tag {};
@@ -31,7 +31,7 @@ namespace CORBA
     using UInt8 = ACE_CDR::UInt8;
     using UInt8_out = UInt8 &;
     struct UInt8_tag {};
-    //@}
+    /// @}
   }
 }
 

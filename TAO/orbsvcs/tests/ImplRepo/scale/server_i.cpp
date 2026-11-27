@@ -7,6 +7,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/Read_Buffer.h"
 #include "ace/streams.h"
+#include <string>
 
 class test_i
   : public virtual POA_test
@@ -19,9 +20,9 @@ public:
     , orb_(CORBA::ORB::_duplicate(orb))
   {
   }
-  virtual ~test_i () {
+  ~test_i () override {
   }
-  virtual CORBA::Long get ()
+  CORBA::Long get () override
   {
     ++n_;
     CORBA::Object_var obj = orb_->resolve_initial_references("POACurrent");
@@ -30,7 +31,7 @@ public:
     PortableServer::POA_var poa = cur->get_POA();
     CORBA::String_var poaname = poa->the_name();
 
-    ACE_DEBUG((LM_DEBUG, "%s: get() %d\n", poaname.in(), n_));
+    ACE_DEBUG((LM_DEBUG, "%C: get() %d\n", poaname.in(), n_));
     return n_;
   }
 };
@@ -44,9 +45,7 @@ Server_i::Server_i ()
 {
 }
 
-Server_i::~Server_i()
-{
-}
+Server_i::~Server_i() = default;
 
 int
 Server_i::parse_args (int argc, ACE_TCHAR* argv[])
@@ -70,7 +69,7 @@ Server_i::parse_args (int argc, ACE_TCHAR* argv[])
       ACE_ERROR_RETURN ((LM_ERROR,
         "usage:  %s"
         " [-c] <count=1> ImR-ified objects."
-        " [-p] <prefix=%s> To all ImR-ified object names."
+        " [-p] <prefix=%C> To all ImR-ified object names."
         "\n",
         argv[0],
         DEFAULT_SERVER_NAME),1);
@@ -84,8 +83,7 @@ namespace
 {
   ACE_CString toStr(int n)
   {
-    char buf[20];
-    return ACE_OS::itoa(n, buf, 10);
+    return ACE_CString (std::to_string (n).c_str ());
   }
 }
 
@@ -98,7 +96,9 @@ Server_i::init (int argc, ACE_TCHAR** argv)
 
     int retval = this->parse_args (argc, argv);
     if (retval != 0)
+    {
       return retval;
+    }
 
     CORBA::Object_var obj =
       this->orb_->resolve_initial_references ("RootPOA");
@@ -152,12 +152,11 @@ Server_i::init (int argc, ACE_TCHAR** argv)
     policies[0]->destroy();
     policies[1]->destroy();
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
   {
     ex._tao_print_exception ("Server_i::init");
     throw;
   }
-
 
   return 0;
 }
@@ -181,16 +180,16 @@ Server_i::run ()
     }
 
     ACE_DEBUG ((LM_DEBUG,
-      "\n  Started Server %s with %d imr-ified objects.\n\n",
+      "\n  Started Server %C with %d imr-ified objects.\n\n",
       this->server_name_.c_str(),
       this->count_));
 
     this->orb_->run ();
 
-    this->root_poa_->destroy(1, 1);
+    this->root_poa_->destroy(true, true);
     this->orb_->destroy();
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
   {
     ex._tao_print_exception ("Server_i::run");
     throw;

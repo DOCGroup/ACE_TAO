@@ -3,7 +3,7 @@
 // The client program for the application.
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   Grid_Client_i client;
 
@@ -11,9 +11,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
               "\nGrid client\n\n"));
 
   if (client.run ("Grid", argc, argv) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
-
-

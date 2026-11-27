@@ -1,13 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file     default_client.h
  *
  *  @author  Chris Cleeland
  */
-//=============================================================================
-
 
 #ifndef TAO_DEFAULT_CLIENT_H
 #define TAO_DEFAULT_CLIENT_H
@@ -36,21 +31,16 @@ class TAO_Export TAO_Default_Client_Strategy_Factory
   : public TAO_Client_Strategy_Factory
 {
 public:
-  /// Constructor.
   TAO_Default_Client_Strategy_Factory ();
 
-  /// Destructor.
   ~TAO_Default_Client_Strategy_Factory () override;
 
-  // = Service Configurator hooks.
   /// Dynamic linking hook
   int init (int argc, ACE_TCHAR *argv[]) override;
 
   /// Parse svc.conf arguments
   int parse_args (int argc, ACE_TCHAR* argv[]);
 
-  // = Check Client_Strategy_Factory.h for the documentation of the
-  //   following methods.
   TAO_Transport_Mux_Strategy *create_transport_mux_strategy (TAO_Transport *transport) override;
   ACE_Lock *create_transport_mux_strategy_lock () override;
   int reply_dispatcher_table_size () const override;
@@ -63,8 +53,8 @@ public:
   Messaging::SyncScope sync_scope () const override;
 
 protected:
-  void report_option_value_error (const ACE_TCHAR* option_name,
-                                  const ACE_TCHAR* option_value);
+  void report_option_value_error (ACE_TCHAR const *option_name,
+                                  ACE_TCHAR const *option_value);
 
 private:
   enum Lock_Type

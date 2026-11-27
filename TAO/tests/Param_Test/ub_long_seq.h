@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    ub_long_seq.h
  *
@@ -7,32 +5,26 @@
  *
  *  @author   Aniruddha Gokhale
  */
-//=============================================================================
-
 
 #ifndef PARAM_TEST_UNBOUNDED_LONG_SEQUENCE_H
 #define PARAM_TEST_UNBOUNDED_LONG_SEQUENCE_H
 
 #include "param_testC.h"
 
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-//           test sequences of longs
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+/// test sequences of longs
 
 class Test_Long_Sequence
 {
 public:
-  /// ctor
   Test_Long_Sequence ();
 
-  /// dtor
-  ~Test_Long_Sequence ();
+  ~Test_Long_Sequence () = default;
 
   /// run the SII test
   int run_sii_test (Param_Test_ptr objref);
 
   /// return operation name
-  const char *opname () const;
+  char const *opname () const;
 
   /// set values for parameters
   int init_parameters (Param_Test_ptr objref);
@@ -54,7 +46,7 @@ public:
 
 private:
   /// operation name
-  char *opname_;
+  char const *opname_;
 
   /// in parameter
   CORBA::LongSeq_var in_;

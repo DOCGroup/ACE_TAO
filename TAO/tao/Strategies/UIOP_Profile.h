@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file     UIOP_Profile.h
  *
@@ -9,8 +6,6 @@
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  *  @author Fred Kuhns <fredk@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_UIOP_PROFILE_H
 #define TAO_UIOP_PROFILE_H
@@ -59,17 +54,15 @@ public:
                     TAO_GIOP_Message_Version const &version,
                     TAO_ORB_Core *orb_core);
 
-  /// Profile constructor
   TAO_UIOP_Profile (char const *rendezvous_point,
                     TAO::ObjectKey const &object_key,
                     ACE_UNIX_Addr const &addr,
                     TAO_GIOP_Message_Version const &version,
                     TAO_ORB_Core *orb_core);
 
-  /// Profile constructor, default.
   explicit TAO_UIOP_Profile (TAO_ORB_Core *orb_core);
 
-  /// Destructor is to be called only through <_decr_refcnt>.
+  /// Destructor is to be called only through @c _decr_refcnt.
   ~TAO_UIOP_Profile ();
 
   /// Template methods. Please see Profile.h for documentation.
@@ -95,6 +88,7 @@ protected:
   CORBA::Boolean do_is_equivalent (TAO_Profile const *other_profile) override;
 
 private:
+  TAO_UIOP_Profile () = delete;
   TAO_UIOP_Profile (TAO_UIOP_Profile const &) = delete;
   TAO_UIOP_Profile &operator= (TAO_UIOP_Profile const &) = delete;
   TAO_UIOP_Profile (TAO_UIOP_Profile &&) = delete;
@@ -112,12 +106,12 @@ private:
    * feature.
    * Addressing info of the default endpoint, i.e., head of the list,
    * is transmitted using standard UIOP ProfileBody components.  See
-   * <encode_endpoints> method documentation above for how the rest of
+   * @c encode_endpoints method documentation above for how the rest of
    * the endpoint list is transmitted.
    */
   TAO_UIOP_Endpoint endpoint_;
 
-  /// Number of endpoints in the list headed by <endpoint_>.
+  /// Number of endpoints in the list headed by @c endpoint_.
   CORBA::ULong count_ {1};
 };
 

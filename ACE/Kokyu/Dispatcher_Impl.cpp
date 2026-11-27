@@ -6,9 +6,6 @@
 
 namespace Kokyu
 {
-//virtual - so don't inline
-Dispatcher_Impl::~Dispatcher_Impl()
-{
-}
+Dispatcher_Impl::~Dispatcher_Impl () = default;
 
 }

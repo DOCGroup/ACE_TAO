@@ -1,12 +1,8 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
  *  @file    Active_Map_Manager_T.h
  *
  *  @author Irfan Pyarali
  */
-//=============================================================================
 
 #ifndef ACE_ACTIVE_MAP_MANAGER_T_H
 #define ACE_ACTIVE_MAP_MANAGER_T_H
@@ -20,6 +16,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Null_Mutex.h"
+
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -36,7 +34,13 @@ template <class T>
 class ACE_Active_Map_Manager : public ACE_Map_Manager<ACE_Active_Map_Manager_Key, T, ACE_Null_Mutex>
 {
 public:
-  // = Traits.
+  ACE_Active_Map_Manager (ACE_Active_Map_Manager const &) = delete;
+  ACE_Active_Map_Manager (ACE_Active_Map_Manager &&) = delete;
+  ACE_Active_Map_Manager &operator= (ACE_Active_Map_Manager const &) = delete;
+  ACE_Active_Map_Manager &operator= (ACE_Active_Map_Manager &&) = delete;
+
+  /// @name Traits
+  /// @{
   using key_type = ACE_Active_Map_Manager_Key;
   using mapped_type = T;
 
@@ -47,6 +51,7 @@ public:
   using entry = ENTRY;
   using iterator = ITERATOR;
   using reverse_iterator = REVERSE_ITERATOR;
+  /// @}
 
   /// Initialize a Active_Map_Manager with the ACE_DEFAULT_MAP_SIZE.
   ACE_Active_Map_Manager (ACE_Allocator *alloc = nullptr);
@@ -69,19 +74,21 @@ public:
 
   /// Add @a value to the map, and the corresponding key produced by the
   /// Active_Map_Manager is returned through @a key.
-  int bind (const T &value,
+  int bind (T const &value,
             ACE_Active_Map_Manager_Key &key);
 
   /// Add @a value to the map.  The user does not care about the
   /// corresponding key produced by the Active_Map_Manager.
-  int bind (const T &value);
+  int bind (T const &value);
 
   /**
    * Reserves a slot in the internal structure and returns the key and
    * a pointer to the value.  User should place their @a value into
    * @a internal_value.  This method is useful in reducing the number
-   * of copies required in some cases.  Note that @a internal_value is
-   * only a temporary pointer and will change when the map resizes.
+   * of copies required in some cases.
+   *
+   * @note @a internal_value is only a temporary pointer and will change
+   * when the map resizes.
    * Therefore, the user should use the pointer immediately and not
    * hold on to it.
    */
@@ -90,16 +97,16 @@ public:
 
   /// Reassociate @a key with @a value. The function fails if @a key is
   /// not in the map.
-  int rebind (const ACE_Active_Map_Manager_Key &key,
-              const T &value);
+  int rebind (ACE_Active_Map_Manager_Key const &key,
+              T const &value);
 
   /**
    * Reassociate @a key with @a value, storing the old value into the
    * "out" parameter @a old_value.  The function fails if @a key is not
    * in the map.
    */
-  int rebind (const ACE_Active_Map_Manager_Key &key,
-              const T &value,
+  int rebind (ACE_Active_Map_Manager_Key const &key,
+              T const &value,
               T &old_value);
 
   /**
@@ -107,48 +114,46 @@ public:
    * into the "out" parameter @a old_key and @a old_value.  The function
    * fails if @a key is not in the map.
    */
-  int rebind (const ACE_Active_Map_Manager_Key &key,
-              const T &value,
+  int rebind (ACE_Active_Map_Manager_Key const &key,
+              T const &value,
               ACE_Active_Map_Manager_Key &old_key,
               T &old_value);
 
   /// Locate @a value associated with @a key.
-  int find (const ACE_Active_Map_Manager_Key &key,
+  int find (ACE_Active_Map_Manager_Key const &key,
             T &value) const;
 
   /// Is @a key in the map?
-  int find (const ACE_Active_Map_Manager_Key &key) const;
+  int find (ACE_Active_Map_Manager_Key const &key) const;
 
   /**
    * Locate @a value associated with @a key.  The value is returned via
-   * @a internal_value and hence a copy is saved.  Note that
-   * @a internal_value is only a temporary pointer and will change when
+   * @a internal_value and hence a copy is saved.
+   *
+   * @note @a internal_value is only a temporary pointer and will change when
    * the map resizes.  Therefore, the user should use the pointer
    * immediately and not hold on to it.
    */
-  int find (const ACE_Active_Map_Manager_Key &key,
+  int find (ACE_Active_Map_Manager_Key const &key,
             T *&internal_value) const;
 
-  // Creates a key.  User should place their @a value into
-  // <*internal_value>.  This method is useful in reducing the number
-  // of copies required in some cases.
-
   /// Remove @a key from the map.
-  int unbind (const ACE_Active_Map_Manager_Key &key);
+  int unbind (ACE_Active_Map_Manager_Key const &key);
 
   /// Remove @a key from the map, and return the @a value associated with
   /// @a key.
-  int unbind (const ACE_Active_Map_Manager_Key &key,
+  int unbind (ACE_Active_Map_Manager_Key const &key,
               T &value);
 
   /**
    * Locate @a value associated with @a key.  The value is returned via
-   * @a internal_value and hence a copy is saved.  Note that
-   * @a internal_value is only a temporary pointer and will change when
+   * @a internal_value and hence a copy is saved.
+   *
+   * @note @a internal_value is only a temporary pointer and will change when
    * the map resizes or when this slot is reused.  Therefore, the user
    * should use the pointer immediately and not hold on to it.
    */
-  int unbind (const ACE_Active_Map_Manager_Key &key,
+  int unbind (ACE_Active_Map_Manager_Key const &key,
               T *&internal_value);
 
   /// Return the current size of the map.
@@ -158,12 +163,13 @@ public:
   size_t total_size () const;
 
   /// Returns a key that cannot be found in the map.
-  static const ACE_Active_Map_Manager_Key npos ();
+  static ACE_Active_Map_Manager_Key const npos ();
 
   /// Dump the state of an object.
   void dump () const;
 
-  // = STL styled iterator factory functions.
+  /// @name STL styled iterator factory functions
+  /// @{
 
   /// Return forward iterator.
   ACE_Map_Iterator<ACE_Active_Map_Manager_Key, T, ACE_Null_Mutex> begin ();
@@ -172,6 +178,7 @@ public:
   /// Return reverse iterator.
   ACE_Map_Reverse_Iterator<ACE_Active_Map_Manager_Key, T, ACE_Null_Mutex> rbegin ();
   ACE_Map_Reverse_Iterator<ACE_Active_Map_Manager_Key, T, ACE_Null_Mutex> rend ();
+  /// @}
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -179,11 +186,6 @@ public:
 protected:
   /// Private base class
   using ACE_AMM_BASE = ACE_Map_Manager<ACE_Active_Map_Manager_Key, T, ACE_Null_Mutex>;
-
-private:
-  // = Disallow these operations.
-  void operator= (const ACE_Active_Map_Manager<T> &) = delete;
-  ACE_Active_Map_Manager (const ACE_Active_Map_Manager<T> &) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

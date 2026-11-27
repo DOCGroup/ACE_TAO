@@ -23,7 +23,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG,
                   "Reading the IOR!\n"));
 
-      const ACE_TCHAR *filename = ACE_TEXT("file://ior.txt");
+      ACE_TCHAR const *filename = ACE_TEXT("file://ior.txt");
 
       orb_obj =
         the_orb->string_to_object (filename);
@@ -43,7 +43,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // Free up the string.
       CORBA::string_free (response);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return 1;

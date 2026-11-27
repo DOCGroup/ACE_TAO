@@ -1,17 +1,16 @@
-//=============================================================================
 /**
  *  @file    Process_Mutex_Test.cpp
  *
- *  Tests an <ACE_Process_Mutex> shared between multiple child processes.
+ *  Tests an @c ACE_Process_Mutex shared between multiple child processes.
  *
  *  @author Irfan Pyarali <irfan@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "ace/Mutex.h"
 #include "ace/Process.h"
 #include "ace/Process_Mutex.h"
+#include "ace/SString.h"
 #include "ace/Get_Opt.h"
 #include "ace/ACE.h"
 #include "ace/OS_NS_stdio.h"
@@ -21,7 +20,7 @@
 
 static int release_mutex = 1;
 static int child_process = 0;
-static const ACE_TCHAR *mutex_name = ACE_DEFAULT_MUTEX;
+static ACE_TCHAR const *mutex_name = ACE_DEFAULT_MUTEX;
 #if defined (__Lynx__)
 static const u_int n_processes = 4;
 #else  /* ! __Lynx__ */
@@ -47,21 +46,23 @@ parse_args (int argc, ACE_TCHAR *argv[])
   int c;
 
   while ((c = get_opt ()) != -1)
-    switch (c)
     {
-    case 'd':
-      release_mutex = 0;
-      break;
-    case 'c':
-      child_process = 1;
-      break;
-    case 'n':
-      mutex_name = get_opt.opt_arg ();
-      break;
-    default:
-      print_usage_and_die ();
-      break;
-  }
+      switch (c)
+        {
+        case 'd':
+          release_mutex = 0;
+          break;
+        case 'c':
+          child_process = 1;
+          break;
+        case 'n':
+          mutex_name = get_opt.opt_arg ();
+          break;
+        default:
+          print_usage_and_die ();
+          break;
+        }
+    }
 }
 
 static void
@@ -75,19 +76,18 @@ acquire_release ()
   // To see if we really are the only holder of the mutex below,
   // we'll try to create a file with exclusive access. If the file
   // already exists, we're not the only one holding the mutex.
-  ACE_TCHAR mutex_check[MAXPATHLEN+1];
-  ACE_OS::strncpy (mutex_check, mutex_name, MAXPATHLEN);
-  ACE_OS::strncat (mutex_check, ACE_TEXT ("_checker"), MAXPATHLEN);
+  ACE_TString mutex_check (mutex_name);
+  mutex_check += ACE_TEXT ("_checker");
 
   // Grab the lock
-  int mutex_acq = mutex.acquire ();
+  int const mutex_acq = mutex.acquire ();
   ACE_TEST_ASSERT (mutex_acq == 0);
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P) Mutex acquired %s\n"),
               mutex_name));
 
-  ACE_HANDLE checker_handle = ACE_OS::open (mutex_check, O_CREAT | O_EXCL);
+  ACE_HANDLE checker_handle = ACE_OS::open (mutex_check.c_str (), O_CREAT | O_EXCL);
   if (checker_handle == ACE_INVALID_HANDLE)
     {
       ACE_DEBUG ((LM_WARNING, ACE_TEXT ("(%P): %p\n"),
@@ -95,7 +95,9 @@ acquire_release ()
       ACE_TEST_ASSERT (errno != EEXIST);
     }
   else
+  {
     ACE_OS::close (checker_handle);
+  }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P) Working....\n")));
@@ -104,7 +106,7 @@ acquire_release ()
   ACE_OS::sleep (2);
 
   // Free up the check file for the next acquirer.
-  ACE_OS::unlink (mutex_check);
+  ACE_OS::unlink (mutex_check.c_str ());
 
   // Check if we need to release the mutex
   if (release_mutex == 1)
@@ -112,7 +114,7 @@ acquire_release ()
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P) Releasing the mutex %s\n"),
                   mutex_name));
-      int mutex_release = mutex.release ();
+      int const mutex_release = mutex.release ();
       ACE_TEST_ASSERT (mutex_release == 0);
     }
 }
@@ -126,7 +128,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   if (child_process)
     {
       ACE_TCHAR lognm[MAXPATHLEN];
-      int mypid (ACE_OS::getpid ());
+      int const mypid (ACE_OS::getpid ());
       ACE_OS::snprintf (lognm, MAXPATHLEN,
                         ACE_TEXT ("Process_Mutex_Test-child-%d"), mypid);
 
@@ -164,13 +166,13 @@ run_main (int argc, ACE_TCHAR *argv[])
 
       for (i = 0;
            i < n_processes;
-           i++)
+           ++i)
         {
           // Spawn the child process.
           if (children[i].spawn (options) == -1)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
-                                 ACE_TEXT ("spawn of client %d failed\n"),
+                                 ACE_TEXT ("spawn of client %B failed\n"),
                                  i),
                                  -1);
             }
@@ -189,20 +191,24 @@ run_main (int argc, ACE_TCHAR *argv[])
           ACE_OS::sleep (1);
         }
 
-      for (i = 0; i < n_processes; i++)
+      for (i = 0; i < n_processes; ++i)
         {
           ACE_exitcode child_status;
           // Wait for the child processes we created to exit.
-          int wait_result = children[i].wait (&child_status);
+          int const wait_result = children[i].wait (&child_status);
           ACE_TEST_ASSERT (wait_result != -1);
           if (child_status == 0)
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("Child %d finished ok\n"),
-                        children[i].getpid ()));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("Child %d finished ok\n"),
+                          children[i].getpid ()));
+            }
           else
-            ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("Child %d finished with status %d\n"),
-                        children[i].getpid (), child_status));
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("Child %d finished with status %d\n"),
+                          children[i].getpid (), child_status));
+            }
         }
 
 #endif // ACE_HAS_PROCESS_SPAWN

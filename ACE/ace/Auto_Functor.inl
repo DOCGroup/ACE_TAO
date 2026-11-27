@@ -1,4 +1,3 @@
-// -*- C++ -*-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<typename X, typename Functor> ACE_INLINE
@@ -23,6 +22,12 @@ ACE_Utils::Auto_Functor<X,Functor>::Auto_Functor(Auto_Functor & rhs)
 {
 }
 
+template<typename X, typename Functor> ACE_INLINE
+ACE_Utils::Auto_Functor<X,Functor>::Auto_Functor(Auto_Functor && rhs)
+  : Auto_Functor (rhs)
+{
+}
+
 template<typename X, typename Functor>
 ACE_INLINE ACE_Utils::Auto_Functor<X,Functor>&
 ACE_Utils::Auto_Functor<X,Functor>:: operator=(Auto_Functor & rhs)
@@ -32,10 +37,23 @@ ACE_Utils::Auto_Functor<X,Functor>:: operator=(Auto_Functor & rhs)
   return *this;
 }
 
+template<typename X, typename Functor>
+ACE_INLINE ACE_Utils::Auto_Functor<X,Functor>&
+ACE_Utils::Auto_Functor<X,Functor>::operator=(Auto_Functor && rhs)
+{
+  return *this = rhs;
+}
+
 template<typename X, typename Functor> template<typename Y> ACE_INLINE
 ACE_Utils::Auto_Functor<X,Functor>::Auto_Functor(Auto_Functor<Y,Functor>& rhs)
   : p_(rhs.release())
-  , f_(rhs.f_)
+  , f_(rhs.functor())
+{
+}
+
+template<typename X, typename Functor> template<typename Y> ACE_INLINE
+ACE_Utils::Auto_Functor<X,Functor>::Auto_Functor(Auto_Functor<Y,Functor>&& rhs)
+  : Auto_Functor (rhs)
 {
 }
 
@@ -44,7 +62,15 @@ ACE_INLINE ACE_Utils::Auto_Functor<X,Functor>&
 ACE_Utils::Auto_Functor<X,Functor>::operator=(Auto_Functor<Y,Functor>& rhs)
 {
   reset(rhs.release());
+  f_ = rhs.functor();
   return *this;
+}
+
+template<typename X, typename Functor> template<typename Y>
+ACE_INLINE ACE_Utils::Auto_Functor<X,Functor>&
+ACE_Utils::Auto_Functor<X,Functor>::operator=(Auto_Functor<Y,Functor>&& rhs)
+{
+  return *this = rhs;
 }
 
 template<typename X, typename Functor> ACE_INLINE X &
@@ -69,11 +95,16 @@ ACE_Utils::Auto_Functor<X,Functor>::get()
 
 template<typename X, typename Functor>
 ACE_INLINE X *
+ACE_Utils::Auto_Functor<X,Functor>::get() const
+{
+  return p_;
+}
+
+template<typename X, typename Functor>
+ACE_INLINE X *
 ACE_Utils::Auto_Functor<X,Functor>::release()
 {
-  X * tmp = p_;
-  p_ = 0;
-  return tmp;
+  return std::exchange (p_, nullptr);
 }
 
 template<typename X, typename Functor>

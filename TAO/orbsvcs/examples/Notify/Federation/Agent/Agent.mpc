@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project : rmcast, orbsvcsexe, notification, notification_skel, notification_serv, typecodefactory {
   exename = agent
   after += Gate

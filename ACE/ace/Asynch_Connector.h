@@ -1,12 +1,8 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
  *  @file    Asynch_Connector.h
  *
  *  @author Alexander Libman <alibman@ihug.com.au>
  */
-//=============================================================================
 
 #ifndef ACE_ASYNCH_CONNECTOR_H
 #define ACE_ASYNCH_CONNECTOR_H
@@ -45,7 +41,7 @@ class ACE_Asynch_Connector : public ACE_Handler
 {
 public:
   /// A do nothing constructor.
-  ACE_Asynch_Connector ();
+  ACE_Asynch_Connector () = default;
 
   /// Virtual destruction
   ~ACE_Asynch_Connector () override = default;
@@ -58,11 +54,11 @@ public:
                     bool validate_new_connection = true);
 
   /// This initiates a new asynchronous connect
-  virtual int connect (const ACE_INET_Addr &remote_sap,
-                       const ACE_INET_Addr &local_sap =
-                         (const ACE_INET_Addr &)ACE_Addr::sap_any,
+  virtual int connect (ACE_INET_Addr const &remote_sap,
+                       ACE_INET_Addr const &local_sap =
+                         (ACE_INET_Addr const &)ACE_Addr::sap_any,
                        int reuse_addr = 1,
-                       const void *act = nullptr);
+                       void const *act = nullptr);
 
   /**
    * This cancels all pending accepts operations that were issued by
@@ -74,7 +70,6 @@ public:
    * @note On POSIX, delegates cancelation to ACE_POSIX_Asynch_Connect.
    */
   virtual int cancel ();
-
 
   /**
    * Template method to validate peer before service is opened.
@@ -103,13 +98,12 @@ public:
    * @retval  0   Service opening will proceeed.
    * @return  Return value is ignored if the connection attempt failed.
    */
-  virtual int validate_connection (const ACE_Asynch_Connect::Result& result,
-                                   const ACE_INET_Addr &remote,
-                                   const ACE_INET_Addr& local);
+  virtual int validate_connection (ACE_Asynch_Connect::Result const & result,
+                                   ACE_INET_Addr const &remote,
+                                   ACE_INET_Addr const & local);
 
-  //
-  // These are low level tweaking methods
-  //
+  /// @name Low-level connection options
+  /// @{
 
   /// Set and get flag that indicates if parsing and passing of
   /// addresses to the service_handler is necessary.
@@ -120,14 +114,14 @@ public:
   /// required.
   virtual bool validate_new_connection () const;
   virtual void validate_new_connection (bool new_value);
+  /// @}
 
 protected:
   /// This is called when an outstanding accept completes.
-  void handle_connect (const ACE_Asynch_Connect::Result &result) override;
-
+  void handle_connect (ACE_Asynch_Connect::Result const &result) override;
 
   /// This parses the address from read buffer.
-  void parse_address (const ACE_Asynch_Connect::Result &result,
+  void parse_address (ACE_Asynch_Connect::Result const &result,
                       ACE_INET_Addr &remote_address,
                       ACE_INET_Addr &local_address);
 
@@ -146,10 +140,10 @@ private:
   ACE_Asynch_Connect asynch_connect_;
 
   /// Flag that indicates if parsing of addresses is necessary.
-  bool pass_addresses_;
+  bool pass_addresses_ {};
 
   /// Flag that indicates if address validation is required.
-  bool validate_new_connection_;
+  bool validate_new_connection_ {};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

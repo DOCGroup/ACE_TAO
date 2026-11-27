@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 #ifndef _SHUTDOWN_UTILS_H
 #define _SHUTDOWN_UTILS_H
 #include /**/ "ace/pre.h"
@@ -11,7 +9,6 @@
 #include "ace/Event_Handler.h"
 #include "ace/Signal.h"
 #include "ace/Sig_Handler.h"
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

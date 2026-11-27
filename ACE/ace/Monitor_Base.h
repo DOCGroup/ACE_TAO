@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  * @file Monitor_Base.h
  *
  * @author Jeff Parsons <j.parsons@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef MONITOR_BASE_H
 #define MONITOR_BASE_H
@@ -25,6 +21,8 @@
 #include "ace/Thread_Mutex.h"
 #include "ace/Synch_Traits.h"
 #include "ace/CDR_Base.h"
+
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -49,7 +47,7 @@ namespace ACE
       using CONSTRAINTS = Monitor_Control_Types::ConstraintList;
       using CONSTRAINT_ITERATOR = CONSTRAINTS::const_iterator;
 
-      Monitor_Base (const char* name,
+      Monitor_Base (char const * name,
                     Monitor_Control_Types::Information_Type type);
       ~Monitor_Base () override;
 
@@ -64,15 +62,15 @@ namespace ACE
       virtual void receive (size_t data);
 
       /// Updates the monitor's data if it is a string type.
-      virtual void receive (const Monitor_Control_Types::NameList& data);
+      virtual void receive (Monitor_Control_Types::NameList const& data);
 
       /// Add a constraint, returns a unique constraint id.
-      long add_constraint (const char* expression,
+      long add_constraint (char const * expression,
                            Control_Action* action = nullptr);
 
       /// Remove a constraint and return the associated control action,
       /// which may be shared, for deletion or further use.
-      Control_Action* remove_constraint (const long constraint_id);
+      Control_Action* remove_constraint (long const constraint_id);
 
       /// Get all constraints
       CONSTRAINTS& constraints ();
@@ -87,11 +85,11 @@ namespace ACE
       /// Common to all monitors.
 
       void add_to_registry (
-        const ACE_Time_Value& time = ACE_Time_Value::zero);
+        ACE_Time_Value const& time = ACE_Time_Value::zero);
       void remove_from_registry ();
 
-      const char* name () const;
-      void name (const char* new_name);
+      char const * name () const;
+      void name (char const * new_name);
 
       void add_ref ();
       void remove_ref ();
@@ -134,6 +132,20 @@ namespace ACE
     private:
       ACE_CString name_;
     };
+
+    struct Monitor_Base_Deleter
+    {
+      void operator() (Monitor_Base *monitor) const
+      {
+        if (monitor != nullptr)
+          {
+            monitor->remove_ref ();
+          }
+      }
+    };
+
+    using Monitor_Base_Unique_Ptr =
+      std::unique_ptr<Monitor_Base, Monitor_Base_Deleter>;
   }
 }
 

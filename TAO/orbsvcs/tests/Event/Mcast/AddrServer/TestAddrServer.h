@@ -8,14 +8,19 @@
 
 class TestAddrServer_i : public POA_RtecUDPAdmin::AddrServer {
 public:
-  TestAddrServer_i (const ACE_INET_Addr& addr,
-                    const ACE_INET_Addr& addr6);
+  TestAddrServer_i (ACE_INET_Addr const& addr,
+                    ACE_INET_Addr const& addr6);
 
-  virtual void get_addr (const RtecEventComm::EventHeader& header,
-                         RtecUDPAdmin::UDP_Addr& address);
+  TestAddrServer_i (TestAddrServer_i const&) = delete;
+  TestAddrServer_i (TestAddrServer_i&&) = delete;
+  TestAddrServer_i& operator= (TestAddrServer_i const&) = delete;
+  TestAddrServer_i& operator= (TestAddrServer_i&&) = delete;
 
-  virtual void get_address (const RtecEventComm::EventHeader& header,
-                               RtecUDPAdmin::UDP_Address_out addr6);
+  void get_addr (RtecEventComm::EventHeader const& header,
+                 RtecUDPAdmin::UDP_Addr& address) override;
+
+  void get_address (RtecEventComm::EventHeader const& header,
+                    RtecUDPAdmin::UDP_Address_out addr6) override;
 
 private:
   ACE_INET_Addr addr_;

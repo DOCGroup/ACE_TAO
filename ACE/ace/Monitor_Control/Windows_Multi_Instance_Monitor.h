@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  * @file Windows_Multi_Instance_Monitor.h
  *
  * @author Jeff Parsons <j.parsons@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef WINDOWS_MULTI_INSTANCE_MONITOR_H
 #define WINDOWS_MULTI_INSTANCE_MONITOR_H
@@ -38,8 +34,14 @@ namespace ACE
      */
     class MONITOR_CONTROL_Export Windows_Multi_Instance_Monitor
     {
+    public:
+      Windows_Multi_Instance_Monitor (Windows_Multi_Instance_Monitor const &) = delete;
+      Windows_Multi_Instance_Monitor (Windows_Multi_Instance_Monitor &&) = delete;
+      Windows_Multi_Instance_Monitor &operator= (Windows_Multi_Instance_Monitor const &) = delete;
+      Windows_Multi_Instance_Monitor &operator= (Windows_Multi_Instance_Monitor &&) = delete;
+
     protected:
-      Windows_Multi_Instance_Monitor (const ACE_TCHAR *wildcard_path);
+      explicit Windows_Multi_Instance_Monitor (ACE_TCHAR const *wildcard_path);
       virtual ~Windows_Multi_Instance_Monitor ();
 
       /// Platform-specific implementation.
@@ -49,15 +51,16 @@ namespace ACE
       void clear_impl ();
 
     protected:
-      double value_;
+      double value_ {};
 
     private:
+      // The queue stores raw pointers because ACE_Unbounded_Queue requires
+      // copyable values; this class owns and deletes each monitor instance.
       using INSTANCES = ACE_Unbounded_Queue<Windows_Monitor *>;
       using INSTANCES_ITERATOR = ACE_Unbounded_Queue_Const_Iterator<Windows_Monitor *>;
 
-      INSTANCES instances_;
-      DWORD n_instances_;
-      PDH_STATUS status_;
+      INSTANCES instances_ {};
+      PDH_STATUS status_ {ERROR_SUCCESS};
     };
   }
 }

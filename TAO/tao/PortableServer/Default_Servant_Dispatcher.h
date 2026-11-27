@@ -1,13 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Default_Servant_Dispatcher.h
  *
  *  @author Frank Hunleth (fhunleth@cs.wustl.edu)
  */
-//=============================================================================
-
 #ifndef Default_Servant_DISPATCHER_H
 #define Default_Servant_DISPATCHER_H
 #include /**/ "ace/pre.h"
@@ -58,7 +53,7 @@ public:
   TAO_Root_POA *create_Root_POA (
         ACE_CString const &name,
         PortableServer::POAManager_ptr poa_manager,
-        const TAO_POA_Policy_Set &policies,
+        TAO_POA_Policy_Set const &policies,
         ACE_Lock &lock,
         TAO_SYNCH_MUTEX &thread_lock,
         TAO_ORB_Core &orb_core,

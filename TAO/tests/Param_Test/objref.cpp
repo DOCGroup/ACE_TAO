@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    objref.cpp
  *
@@ -7,10 +5,10 @@
  *
  *  @author   Aniruddha Gokhale
  */
-//=============================================================================
-
 
 #include "helper.h"
+
+#include <cstring>
 #include "objref.h"
 
 // ************************************************************************
@@ -18,17 +16,11 @@
 // ************************************************************************
 
 Test_ObjRef::Test_ObjRef ()
-  : opname_ (CORBA::string_dup ("test_objref"))
+  : opname_ ("test_objref")
 {
 }
 
-Test_ObjRef::~Test_ObjRef ()
-{
-  CORBA::string_free (this->opname_);
-  this->opname_ = 0;
-}
-
-const char *
+char const *
 Test_ObjRef::opname () const
 {
   return this->opname_;
@@ -60,7 +52,7 @@ Test_ObjRef::dii_req_invoke (CORBA::Request *req)
   this->out_ = Coffee::_duplicate (tmp);
 }
 
-static const char *Coffee_Flavor [] = {
+static char const *Coffee_Flavor [] = {
   "Italian Roast",
   "Irish Creme",
   "Costa Rican",
@@ -79,17 +71,17 @@ Test_ObjRef::init_parameters (Param_Test_ptr objref)
 
   try
     {
-      ACE_OS::strcpy (msg_str, "make_cofee");
+      std::strcpy (msg_str, "make_cofee");
 
       // first get a Coffee object
       this->in_ = objref->make_coffee ();
 
       // Get some index into Coffee_Flavor [].
-      CORBA::ULong index = (CORBA::ULong) (gen->gen_long () % 6);
+      CORBA::ULong const index = (CORBA::ULong) (gen->gen_long () % 6);
       desc.name = Coffee_Flavor [index];
 
       // set the attribute of the object
-      ACE_OS::strcpy (msg_str, "set coffee attribute");
+      std::strcpy (msg_str, "set coffee attribute");
       this->in_->description (desc); // set the attribute for the in object
 
       this->inout_ = Coffee::_nil ();
@@ -98,7 +90,7 @@ Test_ObjRef::init_parameters (Param_Test_ptr objref)
 
       return 0;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception (msg_str);
     }
@@ -113,7 +105,7 @@ Test_ObjRef::reset_parameters ()
   Generator *gen = GENERATOR::instance (); // value generator
 
   // Get some index into Coffee_Flavor [].
-  CORBA::ULong index = (CORBA::ULong) (gen->gen_long () % 6);
+  CORBA::ULong const index = (CORBA::ULong) (gen->gen_long () % 6);
   desc.name = Coffee_Flavor [index];
 
   try
@@ -121,7 +113,7 @@ Test_ObjRef::reset_parameters ()
       // set the attribute of the object
       this->in_->description (desc); // set the attribute for the in object
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("set coffee attribute");
       return -1;
@@ -146,7 +138,7 @@ Test_ObjRef::run_sii_test (Param_Test_ptr objref)
 
       return 0;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Test_ObjRef::run_sii_test\n");
     }
@@ -166,40 +158,42 @@ Test_ObjRef::check_validity ()
           || CORBA::is_nil (this->ret_.in ()))
         {
           ACE_ERROR ((LM_ERROR, "Nil object references returned\n"));
-          return 0;
+          return false;
         }
       Coffee::Desc_var in_desc =
         this->in_->description ();
 
-      const char *in = in_desc->name.in ();
+      char const *in = in_desc->name.in ();
 
       Coffee::Desc_var inout_desc =
         this->inout_->description ();
 
-      const char *inout = inout_desc->name.in ();
+      char const *inout = inout_desc->name.in ();
 
       Coffee::Desc_var out_desc =
         this->out_->description ();
 
-      const char *out = out_desc->name.in ();
+      char const *out = out_desc->name.in ();
 
       Coffee::Desc_var ret_desc = this->out_->description ();
 
-      const char* ret = ret_desc->name.in ();
+      char const *ret = ret_desc->name.in ();
 
       // now compare them
-      if (!ACE_OS::strcmp (in, inout) &&
-          !ACE_OS::strcmp (in, out) &&
-          !ACE_OS::strcmp (in, ret))
-        return 1; // success
+      if (!std::strcmp (in, inout) &&
+          !std::strcmp (in, out) &&
+          !std::strcmp (in, ret))
+      {
+        return true; // success
+      }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Retrieving description");
-      return 0;
+      return false;
     }
 
-  return 1;
+  return true;
 }
 
 CORBA::Boolean
@@ -217,10 +211,10 @@ Test_ObjRef::print_values ()
   Coffee::Desc_var inout_desc;
   Coffee::Desc_var out_desc;
   Coffee::Desc_var ret_desc;
-  const char *in = 0;
-  const char *out = 0;
-  const char *inout = 0;
-  const char *ret = 0;
+  char const *in {};
+  char const *out {};
+  char const *inout {};
+  char const *ret {};
   try
     {
       if (!CORBA::is_nil (this->in_.in ()))
@@ -251,12 +245,11 @@ Test_ObjRef::print_values ()
           ret = ret_desc->name.in ();
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Retrieving Description");
       return;
     }
-
 
   ACE_DEBUG ((LM_DEBUG,
               "\n=*=*=*=*=*=*"

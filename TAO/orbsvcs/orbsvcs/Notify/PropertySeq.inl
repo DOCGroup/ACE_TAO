@@ -1,8 +1,7 @@
-// -*- C++ -*-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE int
-TAO_Notify_PropertySeq::find (const char* name,
+TAO_Notify_PropertySeq::find (char const *name,
                               CosNotification::PropertyValue& value) const
 {
   ACE_CString str_name (name);

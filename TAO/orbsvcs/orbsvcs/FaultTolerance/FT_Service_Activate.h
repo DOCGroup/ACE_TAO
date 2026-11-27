@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  * @file FT_Service_Activate.h
  *
@@ -6,7 +5,6 @@
  *
  * @author Bala Natarajan <bala@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_FT_ACTIVATE_H
 #define TAO_FT_ACTIVATE_H

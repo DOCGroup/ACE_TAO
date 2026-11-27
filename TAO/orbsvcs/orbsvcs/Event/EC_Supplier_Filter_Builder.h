@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 /**
  *  @file   EC_Supplier_Filter_Builder.h
  *
@@ -40,7 +38,6 @@ class TAO_EC_ProxyPushConsumer;
 class TAO_RTEvent_Serv_Export TAO_EC_Supplier_Filter_Builder
 {
 public:
-  /// Destructor...
   virtual ~TAO_EC_Supplier_Filter_Builder ();
 
   /**

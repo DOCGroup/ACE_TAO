@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project: messaging, rteventexe, rtevent_serv, naming, iortable {
   after    += Event_Test_Lib
   libs     += ECTests

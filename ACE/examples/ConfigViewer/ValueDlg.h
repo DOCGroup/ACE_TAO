@@ -1,39 +1,38 @@
-/* -*- C++ -*- */
 #ifndef _ConfigurationViewer_ValueDlg_H
 #define _ConfigurationViewer_ValueDlg_H
 
 class ValueDlg : public wxDialog
 {
 public:
-  ///////////////////////////////////////////
-  // Initializers
-  ///////////////////////////////////////////
+  /// @name Initializers
+  /// @{
+  /// New Value Ctor
   ValueDlg(wxWindow* pParent, bool String);
-  // New Value Ctor
-  ValueDlg(wxWindow* pParent, wxString& Name, wxString& Value);
-  // Edit String Ctor
-  ValueDlg(wxWindow* pParent, wxString& Name, u_int Value);
-  // Edit UINT Ctor
+  /// Edit String Ctor
+  ValueDlg(wxWindow* pParent, wxString const &Name, wxString& Value);
+  /// Edit UINT Ctor
+  ValueDlg(wxWindow* pParent, wxString const &Name, u_int Value);
   virtual ~ValueDlg();
+  /// @}
 
-  ///////////////////////////////////////////
-  // Methods
-  ///////////////////////////////////////////
+  /// @name Methods
+  /// @{
   const wxString& GetName();
   const wxString& GetStringValue();
   u_int GetUINTValue();
+  /// @}
 
-  ///////////////////////////////////////////
-  // Attribute Accessors
-  ///////////////////////////////////////////
+  /// @name Attributes
+  /// @{
   wxButton*       m_pOK;
   wxButton*       m_pCancel;
   wxStaticText*   m_pName;
   wxTextCtrl*     m_pNameText;
   wxStaticText*   m_pValue;
   wxTextCtrl*     m_pValueText;
+  /// @}
 protected:
-  // Not Used
+  /// Not Used
   ValueDlg(const ValueDlg& RHS);
   const ValueDlg& operator=(const ValueDlg& RHS);
 

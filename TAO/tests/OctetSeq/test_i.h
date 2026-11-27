@@ -1,17 +1,15 @@
-
-//=============================================================================
 /**
  *  @file   test_i.h
  *
  *  @author Carlos O'Ryan
  */
-//=============================================================================
-
 
 #ifndef TAO_OCTETSEQ_TEST_I_H
 #define TAO_OCTETSEQ_TEST_I_H
 
 #include "testS.h"
+
+#include <memory>
 
 /**
  * @class Database_i
@@ -21,24 +19,29 @@
 class Database_i : public POA_Test::Database
 {
 public:
-  /// ctor
   Database_i (CORBA::ORB_ptr orb,
               Test::Index max_range);
 
-  /// dtor
-  ~Database_i ();
+  ~Database_i () override = default;
 
-  // = The Simple_Server methods.
+  Database_i (Database_i const &) = delete;
+  Database_i &operator= (Database_i const &) = delete;
+  Database_i (Database_i &&) = delete;
+  Database_i &operator= (Database_i &&) = delete;
+
+  /// @name Database methods
+  /// @{
   void set (Test::Index i,
-            const Test::OctetSeq& seq,
+            Test::OctetSeq const &seq,
             CORBA::Double verification_token,
-            CORBA::Double_out returned_token);
+            CORBA::Double_out returned_token) override;
 
-  Test::OctetSeq* get (Test::Index i);
+  Test::OctetSeq* get (Test::Index i) override;
 
-  CORBA::ULong get_crc (Test::Index i);
+  CORBA::ULong get_crc (Test::Index i) override;
 
-  void shutdown ();
+  void shutdown () override;
+  /// @}
 
 private:
   /// The ORB pointer
@@ -48,7 +51,7 @@ private:
   Test::Index max_range_;
 
   /// The elements
-  Test::OctetSeq* elements_;
+  std::unique_ptr<Test::OctetSeq[]> elements_;
 };
 
 #if defined(__ACE_INLINE__)

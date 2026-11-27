@@ -63,11 +63,9 @@ void create_dialog_components(wxDialog* dialog)
 
 };  // anonymous
 
-
 BEGIN_EVENT_TABLE( WxBindDialog, wxDialog)
   EVT_BUTTON( IDC_VIEWIOR, WxBindDialog::onViewIOR)
 END_EVENT_TABLE()
-
 
 WxBindDialog::WxBindDialog(
     bool isContext,
@@ -110,14 +108,12 @@ WxBindDialog::WxBindDialog(
   ctrl->SetDefault();
 }
 
-
 void WxBindDialog::onViewIOR( wxCommandEvent& WXUNUSED(event))
 {
   TransferDataFromWindow();
   WxAutoDialog<WxViewIORDialog> dialog( new WxViewIORDialog( orb, object.in(), 0));
   dialog->ShowModal();
 }
-
 
 bool WxBindDialog::TransferDataFromWindow()
 {

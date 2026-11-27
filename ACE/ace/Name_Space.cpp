@@ -1,8 +1,10 @@
 // Name_Space.cpp
 #include "ace/Name_Space.h"
+#include <memory>
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_stdlib.h"
 
+#include <cstring>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -14,20 +16,19 @@ ACE_Name_Binding::ACE_Name_Binding ()
   ACE_TRACE ("ACE_Name_Binding::ACE_Name_Binding");
 }
 
-
 ACE_Name_Binding::~ACE_Name_Binding ()
 {
   ACE_TRACE ("ACE_Name_Binding::~ACE_Name_Binding");
 #if defined (ACE_HAS_ALLOC_HOOKS)
-  ACE_Allocator::instance()->free ((void *) this->type_);
+  ACE_Allocator::instance()->free (this->type_);
 #else
-  ACE_OS::free ((void *) this->type_);
+  ACE_OS::free (this->type_);
 #endif /* ACE_HAS_ALLOC_HOOKS */
 }
 
-ACE_Name_Binding::ACE_Name_Binding (const ACE_NS_WString &name,
-                                    const ACE_NS_WString &value,
-                                    const char *type)
+ACE_Name_Binding::ACE_Name_Binding (ACE_NS_WString const &name,
+                                    ACE_NS_WString const &value,
+                                    char const *type)
   : name_ (name),
     value_ (value),
     type_ (type == nullptr ? ACE_OS::strdup ("") : ACE_OS::strdup (type))
@@ -35,7 +36,7 @@ ACE_Name_Binding::ACE_Name_Binding (const ACE_NS_WString &name,
   ACE_TRACE ("ACE_Name_Binding::ACE_Name_Binding");
 }
 
-ACE_Name_Binding::ACE_Name_Binding (const ACE_Name_Binding &s)
+ACE_Name_Binding::ACE_Name_Binding (ACE_Name_Binding const &s)
   : name_ (s.name_),
     value_ (s.value_),
     type_ (ACE_OS::strdup (s.type_))
@@ -43,17 +44,17 @@ ACE_Name_Binding::ACE_Name_Binding (const ACE_Name_Binding &s)
   ACE_TRACE ("ACE_Name_Binding::ACE_Name_Binding");
 }
 
-const ACE_Name_Binding&
-ACE_Name_Binding::operator = (const ACE_Name_Binding &s)
+ACE_Name_Binding const &
+ACE_Name_Binding::operator = (ACE_Name_Binding const &s)
 {
   ACE_TRACE ("ACE_Name_Binding::operator =");
 
-  if (this != &s)
+  if (this != std::addressof (s))
     {
 #if defined (ACE_HAS_ALLOC_HOOKS)
-      ACE_Allocator::instance()->free ((void *) this->type_);
+      ACE_Allocator::instance()->free (this->type_);
 #else
-      ACE_OS::free ((void *) this->type_);
+      ACE_OS::free (this->type_);
 #endif /* ACE_HAS_ALLOC_HOOKS */
       this->name_ = s.name_;
       this->value_ = s.value_;
@@ -64,12 +65,12 @@ ACE_Name_Binding::operator = (const ACE_Name_Binding &s)
 }
 
 bool
-ACE_Name_Binding::operator == (const ACE_Name_Binding &s) const
+ACE_Name_Binding::operator == (ACE_Name_Binding const &s) const
 {
   ACE_TRACE ("ACE_Name_Binding::operator ==");
   return this->name_ == s.name_
     && this->value_ == s.value_
-    && ACE_OS::strcmp (this->type_, s.type_) == 0;
+    && std::strcmp (this->type_, s.type_) == 0;
 }
 
 ACE_Name_Space::~ACE_Name_Space ()

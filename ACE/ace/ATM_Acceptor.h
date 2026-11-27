@@ -1,13 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    ATM_Acceptor.h
  *
  *  @author Joe Hoffert
  */
-//=============================================================================
-
 
 #ifndef ACE_ATM_ACCEPTOR_H
 #define ACE_ATM_ACCEPTOR_H
@@ -58,25 +53,25 @@ class ACE_Time_Value;
 class ACE_Export ACE_ATM_Acceptor
 {
 public:
-  /// Default constructor.
   ACE_ATM_Acceptor ();
 
   ~ACE_ATM_Acceptor ();
 
   /// Initiate a passive mode connection.
-  ACE_ATM_Acceptor (const ACE_Addr &remote_sap,
+  ACE_ATM_Acceptor (ACE_Addr const &remote_sap,
                     int backlog = ACE_DEFAULT_BACKLOG,
                     ACE_ATM_Params params = ACE_ATM_Params());
 
   /// Initiate a passive mode socket.
-  ACE_HANDLE open (const ACE_Addr &remote_sap,
+  ACE_HANDLE open (ACE_Addr const &remote_sap,
                    int backlog = ACE_DEFAULT_BACKLOG,
                    ACE_ATM_Params params = ACE_ATM_Params());
 
   /// Close down the acceptor and release resources.
   int close ();
 
-  // = Passive connection acceptance method.
+  /// @name Passive connection acceptance
+  /// @{
 
   /// Accept a new data transfer connection.  A @a timeout of 0 means
   /// block forever, a @a timeout of {0, 0} means poll. @a restart == 1
@@ -88,13 +83,16 @@ public:
               bool reset_new_handle = false,
               ACE_ATM_Params params = ACE_ATM_Params(),
               ACE_ATM_QoS qos = ACE_ATM_QoS());
+  /// @}
 
   /// Get the local address currently listening on
   int get_local_addr(ACE_ATM_Addr &local_addr);
 
-  // = Meta-type info
+  /// @name Peer types
+  /// @{
   using PEER_ADDR = ACE_ATM_Addr;
   using PEER_STREAM = ACE_ATM_Stream;
+  /// @}
 
   /// Dump the state of an object.
   void dump () const;
@@ -108,7 +106,6 @@ private:
 
 // Close versioned namespace, if enabled by the user.
 ACE_END_VERSIONED_NAMESPACE_DECL
-
 
 #if defined (__ACE_INLINE__)
 #include "ace/ATM_Acceptor.inl"

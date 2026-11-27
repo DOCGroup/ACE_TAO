@@ -3,22 +3,16 @@
 #include "tao/debug.h"
 #include "ace/Log_Msg.h"
 
-TAO_Notify_Tests_Options_Parser::TAO_Notify_Tests_Options_Parser ()
-{
-}
+TAO_Notify_Tests_Options_Parser::TAO_Notify_Tests_Options_Parser () = default;
 
-TAO_Notify_Tests_Options_Parser::~TAO_Notify_Tests_Options_Parser ()
-{
-}
+TAO_Notify_Tests_Options_Parser::~TAO_Notify_Tests_Options_Parser () = default;
 
 void
 TAO_Notify_Tests_Options_Parser::execute (CosNotification::EventTypeSeq& added, CosNotification::EventTypeSeq& removed, ACE_Arg_Shifter& arg_shifter)
 {
-  const ACE_TCHAR* current_arg = 0;
-
   while (arg_shifter.is_anything_left ())
     {
-      current_arg = arg_shifter.get_current ();
+      ACE_TCHAR const *current_arg = arg_shifter.get_current ();
       arg_shifter.consume_arg ();
 
       if (current_arg[0] == '+')
@@ -45,7 +39,7 @@ TAO_Notify_Tests_Options_Parser::execute (CosNotification::EventTypeSeq& added, 
 void
 TAO_Notify_Tests_Options_Parser::execute (CosNotification::QoSProperties& qos, ACE_Arg_Shifter& arg_shifter)
 {
-  const ACE_TCHAR *current_arg = 0;
+  ACE_TCHAR const *current_arg {};
   NotifyExt::Priority default_priority = NotifyExt::minPriority;
 
   if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-ThreadPool")) == 0) // -ThreadPool [-Threads static_threads] [-Priority default_priority]
@@ -72,25 +66,27 @@ TAO_Notify_Tests_Options_Parser::execute (CosNotification::QoSProperties& qos, A
           const int priority= ACE_OS::atoi (current_arg);
           if (priority < NotifyExt::minPriority)
             {
-              NotifyExt::Priority default_priority = NotifyExt::minPriority;
+              NotifyExt::Priority fallback_priority = NotifyExt::minPriority;
               ACE_DEBUG ((LM_DEBUG, "-Priority %d is too small (min priority %d used)\n",
-                          priority, static_cast<int> (default_priority)));
+                          priority, static_cast<int> (fallback_priority)));
             }
           else if (NotifyExt::maxPriority < priority)
             {
-              NotifyExt::Priority default_priority = NotifyExt::maxPriority;
+              NotifyExt::Priority fallback_priority = NotifyExt::maxPriority;
               ACE_DEBUG ((LM_DEBUG, "-Priority %d is too large (max priority %d used)\n",
-                          priority, static_cast<int> (default_priority)));
+                          priority, static_cast<int> (fallback_priority)));
             }
           else
+          {
             default_priority = static_cast<NotifyExt::Priority> (priority);
+          }
 
           arg_shifter.consume_arg ();
         }
 
       NotifyExt::ThreadPoolParams tp_params
         = { NotifyExt::CLIENT_PROPAGATED, default_priority,
-            0, static_threads, 0, default_priority, 0, 0, 0 };
+            0, static_threads, 0, default_priority, false, 0, 0 };
 
       qos.length (1);
       qos[0].name = CORBA::string_dup (NotifyExt::ThreadPool);
@@ -111,8 +107,8 @@ TAO_Notify_Tests_Options_Parser::execute (CosNotification::QoSProperties& qos, A
       tpl_params.server_priority = default_priority;
       tpl_params.stacksize = 0;
       tpl_params.lanes.length (lanecount);
-      tpl_params.allow_borrowing = 0;
-      tpl_params.allow_request_buffering = 0;
+      tpl_params.allow_borrowing = false;
+      tpl_params.allow_request_buffering = false;
       tpl_params.max_buffered_requests = 0;
       tpl_params.max_request_buffer_size = 0;
 
@@ -137,12 +133,16 @@ TAO_Notify_Tests_Options_Parser::execute (CosNotification::QoSProperties& qos, A
               arg_shifter.consume_arg ();
 
               if (TAO_debug_level > 0)
-                ACE_DEBUG ((LM_DEBUG, "QoS Parser parsed lane: - %d, %d, %d\n",
-                            tpl_params.lanes[l_index].lane_priority, tpl_params.lanes[l_index].static_threads, tpl_params.lanes[l_index].dynamic_threads));
-              l_index++;
+                {
+                  ACE_DEBUG ((LM_DEBUG, "QoS Parser parsed lane: - %d, %d, %d\n",
+                              tpl_params.lanes[l_index].lane_priority, tpl_params.lanes[l_index].static_threads, tpl_params.lanes[l_index].dynamic_threads));
+                }
+              ++l_index;
             }
           else
+          {
             break;
+          }
         } /* while -- lane values */
 
       qos.length (1);

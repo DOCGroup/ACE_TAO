@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file     MIOP.h
  *
  *  @author Bala Natarajan
  */
-//=============================================================================
 #ifndef TAO_MIOP_H
 #define TAO_MIOP_H
 #include /**/ "ace/pre.h"
@@ -26,6 +22,8 @@ namespace TAO
   class TAO_PortableGroup_Export MIOP_Loader
   {
   public:
+    MIOP_Loader () = delete;
+
     /// Used to force the insertion of UIPMC_Factory in the service
     /// configurator.
     static int Initializer ();

@@ -1,12 +1,8 @@
-
-//=============================================================================
 /**
  *  @file   test_i.h
  *
  *  @author Irfan Pyarali
  */
-//=============================================================================
-
 
 #ifndef TAO_BUFFERED_AMI_TEST_I_H
 #define TAO_BUFFERED_AMI_TEST_I_H
@@ -21,18 +17,24 @@
 class test_i : public POA_test
 {
 public:
-  /// ctor.
-  test_i (CORBA::ORB_ptr orb);
+  explicit test_i (CORBA::ORB_ptr orb);
 
-  // = The test interface methods.
+  test_i (test_i const&) = delete;
+  test_i (test_i&&) = delete;
+  test_i& operator= (test_i const&) = delete;
+  test_i& operator= (test_i&&) = delete;
+
+  /// @name Test interface methods
+  /// @{
   void method (CORBA::ULong request_number,
-               CORBA::ULong_out reply_number);
+               CORBA::ULong_out reply_number) override;
 
-  void shutdown ();
+  void shutdown () override;
+  /// @}
 
 private:
   /// The ORB.
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var orb_ {};
 };
 
 #endif /* TAO_BUFFERED_AMI_TEST_I_H */

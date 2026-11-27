@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    iosfwd.h
  *
@@ -15,8 +12,6 @@
  *  for streams uses templates, simple forward declaration will not
  *  work.
  */
-//=============================================================================
-
 
 #ifndef ACE_IOSFWD_H
 #define ACE_IOSFWD_H
@@ -37,10 +32,10 @@
 #if !defined (ACE_USES_OLD_IOSTREAMS)
 #   include /**/ <iosfwd>
 #else
-  // @note If these forward declarations don't work (e.g. aren't
-  //       portable), we may have to include "ace/streams.h" as a last
-  //       resort.  Doing so would defeat the purpose of this header,
-  //       unfortunately.
+  /// @note If these forward declarations don't work (e.g. aren't
+  ///       portable), we may have to include "ace/streams.h" as a last
+  ///       resort. Doing so would defeat the purpose of this header,
+  ///       unfortunately.
   class ios;
   class streambuf;
   class istream;

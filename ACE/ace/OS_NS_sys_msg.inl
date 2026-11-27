@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "ace/OS_NS_errno.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -51,7 +50,7 @@ ACE_OS::msgrcv (int int_id, void *buf, size_t len,
 }
 
 ACE_INLINE int
-ACE_OS::msgsnd (int int_id, const void *buf, size_t len, int flags)
+ACE_OS::msgsnd (int int_id, void const *buf, size_t len, int flags)
 {
   ACE_OS_TRACE ("ACE_OS::msgsnd");
 #if defined (ACE_HAS_SYSV_IPC)

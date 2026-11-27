@@ -1,13 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    LSOCK_CODgram.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
-
 
 #ifndef ACE_LOCAL_SOCK_CODGRAM_H
 #define ACE_LOCAL_SOCK_CODGRAM_H
@@ -53,7 +48,7 @@ public:
   /**
    * @name Initialization methods
    */
-  //@{
+  /// @{
   /**
    * Initialize a fully-specified datagram socket.
    *
@@ -63,11 +58,13 @@ public:
    * @param local_sap   Local address. The local address to receive datagrams
    *                    at. If not specified, an unused address is selected.
    *                    If specified, should be an ACE_UNIX_Addr object.
+   * @param protocol_family The protocol family for the datagram socket.
+   * @param protocol The protocol for the datagram socket.
    *
    * @sa ACE_UNIX_Addr
    */
-  ACE_LSOCK_CODgram (const ACE_Addr &remote_sap,
-                     const ACE_Addr &local_sap = ACE_Addr::sap_any,
+  ACE_LSOCK_CODgram (ACE_Addr const &remote_sap,
+                     ACE_Addr const &local_sap = ACE_Addr::sap_any,
                      int protocol_family = PF_UNIX,
                      int protocol = 0);
 
@@ -77,11 +74,11 @@ public:
    * @retval 0 if no error.
    * @retval -1 on error; check errno for an error reason.
    */
-  int open (const ACE_Addr &remote_sap,
-            const ACE_Addr &local_sap = ACE_Addr::sap_any,
+  int open (ACE_Addr const &remote_sap,
+            ACE_Addr const &local_sap = ACE_Addr::sap_any,
             int protocol_family = PF_UNIX,
             int protocol = 0);
-  //@}
+  /// @}
 
   /// Get underlying handle.
   ACE_HANDLE get_handle () const;

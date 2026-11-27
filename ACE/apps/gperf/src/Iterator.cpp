@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 /**
  * Copyright (C) 1989 Free Software Foundation, Inc.
  * written by Douglas C. Schmidt (d.schmidt@vanderbilt.edu)
@@ -24,8 +22,23 @@
 #include "Iterator.h"
 #include "ace/OS_NS_ctype.h"
 
+namespace
+{
+  bool append_digit (int &value, char digit, int maximum)
+  {
+    int const number = digit - '0';
+    if (value > maximum / 10
+        || (value == maximum / 10 && number > maximum % 10))
+      {
+        return false;
+      }
+    value = value * 10 + number;
+    return true;
+  }
+}
+
 /// Constructor for Iterator.
-Iterator::Iterator (char *s,
+Iterator::Iterator (char const *s,
                     int lo,
                     int hi,
                     int word_end,
@@ -45,20 +58,13 @@ Iterator::Iterator (char *s,
 int
 Iterator::operator() ()
 {
-  // Variables to record the Iterator's status when handling ranges,
-  // e.g., 3-12.
-
-  static int size;
-  static int curr_value;
-  static int upper_bound;
-
-  if (size)
+  if (this->range_active_)
     {
-      if (++curr_value >= upper_bound)
+      if (++this->current_value_ >= this->upper_bound_)
         {
-          size = 0;
+          this->range_active_ = false;
         }
-      return curr_value;
+      return this->current_value_;
     }
   else
     {
@@ -70,28 +76,35 @@ Iterator::operator() ()
           case '$': ++str; return end_word;
           case '0': case '1': case '2': case '3': case '4':
           case '5': case '6': case '7': case '8': case '9':
-            for (curr_value = 0; ACE_OS::ace_isdigit (*str); ++str)
+            for (this->current_value_ = 0; ACE_OS::ace_isdigit (*str); ++str)
               {
-                curr_value = curr_value * 10 + *str - '0';
+                if (!append_digit (this->current_value_, *str, this->hi_bound))
+                  {
+                    return this->error_value;
+                  }
               }
 
             if (*str == '-')
               {
-                for (size = 1, upper_bound = 0;
-                     ACE_OS::ace_isdigit (*++str);
-                     upper_bound = upper_bound * 10 + *str - '0')
+                this->upper_bound_ = 0;
+                ++str;
+                for (; ACE_OS::ace_isdigit (*str); ++str)
                   {
-                    // Do nothing.
+                    if (!append_digit (this->upper_bound_, *str, this->hi_bound))
+                      {
+                        return this->error_value;
+                      }
                   }
 
-                if (upper_bound <= curr_value || upper_bound > hi_bound)
+                if (this->upper_bound_ <= this->current_value_ || this->upper_bound_ > hi_bound)
                   {
                     return error_value;
                   }
+                this->range_active_ = true;
               }
 
-            return curr_value >= lo_bound && curr_value <= hi_bound
-                   ? curr_value
+            return this->current_value_ >= lo_bound && this->current_value_ <= hi_bound
+                   ? this->current_value_
                    : error_value;
           }
 

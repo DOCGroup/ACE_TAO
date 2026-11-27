@@ -1,6 +1,3 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
  *  @file   Consumer.h
  *
@@ -8,8 +5,6 @@
  *
  * Defines a simple Push Consumer.
  */
-//=============================================================================
-
 
 #ifndef COSECCONSUMER_H_
 #define COSECCONSUMER_H_
@@ -30,9 +25,14 @@
 class Consumer : public POA_CosEventComm::PushConsumer
 {
 public:
+  Consumer () = default;
+  Consumer (Consumer const &) = delete;
+  Consumer (Consumer &&) = delete;
+  Consumer &operator= (Consumer const &) = delete;
+  Consumer &operator= (Consumer &&) = delete;
+
   /// This method connects the consumer to the EC.
-  void open (CosEventChannelAdmin::EventChannel_ptr event_channel,
-             CORBA::ORB_ptr orb);
+  void open (CosEventChannelAdmin::EventChannel_ptr const event_channel);
 
   /// Disconnect from the EC.
   void close ();
@@ -45,20 +45,17 @@ public:
   void disconnect ();
 
   /// push the event to the consumer.
-  virtual void push (const CORBA::Any &data);
+  void push (CORBA::Any const &data) override;
 
   /// disconnect the consumer from the EC.
-  virtual void disconnect_push_consumer ();
+  void disconnect_push_consumer () override;
 
 private:
-  /// The orb that we as using.
-  CORBA::ORB_var orb_;
+  /// We talk to the EC using this proxy.
+  CosEventChannelAdmin::ProxyPushSupplier_var supplier_proxy_ {};
 
   /// We talk to the EC using this proxy.
-  CosEventChannelAdmin::ProxyPushSupplier_var supplier_proxy_;
-
-  /// We talk to the EC using this proxy.
-  CosEventChannelAdmin::ConsumerAdmin_var consumer_admin_;
+  CosEventChannelAdmin::ConsumerAdmin_var consumer_admin_ {};
 };
 
 #endif /* COSECCONSUMER_H_ */

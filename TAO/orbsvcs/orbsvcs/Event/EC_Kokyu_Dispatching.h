@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 /**
  *  @file   EC_Kokyu_Dispatching.h
  *
@@ -59,18 +57,25 @@ public:
                             int sched_policy,
                             int sched_scope);
 
-  // = The EC_Dispatching methods.
-  virtual void activate () override;
-  virtual void shutdown () override;
-  virtual void push (TAO_EC_ProxyPushSupplier* proxy,
+  TAO_EC_Kokyu_Dispatching (TAO_EC_Kokyu_Dispatching const &) = delete;
+  TAO_EC_Kokyu_Dispatching (TAO_EC_Kokyu_Dispatching &&) = delete;
+  TAO_EC_Kokyu_Dispatching &operator= (TAO_EC_Kokyu_Dispatching const &) = delete;
+  TAO_EC_Kokyu_Dispatching &operator= (TAO_EC_Kokyu_Dispatching &&) = delete;
+
+  /// @name The EC_Dispatching methods
+  /// @{
+  void activate () override;
+  void shutdown () override;
+  void push (TAO_EC_ProxyPushSupplier* proxy,
                      RtecEventComm::PushConsumer_ptr consumer,
-                     const RtecEventComm::EventSet& event,
+                     RtecEventComm::EventSet const & event,
                      TAO_EC_QOS_Info& qos_info) override;
-  virtual void push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
+  void push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
                             RtecEventComm::PushConsumer_ptr consumer,
                             RtecEventComm::EventSet& event,
                             TAO_EC_QOS_Info& qos_info) override;
 
+  /// @}
 private:
   ACE_Allocator *allocator_;
 
@@ -82,7 +87,7 @@ private:
   /// The scheduler
   RtecScheduler::Scheduler_var scheduler_;
 
-  int lanes_setup_;
+  bool lanes_setup_ {};
   int disp_sched_policy_;
   int disp_sched_scope_;
 };
@@ -92,15 +97,14 @@ private:
 class TAO_RTKokyuEvent_Export TAO_EC_Kokyu_Shutdown_Command : public Kokyu::Dispatch_Command
 {
 public:
-  /// Constructor
-  TAO_EC_Kokyu_Shutdown_Command (ACE_Allocator *allocator);
+  explicit TAO_EC_Kokyu_Shutdown_Command (ACE_Allocator *allocator);
 
   /// Command callback
-  virtual int execute () override;
+  int execute () override;
 
 protected:
-  //Protected so can't be put on stack; must be dynamically allocated
-  virtual ~TAO_EC_Kokyu_Shutdown_Command () override;
+  /// Protected to require dynamic allocation.
+  ~TAO_EC_Kokyu_Shutdown_Command () override = default;
 };
 
 // ****************************************************************
@@ -108,18 +112,17 @@ protected:
 class TAO_RTKokyuEvent_Export TAO_EC_Kokyu_Push_Command : public Kokyu::Dispatch_Command
 {
 public:
-  /// Constructor
   TAO_EC_Kokyu_Push_Command (TAO_EC_ProxyPushSupplier* proxy,
                              RtecEventComm::PushConsumer_ptr consumer,
                              RtecEventComm::EventSet& event,
                              ACE_Allocator* allocator);
 
   /// Command callback
-  virtual int execute () override;
+  int execute () override;
 
 protected:
-  //Protected so can't be put on stack; must be dynamically allocated
-  virtual ~TAO_EC_Kokyu_Push_Command () override;
+  /// Protected to require dynamic allocation.
+  ~TAO_EC_Kokyu_Push_Command () override;
 
 private:
   /// The proxy

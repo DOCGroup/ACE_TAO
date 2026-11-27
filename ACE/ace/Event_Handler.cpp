@@ -14,8 +14,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 // so derived classes don't have to implement unused ones.
 ACE_Event_Handler::ACE_Event_Handler (ACE_Reactor *r,
                                       int p)
-  : reference_count_ (1),
-    priority_ (p),
+  : priority_ (p),
     reactor_ (r),
     reference_counting_policy_ (Reference_Counting_Policy::DISABLED)
 {
@@ -88,7 +87,7 @@ ACE_Event_Handler::handle_exception (ACE_HANDLE)
 
 // Called when timer expires, TV stores the current time.
 int
-ACE_Event_Handler::handle_timeout (const ACE_Time_Value &, const void *)
+ACE_Event_Handler::handle_timeout (ACE_Time_Value const &, void const *)
 {
   ACE_TRACE ("ACE_Event_Handler::handle_timeout");
   return -1;
@@ -163,9 +162,13 @@ ACE_Event_Handler::add_reference ()
     ACE_Event_Handler::Reference_Counting_Policy::ENABLED;
 
   if (reference_counting_required)
-    return ++this->reference_count_;
+    {
+      return ++this->reference_count_;
+    }
   else
-    return 1;
+    {
+      return 1;
+    }
 }
 
 ACE_Event_Handler::Reference_Count
@@ -180,7 +183,9 @@ ACE_Event_Handler::remove_reference ()
       Reference_Count const result = --this->reference_count_;
 
       if (result == 0)
+      {
         delete this;
+      }
 
       return result;
     }
@@ -222,7 +227,9 @@ ACE_Event_Handler::read_adapter (void *args)
   ACE_Reactor *r = this_ptr->reactor ();
 
   while (this_ptr->handle_input (ACE_STDIN) != -1)
-    continue;
+    {
+      continue;
+    }
 
   this_ptr->handle_close (ACE_STDIN, ACE_Event_Handler::READ_MASK);
   // It's possible for handle_close() to "delete this" so we need to
@@ -268,19 +275,15 @@ ACE_Event_Handler::remove_stdin_handler (ACE_Reactor *reactor,
 #endif /* ACE_WIN32 */
 }
 
-// ---------------------------------------------------------------------
-
 ACE_Event_Handler_var::ACE_Event_Handler_var ()
-  : ptr_ (nullptr)
-{
-}
+= default;
 
 ACE_Event_Handler_var::ACE_Event_Handler_var (ACE_Event_Handler *p)
   : ptr_ (p)
 {
 }
 
-ACE_Event_Handler_var::ACE_Event_Handler_var (const ACE_Event_Handler_var &b)
+ACE_Event_Handler_var::ACE_Event_Handler_var (ACE_Event_Handler_var const &b)
   : ptr_ (b.ptr_)
 {
   if (this->ptr_ != nullptr)
@@ -311,7 +314,7 @@ ACE_Event_Handler_var::operator= (ACE_Event_Handler *p)
 }
 
 ACE_Event_Handler_var &
-ACE_Event_Handler_var::operator= (const ACE_Event_Handler_var &b)
+ACE_Event_Handler_var::operator= (ACE_Event_Handler_var const &b)
 {
   ACE_Event_Handler_var tmp (b);
   std::swap (this->ptr_, tmp.ptr_);
@@ -362,11 +365,8 @@ ACE_Event_Handler_var::operator !=(std::nullptr_t) const
   return this->ptr_ != nullptr;
 }
 
-// ---------------------------------------------------------------------
-
 ACE_Notification_Buffer::ACE_Notification_Buffer ()
-  : eh_ (nullptr),
-    mask_ (ACE_Event_Handler::NULL_MASK)
+  : mask_ (ACE_Event_Handler::NULL_MASK)
 {
   ACE_TRACE ("ACE_Notification_Buffer::ACE_Notification_Buffer");
 }

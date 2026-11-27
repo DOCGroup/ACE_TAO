@@ -1,4 +1,3 @@
-// -*- C++ -*-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE int
@@ -85,7 +84,6 @@ TAO_ORB_Parameters::linger (int x)
   this->linger_ = x;
 }
 
-
 ACE_INLINE time_t
 TAO_ORB_Parameters::accept_error_delay () const
 {
@@ -97,7 +95,6 @@ TAO_ORB_Parameters::accept_error_delay (time_t x)
 {
   this->accept_error_delay_ = x;
 }
-
 
 ACE_INLINE void
 TAO_ORB_Parameters::service_port (TAO::MCAST_SERVICEID service_id,
@@ -113,19 +110,19 @@ TAO_ORB_Parameters::service_port (TAO::MCAST_SERVICEID service_id) const
 }
 
 ACE_INLINE void
-TAO_ORB_Parameters::mcast_discovery_endpoint (const char *mde)
+TAO_ORB_Parameters::mcast_discovery_endpoint (char const *mde)
 {
   this->mcast_discovery_endpoint_ = CORBA::string_dup (mde);
 }
 
-ACE_INLINE const char *
+ACE_INLINE char const *
 TAO_ORB_Parameters::mcast_discovery_endpoint () const
 {
   return this->mcast_discovery_endpoint_.in ();
 }
 
 ACE_INLINE void
-TAO_ORB_Parameters::default_init_ref (const char *default_init_ref)
+TAO_ORB_Parameters::default_init_ref (char const *default_init_ref)
 {
   this->default_init_ref_ = default_init_ref;
 }
@@ -337,7 +334,6 @@ TAO_ORB_Parameters::disable_rt_collocation_resolver (bool x)
   this->disable_rt_collocation_resolver_ = x;
 }
 
-
 ACE_INLINE bool
 TAO_ORB_Parameters::negotiate_codesets () const
 {
@@ -363,12 +359,12 @@ TAO_ORB_Parameters::ami_collication (bool x)
 }
 
 ACE_INLINE void
-TAO_ORB_Parameters::collocation_resolver_name (const char *s)
+TAO_ORB_Parameters::collocation_resolver_name (char const *s)
 {
   this->collocation_resolver_name_ = s;
 }
 
-ACE_INLINE const char *
+ACE_INLINE char const *
 TAO_ORB_Parameters::collocation_resolver_name () const
 {
   return this->collocation_resolver_name_.c_str ();

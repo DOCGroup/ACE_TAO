@@ -1,4 +1,3 @@
-// -*- C++ -*-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE void
@@ -18,7 +17,7 @@ TAO_CEC_ConsumerAdmin::
 // ****************************************************************
 
 ACE_INLINE
-TAO_CEC_Propagate_Event_Push::TAO_CEC_Propagate_Event_Push (const CORBA::Any& event)
+TAO_CEC_Propagate_Event_Push::TAO_CEC_Propagate_Event_Push (CORBA::Any const &event)
   :  event_ (event)
 {
 }
@@ -26,7 +25,7 @@ TAO_CEC_Propagate_Event_Push::TAO_CEC_Propagate_Event_Push (const CORBA::Any& ev
 // ****************************************************************
 
 ACE_INLINE
-TAO_CEC_Propagate_Event_Pull::TAO_CEC_Propagate_Event_Pull (const CORBA::Any& event)
+TAO_CEC_Propagate_Event_Pull::TAO_CEC_Propagate_Event_Pull (CORBA::Any const &event)
   :  event_ (event)
 {
 }

@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    ClientRequestInterceptor_Adapter_Impl.h
  *
@@ -12,7 +9,6 @@
  *  @author  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
  *  @author  Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-//=============================================================================
 
 #ifndef TAO_CLIENT_REQUEST_INTERCEPTOR_ADAPTER_IMPL_H
 #define TAO_CLIENT_REQUEST_INTERCEPTOR_ADAPTER_IMPL_H
@@ -24,7 +20,6 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
 
 #if TAO_HAS_INTERCEPTORS == 1
 
@@ -39,7 +34,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace TAO
 {
   using ClientRequestInterceptor_List =
-    Interceptor_List< ::PortableInterceptor::ClientRequestInterceptor,
+    Interceptor_List<::PortableInterceptor::ClientRequestInterceptor,
                       ClientRequestDetails>;
 }
 
@@ -74,7 +69,8 @@ namespace TAO
      * client side, only "starting" and "ending" interception points.
      *
      */
-    //@{
+    /// @{
+
     /// This method implements one of the "starting" client side
     /// interception points.
     void send_request (Invocation_Base &invocation) override;
@@ -90,7 +86,7 @@ namespace TAO
     /// This method implements one of the "ending" client side
     /// interception point.
     void receive_other (Invocation_Base &invocation) override;
-    //@}
+    /// @}
 
     /// Register an interceptor.
     void add_interceptor (
@@ -107,16 +103,21 @@ namespace TAO
       TAO::Invocation_Base const &invocation_base) override;
 
     void popTSC (TAO_ORB_Core *orb_core) override
-      {TAO_RequestInterceptor_Adapter_Impl::popTSC (orb_core);}
+    {
+      TAO_RequestInterceptor_Adapter_Impl::popTSC (orb_core);
+    }
+
     void pushTSC (TAO_ORB_Core *orb_core) override
-      {TAO_RequestInterceptor_Adapter_Impl::pushTSC (orb_core);}
+    {
+      TAO_RequestInterceptor_Adapter_Impl::pushTSC (orb_core);
+    }
 
   protected:
     /// Process the given PortableInterceptor::ForwardRequest exception,
     /// i.e. invoke the receive_other() interception point, in addition
     /// to notifying the Invocation object of the LOCATION_FORWARD.
     void process_forward_request (Invocation_Base &invocation,
-                                  const PortableInterceptor::ForwardRequest &exc);
+                                  PortableInterceptor::ForwardRequest const &exc);
 
   private:
     /// List of registered interceptors.

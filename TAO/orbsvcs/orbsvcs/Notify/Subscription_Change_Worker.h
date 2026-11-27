@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 /**
  *  @file Subscription_Change_Worker.h
  *
@@ -24,25 +22,20 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Notify_Proxy;
 
 /**
- * @class TAO_Subscription_Change_Worker
- *
- * @brief
+ * @class TAO_Notify_Subscription_Change_Worker
  */
 class TAO_Notify_Serv_Export TAO_Notify_Subscription_Change_Worker : public TAO_ESF_Worker<TAO_Notify_Proxy>
 {
 public:
-  /// Constructor
-  TAO_Notify_Subscription_Change_Worker (const CosNotification::EventTypeSeq & added, const CosNotification::EventTypeSeq & removed);
+  TAO_Notify_Subscription_Change_Worker (CosNotification::EventTypeSeq const & added, CosNotification::EventTypeSeq const & removed);
 
-  /// Destructor
   virtual ~TAO_Notify_Subscription_Change_Worker ();
 
-  ///= TAO_ESF_Worker method
   void work (TAO_Notify_Proxy* proxy) override;
 
 protected:
-  const CosNotification::EventTypeSeq & added_;
-  const CosNotification::EventTypeSeq & removed_;
+  CosNotification::EventTypeSeq const & added_;
+  CosNotification::EventTypeSeq const & removed_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

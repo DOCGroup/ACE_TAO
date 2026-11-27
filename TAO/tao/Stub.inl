@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/ORB_Core.h"
 #include "ace/Reverse_Lock_T.h"
 
@@ -13,8 +12,7 @@ TAO_Stub::reset_base ()
   this->set_profile_in_use_i (base_profiles_.get_next ());
 }
 
-
-ACE_INLINE const TAO_SYNCH_MUTEX&
+ACE_INLINE TAO_SYNCH_MUTEX const &
 TAO_Stub::profile_lock () const
 {
   return this->profile_lock_;
@@ -58,7 +56,7 @@ TAO_Stub::reset_profiles ()
     {
       TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - Stub::reset_profiles, acquired ")
-                  ACE_TEXT ("profile lock this = 0x%x\n"),
+                  ACE_TEXT ("profile lock this = %@\n"),
                   this));
     }
 
@@ -74,11 +72,11 @@ TAO_Stub::profile_in_use ()
 ACE_INLINE TAO_MProfile *
 TAO_Stub::make_profiles ()
 {
-  TAO_MProfile * mp = nullptr;
+  TAO_MProfile * mp {};
 
   ACE_NEW_RETURN (mp,
                   TAO_MProfile (base_profiles_),
-                  0);
+                  nullptr);
 
   return mp;
 }
@@ -86,11 +84,12 @@ TAO_Stub::make_profiles ()
 ACE_INLINE TAO_Profile *
 TAO_Stub::next_forward_profile ()
 {
-  TAO_Profile * pfile_next = nullptr;
+  TAO_Profile * pfile_next {};
 
+  // Do not remove the permanent forward at the bottom of the stack.
   while (this->forward_profiles_
          && (pfile_next = this->forward_profiles_->get_next ()) == nullptr
-         && this->forward_profiles_ != this->forward_profiles_perm_)  // do not remove permanent forward from bottom of stack
+         && this->forward_profiles_ != this->forward_profiles_perm_)
     // that was the last profile.  Now we clean up our forward profiles.
     // since we own the forward MProfiles, we must delete them when done.
     this->forward_back_one ();
@@ -101,7 +100,7 @@ TAO_Stub::next_forward_profile ()
 ACE_INLINE TAO_Profile *
 TAO_Stub::next_profile_i ()
 {
-  TAO_Profile * pfile_next = nullptr;
+  TAO_Profile * pfile_next {};
 
   // First handle the case that a permanent forward occurred
   if (this->forward_profiles_perm_) // the permanent forward defined
@@ -124,7 +123,9 @@ TAO_Stub::next_profile_i ()
           this->set_profile_in_use_i (this->forward_profiles_->get_next());
         }
       else
-        this->set_profile_in_use_i (pfile_next);
+        {
+          this->set_profile_in_use_i (pfile_next);
+        }
 
       // We may have been forwarded to / from a collocated situation
       // Check for this and apply / remove optimisation if required.
@@ -152,7 +153,7 @@ TAO_Stub::next_profile_i ()
                 TAOLIB_DEBUG ((LM_DEBUG,
                             ACE_TEXT ("TAO (%P|%t) - Stub::next_profile_i, ")
                             ACE_TEXT ("released profile lock to reinitialize ")
-                            ACE_TEXT ("this = 0x%x\n"),
+                            ACE_TEXT ("this = %@\n"),
                             this));
               }
             // We may have been forwarded to / from a collocated situation
@@ -164,17 +165,23 @@ TAO_Stub::next_profile_i ()
               TAOLIB_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("TAO (%P|%t) - Stub::next_profile_i, ")
                           ACE_TEXT ("reacquired profile lock on object ")
-                          ACE_TEXT ("this = 0x%x\n"),
+                          ACE_TEXT ("this = %@\n"),
                           this));
               }
         }
       else
-        pfile_next = this->base_profiles_.get_next ();
+        {
+          pfile_next = this->base_profiles_.get_next ();
+        }
 
       if (pfile_next == nullptr)
-        this->reset_base ();
+        {
+          this->reset_base ();
+        }
       else
-        this->set_profile_in_use_i (pfile_next);
+        {
+          this->set_profile_in_use_i (pfile_next);
+        }
 
       return pfile_next;
    }
@@ -190,7 +197,7 @@ TAO_Stub::next_profile ()
   if (TAO_debug_level > 5)
     {
       TAOLIB_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - Stub::next_profile, acquired profile lock this = 0x%x\n"), this));
+                  ACE_TEXT ("TAO (%P|%t) - Stub::next_profile, acquired profile lock this = %@\n"), this));
     }
   return this->next_profile_i ();
 }
@@ -214,7 +221,7 @@ TAO_Stub::valid_profile () const
 }
 
 ACE_INLINE TAO_Profile *
-TAO_Stub::base_profiles (const TAO_MProfile &mprofiles)
+TAO_Stub::base_profiles (TAO_MProfile const &mprofiles)
 {
   ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                             guard,
@@ -223,9 +230,8 @@ TAO_Stub::base_profiles (const TAO_MProfile &mprofiles)
   if (TAO_debug_level > 5)
     {
       TAOLIB_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - Stub::base_profiles, acquired profile lock this = 0x%x\n"), this));
+                  ACE_TEXT ("TAO (%P|%t) - Stub::base_profiles, acquired profile lock this = %@\n"), this));
     }
-
 
   // first reset things so we start from scratch!
 
@@ -249,7 +255,7 @@ TAO_Stub::next_profile_retry ()
   if (TAO_debug_level > 5)
     {
       TAOLIB_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - Stub::next_profile_retry, acquired profile lock this = 0x%x\n"), this));
+                  ACE_TEXT ("TAO (%P|%t) - Stub::next_profile_retry, acquired profile lock this = %@\n"), this));
     }
 
   if (this->profile_success_ && this->forward_profiles_)
@@ -273,7 +279,7 @@ TAO_Stub::next_profile_retry ()
   return false;
 }
 
-ACE_INLINE const TAO_MProfile&
+ACE_INLINE TAO_MProfile const &
 TAO_Stub::base_profiles () const
 {
   return this->base_profiles_;
@@ -285,7 +291,7 @@ TAO_Stub::base_profiles ()
   return this->base_profiles_;
 }
 
-ACE_INLINE const TAO_MProfile *
+ACE_INLINE TAO_MProfile const *
 TAO_Stub::forward_profiles () const
 {
   return this->forward_profiles_;
@@ -360,7 +366,7 @@ TAO_Stub::destroy ()
   delete this;
 }
 
-ACE_INLINE CORBA::Boolean
+ACE_INLINE bool
 TAO_Stub::optimize_collocation_objects () const
 {
   return this->collocation_opt_;
@@ -376,8 +382,10 @@ TAO_Stub::transport_queueing_strategy ()
 
   this->orb_core_->call_sync_scope_hook (this, has_synchronization, scope);
 
-  if (has_synchronization == true)
-    return this->orb_core_->get_transport_queueing_strategy  (this, scope);
+  if (has_synchronization)
+    {
+      return this->orb_core_->get_transport_queueing_strategy  (this, scope);
+    }
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
 
   // No queueing strategy, let the transport use its default
@@ -408,7 +416,9 @@ void
 TAO_Stub::_decr_refcnt ()
 {
   if (--this->refcount_ == 0)
-    delete this;
+    {
+      delete this;
+    }
 }
 
 ACE_INLINE

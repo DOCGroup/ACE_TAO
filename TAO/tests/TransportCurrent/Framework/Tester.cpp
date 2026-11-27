@@ -1,7 +1,14 @@
 #include "tao/TransportCurrent/Transport_Current.h"
+#include "tao/Transport_Selection_Guard.h"
 #include "tao/SystemException.h"
 
+#include <type_traits>
+
 using namespace TAO;
+
+static_assert (!std::is_assignable<Transport_Selection_Guard &,
+                                   Transport_Selection_Guard &&>::value,
+               "Transport selection guards must not be move-assigned");
 
 /// Test referencing the TC data outside of the context of an upcall,
 /// or a client-side interceptor
@@ -9,23 +16,23 @@ using namespace TAO;
 int
 test_transport_current (Transport::Current_ptr tc)
 {
-  CORBA::Long id = tc->id ();
+  CORBA::Long const id = tc->id ();
 
-  TAO::CounterT bs = tc->bytes_sent ();
+  TAO::CounterT const bs = tc->bytes_sent ();
 
-  TAO::CounterT br = tc->bytes_received ();
+  TAO::CounterT const br = tc->bytes_received ();
 
-  TAO::CounterT rs = tc->messages_sent ();
+  TAO::CounterT const rs = tc->messages_sent ();
 
-  TAO::CounterT rr = tc->messages_received ();
+  TAO::CounterT const rr = tc->messages_received ();
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Tester (%P|%t) Transport [%q] - Sent/Received [bytes=%q/%q, messages=%q/%q]\n"),
-              (ACE_UINT64)id,
-              (ACE_UINT64)bs,
-              (ACE_UINT64)br,
-              (ACE_UINT64)rs,
-              (ACE_UINT64)rr));
+              ACE_TEXT ("Tester (%P|%t) Transport [%d] - Sent/Received [bytes=%Q/%Q, messages=%Q/%Q]\n"),
+              id,
+              bs,
+              br,
+              rs,
+              rr));
 
   return 0;
 }

@@ -1,50 +1,43 @@
-//---------------------------------------------------------------------------
 #include "memeaterC.h"
-#include "ace/OS_NS_unistd.h"
-#include <memory>
 
-//---------------------------------------------------------------------------
-
-std::unique_ptr<MEMEATER::StringSeq> message_buffer;
-constexpr CORBA::ULong max_msg_buf = 100;
-
-void eat_my_memory ()
+namespace
 {
-  char const *output_string = "Eat my Memory! Eat my Memory! Eat my Memory! Eat my Memory!";
+  constexpr CORBA::ULong max_message_buffer_count {100};
+  constexpr int iteration_count {1000};
+  char const * const output_string = "Eat my Memory! Eat my Memory! Eat my Memory! Eat my Memory!";
+}
 
-  CORBA::ULong const msg_count = message_buffer->length ();
-  if (msg_count < max_msg_buf)
+void eat_my_memory (MEMEATER::StringSeq &message_buffer)
+{
+  CORBA::ULong const msg_count = message_buffer.length ();
+  if (msg_count < max_message_buffer_count)
     {
-      message_buffer->length (msg_count + 1);
-      (*message_buffer)[msg_count] = CORBA::string_dup (output_string);
+      message_buffer.length (msg_count + 1);
+      message_buffer[msg_count] = CORBA::string_dup (output_string);
     }
   else
     {
-      message_buffer->length (1);
-      (*message_buffer)[0] = CORBA::string_dup (output_string);
+      message_buffer.length (1);
+      message_buffer[0] = CORBA::string_dup (output_string);
     }
 }
 
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {
-  message_buffer = std::make_unique<MEMEATER::StringSeq> ();
-  message_buffer->length (0);
+  MEMEATER::StringSeq message_buffer {};
 
   try
     {
-      for (int i = 0; i < 1000; ++i)
+      for (int iteration {}; iteration < iteration_count; ++iteration)
         {
-          eat_my_memory ();
+          eat_my_memory (message_buffer);
         }
     }
   catch (::CORBA::Exception const &ex)
     {
-      ex._tao_print_exception ("ERROR : unexpected CORBA exception caugth :");
+      ex._tao_print_exception ("ERROR: unexpected CORBA exception caught:");
       return 1;
     }
 
-  message_buffer.reset ();
-
   return 0;
 }
-//---------------------------------------------------------------------------

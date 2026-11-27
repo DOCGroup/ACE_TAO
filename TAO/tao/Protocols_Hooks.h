@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-// ===================================================================
 /**
  *  @file   Protocols_Hooks.h
  *
  *  @author Priyanka Gontla <pgontla@ece.uci.edu>
  */
-// ===================================================================
 
 #ifndef TAO_PROTOCOLS_HOOKS_H
 #define TAO_PROTOCOLS_HOOKS_H
@@ -22,7 +18,8 @@
 #include /**/ "tao/TAO_Export.h"
 #include "tao/Basic_Types.h"
 #include "tao/IOPC.h"
-#include "ace/SString.h"
+
+#include <string>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -41,13 +38,13 @@ class TAO_Export TAO_IIOP_Protocol_Properties
 public:
   TAO_IIOP_Protocol_Properties ();
 
-  CORBA::Long send_buffer_size_;
-  CORBA::Long recv_buffer_size_;
-  int keep_alive_;
-  int dont_route_;
-  int no_delay_;
-  CORBA::Boolean enable_network_priority_;
-  CORBA::Long hop_limit_;
+  CORBA::Long send_buffer_size_ {};
+  CORBA::Long recv_buffer_size_ {};
+  int keep_alive_ {};
+  int dont_route_ {};
+  int no_delay_ {};
+  CORBA::Boolean enable_network_priority_ {};
+  CORBA::Long hop_limit_ {-1};
 };
 
 class TAO_Export TAO_UIOP_Protocol_Properties
@@ -55,8 +52,8 @@ class TAO_Export TAO_UIOP_Protocol_Properties
 public:
   TAO_UIOP_Protocol_Properties ();
 
-  CORBA::Long send_buffer_size_;
-  CORBA::Long recv_buffer_size_;
+  CORBA::Long send_buffer_size_ {};
+  CORBA::Long recv_buffer_size_ {};
 };
 
 class TAO_Export TAO_SHMIOP_Protocol_Properties
@@ -64,14 +61,14 @@ class TAO_Export TAO_SHMIOP_Protocol_Properties
 public:
   TAO_SHMIOP_Protocol_Properties ();
 
-  CORBA::Long send_buffer_size_;
-  CORBA::Long recv_buffer_size_;
-  int keep_alive_;
-  int dont_route_;
-  int no_delay_;
-  CORBA::Long preallocate_buffer_size_;
-  ACE_CString mmap_filename_;
-  ACE_CString mmap_lockname_;
+  CORBA::Long send_buffer_size_ {};
+  CORBA::Long recv_buffer_size_ {};
+  int keep_alive_ {};
+  int dont_route_ {};
+  int no_delay_ {};
+  CORBA::Long preallocate_buffer_size_ {};
+  std::string mmap_filename_;
+  std::string mmap_lockname_;
 };
 
 class TAO_Export TAO_DIOP_Protocol_Properties
@@ -79,11 +76,11 @@ class TAO_Export TAO_DIOP_Protocol_Properties
 public:
   TAO_DIOP_Protocol_Properties ();
 
-  CORBA::Long send_buffer_size_;
-  CORBA::Long recv_buffer_size_;
-  CORBA::Boolean enable_network_priority_;
-  CORBA::Long hop_limit_;
-  CORBA::Boolean enable_multicast_loop_;
+  CORBA::Long send_buffer_size_ {};
+  CORBA::Long recv_buffer_size_ {};
+  CORBA::Boolean enable_network_priority_ {};
+  CORBA::Long hop_limit_ {-1};
+  CORBA::Boolean enable_multicast_loop_ {true};
 };
 
 class TAO_Export TAO_SCIOP_Protocol_Properties
@@ -91,19 +88,18 @@ class TAO_Export TAO_SCIOP_Protocol_Properties
 public:
   TAO_SCIOP_Protocol_Properties ();
 
-  CORBA::Long send_buffer_size_;
-  CORBA::Long recv_buffer_size_;
-  int keep_alive_;
-  int dont_route_;
-  int no_delay_;
-  CORBA::Boolean enable_network_priority_;
-  CORBA::Long hop_limit_;
+  CORBA::Long send_buffer_size_ {};
+  CORBA::Long recv_buffer_size_ {};
+  int keep_alive_ {};
+  int dont_route_ {};
+  int no_delay_ {};
+  CORBA::Boolean enable_network_priority_ {};
+  CORBA::Long hop_limit_ {-1};
 };
 
 class TAO_Export TAO_Protocols_Hooks : public ACE_Service_Object
 {
 public:
-  /// Destructor
   ~TAO_Protocols_Hooks () override;
 
   /// Initialize the protocols hooks instance.
@@ -165,7 +161,7 @@ public:
    * some critical components.  If the RTCORBA library isn't used,
    * these operations are no-ops.
    */
-  //@{
+  /// @{
   virtual int get_thread_CORBA_priority (CORBA::Short &) = 0;
 
   virtual int get_thread_native_priority (CORBA::Short &) = 0;
@@ -180,7 +176,7 @@ public:
 
   virtual int restore_thread_CORBA_and_native_priority (CORBA::Short,
                                                         CORBA::Short) = 0;
-  //@}
+  /// @}
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

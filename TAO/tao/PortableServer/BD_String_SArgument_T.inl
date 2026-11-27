@@ -1,4 +1,3 @@
-// -*- C+ -*-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<typename S_var,
@@ -18,9 +17,6 @@ arg () const
 {
   return this->x_.in ();
 }
-
-// ==========================================================================
-
 template<typename S_var,
          size_t BOUND,
          template <typename> class Insert_Policy>
@@ -38,9 +34,6 @@ arg ()
 {
   return this->x_.inout ();
 }
-
-// ==========================================================================
-
 template<typename S_var,
          size_t BOUND,
          template <typename> class Insert_Policy>
@@ -58,9 +51,6 @@ arg ()
 {
   return this->x_.out ();
 }
-
-// ==========================================================================
-
 template<typename S_var,
          size_t BOUND,
          template <typename> class Insert_Policy>

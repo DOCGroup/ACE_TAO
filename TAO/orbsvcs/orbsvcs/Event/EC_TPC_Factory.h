@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /**
  *  @file   EC_TPC_Factory.h
  */
@@ -29,11 +28,9 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_RTEvent_Serv_Export TAO_EC_TPC_Factory : public TAO_EC_Default_Factory
 {
 public:
-  /// Constructor
   TAO_EC_TPC_Factory ();
 
-  /// destructor...
-  virtual ~TAO_EC_TPC_Factory () override;
+  ~TAO_EC_TPC_Factory () override = default;
 
   TAO_EC_TPC_Factory (TAO_EC_TPC_Factory const &) = delete;
   TAO_EC_TPC_Factory (TAO_EC_TPC_Factory &&) = delete;
@@ -44,18 +41,22 @@ public:
   /// configurator.
   static int init_svcs ();
 
-  // = The Service_Object entry points
-  virtual int init (int argc, ACE_TCHAR* argv[]) override;
+  /// @name The Service_Object entry points
+  /// @{
+  int init (int argc, ACE_TCHAR* argv[]) override;
 
-  // = The EC_Factory methods
-  virtual TAO_EC_Dispatching*
+  /// @}
+  /// @name The EC_Factory methods
+  /// @{
+  TAO_EC_Dispatching*
       create_dispatching (TAO_EC_Event_Channel_Base*) override;
 
-  virtual TAO_EC_ProxyPushSupplier*
+  TAO_EC_ProxyPushSupplier*
       create_proxy_push_supplier (TAO_EC_Event_Channel_Base*) override;
 
-  virtual TAO_EC_ProxyPushConsumer*
+  TAO_EC_ProxyPushConsumer*
       create_proxy_push_consumer (TAO_EC_Event_Channel_Base*) override;
+  /// @}
 };
 
 extern unsigned long TAO_EC_TPC_debug_level;

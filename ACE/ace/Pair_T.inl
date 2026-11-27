@@ -1,4 +1,3 @@
-// -*- C++ -*-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class T1, class T2> ACE_INLINE
@@ -22,7 +21,7 @@ ACE_Reference_Pair<T1, T2>::second () const
 }
 
 template <class T1, class T2> ACE_INLINE bool
-ACE_Reference_Pair<T1, T2>::operator== (const ACE_Reference_Pair<T1, T2> &rhs) const
+ACE_Reference_Pair<T1, T2>::operator== (ACE_Reference_Pair<T1, T2> const &rhs) const
 {
   return (this->first_ == rhs.first_ &&
           this->second_ == rhs.second_);

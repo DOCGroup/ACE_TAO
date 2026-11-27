@@ -27,9 +27,6 @@ TAO::In_Fixed_Size_SArgument_T<S,Insert_Policy>::interceptor_value (
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
-
-// ===========================================================
-
 template<typename S,
          template <typename> class Insert_Policy>
 CORBA::Boolean
@@ -59,9 +56,6 @@ TAO::Inout_Fixed_Size_SArgument_T<S,Insert_Policy>::interceptor_value (
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
-
-// ==============================================================
-
 template<typename S,
          template <typename> class Insert_Policy>
 CORBA::Boolean
@@ -82,9 +76,6 @@ TAO::Out_Fixed_Size_SArgument_T<S,Insert_Policy>::interceptor_value (
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
-
-// ============================================================
-
 template<typename S,
          template <typename> class Insert_Policy>
 CORBA::Boolean

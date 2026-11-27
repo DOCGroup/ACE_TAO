@@ -1,15 +1,13 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    SAXExceptions.h
  *
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef _ACEXML_SAXEXCEPTIONS_H_
 #define _ACEXML_SAXEXCEPTIONS_H_
+
+#include <memory>
 
 #include /**/ "ace/pre.h"
 #include "ACEXML/common/ACEXML_Export.h"
@@ -30,44 +28,40 @@
 class ACEXML_Export ACEXML_SAXException : public ACEXML_Exception
 {
 public:
-  /// Default constructor.
   ACEXML_SAXException ();
 
   /// Constructor initializing the exception message.
-  ACEXML_SAXException (const ACEXML_Char *msg);
+  explicit ACEXML_SAXException (ACEXML_Char const *msg);
 
-  /// Assignment operator
-  ACEXML_SAXException& operator= (const ACEXML_SAXException& src);
+  ACEXML_SAXException& operator= (ACEXML_SAXException const& src);
 
-  /// Copy constructor.
-  ACEXML_SAXException (const ACEXML_SAXException &ex);
+  ACEXML_SAXException (ACEXML_SAXException const &ex);
 
-  /// Destructor.
-  virtual ~ACEXML_SAXException ();
+  ~ACEXML_SAXException () override;
 
   /// Throw the exception.
-  virtual void _raise ();
+  void _raise () override;
 
   /// Static narrow operation.
   static ACEXML_SAXException* _downcast (ACEXML_Exception* ex);
 
   /// Return the name of the exception.
-  virtual const ACEXML_Char *id () const;
+  ACEXML_Char const *id () const override;
 
   /// Return the extra message accompanying the exception.
-  const ACEXML_Char *message () const;
+  ACEXML_Char const *message () const;
 
-  virtual ACEXML_Exception *duplicate () const;
+  ACEXML_Exception *duplicate () const override;
 
-  virtual int is_a (const ACEXML_Char *name);
+  bool is_a (ACEXML_Char const *name) override;
 
-  virtual void print () const;
+  void print () const override;
 
 protected:
-  static const ACEXML_Char * exception_name_;
+  static ACEXML_Char const * exception_name_;
 
   /// A message providing more information about the exception being thrown.
-  ACEXML_Char *message_;
+  std::unique_ptr<ACEXML_Char[]> message_;
 };
 
 /**
@@ -79,37 +73,33 @@ class ACEXML_Export ACEXML_SAXNotSupportedException
   : public ACEXML_SAXException
 {
 public:
-  /// Default constructor.
   ACEXML_SAXNotSupportedException ();
 
-  /// Copy constructor.
-  ACEXML_SAXNotSupportedException (const ACEXML_SAXNotSupportedException &ex);
+  ACEXML_SAXNotSupportedException (ACEXML_SAXNotSupportedException const &ex);
 
-  /// Assignment operator
-  ACEXML_SAXNotSupportedException& operator= (const ACEXML_SAXNotSupportedException &ex);
+  ACEXML_SAXNotSupportedException& operator= (ACEXML_SAXNotSupportedException const &ex);
 
   /// Constructor which accepts an informational message
-  ACEXML_SAXNotSupportedException (const ACEXML_Char* msg);
+  explicit ACEXML_SAXNotSupportedException (ACEXML_Char const * msg);
 
-  /// Destructor.
-  virtual ~ACEXML_SAXNotSupportedException ();
+  ~ACEXML_SAXNotSupportedException () override;
 
   /// Throw the exception.
-  virtual void _raise ();
+  void _raise () override;
 
   /// Static narrow operation.
   static ACEXML_SAXNotSupportedException* _downcast (ACEXML_Exception* ex);
 
-  virtual const ACEXML_Char *id () const;
+  ACEXML_Char const *id () const override;
 
-  virtual ACEXML_Exception *duplicate () const;
+  ACEXML_Exception *duplicate () const override;
 
-  virtual int is_a (const ACEXML_Char *name);
+  bool is_a (ACEXML_Char const *name) override;
 
-  virtual void print () const;
+  void print () const override;
 
 protected:
-  static const ACEXML_Char exception_name_[];
+  static ACEXML_Char const exception_name_[];
 };
 
 /**
@@ -121,37 +111,33 @@ class ACEXML_Export ACEXML_SAXNotRecognizedException
   : public ACEXML_SAXException
 {
 public:
-  /// Default constructor.
   ACEXML_SAXNotRecognizedException ();
 
   /// Constructor with an initializing exception message.
-  ACEXML_SAXNotRecognizedException (const ACEXML_Char *msg);
+  explicit ACEXML_SAXNotRecognizedException (ACEXML_Char const *msg);
 
-  /// Copy constructor.
-  ACEXML_SAXNotRecognizedException (const ACEXML_SAXNotRecognizedException &ex);
+  ACEXML_SAXNotRecognizedException (ACEXML_SAXNotRecognizedException const &ex);
 
-  /// Assignment operator.
-  ACEXML_SAXNotRecognizedException& operator= (const ACEXML_SAXNotRecognizedException &ex);
+  ACEXML_SAXNotRecognizedException& operator= (ACEXML_SAXNotRecognizedException const &ex);
 
-  /// Destructor.
-  virtual ~ACEXML_SAXNotRecognizedException ();
+  ~ACEXML_SAXNotRecognizedException () override;
 
   /// Throw the exception.
-  virtual void _raise ();
+  void _raise () override;
 
   /// Static narrow operation.
   static ACEXML_SAXNotRecognizedException* _downcast (ACEXML_Exception* ex);
 
-  virtual const ACEXML_Char *id () const;
+  ACEXML_Char const *id () const override;
 
-  virtual ACEXML_Exception *duplicate () const;
+  ACEXML_Exception *duplicate () const override;
 
-  virtual int is_a (const ACEXML_Char *name);
+  bool is_a (ACEXML_Char const *name) override;
 
-  virtual void print () const;
+  void print () const override;
 
 protected:
-  static const ACEXML_Char exception_name_[];
+  static ACEXML_Char const exception_name_[];
 };
 
 /**
@@ -163,37 +149,33 @@ class ACEXML_Export ACEXML_SAXParseException
   : public ACEXML_SAXException
 {
 public:
-  /// Default constructor.
   ACEXML_SAXParseException ();
 
   /// Constructor with an initializing exception message.
-  ACEXML_SAXParseException (const ACEXML_Char *msg);
+  explicit ACEXML_SAXParseException (ACEXML_Char const *msg);
 
-  /// Copy constructor.
-  ACEXML_SAXParseException (const ACEXML_SAXParseException &ex);
+  ACEXML_SAXParseException (ACEXML_SAXParseException const &ex);
 
-  /// Assignment operator.
-  ACEXML_SAXParseException& operator= (const ACEXML_SAXParseException &ex);
+  ACEXML_SAXParseException& operator= (ACEXML_SAXParseException const &ex);
 
-  /// Destructor.
-  virtual ~ACEXML_SAXParseException ();
+  ~ACEXML_SAXParseException () override;
 
   /// Throw the exception.
-  virtual void _raise ();
+  void _raise () override;
 
   /// Static narrow operation.
   static ACEXML_SAXParseException* _downcast (ACEXML_Exception* ex);
 
-  virtual const ACEXML_Char *id () const;
+  ACEXML_Char const *id () const override;
 
-  virtual ACEXML_Exception *duplicate () const;
+  ACEXML_Exception *duplicate () const override;
 
-  virtual int is_a (const ACEXML_Char *name);
+  bool is_a (ACEXML_Char const *name) override;
 
-  virtual void print () const;
+  void print () const override;
 
 protected:
-  static const ACEXML_Char exception_name_[];
+  static ACEXML_Char const exception_name_[];
 };
 
 #if defined (__ACEXML_INLINE__)

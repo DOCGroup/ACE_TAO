@@ -1,4 +1,3 @@
-
 /*  A Bison parser, made from ETCL/ETCL.yy
     by GNU Bison version 1.28  */
 
@@ -49,13 +48,11 @@
 #define  ETCL_REPOS_ID  299
 
 
-//=============================================================================
 /**
  *  @file   ETCL_y.cpp
  *
  *  @author Carlos O'Ryan <coryan@uci.edu> based on previous work by Seth Widoff <sbw1@cs.wustl.edu>
  */
-//=============================================================================
 
 
 #include "ace/ETCL/ETCL_y.h"
@@ -656,7 +653,9 @@ yynewstate:
   }
       yystacksize *= 2;
       if (yystacksize > YYMAXDEPTH)
-  yystacksize = YYMAXDEPTH;
+      {
+        yystacksize = YYMAXDEPTH;
+      }
 #ifndef YYSTACK_USE_ALLOCA
       yyfree_stacks = 1;
 #endif
@@ -685,7 +684,9 @@ yynewstate:
 #endif
 
       if (yyssp >= yyss + yystacksize - 1)
-  YYABORT;
+      {
+        YYABORT;
+      }
     }
 
 #if YYDEBUG != 0
@@ -704,7 +705,9 @@ yynewstate:
 
   yyn = yypact[yystate];
   if (yyn == YYFLAG)
+  {
     goto yydefault;
+  }
 
   /* Not known => get a lookahead token if don't already have one.  */
 
@@ -752,7 +755,9 @@ yynewstate:
 
   yyn += yychar1;
   if (yyn < 0 || yyn > YYLAST || yycheck[yyn] != yychar1)
+  {
     goto yydefault;
+  }
 
   yyn = yytable[yyn];
 
@@ -766,7 +771,9 @@ yynewstate:
   if (yyn < 0)
     {
       if (yyn == YYFLAG)
-  goto yyerrlab;
+      {
+        goto yyerrlab;
+      }
       yyn = -yyn;
       goto yyreduce;
     }
@@ -774,7 +781,9 @@ yynewstate:
     goto yyerrlab;
 
   if (yyn == YYFINAL)
+  {
     YYACCEPT;
+  }
 
   /* Shift the lookahead token.  */
 
@@ -785,7 +794,9 @@ yynewstate:
 
   /* Discard the token being shifted unless it is eof.  */
   if (yychar != YYEOF)
+  {
     yychar = YYEMPTY;
+  }
 
   *++yyvsp = yylval;
 #ifdef YYLSP_NEEDED
@@ -793,7 +804,10 @@ yynewstate:
 #endif
 
   /* count tokens shifted since error; after three, turn off error status.  */
-  if (yyerrstatus) yyerrstatus--;
+  if (yyerrstatus)
+  {
+    yyerrstatus--;
+  }
 
   yystate = yyn;
   goto yynewstate;
@@ -803,13 +817,17 @@ yydefault:
 
   yyn = yydefact[yystate];
   if (yyn == 0)
+  {
     goto yyerrlab;
+  }
 
 /* Do a reduction.  yyn is the number of a rule to reduce with.  */
 yyreduce:
   yylen = yyr2[yyn];
   if (yylen > 0)
+  {
     yyval = yyvsp[1-yylen]; /* implement default value of the action */
+  }
 
 #if YYDEBUG != 0
   if (yydebug)
@@ -970,7 +988,7 @@ case 45:
     break;}
 case 46:
 //#line 195 "ETCL/ETCL.yy"
-{ yyval.constraint = 0; ;
+{ yyval.constraint = nullptr; ;
     break;}
 case 47:
 //#line 197 "ETCL/ETCL.yy"
@@ -982,7 +1000,7 @@ case 48:
     break;}
 case 51:
 //#line 207 "ETCL/ETCL.yy"
-{ yyval.constraint = 0; ;
+{ yyval.constraint = nullptr; ;
     break;}
 case 52:
 //#line 209 "ETCL/ETCL.yy"
@@ -1026,7 +1044,7 @@ case 65:
     break;}
 case 66:
 //#line 246 "ETCL/ETCL.yy"
-{ yyval.constraint = 0; ;
+{ yyval.constraint = nullptr; ;
     break;}
 case 67:
 //#line 248 "ETCL/ETCL.yy"
@@ -1095,7 +1113,9 @@ case 70:
   if (yystate >= 0 && yystate <= YYLAST && yycheck[yystate] == *yyssp)
     yystate = yytable[yystate];
   else
+  {
     yystate = yydefgoto[yyn - YYNTBASE];
+  }
 
   goto yynewstate;
 
@@ -1159,7 +1179,9 @@ yyerrlab1:   /* here on error raised explicitly by an action */
 
       /* return failure if at end of input */
       if (yychar == YYEOF)
-  YYABORT;
+      {
+        YYABORT;
+      }
 
 #if YYDEBUG != 0
       if (yydebug)
@@ -1187,7 +1209,10 @@ yyerrdefault:  /* current state does not do anything special for the error token
 
 yyerrpop:   /* pop the current state because it cannot handle the error token */
 
-  if (yyssp == yyss) YYABORT;
+  if (yyssp == yyss)
+  {
+    YYABORT;
+  }
   yyvsp--;
   yystate = *--yyssp;
 #ifdef YYLSP_NEEDED
@@ -1209,17 +1234,23 @@ yyerrhandle:
 
   yyn = yypact[yystate];
   if (yyn == YYFLAG)
+  {
     goto yyerrdefault;
+  }
 
   yyn += YYTERROR;
   if (yyn < 0 || yyn > YYLAST || yycheck[yyn] != YYTERROR)
+  {
     goto yyerrdefault;
+  }
 
   yyn = yytable[yyn];
   if (yyn < 0)
     {
       if (yyn == YYFLAG)
-  goto yyerrpop;
+      {
+        goto yyerrpop;
+      }
       yyn = -yyn;
       goto yyreduce;
     }
@@ -1227,7 +1258,9 @@ yyerrhandle:
     goto yyerrpop;
 
   if (yyn == YYFINAL)
+  {
     YYACCEPT;
+  }
 
 #if YYDEBUG != 0
   if (yydebug)

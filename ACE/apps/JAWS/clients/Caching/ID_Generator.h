@@ -1,19 +1,14 @@
-/* -*- C++ -*- */
-
-
-//=============================================================================
 /**
  *  @file    ID_Generator.h
  *
  *  @author Nanbor Wang
  */
-//=============================================================================
-
 
 #ifndef ACE_ID_GENERATOR_H
-#define ACE_ID_GENERATOR_h
+#define ACE_ID_GENERATOR_H
 
 #include "ace/config-all.h"
+#include "ace/Synch_Traits.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -24,17 +19,17 @@
 /**
  * @class ACE_ID_Generator
  *
- * @brief An unique ID generator.
+ * @brief Generates unique offer IDs.
+ *
+ * IDs are based on the current time and are unique within a process, including
+ * when generated concurrently by multiple threads.
  */
 class ACE_ID_Generator
-
-  //     Generate an offer ID according to current time and avoid
-  //     duplicate ID.  It guarantees ID uniqueness within a process,
-  //     i.e. no two threads may get the same ID string.  Using a
-  //     similar method like the backery algorithm.
 {
 public:
-  /// allocate a new ID string and point <id> to it.
+  ACE_ID_Generator () = delete;
+
+  /// allocate a new ID string and point @a id to it.
   static char *get_new_id (char *id);
 
 private:
@@ -42,7 +37,7 @@ private:
   static void get_serial_id (time_t &t, size_t &s);
 
   /// Get the lock instance.
-  static ACE_SYNCH_MUTEX *get_lock ();
+  static ACE_SYNCH_MUTEX &get_lock ();
 
   /// Record the time last offer ID generated.
   static time_t last_time_;
@@ -50,9 +45,6 @@ private:
   /// Record serial number of last offer ID with same
   /// generation time.
   static size_t last_number_;
-
-  /// mutex to access private member.
-  static ACE_SYNCH_MUTEX *lock_;
 };
 
 #endif /* ACE_ID_GENERATOR_H */

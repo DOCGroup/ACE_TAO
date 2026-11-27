@@ -3,8 +3,7 @@
 #include "tao/BiDir_GIOP/BiDirGIOP.h"
 #include "tao/AnyTypeCode/Any.h"
 
-
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
+ACE_TCHAR const *ior = ACE_TEXT("file://test.ior");
 
 void do_nothing ()
 {
@@ -41,7 +40,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   CORBA::ORB_var orb = CORBA::ORB::_nil();
   PortableServer::POA_var root_poa = PortableServer::POA::_nil();
-  Callback_i *servant = 0;
+  Callback_i *servant {};
 
   try
     {
@@ -51,11 +50,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         orb->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize the POA.\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Unable to initialize the POA.\n"),
+                            1);
+        }
 
-      PortableServer::POA_var root_poa =
+      root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
 
       PortableServer::POAManager_var poa_manager =
@@ -90,7 +91,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       poa_manager->activate ();
 
       if (parse_args (argc, argv) != 0)
+      {
         return 1;
+      }
 
       CORBA::Object_var object =
         orb->string_to_object (ior);
@@ -106,7 +109,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                             1);
         }
 
-
       servant = new Callback_i (orb.in ());
 
       Callback_var callback =
@@ -117,7 +119,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // A  method to kickstart callbacks from the server
       CORBA::Long r =
-        server->test_method (1);
+        server->test_method (true);
 
       if (r != 0)
         {
@@ -130,14 +132,16 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       root_poa->destroy (true, true);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return 1;
     }
 
   if (!CORBA::is_nil(root_poa.in()))
+  {
     root_poa->destroy (true, true);
+  }
   delete servant;
 
   return 0;

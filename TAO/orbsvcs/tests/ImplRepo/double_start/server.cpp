@@ -1,6 +1,8 @@
 // server.cpp
 // This version uses the Implementation Repository.
 
+#include <string>
+
 #include "Test_i.h"
 
 #include "tao/IORTable/IORTable.h"
@@ -16,13 +18,12 @@ namespace
 {
   ACE_CString toStr(int n)
   {
-    char buf[20];
-    return ACE_OS::itoa(n, buf, 10);
+    return ACE_CString (std::to_string (n).c_str ());
   }
 }
 
 PortableServer::POA_ptr
-createPOA(PortableServer::POA_ptr root_poa, const char* poa_name)
+createPOA(PortableServer::POA_ptr root_poa, char const *poa_name)
 {
   PortableServer::LifespanPolicy_var life =
     root_poa->create_lifespan_policy(PortableServer::PERSISTENT);
@@ -55,7 +56,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     int max_run = 0;
     int server_num = 0;
     int init_delay_secs = 0;
-    const ACE_TCHAR *ior_file_name = ACE_TEXT ("");
+    ACE_TCHAR const *ior_file_name = ACE_TEXT ("");
     ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("d:m:n:o:?"));
     int c;
 
@@ -167,12 +168,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         orb->run ();
       }
     ec = impl->exit_code ();
-    root_poa->destroy(1,1);
+    root_poa->destroy(true,true);
     orb->destroy();
 
     //    ACE_OS::unlink (pid_file.c_str ());
   }
-  catch(const CORBA::Exception& ex) {
+  catch(CORBA::Exception const & ex) {
     ex._tao_print_exception (ACE_TEXT ("Server main()"));
     return 1;
   }

@@ -1,18 +1,15 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   Environment.h
  *
- * Declare the CORBA::Environment class.  Note that this header file
- * only requires a few forward declarations of CORBA classes, this
- * is *very* important because even the ORB needs to know about it;
+ * Declare the CORBA::Environment class.
+ *
+ * @note This header file only requires a few forward declarations of CORBA
+ * classes. This is *very* important because even the ORB needs to know about it;
  * make your changes with care.  It is also a good idea trying to
  * minimize cross dependencies between header files.
  *
  * @author Carlos O'Ryan <coryan@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_ENVIRONMENT_H
 #define TAO_ENVIRONMENT_H
@@ -30,6 +27,7 @@
 #include "tao/orbconf.h"
 #include "tao/Pseudo_VarOut_T.h"
 #include "tao/default_environment.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -76,11 +74,10 @@ namespace CORBA
     /// exceptions.
     Environment () = default;
 
-    /// Copy constructor.
-    Environment (const Environment &rhs);
+    Environment (Environment const &rhs);
 
     /// Assingment.
-    Environment &operator=(const Environment &rhs);
+    Environment &operator= (Environment const &rhs);
 
     /// Destructor, release the exception.
     ~Environment ();
@@ -117,16 +114,16 @@ namespace CORBA
     int exception_type () const;
 
     /// return the repository ID for the exception.
-    const char *exception_id () const;
+    char const *exception_id () const;
 
     /// Clear the exception.
     void clear ();
 
     /// Print the exception to output determined by f.  This function
     /// is not CORBA compliant.
-    void print_exception (const char *info, FILE *f=stdout) const;
+    void print_exception (char const *info, FILE *f=stdout) const;
 
-    // = Obtain a default environment to use with TAO.
+    /// Obtain a default environment to use with TAO.
     static CORBA::Environment &default_environment ();
 
     // Useful for template programming.
@@ -141,7 +138,7 @@ namespace CORBA
     Environment (TAO_ORB_Core *orb_core);
 
     /// Pointer to the exception object contained in the environment.
-    CORBA::Exception *exception_ {};
+    std::unique_ptr<CORBA::Exception> exception_;
 
     /// The previous environment on the "default environment stack".
     Environment *previous_ {};
@@ -155,7 +152,6 @@ namespace CORBA
 } // End CORBA namespace
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-
 
 #if defined (__ACE_INLINE__)
 # include "tao/Environment.inl"

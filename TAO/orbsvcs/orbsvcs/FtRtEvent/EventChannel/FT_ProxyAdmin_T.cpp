@@ -2,6 +2,8 @@
 #include "orbsvcs/FtRtEvent/EventChannel/Replication_Service.h"
 #include "tao/PortableServer/POAC.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class EC_PROXY_ADMIN, class Proxy,
@@ -44,7 +46,9 @@ FT_ProxyAdmin<EC_PROXY_ADMIN, Proxy, ProxyInterface, State>::obtain_proxy ()
 
   CORBA::Object_var obj;
   if (any >>= CORBA::Any::to_object(obj))
-    return ProxyInterface::_narrow(obj.in());
+    {
+      return ProxyInterface::_narrow(obj.in());
+    }
 
   FtRtecEventChannelAdmin::ObjectId oid;
   Request_Context_Repository().generate_object_id(oid);
@@ -75,7 +79,6 @@ FT_ProxyAdmin<EC_PROXY_ADMIN, Proxy, ProxyInterface, State>::obtain_proxy ()
   return result._retn();
 }
 
-
 template <class EC_PROXY_ADMIN, class Proxy,
           class ProxyInterface, class State>
 void FT_ProxyAdmin<EC_PROXY_ADMIN, Proxy, ProxyInterface, State>::get_state(
@@ -90,7 +93,7 @@ template <class EC_PROXY_ADMIN, class Proxy,
 void FT_ProxyAdmin<EC_PROXY_ADMIN, Proxy, ProxyInterface, State>::set_state(
   State const& state)
 {
-  for (size_t i = 0; i < state.proxies.length(); ++i)
+  for (size_t i {}; i < state.proxies.length(); ++i)
   {
     typename Proxy::State const& proxy_state
       = state.proxies[i];
@@ -101,7 +104,7 @@ void FT_ProxyAdmin<EC_PROXY_ADMIN, Proxy, ProxyInterface, State>::set_state(
       proxy_ior = admin_->obtain();
 
     using Skeleton = typename Proxy::Skeleton;
-    void const* temp = &proxy_state.object_id;
+    void const* temp = std::addressof (proxy_state.object_id);
     PortableServer::ObjectId const* oid =
       reinterpret_cast<PortableServer::ObjectId const*> (temp);
     PortableServer::Servant const servant =

@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    SOCK_Dgram_Mcast.h
  *
@@ -10,7 +7,6 @@
  *  @author Bill Fulton <bill_a_fulton@raytheon.com>
  *  @author Don Hinton <dhinton@objectsciences.com>
  */
-//=============================================================================
 
 #ifndef ACE_SOCK_DGRAM_MCAST_H
 #define ACE_SOCK_DGRAM_MCAST_H
@@ -47,12 +43,12 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * specifications.  Constructor arguments determine per-instance optional
  * functionality.
  *
- * Note that multicast semantics and implementation details are @i very
+ * @note Multicast semantics and implementation details are very
  * environment-specific; this class is just a wrapper around the underlying
  * implementation and does not try to normalize the concept of multicast
  * communications.
  *
- * Usage Notes:
+ * @note Usage:
  * - Send and receive addresses and network interfaces, but not port number,
  *   are independent. While this instance is open, one send interface (and a
  *   default send address) is in effect and 0, 1, or multiple receive
@@ -73,7 +69,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  *   However, there are filtering options that can be applied, to narrow it
  *   down considerably.
  *
- * Interface specification notes (for subscribe() and unsubscribe()):
+ * @note Interface specification (for subscribe() and unsubscribe()):
  * - If @a net_if == 0, the @c OPT_NULLIFACE_ALL and @c OPT_NULLIFACE_ONE
  *   options determine whether only the system default interface
  *   (if @c OPT_NULLIFACE_ONE is set) or all interfaces (if
@@ -112,7 +108,7 @@ public:
   {
     /* Define whether a specific multicast address (in addition to the port
      * number) is bound to the socket.
-     * @note:
+     * @note
      * - Effect of doing this is stack/environment dependent, but in most
      *   environments can be used to filter out unwanted unicast, broadcast,
      *   and (other) multicast messages sent to the same port number.
@@ -136,8 +132,8 @@ public:
     /// Default value for BINDADDR option. (Environment-dependent.)
 #if defined (ACE_LACKS_PERFECT_MULTICAST_FILTERING) \
     && (ACE_LACKS_PERFECT_MULTICAST_FILTERING == 1)
-      /// Platforms that don't support perfect filtering. Note that perfect
-      /// filtering only really applies to multicast traffic, not unicast
+      /// Platforms that don't support perfect filtering.
+      /// @note Perfect filtering applies to multicast traffic, not unicast
       /// or broadcast.
       DEFOPT_BINDADDR  = OPT_BINDADDR_YES,
 # else
@@ -234,11 +230,12 @@ public:
    * the address, port, and/or interface parameters or during system open()
    * or socket option processing.
    */
-  int open (const ACE_INET_Addr &mcast_addr,
-            const ACE_TCHAR *net_if = nullptr,
+  int open (ACE_INET_Addr const &mcast_addr,
+            ACE_TCHAR const *net_if = nullptr,
             int reuse_addr = 1);
 
-  // = Multicast group subscribe/unsubscribe routines.
+  /// @name Multicast group subscriptions
+  /// @{
 
   /// Join a multicast group on a given interface (or all interfaces, if
   /// supported).
@@ -263,16 +260,15 @@ public:
    * ACE_Sock_Connect::get_ip_interfaces() is not implemented in this
    * environment.
    *
-   * Note that the optional @a reuse_addr parameter does not apply to
+   * @note The optional @a reuse_addr parameter does not apply to
    * subscriptions; it is only used if open() is implicitly invoked (see above).
    *
    * Uses the mcast_addr to determine protocol_family, and protocol which
    * we always pass as 0 anyway.
    */
-  int join (const ACE_INET_Addr &mcast_addr,
+  int join (ACE_INET_Addr const &mcast_addr,
             int reuse_addr = 1,               // (see above)
-            const ACE_TCHAR *net_if = nullptr);
-
+            ACE_TCHAR const *net_if = nullptr);
 
   /// Leave a multicast group on a given interface (or all interfaces, if
   /// supported).
@@ -291,14 +287,16 @@ public:
    * leave() replaces unsubscribe() and uses mcast_addr to determine
    * protocol_family, and protocol which we always pass as 0 anyway.
    */
-  int leave (const ACE_INET_Addr &mcast_addr,
-             const ACE_TCHAR *net_if = nullptr);
+  int leave (ACE_INET_Addr const &mcast_addr,
+             ACE_TCHAR const *net_if = nullptr);
+  /// @}
 
-  // = Data transfer routines.
+  /// @name Data transfer
+  /// @{
 
   /// Send @a n bytes in @a buf, using the multicast address and network interface
   /// defined by the first open() or subscribe().
-  ssize_t send (const void *buf,
+  ssize_t send (void const *buf,
                 size_t n,
                 int flags = 0) const;
 
@@ -307,8 +305,10 @@ public:
   ssize_t send (const iovec iov[],
                 int n,
                 int flags = 0) const;
+  /// @}
 
-  // = Options.
+  /// @name Socket options
+  /// @{
 
   /// Set a socket option.
   /**
@@ -341,34 +341,35 @@ public:
 
   /// Read accessor for the constructor options (@see enum options above)
   int opts () const;
+  /// @}
 
 private:
   /// Subscribe to a multicast address on one or more network interface(s).
   /// (No QoS support.)
-  int subscribe_ifs (const ACE_INET_Addr &mcast_addr,
-                     const ACE_TCHAR *net_if,
+  int subscribe_ifs (ACE_INET_Addr const &mcast_addr,
+                     ACE_TCHAR const *net_if,
                      int reuse_addr);
 
   /// Do subscription processing w/out updating the subscription list.
   /// (Layered method for subscribe() processing).
-  int subscribe_i (const ACE_INET_Addr &mcast_addr,
+  int subscribe_i (ACE_INET_Addr const &mcast_addr,
                    int reuse_addr = 1,
-                   const ACE_TCHAR *net_if = nullptr);
+                   ACE_TCHAR const *net_if = nullptr);
 
   /// Unsubscribe from a multicast address on one or more network interface(s).
-  int unsubscribe_ifs (const ACE_INET_Addr &mcast_addr,
-                       const ACE_TCHAR *net_if = nullptr);
+  int unsubscribe_ifs (ACE_INET_Addr const &mcast_addr,
+                       ACE_TCHAR const *net_if = nullptr);
 
   /// Do unsubscription processing w/out udpating subscription list.
-  ///  (Layered method for <unsubscribe> processing).
-  int unsubscribe_i (const ACE_INET_Addr &mcast_addr,
-                     const ACE_TCHAR *net_if = nullptr);
+  ///  (Layered method for @c unsubscribe processing).
+  int unsubscribe_i (ACE_INET_Addr const &mcast_addr,
+                     ACE_TCHAR const *net_if = nullptr);
 
 protected:
   /// Contains common open functionality so that inheriting classes can
   /// reuse it.
-  int open_i (const ACE_INET_Addr &mcast_addr,        // Bound & sendto address.
-              const ACE_TCHAR *net_if = nullptr,      // Net interface for sends.
+  int open_i (ACE_INET_Addr const &mcast_addr,        // Bound & sendto address.
+              ACE_TCHAR const *net_if = nullptr,      // Net interface for sends.
               int reuse_addr = 1);
 
   /// Empty the dynamic subscription list.
@@ -388,9 +389,9 @@ private:
  using subscription_list_iter_t = ACE_DLList_Iterator<ip_mreq>;
  /// List of currently subscribed addr/iface pairs (and assc. types).
  mutable subscription_list_t  subscription_list_;
- /// Lock used to protect subscription list.
+ /// Lock used to protect subscription list. The lock type need not
+ /// support recursive locking.
  mutable ACE_SDM_LOCK subscription_list_lock_;
-     // (Lock type does not need to support recursive locking.)
 #endif /* ACE_SOCK_DGRAM_MCAST_DUMPABLE */
 };
 

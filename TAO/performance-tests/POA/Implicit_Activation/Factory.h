@@ -1,4 +1,3 @@
-
 #ifndef FACTORY_H
 #define FACTORY_H
 #include /**/ "ace/pre.h"
@@ -15,14 +14,13 @@ class Factory
   : public virtual POA_Test::Factory
 {
 public:
-  /// Constructor
-  Factory (CORBA::ORB_ptr orb);
+  explicit Factory (CORBA::ORB_ptr orb);
 
-  // = The skeleton methods
+  /// The skeleton methods
 
-  virtual Test::Simple_ptr create_simple_object ();
+  Test::Simple_ptr create_simple_object () override;
 
-  virtual void shutdown ();
+  void shutdown () override;
 
 private:
   /// Keep a reference to the ORB

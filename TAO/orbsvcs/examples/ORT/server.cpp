@@ -5,10 +5,10 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 
-const ACE_TCHAR *ior_output_file = 0;
+#include <memory>
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], ACE_TCHAR const *&ior_output_file)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
   int c;
@@ -21,9 +21,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
         break;
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "Usage: %s "
-                           "-o <iorfile>"
-                           "\n",
+                           ACE_TEXT ("Usage: %s -o <iorfile>\n"),
                            argv[0]),
                           -1);
       }
@@ -33,10 +31,12 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
+      ACE_TCHAR const *ior_output_file {};
+
 #if TAO_HAS_INTERCEPTORS == 1
 
       PortableInterceptor::ORBInitializer_ptr orb_initializer =
@@ -60,8 +60,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                                             argv,
                                             "server_sum_orb");
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, ior_output_file) != 0)
+      {
         return -1;
+      }
 
       // Resolve reference to RootPOA
       CORBA::Object_var obj =
@@ -73,9 +75,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // Check for nil references
       if (CORBA::is_nil (root_poa.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Unable to obtain RootPOA reference.\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Unable to obtain RootPOA reference.\n"),
+                            -1);
+        }
 
       // Get poa_manager reference
       PortableServer::POAManager_var poa_manager =
@@ -96,34 +100,38 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // Check for nil reference
       if (CORBA::is_nil (sum_server.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Unable to obtain reference to ORT::sum_server "
-                           "object.\n"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Unable to obtain reference to ORT::sum_server "
+                             "object.\n"),
+                            -1);
+        }
 
       // Convert the object reference to a string format.
       CORBA::String_var ior =
         orb->object_to_string (sum_server.in ());
 
       // If the ior_output_file exists, output the IOR to it.
-      if (ior_output_file != 0)
+      if (ior_output_file != nullptr)
         {
-          FILE *output_file = ACE_OS::fopen (ior_output_file, "w");
-          if (output_file == 0)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "Cannot open output file for writing "
-                               "IOR: %s",
-                               ior_output_file),
-                              1);
-          ACE_OS::fprintf (output_file, "%s", ior.in ());
-          ACE_OS::fclose (output_file);
+          std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+            ACE_OS::fopen (ior_output_file, ACE_TEXT ("w")),
+            ACE_OS::fclose);
+          if (!output_file)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("Cannot open output file for writing IOR: %s"),
+                                 ior_output_file),
+                                1);
+            }
+          ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
         }
 
       orb->run ();
 
       ACE_DEBUG ((LM_INFO, "Successful.\n"));
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("ORT example server:");
       return -1;

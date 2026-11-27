@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   Tagged_Components.h
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  */
-//=============================================================================
 
 #ifndef TAO_TAGGED_COMPONENTS_H
 #define TAO_TAGGED_COMPONENTS_H
@@ -20,7 +16,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/CONV_FRAMEC.h"
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -39,26 +34,26 @@ constexpr CORBA::ULong TAO_TAG_ENDPOINTS = 0x54414f02U;
  *
  * @brief The policy manager implementation.
  *
- * This class is used to manipulate and access the <components>
+ * This class is used to manipulate and access the @c components
  * field of an IIOP profile (and other GIOP profiles).
  * The definition for that field is simply a sequence of the
  * following structures:
+ * @code{.idl}
  * typedef unsigned long ComponentId;
  * struct TaggedComponent {
- * ComponentId     tag;
- * sequence<octet> component_data;
+ *   ComponentId tag;
+ *   sequence<octet> component_data;
  * };
+ * @endcode
  * the real motivation is to minimize the marshaling and
- * demarshaling of the <component_data> field for certain critical
+ * demarshaling of the @c component_data field for certain critical
  * components.
  */
 class TAO_Export TAO_Tagged_Components
 {
 public:
-  /// Constructor
   TAO_Tagged_Components ();
 
-  // = Standard OMG that require fast access.
   /// The the IOP::TAG_ORB_TYPE component value
   void set_orb_type (CORBA::ULong orb_type);
 
@@ -71,22 +66,20 @@ public:
    * copies the data, the second version steal all the sequence
    * buffers.
    */
-  void set_code_sets (const CONV_FRAME::CodeSetComponentInfo &);
+  void set_code_sets (CONV_FRAME::CodeSetComponentInfo const &);
   void set_code_sets (CONV_FRAME::CodeSetComponentInfo &);
 
   /// Gets a reference of the IOP::TAG_CODE_SETS component value,
   /// return 0 if the component is not present.
-  int get_code_sets (const CONV_FRAME::CodeSetComponentInfo* &) const;
+  int get_code_sets (CONV_FRAME::CodeSetComponentInfo const * &) const;
 
   /// Gets a copy of the IOP::TAG_CODE_SETS component value, return 0
   /// if the component is not present.
   int get_code_sets (CONV_FRAME::CodeSetComponentInfo &) const;
 
-  // = Generic components
-
   /// Insert the component into the list, making a copy of the octet
   /// sequence.
-  void set_component (const IOP::TaggedComponent& component);
+  void set_component (IOP::TaggedComponent const & component);
 
   /// Insert the component into the list, but efficiently stealing the
   /// contents of the octet sequence.
@@ -99,8 +92,6 @@ public:
   /// Remove a component, if present. Return number of components
   /// removed.
   int remove_component (IOP::ComponentId id);
-
-  // = Marshaling and demarshaling
 
   /// Marshal the list.
   int encode (TAO_OutputCDR& cdr) const;
@@ -121,10 +112,10 @@ private:
                         CONV_FRAME::CodeSetComponent &rhs);
 
   /// Helper methods to implement set_component()
-  void set_known_component_i (const IOP::TaggedComponent& component);
-  void set_component_i (const IOP::TaggedComponent& component);
+  void set_known_component_i (IOP::TaggedComponent const & component);
+  void set_component_i (IOP::TaggedComponent const & component);
   void set_component_i (IOP::TaggedComponent& component);
-  void add_component_i (const IOP::TaggedComponent& component);
+  void add_component_i (IOP::TaggedComponent const & component);
   void add_component_i (IOP::TaggedComponent& component);
   void set_component_i (IOP::ComponentId tag, TAO_OutputCDR &cdr);
 

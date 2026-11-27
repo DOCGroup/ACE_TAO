@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    test_dynany.cpp
  *
@@ -6,7 +5,6 @@
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "tao/AnyTypeCode/AnyTypeCode_methods.h"
 #include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
@@ -20,25 +18,18 @@
 #include "analyzer.h"
 
 #include <cstring>
+#include <memory>
 
-Test_DynAny::Test_DynAny (CORBA::ORB_var orb, int debug)
+Test_DynAny::Test_DynAny (CORBA::ORB_var orb, bool debug)
   : orb_ (orb),
-    test_name_ (CORBA::string_dup ("test_dynany")),
-    error_count_ (0),
     debug_ (debug)
 {
 }
 
-Test_DynAny::~Test_DynAny ()
-{
-  CORBA::string_free (this->test_name_);
-  this->test_name_ = 0;
-}
-
-const char*
+char const*
 Test_DynAny::test_name () const
 {
-  return this->test_name_;
+  return "test_dynany";
 }
 
 int
@@ -59,6 +50,27 @@ Test_DynAny::run_test ()
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Nil dynamic any factory after narrow\n"),
+                            -1);
+        }
+
+      fixed_test_stage = "multiple DynAny round trip";
+      DynamicAny::AnySeq values;
+      values.length (2);
+      values[0] <<= CORBA::Long (42);
+      values[1] <<= CORBA::Long (73);
+      DynamicAny::DynAnySeq_var dyn_values =
+        dynany_factory->create_multiple_dyn_anys (values, true);
+      DynamicAny::AnySeq_var copied_values =
+        dynany_factory->create_multiple_anys (dyn_values.in ());
+      CORBA::Long first {};
+      CORBA::Long second {};
+      if (copied_values->length () != 2
+          || !(copied_values[0] >>= first)
+          || !(copied_values[1] >>= second)
+          || first != 42 || second != 73)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Multiple DynAny round trip returned incorrect values\n"),
                             -1);
         }
 
@@ -356,13 +368,14 @@ Test_DynAny::run_test ()
               malformed_output.write_octet (0x12);
             }
           TAO_InputCDR malformed_input (malformed_output);
-          TAO::Unknown_IDL_Type *malformed_impl = nullptr;
+          TAO::Unknown_IDL_Type *malformed_impl {};
           ACE_NEW_THROW_EX (malformed_impl,
                             TAO::Unknown_IDL_Type (small_fixed_tc.in (),
                                                    malformed_input),
                             CORBA::NO_MEMORY ());
+          std::unique_ptr<TAO::Unknown_IDL_Type> malformed_owner (malformed_impl);
           CORBA::Any malformed_any;
-          malformed_any.replace (malformed_impl);
+          malformed_any.replace (malformed_owner.release ());
 
           bool rejected = false;
           try
@@ -571,7 +584,6 @@ Test_DynAny::run_test ()
           ++this->error_count_;
         }
 
-
       ACE_DEBUG ((LM_DEBUG,
                   "testing: constructor(TypeCode)/from_any/to_any\n"));
 
@@ -585,7 +597,7 @@ Test_DynAny::run_test ()
       CORBA::TypeCode_ptr out_tc;
       out_any2 >>= out_tc;
 
-      CORBA::Boolean equal = out_tc->equal (data.m_typecode1);
+      CORBA::Boolean const equal = out_tc->equal (data.m_typecode1);
 
       if (equal)
         {
@@ -596,7 +608,6 @@ Test_DynAny::run_test ()
         {
           ++this->error_count_;
         }
-
 
       fa2->destroy ();
       ftc2->destroy ();
@@ -643,7 +654,6 @@ Test_DynAny::run_test ()
           ++this->error_count_;
         }
 
-
       ACE_DEBUG ((LM_DEBUG,
                   "testing: constructor(TypeCode)/from_any/to_any\n"));
 
@@ -655,7 +665,7 @@ Test_DynAny::run_test ()
       analyzer.analyze (ftc3.in ());
       CORBA::Any_var out_any3 = ftc3->to_any ();
 
-      const CORBA::ShortSeq *outseq = 0;
+      CORBA::ShortSeq const* outseq {};
       out_any3.in () >>= outseq;
 
       good =
@@ -712,7 +722,7 @@ Test_DynAny::run_test ()
       good = good && !fa4->equal(fa5.in ());
 
       CORBA::ShortSeq ss6(data.m_shortseq1);
-      ss6[0]++;
+      ++ss6[0];
       CORBA::Any in6;
       in6 <<= ss6;
 
@@ -722,16 +732,13 @@ Test_DynAny::run_test ()
       // is not equal for different values
       good = good && !fa4->equal(fa6.in ());
 
-
       CORBA::Any in7;
       in7 <<= data.m_shortseq1;
       DynamicAny::DynAny_var fa7 =
         dynany_factory->create_dyn_any (in7);
 
-
       // is equal to identical sequence, not self
       good = good && fa4->equal(fa7.in ());
-
 
       if (good)
         {
@@ -744,7 +751,7 @@ Test_DynAny::run_test ()
         }
 
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ACE_ERROR ((LM_ERROR,
                   "fixed DynAny test failed during %C\n",

@@ -1,12 +1,8 @@
-/* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file   Control.h
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  */
-//=============================================================================
-
 
 #ifndef EC_CONTROL_H
 #define EC_CONTROL_H
@@ -25,13 +21,17 @@
 class Consumer : public EC_Counting_Consumer
 {
 public:
-  /// Constructor
-  Consumer (const char* name,
+  Consumer (char const *name,
             int event_count);
+  Consumer (Consumer const &) = delete;
+  Consumer &operator= (Consumer const &) = delete;
+  Consumer (Consumer &&) = delete;
+  Consumer &operator= (Consumer &&) = delete;
 
-  // = The RtecEventComm::PushConsumer methods
-
-  virtual void push (const RtecEventComm::EventSet& events);
+  /// @name RtecEventComm::PushConsumer operations
+  /// @{
+  void push (RtecEventComm::EventSet const & events) override;
+  /// @}
 
 private:
   /// After this number of events the consumer disconnects from the

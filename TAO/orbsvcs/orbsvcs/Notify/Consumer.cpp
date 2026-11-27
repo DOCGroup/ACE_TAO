@@ -11,6 +11,8 @@
 #include "orbsvcs/Notify/QoSProperties.h"
 #include "orbsvcs/Notify/Properties.h"
 
+#include <memory>
+
 #include "orbsvcs/Time_Utilities.h"
 
 #include "tao/debug.h"
@@ -18,26 +20,24 @@
 #include "tao/Messaging/Messaging_TypesC.h"
 
 #include "ace/Bound_Ptr.h"
-#include "ace/Unbounded_Queue.h"
 
 #ifndef DEBUG_LEVEL
 # define DEBUG_LEVEL TAO_debug_level
 #endif //DEBUG_LEVEL
 
-static const int DEFAULT_RETRY_TIMEOUT = 10;//120; // Note : This should be a config param or qos setting
+// This should be a configuration parameter or QoS setting.
+static constexpr int DEFAULT_RETRY_TIMEOUT = 10;
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_Consumer::TAO_Notify_Consumer (TAO_Notify_ProxySupplier* proxy)
 : proxy_ (proxy)
-, is_suspended_ (0)
-, have_not_yet_verified_publish_ (true)
 , pacing_ (proxy->qos_properties_.pacing_interval ())
 , max_batch_size_ (CosNotification::MaximumBatchSize, 0)
 , timer_id_ (-1)
 , timer_ (0)
 {
-  Request_Queue* pending_events = nullptr;
+  Request_Queue* pending_events {};
   ACE_NEW (pending_events, TAO_Notify_Consumer::Request_Queue ());
   this->pending_events_.reset( pending_events );
 
@@ -76,7 +76,7 @@ TAO_Notify_Consumer::proxy ()
 }
 
 void
-TAO_Notify_Consumer::qos_changed (const TAO_Notify_QoSProperties& qos_properties)
+TAO_Notify_Consumer::qos_changed (TAO_Notify_QoSProperties const &qos_properties)
 {
   this->max_batch_size_ = qos_properties.maximum_batch_size ();
 }
@@ -84,7 +84,7 @@ TAO_Notify_Consumer::qos_changed (const TAO_Notify_QoSProperties& qos_properties
 void
 TAO_Notify_Consumer::resume ()
 {
-  this->is_suspended_ = 0;
+  this->is_suspended_ = false;
 
   this->dispatch_pending ();
 }
@@ -101,12 +101,15 @@ TAO_Notify_Consumer::enqueue_request (
     TAO_Notify_Method_Request_Event_Queueable (*request, event),
     CORBA::NO_MEMORY ());
 
-  if (DEBUG_LEVEL  > 3) ORBSVCS_DEBUG ( (LM_DEBUG,
-    ACE_TEXT ("Consumer %d: enqueue_request (%d) @%@.\n"),
-    static_cast<int> (this->proxy ()->id ()),
-    request->sequence (),
-    request
-    ));
+  if (DEBUG_LEVEL  > 3)
+    {
+      ORBSVCS_DEBUG ( (LM_DEBUG,
+      ACE_TEXT ("Consumer %d: enqueue_request (%d) @%@.\n"),
+      static_cast<int> (this->proxy ()->id ()),
+      request->sequence (),
+      request
+      ));
+    }
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, *this->proxy_lock ());
   this->pending_events().enqueue_tail (queue_entry);
 }
@@ -118,11 +121,13 @@ TAO_Notify_Consumer::enqueue_if_necessary (TAO_Notify_Method_Request_Event * req
   if (! this->pending_events().is_empty ())
     {
       if (DEBUG_LEVEL > 3)
-        ORBSVCS_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("Consumer %d: enqueuing another event. %d\n"),
-                    static_cast<int> (this->proxy ()->id ()),
-                    request->sequence ()
-                    ));
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("Consumer %d: enqueuing another event. %d\n"),
+                      static_cast<int> (this->proxy ()->id ()),
+                      request->sequence ()
+                      ));
+        }
       TAO_Notify_Event::Ptr event (
         request->event ()->queueable_copy ());
       TAO_Notify_Method_Request_Event_Queueable * queue_entry;
@@ -134,14 +139,16 @@ TAO_Notify_Consumer::enqueue_if_necessary (TAO_Notify_Method_Request_Event * req
       this->schedule_timer (false);
       return true;
     }
-  if (this->is_suspended_ == 1)
+  if (this->is_suspended_)
     {
       if (DEBUG_LEVEL > 3)
-        ORBSVCS_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("Suspended Consumer %d enqueing event. %d\n"),
-                    static_cast<int> (this->proxy ()->id ()),
-                    request->sequence ()
-                    ));
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("Suspended Consumer %d enqueing event. %d\n"),
+                      static_cast<int> (this->proxy ()->id ()),
+                      request->sequence ()
+                      ));
+        }
       TAO_Notify_Event::Ptr event (
         request->event ()->queueable_copy ());
       TAO_Notify_Method_Request_Event_Queueable * queue_entry;
@@ -165,7 +172,7 @@ TAO_Notify_Consumer::deliver (TAO_Notify_Method_Request_Event * request)
   bool queued = enqueue_if_necessary (request);
   if (!queued)
     {
-      bool from_timeout = false;
+      bool from_timeout {};
       DispatchStatus status = this->dispatch_request (request);
       switch (status)
         {
@@ -177,11 +184,13 @@ TAO_Notify_Consumer::deliver (TAO_Notify_Method_Request_Event * request)
         case DISPATCH_RETRY:
           {
             if (DEBUG_LEVEL > 1)
-              ORBSVCS_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("Consumer %d enqueing event %d due ")
-                          ACE_TEXT ("to failed dispatch.\n"),
-                          static_cast<int> (this->proxy ()->id ()),
-                          request->sequence ()));
+              {
+                ORBSVCS_DEBUG ((LM_DEBUG,
+                            ACE_TEXT ("Consumer %d enqueing event %d due ")
+                            ACE_TEXT ("to failed dispatch.\n"),
+                            static_cast<int> (this->proxy ()->id ()),
+                            request->sequence ()));
+              }
             this->enqueue_request (request);
             this->schedule_timer (true);
             break;
@@ -189,12 +198,14 @@ TAO_Notify_Consumer::deliver (TAO_Notify_Method_Request_Event * request)
         case DISPATCH_DISCARD:
           {
             if (DEBUG_LEVEL  > 0)
-              ORBSVCS_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("(%P|%t) Consumer %d: Error during ")
-                          ACE_TEXT ("direct dispatch. Discarding event:%d.\n"),
-                          static_cast<int> (this->proxy ()->id ()),
-                          request->sequence ()
-                          ));
+              {
+                ORBSVCS_DEBUG ((LM_DEBUG,
+                            ACE_TEXT ("(%P|%t) Consumer %d: Error during ")
+                            ACE_TEXT ("direct dispatch. Discarding event:%d.\n"),
+                            static_cast<int> (this->proxy ()->id ()),
+                            request->sequence ()
+                            ));
+              }
             request->complete ();
             break;
           }
@@ -204,18 +215,20 @@ TAO_Notify_Consumer::deliver (TAO_Notify_Method_Request_Event * request)
         case DISPATCH_FAIL:
           {
             if (DEBUG_LEVEL  > 0)
-              ORBSVCS_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("(%P|%t) Consumer %d: Failed during ")
-                          ACE_TEXT ("direct dispatch :%d. Discarding event.\n"),
-                          static_cast<int> (this->proxy ()->id ()),
-                          request->sequence ()
-                          ));
+              {
+                ORBSVCS_DEBUG ((LM_DEBUG,
+                            ACE_TEXT ("(%P|%t) Consumer %d: Failed during ")
+                            ACE_TEXT ("direct dispatch :%d. Discarding event.\n"),
+                            static_cast<int> (this->proxy ()->id ()),
+                            request->sequence ()
+                            ));
+              }
             request->complete ();
             try
               {
                 this->proxy_supplier ()->destroy (from_timeout);
               }
-            catch (const CORBA::Exception&)
+            catch (CORBA::Exception const&)
               {
                 // todo is there something meaningful we can do here?
               }
@@ -233,36 +246,40 @@ TAO_Notify_Consumer::dispatch_request (TAO_Notify_Method_Request_Event * request
     {
       request->event ()->push (this);
       if (DEBUG_LEVEL  > 8)
-        ORBSVCS_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("Consumer %d dispatched single event %d.\n"),
-                    static_cast<int> (this->proxy ()->id ()),
-                    request->sequence ()
-                    ));
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("Consumer %d dispatched single event %d.\n"),
+                      static_cast<int> (this->proxy ()->id ()),
+                      request->sequence ()
+                      ));
+        }
     }
-  catch (const CORBA::OBJECT_NOT_EXIST& ex)
+  catch (CORBA::OBJECT_NOT_EXIST const& ex)
     {
       if (DEBUG_LEVEL  > 0)
         {
           ORBSVCS_DEBUG ((LM_ERROR,
                       ACE_TEXT ("(%P|%t) TAO_Notify_Consumer %d::push ")
-                      ACE_TEXT ("(request) %s\n"),
+                      ACE_TEXT ("(request) %C\n"),
                       static_cast<int> (this->proxy ()->id ()),
                       ex._info ().c_str ()
                       ));
         }
       result = DISPATCH_FAIL;
     }
-  catch (const CORBA::TRANSIENT& ex)
+  catch (CORBA::TRANSIENT const& ex)
     {
       if (DEBUG_LEVEL  > 0)
-        ORBSVCS_DEBUG ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) TAO_Notify_Consumer %d::push ")
-                    ACE_TEXT ("(request) Transient (minor=%d) %s\n"),
-                    static_cast<int> (this->proxy ()->id ()),
-                    ex.minor (),
-                    ex._info ().c_str ()
-                    ));
-      const CORBA::ULong BITS_5_THRU_12_MASK = 0x00000f80u;
+        {
+          ORBSVCS_DEBUG ((LM_ERROR,
+                      ACE_TEXT ("(%P|%t) TAO_Notify_Consumer %d::push ")
+                      ACE_TEXT ("(request) Transient (minor=%d) %s\n"),
+                      static_cast<int> (this->proxy ()->id ()),
+                      ex.minor (),
+                      ex._info ().c_str ()
+                      ));
+        }
+      CORBA::ULong const BITS_5_THRU_12_MASK = 0x00000f80u;
       switch (ex.minor () & 0xfffff000u)
         {
         case CORBA::OMGVMCID:
@@ -292,29 +309,33 @@ TAO_Notify_Consumer::dispatch_request (TAO_Notify_Method_Request_Event * request
             } break;
         }
     }
-  catch (const CORBA::TIMEOUT& ex)
+  catch (CORBA::TIMEOUT const& ex)
     {
       if (DEBUG_LEVEL  > 0)
-        ORBSVCS_DEBUG ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) TAO_Notify_Consumer %u::push ")
-                    ACE_TEXT ("(request) %s\n"),
-                    this->proxy ()->id (),
-                    ex._info().c_str ()
-                    ));
+        {
+          ORBSVCS_DEBUG ((LM_ERROR,
+                      ACE_TEXT ("(%P|%t) TAO_Notify_Consumer %u::push ")
+                      ACE_TEXT ("(request) %C\n"),
+                      this->proxy ()->id (),
+                      ex._info().c_str ()
+                      ));
+        }
       result = DISPATCH_FAIL_TIMEOUT;
     }
-  catch (const CORBA::COMM_FAILURE& ex)
+  catch (CORBA::COMM_FAILURE const& ex)
     {
       if (DEBUG_LEVEL  > 0)
-        ORBSVCS_DEBUG ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) TAO_Notify_Consumer %u::push ")
-                    ACE_TEXT ("(request) %s\n"),
-                    this->proxy ()->id (),
-                    ex._info().c_str ()
-                    ));
+        {
+          ORBSVCS_DEBUG ((LM_ERROR,
+                      ACE_TEXT ("(%P|%t) TAO_Notify_Consumer %u::push ")
+                      ACE_TEXT ("(request) %C\n"),
+                      this->proxy ()->id (),
+                      ex._info().c_str ()
+                      ));
+        }
       result = DISPATCH_FAIL;
     }
-  catch (const CORBA::SystemException& ex)
+  catch (CORBA::SystemException const& ex)
     {
       if (DEBUG_LEVEL  > 0)
         {
@@ -327,7 +348,7 @@ TAO_Notify_Consumer::dispatch_request (TAO_Notify_Method_Request_Event * request
         }
       result = DISPATCH_DISCARD;
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const&)
     {
       ORBSVCS_ERROR ( (LM_ERROR,
                    ACE_TEXT ("(%P|%t) TAO_Notify_Consumer %d::push ")
@@ -361,35 +382,39 @@ TAO_Notify_Consumer::dispatch_request (TAO_Notify_Method_Request_Event * request
 }
 
 TAO_Notify_Consumer::DispatchStatus
-TAO_Notify_Consumer::dispatch_batch (const CosNotification::EventBatch& batch)
+TAO_Notify_Consumer::dispatch_batch (CosNotification::EventBatch const& batch)
 {
   DispatchStatus result = DISPATCH_SUCCESS;
   try
     {
       this->push (batch);
     }
-  catch (const CORBA::OBJECT_NOT_EXIST& ex)
+  catch (CORBA::OBJECT_NOT_EXIST const& ex)
     {
       if (DEBUG_LEVEL  > 0)
-        ORBSVCS_DEBUG ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) TAO_Notify_Consumer ")
-                    ACE_TEXT ("%d::dispatch_batch() %s\n"),
-                    static_cast<int> (this->proxy ()->id ()),
-                    ex._info ().c_str ()
-                    ));
+        {
+          ORBSVCS_DEBUG ((LM_ERROR,
+                      ACE_TEXT ("(%P|%t) TAO_Notify_Consumer ")
+                      ACE_TEXT ("%d::dispatch_batch() %C\n"),
+                      static_cast<int> (this->proxy ()->id ()),
+                      ex._info ().c_str ()
+                      ));
+        }
       result = DISPATCH_FAIL;
     }
-  catch (const CORBA::TRANSIENT& ex)
+  catch (CORBA::TRANSIENT const& ex)
     {
       if (DEBUG_LEVEL  > 0)
-        ORBSVCS_DEBUG ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) TAO_Notify_Consumer ")
-                    ACE_TEXT ("%d::dispatch_batch() Transient (minor=%d) %s\n"),
-                    static_cast<int> (this->proxy ()->id ()),
-                    ex.minor (),
-                    ex._info ().c_str ()
-                    ));
-      const CORBA::ULong BITS_5_THRU_12_MASK = 0x00000f80u;
+        {
+          ORBSVCS_DEBUG ((LM_ERROR,
+                      ACE_TEXT ("(%P|%t) TAO_Notify_Consumer ")
+                      ACE_TEXT ("%d::dispatch_batch() Transient (minor=%d) %s\n"),
+                      static_cast<int> (this->proxy ()->id ()),
+                      ex.minor (),
+                      ex._info ().c_str ()
+                      ));
+        }
+      CORBA::ULong const BITS_5_THRU_12_MASK = 0x00000f80u;
       switch (ex.minor () & 0xfffff000u)
         {
         case CORBA::OMGVMCID:
@@ -419,29 +444,33 @@ TAO_Notify_Consumer::dispatch_batch (const CosNotification::EventBatch& batch)
             } break;
         }
     }
-  catch (const CORBA::TIMEOUT& ex)
+  catch (CORBA::TIMEOUT const& ex)
     {
       if (DEBUG_LEVEL  > 0)
-        ORBSVCS_DEBUG ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) TAO_Notify_Consumer ")
-                    ACE_TEXT ("%u::dispatch_batch() %s\n"),
-                    this->proxy ()->id (),
-                    ex._info().c_str ()
-                    ));
+        {
+          ORBSVCS_DEBUG ((LM_ERROR,
+                      ACE_TEXT ("(%P|%t) TAO_Notify_Consumer ")
+                      ACE_TEXT ("%u::dispatch_batch() %C\n"),
+                      this->proxy ()->id (),
+                      ex._info().c_str ()
+                      ));
+        }
       result = DISPATCH_FAIL_TIMEOUT;
     }
-  catch (const CORBA::COMM_FAILURE& ex)
+  catch (CORBA::COMM_FAILURE const& ex)
     {
       if (DEBUG_LEVEL  > 0)
-        ORBSVCS_DEBUG ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) TAO_Notify_Consumer ")
-                    ACE_TEXT ("%u::dispatch_batch() %s\n"),
-                    this->proxy ()->id (),
-                    ex._info().c_str ()
-                    ));
+        {
+          ORBSVCS_DEBUG ((LM_ERROR,
+                      ACE_TEXT ("(%P|%t) TAO_Notify_Consumer ")
+                      ACE_TEXT ("%u::dispatch_batch() %C\n"),
+                      this->proxy ()->id (),
+                      ex._info().c_str ()
+                      ));
+        }
       result = DISPATCH_FAIL;
     }
-  catch (const CORBA::SystemException& ex)
+  catch (CORBA::SystemException const& ex)
     {
       if (DEBUG_LEVEL  > 0)
         {
@@ -454,7 +483,7 @@ TAO_Notify_Consumer::dispatch_batch (const CosNotification::EventBatch& batch)
         }
       result = DISPATCH_DISCARD;
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const&)
     {
       ORBSVCS_ERROR ((LM_ERROR,
                   ACE_TEXT ("(%P|%t) TAO_Notify_Consumer ")
@@ -471,11 +500,13 @@ void
 TAO_Notify_Consumer::dispatch_pending ()
 {
   if (DEBUG_LEVEL  > 5)
-    ORBSVCS_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("Consumer %d dispatching pending events.  Queue size: %d\n"),
-                static_cast<int> (this->proxy ()->id ()),
-                this->pending_events().size ()
-                ));
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("Consumer %d dispatching pending events.  Queue size: %B\n"),
+                  static_cast<int> (this->proxy ()->id ()),
+                  this->pending_events().size ()
+                  ));
+    }
 
   // lock ourselves in memory for the duration
   TAO_Notify_Consumer::Ptr self_grd (this);
@@ -495,7 +526,6 @@ TAO_Notify_Consumer::dispatch_pending ()
     }
 }
 
-
 // virtual: this is the default, overridden for SequencePushConsumer
 // FUZZ: disable check_for_ACE_Guard
 bool
@@ -505,7 +535,7 @@ TAO_Notify_Consumer::dispatch_from_queue (
 {
 // FUZZ: enable check_for_ACE_Guard
   bool result = true;
-  TAO_Notify_Method_Request_Event_Queueable * request = nullptr;
+  TAO_Notify_Method_Request_Event_Queueable * request {};
   if (requests.dequeue_head (request) == 0)
     {
       ace_mon.release ();
@@ -523,11 +553,13 @@ TAO_Notify_Consumer::dispatch_from_queue (
         case DISPATCH_RETRY:
           {
             if (DEBUG_LEVEL  > 0)
-              ORBSVCS_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("(%P|%t) Consumer %d: Will retry %d\n"),
-                          static_cast<int> (this->proxy ()->id ()),
-                          request->sequence ()
-                          ));
+              {
+                ORBSVCS_DEBUG ((LM_DEBUG,
+                            ACE_TEXT ("(%P|%t) Consumer %d: Will retry %d\n"),
+                            static_cast<int> (this->proxy ()->id ()),
+                            request->sequence ()
+                            ));
+              }
             ace_mon.acquire ();
             requests.enqueue_head (request); // put the failed event back where it was
             result = false;
@@ -536,12 +568,14 @@ TAO_Notify_Consumer::dispatch_from_queue (
         case DISPATCH_DISCARD:
           {
             if (DEBUG_LEVEL  > 0)
-              ORBSVCS_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("(%P|%t) Consumer %d: Error during ")
-                          ACE_TEXT ("dispatch. Discarding event:%d.\n"),
-                          static_cast<int> (this->proxy ()->id ()),
-                          request->sequence ()
-                          ));
+              {
+                ORBSVCS_DEBUG ((LM_DEBUG,
+                            ACE_TEXT ("(%P|%t) Consumer %d: Error during ")
+                            ACE_TEXT ("dispatch. Discarding event:%d.\n"),
+                            static_cast<int> (this->proxy ()->id ()),
+                            request->sequence ()
+                            ));
+              }
             request->complete ();
             ace_mon.acquire ();
             result = true;
@@ -550,12 +584,14 @@ TAO_Notify_Consumer::dispatch_from_queue (
         case DISPATCH_FAIL:
           {
             if (DEBUG_LEVEL  > 0)
-              ORBSVCS_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("(%P|%t) Consumer %d: Failed. ")
-                          ACE_TEXT ("Discarding event %d.\n"),
-                          static_cast<int> (this->proxy ()->id ()),
-                          request->sequence ()
-                          ));
+              {
+                ORBSVCS_DEBUG ((LM_DEBUG,
+                            ACE_TEXT ("(%P|%t) Consumer %d: Failed. ")
+                            ACE_TEXT ("Discarding event %d.\n"),
+                            static_cast<int> (this->proxy ()->id ()),
+                            request->sequence ()
+                            ));
+              }
             request->complete ();
             ace_mon.acquire ();
             while (requests.dequeue_head (request) == 0)
@@ -569,7 +605,7 @@ TAO_Notify_Consumer::dispatch_from_queue (
               {
                 this->proxy_supplier ()->destroy ();
               }
-            catch (const CORBA::Exception&)
+            catch (CORBA::Exception const&)
               {
                 // todo is there something reasonable to do here?
               }
@@ -621,7 +657,7 @@ TAO_Notify_Consumer::schedule_timer (bool is_error)
   if (DEBUG_LEVEL  > 5)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("Consumer %d: scheduling pacing/retry for %dms.\n"),
+                  ACE_TEXT ("Consumer %d: scheduling pacing/retry for %Lums.\n"),
                   static_cast<int> (this->proxy ()->id ()), tv.msec ()));
     }
 
@@ -647,10 +683,12 @@ TAO_Notify_Consumer::cancel_timer ()
   if (this->timer_.isSet() && this->timer_id_ != -1)
     {
       if (DEBUG_LEVEL  > 5)
-        ORBSVCS_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("Consumer %d canceling dispatch timer.\n"),
-                    static_cast<int> (this->proxy ()->id ())
-                    ));
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("Consumer %d canceling dispatch timer.\n"),
+                      static_cast<int> (this->proxy ()->id ())
+                      ));
+        }
 
       this->timer_->cancel_timer (timer_id_);
     }
@@ -658,7 +696,7 @@ TAO_Notify_Consumer::cancel_timer ()
 }
 
 int
-TAO_Notify_Consumer::handle_timeout (const ACE_Time_Value&, const void*)
+TAO_Notify_Consumer::handle_timeout (ACE_Time_Value const&, void const*)
 {
   if (!this->is_suspended() && this->timer_.isSet() && this->timer_id_ != -1)
     {
@@ -688,22 +726,26 @@ TAO_Notify_Consumer::shutdown ()
 }
 
 void
-TAO_Notify_Consumer::dispatch_updates_i (const CosNotification::EventTypeSeq& added, const CosNotification::EventTypeSeq& removed)
+TAO_Notify_Consumer::dispatch_updates_i (CosNotification::EventTypeSeq const& added, CosNotification::EventTypeSeq const& removed)
 {
   if (this->have_not_yet_verified_publish_)
     {
       this->have_not_yet_verified_publish_ = false; // no need to check again
       if (! this->publish_->_is_a ("IDL:omg.org/CosNotifyComm/NotifyPublish:1.0"))
+      {
         this->publish_ = CosNotifyComm::NotifyPublish::_nil();
+      }
     }
   if (! CORBA::is_nil (this->publish_.in ()))
+  {
     this->publish_->offer_change (added, removed);
+  }
 }
 
 TAO_SYNCH_MUTEX*
 TAO_Notify_Consumer::proxy_lock ()
 {
-  return &this->proxy_->lock_;
+  return std::addressof (this->proxy_->lock_);
 }
 
 TAO_Notify_ProxySupplier*
@@ -741,7 +783,7 @@ TAO_Notify_Consumer::assume_pending_events (TAO_Notify_Consumer& rhs)
 bool
 TAO_Notify_Consumer::is_alive (bool allow_nil_consumer)
 {
-  bool status = false;
+  bool status {};
   CORBA::Object_var consumer = this->get_consumer ();
   if (CORBA::is_nil (consumer.in ()))
   {
@@ -750,15 +792,19 @@ TAO_Notify_Consumer::is_alive (bool allow_nil_consumer)
     // check should return true so it will be validated in
     // next period.
     if (allow_nil_consumer)
-      return true;
+      {
+        return true;
+      }
     else
-      return status;
+      {
+        return status;
+      }
   }
 
   CORBA::PolicyList policy_list;
   try
     {
-      bool do_liveliness_check = false;
+      bool do_liveliness_check {};
       ACE_Time_Value now = ACE_OS::gettimeofday ();
 
       if (CORBA::is_nil (this->rtt_obj_.in ()))
@@ -785,32 +831,40 @@ TAO_Notify_Consumer::is_alive (bool allow_nil_consumer)
                                           CORBA::ADD_OVERRIDE);
 
         // Clean up the policy that was allocated in the try/catch
-        for (CORBA::ULong i = 0; i < policy_list.length (); i++)
-          policy_list[i]->destroy ();
+        for (CORBA::ULong i {}; i < policy_list.length (); ++i)
+          {
+            policy_list[i]->destroy ();
+          }
 
         do_liveliness_check
           = (last_ping_ == ACE_Time_Value::zero ? true
           : now - last_ping_.value () >= TAO_Notify_PROPERTIES::instance()->validate_client_delay ());
       }
       else
-        do_liveliness_check =
-          now - last_ping_.value () >= TAO_Notify_PROPERTIES::instance()->validate_client_interval ();
+        {
+          do_liveliness_check =
+            now - last_ping_.value () >= TAO_Notify_PROPERTIES::instance()->validate_client_interval ();
+        }
 
       if (CORBA::is_nil (rtt_obj_.in ()))
-        status = false;
+        {
+          status = false;
+        }
       else if (do_liveliness_check || allow_nil_consumer)
-      {
-        last_ping_ = now;
-        status = !rtt_obj_->_non_existent ();
-      }
+        {
+          last_ping_ = now;
+          status = !rtt_obj_->_non_existent ();
+        }
       else
-        status = true;
+        {
+          status = true;
+        }
     }
-  catch (const CORBA::TIMEOUT&)
+  catch (CORBA::TIMEOUT const&)
     {
        status = true;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       if (DEBUG_LEVEL > 0)
       {

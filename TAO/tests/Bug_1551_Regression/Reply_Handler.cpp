@@ -1,9 +1,8 @@
 #include "Reply_Handler.h"
 
-Reply_Handler::Reply_Handler (
-    Test::Hello_ptr hello, CORBA::ORB_ptr orb)
-  : counter_ (1000)
-  , hello_ (Test::Hello::_duplicate (hello))
+Reply_Handler::Reply_Handler (Test::Hello_ptr hello,
+                              CORBA::ORB_ptr orb)
+  : hello_ (Test::Hello::_duplicate (hello))
   , orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
@@ -13,7 +12,7 @@ Reply_Handler::short_sleep ()
 {
   this->check_counter ();
 
-  Test::AMI_HelloHandler_var current =
+  Test::AMI_HelloHandler_var const current =
     this->_this ();
 
   this->hello_->sendc_short_sleep (current.in ());
@@ -39,7 +38,7 @@ Reply_Handler::short_sleep_excep (
           ACE_ERROR ((LM_ERROR, "ERROR: Got nill exceptionholder\n"));
         }
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       // Exceptions are expected and thus ignored in normal runs:
 #if 0
@@ -47,7 +46,7 @@ Reply_Handler::short_sleep_excep (
 #endif /* 0 */
     }
 
-  Test::AMI_HelloHandler_var current =
+  Test::AMI_HelloHandler_var const current =
     this->_this ();
 
   this->hello_->sendc_short_sleep (current.in ());

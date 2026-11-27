@@ -1,12 +1,8 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
  *  @file    Base_Optimizer.h
  *
  *  @author Per Andersson.
  */
-//=============================================================================
 
 #ifndef BASE_OPTIMIZER_H
 #define BASE_OPTIMIZER_H
@@ -28,9 +24,9 @@ class Base_Optimizer : public Base
 {
 public:
   Base_Optimizer ();
-  Base_Optimizer (const Base &base);
-  Base_Optimizer (const Base &base,
-                  const Member &member);
+  explicit Base_Optimizer (Base const &base);
+  Base_Optimizer (Base const &base,
+                  Member const &member);
 
   Member m_;
 };

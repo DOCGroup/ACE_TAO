@@ -1,6 +1,3 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
  *  @file    Functor_T.h
  *
@@ -8,9 +5,9 @@
  *   used in various places in ACE.  There are currently two major
  *   categories of function objects in ACE: GOF Command Pattern
  *   objects, and STL-style functors for comparison of container
- *   elements.  The command objects are invoked via an <execute>
+ *   elements.  The command objects are invoked via an @c execute
  *   method, while the STL-style functors are invoked via an
- *   <operator()> method.
+ *   @c operator() method.
  *
  *  @author Chris Gill <cdgill@cs.wustl.edu>
  *  @author Based on Command Pattern implementations originally done by
@@ -20,8 +17,6 @@
  *  @author and on STL-style functor implementations originally done by
  *  @author Irfan Pyarali  <irfan@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef ACE_FUNCTOR_T_H
 #define ACE_FUNCTOR_T_H
@@ -63,7 +58,6 @@ public:
   /// @c action_ of the Command to @a action.
   ACE_Command_Callback (RECEIVER &recvr, ACTION action);
 
-  /// Virtual destructor.
   ~ACE_Command_Callback () override = default;
 
   /// Invokes the method @c action_ from the object @c receiver_.
@@ -91,14 +85,13 @@ class ACE_Member_Function_Command : public ACE_Command_Base
 public:
   using PTMF = void (RECEIVER::*)();
 
-  /// Con Constructor: sets the <receiver_> of the Command to @a recvr, and the
-  /// <action_> of the Command to <action>.
+  /// Con Constructor: sets the @c receiver_ of the Command to @a recvr, and the
+  /// @c action_ of the Command to @c action.
   ACE_Member_Function_Command (RECEIVER &recvr, PTMF ptmf);
 
-  /// Virtual destructor.
   ~ACE_Member_Function_Command () override = default;
 
-  /// Invokes the method <action_> from the object <receiver_>.  The
+  /// Invokes the method @c action_ from the object @c receiver_.  The
   /// parameter is ignored
   int execute (void *) override;
 
@@ -124,7 +117,7 @@ class ACE_Hash
 {
 public:
   /// Simply calls t.hash ()
-  unsigned long operator () (const TYPE &t) const;
+  unsigned long operator () (TYPE const &t) const;
 };
 
 /**
@@ -153,8 +146,8 @@ class ACE_Equal_To
 {
 public:
   /// Simply calls operator==
-  bool operator () (const TYPE &lhs,
-                    const TYPE &rhs) const;
+  bool operator () (TYPE const &lhs,
+                    TYPE const &rhs) const;
 };
 
 /**
@@ -170,8 +163,8 @@ class ACE_Less_Than
 {
 public:
   /// Simply calls operator<
-  bool operator () (const TYPE &lhs,
-                    const TYPE &rhs) const;
+  bool operator () (TYPE const &lhs,
+                    TYPE const &rhs) const;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

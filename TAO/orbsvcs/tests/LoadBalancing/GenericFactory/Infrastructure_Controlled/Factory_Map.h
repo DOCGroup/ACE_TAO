@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #ifndef FACTORY_MAP_H
 #define FACTORY_MAP_H
 
@@ -18,7 +17,6 @@ using Factory_Map = ACE_Hash_Map_Manager_Ex<
   ACE_Hash<ACE_UINT32>,
   ACE_Equal_To<ACE_UINT32>,
   ACE_Null_Mutex>;
-
 
 #include /**/ "ace/post.h"
 #endif /* FACTORY_MAP_H */

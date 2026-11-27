@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*): taoserver {
   exename = Collocated_Test
 }

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE TAO_Notify_Factory*
@@ -121,7 +120,6 @@ TAO_Notify_Properties::validate_client_interval (ACE_Time_Value b)
   this->validate_client_interval_ = b;
 }
 
-
 ACE_INLINE bool
 TAO_Notify_Properties::separate_dispatching_orb ()
 {
@@ -146,62 +144,62 @@ TAO_Notify_Properties::updates (CORBA::Boolean updates)
   this->updates_ = updates;
 }
 
-ACE_INLINE const CosNotification::QoSProperties&
+ACE_INLINE CosNotification::QoSProperties const&
 TAO_Notify_Properties::default_event_channel_qos_properties ()
 {
   return this->ec_qos_;
 }
 
 ACE_INLINE void
-TAO_Notify_Properties::default_event_channel_qos_properties (const CosNotification::QoSProperties &ec_qos)
+TAO_Notify_Properties::default_event_channel_qos_properties (CosNotification::QoSProperties const &ec_qos)
 {
   this->ec_qos_ = ec_qos;
 }
 
-ACE_INLINE const CosNotification::QoSProperties&
+ACE_INLINE CosNotification::QoSProperties const&
 TAO_Notify_Properties::default_supplier_admin_qos_properties ()
 {
   return this->sa_qos_;
 }
 
 ACE_INLINE void
-TAO_Notify_Properties::default_supplier_admin_qos_properties (const CosNotification::QoSProperties &sa_qos)
+TAO_Notify_Properties::default_supplier_admin_qos_properties (CosNotification::QoSProperties const &sa_qos)
 {
   this->sa_qos_ = sa_qos;
 }
 
-ACE_INLINE const CosNotification::QoSProperties&
+ACE_INLINE CosNotification::QoSProperties const&
 TAO_Notify_Properties::default_consumer_admin_qos_properties ()
 {
   return this->ca_qos_;
 }
 
 ACE_INLINE void
-TAO_Notify_Properties::default_consumer_admin_qos_properties (const CosNotification::QoSProperties &ca_qos)
+TAO_Notify_Properties::default_consumer_admin_qos_properties (CosNotification::QoSProperties const &ca_qos)
 {
   this->ca_qos_ = ca_qos;
 }
 
-ACE_INLINE const CosNotification::QoSProperties&
+ACE_INLINE CosNotification::QoSProperties const&
 TAO_Notify_Properties::default_proxy_supplier_qos_properties ()
 {
   return this->ps_qos_;
 }
 
 ACE_INLINE void
-TAO_Notify_Properties::default_proxy_supplier_qos_properties (const CosNotification::QoSProperties &ps_qos)
+TAO_Notify_Properties::default_proxy_supplier_qos_properties (CosNotification::QoSProperties const &ps_qos)
 {
   this->ps_qos_ = ps_qos;
 }
 
-ACE_INLINE const CosNotification::QoSProperties&
+ACE_INLINE CosNotification::QoSProperties const&
 TAO_Notify_Properties::default_proxy_consumer_qos_properties ()
 {
   return this->pc_qos_;
 }
 
 ACE_INLINE void
-TAO_Notify_Properties::default_proxy_consumer_qos_properties (const CosNotification::QoSProperties &pc_qos)
+TAO_Notify_Properties::default_proxy_consumer_qos_properties (CosNotification::QoSProperties const &pc_qos)
 {
   this->pc_qos_ = pc_qos;
 }
@@ -217,7 +215,6 @@ TAO_Notify_Properties::defaultConsumerAdminFilterOp (CosNotifyChannelAdmin::Inte
 {
   this->defaultConsumerAdminFilterOp_ = op;
 }
-
 
 ACE_INLINE CosNotifyChannelAdmin::InterFilterGroupOperator
 TAO_Notify_Properties::defaultSupplierAdminFilterOp ()

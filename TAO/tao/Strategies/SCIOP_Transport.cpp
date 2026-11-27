@@ -18,10 +18,9 @@
 #include "tao/GIOP_Message_Base.h"
 #include "tao/Protocols_Hooks.h"
 #include "tao/Adapter.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-TAO_SCIOP_Transport::~TAO_SCIOP_Transport () = default;
 
 TAO_SCIOP_Transport::TAO_SCIOP_Transport (TAO_SCIOP_Connection_Handler *handler,
                                           TAO_ORB_Core *orb_core)
@@ -46,12 +45,14 @@ TAO_SCIOP_Transport::connection_handler_i ()
 ssize_t
 TAO_SCIOP_Transport::send (iovec *iov, int iovcnt,
                            size_t &bytes_transferred,
-                           const ACE_Time_Value *max_wait_time)
+                           ACE_Time_Value const *max_wait_time)
 {
-  ssize_t retval = this->connection_handler_->peer ().sendv (iov, iovcnt,
-                                                             max_wait_time);
+  ssize_t const retval = this->connection_handler_->peer ().sendv (iov, iovcnt,
+                                                                   max_wait_time);
   if (retval > 0)
-    bytes_transferred = retval;
+    {
+      bytes_transferred = retval;
+    }
 
   return retval;
 }
@@ -59,11 +60,11 @@ TAO_SCIOP_Transport::send (iovec *iov, int iovcnt,
 ssize_t
 TAO_SCIOP_Transport::recv (char *buf,
                            size_t len,
-                           const ACE_Time_Value *max_wait_time)
+                           ACE_Time_Value const *max_wait_time)
 {
-  ssize_t n = this->connection_handler_->peer ().recv (buf,
-                                                       len,
-                                                       max_wait_time);
+  ssize_t const n = this->connection_handler_->peer ().recv (buf,
+                                                             len,
+                                                             max_wait_time);
 
   // Do not print the error message if it is a timeout, which could
   // occur in thread-per-connection.
@@ -81,8 +82,9 @@ TAO_SCIOP_Transport::recv (char *buf,
   if (n == -1)
     {
       if (errno == EWOULDBLOCK)
-        return 0;
-
+        {
+          return 0;
+        }
 
       return -1;
     }
@@ -108,15 +110,18 @@ TAO_SCIOP_Transport::send_request (TAO_Stub *stub,
 {
   if (this->ws_->sending_request (orb_core,
                                   message_semantics) == -1)
-
-    return -1;
+    {
+      return -1;
+    }
 
   if (this->send_message (stream,
                           stub,
                           nullptr,
                           message_semantics,
                           max_wait_time) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   this->first_request_sent();
 
@@ -137,18 +142,20 @@ TAO_SCIOP_Transport::send_message (TAO_OutputCDR &stream,
     }
 
   // This guarantees to send all data (bytes) or return an error.
-  ssize_t n = this->send_message_shared (stub,
-                                         message_semantics,
-                                         stream.begin (),
-                                         max_wait_time);
+  ssize_t const n = this->send_message_shared (stub,
+                                               message_semantics,
+                                               stream.begin (),
+                                               max_wait_time);
 
   if (n == -1)
     {
       if (TAO_debug_level)
-        TAOLIB_ERROR ((LM_ERROR,
+        {
+          TAOLIB_ERROR ((LM_ERROR,
                     ACE_TEXT ("TAO (%P|%t) - SCIOP_Transport[%B]::send_message, ")
                     ACE_TEXT (" write failure - %m\n"),
                     this->id ()));
+        }
       return -1;
     }
 
@@ -160,13 +167,17 @@ TAO_SCIOP_Transport::tear_listen_point_list (TAO_InputCDR &cdr)
 {
   CORBA::Boolean byte_order;
   if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
-    return -1;
+    {
+      return -1;
+    }
 
   cdr.reset_byte_order (static_cast<int> (byte_order));
 
   IIOP::ListenPointList listen_list;
   if (!(cdr >> listen_list))
-    return -1;
+    {
+      return -1;
+    }
 
   // As we have received a bidirectional information, set the flag to
   // 1 (i.e., non-originating side)
@@ -182,20 +193,15 @@ TAO_SCIOP_Transport::set_bidir_context_info (TAO_Operation_Details &opdetails)
   TAO_Acceptor_Registry &ar =
     this->orb_core ()->lane_resources ().acceptor_registry ();
 
-  // Get the first acceptor in the registry
-  TAO_AcceptorSetIterator acceptor = ar.begin ();
-
   IIOP::ListenPointList listen_point_list;
 
-  for (;
-       acceptor != ar.end ();
-       acceptor++)
+  for (std::unique_ptr<TAO_Acceptor> const& acceptor : ar.acceptors ())
     {
       // Check whether it is a SCIOP acceptor
-      if ((*acceptor)->tag () == this->tag ())
+      if (acceptor->tag () == this->tag ())
         {
           if (this->get_listen_point (listen_point_list,
-                                      *acceptor) == -1)
+                                      acceptor.get ()) == -1)
             {
               TAOLIB_ERROR ((LM_ERROR,
                           "TAO (%P|%t) - SCIOP_Transport::set_bidir_info, "
@@ -213,7 +219,9 @@ TAO_SCIOP_Transport::set_bidir_context_info (TAO_Operation_Details &opdetails)
   // Marshall the information into the stream
   if ((cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER) == 0)
       || (cdr << listen_point_list) == 0)
-    return;
+    {
+      return;
+    }
 
   // Add this info in to the svc_list
   opdetails.request_service_context ().set_context (IOP::BI_DIR_IIOP, cdr);
@@ -224,15 +232,15 @@ TAO_SCIOP_Transport::get_listen_point (
     IIOP::ListenPointList &listen_point_list,
     TAO_Acceptor *acceptor)
 {
-  TAO_SCIOP_Acceptor *sciop_acceptor =
+  TAO_SCIOP_Acceptor * const sciop_acceptor =
     dynamic_cast<TAO_SCIOP_Acceptor *> (acceptor );
 
   // Get the array of endpoints serviced by TAO_SCIOP_Acceptor
-  ACE_INET_Addr const *endpoint_addr =
+  ACE_INET_Addr const * const endpoint_addr =
     sciop_acceptor->endpoints ();
 
   // Get the endpoint count
-  size_t count =
+  size_t const count =
     sciop_acceptor->endpoint_count ();
 
   // Get the local address of the connection
@@ -263,7 +271,7 @@ TAO_SCIOP_Transport::get_listen_point (
                         -1);
     }
 
-  for (size_t index = 0; index != count; index++)
+  for (size_t index {}; index != count; ++index)
     {
       if (local_addr.get_ip_address() == endpoint_addr[index].get_ip_address())
         {

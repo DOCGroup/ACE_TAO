@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "ace/Global_Macros.h"
 #include "ace/OS_NS_Thread.h"
 
@@ -8,7 +7,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 // Semaphores don't offer wide-char names, so convert the name and forward
 // to the narrow-char open().
 ACE_INLINE int
-ACE_SV_Semaphore_Simple::open (const wchar_t *name,
+ACE_SV_Semaphore_Simple::open (wchar_t const *name,
                                short flags,
                                int initial_value,
                                u_short nsems,
@@ -33,8 +32,8 @@ ACE_SV_Semaphore_Simple::control (int cmd,
     -1 : ACE_OS::semctl (this->internal_id_, n, cmd, arg);
 }
 
-// Close a ACE_SV_Semaphore, marking it as invalid for subsequent
-// operations...
+/// Close a ACE_SV_Semaphore, marking it as invalid for subsequent
+/// operations...
 
 ACE_INLINE int
 ACE_SV_Semaphore_Simple::close ()

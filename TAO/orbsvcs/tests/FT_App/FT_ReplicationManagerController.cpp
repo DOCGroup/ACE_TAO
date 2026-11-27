@@ -23,9 +23,9 @@ public:
 // Forbidden.
 private:
   TAO_FT_ReplicationManagerController (
-    const TAO_FT_ReplicationManagerController & rhs);
+    TAO_FT_ReplicationManagerController const & rhs);
   TAO_FT_ReplicationManagerController & operator = (
-    const TAO_FT_ReplicationManagerController & rhs);
+    TAO_FT_ReplicationManagerController const & rhs);
 
 /////////////////////////////
 // Private implementation.
@@ -37,21 +37,19 @@ private:
 private:
   CORBA::ORB_var orb_;
   FT::ReplicationManager_var replication_manager_;
-  const ACE_TCHAR *rm_ior_;
+  ACE_TCHAR const *rm_ior_;
   int shutdown_;
 };
 
 TAO_FT_ReplicationManagerController::TAO_FT_ReplicationManagerController ()
   : orb_ (CORBA::ORB::_nil())
   , replication_manager_ (FT::ReplicationManager::_nil())
-  , rm_ior_ (0)
+  , rm_ior_ (nullptr)
   , shutdown_ (0)
 {
 }
 
-TAO_FT_ReplicationManagerController::~TAO_FT_ReplicationManagerController ()
-{
-}
+TAO_FT_ReplicationManagerController::~TAO_FT_ReplicationManagerController () = default;
 
 int TAO_FT_ReplicationManagerController::init (int &argc, ACE_TCHAR *argv[])
 {
@@ -67,7 +65,7 @@ int TAO_FT_ReplicationManagerController::init (int &argc, ACE_TCHAR *argv[])
     if (result == 0)
     {
       CORBA::Object_var obj = CORBA::Object::_nil ();
-      if (this->rm_ior_ != 0)
+      if (this->rm_ior_ != nullptr)
       {
         obj = this->orb_->string_to_object (
           ACE_TEXT_ALWAYS_CHAR (this->rm_ior_));
@@ -89,7 +87,7 @@ int TAO_FT_ReplicationManagerController::init (int &argc, ACE_TCHAR *argv[])
       }
     }
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
   {
     ex._tao_print_exception (
       ACE_TEXT (
@@ -99,7 +97,6 @@ int TAO_FT_ReplicationManagerController::init (int &argc, ACE_TCHAR *argv[])
 
   return result;
 }
-
 
 int TAO_FT_ReplicationManagerController::parse_args (int &argc, ACE_TCHAR *argv[])
 {
@@ -160,7 +157,7 @@ int TAO_FT_ReplicationManagerController::run ()
       ACE_OS::sleep (tv);
     }
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
   {
     ex._tao_print_exception (
       ACE_TEXT ("TAO_FT_ReplicationManagerController::run:\n"));

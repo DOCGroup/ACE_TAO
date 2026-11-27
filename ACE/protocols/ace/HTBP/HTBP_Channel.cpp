@@ -1,12 +1,10 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
  *  @file    HTBP_Channel.cpp
  *
  *  @author Phil Mesnier, Priyanka Gontla
  */
-//=============================================================================
+#include <cstring>
+
 #include "HTBP_Channel.h"
 
 #if !defined (__ACE_INLINE__)
@@ -26,76 +24,78 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Initialization and termination methods.
-/// Constructor.
 ACE::HTBP::Channel::Channel (ACE::HTBP::Session *s)
-  : filter_ (0),
+  : filter_ (nullptr),
     session_ (s),
     ace_stream_ (),
-    notifier_ (0),
+    notifier_ (nullptr),
     leftovers_ (1001),
     data_len_ (0),
     data_consumed_ (0),
     state_ (Init),
-    error_buffer_ (0)
+    error_buffer_ (nullptr)
 {
   ACE_NEW (this->notifier_,ACE::HTBP::Notifier(this));
-  this->filter_ = ACE::HTBP::Filter_Factory::get_filter (this->session_ != 0);
+  this->filter_ = ACE::HTBP::Filter_Factory::get_filter (this->session_ != nullptr);
   this->request_count_ = static_cast<unsigned long> (ACE_OS::time());
 }
 
 /// Constructor, takes ownership of the supplied stream
 ACE::HTBP::Channel::Channel (ACE_SOCK_Stream &s)
-  : filter_ (0),
-    session_ (0),
+  : filter_ (nullptr),
+    session_ (nullptr),
     ace_stream_ (s.get_handle()),
-    notifier_ (0),
+    notifier_ (nullptr),
     leftovers_ (1001),
     data_len_ (0),
     data_consumed_ (0),
     state_ (Init),
-    error_buffer_ (0)
+    error_buffer_ (nullptr)
 
 {
 #if !defined (ACE_LACKS_TCP_NODELAY)
   int no_delay = 1;
-  int result = this->ace_stream_.set_option (ACE_IPPROTO_TCP,
+  int const result = this->ace_stream_.set_option (ACE_IPPROTO_TCP,
                                              TCP_NODELAY,
                                              (void *) &no_delay,
                                              sizeof (no_delay));
   if (result == -1)
+  {
     ACE_DEBUG ((LM_DEBUG, "HTBP::Channel ctor(stream), %p\n", "set_option" ));
+  }
 #endif /* ! ACE_LACKS_TCP_NODELAY */
 
-  this->filter_ = ACE::HTBP::Filter_Factory::get_filter (this->session_ != 0);
+  this->filter_ = ACE::HTBP::Filter_Factory::get_filter (this->session_ != nullptr);
   this->request_count_ = static_cast<unsigned long> (ACE_OS::time());
 }
 
 ACE::HTBP::Channel::Channel (ACE_HANDLE h)
-  : filter_ (0),
-    session_ (0),
+  : filter_ (nullptr),
+    session_ (nullptr),
     ace_stream_ (h),
-    notifier_ (0),
+    notifier_ (nullptr),
     leftovers_ (1001),
     data_len_ (0),
     data_consumed_ (0),
     state_ (Init),
-    error_buffer_ (0)
+    error_buffer_ (nullptr)
 {
 #if !defined (ACE_LACKS_TCP_NODELAY)
   int no_delay = 1;
-  int result = this->ace_stream_.set_option (ACE_IPPROTO_TCP,
+  int const result = this->ace_stream_.set_option (ACE_IPPROTO_TCP,
                                              TCP_NODELAY,
                                              (void *) &no_delay,
                                              sizeof (no_delay));
   if (result == -1)
+  {
     ACE_DEBUG ((LM_DEBUG, "HTBP::Channel(handle) ctor, %p\n", "set_option" ));
+  }
 #endif /* ! ACE_LACKS_TCP_NODELAY */
 
-  this->filter_ = ACE::HTBP::Filter_Factory::get_filter (this->session_ != 0);
+  this->filter_ = ACE::HTBP::Filter_Factory::get_filter (this->session_ != nullptr);
   this->request_count_ = static_cast<unsigned long> (ACE_OS::time());
 }
 
-/// Destructor.
 ACE::HTBP::Channel::~Channel ()
 {
   delete this->notifier_;
@@ -117,9 +117,11 @@ ACE::HTBP::Channel::request_count ()
 void
 ACE::HTBP::Channel::register_notifier (ACE_Reactor *r)
 {
-  if (r == 0)
+  if (r == nullptr)
+  {
     return;
-  if (this->notifier_ == 0)
+  }
+  if (this->notifier_ == nullptr)
     {
       ACE_NEW (this->notifier_,ACE::HTBP::Notifier(this));
     }
@@ -180,11 +182,15 @@ ACE::HTBP::Channel::load_buffer ()
         ACE::handle_read_ready (this->ace_stream().get_handle(),
                                 &ACE_Time_Value::zero);
       if (nread == -1 && errno == ETIME)
+      {
         errno = EWOULDBLOCK;
+      }
     }
   if (nread != -1)
-    nread = this->ace_stream().recv (this->leftovers_.wr_ptr(),
-                                     this->leftovers_.space()-1);
+    {
+      nread = this->ace_stream().recv (this->leftovers_.wr_ptr(),
+                                       this->leftovers_.space()-1);
+    }
   if (nread < 1)
     {
       if (nread == 0 || (errno != EWOULDBLOCK && errno != EAGAIN))
@@ -192,7 +198,7 @@ ACE::HTBP::Channel::load_buffer ()
           this->state_ = Closed;
 #if 0
           ACE_ERROR ((LM_ERROR,
-                      "load_buffer[%d] %p\n",
+                      "load_buffer[%H] %p\n",
                       this->ace_stream_.get_handle(),"recv"));
 #endif
         }
@@ -207,7 +213,9 @@ int
 ACE::HTBP::Channel::flush_buffer ()
 {
   if (this->session_)
+  {
     return this->session_->flush_outbound_queue();
+  }
   return 0;
 }
 
@@ -221,7 +229,9 @@ int
 ACE::HTBP::Channel::recv_ack ()
 {
   if (load_buffer() == -1)
+  {
     return -1;
+  }
   return this->filter_->recv_ack(this);
 }
 
@@ -231,7 +241,7 @@ ACE::HTBP::Channel::state (ACE::HTBP::Channel::State s)
   if (s == Detached)
     {
       this->session_->detach(this);
-      this->session_ = 0;
+      this->session_ = nullptr;
     }
   this->state_ = s;
 }
@@ -239,7 +249,7 @@ ACE::HTBP::Channel::state (ACE::HTBP::Channel::State s)
 int
 ACE::HTBP::Channel::consume_error ()
 {
-  if (error_buffer_ == 0)
+  if (error_buffer_ == nullptr)
     {
       ACE_NEW_RETURN (error_buffer_,
                       ACE_Message_Block (this->data_len_ + 1),
@@ -253,7 +263,7 @@ ACE::HTBP::Channel::consume_error ()
   if (this->leftovers_.length() > 0)
     {
       result = (std::min) (n,this->leftovers_.length());
-      ACE_OS::memcpy (buf,this->leftovers_.rd_ptr(), result);
+      std::memcpy (buf, this->leftovers_.rd_ptr (), result);
       this->leftovers_.rd_ptr(result);
       buf += result;
     }
@@ -272,21 +282,20 @@ ACE::HTBP::Channel::consume_error ()
         {
           *this->error_buffer_->wr_ptr() = '\0';
           if (ACE::debug())
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("ACE::HTBP::Channel::consume_error ")
-                        ACE_TEXT("Received entire error buffer: \n%s\n"),
-                        this->error_buffer_->rd_ptr()));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("ACE::HTBP::Channel::consume_error ")
+                          ACE_TEXT("Received entire error buffer: \n%s\n"),
+                          this->error_buffer_->rd_ptr()));
+            }
           delete error_buffer_;
-          error_buffer_ = 0;
+          error_buffer_ = nullptr;
 
           return 1;
         }
     }
   return 0;
 }
-
-//---------------------------------------------------------------------------
-// = I/O functions.
 
 /// The ACE::HTBP::Channel is a sibling of the ACE_SOCK_IO class, rather than a
 /// decendant. This is due to the requirement to wrap all messages with
@@ -297,9 +306,11 @@ int
 ACE::HTBP::Channel::pre_recv()
 {
   if (ACE::debug())
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%P|%t) ACE::HTBP::Channel::pre_recv ")
-                ACE_TEXT ("in initial state = %d\n"),state_));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%P|%t) ACE::HTBP::Channel::pre_recv ")
+                  ACE_TEXT ("in initial state = %d\n"),state_));
+    }
   if (this->state_ == Init ||
       this->state_ == Detached ||
       this->state_ == Header_Pending ||
@@ -308,19 +319,25 @@ ACE::HTBP::Channel::pre_recv()
       if (this->load_buffer() == -1 && this->leftovers_.length() == 0)
         {
           if (errno != EWOULDBLOCK)
-            this->state_ = Closed;
+            {
+              this->state_ = Closed;
+            }
           if (ACE::debug())
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("(%P|%t) ACE::HTBP::Channel::pre_recv ")
-                        ACE_TEXT ("pre_recv returning -1, state = %d, %p\n"),
-                        state_, ACE_TEXT("load_buffer()")));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("(%P|%t) ACE::HTBP::Channel::pre_recv ")
+                          ACE_TEXT ("pre_recv returning -1, state = %d, %p\n"),
+                          state_, ACE_TEXT("load_buffer()")));
+            }
           return -1;
         }
       if (this->filter_->recv_data_header(this) == -1)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) ACE::HTBP::Channel::pre_recv ")
-                    ACE_TEXT ("recv_data_header failed, %p\n"),
-                    ACE_TEXT("pre_recv")));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("(%P|%t) ACE::HTBP::Channel::pre_recv ")
+                      ACE_TEXT ("recv_data_header failed, %p\n"),
+                      ACE_TEXT("pre_recv")));
+        }
     }
   switch (this->state_)
     {
@@ -333,30 +350,34 @@ ACE::HTBP::Channel::pre_recv()
       return -1;
     default:
       if (ACE::debug())
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%P|%t) ACE::HTBP::Channel::pre_recv ")
-                    ACE_TEXT("channel[%d] state = %d, %p\n"),
-                    this->get_handle(),
-                    this->state_,
-                    ACE_TEXT("pre_recv")));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) ACE::HTBP::Channel::pre_recv ")
+                      ACE_TEXT("channel[%H] state = %d, %p\n"),
+                      this->get_handle (),
+                      this->state_,
+                      ACE_TEXT("pre_recv")));
+        }
     }
   return -1;
 }
 
-/// Recv an <n> byte buffer from the connected socket.
+/// Recv an @a n byte buffer from the connected socket.
 ssize_t
 ACE::HTBP::Channel::recv (void *buf,
                  size_t n,
                  int flags,
-                 const ACE_Time_Value *timeout)
+                 ACE_Time_Value const* timeout)
 {
   ssize_t result = 0;
   if (this->pre_recv() == -1 && this->leftovers_.length() == 0)
+  {
     return -1;
+  }
   if (this->leftovers_.length() > 0)
     {
       result = (std::min) (n,this->leftovers_.length());
-      ACE_OS::memcpy (buf,this->leftovers_.rd_ptr(), result);
+      std::memcpy (buf, this->leftovers_.rd_ptr (), result);
       this->leftovers_.rd_ptr(result);
       buf = (char *)buf + result;
     }
@@ -368,25 +389,29 @@ ACE::HTBP::Channel::recv (void *buf,
       result += this->ace_stream_.recv(buf, n, flags, timeout);
     }
   if (result > 0)
+  {
     data_consumed((size_t)result);
+  }
   return result;
 }
 
-  /// Recv an <n> byte buffer from the connected socket.
+  /// Recv an @a n byte buffer from the connected socket.
 ssize_t
 ACE::HTBP::Channel::recv (void *buf,
                  size_t n,
-                 const ACE_Time_Value *timeout)
+                 ACE_Time_Value const* timeout)
 {
   ssize_t result = 0;
   if (this->pre_recv() == -1)
+  {
     return -1;
+  }
 
   result = 0;
   if (this->leftovers_.length() > 0)
     {
       result = (std::min) (n,this->leftovers_.length());
-      ACE_OS::memcpy (buf,this->leftovers_.rd_ptr(), result);
+      std::memcpy (buf, this->leftovers_.rd_ptr (), result);
       this->leftovers_.rd_ptr(result);
       buf = (char *)buf + result;
     }
@@ -398,32 +423,35 @@ ACE::HTBP::Channel::recv (void *buf,
     }
 
   if (result > 0)
+  {
     this->data_consumed((size_t)result);
+  }
   return result;
 }
 
-  /// Recv an <iovec> of size <n> from the connected socket.
+  /// Recv an @c iovec of size @a n from the connected socket.
 ssize_t
 ACE::HTBP::Channel::recvv (iovec iov[],
                   int iovcnt,
-                  const ACE_Time_Value *timeout)
+                  ACE_Time_Value const* timeout)
 {
   ssize_t result = 0;
   if (this->pre_recv() == -1)
+  {
     return -1;
+  }
 
   if (this->leftovers_.length())
     {
       int ndx = 0;
-      iovec *iov2 = new iovec[iovcnt];
-      std::unique_ptr<iovec[]> guard (iov2);
-      for (int i = 0; i < iovcnt; i++)
+      std::unique_ptr<iovec[]> const iov2 = std::make_unique<iovec[]> (iovcnt);
+      for (int i = 0; i < iovcnt; ++i)
         {
-          size_t n = (std::min) ((size_t) iov[i].iov_len ,
+          size_t const n = (std::min) ((size_t) iov[i].iov_len ,
                               (size_t) this->leftovers_.length());
           if (n > 0)
             {
-              ACE_OS::memcpy (iov[i].iov_base,this->leftovers_.rd_ptr(), n);
+              std::memcpy (iov[i].iov_base, this->leftovers_.rd_ptr (), n);
               this->leftovers_.rd_ptr(n);
               result += n;
             }
@@ -431,50 +459,62 @@ ACE::HTBP::Channel::recvv (iovec iov[],
             {
               iov2[ndx].iov_len = iov[i].iov_len - n;
               iov2[ndx].iov_base = (char *)iov[i].iov_base + n;
-              ndx++;
+              ++ndx;
             }
         }
       if (ndx > 0)
-        result += this->ace_stream_.recvv(iov2,ndx,timeout);
+      {
+        result += this->ace_stream_.recvv(iov2.get (),ndx,timeout);
+      }
     }
   else
+  {
     result = this->ace_stream_.recvv(iov,iovcnt,timeout);
+  }
 
   if (result > 0)
+  {
     this->data_consumed((size_t)result);
+  }
   return result;
 }
 
 ssize_t
 ACE::HTBP::Channel::recvv (iovec *io_vec,
-                  const ACE_Time_Value *timeout)
+                  ACE_Time_Value const* timeout)
 {
   ssize_t result = 0;
   if (this->pre_recv() == -1)
+  {
     return -1;
+  }
   if (ACE::debug())
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("ACE::HTBP::Channel::recvv ")
-                ACE_TEXT("recvv, leftover len = %d\n"),
-                this->leftovers_.length()));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("ACE::HTBP::Channel::recvv ")
+                  ACE_TEXT("recvv, leftover len = %B\n"),
+                  this->leftovers_.length()));
+    }
   if (this->leftovers_.length())
     {
-      io_vec->iov_base = 0;
+      io_vec->iov_base = nullptr;
       io_vec->iov_len = 0;
       ACE_NEW_RETURN (io_vec->iov_base,
                       char[this->leftovers_.length()],-1);
       io_vec->iov_len = this->leftovers_.length();
-      ACE_OS::memcpy (io_vec->iov_base,
-                      this->leftovers_.rd_ptr(),
-                      io_vec->iov_len);
+      std::memcpy (io_vec->iov_base, this->leftovers_.rd_ptr (), io_vec->iov_len);
       result = io_vec->iov_len;
       this->leftovers_.length(0);
     }
   else
+  {
     result = this->ace_stream_.recvv(io_vec,timeout);
+  }
 
   if (result > 0)
+  {
     this->data_consumed((size_t)result);
+  }
   return result;
 }
 
@@ -482,46 +522,62 @@ ssize_t
 ACE::HTBP::Channel::send (const void *buf,
                  size_t n,
                  int flags,
-                 const ACE_Time_Value *timeout)
+                 ACE_Time_Value const* timeout)
 {
   ssize_t result = 0;
   if (this->filter_->send_data_header(n,this) == -1)
+  {
     return -1;
+  }
   result = this->ace_stream_.send(buf,n,flags,timeout);
   if (result == -1)
+  {
     return -1;
+  }
   if (this->filter_->send_data_trailer(this) == -1)
+  {
     return -1;
+  }
   return result;
 }
 
 ssize_t
 ACE::HTBP::Channel::send (const void *buf,
                   size_t n,
-                  const ACE_Time_Value *timeout)
+                  ACE_Time_Value const* timeout)
 {
   ssize_t result = 0;
-  if (this->filter_ == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) ACE::HTBP::Channel::send: filter ")
-                       ACE_TEXT ("is null\n")),-1);
+  if (this->filter_ == nullptr)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%P|%t) ACE::HTBP::Channel::send: filter ")
+                         ACE_TEXT ("is null\n")),-1);
+    }
   if (this->filter_->send_data_header(n,this) == -1)
+  {
     return -1;
+  }
   result = this->ace_stream_.send (buf,n,timeout);
   if (result == -1)
+  {
     return -1;
+  }
   if (this->filter_->send_data_trailer(this) == -1)
+  {
     return -1;
+  }
   return result;
 }
 
 ssize_t
 ACE::HTBP::Channel::sendv (const iovec iov[],
                            int iovcnt,
-                           const ACE_Time_Value *timeout)
+                           ACE_Time_Value const* timeout)
 {
   if (this->ace_stream_.get_handle() == ACE_INVALID_HANDLE)
+  {
     this->session_->inbound();
+  }
 
   ssize_t result = 0;
   size_t n = 0;
@@ -532,24 +588,30 @@ ACE::HTBP::Channel::sendv (const iovec iov[],
     }
 
   if (this->filter_->send_data_header(n,this) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) ACE::HTBP::Channel::sendv ")
-                       ACE_TEXT("%p\n"),
-                       ACE_TEXT("send_data_header")),-1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%P|%t) ACE::HTBP::Channel::sendv ")
+                         ACE_TEXT("%p\n"),
+                         ACE_TEXT("send_data_header")),-1);
+    }
 
   result = this->ace_stream_.sendv (iov,iovcnt,timeout);
 
   if (result == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) ACE::HTBP::Channel::sendv ")
-                       ACE_TEXT("%p\n"),
-                       ACE_TEXT("ace_stream_.sendv")),-1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%P|%t) ACE::HTBP::Channel::sendv ")
+                         ACE_TEXT("%p\n"),
+                         ACE_TEXT("ace_stream_.sendv")),-1);
+    }
 
   if (this->filter_->send_data_trailer(this) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) ACE::HTBP::Channel::sendv ")
-                       ACE_TEXT("%p\n"),
-                       ACE_TEXT("send_data_trailer\n")),-1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%P|%t) ACE::HTBP::Channel::sendv ")
+                         ACE_TEXT("%p\n"),
+                         ACE_TEXT("send_data_trailer\n")),-1);
+    }
   return result;
 }
 

@@ -1,28 +1,22 @@
 #include "Connection_Manager.h"
 #include "tao/debug.h"
 
-Connection_Manager::Connection_Manager ()
-{
-}
-
-Connection_Manager::~Connection_Manager ()
-{
-}
-
 int
 Connection_Manager::init (CORBA::ORB_ptr orb)
 {
   // Initialize the naming service
   if (this->naming_client_.init (orb) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       " (%P|%t) Unable to initialize "
-                       "the TAO_Naming_Client.\n"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         " (%P|%t) Unable to initialize "
+                         "the TAO_Naming_Client.\n"),
+                        -1);
+    }
   return 0;
 }
 
 void
-Connection_Manager::bind_to_receivers (const ACE_CString &sender_name,
+Connection_Manager::bind_to_receivers (ACE_CString const &sender_name,
                                        AVStreams::MMDevice_ptr sender)
 {
   this->sender_name_ =
@@ -56,7 +50,7 @@ Connection_Manager::bind_to_receivers (const ACE_CString &sender_name,
       this->receiver_context_ =
         this->sender_context_->bind_new_context (name);
     }
-  catch (const CosNaming::NamingContext::AlreadyBound&)
+  catch (CosNaming::NamingContext::AlreadyBound const &)
     {
       //
       // The sender context already exists, probably created by the
@@ -99,7 +93,7 @@ Connection_Manager::find_receivers ()
 {
   CosNaming::BindingIterator_var iterator;
   CosNaming::BindingList_var binding_list;
-  const CORBA::ULong chunk = 100;
+  CORBA::ULong const chunk = 100;
 
   // Get the list of receivers registered for this sender.
   this->receiver_context_->list (chunk,
@@ -111,7 +105,7 @@ Connection_Manager::find_receivers ()
 
   if (!CORBA::is_nil (iterator.in ()))
     {
-      CORBA::Boolean more = 1;
+      CORBA::Boolean more = true;
 
       // Check to see if there are more receivers listed.
       while (more)
@@ -129,10 +123,10 @@ Connection_Manager::add_to_receivers (CosNaming::BindingList &binding_list)
 {
   for (CORBA::ULong i = 0;
        i < binding_list.length ();
-       i++)
+       ++i)
     {
       // Get the receiver name from the binding list.
-      ACE_CString receiver_name =
+      ACE_CString const receiver_name =
         binding_list [i].binding_name [0].id.in ();
 
       CosNaming::Name name (1);
@@ -149,7 +143,7 @@ Connection_Manager::add_to_receivers (CosNaming::BindingList &binding_list)
         AVStreams::MMDevice::_narrow (obj.in ());
 
       // Add this receiver to the receiver map.
-      ACE_CString flowname =
+      ACE_CString const flowname =
         this->sender_name_ +
         "_" +
         receiver_name;
@@ -169,7 +163,7 @@ Connection_Manager::connect_to_receivers ()
       // Initialize the QoS
       AVStreams::streamQoS_var the_qos (new AVStreams::streamQoS);
 
-      ACE_CString flowname =
+      ACE_CString const flowname =
         (*iterator).ext_id_;
 
       // Create the forward flow specification to describe the flow.
@@ -178,7 +172,7 @@ Connection_Manager::connect_to_receivers ()
                                                "USER_DEFINED",
                                                "",
                                                "UDP",
-                                               0);
+                                               nullptr);
 
       // Set the flow specification for the stream between receiver
       // and distributer
@@ -214,8 +208,8 @@ Connection_Manager::connect_to_receivers ()
 }
 
 void
-Connection_Manager::bind_to_sender (const ACE_CString &sender_name,
-                                    const ACE_CString &receiver_name,
+Connection_Manager::bind_to_sender (ACE_CString const &sender_name,
+                                    ACE_CString const &receiver_name,
                                     AVStreams::MMDevice_ptr receiver)
 {
   this->sender_name_ =
@@ -227,12 +221,12 @@ Connection_Manager::bind_to_sender (const ACE_CString &sender_name,
   this->receiver_ =
     AVStreams::MMDevice::_duplicate (receiver);
 
-  this->sender_ = 0 ;
+  this->sender_ = nullptr;
 
   CosNaming::Name name (1);
   name.length (1);
 
-  int sender_context_exists = 0;
+  bool sender_context_exists {};
 
   try
     {
@@ -247,7 +241,7 @@ Connection_Manager::bind_to_sender (const ACE_CString &sender_name,
       // We reach here if there was no exception raised in <resolve>.
       // Therefore, there must be a valid sender context available.
       //
-      sender_context_exists = 1;
+      sender_context_exists = true;
 
       this->sender_context_ =
         CosNaming::NamingContext::_narrow (object.in ());
@@ -262,7 +256,7 @@ Connection_Manager::bind_to_sender (const ACE_CString &sender_name,
       this->receiver_context_ =
         CosNaming::NamingContext::_narrow (object.in ());
     }
-  catch (const CosNaming::NamingContext::NotFound&)
+  catch (CosNaming::NamingContext::NotFound const &)
     {
       name [0].id =
         CORBA::string_dup (this->sender_name_.c_str ());
@@ -308,7 +302,7 @@ Connection_Manager::bind_to_sender (const ACE_CString &sender_name,
           this->sender_ =
             AVStreams::MMDevice::_narrow (object.in ());
         }
-      catch (const CosNaming::NamingContext::NotFound&)
+      catch (CosNaming::NamingContext::NotFound const &)
         {
           // No problem if the sender was not there.
         }
@@ -319,7 +313,9 @@ void
 Connection_Manager::connect_to_sender ()
 {
   if (CORBA::is_nil (this->sender_.in ()))
+  {
     return;
+  }
 
   ACE_CString flowname =
     this->sender_name_ +
@@ -332,7 +328,7 @@ Connection_Manager::connect_to_sender ()
                                            "USER_DEFINED",
                                            "",
                                            "UDP",
-                                           0);
+                                           nullptr);
 
   // Set the flow specification for the stream between sender and
   // receiver.
@@ -342,7 +338,7 @@ Connection_Manager::connect_to_sender ()
     CORBA::string_dup (sender_entry.entry_to_string ());
 
   // Create the stream control for this stream
-  TAO_StreamCtrl* streamctrl;
+  TAO_StreamCtrl *streamctrl {};
   ACE_NEW (streamctrl,
            TAO_StreamCtrl);
 
@@ -358,22 +354,21 @@ Connection_Manager::connect_to_sender ()
   // Since senders terminate the streams, we don't need the streamctrl
   // for these.
   //
-  // this->streamctrls_.bind (flowname,
-  //                          streamctrl_object);
-
   // Initialize the  QoS
   AVStreams::streamQoS_var the_qos (new AVStreams::streamQoS);
 
   // Connect the sender and receiver devices.
-  CORBA::Boolean result =
+  CORBA::Boolean const result =
     streamctrl->bind_devs (this->sender_.in (),
                            this->receiver_.in (),
                            the_qos.inout (),
                            flow_spec);
 
   if (result == 0)
-    ACE_ERROR ((LM_ERROR,
-                "Streamctrl::bind_devs failed\n"));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "Streamctrl::bind_devs failed\n"));
+    }
 
   // Start the data sending.
   AVStreams::flowSpec start_spec;
@@ -381,42 +376,43 @@ Connection_Manager::connect_to_sender ()
 }
 
 void
-Connection_Manager::add_streamctrl (const ACE_CString &flowname,
+Connection_Manager::add_streamctrl (ACE_CString const &flowname,
                                     TAO_StreamEndPoint *endpoint)
 {
   // Get the stream controller for this endpoint.
   CORBA::Any_var streamctrl_any =
     endpoint->get_property_value ("Related_StreamCtrl");
 
-  AVStreams::StreamCtrl_ptr streamctrl;
+  AVStreams::StreamCtrl_ptr streamctrl {};
 
-  if( streamctrl_any.in() >>= streamctrl )
-  {
-    // the CORBA::Any_var owns the pointer, so we should
-    // _duplicate it before passing it around
-    AVStreams::StreamCtrl::_duplicate( streamctrl);
-    this->streamctrls_.unbind(flowname);
-    this->streamctrls_.bind (flowname, streamctrl);
-  }
+  if (streamctrl_any.in () >>= streamctrl)
+    {
+      // The Any owns the extracted reference; retain one for the map entry.
+      AVStreams::StreamCtrl_var streamctrl_copy =
+        AVStreams::StreamCtrl::_duplicate (streamctrl);
+      this->streamctrls_.unbind (flowname);
+      this->streamctrls_.bind (flowname, streamctrl_copy);
+    }
 }
 
-
 void
-Connection_Manager::destroy (const ACE_CString &flowname)
+Connection_Manager::destroy (ACE_CString const &flowname)
 {
   this->protocol_objects_.unbind (flowname);
   this->receivers_.unbind (flowname);
 
-  this->streamctrls_.unbind(flowname);
+  this->streamctrls_.unbind (flowname);
 }
 
 void
-Connection_Manager::unbind_sender (const ACE_CString &sender_name,
+Connection_Manager::unbind_sender (ACE_CString const &sender_name,
                                    AVStreams::MMDevice_ptr sender_mmdevice_obj)
 {
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "Connection_Manager::unbind_sender\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Connection_Manager::unbind_sender\n"));
+    }
 
   CosNaming::Name name (1);
   name.length (1);
@@ -434,8 +430,10 @@ Connection_Manager::unbind_sender (const ACE_CString &sender_name,
         CosNaming::NamingContext::_narrow (object.in ());
 
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    "Sender Context Found\n"));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "Sender Context Found\n"));
+        }
 
       try
         {
@@ -450,11 +448,13 @@ Connection_Manager::unbind_sender (const ACE_CString &sender_name,
             sender_context->unbind (name);
 
             if (TAO_debug_level > 0)
-              ACE_DEBUG ((LM_DEBUG,
-                          "Sender Unbound\n"));
+              {
+                ACE_DEBUG ((LM_DEBUG,
+                            "Sender Unbound\n"));
+              }
           }
         }
-      catch (const CosNaming::NamingContext::NotFound&)
+      catch (CosNaming::NamingContext::NotFound const &)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "Sender object not found\n"));
@@ -462,7 +462,7 @@ Connection_Manager::unbind_sender (const ACE_CString &sender_name,
         }
 
     }
-  catch (const CosNaming::NamingContext::NotFound&)
+  catch (CosNaming::NamingContext::NotFound const &)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Sender Context Not Found\n"));
@@ -472,13 +472,15 @@ Connection_Manager::unbind_sender (const ACE_CString &sender_name,
 }
 
 void
-Connection_Manager::unbind_receiver (const ACE_CString &sender_name,
-                                     const ACE_CString &receiver_name,
+Connection_Manager::unbind_receiver (ACE_CString const &sender_name,
+                                     ACE_CString const &receiver_name,
                                      AVStreams::MMDevice_ptr receiver_mmdevice)
 {
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "Connection_Manager::unbind_receiver\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Connection_Manager::unbind_receiver\n"));
+    }
 
   CosNaming::Name name (1);
   name.length (1);
@@ -496,8 +498,10 @@ Connection_Manager::unbind_receiver (const ACE_CString &sender_name,
         CosNaming::NamingContext::_narrow (object.in ());
 
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    "Sender Context Found\n"));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "Sender Context Found\n"));
+        }
 
       try
         {
@@ -508,8 +512,10 @@ Connection_Manager::unbind_receiver (const ACE_CString &sender_name,
             sender_context->resolve (name);
 
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG,
-                        "Receivers Context Found\n"));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "Receivers Context Found\n"));
+            }
 
           CosNaming::NamingContext_var receivers_context =
             CosNaming::NamingContext::_narrow (object.in ());
@@ -528,11 +534,13 @@ Connection_Manager::unbind_receiver (const ACE_CString &sender_name,
             receivers_context->unbind (name);
 
             if (TAO_debug_level > 0)
-              ACE_DEBUG ((LM_DEBUG,
-                          "Receiver Unbound\n"));
+              {
+                ACE_DEBUG ((LM_DEBUG,
+                            "Receiver Unbound\n"));
+              }
           }
         }
-      catch (const CosNaming::NamingContext::NotFound&)
+      catch (CosNaming::NamingContext::NotFound const &)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "Receiver Not found\n"));
@@ -540,7 +548,7 @@ Connection_Manager::unbind_receiver (const ACE_CString &sender_name,
         }
 
     }
-  catch (const CosNaming::NamingContext::NotFound&)
+  catch (CosNaming::NamingContext::NotFound const &)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Sender Context Not Found\n"));

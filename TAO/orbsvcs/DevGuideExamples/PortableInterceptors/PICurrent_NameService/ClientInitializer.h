@@ -10,8 +10,8 @@ class ClientInitializer :
   public virtual PortableInterceptor::ORBInitializer,
   public virtual ::CORBA::LocalObject
 {
- public:
-  ClientInitializer ();
+public:
+  ClientInitializer () = default;
   ClientInitializer (ClientInitializer const &) = delete;
   ClientInitializer (ClientInitializer &&) = delete;
   ClientInitializer &operator= (ClientInitializer const &) = delete;
@@ -22,8 +22,8 @@ class ClientInitializer :
   void set_slot_data ();
 
  private:
-   PortableInterceptor::SlotId slot_;
-   PortableInterceptor::Current_var current_;
+  PortableInterceptor::SlotId slot_ {};
+  PortableInterceptor::Current_var current_ {};
 };
 
 #endif

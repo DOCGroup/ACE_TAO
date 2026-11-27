@@ -1,12 +1,8 @@
-/* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file   Atomic_Reconnect.h
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  */
-//=============================================================================
-
 
 #ifndef EC_ATOMIC_RECONNECT_H
 #define EC_ATOMIC_RECONNECT_H
@@ -25,9 +21,12 @@
 class Consumer : public EC_Counting_Consumer
 {
 public:
-  /// Constructor
-  Consumer (const char* name,
+  Consumer (char const *name,
             int event_base_type);
+  Consumer (Consumer const &) = delete;
+  Consumer &operator= (Consumer const &) = delete;
+  Consumer (Consumer &&) = delete;
+  Consumer &operator= (Consumer &&) = delete;
 
   void dump_results (int expected_count,
                      int tolerance);
@@ -35,11 +34,12 @@ public:
                      int extra_count,
                      int tolerance);
 
-  // = The RtecEventComm::PushConsumer methods
+  /// @name RtecEventComm::PushConsumer operations
+  /// @{
+  void push (RtecEventComm::EventSet const & events) override;
+  /// @}
 
-  virtual void push (const RtecEventComm::EventSet& events);
-
-  /// Number of events of type <event_base_type_> received.
+  /// Number of events of type @c event_base_type_ received.
   CORBA::ULong event_base_count;
 
 private:

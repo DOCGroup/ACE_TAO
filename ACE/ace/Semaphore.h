@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//==========================================================================
 /**
  *  @file    Semaphore.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//==========================================================================
 
 #ifndef ACE_SEMAPHORE_H
 #define ACE_SEMAPHORE_H
@@ -32,11 +28,16 @@ class ACE_Time_Value;
 class ACE_Export ACE_Semaphore
 {
 public:
+  ACE_Semaphore (ACE_Semaphore const &) = delete;
+  ACE_Semaphore (ACE_Semaphore &&) = delete;
+  ACE_Semaphore &operator= (ACE_Semaphore const &) = delete;
+  ACE_Semaphore &operator= (ACE_Semaphore &&) = delete;
+
   /// Initialize the semaphore, with initial value of "count".
   ACE_Semaphore (unsigned int count = 1, // By default make this unlocked.
                  int type = USYNC_THREAD,
-                 const ACE_TCHAR *name = nullptr,
-                 void * = 0,
+                 ACE_TCHAR const *name = nullptr,
+                 void * = nullptr,
                  int max = 0x7fffffff);
 
   /// Implicitly destroy the semaphore.
@@ -64,7 +65,7 @@ public:
   int acquire (ACE_Time_Value &tv);
 
   /**
-   * If @a tv == 0 then call <acquire()> directly.  Otherwise, Block
+   * If @a tv == 0 then call @c acquire() directly. Otherwise, block
    * the thread until the semaphore count becomes greater than 0
    * (at which point it is decremented) or until @a tv times out (in
    * which case -1 is returned and @c errno == @c ETIME).  Note that
@@ -91,14 +92,14 @@ public:
   int release (unsigned int release_count);
 
   /**
-   * Acquire semaphore ownership.  This calls <acquire> and is only
+   * Acquire semaphore ownership.  This calls @c acquire and is only
    * here to make the ACE_Semaphore interface consistent with the
    * other synchronization APIs.
    */
   int acquire_read ();
 
   /**
-   * Acquire semaphore ownership.  This calls <acquire> and is only
+   * Acquire semaphore ownership.  This calls @c acquire and is only
    * here to make the ACE_Semaphore interface consistent with the
    * other synchronization APIs.
    */
@@ -106,7 +107,7 @@ public:
 
   /**
    * Conditionally acquire semaphore (i.e., won't block).  This calls
-   * <tryacquire> and is only here to make the ACE_Semaphore
+   * @c tryacquire and is only here to make the ACE_Semaphore
    * interface consistent with the other synchronization APIs.
    * Returns -1 on failure.  If we "failed" because someone else
    * already had the lock, @c errno is set to @c EBUSY.
@@ -115,7 +116,7 @@ public:
 
   /**
    * Conditionally acquire semaphore (i.e., won't block).  This calls
-   * <tryacquire> and is only here to make the ACE_Semaphore
+   * @c tryacquire and is only here to make the ACE_Semaphore
    * interface consistent with the other synchronization APIs.
    * Returns -1 on failure.  If we "failed" because someone else
    * already had the lock, @c errno is set to @c EBUSY.
@@ -137,7 +138,7 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
   /// Return the underlying lock.
-  const ACE_sema_t &lock () const;
+  ACE_sema_t const &lock () const;
 
 protected:
   ACE_sema_t semaphore_;
@@ -147,11 +148,7 @@ protected:
   /// destructor.  This flag isn't protected by a lock, so make sure
   /// that you don't have multiple threads simultaneously calling
   /// remove () on the same object, which is a bad idea anyway...
-  bool removed_;
-
-private:
-  void operator= (const ACE_Semaphore &) = delete;
-  ACE_Semaphore (const ACE_Semaphore &) = delete;
+  bool removed_ {};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

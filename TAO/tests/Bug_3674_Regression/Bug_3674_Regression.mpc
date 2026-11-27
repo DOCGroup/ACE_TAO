@@ -1,5 +1,3 @@
-// -*- MPC -*-
-
 project(*): taoserver, pi_server, iorinterceptor {
   requires += interceptors
   exename  = *

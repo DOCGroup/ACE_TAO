@@ -1,13 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Log_Msg_Backend.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
-
 
 #ifndef ACE_LOG_MSG_BACKEND_H
 #define ACE_LOG_MSG_BACKEND_H
@@ -53,7 +48,7 @@ public:
    * @retval 0 for success.
    * @retval -1 for failure.
    */
-  virtual int open (const ACE_TCHAR *logger_key) = 0;
+  virtual int open (ACE_TCHAR const *logger_key) = 0;
 
   /**
    * Reset the backend.  If ACE_Log_Msg is reopened during execution, this

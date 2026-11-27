@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "ace/Log_Category.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -14,8 +13,6 @@ ACE_Dev_Poll_Reactor::Event_Tuple::Event_Tuple (ACE_Event_Handler *eh,
     controlled (is_controlled)
 {
 }
-
-// ---------------------------------------------------------------------
 
 ACE_INLINE size_t
 ACE_Dev_Poll_Reactor::Handler_Repository::size () const
@@ -33,31 +30,34 @@ ACE_Dev_Poll_Reactor::Handler_Repository::max_size () const
   return this->max_size_;
 }
 
-// -----------------------------------------------------------------
-
 ACE_INLINE
 ACE_Dev_Poll_Handler_Guard::ACE_Dev_Poll_Handler_Guard
   (ACE_Event_Handler *eh,
    bool do_incr)
-  : eh_ (eh),
-    refcounted_ (false)
+  : eh_ (eh)
 {
-  if (eh == 0)
-    return;
+  if (eh == nullptr)
+    {
+      return;
+    }
 
   this->refcounted_ =
     eh->reference_counting_policy ().value () ==
     ACE_Event_Handler::Reference_Counting_Policy::ENABLED;
 
   if (do_incr && this->refcounted_)
-    eh->add_reference ();
+    {
+      eh->add_reference ();
+    }
 }
 
 ACE_INLINE
 ACE_Dev_Poll_Handler_Guard::~ACE_Dev_Poll_Handler_Guard ()
 {
-  if (this->refcounted_ && this->eh_ != 0)
-    this->eh_->remove_reference ();
+  if (this->refcounted_ && this->eh_ != nullptr)
+    {
+      this->eh_->remove_reference ();
+    }
 }
 
 ACE_INLINE void
@@ -65,8 +65,6 @@ ACE_Dev_Poll_Handler_Guard::release ()
 {
   this->eh_ = nullptr;
 }
-
-// ---------------------------------------------------------------------
 
 ACE_INLINE int
 ACE_Dev_Poll_Reactor::upcall (ACE_Event_Handler *event_handler,
@@ -88,7 +86,6 @@ ACE_Dev_Poll_Reactor::upcall (ACE_Event_Handler *event_handler,
   return status;
 }
 
-
 /************************************************************************/
 // Methods for ACE_Dev_Poll_Reactor::Token_Guard
 /************************************************************************/
@@ -96,8 +93,7 @@ ACE_Dev_Poll_Reactor::upcall (ACE_Event_Handler *event_handler,
 ACE_INLINE
 ACE_Dev_Poll_Reactor::Token_Guard::Token_Guard (ACE_Dev_Poll_Reactor_Token &token)
 
-  : token_ (token),
-    owner_ (false)
+  : token_ (token)
 {
 }
 

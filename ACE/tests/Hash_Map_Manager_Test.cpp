@@ -1,50 +1,148 @@
-
-//=============================================================================
 /**
  *  @file    Hash_Map_Manager_Test.cpp
  *
- *    This test illustrates the use of <ACE_Hash_Map_Manager> to
+ *    This test illustrates the use of @c ACE_Hash_Map_Manager to
  *    maintain a hash table using strings.  In addition, it also
- *    illustrates how the <ACE_Static_Allocator> works in
- *    conjunction with the <ACE_Hash_Map_Manager>.
+ *    illustrates how the @c ACE_Static_Allocator works in
+ *    conjunction with the @c ACE_Hash_Map_Manager.
  *
  *  @author James Hu <jxh@cs.wustl.edu> and Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
-
 
 #include "test_config.h"
 #include "STL_algorithm_Test_T.h"
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Malloc_T.h"
 #include "ace/Null_Mutex.h"
+#include <cerrno>
+#include <limits>
+#include <stdexcept>
 
+class Throwing_Value
+{
+public:
+  Throwing_Value () = default;
+  Throwing_Value (Throwing_Value const &)
+  {
+    throw std::runtime_error ("test copy failure");
+  }
+  Throwing_Value &operator= (Throwing_Value const &) = default;
+};
+
+static int
+test_throwing_value ()
+{
+  using Map = ACE_Hash_Map_Manager_Ex<int, Throwing_Value, ACE_Hash<int>,
+                                      ACE_Equal_To<int>, ACE_Null_Mutex>;
+  Map map;
+  Throwing_Value value;
+  bool bind_failed {};
+  try
+    {
+      map.bind (1, value);
+    }
+  catch (std::runtime_error const &)
+    {
+      bind_failed = true;
+    }
+  bool trybind_failed {};
+  try
+    {
+      map.trybind (2, value);
+    }
+  catch (std::runtime_error const &)
+    {
+      trybind_failed = true;
+    }
+  if (!bind_failed || !trybind_failed || map.current_size () != 0)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Hash map failed to handle a throwing entry\n")), -1);
+    }
+  return 0;
+}
+
+class Throwing_Default_Value
+{
+public:
+  Throwing_Default_Value ()
+  {
+    if (remaining_ == 0)
+      {
+        throw std::runtime_error ("test default construction failure");
+      }
+    if (remaining_ > 0)
+      {
+        --remaining_;
+      }
+    ++live_;
+  }
+  ~Throwing_Default_Value () { --live_; }
+  static int remaining_;
+  static int live_;
+};
+
+int Throwing_Default_Value::remaining_ {-1};
+int Throwing_Default_Value::live_ {};
+
+static int
+test_bucket_construction_failure ()
+{
+  using Map = ACE_Hash_Map_Manager_Ex<int, Throwing_Default_Value, ACE_Hash<int>,
+                                      ACE_Equal_To<int>, ACE_Null_Mutex>;
+  Map map (4);
+  Throwing_Default_Value::remaining_ = 2;
+  bool caught {};
+  try
+    {
+      map.open (4);
+    }
+  catch (std::runtime_error const &)
+    {
+      caught = true;
+    }
+  if (!caught || Throwing_Default_Value::live_ != 0 || map.total_size () != 0)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Hash map leaked partially constructed buckets\n")), -1);
+    }
+  Throwing_Default_Value::remaining_ = -1;
+  if (map.open (4) != 0 || Throwing_Default_Value::live_ != 4)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Hash map could not reopen after bucket construction failed\n")), -1);
+    }
+  errno = 0;
+  if (map.open ((std::numeric_limits<size_t>::max) ()) != -1
+      || errno != ENOMEM || map.total_size () != 0 || Throwing_Default_Value::live_ != 0)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Hash map bucket size overflow was not rejected\n")), -1);
+    }
+  return 0;
+}
 
 static constexpr size_t STRING_TABLE_ENTRIES = 3 * 2;
 static constexpr size_t MAX_HASH = 6;
 
-using HASH_STRING_ENTRY = ACE_Hash_Map_Entry<const ACE_TCHAR *, const ACE_TCHAR *>;
+using HASH_STRING_ENTRY = ACE_Hash_Map_Entry<ACE_TCHAR const *, ACE_TCHAR const *>;
 
 // @@ The following requires too much internal implementation
 // information about the <ACE_Hash_Map_Manager>.  We need to figure
 // out how to simplify this.
-static const size_t STRING_TABLE_SIZE =
+static size_t const STRING_TABLE_SIZE =
   sizeof (HASH_STRING_ENTRY) * (STRING_TABLE_ENTRIES + MAX_HASH);
 
 static ACE_Static_Allocator<STRING_TABLE_SIZE> ace_test_allocator;
 
-using HASH_STRING_MAP = ACE_Hash_Map_Manager_Ex<const ACE_TCHAR *, const ACE_TCHAR *, ACE_Hash<const ACE_TCHAR *>, ACE_Equal_To<const ACE_TCHAR *>, ACE_Null_Mutex>;
+using HASH_STRING_MAP = ACE_Hash_Map_Manager_Ex<ACE_TCHAR const *, ACE_TCHAR const *, ACE_Hash<ACE_TCHAR const *>, ACE_Equal_To<ACE_TCHAR const *>, ACE_Null_Mutex>;
 
-using HASH_STRING_ITER = ACE_Hash_Map_Iterator_Ex<const ACE_TCHAR *, const ACE_TCHAR *, ACE_Hash<const ACE_TCHAR *>, ACE_Equal_To<const ACE_TCHAR *>, ACE_Null_Mutex>;
+using HASH_STRING_ITER = ACE_Hash_Map_Iterator_Ex<ACE_TCHAR const *, ACE_TCHAR const *, ACE_Hash<ACE_TCHAR const *>, ACE_Equal_To<ACE_TCHAR const *>, ACE_Null_Mutex>;
 
-using HASH_STRING_CONST_ITER = ACE_Hash_Map_Const_Iterator_Ex<const ACE_TCHAR *, const ACE_TCHAR *, ACE_Hash<const ACE_TCHAR *>, ACE_Equal_To<const ACE_TCHAR *>, ACE_Null_Mutex>;
+using HASH_STRING_CONST_ITER = ACE_Hash_Map_Const_Iterator_Ex<ACE_TCHAR const *, ACE_TCHAR const *, ACE_Hash<ACE_TCHAR const *>, ACE_Equal_To<ACE_TCHAR const *>, ACE_Null_Mutex>;
 
-using HASH_STRING_REVERSE_ITER = ACE_Hash_Map_Reverse_Iterator_Ex<const ACE_TCHAR *, const ACE_TCHAR *, ACE_Hash<const ACE_TCHAR *>, ACE_Equal_To<const ACE_TCHAR *>, ACE_Null_Mutex>;
+using HASH_STRING_REVERSE_ITER = ACE_Hash_Map_Reverse_Iterator_Ex<ACE_TCHAR const *, ACE_TCHAR const *, ACE_Hash<ACE_TCHAR const *>, ACE_Equal_To<ACE_TCHAR const *>, ACE_Null_Mutex>;
 
 struct String_Table
 {
-  const ACE_TCHAR *key_;
-  const ACE_TCHAR *value_;
+  ACE_TCHAR const *key_;
+  ACE_TCHAR const *value_;
 };
 
 static String_Table string_table[] =
@@ -82,7 +180,7 @@ int test_two_allocators ()
   ACE_Dynamic_Cached_Allocator<ACE_Null_Mutex> table_alloc_small (1, chunk_size * chunks - 1);
   ACE_Cached_Allocator<HASH_STRING_MAP::ENTRY, ACE_Null_Mutex> entry_alloc (chunks);
 
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing hash map manager with %d elements...\n"), chunks));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing hash map manager with %B elements...\n"), chunks));
 
   HASH_STRING_MAP hash;
 
@@ -92,10 +190,14 @@ int test_two_allocators ()
   ACE_OS::last_error (0);
   status = hash.open (chunks, &table_alloc_small, &entry_alloc);
   if (status < 0)
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("OK, failed: %d (%s)\n"),
-                status, ACE_OS::strerror (ACE_OS::last_error ())));
+    {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("OK, failed: %d (%s)\n"),
+                  status, ACE_OS::strerror (ACE_OS::last_error ())));
+    }
   else
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("*** Something is wrong...\n")), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("*** Something is wrong...\n")), -1);
+    }
 
   status = hash.close ();
 
@@ -110,43 +212,55 @@ int test_two_allocators ()
   ACE_OS::last_error (0);
   status = hash.open (chunks, &table_alloc, &entry_alloc);
   if (status < 0)
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("*** Something is wrong: %d (%s)\n"),
-                       status, ACE_OS::strerror (ACE_OS::last_error ())), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("*** Something is wrong: %d (%s)\n"),
+                         status, ACE_OS::strerror (ACE_OS::last_error ())), -1);
+    }
   else
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("OK.\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("OK.\n")));
+    }
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Table allocator depth: %d\n"),
               table_alloc.pool_depth ()));
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Entry allocator depth: %d.\n"),
               entry_alloc.pool_depth ()));
 
-  for (size_t i = 0; i < chunks; i++)
+  for (size_t i = 0; i < chunks; ++i)
     {
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("- Binding ('%s', '%s'), should succeed...\n"),
                   string_table[i].key_ , string_table[i].value_));
       ACE_OS::last_error (0);
       status = hash.bind (string_table[i].key_, string_table[i].value_);
       if (status < 0)
-        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("*** Something is wrong: %d (%s)\n"),
-                           status, ACE_OS::strerror (ACE_OS::last_error ())), -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("*** Something is wrong: %d (%s)\n"),
+                             status, ACE_OS::strerror (ACE_OS::last_error ())), -1);
+        }
       else
-        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("OK, entry allocator depth: %d\n"),
-                    entry_alloc.pool_depth ()));
+        {
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("OK, entry allocator depth: %d\n"),
+                      entry_alloc.pool_depth ()));
+        }
     }
 
-  const ACE_TCHAR *key = ACE_TEXT ("key");
-  const ACE_TCHAR *val = ACE_TEXT ("value");
+  ACE_TCHAR const *key = ACE_TEXT ("key");
+  ACE_TCHAR const *val = ACE_TEXT ("value");
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("- Binding ('%s', '%s'), should fail...\n"),
               key, val));
   ACE_OS::last_error (0);
   status = hash.bind (key, val);
   if (status < 0)
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("OK, failed (%s).\n"),
-                ACE_OS::strerror (ACE_OS::last_error ())));
+    {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("OK, failed (%s).\n"),
+                  ACE_OS::strerror (ACE_OS::last_error ())));
+    }
   else
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("*** Something is wrong: %d (%s)\n"),
-                       status, ACE_OS::strerror (ACE_OS::last_error ())), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("*** Something is wrong: %d (%s)\n"),
+                         status, ACE_OS::strerror (ACE_OS::last_error ())), -1);
+    }
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Closing hash map.\n")));
   status = hash.close ();
@@ -169,47 +283,61 @@ run_test ()
   size_t i;
 
   // Check the <bind> operation.
-  for (i = 0; string_table[i].key_ != nullptr; i++)
-    if (hash.bind (string_table[i].key_,
-                   string_table[i].value_) == -1)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("%p failed for %s\n"),
-                         ACE_TEXT ("bind"),
-                         string_table[i].key_), -1);
+  for (i = 0; string_table[i].key_ != nullptr; ++i)
+    {
+      if (hash.bind (string_table[i].key_,
+                     string_table[i].value_) == -1)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("%p failed for %s\n"),
+                             ACE_TEXT ("bind"),
+                             string_table[i].key_), -1);
+        }
+    }
 
-  const ACE_TCHAR *entry = nullptr;
+  ACE_TCHAR const *entry {};
 
   // Check the <find> operation.
-  for (i = 0; string_table[i].key_ != nullptr; i++)
-    if (hash.find (string_table[i].key_,
-                   entry) == 0)
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("`%s' found `%s'\n"),
-                  string_table[i].key_,
-                  entry));
-    else
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("`%s' not found\n"),
-                         string_table[i].key_),
-                        -1);
+  for (i = 0; string_table[i].key_ != nullptr; ++i)
+    {
+      if (hash.find (string_table[i].key_,
+                     entry) == 0)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("`%s' found `%s'\n"),
+                      string_table[i].key_,
+                      entry));
+        }
+      else
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("`%s' not found\n"),
+                             string_table[i].key_),
+                            -1);
+        }
+    }
 
   // Check the <trybind> operation.
   {
-    const ACE_TCHAR *pc = string_table[1].value_;
+    ACE_TCHAR const *pc = string_table[1].value_;
     if (hash.trybind (string_table[0].key_,
                       pc) != 1)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("::trybind missed existing entry.")),
-                        -1);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("::trybind missed existing entry.")),
+                          -1);
+      }
     else if (pc != string_table[0].value_)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("::trybind doesn't return existing value.")),
-                        -1);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("::trybind doesn't return existing value.")),
+                          -1);
+      }
   }
 
   // Let's test the iterator while we are at it.
   {
-    HASH_STRING_ENTRY *entry = nullptr;
+    HASH_STRING_ENTRY *entry {};
     size_t i = 0;
 
     for (HASH_STRING_ITER hash_iter (hash);
@@ -217,17 +345,17 @@ run_test ()
          hash_iter.advance ())
       {
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("iterating (%d): [%s, %s]\n"),
+                    ACE_TEXT ("iterating (%B): [%s, %s]\n"),
                     i,
                     entry->ext_id_,
                     entry->int_id_));
-        i++;
+        ++i;
       }
   }
 
   // And now test the const iterator
   {
-    HASH_STRING_ENTRY *entry = nullptr;
+    HASH_STRING_ENTRY *entry {};
     size_t i = 0;
 
     for (HASH_STRING_CONST_ITER hash_iter (hash);
@@ -235,33 +363,39 @@ run_test ()
          hash_iter.advance ())
       {
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("const iterating (%d): [%s, %s]\n"),
+                    ACE_TEXT ("const iterating (%B): [%s, %s]\n"),
                     i,
                     entry->ext_id_,
                     entry->int_id_));
-        i++;
+        ++i;
       }
   }
 
   hash.unbind (string_table[2].key_, entry);
 
   // Check the <find> operation again.
-  for (i = 0; string_table[i].key_ != nullptr; i++)
-    if (hash.find (string_table[i].key_,
-                   entry) == 0)
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("`%s' found `%s'\n"),
-                  string_table[i].key_,
-                  entry));
-    else if (i != 2)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("`%s' not found\n"),
-                         string_table[i].key_),
-                        -1);
+  for (i = 0; string_table[i].key_ != nullptr; ++i)
+    {
+      if (hash.find (string_table[i].key_,
+                     entry) == 0)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("`%s' found `%s'\n"),
+                      string_table[i].key_,
+                      entry));
+        }
+      else if (i != 2)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("`%s' not found\n"),
+                             string_table[i].key_),
+                            -1);
+        }
+    }
 
   // Let's test the iterator backwards.
   {
-    HASH_STRING_ENTRY *entry = nullptr;
+    HASH_STRING_ENTRY *entry {};
     size_t i = 0;
 
     for (HASH_STRING_REVERSE_ITER hash_iter (hash);
@@ -269,28 +403,34 @@ run_test ()
          hash_iter.advance ())
       {
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("iterating (%d): [%s, %s]\n"),
+                    ACE_TEXT ("iterating (%B): [%s, %s]\n"),
                     i,
                     entry->ext_id_,
                     entry->int_id_));
-        i++;
+        ++i;
       }
   }
 
   // Remove all the entries.
   if (hash.unbind_all () != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("unbind_all failed\n")),
-                       -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("unbind_all failed\n")),
+                         -1);
+    }
 
   // Redo the <bind> operations.
-  for (i = 0; string_table[i].key_ != nullptr; i++)
-    if (hash.bind (string_table[i].key_,
-                   string_table[i].value_) != 0)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("%p failed for %s\n"),
-                         ACE_TEXT ("bind"),
-                         string_table[i].key_), -1);
+  for (i = 0; string_table[i].key_ != nullptr; ++i)
+    {
+      if (hash.bind (string_table[i].key_,
+                     string_table[i].value_) != 0)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("%p failed for %s\n"),
+                             ACE_TEXT ("bind"),
+                             string_table[i].key_), -1);
+        }
+    }
 
   ace_test_allocator.dump ();
 
@@ -312,7 +452,10 @@ run_main (int, ACE_TCHAR *[])
 
   run_test ();
 
+  int const exception_test_result = test_throwing_value ();
+  int const bucket_test_result = test_bucket_construction_failure ();
+
   ACE_END_TEST;
 
-  return 0;
+  return exception_test_result != 0 || bucket_test_result != 0 ? 1 : 0;
 }

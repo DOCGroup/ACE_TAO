@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    TypeCode.h
  *
@@ -10,7 +7,6 @@
  *  @author DOC group at Vanderbilt University, Washington University
  *          and the University of California at Irvine.
  */
-//=============================================================================
 
 #ifndef TAO_TYPECODE_H
 #define TAO_TYPECODE_H
@@ -67,18 +63,17 @@ namespace CORBA
     class TAO_AnyTypeCode_Export Bounds : public UserException
     {
     public:
-      /// Constructor.
       Bounds ();
 
       static Bounds * _downcast (CORBA::Exception * ex);
       static CORBA::Exception * _alloc ();
 
-      virtual CORBA::Exception * _tao_duplicate () const;
+      CORBA::Exception * _tao_duplicate () const override;
 
-      virtual void _raise () const;
+      void _raise () const override;
 
-      virtual void _tao_encode (TAO_OutputCDR & cdr) const;
-      virtual void _tao_decode (TAO_InputCDR & cdr);
+      void _tao_encode (TAO_OutputCDR & cdr) const override;
+      void _tao_decode (TAO_InputCDR & cdr) override;
     };
 
     /**
@@ -98,12 +93,12 @@ namespace CORBA
       static BadKind * _downcast (CORBA::Exception * ex);
       static CORBA::Exception * _alloc ();
 
-      virtual CORBA::Exception * _tao_duplicate () const;
+      CORBA::Exception * _tao_duplicate () const override;
 
-      virtual void _raise () const;
+      void _raise () const override;
 
-      virtual void _tao_encode (TAO_OutputCDR & cdr) const;
-      virtual void _tao_decode (TAO_InputCDR & cdr);
+      void _tao_encode (TAO_OutputCDR & cdr) const override;
+      void _tao_decode (TAO_InputCDR & cdr) override;
     };
 
     static CORBA::TypeCode_ptr const _tc_Bounds;
@@ -119,7 +114,7 @@ namespace CORBA
      */
     static CORBA::TypeCode_ptr _duplicate (CORBA::TypeCode_ptr tc);
 
-    /// Returns a NULL typecode.
+    /// Returns a null TypeCode.
     static CORBA::TypeCode_ptr _nil ();
 
     /**
@@ -136,7 +131,8 @@ namespace CORBA
      * pattern, not the C++ feature) listed below in the @c protected
      * block.
      */
-    //@{
+    /// @{
+
     /// Equality of two @c TypeCodes.
     /**
      * @return @c true if and only if the set of legal operations is
@@ -370,7 +366,7 @@ namespace CORBA
      *         @c CORBA::TypeCode::_nil() if no concrete base exists.
      */
     TypeCode_ptr concrete_base_type () const;
-    //@}
+    /// @}
 
     /// Marshal the @c TypeCode @c TCKind.
     /**
@@ -421,10 +417,8 @@ namespace CORBA
     using _out_type = CORBA::TypeCode_out;
 
   protected:
-    /// Constructor.
     explicit TypeCode (CORBA::TCKind kind);
 
-    /// Destructor.
     /**
      * Protected destructor to enforce proper memory management
      * through the reference counting mechanism.
@@ -447,7 +441,7 @@ namespace CORBA
      * @c TypeCodes which is why their template method "@c _i"
      * counterparts are pure virtual.
      */
-    //@{
+    /// @{
     virtual Boolean equal_i (TypeCode_ptr tc) const = 0;
     virtual Boolean equivalent_i (TypeCode_ptr tc) const = 0;
     virtual TypeCode_ptr get_compact_typecode_i () const = 0;
@@ -467,33 +461,33 @@ namespace CORBA
     virtual Visibility member_visibility_i (ULong index) const;
     virtual ValueModifier type_modifier_i () const;
     virtual TypeCode_ptr concrete_base_type_i () const;
-    //@}
+    /// @}
 
   private:
-    // Prevent copying and assignment.
+    /// Copying and assignment are disabled.
+    TypeCode () = delete;
     TypeCode (TypeCode const &) = delete;
-    void operator= (TypeCode const &) = delete;
+    TypeCode &operator= (TypeCode const &) = delete;
     TypeCode (TypeCode &&) = delete;
-    void operator= (TypeCode &&) = delete;
+    TypeCode &operator= (TypeCode &&) = delete;
 
   protected:
-    /// The kind of TypeCode.
-    TCKind const kind_;
+    /// The kind of TypeCode, resolved after construction for recursive types.
+    TCKind kind_;
   };
 }  // End namespace CORBA
 
-
 TAO_AnyTypeCode_Export CORBA::Boolean
-operator<< (TAO_OutputCDR & cdr, const CORBA::TypeCode_ptr tc);
+operator<< (TAO_OutputCDR & cdr, CORBA::TypeCode_ptr const tc);
 
 TAO_AnyTypeCode_Export CORBA::Boolean
 operator>> (TAO_InputCDR & cdr, CORBA::TypeCode_ptr & tc);
 
 #if defined (GEN_OSTREAM_OPS)
 
-// Used in optionally generated ostream operators (for debugging).
+/// Used in optionally generated ostream operators for debugging.
 TAO_AnyTypeCode_Export std::ostream &
-operator<< (std::ostream &, const CORBA::TypeCode_ptr tc);
+operator<< (std::ostream &, CORBA::TypeCode_ptr const tc);
 
 #endif /* GEN_OSTREAM_OPS */
 
@@ -504,7 +498,7 @@ namespace TAO
     /// Marshal the @c TypeCode @a tc in to the output CDR stream @a
     /// cdr.
     /**
-     * @see @CORBA::TypeCode::tao_marshal() description for details.
+     * @see CORBA::TypeCode::tao_marshal() description for details.
      */
 
     TAO_AnyTypeCode_Export bool marshal (TAO_OutputCDR & cdr,
@@ -529,10 +523,8 @@ namespace TAO
   TAO_AnyTypeCode_Export
   CORBA::TCKind unaliased_kind (CORBA::TypeCode_ptr tc);
 
-  // ---------------------------------------------------------------
-
-  // Used in generated code if CORBA::TypeCode is an argument or
-  // return type.
+  /// Used in generated code if CORBA::TypeCode is an argument or
+  /// return type.
   template<>
   class TAO_AnyTypeCode_Export Arg_Traits<CORBA::TypeCode>
     : public Object_Arg_Traits_T<CORBA::TypeCode_ptr,
@@ -544,7 +536,7 @@ namespace TAO
   };
 
   template<>
-  struct TAO_AnyTypeCode_Export Objref_Traits< ::CORBA::TypeCode>
+  struct TAO_AnyTypeCode_Export Objref_Traits<::CORBA::TypeCode>
   {
     static ::CORBA::TypeCode_ptr duplicate (::CORBA::TypeCode_ptr);
     static void release (::CORBA::TypeCode_ptr);

@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    Basic_Types_Test.cpp
  *
@@ -6,7 +5,6 @@
  *
  *  @author David L. Levine <levine@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "ace/config-all.h"
 // Don't use the ACE version accessors in class ACE, so that we can
@@ -33,23 +31,26 @@
 using a_function_pointer = void *(*)(void *);
 
 ACE_UINT32
-check (const ACE_TCHAR* message, ACE_UINT32 i, ACE_UINT32 j)
+check (ACE_TCHAR const * message, ACE_UINT32 i, ACE_UINT32 j)
 {
   if (i == j)
     {
-      ACE_DEBUG ((LM_DEBUG, message, j, ACE_TEXT ("\n")));
+      ACE_DEBUG ((LM_DEBUG, message,
+                  static_cast<unsigned int> (j), ACE_TEXT ("\n")));
       return 0;
     }
   else
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("assertion failed \"%s\": %u != %u\n"),
-                  message, i, j));
+                  message,
+                  static_cast<unsigned int> (i),
+                  static_cast<unsigned int> (j)));
       return 1;
     }
 }
 
 ACE_UINT32
-check64 (const ACE_TCHAR* message, ACE_UINT64 i, ACE_UINT64 j)
+check64 (ACE_TCHAR const * message, ACE_UINT64 i, ACE_UINT64 j)
 {
   if (i == j)
   {
@@ -58,7 +59,8 @@ check64 (const ACE_TCHAR* message, ACE_UINT64 i, ACE_UINT64 j)
   }
   else
   {
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("assertion failed \"%s\": %u != %u\n"), message, i, j));
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("assertion failed \"%s\": %Q != %Q\n"),
+                message, i, j));
     return 1;
   }
 }
@@ -69,9 +71,9 @@ run_main (int, ACE_TCHAR *[])
   ACE_START_TEST (ACE_TEXT ("Basic_Types_Test"));
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("This is ACE Version %u.%u.%u\n\n"),
-              ACE_MAJOR_VERSION,
-              ACE_MINOR_VERSION,
-              ACE_MICRO_VERSION));
+              static_cast<unsigned int> (ACE_MAJOR_VERSION),
+              static_cast<unsigned int> (ACE_MINOR_VERSION),
+              static_cast<unsigned int> (ACE_MICRO_VERSION)));
 
   u_int errors = 0;
 
@@ -123,7 +125,9 @@ run_main (int, ACE_TCHAR *[])
 
   // ACE assumes sizeof (ptrdiff_t) == sizeof (void*)
   if (sizeof (ptrdiff_t) == sizeof (void *))
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("sizeof (ptrdiff_t) == sizeof (void*)\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("sizeof (ptrdiff_t) == sizeof (void*)\n")));
+    }
   else
     {
       ACE_ERROR ((LM_ERROR,
@@ -133,8 +137,10 @@ run_main (int, ACE_TCHAR *[])
 
   // ACE assumes sizeof (ptrdiff_t) >= sizeof (a_function_pointer)
   if (sizeof (ptrdiff_t) >= sizeof (a_function_pointer))
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("sizeof (ptrdiff_t) >= sizeof (a_function_pointer)\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("sizeof (ptrdiff_t) >= sizeof (a_function_pointer)\n")));
+    }
   else
     {
       ACE_ERROR ((LM_ERROR,
@@ -146,15 +152,19 @@ run_main (int, ACE_TCHAR *[])
 #if defined (ACE_LITTLE_ENDIAN)
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("little endian\n")));
   if (ACE_HTONS (test_val) == test_val)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("Endian test: %d == %d but should be different\n"),
-                ACE_HTONS (test_val), test_val));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Endian test: %d == %d but should be different\n"),
+                  ACE_HTONS (test_val), test_val));
+    }
 #elif defined (ACE_BIG_ENDIAN)
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("big endian\n")));
   if (ACE_HTONS (test_val) != test_val)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("Endian test: %d != %d but should be equal\n"),
-                ACE_HTONS (test_val), test_val));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Endian test: %d != %d but should be equal\n"),
+                  ACE_HTONS (test_val), test_val));
+    }
 #else
   ACE_ERROR ((LM_ERROR,
               ACE_TEXT ("assertion failed: no ACE_*_ENDIAN definition!\n")));
@@ -162,8 +172,8 @@ run_main (int, ACE_TCHAR *[])
 #endif /* ACE_LITTLE_ENDIAN */
 
   test_val = 0x0123;
-  ACE_UINT32 test_val_2 = 0x01234567;
-  ACE_UINT64 test_val_3 = 0x0123456789abcdef;
+  ACE_UINT32 const test_val_2 = 0x01234567;
+  ACE_UINT64 const test_val_3 = 0x0123456789abcdef;
   errors +=
     check (ACE_TEXT ("ACE_SWAP_WORD(0x0123) is %u%s"), ACE_SWAP_WORD (test_val), 0x2301);
   errors +=
@@ -171,16 +181,16 @@ run_main (int, ACE_TCHAR *[])
   errors +=
     check64 (ACE_TEXT ("ACE_SWAP_LONG_LONG(0x0123456789abcdef) is %Q%s"), ACE_SWAP_LONG_LONG (test_val_3), 0xefcdab8967452301);
 
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("OS page size: %u\n"),
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("OS page size: %Ld\n"),
               ACE_OS::getpagesize ()));
 
 #if defined (_SC_PAGESIZE)
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("sysconf page size: %d\n"),
-              (int) ACE_OS::sysconf (_SC_PAGESIZE)));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("sysconf page size: %Ld\n"),
+              ACE_OS::sysconf (_SC_PAGESIZE)));
 #endif /* _SC_PAGESIZE */
 #if defined (_SC_CLK_TCK)
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("clock ticks/sec = %d\n"),
-              (int) ACE_OS::sysconf (_SC_CLK_TCK)));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("clock ticks/sec = %Ld\n"),
+              ACE_OS::sysconf (_SC_CLK_TCK)));
 #endif /* _SC_CLK_TCK */
 
   ACE_END_TEST;

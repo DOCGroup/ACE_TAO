@@ -1,13 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    SOCK_Dgram_Mcast_QoS.h
  *
  *  @author Vishal Kachroo <vishal@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef ACE_SOCK_DGRAM_MCAST_QOS_H
 #define ACE_SOCK_DGRAM_MCAST_QOS_H
@@ -27,47 +22,52 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  * @brief Defines the member functions for the ACE QoS enabled socket
  * wrapper for UDP/IP multicast.
+ *
+ * @note There is no public @c open() method, so this class cannot be used
+ * until it subscribes to a multicast group. To send without listening,
+ * use @c ACE_SOCK_Dgram or @c ACE_SOCK_CODgram instead.
  */
 class ACE_QoS_Export ACE_SOCK_Dgram_Mcast_QoS : public ACE_SOCK_Dgram_Mcast
 {
 public:
-  /// Ctor, has same defaults as ACE_SOCK_Dgram_Mcast
+  /// Uses the same default options as ACE_SOCK_Dgram_Mcast.
   ACE_SOCK_Dgram_Mcast_QoS (options opts = DEFOPTS);
 
-  // Note that there is no public <open> method.  Therefore, this
-  // class cannot be used unless you <subscribe> to a multicast group.
-  // If you just want to send (and not listen) to a multicast group,
-  // use <ACE_SOCK_Dgram> or <ACE_SOCK_CODgram> instead.
-
-  /// Default dtor.
   ~ACE_SOCK_Dgram_Mcast_QoS ();
 
-  // = Multicast group management routines.
+  ACE_SOCK_Dgram_Mcast_QoS (ACE_SOCK_Dgram_Mcast_QoS const &) = delete;
+  ACE_SOCK_Dgram_Mcast_QoS &operator= (ACE_SOCK_Dgram_Mcast_QoS const &) = delete;
+  ACE_SOCK_Dgram_Mcast_QoS (ACE_SOCK_Dgram_Mcast_QoS &&) = delete;
+  ACE_SOCK_Dgram_Mcast_QoS &operator= (ACE_SOCK_Dgram_Mcast_QoS &&) = delete;
+
+  /// @name Multicast group management
+  /// @{
+
   /**
    * This is a QoS-enabled method for joining a multicast group, which
-   * passes <qos_params> via <ACE_OS::join_leaf>.  The network
+   * passes @a qos_params via @c ACE_OS::join_leaf(). The network
    * interface device driver is instructed to accept datagrams with
-   * <mcast_addr> multicast addresses.  If the socket has already been
-   * opened, <subscribe> closes the socket and opens a new socket
-   * bound to the <mcast_addr>. The session object specifies the QoS
+   * @a mcast_addr multicast addresses. If the socket has already been
+   * opened, @c subscribe() closes the socket and opens a new socket
+   * bound to @a mcast_addr. The session object specifies the QoS
    * session that the socket wants to subscribe to. A socket may
    * subscribe to multiple QoS sessions by calling this method multiple
    * times with different session objects.
    *
-   * The <net_if> interface is hardware specific, e.g., use "netstat
-   * -i" to find whether your interface is, such as "le0" or something
-   * else.  If net_if == 0, <subscribe> uses the default mcast
+   * The @a net_if interface is hardware specific, e.g., use "netstat
+   * -i" to find the interface name, such as "le0". If @a net_if is
+   * @c nullptr, @c subscribe() uses the default multicast
    * interface.  Returns: -1 if the call fails.
    *
-   * Note that some platforms, such as pSoS, support only number, not
-   * names, for network interfaces.  For these platforms, just give
-   * these numbers in alphanumeric form and <subscribe> will convert
-   * them into numbers via <ACE_OS::atoi>.
+   * @note Some platforms, such as pSoS, support only number, not
+   * names, for network interfaces. For these platforms, give the numbers
+   * in alphanumeric form and @c subscribe() converts them via
+   * @c ACE_OS::atoi().
    */
-  int subscribe (const ACE_INET_Addr &mcast_addr,
-                 const ACE_QoS_Params &qos_params,
+  int subscribe (ACE_INET_Addr const &mcast_addr,
+                 ACE_QoS_Params const &qos_params,
                  int reuse_addr = 1,
-                 const ACE_TCHAR *net_if = nullptr,
+                 ACE_TCHAR const *net_if = nullptr,
                  int protocol_family = PF_INET,
                  int protocol = 0,
                  ACE_Protocol_Info *protocolinfo = nullptr,
@@ -75,25 +75,30 @@ public:
                  u_long flags = 0,
                  ACE_QoS_Session *qos_session = nullptr);
 
-  // = Data transfer routines.
+  /// @}
 
-  /// Send <buffer_count> worth of @a buffers to @a addr using overlapped
-  /// I/O (uses <WSASentTo>).  Returns 0 on success.
-  ssize_t send (const iovec buffers[],
+  /// @name Data transfer
+  /// @{
+
+  /// Send @a buffer_count buffers from @a buffers to @a addr using overlapped
+  /// I/O (uses @c WSASendTo()). Returns 0 on success.
+  ssize_t send (iovec const buffers[],
                 int buffer_count,
                 size_t &number_of_bytes_sent,
                 int flags,
-                const ACE_Addr &addr,
+                ACE_Addr const &addr,
                 ACE_OVERLAPPED *overlapped,
                 ACE_OVERLAPPED_COMPLETION_FUNC func) const;
 
-  /// Send an @a n byte @a buf to the datagram socket (uses <WSASentTo>).
-  ssize_t send (const void *buf,
+  /// Send @a n bytes from @a buf to the datagram socket (uses @c WSASendTo()).
+  ssize_t send (void const *buf,
                 size_t n,
-                const ACE_Addr &addr,
+                ACE_Addr const &addr,
                 int flags,
                 ACE_OVERLAPPED *overlapped,
                 ACE_OVERLAPPED_COMPLETION_FUNC func) const;
+
+  /// @}
 
   /// Returns the QoS manager for this socket.
   ACE_QoS_Manager qos_manager ();
@@ -101,8 +106,8 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
-  int open (const ACE_INET_Addr &addr,
-            const ACE_QoS_Params &qos_params,
+  int open (ACE_INET_Addr const &addr,
+            ACE_QoS_Params const &qos_params,
             int protocol_family = PF_INET,
             int protocol = 0,
             ACE_Protocol_Info *protocolinfo = nullptr,
@@ -111,12 +116,10 @@ public:
             int reuse_addr = 0);
 
 private:
-  // = Disable public <open> method to ensure class used properly.
-
   /// Subscribe to the multicast interface using QoS-enabled semantics.
-  int subscribe_ifs (const ACE_INET_Addr &mcast_addr,
-                     const ACE_QoS_Params &qos_params,
-                     const ACE_TCHAR *net_if,
+  int subscribe_ifs (ACE_INET_Addr const &mcast_addr,
+                     ACE_QoS_Params const &qos_params,
+                     ACE_TCHAR const *net_if,
                      int protocol_family,
                      int protocol,
                      int reuse_addr,

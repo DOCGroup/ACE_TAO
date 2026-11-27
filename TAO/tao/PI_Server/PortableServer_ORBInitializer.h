@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 /**
  *  @file PortableServer_ORBInitializer.h
  *
@@ -35,11 +33,11 @@ public:
    * The following methods are required by the
    * PortableInterceptor::ORBInitializer interface.
    */
-  //@{
+  /// @{
   void pre_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 
   void post_init (PortableInterceptor::ORBInitInfo_ptr info) override;
-  //@}
+  /// @}
 
 private:
   TAO_PortableServer_ORBInitializer (TAO_PortableServer_ORBInitializer const &) = delete;

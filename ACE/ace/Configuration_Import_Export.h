@@ -1,6 +1,3 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
  * @file Configuration_Import_Export.h
  *
@@ -17,7 +14,6 @@
  *  - Provide ability to read file in one format and write in another.
  *  - See todo's in each class
  */
-//=============================================================================
 
 #ifndef ACE_CONFIGURATION_IMPORT_EXPORT_H
 #define ACE_CONFIGURATION_IMPORT_EXPORT_H
@@ -44,33 +40,32 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Config_ImpExp_Base
 {
 public:
-  /// Constructor taking the ACE_Configuration to import/export to
-  ACE_Config_ImpExp_Base (ACE_Configuration& config);
+  ACE_Config_ImpExp_Base () = delete;
+  ACE_Config_ImpExp_Base (ACE_Config_ImpExp_Base const &) = delete;
+  ACE_Config_ImpExp_Base (ACE_Config_ImpExp_Base &&) = delete;
+  ACE_Config_ImpExp_Base &operator= (ACE_Config_ImpExp_Base const &) = delete;
+  ACE_Config_ImpExp_Base &operator= (ACE_Config_ImpExp_Base &&) = delete;
 
-  /**
-   * Destructor
-   */
+  /// Constructor taking the ACE_Configuration to import/export to
+  explicit ACE_Config_ImpExp_Base (ACE_Configuration& config);
+
   virtual ~ACE_Config_ImpExp_Base () = default;
 
    /**
    * Imports the configuration database from @a filename.
    * No existing data is removed.
    */
-  virtual int import_config (const ACE_TCHAR* filename) = 0;
+  virtual int import_config (ACE_TCHAR const * filename) = 0;
 
   /**
    * This method exports the entire configuration database to @a filename.
    * Once the file is opened this method calls 'export_section' passing
    * the root section.
    */
-  virtual int export_config (const ACE_TCHAR* filename) = 0;
+  virtual int export_config (ACE_TCHAR const * filename) = 0;
 
 protected:
   ACE_Configuration &config_;
-
-private:
-  ACE_Config_ImpExp_Base (const ACE_Config_ImpExp_Base&) = delete;
-  ACE_Config_ImpExp_Base& operator= (const ACE_Config_ImpExp_Base&) = delete;
 };
 
 /**
@@ -90,35 +85,36 @@ private:
 class ACE_Export ACE_Registry_ImpExp : public ACE_Config_ImpExp_Base
 {
 public:
-  /// Construction
-  ACE_Registry_ImpExp (ACE_Configuration&);
+  ACE_Registry_ImpExp () = delete;
+  ACE_Registry_ImpExp (ACE_Registry_ImpExp const &) = delete;
+  ACE_Registry_ImpExp (ACE_Registry_ImpExp &&) = delete;
+  ACE_Registry_ImpExp &operator= (ACE_Registry_ImpExp const &) = delete;
+  ACE_Registry_ImpExp &operator= (ACE_Registry_ImpExp &&) = delete;
 
-  /// Destruction.
+  explicit ACE_Registry_ImpExp (ACE_Configuration&);
+
   ~ACE_Registry_ImpExp () override = default;
 
   /**
    * Imports the configuration database from @a filename.
    * No existing data is removed.
    */
-  int import_config (const ACE_TCHAR* filename) override;
+  int import_config (ACE_TCHAR const * filename) override;
 
   /**
    * This method exports the entire configuration database to @a filename.
    * Once the file is opened this method calls export_section() passing
    * the root section.
    */
-  int export_config (const ACE_TCHAR* filename) override;
+  int export_config (ACE_TCHAR const * filename) override;
 
 private:
-  int export_section (const ACE_Configuration_Section_Key& section,
-                      const ACE_TString& path,
+  int export_section (ACE_Configuration_Section_Key const & section,
+                      ACE_TString const & path,
                       FILE* out);
 
   int process_previous_line_format (ACE_TCHAR* buffer,
                                     ACE_Configuration_Section_Key& section);
-
-  ACE_Registry_ImpExp (const ACE_Registry_ImpExp&) = delete;
-  ACE_Registry_ImpExp& operator= (const ACE_Registry_ImpExp&) = delete;
 };
 
 /**
@@ -148,38 +144,35 @@ private:
  *        get_string_value() function and convert the string to the
  *        desired data type.
  *
- * @todo
- *  - Strings with embedded newlines cause the import to fail
- *  - Strings with embedded quotes " cause the import to fail
- *  - Importing/exporting for values in the root section does not work
- *  - Add dynamic buffer when importing.  currently it will not allow
- *    importing of values greater than a fixed amount (4096 bytes)
+ * @todo Strings with embedded newlines or quotes cause import failures, and
+ * values in the root section cannot be imported or exported. Add a dynamic
+ * buffer so values larger than 4096 bytes can be imported.
 */
 class ACE_Export ACE_Ini_ImpExp  : public ACE_Config_ImpExp_Base
 {
 public:
-  /**
-   * Construction
-   */
-  ACE_Ini_ImpExp (ACE_Configuration&);
+  ACE_Ini_ImpExp () = delete;
+  ACE_Ini_ImpExp (ACE_Ini_ImpExp const &) = delete;
+  ACE_Ini_ImpExp (ACE_Ini_ImpExp &&) = delete;
+  ACE_Ini_ImpExp &operator= (ACE_Ini_ImpExp const &) = delete;
+  ACE_Ini_ImpExp &operator= (ACE_Ini_ImpExp &&) = delete;
 
-  /**
-   * Destructor
-   */
+  explicit ACE_Ini_ImpExp (ACE_Configuration&);
+
   ~ACE_Ini_ImpExp () override = default;
 
   /**
    * Imports the configuration database from @a filename.
    * No existing data is removed.
    */
-  int import_config (const ACE_TCHAR* filename) override;
+  int import_config (ACE_TCHAR const * filename) override;
 
   /**
    * This method exports the entire configuration database to @a filename.
    * Once the file is opened this method calls export_section() passing
    * the root section.
    */
-  int export_config (const ACE_TCHAR* filename) override;
+  int export_config (ACE_TCHAR const * filename) override;
 
 private:
   /**
@@ -187,8 +180,8 @@ private:
    * to the file specified.  Called by export_config() when exporting
    * the entire configuration object.
    */
-  int export_section (const ACE_Configuration_Section_Key& section,
-                      const ACE_TString& path,
+  int export_section (ACE_Configuration_Section_Key const & section,
+                      ACE_TString const & path,
                       FILE* out);
 
   /**
@@ -200,9 +193,6 @@ private:
    * first character past the last non-whitespace.
    */
   ACE_TCHAR *squish (ACE_TCHAR *src);
-
-  ACE_Ini_ImpExp (const ACE_Ini_ImpExp&) = delete;
-  ACE_Ini_ImpExp& operator= (const ACE_Ini_ImpExp&) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

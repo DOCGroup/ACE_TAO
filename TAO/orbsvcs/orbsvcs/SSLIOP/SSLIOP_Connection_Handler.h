@@ -1,14 +1,9 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    SSLIOP_Connection_Handler.h
  *
  *  @author  Carlos O'Ryan <coryan@uci.edu>
  *  @author  Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_SSLIOP_CONNECTION_HANDLER_H
 #define TAO_SSLIOP_CONNECTION_HANDLER_H
@@ -50,12 +45,10 @@ namespace TAO
         public TAO_Connection_Handler
     {
     public:
-      Connection_Handler (ACE_Thread_Manager* t = nullptr);
+      explicit Connection_Handler (ACE_Thread_Manager* t = nullptr);
 
-      /// Constructor.
-      Connection_Handler (TAO_ORB_Core *orb_core);
+      explicit Connection_Handler (TAO_ORB_Core *orb_core);
 
-      /// Destructor.
       ~Connection_Handler () override;
 
       /**
@@ -63,15 +56,15 @@ namespace TAO
        *
        * Connection Handler overloads.
        */
-      //@{
+      /// @{
       int open_handler (void *) override;
-      //@}
+      /// @}
 
       /// Close called by the Acceptor or Connector when connection
       /// establishment fails.
       int close (u_long = 0) override;
 
-      //@{
+      /// @{
       /** @name Event Handler overloads
        */
       int resume_handler () override;
@@ -79,10 +72,10 @@ namespace TAO
       int handle_input (ACE_HANDLE) override;
       int handle_output (ACE_HANDLE) override;
       int handle_close (ACE_HANDLE, ACE_Reactor_Mask) override;
-      int handle_timeout (const ACE_Time_Value &current_time,
-                          const void *act = nullptr) override;
+      int handle_timeout (ACE_Time_Value const &current_time,
+                          void const *act = nullptr) override;
       int open (void *) override;
-      //@}
+      /// @}
 
       /// Add ourselves to cache.
       int add_transport_to_cache ();
@@ -106,14 +99,14 @@ namespace TAO
       bool check_host ();
 
     protected:
-      //@{
+      /// @{
       /**
        * @name TAO_Connection Handler overloads
        */
       int release_os_resources () override;
       void pos_io_hook (int & return_value) override;
-      int handle_write_ready (const ACE_Time_Value *timeout) override;
-      //@}
+      int handle_write_ready (ACE_Time_Value const *timeout) override;
+      /// @}
 
     protected:
       /// Reference to the SSLIOP::Current object (downcast to gain
@@ -172,18 +165,16 @@ namespace TAO
 
       /// Flag that specifies whether or not setup of the SSLIOP::Current
       /// object completed for the current thread and invocation.
-      bool setup_done_;
+      bool setup_done_ {};
     };
   }  // End SSLIOP namespace.
 }  // End TAO namespace.
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-
 #if defined (__ACE_INLINE__)
 #include "orbsvcs/SSLIOP/SSLIOP_Connection_Handler.inl"
 #endif /* __ACE_INLINE__ */
-
 
 #include /**/ "ace/post.h"
 

@@ -18,33 +18,7 @@ ACE_round (ACE_timer_t t)
 }
 
 Task_State::Task_State ()
-  : barrier_ (0),
-    key_ ("Cubit"),
-    loop_count_ (1000),
-    thread_count_ (2),
-    latency_ (0),
-    ave_latency_ (0),
-    datatype_ (CB_OCTET),
-    thread_per_rate_ (0),
-    global_jitter_array_ (0),
-    count_ (0),
-    shutdown_ (0),
-    oneway_ (0),
-    one_ior_ (0),
-    one_to_n_test_ (0),
-    context_switch_test_ (0),
-    iors_ (0),
-    iors_count_ (0),
-    ior_file_ (0),
-    granularity_ (1),
-    use_utilization_test_ (0),
-    high_priority_loop_count_ (0),
-    semaphore_ (0),
-    use_multiple_priority_ (0),
-    ready_ (0),
-    ready_cnd_ (ready_mtx_),
-    remote_invocations_ (1),
-    util_test_time_ (0)
+  : ready_cnd_ (ready_mtx_)
 {
 }
 
@@ -55,98 +29,104 @@ Task_State::parse_args (int argc,ACE_TCHAR *argv[])
   int c;
 
   while ((c = opts ()) != -1)
-    switch (c) {
-    case 'g':
-      granularity_ = ACE_OS::atoi (opts.opt_arg ());
-      if (granularity_ < 1)
-        granularity_ = 1;
-      break;
-    case 'l':
-      remote_invocations_ = 0;
-      break;
-    case 'c':
-      context_switch_test_ = 1;
-      break;
-    case 'm':
-      use_multiple_priority_ = 1;
-      break;
-    case '1':
-      one_to_n_test_ = 1;
-      break;
-    case 'u':
-      use_utilization_test_ = 1;
-      loop_count_ = ACE_OS::atoi (opts.opt_arg ());
-      break;
-    case 'f':
-      ior_file_ = ACE_OS::strdup (opts.opt_arg ());
-      break;
-    case 'o':
-      oneway_ = 1;
-      break;
-    case 'x':
-      shutdown_ = 1;
-      break;
-    case 'r':
-      thread_per_rate_ = 1;
-      break;
-    case 'd':
-      {
-        int datatype = ACE_OS::atoi (opts.opt_arg ());
-        switch (datatype)
-          {
-          case CB_OCTET:
-            ACE_DEBUG ((LM_DEBUG,
-                        "Testing Octets\n"));
-            datatype_ = CB_OCTET;
-            break;
-          case CB_LONG:
-            ACE_DEBUG ((LM_DEBUG,
-                        "Testing Longs\n"));
-            datatype_ = CB_LONG;
-            break;
-          case CB_STRUCT:
-            ACE_DEBUG ((LM_DEBUG,
-                        "Testing Structs\n"));
-            datatype_ = CB_STRUCT;
-            break;
-          case CB_SHORT:
-          default:
-            ACE_DEBUG ((LM_DEBUG,
-                        "Testing Shorts\n"));
-            datatype_ = CB_SHORT;
-            break;
-          }
+  {
+      switch (c) {
+      case 'g':
+        granularity_ = ACE_OS::atoi (opts.opt_arg ());
+        if (granularity_ < 1)
+        {
+          granularity_ = 1;
+        }
+        break;
+      case 'l':
+        remote_invocations_ = 0;
+        break;
+      case 'c':
+        context_switch_test_ = 1;
+        break;
+      case 'm':
+        use_multiple_priority_ = 1;
+        break;
+      case '1':
+        one_to_n_test_ = 1;
+        break;
+      case 'u':
+        use_utilization_test_ = 1;
+        loop_count_ = ACE_OS::atoi (opts.opt_arg ());
+        break;
+      case 'f':
+        ior_file_ = ACE_OS::strdup (opts.opt_arg ());
+        break;
+      case 'o':
+        oneway_ = 1;
+        break;
+      case 'x':
+        shutdown_ = 1;
+        break;
+      case 'r':
+        thread_per_rate_ = 1;
+        break;
+      case 'd':
+        {
+          int datatype = ACE_OS::atoi (opts.opt_arg ());
+          switch (datatype)
+            {
+            case CB_OCTET:
+              ACE_DEBUG ((LM_DEBUG,
+                          "Testing Octets\n"));
+              datatype_ = CB_OCTET;
+              break;
+            case CB_LONG:
+              ACE_DEBUG ((LM_DEBUG,
+                          "Testing Longs\n"));
+              datatype_ = CB_LONG;
+              break;
+            case CB_STRUCT:
+              ACE_DEBUG ((LM_DEBUG,
+                          "Testing Structs\n"));
+              datatype_ = CB_STRUCT;
+              break;
+            case CB_SHORT:
+            default:
+              ACE_DEBUG ((LM_DEBUG,
+                          "Testing Shorts\n"));
+              datatype_ = CB_SHORT;
+              break;
+            }
+        }
+        continue;
+      case 'n':                   // loop count
+        loop_count_ = (u_int) ACE_OS::atoi (opts.opt_arg ());
+        continue;
+      case 't':
+        thread_count_ = (u_int) ACE_OS::atoi (opts.opt_arg ());
+        continue;
+      case '?':
+      default:
+        ACE_DEBUG ((LM_DEBUG, "usage:  %s\t"
+                    "[<ORB OPTIONS>]        // ORB options, e.g., \"-ORBobjrefstyle url\"                               \n\t\t\t"
+                    "[-d <datatype>]        // what datatype to use for calls:  Octet=0, Short=1, Long=2, Struct=3      \n\t\t\t"
+                    "[-n <num_calls>]       // number of CORBA calls to make.                                           \n\t\t\t"
+                    "[-t <num_of_clients>]  // number of client threads to create                                       \n\t\t\t"
+                    "[-f <ior_file>]        // specify the file from which we read the object references (iors), if any.\n\t\t\t"
+                    "[-r]                   // run thread-per-rate test.                                                \n\t\t\t"
+                    "[-o]                   // makes client use oneway calls.  By default, twoway calls are used.       \n\t\t\t"
+                    "[-x]                   // makes a call to servant to shutdown                                      \n\t\t\t"
+                    "[-u <requests> ]       // run the client utilization test for a number of <requests>               \n\t\t\t"
+                    "[-1]                   // run the one-to-n test.                                                   \n\t\t\t"
+                    "[-g <granularity>]     // choose the granularity of the timing of CORBA calls                      \n\t\t\t"
+                    "[-c]                   // run the number of context switches test.                                 \n\t\t\t"
+                    "[-l]                   // use direct function calls, as opposed to CORBA requests.  ONLY to be used with -u option.\n\t\t\t"
+                    "[-m]                   // use multiple priorities for the low priority clients.                   \n"
+                    ,argv [0]));
+        return -1;
       }
-      continue;
-    case 'n':                   // loop count
-      loop_count_ = (u_int) ACE_OS::atoi (opts.opt_arg ());
-      continue;
-    case 't':
-      thread_count_ = (u_int) ACE_OS::atoi (opts.opt_arg ());
-      continue;
-    case '?':
-    default:
-      ACE_DEBUG ((LM_DEBUG, "usage:  %s\t"
-                  "[<ORB OPTIONS>]        // ORB options, e.g., \"-ORBobjrefstyle url\"                               \n\t\t\t"
-                  "[-d <datatype>]        // what datatype to use for calls:  Octet=0, Short=1, Long=2, Struct=3      \n\t\t\t"
-                  "[-n <num_calls>]       // number of CORBA calls to make.                                           \n\t\t\t"
-                  "[-t <num_of_clients>]  // number of client threads to create                                       \n\t\t\t"
-                  "[-f <ior_file>]        // specify the file from which we read the object references (iors), if any.\n\t\t\t"
-                  "[-r]                   // run thread-per-rate test.                                                \n\t\t\t"
-                  "[-o]                   // makes client use oneway calls.  By default, twoway calls are used.       \n\t\t\t"
-                  "[-x]                   // makes a call to servant to shutdown                                      \n\t\t\t"
-                  "[-u <requests> ]       // run the client utilization test for a number of <requests>               \n\t\t\t"
-                  "[-1]                   // run the one-to-n test.                                                   \n\t\t\t"
-                  "[-g <granularity>]     // choose the granularity of the timing of CORBA calls                      \n\t\t\t"
-                  "[-c]                   // run the number of context switches test.                                 \n\t\t\t"
-                  "[-l]                   // use direct function calls, as opposed to CORBA requests.  ONLY to be used with -u option.\n\t\t\t"
-                  "[-m]                   // use multiple priorities for the low priority clients.                   \n"
-                  ,argv [0]));
-      return -1;
-    }
+  }
 
   if (thread_per_rate_ == 1)
+  {
     thread_count_ = THREAD_PER_RATE_OBJS;
+  }
 
   if (use_utilization_test_ == 1)
     {
@@ -166,18 +146,20 @@ Task_State::parse_args (int argc,ACE_TCHAR *argv[])
         ACE_OS::fopen (ior_file_, "r");
 
       if (ior_file == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Task_State::parse_args; "
-                           "unable to open IOR file \"%s\"\n",
-                           ior_file_),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Task_State::parse_args; "
+                             "unable to open IOR file \"%s\"\n",
+                             ior_file_),
+                            -1);
+        }
       char buf[BUFSIZ];
       u_int i;
 
       for (i = 0;
            ACE_OS::fgets (buf, BUFSIZ, ior_file) != 0
              && i < thread_count_;
-           i++)
+           ++i)
         {
           ACE_DEBUG ((LM_DEBUG,
                       buf));
@@ -200,21 +182,27 @@ Task_State::parse_args (int argc,ACE_TCHAR *argv[])
   if (thread_per_rate_ == 0)
     {
       if (use_utilization_test_ == 1)
-        // If we are to use the utilization test, include it in the
-        // barrier count.  See description of this variable in header
-        // file.
-        ACE_NEW_RETURN (barrier_,
-                        ACE_Barrier (thread_count_ + 2),
-                        -1);
+        {
+          // If we are to use the utilization test, include it in the
+          // barrier count.  See description of this variable in header
+          // file.
+          ACE_NEW_RETURN (barrier_,
+                          ACE_Barrier (thread_count_ + 2),
+                          -1);
+        }
       else
-        ACE_NEW_RETURN (barrier_,
-                        ACE_Barrier (thread_count_ + 1),
-                        -1);
+        {
+          ACE_NEW_RETURN (barrier_,
+                          ACE_Barrier (thread_count_ + 1),
+                          -1);
+        }
     }
   else
-    ACE_NEW_RETURN (this->barrier_,
-                    ACE_Barrier (thread_count_),
-                    -1);
+    {
+      ACE_NEW_RETURN (this->barrier_,
+                      ACE_Barrier (thread_count_),
+                      -1);
+    }
   ACE_NEW_RETURN (this->semaphore_,
                   ACE_SYNCH_SEMAPHORE (0),
                   -1);
@@ -235,11 +223,15 @@ Task_State::~Task_State ()
   int i;
 
   if (this->ior_file_ != 0)
+  {
     ACE_OS::free (this->ior_file_);
+  }
 
   // Delete the strduped memory.
-  for (i = 0; i < this->iors_count_; i++)
-    ACE_OS::free (this->iors_ [i]);
+  for (i = 0; i < this->iors_count_; ++i)
+    {
+      ACE_OS::free (this->iors_ [i]);
+    }
 
   delete [] this->iors_;
   // Delete the barrier.
@@ -261,14 +253,7 @@ Client::Client (ACE_Thread_Manager *thread_manager,
     cubit_impl_ (CORBA::ORB::_nil (),
                  PortableServer::POA::_nil ()),
     ts_ (ts),
-    num_ (0),
     id_ (id),
-    call_count_ (0),
-    error_count_ (0),
-    my_jitter_array_ (0),
-    timer_ (0),
-    frequency_ (0),
-    latency_ (0),
     argc_ (argc),
     argv_ (argv)
 {
@@ -315,14 +300,18 @@ ACE_timer_t
 Client::get_low_priority_latency ()
 {
   if (this->ts_->thread_count_ == 1)
+  {
     return 0;
+  }
 
   ACE_timer_t l = 0;
 
   for (u_int i = 1;
        i < this->ts_->thread_count_;
-       i++)
-    l += (ACE_timer_t) this->ts_->latency_[i];
+       ++i)
+    {
+      l += (ACE_timer_t) this->ts_->latency_[i];
+    }
 
   // Return the average latency for the low priority threads.
   return l / (ACE_timer_t) (this->ts_->thread_count_ - 1);
@@ -354,7 +343,7 @@ Client::get_high_priority_jitter ()
     this->ts_->global_jitter_array_[0]->begin ();
 
   // latency in usecs.
-  ACE_timer_t *latency = 0;
+  ACE_timer_t *latency {};
 
   for (iterator.first ();
        iterator.next (latency) == 1;
@@ -366,7 +355,9 @@ Client::get_high_priority_jitter ()
       jitter += difference * difference;
 
       if (stats.sample (ACE_round (*latency)) == -1)
+      {
         ACE_DEBUG ((LM_DEBUG, "Error: stats.sample returned -1\n"));
+      }
     }
 
   // Return the square root of the sum of the differences computed
@@ -387,7 +378,9 @@ ACE_timer_t
 Client::get_low_priority_jitter ()
 {
   if (this->ts_->thread_count_ == 1)
+  {
     return 0;
+  }
 
   ACE_timer_t jitter = 0.0;
   ACE_timer_t average = get_low_priority_latency ();
@@ -403,7 +396,7 @@ Client::get_low_priority_jitter ()
 
   for (u_int j = 1;
        j < this->ts_->thread_count_;
-       j++)
+       ++j)
     {
       ACE_DEBUG ((LM_DEBUG, "count: %u\n", ts_->count_[j]));
 
@@ -413,7 +406,7 @@ Client::get_low_priority_jitter ()
       ACE_timer_t number_of_calls =
         this->ts_->count_ [j] / this->ts_->granularity_;
 
-      ACE_timer_t *latency = 0;
+      ACE_timer_t *latency {};
 
       u_int i = 0;
 
@@ -459,7 +452,7 @@ Client::get_jitter (u_int id)
   ACE_timer_t number_of_calls =
     this->ts_->count_[id] / this->ts_->granularity_;
 
-  ACE_timer_t *latency = 0;
+  ACE_timer_t *latency {};
 
   u_int i = 0;
 
@@ -504,45 +497,47 @@ Client::find_frequency ()
           }
       }
     else
-      switch (this->id_)
-        {
-        case CB_20HZ_CONSUMER:
-          this->frequency_ = CB_20HZ_CONSUMER_RATE;
-          ACE_DEBUG ((LM_DEBUG,
-                      "(%t) I'm a %u Hz frequency client, "
-                      "my id is %u.\n",
-                      CB_20HZ_CONSUMER_RATE,
-                      this->id_));
-          break;
-        case CB_10HZ_CONSUMER:
-          this->frequency_ = CB_10HZ_CONSUMER_RATE;
-          ACE_DEBUG ((LM_DEBUG,
-                      "(%t) I'm a %u Hz frequency client, "
-                      "my id is %u.\n",
-                      CB_10HZ_CONSUMER_RATE,
-                      this->id_));
-          break;
-        case CB_5HZ_CONSUMER:
-          this->frequency_ = CB_5HZ_CONSUMER_RATE;
-          ACE_DEBUG ((LM_DEBUG,
-                      "(%t) I'm a %u Hz frequency client, "
-                      "my id is %u.\n",
-                      CB_5HZ_CONSUMER_RATE,
-                      this->id_));
-          break;
-        case CB_1HZ_CONSUMER:
-          this->frequency_ = CB_1HZ_CONSUMER_RATE;
-          ACE_DEBUG ((LM_DEBUG,
-                      "(%t) I'm a %u Hz frequency client, "
-                      "my id is %u.\n",
-                      CB_1HZ_CONSUMER_RATE,
-                      this->id_));
-          break;
-        default:
-          ACE_DEBUG ((LM_DEBUG,
-                      "(%t) Invalid Thread ID!!!!\n",
-                      this->id_));
-        }
+      {
+        switch (this->id_)
+          {
+          case CB_20HZ_CONSUMER:
+            this->frequency_ = CB_20HZ_CONSUMER_RATE;
+            ACE_DEBUG ((LM_DEBUG,
+                        "(%t) I'm a %u Hz frequency client, "
+                        "my id is %u.\n",
+                        CB_20HZ_CONSUMER_RATE,
+                        this->id_));
+            break;
+          case CB_10HZ_CONSUMER:
+            this->frequency_ = CB_10HZ_CONSUMER_RATE;
+            ACE_DEBUG ((LM_DEBUG,
+                        "(%t) I'm a %u Hz frequency client, "
+                        "my id is %u.\n",
+                        CB_10HZ_CONSUMER_RATE,
+                        this->id_));
+            break;
+          case CB_5HZ_CONSUMER:
+            this->frequency_ = CB_5HZ_CONSUMER_RATE;
+            ACE_DEBUG ((LM_DEBUG,
+                        "(%t) I'm a %u Hz frequency client, "
+                        "my id is %u.\n",
+                        CB_5HZ_CONSUMER_RATE,
+                        this->id_));
+            break;
+          case CB_1HZ_CONSUMER:
+            this->frequency_ = CB_1HZ_CONSUMER_RATE;
+            ACE_DEBUG ((LM_DEBUG,
+                        "(%t) I'm a %u Hz frequency client, "
+                        "my id is %u.\n",
+                        CB_1HZ_CONSUMER_RATE,
+                        this->id_));
+            break;
+          default:
+            ACE_DEBUG ((LM_DEBUG,
+                        "(%t) Invalid Thread ID!!!!\n",
+                        this->id_));
+          }
+      }
 }
 
 CORBA::ORB_ptr
@@ -550,7 +545,6 @@ Client::init_orb ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "I'm thread %t\n"));
-
 
   // Convert the argv vector into a string.
   ACE_ARGV tmp_args (this->argv_);
@@ -585,7 +579,9 @@ Client::init_orb ()
       int result = this->ts_->parse_args (argc,
                                           argv);
       if (result != 0)
+      {
         return CORBA::ORB::_nil ();
+      }
 
       ACE_DEBUG ((LM_DEBUG,
                   "(%t)Arguments parsed successfully\n"));
@@ -615,29 +611,37 @@ Client::get_cubit (CORBA::ORB_ptr orb)
   // priority clients use only 1 low priority servant.
   if (this->id_ > 0
       && this->ts_->one_to_n_test_ == 1)
+  {
     my_ior = this->ts_->iors_[1];
+  }
 
   if (my_ior == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Must specify valid ior filename with -f option\n"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Must specify valid ior filename with -f option\n"),
+                        -1);
+    }
 
   CORBA::Object_var objref =
     orb->string_to_object (my_ior);
 
   if (CORBA::is_nil (objref.in ()))
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       " (%t) string_to_object Failed!\n"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         " (%t) string_to_object Failed!\n"),
+                        -1);
+    }
 
   // Narrow the CORBA::Object reference to the stub object,
   // checking the type along the way using _is_a.
   this->cubit_ = Cubit::_narrow (objref.in ());
 
   if (CORBA::is_nil (this->cubit_))
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Create cubit failed\n"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Create cubit failed\n"),
+                        -1);
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               "(%t) Binding succeeded\n"));
@@ -666,7 +670,9 @@ Client::svc ()
       // Get the cubit object from the file.
       int r = this->get_cubit (orb.in ());
       if (r != 0)
+      {
         return r;
+      }
 
       ACE_DEBUG ((LM_DEBUG,
                   "(%t) Waiting for other threads to "
@@ -678,20 +684,28 @@ Client::svc ()
       ACE_DEBUG ((LM_DEBUG,
                   "(%t; %D) Everyone's done, here I go!!\n"));
       if (this->ts_->oneway_ == 1)
-        ACE_DEBUG ((LM_DEBUG,
-                    "(%t) **** USING ONEWAY CALLS ****\n"));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "(%t) **** USING ONEWAY CALLS ****\n"));
+        }
 
       // Perform the tests.
       int result = this->run_tests ();
       if (result != 0)
+      {
         return result;
+      }
 
       // release the semaphore
       if (this->ts_->thread_per_rate_ == 1
           && this->id_ == this->ts_->thread_count_ - 1)
-        this->ts_->semaphore_->release (this->ts_->thread_count_ - 1);
+        {
+          this->ts_->semaphore_->release (this->ts_->thread_count_ - 1);
+        }
       else
+      {
         this->ts_->semaphore_->release ();
+      }
 
       // shutdown the server if necessary.
       if (this->ts_->shutdown_)
@@ -715,9 +729,13 @@ Client::svc ()
   ACE_THR_FUNC_RETURN status = 0;
 
   if (thr_mgr ())
-    thr_mgr ()->exit (status, 1);
+    {
+      thr_mgr ()->exit (status, true);
+    }
   else
+  {
     ACE_OS::thr_exit (status);
+  }
 
   return 0;
 }
@@ -727,7 +745,7 @@ Client::cube_octet ()
 {
   try
     {
-      this->call_count_++;
+      ++this->call_count_;
       // Cube an octet.
       CORBA::Octet arg_octet = func (this->num_);
       CORBA::Octet ret_octet = 0;
@@ -735,9 +753,13 @@ Client::cube_octet ()
       START_QUANTIFY;
 
       if (this->ts_->use_utilization_test_ == 1 && this->ts_->remote_invocations_ == 0)
-        ret_octet = this->cubit_impl_.cube_octet (arg_octet);
+        {
+          ret_octet = this->cubit_impl_.cube_octet (arg_octet);
+        }
       else
+      {
         ret_octet = this->cubit_->cube_octet (arg_octet);
+      }
 
       STOP_QUANTIFY;
 
@@ -746,7 +768,7 @@ Client::cube_octet ()
 
       if (arg_octet != ret_octet)
         {
-          this->error_count_++;
+          ++this->error_count_;
           ACE_ERROR_RETURN ((LM_ERROR,
                              "** cube_octet (%d) (--> %d)\n",
                              arg_octet,
@@ -768,7 +790,7 @@ Client::cube_short ()
 {
   try
     {
-      this->call_count_++;
+      ++this->call_count_;
 
       CORBA::Short arg_short = func (this->num_);
       CORBA::Short ret_short;
@@ -780,7 +802,7 @@ Client::cube_short ()
 
       if (arg_short != ret_short)
         {
-          this->error_count_++;
+          ++this->error_count_;
           ACE_ERROR_RETURN ((LM_ERROR,
                              "** cube_short (%d) (--> %d)\n",
                              arg_short ,
@@ -801,7 +823,7 @@ Client::cube_long ()
 {
   try
     {
-      this->call_count_++;
+      ++this->call_count_;
 
       CORBA::Long arg_long = func (this->num_);
       CORBA::Long ret_long;
@@ -814,7 +836,7 @@ Client::cube_long ()
 
       if (arg_long != ret_long)
         {
-          this->error_count_++;
+          ++this->error_count_;
           ACE_ERROR ((LM_ERROR,
                       "** cube_long (%d) (--> %d)\n",
                       arg_long,
@@ -837,7 +859,7 @@ Client::cube_struct ()
       Cubit::Many arg_struct;
       Cubit::Many ret_struct;
 
-      this->call_count_++;
+      ++this->call_count_;
 
       arg_struct.l = func (this->num_);
       arg_struct.s = func (this->num_);
@@ -855,7 +877,7 @@ Client::cube_struct ()
           || arg_struct.s  != ret_struct.s
           || arg_struct.o  != ret_struct.o )
         {
-          this->error_count_++;
+          ++this->error_count_;
           ACE_ERROR ((LM_ERROR,
                       "**cube_struct error!\n"));
         }
@@ -898,13 +920,15 @@ Client::make_request ()
                              this->ts_->datatype_), -1);
         }
       if (result != 0)
+      {
         return result;
+      }
     }
   else
     {
       try
         {
-          this->call_count_++;
+          ++this->call_count_;
           START_QUANTIFY;
           this->cubit_->noop ();
           STOP_QUANTIFY;
@@ -997,7 +1021,7 @@ Client::do_test ()
        // lowest frequency thread.
        || (this->ts_->thread_per_rate_ == 1
            && id_ < (this->ts_->thread_count_ - 1));
-       i++)
+       ++i)
     {
       // Start timing a call.
       if ((i % this->ts_->granularity_) == 0 &&
@@ -1016,7 +1040,9 @@ Client::do_test ()
       // make a request to the server object depending on the datatype.
       result = this->make_request ();
       if (result != 0)
+      {
         return 2;
+      }
 
       // Stop the timer.
       if (i % this->ts_->granularity_ == this->ts_->granularity_ - 1
@@ -1034,13 +1060,17 @@ Client::do_test ()
           this->latency_ += real_time * this->ts_->granularity_;
 
           if ((result = this->my_jitter_array_->enqueue_tail (real_time)) != 0)
+          {
             ACE_DEBUG ((LM_DEBUG, "(%t) Error: my_jitter_array->enqueue_tail() returned %d\n", result));
+          }
         }
       if (this->ts_->thread_per_rate_ == 1
           && id_ < (this->ts_->thread_count_ - 1))
         {
           if (this->ts_->semaphore_->tryacquire () != -1)
+          {
             break;
+          }
         }
       else
         // If we are the high priority client.  If tryacquire()
@@ -1051,10 +1081,12 @@ Client::do_test ()
           {
             if (this->ts_->semaphore_->tryacquire () != -1)
               {
-                low_priority_client_count --;
+                --low_priority_client_count;
                 // If all clients are done then break out of loop.
                 if (low_priority_client_count <= 0)
+                {
                   break;
+                }
               }
           }
 
@@ -1076,16 +1108,22 @@ Client::run_tests ()
                   MT_Cubit_Timer (this->ts_->granularity_),
                   -1);
   if (this->ts_->use_utilization_test_ == 1)
+  {
     this->timer_->start ();
+  }
 
   // Make the calls in a loop.
   result = this->do_test ();
   if (result != 0)
+  {
     return result;
+  }
 
   if (id_ == 0)
-    this->ts_->high_priority_loop_count_ =
-      this->call_count_;
+    {
+      this->ts_->high_priority_loop_count_ =
+        this->call_count_;
+    }
 
   if (this->ts_->use_utilization_test_ == 1)
     {

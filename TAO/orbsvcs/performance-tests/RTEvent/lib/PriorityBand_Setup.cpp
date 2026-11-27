@@ -18,13 +18,13 @@ PriorityBand_Setup::PriorityBand_Setup (CORBA::ORB_ptr orb,
   RTCORBA::RTORB_var rtorb =
     RIR_Narrow<RTCORBA::RTORB>::resolve (orb, "RTORB");
 
-  const RTCORBA::ThreadpoolLanes &lanes = rtcorba_setup.lanes ();
+  const RTCORBA::ThreadpoolLanes &threadpool_lanes = rtcorba_setup.lanes ();
 
   RTCORBA::PriorityBands priority_bands (3); priority_bands.length (3);
-  for (CORBA::ULong i = 0; i != lanes.length (); ++i)
+  for (CORBA::ULong i = 0; i != threadpool_lanes.length (); ++i)
     {
-      priority_bands[i].low  = lanes[i].lane_priority;
-      priority_bands[i].high = lanes[i].lane_priority;
+      priority_bands[i].low  = threadpool_lanes[i].lane_priority;
+      priority_bands[i].high = threadpool_lanes[i].lane_priority;
     }
 
   CORBA::PolicyList policy_list (1); policy_list.length (1);
@@ -37,6 +37,4 @@ PriorityBand_Setup::PriorityBand_Setup (CORBA::ORB_ptr orb,
   policy_list[0]->destroy ();
 }
 
-PriorityBand_Setup::~PriorityBand_Setup ()
-{
-}
+PriorityBand_Setup::~PriorityBand_Setup () = default;

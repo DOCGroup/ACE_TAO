@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//==========================================================================
 /**
  *  @file    Stream.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//==========================================================================
 
 #ifndef ACE_STREAM_H
 #define ACE_STREAM_H
@@ -42,7 +38,7 @@ class ACE_Time_Value;
  * contains two @c ACE_Tasks.  Even though the methods in this
  * class are virtual, this class isn't really intended for
  * subclassing unless you know what you are doing.  In
- * particular, the ACE_Stream destructor calls <close>, which
+ * particular, the ACE_Stream destructor calls @c close, which
  * won't be overridden properly unless you call it in a subclass
  * destructor.
  */
@@ -59,12 +55,13 @@ public:
     M_DELETE = 3
   };
 
-  // = Initializatation and termination methods.
+  /// @name Initialization and termination
+  /// @{
   /**
    * Create a Stream consisting of @a head and @a tail as the Stream
-   * head and Stream tail, respectively.  If these are 0 then the
+   * head and Stream tail, respectively.  If these are nullptr then the
    * ACE_Stream_Head and ACE_Stream_Tail are used, respectively.
-   * @a arg is the value past in to the <open> methods of the tasks.
+   * @a arg is the value past in to the @c open methods of the tasks.
    */
   ACE_Stream (void *arg = nullptr,
               ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *head = nullptr,
@@ -72,7 +69,7 @@ public:
 
   /**
    * Create a Stream consisting of @a head and @a tail as the Stream
-   * head and Stream tail, respectively.  If these are 0 then the
+   * head and Stream tail, respectively.  If these are nullptr then the
    * ACE_Stream_Head and ACE_Stream_Tail are used, respectively.
    * @a arg is the value past in to the @c open() methods of the tasks.
    */
@@ -85,8 +82,10 @@ public:
 
   /// Close down the stream and release all the resources.
   virtual ~ACE_Stream ();
+  /// @}
 
-  // = ACE_Stream plumbing operations
+  /// @name Stream operations
+  /// @{
 
   /// Add a new module @a mod right below the Stream head.  The
   /// @c open() hook methods of the @c ACE_Tasks in this ACE_Module
@@ -103,17 +102,17 @@ public:
   virtual int top (ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *&mod);
 
   /// Insert a new module @a mod below the named module @a prev_name.
-  virtual int insert (const ACE_TCHAR *prev_name,
+  virtual int insert (ACE_TCHAR const *prev_name,
                       ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *mod);
 
   /// Replace the named module @a replace_name with a new module @a mod.
-  virtual int replace (const ACE_TCHAR *replace_name,
+  virtual int replace (ACE_TCHAR const *replace_name,
                        ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *mod,
                        int flags = M_DELETE);
 
   /// Remove the named module @a mod from the stream.  This bypasses the
   /// strict LIFO ordering of @c push and @c pop.
-  virtual int remove (const ACE_TCHAR *mod,
+  virtual int remove (ACE_TCHAR const *mod,
                       int flags = M_DELETE);
 
   /// Return current stream head.
@@ -123,15 +122,17 @@ public:
   virtual ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *tail ();
 
   /// Find a particular ACE_Module.
-  virtual ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *find (const ACE_TCHAR *mod);
+  virtual ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *find (ACE_TCHAR const *mod);
 
   /// Create a pipe between two Streams.
   virtual int link (ACE_Stream<ACE_SYNCH_USE, TIME_POLICY> &);
 
   /// Remove a pipe formed between two Streams.
   virtual int unlink ();
+  /// @}
 
-  // = Blocking data transfer operations
+  /// @name Blocking data transfer
+  /// @{
   /**
    * Send the message @a mb down the stream, starting at the Module
    * below the Stream head.  Wait for upto @a timeout amount of
@@ -155,6 +156,7 @@ public:
 
   /// Synchronize with the final close of the stream.
   virtual int wait ();
+  /// @}
 
   /// Dump the state of an object.
   virtual void dump () const;
@@ -164,15 +166,16 @@ public:
 
 protected:
   /// Pointer to the head of the stream.
-  ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *stream_head_;
+  ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *stream_head_ {};
 
   /// Pointer to the tail of the stream.
-  ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *stream_tail_;
+  ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *stream_tail_ {};
 
   /// Pointer to an adjoining linked stream.
-  ACE_Stream<ACE_SYNCH_USE, TIME_POLICY> *linked_us_;
+  ACE_Stream<ACE_SYNCH_USE, TIME_POLICY> *linked_us_ {};
 
-  // = Synchronization objects used for thread-safe streams.
+  /// @name Synchronization objects for thread-safe streams
+  /// @{
   /// Protect the stream against race conditions.
   mutable ACE_SYNCH_MUTEX_T lock_;
 
@@ -186,6 +189,7 @@ protected:
 
   /// Use to tell all threads waiting on the close that we are done.
   ACE_SYNCH_CONDITION_T final_close_;
+  /// @}
 
 private:
   /// Actually perform the unlinking of two Streams (must be called
@@ -211,13 +215,15 @@ template <ACE_SYNCH_DECL, class TIME_POLICY = ACE_System_Time_Policy>
 class ACE_Stream_Iterator
 {
 public:
-  ACE_Stream_Iterator (const ACE_Stream<ACE_SYNCH_USE, TIME_POLICY> &sr);
+  explicit ACE_Stream_Iterator (
+    ACE_Stream<ACE_SYNCH_USE, TIME_POLICY> const &sr);
 
-  // = Iteration methods.
+  /// @name Iteration methods
+  /// @{
 
   /// Pass back the @a next_item that hasn't been seen in the set.
   /// Returns 0 when all items have been seen, else 1.
-  int next (const ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *&next_item);
+  int next (ACE_Module<ACE_SYNCH_USE, TIME_POLICY> const *&next_item);
 
   /// Returns 1 when all items have been seen, else 0.
   int done () const;
@@ -225,10 +231,11 @@ public:
   /// Move forward by one element in the set.  Returns 0 when all the
   /// items in the set have been seen, else 1.
   int advance ();
+  /// @}
 
 private:
   /// Next ACE_Module that we haven't yet seen.
-  ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *next_;
+  ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *next_ {};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

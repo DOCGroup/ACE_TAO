@@ -1,6 +1,3 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
  *  @file    Multicast_Interfaces_Test.cpp
  *
@@ -13,7 +10,6 @@
  *
  *  @author Timothy Simpson <simpsont@objectcomputing.com>
  */
-//=============================================================================
 
 #include "test_config.h"
 
@@ -45,7 +41,7 @@ get_valid_ipv4_interface_names_win32 (nameset &names)
     }
 
   // Get required output buffer and retrieve info for real.
-  char *buf = 0;
+  char *buf {};
   ACE_NEW (buf, char[bufLen]);
   PIP_ADAPTER_ADDRESSES pAddrs = reinterpret_cast<PIP_ADAPTER_ADDRESSES> (buf);
   if (::GetAdaptersAddresses (AF_INET, 0, 0, pAddrs, &bufLen) != NO_ERROR)
@@ -74,11 +70,13 @@ get_valid_ipv4_interface_names_win32 (nameset &names)
 void
 get_valid_ipv4_interface_names_getifaddrs (nameset &names)
 {
-  ifaddrs *ifap = nullptr;
-  ifaddrs *p_if = nullptr;
+  ifaddrs *ifap {};
+  ifaddrs *p_if {};
 
   if (::getifaddrs (&ifap) != 0)
+  {
     return;
+  }
 
   for (p_if = ifap; p_if != nullptr; p_if = p_if->ifa_next)
     {
@@ -126,7 +124,7 @@ get_valid_ipv6_interface_names_win32 (nameset &names)
     }
 
   // Get required output buffer and retrieve info for real.
-  char *buf = 0;
+  char *buf {};
   ACE_NEW (buf, char[bufLen]);
   PIP_ADAPTER_ADDRESSES pAddrs = reinterpret_cast<PIP_ADAPTER_ADDRESSES> (buf);
   if (::GetAdaptersAddresses (AF_INET6, 0, 0, pAddrs, &bufLen) != NO_ERROR)
@@ -155,11 +153,13 @@ get_valid_ipv6_interface_names_win32 (nameset &names)
 void
 get_valid_ipv6_interface_names_getifaddrs (nameset &names)
 {
-  ifaddrs *ifap = nullptr;
-  ifaddrs *p_if = nullptr;
+  ifaddrs *ifap {};
+  ifaddrs *p_if {};
 
   if (::getifaddrs (&ifap) != 0)
-    return;
+    {
+      return;
+    }
 
   for (p_if = ifap; p_if != nullptr; p_if = p_if->ifa_next)
     {
@@ -191,7 +191,7 @@ get_valid_ipv6_interface_names (nameset &names)
 #endif /* ACE_HAS_IPV6 */
 
 int
-create_socket_and_join_multicast (const ACE_INET_Addr &mc_addr, const ACE_TString &if_name)
+create_socket_and_join_multicast (ACE_INET_Addr const &mc_addr, ACE_TString const &if_name)
 {
   int result = 0;
   ACE_SOCK_Dgram_Mcast sock;
@@ -218,7 +218,7 @@ run_main (int, ACE_TCHAR *[])
   nameset names;
 
   get_valid_ipv4_interface_names (names);
-  ACE_INET_Addr ipv4_mc_addr ("239.255.0.7:1234", AF_INET);
+  ACE_INET_Addr const ipv4_mc_addr ("239.255.0.7:1234", AF_INET);
   result |= create_socket_and_join_multicast (ipv4_mc_addr, ACE_TString ());
   for (nameset::const_iterator it = names.begin (); result == 0 && it != names.end (); ++it)
     {
@@ -228,7 +228,7 @@ run_main (int, ACE_TCHAR *[])
 #if defined (ACE_HAS_IPV6)
   names.clear ();
   get_valid_ipv6_interface_names (names);
-  ACE_INET_Addr ipv6_mc_addr ("ff03::7:4321", AF_INET6);
+  ACE_INET_Addr const ipv6_mc_addr ("ff03::7:4321", AF_INET6);
   result |= create_socket_and_join_multicast (ipv6_mc_addr, ACE_TString ());
   for (nameset::const_iterator it = names.begin (); result == 0 && it != names.end (); ++it)
     {

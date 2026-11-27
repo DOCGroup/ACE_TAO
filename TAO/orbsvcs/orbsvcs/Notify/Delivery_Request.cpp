@@ -23,21 +23,26 @@ namespace TAO_Notify
 {
 ///////////////////
 // Delivery_Request
-Delivery_Request::Delivery_Request (const Routing_Slip_Ptr & routing_slip, size_t request_id)
+Delivery_Request::Delivery_Request (Routing_Slip_Ptr const & routing_slip, size_t request_id)
   : routing_slip_ (routing_slip)
   , request_id_ (request_id)
-  , delivery_type_ (0)
 {
-  if (DEBUG_LEVEL > 8) ORBSVCS_DEBUG ((LM_DEBUG,
-      ACE_TEXT ("(%P|%t) Delivery_Request:: constructor\n")
-      ));
+  if (DEBUG_LEVEL > 8)
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) Delivery_Request:: constructor\n")
+                      ));
+    }
 }
 
 Delivery_Request::~Delivery_Request ()
 {
-  if (DEBUG_LEVEL > 8) ORBSVCS_DEBUG ((LM_DEBUG,
-      ACE_TEXT ("(%P|%t) Delivery_Request:: destructor\n")
-      ));
+  if (DEBUG_LEVEL > 8)
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) Delivery_Request:: destructor\n")
+                      ));
+    }
 }
 
 // DO NOT INLINE THIS.  It uses the Routing_Slip_Ptr which cannot be declared at
@@ -50,7 +55,7 @@ Delivery_Request::complete ()
 
 // DO NOT INLINE THIS.  It uses the Routing_Slip_Ptr which cannot be declared at
 // the time Delivery_Request.inl is compiled.
-const TAO_Notify_Event::Ptr &
+TAO_Notify_Event::Ptr const &
 Delivery_Request::event () const
 {
   return this->routing_slip_->event ();
@@ -65,7 +70,7 @@ Delivery_Request::marshal (TAO_OutputCDR & cdr)
     CORBA::ULong dest_count =
       ACE_Utils::truncate_cast<CORBA::ULong> (this->destination_id_.size ());
     cdr.write_ulong (dest_count);
-    for (size_t ndest = 0; ndest < dest_count; ++ ndest)
+    for (size_t ndest {}; ndest < dest_count; ++ ndest)
     {
       cdr.write_ulong (this->destination_id_ [ndest]);
     }
@@ -77,7 +82,6 @@ Delivery_Request::sequence () const
 {
   return this->routing_slip_->sequence ();
 }
-
 
 bool
 Delivery_Request::should_retry () const
@@ -93,7 +97,7 @@ Delivery_Request::dispatch (
   this->routing_slip_->dispatch (proxy_supplier, filter);
 }
 
-const Routing_Slip_Ptr &
+Routing_Slip_Ptr const &
 Delivery_Request::routing_slip () const
 {
   return this->routing_slip_;

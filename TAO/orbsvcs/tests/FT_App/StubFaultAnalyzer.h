@@ -1,8 +1,9 @@
-// -*- C++ -*-
 #ifndef STUBFAULTANALYZER_H
 #define STUBFAULTANALYZER_H
 #include /**/ <ace/pre.h>
 #include <ace/ACE.h>
+#include <string>
+#include <vector>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -13,7 +14,6 @@
 #include <orbsvcs/FT_NotifierC.h>
 #include <orbsvcs/FT_FaultDetectorFactoryC.h>
 
-#include "ace/Vector_T.h"
 #include "ace/SString.h"
 
 //////////////////////
@@ -28,15 +28,13 @@
 class  StubFaultAnalyzer
 {
 public:
-  /**
-   * Default constructor.
-   */
-  StubFaultAnalyzer ();
+  StubFaultAnalyzer () = default;
+  StubFaultAnalyzer (StubFaultAnalyzer const &) = delete;
+  StubFaultAnalyzer &operator= (StubFaultAnalyzer const &) = delete;
+  StubFaultAnalyzer (StubFaultAnalyzer &&) = delete;
+  StubFaultAnalyzer &operator= (StubFaultAnalyzer &&) = delete;
 
-  /**
-   * destructor.
-   */
-  ~StubFaultAnalyzer ();
+  ~StubFaultAnalyzer () = default;
 
   /**
    * Parse command line arguments.
@@ -51,7 +49,7 @@ public:
   /**
    * Return a string to identify this object for logging/console message purposes.
    */
-  const char * identity () const;
+  char const *identity () const;
 
   /**
    * idle time activity.
@@ -66,14 +64,14 @@ public:
    */
   int fini ();
 
-  /////////////////
-  // Implementation
+  /// @name Implementation methods
+  /// @{
 private:
-  int readIORFile(const ACE_TCHAR * fileName, CORBA::String_var & ior);
+  int readIORFile(ACE_TCHAR const *fileName, CORBA::String_var & ior);
+  /// @}
 
-  ///////////////
-  // Data Members
-private:
+  /// @name Data members
+  /// @{
   /**
    * The orb
    */
@@ -95,34 +93,34 @@ private:
   ACE_CString identity_;
 
   /**
-   * a file to write to to signal "ready"
+   * A file to write to to signal "ready".
    */
-  const ACE_TCHAR * readyFile_;
+  std::basic_string<ACE_TCHAR> readyFile_;
 
   /**
-   * The detector's IOR  (-d option)
+   * The detector's IOR (-d option).
    */
-  const ACE_TCHAR * detector_ior_;
+  std::basic_string<ACE_TCHAR> detector_ior_;
 
   ::FT::FaultDetectorFactory_var factory_;
 
   /**
    * The notifier's IOR (-n option)
    */
-  const ACE_TCHAR * notifier_ior_;
+  std::basic_string<ACE_TCHAR> notifier_ior_;
 
   ::FT::FaultNotifier_var notifier_;
 
   /**
-   * A collection of files containing replica IORs
+   * Replica IOR strings from the -r options.
    */
-  ACE_Vector < const char * > replicaIORs;
+  std::vector<std::string> replicaIORs;
 
-  ACE_Vector < FT::PullMonitorable_var > replicas_;
-
+  std::vector<FT::PullMonitorable_var> replicas_;
 
   StubFaultConsumer faultConsumer_;
   StubBatchConsumer batchConsumer_;
+  /// @}
 };
 
 #include /**/ <ace/post.h>

@@ -124,7 +124,6 @@ namespace
   };
 }
 
-
 int
 run_main (int, ACE_TCHAR *[])
 {
@@ -183,7 +182,7 @@ run_main (int, ACE_TCHAR *[])
     {
       // ... start the test fresh ...
       reset_counts();
-      std::unique_ptr<Aggregate> b(new Aggregate);
+      std::unique_ptr<Aggregate> b = std::make_unique<Aggregate> ();
       never_reached(__FILE__, __LINE__);
     }
   catch(...)

@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    Process_Env_Test.cpp
  *
@@ -8,19 +6,18 @@
  *
  *  @author Chad Elliott <elliott_c@ociweb.com>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "ace/Process.h"
 #include "ace/SString.h"
 
 #if defined (ACE_WIN32) && !defined (ACE_USES_WCHAR)
-using setenvfn_t = void (*)(const ACE_TCHAR *, const ACE_TCHAR *, void *);
+using setenvfn_t = void (*)(ACE_TCHAR const *, ACE_TCHAR const *, void *);
 
 void create_large_env (setenvfn_t setenv, void *ctx)
 {
   static constexpr size_t varsize = 1600;
-  for (int i = 0; i < 26; i++)
+  for (int i = 0; i < 26; ++i)
     {
       char name[2] = { 'A', '\0' };
       name[0] += i;
@@ -33,13 +30,13 @@ void create_large_env (setenvfn_t setenv, void *ctx)
     }
 }
 
-void apo_setenv (const ACE_TCHAR *name, const ACE_TCHAR *value, void *ctx)
+void apo_setenv (ACE_TCHAR const *name, ACE_TCHAR const *value, void *ctx)
 {
   ACE_Process_Options *apo = static_cast<ACE_Process_Options *> (ctx);
   apo->setenv (name, value);
 }
 
-void thisproc_setenv (const ACE_TCHAR *name, const ACE_TCHAR *value, void *)
+void thisproc_setenv (ACE_TCHAR const *name, ACE_TCHAR const *value, void *)
 {
   ACE_TString putstr (name);
   putstr += ACE_TEXT ('=');

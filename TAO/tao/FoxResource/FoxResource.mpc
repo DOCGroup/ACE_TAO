@@ -1,4 +1,3 @@
-//  -*- MPC -*-
 project(TAO_FoxResource) : acelib, taolib, install, tao_output, taodefaults, ace_foxreactor, taoidldefaults {
   sharedname   = TAO_FoxResource
   dynamicflags += TAO_FOCRESOURCE_BUILD_DLL

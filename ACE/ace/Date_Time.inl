@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "ace/Global_Macros.h"
 #include "ace/Time_Value.h"
 #include "ace/OS_NS_sys_time.h"
@@ -7,10 +6,10 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE void
-ACE_Date_Time::update (const ACE_Time_Value& timevalue)
+ACE_Date_Time::update (ACE_Time_Value const &timevalue)
 {
-  time_t time = timevalue.sec ();
-  struct tm tm_time;
+  time_t const time = timevalue.sec ();
+  struct tm tm_time {};
   ACE_OS::localtime_r (&time, &tm_time);
   this->day_ = tm_time.tm_mday;
   this->month_ = tm_time.tm_mon + 1;    // localtime's months are 0-11
@@ -27,7 +26,7 @@ ACE_Date_Time::update ()
 {
   ACE_TRACE ("ACE_Date_Time::update");
 
-  update(ACE_OS::gettimeofday ());
+  this->update (ACE_OS::gettimeofday ());
 }
 
 ACE_INLINE
@@ -38,13 +37,13 @@ ACE_Date_Time::ACE_Date_Time ()
 }
 
 ACE_INLINE
-ACE_Date_Time::ACE_Date_Time (const ACE_Time_Value& timevalue)
+ACE_Date_Time::ACE_Date_Time (ACE_Time_Value const &timevalue)
 {
   ACE_TRACE ("ACE_Date_Time::ACE_Date_Time: timevalue");
   this->update (timevalue);
 }
 
-// Constructor with init values, no check for validy
+/// Constructor with init values, no check for validity.
 ACE_INLINE
 ACE_Date_Time::ACE_Date_Time (long day,
                               long month,
@@ -66,9 +65,11 @@ ACE_Date_Time::ACE_Date_Time (long day,
   ACE_TRACE ("ACE_Date_Time::ACE_Date_Time");
 }
 
-// set/get portions of ACE_Date_Time, no check for validy
+/// @name Date/time components
+/// Setters do not check for validity.
+/// @{
 
-// get day
+/// Get day.
 ACE_INLINE long
 ACE_Date_Time::day () const
 {
@@ -76,7 +77,7 @@ ACE_Date_Time::day () const
   return day_;
 }
 
-// set day
+/// Set day.
 ACE_INLINE void
 ACE_Date_Time::day (long day)
 {
@@ -84,7 +85,7 @@ ACE_Date_Time::day (long day)
   day_ = day;
 }
 
-// get month
+/// Get month.
 ACE_INLINE long
 ACE_Date_Time::month () const
 {
@@ -92,7 +93,7 @@ ACE_Date_Time::month () const
   return month_;
 }
 
-// set month
+/// Set month.
 ACE_INLINE void
 ACE_Date_Time::month (long month)
 {
@@ -100,7 +101,7 @@ ACE_Date_Time::month (long month)
   month_ = month;
 }
 
-// get year
+/// Get year.
 ACE_INLINE long
 ACE_Date_Time::year () const
 {
@@ -108,7 +109,7 @@ ACE_Date_Time::year () const
   return year_;
 }
 
-// set year
+/// Set year.
 ACE_INLINE void
 ACE_Date_Time::year (long year)
 {
@@ -116,7 +117,7 @@ ACE_Date_Time::year (long year)
   year_ = year;
 }
 
-// get hour
+/// Get hour.
 ACE_INLINE long
 ACE_Date_Time::hour () const
 {
@@ -124,7 +125,7 @@ ACE_Date_Time::hour () const
   return hour_;
 }
 
-// set hour
+/// Set hour.
 ACE_INLINE void
 ACE_Date_Time::hour (long hour)
 {
@@ -132,7 +133,7 @@ ACE_Date_Time::hour (long hour)
   hour_ = hour;
 }
 
-// get minute
+/// Get minute.
 ACE_INLINE long
 ACE_Date_Time::minute () const
 {
@@ -140,7 +141,7 @@ ACE_Date_Time::minute () const
   return minute_;
 }
 
-// set minute
+/// Set minute.
 ACE_INLINE void
 ACE_Date_Time::minute (long minute)
 {
@@ -148,7 +149,7 @@ ACE_Date_Time::minute (long minute)
   minute_ = minute;
 }
 
-// get second
+/// Get second.
 ACE_INLINE long
 ACE_Date_Time::second () const
 {
@@ -156,7 +157,7 @@ ACE_Date_Time::second () const
   return second_;
 }
 
-// set second
+/// Set second.
 ACE_INLINE void
 ACE_Date_Time::second (long second)
 {
@@ -164,7 +165,7 @@ ACE_Date_Time::second (long second)
   second_ = second;
 }
 
-// get microsec
+/// Get microsec.
 ACE_INLINE long
 ACE_Date_Time::microsec () const
 {
@@ -172,7 +173,7 @@ ACE_Date_Time::microsec () const
   return microsec_;
 }
 
-// set microsec
+/// Set microsec.
 ACE_INLINE void
 ACE_Date_Time::microsec (long microsec)
 {
@@ -180,7 +181,7 @@ ACE_Date_Time::microsec (long microsec)
   microsec_ = microsec;
 }
 
-// get wday
+/// Get weekday.
 ACE_INLINE long
 ACE_Date_Time::weekday () const
 {
@@ -188,12 +189,13 @@ ACE_Date_Time::weekday () const
   return wday_;
 }
 
-// set wday
+/// Set weekday.
 ACE_INLINE void
 ACE_Date_Time::weekday (long wday)
 {
   ACE_TRACE ("ACE_Date_Time::weekday");
   wday_ = wday;
 }
+/// @}
 
 ACE_END_VERSIONED_NAMESPACE_DECL

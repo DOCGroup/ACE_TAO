@@ -28,29 +28,27 @@ namespace ACE
         class ACE_INET_Export AuthenticationBase
           {
             public:
-              /// Destructor
               virtual ~AuthenticationBase ();
 
               /// Returns authentication scheme (f.i. 'ftp' or 'http:basic').
-              virtual const ACE_CString& scheme () const = 0;
+              virtual ACE_CString const& scheme () const = 0;
 
               /// Returns authentication realm.
-              virtual const ACE_CString& realm () const = 0;
+              virtual ACE_CString const& realm () const = 0;
 
               /// Returns user id.
-              virtual const ACE_CString& user () const = 0;
+              virtual ACE_CString const& user () const = 0;
 
               /// Changes user id.
-              virtual void user (const ACE_CString& usr) = 0;
+              virtual void user (ACE_CString const& usr) = 0;
 
               /// Returns password.
-              virtual const ACE_CString& password () const = 0;
+              virtual ACE_CString const& password () const = 0;
 
               /// Changes password.
-              virtual void password (const ACE_CString& pw) = 0;
+              virtual void password (ACE_CString const& pw) = 0;
 
             protected:
-              /// Constructor
               AuthenticationBase ();
           };
 
@@ -63,10 +61,8 @@ namespace ACE
         class ACE_INET_Export AuthenticatorBase
           {
             public:
-              /// Default constructor
               AuthenticatorBase ();
 
-              /// Destructor
               virtual ~AuthenticatorBase ();
 
               /// Verifies authentication for given info and returns true if

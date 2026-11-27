@@ -1,13 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    ServerRequestInterceptor_Adapter_Factory.h
  *
  *  @author  Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-//=============================================================================
-
 
 #ifndef TAO_SERVERREQUESTINTERCEPTOR_ADAPTER_FACTORY_H
 #define TAO_SERVERREQUESTINTERCEPTOR_ADAPTER_FACTORY_H

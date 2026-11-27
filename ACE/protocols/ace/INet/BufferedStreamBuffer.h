@@ -35,33 +35,38 @@ namespace ACE
         *
         * Implements a base class for a C++ standard unidirectional
         * streambuffer using any data source/destination that can be
-        * driven by overloading the <write_to_stream> or <read_from_stream>
+        * driven by overloading the @c write_to_stream or @c read_from_stream
         * methods.
         */
-        template <class ACE_CHAR_T, class TR = std::char_traits<ACE_CHAR_T> >
+        template <class ACE_CHAR_T, class TR = std::char_traits<ACE_CHAR_T>>
         class BasicBufferedStreamBuffer
           : public std::basic_streambuf<ACE_CHAR_T, TR>
           {
             public:
-              typedef std::basic_streambuf<ACE_CHAR_T, TR> base_type;
-              typedef std::basic_ios<ACE_CHAR_T, TR> ios_type;
-              typedef ACE_CHAR_T char_type;
-              typedef TR char_traits;
-              typedef typename base_type::int_type int_type;
-              typedef typename base_type::pos_type pos_type;
-              typedef typename base_type::off_type off_type;
-              typedef typename ios_type::seekdir seekdir;
-              typedef typename ios_type::openmode openmode;
-              typedef StreamInterceptorBase<char_type, char_traits> interceptor_type;
+              using base_type = std::basic_streambuf<ACE_CHAR_T, TR>;
+              using ios_type = std::basic_ios<ACE_CHAR_T, TR>;
+              using char_type = ACE_CHAR_T;
+              using char_traits = TR;
+              using int_type = typename base_type::int_type;
+              using pos_type = typename base_type::pos_type;
+              using off_type = typename base_type::off_type;
+              using seekdir = typename ios_type::seekdir;
+              using openmode = typename ios_type::openmode;
+              using interceptor_type = StreamInterceptorBase<char_type, char_traits>;
 
               BasicBufferedStreamBuffer (std::streamsize bufsz,
                                          typename std::basic_ios<ACE_CHAR_T, TR>::openmode mode);
 
-              virtual ~BasicBufferedStreamBuffer ();
+              ~BasicBufferedStreamBuffer () override;
 
-              virtual int_type overflow (int_type c);
-              virtual int_type underflow ();
-              virtual int sync ();
+              BasicBufferedStreamBuffer (BasicBufferedStreamBuffer const&) = delete;
+              BasicBufferedStreamBuffer& operator= (BasicBufferedStreamBuffer const&) = delete;
+              BasicBufferedStreamBuffer (BasicBufferedStreamBuffer&&) = delete;
+              BasicBufferedStreamBuffer& operator= (BasicBufferedStreamBuffer&&) = delete;
+
+              int_type overflow (int_type c) override;
+              int_type underflow () override;
+              int sync () override;
 
               void set_interceptor (interceptor_type& interceptor);
 
@@ -72,7 +77,7 @@ namespace ACE
 
               virtual int read_from_stream (char_type* buffer, std::streamsize length);
 
-              virtual int write_to_stream (const char_type* buffer, std::streamsize length);
+              virtual int write_to_stream (char_type const* buffer, std::streamsize length);
 
               void reset_buffers ();
 
@@ -82,14 +87,12 @@ namespace ACE
               std::streamsize bufsize_;
               std::unique_ptr<char_type[]> buffer_;
               typename std::basic_ios<ACE_CHAR_T, TR>::openmode mode_;
+              /// Non-owning interceptor configured by set_interceptor().
               interceptor_type* interceptor_;
-
-              BasicBufferedStreamBuffer(const BasicBufferedStreamBuffer&);
-              BasicBufferedStreamBuffer& operator = (const BasicBufferedStreamBuffer&);
           };
 
         /// char specialization
-        typedef BasicBufferedStreamBuffer<char, std::char_traits<char> > BufferedStreamBuffer;
+        using BufferedStreamBuffer = BasicBufferedStreamBuffer<char, std::char_traits<char>>;
       }
   }
 

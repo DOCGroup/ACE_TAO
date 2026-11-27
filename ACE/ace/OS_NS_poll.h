@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   OS_NS_poll.h
  *
@@ -8,7 +5,6 @@
  *  @author Jesper S. M|ller<stophph@diku.dk>
  *  @author and a cast of thousands...
  */
-//=============================================================================
 
 #ifndef ACE_OS_NS_POLL_H
 # define ACE_OS_NS_POLL_H
@@ -38,12 +34,12 @@ namespace ACE_OS
   ACE_NAMESPACE_INLINE_FUNCTION
   int poll (struct pollfd *pollfds,
             unsigned long len,
-            const ACE_Time_Value *tv = nullptr);
+            ACE_Time_Value const *tv = nullptr);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int poll (struct pollfd *pollfds,
             unsigned long len,
-            const ACE_Time_Value &tv);
+            ACE_Time_Value const &tv);
 } /* namespace ACE_OS */
 
 ACE_END_VERSIONED_NAMESPACE_DECL

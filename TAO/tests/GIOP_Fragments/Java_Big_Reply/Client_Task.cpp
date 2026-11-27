@@ -1,4 +1,3 @@
-
 #include "Client_Task.h"
 
 Client_Task::Client_Task (Test::Big_Reply_ptr reply_gen,
@@ -16,7 +15,6 @@ Client_Task::svc ()
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Starting client task\n"));
 
-
   // Now get the big replies..
   try
     {
@@ -25,13 +23,17 @@ Client_Task::svc ()
           Test::Octet_Seq_var seq =
               this->reply_gen_->get_big_reply ();
 
-          CORBA::ULong length = seq->length ();
-          for(CORBA::ULong i = 0; i < length; ++i)
+          CORBA::ULong const length = seq->length ();
+          for (CORBA::ULong sequence_index = 0;
+               sequence_index < length;
+               ++sequence_index)
             {
-              if (seq[i] != 'A')
+              if (seq[sequence_index] != 'A')
                 {
                   ACE_ERROR_RETURN ((LM_ERROR,
-                                     "Invalid data '%c' at %d\n", seq[i], i),
+                                     "Invalid data '%c' at %u\n",
+                                     seq[sequence_index],
+                                     sequence_index),
                                     -1);
                 }
             }
@@ -40,7 +42,7 @@ Client_Task::svc ()
 //          ACE_OS::sleep(tv);
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Exception Caught\n");
       return -1;

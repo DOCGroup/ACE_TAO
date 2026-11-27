@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /*
  *  @file Codeset_Manager.h
  *
@@ -8,7 +5,6 @@
  *
  *  @author  Mahesh Vedantam <mahesh@ociweb.com>
  */
-//=============================================================================
 
 #ifndef TAO_CODESET_MANAGER_H
 #define TAO_CODESET_MANAGER_H
@@ -38,7 +34,6 @@ class TAO_Tagged_Components;
 class TAO_Codeset_Translator_Base;
 class TAO_Codeset_Descriptor_Base;
 
-
 // ****************************************************************
 
 /**
@@ -59,7 +54,6 @@ class TAO_Codeset_Descriptor_Base;
 class TAO_Export TAO_Codeset_Manager
 {
 public:
-  /// Destructor.
   virtual ~TAO_Codeset_Manager () = default;
 
   /// Called by an object of TAO_Acceptor to set NCS and CCS values for

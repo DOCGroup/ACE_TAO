@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Request.h
  *
@@ -10,7 +7,6 @@
  *  @author Copyright 1994-1995 by Sun Microsystems, Inc.
  *  @author Additions and RequestSeq by Jeff Parsons <parsons@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_REQUEST_H
 #define TAO_REQUEST_H
@@ -41,6 +37,7 @@
 
 #include "ace/SString.h"
 #include <atomic>
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -98,14 +95,14 @@ namespace CORBA
      * optional name. Returns reference to Any for insertion using
      * <<=.
      */
-    //@{
+    /// @{
     CORBA::Any &add_in_arg ();
     CORBA::Any &add_in_arg (char const* name);
     CORBA::Any &add_inout_arg ();
     CORBA::Any &add_inout_arg (char const* name);
     CORBA::Any &add_out_arg ();
     CORBA::Any &add_out_arg (char const* name);
-    //@}
+    /// @}
 
     /// Initialize the return type.
     void set_return_type (CORBA::TypeCode_ptr tc);
@@ -140,11 +137,11 @@ namespace CORBA
      *
      * The 'deferred synchronous' methods.
      */
-    //@{
+    /// @{
     void send_deferred ();
     void get_response ();
     CORBA::Boolean poll_response ();
-    //@}
+    /// @}
 
     /// Callback method for deferred synchronous requests.
     void handle_response (TAO_InputCDR &incoming, GIOP::ReplyStatusType reply_status);
@@ -164,7 +161,6 @@ namespace CORBA
     static CORBA::Request* _duplicate (CORBA::Request*);
     static CORBA::Request* _nil ();
 
-    // = Reference counting.
     CORBA::ULong _incr_refcount ();
     CORBA::ULong _decr_refcount ();
 
@@ -220,7 +216,7 @@ namespace CORBA
     CORBA::ORB_var orb_;
 
     /// Operation name.
-    char const* opname_ {};
+    char *opname_ {};
 
     /// Parameter list.
     CORBA::NVList_ptr args_ {};
@@ -254,6 +250,9 @@ namespace CORBA
 
     /// Set to true upon completion of invoke() or handle_response().
     CORBA::Boolean response_received_ {};
+
+    /// Exception received for a deferred request.
+    std::unique_ptr<CORBA::Exception> deferred_exception_;
 
     /// Can be reset by a gateway when passing along a request.
     int byte_order_ {TAO_ENCAP_BYTE_ORDER};

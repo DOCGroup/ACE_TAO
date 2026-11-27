@@ -1,4 +1,5 @@
-// -*- C++ -*-
+#include <memory>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class T> ACE_INLINE int
@@ -21,7 +22,7 @@ ACE_Active_Map_Manager<T>::bind (ACE_Active_Map_Manager_Key &key,
       key = this->search_structure_[slot_index].ext_id_;
 
       // This is where the user should place the value.
-      internal_value = &this->search_structure_[slot_index].int_id_;
+      internal_value = std::addressof (this->search_structure_[slot_index].int_id_);
 
       // Update the current size.
       ++this->cur_size_;
@@ -31,10 +32,10 @@ ACE_Active_Map_Manager<T>::bind (ACE_Active_Map_Manager_Key &key,
 }
 
 template <class T> ACE_INLINE int
-ACE_Active_Map_Manager<T>::bind (const T &value,
+ACE_Active_Map_Manager<T>::bind (T const &value,
                                  ACE_Active_Map_Manager_Key &key)
 {
-  T *internal_value = nullptr;
+  T *internal_value {};
   int result = this->bind (key,
                            internal_value);
 
@@ -48,63 +49,65 @@ ACE_Active_Map_Manager<T>::bind (const T &value,
 }
 
 template <class T> ACE_INLINE int
-ACE_Active_Map_Manager<T>::bind (const T &value)
+ACE_Active_Map_Manager<T>::bind (T const &value)
 {
   ACE_Active_Map_Manager_Key key;
   return this->bind (value, key);
 }
 
 template <class T> ACE_INLINE int
-ACE_Active_Map_Manager<T>::find (const ACE_Active_Map_Manager_Key &key,
+ACE_Active_Map_Manager<T>::find (ACE_Active_Map_Manager_Key const &key,
                                  T *&internal_value) const
 {
   ACE_UINT32 slot_index = key.slot_index ();
   ACE_UINT32 slot_generation = key.slot_generation ();
 
-  if (slot_index > this->total_size_ ||
+  if (slot_index >= this->total_size_ ||
 #if defined (ACE_HAS_LAZY_MAP_MANAGER)
       this->search_structure_[slot_index].free_ ||
 #endif /* ACE_HAS_LAZY_MAP_MANAGER */
       this->search_structure_[slot_index].ext_id_.slot_generation () != slot_generation ||
       this->search_structure_[slot_index].ext_id_.slot_index () ==
-                 (ACE_UINT32)this->free_list_id ())
+                 this->free_list_id ())
     {
       return -1;
     }
   else
     {
       // This is where the user value is.
-      internal_value = &this->search_structure_[slot_index].int_id_;
+      internal_value = std::addressof (this->search_structure_[slot_index].int_id_);
     }
 
   return 0;
 }
 
 template <class T> ACE_INLINE int
-ACE_Active_Map_Manager<T>::find (const ACE_Active_Map_Manager_Key &key) const
+ACE_Active_Map_Manager<T>::find (ACE_Active_Map_Manager_Key const &key) const
 {
-  T *internal_value = nullptr;
+  T *internal_value {};
   return this->find (key,
                      internal_value);
 }
 
 template <class T> ACE_INLINE int
-ACE_Active_Map_Manager<T>::find (const ACE_Active_Map_Manager_Key &key,
+ACE_Active_Map_Manager<T>::find (ACE_Active_Map_Manager_Key const &key,
                                  T &value) const
 {
-  T *internal_value = nullptr;
+  T *internal_value {};
   int result = this->find (key,
                            internal_value);
 
   if (result == 0)
-    value = *internal_value;
+    {
+      value = *internal_value;
+    }
 
   return result;
 }
 
 template <class T> ACE_INLINE int
-ACE_Active_Map_Manager<T>::rebind (const ACE_Active_Map_Manager_Key &key,
-                                   const T &value)
+ACE_Active_Map_Manager<T>::rebind (ACE_Active_Map_Manager_Key const &key,
+                                   T const &value)
 {
   int result = this->find (key);
 
@@ -118,8 +121,8 @@ ACE_Active_Map_Manager<T>::rebind (const ACE_Active_Map_Manager_Key &key,
 }
 
 template <class T> ACE_INLINE int
-ACE_Active_Map_Manager<T>::rebind (const ACE_Active_Map_Manager_Key &key,
-                                   const T &value,
+ACE_Active_Map_Manager<T>::rebind (ACE_Active_Map_Manager_Key const &key,
+                                   T const &value,
                                    T &old_value)
 {
   int result = this->find (key);
@@ -137,8 +140,8 @@ ACE_Active_Map_Manager<T>::rebind (const ACE_Active_Map_Manager_Key &key,
 }
 
 template <class T> ACE_INLINE int
-ACE_Active_Map_Manager<T>::rebind (const ACE_Active_Map_Manager_Key &key,
-                                   const T &value,
+ACE_Active_Map_Manager<T>::rebind (ACE_Active_Map_Manager_Key const &key,
+                                   T const &value,
                                    ACE_Active_Map_Manager_Key &old_key,
                                    T &old_value)
 {
@@ -160,7 +163,7 @@ ACE_Active_Map_Manager<T>::rebind (const ACE_Active_Map_Manager_Key &key,
 }
 
 template <class T> ACE_INLINE int
-ACE_Active_Map_Manager<T>::unbind (const ACE_Active_Map_Manager_Key &key,
+ACE_Active_Map_Manager<T>::unbind (ACE_Active_Map_Manager_Key const &key,
                                    T *&internal_value)
 {
   int result = this->find (key,
@@ -198,7 +201,7 @@ ACE_Active_Map_Manager<T>::unbind (const ACE_Active_Map_Manager_Key &key,
 }
 
 template <class T> ACE_INLINE int
-ACE_Active_Map_Manager<T>::unbind (const ACE_Active_Map_Manager_Key &key,
+ACE_Active_Map_Manager<T>::unbind (ACE_Active_Map_Manager_Key const &key,
                                    T &value)
 {
   T *internal_value;
@@ -215,7 +218,7 @@ ACE_Active_Map_Manager<T>::unbind (const ACE_Active_Map_Manager_Key &key,
 }
 
 template <class T> ACE_INLINE int
-ACE_Active_Map_Manager<T>::unbind (const ACE_Active_Map_Manager_Key &key)
+ACE_Active_Map_Manager<T>::unbind (ACE_Active_Map_Manager_Key const &key)
 {
   T *internal_value;
   return this->unbind (key,
@@ -262,7 +265,7 @@ ACE_Active_Map_Manager<T>::total_size () const
 }
 
 /* static */
-template <class T> ACE_INLINE const ACE_Active_Map_Manager_Key
+template <class T> ACE_INLINE ACE_Active_Map_Manager_Key const
 ACE_Active_Map_Manager<T>::npos ()
 {
   return ACE_Active_Map_Manager_Key (~0, ~0);

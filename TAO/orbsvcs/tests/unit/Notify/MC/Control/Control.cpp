@@ -3,6 +3,8 @@
 #include "orbsvcs/Notify/MonitorControl/Control.h"
 #include "tao/Exception.h"
 
+#include <cstring>
+
 #if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
 
 static ACE_CString command;
@@ -10,20 +12,20 @@ static ACE_CString command;
 class ControlTest : public TAO_NS_Control
 {
 public:
-  ControlTest (const ACE_CString& name)
+  ControlTest (ACE_CString const & name)
     : TAO_NS_Control (name.c_str ())
   {
   }
 
-  virtual bool execute (const char* cmd)
+  bool execute (char const *cmd) override
   {
     command = cmd;
-    return (ACE_OS::strcmp (cmd, TAO_NS_CONTROL_SHUTDOWN) == 0);
+    return std::strcmp (cmd, TAO_NS_CONTROL_SHUTDOWN) == 0;
   }
 };
 
 void
-error (const char* msg)
+error (char const *msg)
 {
   ACE_ERROR ((LM_ERROR, "%s\n", msg));
   ACE_OS::exit (1);
@@ -61,7 +63,7 @@ ACE_TMAIN (int, ACE_TCHAR*[])
           error ("The TAO_NS_Control callback does not work");
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Control: ");
       error ("Caught a CORBA exception");

@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    SOCK_Dgram_Bcast_Test.cpp
  *
@@ -13,8 +12,6 @@
  *
  *  @author Marek Brudka (mbrudka@elka.pw.edu.pl)
  */
-//=============================================================================
-
 
 #include "test_config.h"
 #include "ace/OS_NS_string.h"
@@ -46,15 +43,19 @@ int send_datagram (ACE_SOCK_Dgram_Bcast &socket, int datagram_no)
     if (socket.send (dgram_buffer,
                      ACE_OS::strlen (dgram_buffer) + 1,
                      dgram_port) < 0 )
+      {
         ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
                            ACE_TEXT ("Cannot broadcast datagram")), -1);
+      }
     else
+      {
         ACE_DEBUG ((LM_INFO, ACE_TEXT ("%C sent\n"), dgram_buffer));
+      }
     return 0;
 }
 
 /*\brief Send a sequence of datagrams with 1 second period
-  \note Th function employs dgram_port and dgrams_no global variables
+  @note Th function employs dgram_port and dgrams_no global variables
   \retval -1 if error
   \retval 0 if sent
 */
@@ -71,7 +72,9 @@ int run_sender( )
         while (dgrams_no-- != 0)
           {
             if (send_datagram (socket, dgrams_no) < 0)
+            {
               break;
+            }
             ACE_OS::sleep (1);
           }
         socket.close ();
@@ -83,7 +86,7 @@ int run_sender( )
 }
 
 /*\brief Receive single datagram
-  \note The function employes dgram_port and dgram_recv_timeout variables
+  @note The function employes dgram_port and dgram_recv_timeout variables
   \retval -1 if not received,
   \retval 0  received a datagrams
 */
@@ -91,25 +94,27 @@ int run_receiver ()
 {
   ACE_DEBUG
     ((LM_INFO,
-      ACE_TEXT ("Receiving datagrams from port %d with timeout %d ms\n"),
+      ACE_TEXT ("Receiving datagrams from port %d with timeout %Lu ms\n"),
       dgram_port, dgram_recv_timeout.msec ()));
 
   ACE_SOCK_Dgram socket;
   ACE_INET_Addr  remote ;
-  static char    dgram_buffer[BUFSIZ];
 
   if (socket.open (ACE_INET_Addr (dgram_port)) != -1)
-    if (socket.recv (dgram_buffer, sizeof (dgram_buffer),
-                     remote, 0, &dgram_recv_timeout) > 0)
-      {
-        ACE_DEBUG ((LM_INFO, ACE_TEXT ("%C received\n"), dgram_buffer));
-        return 0;
-      }
-    else
-      {
-        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("Cannot receive datagrams")), -1);
-      }
+    {
+      static char dgram_buffer[BUFSIZ];
+      if (socket.recv (dgram_buffer, sizeof (dgram_buffer),
+                       remote, 0, &dgram_recv_timeout) > 0)
+        {
+          ACE_DEBUG ((LM_INFO, ACE_TEXT ("%C received\n"), dgram_buffer));
+          return 0;
+        }
+      else
+        {
+          ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
+                             ACE_TEXT ("Cannot receive datagrams")), -1);
+        }
+    }
   else
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -120,7 +125,8 @@ int run_receiver ()
 
 #if !defined (ACE_HAS_PROCESS_SPAWN) && defined (ACE_HAS_THREADS)
 /* \brief Thread main function to run run_receiver function
-   \note run_receiver return valu is stored in receiver_exit_code global variable
+   @note The run_receiver() return value is stored in the receiver_exit_code
+   global variable.
 */
 static ACE_THR_FUNC_RETURN run_thread_receiver (void *)
 {
@@ -136,7 +142,7 @@ tries to receive at least one datagram.
 \retval 0 datagram was received
 \retval -1 datagram was not received
 */
-int run_auto_test (const ACE_TCHAR *prog_name)
+int run_auto_test (ACE_TCHAR const *prog_name)
 {
 #if defined (ACE_HAS_PROCESS_SPAWN)
   ACE_DEBUG ((LM_INFO, ACE_TEXT ("Running auto_tests in process mode\n")));
@@ -146,15 +152,19 @@ int run_auto_test (const ACE_TCHAR *prog_name)
   opts.command_line (ACE_TEXT ("%s -p %d -t %d -a -r"),
                      prog_name, dgram_port, static_cast<int>(dgram_recv_timeout.msec ()));
   if ((child_pid = ACE_Process_Manager::instance ()->spawn (opts)) == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("spawn_n()")), -1);
+  }
 
 #elif defined (ACE_HAS_THREADS)
   ACE_UNUSED_ARG (prog_name);
   ACE_DEBUG ((LM_INFO, ACE_TEXT ("Running auto_tests in thread mode\n")));
   if (ACE_Thread_Manager::instance ()->spawn (run_thread_receiver) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("spawn_n ()")), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("spawn_n ()")), -1);
+    }
 #else
   ACE_ERROR_RETURN ((LM_ERROR,
                      ACE_TEXT ("Cannot run in auto_test mode without fork or threads.\n")),
@@ -179,12 +189,16 @@ int run_auto_test (const ACE_TCHAR *prog_name)
           if (ACE_Process_Manager::instance ()->wait (child_pid,
                                                       child_timeout,
                                                       &receiver_exit_code) == child_pid)
-            break;
+            {
+              break;
+            }
 #else /* ACE_HAS_THREADS */
           // sleep 1 second or wait for child thread
           child_timeout += ACE_OS::gettimeofday () ;
           if (ACE_Thread_Manager::instance ()->wait (&child_timeout) == 0)
-            break;
+            {
+              break;
+            }
 #endif
         }
       socket.close ();
@@ -192,8 +206,10 @@ int run_auto_test (const ACE_TCHAR *prog_name)
                   receiver_exit_code));
     }
   else
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("Cannot open broadcast socket")), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("Cannot open broadcast socket")), -1);
+    }
   return (receiver_exit_code);
 }
 
@@ -217,7 +233,8 @@ int run_main (int argc, ACE_TCHAR *argv[])
   int result          = 0;
   ACE_Get_Opt opts (argc, argv, ACE_TEXT ("p:t:n:sra"));
   while ((opt = opts ()) != -1)
-    switch (opt)
+    {
+      switch (opt)
       {
       case 'a':
         auto_test_recv = 1;
@@ -248,6 +265,7 @@ int run_main (int argc, ACE_TCHAR *argv[])
         print_usage ();
         return -1;
       }
+    }
   ACE_START_TEST (ACE_TEXT ("SOCK_Dgram_Bcast_Test"));
 
 #ifndef ACE_LACKS_IOCTL

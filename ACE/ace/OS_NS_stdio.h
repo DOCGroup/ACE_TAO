@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   OS_NS_stdio.h
  *
@@ -8,7 +5,6 @@
  *  @author Jesper S. M|ller<stophph@diku.dk>
  *  @author and a cast of thousands...
  */
-//=============================================================================
 
 #ifndef ACE_OS_NS_STDIO_H
 # define ACE_OS_NS_STDIO_H
@@ -171,7 +167,7 @@ namespace ACE_OS {
 # endif /* ACE_WIN32 */
 
     /// Name of this filelock.
-    const ACE_TCHAR *lockname_;
+    ACE_TCHAR const *lockname_;
 
     /// Handle to the underlying file.
     ACE_HANDLE handle_;
@@ -187,7 +183,8 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   void clearerr (FILE* fp);
 
-  //@{ @name Wrappers to obtain the current user id
+  /// @name Wrappers to obtain the current user id
+  /// @{
   // Legacy as per SUSV3
 # if !defined (ACE_LACKS_CUSERID)
 #   if defined(cuserid)
@@ -204,10 +201,10 @@ namespace ACE_OS {
                     size_t maxlen = ACE_MAX_USERID);
 #   endif /* ACE_HAS_WCHAR */
 # endif /* ACE_LACKS_CUSERID */
-  //@}
+  /// @}
 
   extern ACE_Export
-  int asprintf (char **bufp, const char* format, ...)
+  int asprintf (char **bufp, char const* format, ...)
     ACE_GCC_FORMAT_ATTRIBUTE (printf, 2, 3);
 
 # if defined (ACE_HAS_WCHAR)
@@ -219,7 +216,7 @@ namespace ACE_OS {
   int fclose (FILE *fp);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  FILE *fdopen (ACE_HANDLE handle, const ACE_TCHAR *mode);
+  FILE *fdopen (ACE_HANDLE handle, ACE_TCHAR const *mode);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int fflush (FILE *fp);
@@ -241,7 +238,8 @@ namespace ACE_OS {
   wchar_t *fgets (wchar_t *buf, int size, FILE *fp);
 # endif /* ACE_HAS_WCHAR && !ACE_LACKS_FGETWS */
 
-  //@{ @name A set of wrappers for file locks.
+  /// @name A set of wrappers for file locks.
+  /// @{
 
 # if defined (ACE_WIN32)
   ACE_NAMESPACE_INLINE_FUNCTION
@@ -254,7 +252,7 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   int flock_init (ace_flock_t *lock,
                   int flags = 0,
-                  const ACE_TCHAR *name = nullptr,
+                  ACE_TCHAR const *name = nullptr,
                   mode_t perms = 0);
 
   ACE_NAMESPACE_INLINE_FUNCTION
@@ -291,8 +289,7 @@ namespace ACE_OS {
                     ACE_OFF_T start = 0,
                     ACE_OFF_T len = 0);
 
-  //@}
-
+  /// @}
 
   ACE_NAMESPACE_INLINE_FUNCTION
   ACE_HANDLE fileno (FILE *stream);
@@ -302,7 +299,7 @@ namespace ACE_OS {
 #else
   ACE_NAMESPACE_INLINE_FUNCTION
 #endif /* ACE_WIN32 */
-  FILE *fopen (const char *filename, const char *mode);
+  FILE *fopen (char const *filename, char const *mode);
 
 #if defined (ACE_HAS_WCHAR)
 #if defined (ACE_WIN32)
@@ -310,7 +307,7 @@ namespace ACE_OS {
 #else
   ACE_NAMESPACE_INLINE_FUNCTION
 #endif /* ACE_WIN32 */
-  FILE *fopen (const char *filename, const wchar_t *mode);
+  FILE *fopen (char const *filename, const wchar_t *mode);
 #  if defined (ACE_WIN32)
   extern ACE_Export
 #  else
@@ -322,7 +319,7 @@ namespace ACE_OS {
 #  else
   ACE_NAMESPACE_INLINE_FUNCTION
 #  endif /* ACE_WIN32 */
-  FILE *fopen (const wchar_t *filename, const char *mode);
+  FILE *fopen (const wchar_t *filename, char const *mode);
 #endif /* ACE_HAS_WCHAR */
 
 #if defined (ACE_WIN32)
@@ -334,12 +331,10 @@ namespace ACE_OS {
                                              LPSECURITY_ATTRIBUTES,
                                              SECURITY_DESCRIPTOR*);
 
-  // = Win32 OS version determination function.
   /// Return the win32 OSVERSIONINFO structure.
   ACE_NAMESPACE_INLINE_FUNCTION
-  const ACE_TEXT_OSVERSIONINFO &get_win32_versioninfo ();
+  ACE_TEXT_OSVERSIONINFO const &get_win32_versioninfo ();
 
-  // = A pair of functions for modifying ACE's Win32 resource usage.
   /// Return the handle of the module containing ACE's resources. By
   /// default, for a DLL build of ACE this is a handle to the ACE DLL
   /// itself, and for a static build it is a handle to the executable.
@@ -362,7 +357,7 @@ namespace ACE_OS {
   using ::fprintf;
 #else
   extern ACE_Export
-  int fprintf (FILE *fp, const char *format, ...)
+  int fprintf (FILE *fp, char const *format, ...)
     ACE_GCC_FORMAT_ATTRIBUTE (printf, 2, 3);
 #endif
 
@@ -384,7 +379,7 @@ namespace ACE_OS {
             FILE *fp);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int fputs (const char *s,
+  int fputs (char const *s,
              FILE *stream);
 
 # if defined (ACE_HAS_WCHAR) && !defined(ACE_LACKS_FPUTWS)
@@ -400,8 +395,8 @@ namespace ACE_OS {
                 FILE *fp);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  FILE *freopen (const ACE_TCHAR *filename,
-                 const ACE_TCHAR *mode,
+  FILE *freopen (ACE_TCHAR const *filename,
+                 ACE_TCHAR const *mode,
                  FILE* stream);
 
   ACE_NAMESPACE_INLINE_FUNCTION
@@ -416,13 +411,13 @@ namespace ACE_OS {
   long ftell (FILE* fp);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  size_t fwrite (const void *ptr,
+  size_t fwrite (void const *ptr,
                  size_t size,
                  size_t nitems,
                  FILE *fp);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  void perror (const char *s);
+  void perror (char const *s);
 
 #if defined (ACE_HAS_WCHAR)
   ACE_NAMESPACE_INLINE_FUNCTION
@@ -433,7 +428,7 @@ namespace ACE_OS {
   using ::printf;
 #else
   extern ACE_Export
-  int printf (const char *format, ...)
+  int printf (char const *format, ...)
     ACE_GCC_FORMAT_ATTRIBUTE (printf, 1, 2);
 #endif
 
@@ -443,7 +438,7 @@ namespace ACE_OS {
 #endif
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int puts (const char *s);
+  int puts (char const *s);
 
 #if defined (ACE_HAS_WCHAR)
   ACE_NAMESPACE_INLINE_FUNCTION
@@ -451,8 +446,8 @@ namespace ACE_OS {
 #endif /* ACE_HAS_WCHAR */
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int rename (const char *old_name,
-              const char *new_name,
+  int rename (char const *old_name,
+              char const *new_name,
               int flags = -1);
 
 #if defined (ACE_HAS_WCHAR)
@@ -469,7 +464,7 @@ namespace ACE_OS {
   using ::snprintf;
 #else
   extern ACE_Export
-  int snprintf (char *buf, size_t maxlen, const char *format, ...)
+  int snprintf (char *buf, size_t maxlen, char const *format, ...)
     ACE_GCC_FORMAT_ATTRIBUTE (printf, 3, 4);
 #endif
 
@@ -479,7 +474,7 @@ namespace ACE_OS {
 # endif /* ACE_HAS_WCHAR */
 
   extern ACE_Export
-  int sprintf (char *buf, const char *format, ...)
+  int sprintf (char *buf, char const *format, ...)
     ACE_GCC_FORMAT_ATTRIBUTE (printf, 2, 3);
 
 # if defined (ACE_HAS_WCHAR)
@@ -489,8 +484,8 @@ namespace ACE_OS {
 
 # if !defined (ACE_DISABLE_TEMPNAM)
   ACE_NAMESPACE_STORAGE_CLASS
-  char *tempnam (const char *dir = nullptr,
-                 const char *pfx = nullptr);
+  char *tempnam (char const *dir = nullptr,
+                 char const *pfx = nullptr);
 
 #   if defined (ACE_HAS_WCHAR)
   ACE_NAMESPACE_STORAGE_CLASS
@@ -500,23 +495,23 @@ namespace ACE_OS {
 # endif /* !ACE_DISABLE_TEMPNAM */
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int vasprintf (char **bufp, const char *format, va_list argptr)
+  int vasprintf (char **bufp, char const *format, va_list argptr)
     ACE_GCC_FORMAT_ATTRIBUTE (printf, 2, 0);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int vprintf (const char *format, va_list argptr)
+  int vprintf (char const *format, va_list argptr)
     ACE_GCC_FORMAT_ATTRIBUTE (printf, 1, 0);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int vfprintf (FILE *fp, const char *format, va_list argptr)
+  int vfprintf (FILE *fp, char const *format, va_list argptr)
     ACE_GCC_FORMAT_ATTRIBUTE (printf, 2, 0);
 
   ACE_NAMESPACE_STORAGE_CLASS
-  int vsprintf (char *buffer, const char *format, va_list argptr)
+  int vsprintf (char *buffer, char const *format, va_list argptr)
     ACE_GCC_FORMAT_ATTRIBUTE (printf, 2, 0);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int vsnprintf (char *buffer, size_t maxlen, const char *format, va_list argptr)
+  int vsnprintf (char *buffer, size_t maxlen, char const *format, va_list argptr)
     ACE_GCC_FORMAT_ATTRIBUTE (printf, 3, 0);
 
 #if defined (ACE_HAS_WCHAR)
@@ -538,12 +533,12 @@ namespace ACE_OS {
 
 #if defined (ACE_HAS_VSNPRINTF_EMULATION)
   extern ACE_Export
-  int vsnprintf_emulation (char *buf, size_t max, const char *fmt, va_list ap);
+  int vsnprintf_emulation (char *buf, size_t max, char const *fmt, va_list ap);
 #endif
 
 #if !defined (ACE_HAS_VASPRINTF) && !defined (ACE_LACKS_VA_COPY)
   extern ACE_Export
-  int vasprintf_emulation (char **bufp, const char *format, va_list argptr);
+  int vasprintf_emulation (char **bufp, char const *format, va_list argptr);
 #endif
 
 #if !defined (ACE_HAS_VASWPRINTF) && !defined (ACE_LACKS_VA_COPY)

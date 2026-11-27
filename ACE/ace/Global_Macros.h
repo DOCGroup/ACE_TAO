@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   Global_Macros.h
  *
@@ -10,7 +7,6 @@
  *
  *  This one is split from the famous OS.h
  */
-//=============================================================================
 
 #ifndef ACE_GLOBAL_MACROS_H
 #define ACE_GLOBAL_MACROS_H
@@ -38,16 +34,16 @@
 #   define ACE_DB(X) X
 # endif /* ACE_NDEBUG */
 
-// Turn a number into a string.
+/// Turn a number into a string.
 # define ACE_ITOA(X) #X
 
-// Create a string of a server address with a "host:port" format.
+/// Create a string of a server address with a "host:port" format.
 # define ACE_SERVER_ADDRESS(H,P) H ACE_TEXT(":") P
 
 // A couple useful inline functions for checking whether bits are
 // enabled or disabled.
 
-// Efficiently returns the least power of two >= X...
+/// Efficiently returns the least power of two >= X...
 # define ACE_POW(X) (((X) == 0)?1:(X-=1,X|=X>>1,X|=X>>2,X|=X>>4,X|=X>>8,X|=X>>16,(++X)))
 # define ACE_EVEN(NUM) (((NUM) & 1) == 0)
 # define ACE_ODD(NUM) (((NUM) & 1) == 1)
@@ -66,8 +62,6 @@
 // noexcept(false) specification to specify that the operation can
 // throw an exception
 #define ACE_NOEXCEPT_FALSE noexcept(false)
-
-// ----------------------------------------------------------------
 
 // FUZZ: disable check_for_ACE_Guard
 
@@ -105,9 +99,15 @@
  */
 #if !defined (ACE_GUARD_ACTION)
 #define ACE_GUARD_ACTION(MUTEX, OBJ, LOCK, ACTION, REACTION) \
-   ACE_Guard< MUTEX > OBJ (LOCK); \
-   if (OBJ.locked () != 0) { ACTION; } \
-   else { REACTION; }
+   ACE_Guard<MUTEX> OBJ (LOCK); \
+   if (OBJ.locked () != 0) \
+     { \
+       ACTION; \
+     } \
+   else \
+     { \
+       REACTION; \
+     }
 #endif /* !ACE_GUARD_ACTION */
 #if !defined (ACE_GUARD_REACTION)
 #define ACE_GUARD_REACTION(MUTEX, OBJ, LOCK, REACTION) \
@@ -123,9 +123,15 @@
 #endif /* !ACE_GUARD_RETURN */
 #if !defined (ACE_GUARD_CONST_ACTION)
 #define ACE_GUARD_CONST_ACTION(MUTEX, OBJ, LOCK, ACTION, REACTION) \
-   const ACE_Guard< MUTEX > OBJ (LOCK); \
-   if (OBJ.locked () != 0) { ACTION; } \
-   else { REACTION; }
+   ACE_Guard<MUTEX> const OBJ (LOCK); \
+   if (OBJ.locked () != 0) \
+     { \
+       ACTION; \
+     } \
+   else \
+     { \
+       REACTION; \
+     }
 #endif /* !ACE_GUARD_CONST_ACTION */
 #if !defined (ACE_GUARD_CONST_REACTION)
 #define ACE_GUARD_CONST_REACTION(MUTEX, OBJ, LOCK, REACTION) \
@@ -141,27 +147,37 @@
 #endif /* !ACE_GUARD_RETURN_CONST */
 #if !defined (ACE_WRITE_GUARD)
 # define ACE_WRITE_GUARD(MUTEX,OBJ,LOCK) \
-  ACE_Write_Guard< MUTEX > OBJ (LOCK); \
-    if (OBJ.locked () == 0) return;
+  ACE_Write_Guard<MUTEX> OBJ (LOCK); \
+    if (OBJ.locked () == 0) \
+      { \
+        return; \
+      }
 #endif /* !ACE_WRITE_GUARD */
 #if !defined (ACE_WRITE_GUARD_RETURN)
 # define ACE_WRITE_GUARD_RETURN(MUTEX,OBJ,LOCK,RETURN) \
-  ACE_Write_Guard< MUTEX > OBJ (LOCK); \
-    if (OBJ.locked () == 0) return RETURN;
+  ACE_Write_Guard<MUTEX> OBJ (LOCK); \
+    if (OBJ.locked () == 0) \
+      { \
+        return RETURN; \
+      }
 #endif /* ACE_WRITE_GUARD_RETURN */
 #if !defined (ACE_READ_GUARD)
 # define ACE_READ_GUARD(MUTEX,OBJ,LOCK) \
-  ACE_Read_Guard< MUTEX > OBJ (LOCK); \
-    if (OBJ.locked () == 0) return;
+  ACE_Read_Guard<MUTEX> OBJ (LOCK); \
+    if (OBJ.locked () == 0) \
+      { \
+        return; \
+      }
 #endif /* !ACE_READ_GUARD */
 #if !defined (ACE_READ_GUARD_RETURN)
 # define ACE_READ_GUARD_RETURN(MUTEX,OBJ,LOCK,RETURN) \
-  ACE_Read_Guard< MUTEX > OBJ (LOCK); \
-    if (OBJ.locked () == 0) return RETURN;
+  ACE_Read_Guard<MUTEX> OBJ (LOCK); \
+    if (OBJ.locked () == 0) \
+      { \
+        return RETURN; \
+      }
 #endif /* !ACE_READ_GUARD_RETURN */
 // FUZZ: enable check_for_ACE_Guard
-
-// ----------------------------------------------------------------
 
 #if defined(ACE_UNEXPECTED_RETURNS)
 
@@ -191,8 +207,6 @@
   } while (0)
 
 #endif
-
-// ----------------------------------------------------------------
 
 # define ACE_DES_NOFREE(POINTER,CLASS) \
    do { \
@@ -409,16 +423,13 @@ using ACE_Service_Object_Exterminator = void (*)(void *);
  * Notice that in all the macros the SERVICE_CLASS parameter must be
  * the name of a class derived from ACE_Service_Object.
  */
-//@{
+/// @{
 /// Declare a the data structure required to register a statically
 /// linked service into the service configurator.
 /**
  * The macro should be used in the header file where the service is
- * declared, its only argument is usually the name of the class that
- * implements the service.
- *
- * @param SERVICE_CLASS The name of the class implementing the
- *   service.
+ * declared. Its sole argument, @c SERVICE_CLASS, is usually the name of
+ * the class that implements the service.
  */
 # define ACE_STATIC_SVC_DECLARE(SERVICE_CLASS) \
 extern ACE_Static_Svc_Descriptor ace_svc_desc_##SERVICE_CLASS ;
@@ -541,7 +552,6 @@ static ACE_Static_Svc_##SERVICE_CLASS ace_static_svc_##SERVICE_CLASS;
 #define ACE_MAKE_SVC_CONFIG_FACTORY_NAME(VERSIONED_NAMESPACE,SERVICE_CLASS) ACE_MAKE_SVC_CONFIG_FUNCTION_NAME(_make,VERSIONED_NAMESPACE,SERVICE_CLASS)
 #define ACE_MAKE_SVC_CONFIG_GOBBLER_NAME(VERSIONED_NAMESPACE,SERVICE_CLASS) ACE_MAKE_SVC_CONFIG_FUNCTION_NAME(_gobble,VERSIONED_NAMESPACE,SERVICE_CLASS)
 
-
 /// Declare the factory method used to create dynamically loadable
 /// services.
 /**
@@ -580,7 +590,7 @@ ACE_MAKE_SVC_CONFIG_FACTORY_NAME(ACE_VERSIONED_NAMESPACE_NAME,SERVICE_CLASS) (AC
 #define ACE_FACTORY_DEFINE(CLS,SERVICE_CLASS) \
 void ACE_MAKE_SVC_CONFIG_GOBBLER_NAME(ACE_VERSIONED_NAMESPACE_NAME,SERVICE_CLASS) (void *p) { \
   ACE_VERSIONED_NAMESPACE_NAME::ACE_Service_Object * _p = \
-    static_cast< ACE_VERSIONED_NAMESPACE_NAME::ACE_Service_Object *> (p); \
+    static_cast<ACE_VERSIONED_NAMESPACE_NAME::ACE_Service_Object *> (p); \
   ACE_ASSERT (_p != 0); \
   delete _p; } \
 extern "C" CLS##_Export ACE_VERSIONED_NAMESPACE_NAME::ACE_Service_Object *\
@@ -612,7 +622,7 @@ ACE_MAKE_SVC_CONFIG_FACTORY_NAME(ACE_VERSIONED_NAMESPACE_NAME,SERVICE_CLASS) (AC
  *
  * ACE_FACTORY_NAMESPACE_DEFINE(ACE,ACE_Foo_Bar,ACE::Foo::Bar)
  *
- * Note that in this example, the ACE_FACTORY_DECLARE is done outside
+ * @note In this example, the ACE_FACTORY_DECLARE is done outside
  * the namespace scope. Then, the SERVICE_CLASS name is the same as
  * the fully scoped class name, but with '::' replaced with '_'. Doing
  * this will ensure unique generated signatures for the various C
@@ -621,7 +631,7 @@ ACE_MAKE_SVC_CONFIG_FACTORY_NAME(ACE_VERSIONED_NAMESPACE_NAME,SERVICE_CLASS) (AC
 #define ACE_FACTORY_NAMESPACE_DEFINE(CLS,SERVICE_CLASS,NAMESPACE_CLASS) \
 void ACE_MAKE_SVC_CONFIG_GOBBLER_NAME(ACE_VERSIONED_NAMESPACE_NAME,SERVICE_CLASS) (void *p) { \
   ACE_VERSIONED_NAMESPACE_NAME::ACE_Service_Object * _p = \
-    static_cast< ACE_VERSIONED_NAMESPACE_NAME::ACE_Service_Object *> (p); \
+    static_cast<ACE_VERSIONED_NAMESPACE_NAME::ACE_Service_Object *> (p); \
   ACE_ASSERT (_p != 0); \
   delete _p; } \
 extern "C" CLS##_Export ACE_VERSIONED_NAMESPACE_NAME::ACE_Service_Object *\
@@ -640,17 +650,17 @@ ACE_MAKE_SVC_CONFIG_FACTORY_NAME(ACE_VERSIONED_NAMESPACE_NAME,SERVICE_CLASS) (AC
 /// method.
 #define ACE_SVC_INVOKE(SERVICE_CLASS) ACE_SVC_NAME(SERVICE_CLASS) (0)
 
-//@}
+/// @}
 
 /** @name Helper macros for services defined in the netsvcs library.
  *
  * The ACE services defined in netsvcs use this helper macros for
  * simplicity.
  */
-//@{
+/// @{
 # define ACE_SVC_FACTORY_DECLARE(X) ACE_FACTORY_DECLARE (ACE_Svc, X)
 # define ACE_SVC_FACTORY_DEFINE(X) ACE_FACTORY_DEFINE (ACE_Svc, X)
-//@}
+/// @}
 
 #if !defined (ACE_WIN32)
 // Add some typedefs and macros to enhance Win32 conformance...
@@ -796,21 +806,21 @@ ACE_MAKE_SVC_CONFIG_FACTORY_NAME(ACE_VERSIONED_NAMESPACE_NAME,SERVICE_CLASS) (AC
 #   define ACE_MEM_POOL _ACE_MEM_POOL
 #   define ACE_MEM_POOL_OPTIONS typename _ACE_MEM_POOL::OPTIONS
 
-// @deprecated These macros are not longer used in ACE_Svc_Handler.
+/// @deprecated These macros are no longer used in ACE_Svc_Handler.
 // Handle ACE_Svc_Handler
 #   define ACE_PEER_STREAM_1 typename _ACE_PEER_STREAM
 #   define ACE_PEER_STREAM_2 _ACE_PEER_STREAM
 #   define ACE_PEER_STREAM _ACE_PEER_STREAM
 #   define ACE_PEER_STREAM_ADDR typename _ACE_PEER_STREAM::PEER_ADDR
 
-// @deprecated These macros are not longer used in ACE_Acceptor.
+/// @deprecated These macros are no longer used in ACE_Acceptor.
 // Handle ACE_Acceptor
 #   define ACE_PEER_ACCEPTOR_1 typename _ACE_PEER_ACCEPTOR
 #   define ACE_PEER_ACCEPTOR_2 _ACE_PEER_ACCEPTOR
 #   define ACE_PEER_ACCEPTOR _ACE_PEER_ACCEPTOR
 #   define ACE_PEER_ACCEPTOR_ADDR typename _ACE_PEER_ACCEPTOR::PEER_ADDR
 
-// @deprecated These macros are not longer used in ACE_Connector.
+/// @deprecated These macros are no longer used in ACE_Connector.
 // Handle ACE_Connector
 #   define ACE_PEER_CONNECTOR_1 typename _ACE_PEER_CONNECTOR
 #   define ACE_PEER_CONNECTOR_2 _ACE_PEER_CONNECTOR

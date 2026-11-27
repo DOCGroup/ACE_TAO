@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   Log_i.h
  *
@@ -10,8 +7,6 @@
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  *  @author David A. Hanvey <d.hanvey@qub.ac.uk>
  */
-//=============================================================================
-
 
 #ifndef TAO_TLS_LOG_I_H
 #define TAO_TLS_LOG_I_H
@@ -47,14 +42,12 @@ class TAO_LogMgr_i;
 class TAO_Log_Serv_Export TAO_Log_i : public virtual POA_DsLogAdmin::Log
 {
 public:
-  /// Constructor.
   TAO_Log_i (CORBA::ORB_ptr orb,
              TAO_LogMgr_i & logmgr_i,
              DsLogAdmin::LogMgr_ptr factory,
              DsLogAdmin::LogId id,
              TAO_LogNotification *log_notifier);
 
-  /// Destructor.
   ~TAO_Log_i () override;
 
   /// Initlialize the Log.
@@ -65,7 +58,7 @@ public:
    *
    * DsLogAdmin::Log methods.
    */
-  //@{
+  /// @{
   /// Return the factory of the log.
   DsLogAdmin::LogMgr_ptr my_factory () override;
 
@@ -109,13 +102,9 @@ public:
   void set_administrative_state (DsLogAdmin::AdministrativeState state) override;
 
   /// Get the forwarding state of the log.
-  /// @@ Note: is it ok to make this method virtual?
-  /// @@@ Of course!  get_forwarding_state() is virtual in the base
-  ///     class dictated by the IDL!  -Ossama
   DsLogAdmin::ForwardingState get_forwarding_state () override;
 
   /// Set the forwarding state of the log.
-  /// @@ Note: is it ok to make this method virtual?
   void set_forwarding_state (DsLogAdmin::ForwardingState state) override;
 
   /// Get the operational state of the log.
@@ -151,26 +140,25 @@ public:
   void set_week_mask (DsLogAdmin::WeekMask const & masks) override;
 
   /// Returns all records in the log that match the given constraint
-  /// <c>.
+  /// @a c.
   DsLogAdmin::RecordList *query (char const * grammar,
                                  char const * c,
                                  DsLogAdmin::Iterator_out i) override;
 
-  /// Retrieve <how_many> records from time <from_time> using iterator
-  /// <i>.
+  /// Retrieve @a how_many records from time @a from_time using iterator
+  /// @a i.
   DsLogAdmin::RecordList *retrieve (DsLogAdmin::TimeT from_time,
                                     CORBA::Long how_many,
                                     DsLogAdmin::Iterator_out i) override;
 
-  /// Returns the number of records matching constraint <c>.
+  /// Returns the number of records matching constraint @a c.
   CORBA::ULong match (char const * grammar, char const * c) override;
 
-  /// Delete records matching constraint <c>.
+  /// Delete records matching constraint @a c.
   CORBA::ULong delete_records (char const * grammar, char const * c) override;
 
-  /// Delete records matching ids in <ids>
+  /// Delete records matching IDs in @a ids.
   CORBA::ULong delete_records_by_id (DsLogAdmin::RecordIdList const & ids) override;
-
 
   /// Write records to the log storage.
   void write_records (DsLogAdmin::Anys const & records) override;
@@ -189,26 +177,26 @@ public:
                                       char const * c,
                                       DsLogAdmin::NVList const & attr_list) override;
 
-  /// Get the attributes of the record with id <id>. Raises
+  /// Get the attributes of the record with ID @a id. Raises
   /// DsLogAdmin::InvalidRecordId
   DsLogAdmin::NVList *get_record_attribute (DsLogAdmin::RecordId id) override;
 
   /// Causes all pending events to be written to storage. Raises
   /// DsLogAdmin::UnsupportedQos
   void flush () override;
-  //@}
+  /// @}
 
   /// Remove records that have exceeded max_record_life_.
   void remove_old_records ();
 
 protected:
   /// Get the availability status
-  /// @note must be called with locks held
+  /// @note Must be called with locks held
   DsLogAdmin::AvailabilityStatus
   get_availability_status_i ();
 
   /// Tells if the Log is scheduled to run now.
-  /// @note must be called with locks held
+  /// @note Must be called with locks held
   CORBA::Boolean scheduled ();
 
   /// Copy the attributes of the log being passed.
@@ -222,13 +210,13 @@ protected:
 
   /// Check that valid threshold values have been given.
   static CORBA::Boolean validate_capacity_alarm_thresholds (
-    const DsLogAdmin::CapacityAlarmThresholdList & threshs);
+    DsLogAdmin::CapacityAlarmThresholdList const & threshs);
 
   /// Reset Log QoS
-  void reset_log_qos (const DsLogAdmin::QoSList& qos);
+  void reset_log_qos (DsLogAdmin::QoSList const & qos);
 
   /// Validate log QoS
-  void validate_log_qos (const DsLogAdmin::QoSList& qos);
+  void validate_log_qos (DsLogAdmin::QoSList const & qos);
 
   /// Reset Week Mask
   ///
@@ -236,14 +224,14 @@ protected:
   /// week mask list when the log service starts, and to reinitialize
   /// them when they are changed.
   ///
-  void reset_week_mask (const DsLogAdmin::WeekMask& masks);
+  void reset_week_mask (DsLogAdmin::WeekMask const & masks);
 
   /// Validate Week Mask
   ///
   /// Used to check whether week mask is valid.  If not, throws an
   /// InvalidTime, InvalidTimeInterval, or InvalidMask exception.
   ///
-  void validate_week_mask (const DsLogAdmin::WeekMask& masks);
+  void validate_week_mask (DsLogAdmin::WeekMask const & masks);
 
 protected:
   /// Reference to the LogMgr servant
@@ -290,13 +278,13 @@ protected:
   TAO_Log_Compaction_Handler  log_compaction_handler_;
 
   /// Log Compaction Interval
-  static const ACE_Time_Value log_compaction_interval_;
+  static ACE_Time_Value const log_compaction_interval_;
 
   /// Log Flush Handler
   TAO_Log_Flush_Handler   log_flush_handler_;
 
   /// Log Flush Interval
-  static const ACE_Time_Value log_flush_interval_;
+  static ACE_Time_Value const log_flush_interval_;
 
 private:
   TAO_Log_i (TAO_Log_i const &) = delete;
@@ -306,68 +294,68 @@ private:
 };
 
 bool TAO_Log_Serv_Export
-operator==(const DsLogAdmin::CapacityAlarmThresholdList& rhs,
-           const DsLogAdmin::CapacityAlarmThresholdList& lhs);
+operator==(DsLogAdmin::CapacityAlarmThresholdList const & rhs,
+           DsLogAdmin::CapacityAlarmThresholdList const & lhs);
 
 bool TAO_Log_Serv_Export
-operator!=(const DsLogAdmin::CapacityAlarmThresholdList& rhs,
-           const DsLogAdmin::CapacityAlarmThresholdList& lhs);
+operator!=(DsLogAdmin::CapacityAlarmThresholdList const & rhs,
+           DsLogAdmin::CapacityAlarmThresholdList const & lhs);
 
 bool TAO_Log_Serv_Export
-operator==(const DsLogAdmin::IntervalsOfDay& rhs,
-           const DsLogAdmin::IntervalsOfDay& lhs);
+operator==(DsLogAdmin::IntervalsOfDay const & rhs,
+           DsLogAdmin::IntervalsOfDay const & lhs);
 
 bool TAO_Log_Serv_Export
-operator!=(const DsLogAdmin::IntervalsOfDay& rhs,
-           const DsLogAdmin::IntervalsOfDay& lhs);
+operator!=(DsLogAdmin::IntervalsOfDay const & rhs,
+           DsLogAdmin::IntervalsOfDay const & lhs);
 
 bool TAO_Log_Serv_Export
-operator==(const DsLogAdmin::QoSList& rhs,
-           const DsLogAdmin::QoSList& lhs);
+operator==(DsLogAdmin::QoSList const & rhs,
+           DsLogAdmin::QoSList const & lhs);
 
 bool TAO_Log_Serv_Export
-operator!=(const DsLogAdmin::QoSList& rhs,
-           const DsLogAdmin::QoSList& lhs);
+operator!=(DsLogAdmin::QoSList const & rhs,
+           DsLogAdmin::QoSList const & lhs);
 
 bool TAO_Log_Serv_Export
-operator==(const DsLogAdmin::Time24& rhs,
-           const DsLogAdmin::Time24& lhs);
+operator==(DsLogAdmin::Time24 const & rhs,
+           DsLogAdmin::Time24 const & lhs);
 
 bool TAO_Log_Serv_Export
-operator!=(const DsLogAdmin::Time24& rhs,
-           const DsLogAdmin::Time24& lhs);
+operator!=(DsLogAdmin::Time24 const & rhs,
+           DsLogAdmin::Time24 const & lhs);
 
 bool TAO_Log_Serv_Export
-operator==(const DsLogAdmin::Time24Interval& rhs,
-           const DsLogAdmin::Time24Interval& lhs);
+operator==(DsLogAdmin::Time24Interval const & rhs,
+           DsLogAdmin::Time24Interval const & lhs);
 
 bool TAO_Log_Serv_Export
-operator!=(const DsLogAdmin::Time24Interval& rhs,
-           const DsLogAdmin::Time24Interval& lhs);
+operator!=(DsLogAdmin::Time24Interval const & rhs,
+           DsLogAdmin::Time24Interval const & lhs);
 
 bool TAO_Log_Serv_Export
-operator==(const DsLogAdmin::TimeInterval& rhs,
-           const DsLogAdmin::TimeInterval& lhs);
+operator==(DsLogAdmin::TimeInterval const & rhs,
+           DsLogAdmin::TimeInterval const & lhs);
 
 bool TAO_Log_Serv_Export
-operator!=(const DsLogAdmin::TimeInterval& rhs,
-           const DsLogAdmin::TimeInterval& lhs);
+operator!=(DsLogAdmin::TimeInterval const & rhs,
+           DsLogAdmin::TimeInterval const & lhs);
 
 bool TAO_Log_Serv_Export
-operator==(const DsLogAdmin::WeekMaskItem& rhs,
-           const DsLogAdmin::WeekMaskItem& lhs);
+operator==(DsLogAdmin::WeekMaskItem const & rhs,
+           DsLogAdmin::WeekMaskItem const & lhs);
 
 bool TAO_Log_Serv_Export
-operator!=(const DsLogAdmin::WeekMaskItem& rhs,
-           const DsLogAdmin::WeekMaskItem& lhs);
+operator!=(DsLogAdmin::WeekMaskItem const & rhs,
+           DsLogAdmin::WeekMaskItem const & lhs);
 
 bool TAO_Log_Serv_Export
-operator==(const DsLogAdmin::WeekMask& rhs,
-           const DsLogAdmin::WeekMask& lhs);
+operator==(DsLogAdmin::WeekMask const & rhs,
+           DsLogAdmin::WeekMask const & lhs);
 
 bool TAO_Log_Serv_Export
-operator!=(const DsLogAdmin::WeekMask& rhs,
-           const DsLogAdmin::WeekMask& lhs);
+operator!=(DsLogAdmin::WeekMask const & rhs,
+           DsLogAdmin::WeekMask const & lhs);
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

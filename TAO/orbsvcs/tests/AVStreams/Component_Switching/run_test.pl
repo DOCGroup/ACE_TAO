@@ -2,11 +2,9 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     & eval 'exec perl -S $0 $argv:q'
     if 0;
 
-# -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::TestTarget;
-use File::stat;
 
 $status = 0;
 $debug_level = '0';
@@ -65,12 +63,12 @@ $ns->DeleteFile ($nsiorfile);
 $sv1->DeleteFile ($nsiorfile);
 $sv2->DeleteFile ($nsiorfile);
 $sv3->DeleteFile ($nsiorfile);
-$re1->DeleteFile ($nfsiorfile);
-$re2->DeleteFile ($nfsiorfile);
-$di1->DeleteFile ($nfsiorfile);
-$di2->DeleteFile ($nfsiorfile);
-$di3->DeleteFile ($nfsiorfile);
-$di4->DeleteFile ($nfsiorfile);
+$re1->DeleteFile ($nsiorfile);
+$re2->DeleteFile ($nsiorfile);
+$di1->DeleteFile ($nsiorfile);
+$di2->DeleteFile ($nsiorfile);
+$di3->DeleteFile ($nsiorfile);
+$di4->DeleteFile ($nsiorfile);
 $sv1->DeleteFile ($inputfile);
 $sv2->DeleteFile ($inputfile);
 $sv3->DeleteFile ($inputfile);
@@ -406,12 +404,12 @@ $ns->DeleteFile ($nsiorfile);
 $sv1->DeleteFile ($nsiorfile);
 $sv2->DeleteFile ($nsiorfile);
 $sv3->DeleteFile ($nsiorfile);
-$re1->DeleteFile ($nfsiorfile);
-$re2->DeleteFile ($nfsiorfile);
-$di1->DeleteFile ($nfsiorfile);
-$di2->DeleteFile ($nfsiorfile);
-$di3->DeleteFile ($nfsiorfile);
-$di4->DeleteFile ($nfsiorfile);
+$re1->DeleteFile ($nsiorfile);
+$re2->DeleteFile ($nsiorfile);
+$di1->DeleteFile ($nsiorfile);
+$di2->DeleteFile ($nsiorfile);
+$di3->DeleteFile ($nsiorfile);
+$di4->DeleteFile ($nsiorfile);
 $sv1->DeleteFile ($inputfile);
 $sv2->DeleteFile ($inputfile);
 $sv3->DeleteFile ($inputfile);

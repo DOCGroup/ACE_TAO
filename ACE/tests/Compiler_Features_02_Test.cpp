@@ -47,7 +47,7 @@ run_main (int, ACE_TCHAR *[])
     }
 
   // ... and the booleans says that it is already in the map ...
-  if (r.second == true)
+  if (r.second)
     {
       status = 1;
       ACE_ERROR ((LM_ERROR, ACE_TEXT("Expected duplicate insert to fail")));
@@ -55,11 +55,9 @@ run_main (int, ACE_TCHAR *[])
 
   // ... add all the numbers to validate that they are there ...
   int sum = 0;
-  for(collection::iterator i = c.begin(), end = c.end();
-      i != end;
-      ++i)
+  for (collection::value_type const &entry : c)
     {
-      sum += i->second;
+      sum += entry.second;
     }
 
   // ... remember Euler ...
@@ -74,5 +72,4 @@ run_main (int, ACE_TCHAR *[])
   ACE_END_TEST;
   return status;
 }
-
 

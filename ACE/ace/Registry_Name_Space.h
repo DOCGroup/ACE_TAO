@@ -1,13 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Registry_Name_Space.h
  *
  *  @author Irfan Pyarali (irfan@cs.wustl.edu)
  */
-//=============================================================================
-
 
 #ifndef ACE_REGISTRY_NAME_SPACE_H
 #define ACE_REGISTRY_NAME_SPACE_H
@@ -44,56 +39,54 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Registry_Name_Space : public ACE_Name_Space
 {
 public:
-  /// Constructor
   ACE_Registry_Name_Space () = default;
 
   /// Contacts and opens the registry on the specified server
-  ACE_Registry_Name_Space (ACE_Name_Options *name_options);
+  explicit ACE_Registry_Name_Space (ACE_Name_Options *name_options);
 
-  /// Destructor
   ~ACE_Registry_Name_Space () = default;
 
   /// Contacts and opens the registry on the specified server
   int open (ACE_Name_Options *name_options);
 
   /// Bind a new name to a naming context (Wide character strings).
-  int bind (const ACE_NS_WString &name_in,
-            const ACE_NS_WString &value_in,
-            const char *type_in = "");
+  int bind (ACE_NS_WString const &name_in,
+            ACE_NS_WString const &value_in,
+            char const *type_in = "");
 
   /**
    * Overwrite the value or type of an existing name in a
    * ACE_Name_Space or bind a new name to the context, if it didn't
    * exist yet. (Wide character strings interface).
    */
-  int rebind (const ACE_NS_WString &name_in,
-              const ACE_NS_WString &value_in,
-              const char *type_in = "");
+  int rebind (ACE_NS_WString const &name_in,
+              ACE_NS_WString const &value_in,
+              char const *type_in = "");
 
   /// Delete a name from a ACE_Name_Space (Wide character strings
   /// Interface).
-  int unbind (const ACE_NS_WString &name_in);
+  int unbind (ACE_NS_WString const &name_in);
 
   /// Get value and type of a given name binding (Wide chars).  The
   /// caller is responsible for deleting both @a value_out and @a type_out!
-  int resolve (const ACE_NS_WString &name_in,
+  int resolve (ACE_NS_WString const &name_in,
                ACE_NS_WString &value_out,
                char *&type_out);
 
   /// Get a set of names matching a specified pattern (wchars). Matching
   /// means the names must begin with the pattern string.
   int list_names (ACE_WSTRING_SET &set_out,
-                  const ACE_NS_WString &pattern_in);
+                  ACE_NS_WString const &pattern_in);
 
   /// Get a set of values matching a specified pattern (wchars). Matching
   /// means the values must begin with the pattern string.
   int list_values (ACE_WSTRING_SET &set_out,
-                   const ACE_NS_WString &pattern_in);
+                   ACE_NS_WString const &pattern_in);
 
   /// Get a set of types matching a specified pattern (wchars). Matching
   /// means the types must begin with the pattern string.
   int list_types (ACE_WSTRING_SET &set_out,
-                  const ACE_NS_WString &pattern_in);
+                  ACE_NS_WString const &pattern_in);
 
   /**
    * Get a set of names matching a specified pattern (wchars). Matching
@@ -101,7 +94,7 @@ public:
    * complete binding associated each pattern match.
    */
   int list_name_entries (ACE_BINDING_SET &set,
-                         const ACE_NS_WString &pattern);
+                         ACE_NS_WString const &pattern);
 
   /**
    * Get a set of values matching a specified pattern (wchars). Matching
@@ -109,7 +102,7 @@ public:
    * complete binding associated each pattern match.
    */
   int list_value_entries (ACE_BINDING_SET &set,
-                          const ACE_NS_WString &pattern);
+                          ACE_NS_WString const &pattern);
 
   /**
    * Get a set of types matching a specified pattern (wchars). Matching
@@ -117,7 +110,7 @@ public:
    * complete binding associated each pattern match.
    */
   int list_type_entries (ACE_BINDING_SET &set,
-                         const ACE_NS_WString &pattern);
+                         ACE_NS_WString const &pattern);
 
   /// Dump the state of the object
   void dump () const;

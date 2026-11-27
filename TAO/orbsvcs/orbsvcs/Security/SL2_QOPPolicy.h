@@ -1,13 +1,8 @@
-// -*- C++ -*-
-
-// ===================================================================
 /**
  *  @file   SL2_QOPPolicy.h
  *
  *  @author Ossama Othman <ossama@uci.edu>
  */
-// ===================================================================
-
 
 #ifndef TAO_SL2_QOP_POLICY_H
 #define TAO_SL2_QOP_POLICY_H
@@ -51,31 +46,34 @@ namespace TAO
         public virtual ::CORBA::LocalObject
     {
     public:
-      /// Constructor
-      QOPPolicy (::Security::QOP qop);
+      explicit QOPPolicy (::Security::QOP qop);
+
+      QOPPolicy (QOPPolicy const &) = delete;
+      QOPPolicy (QOPPolicy &&) = delete;
+      QOPPolicy &operator= (QOPPolicy const &) = delete;
+      QOPPolicy &operator= (QOPPolicy &&) = delete;
 
       /**
        * @name CORBA::Policy Methods
        */
-      //@{
+      /// @{
       CORBA::PolicyType policy_type () override;
 
       CORBA::Policy_ptr copy () override;
 
       void destroy () override;
-      //@}
+      /// @}
 
       /// Return the Quality-of-Protection value associated with this
       /// policy.
       ::Security::QOP qop () override;
 
     protected:
-      /// Destructor
       /**
        * Protected destructor to enforce proper memory management
        * through the reference counting mechansim.
        */
-      ~QOPPolicy () override;
+      ~QOPPolicy () override = default;
 
     private:
       /// Quality of protection which can be specified for an object

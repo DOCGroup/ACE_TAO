@@ -4,6 +4,8 @@
 
 #include "orbsvcs/Notify/notify_export.h"
 
+#include <memory>
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -27,7 +29,7 @@ namespace CRT{
 class CrtHeapDumper
 {
 public:
-  CrtHeapDumper(const char * name, bool verbose = false)
+  CrtHeapDumper(char const *name, bool verbose = false)
     : name_ (name)
     , verbose_ (verbose)
   {
@@ -46,7 +48,7 @@ public:
     _CrtMemDifference (&diff, &before_, &after);
 
     ORBSVCS_DEBUG ((LM_DEBUG,
-      ACE_TEXT ("(%P|%t) %s: New heap blocks: %d; bytes: %d\n"),
+      ACE_TEXT ("(%P|%t) %C: New heap blocks: %d; bytes: %d\n"),
       name_.c_str (),
       static_cast<int> (diff.lCounts[_NORMAL_BLOCK]),
       static_cast<int> (diff.lSizes[_NORMAL_BLOCK])
@@ -59,7 +61,7 @@ public:
      _CrtSetReportFile( _CRT_ERROR, _CRTDBG_FILE_STDOUT );
      _CrtSetReportMode( _CRT_ASSERT, _CRTDBG_MODE_FILE );
      _CrtSetReportFile( _CRT_ASSERT, _CRTDBG_FILE_STDOUT );
-     _CrtMemDumpAllObjectsSince (&this->before_);
+     _CrtMemDumpAllObjectsSince (std::addressof (this->before_));
     }
   }
 

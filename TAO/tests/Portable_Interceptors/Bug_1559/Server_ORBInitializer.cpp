@@ -1,9 +1,4 @@
-// -*- C++ -*-
 #include "Server_ORBInitializer.h"
-
-Server_ORBInitializer::Server_ORBInitializer ()
-{
-}
 
 void
 Server_ORBInitializer::pre_init (
@@ -20,7 +15,7 @@ Server_ORBInitializer::post_init (
                     Echo_Server_Request_Interceptor,
                     CORBA::NO_MEMORY ());
 
-  PortableInterceptor::ServerRequestInterceptor_var interceptor =
+  PortableInterceptor::ServerRequestInterceptor_var const interceptor =
     this->server_interceptor_;
 
   info->add_server_request_interceptor (interceptor.in ());

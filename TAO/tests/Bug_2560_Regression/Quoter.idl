@@ -1,4 +1,3 @@
-
 module Quoter
 {
   /// Raised when a stock symbol is unknown.

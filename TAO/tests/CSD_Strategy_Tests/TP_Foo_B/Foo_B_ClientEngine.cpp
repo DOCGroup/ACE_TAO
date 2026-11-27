@@ -1,3 +1,5 @@
+#include <cstring>
+
 #include "Foo_B_ClientEngine.h"
 #include "Callback_i.h"
 #include "Foo_B_Statistics.h"
@@ -5,7 +7,7 @@
 #include "AppHelper.h"
 #include "ace/Log_Msg.h"
 
-const char* ONEWAY_ARG_TEST_STR = "TEST";
+char const *ONEWAY_ARG_TEST_STR = "TEST";
 
 Foo_B_ClientEngine::Foo_B_ClientEngine(Foo_B_ptr obj,
                                        Callback_ptr callback,
@@ -21,7 +23,7 @@ Foo_B_ClientEngine::execute()
 {
   // Make sure the connection is established before making
   // remote invocations.
-  if (AppHelper::validate_connection (this->obj_.in ()) == false)
+  if (!AppHelper::validate_connection (this->obj_.in ()))
     {
       ACE_ERROR((LM_ERROR, "(%P|%t)Foo_A_ClientEngine::execute  " \
                           "client %d connect failed.\n", this->client_id_));
@@ -35,14 +37,14 @@ Foo_B_ClientEngine::execute()
 
   this->obj_->op2(this->client_id_);
 
-  CORBA::Long value = this->obj_->op3(this->client_id_);
+  CORBA::Long const value = this->obj_->op3(this->client_id_);
 
   if (value != static_cast<CORBA::Long>(this->client_id_))
     {
       check_validity = false;
     }
 
-  for (CORBA::ULong j = 1; j <= 5; j++)
+  for (CORBA::ULong j = 1; j <= 5; ++j)
     {
       this->obj_->op4(495 + (this->client_id_ * 5) + j);
     }
@@ -53,7 +55,7 @@ Foo_B_ClientEngine::execute()
   {
     this->obj_->op5();
   }
-  catch (const FooException& )
+  catch (FooException const & )
   {
     // Expected
     caught_exception = true;
@@ -77,14 +79,14 @@ Foo_B_ClientEngine::execute()
   // Two-Way calls with "inout" and fixed size "in" arguments.
   CORBA::String_var message = CORBA::string_dup(test_str);
 
-  CORBA::Boolean result = this->obj_->op6( t, message.inout());
+  CORBA::Boolean const result = this->obj_->op6( t, message.inout());
 
   ACE_UNUSED_ARG(result);
 
   ACE_OS::sprintf (buffer, "%d %s %d:%d:%d", this->client_id_, ONEWAY_ARG_TEST_STR,
     t.hour, t.minute, t.second);
 
-  if (ACE_OS::strncmp (message.in (), buffer, ACE_OS::strlen (buffer)) != 0)
+  if (std::strcmp (message.in (), buffer) != 0)
     {
       check_validity = false;
     }
@@ -101,7 +103,7 @@ Foo_B_ClientEngine::execute()
 
   Fixed_Array fixed_array;
 
-  for (CORBA::ULong m = 0 ; m < 20; m ++)
+  for (CORBA::ULong m = 0 ; m < 20; ++m)
   {
      fixed_array[m] = this->client_id_ + m;
   }
@@ -110,7 +112,7 @@ Foo_B_ClientEngine::execute()
 
   Var_Array var_array;
 
-  for (CORBA::ULong k = 0; k < 3; k++)
+  for (CORBA::ULong k = 0; k < 3; ++k)
     {
       ACE_OS::sprintf (buffer, "%d %s %d",
                        this->client_id_, ONEWAY_ARG_TEST_STR, k);
@@ -121,19 +123,20 @@ Foo_B_ClientEngine::execute()
 
   Bounded_Var_Size_var bd_var_size_string = new Bounded_Var_Size();
 
-  bd_var_size_string->replace (ACE_OS::strlen (test_str) + 1,
-                               test_str);
+  CORBA::ULong const test_str_length = static_cast<CORBA::ULong> (std::strlen (test_str) + 1);
+  bd_var_size_string->length (test_str_length);
+  std::memcpy (bd_var_size_string->get_buffer (), test_str, test_str_length);
   this->obj_->test_bounded_var_size_arg (bd_var_size_string.in ());
 
   Unbounded_Var_Size_var ub_var_size_string = new Unbounded_Var_Size(100);
-  ub_var_size_string->replace (ub_var_size_string->maximum (),
-                               ACE_OS::strlen (test_str) + 1,
+  ub_var_size_string->replace (test_str_length,
+                               test_str_length,
                                test_str);
   this->obj_->test_unbounded_var_size_arg (ub_var_size_string.in ());
 
   this->obj_->test_fixed_size_arg (t);
 
-  this->obj_->test_special_basic_arg (this->client_id_ % 2,
+  this->obj_->test_special_basic_arg (this->client_id_ % 2 != 0,
                                       this->client_id_);
 
   this->obj_->test_objref_arg (this->callback_.in ());
@@ -146,7 +149,6 @@ Foo_B_ClientEngine::execute()
 
   return check_validity;
 }
-
 
 void
 Foo_B_ClientEngine::expected_results(Foo_B_Statistics& stats)
@@ -169,7 +171,6 @@ Foo_B_ClientEngine::expected_results(Foo_B_Statistics& stats)
   stats.expected(16, 1, Foo_B_Statistics::FOO_B_STAT_NONE);
   stats.expected_callbacks (1);
 }
-
 
 unsigned
 Foo_B_ClientEngine::expected_callbacks ()

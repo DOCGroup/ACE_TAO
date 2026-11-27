@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file     miopconf.h
  *
@@ -10,7 +7,6 @@
  *  @author  Chris Cleeland
  *  @author  Douglas C. Schmidt
  */
-//=============================================================================
 
 #ifndef TAO_MIOPCONF_H
 #define TAO_MIOPCONF_H
@@ -67,13 +63,13 @@ static int const TAO_DEFAULT_MIOP_FRAGMENTS_CLEANUP_MEMORY = 3000000;
 // static u_long const MIOP_ID_LENGTH_OFFSET         = 16u;
 static u_long const MIOP_ID_CONTENT_OFFSET         = 20u;
 
-// Max ID length 252 is defined in the MIOP spec. We use 12.
+/// Max ID length 252 is defined in the MIOP spec. We use 12.
 static u_long const MIOP_MIN_ID_LENGTH             = 0u;
 static u_long const MIOP_MAX_ID_LENGTH             = 252u;
 static u_long const MIOP_DEFAULT_ID_LENGTH         = 12u;
 
-// MIOP_DEFAULT_HEADER_SIZE, MIOP_MIN_HEADER_SIZE and MIOP_MAX_HEADER_SIZE
-// must be multiple of 8.
+/// MIOP_DEFAULT_HEADER_SIZE, MIOP_MIN_HEADER_SIZE and MIOP_MAX_HEADER_SIZE
+/// must be multiple of 8.
 static u_long const MIOP_DEFAULT_HEADER_SIZE       =
   MIOP_ID_CONTENT_OFFSET + MIOP_DEFAULT_ID_LENGTH +
   (MIOP_ID_CONTENT_OFFSET + MIOP_DEFAULT_ID_LENGTH) % 8u;
@@ -93,20 +89,24 @@ static u_long const TAO_DEFAULT_MIOP_FRAGMENT_SIZE     = MIOP_MAX_DGRAM_SIZE;
 #endif
 
 #if !defined (TAO_DEFAULT_MIOP_MAX_FRAGMENTS)
-static u_long const TAO_DEFAULT_MIOP_MAX_FRAGMENTS = 0u; // Zero is unlimited
+/// Zero means unlimited fragments.
+static u_long const TAO_DEFAULT_MIOP_MAX_FRAGMENTS = 0u;
 #endif
 
 #if !defined (TAO_DEFAULT_MIOP_SEND_THROTTLING)
-static bool const TAO_DEFAULT_MIOP_SEND_THROTTLING = true; // Enabled
+/// Enabled by default.
+static bool const TAO_DEFAULT_MIOP_SEND_THROTTLING = true;
 #endif
 
 #if !defined (TAO_DEFAULT_MIOP_EAGER_DEQUEUEING)
-static bool const TAO_DEFAULT_MIOP_EAGER_DEQUEUEING = true; // Enabled
+/// Enabled by default.
+static bool const TAO_DEFAULT_MIOP_EAGER_DEQUEUEING = true;
 #endif
 
+/// Magic value spells 'M', 'I', 'O', 'P' in ASCII.
 static CORBA::Octet const miop_magic[4] = {
   0x4d, 0x49, 0x4f, 0x50
-}; // in ASCII this is 'M', 'I', 'O', 'P'
+};
 
 #include /**/ "ace/post.h"
 #endif /*TAO_MIOPCONF_H*/

@@ -1,12 +1,8 @@
-// // -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Hash_Map_Manager_T.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef ACE_HASH_MAP_MANAGER_T_H
 #define ACE_HASH_MAP_MANAGER_T_H
@@ -22,6 +18,7 @@
 #include "ace/Functor_T.h"
 #include "ace/Log_Category.h"
 #include <iterator>
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -34,30 +31,27 @@ template <class EXT_ID, class INT_ID>
 class ACE_Hash_Map_Entry
 {
 public:
-  /// Constructor.
-  ACE_Hash_Map_Entry (const EXT_ID &ext_id,
-                      const INT_ID &int_id,
+  ACE_Hash_Map_Entry (EXT_ID const &ext_id,
+                      INT_ID const &int_id,
                       ACE_Hash_Map_Entry<EXT_ID, INT_ID> *next = nullptr,
                       ACE_Hash_Map_Entry<EXT_ID, INT_ID> *prev = nullptr);
 
-  /// Constructor.
   ACE_Hash_Map_Entry (ACE_Hash_Map_Entry<EXT_ID, INT_ID> *next,
                       ACE_Hash_Map_Entry<EXT_ID, INT_ID> *prev);
 
-  /// Destructor.
   ~ACE_Hash_Map_Entry ();
 
   /// Key accessor.
   EXT_ID& key ();
 
   /// Read-only key accessor.
-  const EXT_ID& key () const;
+  EXT_ID const & key () const;
 
   /// Item accessor.
   INT_ID& item ();
 
   /// Read-only item accessor.
-  const INT_ID& item () const;
+  INT_ID const & item () const;
 
   /// Key used to look up an entry.
   /// @deprecated Use key()
@@ -126,6 +120,11 @@ template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class 
 class ACE_Hash_Map_Manager_Ex
 {
 public:
+  ACE_Hash_Map_Manager_Ex (ACE_Hash_Map_Manager_Ex const &) = delete;
+  ACE_Hash_Map_Manager_Ex (ACE_Hash_Map_Manager_Ex &&) = delete;
+  ACE_Hash_Map_Manager_Ex &operator= (ACE_Hash_Map_Manager_Ex const &) = delete;
+  ACE_Hash_Map_Manager_Ex &operator= (ACE_Hash_Map_Manager_Ex &&) = delete;
+
   friend class ACE_Hash_Map_Iterator_Base_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>;
   friend class ACE_Hash_Map_Iterator_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>;
   friend class ACE_Hash_Map_Const_Iterator_Base_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>;
@@ -139,38 +138,44 @@ public:
   using lock_type = ACE_LOCK;
   using ENTRY = ACE_Hash_Map_Entry<EXT_ID, INT_ID>;
 
-  // = ACE-style iterator typedefs.
+  /// @name ACE-style iterator typedefs
+  /// @{
   using ITERATOR = ACE_Hash_Map_Iterator_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>;
   using CONST_ITERATOR = ACE_Hash_Map_Const_Iterator_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>;
   using REVERSE_ITERATOR = ACE_Hash_Map_Reverse_Iterator_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>;
   using CONST_REVERSE_ITERATOR = ACE_Hash_Map_Const_Reverse_Iterator_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>;
+  /// @}
 
-  // = STL-style iterator typedefs.
+  /// @name STL-style iterator typedefs
+  /// @{
   using iterator = ACE_Hash_Map_Iterator_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>;
   using const_iterator = ACE_Hash_Map_Const_Iterator_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>;
   using reverse_iterator = ACE_Hash_Map_Reverse_Iterator_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>;
   using const_reverse_iterator = ACE_Hash_Map_Const_Reverse_Iterator_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>;
+  /// @}
 
-  // = STL-style typedefs/traits.
+  /// @name STL-style typedefs and traits
+  /// @{
   using key_type = EXT_ID;
   using data_type = INT_ID;
   using value_type = ACE_Hash_Map_Entry<EXT_ID, INT_ID>;
   using reference = value_type &;
-  using const_reference = const value_type &;
+  using const_reference = value_type const &;
   using pointer = value_type *;
-  using const_pointer = const value_type *;
+  using const_pointer = value_type const *;
   using difference_type = ptrdiff_t;
   using size_type = size_t;
+  /// @}
 
   /**
    * Initialize an ACE_Hash_Map_Manager_Ex with a default number of elements.
    *
    * @param table_alloc is a pointer to a memory allocator used for
-   *        table_, so it should supply size*sizeof (ACE_Hash_Map_Entry<EXT_ID, INT_ID>).
+   *        table_, so it should supply size*sizeof (ACE_Hash_Map_Entry&lt;EXT_ID, INT_ID&gt;).
    *        If @a table_alloc is 0 it defaults to ACE_Allocator::instance().
    * @param entry_alloc is a pointer to an additional allocator for
    *        entries, so it should be able to allocate 'size' / chunks
-   *        of sizeof(ACE_Hash_Map_Entry<EXT_ID, INT_ID>) bytes each.
+   *        of sizeof(ACE_Hash_Map_Entry&lt;EXT_ID, INT_ID&gt;) bytes each.
    *        If @a entry_alloc is 0 it defaults to the same allocator as
    *        @a table_alloc.
    */
@@ -179,13 +184,14 @@ public:
 
   /**
    * Initialize an ACE_Hash_Map_Manager_Ex with @a size elements.
+   * @param size The initial number of entries to allocate.
    *
    * @param table_alloc is a pointer to a memory allocator used for
-   *        table_, so it should supply size*sizeof (ACE_Hash_Map_Entry<EXT_ID, INT_ID>).
+   *        table_, so it should supply size*sizeof (ACE_Hash_Map_Entry&lt;EXT_ID, INT_ID&gt;).
    *        If @a table_alloc is 0 it defaults to ACE_Allocator::instance().
    * @param entry_alloc is a pointer to an additional allocator for
    *        entries, so it should be able to allocate 'size' / chunks
-   *        of sizeof(ACE_Hash_Map_Entry<EXT_ID, INT_ID>) bytes each.
+   *        of sizeof(ACE_Hash_Map_Entry&lt;EXT_ID, INT_ID&gt;) bytes each.
    *        If @a entry_alloc is 0 it defaults to the same allocator as
    *        @a table_alloc.
    */
@@ -195,12 +201,13 @@ public:
 
   /**
    * Initialize an ACE_Hash_Map_Manager_Ex with @a size elements.
+   * @param size The number of entries to allocate when opening the map.
    * @param table_alloc is a pointer to a memory allocator used for
-   *        table_, so it should supply size*sizeof (ACE_Hash_Map_Entry<EXT_ID, INT_ID>).
+   *        table_, so it should supply size*sizeof (ACE_Hash_Map_Entry&lt;EXT_ID, INT_ID&gt;).
    *        If @a table_alloc is 0 it defaults to ACE_Allocator::instance().
    * @param entry_alloc is a pointer to an additional allocator for
    *        entries, so it should be able to allocate 'size' / chunks
-   *        of sizeof(ACE_Hash_Map_Entry<EXT_ID, INT_ID>) bytes each.
+   *        of sizeof(ACE_Hash_Map_Entry&lt;EXT_ID, INT_ID&gt;) bytes each.
    *        If @a entry_alloc is 0 then it defaults to the same allocator as
    *        @a table_alloc.
    * @return -1 on failure, 0 on success
@@ -228,16 +235,16 @@ public:
    * @retval 1 if an attempt is made to bind an existing entry.
    * @retval -1 if a failure occurs; check @c errno for more information.
    */
-  int bind (const EXT_ID &item,
-            const INT_ID &int_id);
+  int bind (EXT_ID const &item,
+            INT_ID const &int_id);
 
   /**
    * Same as a normal bind, except the map entry is also passed back
    * to the caller.  The entry in this case will either be the newly
    * created entry, or the existing one.
    */
-  int bind (const EXT_ID &ext_id,
-            const INT_ID &int_id,
+  int bind (EXT_ID const &ext_id,
+            INT_ID const &int_id,
             ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry);
 
   /**
@@ -247,7 +254,7 @@ public:
    * if a new entry is bound successfully, returns 1 if an attempt is
    * made to bind an existing entry, and returns -1 if failures occur.
    */
-  int trybind (const EXT_ID &ext_id,
+  int trybind (EXT_ID const &ext_id,
                INT_ID &int_id);
 
   /**
@@ -255,37 +262,37 @@ public:
    * back to the caller.  The entry in this case will either be the
    * newly created entry, or the existing one.
    */
-  int trybind (const EXT_ID &ext_id,
+  int trybind (EXT_ID const &ext_id,
                INT_ID &int_id,
                ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry);
 
   /**
    * Reassociate @a ext_id with @a int_id.  If @a ext_id is not in the
-   * map then behaves just like <bind>.  Returns 0 if a new entry is
+   * map then behaves just like @c bind.  Returns 0 if a new entry is
    * bound successfully, returns 1 if an existing entry was rebound,
    * and returns -1 if failures occur.
    */
-  int rebind (const EXT_ID &ext_id,
-              const INT_ID &int_id);
+  int rebind (EXT_ID const &ext_id,
+              INT_ID const &int_id);
 
   /**
    * Same as a normal rebind, except the map entry is also passed back
    * to the caller.  The entry in this case will either be the newly
    * created entry, or the existing one.
    */
-  int rebind (const EXT_ID &ext_id,
-              const INT_ID &int_id,
+  int rebind (EXT_ID const &ext_id,
+              INT_ID const &int_id,
               ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry);
 
   /**
    * Associate @a ext_id with @a int_id.  If @a ext_id is not in the map
-   * then behaves just like <bind>.  Otherwise, store the old value of
+   * then behaves just like @c bind.  Otherwise, store the old value of
    * @a int_id into the "out" parameter and rebind the new parameters.
    * Returns 0 if a new entry is bound successfully, returns 1 if an
    * existing entry was rebound, and returns -1 if failures occur.
    */
-  int rebind (const EXT_ID &ext_id,
-              const INT_ID &int_id,
+  int rebind (EXT_ID const &ext_id,
+              INT_ID const &int_id,
               INT_ID &old_int_id);
 
   /**
@@ -293,14 +300,14 @@ public:
    * to the caller.  The entry in this case will either be the newly
    * created entry, or the existing one.
    */
-  int rebind (const EXT_ID &ext_id,
-              const INT_ID &int_id,
+  int rebind (EXT_ID const &ext_id,
+              INT_ID const &int_id,
               INT_ID &old_int_id,
               ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry);
 
   /**
    * Associate @a ext_id with @a int_id.  If @a ext_id is not in the map
-   * then behaves just like <bind>.  Otherwise, store the old values
+   * then behaves just like @c bind.  Otherwise, store the old values
    * of @a ext_id and @a int_id into the "out" parameters and rebind the
    * new parameters.  This is very useful if you need to have an
    * atomic way of updating ACE_Hash_Map_Entrys and you also need
@@ -308,8 +315,8 @@ public:
    * bound successfully, returns 1 if an existing entry was rebound,
    * and returns -1 if failures occur.
    */
-  int rebind (const EXT_ID &ext_id,
-              const INT_ID &int_id,
+  int rebind (EXT_ID const &ext_id,
+              INT_ID const &int_id,
               EXT_ID &old_ext_id,
               INT_ID &old_int_id);
 
@@ -318,29 +325,30 @@ public:
    * to the caller.  The entry in this case will either be the newly
    * created entry, or the existing one.
    */
-  int rebind (const EXT_ID &ext_id,
-              const INT_ID &int_id,
+  int rebind (EXT_ID const &ext_id,
+              INT_ID const &int_id,
               EXT_ID &old_ext_id,
               INT_ID &old_int_id,
               ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry);
 
   /// Locate @a ext_id and pass out parameter via @a int_id.
   /// Return 0 if found, returns -1 if not found.
-  int find (const EXT_ID &ext_id,
+  int find (EXT_ID const &ext_id,
             INT_ID &int_id) const;
 
   /// Returns 0 if the @a ext_id is in the mapping, otherwise -1.
-  int find (const EXT_ID &ext_id) const;
+  int find (EXT_ID const &ext_id) const;
 
   /// Locate @a ext_id and pass out parameter via @a entry.  If found,
   /// return 0, returns -1 if not found.
-  int find (const EXT_ID &ext_id,
+  int find (EXT_ID const &ext_id,
             ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry) const;
 
   /// Locate @a ext_id and pass out an iterator that points to its
   /// corresponding value.
   /**
    * @param pos @a pos will be set to @c end() if not found.
+   * @param ext_id The key to locate in the map.
    */
   void find (EXT_ID const & ext_id, iterator & pos) const;
 
@@ -349,12 +357,12 @@ public:
    * @a int_id to the caller (this is useful for collections where the
    * @a int_ids are *not* dynamically allocated...)
    */
-  int unbind (const EXT_ID &ext_id);
+  int unbind (EXT_ID const &ext_id);
 
   /// Break any association of @a ext_id.  Returns the value of @a int_id
   /// in case the caller needs to deallocate memory. Return 0 if the
   /// unbind was successful, and returns -1 if failures occur.
-  int unbind (const EXT_ID &ext_id,
+  int unbind (EXT_ID const &ext_id,
               INT_ID &int_id);
 
   /// Remove entry from map.
@@ -386,19 +394,20 @@ public:
   size_t total_size () const;
 
   /**
-   * Returns a reference to the underlying <ACE_LOCK>.  This makes it
+   * Returns a reference to the underlying @c ACE_LOCK.  This makes it
    * possible to acquire the lock explicitly, which can be useful in
    * some cases if you instantiate the ACE_Atomic_Op with an
    * ACE_Recursive_Mutex or ACE_Process_Mutex, or if you need to
    * guard the state of an iterator.
-   * @note The right name would be <lock>, but HP/C++ will choke on that!
+   * @note The right name would be @c lock, but HP/C++ will choke on that!
    */
   ACE_LOCK &mutex ();
 
   /// Dump the state of an object.
   void dump () const;
 
-  // = STL styled iterator factory functions.
+  /// @name STL styled iterator factory functions.
+  /// @{
 
   /// Return forward iterator.
   iterator begin ();
@@ -411,94 +420,94 @@ public:
   reverse_iterator rend ();
   const_reverse_iterator rbegin () const;
   const_reverse_iterator rend () const;
+  /// @}
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-  // = The following methods do the actual work.
-
-  /// Returns 1 if <id1> == <id2>, else 0.  This is defined as a
+  /// Returns 1 if @c id1 == @c id2, else 0.  This is defined as a
   /// separate method to facilitate template specialization.
-  int equal (const EXT_ID &id1, const EXT_ID &id2);
+  int equal (EXT_ID const &id1, EXT_ID const &id2);
 
   /// Compute the hash value of the @a ext_id.  This is defined as a
   /// separate method to facilitate template specialization.
-  u_long hash (const EXT_ID &ext_id);
+  u_long hash (EXT_ID const &ext_id);
 
-  // = These methods assume locks are held by private methods.
-
-  /// Performs bind.  Must be called with locks held.
-  int bind_i (const EXT_ID &ext_id,
-              const INT_ID &int_id);
+  /// @name Methods called with locks held
+  /// @{
 
   /// Performs bind.  Must be called with locks held.
-  int bind_i (const EXT_ID &ext_id,
-              const INT_ID &int_id,
+  int bind_i (EXT_ID const &ext_id,
+              INT_ID const &int_id);
+
+  /// Performs bind.  Must be called with locks held.
+  int bind_i (EXT_ID const &ext_id,
+              INT_ID const &int_id,
               ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry);
 
   /// Performs trybind.  Must be called with locks held.
-  int trybind_i (const EXT_ID &ext_id,
+  int trybind_i (EXT_ID const &ext_id,
                  INT_ID &int_id);
 
   /// Performs trybind.  Must be called with locks held.
-  int trybind_i (const EXT_ID &ext_id,
+  int trybind_i (EXT_ID const &ext_id,
                  INT_ID &int_id,
                  ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry);
 
   /// Performs rebind.  Must be called with locks held.
-  int rebind_i (const EXT_ID &ext_id,
-                const INT_ID &int_id);
+  int rebind_i (EXT_ID const &ext_id,
+                INT_ID const &int_id);
 
   /// Performs rebind.  Must be called with locks held.
-  int rebind_i (const EXT_ID &ext_id,
-                const INT_ID &int_id,
+  int rebind_i (EXT_ID const &ext_id,
+                INT_ID const &int_id,
                 ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry);
 
   /// Performs rebind.  Must be called with locks held.
-  int rebind_i (const EXT_ID &ext_id,
-                const INT_ID &int_id,
+  int rebind_i (EXT_ID const &ext_id,
+                INT_ID const &int_id,
                 INT_ID &old_int_id);
 
   /// Performs rebind.  Must be called with locks held.
-  int rebind_i (const EXT_ID &ext_id,
-                const INT_ID &int_id,
+  int rebind_i (EXT_ID const &ext_id,
+                INT_ID const &int_id,
                 INT_ID &old_int_id,
                 ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry);
 
   /// Performs rebind.  Must be called with locks held.
-  int rebind_i (const EXT_ID &ext_id,
-                const INT_ID &int_id,
+  int rebind_i (EXT_ID const &ext_id,
+                INT_ID const &int_id,
                 EXT_ID &old_ext_id,
                 INT_ID &old_int_id);
 
   /// Performs rebind.  Must be called with locks held.
-  int rebind_i (const EXT_ID &ext_id,
-                const INT_ID &int_id,
+  int rebind_i (EXT_ID const &ext_id,
+                INT_ID const &int_id,
                 EXT_ID &old_ext_id,
                 INT_ID &old_int_id,
                 ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry);
 
   /// Performs a find of @a int_id using @a ext_id as the key.  Must be
   /// called with locks held.
-  int find_i (const EXT_ID &ext_id,
+  int find_i (EXT_ID const &ext_id,
               INT_ID &int_id);
 
   /// Performs a find using @a ext_id as the key.  Must be called with
   /// locks held.
-  int find_i (const EXT_ID &ext_id);
+  int find_i (EXT_ID const &ext_id);
 
   /// Performs a find using @a ext_id as the key.  Must be called with
   /// locks held.
-  int find_i (const EXT_ID &ext_id,
+  int find_i (EXT_ID const &ext_id,
               ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry);
 
   /// Performs unbind.  Must be called with locks held.
-  int unbind_i (const EXT_ID &ext_id,
+  int unbind_i (EXT_ID const &ext_id,
                 INT_ID &int_id);
 
   /// Performs unbind.  Must be called with locks held.
-  int unbind_i (const EXT_ID &ext_id);
+  int unbind_i (EXT_ID const &ext_id);
 
   /// Performs unbind.  Must be called with locks held.
   int unbind_i (ACE_Hash_Map_Entry<EXT_ID, INT_ID> *entry);
@@ -510,21 +519,22 @@ protected:
    */
   int create_buckets (size_t size);
 
-  /// Close down a <Map_Manager_Ex>.  Must be called with
+  /// Close down a @c Map_Manager_Ex.  Must be called with
   /// locks held.
   int close_i ();
 
-  /// Removes all the entries in <Map_Manager_Ex>.  Must be called with
+  /// Removes all the entries in @c Map_Manager_Ex.  Must be called with
   /// locks held.
   int unbind_all_i ();
+  /// @}
 
   /// Pointer to a memory allocator used for table_, so it should
-  /// supply size*sizeof (ACE_Hash_Map_Entry<EXT_ID, INT_ID>),
+  /// supply size*sizeof (ACE_Hash_Map_Entry&lt;EXT_ID, INT_ID&gt;),
   ACE_Allocator *table_allocator_;
 
-  /// Addidtional allocator for entries, so it should be able to
-  /// allocate 'size' / chunks of sizeof(ACE_Hash_Map_Entry<EXT_ID,
-  /// INT_ID>) bytes each.
+  /// Additional allocator for entries, so it should be able to
+  /// allocate 'size' / chunks of sizeof(ACE_Hash_Map_Entry&lt;EXT_ID,
+  /// INT_ID&gt;) bytes each.
   ACE_Allocator *entry_allocator_;
 
   /// Synchronization variable for the MT_SAFE
@@ -539,7 +549,7 @@ protected:
 
 protected:
   /// Returns the ACE_Hash_Map_Entry that corresponds to @a ext_id.
-  int shared_find (const EXT_ID &ext_id,
+  int shared_find (EXT_ID const &ext_id,
                    ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry,
                    size_t &loc);
 
@@ -550,21 +560,16 @@ private:
   /**
    * Array of ACE_Hash_Map_Entry *s, each of which points to an
    * ACE_Hash_Map_Entry that serves as the beginning of a linked
-   * list of <EXT_ID>s that hash to that bucket.
+   * list of @c EXT_IDs that hash to that bucket.
    */
-  ACE_Hash_Map_Entry<EXT_ID, INT_ID> *table_;
+  ACE_Hash_Map_Entry<EXT_ID, INT_ID> *table_ {};
 
   /// Total size of the hash table.
-  size_t total_size_;
+  size_t total_size_ {};
 
-  /// Current number of entries in the table
-  /// @note That this can be larger than <total_size_> due to the
-  /// bucket chaining).
-  size_t cur_size_;
-
-  // = Disallow these operations.
-  void operator= (const ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID,  HASH_KEY, COMPARE_KEYS, ACE_LOCK> &) = delete;
-  ACE_Hash_Map_Manager_Ex (const ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID,  HASH_KEY, COMPARE_KEYS, ACE_LOCK> &) = delete;
+  /// Current number of entries; this can exceed @c total_size_ due to bucket
+  /// chaining.
+  size_t cur_size_ {};
 };
 
 /**
@@ -579,16 +584,17 @@ template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class 
 class ACE_Hash_Map_Iterator_Base_Ex
 {
 public:
-  // = STL-style typedefs/traits.
+  /// STL-style typedefs/traits.
   using container_type = ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>;
 
-  // = std::iterator_traits typedefs/traits.
+  /// @name std::iterator_traits typedefs and traits
+  /// @{
   using value_type = typename container_type::value_type;
   using reference = typename container_type::reference;
   using pointer = typename container_type::pointer;
   using difference_type = typename container_type::difference_type;
+  /// @}
 
-  /// Constructor.
   /**
    *  If @a head != @c false, the iterator constructed is positioned
    *  at the head of the map.  It is positioned at the end otherwise.
@@ -602,7 +608,6 @@ public:
     ACE_LOCK> &mm,
     bool head);
 
-  /// Constructor.
   /**
    * This constructor positions the iterator to the given @a entry.
    */
@@ -615,9 +620,9 @@ public:
     ACE_Hash_Map_Entry<EXT_ID, INT_ID> * entry,
     size_t index);
 
-  // = ITERATION methods.
+  /// ITERATION methods.
 
-  /// Pass back the next <entry> that hasn't been seen in the Set.
+  /// Pass back the next @c entry that hasn't been seen in the Set.
   /// Returns 0 when all items have been seen, else 1.
   int next (ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&next_entry) const;
 
@@ -635,8 +640,8 @@ public:
   ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>& map ();
 
   /// Check if two iterators point to the same position
-  bool operator== (const ACE_Hash_Map_Iterator_Base_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &) const;
-  bool operator!= (const ACE_Hash_Map_Iterator_Base_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &) const;
+  bool operator== (ACE_Hash_Map_Iterator_Base_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> const &) const;
+  bool operator!= (ACE_Hash_Map_Iterator_Base_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> const &) const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -676,23 +681,25 @@ template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class 
 class ACE_Hash_Map_Const_Iterator_Base_Ex
 {
 public:
-  // = STL-style typedefs/traits.
+  /// STL-style typedefs/traits.
   using container_type = ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>;
 
-  // = std::iterator_traits typedefs/traits.
+  /// @name std::iterator_traits typedefs and traits
+  /// @{
   using value_type = typename container_type::value_type;
   using reference = typename container_type::const_reference;
   using pointer = typename container_type::const_pointer;
   using difference_type = typename container_type::difference_type;
+  /// @}
 
   /// Constructor.  If head the iterator constructed is positioned
   /// at the head of the map, it is positioned at the end otherwise.
-  ACE_Hash_Map_Const_Iterator_Base_Ex (const ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &mm,
+  ACE_Hash_Map_Const_Iterator_Base_Ex (ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> const &mm,
                                        bool head);
 
-  // = ITERATION methods.
+  /// ITERATION methods.
 
-  /// Pass back the next <entry> that hasn't been seen in the Set.
+  /// Pass back the next @c entry that hasn't been seen in the Set.
   /// Returns 0 when all items have been seen, else 1.
   int next (ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&next_entry) const;
 
@@ -707,11 +714,11 @@ public:
 
   /// Returns reference the Hash_Map_Manager_Ex that is being iterated
   /// over.
-  const ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>& map ();
+  ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> const & map ();
 
   /// Check if two iterators point to the same position
-  bool operator== (const ACE_Hash_Map_Const_Iterator_Base_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &) const;
-  bool operator!= (const ACE_Hash_Map_Const_Iterator_Base_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &) const;
+  bool operator== (ACE_Hash_Map_Const_Iterator_Base_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> const &) const;
+  bool operator!= (ACE_Hash_Map_Const_Iterator_Base_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> const &) const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -729,7 +736,7 @@ protected:
   void dump_i () const;
 
   /// Map we are iterating over.
-  const ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> *map_man_;
+  ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> const *map_man_;
 
   /// Keeps track of how far we've advanced in the table.
   ssize_t index_;
@@ -755,10 +762,10 @@ template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class 
 class ACE_Hash_Map_Iterator_Ex : public ACE_Hash_Map_Iterator_Base_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>
 {
 public:
-  // = STL-style traits/typedefs
+  /// STL-style traits/typedefs
   using container_type = typename ACE_Hash_Map_Iterator_Base_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::container_type;
 
-  // = STL-style traits/typedefs
+  /// STL-style traits/typedefs
   using iterator_category = std::bidirectional_iterator_tag;
   using value_type = typename container_type::value_type;
   using reference = typename container_type::reference;
@@ -768,7 +775,6 @@ public:
   ACE_Hash_Map_Iterator_Ex (ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &mm,
                             int tail = 0);
 
-  /// Constructor.
   /**
    * This constructor positions the iterator to the given @a entry.
    */
@@ -781,7 +787,7 @@ public:
     ACE_Hash_Map_Entry<EXT_ID, INT_ID> * entry,
     size_t index);
 
-  // = Iteration methods.
+  /// Iteration methods.
   /// Move forward by one element in the set.  Returns 0 when all the
   /// items in the set have been seen, else 1.
   int advance ();
@@ -789,7 +795,8 @@ public:
   /// Dump the state of an object.
   void dump () const;
 
-  // = STL styled iteration, compare, and reference functions.
+  /// @name STL styled iteration, compare, and reference functions.
+  /// @{
 
   /// Prefix advance.
   ACE_Hash_Map_Iterator_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &operator++ ();
@@ -802,6 +809,8 @@ public:
 
   /// Postfix reverse.
   ACE_Hash_Map_Iterator_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> operator-- (int);
+
+  /// @}
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -823,20 +832,20 @@ template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class 
 class ACE_Hash_Map_Const_Iterator_Ex : public ACE_Hash_Map_Const_Iterator_Base_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>
 {
 public:
-  // = STL-style traits/typedefs
+  /// STL-style traits/typedefs
   using container_type = typename ACE_Hash_Map_Const_Iterator_Base_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::container_type;
 
-  // = std::iterator_trait traits/typedefs
+  /// std::iterator_trait traits/typedefs
   using iterator_category = std::bidirectional_iterator_tag;
   using value_type = typename container_type::value_type;
   using reference = typename container_type::reference;
   using pointer = typename container_type::pointer;
   using difference_type = typename container_type::difference_type;
 
-  ACE_Hash_Map_Const_Iterator_Ex (const ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &mm,
+  ACE_Hash_Map_Const_Iterator_Ex (ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> const &mm,
                                   int tail = 0);
 
-  // = Iteration methods.
+  /// Iteration methods.
   /// Move forward by one element in the set.  Returns 0 when all the
   /// items in the set have been seen, else 1.
   int advance ();
@@ -844,7 +853,8 @@ public:
   /// Dump the state of an object.
   void dump () const;
 
-  // = STL styled iteration, compare, and reference functions.
+  /// @name STL styled iteration, compare, and reference functions.
+  /// @{
 
   /// Prefix advance.
   ACE_Hash_Map_Const_Iterator_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &operator++ ();
@@ -858,6 +868,8 @@ public:
   /// Postfix reverse.
   ACE_Hash_Map_Const_Iterator_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> operator-- (int);
 
+  /// @}
+
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 };
@@ -867,7 +879,7 @@ public:
  *
  * @brief Forward iterator for the ACE_Hash_Map_Manager_Ex which
  * only traverses a particular bucket.  The particular bucket is
- * specified by the <EXT_ID> parameter specified in the constructor.
+ * specified by the @c EXT_ID parameter specified in the constructor.
  *
  * This class does not perform any internal locking of the
  * ACE_Hash_Map_Manager_Ex it is iterating upon since locking is
@@ -876,7 +888,7 @@ public:
  * ACE_GUARD or ACE_READ_GUARD on the ACE_Hash_Map_Manager_Ex's
  * internal lock, which is accessible via its mutex() method.
  *
- * Note that a creation method for this new iterator cannot be added
+ * @note A creation method for this new iterator cannot be added
  * to the hash map, since this would require adding explicit template
  * instantiations for bucket iterators on platforms with broken
  * templates.
@@ -885,10 +897,10 @@ template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class 
 class ACE_Hash_Map_Bucket_Iterator
 {
 public:
-  // = STL-style traits/typedefs
+  /// STL-style traits/typedefs
   using container_type = ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>;
 
-  // = std::iterator traits/typedefs
+  /// std::iterator traits/typedefs
   using iterator_category = std::bidirectional_iterator_tag;
   using value_type = typename container_type::value_type;
   using reference = typename container_type::reference;
@@ -896,10 +908,11 @@ public:
   using difference_type = typename container_type::difference_type;
 
   ACE_Hash_Map_Bucket_Iterator (ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &mm,
-                                const EXT_ID &ext_id,
+                                EXT_ID const &ext_id,
                                 int tail = 0);
 
-  // = STL styled iteration, compare, and reference functions.
+  /// @name STL styled iteration, compare, and reference functions.
+  /// @{
 
   /// Prefix advance.
   ACE_Hash_Map_Bucket_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &operator++ ();
@@ -924,8 +937,10 @@ public:
   ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>& map ();
 
   /// Check if two iterators point to the same position
-  bool operator== (const ACE_Hash_Map_Bucket_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &) const;
-  bool operator!= (const ACE_Hash_Map_Bucket_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &) const;
+  bool operator== (ACE_Hash_Map_Bucket_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> const &) const;
+  bool operator!= (ACE_Hash_Map_Bucket_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> const &) const;
+
+  /// @}
 
 protected:
   /// Move forward by one element in the set.  Returns 0 when there's
@@ -963,17 +978,19 @@ template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class 
 class ACE_Hash_Map_Reverse_Iterator_Ex : public ACE_Hash_Map_Iterator_Base_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>
 {
 public:
-  // = STL-style traits/typedefs
+  /// STL-style traits/typedefs
   using container_type = typename ACE_Hash_Map_Iterator_Base_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::container_type;
 
-  // = std::iterator_traits typedefs
+  /// @name std::iterator_traits typedefs
+  /// @{
   using iterator_category = std::bidirectional_iterator_tag;
   using value_type = typename container_type::value_type;
   using reference = typename container_type::reference;
   using pointer = typename container_type::pointer;
   using difference_type = typename container_type::difference_type;
+  /// @}
 
-  // = Initialization method.
+  /// Initialization method.
   ACE_Hash_Map_Reverse_Iterator_Ex (ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &mm,
                                     bool head = false);
 
@@ -984,7 +1001,8 @@ public:
   /// Dump the state of an object.
   void dump () const;
 
-  // = STL styled iteration, compare, and reference functions.
+  /// @name STL styled iteration, compare, and reference functions.
+  /// @{
 
   /// Prefix reverse.
   ACE_Hash_Map_Reverse_Iterator_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &operator++ ();
@@ -997,6 +1015,8 @@ public:
 
   /// Postfix advance.
   ACE_Hash_Map_Reverse_Iterator_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> operator-- (int);
+
+  /// @}
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -1012,24 +1032,26 @@ public:
  * inherently inefficient and/or error-prone within an STL-style
  * iterator.  If you require locking, you can explicitly use an
  * ACE_GUARD or ACE_READ_GUARD on the ACE_Hash_Map_Manager_Ex's
- * internal lock, which is accessible via its <mutex> method.
+ * internal lock, which is accessible via its @c mutex method.
  */
 template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK>
 class ACE_Hash_Map_Const_Reverse_Iterator_Ex : public ACE_Hash_Map_Const_Iterator_Base_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>
 {
 public:
-  // = STL-style traits/typedefs
+  /// STL-style traits/typedefs
   using container_type = typename ACE_Hash_Map_Const_Iterator_Base_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::container_type;
 
-  // = std::iterator_traits typedefs
+  /// @name std::iterator_traits typedefs
+  /// @{
   using iterator_category = std::bidirectional_iterator_tag;
   using value_type = typename container_type::value_type;
   using reference = typename container_type::reference;
   using pointer = typename container_type::pointer;
   using difference_type = typename container_type::difference_type;
+  /// @}
 
-  // = Initialization method.
-  ACE_Hash_Map_Const_Reverse_Iterator_Ex (const ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &mm,
+  /// Initialization method.
+  ACE_Hash_Map_Const_Reverse_Iterator_Ex (ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> const &mm,
                                           bool head = false);
 
   /// Move forward by one element in the set.  Returns 0 when all the
@@ -1039,7 +1061,8 @@ public:
   /// Dump the state of an object.
   void dump () const;
 
-  // = STL styled iteration, compare, and reference functions.
+  /// @name STL styled iteration, compare, and reference functions.
+  /// @{
 
   /// Prefix reverse.
   ACE_Hash_Map_Const_Reverse_Iterator_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &operator++ ();
@@ -1053,6 +1076,8 @@ public:
   /// Postfix advance.
   ACE_Hash_Map_Const_Reverse_Iterator_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> operator-- (int);
 
+  /// @}
+
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 };
@@ -1063,8 +1088,8 @@ public:
  * @brief Wrapper for backward compatibility.
  *
  * This implementation of a map uses a hash table.  This class
- * expects that the <EXT_ID> contains a method called <hash>.
- * In addition, the <EXT_ID> must support <operator==>.  Both of
+ * expects that the @c EXT_ID contains a method called @c hash.
+ * In addition, the @c EXT_ID must support <operator==>.  Both of
  * these constraints can be alleviated via template
  * specialization, as shown in the $ACE_ROOT/tests/Conn_Test.cpp
  * test.
@@ -1104,10 +1129,10 @@ public:
   /**
    * Initialize a @c Hash_Map_Manager with default size elements.
    * @param table_alloc is a pointer to a memory allocator used for
-   *        table_, so it should supply size*sizeof (ACE_Hash_Map_Entry<EXT_ID, INT_ID>).
+   *        table_, so it should supply size*sizeof (ACE_Hash_Map_Entry&lt;EXT_ID, INT_ID&gt;).
    * @param entry_alloc is a pointer to an additional allocator for
    *        entries, so it should be able to allocate 'size' / chunks
-   *        of sizeof(ACE_Hash_Map_Entry<EXT_ID, INT_ID>) bytes each.
+   *        of sizeof(ACE_Hash_Map_Entry&lt;EXT_ID, INT_ID&gt;) bytes each.
    * If @c table_alloc is 0 it defaults to @c ACE_Allocator::instance().
    * If @c entry_alloc is 0 then it defaults to the same allocator as
    * @c table_alloc.
@@ -1117,11 +1142,12 @@ public:
 
   /**
    * Initialize a @c Hash_Map_Manager with @c size elements.
+   * @param size The number of entries to allocate.
    * @param table_alloc is a pointer to a memory allocator used for
-   *        table_, so it should supply size*sizeof (ACE_Hash_Map_Entry<EXT_ID, INT_ID>).
+   *        table_, so it should supply size*sizeof (ACE_Hash_Map_Entry&lt;EXT_ID, INT_ID&gt;).
    * @param entry_alloc is a pointer to an additional allocator for
    *        entries, so it should be able to allocate 'size' / chunks
-   *        of sizeof(ACE_Hash_Map_Entry<EXT_ID, INT_ID>) bytes each.
+   *        of sizeof(ACE_Hash_Map_Entry&lt;EXT_ID, INT_ID&gt;) bytes each.
    * If @c table_alloc is 0 it defaults to @c ACE_Allocator::instance().
    * If @c entry_alloc is 0 then it defaults to the same allocator as
    * @c table_alloc.
@@ -1130,10 +1156,10 @@ public:
                         ACE_Allocator *table_alloc = nullptr,
                         ACE_Allocator *entry_alloc = nullptr);
 
-  // = The following two are necessary for template specialization of
-  // ACE_Hash_Map_Manager to work.
-  int equal (const EXT_ID &id1, const EXT_ID &id2);
-  u_long hash (const EXT_ID &ext_id);
+  /// The following two are necessary for template specialization of
+  /// ACE_Hash_Map_Manager to work.
+  int equal (EXT_ID const &id1, EXT_ID const &id2);
+  u_long hash (EXT_ID const &ext_id);
 };
 
 /**
@@ -1145,7 +1171,7 @@ template <class EXT_ID, class INT_ID, class ACE_LOCK>
 class ACE_Hash_Map_Iterator : public ACE_Hash_Map_Iterator_Ex<EXT_ID, INT_ID, ACE_Hash<EXT_ID>, ACE_Equal_To<EXT_ID>, ACE_LOCK>
 {
 public:
-  // = STL-style traits/typedefs
+  /// STL-style traits/typedefs
   using container_type = typename ACE_Hash_Map_Iterator_Ex<EXT_ID, INT_ID, ACE_Hash<EXT_ID>, ACE_Equal_To<EXT_ID>, ACE_LOCK>::container_type;
 
   using iterator_category = typename ACE_Hash_Map_Iterator_Ex<EXT_ID, INT_ID, ACE_Hash<EXT_ID>, ACE_Equal_To<EXT_ID>, ACE_LOCK>::iterator_category;
@@ -1163,11 +1189,11 @@ public:
                          int tail = 0);
 
   /// Construct from base
-  ACE_Hash_Map_Iterator (const ACE_Hash_Map_Iterator_Ex<EXT_ID, INT_ID, ACE_Hash<EXT_ID>, ACE_Equal_To<EXT_ID>, ACE_LOCK> &base);
+  ACE_Hash_Map_Iterator (ACE_Hash_Map_Iterator_Ex<EXT_ID, INT_ID, ACE_Hash<EXT_ID>, ACE_Equal_To<EXT_ID>, ACE_LOCK> const &base);
 
   /// Assignment from base
   ACE_Hash_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK> &
-  operator= (const ACE_Hash_Map_Iterator_Ex<EXT_ID, INT_ID, ACE_Hash<EXT_ID>, ACE_Equal_To<EXT_ID>, ACE_LOCK> &base);
+  operator= (ACE_Hash_Map_Iterator_Ex<EXT_ID, INT_ID, ACE_Hash<EXT_ID>, ACE_Equal_To<EXT_ID>, ACE_LOCK> const &base);
 };
 
 /**
@@ -1179,10 +1205,11 @@ template <class EXT_ID, class INT_ID, class ACE_LOCK>
 class ACE_Hash_Map_Const_Iterator : public ACE_Hash_Map_Const_Iterator_Ex<EXT_ID, INT_ID, ACE_Hash<EXT_ID>, ACE_Equal_To<EXT_ID>, ACE_LOCK>
 {
 public:
-  // = STL-style traits/typedefs
+  /// STL-style traits/typedefs
   using container_type = typename ACE_Hash_Map_Const_Iterator_Ex<EXT_ID, INT_ID, ACE_Hash<EXT_ID>, ACE_Equal_To<EXT_ID>, ACE_LOCK>::container_type;
 
-  // = std::iterator_traits typedefs
+  /// @name std::iterator_traits typedefs
+  /// @{
   using iterator_category = typename ACE_Hash_Map_Const_Iterator_Ex<EXT_ID, INT_ID, ACE_Hash<EXT_ID>, ACE_Equal_To<EXT_ID>, ACE_LOCK>::iterator_category;
 
   using value_type = typename ACE_Hash_Map_Const_Iterator_Ex<EXT_ID, INT_ID, ACE_Hash<EXT_ID>, ACE_Equal_To<EXT_ID>, ACE_LOCK>::value_type;
@@ -1192,17 +1219,18 @@ public:
   using pointer = typename ACE_Hash_Map_Const_Iterator_Ex<EXT_ID, INT_ID, ACE_Hash<EXT_ID>, ACE_Equal_To<EXT_ID>, ACE_LOCK>::pointer;
 
   using difference_type = typename ACE_Hash_Map_Const_Iterator_Ex<EXT_ID, INT_ID, ACE_Hash<EXT_ID>, ACE_Equal_To<EXT_ID>, ACE_LOCK>::difference_type;
+  /// @}
 
   /// Construct from map
-  ACE_Hash_Map_Const_Iterator (const ACE_Hash_Map_Manager<EXT_ID, INT_ID, ACE_LOCK> &mm,
+  ACE_Hash_Map_Const_Iterator (ACE_Hash_Map_Manager<EXT_ID, INT_ID, ACE_LOCK> const &mm,
                                int tail = 0);
 
   /// Construct from base
-  ACE_Hash_Map_Const_Iterator (const ACE_Hash_Map_Const_Iterator_Ex<EXT_ID, INT_ID, ACE_Hash<EXT_ID>, ACE_Equal_To<EXT_ID>, ACE_LOCK> &base);
+  ACE_Hash_Map_Const_Iterator (ACE_Hash_Map_Const_Iterator_Ex<EXT_ID, INT_ID, ACE_Hash<EXT_ID>, ACE_Equal_To<EXT_ID>, ACE_LOCK> const &base);
 
   /// Assignment from base
   ACE_Hash_Map_Const_Iterator<EXT_ID, INT_ID, ACE_LOCK> &
-  operator= (const ACE_Hash_Map_Const_Iterator_Ex<EXT_ID, INT_ID, ACE_Hash<EXT_ID>, ACE_Equal_To<EXT_ID>, ACE_LOCK> &base);
+  operator= (ACE_Hash_Map_Const_Iterator_Ex<EXT_ID, INT_ID, ACE_Hash<EXT_ID>, ACE_Equal_To<EXT_ID>, ACE_LOCK> const &base);
 };
 
 /**
@@ -1214,10 +1242,11 @@ template <class EXT_ID, class INT_ID, class ACE_LOCK>
 class ACE_Hash_Map_Reverse_Iterator : public ACE_Hash_Map_Reverse_Iterator_Ex<EXT_ID, INT_ID, ACE_Hash<EXT_ID>, ACE_Equal_To<EXT_ID>, ACE_LOCK>
 {
 public:
-  // = STL-style traits/typedefs
+  /// STL-style traits/typedefs
   using container_type = typename ACE_Hash_Map_Reverse_Iterator_Ex<EXT_ID, INT_ID, ACE_Hash<EXT_ID>, ACE_Equal_To<EXT_ID>, ACE_LOCK>::container_type;
 
-  // = std::iterator_traits typedefs
+  /// @name std::iterator_traits typedefs
+  /// @{
   using iterator_category = typename ACE_Hash_Map_Reverse_Iterator_Ex<EXT_ID, INT_ID, ACE_Hash<EXT_ID>, ACE_Equal_To<EXT_ID>, ACE_LOCK>::iterator_category;
 
   using value_type = typename ACE_Hash_Map_Reverse_Iterator_Ex<EXT_ID, INT_ID, ACE_Hash<EXT_ID>, ACE_Equal_To<EXT_ID>, ACE_LOCK>::value_type;
@@ -1227,16 +1256,17 @@ public:
   using pointer = typename ACE_Hash_Map_Reverse_Iterator_Ex<EXT_ID, INT_ID, ACE_Hash<EXT_ID>, ACE_Equal_To<EXT_ID>, ACE_LOCK>::pointer;
 
   using difference_type = typename ACE_Hash_Map_Reverse_Iterator_Ex<EXT_ID, INT_ID, ACE_Hash<EXT_ID>, ACE_Equal_To<EXT_ID>, ACE_LOCK>::difference_type;
+  /// @}
 
   ACE_Hash_Map_Reverse_Iterator (ACE_Hash_Map_Manager<EXT_ID, INT_ID, ACE_LOCK> &mm,
                                  bool head = false);
 
   /// Construct from base
-  ACE_Hash_Map_Reverse_Iterator (const ACE_Hash_Map_Reverse_Iterator_Ex<EXT_ID, INT_ID, ACE_Hash<EXT_ID>, ACE_Equal_To<EXT_ID>, ACE_LOCK> &base);
+  ACE_Hash_Map_Reverse_Iterator (ACE_Hash_Map_Reverse_Iterator_Ex<EXT_ID, INT_ID, ACE_Hash<EXT_ID>, ACE_Equal_To<EXT_ID>, ACE_LOCK> const &base);
 
   /// Assignment from base
   ACE_Hash_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK> &
-  operator= (const ACE_Hash_Map_Reverse_Iterator_Ex<EXT_ID, INT_ID, ACE_Hash<EXT_ID>, ACE_Equal_To<EXT_ID>, ACE_LOCK> &base);
+  operator= (ACE_Hash_Map_Reverse_Iterator_Ex<EXT_ID, INT_ID, ACE_Hash<EXT_ID>, ACE_Equal_To<EXT_ID>, ACE_LOCK> const &base);
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

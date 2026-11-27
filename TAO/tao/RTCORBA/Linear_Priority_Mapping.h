@@ -1,7 +1,3 @@
-// -*- C++ -*-
-
-
-//=============================================================================
 /**
  *  @file   Linear_Priority_Mapping.h
  *
@@ -10,8 +6,6 @@
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  */
-//=============================================================================
-
 
 #ifndef TAO_LINEAR_PRIORITY_MAPPING_H
 #define TAO_LINEAR_PRIORITY_MAPPING_H
@@ -43,10 +37,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_RTCORBA_Export TAO_Linear_Priority_Mapping : public TAO_Priority_Mapping
 {
 public:
-  /// Default constructor
   explicit TAO_Linear_Priority_Mapping (long policy);
 
-  /// The destructor
   ~TAO_Linear_Priority_Mapping () override = default;
 
   CORBA::Boolean to_native (RTCORBA::Priority corba_priority,
@@ -58,9 +50,11 @@ private:
   /// The scheduling policy
   long policy_;
 
-  // The range
+  /// @name Priority range
+  /// @{
   int const min_;
   int const max_;
+  /// @}
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

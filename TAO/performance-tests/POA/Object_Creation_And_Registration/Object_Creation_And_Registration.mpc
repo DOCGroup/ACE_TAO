@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(registration): taoexe, portableserver, avoids_corba_e_micro, avoids_ace_for_tao {
   exename = registration
 }

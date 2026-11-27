@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/orbconf.h"
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
@@ -21,7 +20,7 @@ namespace TAO
     CORBA::Policy_ptr
     RequestProcessingPolicy::copy ()
     {
-      RequestProcessingPolicy *copy = nullptr;
+      RequestProcessingPolicy *copy {};
       ACE_NEW_THROW_EX (copy,
                         RequestProcessingPolicy (this->value_),
                         CORBA::NO_MEMORY ());
@@ -57,7 +56,6 @@ namespace TAO
     {
       return TAO_POLICY_POA_SCOPE;
     }
-
 
   }
 }

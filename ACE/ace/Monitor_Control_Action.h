@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  * @file Monitor_Control_Action.h
  *
  * @author Jeff Parsons <j.parsons@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef MONITOR_CONTROL_ACTION_H
 #define MONITOR_CONTROL_ACTION_H
@@ -41,7 +37,7 @@ namespace ACE
     {
     public:
       /// To be implemented by the concrete derived class.
-      virtual void execute (const char* command = nullptr) = 0;
+      virtual void execute (char const * command = nullptr) = 0;
 
       /// Refcounting methods.
       void add_ref ();

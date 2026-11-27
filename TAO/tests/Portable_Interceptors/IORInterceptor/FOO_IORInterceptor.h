@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  * @file FOO_IORInterceptor.h
  *
@@ -8,7 +5,6 @@
  *
  * @author Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
 
 #ifndef FOO_IOR_INTERCEPTOR_H
 #define FOO_IOR_INTERCEPTOR_H
@@ -44,8 +40,11 @@ class FOO_IORInterceptor
     public virtual ::CORBA::LocalObject
 {
 public:
-  /// Constructor
-  FOO_IORInterceptor (IOP::Codec_ptr codec);
+  explicit FOO_IORInterceptor (IOP::Codec_ptr codec);
+  FOO_IORInterceptor (FOO_IORInterceptor const &) = delete;
+  FOO_IORInterceptor (FOO_IORInterceptor &&) = delete;
+  FOO_IORInterceptor &operator= (FOO_IORInterceptor const &) = delete;
+  FOO_IORInterceptor &operator= (FOO_IORInterceptor &&) = delete;
 
   /**
    * @name Methods Required by the IOR Interceptor Interface
@@ -54,29 +53,27 @@ public:
    * virtual in the abstract base class.  They are the canonical
    * methods required for all IOR interceptors.
    */
-  //@{
+  /// @{
   /// Return the name of this IORInterceptor.
-  virtual char * name ();
+  char * name () override;
 
   /// Cleanup resources acquired by this IORInterceptor.
-  virtual void destroy ();
+  void destroy () override;
 
   /// Add the tagged components to the IOR.
-  virtual void establish_components (
-      PortableInterceptor::IORInfo_ptr info);
+  void establish_components (PortableInterceptor::IORInfo_ptr info) override;
 
-  virtual void components_established (
-      PortableInterceptor::IORInfo_ptr info);
+  void components_established (PortableInterceptor::IORInfo_ptr info) override;
 
-  virtual void adapter_manager_state_changed (
-      const char * id,
-      PortableInterceptor::AdapterState state);
+  void adapter_manager_state_changed (
+      char const *id,
+      PortableInterceptor::AdapterState state) override;
 
-  virtual void adapter_state_changed (
-      const PortableInterceptor::ObjectReferenceTemplateSeq & templates,
-      PortableInterceptor::AdapterState state);
+  void adapter_state_changed (
+      PortableInterceptor::ObjectReferenceTemplateSeq const &templates,
+      PortableInterceptor::AdapterState state) override;
 
-  //@}
+  /// @}
 
 private:
   /// The CDR encapsulation coder/decoder used to encapsulate data

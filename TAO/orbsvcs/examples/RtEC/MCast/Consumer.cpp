@@ -2,11 +2,6 @@
 #include "orbsvcs/RtecEventChannelAdminS.h"
 #include "orbsvcs/Event_Service_Constants.h"
 
-Consumer::Consumer ()
-  : event_count_ (0)
-{
-}
-
 void
 Consumer::connect (RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin)
 {
@@ -18,16 +13,16 @@ Consumer::connect (RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin)
 
   // Simple subscription, but usually the helper classes in
   // $TAO_ROOT/orbsvcs/Event_Utils.h are a better way to do this.
-  RtecEventChannelAdmin::ConsumerQOS qos;
-  qos.is_gateway = 0;
+  RtecEventChannelAdmin::ConsumerQOS qos {};
+  qos.is_gateway = false;
 
   qos.dependencies.length (2);
-  RtecEventComm::EventHeader& h0 =
+  RtecEventComm::EventHeader &h0 =
     qos.dependencies[0].event.header;
   h0.type   = ACE_ES_DISJUNCTION_DESIGNATOR;
   h0.source = 1; // The disjunction has one element
 
-  RtecEventComm::EventHeader& h1 =
+  RtecEventComm::EventHeader &h1 =
     qos.dependencies[1].event.header;
   h1.type   = ACE_ES_EVENT_UNDEFINED;  // first free event type
   h1.source = ACE_ES_EVENT_SOURCE_ANY; // Any source is OK
@@ -43,7 +38,7 @@ Consumer::disconnect ()
       // Disconnect from the proxy
       this->proxy_->disconnect_push_supplier ();
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       // Ignore exceptions
     }
@@ -60,7 +55,7 @@ Consumer::disconnect ()
 }
 
 void
-Consumer::push (const RtecEventComm::EventSet& events)
+Consumer::push (RtecEventComm::EventSet const &events)
 {
   if (events.length () == 0)
     {
@@ -73,7 +68,7 @@ Consumer::push (const RtecEventComm::EventSet& events)
   if (this->event_count_ % 100 == 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "Consumer (%P|%t): %d events received\n",
+                  "Consumer (%P|%t): %u events received\n",
                   this->event_count_));
     }
 }

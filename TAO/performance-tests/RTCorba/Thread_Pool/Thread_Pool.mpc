@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*RTCorba idl): taoidldefaults {
   IDL_Files {
     test.idl

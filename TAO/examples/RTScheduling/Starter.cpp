@@ -6,9 +6,11 @@ Starter::Starter (CORBA::ORB_ptr orb)
 {
   // Initialize the naming service
   if (this->naming_client_.init (orb) != 0)
-    ACE_ERROR ((LM_ERROR,
-    " (%P|%t) Unable to initialize "
-    "the TAO_Naming_Client.\n"));
+    {
+      ACE_ERROR ((LM_ERROR,
+      " (%P|%t) Unable to initialize "
+      "the TAO_Naming_Client.\n"));
+    }
 }
 
 void
@@ -47,10 +49,9 @@ Starter::resolve_synch_objs ()
   this->synch_context_ =
     CosNaming::NamingContext::_narrow (object.in ());
 
-
   CosNaming::BindingIterator_var iterator;
   CosNaming::BindingList_var binding_list;
-  const CORBA::ULong chunk = 100;
+  CORBA::ULong const chunk = 100;
 
   // Get the list of synchs registered for this sender.
   this->synch_context_->list (chunk,
@@ -62,7 +63,7 @@ Starter::resolve_synch_objs ()
 
   if (!CORBA::is_nil (iterator.in ()))
     {
-      CORBA::Boolean more = 1;
+      CORBA::Boolean more = true;
 
       // Check to see if there are more receivers listed.
       while (more)
@@ -76,14 +77,13 @@ Starter::resolve_synch_objs ()
 
 }
 
-
 void
 Starter::add_to_synchs (CosNaming::BindingList &binding_list)
 {
   ACE_Time_Value base_time = ACE_OS::gettimeofday ();
   for (CORBA::ULong i = 0;
        i < binding_list.length ();
-       i++)
+       ++i)
     {
       // Get the receiver name from the binding list.
       ACE_CString synch_name =
@@ -106,7 +106,6 @@ Starter::add_to_synchs (CosNaming::BindingList &binding_list)
       Synch_var synch_obj =
         Synch::_narrow (obj.in ());
 
-
       synch_obj->go (static_cast<CORBA::Long> (base_time.sec ()));
 
 //        // Add this receiver to the receiver map.
@@ -114,7 +113,6 @@ Starter::add_to_synchs (CosNaming::BindingList &binding_list)
 //          synch_obj);
     }
 }
-
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
@@ -127,7 +125,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       starter.init ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return 1;

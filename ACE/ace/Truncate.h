@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  * @file Truncate.h
  *
@@ -8,7 +5,6 @@
  * @author Ossama Othman <ossama_othman@symantec.com>
  * @author Russell Mora  <russell_mora@symantec.com>
  */
-//=============================================================================
 
 #ifndef ACE_TRUNCATE_H
 #define ACE_TRUNCATE_H
@@ -31,7 +27,7 @@ namespace ACE_Utils
 {
   template<typename T> struct Sign_Check;
 
-  // Specialize the unsigned signed cases.
+  /// Specialize the unsigned signed cases.
   template<> struct Sign_Check<unsigned char>  { static bool const is_signed = false; };
   template<> struct Sign_Check<unsigned short> { static bool const is_signed = false; };
   template<> struct Sign_Check<unsigned int>   { static bool const is_signed = false; };
@@ -43,7 +39,7 @@ namespace ACE_Utils
 # endif  /* __GNUC__ */
   template<> struct Sign_Check<unsigned long long> { static bool const is_signed = false; };
 
-  // Specialize the signed cases.
+  /// Specialize the signed cases.
   template<> struct Sign_Check<signed char>  { static bool const is_signed = true; };
   template<> struct Sign_Check<signed short> { static bool const is_signed = true; };
   template<> struct Sign_Check<signed int>   { static bool const is_signed = true; };
@@ -54,8 +50,6 @@ namespace ACE_Utils
   __extension__
 # endif  /* __GNUC__ */
   template<> struct Sign_Check<signed long long> { static bool const is_signed = true; };
-
-  // -----------------------------------------------------
 
   /**
    * @struct To_Unsigned
@@ -110,8 +104,6 @@ namespace ACE_Utils
 
     unsigned_type operator() (unsigned_type x) { return x; }
   };
-
-  // ----------------
 
   template<>
   struct To_Unsigned<signed char>
@@ -178,8 +170,6 @@ namespace ACE_Utils
     }
   };
 
-  // -----------------------------------------------------
-
   /**
    * @struct Safe_Comparator
    *
@@ -205,7 +195,9 @@ namespace ACE_Utils
     {
       // Prevent wrap-around when casting to unsigned.
       if (lhs < 0)
-        return false;  // since rhs is always positive
+        {
+          return false;  // since rhs is always positive
+        }
       else
         {
           // Implicit promotion of unsigned LEFT and RIGHT types here.
@@ -222,7 +214,9 @@ namespace ACE_Utils
     {
       // Prevent wrap-around when casting to unsigned.
       if (rhs < 0)
-        return true;  // since lhs is always positive
+        {
+          return true;  // since lhs is always positive
+        }
       else
         {
           // Implicit promotion of unsigned LEFT and RIGHT types here.
@@ -252,8 +246,6 @@ namespace ACE_Utils
       return lhs > rhs;
     }
   };
-
-  // -----------------------------------------------------
 
   /**
    * @struct Fast_Comparator
@@ -309,8 +301,6 @@ namespace ACE_Utils
 
   };
 
-  // -----------------------------------------------------
-
   /**
    * @struct Comparator
    *
@@ -343,8 +333,6 @@ namespace ACE_Utils
     using comp_type = typename ACE::If_Then_Else<Fast_Comparator<LEFT, RIGHT>::USABLE, Fast_Comparator<LEFT, RIGHT>, Safe_Comparator<LEFT, RIGHT, Sign_Check<LEFT>::is_signed, Sign_Check<RIGHT>::is_signed>>::result_type;
   };
 
-  // -----------------------------------------------------
-
   /**
    * @struct Truncator
    *
@@ -375,15 +363,15 @@ namespace ACE_Utils
     TO operator() (FROM val)
     {
       return
-        (comparator::greater_than (val, ACE_Numeric_Limits<TO>::max ())
-         ? ACE_Numeric_Limits<TO>::max ()
+        (comparator::greater_than (val, (ACE_Numeric_Limits<TO>::max) ())
+         ? (ACE_Numeric_Limits<TO>::max) ()
          : static_cast<TO> (val));
     }
 
   };
 
-  // Partial specialization for the case where the types are the same.
-  // No truncation is necessary.
+  /// Partial specialization for the case where the types are the same.
+  /// No truncation is necessary.
   template<typename T>
   struct Truncator<T, T>
   {
@@ -393,16 +381,14 @@ namespace ACE_Utils
     }
   };
 
-
-  // -----------------------------------------------------
   /**
    * @struct Noop_Truncator
    *
    * @brief No-op truncation.
    *
    * This structure/functor performs no truncation since it assumes
-   * that @c sizeof(FROM) @c < @c sizeof(TO), meaning that
-   * @c numeric_limits<FROM>::max() @c < @c numeric_limits<TO>::max().
+   * that @c sizeof(FROM) is less than @c sizeof(TO), meaning that the
+   * maximum value of FROM is less than the maximum value of TO.
    */
   template<typename FROM, typename TO>
   struct Noop_Truncator
@@ -412,7 +398,6 @@ namespace ACE_Utils
       return static_cast<TO> (val);
     }
   };
-  // -----------------------------------------------------
 
   /**
    * @class truncate_cast
@@ -436,7 +421,7 @@ namespace ACE_Utils
     using truncator = typename ACE::If_Then_Else<
       (sizeof (FROM) < sizeof (TO)),
       Noop_Truncator<FROM, TO>,
-      Truncator<FROM, TO> >::result_type;
+      Truncator<FROM, TO>>::result_type;
 
     return truncator() (val);
   }

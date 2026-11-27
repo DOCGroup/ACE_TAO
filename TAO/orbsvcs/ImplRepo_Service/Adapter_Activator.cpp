@@ -1,11 +1,8 @@
-// -*- C++ -*-
-//=============================================================================
 /**
  *  @file   Adapter_Activator.cpp
  *
  *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "Adapter_Activator.h"
 
@@ -31,7 +28,7 @@ ImR_Adapter::unknown_adapter (PortableServer::POA_ptr parent,
   ACE_ASSERT (name != nullptr);
   CORBA::PolicyList policies (3);
 
-  const char *exception_message = "Null Message";
+  char const *exception_message = "Null Message";
   policies.length (3);
   try
     {
@@ -58,7 +55,7 @@ ImR_Adapter::unknown_adapter (PortableServer::POA_ptr parent,
                             policies);
 
       exception_message = "While policy->destroy";
-      for (CORBA::ULong i = 0; i < policies.length (); ++i)
+      for (CORBA::ULong i {}; i < policies.length (); ++i)
         {
           CORBA::Policy_ptr policy = policies[i];
           policy->destroy ();
@@ -70,15 +67,15 @@ ImR_Adapter::unknown_adapter (PortableServer::POA_ptr parent,
       exception_message = "While set_servant";
       child->set_servant (this->default_servant_);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ORBSVCS_ERROR ((LM_ERROR,
                   "IMR_Adapter_Activator::unknown_adapter - %C\n",
                   exception_message));
       ex._tao_print_exception ("System Exception");
-      return 0;
+      return false;
     }
 
   // Finally, now everything is fine
-  return 1;
+  return true;
 }

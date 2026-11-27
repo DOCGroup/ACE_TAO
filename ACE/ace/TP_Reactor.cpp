@@ -6,6 +6,8 @@
 #include "ace/Functor_T.h"
 #include "ace/OS_NS_sys_time.h"
 
+#include <memory>
+
 #if !defined (__ACE_INLINE__)
 #include "ace/TP_Reactor.inl"
 #endif /* __ACE_INLINE__ */
@@ -32,7 +34,7 @@ ACE_TP_Token_Guard::acquire_read_token (ACE_Time_Value *max_wait_time)
 
       ACE_MT (result = this->token_.acquire_read (&ACE_TP_Reactor::no_op_sleep_hook,
                                                   nullptr,
-                                                  &tv));
+                                                  std::addressof (tv)));
     }
   else
     {
@@ -43,9 +45,13 @@ ACE_TP_Token_Guard::acquire_read_token (ACE_Time_Value *max_wait_time)
   if (result == -1)
     {
       if (errno == ETIME)
-        return 0;
+        {
+          return 0;
+        }
       else
+      {
         return -1;
+      }
     }
 
   // We got the token and so let us mark ourselves as owner
@@ -70,7 +76,7 @@ ACE_TP_Token_Guard::acquire_token (ACE_Time_Value *max_wait_time)
 
       ACE_MT (result = this->token_.acquire (nullptr,
                                              nullptr,
-                                             &tv));
+                                             std::addressof (tv)));
     }
   else
     {
@@ -81,9 +87,13 @@ ACE_TP_Token_Guard::acquire_token (ACE_Time_Value *max_wait_time)
   if (result == -1)
     {
       if (errno == ETIME)
-        return 0;
+        {
+          return 0;
+        }
       else
+      {
         return -1;
+      }
     }
 
   // We got the token and so let us mark ourselves as owner
@@ -91,7 +101,6 @@ ACE_TP_Token_Guard::acquire_token (ACE_Time_Value *max_wait_time)
 
   return result;
 }
-
 
 ACE_TP_Reactor::ACE_TP_Reactor (ACE_Sig_Handler *sh,
                                 ACE_Timer_Queue *tq,
@@ -120,7 +129,9 @@ ACE_TP_Reactor::owner (ACE_thread_t, ACE_thread_t *o_id)
 {
   ACE_TRACE ("ACE_TP_Reactor::owner");
   if (o_id)
+  {
     *o_id = ACE_Thread::self ();
+  }
 
   return 0;
 }
@@ -156,7 +167,9 @@ ACE_TP_Reactor::handle_events (ACE_Time_Value *max_wait_time)
 
   // If the guard is NOT the owner just return the retval
   if (!guard.is_owner ())
+  {
     return result;
+  }
 
   // After getting the lock just just for deactivation..
   if (this->deactivated_)
@@ -219,7 +232,9 @@ ACE_TP_Reactor::dispatch_i (ACE_Time_Value *max_wait_time,
   result = this->handle_timer_events (event_count, guard);
 
   if (result > 0)
+  {
     return result;
+  }
 
   // Else just go ahead fall through for further handling.
 
@@ -231,7 +246,9 @@ ACE_TP_Reactor::dispatch_i (ACE_Time_Value *max_wait_time,
       result = this->handle_notify_events (event_count, guard);
 
       if (result > 0)
+      {
         return result;
+      }
 
       // Else just fall through for further handling
     }
@@ -249,7 +266,6 @@ ACE_TP_Reactor::dispatch_i (ACE_Time_Value *max_wait_time,
 
   return result;
 }
-
 
 #if 0
   // @Ciju
@@ -300,7 +316,6 @@ endif
 }
 #endif // #if 0
 
-
 int
 ACE_TP_Reactor::handle_timer_events (int & /*event_count*/,
                                      ACE_TP_Token_Guard &guard)
@@ -316,14 +331,16 @@ ACE_TP_Reactor::handle_notify_events (int & /*event_count*/,
                                       ACE_TP_Token_Guard &guard)
 {
   // Get the handle on which notify calls could have occurred
-  ACE_HANDLE notify_handle = this->get_notify_handle ();
+  ACE_HANDLE const notify_handle = this->get_notify_handle ();
 
   int result = 0;
 
   // The notify was not in the list returned by
   // wait_for_multiple_events ().
   if (notify_handle == ACE_INVALID_HANDLE)
+  {
     return result;
+  }
 
   // Now just do a read on the pipe..
   ACE_Notification_Buffer buffer;
@@ -382,7 +399,6 @@ ACE_TP_Reactor::handle_socket_events (int &event_count,
                                     dispatch_info.mask_);
         }
 
-
       return 0;
     }
 
@@ -392,12 +408,18 @@ ACE_TP_Reactor::handle_socket_events (int &event_count,
   // NOTE: This check was performed in older versions of the
   // TP_Reactor. Looks like it is a waste..
   if (dispatch_info.event_handler_ != this->notify_handler_)
-    if (this->suspend_i (dispatch_info.handle_) == -1)
-      return 0;
+    {
+      if (this->suspend_i (dispatch_info.handle_) == -1)
+        {
+          return 0;
+        }
+    }
 
   // Call add_reference() if needed.
   if (dispatch_info.reference_counting_required_)
+  {
     dispatch_info.event_handler_->add_reference ();
+  }
 
   // Release the lock.  Others threads can start waiting.
   guard.release_token ();
@@ -410,7 +432,9 @@ ACE_TP_Reactor::handle_socket_events (int &event_count,
 
   // Dispatched an event
   if (this->dispatch_socket_event (dispatch_info) == 0)
+  {
     ++result;
+  }
 
   return result;
 }
@@ -462,7 +486,9 @@ ACE_TP_Reactor::get_socket_event_info (ACE_EH_Dispatch_Info &event)
     while (!found_io && (handle = handle_iter ()) != ACE_INVALID_HANDLE)
       {
         if (this->is_suspended_i (handle))
+        {
           continue;
+        }
 
         // Remember this info
         event.set (handle,
@@ -482,7 +508,9 @@ ACE_TP_Reactor::get_socket_event_info (ACE_EH_Dispatch_Info &event)
       while (!found_io && (handle = handle_iter ()) != ACE_INVALID_HANDLE)
         {
           if (this->is_suspended_i (handle))
+          {
             continue;
+          }
 
           // Remember this info
           event.set (handle,
@@ -503,7 +531,9 @@ ACE_TP_Reactor::get_socket_event_info (ACE_EH_Dispatch_Info &event)
       while (!found_io && (handle = handle_iter ()) != ACE_INVALID_HANDLE)
         {
           if (this->is_suspended_i (handle))
+          {
             continue;
+          }
 
           // Remember this info
           event.set (handle,
@@ -530,7 +560,9 @@ ACE_TP_Reactor::dispatch_socket_event (ACE_EH_Dispatch_Info &dispatch_info)
 
   // Check for removed handlers.
   if (event_handler == nullptr)
+  {
     return -1;
+  }
 
   // Upcall. If the handler returns positive value (requesting a
   // reactor callback) don't set the ready-bit because it will be
@@ -539,7 +571,9 @@ ACE_TP_Reactor::dispatch_socket_event (ACE_EH_Dispatch_Info &dispatch_info)
   // handling other things.
   int status = 1;
   while (status > 0)
-    status = (event_handler->*callback) (dispatch_info.handle_);
+    {
+      status = (event_handler->*callback) (dispatch_info.handle_);
+    }
 
   // Post process socket event
   return this->post_process_socket_event (dispatch_info, status);
@@ -568,7 +602,9 @@ ACE_TP_Reactor::post_process_socket_event (ACE_EH_Dispatch_Info &dispatch_info,
 
       // If the guard is NOT the owner just return the retval
       if (!guard.is_owner ())
+      {
         return result;
+      }
 
       // A different event handler may have been registered during the
       // upcall if the handle was closed and then reopened, for
@@ -592,13 +628,17 @@ ACE_TP_Reactor::post_process_socket_event (ACE_EH_Dispatch_Info &dispatch_info,
           if (dispatch_info.event_handler_ != this->notify_handler_ &&
               dispatch_info.resume_flag_ ==
               ACE_Event_Handler::ACE_REACTOR_RESUMES_HANDLER)
+          {
             this->resume_i (dispatch_info.handle_);
+          }
         }
     }
 
   // Call remove_reference() if needed.
   if (dispatch_info.reference_counting_required_)
+  {
     dispatch_info.event_handler_->remove_reference ();
+  }
 
   return result;
 }
@@ -612,7 +652,7 @@ ACE_TP_Reactor::resumable_handler ()
 int
 ACE_TP_Reactor::handle_events (ACE_Time_Value &max_wait_time)
 {
-  return this->handle_events (&max_wait_time);
+  return this->handle_events (std::addressof (max_wait_time));
 }
 
 void

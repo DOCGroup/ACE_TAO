@@ -1,4 +1,3 @@
-// -*- c++ -*-
 #if !defined (ACE_HAS_INLINED_OSCALLS)
 # undef ACE_INLINE
 # define ACE_INLINE
@@ -11,7 +10,7 @@ HTTP_SCode_Node::operator int () const
 }
 
 ACE_INLINE
-HTTP_SCode_Node::operator const char * () const
+HTTP_SCode_Node::operator char const * () const
 {
   return this->code_str_;
 }

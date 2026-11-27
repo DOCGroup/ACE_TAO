@@ -1,5 +1,3 @@
-/* -*- c++ -*- */
-//=============================================================================
 /**
  *  @file    valuetype_obv_ch.h
  *
@@ -10,7 +8,6 @@
  *  @author Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
  *  @author based on code from Aniruddha Gokhale
  */
-//=============================================================================
 
 #ifndef _BE_VALUETYPE_VALUETYPE_OBV_CH_H_
 #define _BE_VALUETYPE_VALUETYPE_OBV_CH_H_

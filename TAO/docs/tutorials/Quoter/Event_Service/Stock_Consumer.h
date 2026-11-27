@@ -1,4 +1,3 @@
-
 #ifndef TAO_TUTORIALS_QUOTER_EVENT_SERVICE_STOCK_CONSUMER_H
 #define TAO_TUTORIALS_QUOTER_EVENT_SERVICE_STOCK_CONSUMER_H
 
@@ -7,20 +6,25 @@
 
 class Stock_Consumer : public POA_CosEventComm::PushConsumer {
 public:
-  Stock_Consumer ();
+  Stock_Consumer () = default;
 
+  /// Connects to the event channel using consumer_admin.
   void connect (CosEventChannelAdmin::EventChannel_ptr event_channel);
-  // Connect to the event channel, using <consumer_admin>
 
+  /// Disconnects from the event channel.
   void disconnect ();
-  // Disconnect from the event channel.
 
-  void push (const CORBA::Any& data);
-  void disconnect_push_consumer ();
+  void push (CORBA::Any const &data) override;
+  void disconnect_push_consumer () override;
+
+  Stock_Consumer (Stock_Consumer const &) = delete;
+  Stock_Consumer (Stock_Consumer &&) = delete;
+  Stock_Consumer &operator= (Stock_Consumer const &) = delete;
+  Stock_Consumer &operator= (Stock_Consumer &&) = delete;
 
 private:
+  /// Proxy supplier used to receive events.
   CosEventChannelAdmin::ProxyPushSupplier_var supplier_proxy_;
-  // The supplier proxy.
 };
 
 #endif /* TAO_TUTORIALS_QUOTER_EVENT_SERVICE_STOCK_CONSUMER_H */

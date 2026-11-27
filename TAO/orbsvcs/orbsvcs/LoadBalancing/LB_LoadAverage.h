@@ -1,14 +1,9 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file LB_LoadAverage.h
  *
  *  @author Jaiganesh Balasubramanian <jai@dre.vanderbilt.edu>
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
-//=============================================================================
-
 
 #ifndef LB_LOAD_AVERAGE_H
 #define LB_LOAD_AVERAGE_H
@@ -25,6 +20,7 @@
 
 #include "ace/Synch_Traits.h"
 #include "ace/Thread_Mutex.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -35,13 +31,13 @@ namespace TAO_LB
    *
    * Defaults defined by the Load Balancing specification.
    */
-  //@{
+  /// @{
   constexpr CORBA::Float LA_DEFAULT_TOLERANCE = 1;
   constexpr CORBA::Float LA_DEFAULT_DAMPENING = 0;
   constexpr CORBA::Float LA_DEFAULT_PER_BALANCE_LOAD = 0;
 
   constexpr CORBA::Float LA_DEFAULT_DIFF_AVERAGE_CUTOFF = 0.8f;
-  //@}
+  /// @}
 
 }
 
@@ -57,15 +53,14 @@ class TAO_LB_LoadAverage
   : public virtual POA_CosLoadBalancing::Strategy
 {
 public:
-  /// Constructor.
-  TAO_LB_LoadAverage (PortableServer::POA_ptr poa);
+  explicit TAO_LB_LoadAverage (PortableServer::POA_ptr poa);
 
   /**
    * @name CosLoadBalancing::Strategy methods
    *
    * Methods required by the CosLoadBalancing::Strategy interface.
    */
-  //@{
+  /// @{
   char * name () override;
 
   CosLoadBalancing::Properties * get_properties () override;
@@ -85,7 +80,7 @@ public:
   void analyze_loads (
       PortableGroup::ObjectGroup_ptr object_group,
       CosLoadBalancing::LoadManager_ptr load_manager) override;
-  //@}
+  /// @}
 
   /// Returns the default POA for this servant.
   PortableServer::POA_ptr _default_POA () override;
@@ -99,8 +94,7 @@ public:
   TAO_LB_LoadAverage & operator= (TAO_LB_LoadAverage &&) = delete;
 
 protected:
-  /// Destructor.
-  ~TAO_LB_LoadAverage () override;
+  ~TAO_LB_LoadAverage () override = default;
 
   /// Return the effective load.
   CORBA::Float effective_load (CORBA::Float previous_load,
@@ -123,11 +117,11 @@ private:
   PortableServer::POA_var poa_;
 
   /// Table that maps location to load list.
-  TAO_LB_LoadMap * load_map_ {};
+  std::unique_ptr<TAO_LB_LoadMap> load_map_;
 
   /// Lock used to ensure atomic access to state retained by this
   /// class.
-  TAO_SYNCH_MUTEX * lock_ {};
+  std::unique_ptr<TAO_SYNCH_MUTEX> lock_;
 
   /// Cached set of properties used when initializing this strategy.
   CosLoadBalancing::Properties properties_;
@@ -137,7 +131,7 @@ private:
    *
    * Cached LoadAverage load balancing strategy property values.
    */
-  //@{
+  /// @{
   ///
   CORBA::Float tolerance_;
 
@@ -147,7 +141,7 @@ private:
   ///
   CORBA::Float per_balance_load_;
 
-  //@}
+  /// @}
 
   CosLoadBalancing::LoadList current_loads_;
 };

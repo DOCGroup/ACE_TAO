@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 #ifndef TAO_TEST_I_H
 #define TAO_TEST_I_H
 
@@ -74,10 +72,10 @@ public:
 
 private:
   /// The ORB pseudo-reference (for shutdown).
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var const orb_;
 
-  /// Factories for valuetypes.
-  CORBA::ValueFactoryBase *vtp_factory_;
+  /// Borrowed from the server's owning ValueFactoryBase_var.
+  CORBA::ValueFactoryBase * const vtp_factory_;
 };
 
 #endif /* TAO_TEST_I_H */

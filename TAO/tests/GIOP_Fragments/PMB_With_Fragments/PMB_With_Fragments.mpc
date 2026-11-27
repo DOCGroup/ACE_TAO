@@ -1,3 +1,2 @@
-// -*- MPC -*-
 project: taoserver, avoids_corba_e_micro {
 }

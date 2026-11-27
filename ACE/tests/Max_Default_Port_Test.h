@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    Max_Default_Port_Test.h
  *
@@ -6,8 +5,6 @@
  *
  *  @author Chanaka Liyanaarachchi <chanaka@ociweb.com>
  */
-//=============================================================================
-
 
 #ifndef ACE_TESTS_MAX_DEFAULT_PORT_TEST
 #define ACE_TESTS_MAX_DEFAULT_PORT_TEST
@@ -30,9 +27,9 @@ public:
 
   int open (ACE_INET_Addr &addr);
 
-  ACE_HANDLE get_handle () const;
+  ACE_HANDLE get_handle () const override;
 
-  int handle_input (ACE_HANDLE handle);
+  int handle_input (ACE_HANDLE handle) override;
 
   /// Returns the port the event handler is listening at.
   u_short port ();

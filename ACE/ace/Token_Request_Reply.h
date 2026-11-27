@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Token_Request_Reply.h
  *
@@ -10,8 +7,6 @@
  *  @author Douglas C. Schmidt (d.schmidt@vanderbilt.edu)
  *  @author Tim Harrison (harrison@cs.wustl.edu)
  */
-//=============================================================================
-
 
 #ifndef ACE_TOKEN_REQUEST_REPLY_H
 #define ACE_TOKEN_REQUEST_REPLY_H
@@ -57,7 +52,6 @@ public:
     TRY_ACQUIRE
   };
 
-  /// Default constructor.
   ACE_Token_Request () = default;
 
   /**
@@ -71,9 +65,9 @@ public:
   ACE_Token_Request (int token_type,
                      int proxy_type,
                      ACE_UINT32 operation,
-                     const ACE_TCHAR token_name[],
-                     const ACE_TCHAR client_id[],
-                     const ACE_Synch_Options &options);
+                     ACE_TCHAR const token_name[],
+                     ACE_TCHAR const client_id[],
+                     ACE_Synch_Options const &options);
 
   /// Get the length of the encoded/decoded message.
   ACE_UINT32 length () const;
@@ -117,14 +111,13 @@ public:
   ACE_Synch_Options &options () const;
 
   /// Set the timeout.
-  void options (const ACE_Synch_Options &options);
+  void options (ACE_Synch_Options const &options);
 
-  // = Set/get the name of the token and the client id.  The set
-  // method is combined to make it easier on us.  We're copying the
-  // names as a contiguous buffer.
+  /// Get the token name and client ID, or set both names in one contiguous
+  /// buffer.
   ACE_TCHAR *token_name () const;
   ACE_TCHAR *client_id () const;
-  void token_name (const ACE_TCHAR *token_name, const ACE_TCHAR *client_id);
+  void token_name (ACE_TCHAR const *token_name, ACE_TCHAR const *client_id);
 
   /// Encode the message before transmission.
   int encode (void *&);
@@ -137,9 +130,8 @@ public:
   void dump () const;
 
 private:
-  // = The 5 fields in the <Transfer> struct are transmitted to the server.
-  // The remaining 2 fields are not tranferred -- they are used only on
-  // the server-side to simplify lookups.
+  /// The request fields are transmitted to the server; the name pointers
+  /// below are server-side lookup helpers.
 
   struct Transfer
   {
@@ -152,7 +144,7 @@ private:
     /// Type of the request (i.e., MUTEX, RLOCK, WLOCK...
     ACE_UINT32 proxy_type_;
 
-    /// Type of the request (i.e., <ACQUIRE>, <RELEASE>, <RENEW>, and <REMOVE>).
+    /// Type of the request (i.e., @c ACQUIRE, @c RELEASE, @c RENEW, and @c REMOVE).
     ACE_UINT32 operation_type_;
 
     /// this only makes sense when operation type is renew
@@ -161,10 +153,10 @@ private:
     /// this only makes sense when operation type is renew
     ACE_UINT32 notify_;
 
-    // = ACE_Synch_Options stuff
+    /// Timeout fields copied from ACE_Synch_Options.
 
-    /// Indicates if we should block forever.  If 1, then <secTimeout_>
-    /// and <usecTimeout_> indicates how long we should wait.  If 0,
+    /// Indicates if we should block forever.  If 1, then @c sec_
+    /// and @c usec_ indicates how long we should wait.  If 0,
     /// then we block forever.
     ACE_UINT32 use_timeout_;
 
@@ -174,11 +166,11 @@ private:
     /// Max micro seconds to wait for token if not blocking forever.
     ACE_UINT32 usec_;
 
-    /// value returned in <Token_Reply::arg>;
+    /// value returned in @c Token_Reply::arg;
     ACE_UINT32 arg_;
 
-    /// The data portion contains the <tokenName_> including a 0 terminator,
-    /// a ':', then the <clientId> including a 0 terminator
+    /// The data portion contains the @c tokenName_ including a 0 terminator,
+    /// a ':', then the @c clientId including a 0 terminator
     ACE_TCHAR data_[ACE_MAXTOKENNAMELEN + ACE_MAXCLIENTIDLEN + 3];
   } transfer_;
 
@@ -203,7 +195,6 @@ private:
 class ACE_Export ACE_Token_Reply
 {
 public:
-  /// Default constructor.
   ACE_Token_Reply ();
 
   /// Get the length of the encoded/decoded message.
@@ -234,18 +225,18 @@ public:
   void dump () const;
 
 private:
-  /// The 2 fields in the <Transfer> struct are transmitted to the server.
+  /// The 2 fields in the @c Transfer struct are transmitted to the server.
   struct Transfer
   {
     /// Length of entire reply.
     ACE_UINT32 length_;
 
-    /// Indicates why error occurred if <this->type_> == <FAILURE>.
+    /// Indicates why an error occurred if @c this->type_ == @c FAILURE.
     /// Typical reasons include:
     ///   @c EWOULDBLOCK (if client requested a non-blocking check for the token).
     ///   @c ETIME (if the client timed out after waiting for the token).
-    ///   <ENOLCK> (if the token lock was removed out from underneath a waiter).
-    ///   <EACCES> (attempt to renew a token that isn't owned by the client).
+    ///   @c ENOLCK (if the token lock was removed out from underneath a waiter).
+    ///   @c EACCES (attempt to renew a token that isn't owned by the client).
     ACE_UINT32 errno_;
 
     /// magic cookie

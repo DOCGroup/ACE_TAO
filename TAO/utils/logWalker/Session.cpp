@@ -6,18 +6,45 @@
 #include "ace/SString.h"
 #include "ace/OS_NS_sys_stat.h"
 
+#include <cstring>
+#include <iostream>
+#include <utility>
+#include <memory>
+
 long
 Session::tao_version_ = 220;
 
 AltAddresses
 Session::alt_addrs_;
 
+Session::Output_Stream::Output_Stream (std::ostream *stream)
+  : stream_ (stream)
+{
+}
+
+Session::Output_Stream::Output_Stream (std::unique_ptr<std::ostream> stream)
+  : owned_ (std::move (stream)),
+    stream_ (this->owned_.get ())
+{
+}
+
+std::ostream *
+Session::Output_Stream::get () const
+{
+  return this->stream_;
+}
+
+std::ostream &
+Session::Output_Stream::operator* () const
+{
+  return *this->stream_;
+}
 
 Session::Session ()
   : split_details_ (false)
 {
-  ACE_CString n ("localhost");
-  ACE_CString v ("127.0.0.1");
+  ACE_CString const n ("localhost");
+  ACE_CString const v ("127.0.0.1");
   this->alt_addrs_.bind (n,v);
 }
 
@@ -25,29 +52,43 @@ Session::~Session ()
 {
   for (Processes::iterator i = processes_.begin();
        i != processes_.end();
-       i++)
+       ++i)
     {
       delete i->item();
     }
 }
 
 bool
-Session::set_tao_version (ACE_TCHAR *str)
+Session::set_tao_version (ACE_TCHAR const *str)
 {
-  if (ACE_OS::strncmp(str, ACE_TEXT("1.5"), 3)== 0)
-    tao_version_ = 150;
-  else if (ACE_OS::strncmp (str, ACE_TEXT("1.6"), 3) == 0)
-    tao_version_ = 160;
-  else if (ACE_OS::strncmp (str, ACE_TEXT("1.7"), 3) == 0)
-    tao_version_ = 170;
-  else if (ACE_OS::strncmp (str, ACE_TEXT("1.8"), 3) == 0)
-    tao_version_ = 180;
-  else if (ACE_OS::strncmp (str, ACE_TEXT("2.0"), 3) == 0)
-    tao_version_ = 200;
-  else if (ACE_OS::strncmp (str, ACE_TEXT("2.2"), 3) == 0)
-    tao_version_ = 220;
+  if (ACE_OS::strcmp (str, ACE_TEXT ("1.5")) == 0)
+    {
+      tao_version_ = 150;
+    }
+  else if (ACE_OS::strcmp (str, ACE_TEXT ("1.6")) == 0)
+    {
+      tao_version_ = 160;
+    }
+  else if (ACE_OS::strcmp (str, ACE_TEXT ("1.7")) == 0)
+    {
+      tao_version_ = 170;
+    }
+  else if (ACE_OS::strcmp (str, ACE_TEXT ("1.8")) == 0)
+    {
+      tao_version_ = 180;
+    }
+  else if (ACE_OS::strcmp (str, ACE_TEXT ("2.0")) == 0)
+    {
+      tao_version_ = 200;
+    }
+  else if (ACE_OS::strcmp (str, ACE_TEXT ("2.2")) == 0)
+    {
+      tao_version_ = 220;
+    }
   else
+  {
     return false;
+  }
   return true;
 }
 
@@ -61,23 +102,29 @@ void
 Session::add_process (HostProcess *proc)
 {
   if (processes_.bind(proc->pid(),proc) != 0)
-    ACE_ERROR ((LM_ERROR,
-                "Session::add_process could not bind pid %d\n",
-                proc->pid()));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "Session::add_process could not bind pid %Ld\n",
+                  proc->pid()));
+    }
   if (procs_by_name_.bind(proc->proc_name(), proc) != 0)
-    ACE_ERROR ((LM_ERROR,
-                "Session::add_process could not bind procname %s\n",
-                proc->proc_name().c_str()));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "Session::add_process could not bind procname %C\n",
+                  proc->proc_name().c_str()));
+    }
 }
 
 void
 Session::alternate_address (const char *addrspec)
 {
-  const char *equal = ACE_OS::strchr(addrspec,'=');
-  if (equal == 0)
-   return;
-  ACE_CString name (addrspec,(equal - addrspec));
-  ACE_CString value (equal+1);
+  const char *equal = std::strchr (addrspec, '=');
+  if (equal == nullptr)
+  {
+    return;
+  }
+  ACE_CString const name (addrspec,(equal - addrspec));
+  ACE_CString const value (equal+1);
   Session::alt_addrs_.bind(name,value);
 }
 
@@ -85,7 +132,7 @@ bool
 Session::is_equivalent (const ACE_CString &primary,
                         const ACE_CString &alternate)
 {
-  ACE_CString test(primary);
+  ACE_CString const test(primary);
   ACE_CString alt;
   if (Session::alt_addrs_.find(test,alt) == 0)
     {
@@ -97,15 +144,17 @@ Session::is_equivalent (const ACE_CString &primary,
 void
 Session::default_service (const char *addrspec)
 {
-   const char *equal = ACE_OS::strchr(addrspec,'=');
-  if (equal == 0)
+   const char *equal = std::strchr (addrspec, '=');
+  if (equal == nullptr)
+  {
     return;
-  ACE_CString name (addrspec,(equal - addrspec));
-  Endpoint ep (equal+1);
+  }
+  ACE_CString const name (addrspec,(equal - addrspec));
+  Endpoint const ep (equal+1);
 
-  static long next_def_pid = 0;
+  static long next_def_pid {};
   --next_def_pid;
-  HostProcess *hp = new HostProcess ("defaulted",next_def_pid);
+  HostProcess * const hp = new HostProcess ("defaulted",next_def_pid);
   hp->proc_name(name);
   hp->add_listen_endpoint (ep);
   this->processes_.bind(next_def_pid,hp);
@@ -115,11 +164,15 @@ Session::default_service (const char *addrspec)
 HostProcess *
 Session::find_process (long pid)
 {
-  Processes::ENTRY *entry = 0;
+  Processes::ENTRY *entry {};
   if (this->processes_.find(pid,entry) == 0)
-    return entry->item();
+    {
+      return entry->item();
+    }
   else
-    return 0;
+  {
+    return nullptr;
+  }
 }
 
 HostProcess *
@@ -129,19 +182,25 @@ Session::find_host_i (const Endpoint &endpoint, bool server)
     {
       Processes::ENTRY *entry;
       if (i.next(entry) == 0)
+      {
         break;
+      }
       if (entry->item()->has_endpoint(endpoint, server))
+      {
         return entry->item();
+      }
     }
-  return 0;
+  return nullptr;
 }
 
 HostProcess *
 Session::find_host (const Endpoint &endpoint, bool server)
 {
-  HostProcess *result = find_host_i (endpoint, server);
-  if (result != 0)
+  HostProcess * const result = find_host_i (endpoint, server);
+  if (result != nullptr)
+  {
     return result;
+  }
 
   Endpoint test (endpoint);
   ACE_CString alternate;
@@ -150,7 +209,7 @@ Session::find_host (const Endpoint &endpoint, bool server)
       test.host_ = alternate;
       return find_host_i (test, server);
     }
-  return 0;
+  return nullptr;
 }
 
 void
@@ -167,70 +226,84 @@ Session::outfile (const char *o)
 }
 
 bool
-Session::has_dir ()
+Session::has_dir () const
 {
   return this->base_dir_.length() > 0;
 }
 
 bool
-Session::has_outfile ()
+Session::has_outfile () const
 {
   return this->outfile_.length() > 0;
 }
 
-ostream *
-Session::stream_for ( ostream *oldstream, HostProcess *hp, const char *sub, const char *detail)
+Session::Output_Stream
+Session::stream_for (Output_Stream oldstream,
+                     HostProcess *hp,
+                     const char *sub,
+                     const char *detail)
 {
   if (this->has_dir())
     {
       ACE_CString outname = this->base_dir_;
 
-      if (oldstream == 0 && hp == 0)
+      if (oldstream.get () == nullptr && hp == nullptr)
         {
           if (ACE_OS::mkdir(outname.c_str()) != 0 && errno != EEXIST)
-            ACE_ERROR ((LM_ERROR,
-                        "Session::stream_for unable to make dir %C, %p\n",
-                        outname.c_str(), "mkdir"));
+            {
+              ACE_ERROR ((LM_ERROR,
+                          "Session::stream_for unable to make dir %C, %p\n",
+                          outname.c_str(), "mkdir"));
+            }
         }
-      delete oldstream;
       outname += ACE_DIRECTORY_SEPARATOR_CHAR;
-      if (hp != 0)
+      if (hp != nullptr)
         {
           outname += hp->proc_name();
           if (ACE_OS::mkdir(outname.c_str()) != 0 && errno != EEXIST)
-            ACE_ERROR ((LM_ERROR,
-                        "Session::stream_for unable to make dir %C, %p\n",
-                        outname.c_str(), "mkdir"));
+            {
+              ACE_ERROR ((LM_ERROR,
+                          "Session::stream_for unable to make dir %C, %p\n",
+                          outname.c_str(), "mkdir"));
+            }
 
           outname += ACE_DIRECTORY_SEPARATOR_CHAR;
         }
-      outname += (sub == 0) ? "summary.txt" : sub;
-      if (detail != 0)
+      outname += (sub == nullptr) ? "summary.txt" : sub;
+      if (detail != nullptr)
         {
           if (ACE_OS::mkdir(outname.c_str()) != 0 && errno != EEXIST)
-            ACE_ERROR ((LM_ERROR,
-                        "Session::stream_for unable to make dir %C, %p\n",
-                        outname.c_str(), "mkdir"));
+            {
+              ACE_ERROR ((LM_ERROR,
+                          "Session::stream_for unable to make dir %C, %p\n",
+                          outname.c_str(), "mkdir"));
+            }
 
           outname += ACE_DIRECTORY_SEPARATOR_CHAR;
           outname += detail;
         }
-      return new ofstream (outname.c_str());
+      return Output_Stream (std::make_unique<std::ofstream> (outname.c_str()));
     }
 
-  if (oldstream != 0)
+  if (oldstream.get () != nullptr)
+  {
     return oldstream;
+  }
   if (this->has_outfile())
-    return new ofstream(this->outfile_.c_str());
+    {
+      return Output_Stream (std::make_unique<std::ofstream> (this->outfile_.c_str()));
+    }
   else
-    return &cout;
+  {
+    return Output_Stream (&std::cout);
+  }
 }
 
 void
 Session::dump ()
 {
-  bool single = !this->has_dir();
-  ostream *strm = this->stream_for(0);
+  bool const single = !this->has_dir();
+  Output_Stream strm = this->stream_for ({});
   // report session metrics
 
   if (single)
@@ -243,74 +316,96 @@ Session::dump ()
     {
       Procs_By_Name::ENTRY *entry;
       if (i.next(entry) == 0)
+      {
         continue;
+      }
       entry->item()->dump_summary (*strm);
     }
 
   if (single)
+  {
     *strm << "\n\n\nSession detail threads report: " << endl;
+  }
   for (Procs_By_Name::ITERATOR i (this->procs_by_name_); !i.done(); i.advance())
     {
       Procs_By_Name::ENTRY *entry;
       if (i.next(entry) == 0)
+      {
         continue;
+      }
       strm = this->split_details_ ?
-        stream_for (strm,entry->item(),"threads", "summary.txt"):
-        stream_for (strm,entry->item(),"threads.txt");
+        stream_for (std::move (strm), entry->item(), "threads", "summary.txt"):
+        stream_for (std::move (strm), entry->item(), "threads.txt");
       entry->item()->dump_thread_summary (*strm);
     }
 
   if (single)
+  {
     *strm << "\n\n\nSession detail peer process report: " << endl;
+  }
   for (Procs_By_Name::ITERATOR i (this->procs_by_name_); !i.done(); i.advance())
     {
       Procs_By_Name::ENTRY *entry;
       if (i.next(entry) == 0)
+      {
         continue;
+      }
       strm = this->split_details_ ?
-        stream_for (strm,entry->item(),"peers", "summary.txt") :
-        stream_for (strm,entry->item(),"peer_processes.txt");
+        stream_for (std::move (strm), entry->item(), "peers", "summary.txt") :
+        stream_for (std::move (strm), entry->item(), "peer_processes.txt");
       entry->item()->dump_peer_summary (*strm);
     }
 
   if (single)
+  {
     *strm << "\n\n\nSession detail object report: " << endl;
+  }
   for (Procs_By_Name::ITERATOR i (this->procs_by_name_); !i.done(); i.advance())
     {
       Procs_By_Name::ENTRY *entry;
       if (i.next(entry) == 0)
+      {
         continue;
-      strm = stream_for (strm,entry->item(),"objects.txt");
+      }
+      strm = stream_for (std::move (strm), entry->item(), "objects.txt");
       entry->item()->dump_object_detail (*strm);
     }
 
   if (single)
+  {
     *strm << "\n\n\nSession detail invocation by peer process report: " << endl;
+  }
   for (Procs_By_Name::ITERATOR i (this->procs_by_name_); !i.done(); i.advance())
     {
       Procs_By_Name::ENTRY *entry;
       if (i.next(entry) == 0)
+      {
         continue;
+      }
       if (this->split_details_)
         {
           entry->item()->split_peer_invocations (this);
         }
       else
         {
-          strm = stream_for (strm,entry->item(),"invocation_by_peer.txt");
+          strm = stream_for (std::move (strm), entry->item(), "invocation_by_peer.txt");
           entry->item()->dump_invocation_detail (*strm);
         }
     }
 
   if (single)
+  {
     *strm << "\n\n\nSession detail invocation by thread report: " << endl;
+  }
 
   ACE_Time_Value start = ACE_Time_Value::zero;
   for (Procs_By_Name::ITERATOR i (this->procs_by_name_); !i.done(); i.advance())
     {
       Procs_By_Name::ENTRY *entry;
       if (i.next(entry) == 0)
+      {
         continue;
+      }
       if (start == ACE_Time_Value::zero ||
           entry->item()->start_time().msec() < start.msec())
         {
@@ -322,21 +417,20 @@ Session::dump ()
     {
       Procs_By_Name::ENTRY *entry;
       if (i.next(entry) == 0)
+      {
         continue;
+      }
       if (this->split_details_)
         {
           entry->item()->split_thread_invocations (this, start);
         }
       else
         {
-          strm = stream_for (strm,entry->item(),"invocation_by_thread.txt");
+          strm = stream_for (std::move (strm), entry->item(), "invocation_by_thread.txt");
           entry->item()->dump_thread_invocations (*strm, start);
         }
     }
-  if (this->has_outfile() || this->has_dir())
-    delete strm;
 }
-
 
 // iterate over the collection of host processes to associate peer
 // processes via endpoints.
@@ -347,7 +441,9 @@ Session::reconcile ()
     {
       Processes::ENTRY *entry;
       if (i.next(entry) == 0)
+      {
         continue;
+      }
       entry->item()->reconcile_peers(this);
     }
 

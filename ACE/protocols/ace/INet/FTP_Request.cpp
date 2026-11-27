@@ -9,46 +9,43 @@
 #include "ace/INet/INet_Log.h"
 #include "ace/INet/String_IOStream.h"
 
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE
 {
   namespace FTP
   {
-    const ACE_CString Request::FTP_USER = "USER";
-    const ACE_CString Request::FTP_PASS = "PASS";
-    const ACE_CString Request::FTP_QUIT = "QUIT";
-    const ACE_CString Request::FTP_TYPE = "TYPE";
-    const ACE_CString Request::FTP_SYST = "SYST";
-    const ACE_CString Request::FTP_PWD  = "PWD";
-    const ACE_CString Request::FTP_CWD  = "CWD";
-    const ACE_CString Request::FTP_CDUP = "CDUP";
-    const ACE_CString Request::FTP_RNFR = "RNFR";
-    const ACE_CString Request::FTP_RNTO = "RNTO";
-    const ACE_CString Request::FTP_DELE = "DELE";
-    const ACE_CString Request::FTP_MKD  = "MKD";
-    const ACE_CString Request::FTP_RMD  = "RMD";
-    const ACE_CString Request::FTP_RETR = "RETR";
-    const ACE_CString Request::FTP_STOR = "STOR";
-    const ACE_CString Request::FTP_LIST = "LIST";
-    const ACE_CString Request::FTP_NLST = "NLST";
-    const ACE_CString Request::FTP_ABOR = "ABOR";
-    const ACE_CString Request::FTP_EPRT = "EPRT";
-    const ACE_CString Request::FTP_PORT = "PORT";
-    const ACE_CString Request::FTP_EPSV = "EPSV";
-    const ACE_CString Request::FTP_PASV = "PASV";
-    const ACE_CString Request::FTP_STAT = "STAT";
+    ACE_CString const Request::FTP_USER = "USER";
+    ACE_CString const Request::FTP_PASS = "PASS";
+    ACE_CString const Request::FTP_QUIT = "QUIT";
+    ACE_CString const Request::FTP_TYPE = "TYPE";
+    ACE_CString const Request::FTP_SYST = "SYST";
+    ACE_CString const Request::FTP_PWD  = "PWD";
+    ACE_CString const Request::FTP_CWD  = "CWD";
+    ACE_CString const Request::FTP_CDUP = "CDUP";
+    ACE_CString const Request::FTP_RNFR = "RNFR";
+    ACE_CString const Request::FTP_RNTO = "RNTO";
+    ACE_CString const Request::FTP_DELE = "DELE";
+    ACE_CString const Request::FTP_MKD  = "MKD";
+    ACE_CString const Request::FTP_RMD  = "RMD";
+    ACE_CString const Request::FTP_RETR = "RETR";
+    ACE_CString const Request::FTP_STOR = "STOR";
+    ACE_CString const Request::FTP_LIST = "LIST";
+    ACE_CString const Request::FTP_NLST = "NLST";
+    ACE_CString const Request::FTP_ABOR = "ABOR";
+    ACE_CString const Request::FTP_EPRT = "EPRT";
+    ACE_CString const Request::FTP_PORT = "PORT";
+    ACE_CString const Request::FTP_EPSV = "EPSV";
+    ACE_CString const Request::FTP_PASV = "PASV";
+    ACE_CString const Request::FTP_STAT = "STAT";
 
-    const int Request::eof_ = std::char_traits<char>::eof ();
+    int const Request::eof_ = std::char_traits<char>::eof ();
 
     Request::Request()
       {
       }
 
-    Request::~Request()
-      {
-      }
+    Request::~Request() = default;
 
     void Request::arguments (ACE_Array<ACE_CString> & args) const
       {
@@ -62,7 +59,7 @@ namespace ACE
             if (ch != eof_)
               {
                 // get arg
-                ACE_Array<ACE_CString>::size_type n =
+                ACE_Array<ACE_CString>::size_type const n =
                     args.size ();
                 args.size (n + 1);
                 ACE_CString& arg = args[n];
@@ -79,7 +76,9 @@ namespace ACE
       {
         str << this->command_.c_str ();
         if (!this->args_.empty ())
+        {
           str << ' ' << this->args_.c_str ();
+        }
         str << "\r\n";
 
         INET_DEBUG (6, (LM_DEBUG, DLINFO
@@ -113,7 +112,9 @@ namespace ACE
             ch = str.get ();
           }
         if (!ACE_OS::ace_isspace (ch))
+        {
           return false; // invalid FTP command string
+        }
         if (ch != '\r' && ch != '\n')
           {
             // skip whitespace

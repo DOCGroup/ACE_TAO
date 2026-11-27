@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    MMAP_Allocator.h
  *
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef TAO_MMAP_ALLOCATOR_H
 #define TAO_MMAP_ALLOCATOR_H
@@ -25,14 +21,13 @@
 #include "ace/MMAP_Memory_Pool.h"
 #include "ace/Thread_Mutex.h"
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// An ACE_Lite_MMAP_Memory_Pool is used since sync()ing is not
-// needed.  All memory allocated by the TAO_MMAP_Allocator is meant
-// for strictly transient data, not persistent.
+/// An ACE_Lite_MMAP_Memory_Pool is used since sync()ing is not
+/// needed.  All memory allocated by the TAO_MMAP_Allocator is meant
+/// for strictly transient data, not persistent.
 using TAO_MMAP_Allocator_Base =
-  ACE_Allocator_Adapter <ACE_Malloc<ACE_LITE_MMAP_MEMORY_POOL, TAO_SYNCH_MUTEX> >;
+  ACE_Allocator_Adapter <ACE_Malloc<ACE_LITE_MMAP_MEMORY_POOL, TAO_SYNCH_MUTEX>>;
 
 /**
  * @class TAO_MMAP_Allocator
@@ -45,10 +40,8 @@ class TAO_MMAP_Allocator
   : public TAO_MMAP_Allocator_Base
 {
 public:
-  /// Constructor
   TAO_MMAP_Allocator ();
 
-  /// Destructor.
   ~TAO_MMAP_Allocator () override;
 
   /// Return backing store handle.

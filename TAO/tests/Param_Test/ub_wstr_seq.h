@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    ub_wstr_seq.h
  *
@@ -7,32 +5,26 @@
  *
  *  @author   Jeff Parsons
  */
-//=============================================================================
-
 
 #ifndef PARAM_TEST_UNBOUNDED_WSTRING_SEQUENCE_H
 #define PARAM_TEST_UNBOUNDED_WSTRING_SEQUENCE_H
 
 #include "param_testC.h"
 
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-//           test typedefed sequences (in our case, sequences of wstrings)
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+/// test typedefed sequences (in our case, sequences of wstrings)
 
 class Test_WString_Sequence
 {
 public:
-  /// ctor
   Test_WString_Sequence ();
 
-  /// dtor
-  ~Test_WString_Sequence ();
+  ~Test_WString_Sequence () = default;
 
   /// run the SII test
   int run_sii_test (Param_Test_ptr objref);
 
   /// return operation name
-  const char *opname () const;
+  char const *opname () const;
 
   /// set values for parameters
   int init_parameters (Param_Test_ptr objref);
@@ -54,7 +46,7 @@ public:
 
 private:
   /// operation name
-  char *opname_;
+  char const *opname_;
 
   /// in parameter
   CORBA::WStringSeq_var in_;

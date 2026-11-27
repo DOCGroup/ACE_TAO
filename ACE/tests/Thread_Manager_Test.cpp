@@ -1,16 +1,13 @@
-
-//=============================================================================
 /**
  *  @file    Thread_Manager_Test.cpp
  *
  *    This program tests the group management mechanisms provided by
- *    the <ACE_Thread_Manager>, including the group signal handling,
+ *    the @c ACE_Thread_Manager, including the group signal handling,
  *    group suspension and resumption, and cooperative thread
  *    cancellation mechanisms.
  *
  *  @author Prashant Jain <pjain@cs.wustl.edu> and Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "ace/Thread_Manager.h"
@@ -19,13 +16,15 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_sys_time.h"
 
+#include <memory>
+
 #if defined (ACE_HAS_THREADS)
 #include "ace/Barrier.h"
 
 // Each thread keeps track of whether it has been signalled by using a
 // global array.  It must be dynamically allocated to allow sizing at
 // runtime, based on the number of threads.
-static ACE_thread_t *signalled = nullptr;
+static ACE_thread_t *signalled {};
 static size_t n_threads = ACE_MAX_THREADS;
 
 // Helper function that looks for an existing entry in the signalled
@@ -40,19 +39,25 @@ been_signalled (const ACE_thread_t t_id,
   for (u_int i = 0; i < n_threads; ++i)
     {
       if (ACE_OS::thr_equal (signalled[i], t_id))
-        // Already signalled.
-        return 1;
+        {
+          // Already signalled.
+          return 1;
+        }
 
       if (update  &&
           unused_slot == n_threads  &&
           ACE_OS::thr_equal (signalled[i],
                              ACE_OS::NULL_thread))
+      {
         unused_slot = i;
+      }
     }
 
   if (update  &&  unused_slot < n_threads)
-    // Update the array using the first unused_slot.
-    signalled[unused_slot] = t_id;
+    {
+      // Update the array using the first unused_slot.
+      signalled[unused_slot] = t_id;
+    }
 
   return 0;
 }
@@ -60,7 +65,7 @@ been_signalled (const ACE_thread_t t_id,
 // Synchronize starts of threads, so that they all start before the
 // main thread cancels them.  To avoid creating a static object, it is
 // dynamically allocated, before spawning any threads.
-static ACE_Barrier *thread_start = nullptr;
+static ACE_Barrier *thread_start {};
 
 extern "C" void
 handler (int /* signum */)
@@ -76,9 +81,10 @@ handler (int /* signum */)
     }
 }
 
-static void *
-worker (int iterations)
+static ACE_THR_FUNC_RETURN
+worker (void *arg)
 {
+  const int iterations = *static_cast<int *> (arg);
 #if !defined (ACE_LACKS_UNIX_SIGNALS)
   // Cache this thread's ID.
   const ACE_thread_t t_id = ACE_OS::thr_self ();
@@ -92,7 +98,7 @@ worker (int iterations)
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) worker starting loop\n")));
 
-  for (int i = 0; i < iterations; i++)
+  for (int i = 0; i < iterations; ++i)
     {
       if ((i % 1000) == 0)
         {
@@ -136,7 +142,7 @@ worker (int iterations)
     }
 
   // Destructor removes thread from Thread_Manager.
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 static constexpr int DEFAULT_ITERATIONS = 10000;
@@ -165,28 +171,29 @@ int
 ThrMgr_Task::svc ()
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Task 0x%x, thread %t waiting to be cancelled\n"),
-              this));
-  ACE_thread_t me = ACE_Thread::self ();
+              ACE_TEXT ("Task %@, thread %t waiting to be cancelled\n"),
+              static_cast<void *> (this)));
+  ACE_thread_t const me = ACE_Thread::self ();
   for (int i = 0; i < 30 && !this->thr_mgr ()->testcancel (me); ++i)
-    ACE_OS::sleep (1);
+    {
+      ACE_OS::sleep (1);
+    }
 
   if (this->thr_mgr ()->testcancel (me))
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("Task 0x%x, thread %t cancelled; exiting\n"),
-                  this));
+                  ACE_TEXT ("Task %@, thread %t cancelled; exiting\n"),
+                  static_cast<void *> (this)));
     }
   else
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("Task 0x%x, thread %t was not cancelled\n"),
-                  this));
+                  ACE_TEXT ("Task %@, thread %t was not cancelled\n"),
+                  static_cast<void *> (this)));
       ++ThrMgr_Task::errors;
     }
   return 0;
 }
-
 
 // This function tests the task-based record keeping functions.
 static int
@@ -195,19 +202,24 @@ test_task_record_keeping (ACE_Thread_Manager *mgr)
   int status = 0;
 
   ThrMgr_Task t1 (mgr), t2 (mgr);
-  int t1_grp (20), t2_grp (30);
+  int const t1_grp (20);
+  int const t2_grp (30);
 
   // Start two tasks, with multiple threads per task. Make sure that
   // task_all_list() works.
   if (-1 == t1.activate (THR_JOINABLE, 2, 0,
                          ACE_DEFAULT_THREAD_PRIORITY, t1_grp))
+  {
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("activate")), 1);
+  }
   if (-1 == t2.activate (THR_JOINABLE, 3, 0,
                          ACE_DEFAULT_THREAD_PRIORITY, t2_grp))
+  {
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("activate")), 1);
+  }
 
   ACE_Task_Base *task_list[10];
-  int num_tasks = mgr->task_all_list (task_list, 10);
+  int const num_tasks = mgr->task_all_list (task_list, 10);
   if (2 != num_tasks)
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("Expected 2 tasks; got %d\n"),
@@ -217,25 +229,37 @@ test_task_record_keeping (ACE_Thread_Manager *mgr)
   else
     {
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Got %d tasks - correct\n"), num_tasks));
-      if (((task_list[0] == &t1 && task_list[1] == &t2)
-           || (task_list[1] == &t1 && task_list[0] == &t2))
+      if (((task_list[0] == std::addressof (t1)
+            && task_list[1] == std::addressof (t2))
+           || (task_list[1] == std::addressof (t1)
+               && task_list[0] == std::addressof (t2)))
           && task_list[0] != task_list[1])
-        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("The Task IDs are correct\n")));
+        {
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("The Task IDs are correct\n")));
+        }
       else
+      {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("But Task ID values are wrong!\n")));
+      }
     }
   ACE_DEBUG ((LM_DEBUG, "Canceling grp %d\n", t1_grp));
   if (-1 == mgr->cancel_grp (t1_grp))
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("cancel_grp")),
-                      1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("cancel_grp")),
+                        1);
+    }
   ACE_DEBUG ((LM_DEBUG, "Canceling grp %d\n", t2_grp));
   if (-1 == mgr->cancel_grp (t2_grp))
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("cancel_grp")),
-                      1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("cancel_grp")),
+                        1);
+    }
 
   mgr->wait ();
   if (ThrMgr_Task::errors > 0 && status == 0)
+  {
     status = 1;
+  }
 
   return status;
 }
@@ -249,7 +273,7 @@ run_main (int, ACE_TCHAR *[])
   int status = 0;
 
 #if defined (ACE_HAS_THREADS)
-  size_t n_iterations = DEFAULT_ITERATIONS;
+  int n_iterations = DEFAULT_ITERATIONS;
 
   u_int i;
 
@@ -261,7 +285,9 @@ run_main (int, ACE_TCHAR *[])
                   1);
   // Initialize each ACE_thread_t to avoid Purify UMR's.
   for (i = 0; i < n_threads; ++i)
-    signalled[i] = ACE_OS::NULL_thread;
+    {
+      signalled[i] = ACE_OS::NULL_thread;
+    }
 
   // And similarly, dynamically allocate the thread_start barrier.
   ACE_NEW_RETURN (thread_start,
@@ -269,20 +295,20 @@ run_main (int, ACE_TCHAR *[])
                   -1);
 
   // Register a signal handler.
-  ACE_Sig_Action sa ((ACE_SignalHandler) handler, SIGINT);
+  ACE_Sig_Action const sa ((ACE_SignalHandler) handler, SIGINT);
   ACE_UNUSED_ARG (sa);
 
   ACE_Thread_Manager *thr_mgr = ACE_Thread_Manager::instance ();
 
 #if 0
   // Assign thread (VxWorks task) names to test that feature.
-  ACE_hthread_t *thread_name = 0;
+  ACE_hthread_t *thread_name {};
   ACE_NEW_RETURN (thread_name,
                   ACE_hthread_t[n_threads],
                   -1);
 
   // And test the ability to specify stack size.
-  size_t *stack_size = 0;
+  size_t *stack_size {};
   ACE_NEW_RETURN (stack_size,
                   size_t[n_threads],
                   -1);
@@ -292,21 +318,23 @@ run_main (int, ACE_TCHAR *[])
       if (i < n_threads - 1)
         {
           ACE_NEW_RETURN (thread_name[i], char[32], -1);
-          ACE_OS::snprintf (thread_name[i], 32, ACE_TEXT ("thread%u"), i);
+          ACE_OS::snprintf (thread_name[i], 32, ACE_TEXT ("thread%d"), i);
         }
       else
-        // Pass an ACE_thread_t pointer of 0 for the last thread name.
-        thread_name[n_threads - 1] = 0;
+        {
+          // Pass an ACE_thread_t pointer of 0 for the last thread name.
+          thread_name[n_threads - 1] = 0;
+        }
 
       stack_size[i] = 40000;
     }
 #endif /* ACE_HAS_VXTHREADS */
 
-  int grp_id = thr_mgr->spawn_n
+  int const grp_id = thr_mgr->spawn_n
                  (
                   n_threads,
-                  (ACE_THR_FUNC) worker,
-                  reinterpret_cast <void *> (n_iterations),
+                  worker,
+                  &n_iterations,
                   THR_BOUND
                   , ACE_DEFAULT_THREAD_PRIORITY
                   , -1
@@ -409,15 +437,19 @@ run_main (int, ACE_TCHAR *[])
   // But, wait for a limited time, just in case.
   ACE_Time_Value const max_wait (600);
   ACE_Time_Value const wait_time (ACE_OS::gettimeofday () + max_wait);
-  if (thr_mgr->wait (&wait_time) == -1)
+  if (thr_mgr->wait (std::addressof (wait_time)) == -1)
     {
       if (errno == ETIME)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("maximum wait time of %d msec exceeded\n"),
-                               max_wait.msec ()));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("maximum wait time of %Lu msec exceeded\n"),
+                      max_wait.msec ()));
+        }
       else
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("%p\n"), ACE_TEXT ("wait")));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("%p\n"), ACE_TEXT ("wait")));
+        }
       status = -1;
     }
 
@@ -442,7 +474,9 @@ run_main (int, ACE_TCHAR *[])
 
   // Now test task record keeping
   if (test_task_record_keeping (thr_mgr) != 0)
+  {
     status = -1;
+  }
 
 #else
   ACE_ERROR ((LM_INFO,

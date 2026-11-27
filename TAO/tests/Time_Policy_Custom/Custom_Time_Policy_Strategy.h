@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   Custom_Time_Policy_Strategy.h
  *
  *  @author Martin Corino <mcorino@remedy.nl>
  */
-//=============================================================================
 
 #ifndef CUSTOM_TIME_POLICY_STRATEGY_H
 #define CUSTOM_TIME_POLICY_STRATEGY_H
@@ -31,13 +27,13 @@ class TPTEST_Export Custom_Time_Policy_Strategy
   : public TAO_Time_Policy_Strategy
 {
 public:
-  virtual ~Custom_Time_Policy_Strategy ();
+  ~Custom_Time_Policy_Strategy () override = default;
 
-  virtual ACE_Timer_Queue * create_timer_queue ();
+  ACE_Timer_Queue * create_timer_queue () override;
 
-  virtual void destroy_timer_queue (ACE_Timer_Queue *tmq);
+  void destroy_timer_queue (ACE_Timer_Queue *tmq) override;
 
-  virtual ACE_Dynamic_Time_Policy_Base * get_time_policy ();
+  ACE_Dynamic_Time_Policy_Base * get_time_policy () override;
 };
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TPTEST, Custom_Time_Policy_Strategy)

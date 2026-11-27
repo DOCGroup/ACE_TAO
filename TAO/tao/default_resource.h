@@ -1,14 +1,9 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   default_resource.h
  *
  *  @author Chris Cleeland
  *  @author Carlos O'Ryan
  */
-//=============================================================================
-
 
 #ifndef TAO_DEFAULT_RESOURCE_H
 #define TAO_DEFAULT_RESOURCE_H
@@ -27,6 +22,9 @@ class ACE_Reactor_Impl;
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #include "ace/Timer_Queuefwd.h"
+
+#include <string>
+#include <vector>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -59,15 +57,15 @@ public:
   ~TAO_Codeset_Parameters ();
 
   /// The native codeset (getter)
-  const ACE_TCHAR* native ();
+  ACE_TCHAR const *native ();
 
   /// The native codeset (setter)
-  void native (const ACE_TCHAR* n);
+  void native (ACE_TCHAR const *n);
 
   /// Add a new codeset
-  void add_translator (const ACE_TCHAR* name);
+  void add_translator (ACE_TCHAR const *name);
 
-  using iterator = ACE_Unbounded_Queue_Iterator<ACE_TCHAR*>;
+  using iterator = std::vector<std::basic_string<ACE_TCHAR>>::const_iterator;
 
   /// Iterate through the registered translators
   iterator translators ();
@@ -76,11 +74,14 @@ public:
   void apply_to (TAO_Codeset_Descriptor_Base *csd);
 
 private:
-  TAO_Codeset_Parameters (const TAO_Codeset_Parameters &) = delete;
-  TAO_Codeset_Parameters &operator= (const TAO_Codeset_Parameters &) = delete;
+  TAO_Codeset_Parameters (TAO_Codeset_Parameters const &) = delete;
+  TAO_Codeset_Parameters &operator= (TAO_Codeset_Parameters const &) = delete;
+  TAO_Codeset_Parameters (TAO_Codeset_Parameters &&) = delete;
+  TAO_Codeset_Parameters &operator= (TAO_Codeset_Parameters &&) = delete;
 
-  ACE_Unbounded_Queue<ACE_TCHAR*> translators_;
-  ACE_TCHAR* native_;
+  std::vector<std::basic_string<ACE_TCHAR>> translators_;
+  std::basic_string<ACE_TCHAR> native_;
+  bool native_set_;
 };
 
 /**
@@ -117,29 +118,28 @@ class TAO_Export TAO_Default_Resource_Factory
   : public TAO_Resource_Factory
 {
 public:
-  /// Constructor.
   TAO_Default_Resource_Factory ();
 
-  /// Destructor.
   virtual ~TAO_Default_Resource_Factory ();
 
   /**
    * @name Service Configurator Hooks
    */
-  //@{
+  /// @{
+
   /// Dynamic linking hook
-  virtual int init (int argc, ACE_TCHAR *argv[]);
+  int init (int argc, ACE_TCHAR *argv[]) override;
 
   /// Parse svc.conf arguments
   int parse_args (int argc, ACE_TCHAR* argv[]);
-  //@}
+  /// @}
 
   /**
    * @name Member Accessors
    */
-  //@{
+  /// @{
   int get_parser_names (char **&names,
-                        int &number_of_names);
+                        int &number_of_names) override;
   enum
   {
     TAO_ALLOCATOR_THREAD_LOCK
@@ -148,45 +148,44 @@ public:
   /// Modify and get the source for the CDR allocators
   int cdr_allocator_source ();
 
-  // = Resource Retrieval
-  virtual int use_locked_data_blocks () const;
-  virtual ACE_Reactor *get_reactor ();
-  virtual void reclaim_reactor (ACE_Reactor *);
-  virtual TAO_Acceptor_Registry  *get_acceptor_registry ();
-  virtual TAO_Connector_Registry *get_connector_registry ();
-  virtual void use_local_memory_pool (bool);
-  virtual ACE_Allocator* input_cdr_dblock_allocator ();
-  virtual ACE_Allocator* input_cdr_buffer_allocator ();
-  virtual ACE_Allocator* input_cdr_msgblock_allocator ();
-  virtual int input_cdr_allocator_type_locked ();
-  virtual ACE_Allocator* output_cdr_dblock_allocator ();
-  virtual ACE_Allocator* output_cdr_buffer_allocator ();
-  virtual ACE_Allocator* output_cdr_msgblock_allocator ();
-  virtual ACE_Allocator* amh_response_handler_allocator ();
-  virtual ACE_Allocator* ami_response_handler_allocator ();
-  virtual TAO_ProtocolFactorySet *get_protocol_factories ();
+  int use_locked_data_blocks () const override;
+  ACE_Reactor *get_reactor () override;
+  void reclaim_reactor (ACE_Reactor *) override;
+  TAO_Acceptor_Registry  *get_acceptor_registry () override;
+  TAO_Connector_Registry *get_connector_registry () override;
+  void use_local_memory_pool (bool) override;
+  ACE_Allocator* input_cdr_dblock_allocator () override;
+  ACE_Allocator* input_cdr_buffer_allocator () override;
+  ACE_Allocator* input_cdr_msgblock_allocator () override;
+  int input_cdr_allocator_type_locked () override;
+  ACE_Allocator* output_cdr_dblock_allocator () override;
+  ACE_Allocator* output_cdr_buffer_allocator () override;
+  ACE_Allocator* output_cdr_msgblock_allocator () override;
+  ACE_Allocator* amh_response_handler_allocator () override;
+  ACE_Allocator* ami_response_handler_allocator () override;
+  TAO_ProtocolFactorySet *get_protocol_factories () override;
 
-  virtual int init_protocol_factories ();
+  int init_protocol_factories () override;
 
-  virtual TAO_Codeset_Manager * codeset_manager ();
+  TAO_Codeset_Manager * codeset_manager () override;
 
-  virtual int cache_maximum () const;
-  virtual int purge_percentage () const;
-  virtual int max_muxed_connections () const;
-  virtual ACE_Lock *create_cached_connection_lock ();
-  virtual int locked_transport_cache ();
-  virtual TAO_Flushing_Strategy *create_flushing_strategy ();
-  virtual TAO_Connection_Purging_Strategy *create_purging_strategy ();
-  TAO_Resource_Factory::Resource_Usage resource_usage_strategy () const;
-  virtual TAO_LF_Strategy *create_lf_strategy ();
-  virtual TAO_GIOP_Fragmentation_Strategy*
+  int cache_maximum () const override;
+  int purge_percentage () const override;
+  int max_muxed_connections () const override;
+  ACE_Lock *create_cached_connection_lock () override;
+  int locked_transport_cache () override;
+  TAO_Flushing_Strategy *create_flushing_strategy () override;
+  TAO_Connection_Purging_Strategy *create_purging_strategy () override;
+  TAO_Resource_Factory::Resource_Usage resource_usage_strategy () const override;
+  TAO_LF_Strategy *create_lf_strategy () override;
+  TAO_GIOP_Fragmentation_Strategy*
     create_fragmentation_strategy (TAO_Transport * transport,
-                                   CORBA::ULong max_message_size) const;
-  virtual void disable_factory ();
-  virtual bool drop_replies_during_shutdown () const;
-  virtual int transport_idle_timeout () const;
-  virtual int transport_idle_scan_interval () const;
- //@}
+                                   CORBA::ULong max_message_size) const override;
+  void disable_factory () override;
+  bool drop_replies_during_shutdown () const override;
+  int transport_idle_timeout () const override;
+  int transport_idle_scan_interval () const override;
+ /// @}
 
 protected:
   friend class TAO_RSF_Timer_Queue_Ptr;
@@ -203,19 +202,21 @@ protected:
   virtual ACE_Reactor_Impl *allocate_reactor_impl () const;
 
   /// Add a Parser name to the list of Parser names.
-  int add_to_ior_parser_names (const char *);
+  int add_to_ior_parser_names (char const *);
 
-  void report_option_value_error (const ACE_TCHAR* option_name,
-                                  const ACE_TCHAR* option_value);
+  void report_option_value_error (ACE_TCHAR const *option_name,
+                                  ACE_TCHAR const *option_value);
 
 protected:
   /// The type of data blocks that the ORB should use
   int use_locked_data_blocks_;
 
-  /// The number of the different types of Parsers.
+  /// Number of parser names in the owned array below.
   int parser_names_count_;
 
-  /// Array consisting of the names of the parsers
+  /// Owns the CORBA strings and pointer array returned through the legacy
+  /// get_parser_names(char **&) API. The array is allocated with ACE_NEW_RETURN
+  /// to preserve ACE allocator hooks; each string is freed with string_free.
   char **parser_names_;
 
   /// Index of the current element in the parser_names_ array
@@ -257,7 +258,7 @@ protected:
    */
   bool dynamically_allocated_reactor_;
 
-  virtual int load_default_protocols ();
+  int load_default_protocols () override;
 
   /// This flag is used to determine whether options have been
   /// processed via the init() function.  It is necessary to

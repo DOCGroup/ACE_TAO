@@ -1,4 +1,3 @@
-// -*- C++ -*-
 // Since this is only included in Handle_Gobbler.h, these should be
 // inline, not ACE_INLINE.
 // FUZZ: disable check_for_inline
@@ -14,7 +13,9 @@ ACE_Handle_Gobbler::close_remaining_handles ()
 {
   ACE_Handle_Set_Iterator iter (this->handle_set_);
   for (ACE_HANDLE h = iter (); h != ACE_INVALID_HANDLE; h = iter ())
-    ACE_OS::close (h);
+    {
+      ACE_OS::close (h);
+    }
 }
 
 inline
@@ -46,7 +47,7 @@ ACE_Handle_Gobbler::consume_handles (size_t n_handles_to_keep_available)
 
 #else
 
-  while (1)
+  while (true)
     {
       ACE_HANDLE handle = ACE_OS::open (ACE_DEV_NULL, O_WRONLY);
 
@@ -64,7 +65,9 @@ ACE_Handle_Gobbler::consume_handles (size_t n_handles_to_keep_available)
             }
         }
       if (handle >= static_cast<ACE_HANDLE>(FD_SETSIZE))
-        break;
+        {
+          break;
+        }
       this->handle_set_.set_bit (handle);
     }
 

@@ -1,5 +1,4 @@
-// -*- C++ -*-
-#include "ace/OS_NS_string.h"
+#include <cstring>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -76,7 +75,7 @@ ACE_Thread::spawn (ACE_THR_FUNC func,
                    void *thr_stack,
                    size_t thr_stack_size,
                    ACE_Thread_Adapter *thread_adapter,
-                   const char **thr_name)
+                   char const **thr_name)
 {
   ACE_TRACE ("ACE_Thread::spawn");
 
@@ -146,7 +145,7 @@ ACE_Thread::setconcurrency (int new_level)
 
 ACE_INLINE int
 ACE_Thread::sigsetmask (int how,
-                        const sigset_t *sigset,
+                        sigset_t const *sigset,
                         sigset_t *osigset)
 {
   ACE_TRACE ("ACE_Thread::sigsetmask");
@@ -160,9 +159,9 @@ ACE_Thread::disablecancel (struct cancel_state *old_state)
   int old_cstate = 0;
   int result = ACE_OS::thr_setcancelstate (THR_CANCEL_DISABLE,
                                            &old_cstate);
-  if (result == 0 && old_state != 0)
+  if (result == 0 && old_state != nullptr)
     {
-      ACE_OS::memset (old_state,
+      std::memset (old_state,
                       0,
                       sizeof (*old_state));
       old_state->cancelstate = old_cstate;
@@ -183,14 +182,18 @@ ACE_Thread::enablecancel (struct cancel_state *old_state,
   result = ACE_OS::thr_setcancelstate (THR_CANCEL_ENABLE,
                                        &old_cstate);
   if (result != 0)
-    return result;
+    {
+      return result;
+    }
 
   result = ACE_OS::thr_setcanceltype (flag,
                                       &old_ctype);
   if (result != 0)
-    return result;
+    {
+      return result;
+    }
 
-  if (old_state != 0)
+  if (old_state != nullptr)
     {
       old_state->cancelstate = old_cstate;
       old_state->canceltype = old_ctype;
@@ -210,7 +213,9 @@ ACE_Thread::setcancelstate (struct cancel_state &new_state,
   if (new_state.cancelstate != 0
       && ACE_OS::thr_setcancelstate (new_state.cancelstate,
                                      &old_cstate) != 0)
-    return -1;
+    {
+      return -1;
+    }
 
   if (new_state.canceltype != 0
       && ACE_OS::thr_setcanceltype (new_state.canceltype,
@@ -223,7 +228,7 @@ ACE_Thread::setcancelstate (struct cancel_state &new_state,
       return -1;
     }
 
-  if (old_state != 0)
+  if (old_state != nullptr)
     {
       old_state->cancelstate = old_cstate;
       old_state->canceltype = old_ctype;

@@ -12,10 +12,12 @@
 #include "tao/Wait_Strategy.h"
 #include "tao/Stub.h"
 #include "tao/ORB_Core.h"
-#include "tao/debug.h"
 #include "tao/GIOP_Message_Base.h"
 #include "tao/Acceptor_Registry.h"
 #include "tao/Thread_Lane_Resources.h"
+
+#include <cstring>
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -24,10 +26,6 @@ TAO::SSLIOP::Transport::Transport (
   TAO_ORB_Core *orb_core)
   : TAO_Transport (IOP::TAG_INTERNET_IOP, orb_core),
     connection_handler_ (handler)
-{
-}
-
-TAO::SSLIOP::Transport::~Transport ()
 {
 }
 
@@ -47,13 +45,15 @@ int
 TAO::SSLIOP::Transport::handle_input (TAO_Resume_Handle &rh,
                                       ACE_Time_Value *max_wait_time)
 {
-  int result = 0;
+  int result {};
 
   // Set up the SSLIOP::Current object.
   TAO::SSLIOP::State_Guard ssl_state_guard (this->connection_handler_, result);
 
   if (result == -1)
+  {
     return -1;
+  }
 
   return TAO_Transport::handle_input (rh, max_wait_time);
 }
@@ -62,13 +62,15 @@ ssize_t
 TAO::SSLIOP::Transport::send (iovec *iov,
                               int iovcnt,
                               size_t &bytes_transferred,
-                              const ACE_Time_Value *max_wait_time)
+                              ACE_Time_Value const *max_wait_time)
 {
   ssize_t const retval =
     this->connection_handler_->peer ().sendv (iov, iovcnt, max_wait_time);
 
   if (retval > 0)
+  {
     bytes_transferred = retval;
+  }
 
   return retval;
 }
@@ -76,7 +78,7 @@ TAO::SSLIOP::Transport::send (iovec *iov,
 ssize_t
 TAO::SSLIOP::Transport::recv (char *buf,
                               size_t len,
-                              const ACE_Time_Value *max_wait_time)
+                              ACE_Time_Value const *max_wait_time)
 {
   ssize_t const n = this->connection_handler_->peer ().recv (buf,
                                                              len,
@@ -97,7 +99,9 @@ TAO::SSLIOP::Transport::recv (char *buf,
   if (n == -1)
     {
       if (errno == EWOULDBLOCK)
+      {
         return 0;
+      }
 
       return -1;
     }
@@ -118,15 +122,19 @@ TAO::SSLIOP::Transport::send_request (TAO_Stub *stub,
                                       ACE_Time_Value *max_wait_time)
 {
   if (this->ws_->sending_request (orb_core, message_semantics) == -1)
+  {
     return -1;
+  }
 
   if (this->send_message (stream,
                           stub,
-                          0,
+                          nullptr,
                           message_semantics,
                           max_wait_time) == -1)
+  {
 
     return -1;
+  }
 
   return 0;
 }
@@ -140,7 +148,9 @@ TAO::SSLIOP::Transport::send_message (TAO_OutputCDR &stream,
 {
   // Format the message in the stream first
   if (this->messaging_object ()->format_message (stream, stub, request) != 0)
+  {
     return -1;
+  }
 
   // Strictly speaking, should not need to loop here because the
   // socket never gets set to a nonblocking mode ... some Linux
@@ -155,11 +165,13 @@ TAO::SSLIOP::Transport::send_message (TAO_OutputCDR &stream,
   if (n == -1)
     {
       if (TAO_debug_level)
+      {
         ORBSVCS_ERROR ((LM_ERROR,
                     ACE_TEXT ("TAO (%P|%t) - SSLIOP_Transport::send_message, ")
                     ACE_TEXT ("closing transport %B after fault %p\n"),
                     this->id (),
                     ACE_TEXT ("send_message ()\n")));
+      }
 
       return -1;
     }
@@ -172,13 +184,17 @@ TAO::SSLIOP::Transport::tear_listen_point_list (TAO_InputCDR &cdr)
 {
   CORBA::Boolean byte_order;
   if (!(cdr >> ACE_InputCDR::to_boolean (byte_order)))
+  {
     return -1;
+  }
 
   cdr.reset_byte_order (static_cast<int> (byte_order));
 
   IIOP::ListenPointList listen_list;
   if (!(cdr >> listen_list))
+  {
     return -1;
+  }
 
   // As we have received a bidirectional information, set the flag to
   // 0
@@ -186,7 +202,6 @@ TAO::SSLIOP::Transport::tear_listen_point_list (TAO_InputCDR &cdr)
 
   return this->connection_handler_->process_listen_point_list (listen_list);
 }
-
 
 void
 TAO::SSLIOP::Transport::set_bidir_context_info (
@@ -196,19 +211,14 @@ TAO::SSLIOP::Transport::set_bidir_context_info (
   TAO_Acceptor_Registry &ar =
     this->orb_core ()->lane_resources ().acceptor_registry ();
 
-  // Get the first acceptor in the registry
-  TAO_AcceptorSetIterator acceptor = ar.begin ();
-
   IIOP::ListenPointList listen_point_list;
 
-  for (;
-       acceptor != ar.end ();
-       acceptor++)
+  for (std::unique_ptr<TAO_Acceptor> const& acceptor : ar.acceptors ())
     {
       // Check whether it is a IIOP acceptor
-      if ((*acceptor)->tag () == this->tag ())
+      if (acceptor->tag () == this->tag ())
         {
-          if (this->get_listen_point (listen_point_list, *acceptor) == -1)
+          if (this->get_listen_point (listen_point_list, acceptor.get ()) == -1)
             {
               ORBSVCS_ERROR ((LM_ERROR,
                           "TAO (%P|%t) - SSLIOP_Transport::set_bidir_info, ",
@@ -225,13 +235,14 @@ TAO::SSLIOP::Transport::set_bidir_context_info (
   // Marshall the information into the stream
   if (!(cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER))
       || !(cdr << listen_point_list))
+  {
     return;
+  }
 
   // Add this info in to the svc_list
   opdetails.request_service_context ().set_context (IOP::BI_DIR_IIOP, cdr);
   return;
 }
-
 
 int
 TAO::SSLIOP::Transport::get_listen_point (
@@ -242,18 +253,20 @@ TAO::SSLIOP::Transport::get_listen_point (
     dynamic_cast<TAO::SSLIOP::Acceptor *> (acceptor);
 
   if (ssliop_acceptor == nullptr)
+  {
     return -1;
+  }
 
   // Get the array of IIOP (not SSLIOP!) endpoints serviced by the
   // SSLIOP_Acceptor.
-  const ACE_INET_Addr *endpoint_addr = ssliop_acceptor->endpoints ();
+  ACE_INET_Addr const *endpoint_addr = ssliop_acceptor->endpoints ();
 
   // Get the count
   size_t const count = ssliop_acceptor->endpoint_count ();
 
   // The SSL port is stored in the SSLIOP::SSL component associated
   // with the SSLIOP_Acceptor.
-  const ::SSLIOP::SSL &ssl = ssliop_acceptor->ssl_component ();
+  ::SSLIOP::SSL const &ssl = ssliop_acceptor->ssl_component ();
 
   // Get the local address of the connection
   ACE_INET_Addr local_addr;
@@ -267,7 +280,9 @@ TAO::SSLIOP::Transport::get_listen_point (
 
 #ifdef ACE_HAS_IPV6
   if (local_addr.is_ipv4_mapped_ipv6 ())
-    local_addr.set (local_addr.get_port_number (), local_addr.get_ip_address ());
+    {
+      local_addr.set (local_addr.get_port_number (), local_addr.get_ip_address ());
+    }
 #endif /* ACE_HAS_IPV6 */
 
   // Note: Looks like there is no point in sending the list of
@@ -289,16 +304,16 @@ TAO::SSLIOP::Transport::get_listen_point (
 #if defined (ACE_HAS_IPV6)
   // If this is an IPv6 decimal linklocal address containing a scopeid than
   // remove the scopeid from the information being sent.
-  const char *cp_scope = nullptr;
+  char const *cp_scope {};
   if (local_addr.get_type () == PF_INET6 &&
-        (cp_scope = ACE_OS::strchr (local_interface.in (), '%')) != nullptr)
+        (cp_scope = std::strchr (local_interface.in (), '%')) != nullptr)
     {
       CORBA::ULong len = cp_scope - local_interface.in ();
       local_interface[len] = '\0';
     }
 #endif /* ACE_HAS_IPV6 */
 
-  for (size_t index = 0; index < count; ++index)
+  for (size_t index {}; index < count; ++index)
     {
       // Make sure port numbers are equal so the following comparison
       // only concerns the IP(v4/v6) address.

@@ -1,6 +1,3 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
  *  @file    receiver.h
  *
@@ -9,9 +6,13 @@
  *
  *  @author Yamuna Krishnamurthy <yamuna@cs.wustl.edu>
  */
-//=============================================================================
 
+#include <cstddef>
+#include <cstdio>
+#include <memory>
+#include <string>
 
+#include "ace/OS_NS_stdio.h"
 #include "orbsvcs/Naming/Naming_Client.h"
 #include "orbsvcs/AV/AVStreams_i.h"
 #include "orbsvcs/AV/Endpoint_Strategy.h"
@@ -28,32 +29,32 @@
 class Receiver_Callback : public TAO_AV_Callback
 {
 public:
-  /// Constructor.
-  Receiver_Callback ();
+  Receiver_Callback () = default;
+  Receiver_Callback (Receiver_Callback const &) = delete;
+  Receiver_Callback &operator= (Receiver_Callback const &) = delete;
+  Receiver_Callback (Receiver_Callback &&) = delete;
+  Receiver_Callback &operator= (Receiver_Callback &&) = delete;
 
-  // Method that is called when there is data to be received from a
-  // sender.
+  /// Method that is called when there is data to be received from a
+  /// sender.
   int receive_frame (ACE_Message_Block *frame,
                      TAO_AV_frame_info *frame_info,
                      ACE_Addr const &peer_address) override;
 
-  // Called when the sender is done sending data and wants to close
-  // down the connection.
+  /// Called when the sender is done sending data and wants to close
+  /// down the connection.
   int handle_destroy () override;
 
-  void flowname (const char*);
+  int flowname (std::string const &flow_name);
 
 private:
   /// Keeping a count of the incoming frames.
-  int frame_count_;
+  size_t frame_count_ {};
 
-  /// Message block into which data is read from a file and then sent.
-  ACE_Message_Block mb_;
-
-  ACE_CString flowname_;
+  std::string flowname_;
 
   /// File handle of the file into which received data is written.
-  FILE *output_file_;
+  std::unique_ptr<FILE, int (*) (FILE *)> output_file_ {nullptr, std::fclose};
 };
 
 /**
@@ -66,13 +67,19 @@ private:
 class Receiver_StreamEndPoint : public TAO_Server_StreamEndPoint
 {
 public:
-  // Create a receiver application callback.
-  int get_callback (const char *flowname,
+  Receiver_StreamEndPoint () = default;
+  Receiver_StreamEndPoint (Receiver_StreamEndPoint const &) = delete;
+  Receiver_StreamEndPoint &operator= (Receiver_StreamEndPoint const &) = delete;
+  Receiver_StreamEndPoint (Receiver_StreamEndPoint &&) = delete;
+  Receiver_StreamEndPoint &operator= (Receiver_StreamEndPoint &&) = delete;
+
+  /// Create a receiver application callback.
+  int get_callback (char const *flowname,
                     TAO_AV_Callback *&callback) override;
 
   /// Set protocol object corresponding to the transport protocol
   /// chosen.
-  int set_protocol_object (const char *flowname,
+  int set_protocol_object (char const *flowname,
                            TAO_AV_Protocol_Object *object) override;
 };
 
@@ -87,11 +94,8 @@ public:
 class Receiver
 {
 public:
-  /// Constructor
-  Receiver ();
-
-  /// Destructor.
-  ~Receiver ();
+  Receiver () = default;
+  ~Receiver () = default;
   Receiver (Receiver const &) = delete;
   Receiver &operator= (Receiver const &) = delete;
   Receiver (Receiver &&) = delete;
@@ -116,23 +120,13 @@ protected:
   <Receiver_StreamEndPoint,TAO_VDev,AV_Null_MediaCtrl> reactive_strategy_;
 
   /// Receiver MMDevice.
-  TAO_MMDevice *mmdevice_;
-
-  /// Rate at which the data will be sent.
-  int frame_rate_;
+  // Non-owning; ServantBase_var and the POA manage the servant reference.
+  TAO_MMDevice *mmdevice_ {};
 
   /// Protocol object corresponding to the transport protocol selected.
-  TAO_AV_Protocol_Object *protocol_object_;
-
-  /// Number of frames sent.
-  int frame_count_;
-
-  /// File from which data is read.
-  ACE_CString filename_;
+  // Non-owning pointer managed by the AVStreams framework.
+  TAO_AV_Protocol_Object *protocol_object_ {};
 
   /// Method to parse the command line arguments.
   int parse_args (int argc, ACE_TCHAR *argv[]);
-
-  /// Message block into which data is read from a file and then sent.
-  ACE_Message_Block mb_;
 };

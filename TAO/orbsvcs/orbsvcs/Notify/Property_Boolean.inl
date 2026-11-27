@@ -1,11 +1,14 @@
-// -*- C++ -*-
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE TAO_Notify_Property_Boolean&
-TAO_Notify_Property_Boolean::operator= (const TAO_Notify_Property_Boolean& rhs)
+TAO_Notify_Property_Boolean::operator= (TAO_Notify_Property_Boolean const& rhs)
 {
-  if (this == &rhs)
-    return *this;
+  if (this == std::addressof (rhs))
+    {
+      return *this;
+    }
 
   if (rhs.is_valid ())
     {
@@ -18,7 +21,7 @@ TAO_Notify_Property_Boolean::operator= (const TAO_Notify_Property_Boolean& rhs)
 }
 
 ACE_INLINE TAO_Notify_Property_Boolean&
-TAO_Notify_Property_Boolean::operator= (const CORBA::Boolean& value)
+TAO_Notify_Property_Boolean::operator= (CORBA::Boolean const& value)
 {
   this->value_ = value;
 
@@ -26,19 +29,19 @@ TAO_Notify_Property_Boolean::operator= (const CORBA::Boolean& value)
 }
 
 ACE_INLINE bool
-TAO_Notify_Property_Boolean::operator== (const CORBA::Boolean &rhs) const
+TAO_Notify_Property_Boolean::operator== (CORBA::Boolean const &rhs) const
 {
   return (this->value_ == rhs);
 }
 
 ACE_INLINE bool
-TAO_Notify_Property_Boolean::operator!= (const CORBA::Boolean &rhs) const
+TAO_Notify_Property_Boolean::operator!= (CORBA::Boolean const &rhs) const
 {
   return (this->value_ != rhs);
 }
 
 ACE_INLINE
-const char *
+char const *
 TAO_Notify_Property_Boolean::name () const
 {
   return this->name_;

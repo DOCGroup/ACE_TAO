@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*MQ Client) : aceexe, avoids_ace_for_tao {
   exename = mqclient
   Source_Files {

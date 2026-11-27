@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/PortableServer/Servant_Base.h"
 #include "tao/PortableServer/Root_POA.h"
 #include "tao/PortableServer/Operation_Table.h"
@@ -27,7 +26,7 @@
 #include "tao/Basic_Types.h"
 
 #include "ace/Dynamic_Service.h"
-#include "ace/OS_NS_string.h"
+#include <cstring>
 
 #if !defined (__ACE_INLINE__)
 # include "tao/PortableServer/Servant_Base.inl"
@@ -35,7 +34,7 @@
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 
-static const char *TAO_ServantBase_Timeprobe_Description[] =
+static char const *TAO_ServantBase_Timeprobe_Description[] =
 {
   "TAO_ServantBase::_find - start",
   "TAO_ServantBase::_find - end"
@@ -60,7 +59,7 @@ TAO_ServantBase::TAO_ServantBase (TAO_Operation_Table *optable)
 {
 }
 
-TAO_ServantBase::TAO_ServantBase (const TAO_ServantBase &rhs)
+TAO_ServantBase::TAO_ServantBase (TAO_ServantBase const &rhs)
   :
 #if defined __GNUC__ && __GNUC__ < 9
   // GCC version 8 issues an invalid warning without the next non-comment line.
@@ -74,7 +73,7 @@ TAO_ServantBase::TAO_ServantBase (const TAO_ServantBase &rhs)
 }
 
 TAO_ServantBase &
-TAO_ServantBase::operator= (const TAO_ServantBase &rhs)
+TAO_ServantBase::operator= (TAO_ServantBase const &rhs)
 {
   this->optable_ = rhs.optable_;
   return *this;
@@ -83,19 +82,18 @@ TAO_ServantBase::operator= (const TAO_ServantBase &rhs)
 PortableServer::POA_ptr
 TAO_ServantBase::_default_POA ()
 {
-  CORBA::Object_var object = TAO_ORB_Core_instance ()->root_poa ();
+  CORBA::Object_var const object = TAO_ORB_Core_instance ()->root_poa ();
 
   return PortableServer::POA::_narrow (object.in ());
 }
-
 
 void
 TAO_ServantBase::_is_a_skel (TAO_ServerRequest & server_request,
                              TAO::Portable_Server::Servant_Upcall* TAO_INTERCEPTOR(servant_upcall),
                              TAO_ServantBase *servant)
 {
-  TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_val retval;
-  TAO::SArg_Traits< char *>::in_arg_val _tao_repository_id;
+  TAO::SArg_Traits<::ACE_InputCDR::to_boolean>::ret_val retval;
+  TAO::SArg_Traits<char *>::in_arg_val _tao_repository_id;
 
   TAO::Argument * const args[] =
     {
@@ -125,8 +123,8 @@ TAO_ServantBase::_is_a_thru_poa_skel (TAO_ServerRequest & server_request,
                                       TAO::Portable_Server::Servant_Upcall* TAO_INTERCEPTOR (servant_upcall),
                                       TAO_ServantBase *servant)
 {
-  TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_val retval;
-  TAO::SArg_Traits< char *>::in_arg_val _tao_repository_id;
+  TAO::SArg_Traits<::ACE_InputCDR::to_boolean>::ret_val retval;
+  TAO::SArg_Traits<char *>::in_arg_val _tao_repository_id;
 
   TAO::Argument * const args[] =
     {
@@ -152,14 +150,13 @@ TAO_ServantBase::_is_a_thru_poa_skel (TAO_ServerRequest & server_request,
                          );
 }
 
-
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 void
 TAO_ServantBase::_non_existent_skel (TAO_ServerRequest & server_request,
                                     TAO::Portable_Server::Servant_Upcall* TAO_INTERCEPTOR (servant_upcall),
                                     TAO_ServantBase *servant)
 {
-  TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_val retval;
+  TAO::SArg_Traits<::ACE_InputCDR::to_boolean>::ret_val retval;
 
   TAO::Argument * const args[] =
     {
@@ -187,7 +184,7 @@ void TAO_ServantBase::_non_existent_thru_poa_skel (TAO_ServerRequest & server_re
                                                   TAO::Portable_Server::Servant_Upcall* TAO_INTERCEPTOR (servant_upcall),
                                                   TAO_ServantBase *servant)
 {
-  TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_val retval;
+  TAO::SArg_Traits<::ACE_InputCDR::to_boolean>::ret_val retval;
 
   TAO::Argument * const args[] =
     {
@@ -211,7 +208,6 @@ void TAO_ServantBase::_non_existent_thru_poa_skel (TAO_ServerRequest & server_re
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
                          );
 }
-
 
 # if !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 void
@@ -248,7 +244,7 @@ TAO_ServantBase::_component_skel (TAO_ServerRequest & server_request,
                                   TAO::Portable_Server::Servant_Upcall* TAO_INTERCEPTOR (servant_upcall),
                                   TAO_ServantBase *servant)
 {
-  TAO::SArg_Traits< ::CORBA::Object>::ret_val retval;
+  TAO::SArg_Traits<::CORBA::Object>::ret_val retval;
 
   TAO::Argument * const args[] =
     {
@@ -277,7 +273,7 @@ TAO_ServantBase::_component_thru_poa_skel (TAO_ServerRequest & server_request,
                                           TAO::Portable_Server::Servant_Upcall* TAO_INTERCEPTOR (servant_upcall),
                                           TAO_ServantBase *servant)
 {
-  TAO::SArg_Traits< ::CORBA::Object>::ret_val retval;
+  TAO::SArg_Traits<::CORBA::Object>::ret_val retval;
 
   TAO::Argument * const args[] =
     {
@@ -304,13 +300,12 @@ TAO_ServantBase::_component_thru_poa_skel (TAO_ServerRequest & server_request,
 
 # endif /* !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO) */
 
-
 void
 TAO_ServantBase::_repository_id_skel (TAO_ServerRequest & server_request,
                                       TAO::Portable_Server::Servant_Upcall* TAO_INTERCEPTOR (servant_upcall),
                                       TAO_ServantBase *servant)
 {
-  TAO::SArg_Traits< char *>::ret_val retval;
+  TAO::SArg_Traits<char *>::ret_val retval;
 
   TAO::Argument * const args[] =
     {
@@ -339,7 +334,7 @@ TAO_ServantBase::_repository_id_thru_poa_skel (TAO_ServerRequest & server_reques
                                               TAO::Portable_Server::Servant_Upcall* TAO_INTERCEPTOR (servant_upcall),
                                               TAO_ServantBase *servant)
 {
-  TAO::SArg_Traits< char *>::ret_val retval;
+  TAO::SArg_Traits<char *>::ret_val retval;
 
   TAO::Argument * const args[] =
     {
@@ -366,10 +361,10 @@ TAO_ServantBase::_repository_id_thru_poa_skel (TAO_ServerRequest & server_reques
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
 CORBA::Boolean
-TAO_ServantBase::_is_a (const char *logical_type_id)
+TAO_ServantBase::_is_a (char const *logical_type_id)
 {
   static char const id[] = "IDL:omg.org/CORBA/Object:1.0";
-  return ACE_OS::strcmp (logical_type_id, id) == 0;
+  return std::strcmp (logical_type_id, id) == 0;
 }
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
@@ -412,9 +407,9 @@ TAO_ServantBase::_repository_id ()
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
 int
-TAO_ServantBase::_find (const char *opname,
+TAO_ServantBase::_find (char const *opname,
                         TAO_Skeleton& skelfunc,
-                        const size_t length)
+                        size_t const length)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_SERVANT_BASE_FIND_START);
   return this->optable_->find (opname, skelfunc,
@@ -422,10 +417,10 @@ TAO_ServantBase::_find (const char *opname,
 }
 
 int
-TAO_ServantBase::_find (const char *opname,
+TAO_ServantBase::_find (char const *opname,
                         TAO_Collocated_Skeleton& skelfunc,
                         TAO::Collocation_Strategy st,
-                        const size_t length)
+                        size_t const length)
 {
   ACE_FUNCTION_TIMEPROBE (TAO_SERVANT_BASE_FIND_START);
   return this->optable_->find (opname, skelfunc, st,
@@ -435,13 +430,13 @@ TAO_ServantBase::_find (const char *opname,
 TAO_Stub *
 TAO_ServantBase::_create_stub ()
 {
-  TAO_Stub *stub = nullptr;
+  TAO_Stub *stub {};
 
   TAO::Portable_Server::POA_Current_Impl *poa_current_impl =
     static_cast<TAO::Portable_Server::POA_Current_Impl *>
                     (TAO_TSS_Resources::instance ()->poa_current_impl_);
 
-  CORBA::ORB_ptr servant_orb = nullptr;
+  CORBA::ORB_ptr servant_orb {};
 
   if (poa_current_impl != nullptr && this == poa_current_impl->servant ())
     {
@@ -455,9 +450,9 @@ TAO_ServantBase::_create_stub ()
     }
   else
     {
-      PortableServer::POA_var poa = this->_default_POA ();
+      PortableServer::POA_var const poa = this->_default_POA ();
 
-      CORBA::Object_var object = poa->servant_to_reference (this);
+      CORBA::Object_var const object = poa->servant_to_reference (this);
 
       // Get the stub object
       stub = object->_stubobj ();
@@ -528,7 +523,9 @@ TAO_ServantBase::synchronous_upcall_dispatch (
               throw;
             }
           else
+          {
             req.tao_send_reply_exception (ex);
+          }
         }
     }
 }
@@ -540,7 +537,7 @@ TAO_ServantBase::asynchronous_upcall_dispatch (
   TAO_ServantBase *derived_this)
 {
   TAO_Skeleton skel;
-  const char *opname = req.operation ();
+  char const *opname = req.operation ();
 
   // It seems that I might have missed s/g here.  What if
   // it is a one way that is SYNC_WITH_SERVER.
@@ -586,15 +583,14 @@ TAO_ServantBase::asynchronous_upcall_dispatch (
 void
 TAO_ServantBase::_add_ref ()
 {
-  ++this->ref_count_;
+  this->ref_count_.fetch_add (1, std::memory_order_relaxed);
 }
 
 void
 TAO_ServantBase::_remove_ref ()
 {
-  CORBA::ULong const new_count = --this->ref_count_;
-
-  if (new_count == 0)
+  // The final decrement acquires prior releases before destroying the servant.
+  if (this->ref_count_.fetch_sub (1, std::memory_order_acq_rel) == 1)
     {
       delete this;
     }
@@ -603,7 +599,7 @@ TAO_ServantBase::_remove_ref ()
 CORBA::ULong
 TAO_ServantBase::_refcount_value () const
 {
-  return this->ref_count_;
+  return this->ref_count_.load (std::memory_order_relaxed);
 }
 
 void
@@ -612,7 +608,7 @@ TAO_ServantBase::_collocated_dispatch (::CORBA::Object_ptr obj,
                                        bool &is_forwarded,
                                        TAO::Argument ** args,
                                        int num_args,
-                                       const char * op,
+                                       char const *op,
                                        size_t op_len,
                                        TAO::Collocation_Strategy strategy)
 {

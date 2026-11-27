@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project : orbsvcslib, svc_utils {
   after     += CosNaming
   libs      += TAO_CosNaming

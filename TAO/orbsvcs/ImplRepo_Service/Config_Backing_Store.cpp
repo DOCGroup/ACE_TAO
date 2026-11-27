@@ -5,25 +5,27 @@
 #include "utils.h"
 #include "ace/OS_NS_unistd.h"
 
-static const ACE_TCHAR* STARTUP_COMMAND = ACE_TEXT("StartupCommand");
-static const ACE_TCHAR* WORKING_DIR = ACE_TEXT("WorkingDir");
-static const ACE_TCHAR* ENVIRONMENT = ACE_TEXT("Environment");
-static const ACE_TCHAR* ACTIVATION = ACE_TEXT("Activation");
-static const ACE_TCHAR* PARTIAL_IOR = ACE_TEXT("Location");
-static const ACE_TCHAR* IOR = ACE_TEXT("IOR");
-static const ACE_TCHAR* START_LIMIT = ACE_TEXT("StartLimit");
-static const ACE_TCHAR* ACTIVATOR = ACE_TEXT("Activator");
-static const ACE_TCHAR* SERVERS_ROOT_KEY = ACE_TEXT("Servers");
-static const ACE_TCHAR* ACTIVATORS_ROOT_KEY = ACE_TEXT("Activators");
-static const ACE_TCHAR* TOKEN = ACE_TEXT("Token");
-static const ACE_TCHAR* SERVER_ID = ACE_TEXT("ServerId");
-static const ACE_TCHAR* JACORB_SERVER = ACE_TEXT("JacORBServer");
-static const ACE_TCHAR* ALTKEY = ACE_TEXT("AltKey");
-static const ACE_TCHAR* POA = ACE_TEXT("POA");
-static const ACE_TCHAR* PEERS = ACE_TEXT("Peers");
-static const ACE_TCHAR* CONFIG_PID = ACE_TEXT("Pid");
+#include <memory>
+
+static ACE_TCHAR const *STARTUP_COMMAND = ACE_TEXT("StartupCommand");
+static ACE_TCHAR const *WORKING_DIR = ACE_TEXT("WorkingDir");
+static ACE_TCHAR const *ENVIRONMENT = ACE_TEXT("Environment");
+static ACE_TCHAR const *ACTIVATION = ACE_TEXT("Activation");
+static ACE_TCHAR const *PARTIAL_IOR = ACE_TEXT("Location");
+static ACE_TCHAR const *IOR = ACE_TEXT("IOR");
+static ACE_TCHAR const *START_LIMIT = ACE_TEXT("StartLimit");
+static ACE_TCHAR const *ACTIVATOR = ACE_TEXT("Activator");
+static ACE_TCHAR const *SERVERS_ROOT_KEY = ACE_TEXT("Servers");
+static ACE_TCHAR const *ACTIVATORS_ROOT_KEY = ACE_TEXT("Activators");
+static ACE_TCHAR const *TOKEN = ACE_TEXT("Token");
+static ACE_TCHAR const *SERVER_ID = ACE_TEXT("ServerId");
+static ACE_TCHAR const *JACORB_SERVER = ACE_TEXT("JacORBServer");
+static ACE_TCHAR const *ALTKEY = ACE_TEXT("AltKey");
+static ACE_TCHAR const *POA = ACE_TEXT("POA");
+static ACE_TCHAR const *PEERS = ACE_TEXT("Peers");
+static ACE_TCHAR const *CONFIG_PID = ACE_TEXT("Pid");
 #if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_REGISTRY)
-static const ACE_TCHAR WIN32_REG_KEY[] = ACE_TEXT ("Software\\TAO\\ImplementationRepository");
+static ACE_TCHAR const WIN32_REG_KEY[] = ACE_TEXT ("Software\\TAO\\ImplementationRepository");
 #endif
 
 Config_Backing_Store::Config_Backing_Store (const Options& opts,
@@ -35,14 +37,12 @@ Config_Backing_Store::Config_Backing_Store (const Options& opts,
 {
 }
 
-Config_Backing_Store::~Config_Backing_Store ()
-{
-}
+Config_Backing_Store::~Config_Backing_Store () = default;
 
 namespace {
   int get_cstring_value (ACE_Configuration &config,
-                         const ACE_Configuration_Section_Key &key,
-                         const ACE_TCHAR *name,
+                         ACE_Configuration_Section_Key const &key,
+                         ACE_TCHAR const *name,
                          ACE_CString &value)
   {
     ACE_TString tmp;
@@ -55,9 +55,9 @@ namespace {
   }
 
   int set_cstring_value (ACE_Configuration &config,
-                         const ACE_Configuration_Section_Key &key,
-                         const ACE_TCHAR *name,
-                         const ACE_CString &value)
+                         ACE_Configuration_Section_Key const &key,
+                         ACE_TCHAR const *name,
+                         ACE_CString const &value)
   {
     return config.set_string_value (key, name, ACE_TEXT_CHAR_TO_TCHAR (value.c_str ()));
   }
@@ -67,7 +67,7 @@ void Config_Backing_Store::loadActivators ()
 {
   ACE_Configuration_Section_Key root;
   int err =
-    config_.open_section (config_.root_section (), ACTIVATORS_ROOT_KEY, 0, root);
+    config_.open_section (config_.root_section (), ACTIVATORS_ROOT_KEY, false, root);
   if (err == 0)
     {
       int index = 0;
@@ -80,17 +80,19 @@ void Config_Backing_Store::loadActivators ()
           ACE_Configuration_Section_Key key;
 
           // Can't fail, because we're enumerating
-          config_.open_section (root, name.c_str(), 0, key);
+          config_.open_section (root, name.c_str(), false, key);
 
           get_cstring_value (this->config_, key, IOR, ior);
           config_.get_integer_value (key, TOKEN, token);
 
-          const ACE_CString name_cstr = ACE_TEXT_ALWAYS_CHAR (name.c_str ());
+          ACE_CString const name_cstr = ACE_TEXT_ALWAYS_CHAR (name.c_str ());
 
-          Activator_Info* ai = nullptr;
+          Activator_Info* ai {};
           ACE_NEW (ai, Activator_Info (name_cstr, token, ior));
 
-          Activator_Info_Ptr info (ai);
+          std::unique_ptr<Activator_Info> ai_owner (ai);
+          Activator_Info_Ptr info (ai_owner.get ());
+          ai_owner.release ();
           activators ().bind (lcase (name_cstr), info);
           ++index;
         }
@@ -102,30 +104,32 @@ Config_Backing_Store::loadServers ()
 {
   ACE_Configuration_Section_Key root;
   int err =
-    config_.open_section (config_.root_section (), SERVERS_ROOT_KEY, 0, root);
+    config_.open_section (config_.root_section (), SERVERS_ROOT_KEY, false, root);
   if (err == 0)
     {
       int index = 0;
       ACE_TString name;
-      Server_Info *si = nullptr;
+      Server_Info *si {};
       u_int tmp_int = 0;
       ACE_CString tmp;
 
       while (config_.enumerate_sections (root, index, name) == 0)
         {
-          const ACE_CString name_cstr = ACE_TEXT_ALWAYS_CHAR (name.c_str ());
+          ACE_CString const name_cstr = ACE_TEXT_ALWAYS_CHAR (name.c_str ());
           Server_Info_Ptr info;
           if (this->servers ().find (name_cstr, info) != 0)
             {
               ACE_NEW (si, Server_Info);
-              info.reset (si);
+              std::unique_ptr<Server_Info> si_owner (si);
+              info.reset (si_owner.get ());
+              si_owner.release ();
               si->key_name_ = name_cstr;
             }
 
           ACE_Configuration_Section_Key key;
 
           // Can't fail, because we're enumerating
-          config_.open_section (root, name.c_str(), 0, key);
+          config_.open_section (root, name.c_str(), false, key);
           if (!get_cstring_value (this->config_, key, POA, si->poa_name))
             {
               si->poa_name = si->key_name_;
@@ -154,10 +158,12 @@ Config_Backing_Store::loadServers ()
               if (tmp.length () > 0 &&
                   this->servers ().find (tmp, si->alt_info_) != 0)
                 {
-                  Server_Info *base_si = nullptr;
+                  Server_Info *base_si {};
                   ACE_NEW (base_si, Server_Info);
+                  std::unique_ptr<Server_Info> base_si_owner (base_si);
                   base_si->key_name_ = tmp;
-                  si->alt_info_.reset (base_si);
+                  si->alt_info_.reset (base_si_owner.get ());
+                  base_si_owner.release ();
                   this->servers ().bind (tmp, si->alt_info_);
                 }
             }
@@ -171,19 +177,19 @@ Config_Backing_Store::loadServers ()
 }
 
 int
-Config_Backing_Store::persistent_remove (const ACE_CString& name,
+Config_Backing_Store::persistent_remove (ACE_CString const& name,
                                          bool activator)
 {
-  const ACE_TCHAR* const key =
+  ACE_TCHAR const *const key =
     (activator ? ACTIVATORS_ROOT_KEY : SERVERS_ROOT_KEY);
   return remove (name, key);
 }
 
 int
-Config_Backing_Store::remove (const ACE_CString& name, const ACE_TCHAR* key)
+Config_Backing_Store::remove (ACE_CString const& name, ACE_TCHAR const *key)
 {
   ACE_Configuration_Section_Key root;
-  int err = config_.open_section (config_.root_section (), key, 0, root);
+  int err = config_.open_section (config_.root_section (), key, false, root);
   if (err != 0)
     {
       if (this->opts_.debug () > 9)
@@ -193,22 +199,22 @@ Config_Backing_Store::remove (const ACE_CString& name, const ACE_TCHAR* key)
         }
       return 0; // Already gone.
     }
-  return config_.remove_section (root, ACE_TEXT_CHAR_TO_TCHAR (name.c_str ()), 1);
+  return config_.remove_section (root, ACE_TEXT_CHAR_TO_TCHAR (name.c_str ()), true);
 }
 
-static int get_key (ACE_Configuration& cfg, const ACE_CString& name,
-                    const ACE_TCHAR* const sub_section,
+static int get_key (ACE_Configuration& cfg, ACE_CString const& name,
+                    ACE_TCHAR const *const sub_section,
                     ACE_Configuration_Section_Key& key)
 {
   ACE_Configuration_Section_Key root;
-  int err = cfg.open_section (cfg.root_section(), sub_section, 1, root);
+  int err = cfg.open_section (cfg.root_section(), sub_section, true, root);
   if (err != 0)
     {
       ORBSVCS_ERROR ((LM_ERROR, ACE_TEXT ("Unable to open config section:%s\n"),
         sub_section));
       return err;
     }
-  err = cfg.open_section (root, ACE_TEXT_CHAR_TO_TCHAR (name.c_str ()), 1, key);
+  err = cfg.open_section (root, ACE_TEXT_CHAR_TO_TCHAR (name.c_str ()), true, key);
   if (err != 0)
     {
       ORBSVCS_ERROR((LM_ERROR, ACE_TEXT ("Unable to open config section:%C\n"),
@@ -314,25 +320,23 @@ Heap_Backing_Store::Heap_Backing_Store (const Options& opts,
   status_ = heap_.open (this->filename_.c_str());
 }
 
-Heap_Backing_Store::~Heap_Backing_Store ()
-{
-}
+Heap_Backing_Store::~Heap_Backing_Store () = default;
 
-const ACE_TCHAR*
+ACE_TCHAR const *
 Heap_Backing_Store::repo_mode() const
 {
   return this->filename_.c_str();
 }
 
 #if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_REGISTRY)
-static HKEY setup_registry (const bool start_clean)
+static HKEY setup_registry (bool const start_clean)
 {
   if (start_clean)
     {
       ACE_Configuration_Win32Registry config ( HKEY_LOCAL_MACHINE );
       ACE_Configuration_Section_Key root;
-      config.open_section (config.root_section(), ACE_TEXT ("Software\\TAO"), 0, root);
-      config.remove_section (root, ACE_TEXT ("ImplementationRepository"), 1);
+      config.open_section (config.root_section(), ACE_TEXT ("Software\\TAO"), false, root);
+      config.remove_section (root, ACE_TEXT ("ImplementationRepository"), true);
     }
 
   return ACE_Configuration_Win32Registry::
@@ -358,11 +362,9 @@ Registry_Backing_Store::Registry_Backing_Store(const Options& opts,
 #endif
 }
 
-Registry_Backing_Store::~Registry_Backing_Store ()
-{
-}
+Registry_Backing_Store::~Registry_Backing_Store () = default;
 
-const ACE_TCHAR*
+ACE_TCHAR const *
 Registry_Backing_Store::repo_mode () const
 {
   return ACE_TEXT("Registry");

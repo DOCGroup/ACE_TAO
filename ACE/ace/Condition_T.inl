@@ -1,4 +1,5 @@
-// -*- C++ -*-
+#include <memory>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<class MUTEX> ACE_INLINE int
@@ -12,12 +13,12 @@ ACE_Condition<MUTEX>::remove ()
   // has called the cond_wait routine after the signal call.  Since
   // the condition signal is not queued in any way, deadlock occurs.
 
-  int result = 0;
+  int result {};
 
-  while ((result = ACE_OS::cond_destroy (&this->cond_)) == -1
+  while ((result = ACE_OS::cond_destroy (std::addressof (this->cond_))) == -1
           && errno == EBUSY)
     {
-      ACE_OS::cond_broadcast (&this->cond_);
+      ACE_OS::cond_broadcast (std::addressof (this->cond_));
       ACE_OS::thr_yield ();
     }
 
@@ -35,14 +36,14 @@ template <class MUTEX> ACE_INLINE int
 ACE_Condition<MUTEX>::signal ()
 {
 // ACE_TRACE ("ACE_Condition<MUTEX>::signal");
-  return ACE_OS::cond_signal (&this->cond_);
+  return ACE_OS::cond_signal (std::addressof (this->cond_));
 }
 
 template <class MUTEX> ACE_INLINE int
 ACE_Condition<MUTEX>::broadcast ()
 {
 // ACE_TRACE ("ACE_Condition<MUTEX>::broadcast");
-  return ACE_OS::cond_broadcast (&this->cond_);
+  return ACE_OS::cond_broadcast (std::addressof (this->cond_));
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

@@ -5,13 +5,15 @@
 #include "ace/OS_NS_sys_time.h"
 
 int
-Checkpoint_Client_i::run (const char *name,
+Checkpoint_Client_i::run (char const *name,
                           int argc,
                           ACE_TCHAR *argv[])
 {
   // Initialize the client (read ior...).
-  if (checkpoint.init (name,argc, argv) == -1)
+  if (checkpoint.init (name, argc, argv) == -1)
+  {
     return -1;
+  }
 
   // Set random seed
   ACE_Time_Value now (ACE_OS::gettimeofday ());
@@ -33,7 +35,7 @@ Checkpoint_Client_i::run (const char *name,
 
       checkpoint->shutdown ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("\n Exception in RMI");
       return -1;
@@ -41,16 +43,3 @@ Checkpoint_Client_i::run (const char *name,
 
   return 0;
 }
-
-// Constructor.
-Checkpoint_Client_i::Checkpoint_Client_i ()
-{
-  //no-op
-}
-
-//Destructor.
-Checkpoint_Client_i::~Checkpoint_Client_i ()
-{
-  //no-op
-}
-

@@ -31,9 +31,9 @@ ACE_MEM_Connector::ACE_MEM_Connector ()
 
 // Establish a connection.
 ACE_MEM_Connector::ACE_MEM_Connector (ACE_MEM_Stream &new_stream,
-                                      const ACE_INET_Addr &remote_sap,
-                                      const ACE_Time_Value *timeout,
-                                      const ACE_Addr &local_sap,
+                                      ACE_INET_Addr const &remote_sap,
+                                      ACE_Time_Value const *timeout,
+                                      ACE_Addr const &local_sap,
                                       int reuse_addr,
                                       int flags,
                                       int perms)
@@ -54,9 +54,9 @@ ACE_MEM_Connector::ACE_MEM_Connector (ACE_MEM_Stream &new_stream,
 
 int
 ACE_MEM_Connector::connect (ACE_MEM_Stream &new_stream,
-                            const ACE_INET_Addr &remote_sap,
-                            const ACE_Time_Value *timeout,
-                            const ACE_Addr &local_sap,
+                            ACE_INET_Addr const &remote_sap,
+                            ACE_Time_Value const *timeout,
+                            ACE_Addr const &local_sap,
                             int reuse_addr,
                             int flags,
                             int perms)
@@ -64,18 +64,21 @@ ACE_MEM_Connector::connect (ACE_MEM_Stream &new_stream,
   ACE_TRACE ("ACE_MEM_Connector::connect");
 
   if (!this->address_.same_host (remote_sap))
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) MEM_Connector can't connect ")
-                       ACE_TEXT ("to %C:%d which is not a local endpoint ")
-                       ACE_TEXT ("(local address is %C:%d)\n"),
-                       remote_sap.get_host_name (),
-                       remote_sap.get_port_number (),
-                       this->address_.get_host_name (),
-                       this->address_.get_port_number ()),
-                      -1);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                            ACE_TEXT ("(%P|%t) MEM_Connector can't connect ")
+                            ACE_TEXT ("to %C:%d which is not a local endpoint ")
+                            ACE_TEXT ("(local address is %C:%d)\n"),
+                            remote_sap.get_host_name (),
+                            remote_sap.get_port_number (),
+                            this->address_.get_host_name (),
+                            this->address_.get_port_number ()),
+                           -1);
+    }
   else
+  {
     this->address_.set_port_number (remote_sap.get_port_number ());
-
+  }
 
   ACE_SOCK_Stream temp_stream;
 
@@ -83,13 +86,14 @@ ACE_MEM_Connector::connect (ACE_MEM_Stream &new_stream,
                                    this->address_.get_local_addr (),
                                    timeout, local_sap,
                                    reuse_addr, flags, perms) == -1)
-    ACELIB_ERROR_RETURN ((LM_DEBUG,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("ACE_MEM_Connector::connect")),
-                      -1);
+    {
+      ACELIB_ERROR_RETURN ((LM_DEBUG,
+                            ACE_TEXT ("%p\n"),
+                            ACE_TEXT ("ACE_MEM_Connector::connect")),
+                           -1);
+    }
 
-
-  ACE_HANDLE new_handle = temp_stream.get_handle ();
+  ACE_HANDLE const new_handle = temp_stream.get_handle ();
   new_stream.set_handle (new_handle);
   new_stream.disable (ACE_NONBLOCK);
   // Do not close the handle.
@@ -102,9 +106,11 @@ ACE_MEM_Connector::connect (ACE_MEM_Stream &new_stream,
   // Receive the signaling strategy theserver support.
   if (ACE::recv (new_handle, &server_strategy,
                  sizeof (ACE_INT16)) == -1)
-    ACELIB_ERROR_RETURN ((LM_DEBUG,
-                       ACE_TEXT ("ACE_MEM_Connector::connect error receiving strategy\n")),
-                      -1);
+    {
+      ACELIB_ERROR_RETURN ((LM_DEBUG,
+                            ACE_TEXT ("ACE_MEM_Connector::connect error receiving strategy\n")),
+                           -1);
+    }
 
   // If either side don't support MT, we will not use it.
 #if defined (ACE_WIN32) || !defined (_ACE_USE_SV_SEM)
@@ -115,26 +121,34 @@ ACE_MEM_Connector::connect (ACE_MEM_Stream &new_stream,
 
   if (ACE::send (new_handle, &server_strategy,
                  sizeof (ACE_INT16)) == -1)
-    ACELIB_ERROR_RETURN ((LM_DEBUG,
-                       ACE_TEXT ("ACE_MEM_Connector::connect error sending strategy\n")),
-                      -1);
+    {
+      ACELIB_ERROR_RETURN ((LM_DEBUG,
+                            ACE_TEXT ("ACE_MEM_Connector::connect error sending strategy\n")),
+                           -1);
+    }
 
   ACE_INT16 buf_len;
   // Byte-order is not a problem for this read.
   if (ACE::recv (new_handle, &buf_len, sizeof (buf_len)) == -1)
-    ACELIB_ERROR_RETURN ((LM_DEBUG,
-                       ACE_TEXT ("ACE_MEM_Connector::connect error receiving shm filename length\n")),
-                      -1);
+    {
+      ACELIB_ERROR_RETURN ((LM_DEBUG,
+                            ACE_TEXT ("ACE_MEM_Connector::connect error receiving shm filename length\n")),
+                           -1);
+    }
 
   if (ACE::recv (new_handle, buf, buf_len) == -1)
-    ACELIB_ERROR_RETURN ((LM_DEBUG,
-                       ACE_TEXT ("ACE_MEM_Connector::connect error receiving shm filename.\n")),
-                      -1);
+    {
+      ACELIB_ERROR_RETURN ((LM_DEBUG,
+                            ACE_TEXT ("ACE_MEM_Connector::connect error receiving shm filename.\n")),
+                           -1);
+    }
 
   if (new_stream.init (buf,
                        static_cast<ACE_MEM_IO::Signal_Strategy> (server_strategy),
                        &this->malloc_options_) == -1)
+  {
     return -1;
+  }
 
   return 0;
 }

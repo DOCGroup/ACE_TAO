@@ -9,6 +9,8 @@
 #include "tests/RTCORBA/common_args.cpp"
 #include "tests/RTCORBA/check_supported_priorities.cpp"
 
+#include <memory>
+
 class test_i :
   public POA_test
 {
@@ -42,14 +44,18 @@ test_i::method (CORBA::ULong work,
                 CORBA::ULong prime_number)
 {
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "test_i::method: %hd units of work\n",
-                work));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "test_i::method: %u units of work\n",
+                  work));
+    }
 
-  for (; work != 0; work--)
-    ACE::is_prime (prime_number,
-                   2,
-                   prime_number / 2);
+  for (; work != 0; ++work)
+    {
+      ACE::is_prime (prime_number,
+                     2,
+                     prime_number / 2);
+    }
 }
 
 PortableServer::POA_ptr
@@ -84,74 +90,76 @@ parse_args (int argc, ACE_TCHAR *argv[])
   int c;
 
   while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'b':
-        bands_file = get_opts.opt_arg ();
-        break;
+    {
+      switch (c)
+        {
+        case 'b':
+          bands_file = get_opts.opt_arg ();
+          break;
 
-      case 'f':
-        pool_priority = ACE_OS::atoi (get_opts.opt_arg ());
-        break;
+        case 'f':
+          pool_priority = ACE_OS::atoi (get_opts.opt_arg ());
+          break;
 
-      case 'l':
-        lanes_file = get_opts.opt_arg ();
-        break;
+        case 'l':
+          lanes_file = get_opts.opt_arg ();
+          break;
 
-      case 'n':
-        number_of_lanes = ACE_OS::atoi (get_opts.opt_arg ());
-        break;
+        case 'n':
+          number_of_lanes = ACE_OS::atoi (get_opts.opt_arg ());
+          break;
 
-      case 'o':
-        ior_output_file = get_opts.opt_arg ();
-        break;
+        case 'o':
+          ior_output_file = get_opts.opt_arg ();
+          break;
 
-      case 's':
-        static_threads = ACE_OS::atoi (get_opts.opt_arg ());
-        break;
+        case 's':
+          static_threads = ACE_OS::atoi (get_opts.opt_arg ());
+          break;
 
-      case 'c':
-      case 'e':
-      case 'g':
-      case 'i':
-      case 'j':
-      case 'k':
-      case 'm':
-      case 'p':
-      case 'q':
-      case 'r':
-      case 't':
-      case 'u':
-      case 'v':
-      case 'w':
-      case 'x':
-      case 'y':
-      case 'z':
-        // client options: ignored.
-        break;
+        case 'c':
+        case 'e':
+        case 'g':
+        case 'i':
+        case 'j':
+        case 'k':
+        case 'm':
+        case 'p':
+        case 'q':
+        case 'r':
+        case 't':
+        case 'u':
+        case 'v':
+        case 'w':
+        case 'x':
+        case 'y':
+        case 'z':
+          // client options: ignored.
+          break;
 
-      case 'h':
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s\n"
-                           "\t-b <bands file> (defaults to %s)\n"
-                           "\t-f <pool priority> (defaults to %d)\n"
-                           "\t-h <help: shows options menu>\n"
-                           "\t-l <lanes file> (defaults to %s)\n"
-                           "\t-n <number of lanes> (defaults to %d)\n"
-                           "\t-o <ior file> (defaults to %s)\n"
-                           "\t-s <static threads> (defaults to %d)\n"
-                           "\n",
-                           argv [0],
-                           bands_file,
-                           default_thread_priority,
-                           lanes_file,
-                           number_of_lanes,
-                           ior_output_file,
-                           static_threads),
-                          -1);
-      }
+        case 'h':
+        case '?':
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "usage:  %s\n"
+                             "\t-b <bands file> (defaults to %s)\n"
+                             "\t-f <pool priority> (defaults to %d)\n"
+                             "\t-h <help: shows options menu>\n"
+                             "\t-l <lanes file> (defaults to %s)\n"
+                             "\t-n <number of lanes> (defaults to %d)\n"
+                             "\t-o <ior file> (defaults to %s)\n"
+                             "\t-s <static threads> (defaults to %d)\n"
+                             "\n",
+                             argv [0],
+                             bands_file,
+                             default_thread_priority,
+                             lanes_file,
+                             number_of_lanes,
+                             ior_output_file,
+                             static_threads),
+                            -1);
+        }
+    }
 
   return 0;
 }
@@ -169,10 +177,12 @@ write_ior_to_file (const ACE_TCHAR *ior_file,
                    "w");
 
   if (output_file == 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Cannot open output file for writing IOR: %s",
-                       ior_file),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Cannot open output file for writing IOR: %s",
+                         ior_file),
+                        -1);
+    }
 
   ACE_OS::fprintf (output_file,
                    "%s",
@@ -196,7 +206,7 @@ public:
 
 Task::Task (ACE_Thread_Manager &thread_manager,
             CORBA::ORB_ptr orb)
-  : ACE_Task_Base (&thread_manager),
+  : ACE_Task_Base (std::addressof (thread_manager)),
     orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
@@ -232,13 +242,13 @@ Task::svc ()
 
       int result = 0;
       CORBA::ULong stacksize = 0;
-      CORBA::Boolean allow_request_buffering = 0;
+      CORBA::Boolean allow_request_buffering = false;
       CORBA::ULong max_buffered_requests = 0;
       CORBA::ULong max_request_buffer_size = 0;
 
       CORBA::PolicyList policies;
 
-      CORBA::Boolean allow_borrowing = 0;
+      CORBA::Boolean allow_borrowing = false;
       if (number_of_lanes != 0)
         {
           get_auto_priority_lanes_and_bands (number_of_lanes,
@@ -270,7 +280,9 @@ Task::svc ()
                                 1);
 
           if (result != 0)
+          {
             return result;
+          }
 
           result =
             get_priority_bands ("server",
@@ -280,13 +292,17 @@ Task::svc ()
                                 1);
 
           if (result != 0)
+          {
             return result;
+          }
         }
       else
         {
           if (pool_priority == ACE_INT16_MIN)
-            pool_priority =
-              default_thread_priority;
+            {
+              pool_priority =
+                default_thread_priority;
+            }
 
           RTCORBA::ThreadpoolId threadpool_id =
             rt_orb->create_threadpool (stacksize,
@@ -311,7 +327,9 @@ Task::svc ()
                                     1);
 
               if (result != 0)
+              {
                 return result;
+              }
             }
         }
 
@@ -346,7 +364,9 @@ Task::svc ()
                            test.in ());
 
       if (result != 0)
+      {
         return result;
+      }
 
       poa_manager->activate ();
 
@@ -375,7 +395,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       int result =
         parse_args (argc, argv);
       if (result != 0)
+      {
         return result;
+      }
 
       // Make sure we can support multiple priorities that are required
       // for this test.

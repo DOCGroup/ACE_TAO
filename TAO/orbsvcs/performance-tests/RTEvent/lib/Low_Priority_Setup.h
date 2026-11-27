@@ -32,7 +32,6 @@ template<class Client_Type>
 class Low_Priority_Setup
 {
 public:
-  /// Constructor
   Low_Priority_Setup (int consumer_count,
                       int iterations,
                       int use_different_types,
@@ -55,12 +54,12 @@ public:
   /// Collect the stats from all the clients
   void collect_basic_stats (ACE_Basic_Stats &stats);
 
-  typedef std::unique_ptr<Client_Type[]> Client_Array;
-  typedef Auto_Disconnect<Client_Type> Client_Auto_Disconnect;
-  typedef std::unique_ptr<Client_Auto_Disconnect[]> Client_Auto_Disconnect_Array;
-  typedef std::unique_ptr<Send_Task[]> Send_Task_Array;
-  typedef std::unique_ptr<Send_Task_Stopper> Auto_Send_Task_Stopper;
-  typedef std::unique_ptr<Auto_Send_Task_Stopper[]> Send_Task_Stopper_Array;
+  using Client_Array = std::unique_ptr<Client_Type[]>;
+  using Client_Auto_Disconnect = Auto_Disconnect<Client_Type>;
+  using Client_Auto_Disconnect_Array = std::unique_ptr<Client_Auto_Disconnect[]>;
+  using Send_Task_Array = std::unique_ptr<Send_Task[]>;
+  using Auto_Send_Task_Stopper = std::unique_ptr<Send_Task_Stopper>;
+  using Send_Task_Stopper_Array = std::unique_ptr<Auto_Send_Task_Stopper[]>;
 
 private:
   int consumer_count_;

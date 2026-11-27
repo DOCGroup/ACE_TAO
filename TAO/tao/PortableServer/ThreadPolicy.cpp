@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/orbconf.h"
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
@@ -20,7 +19,7 @@ namespace TAO
     CORBA::Policy_ptr
     ThreadPolicy::copy ()
     {
-      ThreadPolicy *copy = nullptr;
+      ThreadPolicy *copy {};
       ACE_NEW_THROW_EX (copy,
                         ThreadPolicy (this->value_),
                         CORBA::NO_MEMORY ());

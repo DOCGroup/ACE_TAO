@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 #ifndef ACE_CONFIG_INTEGRITY_H
 #define ACE_CONFIG_INTEGRITY_H
 

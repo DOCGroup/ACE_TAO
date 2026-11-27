@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//===========================================================================
 /**
  *  @file     SCIOP_Endpoint.h
  *
@@ -9,8 +6,6 @@
  *  @author  Jason Cohen, Lockheed Martin ATL  <jcohen@atl.lmco.com>
  *  @author  Keith O'Hara, Lockheed Martin ATL
  */
-//==========================================================================
-
 
 #ifndef TAO_SCIOP_ENDPOINT_H
 #define TAO_SCIOP_ENDPOINT_H
@@ -44,11 +39,10 @@ class TAO_SCIOP_Connection_Handler;
 class TAO_Strategies_Export TAO_SCIOP_Endpoint : public TAO_Endpoint
 {
 public:
-  // @todo Lose these friends!
+  /// @todo Lose these friends!
   friend class TAO_SCIOP_Profile;
   friend class TAO_SSLIOP_Profile;
 
-  /// Default constructor.
   TAO_SCIOP_Endpoint ();
 
   /// Constructor.  This is the most efficient constructor since it
@@ -58,7 +52,6 @@ public:
                       ACE_INET_Addr const &addr,
                       CORBA::Short priority = TAO_INVALID_PRIORITY);
 
-  /// Constructor.
   TAO_SCIOP_Endpoint (ACE_INET_Addr const &addr,
                      int use_dotted_decimal_addresses);
 
@@ -67,12 +60,11 @@ public:
                      CORBA::UShort port,
                      CORBA::Short priority);
 
-  /// Destructor.
-  ~TAO_SCIOP_Endpoint () = default;
+  ~TAO_SCIOP_Endpoint () override = default;
 
-  // = Implementation of abstract TAO_Endpoint methods.  See
-  // Endpoint.h for their documentation.
-
+  /// @name TAO_Endpoint methods
+  /// Please check the documentation in Endpoint.h for details.
+  /// @{
   TAO_Endpoint *next () override;
   int addr_to_string (char *buffer, size_t length) override;
   TAO_Endpoint *duplicate () override;
@@ -83,17 +75,19 @@ public:
 
   /// Return a hash value for this object.
   CORBA::ULong hash () override;
+  /// @}
 
-  // = SCIOP_Endpoint-specific methods.
+  /// @name SCIOP-specific methods
+  /// @{
 
-  /// Return a reference to the <object_addr>.
+  /// Return a reference to the @c object_addr.
   ACE_INET_Addr const &object_addr () const;
 
   /// Return a pointer to the host string.  This object maintains
   /// ownership of this string.
   char const *host () const;
 
-  /// Copy the string @a h into <host_> and return the resulting pointer.
+  /// Copy the string @a h into @c host_ and return the resulting pointer.
   /// This object maintains ownership of this string.
   char const *host (char const *h);
 
@@ -108,6 +102,7 @@ public:
 
   /// Return the preferred network if any.
   char const *preferred_network () const;
+  /// @}
 
 private:
   /// Helper method for setting INET_Addr.
@@ -132,14 +127,13 @@ private:
   TAO_SCIOP_Endpoint (TAO_SCIOP_Endpoint &&) = delete;
   TAO_SCIOP_Endpoint &operator= (TAO_SCIOP_Endpoint &&) = delete;
 
-
   /// String representing the host name.
   CORBA::String_var host_;
 
   /// TCP port number.
   CORBA::UShort port_ {683};
 
-  /// Cached instance of <ACE_INET_Addr> for use in making
+  /// Cached instance of @c ACE_INET_Addr for use in making
   /// invocations, etc.
   mutable ACE_INET_Addr object_addr_;
 

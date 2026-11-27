@@ -1,7 +1,3 @@
-// -*- C++ -*-
-
-
-//=============================================================================
 /**
  *  @file    Container_i.h
  *
@@ -9,8 +5,6 @@
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_CONTAINER_I_H
 #define TAO_CONTAINER_I_H
@@ -297,8 +291,7 @@ public:
   /// Used with structs, unions and exceptions.
   void update_refs (
       char const *path,
-      char const *name = nullptr
-    );
+      char const *name = nullptr);
 
 protected:
   /// Store a union member's label value.

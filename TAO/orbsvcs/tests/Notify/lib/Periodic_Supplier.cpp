@@ -14,23 +14,18 @@
 #include "Priority_Mapping.h"
 
 TAO_Notify_Tests_Periodic_Supplier::TAO_Notify_Tests_Periodic_Supplier ()
-  : barrier_ (0),
-    priority_ (0),
+  : priority_ (0),
     period_ (0),
     total_deadlines_missed_ (0),
     run_time_ (0),
     exec_time_ (0),
     phase_ (0),
     iter_ (0),
-    load_ (0),
-    client_ (0)
+    load_ (0)
 {
 }
 
-TAO_Notify_Tests_Periodic_Supplier::~TAO_Notify_Tests_Periodic_Supplier ()
-{
-}
-
+TAO_Notify_Tests_Periodic_Supplier::~TAO_Notify_Tests_Periodic_Supplier () = default;
 
 void
 TAO_Notify_Tests_Periodic_Supplier::task_callback(TAO_Notify_Tests_Task_Callback* client)
@@ -43,19 +38,23 @@ TAO_Notify_Tests_Periodic_Supplier::init_state (ACE_Arg_Shifter& arg_shifter)
 {
   // First, let the base class look for options.
   if (TAO_Notify_Tests_StructuredPushSupplier::init_state (arg_shifter) == -1)
+  {
     return -1;
+  }
 
-  const ACE_TCHAR *current_arg = 0;
+  ACE_TCHAR const *current_arg {};
 
   while (arg_shifter.is_anything_left ())
     {
-      if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-EventType"))))
+      current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-EventType"));
+      if (current_arg != nullptr)
         {
           this->event_.type ("*", ACE_TEXT_ALWAYS_CHAR(current_arg)) ;
           zeroth_event.type ("*", ACE_TEXT_ALWAYS_CHAR(current_arg)) ;
           arg_shifter.consume_arg ();
+          continue;
         }
-      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-FilterLongData")) == 0) // -FilterLongData name value
+      if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-FilterLongData")) == 0) // -FilterLongData name value
         {
           arg_shifter.consume_arg ();
 
@@ -71,8 +70,10 @@ TAO_Notify_Tests_Periodic_Supplier::init_state (ACE_Arg_Shifter& arg_shifter)
           buffer <<= (CORBA::Long) value;
 
           this->event_.filter (name.c_str (), buffer);
+          continue;
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Priority"))))
+      current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Priority"));
+      if (current_arg != nullptr)
         {
           priority_ = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
@@ -80,36 +81,50 @@ TAO_Notify_Tests_Periodic_Supplier::init_state (ACE_Arg_Shifter& arg_shifter)
           CORBA::Any buffer;
           buffer <<= (CORBA::Short) this->priority_;
           this->event_.qos (CosNotification::Priority, buffer);
+          continue;
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Period"))))
+      current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Period"));
+      if (current_arg != nullptr)
         {
           period_ = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
+          continue;
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-ExecTime"))))
+      current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-ExecTime"));
+      if (current_arg != nullptr)
         {
           exec_time_ = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
+          continue;
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Phase"))))
+      current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Phase"));
+      if (current_arg != nullptr)
         {
           phase_ = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
+          continue;
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Iter"))))
+      current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Iter"));
+      if (current_arg != nullptr)
         {
           iter_ = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
 
           if (stats_.init (iter_) == -1)
+          {
             return -1;
+          }
+          continue;
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Load"))))
+      current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Load"));
+      if (current_arg != nullptr)
         {
           load_ = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
+          continue;
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-RunTime")))) // in seconds
+      current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-RunTime"));
+      if (current_arg != nullptr) // in seconds
         {
           run_time_ = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
@@ -119,8 +134,10 @@ TAO_Notify_Tests_Periodic_Supplier::init_state (ACE_Arg_Shifter& arg_shifter)
           ACE_DEBUG ((LM_DEBUG, "parse Task unknown option %s\n",
                       arg_shifter.get_current ()));
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG, "event type %s, priority %d, period %duS, exec_time %duS, phase %duS, iter %d, load %d\n",
-                        event_.type(), priority_, period_, exec_time_, phase_, iter_, load_));
+            {
+              ACE_DEBUG ((LM_DEBUG, "event type %s, priority %d, period %duS, exec_time %duS, phase %duS, iter %d, load %d\n",
+                          event_.type(), priority_, period_, exec_time_, phase_, iter_, load_));
+            }
           break;
         }
     }
@@ -155,15 +172,19 @@ TAO_Notify_Tests_Periodic_Supplier::activate_task (ACE_Barrier* barrier)
                                             native_prio) == -1)
        {
          if (ACE_OS::last_error () == EPERM)
-           ACE_ERROR_RETURN ((LM_ERROR,
-                              ACE_TEXT ("Insufficient privilege to activate ACE_Task.\n")),
-                             -1);
+           {
+             ACE_ERROR_RETURN ((LM_ERROR,
+                                ACE_TEXT ("Insufficient privilege to activate ACE_Task.\n")),
+                               -1);
+           }
          else
-           ACE_DEBUG ((LM_ERROR,
-                       ACE_TEXT ("(%t) Task activation at priority %d failed, ")
-                        ACE_TEXT ("exiting!\n%a"),
-                       this->priority_,
-                       -1));
+           {
+             ACE_DEBUG ((LM_ERROR,
+                         ACE_TEXT ("(%t) Task activation at priority %d failed, ")
+                          ACE_TEXT ("exiting!\n%a"),
+                         this->priority_,
+                         -1));
+           }
        }
 
   ACE_DEBUG ((LM_ERROR, "Activated Periodic Supplier Thread at priority %d\n", this->priority_));
@@ -202,7 +223,9 @@ TAO_Notify_Tests_Periodic_Supplier::send_prologue ()
   zeroth_event.opt_header ("Load", buffer);
 
   if (TAO_debug_level > 0)
+  {
     ACE_DEBUG ((LM_DEBUG, "(%P, %t) Supplier (%s) sending event 0th event\n"));
+  }
 
   this->send_event (zeroth_event.event ());
 }
@@ -241,8 +264,10 @@ TAO_Notify_Tests_Periodic_Supplier::handle_svc ()
         }
 
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG, "(%P, %t) Supplier (%s) sending event #%d\n",
-                    this->name_.c_str (), i));
+        {
+          ACE_DEBUG ((LM_DEBUG, "(%P, %t) Supplier (%s) sending event #%d\n",
+                      this->name_.c_str (), i));
+        }
 
       this->send_event (this->event_.event ());
 
@@ -261,8 +286,11 @@ TAO_Notify_Tests_Periodic_Supplier::handle_svc ()
           this->total_deadlines_missed_ += missed;
 
           /* Start -- "Immediate run if last call missed deadline" */
-          if (missed > 0) // if we missed
-            continue;
+          if (missed > 0)
+            {
+              // if we missed
+              continue;
+            }
 
           long sleep_time = period_ - elapsed_microseconds;
           /* End -- "Immediate run if last call missed deadline" */
@@ -276,7 +304,12 @@ TAO_Notify_Tests_Periodic_Supplier::handle_svc ()
           */
 
           if (TAO_debug_level > 0)
-            ACE_DEBUG ((LM_DEBUG, "(%t) sleep time = %d uSec, missed %d deadlines\n", sleep_time, missed));
+          {
+            ACE_DEBUG ((LM_DEBUG,
+                        "(%t) sleep time = %Ld uSec, missed %Ld deadlines\n",
+                        sleep_time,
+                        missed));
+          }
 
           ACE_Time_Value t_sleep (0, sleep_time);
           ACE_OS::sleep (t_sleep);
@@ -287,14 +320,18 @@ TAO_Notify_Tests_Periodic_Supplier::handle_svc ()
   stats_.end_time (ACE_OS::gethrtime ());
 
   if (this->client_)
+  {
     this->client_->done (this);
+  }
 }
 
 int
 TAO_Notify_Tests_Periodic_Supplier::svc ()
 {
   if (TAO_debug_level > 0)
+  {
     ACE_DEBUG ((LM_DEBUG, "Thread_Task (%t) - wait\n"));
+  }
 
   try
     {
@@ -312,12 +349,12 @@ TAO_Notify_Tests_Periodic_Supplier::svc ()
 
       this->handle_svc ();
     }
-  catch (const CORBA::UserException& ue)
+  catch (CORBA::UserException const & ue)
     {
       ue._tao_print_exception (
         "Error: Periodic supplier: error sending event. ");
     }
-  catch (const CORBA::SystemException& se)
+  catch (CORBA::SystemException const & se)
     {
       se._tao_print_exception (
         "Error: Periodic supplier: error sending event. ");
@@ -327,7 +364,7 @@ TAO_Notify_Tests_Periodic_Supplier::svc ()
 }
 
 void
-TAO_Notify_Tests_Periodic_Supplier::dump_stats (ACE_TCHAR* msg, int dump_samples)
+TAO_Notify_Tests_Periodic_Supplier::dump_stats (ACE_TCHAR const *msg, bool dump_samples)
 {
   ACE_TCHAR buf[BUFSIZ];
   ACE_OS::sprintf (buf, ACE_TEXT("%s.dat"), this->name_.c_str ());

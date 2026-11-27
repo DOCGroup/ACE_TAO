@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    IIOP_SSL_Acceptor.h
  *
@@ -8,8 +5,6 @@
  *
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_IIOP_SSL_ACCEPTOR_H
 #define TAO_IIOP_SSL_ACCEPTOR_H
@@ -43,32 +38,15 @@ namespace TAO
   {
   public:
     using TAO_IIOP_SSL_BASE_ACCEPTOR = ACE_Strategy_Acceptor<IIOP_SSL_Connection_Handler, ACE_SOCK_ACCEPTOR>;
-    using TAO_IIOP_SSL_CREATION_STRATEGY = TAO_Creation_Strategy<IIOP_SSL_Connection_Handler>;
-    using TAO_IIOP_SSL_CONCURRENCY_STRATEGY = TAO_Concurrency_Strategy<IIOP_SSL_Connection_Handler>;
-    using TAO_IIOP_SSL_ACCEPT_STRATEGY = TAO_Accept_Strategy<IIOP_SSL_Connection_Handler, ACE_SOCK_ACCEPTOR>;
+    IIOP_SSL_Acceptor () = default;
 
-    /// Constructor.
-    IIOP_SSL_Acceptor ();
-
-    /// Destructor.
     ~IIOP_SSL_Acceptor () override;
 
     int close () override;
 
   private:
-    /// The concrete acceptor, as a pointer to it's base class.
+    /// The concrete acceptor, as a pointer to its base class.
     TAO_IIOP_SSL_BASE_ACCEPTOR base_acceptor_;
-
-    /**
-     * @name Acceptor Strategies
-     *
-     * Server side creation, concurrency and accept strategies.
-     */
-    //@{
-    TAO_IIOP_SSL_CREATION_STRATEGY *creation_strategy_ {};
-    TAO_IIOP_SSL_CONCURRENCY_STRATEGY *concurrency_strategy_ {};
-    TAO_IIOP_SSL_ACCEPT_STRATEGY *accept_strategy_ {};
-    //@}
   };
 } // End TAO namespace.
 

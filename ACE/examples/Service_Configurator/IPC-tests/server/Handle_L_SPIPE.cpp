@@ -6,9 +6,12 @@
 
 #if defined (ACE_HAS_STREAM_PIPES)
 
-const ACE_TCHAR *Handle_L_SPIPE::DEFAULT_RENDEZVOUS = ACE_TEXT ("/tmp/foo_spipe");
+ACE_TCHAR const *Handle_L_SPIPE::DEFAULT_RENDEZVOUS = ACE_TEXT ("/tmp/foo_spipe");
 
-Handle_L_SPIPE local_spipe;
+extern "C"
+{
+  ACE_Svc_Export Handle_L_SPIPE local_spipe;
+}
 ACE_Service_Object_Type lsp (&local_spipe, ACE_TEXT ("Local_SPIPE"));
 
 #endif /* ACE_HAS_STREAM_PIPES */

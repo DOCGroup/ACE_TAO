@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "Admin_Client.h"
 
 #include <cstring>
@@ -1677,7 +1676,7 @@ Admin_Client::exception_test ()
   if (this->debug_)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("\nRepository::lookup: %s\n"),
+                  ACE_TEXT ("\nRepository::lookup: %C\n"),
                   str.in ()));
     }
 
@@ -1690,7 +1689,7 @@ Admin_Client::exception_test ()
   if (this->debug_)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("ExceptionDef::lookup: %s\n"),
+                  ACE_TEXT ("ExceptionDef::lookup: %C\n"),
                   str.in ()));
     }
 
@@ -2185,7 +2184,7 @@ Admin_Client::interface_test ()
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("OperationDef::describe::value::")
-                  ACE_TEXT ("defined_in: %s\n"),
+                  ACE_TEXT ("defined_in: %C\n"),
                   od->defined_in.in ()));
     }
 

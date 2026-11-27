@@ -9,7 +9,6 @@
 #include "ace/SString.h"
 #include <deque>
 
-// =====================================================================
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -20,7 +19,6 @@ TAO_InterfaceAttrExtension_i::TAO_InterfaceAttrExtension_i (
 }
 
 TAO_InterfaceAttrExtension_i::~TAO_InterfaceAttrExtension_i () = default;
-
 
 CORBA::InterfaceAttrExtension::ExtFullInterfaceDescription *
 TAO_InterfaceAttrExtension_i::describe_ext_interface ()
@@ -46,23 +44,23 @@ TAO_InterfaceAttrExtension_i::describe_ext_interface_i ()
   ACE_TString holder;
 
   this->repo_->config ()->get_string_value (this->section_key_,
-                                            "name",
+                                            ACE_TEXT ("name"),
                                             holder);
-  fifd->name = holder.fast_rep ();
+  fifd->name = static_cast<char const *> (ACE_TEXT_ALWAYS_CHAR (holder.fast_rep ()));
   this->repo_->config ()->get_string_value (this->section_key_,
-                                            "id",
+                                            ACE_TEXT ("id"),
                                             holder);
-  fifd->id = holder.fast_rep ();
+  fifd->id = static_cast<char const *> (ACE_TEXT_ALWAYS_CHAR (holder.fast_rep ()));
 
   this->repo_->config ()->get_string_value (this->section_key_,
-                                            "container_id",
+                                            ACE_TEXT ("container_id"),
                                             holder);
 
-  fifd->defined_in = holder.fast_rep ();
+  fifd->defined_in = static_cast<char const *> (ACE_TEXT_ALWAYS_CHAR (holder.fast_rep ()));
   this->repo_->config ()->get_string_value (this->section_key_,
-                                            "version",
+                                            ACE_TEXT ("version"),
                                             holder);
-  fifd->version = holder.fast_rep ();
+  fifd->version = static_cast<char const *> (ACE_TEXT_ALWAYS_CHAR (holder.fast_rep ()));
 
   CORBA::ULong i = 0;
   CORBA::ULong j = 0;
@@ -84,8 +82,8 @@ TAO_InterfaceAttrExtension_i::describe_ext_interface_i ()
   ACE_Configuration_Section_Key ops_key, op_key;
   int status =
     this->repo_->config ()->open_section (this->section_key_,
-                                          "ops",
-                                          0,
+                                          ACE_TEXT ("ops"),
+                                          false,
                                           ops_key);
 
   CORBA::ULong count = 0;
@@ -93,16 +91,16 @@ TAO_InterfaceAttrExtension_i::describe_ext_interface_i ()
   if (status == 0)
     {
       this->repo_->config ()->get_integer_value (ops_key,
-                                                 "count",
+                                                 ACE_TEXT ("count"),
                                                  count);
 
       for (j = 0; j < count; ++j)
         {
-          char *stringified = TAO_IFR_Service_Utils::int_to_string (j);
+          ACE_TCHAR *stringified = TAO_IFR_Service_Utils::int_to_string (j);
           status =
             this->repo_->config ()->open_section (ops_key,
                                                   stringified,
-                                                  0,
+                                                  false,
                                                   op_key);
 
           if (status == 0)
@@ -142,8 +140,8 @@ TAO_InterfaceAttrExtension_i::describe_ext_interface_i ()
   ACE_Configuration_Section_Key attrs_key;
   status =
     this->repo_->config ()->open_section (this->section_key_,
-                                          "attrs",
-                                          0,
+                                          ACE_TEXT ("attrs"),
+                                          false,
                                           attrs_key);
 
   count = 0;
@@ -151,17 +149,17 @@ TAO_InterfaceAttrExtension_i::describe_ext_interface_i ()
   if (status == 0)
     {
       this->repo_->config ()->get_integer_value (attrs_key,
-                                                 "count",
+                                                 ACE_TEXT ("count"),
                                                  count);
 
       for (j = 0; j < count; ++j)
         {
           ACE_Configuration_Section_Key attr_key;
-          char *stringified = TAO_IFR_Service_Utils::int_to_string (j);
+          ACE_TCHAR *stringified = TAO_IFR_Service_Utils::int_to_string (j);
           status =
             this->repo_->config ()->open_section (attrs_key,
                                                   stringified,
-                                                  0,
+                                                  false,
                                                   attr_key);
 
           if (status == 0)
@@ -203,17 +201,16 @@ TAO_InterfaceAttrExtension_i::describe_ext_interface_i ()
 
   for (i = 0; i < length; ++i)
     {
-      char * const base_path =
-        TAO_IFR_Service_Utils::reference_to_path (bases[i]);
+      char * const base_path = TAO_IFR_Service_Utils::reference_to_path (bases[i]);
 
       this->repo_->config ()->expand_path (this->repo_->root_key (),
-                                           base_path,
+                                           ACE_TEXT_CHAR_TO_TCHAR (base_path),
                                            base_key,
-                                           0);
+                                           false);
       this->repo_->config ()->get_string_value (base_key,
-                                                "id",
+                                                ACE_TEXT ("id"),
                                                 holder);
-      repo_ids[i] = holder.fast_rep ();
+      repo_ids[i] = static_cast<char const *> (ACE_TEXT_ALWAYS_CHAR (holder.fast_rep ()));
     }
 
   fifd->base_interfaces = repo_ids;
@@ -276,12 +273,12 @@ TAO_InterfaceAttrExtension_i::create_ext_attribute_i (
   char *type_path = TAO_IFR_Service_Utils::reference_to_path (type);
 
   this->repo_->config ()->set_string_value (new_key,
-                                            "type_path",
-                                            type_path);
+                                            ACE_TEXT ("type_path"),
+                                            ACE_TEXT_CHAR_TO_TCHAR (type_path));
 
   // Store the attribute's mode.
   this->repo_->config ()->set_integer_value (new_key,
-                                             "mode",
+                                             ACE_TEXT ("mode"),
                                              mode);
 
   TAO_IFR_Service_Utils::set_exceptions (this->repo_->config (),
@@ -297,7 +294,7 @@ TAO_InterfaceAttrExtension_i::create_ext_attribute_i (
   // Create the object reference.
   CORBA::Object_var obj =
     TAO_IFR_Service_Utils::create_objref (CORBA::dk_Attribute,
-                                          path.c_str (),
+                                          ACE_TEXT_ALWAYS_CHAR (path.c_str ()),
                                           this->repo_);
 
   CORBA::ExtAttributeDef_var retval =

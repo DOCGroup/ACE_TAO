@@ -1,6 +1,3 @@
-/* -*- c++ -*- */
-
-//=============================================================================
 /**
  *  @file    module_ih.h
  *
@@ -9,7 +6,6 @@
  *
  *  @author Yamuna Krishnamurthy (yamuna@cs.wustl.edu)
  */
-//=============================================================================
 
 #ifndef _BE_VISITOR_MODULE_MODULE_IH_H_
 #define _BE_VISITOR_MODULE_MODULE_IH_H_
@@ -28,9 +24,9 @@ public:
 
   ~be_visitor_module_ih () override;
 
-  be_visitor_module_ih (const be_visitor_module_ih &) = delete;
+  be_visitor_module_ih (be_visitor_module_ih const &) = delete;
   be_visitor_module_ih (be_visitor_module_ih &&) = delete;
-  be_visitor_module_ih &operator= (const be_visitor_module_ih &) = delete;
+  be_visitor_module_ih &operator= (be_visitor_module_ih const &) = delete;
   be_visitor_module_ih &operator= (be_visitor_module_ih &&) = delete;
 
   /// visit module. We provide code for this method in the derived class

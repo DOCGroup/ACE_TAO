@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  * @file    Array_Map_Test.cpp
  *
@@ -6,8 +5,6 @@
  *
  * @author Ossama Othman
  */
-//=============================================================================
-
 
 #include "test_config.h"
 
@@ -37,7 +34,6 @@ static ACE_TString const words[] =
 static size_t const letters_len = sizeof (letters) / sizeof (letters[0]);
 static size_t const words_len   = sizeof (words)   / sizeof (words[0]);
 
-// --------------------------------------------------------------
 
 bool
 insertion_removal_test ()
@@ -62,7 +58,6 @@ insertion_removal_test ()
                   ACE_TEXT ("------------- Populating map %u -------------\n"),
                   count));
 
-
       ACE_TString const * word = words;
       for (char const * i = letters;
            i != letters + letters_len;
@@ -72,16 +67,20 @@ insertion_removal_test ()
             m->insert (std::make_pair (*i, *word));
 
           if (result.second)
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("Inserted \"%c | %s\"\n"),
-                        *i,
-                        word->c_str ()));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("Inserted \"%c | %s\"\n"),
+                          *i,
+                          word->c_str ()));
+            }
           else
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("Insertion of \"%c | %s\" failed.\n"),
-                               *i,
-                               word->c_str ()),
-                              false);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("Insertion of \"%c | %s\" failed.\n"),
+                                 *i,
+                                 word->c_str ()),
+                                false);
+            }
         }
 
       ACE_TEST_ASSERT (m->size () == letters_len);
@@ -105,8 +104,8 @@ insertion_removal_test ()
 
   ACE_TEST_ASSERT (!phonetic[0].is_empty ()); // Sanity check.
 
-  Map foo (phonetic[0]);  // Copy construction
-  Map bar = foo;          // Assignment
+  Map const foo (phonetic[0]);  // Copy construction
+  Map const bar = foo;          // Assignment
 
   if (!(foo == bar))
     {
@@ -150,7 +149,7 @@ insertion_removal_test ()
                         false);
     }
 
-  // ==== Removal tests ====
+  /// Removal tests.
 
   // Remove two elements from map.
   Map::iterator letter_A = A.find ('A');
@@ -178,7 +177,6 @@ insertion_removal_test ()
                         false);
     }
 
-
   // Remove range of letters from map.
   static size_t const removed_len = 3;
   Map::iterator const first = B.begin () + 2;
@@ -196,9 +194,9 @@ insertion_removal_test ()
 
   B.erase (first, last);
 
-  for (size_t s = 0; s < removed_len ; ++s)
+  for (Map::value_type const &removed_entry : removed)
     {
-      Map::key_type const key = removed[s].first;
+      Map::key_type const key = removed_entry.first;
 
       if (B.count (key) != 0
           || B.find (key) != B.end ())
@@ -217,7 +215,6 @@ insertion_removal_test ()
   return true;
 }
 
-// --------------------------------------------------------------
 
 bool
 index_operator_test ()
@@ -261,15 +258,17 @@ index_operator_test ()
            ++n, ++letter, ++word)
         {
           if ((*n).first  != *letter || (*n).second != *word)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("Key/Datum mismatch:\n")
-                               ACE_TEXT ("    key \"%c\" should be \"%c\"\n")
-                               ACE_TEXT ("  datum \"%s\" should be \"%s\"\n"),
-                               (*n).first,
-                               *letter,
-                               (*n).second.c_str (),
-                               word->c_str ()),
-                              false);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("Key/Datum mismatch:\n")
+                                 ACE_TEXT ("    key \"%c\" should be \"%c\"\n")
+                                 ACE_TEXT ("  datum \"%s\" should be \"%s\"\n"),
+                                 (*n).first,
+                                 *letter,
+                                 (*n).second.c_str (),
+                                 word->c_str ()),
+                                false);
+            }
 
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("\t%c\t%s\n"),
@@ -300,15 +299,17 @@ index_operator_test ()
            ++r, --letter, --word)
         {
           if ((*r).first != *letter || (*r).second != *word)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("Key/Datum mismatch:\n")
-                               ACE_TEXT ("    key \"%c\" should be \"%c\"\n")
-                               ACE_TEXT ("  datum \"%s\" should be \"%s\"\n"),
-                               (*r).first,
-                               *letter,
-                               (*r).second.c_str (),
-                               word->c_str ()),
-                              false);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("Key/Datum mismatch:\n")
+                                 ACE_TEXT ("    key \"%c\" should be \"%c\"\n")
+                                 ACE_TEXT ("  datum \"%s\" should be \"%s\"\n"),
+                                 (*r).first,
+                                 *letter,
+                                 (*r).second.c_str (),
+                                 word->c_str ()),
+                                false);
+            }
 
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("\t%c\t%s\n"),
@@ -331,7 +332,6 @@ index_operator_test ()
   return true;
 }
 
-// --------------------------------------------------------------
 
 class RefCounted
 {
@@ -349,14 +349,18 @@ public:
   ~RefCounted ()
   {
     if (this->refcount_)
+    {
       --(*this->refcount_);
+    }
   }
 
   RefCounted (RefCounted const & r)
     : refcount_ (r.refcount_ptr ())
   {
     if (this->refcount_)
+    {
       ++(*this->refcount_);
+    }
   }
 
   RefCounted &
@@ -384,7 +388,6 @@ private:
   unsigned int * refcount_;
 };
 
-// --------
 
 bool
 reference_count_test ()
@@ -395,7 +398,7 @@ reference_count_test ()
 
   unsigned int ref_count = 1;
 
-  RefCounted counted (&ref_count);
+  RefCounted const counted (&ref_count);
 
   ACE_TEST_ASSERT (counted.refcount () == 1);
 
@@ -407,7 +410,6 @@ reference_count_test ()
     map[ACE_TEXT("One")] = counted;
 
     ACE_TEST_ASSERT (counted.refcount () == 2);
-
 
     std::pair<Map::iterator, bool> result;
 
@@ -426,7 +428,6 @@ reference_count_test ()
 
       ACE_TEST_ASSERT (result.second);
     }
-
 
     ACE_TEST_ASSERT (counted.refcount () == 4);
 
@@ -447,7 +448,6 @@ reference_count_test ()
   return true;
 }
 
-// --------------------------------------------------------------
 
 int
 run_main (int, ACE_TCHAR *[])

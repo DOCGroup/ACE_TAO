@@ -1,4 +1,3 @@
-
 #include "tao/OctetSeq.pidl"
 #include "tao/StringSeq.pidl"
 
@@ -14,7 +13,7 @@ module Test
     ArvComposition
   };
 
-  /// @note the (deprecated) anonymous sequence type in the union
+  /// @note The (deprecated) anonymous sequence type in the union
   /// is intentional; the IDL compiler generated different
   /// code for this case as compared to using a proper
   /// forward and typedef.

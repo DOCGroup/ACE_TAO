@@ -1,13 +1,9 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Obstack_T.h
  *
  *  @author Doug Schmidt <d.schmidt@vanderbilt.edu>
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef ACE_OBSTACK_T_H
 #define ACE_OBSTACK_T_H
@@ -65,7 +61,7 @@ public:
   /// block.  Return the starting address of the current building
   /// block, 0 if error occurs.  @a len specify the string length,
   /// not the actually data size.
-  ACE_CHAR_T *copy (const ACE_CHAR_T *data,
+  ACE_CHAR_T *copy (ACE_CHAR_T const *data,
               size_t len);
 
   /// Return the maximum @a size
@@ -102,10 +98,10 @@ protected:
 
   // Don't change the order of the following two fields.
   /// Head of the Obchunk chain.
-  class ACE_Obchunk *head_;
+  class ACE_Obchunk *head_ {};
 
   /// Pointer to the current Obchunk.
-  class ACE_Obchunk *curr_;
+  class ACE_Obchunk *curr_ {};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

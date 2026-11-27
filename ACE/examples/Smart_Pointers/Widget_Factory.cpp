@@ -1,16 +1,14 @@
-/* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file    Widget_Factory.cpp
  *
  *  @author Christopher Kohlhoff <chris@kohlhoff.com>
  */
-//=============================================================================
 
 #include "Widget_Factory.h"
 #include "Widget_Impl.h"
+#include <memory>
 
-Widget *Widget_Factory::create_widget ()
+std::unique_ptr<Widget> Widget_Factory::create_widget ()
 {
-  return new Widget_Impl;
+  return std::make_unique<Widget_Impl> ();
 }

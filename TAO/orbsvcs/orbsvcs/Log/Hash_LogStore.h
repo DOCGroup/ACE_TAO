@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   Hash_LogStore.h
  *
@@ -8,7 +5,6 @@
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  *  @author David A. Hanvey <d.hanvey@qub.ac.uk>
  */
-//=============================================================================
 
 #ifndef TAO_TLS_HASH_LOGSTORE_H
 #define TAO_TLS_HASH_LOGSTORE_H
@@ -40,12 +36,9 @@ class TAO_Log_Serv_Export TAO_Hash_LogStore
   : public TAO_LogStore
 {
 public:
-  /// Constructor.
-  TAO_Hash_LogStore (TAO_LogMgr_i * mgr);
+  explicit TAO_Hash_LogStore (TAO_LogMgr_i * mgr);
 
-  /// Destructor.
   ~TAO_Hash_LogStore () override;
-
 
   /// Lists all logs created by the log factory.
   DsLogAdmin::LogList *list_logs () override;

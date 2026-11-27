@@ -4,13 +4,17 @@
 #include "JAWS/Filecache.h"
 #include "JAWS/Cache_List_T.h"
 
+#include <memory>
+
 void
 JAWS_Referenced_Filecache_Factory::destroy (JAWS_Cache_Object *object)
 {
-  JAWS_FILE *file = (JAWS_FILE *) object->data ();
+  JAWS_FILE *file = static_cast<JAWS_FILE *> (const_cast<void *> (object->data ()));
   file->close ();
   if (file->map ())
+  {
     file->map ()->close ();
+  }
   delete file;
   this->JAWS_Referenced_Cache_Object_Factory::destroy (object);
 }
@@ -18,21 +22,23 @@ JAWS_Referenced_Filecache_Factory::destroy (JAWS_Cache_Object *object)
 void
 JAWS_Counted_Filecache_Factory::destroy (JAWS_Cache_Object *object)
 {
-  JAWS_FILE *file = (JAWS_FILE *) object->data ();
+  JAWS_FILE *file = static_cast<JAWS_FILE *> (const_cast<void *> (object->data ()));
   file->close ();
   if (file->map ())
+  {
     file->map ()->close ();
+  }
   delete file;
   this->JAWS_Counted_Cache_Object_Factory::destroy (object);
 }
 
-JAWS_Cached_FILE::JAWS_Cached_FILE (const char *const &filename,
+JAWS_Cached_FILE::JAWS_Cached_FILE (char const *const &filename,
                                     JAWS_Filecache_Proxy::Cache_Manager *cm)
   : JAWS_Filecache_Proxy (filename, cm)
 {
   ACE_HANDLE handle = ACE_INVALID_HANDLE;
 
-  if (this->data () != 0)
+  if (this->data () != nullptr)
     {
       handle = ACE_OS::dup (this->data ()->get_handle ());
     }
@@ -41,7 +47,7 @@ JAWS_Cached_FILE::JAWS_Cached_FILE (const char *const &filename,
       JAWS_FILE *file = new JAWS_FILE;
       ACE_FILE_Connector file_connector;
 
-      int result = file_connector.connect (*file, ACE_FILE_Addr (filename));
+      int const result = file_connector.connect (*file, ACE_FILE_Addr (filename));
       if (result == -1 || file->get_handle () == ACE_INVALID_HANDLE)
         {
           // TODO: do something here!
@@ -53,8 +59,8 @@ JAWS_Cached_FILE::JAWS_Cached_FILE (const char *const &filename,
       handle = ACE_OS::dup (file->get_handle ());
 
       {
-        JAWS_Cached_FILE cf (filename, file, info.size_, cm);
-        if (cf.data () != 0)
+        JAWS_Cached_FILE const cf (filename, file, info.size_, cm);
+        if (cf.data () != nullptr)
           {
             new (this) JAWS_Cached_FILE (filename, cm);
             return;
@@ -65,7 +71,7 @@ JAWS_Cached_FILE::JAWS_Cached_FILE (const char *const &filename,
   this->file_.set_handle (handle);
 }
 
-JAWS_Cached_FILE::JAWS_Cached_FILE (const char *const &filename,
+JAWS_Cached_FILE::JAWS_Cached_FILE (char const *const &filename,
                                     JAWS_FILE *&file,
                                     size_t size,
                                     JAWS_Filecache_Proxy::Cache_Manager *cm)
@@ -81,12 +87,12 @@ JAWS_Cached_FILE::~JAWS_Cached_FILE ()
 ACE_FILE_IO *
 JAWS_Cached_FILE::file ()
 {
-  return &(this->file_);
+  return std::addressof (this->file_);
 }
 
 ACE_Mem_Map *
 JAWS_Cached_FILE::mmap ()
 {
-  return (this->data () == 0 ? 0 : this->data ()->mem_map ());
+  return (this->data () == nullptr ? nullptr : this->data ()->mem_map ());
 }
 

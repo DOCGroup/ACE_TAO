@@ -1,13 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
- *  @fileIdAssignmentStrategyUser.h
+ *  @file IdAssignmentStrategyUser.h
  *
  *  @author  Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-//=============================================================================
-
 #ifndef TAO_IDASSIGNMENTSTRATEGYUSER_H
 #define TAO_IDASSIGNMENTSTRATEGYUSER_H
 #include /**/ "ace/pre.h"

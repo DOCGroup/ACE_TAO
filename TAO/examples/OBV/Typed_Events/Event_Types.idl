@@ -46,7 +46,7 @@ valuetype Event
 
 /// Derived Events
 ///
-/// @note do_print () is overridden in the implementation. We can't
+/// @note The do_print() method is overridden in the implementation. We can't
 /// tell this in IDL, because operations can't be declared again.
 /// They are implicit assumed to be polymorph.
 valuetype Temperature : Event
@@ -181,8 +181,9 @@ abstract valuetype Criterion
   boolean is_critical (in Event e);
 };
 
-/// The specialized criterions. Note: A valuetype can only inherit
-/// from one non-abstract other valuetype (which then must be the first
+/// The specialized criterions.
+/// @note A valuetype can only inherit from one non-abstract other
+/// valuetype (which then must be the first
 /// one listed). Further Criterions may only be abstract valuetypes
 /// without the ability to contain state members. (The support of
 /// a CORBA interface is not yet supported.)

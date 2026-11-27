@@ -1,11 +1,8 @@
-// -*- C++ -*-
-//=============================================================================
 /**
  *  @file    Synch_Invocation.h
  *
  *  @author Balachandran Natarajan <bala@dre.vanderbilt.edu>
  */
-//=============================================================================
 #ifndef TAO_SYNCH_INVOCATION_H
 #define TAO_SYNCH_INVOCATION_H
 #include /**/ "ace/pre.h"
@@ -49,6 +46,7 @@ namespace TAO
   class TAO_Export Synch_Twoway_Invocation : public Remote_Invocation
   {
   public:
+    Synch_Twoway_Invocation () = delete;
     /// Constructor used by TAO::Invocation_Adapter
     /**
      * @param otarget The original target on which this invocation
@@ -145,6 +143,7 @@ namespace TAO
     : public Synch_Twoway_Invocation
   {
   public:
+    Synch_Oneway_Invocation () = delete;
     /// Constructor used by TAO::Invocation_Adapter
     /**
      * @param otarget The original target on which this invocation
@@ -189,6 +188,7 @@ namespace TAO
     void set_status (Invocation_Status s);
 
   private:
+    Reply_Guard () = delete;
     Reply_Guard (Reply_Guard const &) = delete;
     Reply_Guard &operator= (Reply_Guard const &) = delete;
     Reply_Guard (Reply_Guard &&) = delete;

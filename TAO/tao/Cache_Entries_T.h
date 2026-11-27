@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   Cache_Entries_T.h
  *
  *  @author Bala Natarajan  <bala@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_CACHE_ENTRIES_T_H
 #define TAO_CACHE_ENTRIES_T_H
@@ -53,9 +49,9 @@ namespace TAO
   /**
    * @brief Helper class for TAO_Transport_Cache_Manager
    *
-   * Helper class that wraps the <value> part of the Map or
+   * Helper class that wraps the value part of the Map or
    * table holding the Transport state.: unifies data items, so
-   * they can be stored together as a <value> for a <key> in a
+   * they can be stored together as a value for a key in a
    * table holding the state of the Transport Cache.
    */
   template <typename TRANSPORT_TYPE>
@@ -64,32 +60,28 @@ namespace TAO
   public:
     using transport_type = TRANSPORT_TYPE;
 
-    /// Constructor.
     Cache_IntId_T ();
 
-    /// Constructor.
-    Cache_IntId_T (transport_type *transport);
+    explicit Cache_IntId_T (transport_type *transport);
 
-    /// Copy constructor.
-    Cache_IntId_T (const Cache_IntId_T & rhs);
+    Cache_IntId_T (Cache_IntId_T const & rhs);
 
-    /// Destructor.
     ~Cache_IntId_T ();
 
     /// Assignment operator (does copy memory).
-    Cache_IntId_T& operator= (const Cache_IntId_T &rhs);
+    Cache_IntId_T& operator= (Cache_IntId_T const &rhs);
 
     /// Equality comparison operator (must match both id_ and kind_).
-    bool operator== (const Cache_IntId_T &rhs) const;
+    bool operator== (Cache_IntId_T const &rhs) const;
 
     /// Inequality comparison operator.
-    bool operator!= (const Cache_IntId_T &rhs) const;
+    bool operator!= (Cache_IntId_T const &rhs) const;
 
     /// Return the underlying transport
     transport_type *transport ();
 
     /// Return the underlying transport
-    const transport_type *transport () const;
+    transport_type const *transport () const;
 
     /// Set recycle_state.
     void recycle_state (Cache_Entries_State new_state);
@@ -114,20 +106,19 @@ namespace TAO
     /// Set the connected flag
     void is_connected (bool connected);
 
-    static const char *state_name (Cache_Entries_State st);
+    static char const *state_name (Cache_Entries_State st);
 
   private:
     /// The transport that needs to be cached.
-    transport_type *transport_;
+    transport_type *transport_ {};
 
     /// The state of the handle
-    Cache_Entries_State recycle_state_;
+    Cache_Entries_State recycle_state_ {ENTRY_UNKNOWN};
 
     /// This is an analog for the transport::is_connected(), which is
     /// guarded by a mutex.
-    bool is_connected_;
+    bool is_connected_ {};
   };
-
 
   /**
    * @class Cache_ExtId_T
@@ -143,27 +134,22 @@ namespace TAO
   public:
     using transport_descriptor_type = TRANSPORT_DESCRIPTOR_TYPE;
 
-    /// Constructor.
     Cache_ExtId_T ();
 
-    /// Constructor.
     explicit Cache_ExtId_T (transport_descriptor_type *prop);
 
-    /// Copy constructor.
-    Cache_ExtId_T (const Cache_ExtId_T & rhs);
+    Cache_ExtId_T (Cache_ExtId_T const & rhs);
 
-    /// Destructor.
     ~Cache_ExtId_T ();
 
-    // = Assignment and comparison operators.
     /// Assignment operator (does copy memory).
-    Cache_ExtId_T& operator= (const Cache_ExtId_T &rhs);
+    Cache_ExtId_T& operator= (Cache_ExtId_T const &rhs);
 
     /// Equality comparison operator (must match both id_ and kind_).
-    bool operator== (const Cache_ExtId_T &rhs) const;
+    bool operator== (Cache_ExtId_T const &rhs) const;
 
     /// Inequality comparison operator.
-    bool operator!= (const Cache_ExtId_T &rhs) const;
+    bool operator!= (Cache_ExtId_T const &rhs) const;
 
     /// hash function is required in order for this class to be usable by
     /// ACE_Hash_Map_Manager_Ex.
@@ -182,16 +168,15 @@ namespace TAO
     /// Increment the index value
     void incr_index ();
 
-    // = Accessors
     /// Get the underlying the property pointer
     transport_descriptor_type *property () const;
 
   private:
     /// A property object that we represent.
-    transport_descriptor_type *transport_property_;
+    transport_descriptor_type *transport_property_ {};
 
     /// Do we need to delete transport_property?
-    bool is_delete_;
+    bool is_delete_ {};
 
     /**
      * This is a supplementary index. Would be set to zero by
@@ -199,7 +184,7 @@ namespace TAO
      * see the documentation of TAO_Transport_Cache_Manager for
      * details.
      */
-    CORBA::ULong index_;
+    CORBA::ULong index_ {};
   };
 }
 

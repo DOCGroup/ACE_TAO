@@ -7,11 +7,11 @@ Payload_Receiver::Payload_Receiver (CORBA::ORB_ptr orb)
 }
 
 void
-Payload_Receiver::more_data (const Test::Payload &payload)
+Payload_Receiver::more_data (Test::Payload const &payload)
 {
   ++this->count_;
 
-  CORBA::ULong length = payload.length ();
+  CORBA::ULong const length = payload.length ();
   for (CORBA::ULong i = 0; i < length; ++i)
     {
       if (payload[i] != 'A')
@@ -21,13 +21,11 @@ Payload_Receiver::more_data (const Test::Payload &payload)
     }
 }
 
-
 void
 Payload_Receiver::shutdown ()
 {
   this->orb_->shutdown (false);
 }
-
 
 int
 Payload_Receiver::get_count () const

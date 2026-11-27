@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   CEC_EventChannel.h
  *
@@ -9,8 +6,6 @@
  * A new implementation of the COS Event Channel.
  * This version does not rely on the RTEC in its implementation.
  */
-//=============================================================================
-
 
 #ifndef TAO_CEC_EVENTCHANNEL_H
 #define TAO_CEC_EVENTCHANNEL_H
@@ -63,8 +58,8 @@ public:
   // the user should be able to set any values she wants.
 
   /// Can consumers or suppliers invoke connect_push_* multiple times?
-  int consumer_reconnect;
-  int supplier_reconnect;
+  bool consumer_reconnect;
+  bool supplier_reconnect;
 
   /**
    * If not zero the event channel will send disconnect callbacks when
@@ -75,7 +70,7 @@ public:
    * It is a matter of debate what the spec requires for the regular
    * event service.
    */
-  int disconnect_callbacks;
+  bool disconnect_callbacks;
 
 private:
   /// Only the EC can read the private fields.
@@ -118,14 +113,13 @@ public:
   /**
    * constructor
    * If @a own_factory is not 0 it assumes ownership of the factory.
-   * If the factory is <nil> it uses the Service_Configurator to load
+   * If the factory is @c nullptr it uses the Service_Configurator to load
    * the Factory, if not found it uses TAO_CEC_Default_Resource_Factory
    */
   TAO_CEC_EventChannel (TAO_CEC_EventChannel_Attributes const &attributes,
                         TAO_CEC_Factory *factory = nullptr,
-                        int own_factory = 0);
+                        bool own_factory = false);
 
-  /// destructor
   ~TAO_CEC_EventChannel () override;
 
   TAO_CEC_EventChannel (TAO_CEC_EventChannel const &) = delete;
@@ -156,7 +150,8 @@ public:
   /// Access the supplier control strategy.
   TAO_CEC_SupplierControl* supplier_control () const;
 
-  // = The factory methods, they delegate on the CEC_Factory.
+  /// @name The factory methods, they delegate on the CEC_Factory
+  /// @{
   /// Create and destroy a ProxyPushSupplier
   void create_proxy (TAO_CEC_ProxyPushSupplier*&);
   void destroy_proxy (TAO_CEC_ProxyPushSupplier*);
@@ -220,16 +215,18 @@ public:
   // at construction time.
 
   /// Can the consumers reconnect to the EC?
-  int consumer_reconnect () const;
+  bool consumer_reconnect () const;
 
   /// Can the suppliers reconnect to the EC?
-  int supplier_reconnect () const;
+  bool supplier_reconnect () const;
 
   /// Should we send callback disconnect messages when a proxy is
   /// disconnected by the client
-  int disconnect_callbacks () const;
+  bool disconnect_callbacks () const;
 
-  // = The CosEventChannelAdmin::EventChannel methods...
+  /// @}
+  /// @name The CosEventChannelAdmin::EventChannel methods
+  /// @{
   /// The default implementation is:
   ///    this->consumer_admin ()->_this (env);
   CosEventChannelAdmin::ConsumerAdmin_ptr for_consumers () override;
@@ -245,8 +242,9 @@ public:
 
   /// Forwarded to the factory
   CORBA::Policy_ptr
-  create_roundtrip_timeout_policy (const ACE_Time_Value &timeout);
+  create_roundtrip_timeout_policy (ACE_Time_Value const &timeout);
 
+  /// @}
 private:
   /// The POAs used to activate "supplier-side" and "consumer-side"
   /// objects.
@@ -261,31 +259,31 @@ private:
   TAO_CEC_Factory *factory_;
 
   /// Flag that indicates if we own the factory.
-  int own_factory_;
+  bool own_factory_;
 
   /// The dispatching "module"
-  TAO_CEC_Dispatching *dispatching_;
+  TAO_CEC_Dispatching *dispatching_ {};
 
   /// The pulling strategy
-  TAO_CEC_Pulling_Strategy *pulling_strategy_;
+  TAO_CEC_Pulling_Strategy *pulling_strategy_ {};
 
   /// The ConsumerAdmin implementation
-  TAO_CEC_ConsumerAdmin *consumer_admin_;
+  TAO_CEC_ConsumerAdmin *consumer_admin_ {};
 
   /// The SupplierAdmin implementation
-  TAO_CEC_SupplierAdmin *supplier_admin_;
+  TAO_CEC_SupplierAdmin *supplier_admin_ {};
 
   /// Consumer/Supplier reconnection flags
-  int consumer_reconnect_;
-  int supplier_reconnect_;
+  bool consumer_reconnect_;
+  bool supplier_reconnect_;
 
-  /// If not zero we send callbacks when a proxy is disconnected
-  int disconnect_callbacks_;
+  /// If enabled, we send callbacks when a proxy is disconnected.
+  bool disconnect_callbacks_;
 
   /// Strategies to disconnect misbehaving or destroyed consumers and
   /// suppliers
-  TAO_CEC_ConsumerControl *consumer_control_;
-  TAO_CEC_SupplierControl *supplier_control_;
+  TAO_CEC_ConsumerControl *consumer_control_ {};
+  TAO_CEC_SupplierControl *supplier_control_ {};
 
   ServantRetryMap retry_map_;
 };

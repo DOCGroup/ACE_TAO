@@ -1,4 +1,3 @@
-/* -*- c++ -*- */
 #ifndef JAWS_EVENT_RESULT_H
 #define JAWS_EVENT_RESULT_H
 
@@ -64,7 +63,7 @@ public:
                     , JE_STATUS status = JE_IDLE
                     , JE_REASON reason = JE_NO_REASON
                     , int error_number = -1
-                    , void * data = 0
+                    , void * data = nullptr
                     )
     : bytes_ (bytes)
     , status_ (status)
@@ -73,7 +72,9 @@ public:
     , data_ (data)
   {
     if (this->error_number_ == -1)
-      this->error_number_ = errno;
+      {
+        this->error_number_ = errno;
+      }
   }
 
   size_t bytes () const { return this->bytes_; }

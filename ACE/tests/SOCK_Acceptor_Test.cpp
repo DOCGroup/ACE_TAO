@@ -1,13 +1,10 @@
-
-//=============================================================================
 /**
  *  @file    SOCK_Acceptor_Test.cpp
  *
- *   This is a test of the <ACE_SOCK_Acceptor> class.
+ *   This is a test of the @c ACE_SOCK_Acceptor class.
  *
  *  @author Steve Huston <shuston@riverace.com>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "ace/OS_NS_unistd.h"
@@ -34,10 +31,12 @@ test_accept (ACE_Addr listen_addr, int v6_only)
                      0,
                      v6_only) == -1
       || acceptor.get_local_addr (listening_at) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) %p\n"),
-                       ACE_TEXT ("open")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%P|%t) %p\n"),
+                         ACE_TEXT ("open")),
+                        -1);
+    }
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) listening at port %d\n"),
               listening_at.get_port_number ()));
 
@@ -50,7 +49,7 @@ test_accept (ACE_Addr listen_addr, int v6_only)
                          ACE_LOCALHOST,
                          PF_INET);
   ACE_SOCK_Stream v4_stream;
-  bool v4_ok = (connector.connect (v4_stream, v4_addr) == 0);
+  bool const v4_ok = (connector.connect (v4_stream, v4_addr) == 0);
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("v4 connect %s\n"),
               v4_ok ? ACE_TEXT ("OK") : ACE_TEXT ("FAIL")));
@@ -61,18 +60,24 @@ test_accept (ACE_Addr listen_addr, int v6_only)
                          ACE_IPV6_LOCALHOST,
                          PF_INET6);
   ACE_SOCK_Stream v6_stream;
-  bool v6_ok = (connector.connect (v6_stream, v6_addr) == 0);
+  bool const v6_ok = (connector.connect (v6_stream, v6_addr) == 0);
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("v6 connect %s\n"),
               v6_ok ? ACE_TEXT ("OK") : ACE_TEXT ("FAIL")));
   v6_stream.close();
 
   if (v6_only && v4_ok)
-    status = 1;
+    {
+      status = 1;
+    }
   if (!v6_only && !v4_ok)
-    status = 1;
+    {
+      status = 1;
+    }
   if (!v6_ok)
-    status = 1;
+    {
+      status = 1;
+    }
 #else
   status = v4_ok ? 0 : 1;
 #endif /* ACE_HAS_IPV6 */
@@ -88,9 +93,13 @@ run_main (int, ACE_TCHAR *[])
   int status = 0;
 
   if (test_accept (ACE_Addr::sap_any, 1) != 0)
+  {
     status = 1;
+  }
   if (test_accept (ACE_Addr::sap_any, 0) != 0)
+  {
     status = 1;
+  }
 
   ACE_END_TEST;
   return status;

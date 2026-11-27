@@ -9,7 +9,7 @@
 using namespace ACE_VERSIONED_NAMESPACE_NAME::ACE::Monitor_Control;
 
 void
-error (const char* msg)
+error (char const *msg)
 {
 #if defined (ACE_NLOGGING)
   ACE_UNUSED_ARG (msg);
@@ -30,44 +30,44 @@ ACE_TMAIN (int, ACE_TCHAR*[])
       TAO_Singleton_Manager::instance ()->init ();
 
       // Test registry acquisition.
-      Monitor_Point_Registry* reg = Monitor_Point_Registry::instance ();
+      Monitor_Point_Registry * const reg = Monitor_Point_Registry::instance ();
 
-      if (reg == 0)
+      if (reg == nullptr)
         {
           error ("Monitor_Point_Registry::instance() failed");
         }
 
       // Test registry addition.
-      Monitor_Base* s = 0;
+      Monitor_Base *s {};
       ACE_NEW_RETURN (s,
                       Monitor_Base ("test1",
                                     Monitor_Control_Types::MC_COUNTER),
                       2);
 
-      if (reg->add (s) == false)
+      if (!reg->add (s))
         {
           error ("clean Monitor_Point_Registry::add() failed");
         }
 
-      if (reg->add (s) == true)
+      if (reg->add (s))
         {
           error ("duplicate Monitor_Point_Registry::add() failed");
         }
 
       // Test registry addition of null value - should get ACE_ERROR
       // message and return value of 'false'.
-      if (reg->add (0) == true)
+      if (reg->add (0))
         {
           error ("Monitor_Point_Registry::add() of null succeeded");
         }
 
       // Test registry removal.
-      if (reg->remove ("fake name") == true)
+      if (reg->remove ("fake name"))
         {
           error ("non-existent Monitor_Point_Registry::remove() failed");
         }
 
-      if (reg->remove ("test1") == false)
+      if (!reg->remove ("test1"))
         {
           error ("existent Monitor_Point_Registry::remove() failed");
         }
@@ -78,7 +78,7 @@ ACE_TMAIN (int, ACE_TCHAR*[])
                                     Monitor_Control_Types::MC_COUNTER),
                       2);
 
-      if (reg->add (s) == false)
+      if (!reg->add (s))
         {
           error ("re-addition Monitor_Point_Registry::add() failed");
         }
@@ -88,14 +88,14 @@ ACE_TMAIN (int, ACE_TCHAR*[])
                                     Monitor_Control_Types::MC_NUMBER),
                       2);
 
-      if (reg->add (s) == false)
+      if (!reg->add (s))
         {
           error ("second Monitor_Point_Registry::add() failed");
         }
 
       TAO_Singleton_Manager::instance ()->fini ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Statistic_Registry: ");
       error ("Caught a CORBA exception");

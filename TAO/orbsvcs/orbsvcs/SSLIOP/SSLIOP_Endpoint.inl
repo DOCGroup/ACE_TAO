@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE TAO_IIOP_Endpoint *
@@ -14,7 +12,7 @@ TAO_SSLIOP_Endpoint::iiop_endpoint (TAO_IIOP_Endpoint *iiop_endpoint,
 {
   if (iiop_endpoint != nullptr)
     {
-      TAO_IIOP_Endpoint *new_endpoint = nullptr;
+      TAO_IIOP_Endpoint *new_endpoint {};
 
       if (destroy)
         {
@@ -24,17 +22,21 @@ TAO_SSLIOP_Endpoint::iiop_endpoint (TAO_IIOP_Endpoint *iiop_endpoint,
 
         }
       else
-        new_endpoint = iiop_endpoint;
+        {
+          new_endpoint = iiop_endpoint;
+        }
 
       if (this->destroy_iiop_endpoint_)
-        delete this->iiop_endpoint_;
+        {
+          delete this->iiop_endpoint_;
+        }
 
       this->iiop_endpoint_ = new_endpoint;
       this->destroy_iiop_endpoint_ = destroy;
     }
 }
 
-ACE_INLINE const ::SSLIOP::SSL &
+ACE_INLINE ::SSLIOP::SSL const &
 TAO_SSLIOP_Endpoint::ssl_component () const
 {
   return this->ssl_component_;
@@ -58,7 +60,7 @@ TAO_SSLIOP_Endpoint::credentials () const
   return this->credentials_.in ();
 }
 
-ACE_INLINE int
+ACE_INLINE bool
 TAO_SSLIOP_Endpoint::credentials_set () const
 {
   return this->credentials_set_;

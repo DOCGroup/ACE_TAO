@@ -1,6 +1,3 @@
-//-*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Fault_Tolerance_Service.h
  *
@@ -10,7 +7,6 @@
  *
  *  @author Bala Natarajan <bala@cs.wustl.edu>
  */
-//=============================================================================
 #ifndef TAO_FAULT_TOLERANCE_SERVICE_H
 #define TAO_FAULT_TOLERANCE_SERVICE_H
 
@@ -23,6 +19,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Basic_Types.h"
+
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -39,10 +37,8 @@ class TAO_ORB_Core;
 class TAO_Export TAO_Fault_Tolerance_Service
 {
 public:
-  /// Ctor
   TAO_Fault_Tolerance_Service () = default;
 
-  /// Dtor
   ~TAO_Fault_Tolerance_Service ();
 
   /// Initialize the internal data structures
@@ -52,12 +48,14 @@ public:
   TAO_Service_Callbacks *service_callback ();
 
 private:
-  void operator= (const TAO_Fault_Tolerance_Service &);
-  TAO_Fault_Tolerance_Service (const TAO_Fault_Tolerance_Service &);
+  TAO_Fault_Tolerance_Service (TAO_Fault_Tolerance_Service const &) = delete;
+  TAO_Fault_Tolerance_Service &operator= (TAO_Fault_Tolerance_Service const &) = delete;
+  TAO_Fault_Tolerance_Service (TAO_Fault_Tolerance_Service &&) = delete;
+  TAO_Fault_Tolerance_Service &operator= (TAO_Fault_Tolerance_Service &&) = delete;
 
 private:
   /// hook to callback on to the service
-  TAO_Service_Callbacks *ft_service_callback_ {};
+  std::unique_ptr<TAO_Service_Callbacks> ft_service_callback_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

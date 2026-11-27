@@ -1,13 +1,9 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file     Pagefile_Memory_Pool.h
  *
  *  @author Dougls C. Schmidt <d.schmidt@vanderbilt.edu>
  *  @author Prashant Jain <pjain@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef ACE_PAGEFILE_MEMORY_POOL_H
 #define ACE_PAGEFILE_MEMORY_POOL_H
@@ -62,10 +58,9 @@ public:
   using OPTIONS = ACE_Pagefile_Memory_Pool_Options;
 
   /// Initialize the pool.
-  ACE_Pagefile_Memory_Pool (const ACE_TCHAR *backing_store_name = nullptr,
-                            const OPTIONS *options = nullptr);
+  ACE_Pagefile_Memory_Pool (ACE_TCHAR const *backing_store_name = nullptr,
+                            OPTIONS const *options = nullptr);
 
-  /// Destructor
   virtual ~ACE_Pagefile_Memory_Pool () = default;
 
   /// Ask system for initial chunk of shared memory.
@@ -73,7 +68,7 @@ public:
                       size_t &rounded_bytes,
                       int &first_time);
 
-  /// Acquire at least @a nbytes from the memory pool.  <rounded_bytes>
+  /// Acquire at least @a nbytes from the memory pool.  @c rounded_bytes
   /// is the actual number of bytes allocated.
   void *acquire (size_t nbytes,
                  size_t &rounded_bytes);
@@ -106,7 +101,6 @@ public:
   /// Round up to the chunk size required by the operation system
   size_t round_to_chunk_size (size_t nbytes);
 
-  // = Don't need this methods here ...
   int sync (ssize_t = -1, int = MS_SYNC);
   int sync (void *, size_t, int = MS_SYNC);
   int protect (ssize_t = -1, int = PROT_RDWR);
@@ -176,7 +170,7 @@ private:
   Control_Block local_cb_;
 
   /// Shared memory pool statistics.
-  Control_Block *shared_cb_;
+  Control_Block *shared_cb_ {};
 
   /// File mapping handle.
   ACE_HANDLE object_handle_;

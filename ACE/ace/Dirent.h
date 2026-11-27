@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Dirent.h
  *
@@ -9,7 +6,6 @@
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef ACE_DIRENT_H
 #define ACE_DIRENT_H
@@ -33,15 +29,19 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Dirent
 {
 public:
-  /// Default constructor.
   ACE_Dirent () = default;
 
   /// Constructor calls @c opendir()
-  explicit ACE_Dirent (const ACE_TCHAR *dirname);
+  explicit ACE_Dirent (ACE_TCHAR const *dirname);
+
+  ACE_Dirent (ACE_Dirent const &) = delete;
+  ACE_Dirent &operator= (ACE_Dirent const &) = delete;
+  ACE_Dirent (ACE_Dirent &&other) noexcept;
+  ACE_Dirent &operator= (ACE_Dirent &&other) noexcept;
 
   /// Opens the directory named by filename and associates a directory
   /// stream with it.
-  int open (const ACE_TCHAR *filename);
+  int open (ACE_TCHAR const *filename);
 
   /// Destructor calls @c closedir().
   ~ACE_Dirent ();
@@ -49,7 +49,8 @@ public:
   /// Closes the directory stream and frees the ACE_DIR structure.
   void close ();
 
-  // = Iterator methods.
+  /// @name Iterator methods
+  /// @{
   /**
    * Returns a pointer to a structure representing the directory entry
    * at the current position in the directory stream to which dirp
@@ -68,8 +69,11 @@ public:
    * directory is actually read.
    */
   ACE_DIRENT *read ();
+  /// @}
 
-  // = Manipulators.
+  /// @name Position manipulators
+  /// @{
+
   /// Returns the current location associated with the directory
   /// stream.
   long tell ();
@@ -95,6 +99,7 @@ public:
    * @c opendir() would.
    */
   void rewind ();
+  /// @}
 
 private:
   /// Pointer to the directory stream.

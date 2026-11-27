@@ -1,5 +1,3 @@
-/* -*- c++ -*- */
-//=============================================================================
 /**
  *  @file    interface_sh.h
  *
@@ -8,7 +6,6 @@
  *
  *  @author Aniruddha Gokhale
  */
-//=============================================================================
 
 #ifndef _BE_INTERFACE_INTERFACE_SH_H_
 #define _BE_INTERFACE_INTERFACE_SH_H_

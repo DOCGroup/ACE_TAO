@@ -1,12 +1,8 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
  *  @file    Log_Message_Receiver.h
  *
  *  @author Per Andersson
  */
-//=============================================================================
 
 #ifndef LOG_MESSAGE_RECEIVER_H
 #define LOG_MESSAGE_RECEIVER_H
@@ -25,62 +21,6 @@
 #  include "ace/Null_Mutex.h"
 #endif /* ACE_HAS_THREADS */
 
-// ==========================================================================//
-//------------- General Requirements on a Log Message Receiver --------------//
-// ==========================================================================//
-//  The requirements on a log manager receiver, T, are quite simple.
-//  1: There must exist one "log_record" member function with the following
-//     prototype:
-//        void log_record(const ACE_TCHAR *hostname,
-//                        ACE_Log_Record &record);
-//
-//  2: There must exist a public destructor.
-//  3: There must exist a public copy constructor.
-//  4: There must exist a default constructor. (for now)
-//
-//  The semantics are also simple. A log message receiver should
-//  behave as an accessor object (smart pointer or envelope class).
-//  It should be very cheap to copy and the should be no noticeable
-//  difference when using either the new copy or the old log message
-//  receiver.
-//
-//  Methods:
-//    void log_record(const ACE_TCHAR* hostname,
-//                    ACE_Log_Record& record)
-//  Description:
-//    Processes the log record "record" from the host "hostname"
-//  Precondition:
-//    hostname != 0;
-//  Requirements:
-//    Record must be a valid ACE_Log_Record.
-//
-// ==========================================================================//
-
-// ==========================================================================//
-// ------------ General Description of a Log Message Receiver -------------- //
-// ==========================================================================//
-//  Log Message Receivers, LRMs, are processing log records. It is the
-//  LRM that writes a log message to stderr, stdout, a log file and maybee
-//  converts some of the log messages to notifications, warnings, alarms
-//  and forwards them to some operation and maintenance system (PATROL).
-//
-//  The client logging handler and server logging handler are responsible
-//  for forwarding, receiving, framing, processing log records.
-//  That is a very usable service, but it should also be possible to change
-//  how log records are processed without having to rewrite code in
-//  the server log handler. This code should instead be written as a
-//  separate entity, a Log Message Receiver.
-//
-//  A simple LMR should be very easy to write but it should also
-//  be possible to write more complex LMRs, like one that creates
-//  a new log file each day or keeps a fixed size, round robin,
-//  log file. It should also be possible to have separate LMRs
-//  of the same type that uses different log files.
-//
-// ==========================================================================//
-
-
-// Type based log message receiver
 /**
  * @class Static_Log_Message_Receiver
  *
@@ -98,24 +38,14 @@ class Static_Log_Message_Receiver
 public:
   /// Prints the log_record to stderr using record.print (hostname, 0, stderr).
   /// Serializes the output by using a ACE_SYNCH_MUTEX.
-  static void log_record(const ACE_TCHAR *hostname,
+  static void log_record(ACE_TCHAR const *hostname,
                          ACE_Log_Record &record);
 
   /// Prints the log_record to a user specified ostream.
-  static void log_output(const ACE_TCHAR *hostname,
+  static void log_output(ACE_TCHAR const *hostname,
                          ACE_Log_Record &record,
                          ostream *output);
 };
-
-// Instance based log message receiver
-
-// ------------------------ Log_Message_Receiver --------------------------- //
-//  Log_Message_Receiver is little more complicated log message receiver.
-//  It is instance based and have a reference counted implementation.
-//  Log_Message_Receiver is the envelope class for Log_Message_Receiver_Impl.
-//
-// ------------------------------------------------------------------------- //
-
 
 //Forward declaration
 template<ACE_SYNCH_DECL> class Log_Message_Receiver_Impl;
@@ -129,7 +59,20 @@ template<ACE_SYNCH_DECL> class Log_Message_Receiver_Impl;
  * Log_Message_Receiver_Impl.  The difference between
  * Static_Log_Message_Receiver and Log_Message_Receiver is that is
  * possible to have instance data in Log_Message_Receiver.
- * Comment:
+ *
+ * A receiver must provide a log_record method, a public destructor and copy
+ * constructor, and a default constructor. It should act as a cheap-to-copy
+ * envelope object. The log_record method processes a valid ACE_Log_Record
+ * for a non-null hostname.
+ *
+ * Log message receivers process records after the client and server logging
+ * handlers forward, receive, frame, and dispatch them. Keeping that work in
+ * a separate receiver allows applications to change processing without
+ * changing the server handler, for example to write daily or fixed-size
+ * rotating log files or forward selected records to a monitoring system.
+ * Multiple receivers of the same type can use different output files.
+ *
+ * @note
  * The practical usage of this is limited with the current
  * ACE_Server_Logging_Acceptor_T design. Since
  * ACE_Server_Logging_Acceptor_T will create the
@@ -150,10 +93,10 @@ public:
   Log_Message_Receiver(Log_Message_Receiver<ACE_SYNCH_USE> const &rhs);
   ~Log_Message_Receiver ();
 
-  void log_record (const ACE_TCHAR *hostname,
+  void log_record (ACE_TCHAR const *hostname,
                    ACE_Log_Record &record);
 
-  void log_output(const ACE_TCHAR *hostname,
+  void log_output(ACE_TCHAR const *hostname,
                   ACE_Log_Record &record,
                   ostream *output);
 private:
@@ -172,14 +115,14 @@ template<ACE_SYNCH_DECL>
 class Log_Message_Receiver_Impl
 {
 public:
-  // Methods for handling reference count and instance lifetime
+  /// Methods for handling reference count and instance lifetime
   static Log_Message_Receiver_Impl *create ();
   static Log_Message_Receiver_Impl *attach (Log_Message_Receiver_Impl<ACE_SYNCH_USE> *body);
   static void detach (Log_Message_Receiver_Impl<ACE_SYNCH_USE> *body);
 
-  void log_record (const ACE_TCHAR *hostname, ACE_Log_Record &record);
+  void log_record (ACE_TCHAR const *hostname, ACE_Log_Record &record);
 
-  void log_output(const ACE_TCHAR *hostname,
+  void log_output(ACE_TCHAR const *hostname,
                   ACE_Log_Record &record,
                   ostream *output);
 

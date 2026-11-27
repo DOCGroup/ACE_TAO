@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Regular_POA.h
  *
@@ -8,7 +5,6 @@
  *
  *  @author  Irfan Pyarali <irfan@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_REGULAR_POA_H
 #define TAO_REGULAR_POA_H
@@ -38,9 +34,9 @@ class TAO_PortableServer_Export TAO_Regular_POA
   : public TAO_Root_POA
 {
 public:
-  TAO_Regular_POA (const String &name,
+  TAO_Regular_POA (String const &name,
                    PortableServer::POAManager_ptr poa_manager,
-                   const TAO_POA_Policy_Set &policies,
+                   TAO_POA_Policy_Set const &policies,
                    TAO_Root_POA *parent,
                    ACE_Lock &lock,
                    TAO_SYNCH_MUTEX &thread_lock,
@@ -58,9 +54,7 @@ protected:
 
   char root_key_type () override;
 
-  /// The parent of this POA, be aware that in case this pointer is nill,
-  /// we are a parent. This can be achieved by deriving from this Regular_POA
-  /// and pass a nill pointer as parent with the constructor.
+  /// Non-owning pointer to this POA's parent; null indicates that it is a root.
   TAO_Root_POA *parent_;
 };
 

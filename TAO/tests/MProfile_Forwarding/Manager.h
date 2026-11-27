@@ -2,40 +2,48 @@
 #define _MANAGER_H_
 
 #include "Servant_Locator.h"
+#include "ace/SString.h"
+
+struct Manager_Options
+{
+  ACE_TString first_ior;
+  ACE_TString second_ior;
+  ACE_TString third_ior;
+  ACE_TString ior_output_file;
+};
 
 class Manager
 {
-  public:
-  Manager ();
+public:
+  Manager () = default;
+  Manager (Manager const &) = delete;
+  Manager (Manager &&) = delete;
+  Manager &operator= (Manager const &) = delete;
+  Manager &operator= (Manager &&) = delete;
 
-  // Ctor
-
+  /// Initializes the ORB and POA.
   int init (int argc, ACE_TCHAR *argv[]);
 
-  // Initialize the ORB, POA etc.
-
-  int init_register_name_service ();
-  // Initialize the Name service, tegister the combined IOR with it
-
+  /// Activates the servant.
   int activate_servant ();
-  // Activate the servant etc.
 
-  int make_iors_register ();
+  int make_iors_register (Manager_Options const &options);
 
+  /// Runs the ORB event loop.
   int run ();
-  // Run the  ORB event loop..
- private:
+
+private:
+  /// The ORB.
   CORBA::ORB_var orb_;
-  // Our ORB
 
+  /// The new POA.
   PortableServer::POA_var new_poa_var_;
-  // The new poa that is created..
 
-  Servant_Locator *servant_locator_;
-  // Our servant locator
+  /// Non-owning alias; servant_locator_var_ holds the servant reference.
+  Servant_Locator *servant_locator_ {};
 
+  /// The servant locator reference.
   PortableServer::ServantLocator_var servant_locator_var_;
-  // Our servant locator var
 
   CORBA::Object_var new_manager_ior_;
 };

@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 /**
  *  @file   ECG_UDP_EH.h
  *
@@ -44,33 +42,29 @@ class TAO_RTEvent_Serv_Export TAO_ECG_UDP_EH :
 {
 public:
   /// Initialization and termination methods.
-  //@{
-  /// Constructor.
+  /// @{
   /// Messages received by this EH will be forwarded to the @a recv.
-  /*
-   * See comments for <receiver_> data member on why raw pointer is
-   * used for the @a recv argument.
-   */
-  TAO_ECG_UDP_EH (TAO_ECG_Dgram_Handler *recv);
+  /// See comments for @c receiver_ data member on why raw pointer is
+  /// used for the @a recv argument.
+  explicit TAO_ECG_UDP_EH (TAO_ECG_Dgram_Handler *recv);
 
-  /// Destructor.
-  virtual ~TAO_ECG_UDP_EH () override;
+  ~TAO_ECG_UDP_EH () override = default;
 
   /// Open the datagram and register itself with this->reactor().
   /// To insure proper resource clean up, if open () is successful,
   /// the user MUST call shutdown () when handler is no longer needed
   /// (and its reactor still exists).
-  int open (const ACE_INET_Addr& ipaddr,
+  int open (ACE_INET_Addr const &ipaddr,
             int reuse_addr = 0);
 
   /// TAO_ECG_Handler_Shutdown method.
   /// Unsubscribe from the reactor and close the datagram.
-  virtual int shutdown () override;
-  //@}
+  int shutdown () override;
+  /// @}
 
-  /// Main method - reactor callback.  Notify <receiver_> that
-  /// <dgram_> is ready for reading.
-  virtual int handle_input (ACE_HANDLE fd) override;
+  /// Main method - reactor callback.  Notify @c receiver_ that
+  /// @c dgram_ is ready for reading.
+  int handle_input (ACE_HANDLE fd) override;
 
   /**
    * Obtain the dgram, this is one of those "controlled violations of
@@ -84,15 +78,13 @@ private:
   ACE_SOCK_Dgram dgram_;
 
   /// We callback to this object when a message arrives.
-  /*
-   * We can keep a raw pointer to the receiver (even though it may
-   * be a refcounted object) because receiver guarantees
-   * to notify us (by calling shutdown ()) before going away.
-   *
-   * We have to use raw pointer instead of a refcounting mechanism
-   * here to avoid a circular refcounting dependency between
-   * receiver and handler.
-   */
+  /// We can keep a raw pointer to the receiver (even though it may
+  /// be a refcounted object) because receiver guarantees
+  /// to notify us (by calling shutdown ()) before going away.
+  ///
+  /// We have to use raw pointer instead of a refcounting mechanism
+  /// here to avoid a circular refcounting dependency between
+  /// receiver and handler.
   TAO_ECG_Dgram_Handler* receiver_;
 };
 

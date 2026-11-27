@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file Event.h
  *
@@ -41,28 +40,29 @@ class TAO_Notify_Serv_Export TAO_Notify_Event
 public:
   using Ptr = TAO_Notify_Refcountable_Guard_T<TAO_Notify_Event>;
 
-  // Codes to distinguish marshaled events in persistent storage
-  enum {MARSHAL_ANY=1,MARSHAL_STRUCTURED=2};
+  /// @name Codes distinguishing marshaled events in persistent storage
+  /// @{
+  static constexpr int MARSHAL_ANY = 1;
+  static constexpr int MARSHAL_STRUCTURED = 2;
+  /// @}
 
-  /// Constructor
   TAO_Notify_Event ();
 
-  TAO_Notify_Event (const TAO_Notify_Event &) = delete;
+  TAO_Notify_Event (TAO_Notify_Event const &) = delete;
   TAO_Notify_Event (TAO_Notify_Event &&) = delete;
-  TAO_Notify_Event &operator= (const TAO_Notify_Event &) = delete;
+  TAO_Notify_Event &operator= (TAO_Notify_Event const &) = delete;
   TAO_Notify_Event &operator= (TAO_Notify_Event &&) = delete;
 
-  /// Destructor
-  virtual ~TAO_Notify_Event ();
+  ~TAO_Notify_Event () override;
 
   /// Translate Any to Structured
-  static void translate (const CORBA::Any& any, CosNotification::StructuredEvent& notification);
+  static void translate (CORBA::Any const& any, CosNotification::StructuredEvent& notification);
 
   /// Translate Structured to Any
-  static void translate (const CosNotification::StructuredEvent& notification, CORBA::Any& any);
+  static void translate (CosNotification::StructuredEvent const& notification, CORBA::Any& any);
 
   /// Get the event type.
-  virtual const TAO_Notify_EventType& type () const = 0;
+  virtual TAO_Notify_EventType const& type () const = 0;
 
   /// Returns true if the filter matches.
   virtual CORBA::Boolean do_match (CosNotifyFilter::Filter_ptr filter) const = 0;
@@ -96,22 +96,24 @@ public:
   /// Unmarshal an event from a CDR. (for persistence)
   static TAO_Notify_Event* unmarshal (TAO_InputCDR & cdr);
 
-  ///= Accessors
+  /// @name Accessors
+  /// @{
   /// Priority
-  const TAO_Notify_Property_Short& priority () const;
+  TAO_Notify_Property_Short const& priority () const;
 
   /// Timeout
-  const TAO_Notify_Property_Time& timeout () const;
+  TAO_Notify_Property_Time const& timeout () const;
 
   /// Reliable
-  const TAO_Notify_Property_Boolean& reliable() const;
+  TAO_Notify_Property_Boolean const& reliable() const;
 
   /// Event creation time
-  const ACE_Time_Value& creation_time () const;
+  ACE_Time_Value const& creation_time () const;
+  /// @}
 
 protected:
-  /// = QoS properties
-
+  /// @name QoS properties
+  /// @{
   /// Priority.
   TAO_Notify_Property_Short priority_;
 
@@ -120,15 +122,16 @@ protected:
 
   /// Reliability
   TAO_Notify_Property_Boolean reliable_;
+  /// @}
 
 private:
   /// Return a pointer to a copy of this event on the heap
   virtual TAO_Notify_Event* copy () const = 0;
 
-  virtual void release ();
+  void release () override;
 
   mutable Ptr clone_;
-  bool        is_on_heap_;
+  bool is_on_heap_ {};
   ACE_Time_Value time_;
 };
 

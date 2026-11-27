@@ -7,7 +7,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
 #if !defined (__ACE_INLINE__)
 #include "orbsvcs/SSLIOP/SSLIOP_OpenSSL_st_T.inl"
 #endif  /* !__ACE_INLINE__ */

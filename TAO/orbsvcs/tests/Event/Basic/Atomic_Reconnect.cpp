@@ -8,11 +8,11 @@
 #include "orbsvcs/Event/EC_Event_Channel.h"
 #include "orbsvcs/Event/EC_Default_Factory.h"
 
-const int event_type = 20;
-const int event_source = 10;
+constexpr int event_type = 20;
+constexpr int event_source = 10;
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   TAO_EC_Default_Factory::init_svcs ();
 
@@ -34,15 +34,14 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       TAO_EC_Event_Channel_Attributes attributes (poa.in (),
                                                   poa.in ());
-      attributes.consumer_reconnect = 1;
-      attributes.supplier_reconnect = 1;
+      attributes.consumer_reconnect = true;
+      attributes.supplier_reconnect = true;
 
       TAO_EC_Event_Channel ec_impl (attributes);
       ec_impl.activate ();
 
       RtecEventChannelAdmin::EventChannel_var event_channel =
         ec_impl._this ();
-
 
       // ****************************************************************
 
@@ -117,7 +116,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // ****************************************************************
 
-      const int iterations = 1000;
+      constexpr int iterations = 1000;
 
       for (int i = 0; i != iterations; ++i)
         {
@@ -144,7 +143,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       task1.stop ();
 
       ACE_Thread_Manager::instance ()->wait ();
-
 
       // ****************************************************************
 
@@ -183,7 +181,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                                task1.push_count (),
                                1);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Service");
       return 1;
@@ -193,7 +191,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
 // ****************************************************************
 
-Consumer::Consumer (const char* name,
+Consumer::Consumer (char const *name,
                     int base_type)
   : EC_Counting_Consumer (name),
     event_base_count (0),
@@ -252,7 +250,7 @@ Consumer::dump_results (int base_count,
 }
 
 void
-Consumer::push (const RtecEventComm::EventSet& events)
+Consumer::push (RtecEventComm::EventSet const & events)
 {
   if (events.length () == 0)
     {
@@ -262,12 +260,14 @@ Consumer::push (const RtecEventComm::EventSet& events)
     }
 
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
-  this->event_count++;
+    ++this->event_count;
 
   // ACE_DEBUG ((LM_DEBUG,
   //               "Consumer %C has received %d events\n",
   //               this->name_, this->event_count));
 
   if (events[0].header.type == this->event_base_type_)
-    this->event_base_count++;
+  {
+    ++this->event_base_count;
+  }
 }

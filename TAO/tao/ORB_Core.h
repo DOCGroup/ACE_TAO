@@ -1,13 +1,9 @@
-// -*- C++ -*-
-
-// ===================================================================
 /**
  *  @file   ORB_Core.h
  *
  *  @author DOC Center - Washington University at St. Louis
  *  @author DOC Laboratory - University of California at Irvine
  */
-// ===================================================================
 
 #ifndef TAO_ORB_CORE_H
 #define TAO_ORB_CORE_H
@@ -41,7 +37,9 @@
 #include "ace/Lock_Adapter_T.h"
 #include "ace/TSS_T.h"
 #include "ace/Service_Config.h"
+
 #include <atomic>
+#include <string>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Data_Block;
@@ -160,10 +158,15 @@ class TAO_Export TAO_ORB_Core
   friend struct TAO_ORB_Core_Decr_Refcnt;
   friend TAO_Export CORBA::ORB_ptr CORBA::ORB_init (int &,
                                          ACE_TCHAR *argv[],
-                                         const char *);
+                                         char const *);
 public:
-  /// Constructor.
-  TAO_ORB_Core (const char* id, ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> g);
+  TAO_ORB_Core (char const *id, ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> g);
+
+  TAO_ORB_Core () = delete;
+  TAO_ORB_Core (TAO_ORB_Core const &) = delete;
+  TAO_ORB_Core (TAO_ORB_Core &&) = delete;
+  TAO_ORB_Core &operator= (TAO_ORB_Core const &) = delete;
+  TAO_ORB_Core &operator= (TAO_ORB_Core &&) = delete;
 
   /// Accessor for the ORB parameters.
   TAO_ORB_Parameters *orb_params ();
@@ -180,9 +183,9 @@ public:
    * other components transparently.
    */
   /// Accessor to the POA current.
-  //@{
+  /// @{
   CORBA::Object_ptr poa_current();
-  //@}
+  /// @}
 
   /// Get the connector registry
   TAO_Connector_Registry *connector_registry ();
@@ -223,7 +226,7 @@ public:
   TAO_Adapter_Registry &adapter_registry ();
 
   /// @name Collocation Strategies as configured by the user
-  //@{
+  /// @{
   enum
   {
     /// Indicate object should refer to ORB for either one of the
@@ -243,15 +246,15 @@ public:
   };
 
   /// Set/get the collocation flags
-  //@{
-  void optimize_collocation_objects (CORBA::Boolean opt);
-  CORBA::Boolean optimize_collocation_objects () const;
+  /// @{
+  void optimize_collocation_objects (bool opt);
+  bool optimize_collocation_objects () const;
 
   void use_global_collocation (CORBA::Boolean opt);
   CORBA::Boolean use_global_collocation () const;
 
   CORBA::ULong get_collocation_strategy () const;
-  //@}
+  /// @}
 
   /// Get the adapter named "RootPOA" and cache the result, this is an
   /// optimization for the POA.
@@ -265,7 +268,8 @@ public:
    * instances to which the return pointers are stored in the Service
    * Repository.
    */
-  //@{
+  /// @{
+
   /// Returns pointer to the resource factory.
   TAO_Resource_Factory *resource_factory ();
 
@@ -293,10 +297,10 @@ public:
   /// Returns a pointer to the endpoint selector factory.
   TAO_Endpoint_Selector_Factory *endpoint_selector_factory ();
 
-  //@}
+  /// @}
 
   /// Sets the value of TAO_ORB_Core::resource_factory_
-  static void set_resource_factory (const char *resource_factory_name);
+  static void set_resource_factory (char const *resource_factory_name);
 
   /** Sets the value of TAO_ORB_Core::gui_resource_factory_.
    *
@@ -307,7 +311,7 @@ public:
 
   /// Sets the value of TAO_ORB_Core::network_priority_protocols_hooks_
   static void set_network_priority_protocols_hooks (
-    const char *network_priority_protocols_hooks_name);
+    char const *network_priority_protocols_hooks_name);
 
   /// Gets the value of TAO_ORB_Core::protocols_hooks__
   TAO_Protocols_Hooks * get_protocols_hooks ();
@@ -317,38 +321,38 @@ public:
     get_network_priority_protocols_hooks ();
 
   /// Sets the value of TAO_ORB_Core::dynamic_adapter_name_.
-  static void dynamic_adapter_name (const char *name);
+  static void dynamic_adapter_name (char const *name);
 
   /// Gets the value of TAO_ORB_Core::dynamic_adapter_name_.
-  static const char *dynamic_adapter_name ();
+  static char const *dynamic_adapter_name ();
 
   /// Sets the value of TAO_ORB_Core::ifr_client_adapter_name_.
-  static void ifr_client_adapter_name (const char *name);
+  static void ifr_client_adapter_name (char const *name);
 
   /// Gets the value of TAO_ORB_Core::ifr_client_adapter_name_.
-  static const char *ifr_client_adapter_name ();
+  static char const *ifr_client_adapter_name ();
 
   /// Sets the value of TAO_ORB_Core::typecodefactory_adapter_name_.
-  static void typecodefactory_adapter_name (const char *name);
+  static void typecodefactory_adapter_name (char const *name);
 
   /// Gets the value of TAO_ORB_Core::typecodefactory_adapter_name_.
-  static const char *typecodefactory_adapter_name ();
+  static char const *typecodefactory_adapter_name ();
 
   /// Sets the value of TAO_ORB_Core::iorinterceptor_adapter_factory_name_.
-  static void iorinterceptor_adapter_factory_name (const char *name);
+  static void iorinterceptor_adapter_factory_name (char const *name);
 
   /// Gets the value of TAO_ORB_Core::iorinterceptor_adapter_factory_name_.
-  static const char *iorinterceptor_adapter_factory_name ();
+  static char const *iorinterceptor_adapter_factory_name ();
 
   /// Sets the value of TAO_ORB_Core::valuetype_adapter_factory_name.
-  static void valuetype_adapter_factory_name (const char *name);
+  static void valuetype_adapter_factory_name (char const *name);
 
   /// Gets the value of TAO_ORB_Core::valuetype_adapter_factory_name.
-  static const char *valuetype_adapter_factory_name ();
+  static char const *valuetype_adapter_factory_name ();
 
   /// See if we have a collocated address, if yes, return the POA
   /// associated with the address.
-  int is_collocated (const TAO_MProfile& mprofile);
+  bool is_collocated (TAO_MProfile const& mprofile);
 
   /// This allocator is always TSS and has no locks. It is intended
   /// for allocating the ACE_Data_Blocks used in *outgoing* CDR
@@ -431,10 +435,10 @@ public:
    * on the heap and/or as class members; we need to investigate the
    * tradeoffs and take a decision.
    */
-  //@{
+  /// @{
   CORBA::Environment *default_environment () const;
   void default_environment (CORBA::Environment*);
-  //@}
+  /// @}
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
@@ -453,6 +457,7 @@ public:
    * The timeout hook is used to determine if the timeout policy is
    * set and with what value.  If the ORB is compiled without support
    * for Messaging this feature does not take effect
+   * @param stub The object stub whose policies are checked.
    * \param has_timeout returns 0 if there is no timeout policy set.
    * \param time_value returns the timeout value in effect for the object,
    * thread and current ORB.
@@ -474,6 +479,7 @@ public:
    * The timeout hook is used to determine if the timeout policy is
    * set and with what value.  If the ORB is compiled without support
    * for Messaging this feature does not take effect
+   * @param stub The object stub whose policies are checked.
    * \param has_timeout returns 0 if there is no timeout policy set.
    * \param time_value returns the timeout value in effect for the object,
    * thread and current ORB.
@@ -538,10 +544,10 @@ public:
   Messaging::SyncScope default_sync_scope ();
 
   /// Handle to the factory for protocols_hooks_..
-  TAO_Protocols_Hooks *protocols_hooks_;
+  TAO_Protocols_Hooks *protocols_hooks_ {};
 
   /// Handle to the factory for network_priority_protocols_hooks_..
-  TAO_Network_Priority_Protocols_Hooks *network_priority_protocols_hooks_;
+  TAO_Network_Priority_Protocols_Hooks *network_priority_protocols_hooks_ {};
 
   /// Obtain the TSS resources of this orb.
   TAO_ORB_Core_TSS_Resources* get_tss_resources ();
@@ -593,15 +599,15 @@ public:
   /// Makes sure that the ORB is open and then creates a TAO_Stub
   /// based on the endpoint.
   TAO_Stub *create_stub_object (TAO_MProfile &mprofile,
-                                const char *type_id,
+                                char const *type_id,
                                 CORBA::PolicyList *policy_list);
 
   /// Factory method that create the "right" Stub depending on
   /// whether RTCORBA is loaded or not. The factory used to create
   /// the stub, is loaded at ORB initialization, and its type depends
   /// on the fact that RTCORBA is being used or not.
-  TAO_Stub *create_stub (const char *repository_id,
-                         const TAO_MProfile &profiles);
+  TAO_Stub *create_stub (char const *repository_id,
+                         TAO_MProfile const &profiles);
 
   /// Create a new object, use the adapter registry to create a
   /// collocated object, if not possible then create a regular
@@ -611,7 +617,7 @@ public:
   /// Initialize a new object, use the adapter registry to initialize a
   /// collocated object, if not possible then initialize a regular
   /// object.
-  /// NOTE: Why would this method be required? The answer is if the
+  /// @note Why would this method be required? The answer is if the
   /// user decides to use lazy initialization of CORBA object, then
   /// this is the route that we have to take to do the
   /// initialization.
@@ -623,13 +629,13 @@ public:
   CORBA::Long reinitialize_object (TAO_Stub *stub);
 
   /// Return ORBid string.
-  const char *orbid () const;
+  char const *orbid () const;
 
   /// Set/Get the IOR of the Implementation Repository service.
-  //@{
+  /// @{
   CORBA::Object_ptr implrepo_service ();
-  void implrepo_service (const CORBA::Object_ptr ir);
-  //@}
+  void implrepo_service (CORBA::Object_ptr const ir);
+  /// @}
 
   /// Do we attempt to register with the Implementation Repository
   CORBA::Boolean use_implrepo ();
@@ -672,8 +678,8 @@ public:
   CORBA::Object_ptr resolve_monitor ();
 
   /// Resolve an initial reference via the -ORBInitRef and
-  // -ORBDefaultInitRef options.
-  CORBA::Object_ptr resolve_rir (const char *name);
+  /// -ORBDefaultInitRef options.
+  CORBA::Object_ptr resolve_rir (char const *name);
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
   /// Resolve the RT ORB reference for this ORB.
@@ -682,7 +688,7 @@ public:
 
   /// Resolve the RT Current flyweight for this ORB.
   /// Return server_id string.
-  const char *server_id () const;
+  char const *server_id () const;
 
   /// List all the service known by the ORB
   CORBA::ORB_ObjectIdList *list_initial_references ();
@@ -709,14 +715,14 @@ public:
    * hooks would be used to call back on the services or other
    * features that are dynamically loaded.
    */
-  //@{
+  /// @{
   /**
    * The loaded service in the ORB_Core would determine if the profile
    * selection is going to be made by the services or not. If the
    * services do make the selection they would return the selected
-   * profile through <profile>.
+   * profile through @a profile.
    */
-  CORBA::Boolean service_profile_selection (const TAO_MProfile &mprofile,
+  CORBA::Boolean service_profile_selection (TAO_MProfile const &mprofile,
                                             TAO_Profile  *&profile);
 
   /**
@@ -732,10 +738,10 @@ public:
    * For details on how this is used please see the FT service
    */
   TAO_Service_Callbacks::Profile_Equivalence is_profile_equivalent (
-                                        const TAO_Profile *this_p,
-                                        const TAO_Profile *that_p);
+                                        TAO_Profile const *this_p,
+                                        TAO_Profile const *that_p);
 
-  /// Hook for the services to determine the <hash> value of a
+  /// Hook for the services to determine the @c hash value of a
   /// profile.
   /**
    * For details on how this is used please see the FT service
@@ -764,7 +770,7 @@ public:
       IOP::ServiceContextList &clist,
       TAO_Profile *profile);
 
-  //@}
+  /// @}
 
   /**
    * @name Portable Interceptor Related Methods
@@ -773,7 +779,7 @@ public:
    * interceptor set (an array) access, in addition to PICurrent
    * access.
    */
-  //@{
+  /// @{
 #if TAO_HAS_INTERCEPTORS == 1
 
   /// Return a pointer to the cached TAO::PICurrent object.
@@ -793,12 +799,12 @@ public:
   /// Register a client request interceptor with policies.
   void add_interceptor (
     PortableInterceptor::ClientRequestInterceptor_ptr interceptor,
-    const CORBA::PolicyList& policies);
+    CORBA::PolicyList const &policies);
 
   /// Register a server request interceptor with policies.
   void add_interceptor (
     PortableInterceptor::ServerRequestInterceptor_ptr interceptor,
-    const CORBA::PolicyList& policies);
+    CORBA::PolicyList const &policies);
 
   /// Get the Client Request Interceptor adapter.
   /// Will not create a new one if not available yet.
@@ -812,7 +818,7 @@ public:
 
   /// Register an IOR interceptor.
   void add_interceptor (PortableInterceptor::IORInterceptor_ptr interceptor);
-  //@}
+  /// @}
 
   /// Return the valuetype adapter
   TAO_Valuetype_Adapter *valuetype_adapter ();
@@ -820,16 +826,16 @@ public:
 #if !defined(CORBA_E_MICRO)
   /// Value factory operations  (CORBA 2.3 ptc/98-10-05 Ch. 4.2 p.4-7)
   CORBA::ValueFactory register_value_factory (
-    const char *repository_id,
+    char const *repository_id,
     CORBA::ValueFactory factory);
 #endif
 
 #if !defined(CORBA_E_MICRO)
-  void unregister_value_factory (const char * repository_id);
+  void unregister_value_factory (char const *repository_id);
 #endif
 
 #if !defined(CORBA_E_MICRO)
-  CORBA::ValueFactory lookup_value_factory (const char *repository_id);
+  CORBA::ValueFactory lookup_value_factory (char const *repository_id);
 #endif
 
   /// Get the IOR Interceptor adapter. If not created, this method will try
@@ -883,16 +889,16 @@ public:
 
   /// Set the ORB related to the orb_id as the default ORB and not the
   /// ORB that is first binded in the ORB Table
-  void set_default (const char * orb_id);
+  void set_default (char const *orb_id);
 
   /// Choose to be not a default ORB when there is more than one ORB.
-  void not_default (const char * orb_id);
+  void not_default (char const *orb_id);
 
   /// Verify condition for  permanent forward is given,
   /// both parameters must provide group attributes.
   CORBA::Boolean is_permanent_forward_condition
-    (const CORBA::Object_ptr obj,
-    const TAO_Service_Context &service_context);
+    (CORBA::Object_ptr const obj,
+    TAO_Service_Context const &service_context);
 
   /// Configuration accessor method
   ACE_Service_Gestalt* configuration () const;
@@ -919,7 +925,6 @@ protected:
   int init (int &argc, char *argv[]);
 
   /// Final termination hook, typically called by CORBA::ORB's
-  /// destructor.
   int fini ();
 
   /// Routine that creates a ACE_Data_Block given the lock and allocators.
@@ -975,8 +980,8 @@ protected:
   /// Pointer to the list of protocol loaded into this ORB instance.
   /// Helper method to hold the common code part for -ORBEndpoint and
   /// -ORBListenEndpoints options.
-  int set_endpoint_helper (const ACE_CString &lane,
-                           const ACE_CString &endpoints);
+  int set_endpoint_helper (ACE_CString const &lane,
+                           ACE_CString const &endpoints);
 
   /// Return pointer to the policy factory registry associated with
   /// this ORB core.
@@ -988,15 +993,9 @@ protected:
 
   /// Common code from ::initialize_object and ::reinitialize_object
   CORBA::Long initialize_object_i (TAO_Stub *the_stub,
-                                   const TAO_MProfile& mprofile);
+                                   TAO_MProfile const& mprofile);
 
 private:
-  /// The ORB Core should not be copied.
-  //@{
-  TAO_ORB_Core(const TAO_ORB_Core&);
-  void operator=(const TAO_ORB_Core&);
-  //@}
-
   /// Obtain and cache the ior table object reference.
   void resolve_ior_table_i ();
 
@@ -1006,7 +1005,7 @@ private:
   /// Checks to see whether collocation optimizations have to be
   /// applied on objects in the @a other_orb
   CORBA::Boolean is_collocation_enabled (TAO_ORB_Core *other_orb,
-                                         const TAO_MProfile &mp);
+                                         TAO_MProfile const &mp);
 
   bool use_local_memory_pool_;
 
@@ -1014,20 +1013,20 @@ protected:
   /// Synchronize internal state...
   TAO_SYNCH_MUTEX lock_;
 
-  TAO_Thread_Lane_Resources_Manager *thread_lane_resources_manager_;
+  TAO_Thread_Lane_Resources_Manager *thread_lane_resources_manager_ {};
 
-  TAO_Collocation_Resolver *collocation_resolver_;
+  TAO_Collocation_Resolver *collocation_resolver_ {};
 
-  TAO_Stub_Factory *stub_factory_;
+  TAO_Stub_Factory *stub_factory_ {};
 
-  TAO_ProtocolFactorySet *protocol_factories_;
+  TAO_ProtocolFactorySet *protocol_factories_ {};
 
   /// The cached IOR for the Implementation Repository.
   // @@ If this is a _var, where should it get deleted? (brunsch)
   CORBA::Object_ptr implrepo_service_;
 
   /// Flag for whether the implrepo support is enabled or not.
-  int use_implrepo_;
+  int use_implrepo_ {};
 
   /// Flag for whether to put the ImR endpoints into our object refs.
   int imr_endpoints_in_ior_;
@@ -1094,37 +1093,38 @@ protected:
   TAO::ObjectKey_Table object_key_table_;
 
   /// The ORBid for this ORB.
-  char *orbid_;
+  std::string orbid_;
 
   /// Handle to the factory for resource information..
-  TAO_Resource_Factory *resource_factory_;
+  TAO_Resource_Factory *resource_factory_ {};
 
   /// The server_id_ that was passed via -ORBServerId option
-  ACE_CString server_id_;
+  std::string server_id_;
 
   /// Handle to the factory for Client-side strategies.
-  TAO_Client_Strategy_Factory *client_factory_;
+  TAO_Client_Strategy_Factory *client_factory_ {};
 
   /// Handle to the factory for Server-side strategies.
-  TAO_Server_Strategy_Factory *server_factory_;
+  TAO_Server_Strategy_Factory *server_factory_ {};
 
   /**
    * @name Service Level Hooks
    */
-  //@{
+  /// @{
+
   /// Fault Tolerant service hook.
   TAO_Fault_Tolerance_Service ft_service_;
 
-  //@}
+  /// @}
 
   /// TRUE transmits a full TAG_FT_GROUP component in place of the FT_GROUP_VERSION
   /// context on FT requests. This is contrary to the spec but enables more effective
   /// fault tolerant stuff. @todo reference to OMG issue. Default false.
-  CORBA::Boolean ft_send_extended_sc_;
+  CORBA::Boolean ft_send_extended_sc_ {};
 
   /// TRUE if we want to take advantage of collocation optimization in
   /// this ORB.
-  CORBA::Boolean opt_for_collocation_;
+  bool opt_for_collocation_;
 
   /// TRUE if we want to consider all ORBs in this address space
   /// collocated.
@@ -1136,13 +1136,13 @@ protected:
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
   /// The Policy_Manager for this ORB.
-  TAO_Policy_Manager *policy_manager_;
+  TAO_Policy_Manager *policy_manager_ {};
 
   /// The default policies.
-  TAO_Policy_Set *default_policies_;
+  TAO_Policy_Set *default_policies_ {};
 
   /// Policy current.
-  TAO_Policy_Current *policy_current_;
+  TAO_Policy_Current *policy_current_ {};
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
@@ -1158,7 +1158,7 @@ protected:
   TAO_Adapter_Registry adapter_registry_;
 
   /// An optimization for the POA.
-  TAO_Adapter *poa_adapter_;
+  TAO_Adapter *poa_adapter_ {};
 
   /// The Thread Manager
   ACE_Thread_Manager tm_;
@@ -1177,27 +1177,27 @@ protected:
   bool has_shutdown_;
 
   /// The value of the timeout if the flag above is not zero.
-  //@{
+  /// @{
   int thread_per_connection_use_timeout_;
   ACE_Time_Value thread_per_connection_timeout_;
-  //@}
+  /// @}
 
   /// Mutual exclusion for calling open.
   TAO_SYNCH_MUTEX open_lock_;
 
-  TAO_Endpoint_Selector_Factory *endpoint_selector_factory_;
+  TAO_Endpoint_Selector_Factory *endpoint_selector_factory_ {};
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
   /// This strategy will buffer messages.
-  TAO::Transport_Queueing_Strategy *eager_transport_queueing_strategy_;
+  TAO::Transport_Queueing_Strategy *eager_transport_queueing_strategy_ {};
 
   /// This strategy will buffer messages.
-  TAO::Transport_Queueing_Strategy *delayed_transport_queueing_strategy_;
+  TAO::Transport_Queueing_Strategy *delayed_transport_queueing_strategy_ {};
 
   /// This strategy will not queue by default, but will flush the queue
   /// each time
-  TAO::Transport_Queueing_Strategy *flush_transport_queueing_strategy_;
+  TAO::Transport_Queueing_Strategy *flush_transport_queueing_strategy_ {};
 
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
 
@@ -1205,10 +1205,10 @@ protected:
   std::atomic<uint32_t> refcount_;
 
   /// Registry containing all registered policy factories.
-  TAO::PolicyFactory_Registry_Adapter *policy_factory_registry_;
+  TAO::PolicyFactory_Registry_Adapter *policy_factory_registry_ {};
 
   /// Registry containing all orb initializers
-  TAO::ORBInitializer_Registry_Adapter *orbinitializer_registry_;
+  TAO::ORBInitializer_Registry_Adapter *orbinitializer_registry_ {};
 
   /// Registry containing all service context handlers
   TAO_Service_Context_Registry service_context_registry_;
@@ -1223,52 +1223,52 @@ protected:
    */
   CORBA::Object_ptr pi_current_;
 
-  /// The adapter for handling client request interceptors
-  TAO::ClientRequestInterceptor_Adapter *client_request_interceptor_adapter_;
+  /// Owned client interceptor adapter created by its configured factory.
+  TAO::ClientRequestInterceptor_Adapter *client_request_interceptor_adapter_ {};
 
-  /// The adapter for handling server request interceptors
-  TAO::ServerRequestInterceptor_Adapter *server_request_interceptor_adapter_;
+  /// Owned server interceptor adapter created by its configured factory.
+  TAO::ServerRequestInterceptor_Adapter *server_request_interceptor_adapter_ {};
 
 #endif /* TAO_HAS_INTERCEPTORS */
 
   /// IORInterceptor adapter.
-  TAO_IORInterceptor_Adapter *ior_interceptor_adapter_;
+  TAO_IORInterceptor_Adapter *ior_interceptor_adapter_ {};
 
   /// Pointer to the valuetype adapter.
-  TAO_Valuetype_Adapter *valuetype_adapter_;
+  TAO_Valuetype_Adapter *valuetype_adapter_ {};
 
   /// The IOR parser registry.
   TAO_Parser_Registry parser_registry_;
 
   /// BiDirectional GIOP factory
-  TAO_BiDir_Adapter *bidir_adapter_;
+  TAO_BiDir_Adapter *bidir_adapter_ {};
 
   /// Bir Dir GIOP policy value
-  CORBA::Boolean bidir_giop_policy_;
+  CORBA::Boolean bidir_giop_policy_ {};
 
   /// ZIOP Adapter
-  TAO_ZIOP_Adapter *ziop_adapter_;
+  TAO_ZIOP_Adapter *ziop_adapter_ {};
 
   /// ZIOP enabled or not
-  CORBA::Boolean ziop_enabled_;
+  CORBA::Boolean ziop_enabled_ {};
 
   /// Hold the flushing strategy
-  TAO_Flushing_Strategy *flushing_strategy_;
+  TAO_Flushing_Strategy *flushing_strategy_ {};
 
   /// Code Set Manager, received from the Resource Factory
-  TAO_Codeset_Manager *codeset_manager_;
+  TAO_Codeset_Manager *codeset_manager_ {};
 
   /// ORB's service configuration
   ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> config_;
 
   /// The hook to be set for the SyncScopePolicy
-  Sync_Scope_Hook sync_scope_hook_;
+  Sync_Scope_Hook sync_scope_hook_ {};
 
   /// The configured value used as the default sync scope
   Messaging::SyncScope default_sync_scope_;
 
   /// The hook to be set for the RelativeRoundtripTimeoutPolicy.
-  Timeout_Hook timeout_hook_;
+  Timeout_Hook timeout_hook_ {};
 };
 
 // ****************************************************************
@@ -1298,7 +1298,7 @@ public:
   /**
    * Name of the network_priority_protocols_hooks that needs to be instantiated.
   */
-  ACE_CString network_priority_protocols_hooks_name_;
+  std::string network_priority_protocols_hooks_name_;
 
   /// The hook to be set for the ConnectionTimeoutPolicy
   TAO_ORB_Core::Timeout_Hook connection_timeout_hook_;
@@ -1309,7 +1309,7 @@ public:
    * linked, the set_resource_factory will be called to set the value
    * to be "Advanced_Resource_Factory".
    */
-  ACE_CString resource_factory_name_;
+  std::string resource_factory_name_;
 
   /**
    * Name of the service object for DII request creation that needs
@@ -1317,7 +1317,7 @@ public:
    * TAO_DynamicInterface is linked, dynamic_adapter_name() will be
    * called to set the value to "Concrete_Dynamic_Adapter".
    */
-  ACE_CString dynamic_adapter_name_;
+  std::string dynamic_adapter_name_;
 
   /**
    * Name of the service object for functions that make calls on
@@ -1325,7 +1325,7 @@ public:
    * If TAO_IFR_CLient is linked, ifr_client_adapter_name() will be
    * called to set the value to "Concrete_IFR_Client_Adapter".
    */
-  ACE_CString ifr_client_adapter_name_;
+  std::string ifr_client_adapter_name_;
 
   /**
    * Name of the service object used by the ORB create_*_tc functions.
@@ -1334,7 +1334,7 @@ public:
    * function typecodefactory_adapter_name() will be called to set
    * the value to "Concrete_TypeCodeFactory_Adapter".
    */
-  ACE_CString typecodefactory_adapter_name_;
+  std::string typecodefactory_adapter_name_;
 
   /**
    * Name of the factory object used to adapt function calls on
@@ -1344,7 +1344,7 @@ public:
    * function iorinterceptor_adapter_factory_name() will be called to set
    * the value to "Concrete_IORInterceptor_Adapter_Factory".
    */
-  ACE_CString iorinterceptor_adapter_factory_name_;
+  std::string iorinterceptor_adapter_factory_name_;
 
   /**
    * Name of the factory object used to adapt function calls on
@@ -1354,15 +1354,14 @@ public:
    * function valuetype_adapter_factory_name() will be called to set
    * the value to "Concrete_Valuetype_Adapter_Factory".
    */
-  ACE_CString valuetype_adapter_factory_name_;
+  std::string valuetype_adapter_factory_name_;
 
   /// An alternative hook to be set for the ConnectionTimeoutPolicy
   TAO_ORB_Core::Timeout_Hook alt_connection_timeout_hook_;
 
 //private:
-  /// Constructor.
   TAO_ORB_Core_Static_Resources ();
-  TAO_ORB_Core_Static_Resources& operator= (const TAO_ORB_Core_Static_Resources&);
+  TAO_ORB_Core_Static_Resources& operator= (TAO_ORB_Core_Static_Resources const&);
 
 private:
   /// Mostly unused variable whose sole purpose is to enforce

@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Containers_T.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef ACE_CONTAINERS_T_H
 #define ACE_CONTAINERS_T_H
@@ -14,6 +10,8 @@
 #include /**/ "ace/pre.h"
 
 #include /**/ "ace/config-all.h"
+
+#include <memory>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -37,7 +35,6 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class ACE_Allocator;
-
 
 /**
  * @class ACE_Bounded_Stack
@@ -75,29 +72,29 @@ template <class T>
 class ACE_Bounded_Stack
 {
 public:
-  // = Initialization, assignment, and termination methods.
+  /// @name Initialization, assignment, and termination methods
+  /// @{
 
   /// Initialize a new empty stack with the provided size..
   /**
    * Initialize and allocate space for a new Bounded_Stack with the provided
    * size.
    */
-  ACE_Bounded_Stack (size_t size);
+  explicit ACE_Bounded_Stack (size_t size);
 
   /// Initialize the stack to be a copy of the stack provided.
   /**
    * Initialize the stack to be an exact copy of the Bounded_Stack provided
    * as a parameter.
    */
-  ACE_Bounded_Stack (const ACE_Bounded_Stack<T> &s);
+  ACE_Bounded_Stack (ACE_Bounded_Stack<T> const &s);
 
-  /// Assignment operator
   /**
    * Perform a deep copy operation using the Bounded_Stack parameter.  If the
    * capacity of the lhs isn't sufficient for the rhs, then the underlying data
    * structure will be reallocated to accomadate the larger number of elements.
    */
-  void operator= (const ACE_Bounded_Stack<T> &s);
+  void operator= (ACE_Bounded_Stack<T> const &s);
 
   /// Perform actions needed when stack goes out of scope.
   /**
@@ -105,7 +102,9 @@ public:
    */
   ~ACE_Bounded_Stack ();
 
-  // = Classic Stack operations.
+  /// @}
+  /// @name Classic Stack operations
+  /// @{
 
   ///Add an element to the top of the stack.
   /**
@@ -113,7 +112,7 @@ public:
    * is already full, 0 if the stack is not already full, and -1 if
    * failure occurs.
    */
-  int push (const T &new_item);
+  int push (T const &new_item);
 
   ///Remove an item from the top of stack.
   /**
@@ -131,19 +130,21 @@ public:
    */
   int top (T &item) const;
 
-  // = Check boundary conditions.
+  /// @}
+  /// @name Check boundary conditions
+  /// @{
 
-  /// Returns 1 if the container is empty, otherwise returns 0.
+  /// Returns true if the container is empty.
   /**
    * Performs constant time check to determine if the stack is empty.
    */
-  int is_empty () const;
+  bool is_empty () const;
 
-  /// Returns 1 if the container is full, otherwise returns 0.
+  /// Returns true if the container is full.
   /**
    * Performs constant time check to determine if the stack is at capacity.
    */
-  int is_full () const;
+  bool is_full () const;
 
   /// The number of items in the stack.
   /**
@@ -157,18 +158,17 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
+  /// @}
 private:
   /// Size of the dynamically allocated data.
   size_t size_;
 
   /// Keeps track of the current top of stack.
-  size_t top_;
+  size_t top_ {};
 
   /// Holds the stack's contents.
   T *stack_;
 };
-
-//----------------------------------------
 
 
 /**
@@ -205,7 +205,9 @@ template <class T, size_t ACE_SIZE>
 class ACE_Fixed_Stack
 {
 public:
-  // = Initialization, assignment, and termination methods.
+  /// @name Initialization, assignment, and termination methods
+  /// @{
+
   /// Initialize a new stack so that it is empty.
   /**
    * Initialize an empty stack.
@@ -216,13 +218,13 @@ public:
   /**
    * Initialize the stack and copy the provided stack into the current stack.
    */
-  ACE_Fixed_Stack (const ACE_Fixed_Stack<T, ACE_SIZE> &s);
+  ACE_Fixed_Stack (ACE_Fixed_Stack<T, ACE_SIZE> const &s);
 
   /// Assignment operator (performs assignment).
   /**
    * Perform a deep copy of the provided stack.
    */
-  void operator= (const ACE_Fixed_Stack<T, ACE_SIZE> &s);
+  void operator= (ACE_Fixed_Stack<T, ACE_SIZE> const &s);
 
   /// Perform actions needed when stack goes out of scope.
   /**
@@ -230,7 +232,9 @@ public:
    */
   ~ACE_Fixed_Stack ();
 
-  // = Classic Stack operations.
+  /// @}
+  /// @name Classic Stack operations
+  /// @{
 
   ///Constant time placement of element on top of stack.
   /**
@@ -238,7 +242,7 @@ public:
    * is already full, 0 if the stack is not already full, and -1 if
    * failure occurs.
    */
-  int push (const T &new_item);
+  int push (T const &new_item);
 
   ///Constant time removal of top of stack.
   /**
@@ -256,19 +260,21 @@ public:
    */
   int top (T &item) const;
 
-  // = Check boundary conditions.
+  /// @}
+  /// @name Check boundary conditions
+  /// @{
 
-  /// Returns 1 if the container is empty, otherwise returns 0.
+  /// Returns true if the container is empty.
   /**
    * Performs constant time check to see if stack is empty.
    */
-  int is_empty () const;
+  bool is_empty () const;
 
-  /// Returns 1 if the container is full, otherwise returns 0.
+  /// Returns true if the container is full.
   /**
    * Performs constant time check to see if stack is full.
    */
-  int is_full () const;
+  bool is_full () const;
 
   /// The number of items in the stack.
   /**
@@ -282,18 +288,18 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
+  /// @}
 private:
   /// Size of the allocated data.
   size_t size_;
 
   /// Keeps track of the current top of stack.
-  size_t top_;
+  size_t top_ {};
 
   /// Holds the stack's contents.
   T stack_[ACE_SIZE];
 };
 
-//----------------------------------------
 
 template<class T> class ACE_Ordered_MultiSet;
 template<class T> class ACE_Ordered_MultiSet_Iterator;
@@ -317,7 +323,7 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-  ACE_DNode (const T &i, ACE_DNode<T> *n = nullptr, ACE_DNode<T> *p = nullptr);
+  ACE_DNode (T const &i, ACE_DNode<T> *n = nullptr, ACE_DNode<T> *p = nullptr);
 
   /// Pointer to next element in the list of {ACE_DNode}s.
   ACE_DNode<T> *next_;
@@ -328,7 +334,6 @@ private:
   /// Current value of the item in this node.
   T item_;
 };
-
 
 /**
  * @class ACE_Unbounded_Stack
@@ -373,7 +378,9 @@ public:
   // Trait definition.
   using ITERATOR = ACE_Unbounded_Stack_Iterator<T>;
 
-  // = Initialization, assignment, and termination methods.
+  /// @name Initialization, assignment, and termination methods
+  /// @{
+
   /// Initialize a new stack so that it is empty.  Use user defined
   /// allocation strategy if specified.
   /**
@@ -386,13 +393,13 @@ public:
   /**
    * Initialize this stack to be an exact copy of {s}.
    */
-  ACE_Unbounded_Stack (const ACE_Unbounded_Stack<T> &s);
+  ACE_Unbounded_Stack (ACE_Unbounded_Stack<T> const &s);
 
   /// Assignment operator (performs assignment).
   /**
    * Perform a deep copy of the rhs into the lhs.
    */
-  void operator= (const ACE_Unbounded_Stack<T> &s);
+  void operator= (ACE_Unbounded_Stack<T> const &s);
 
   /// Perform actions needed when stack goes out of scope.
   /**
@@ -400,8 +407,9 @@ public:
    */
   ~ACE_Unbounded_Stack ();
 
-  // = Classic Stack operations.
-
+  /// @}
+  /// @name Classic Stack operations
+  /// @{
 
   ///Push an element onto the top of stack.
   /**
@@ -409,7 +417,7 @@ public:
    * is already full, 0 if the stack is not already full, and -1 if
    * failure occurs.
    */
-  int push (const T &new_item);
+  int push (T const &new_item);
 
   ///Pop the top element of the stack.
   /**
@@ -427,21 +435,25 @@ public:
    */
   int top (T &item) const;
 
-  // = Check boundary conditions.
+  /// @}
+  /// @name Check boundary conditions
+  /// @{
 
-  /// Returns 1 if the container is empty, otherwise returns 0.
+  /// Returns true if the container is empty.
   /**
    * Constant time check to see if the stack is empty.
    */
-  int is_empty () const;
+  bool is_empty () const;
 
-  /// Returns 1 if the container is full, otherwise returns 0.
+  /// Returns true if the container is full.
   /**
    * Always resturns 0 since the stack is unbounded.
    */
-  int is_full () const;
+  bool is_full () const;
 
-  // = Auxiliary methods (not strictly part of the Stack ADT).
+  /// @}
+  /// @name Auxiliary methods (not strictly part of the Stack ADT)
+  /// @{
 
   ///Linear Insert of an item.
   /**
@@ -449,20 +461,20 @@ public:
    * duplicates).  Returns -1 if failures occur, 1 if item is already
    * present (i.e., no duplicates are allowed), else 0.
    */
-  int insert (const T &new_item);
+  int insert (T const &new_item);
 
   /// Remove @a item from the Stack.  Returns 0 if it removes the item,
   /// -1 if it can't find the item, and -1 if a failure occurs.
   /**
    * Linear remove operation.
    */
-  int remove (const T &item);
+  int remove (T const &item);
 
   /// Finds if @a item occurs the set.  Returns 0 if finds, else -1.
   /**
    * Linear find operation.
    */
-  int find (const T &item) const;
+  int find (T const &item) const;
 
   /// The number of items in the stack.
   /**
@@ -476,18 +488,19 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
+  /// @}
 private:
   /// Delete all the nodes in the stack.
   void delete_all_nodes ();
 
   /// Copy all nodes from {s} to {this}.
-  void copy_all_nodes (const ACE_Unbounded_Stack<T> &s);
+  void copy_all_nodes (ACE_Unbounded_Stack<T> const &s);
 
   /// Head of the linked list of Nodes.
-  ACE_Node<T> *head_;
+  ACE_Node<T> *head_ {};
 
   /// Current size of the stack.
-  size_t cur_size_;
+  size_t cur_size_ {};
 
   /// Allocation strategy of the stack.
   ACE_Allocator *allocator_;
@@ -505,7 +518,8 @@ public:
   /// Move to the first element in the {stack}.
   ACE_Unbounded_Stack_Iterator (ACE_Unbounded_Stack<T> &stack);
 
-  // = Iteration methods.
+  /// @name Iteration methods
+  /// @{
 
   /// Pass back the @a next_item that hasn't been seen in the Stack.
   /// Returns 0 when all items have been seen, else 1.
@@ -528,6 +542,7 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
+  /// @}
 private:
   /// Pointer to the current node in the iteration.
   ACE_Node<T> *current_;
@@ -549,7 +564,8 @@ template <class T>
 class ACE_Double_Linked_List_Iterator_Base
 {
 public:
-  // = Iteration methods.
+  /// @name Iteration methods
+  /// @{
 
   /// Passes back the {entry} under the iterator. Returns 0 if the
   /// iteration has completed, otherwise 1
@@ -581,20 +597,20 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
+  /// @}
 protected:
-  /// Constructor
-  ACE_Double_Linked_List_Iterator_Base (const ACE_Double_Linked_List<T> &);
+  ACE_Double_Linked_List_Iterator_Base (ACE_Double_Linked_List<T> const &);
 
-  /// Copy constructor.
   ACE_Double_Linked_List_Iterator_Base (const
                                         ACE_Double_Linked_List_Iterator_Base<T>
                                         &iter);
 
-  // = Iteration methods.
+  /// @name Iteration methods
+  /// @{
   /**
    * Move to the first element of the list. Returns 0 if the list is
    * empty, else 1.
-   * @note the head of the ACE_DLList is actually a null entry, so the
+   * @note The head of the ACE_DLList is actually a null entry, so the
    * first element is actually the 2n'd entry
    */
   int go_head ();
@@ -623,9 +639,10 @@ protected:
   void dump_i () const;
 
   /// Remember where we are.
-  T *current_;
+  T *current_ {};
 
-  const ACE_Double_Linked_List<T> *dllist_;
+  ACE_Double_Linked_List<T> const *dllist_;
+  /// @}
 };
 
 /**
@@ -645,7 +662,7 @@ template <class T>
 class ACE_Double_Linked_List_Iterator : public ACE_Double_Linked_List_Iterator_Base <T>
 {
 public:
-  ACE_Double_Linked_List_Iterator (const ACE_Double_Linked_List<T> &);
+  ACE_Double_Linked_List_Iterator (ACE_Double_Linked_List<T> const &);
 
   /**
    * Retasks the iterator to iterate over a new
@@ -674,7 +691,8 @@ public:
    */
   T* advance_and_remove (bool dont_remove);
 
-  // = STL-style iteration methods
+  /// @name STL-style iteration methods
+  /// @{
 
   /// Prefix advance.
   ACE_Double_Linked_List_Iterator<T> & operator++ ();
@@ -693,6 +711,7 @@ public:
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
+  /// @}
 };
 
 /**
@@ -742,7 +761,8 @@ public:
    */
   T* advance_and_remove (bool dont_remove);
 
-  // = STL-style iteration methods
+  /// @name STL-style iteration methods
+  /// @{
 
   /// Prefix advance.
   ACE_Double_Linked_List_Reverse_Iterator<T> & operator++ ();
@@ -761,8 +781,8 @@ public:
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
+  /// @}
 };
-
 
 /**
  * @class ACE_Double_Linked_List
@@ -827,41 +847,41 @@ public:
    */
   ACE_Double_Linked_List (ACE_Allocator *the_allocator = nullptr);
 
-  /// Copy constructor.
   /**
    * Create a double linked list that is a copy of the provided
    * parameter.
    */
-  ACE_Double_Linked_List (const ACE_Double_Linked_List<T> &);
+  ACE_Double_Linked_List (ACE_Double_Linked_List<T> const &);
 
-  /// Assignment operator.
   /**
    * Perform a deep copy of the provided list by first deleting the nodes of the
    * lhs and then copying the nodes of the rhs.
    */
-  void operator= (const ACE_Double_Linked_List<T> &);
+  void operator= (ACE_Double_Linked_List<T> const &);
 
-  /// Destructor.
   /**
    * Clean up the memory allocated for the nodes of the list.
    */
   ~ACE_Double_Linked_List ();
 
-  // = Check boundary conditions.
+  /// @name Check boundary conditions
+  /// @{
 
-  /// Returns 1 if the container is empty, 0 otherwise.
+  /// Returns true if the container is empty.
   /**
    * Performs constant time check to determine if the list is empty.
    */
-  int is_empty () const;
+  bool is_empty () const;
 
-  /// The list is unbounded, so this always returns 0.
+  /// The list is unbounded, so this always returns false.
   /**
-   * Since the list is unbounded, the method simply returns 0.
+   * Since the list is unbounded, the method simply returns false.
    */
-  int is_full () const;
+  bool is_full () const;
 
-  // = Classic queue operations.
+  /// @}
+  /// @name Classic queue operations
+  /// @{
 
   /// Adds @a new_item to the tail of the list. Returns the new item
   /// that was inserted.
@@ -893,7 +913,9 @@ public:
    */
   T *delete_tail ();
 
-  // = Additional utility methods.
+  /// @}
+  /// @name Additional utility methods
+  /// @{
 
   ///Empty the list.
   /**
@@ -929,6 +951,7 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
+  /// @}
 protected:
   /// Delete all the nodes in the list.
   /**
@@ -941,7 +964,7 @@ protected:
    * Copy the elements of the provided list by allocated new nodes and assigning
    * them with the proper data.
    */
-  void copy_nodes (const ACE_Double_Linked_List<T> &rhs);
+  void copy_nodes (ACE_Double_Linked_List<T> const &rhs);
 
   /// Setup header pointer.  Called after we create the head node in ctor.
   /**
@@ -973,12 +996,11 @@ protected:
   T *head_;
 
   /// Size of this list.
-  size_t size_;
+  size_t size_ {};
 
   /// Allocation Strategy of the queue.
   ACE_Allocator *allocator_;
 };
-
 
 template <class T> class ACE_DLList;
 template <class T> class ACE_DLList_Iterator;
@@ -1012,12 +1034,12 @@ class ACE_DLList : public ACE_DLList_Base
 
 public:
   /// Delegates to ACE_Double_Linked_List.
-  void operator= (const ACE_DLList<T> &l);
+  void operator= (ACE_DLList<T> const &l);
 
   /**
    * @name Queue-like insert and delete methods
    */
-  //@{
+  /// @{
   /**
    * Insert pointer for a new item at the tail of the list.
    *
@@ -1047,7 +1069,7 @@ public:
    *         an error occurred, or the original pointer inserted was 0.
    */
   T *delete_tail ();
-  //@}
+  /// @}
 
   /**
    * Provide random access to any item in the list.
@@ -1077,7 +1099,7 @@ public:
   ACE_DLList (ACE_Allocator *the_allocator = nullptr);
 
   /// Delegates to ACE_Double_Linked_List.
-  ACE_DLList (const ACE_DLList<T> &l);
+  ACE_DLList (ACE_DLList<T> const &l);
 
   /**
    * Deletes all ACE_DLList_Node objects in the list starting from the head.
@@ -1088,9 +1110,11 @@ public:
    * @code
         ACE_DLList<Item> list;
         ...   // insert dynamically allocated Items...
-        Item *p = nullptr;
+        Item *p {};
         while ((p = list.delete_head()) != nullptr)
+        {
           delete p;
+        }
       @endcode
    */
   ~ACE_DLList ();
@@ -1125,7 +1149,9 @@ public:
    */
   void reset (ACE_DLList<T> &l);
 
-  // = Iteration methods.
+  /// @name Iteration methods
+  /// @{
+
   /// Move forward by one element in the list.  Returns 0 when all the
   /// items in the list have been seen, else 1.
   int advance ();
@@ -1143,7 +1169,7 @@ public:
 
   /**
    * Removes the current item (i.e., {next}) from the list.
-   * Note that DLList iterators do not support {advance_and_remove}
+   * @note DLList iterators do not support {advance_and_remove}
    * directly (defined in its base class) and you will need to
    * release the element returned by it.
    */
@@ -1152,6 +1178,7 @@ public:
   /// Delegates to ACE_Double_Linked_List_Iterator.
   void dump () const;
 
+  /// @}
 private:
   ACE_DLList<T> *list_;
 };
@@ -1185,7 +1212,9 @@ public:
    */
   void reset (ACE_DLList<T> &l);
 
-  // = Iteration methods.
+  /// @name Iteration methods
+  /// @{
+
   /// Move forward by one element in the list.  Returns 0 when all the
   /// items in the list have been seen, else 1.
   int advance ();
@@ -1198,7 +1227,7 @@ public:
   T *next () const;
 
   /// Removes the current item (i.e., {next}) from the list.
-  /// Note that DLList iterators do not support {advance_and_remove}
+  /// @note DLList iterators do not support {advance_and_remove}
   /// directly (defined in its base class) and you will need to
   /// release the element returned by it.
   int remove ();
@@ -1206,6 +1235,7 @@ public:
   /// Delegates to ACE_Double_Linked_List_Iterator.
   void dump () const;
 
+  /// @}
 private:
   ACE_DLList<T> *list_;
 };
@@ -1223,7 +1253,8 @@ template <class T, size_t ACE_SIZE>
 class ACE_Fixed_Set_Iterator_Base
 {
 public:
-  // = Iteration methods.
+  /// @name Iteration methods
+  /// @{
 
   /// Pass back the {next_item} that hasn't been seen in the Set.
   /// Returns 0 when all items have been seen, else 1.
@@ -1243,6 +1274,7 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
+  /// @}
 protected:
   ACE_Fixed_Set_Iterator_Base (ACE_Fixed_Set<T, ACE_SIZE> &s);
 
@@ -1250,10 +1282,10 @@ protected:
   ACE_Fixed_Set<T, ACE_SIZE> &s_;
 
   /// How far we've advanced over the set.
-  ssize_t next_;
+  ssize_t next_ {-1};
 
   /// The number of non free items that the iterator had pointed at.
-  size_t iterated_items_;
+  size_t iterated_items_ {};
 
   /// Dump the state of an object.
   void dump_i () const;
@@ -1277,7 +1309,8 @@ class ACE_Fixed_Set_Iterator : public ACE_Fixed_Set_Iterator_Base <T, ACE_SIZE>
 public:
   ACE_Fixed_Set_Iterator (ACE_Fixed_Set<T, ACE_SIZE> &s);
 
-  // = Iteration methods.
+  /// @name Iteration methods
+  /// @{
 
   /// Pass back the {next_item} that hasn't been seen in the Set.
   /// Returns 0 when all items have been seen, else 1.
@@ -1297,6 +1330,7 @@ public:
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
+  /// @}
 };
 
 /**
@@ -1310,23 +1344,25 @@ template <class T, size_t ACE_SIZE>
 class ACE_Fixed_Set_Const_Iterator : public ACE_Fixed_Set_Iterator_Base <T, ACE_SIZE>
 {
 public:
-  ACE_Fixed_Set_Const_Iterator (const ACE_Fixed_Set<T, ACE_SIZE> &s);
+  ACE_Fixed_Set_Const_Iterator (ACE_Fixed_Set<T, ACE_SIZE> const &s);
 
-  // = Iteration methods.
+  /// @name Iteration methods
+  /// @{
 
   /// Pass back the {next_item} that hasn't been seen in the Set.
   /// Returns 0 when all items have been seen, else 1.
-  int next (const T *&next_item);
+  int next (T const *&next_item);
 
   /// Dump the state of an object.
   void dump () const;
 
   /// STL-like iterator dereference operator: returns a reference
   /// to the node underneath the iterator.
-  const T & operator* () const ;
+  T const & operator* () const ;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
+  /// @}
 };
 
 /**
@@ -1373,45 +1409,44 @@ public:
   using ITERATOR = ACE_Fixed_Set_Iterator<T, ACE_SIZE>;
   using CONST_ITERATOR = ACE_Fixed_Set_Const_Iterator<T, ACE_SIZE>;
 
-  /// Default Constructor.
   /**
    * Creates an empy set
    */
   ACE_Fixed_Set ();
 
-  /// Copy constructor.
   /**
    * Initializes a set to be a copy of the set parameter.
    */
-  ACE_Fixed_Set (const ACE_Fixed_Set<T, ACE_SIZE> &);
+  ACE_Fixed_Set (ACE_Fixed_Set<T, ACE_SIZE> const &);
 
-  /// Assignment operator.
   /**
    * Deep copy of one set to another.
    */
-  void operator= (const ACE_Fixed_Set<T, ACE_SIZE> &);
+  void operator= (ACE_Fixed_Set<T, ACE_SIZE> const &);
 
-  /// Destructor.
   /**
    * Destroys a set.
    */
   ~ACE_Fixed_Set ();
 
-  // = Check boundary conditions.
+  /// @name Check boundary conditions
+  /// @{
 
-  /// Returns 1 if the container is empty, otherwise returns 0.
+  /// Returns true if the container is empty.
   /**
    * Performs constant time check to determine if a set is empty.
    */
-  int is_empty () const;
+  bool is_empty () const;
 
-  /// Returns 1 if the container is full, otherwise returns 0.
+  /// Returns true if the container is full.
   /**
    * Performs a constant time check to see if the set is full.
    */
-  int is_full () const;
+  bool is_full () const;
 
-  // = Classic unordered set operations.
+  /// @}
+  /// @name Classic unordered set operations
+  /// @{
 
   ///Linear time insertion of an item unique to the set.
   /**
@@ -1419,7 +1454,7 @@ public:
    * Returns -1 if failures occur, 1 if item is already present, else
    * 0.
    */
-  int insert (const T &new_item);
+  int insert (T const &new_item);
 
   ///Linear time removal operation of an item.
   /**
@@ -1427,13 +1462,13 @@ public:
    * it removes the item, -1 if it can't find the item, and -1 if a
    * failure occurs.  Removal doesn't reclaim memory for the @a item.
    */
-  int remove (const T &item);
+  int remove (T const &item);
 
   /// Finds if @a item occurs in the set.  Returns 0 if finds, else -1.
   /**
    * Performs a linear find operation for the specified @a item.
    */
-  int find (const T &item) const;
+  int find (T const &item) const;
 
   /// Size of the set.
   /**
@@ -1447,22 +1482,23 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
+  /// @}
 private:
   /// Holds the contents of the set.
   struct
   {
     /// Item in the set.
-    T item_;
+    T item_ {};
 
     /// Keeps track of whether this item is in use or not.
-    int is_free_;
+    bool is_free_ {true};
   } search_structure_[ACE_SIZE];
 
   /// Current size of the set.
-  size_t cur_size_;
+  size_t cur_size_ {};
 
   /// Maximum size of the set.
-  size_t max_size_;
+  size_t max_size_ {ACE_SIZE};
 };
 
 // Forward declaration.
@@ -1483,7 +1519,8 @@ class ACE_Bounded_Set_Iterator
 public:
   ACE_Bounded_Set_Iterator (ACE_Bounded_Set<T> &s);
 
-  // = Iteration methods.
+  /// @name Iteration methods
+  /// @{
 
   /// Pass back the {next_item} that hasn't been seen in the Set.
   /// Returns 0 when all items have been seen, else 1.
@@ -1506,6 +1543,7 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
+  /// @}
 private:
   /// Set we are iterating over.
   ACE_Bounded_Set<T> &s_;
@@ -1513,7 +1551,6 @@ private:
   /// How far we've advanced over the set.
   ssize_t next_;
 };
-
 
 /**
  * @class ACE_Bounded_Set
@@ -1574,46 +1611,47 @@ public:
    * Initialize the Bounded_Set to have a maximum size equal to the size
    * parameter specified.
    */
-  ACE_Bounded_Set (size_t size);
+  explicit ACE_Bounded_Set (size_t size);
 
   /// Construct a Bounded_Set that is a copy of the provides Bounded_Set.
   /**
    * Initialize the Bounded_Set to be a copy of the Bounded_Set parameter.
    */
-  ACE_Bounded_Set (const ACE_Bounded_Set<T> &);
+  ACE_Bounded_Set (ACE_Bounded_Set<T> const &);
 
-  /// Assignment operator.
   /**
    * The assignment will make a deep copy of the Bounded_Set provided.  If the
    * rhs has more elements than the capacity of the lhs, then the lhs will be
    * deleted and reallocated to accomadate the larger number of elements.
    */
-  void operator= (const ACE_Bounded_Set<T> &);
+  void operator= (ACE_Bounded_Set<T> const &);
 
-  /// Destructor
   /**
    * Clean up the underlying dynamically allocated memory that is used by
    * the Bounded_Set.
    */
   ~ACE_Bounded_Set ();
 
-  // = Check boundary conditions.
+  /// @name Check boundary conditions
+  /// @{
 
-  /// Returns 1 if the container is empty, otherwise returns 0.
+  /// Returns true if the container is empty.
   /**
    * A constant time check is performed to determine if the Bounded_Set is
    * empty.
    */
-  int is_empty () const;
+  bool is_empty () const;
 
-  /// Returns 1 if the container is full, otherwise returns 0.
+  /// Returns true if the container is full.
   /**
    * Performs a constant time check to determine if the Bounded_Set is at
    * capacity.
    */
-  int is_full () const;
+  bool is_full () const;
 
-  // = Classic unordered set operations.
+  /// @}
+  /// @name Classic unordered set operations
+  /// @{
 
   ///Inserts a new element unique to the set.
   /**
@@ -1622,7 +1660,7 @@ public:
    * Returns -1 if failures occur, 1 if item is already present, else
    * 0.
    */
-  int insert (const T &new_item);
+  int insert (T const &new_item);
 
   ///Finds the specified element and removes it from the set.
   /**
@@ -1631,14 +1669,14 @@ public:
    * failure occurs.  The linear remove operation does not reclaim the
    * memory associated with the removed item.
    */
-  int remove (const T &item);
+  int remove (T const &item);
 
   /// Finds if @a item occurs in the set.  Returns 0 if finds, else -1.
   /**
    * find preforms a linear search for {item} and returns 0 on successful
    * find and -1 otherwise.
    */
-  int find (const T &item) const;
+  int find (T const &item) const;
 
   /// Size of the set.
   /**
@@ -1652,21 +1690,22 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
+  /// @}
 private:
   struct Search_Structure
   {
     /// Item in the set.
-    T item_;
+    T item_ {};
 
     /// Keeps track of whether this item is in use or not.
-    int is_free_;
+    bool is_free_ {true};
   };
 
   /// Holds the contents of the set.
-  Search_Structure *search_structure_;
+  Search_Structure *search_structure_ {};
 
   /// Current size of the set.
-  size_t cur_size_;
+  size_t cur_size_ {};
 
   /// Maximum size of the set.
   size_t max_size_;
@@ -1688,7 +1727,8 @@ public:
 
   ACE_Ordered_MultiSet_Iterator (ACE_Ordered_MultiSet<T> &s);
 
-  // = Iteration methods.
+  /// @name Iteration methods
+  /// @{
 
   /// Pass back the {next_item} that hasn't been seen in the ordered multiset.
   /// Returns 0 when all items have been seen, else 1.
@@ -1722,6 +1762,7 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
+  /// @}
 private:
   /// Pointer to the current node in the iteration.
   ACE_DNode<T> *current_;
@@ -1729,7 +1770,6 @@ private:
   /// Pointer to the set we're iterating over.
   ACE_Ordered_MultiSet<T> &set_;
 };
-
 
 /**
  * @class ACE_Ordered_MultiSet
@@ -1781,31 +1821,29 @@ public:
    */
   ACE_Ordered_MultiSet (ACE_Allocator *the_allocator = nullptr);
 
-  /// Copy constructor.
   /**
    * Initialize the set to be a copy of the provided set.
    */
-  ACE_Ordered_MultiSet (const ACE_Ordered_MultiSet<T> &);
+  ACE_Ordered_MultiSet (ACE_Ordered_MultiSet<T> const &);
 
-  /// Destructor.
   /**
    * Delete the nodes of the set.
    */
   ~ACE_Ordered_MultiSet ();
 
-  /// Assignment operator.
   /**
    * Delete the nodes in lhs, and copy the nodes from the rhs.
    */
-  void operator= (const ACE_Ordered_MultiSet<T> &);
+  void operator= (ACE_Ordered_MultiSet<T> const &);
 
-  // = Check boundary conditions.
+  /// @name Check boundary conditions
+  /// @{
 
-  /// Returns 1 if the container is empty, otherwise returns 0.
+  /// Returns true if the container is empty.
   /**
    * Constant time check to determine if the set is empty.
    */
-  int is_empty () const;
+  bool is_empty () const;
 
   /// Size of the set.
   /**
@@ -1813,14 +1851,16 @@ public:
    */
   size_t size () const;
 
-  // = Classic unordered set operations.
+  /// @}
+  /// @name Classic unordered set operations
+  /// @{
 
   /// Insert @a new_item into the ordered multiset.
   /// Returns -1 if failures occur, else 0.
   /**
    * Linear time, order preserving insert into the set beginning at the head.
    */
-  int insert (const T &new_item);
+  int insert (T const &new_item);
 
   ///Linear time insert beginning at the point specified by the provided iterator.
   /**
@@ -1829,14 +1869,14 @@ public:
    * updates the iterator to point to the newly inserted node.
    * Returns -1 if failures occur, else 0.
    */
-  int insert (const T &new_item, ITERATOR &iter);
+  int insert (T const &new_item, ITERATOR &iter);
 
   /// Remove first occurrence of @a item from the set.  Returns 0 if
   /// it removes the item, -1 if it can't find the item.
   /**
    * Linear time search operation which removes the item from the set if found .
    */
-  int remove (const T &item);
+  int remove (T const &item);
 
   ///Linear find operation.
   /**
@@ -1845,7 +1885,7 @@ public:
    * it positions the iterator at that node and returns 0, or if it cannot
    * locate the node, it leaves the iterator alone and just returns -1.
    */
-  int find (const T &item, ITERATOR &iter) const;
+  int find (T const &item, ITERATOR &iter) const;
 
   /// Reset the ACE_Ordered_MultiSet to be empty.
   /**
@@ -1859,13 +1899,14 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
+  /// @}
 private:
   /**
    * Insert @a item, starting its search at the position given,
    * and if successful updates the passed pointer to point to
    * the newly inserted item's node.
    */
-  int insert_from (const T &item, ACE_DNode<T> *start_position,
+  int insert_from (T const &item, ACE_DNode<T> *start_position,
                    ACE_DNode<T> **new_position);
 
   /**
@@ -1879,23 +1920,23 @@ private:
    * new_position pointer to point to this node (or 0 if there is no such
    * node) and returns 1;
    */
-  int locate (const T &item, ACE_DNode<T> *start_position,
+  int locate (T const &item, ACE_DNode<T> *start_position,
               ACE_DNode<T> *&new_position) const;
 
   /// Delete all the nodes in the Set.
   void delete_nodes ();
 
   /// Copy nodes into this set.
-  void copy_nodes (const ACE_Ordered_MultiSet<T> &);
+  void copy_nodes (ACE_Ordered_MultiSet<T> const &);
 
   /// Head of the bilinked list of Nodes.
-  ACE_DNode<T> *head_;
+  ACE_DNode<T> *head_ {};
 
   /// Head of the bilinked list of Nodes.
-  ACE_DNode<T> *tail_;
+  ACE_DNode<T> *tail_ {};
 
   /// Current size of the set.
-  size_t cur_size_;
+  size_t cur_size_ {};
 
   /// Allocation strategy of the set.
   ACE_Allocator *allocator_;
@@ -1957,29 +1998,29 @@ public:
    * Initialize an array the given size placing the default_value in each index.
    */
   ACE_Array (size_t size,
-             const T &default_value,
+             T const &default_value,
              ACE_Allocator* alloc = nullptr);
 
-  ///Copy constructor.
   /**
    * The copy constructor performs initialization by making an exact
    * copy of the contents of parameter {s}, i.e., *this == s will
    * return true.
    */
-  ACE_Array (const ACE_Array<T> &s);
+  ACE_Array (ACE_Array<T> const &s);
 
-  ///Assignment operator
   /**
    * Assignment operator performs an assignment by making an exact
-   * copy of the contents of parameter {s}, i.e., *this == s will
-   * return true.  Note that if the {max_size_} of {array_} is >= than
-   * {s.max_size_} we can copy it without reallocating.  However, if
-   * {max_size_} is < {s.max_size_} we must delete the {array_},
-   * reallocate a new {array_}, and then copy the contents of {s}.
+   * copy of the contents of parameter @a s, i.e., *this == s will
+   * return true.
+   *
+   * @note If @c max_size_ is at least @c s.max_size_, the contents can
+   * be copied without reallocating. Otherwise, @c array_ must be deleted
+   * and reallocated before copying the contents of @a s.
    */
-  void operator= (const ACE_Array<T> &s);
+  void operator= (ACE_Array<T> const &s);
 
-  // = Compare operators
+  /// @name Compare operators
+  /// @{
 
   ///Equality comparison operator.
   /**
@@ -1987,7 +2028,7 @@ public:
    * if their {size}'s are equal and all the elements from 0 .. {size}
    * are equal.
    */
-  bool operator== (const ACE_Array<T> &s) const;
+  bool operator== (ACE_Array<T> const &s) const;
 
   ///Inequality comparison operator.
   /**
@@ -1995,7 +2036,8 @@ public:
    * {s} is always the complement of the boolean return value of
    * {*this} == {s}.
    */
-  bool operator!= (const ACE_Array<T> &s) const;
+  bool operator!= (ACE_Array<T> const &s) const;
+  /// @}
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

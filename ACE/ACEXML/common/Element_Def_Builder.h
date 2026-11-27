@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Element_Def_Builder.h
  *
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  */
-//=============================================================================
 #ifndef _ACEXML_ELEMENT_DEF_BUILDER_H_
 #define _ACEXML_ELEMENT_DEF_BUILDER_H_
 
@@ -35,20 +31,20 @@ class ACEXML_Export ACEXML_Element_Def_Builder
 public:
   using VAR = std::unique_ptr<ACEXML_Element_Def_Builder>;
 
-  typedef enum {
+  enum class CONTENT_TYPE {
     EMPTY,
     ANY,
     MIXED,
     CHILDREN,
     UNDEFINED
-  } CONTENT_TYPE;
+  };
 
-  typedef enum {
+  enum class CARDINALITY {
     ONE,
     ZERO_OR_MORE,
     ONE_OR_MORE,
     ONE_OR_ZERO
-  } CARDINALITY;
+  };
 
   virtual ~ACEXML_Element_Def_Builder () = 0;
 
@@ -57,9 +53,9 @@ public:
    *
    * @retval 0 if valid, -1 otherwise.
    */
-  virtual int setElementName (const ACEXML_Char *namespaceURI,
-                              const ACEXML_Char *localName,
-                              const ACEXML_Char *qName) = 0;
+  virtual int setElementName (ACEXML_Char const *namespaceURI,
+                              ACEXML_Char const *localName,
+                              ACEXML_Char const *qName) = 0;
 
   /**
    * Define the content type of the element.
@@ -71,9 +67,9 @@ public:
   /**
    * Insert one more element into Mixed definition.
    */
-  virtual int insertMixedElement (const ACEXML_Char *namespaceURI,
-                                  const ACEXML_Char *localName,
-                                  const ACEXML_Char *qName) = 0;
+  virtual int insertMixedElement (ACEXML_Char const *namespaceURI,
+                                  ACEXML_Char const *localName,
+                                  ACEXML_Char const *qName) = 0;
 
   /**
    * Start a new group of children.
@@ -110,16 +106,15 @@ public:
    *
    * @retval 0 on success, -1 otherwise.
    */
-  virtual int insertElement  (const ACEXML_Char *namespaceURI,
-                              const ACEXML_Char *localName,
-                              const ACEXML_Char *qName) = 0;
+  virtual int insertElement  (ACEXML_Char const *namespaceURI,
+                              ACEXML_Char const *localName,
+                              ACEXML_Char const *qName) = 0;
 
   /**
    * Dump the content of the attribute definition.
    */
   virtual void dump () = 0;
 };
-
 
 #include /**/ "ace/post.h"
 

@@ -1,10 +1,8 @@
-//=============================================================================
 /**
  *  @file    Foo_A_ClientEngine.h
  *
  *  @author  Tim Bradley <bradley_t@ociweb.com>
  */
-//=============================================================================
 
 #ifndef FOO_A_CLIENT_ENGINE_H
 #define FOO_A_CLIENT_ENGINE_H
@@ -18,12 +16,17 @@ class Foo_A_Statistics;
 class CSD_TP_Foo_A_Export Foo_A_ClientEngine : public ClientEngine
 {
 public:
-  Foo_A_ClientEngine(Foo_A_ptr obj, unsigned  client_id = 0);
-  virtual ~Foo_A_ClientEngine() = default;
+  explicit Foo_A_ClientEngine(Foo_A_ptr obj, unsigned  client_id = 0);
+  ~Foo_A_ClientEngine() override = default;
 
-  virtual bool execute();
+  bool execute() override;
 
   static void expected_results(Foo_A_Statistics& stats);
+
+  Foo_A_ClientEngine (Foo_A_ClientEngine const &) = delete;
+  Foo_A_ClientEngine (Foo_A_ClientEngine &&) = delete;
+  Foo_A_ClientEngine & operator= (Foo_A_ClientEngine const &) = delete;
+  Foo_A_ClientEngine & operator= (Foo_A_ClientEngine &&) = delete;
 
 private:
   Foo_A_var obj_;

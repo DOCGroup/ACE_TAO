@@ -2,6 +2,10 @@
 
 #if defined (ACE_HAS_GCC_ATOMIC_BUILTINS) && (ACE_HAS_GCC_ATOMIC_BUILTINS == 1)
 
+#if defined (ACE_HAS_DUMP)
+#include "ace/Log_Category.h"
+#endif /* ACE_HAS_DUMP */
+
 #if !defined (__ACE_INLINE__)
 #include "ace/Atomic_Op_GCC_T.inl"
 #endif /* __ACE_INLINE__ */

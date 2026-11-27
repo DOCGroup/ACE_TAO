@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project : aceexe {
   exename = iostream_server
 }

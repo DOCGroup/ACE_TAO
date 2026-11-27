@@ -5,11 +5,11 @@
 #endif /* __ACE_INLINE__ */
 
 CORBA::Boolean
-Simple_Server_i::test_is_a (const char * /* type */)
+Simple_Server_i::test_is_a (char const * /* type */)
 {
   // ACE_DEBUG ((LM_DEBUG, "(%P|%t) test_is_a %s\n", type));
   throw ::CORBA::OBJECT_NOT_EXIST ();
-  return 0;
+  return false;
 }
 
 void

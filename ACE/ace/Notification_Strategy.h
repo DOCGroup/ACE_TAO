@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   Notification_Strategy.h
  *
  *  @author Doug Schmidt
  */
-//=============================================================================
 #ifndef ACE_NOTIFICATION_STRATEGY_H
 #define ACE_NOTIFICATION_STRATEGY_H
 #include /**/ "ace/pre.h"
@@ -34,10 +30,8 @@ class ACE_Reactor;
 class ACE_Export ACE_Notification_Strategy
 {
 public:
-  /// Constructor.
   ACE_Notification_Strategy (ACE_Event_Handler *eh, ACE_Reactor_Mask mask);
 
-  /// Destructor.
   virtual ~ACE_Notification_Strategy () = default;
 
   virtual int notify () = 0;

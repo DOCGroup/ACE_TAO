@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_sys_mman.h"
 #include "ace/OS_NS_sys_stat.h"
@@ -12,9 +11,9 @@ ACE_Mem_Map::handle () const
   return this->handle_;
 }
 
-// Return the name of file that is mapped (if any).
+/// Return the name of file that is mapped (if any).
 
-ACE_INLINE const ACE_TCHAR *
+ACE_INLINE ACE_TCHAR const *
 ACE_Mem_Map::filename () const
 {
   return this->filename_;
@@ -33,7 +32,7 @@ ACE_Mem_Map::map (ACE_HANDLE handle,
   return this->map_it (handle, length, prot, share, addr, offset, sa);
 }
 
-// Remap the file associated with <this->handle_>.
+/// Remap the file associated with <this->handle_>.
 
 ACE_INLINE int
 ACE_Mem_Map::map (size_t length,
@@ -46,7 +45,7 @@ ACE_Mem_Map::map (size_t length,
   ACE_TRACE ("ACE_Mem_Map::map");
   // If we're already mapped at a particular location then try to
   // remap the file using the same base address.
-  if (addr == 0 && this->base_addr_ != 0 && this->base_addr_ != MAP_FAILED)
+  if (addr == nullptr && this->base_addr_ != nullptr && this->base_addr_ != MAP_FAILED)
     {
       share |= MAP_FIXED;
       addr = this->base_addr_;
@@ -56,7 +55,7 @@ ACE_Mem_Map::map (size_t length,
                        share, addr, offset, sa);
 }
 
-// This operator passes back the starting address of the mapped file.
+/// This operator passes back the starting address of the mapped file.
 
 ACE_INLINE int
 ACE_Mem_Map::operator () (void *&addr)
@@ -64,7 +63,9 @@ ACE_Mem_Map::operator () (void *&addr)
   ACE_TRACE ("ACE_Mem_Map::operator");
 
   if (this->base_addr_ == MAP_FAILED)
-    return -1;
+    {
+      return -1;
+    }
   else
     {
       addr = this->base_addr_;
@@ -72,7 +73,7 @@ ACE_Mem_Map::operator () (void *&addr)
     }
 }
 
-// Return the base address.
+/// Return the base address.
 
 ACE_INLINE void *
 ACE_Mem_Map::addr () const
@@ -82,8 +83,8 @@ ACE_Mem_Map::addr () const
   return this->base_addr_;
 }
 
-// This function returns the number of bytes currently mapped in the
-// file.
+/// This function returns the number of bytes currently mapped in the
+/// file.
 
 ACE_INLINE size_t
 ACE_Mem_Map::size () const
@@ -124,7 +125,9 @@ ACE_Mem_Map::unmap (ssize_t len)
       return result;
     }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 
 // Unmap the region starting at <addr_>.
@@ -182,7 +185,6 @@ ACE_Mem_Map::protect (size_t len, int prot)
   return ACE_OS::mprotect (this->base_addr_, len, prot);
 }
 
-
 // Change the protection of all the pages of the mapped region to <prot>
 // starting at <this->base_addr_>.
 
@@ -209,7 +211,7 @@ ACE_INLINE int
 ACE_Mem_Map::advise (int behavior, int len)
 {
   ACE_TRACE ("ACE_Mem_Map::advise");
-  const size_t advise_len =
+  size_t const advise_len =
     len < 0 ? this->length_ : static_cast<size_t> (len);
 
   return ACE_OS::madvise ((caddr_t) this->base_addr_,

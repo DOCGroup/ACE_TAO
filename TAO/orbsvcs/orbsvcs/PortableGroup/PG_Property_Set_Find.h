@@ -1,15 +1,10 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    PG_Property_Set_Find.h
  *
- *  This is a companion function for the properties docoder
- *  to work around compilers that don't support templated methods.
+ *  Typed lookup helper for a property set.
  *
  *  @author Dale Wilson <wilson_d@ociweb.com>
  */
-//=============================================================================
 #ifndef TAO_PG_PROPERTY_SET_FIND_H
 #define TAO_PG_PROPERTY_SET_FIND_H
 #include /**/ "ace/pre.h"
@@ -28,16 +23,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-  /**
-   * Find a value in a TAO::PG_Property_Set.
-   * This is a work-around for the lack of
-   * templated methods.
-   */
+  /// Find and extract a typed value from a TAO::PG_Property_Set.
   template <typename TYPE>
-  int find (const PG_Property_Set & decoder, const ACE_CString & key, TYPE & value)
+  int find (PG_Property_Set const & decoder, ACE_CString const & key, TYPE & value)
   {
     int result = 0;
-    const PortableGroup::Value * any {};
+    PortableGroup::Value const * any {};
     if (decoder.find (key, any))
     {
       result = ((*any) >>= value);

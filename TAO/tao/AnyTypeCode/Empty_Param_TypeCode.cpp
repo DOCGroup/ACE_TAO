@@ -1,5 +1,6 @@
-// -*- C++ -*-
 #include "tao/AnyTypeCode/Empty_Param_TypeCode.h"
+
+#include <memory>
 
 #ifndef __ACE_INLINE__
 # include "tao/AnyTypeCode/Empty_Param_TypeCode.inl"
@@ -52,7 +53,9 @@ TAO::TypeCode::Empty_Param::equivalent_i (CORBA::TypeCode_ptr tc) const
   CORBA::TCKind const tc_kind = TAO::unaliased_kind (tc);
 
   if (tc_kind != this->kind_)
+  {
     return false;
+  }
 
   return true;
 }
@@ -67,7 +70,7 @@ TAO::TypeCode::Empty_Param::get_compact_typecode_i () const
 
   static TAO::TypeCode::Empty_Param compact_typecode (this->kind_);
 
-  return &compact_typecode;
+  return std::addressof (compact_typecode);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -1,6 +1,8 @@
 // server.cpp
 // This version uses the Implementation Repository.
 
+#include <string>
+
 #include "Test_i.h"
 
 #include "tao/IORTable/IORTable.h"
@@ -14,13 +16,12 @@ namespace
 {
   ACE_CString toStr(int n)
   {
-    char buf[20];
-    return ACE_OS::itoa(n, buf, 10);
+    return ACE_CString (std::to_string (n).c_str ());
   }
 }
 
 PortableServer::POA_ptr
-createPOA(PortableServer::POA_ptr root_poa, const char* poa_name)
+createPOA(PortableServer::POA_ptr root_poa, char const *poa_name)
 {
   PortableServer::LifespanPolicy_var life =
     root_poa->create_lifespan_policy(PortableServer::PERSISTENT);
@@ -49,7 +50,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   try {
     CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
 
-    ACE_TCHAR *other_server_ior = 0;
+    ACE_TCHAR *other_server_ior {};
 
     int server_num = 0;
     int reply_delay_secs = 0;
@@ -147,7 +148,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                         ACE_TEXT ("(%P|%t|%T) Server %d received reply from server %d\n"),
                         server_num, n));
           }
-        catch (const CORBA::TRANSIENT &)
+        catch (CORBA::TRANSIENT const &)
           {
             if (expect_transient)
               {
@@ -163,7 +164,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               }
           }
       }
-
 
     //
     // This server is now ready to run.
@@ -190,14 +190,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     orb->run();
 
-    root_poa->destroy(1,1);
+    root_poa->destroy(true,true);
     orb->destroy();
 
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("(%P|%t|%T) Server %d ending serving of %C\n"),
                 server_num, poa_name.c_str ()));
   }
-  catch(const CORBA::Exception& ex) {
+  catch(CORBA::Exception const & ex) {
     ex._tao_print_exception (ACE_TEXT ("Server main()"));
     return 1;
   }

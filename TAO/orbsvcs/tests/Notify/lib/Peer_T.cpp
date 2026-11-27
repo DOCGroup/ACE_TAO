@@ -16,9 +16,7 @@ TAO_Notify_Tests_Peer_T<Peer_Traits>::TAO_Notify_Tests_Peer_T ()
 }
 
 template <class Peer_Traits>
-TAO_Notify_Tests_Peer_T<Peer_Traits>::~TAO_Notify_Tests_Peer_T ()
-{
-}
+TAO_Notify_Tests_Peer_T<Peer_Traits>::~TAO_Notify_Tests_Peer_T () = default;
 
 template <class Peer_Traits>
 typename TAO_Notify_Tests_Peer_T<Peer_Traits>::Proxy_Traits_PTR
@@ -73,7 +71,6 @@ TAO_Notify_Tests_Peer_T<Peer_Traits>::connect (Admin_Traits_PTR admin_ptr)
                  this->proxy_id_);
 }
 
-
 template <class Peer_Traits>
 void
 TAO_Notify_Tests_Peer_T<Peer_Traits>::connect ()
@@ -110,8 +107,7 @@ TAO_Notify_Tests_Peer_T<Peer_Traits>::connect ()
 template <class Peer_Traits>
 void
 TAO_Notify_Tests_Peer_T<Peer_Traits>::set_qos (
-    CosNotification::QoSProperties& qos
-  )
+    CosNotification::QoSProperties& qos)
 {
   this->get_proxy ()->set_qos (qos);
 }
@@ -139,14 +135,14 @@ TAO_Notify_Tests_Peer_T<Peer_Traits>::status ()
                       this->name_.c_str ()));
         }
     }
-  catch (const CORBA::TRANSIENT& ex)
+  catch (CORBA::TRANSIENT const & ex)
     {
       ex._tao_print_exception ("Error: ");
       ACE_DEBUG ((LM_DEBUG,
                   "Peer %s is_equivalent transient exception.",
                   this->name_.c_str ()));
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Error: ");
       ACE_DEBUG ((LM_DEBUG,
@@ -166,7 +162,7 @@ TAO_Notify_Tests_Peer_T<Peer_Traits>::disconnect ()
     {
       this->disconnect_from_proxy ();
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Peer %s failed to disconnect from proxy.",
@@ -177,7 +173,7 @@ TAO_Notify_Tests_Peer_T<Peer_Traits>::disconnect ()
     {
       this->deactivate ();
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Peer %s failed to deactivate.",
@@ -187,8 +183,7 @@ TAO_Notify_Tests_Peer_T<Peer_Traits>::disconnect ()
 
 template <class Peer_Traits>
 PortableServer::POA_ptr
-TAO_Notify_Tests_Peer_T<Peer_Traits>::_default_POA (
-  )
+TAO_Notify_Tests_Peer_T<Peer_Traits>::_default_POA ()
 {
   return PortableServer::POA::_duplicate (this->default_POA_.in ());
 }

@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    DynAnyUtils_T.cpp
  *
@@ -8,8 +5,6 @@
  *
  *  @author Jeff Parsons <j.parsons@vanderbilt.edu>
  */
-//=============================================================================
-
 #ifndef TAO_DYNANYUTILS_T_CPP
 #define TAO_DYNANYUTILS_T_CPP
 
@@ -35,7 +30,7 @@ namespace TAO
 {
   template<typename T>
   void
-  DynAnyBasicTypeUtils<T>::insert_value (const T &val,
+  DynAnyBasicTypeUtils<T>::insert_value (T const &val,
                                          TAO_DynCommon *the_dynany)
   {
     if (the_dynany->destroyed ())
@@ -45,7 +40,7 @@ namespace TAO
 
     if (the_dynany->has_components ())
       {
-        DynamicAny::DynAny_var cc = the_dynany->check_component ();
+        DynamicAny::DynAny_var const cc = the_dynany->check_component ();
         TAO_DynCommon *dc = dynamic_cast<TAO_DynCommon *> (cc.in ());
         DynAnyBasicTypeUtils<T>::insert_value (val, dc);
       }
@@ -70,7 +65,7 @@ namespace TAO
 
     if (the_dynany->has_components ())
       {
-        DynamicAny::DynAny_var cc = the_dynany->check_component ();
+        DynamicAny::DynAny_var const cc = the_dynany->check_component ();
         TAO_DynCommon *dc = dynamic_cast<TAO_DynCommon *> (cc.in ());
         return DynAnyBasicTypeUtils<T>::get_value (dc);
       }
@@ -80,7 +75,7 @@ namespace TAO
         using ext_type = typename BasicTypeTraits<T>::extract_type;
         ret_type retval = ret_type ();
         ext_type extval (retval);
-        const CORBA::Any &my_any = the_dynany->the_any ();
+        CORBA::Any const &my_any = the_dynany->the_any ();
 
         if (!(my_any >>= extval))
           {
@@ -114,7 +109,7 @@ namespace TAO
     ANY_TC any_tc,
     CORBA::Boolean allow_truncation)
   {
-    DA_IMPL *p = nullptr;
+    DA_IMPL *p {};
     ACE_NEW_THROW_EX (p,
                       DA_IMPL (allow_truncation),
                       CORBA::NO_MEMORY ());
@@ -143,7 +138,7 @@ namespace TAO
     ANY_TC any_tc,
     CORBA::Boolean allow_truncation)
   {
-    DA_IMPL *p = nullptr;
+    DA_IMPL *p {};
     ACE_NEW_THROW_EX (p,
                       DA_IMPL (allow_truncation),
                       CORBA::NO_MEMORY ());

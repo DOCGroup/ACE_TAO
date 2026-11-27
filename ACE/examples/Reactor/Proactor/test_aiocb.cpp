@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    test_aiocb.cpp
  *
@@ -12,8 +10,6 @@
  *
  *  @author Alexander Babu Arulanthu <alex@cs.wustl.edu>
  */
-//=============================================================================
-
 
 //FUZZ: disable check_for_lack_ACE_OS
 //FUZZ: disable check_for_improper_main_declaration
@@ -23,18 +19,23 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <signal.h>
-#include <string.h>
 #include <errno.h>
 #include <stdio.h>
-#include <iostream.h>
+#include <iostream>
+#include <memory>
+#include <string>
+#include <vector>
 
 #include <aio.h>
 
 class Test_Aio
 {
 public:
-  /// Default constructor.
-  Test_Aio ();
+  Test_Aio () = default;
+  Test_Aio (Test_Aio const &) = delete;
+  Test_Aio (Test_Aio &&) = delete;
+  Test_Aio &operator= (Test_Aio const &) = delete;
+  Test_Aio &operator= (Test_Aio &&) = delete;
 
   /// Initting the output file and the buffer.
   int init ();
@@ -42,39 +43,30 @@ public:
   /// Doing the testing stuff.
   int do_aio ();
 
-  /// Destructor.
   ~Test_Aio ();
 private:
   /// Output file descriptor.
-  int out_fd_;
+  int out_fd_ {-1};
 
   /// For writing to the file.
-  struct aiocb *aiocb_write_;
+  struct aiocb aiocb_write_ {};
 
   /// Reading stuff from the file.
-  struct aiocb *aiocb_read_;
+  struct aiocb aiocb_read_ {};
 
   /// The buffer to be written to the out_fd.
-  char *buffer_write_;
+  std::string buffer_write_ {"Welcome to the world of AIO... AIO Rules !!!"};
 
   /// The buffer to be read back from the file.
-  char *buffer_read_;
+  std::vector<char> buffer_read_;
 };
-
-Test_Aio::Test_Aio ()
-  : aiocb_write_ (new struct aiocb),
-    aiocb_read_ (new struct aiocb),
-    buffer_write_ (0),
-    buffer_read_ (0)
-{
-}
 
 Test_Aio::~Test_Aio ()
 {
-  delete aiocb_write_;
-  delete aiocb_read_;
-  delete buffer_write_;
-  delete [] buffer_read_;
+  if (this->out_fd_ != -1)
+    {
+      close (this->out_fd_);
+    }
 }
 
 // Init the output file and init the buffer.
@@ -83,16 +75,15 @@ Test_Aio::init ()
 {
   // Open the output file.
   this->out_fd_ = open ("test_aio.log", O_RDWR | O_CREAT | O_TRUNC, 0666);
-  if (this->out_fd_ == 0)
+  if (this->out_fd_ == -1)
     {
-      cout << "Error : Opening file" << endl;
+      std::cout << "Error : Opening file" << std::endl;
       return -1;
     }
 
   // Init the buffers.
-  this->buffer_write_ = strdup ("Welcome to the world of AIO... AIO Rules !!!");
-  cout << "The buffer : " << this->buffer_write_ << endl;
-  this->buffer_read_ = new char [strlen (this->buffer_write_) + 1];
+  std::cout << "The buffer : " << this->buffer_write_ << std::endl;
+  this->buffer_read_.resize (this->buffer_write_.size () + 1);
   return 0;
 }
 
@@ -103,61 +94,62 @@ Test_Aio::init ()
 int
 Test_Aio::do_aio ()
 {
-  // = Write to the file.
+  // Write to the file.
 
   // Setup AIOCB.
-  this->aiocb_write_->aio_fildes = this->out_fd_;
-  this->aiocb_write_->aio_offset = 0;
-  this->aiocb_write_->aio_buf = this->buffer_write_;
-  this->aiocb_write_->aio_nbytes = strlen (this->buffer_write_);
-  this->aiocb_write_->aio_reqprio = 0;
-  this->aiocb_write_->aio_sigevent.sigev_notify = SIGEV_NONE;
+  this->aiocb_write_.aio_fildes = this->out_fd_;
+  this->aiocb_write_.aio_offset = 0;
+  this->aiocb_write_.aio_buf = this->buffer_write_.data ();
+  this->aiocb_write_.aio_nbytes = this->buffer_write_.size ();
+  this->aiocb_write_.aio_reqprio = 0;
+  this->aiocb_write_.aio_sigevent.sigev_notify = SIGEV_NONE;
   //this->this->aiocb_.aio_sigevent.sigev_signo = SIGRTMAX;
-  this->aiocb_write_->aio_sigevent.sigev_value.sival_ptr =
-    (void *) this->aiocb_write_;
+  this->aiocb_write_.aio_sigevent.sigev_value.sival_ptr =
+    std::addressof (this->aiocb_write_);
 
   // Fire off the aio write.
-  if (aio_write (this->aiocb_write_) != 0)
+  if (aio_write (std::addressof (this->aiocb_write_)) != 0)
     {
       perror ("aio_write");
       return -1;
     }
 
-  // = Read from that file.
+  // Read from that file.
 
   // Setup AIOCB.
-  this->aiocb_read_->aio_fildes = this->out_fd_;
-  this->aiocb_read_->aio_offset = 0;
-  this->aiocb_read_->aio_buf = this->buffer_read_;
-  this->aiocb_read_->aio_nbytes = strlen (this->buffer_write_);
-  this->aiocb_read_->aio_reqprio = 0;
-  this->aiocb_read_->aio_sigevent.sigev_notify = SIGEV_NONE;
+  this->aiocb_read_.aio_fildes = this->out_fd_;
+  this->aiocb_read_.aio_offset = 0;
+  this->aiocb_read_.aio_buf = this->buffer_read_.data ();
+  this->aiocb_read_.aio_nbytes = this->buffer_write_.size ();
+  this->aiocb_read_.aio_reqprio = 0;
+  this->aiocb_read_.aio_sigevent.sigev_notify = SIGEV_NONE;
   //this->this->aiocb_.aio_sigevent.sigev_signo = SIGRTMAX;
-  this->aiocb_read_->aio_sigevent.sigev_value.sival_ptr =
-    (void *) this->aiocb_read_;
+  this->aiocb_read_.aio_sigevent.sigev_value.sival_ptr =
+    std::addressof (this->aiocb_read_);
 
   // Fire off the aio write. If it doesnt get queued, carry on to get
   // the completion for the first one.
-  if (aio_read (this->aiocb_read_) < 0)
-    perror ("aio_read");
+  if (aio_read (std::addressof (this->aiocb_read_)) < 0)
+    {
+      perror ("aio_read");
+    }
 
   // Wait for the completion on aio_suspend.
   struct aiocb *list_aiocb[2];
-  list_aiocb [0] = this->aiocb_write_;
-  list_aiocb [1] = this->aiocb_read_;
+  list_aiocb [0] = std::addressof (this->aiocb_write_);
+  list_aiocb [1] = std::addressof (this->aiocb_read_);
 
   // Do suspend till all the aiocbs in the list are done.
-  int done = 0;
-  int return_val = 0;
+  bool done {false};
   while (!done)
     {
-      return_val = aio_suspend (list_aiocb,
-                                2,
-                                0);
-      cerr << "Return value :" << return_val << endl;
+      int const return_val = aio_suspend (list_aiocb,
+                                          2,
+                                          nullptr);
+      std::cerr << "Return value :" << return_val << std::endl;
 
       // Analyze return and error values.
-      if (list_aiocb[0] != 0)
+      if (list_aiocb[0] != nullptr)
         {
           if (aio_error (list_aiocb [0]) != EINPROGRESS)
             {
@@ -168,21 +160,21 @@ Test_Aio::do_aio ()
                 }
               else
                 {
-                  // Successful. Store the pointer somewhere and make the
-                  // entry NULL in the list.
-                  this->aiocb_write_ = list_aiocb [0];
-                  list_aiocb [0] = 0;
+                  // Mark the request complete in the list.
+                  list_aiocb [0] = nullptr;
                 }
             }
           else
-            cout << "AIO write in progress" << endl;
+            {
+              std::cout << "AIO write in progress" << std::endl;
+            }
         }
 
-      if (list_aiocb[1] != 0)
+      if (list_aiocb[1] != nullptr)
         {
           if (aio_error (list_aiocb [1]) != EINPROGRESS)
             {
-              int read_return = aio_return (list_aiocb[1]);
+              ssize_t const read_return = aio_return (list_aiocb[1]);
               if (read_return == -1)
                 {
                   perror ("aio_return");
@@ -190,24 +182,26 @@ Test_Aio::do_aio ()
                 }
               else
                 {
-                  // Successful. Store the pointer somewhere and make the
-                  // entry NULL in the list.
-                  this->aiocb_read_ = list_aiocb [1];
-                  list_aiocb [1] = 0;
-                  this->buffer_read_[read_return] = '\0';
+                  // Mark the request complete in the list.
+                  list_aiocb [1] = nullptr;
+                  this->buffer_read_[static_cast<size_t> (read_return)] = '\0';
                 }
             }
           else
-            cout << "AIO read in progress" << endl;
+            {
+              std::cout << "AIO read in progress" << std::endl;
+            }
         }
 
       // Is it done?
-      if ((list_aiocb [0] == 0) && (list_aiocb [1] == 0))
-        done = 1;
+      if (list_aiocb [0] == nullptr && list_aiocb [1] == nullptr)
+        {
+          done = true;
+        }
     }
 
-  cout << "Both the AIO operations done." << endl;
-  cout << "The buffer is :" << this->buffer_read_ << endl;
+  std::cout << "Both the AIO operations done." << std::endl;
+  std::cout << "The buffer is :" << this->buffer_read_.data () << std::endl;
 
   return 0;
 }

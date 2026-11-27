@@ -17,7 +17,6 @@
 
 #include <memory>
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::SSLIOP::ORBInitializer::ORBInitializer (::Security::QOP qop)
@@ -32,7 +31,9 @@ TAO::SSLIOP::ORBInitializer::pre_init (
   TAO_ORBInitInfo_var tao_info = TAO_ORBInitInfo::_narrow (info);
 
   if (CORBA::is_nil (tao_info.in ()))
+  {
     throw CORBA::INV_OBJREF ();
+  }
 
   // SSLIOP doesn't use the ORB Core until a request invocation occurs
   // so there is no problem in retrieving the ORB Core pointer in this
@@ -164,7 +165,7 @@ TAO::SSLIOP::ORBInitializer::post_init (
   TAO::SL3::CredentialsCurator_var tao_curator =
     TAO::SL3::CredentialsCurator::_narrow (curator.in ());
 
-  TAO::SSLIOP::CredentialsAcquirerFactory * factory = nullptr;
+  TAO::SSLIOP::CredentialsAcquirerFactory * factory {};
   ACE_NEW_THROW_EX (factory,
                     TAO::SSLIOP::CredentialsAcquirerFactory,
                     CORBA::NO_MEMORY ());

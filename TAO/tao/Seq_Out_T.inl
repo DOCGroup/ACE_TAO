@@ -1,5 +1,3 @@
-// -*- C++ -*-
-//
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<typename T>
@@ -21,14 +19,14 @@ TAO_Seq_Out_T<T>::TAO_Seq_Out_T (T_var & p)
 
 template<typename T>
 ACE_INLINE
-TAO_Seq_Out_T<T>::TAO_Seq_Out_T (const TAO_Seq_Out_T<T> & p)
+TAO_Seq_Out_T<T>::TAO_Seq_Out_T (TAO_Seq_Out_T<T> const & p)
   : ptr_ (p.ptr_)
 {}
 
 template<typename T>
 ACE_INLINE
 TAO_Seq_Out_T<T> &
-TAO_Seq_Out_T<T>::operator= (const TAO_Seq_Out_T<T> & p)
+TAO_Seq_Out_T<T>::operator= (TAO_Seq_Out_T<T> const & p)
 {
   this->ptr_ = p.ptr_;
   return *this;

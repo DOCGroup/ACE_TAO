@@ -1,5 +1,3 @@
-/* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file Job_i.h
  *
@@ -7,7 +5,6 @@
  *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  */
-//=============================================================================
 #ifndef JOB_I_H
 #define JOB_I_H
 
@@ -23,20 +20,26 @@
 class Job_i : public POA_Job
 {
  public:
-  /// Constructor
-  Job_i ();
+  Job_i () = default;
+
+  Job_i (Job_i const &) = delete;
+  Job_i (Job_i &&) = delete;
+  Job_i &operator= (Job_i const &) = delete;
+  Job_i &operator= (Job_i &&) = delete;
 
   /// Init the state of this object.
   int init (ACE_Arg_Shifter& arg_shifter);
 
-  /// = Accessors
-  const ACE_CString& name ();
-  const ACE_CString& poa ();
+  /// @name Accessors
+  /// @{
+  ACE_CString const &name () const;
+  ACE_CString const &poa () const;
+  /// @}
 
-  /// = inteface Job method implementation.
-  virtual void work (CORBA::ULong work);
+  /// Implements the Job::work operation.
+  void work (CORBA::ULong work) override;
 
-  virtual void shutdown ();
+  void shutdown () override;
  protected:
   /// The name of this Job
   ACE_CString job_name_;

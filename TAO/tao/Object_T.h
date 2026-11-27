@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Object_T.h
  *
@@ -8,7 +5,6 @@
  *
  *  @author  Jeff Parsons <j.parsons@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef TAO_CORBA_OBJECT_T_H
 #define TAO_CORBA_OBJECT_T_H
@@ -41,13 +37,13 @@ namespace TAO
     using T_ptr = T *;
 
     static T_ptr narrow (CORBA::Object_ptr,
-                         const char *repo_id);
+                         char const *repo_id);
 
     /// Version used the operators.
     static T_ptr unchecked_narrow (CORBA::Object_ptr);
 
   private:
-    // Code for lazily evaluated IORs.
+    /// Code for lazily evaluated IORs.
     static T_ptr lazy_evaluation (CORBA::Object_ptr);
   };
 }

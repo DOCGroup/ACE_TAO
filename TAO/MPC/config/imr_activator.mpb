@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project : minimum_corba {
   after += ImR_Activator
   libs  += TAO_ImR_Activator

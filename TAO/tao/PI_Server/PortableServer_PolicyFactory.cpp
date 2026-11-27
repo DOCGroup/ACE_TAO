@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/PI_Server/PortableServer_PolicyFactory.h"
 #include "tao/PortableServer/ThreadPolicy.h"
 #include "tao/PortableServer/LifespanPolicy.h"

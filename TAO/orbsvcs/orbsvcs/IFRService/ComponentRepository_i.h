@@ -1,7 +1,3 @@
-// -*- C++ -*-
-
-
-//=============================================================================
 /**
  *  @file    ComponentRepository_i.h
  *
@@ -9,8 +5,6 @@
  *
  *  @author Jeff Parsons <j.parsons@vanderbiltl.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_COMPONENTREPOSITORY_I_H
 #define TAO_COMPONENTREPOSITORY_I_H
@@ -23,7 +17,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/IFRService/ComponentContainer_i.h"
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

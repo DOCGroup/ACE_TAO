@@ -1,7 +1,3 @@
-// -*- C++ -*-
-
-
-//=============================================================================
 /**
  *  @file    IOR_Multicast.h
  *
@@ -10,8 +6,6 @@
  *
  *  @author   Sergio Flores-Gaitan
  */
-//=============================================================================
-
 
 #ifndef TAO_IOR_MULTICAST_H
 #define TAO_IOR_MULTICAST_H
@@ -44,7 +38,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Svc_Utils_Export TAO_IOR_Multicast : public ACE_Event_Handler
 {
 public:
-  /// Constructor.
   TAO_IOR_Multicast ();
 
   /// Constructor taking the ior of the service.
@@ -65,7 +58,6 @@ public:
             char const *mcast_addr,
             TAO_Service_ID service_id);
 
-  /// Destructor.
   ~TAO_IOR_Multicast () override;
 
   TAO_IOR_Multicast (TAO_IOR_Multicast const&) = delete;

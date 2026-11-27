@@ -29,7 +29,9 @@ Loopback_Consumer::connect (RtecEventChannelAdmin::EventChannel_ptr ec)
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
     if (!CORBA::is_nil (this->proxy_supplier_.in ()))
+    {
       return;
+    }
 
     this->proxy_supplier_ =
       consumer_admin->obtain_push_supplier ();
@@ -39,7 +41,7 @@ Loopback_Consumer::connect (RtecEventChannelAdmin::EventChannel_ptr ec)
     this->_this ();
 
   RtecEventChannelAdmin::ConsumerQOS consumer_qos;
-  consumer_qos.is_gateway = 0;
+  consumer_qos.is_gateway = false;
   consumer_qos.dependencies.length (2);
   RtecEventComm::EventHeader& h0 =
     consumer_qos.dependencies[0].event.header;
@@ -62,7 +64,9 @@ Loopback_Consumer::disconnect ()
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
     if (CORBA::is_nil (this->proxy_supplier_.in ()))
+    {
       return;
+    }
     proxy = this->proxy_supplier_._retn ();
   }
 
@@ -72,7 +76,7 @@ Loopback_Consumer::disconnect ()
     {
       proxy->disconnect_push_supplier ();
     }
-  catch (const CORBA::Exception&){}
+  catch (CORBA::Exception const&){}
 }
 
 void

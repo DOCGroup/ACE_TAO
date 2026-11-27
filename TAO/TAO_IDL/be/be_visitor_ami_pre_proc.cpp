@@ -1,6 +1,3 @@
-
-/* -*- c++ -*- */
-//=============================================================================
 /**
  *  @file    be_visitor_ami_pre_proc.cpp
  *
@@ -11,7 +8,6 @@
  *
  *  @author Michael Kircher <Michael.Kircher@mchp.siemens.de>
  */
-//=============================================================================
 
 #include "be_visitor_ami_pre_proc.h"
 #include "be_visitor_context.h"
@@ -610,8 +606,8 @@ be_visitor_ami_pre_proc::create_reply_handler_operation (
                   be_operation (be_global->void_type (),
                                 AST_Operation::OP_noflags,
                                 op_name.get (),
-                                0,
-                                0),
+                                false,
+                                false),
                   -1);
   std::unique_ptr<be_operation, BE_AST_Decl_Deleter> operation_owner (operation);
 

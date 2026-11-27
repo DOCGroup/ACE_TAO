@@ -1,9 +1,9 @@
-
 #include "ace/Task.h"
-#include "ace/Atomic_Op_T.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_unistd.h"
 #include "HelloC.h"
+#include <atomic>
+#include <cstring>
 
 ACE_TCHAR const* ior = ACE_TEXT ("file://test.ior");
 CORBA::ULong payload_length = 1000;
@@ -111,7 +111,7 @@ public:
             this->obj_->process (seq);
           }
       }
-    catch (const CORBA::Exception& ex)
+    catch (CORBA::Exception const & ex)
       {
         ex._tao_print_exception ("Exception caught in ClientThread:");
         return -1;
@@ -126,7 +126,7 @@ private:
   CORBA::ULong payload_;
   CORBA::ULong calls_;
 
-  ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::ULong> id_;
+  std::atomic<CORBA::ULong> id_;
 
   CORBA::ULong sleep_;
 };
@@ -139,14 +139,18 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("ERROR: wrong arguments\n")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("ERROR: wrong arguments\n")),
+                            -1);
+        }
 
-      if (id_offset + client_threads >= ACE_OS::strlen (Test::ClientIDs))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("ERROR: too many clients\n")),
-                          -1);
+      if (id_offset + client_threads >= std::strlen (Test::ClientIDs))
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("ERROR: too many clients\n")),
+                            -1);
+        }
 
       CORBA::Object_var obj = orb->string_to_object (ior);
 
@@ -154,9 +158,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       Test::Hello_var hello = Test::Hello::_narrow (obj.in ());
 
       if (CORBA::is_nil (hello.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("ERROR: nil Hello object\n")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("ERROR: nil Hello object\n")),
+                            -1);
+        }
 
       if (do_shutdown)
         {
@@ -181,12 +187,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
           // Give a chance to flush all OS buffers for client.
           while (orb->work_pending ())
-            orb->perform_work ();
+        {
+              orb->perform_work ();
+        }
         }
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Exception caught in client main ():");
       return 1;

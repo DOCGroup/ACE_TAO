@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/RTPortableServer/RT_Policy_Validator.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
@@ -14,6 +13,8 @@
 #include "tao/ORB_Core.h"
 #include "tao/Policy_Set.h"
 #include "tao/Transport_Acceptor.h"
+#include <algorithm>
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -68,47 +69,39 @@ TAO_POA_RT_Policy_Validator::validate_server_protocol (TAO_Policy_Set &policies)
         }
     }
 
-  RTCORBA::ServerProtocolPolicy_var server_protocol_policy =
+  RTCORBA::ServerProtocolPolicy_var const server_protocol_policy =
     RTCORBA::ServerProtocolPolicy::_narrow (protocol.in ());
 
-  TAO_ServerProtocolPolicy *server_protocol =
+  TAO_ServerProtocolPolicy * const server_protocol =
     dynamic_cast <TAO_ServerProtocolPolicy *>
                       (server_protocol_policy.in ());
 
   RTCORBA::ProtocolList &protocols =
     server_protocol->protocols_rep ();
 
-  for (CORBA::ULong j = 0; j < protocols.length (); ++j)
+  for (CORBA::ULong j {}; j < protocols.length (); ++j)
     {
-      bool found = false;
       CORBA::ULong const protocol_type = protocols[j].protocol_type;
+      bool found {};
 
-      if (this->thread_pool_)
+      if (this->thread_pool_ != nullptr)
         {
-          TAO_Thread_Lane **lanes =
-            this->thread_pool_->lanes ();
-
-          for (CORBA::ULong i = 0;
-               i != this->thread_pool_->number_of_lanes ();
-               ++i)
-            {
-              TAO_Thread_Lane_Resources &resources =
-                lanes[i]->resources ();
-
-              TAO_Acceptor_Registry &acceptor_registry =
-                resources.acceptor_registry ();
-
-              for (TAO_AcceptorSetIterator a = acceptor_registry.begin ();
-                   a != acceptor_registry.end ();
-                   ++a)
-                {
-                  if ((*a)->tag () == protocol_type)
-                    {
-                      found = true;
-                      break;
-                    }
-                }
-            }
+          TAO_Thread_Lanes const &lanes = this->thread_pool_->lanes ();
+          found = std::any_of (lanes.begin (),
+                               lanes.end (),
+                               [protocol_type] (std::unique_ptr<TAO_Thread_Lane> const &lane)
+                               {
+                                 TAO_Acceptor_Registry const &acceptor_registry =
+                                   lane->resources ().acceptor_registry ();
+                                 TAO_AcceptorSet const &acceptors =
+                                   acceptor_registry.acceptors ();
+                                 return std::any_of (acceptors.begin (),
+                                                     acceptors.end (),
+                                                     [protocol_type] (std::unique_ptr<TAO_Acceptor> const &acceptor)
+                                                     {
+                                                       return acceptor->tag () == protocol_type;
+                                                     });
+                               });
         }
       else
         {
@@ -118,23 +111,22 @@ TAO_POA_RT_Policy_Validator::validate_server_protocol (TAO_Policy_Set &policies)
           TAO_Thread_Lane_Resources &resources =
             thread_lane_resources_manager.default_lane_resources ();
 
-          TAO_Acceptor_Registry &acceptor_registry =
+          TAO_Acceptor_Registry const &acceptor_registry =
             resources.acceptor_registry ();
 
-          for (TAO_AcceptorSetIterator a = acceptor_registry.begin ();
-               a != acceptor_registry.end ();
-               ++a)
-            {
-              if ((*a)->tag () == protocol_type)
-                {
-                  found = true;
-                  break;
-                }
-            }
+          TAO_AcceptorSet const &acceptors = acceptor_registry.acceptors ();
+          found = std::any_of (acceptors.begin (),
+                               acceptors.end (),
+                               [protocol_type] (std::unique_ptr<TAO_Acceptor> const &acceptor)
+                               {
+                                 return acceptor->tag () == protocol_type;
+                               });
         }
 
       if (!found)
+        {
         throw PortableServer::POA::InvalidPolicy ();
+      }
     }
 }
 
@@ -150,7 +142,7 @@ TAO_POA_RT_Policy_Validator::validate_priorities (TAO_Policy_Set &policies)
   CORBA::Policy_var policy =
     policies.get_cached_policy (TAO_CACHED_POLICY_PRIORITY_MODEL);
 
-  RTCORBA::PriorityModelPolicy_var priority_model =
+  RTCORBA::PriorityModelPolicy_var const priority_model =
     RTCORBA::PriorityModelPolicy::_narrow (policy.in ());
 
   if (!CORBA::is_nil (priority_model.in ()))
@@ -178,16 +170,18 @@ TAO_POA_RT_Policy_Validator::validate_priorities (TAO_Policy_Set &policies)
     {
       if (this->thread_pool_ != nullptr &&
           this->thread_pool_->with_lanes ())
+        {
         throw PortableServer::POA::InvalidPolicy ();
+      }
     }
 
   policy =
     policies.get_cached_policy (TAO_CACHED_POLICY_RT_PRIORITY_BANDED_CONNECTION);
 
-  RTCORBA::PriorityBandedConnectionPolicy_var priority_bands
+  RTCORBA::PriorityBandedConnectionPolicy_var const priority_bands
     = RTCORBA::PriorityBandedConnectionPolicy::_narrow (policy.in ());
 
-  TAO_PriorityBandedConnectionPolicy *bands_policy =
+  TAO_PriorityBandedConnectionPolicy * const bands_policy =
     dynamic_cast<TAO_PriorityBandedConnectionPolicy *> (priority_bands.in ());
 
   // If priority banded connections are set, make sure that:
@@ -205,17 +199,21 @@ TAO_POA_RT_Policy_Validator::validate_priorities (TAO_Policy_Set &policies)
     {
       // Checks 0.
       if (rt_priority_model == TAO::Portable_Server::Cached_Policies::NOT_SPECIFIED)
+        {
         throw PortableServer::POA::InvalidPolicy ();
+      }
 
       RTCORBA::PriorityBands &bands =
         bands_policy->priority_bands_rep ();
 
       // Checks 1.
       if (bands.length () == 0)
+        {
         throw PortableServer::POA::InvalidPolicy ();
+      }
 
       // Checks 2.
-      for (CORBA::ULong i = 0; i < bands.length (); ++i)
+      for (CORBA::ULong i {}; i < bands.length (); ++i)
         {
           //  2a. low is not < RTCORBA::minPriority
           //  2b. low is not > high
@@ -235,19 +233,21 @@ TAO_POA_RT_Policy_Validator::validate_priorities (TAO_Policy_Set &policies)
       // Check 3.
       if (rt_priority_model == TAO::Portable_Server::Cached_Policies::SERVER_DECLARED)
         {
-          int match = 0;
-          for (CORBA::ULong i = 0; i < bands.length (); ++i)
+          bool match {};
+          for (CORBA::ULong i {}; i < bands.length (); ++i)
             {
               if (priority <= bands[i].high &&
                   priority >= bands[i].low)
                 {
-                  match = 1;
+                  match = true;
                   break;
                 }
             }
 
           if (!match)
+            {
             throw PortableServer::POA::InvalidPolicy ();
+          }
         }
 
       //
@@ -259,32 +259,34 @@ TAO_POA_RT_Policy_Validator::validate_priorities (TAO_Policy_Set &policies)
       // the checks.
       if (this->thread_pool_ == nullptr ||
           !this->thread_pool_->with_lanes ())
+        {
         return;
+      }
 
       // If this POA is using a thread pool with lanes, make sure we
       // have at least one thread lane that corresponds to these
       // each band.
-      TAO_Thread_Lane **lanes =
-        this->thread_pool_->lanes ();
-
-      for (CORBA::ULong band = 0;
+      for (CORBA::ULong band {};
            band < bands.length ();
            ++band)
         {
-          int match = 0;
-          for (CORBA::ULong lane = 0;
-               lane != this->thread_pool_->number_of_lanes () && !match;
-               ++lane)
+          bool match {};
+          for (std::unique_ptr<TAO_Thread_Lane> const &lane : this->thread_pool_->lanes ())
             {
-              CORBA::Short lane_priority =
-                lanes[lane]->lane_priority ();
+              CORBA::Short const lane_priority =
+                lane->lane_priority ();
 
               if (lane_priority <= bands[band].high &&
                   lane_priority >= bands[band].low)
-                match = 1;
+                {
+                  match = true;
+                  break;
+                }
             }
           if (!match)
+            {
             throw PortableServer::POA::InvalidPolicy ();
+          }
         }
 
       // Done with checks.
@@ -302,28 +304,29 @@ TAO_POA_RT_Policy_Validator::validate_priorities (TAO_Policy_Set &policies)
       // the checks.
       if (this->thread_pool_ == nullptr ||
           !this->thread_pool_->with_lanes ())
+        {
         return;
+      }
 
       // If this POA is using a thread pool with lanes, make sure we
       // have at least one thread lane that can provide service for
       // the specified SERVER_DECLARED priority.
-      TAO_Thread_Lane **lanes =
-        this->thread_pool_->lanes ();
-
-      int match = 0;
-      for (CORBA::ULong lane = 0;
-           lane != this->thread_pool_->number_of_lanes () && !match;
-           ++lane)
+      bool match {};
+      for (std::unique_ptr<TAO_Thread_Lane> const &lane : this->thread_pool_->lanes ())
         {
-          CORBA::Short lane_priority =
-            lanes[lane]->lane_priority ();
+          CORBA::Short const lane_priority =
+            lane->lane_priority ();
 
-          if (lane_priority <= priority &&
-              lane_priority >= priority)
-            match = 1;
+          if (lane_priority == priority)
+            {
+              match = true;
+              break;
+            }
         }
       if (!match)
+        {
         throw PortableServer::POA::InvalidPolicy ();
+      }
 
       // Done with checks.
       return;
@@ -403,17 +406,12 @@ TAO_POA_RT_Policy_Validator::server_protocol_policy_from_thread_pool (TAO_Thread
 {
   RTCORBA::ProtocolList protocols;
 
-  if (thread_pool)
+  if (thread_pool != nullptr)
     {
-      TAO_Thread_Lane **lanes =
-        thread_pool->lanes ();
-
-      for (CORBA::ULong i = 0;
-           i != thread_pool->number_of_lanes ();
-           ++i)
+      for (std::unique_ptr<TAO_Thread_Lane> const &lane : thread_pool->lanes ())
         {
           TAO_Thread_Lane_Resources &resources =
-            lanes[i]->resources ();
+            lane->resources ();
 
           TAO_Acceptor_Registry &acceptor_registry =
             resources.acceptor_registry ();
@@ -440,10 +438,10 @@ TAO_POA_RT_Policy_Validator::server_protocol_policy_from_thread_pool (TAO_Thread
     }
 
   // Set ServerProtocolPolicy.
-  TAO_ServerProtocolPolicy *server_protocol_policy = nullptr;
+  TAO_ServerProtocolPolicy *server_protocol_policy {};
   ACE_NEW_RETURN (server_protocol_policy,
                   TAO_ServerProtocolPolicy (protocols),
-                  0);
+                  nullptr);
 
   return server_protocol_policy;
 }
@@ -454,41 +452,43 @@ TAO_POA_RT_Policy_Validator::server_protocol_policy_from_acceptor_registry (RTCO
                                                                             TAO_Acceptor_Registry &acceptor_registry,
                                                                             TAO_ORB_Core &orb_core)
 {
-  TAO_AcceptorSetIterator end = acceptor_registry.end ();
-
-  for (TAO_AcceptorSetIterator acceptor = acceptor_registry.begin ();
-       acceptor != end;
-       ++acceptor)
+  for (std::unique_ptr<TAO_Acceptor> const &acceptor : acceptor_registry.acceptors ())
     {
-      if (*acceptor == nullptr)
+      if (acceptor == nullptr)
+        {
         continue;
+      }
 
-      CORBA::ULong current_length = protocols.length ();
+      CORBA::ULong const current_length = protocols.length ();
 
       // Make sure that this protocol is not already in the protocol
       // list.
-      bool protocol_already_present = false;
-      for (CORBA::ULong i = 0;
+      bool protocol_already_present {};
+      for (CORBA::ULong i {};
            i < current_length && !protocol_already_present;
            ++i)
         {
-          if (protocols[i].protocol_type == (*acceptor)->tag ())
+          if (protocols[i].protocol_type == acceptor->tag ())
+            {
             protocol_already_present = true;
+          }
         }
 
       if (protocol_already_present)
+        {
         continue;
+      }
 
       protocols.length (current_length + 1);
 
       protocols[current_length].protocol_type =
-        (*acceptor)->tag ();
+        acceptor->tag ();
 
       protocols[current_length].orb_protocol_properties =
         RTCORBA::ProtocolProperties::_nil ();
 
       protocols[current_length].transport_protocol_properties =
-        TAO_Protocol_Properties_Factory::create_transport_protocol_property ((*acceptor)->tag (),
+        TAO_Protocol_Properties_Factory::create_transport_protocol_property (acceptor->tag (),
                                                                              &orb_core);
     }
 }
@@ -498,27 +498,31 @@ TAO_Thread_Pool *
 TAO_POA_RT_Policy_Validator::extract_thread_pool (TAO_ORB_Core &orb_core,
                                                   TAO_Policy_Set &policies)
 {
-  CORBA::Policy_var policy =
+  CORBA::Policy_var const policy =
     policies.get_cached_policy (TAO_CACHED_POLICY_THREADPOOL);
 
-  RTCORBA::ThreadpoolPolicy_var thread_pool_policy =
+  RTCORBA::ThreadpoolPolicy_var const thread_pool_policy =
     RTCORBA::ThreadpoolPolicy::_narrow (policy.in ());
 
   if (CORBA::is_nil (thread_pool_policy.in ()))
-    return 0;
+    {
+    return nullptr;
+  }
 
-  RTCORBA::ThreadpoolId thread_pool_id = thread_pool_policy->threadpool ();
+  RTCORBA::ThreadpoolId const thread_pool_id = thread_pool_policy->threadpool ();
 
   // Get the RTORB.
-  CORBA::Object_var object = orb_core.resolve_rt_orb ();
+  CORBA::Object_var const object = orb_core.resolve_rt_orb ();
 
-  RTCORBA::RTORB_var rt_orb = RTCORBA::RTORB::_narrow (object.in ());
+  RTCORBA::RTORB_var const rt_orb = RTCORBA::RTORB::_narrow (object.in ());
 
   TAO_RT_ORB * const tao_rt_orb =
     dynamic_cast <TAO_RT_ORB *> (rt_orb.in ());
 
-  if (!tao_rt_orb)
+  if (tao_rt_orb == nullptr)
+    {
     throw CORBA::INTERNAL ();
+  }
 
   TAO_Thread_Pool_Manager & tp_manager = tao_rt_orb->tp_manager ();
 
@@ -526,7 +530,9 @@ TAO_POA_RT_Policy_Validator::extract_thread_pool (TAO_ORB_Core &orb_core,
     tp_manager.get_threadpool (thread_pool_id);
 
   if (thread_pool == nullptr)
+    {
     throw PortableServer::POA::InvalidPolicy ();
+  }
 
   return thread_pool;
 }

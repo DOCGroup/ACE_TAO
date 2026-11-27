@@ -1,16 +1,13 @@
-
-//=============================================================================
 /**
  *  @file    Task_Test.cpp
  *
  *    This test program illustrates how the ACE barrier
  *    synchronization mechanisms work in conjunction with the
- *    <ACE_Task> and the <ACE_Thread_Manager>.  This also illustrates
- *    how the <ACE_Thread_Hook> mechanism works.
+ *    @c ACE_Task and the @c ACE_Thread_Manager.  This also illustrates
+ *    how the @c ACE_Thread_Hook mechanism works.
  *
  *  @author Prashant Jain <pjain@cs.wustl.edu> and Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "ace/Task.h"
@@ -42,7 +39,7 @@ public:
   ///FUZZ: enable check_for_lack_ACE_OS
   int close (u_long flags = 0) override;
 
-  /// Iterate <n_iterations> time printing off a message and "waiting"
+  /// Iterate @c n_iterations time printing off a message and "waiting"
   /// for all other threads to complete this iteration.
   int svc () override;
 
@@ -73,7 +70,9 @@ Barrier_Task::Barrier_Task (ACE_Thread_Manager *thr_mgr,
 {
   // Create worker threads.
   if (this->activate (THR_NEW_LWP, n_threads) == -1)
+  {
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("activate failed")));
+  }
 }
 
 // Check to see if it's time to clean up by examining last_thread().
@@ -95,7 +94,7 @@ Barrier_Task::svc ()
 {
   for (int iterations = 1;
        iterations <= this->n_iterations_;
-       iterations++)
+       ++iterations)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%t) in iteration %d\n"),
@@ -122,10 +121,10 @@ run_main (int, ACE_TCHAR *[])
   // Set the thread hook!
   ACE_Thread_Hook::thread_hook (new My_Thread_Hook);
 
-  int n_threads = ACE_MAX_THREADS;
-  int n_iterations = ACE_MAX_ITERATIONS;
+  int const n_threads = ACE_MAX_THREADS;
+  int const n_iterations = ACE_MAX_ITERATIONS;
 
-  Barrier_Task barrier_task (ACE_Thread_Manager::instance (),
+  Barrier_Task const barrier_task (ACE_Thread_Manager::instance (),
                              n_threads,
                              n_iterations);
 
@@ -133,10 +132,12 @@ run_main (int, ACE_TCHAR *[])
 
   // Only one of the threads should see a cleanup...
   if (close_cleanups != 1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%d threads saw cleanup indication; ")
-                ACE_TEXT ("should be 1\n"),
-                close_cleanups.value ()));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("%d threads saw cleanup indication; ")
+                  ACE_TEXT ("should be 1\n"),
+                  close_cleanups.value ()));
+    }
 
   // Cleanup the thread hook so it doesn't leak.
   delete ACE_Thread_Hook::thread_hook ();

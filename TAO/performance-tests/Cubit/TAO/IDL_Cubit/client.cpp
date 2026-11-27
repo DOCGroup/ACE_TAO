@@ -29,8 +29,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                       "test runs in time-shared class\n"));
         }
       else
-        ACE_ERROR ((LM_ERROR,
-                    "client (%P|%t): sched_params failed\n"));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "client (%P|%t): sched_params failed\n"));
+        }
     }
 
   Cubit_Client cubit_client;
@@ -39,7 +41,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
               "\n (%P|%t)\tIDL_Cubit: client\n\n"));
 
   if (cubit_client.init (argc, argv) == -1)
+  {
     return 1;
+  }
 
   int const retval = cubit_client.run ();
 

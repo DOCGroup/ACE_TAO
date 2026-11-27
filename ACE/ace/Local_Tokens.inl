@@ -1,4 +1,5 @@
-// -*- C++ -*-
+#include <memory>
+
 #if defined (ACE_HAS_TOKENS_LIBRARY)
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -28,7 +29,7 @@ ACE_TPQ_Entry::waiting (int v)
   waiting_ = v;
 }
 
-ACE_INLINE const ACE_TCHAR *
+ACE_INLINE ACE_TCHAR const *
 ACE_TPQ_Entry::client_id () const
 {
   ACE_TRACE ("ACE_TPQ_Entry::client_id");
@@ -75,14 +76,18 @@ ACE_Tokens::inc_reference ()
   ++this->reference_count_;
 }
 
-ACE_INLINE const ACE_TPQ_Entry *
+ACE_INLINE ACE_TPQ_Entry const *
 ACE_Token_Proxy_Queue::head ()
 {
   ACE_TRACE ("ACE_Token_Proxy_Queue::head");
-  if (this->head_ == 0)
-    return 0;
+  if (this->head_ == nullptr)
+    {
+      return nullptr;
+    }
   else
-    return this->head_;
+    {
+      return this->head_;
+    }
 }
 
 // **************************************************
@@ -105,20 +110,24 @@ ACE_INLINE ACE_TPQ_Entry *
 ACE_Tokens::owner ()
 {
   ACE_TRACE ("ACE_Tokens::owner");
-  return (ACE_TPQ_Entry *) this->waiters_.head ();
+  return const_cast<ACE_TPQ_Entry *> (this->waiters_.head ());
 }
 
-ACE_INLINE const ACE_TCHAR*
+ACE_INLINE ACE_TCHAR const *
 ACE_Tokens::owner_id ()
 {
   ACE_TRACE ("ACE_Tokens::owner_id");
   if (this->owner () == 0)
-    return ACE_TEXT ("no owner");
+    {
+      return ACE_TEXT ("no owner");
+    }
   else
-    return this->owner ()->client_id ();
+    {
+      return this->owner ()->client_id ();
+    }
 }
 
-ACE_INLINE const ACE_TCHAR*
+ACE_INLINE ACE_TCHAR const *
 ACE_Tokens::name ()
 {
   ACE_TRACE ("ACE_Tokens::name");
@@ -161,15 +170,19 @@ ACE_TPQ_Entry::call_sleep_hook ()
   ACE_TRACE ("ACE_TPQ_Entry::call_sleep_hook");
 
   // if a function has been registered, call it.
-  if (this->sleep_hook () != 0)
-    this->sleep_hook () ((void *) this->proxy ());
+  if (this->sleep_hook () != nullptr)
+    {
+      this->sleep_hook () (static_cast<void *> (this->proxy ()));
+    }
   else
-    // otherwise, call back the sleep_hook method
-    this->proxy ()->sleep_hook ();
+    {
+      // otherwise, call back the sleep_hook method
+      this->proxy ()->sleep_hook ();
+    }
 }
 
 ACE_INLINE int
-ACE_TPQ_Entry::equal_client_id (const ACE_TCHAR *id)
+ACE_TPQ_Entry::equal_client_id (ACE_TCHAR const *id)
 {
   ACE_TRACE ("ACE_TPQ_Entry::equal_client_id");
   return (ACE_OS::strcmp (this->client_id (), id) == 0);
@@ -178,7 +191,7 @@ ACE_TPQ_Entry::equal_client_id (const ACE_TCHAR *id)
 // ************************************************************
 
 ACE_INLINE
-ACE_Local_Mutex::ACE_Local_Mutex (const ACE_TCHAR *token_name,
+ACE_Local_Mutex::ACE_Local_Mutex (ACE_TCHAR const *token_name,
                                   int ignore_deadlock,
                                   int debug)
 {
@@ -187,22 +200,26 @@ ACE_Local_Mutex::ACE_Local_Mutex (const ACE_TCHAR *token_name,
 }
 
 ACE_INLINE void
-ACE_Token_Name::name (const ACE_TCHAR *new_name)
+ACE_Token_Name::name (ACE_TCHAR const *new_name)
 {
   ACE_TRACE ("ACE_Token_Name::name");
 
-  if (new_name == 0)
-    new_name = ACE_TEXT ("no name");
+  if (new_name == nullptr)
+    {
+      new_name = ACE_TEXT ("no name");
+    }
 
   size_t n = ACE_OS::strlen (new_name) + 1;
 
   if (n >= ACE_MAXTOKENNAMELEN)
-    n = ACE_MAXTOKENNAMELEN - 1;
+    {
+      n = ACE_MAXTOKENNAMELEN - 1;
+    }
 
-  ACE_OS::strsncpy (this->token_name_, (ACE_TCHAR *) new_name, n);
+  ACE_OS::strsncpy (this->token_name_, new_name, n);
 }
 
-ACE_INLINE const ACE_TCHAR*
+ACE_INLINE ACE_TCHAR const *
 ACE_Token_Name::name () const
 {
   ACE_TRACE ("ACE_Token_Name::name");
@@ -212,7 +229,7 @@ ACE_Token_Name::name () const
 // ************************************************************
 
 ACE_INLINE
-ACE_Local_RLock::ACE_Local_RLock (const ACE_TCHAR *token_name,
+ACE_Local_RLock::ACE_Local_RLock (ACE_TCHAR const *token_name,
                                   int ignore_deadlock,
                                   int debug)
 {
@@ -223,7 +240,7 @@ ACE_Local_RLock::ACE_Local_RLock (const ACE_TCHAR *token_name,
 // ************************************************************
 
 ACE_INLINE
-ACE_Local_WLock::ACE_Local_WLock (const ACE_TCHAR *token_name,
+ACE_Local_WLock::ACE_Local_WLock (ACE_TCHAR const *token_name,
                                   int ignore_deadlock,
                                   int debug)
 {
@@ -233,19 +250,18 @@ ACE_Local_WLock::ACE_Local_WLock (const ACE_TCHAR *token_name,
 
 // ************************************************************
 
-
 ACE_INLINE void
-ACE_Token_Name::operator= (const ACE_Token_Name &rhs)
+ACE_Token_Name::operator= (ACE_Token_Name const &rhs)
 {
   ACE_TRACE ("ACE_Token_Name::operator=");
-  if (&rhs != this)
+  if (std::addressof (rhs) != this)
   {
     this->name (rhs.name ());
   }
 }
 
 ACE_INLINE bool
-ACE_Token_Name::operator== (const ACE_Token_Name &rhs) const
+ACE_Token_Name::operator== (ACE_Token_Name const &rhs) const
 {
   ACE_TRACE ("ACE_Token_Name::operator==");
 

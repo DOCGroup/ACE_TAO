@@ -1,6 +1,3 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
  *  @file    NT_Notify_Server.cpp
  *
@@ -11,8 +8,6 @@
  *  @author Mike Vitalo <mvitalo@infoglide.com>
  *  @author and David Robison <drrobison@openroadsconsulting.com>
  */
-//=============================================================================
-
 
 #include "orbsvcs/Log_Macros.h"
 
@@ -51,6 +46,10 @@ class Options
 public:
   Options ();
   ~Options ();
+  Options (Options const &) = delete;
+  Options (Options &&) = delete;
+  Options &operator= (Options const &) = delete;
+  Options &operator= (Options &&) = delete;
 
   int run (int argc, ACE_TCHAR *argv[]);
 
@@ -61,30 +60,21 @@ private:
 private:
   ACE_TCHAR progname[128];
 
-  int opt_setargs;
-  const ACE_TCHAR *opt_args;
-  int opt_install;
-  int opt_remove;
-  int opt_start;
-  int opt_kill;
-  int opt_type;
-  int opt_debug;
+  bool opt_setargs {};
+  ACE_TCHAR const *opt_args {};
+  bool opt_install {};
+  bool opt_remove {};
+  bool opt_start {};
+  bool opt_kill {};
+  bool opt_type {};
+  bool opt_debug {};
 
-  int opt_startup;
+  int opt_startup {};
 };
 
-typedef ACE_Singleton<Options, ACE_Mutex> OPTIONS;
+using OPTIONS = ACE_Singleton<Options, ACE_Mutex>;
 
 Options::Options ()
-  : opt_setargs (0),
-    opt_args (0),
-    opt_install (0),
-    opt_remove (0),
-    opt_start (0),
-    opt_kill (0),
-    opt_type (0),
-    opt_debug (0),
-    opt_startup (0)
 {
   ACE_OS::strcpy (progname,
                   ACE_TEXT ("service"));
@@ -121,54 +111,62 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
   int c;
 
   while ((c = get_opt ()) != -1)
-    switch (c)
-      {
-      case 'c':
-        opt_setargs = 1;
-        opt_args = get_opt.opt_arg ();
-        break;
-      case 'i':
-        opt_install = 1;
-        opt_startup = ACE_OS::atoi (get_opt.optarg);
-        if (opt_startup <= 0)
-          print_usage_and_die ();
-        break;
-      case 'r':
-        opt_remove = 1;
-        break;
-      case 's':
-        opt_start = 1;
-        break;
-      case 'k':
-        opt_kill = 1;
-        break;
-      case 't':
-        opt_type = 1;
-        opt_startup = ACE_OS::atoi (get_opt.optarg);
-        if (opt_startup <= 0)
-          print_usage_and_die ();
-        break;
-      case 'd':
-        //opt_debug = 1;
-        break;
-      default:
-        // -c and -i can also be given without a value - if so, it defaults
-        // to defined value.
-        const ACE_TCHAR *lastarg = get_opt.argv ()[get_opt.opt_ind () - 1];
-        if (ACE_OS::strcmp (get_opt.argv_[get_opt.optind-1], ACE_TEXT ("-i")) == 0)
-          {
-            opt_install = 1;
-            opt_startup = DEFAULT_SERVICE_INIT_STARTUP;
-          }
-        else if (ACE_OS::strcmp (lastarg, ACE_TEXT ("-c")) == 0)
-          {
-            opt_setargs = 1;
-            opt_args = 0;
-          }
-        else
-          this->print_usage_and_die ();
-        break;
-      }
+    {
+      switch (c)
+        {
+        case 'c':
+          opt_setargs = true;
+          opt_args = get_opt.opt_arg ();
+          break;
+        case 'i':
+          opt_install = true;
+          opt_startup = ACE_OS::atoi (get_opt.optarg);
+          if (opt_startup <= 0)
+            {
+              print_usage_and_die ();
+            }
+          break;
+        case 'r':
+          opt_remove = true;
+          break;
+        case 's':
+          opt_start = true;
+          break;
+        case 'k':
+          opt_kill = true;
+          break;
+        case 't':
+          opt_type = true;
+          opt_startup = ACE_OS::atoi (get_opt.optarg);
+          if (opt_startup <= 0)
+            {
+              print_usage_and_die ();
+            }
+          break;
+        case 'd':
+          //opt_debug = 1;
+          break;
+        default:
+          // -c and -i can also be given without a value - if so, it defaults
+          // to defined value.
+          ACE_TCHAR const *lastarg = get_opt.argv ()[get_opt.opt_ind () - 1];
+          if (ACE_OS::strcmp (get_opt.argv_[get_opt.optind-1], ACE_TEXT ("-i")) == 0)
+            {
+              opt_install = true;
+              opt_startup = DEFAULT_SERVICE_INIT_STARTUP;
+            }
+          else if (ACE_OS::strcmp (lastarg, ACE_TEXT ("-c")) == 0)
+            {
+              opt_setargs = true;
+              opt_args = nullptr;
+            }
+          else
+            {
+              this->print_usage_and_die ();
+            }
+          break;
+        }
+    }
 }
 
 // Define a function to handle Ctrl+C to cleanly shut this down.
@@ -192,25 +190,39 @@ Options::run (int argc, ACE_TCHAR* argv[])
   this->parse_args (argc, argv);
 
   if (opt_install && !opt_remove)
-    return SERVICE::instance ()->insert (opt_startup);
+    {
+      return SERVICE::instance ()->insert (opt_startup);
+    }
 
   if (opt_remove && !opt_install)
-    return SERVICE::instance ()->remove ();
+    {
+      return SERVICE::instance ()->remove ();
+    }
 
   if (opt_start && opt_kill)
-    print_usage_and_die ();
+    {
+      print_usage_and_die ();
+    }
 
   if (opt_setargs)
-    return SERVICE::instance ()->set_args (opt_args);
+    {
+      return SERVICE::instance ()->set_args (opt_args);
+    }
 
   if (opt_start)
-    return SERVICE::instance ()->start_svc ();
+    {
+      return SERVICE::instance ()->start_svc ();
+    }
 
   if (opt_kill)
-    return SERVICE::instance ()->stop_svc ();
+    {
+      return SERVICE::instance ()->stop_svc ();
+    }
 
   if (opt_type)
-    return SERVICE::instance ()->startup (opt_startup);
+    {
+      return SERVICE::instance ()->startup (opt_startup);
+    }
 
   // If we get here, we either run the app in debug mode (-d) or are
   // being called from the service manager to start the service.

@@ -20,7 +20,7 @@ run_main (int, ACE_TCHAR *[])
 
 #if defined(ACE_WIN32) && !defined (ACE_LACKS_MMAP)
   ACE_HANDLE  handle = ACE_INVALID_HANDLE;
-  ACE_TString name(ACE_TEXT ("Bug3500"));
+  ACE_TString mapping_name(ACE_TEXT ("Bug3500"));
 
   void *mmap =
     ACE_OS::mmap(0,                   // addr
@@ -31,7 +31,7 @@ run_main (int, ACE_TCHAR *[])
                  0,                   // off
                  &handle,             // file_mapping
                  0,                   // sa
-                 name.c_str());       // shared memory name
+                 mapping_name.c_str()); // shared memory name
 
   if (mmap == MAP_FAILED)
     {

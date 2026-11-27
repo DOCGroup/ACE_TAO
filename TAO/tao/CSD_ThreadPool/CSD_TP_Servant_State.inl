@@ -1,4 +1,3 @@
-// -*- C++ -*-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
@@ -7,7 +6,6 @@ TAO::CSD::TP_Servant_State::busy_flag() const
 {
   return this->busy_flag_;
 }
-
 
 ACE_INLINE
 void

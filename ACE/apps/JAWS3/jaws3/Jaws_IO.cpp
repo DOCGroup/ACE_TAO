@@ -17,49 +17,52 @@ JAWS_IO::JAWS_IO (JAWS_IO_Impl *impl)
   // in terms of calls needed, but provides the least amount
   // of support for concurrency.
 
-  if (this->impl_ == 0)
+  if (this->impl_ == nullptr)
     {
-      const char *io_type = JAWS_Options::instance ()->getenv ("JAWS_IO");
-      if (io_type == 0)
+      char const *io_type = JAWS_Options::instance ()->getenv ("JAWS_IO");
+      if (io_type == nullptr)
+      {
         io_type = JAWS_DEFAULT_IO;
+      }
 
       if (ACE_OS::strcasecmp (io_type, "SYNCH") == 0)
-        this->impl_ = JAWS_Synch_IO::instance ();
+        {
+          this->impl_ = JAWS_Synch_IO::instance ();
+        }
       else if (ACE_OS::strcasecmp (io_type, "ASYNCH") == 0)
-        this->impl_ = JAWS_Asynch_IO::instance ();
+        {
+          this->impl_ = JAWS_Asynch_IO::instance ();
+        }
       else if (ACE_OS::strcasecmp (io_type, "REACTIVE") == 0)
-        this->impl_ = JAWS_Reactive_IO::instance ();
+        {
+          this->impl_ = JAWS_Reactive_IO::instance ();
+        }
       else
+      {
         this->impl_ = JAWS_Synch_IO::instance ();
+      }
     }
 }
 
-JAWS_IO::~JAWS_IO ()
-{
-}
-
+JAWS_IO::~JAWS_IO () = default;
 
 void
 JAWS_IO::send ( ACE_HANDLE handle
               , ACE_Message_Block *mb
               , JAWS_Event_Completer *completer
-              , void *act
-              )
+              , void *act)
 {
   this->impl_->send (handle, mb, completer, act);
 }
 
-
 void
 JAWS_IO::recv ( ACE_HANDLE handle
               , ACE_Message_Block *mb
               , JAWS_Event_Completer *completer
-              , void *act
-              )
+              , void *act)
 {
   this->impl_->recv (handle, mb, completer, act);
 }
-
 
 void
 JAWS_IO::transmit ( ACE_HANDLE handle
@@ -67,46 +70,39 @@ JAWS_IO::transmit ( ACE_HANDLE handle
                   , JAWS_Event_Completer *completer
                   , void *act
                   , ACE_Message_Block *header
-                  , ACE_Message_Block *trailer
-                  )
+                  , ACE_Message_Block *trailer)
 {
   this->impl_->transmit (handle, source, completer, act, header, trailer);
 }
-
 
 void
 JAWS_IO::send ( ACE_HANDLE handle
               , ACE_Message_Block *mb
               , JAWS_Event_Completer *completer
-              , const ACE_Time_Value &tv
-              , void *act
-              )
+              , ACE_Time_Value const &tv
+              , void *act)
 {
   this->impl_->send (handle, mb, completer, tv, act);
 }
-
 
 void
 JAWS_IO::recv ( ACE_HANDLE handle
               , ACE_Message_Block *mb
               , JAWS_Event_Completer *completer
-              , const ACE_Time_Value &tv
-              , void *act
-              )
+              , ACE_Time_Value const &tv
+              , void *act)
 {
   this->impl_->recv (handle, mb, completer, tv, act);
 }
-
 
 void
 JAWS_IO::transmit ( ACE_HANDLE handle
                   , ACE_HANDLE source
                   , JAWS_Event_Completer *completer
-                  , const ACE_Time_Value &tv
+                  , ACE_Time_Value const &tv
                   , void *act
                   , ACE_Message_Block *header
-                  , ACE_Message_Block *trailer
-                  )
+                  , ACE_Message_Block *trailer)
 {
   this->impl_->transmit (handle, source, completer, tv, act, header, trailer);
 }

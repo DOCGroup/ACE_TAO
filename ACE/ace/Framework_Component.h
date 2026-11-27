@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Framework_Component.h
  *
@@ -29,7 +26,6 @@
  *
  *  @author Don Hinton <dhinton@ieee.org>.
  */
-//=============================================================================
 
 #ifndef ACE_FRAMEWORK_COMPONENT_H
 #define ACE_FRAMEWORK_COMPONENT_H
@@ -44,6 +40,7 @@
 #include "ace/os_include/os_signal.h"
 #include "ace/Thread_Mutex.h"
 #include "ace/Synch_Traits.h"
+#include <memory>
 
 #define ACE_DEFAULT_FRAMEWORK_REPOSITORY_SIZE 1024
 
@@ -60,32 +57,31 @@ class ACE_Export ACE_Framework_Component
 public:
   friend class ACE_Framework_Repository;
 
-  /// Constructor.
+  ACE_Framework_Component () = delete;
   ACE_Framework_Component (void *_this,
-                           const ACE_TCHAR *dll_name = nullptr,
-                           const ACE_TCHAR *name = nullptr);
+                           ACE_TCHAR const *dll_name = nullptr,
+                           ACE_TCHAR const *name = nullptr);
 
-  ACE_Framework_Component (const ACE_Framework_Component &) = delete;
+  ACE_Framework_Component (ACE_Framework_Component const &) = delete;
   ACE_Framework_Component (ACE_Framework_Component &&) = delete;
-  ACE_Framework_Component &operator= (const ACE_Framework_Component &) = delete;
+  ACE_Framework_Component &operator= (ACE_Framework_Component const &) = delete;
   ACE_Framework_Component &operator= (ACE_Framework_Component &&) = delete;
 
   /// Close the contained singleton.
   virtual void close_singleton () = 0;
 
 protected:
-  /// Destructor.
   virtual ~ACE_Framework_Component ();
 
 private:
   /// Pointer to the actual component.
-  const void *this_;
+  void const *this_;
 
   /// Library associated with this component
-  const ACE_TCHAR *dll_name_;
+  ACE_TCHAR const *dll_name_;
 
   /// Component name
-  const ACE_TCHAR *name_;
+  ACE_TCHAR const *name_;
 };
 
 /**
@@ -105,9 +101,9 @@ public:
 
   static constexpr int DEFAULT_SIZE = ACE_DEFAULT_FRAMEWORK_REPOSITORY_SIZE;
 
-  ACE_Framework_Repository (const ACE_Framework_Repository &) = delete;
+  ACE_Framework_Repository (ACE_Framework_Repository const &) = delete;
   ACE_Framework_Repository (ACE_Framework_Repository &&) = delete;
-  ACE_Framework_Repository &operator= (const ACE_Framework_Repository &) = delete;
+  ACE_Framework_Repository &operator= (ACE_Framework_Repository const &) = delete;
   ACE_Framework_Repository &operator= (ACE_Framework_Repository &&) = delete;
 
   /// Close down the repository and free up dynamically allocated
@@ -128,24 +124,29 @@ public:
   /// Delete the dynamically allocated Singleton.
   static void close_singleton ();
 
-  // = Search structure operations (all acquire locks as necessary).
+  /** @name Search structure operations
+   * These operations acquire the repository lock when necessary.
+   */
+  /// @{
 
   /// Insert a new component.  Returns -1 when the repository is full
-  /// and 0 on success.
+  /// and 0 on success. Ownership transfers to the repository only when
+  /// this method succeeds.
   int register_component (ACE_Framework_Component *fc);
 
   /// Remove a component.  Returns -1 on error or if component not found
   /// and 0 on success.
-  int remove_component (const ACE_TCHAR *name);
+  int remove_component (ACE_TCHAR const *name);
 
   /// Remove all components associated with a particular dll.
-  int remove_dll_components (const ACE_TCHAR *dll_name);
+  int remove_dll_components (ACE_TCHAR const *dll_name);
 
   /// Return the current size of the repository.
   int current_size () const;
 
   /// Return the total size of the repository.
   int total_size () const;
+  /// @}
 
   /// Dump the state of an object.
   void dump () const;
@@ -158,19 +159,26 @@ protected:
   ACE_Framework_Repository (int size = ACE_Framework_Repository::DEFAULT_SIZE);
 
 private:
-  /// Actually removes the dll components, must be called with locks held.
-  int remove_dll_components_i (const ACE_TCHAR *dll_name);
+  struct Component_Array_Deleter
+  {
+    void operator() (ACE_Framework_Component **components) const;
+  };
 
-  /// Compact component_vector_ after components have been removed__maintains
-  /// order.
+  /// Actually removes the dll components, must be called with locks held.
+  int remove_dll_components_i (ACE_TCHAR const *dll_name);
+
+  /// Compact component_vector_ after components have been removed while maintaining order.
   void compact ();
 
 private:
-  /// Contains all the framework components.
-  ACE_Framework_Component **component_vector_ {};
+  /// The component pointer array uses ACE allocator hooks when enabled,
+  /// otherwise it uses new[]. The repository manually owns its entries
+  /// because ACE_Framework_Component's destructor is protected and this
+  /// class is its friend.
+  std::unique_ptr<ACE_Framework_Component *[], Component_Array_Deleter> component_vector_ {};
 
   /// Current number of components.
-  int current_size_;
+  int current_size_ {};
 
   /// Maximum number of components.
   int total_size_;

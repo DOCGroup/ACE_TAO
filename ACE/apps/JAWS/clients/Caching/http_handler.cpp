@@ -1,48 +1,35 @@
-
-//=============================================================================
 /**
  *  @file    http_handler.cpp
  *
  *  @author James Hu
  */
-//=============================================================================
 
-
-#include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_string.h"
 #include "ace/Filecache.h"
 #include "http_handler.h"
 
-HTTP_Handler::HTTP_Handler ()
-{
-}
+#include <charconv>
+#include <cstring>
+#include <limits>
+#include <memory>
 
-HTTP_Handler::HTTP_Handler (const char * path)
+HTTP_Handler::HTTP_Handler (std::string const &path)
 {
-  // How long is the request going to be?
-  this->request_[0] = '\0';
-  this->request_size_ =
-    ACE_OS::strlen ("GET ")
-    + ACE_OS::strlen (path)
-    + ACE_OS::strlen (" HTTP/1.0\r\nAccept: HTTP/1.0\r\n\r\n");
-
-  // Make the request.
-  if ((u_int) this->request_size_ < sizeof (this->request_))
-    ACE_OS::sprintf (this->request_,
-                     "GET %s HTTP/1.0\r\nAccept: HTTP/1.0\r\n\r\n",
-                     path);
+  this->request_ = "GET " + path + " HTTP/1.0\r\nAccept: HTTP/1.0\r\n\r\n";
 
   // Find the filename.
-  const char *last = ACE_OS::strrchr (path, '/');
-
-  if (last == 0)
-    last = path;
-  else if (last[1] == '\0')
-    last = "index.html";
+  size_t const last_slash = path.rfind ('/');
+  if (last_slash == std::string::npos)
+    {
+      this->filename_ = path;
+    }
+  else if (last_slash == path.size () - 1)
+    {
+      this->filename_ = "index.html";
+    }
   else
-    last = last+1;
-
-  ACE_OS::sprintf (this->filename_, "%s", last);
+    {
+      this->filename_ = path.substr (last_slash + 1);
+    }
 }
 
 int
@@ -52,7 +39,9 @@ HTTP_Handler::open (void *)
 #if 0
   if (this->activate () != 0)
     {
-      ACE_ERROR_RETURN ((LM_ERROR, "HTTP_Handler::open, whups!\n"), -1);
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("HTTP_Handler::open, whups!\n")),
+                        -1);
     }
 
   return 0;
@@ -64,82 +53,152 @@ HTTP_Handler::open (void *)
 int
 HTTP_Handler::svc ()
 {
-  static char buf[BUFSIZ];
-  int count = 0;
+  char buf[BUFSIZ] {};
+  int count {};
 
-  ACE_DEBUG ((LM_DEBUG, "[%t] sending request --\n%s", this->request_));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("[%t] sending request --\n%C"),
+              this->request_.c_str ()));
 
-  this->peer ().send_n (this->request_, this->request_size_);
+  if (this->peer ().send_n (this->request_.c_str (), this->request_.size ())
+      != static_cast<ssize_t> (this->request_.size ()))
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Failed to send HTTP request\n")), -1);
+    }
 
   // Read in characters until encounter \r\n\r\n
-  int done = 0;
-  char *contentlength;
+  bool done {};
+  char const *contentlength {};
 
   do
     {
       while (((count += this->peer ().recv_n (buf + count, 1)) > 0)
-             && ((u_int) count < sizeof (buf)))
+             && (static_cast<size_t> (count) < sizeof (buf) - 1))
         {
           buf[count] = '\0';
 
-          if (count < 2)
-            continue;
-          done = ACE_OS::strcmp (buf + count - 4, "\n\n") == 0;
+          if (count >= 2)
+            {
+              done = std::strcmp (buf + count - 2, "\n\n") == 0;
+            }
 
           if (done)
-            break;
+            {
+              break;
+            }
 
           if (count < 4)
-            continue;
+            {
+              continue;
+            }
 
-          done = ACE_OS::strcmp (buf + count - 4, "\r\n\r\n") == 0;
+          done = std::strcmp (buf + count - 4, "\r\n\r\n") == 0;
 
           if (done)
-            break;
+            {
+              break;
+            }
         }
 
       if (!done)
         {
-          char *last = ACE_OS::strrchr (buf, '\n');
+          char *last = std::strrchr (buf, '\n');
+          if (last == nullptr)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Malformed HTTP response header\n")), -1);
+            }
           last[0] = '\0';
 
-          if ((contentlength = ACE_OS::strstr (buf, "\nContent-length:"))
-              || (contentlength = ACE_OS::strstr (buf, "\nContent-Length:")))
-            done = 1;
+          contentlength = std::strstr (buf, "\nContent-length:");
+          if (contentlength == nullptr)
+            {
+              contentlength = std::strstr (buf, "\nContent-Length:");
+            }
+
+          if (contentlength != nullptr)
+            {
+              done = true;
+            }
           else
             {
               last[0] = '\n';
-              count = ACE_OS::strlen (last);
-              ACE_OS::memmove (buf, last, count + 1);
+              count = std::strlen (last);
+              std::memmove (buf, last, count + 1);
             }
         }
       else
         {
-          contentlength = ACE_OS::strstr (buf, "\nContent-length:");
+          contentlength = std::strstr (buf, "\nContent-length:");
 
-          if (!contentlength)
-            contentlength =
-              ACE_OS::strstr (buf, "\nContent-Length:");
+          if (contentlength == nullptr)
+            {
+              contentlength =
+                std::strstr (buf, "\nContent-Length:");
+            }
         }
 
     }
   while (!done);
 
-  // ASSERT (contentlength != 0)
-  int size = 0;
-  if (contentlength
-      && (::sscanf (contentlength, "\nContent-%*[lL]ength: %d ",
-                    &size) == 1))
+  if (contentlength != nullptr)
     {
-      this->response_size_ = size;
-      ACE_Filecache_Handle afh (ACE_TEXT_CHAR_TO_TCHAR (this->filename_),
+      size_t response_size {};
+      bool has_content_length {};
+      char const *value = std::strchr (contentlength, ':');
+      if (value != nullptr)
+        {
+          ++value;
+          while (*value == ' ' || *value == '\t')
+            {
+              ++value;
+            }
+
+          char const *value_end = std::strpbrk (value, "\r\n");
+          if (value_end == nullptr)
+            {
+              value_end = value + std::strlen (value);
+            }
+
+          std::from_chars_result const parsed =
+            std::from_chars (value, value_end, response_size);
+          if (parsed.ec == std::errc {} && parsed.ptr != value)
+            {
+              char const *trailing = parsed.ptr;
+              while (trailing != value_end &&
+                     (*trailing == ' ' || *trailing == '\t'))
+                {
+                  ++trailing;
+                }
+              has_content_length = trailing == value_end;
+            }
+        }
+
+      if (!has_content_length)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Invalid HTTP Content-Length header\n")),
+                            -1);
+        }
+
+      if (response_size > static_cast<size_t> ((std::numeric_limits<ssize_t>::max) ()))
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("HTTP response body is too large\n")),
+                            -1);
+        }
+
+      this->response_size_ = response_size;
+      ACE_Filecache_Handle afh (ACE_TEXT_CHAR_TO_TCHAR (this->filename_.c_str ()),
                                 this->response_size_);
 
-      this->peer ().recv_n (afh.address (), this->response_size_);
+      if (this->peer ().recv_n (afh.address (), this->response_size_)
+          != static_cast<ssize_t> (this->response_size_))
+        {
+          ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Failed to receive HTTP response body\n")), -1);
+        }
 
       ACE_DEBUG ((LM_DEBUG,
-                  "  ``%s'' is now cached.\n",
-                  this->filename_));
+                  ACE_TEXT ("  ``%C'' is now cached.\n"),
+                  this->filename_.c_str ()));
     }
   else
     {
@@ -153,81 +212,106 @@ HTTP_Handler::svc ()
       // Perhaps make ACE_Filecache_Handle more savvy, and allow a
       // constructor which accepts a PEER as a parameter.
       ACE_DEBUG ((LM_DEBUG,
-                  "HTTP_Handler, no content-length header!\n"));
+                  ACE_TEXT ("HTTP_Handler, no content-length header!\n")));
     }
 
   return 0;
 }
 
-const char *
+std::string const &
 HTTP_Handler::filename () const
 {
   return this->filename_;
 }
 
 int
-HTTP_Connector::connect (const char * url)
+HTTP_Connector::connect (std::string const &url)
 {
-  char host[BUFSIZ];
-  u_short port;
-  char path[BUFSIZ];
+  u_short port {};
+  std::string host;
+  std::string path;
 
-  if (this->parseurl (url, host, &port, path) == -1)
+  if (this->parseurl (url, host, port, path) == -1)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "HTTP_Connector, error parsing url: %s\n",
-                  url));
+                  ACE_TEXT ("HTTP_Connector, error parsing url: %C\n"),
+                  url.c_str ()));
       return -1;
     }
 
   HTTP_Handler hh (path);
-  HTTP_Handler *hhptr = &hh;
+  HTTP_Handler *hhptr = std::addressof (hh);
 
   // First check the cache.
-  if (ACE_Filecache::instance ()->find (ACE_TEXT_CHAR_TO_TCHAR (hh.filename ())) == 0)
+  if (ACE_Filecache::instance ()->find (ACE_TEXT_CHAR_TO_TCHAR (hh.filename ().c_str ())) == 0)
     {
-      ACE_DEBUG ((LM_DEBUG, "  ``%s'' is already cached.\n",
-                  hh.filename ()));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("  ``%C'' is already cached.\n"),
+                  hh.filename ().c_str ()));
       return 0;
     }
 
-  return this->connector_.connect (hhptr, ACE_INET_Addr (port, host));
+  return this->connector_.connect (hhptr, ACE_INET_Addr (port, host.c_str ()));
 }
 
 #define DEFAULT_SERVER_PORT 80
 
 // extract the main components of a URL
 int
-HTTP_Connector::parseurl (const char *url,
-                          char *host,
-                          u_short *port,
-                          char *path)
+HTTP_Connector::parseurl (std::string const &url,
+                          std::string &host,
+                          u_short &port,
+                          std::string &path)
 {
-  int status = 0;
-
-  // hackish, but useful
-  if (3 != ::sscanf (url, "http://%[^:/]:%hu%s", host, port, path))
+  constexpr char scheme[] = "http://";
+  constexpr size_t scheme_length = sizeof (scheme) - 1;
+  if (url.compare (0, scheme_length, scheme) != 0)
     {
-      if (2 != ::sscanf (url, "http://%[^:/]:%hu", host, port))
-        {
-          if (2 != ::sscanf (url, "http://%[^:/]%s", host, path))
-            {
-              if (1 != ::sscanf (url, "http://%[^:/]", host))
-                status = -1;
-              else
-                {
-                  *port = DEFAULT_SERVER_PORT;
-                  ACE_OS::strcpy (path, "/");
-                }
-            }
-          else
-            *port = DEFAULT_SERVER_PORT;
-        }
-      else ACE_OS::strcpy (path, "/");
+      return -1;
     }
 
-  // 0 => success
-  // -1 => error
-  return status;
+  size_t const authority_start = scheme_length;
+  size_t const path_start = url.find_first_of ("/?", authority_start);
+  std::string const authority = url.substr (authority_start,
+                                            path_start - authority_start);
+  size_t const port_separator = authority.find (':');
+  host = authority.substr (0, port_separator);
+  if (host.empty ())
+    {
+      return -1;
+    }
+
+  port = DEFAULT_SERVER_PORT;
+  if (port_separator != std::string::npos)
+    {
+      std::string const port_text = authority.substr (port_separator + 1);
+      unsigned int parsed_port {};
+      std::from_chars_result const result = std::from_chars (port_text.data (),
+                                           port_text.data () + port_text.size (),
+                                           parsed_port);
+      if (port_text.empty ()
+          || result.ec != std::errc {}
+          || result.ptr != port_text.data () + port_text.size ()
+          || parsed_port == 0
+          || parsed_port > (std::numeric_limits<u_short>::max) ())
+        {
+          return -1;
+        }
+      port = static_cast<u_short> (parsed_port);
+    }
+
+  if (path_start == std::string::npos)
+    {
+      path = "/";
+    }
+  else
+    {
+      path = url.substr (path_start);
+      if (url[path_start] == '?')
+        {
+          path.insert (path.begin (), '/');
+        }
+    }
+
+  return 0;
 }
 

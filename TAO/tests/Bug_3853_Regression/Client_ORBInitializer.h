@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 #ifndef CLIENT_ORB_INITIALIZER_H
 #define CLIENT_ORB_INITIALIZER_H
 #include /**/ "ace/pre.h"
@@ -25,7 +23,6 @@ class Client_ORBInitializer :
   public virtual ::CORBA::LocalObject
 {
 public:
-  /// Constructor
   Client_ORBInitializer () = default;
   Client_ORBInitializer (Client_ORBInitializer const &) = delete;
   Client_ORBInitializer (Client_ORBInitializer &&) = delete;

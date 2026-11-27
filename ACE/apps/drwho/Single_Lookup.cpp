@@ -4,23 +4,26 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_Memory.h"
 
-Single_Lookup::Single_Lookup (const char *usr_name)
+Single_Lookup::Single_Lookup (char const *usr_name)
 {
-  ACE_NEW (this->prp_,
-           Protocol_Record (ACE::strnew (usr_name)));
+  Protocol_Record *record {};
+  ACE_NEW (record, Protocol_Record (ACE::strnew (usr_name)));
+  this->prp_.reset (record);
 }
 
 Single_Lookup::~Single_Lookup ()
 {
   if (Options::get_opt (Options::DEBUGGING))
-    ACE_DEBUG ((LM_DEBUG,
-                "disposing Single_Lookup\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "disposing Single_Lookup\n"));
+    }
 }
 
 Protocol_Record *
 Single_Lookup::get_each_entry ()
 {
-  return this->prp_;
+  return this->prp_.get ();
 }
 
 Protocol_Record *

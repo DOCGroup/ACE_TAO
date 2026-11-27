@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    recursive_struct.h
  *
@@ -8,8 +6,6 @@
  *  @author Aniruddha Gokhale
  *  @author Jeff Parsons
  */
-//=============================================================================
-
 
 #ifndef PARAM_TEST_RECURSIVE_STRUCT_H
 #define PARAM_TEST_RECURSIVE_STRUCT_H
@@ -17,24 +13,20 @@
 #include "param_testC.h"
 #include "helper.h"
 
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-//           test recursive structs
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+/// test recursive structs
 
 class Test_Recursive_Struct
 {
 public:
-  /// ctor
   Test_Recursive_Struct ();
 
-  /// dtor
-  ~Test_Recursive_Struct ();
+  ~Test_Recursive_Struct () = default;
 
   /// run the SII test
   int run_sii_test (Param_Test_ptr objref);
 
   /// return operation name
-  const char *opname () const;
+  char const *opname () const;
 
   /// set values for parameters
   int init_parameters (Param_Test_ptr objref);
@@ -56,7 +48,7 @@ public:
 
 private:
   /// operation name
-  char *opname_;
+  char const *opname_;
 
   /// in parameter
   Param_Test::Recursive_Struct in_;

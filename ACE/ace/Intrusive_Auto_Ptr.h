@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Intrusive_Auto_Ptr.h
  *
@@ -8,7 +5,6 @@
  *
  *  @note Modeled on http://www.boost.org/boost/intrusive_ptr.hpp
  */
-//=============================================================================
 
 #ifndef ACE_INTRUSIVE_AUTO_PTR_H
 #define ACE_INTRUSIVE_AUTO_PTR_H
@@ -47,16 +43,9 @@ template <class X>
 class ACE_Intrusive_Auto_Ptr
 {
 protected:
-  /// Used to define a proper boolean conversion for "if (sp) ..."
-  static void unspecified_bool(ACE_Intrusive_Auto_Ptr<X>***){}
-  using unspecified_bool_type = void (*)(ACE_Intrusive_Auto_Ptr<X> ***);
-
 public:
-  /// Enables "if (sp) ..."
-  operator unspecified_bool_type() const
-    {
-        return rep_ == 0 ? 0: unspecified_bool;
-    }
+  /// Enables contextual conversion to bool, such as in "if (sp) ...".
+  explicit operator bool () const { return this->rep_ != nullptr; }
 
   /// Constructor that initializes an ACE_Intrusive_Auto_Ptr to
   /// the specified pointer value.
@@ -65,10 +54,12 @@ public:
   /// Copy constructor binds the new ACE_Intrusive_Auto_Ptr to the
   /// representation object referenced by @a r.
   /// An ACE_Intrusive_Auto_Ptr_Rep is created if necessary.
-  ACE_Intrusive_Auto_Ptr (const ACE_Intrusive_Auto_Ptr<X> &r);
+  ACE_Intrusive_Auto_Ptr (ACE_Intrusive_Auto_Ptr<X> const &r);
+  ACE_Intrusive_Auto_Ptr (ACE_Intrusive_Auto_Ptr<X> &&) = delete;
 
-  // Derived class copy ctor
-  template<class U> ACE_Intrusive_Auto_Ptr(const ACE_Intrusive_Auto_Ptr<U> & rhs);
+  /// Derived class copy ctor
+  template<class U>
+  ACE_Intrusive_Auto_Ptr (ACE_Intrusive_Auto_Ptr<U> const &rhs);
 
   /// Destructor. Releases the reference to the underlying representation.
   /// If the release of that reference causes its reference count to reach 0,
@@ -78,7 +69,8 @@ public:
   /// Assignment operator that binds the current object and @a r to the same
   /// ACE_Intrusive_Auto_Ptr_Rep. An ACE_Intrusive_Auto_Ptr_Rep
   /// is created if necessary.
-  void operator = (const ACE_Intrusive_Auto_Ptr<X> &r);
+  void operator = (ACE_Intrusive_Auto_Ptr<X> const &r);
+  void operator = (ACE_Intrusive_Auto_Ptr<X> &&) = delete;
 
   /// Redirection operator
   X *operator-> () const;
@@ -116,23 +108,25 @@ protected:
    *       instantiated and not used yet.
    */
 template<class T, class U>
-bool operator==(ACE_Intrusive_Auto_Ptr<T> const & a, ACE_Intrusive_Auto_Ptr<U> const & b);
+bool operator== (ACE_Intrusive_Auto_Ptr<T> const &a,
+                 ACE_Intrusive_Auto_Ptr<U> const &b);
 
 /// Inequality operator, which is the opposite of equality.
 template<class T, class U>
-bool operator!=(ACE_Intrusive_Auto_Ptr<T> const & a, ACE_Intrusive_Auto_Ptr<U> const & b);
+bool operator!= (ACE_Intrusive_Auto_Ptr<T> const &a,
+                 ACE_Intrusive_Auto_Ptr<U> const &b);
 
 template<class T, class U>
-bool operator==(ACE_Intrusive_Auto_Ptr<T> const & a, U * b);
+bool operator== (ACE_Intrusive_Auto_Ptr<T> const &a, U *b);
 
 template<class T, class U>
-bool operator!=(ACE_Intrusive_Auto_Ptr<T> & a, U * b);
+bool operator!= (ACE_Intrusive_Auto_Ptr<T> const &a, U *b);
 
 template<class T, class U>
-bool operator==(T * a, ACE_Intrusive_Auto_Ptr<U> const & b);
+bool operator== (T *a, ACE_Intrusive_Auto_Ptr<U> const &b);
 
 template<class T, class U>
-bool operator!=(T * a, ACE_Intrusive_Auto_Ptr<U> const & b);
+bool operator!= (T *a, ACE_Intrusive_Auto_Ptr<U> const &b);
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 

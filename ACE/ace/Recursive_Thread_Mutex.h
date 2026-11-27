@@ -1,13 +1,9 @@
-// -*- C++ -*-
-
-//==========================================================================
 /**
  *  @file    Recursive_Thread_Mutex.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu> and
  *          Abdullah Sowayan <abdullah.sowayan@lmco.com>
  */
-//==========================================================================
 
 #ifndef ACE_RECURSIVE_THREAD_MUTEX_H
 #define ACE_RECURSIVE_THREAD_MUTEX_H
@@ -37,8 +33,13 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Recursive_Thread_Mutex
 {
 public:
+  ACE_Recursive_Thread_Mutex (ACE_Recursive_Thread_Mutex const &) = delete;
+  ACE_Recursive_Thread_Mutex (ACE_Recursive_Thread_Mutex &&) = delete;
+  ACE_Recursive_Thread_Mutex &operator= (ACE_Recursive_Thread_Mutex const &) = delete;
+  ACE_Recursive_Thread_Mutex &operator= (ACE_Recursive_Thread_Mutex &&) = delete;
+
   /// Initialize a recursive mutex.
-  ACE_Recursive_Thread_Mutex (const ACE_TCHAR *name = nullptr,
+  ACE_Recursive_Thread_Mutex (ACE_TCHAR const *name = nullptr,
                               ACE_mutexattr_t *arg = nullptr);
 
   /// Implicitly release a recursive mutex.
@@ -159,7 +160,7 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-  // = This method should *not* be public (they hold no locks...)
+  /// Internal helper; this operation does not hold the mutex locks.
   void set_thread_id (ACE_thread_t t);
 
   /// Recursive mutex.
@@ -170,11 +171,7 @@ protected:
   /// destructor.  This flag isn't protected by a lock, so make sure
   /// that you don't have multiple threads simultaneously calling
   /// remove() on the same object, which is a bad idea anyway...
-  bool removed_;
-
-private:
-  void operator= (const ACE_Recursive_Thread_Mutex &) = delete;
-  ACE_Recursive_Thread_Mutex (const ACE_Recursive_Thread_Mutex &) = delete;
+  bool removed_ {};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

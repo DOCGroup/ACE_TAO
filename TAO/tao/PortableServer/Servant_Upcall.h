@@ -1,13 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Servant_Upcall.h
  *
  *  @author Irfan Pyarali
  */
-//=============================================================================
-
 #ifndef TAO_SERVANT_UPCALL_H
 #define TAO_SERVANT_UPCALL_H
 
@@ -69,7 +64,6 @@ namespace TAO
       class Pre_Invoke_State
       {
       public:
-        /// Constructor.
         Pre_Invoke_State ();
 
         enum State
@@ -89,20 +83,18 @@ namespace TAO
         CORBA::Short original_CORBA_priority_ {};
       };
 
-      /// Constructor.
       explicit Servant_Upcall (TAO_ORB_Core *orb_core);
 
-      /// Destructor.
       ~Servant_Upcall ();
 
       /// Locate POA and servant.
-      int prepare_for_upcall (const TAO::ObjectKey &key,
-                              const char *operation,
+      int prepare_for_upcall (TAO::ObjectKey const &key,
+                              char const *operation,
                               CORBA::Object_out forward_to);
 
       /// Helper.
-      int prepare_for_upcall_i (const TAO::ObjectKey &key,
-                                const char *operation,
+      int prepare_for_upcall_i (TAO::ObjectKey const &key,
+                                char const *operation,
                                 CORBA::Object_out forward_to,
                                 bool &wait_occurred_restart_call);
 
@@ -116,7 +108,7 @@ namespace TAO
       void post_invoke ();
 
       /// Locate POA.
-      ::TAO_Root_POA *lookup_POA (const TAO::ObjectKey &key);
+      ::TAO_Root_POA *lookup_POA (TAO::ObjectKey const &key);
 
       /// POA accessor.
       ::TAO_Root_POA &poa () const;
@@ -125,12 +117,12 @@ namespace TAO
       TAO_Object_Adapter &object_adapter () const;
 
       /// System ID accessor.
-      const PortableServer::ObjectId &id () const;
+      PortableServer::ObjectId const &id () const;
 
       /// User ID accessors.  This is the same value returned by
       /// PortableServer::Current::get_object_id().
-      void user_id (const PortableServer::ObjectId *);
-      const PortableServer::ObjectId &user_id () const;
+      void user_id (PortableServer::ObjectId const *);
+      PortableServer::ObjectId const &user_id () const;
 
       /// Servant accessor.
       PortableServer::Servant servant () const;
@@ -144,10 +136,10 @@ namespace TAO
       void locator_cookie (void* cookie);
 
       /// Get the operation name.
-      const char *operation () const;
+      char const *operation () const;
 
       /// Set the operation name.
-      void operation (const char *);
+      void operation (char const *);
 
   #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
@@ -189,10 +181,14 @@ namespace TAO
       void upcall_cleanup ();
 
     protected:
+      /// Non-owning adapter pointer obtained from the ORB core.
       TAO_Object_Adapter *object_adapter_ {};
 
+      /// Non-owning POA pointer resolved for the duration of this upcall.
       ::TAO_Root_POA *poa_ {};
 
+      /// Borrowed servant selected for this upcall; request processing manages
+      /// its lifetime.
       PortableServer::Servant servant_ {};
 
       State state_ {INITIAL_STAGE};
@@ -200,30 +196,33 @@ namespace TAO
       CORBA::Octet system_id_buf_[TAO_POA_OBJECT_ID_BUF_SIZE];
       PortableServer::ObjectId system_id_;
 
+      /// Non-owning object-ID pointer supplied by the request-processing path.
       PortableServer::ObjectId const *user_id_ {};
 
       POA_Current_Impl current_context_;
 
   #if (TAO_HAS_MINIMUM_POA == 0)
 
-      /// Servant Locator's cookie
+      /// Borrowed Servant Locator cookie passed back to postinvoke.
       void *cookie_ {};
 
-      /// Operation name for this current.
+      /// Non-owning operation-name string supplied for this upcall.
       char const *operation_ {};
 
   #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
-      /// Pointer to the entry in the TAO_Active_Object_Map corresponding
-      /// to the servant for this request.
+      /// Non-owning pointer to the active-map entry corresponding to this
+      /// servant; the active object map controls its lifetime.
       TAO_Active_Object_Map_Entry *active_object_map_entry_ {};
 
       /// Preinvoke data for the upcall.
       Pre_Invoke_State pre_invoke_state_;
 
     private:
-      Servant_Upcall (const Servant_Upcall &);
-      void operator= (const Servant_Upcall &);
+      Servant_Upcall (Servant_Upcall const &) = delete;
+      Servant_Upcall (Servant_Upcall &&) = delete;
+      void operator= (Servant_Upcall const &) = delete;
+      void operator= (Servant_Upcall &&) = delete;
     };
   }
 }

@@ -1,5 +1,3 @@
-/* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file   Notify_SequencePushConsumer.h
  *
@@ -8,8 +6,6 @@
  *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef NOTIFY_SEQUENCEPUSHCONSUMER_H
 #define NOTIFY_SEQUENCEPUSHCONSUMER_H
@@ -17,7 +13,7 @@
 
 #include "SequencePushConsumer.h"
 
-typedef TAO_Notify_Tests_SequencePushConsumer TAO_Notify_SequencePushConsumer;
+using TAO_Notify_SequencePushConsumer = TAO_Notify_Tests_SequencePushConsumer;
 
 #include /**/ "ace/post.h"
 

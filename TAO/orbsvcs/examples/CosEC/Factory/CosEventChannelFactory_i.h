@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    CosEventChannelFactory_i.h
  *
@@ -8,8 +5,6 @@
  *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_COSEVENTCHANNELFACTORY_I_H
 #define TAO_COSEVENTCHANNELFACTORY_I_H
@@ -27,14 +22,16 @@ class TAO_CosEventChannelFactory_i :
   public virtual POA_CosEventChannelFactory::ChannelFactory
 {
 public:
-  /// Constructor.
-  TAO_CosEventChannelFactory_i ();
+  TAO_CosEventChannelFactory_i () = default;
 
-  /// Destructor.
-  ~TAO_CosEventChannelFactory_i () = default;
+  ~TAO_CosEventChannelFactory_i () override = default;
+  TAO_CosEventChannelFactory_i (TAO_CosEventChannelFactory_i const &) = delete;
+  TAO_CosEventChannelFactory_i (TAO_CosEventChannelFactory_i &&) = delete;
+  TAO_CosEventChannelFactory_i &operator= (TAO_CosEventChannelFactory_i const &) = delete;
+  TAO_CosEventChannelFactory_i &operator= (TAO_CosEventChannelFactory_i &&) = delete;
 
   /**
-   * This method creates a child poa with <poa> as the
+   * This method creates a child POA with @a poa as the
    * parent. It also accepts a Naming_Context which is used to register
    * the event channels if specified.
    * Returns -1 on error, 0 on success.
@@ -42,7 +39,7 @@ public:
    *    raise exceptions, but I'm undecided.
    * @@ Pradeep: when is the child poa destroyed? Maybe we should add
    *    a destroy() method to the factory interface (in IDL).
-   * @@ Carlos: if we add a <destroy> to the factory, any client will be
+   * @@ Carlos: if we add a @c destroy() operation to the factory, any client will be
    * able to destroy the factory!
    * @@ Pradeep: it could be a method of the Factory_i class, it
    *    doesn't have to be exposed through the IDL interface. Anyway,
@@ -53,24 +50,24 @@ public:
    * @@ Pradeep: anyway you can just use exceptions and not return -1?
    */
   int init (PortableServer::POA_ptr poa,
-            const char* child_poa_name,
+            char const *child_poa_name,
             CosNaming::NamingContext_ptr naming = CosNaming::NamingContext::_nil ());
 
-  // = CosEventChannelFactory::ChannelFactory methods.
-  virtual CosEventChannelAdmin::EventChannel_ptr create (const char * channel_id,
-                                                         CORBA::Boolean store_in_naming_service);
+  CosEventChannelAdmin::EventChannel_ptr create (char const *channel_id,
+                                                  CORBA::Boolean store_in_naming_service) override;
 
-  virtual void destroy (const char * channel_id, CORBA::Boolean unbind_from_naming_service);
+  void destroy (char const *channel_id,
+                CORBA::Boolean unbind_from_naming_service) override;
 
-  virtual CosEventChannelAdmin::EventChannel_ptr find (const char * channel_id);
+  CosEventChannelAdmin::EventChannel_ptr find (char const *channel_id) override;
 
-  virtual char * find_channel_id (CosEventChannelAdmin::EventChannel_ptr channel);
+  char *find_channel_id (CosEventChannelAdmin::EventChannel_ptr channel) override;
 protected:
   /// The POA with which we activate all the Event Channels.
-  PortableServer::POA_var poa_;
+  PortableServer::POA_var poa_ {};
 
   /// The naming context to use.
-  CosNaming::NamingContext_var naming_;
+  CosNaming::NamingContext_var naming_ {};
 };
 
 #include /**/ "ace/post.h"

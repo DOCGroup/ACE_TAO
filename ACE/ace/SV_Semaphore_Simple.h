@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//==========================================================================
 /**
  *  @file    SV_Semaphore_Simple.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//==========================================================================
 
 #ifndef ACE_SV_SEMAPHORE_SIMPLE_H
 #define ACE_SV_SEMAPHORE_SIMPLE_H
@@ -61,13 +57,13 @@ public:
                            int initial_value = 1,
                            u_short nsems = 1,
                            mode_t perms = ACE_DEFAULT_FILE_PERMS);
-  ACE_SV_Semaphore_Simple (const char *name,
+  ACE_SV_Semaphore_Simple (char const *name,
                            short flags = ACE_SV_Semaphore_Simple::ACE_CREATE,
                            int initial_value = 1,
                            u_short nsems = 1,
                            mode_t perms = ACE_DEFAULT_FILE_PERMS);
 #if defined (ACE_HAS_WCHAR)
-  ACE_SV_Semaphore_Simple (const wchar_t *name,
+  ACE_SV_Semaphore_Simple (wchar_t const *name,
                            short flags = ACE_SV_Semaphore_Simple::ACE_CREATE,
                            int initial_value = 1,
                            u_short nsems = 1,
@@ -76,14 +72,14 @@ public:
 
   ~ACE_SV_Semaphore_Simple ();
 
-  int open (const char *name,
+  int open (char const *name,
             short flags = ACE_SV_Semaphore_Simple::ACE_CREATE,
             int initial_value = 1,
             u_short nsems = 1,
             mode_t perms = ACE_DEFAULT_FILE_PERMS);
 
 #if defined (ACE_HAS_WCHAR)
-  int open (const wchar_t *name,
+  int open (wchar_t const *name,
             short flags = ACE_SV_Semaphore_Simple::ACE_CREATE,
             int initial_value = 1,
             u_short nsems = 1,
@@ -111,7 +107,8 @@ public:
    */
   int remove () const;
 
-  // = Semaphore acquire and release methods.
+  /// @name Semaphore acquire and release
+  /// @{
   /**
    * Wait until a ACE_SV_Semaphore's value is greater than 0, the
    * decrement it by 1 and return. Dijkstra's P operation, Tannenbaums
@@ -125,7 +122,7 @@ public:
   /// Acquire a semaphore for writing
   int acquire_write (u_short n = 0, short flags = 0) const;
 
-  /// Non-blocking version of <acquire>.
+  /// Non-blocking version of @c acquire.
   int tryacquire (u_short n = 0, short flags = 0) const;
 
   /// Try to acquire the semaphore for reading.
@@ -137,18 +134,24 @@ public:
   /// Increment ACE_SV_Semaphore by one. Dijkstra's V operation,
   /// Tannenbaums UP operation.
   int release (u_short n = 0, short flags = 0) const;
+  /// @}
 
-  // = Semaphore operation methods.
+  /// @name Semaphore operations
+  /// @{
+
   /// General ACE_SV_Semaphore operation. Increment or decrement by a
   /// specific amount (positive or negative; amount can`t be zero).
   int op (short val, u_short semnum = 0, short flags = SEM_UNDO) const;
 
   /// General ACE_SV_Semaphore operation on an array of SV_Semaphores.
   int op (sembuf op_vec[], u_short nsems) const;
+  /// @}
 
-  // = Semaphore control methods.
+  /// @name Semaphore control
+  /// @{
   int control (int cmd, semun arg, u_short n = 0) const;
   int control (int cmd, int value = 0, u_short n = 0) const;
+  /// @}
 
   /// Get underlying internal id.
   int get_id () const;
@@ -183,7 +186,7 @@ protected:
             int i = -1);
 #endif
 
-  key_t name_2_key (const char *name);
+  key_t name_2_key (char const *name);
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

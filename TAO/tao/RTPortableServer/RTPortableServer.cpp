@@ -1,11 +1,8 @@
-//=============================================================================
 /**
  *  @file    RTPortableServer.cpp
  *
  *  @author Frank Hunleth <fhunleth@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #include "tao/RTPortableServer/RTPortableServer.h"
 #include "tao/RTPortableServer/RT_Object_Adapter_Factory.h"

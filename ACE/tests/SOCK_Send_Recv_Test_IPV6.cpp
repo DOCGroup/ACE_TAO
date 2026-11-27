@@ -1,8 +1,7 @@
-// ===========================================================================
 /**
  * @file  SOCK_Send_Recv_Test_IPV6.cpp
  *
- * @brief This is a test of the <ACE_SOCK>'s various send and receive
+ * @brief This is a test of the @c ACE_SOCK's various send and receive
  * methods.
 
  * The test forks two processes or spawns two threads (depending upon
@@ -15,7 +14,6 @@
  * @author Steve Huston <shuston@riverace.com>
  *         Brian Buesker <bbuesker@qualcomm.com>
  */
-// ============================================================================
 
 #include "test_config.h"
 #include "ace/OS_NS_sys_wait.h"
@@ -26,6 +24,8 @@
 #include "ace/SOCK_Connector.h"
 #include "ace/SOCK_Acceptor.h"
 #include "ace/SOCK_Stream.h"
+
+#include <memory>
 
 // Change to non-zero if test fails
 static int Test_Result = 0;
@@ -41,15 +41,15 @@ static int Test_Result = 0;
 // to change it.
 // For some odd reason, NT will try to send a single large buffer, but not
 // multiple smaller ones that add up to the large size.
-const size_t Test3_Send_Size = 4*1024;
-const size_t Test3_Loops = 10;
-const size_t Test3_Total_Size = Test3_Send_Size * Test3_Loops;
+size_t const Test3_Send_Size = 4*1024;
+size_t const Test3_Loops = 10;
+size_t const Test3_Total_Size = Test3_Send_Size * Test3_Loops;
 
-static void *
+static ACE_THR_FUNC_RETURN
 client (void *arg)
 {
-  ACE_INET_Addr *remote_addr = reinterpret_cast<ACE_INET_Addr *> (arg);
-  ACE_INET_Addr server_addr (remote_addr->get_port_number (),
+  ACE_INET_Addr *remote_addr = static_cast<ACE_INET_Addr *> (arg);
+  ACE_INET_Addr const server_addr (remote_addr->get_port_number (),
                              ACE_IPV6_LOCALHOST);
 
   ACE_SOCK_Stream cli_stream;
@@ -63,13 +63,13 @@ client (void *arg)
   // Initiate connection with server; don't wait forever
   if (con.connect (cli_stream,
                    server_addr,
-                   &timeout) == -1)
+                   std::addressof (timeout)) == -1)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("(%P|%t) %p\n"),
                   ACE_TEXT ("connection failed")));
       Test_Result = 1;
-      return nullptr;
+      return ACE_THR_FUNC_RETURN_NULL;
     }
 
   ACE_DEBUG ((LM_DEBUG,
@@ -89,23 +89,25 @@ client (void *arg)
   // The server will verify that this data pattern gets there intact.
 
   for (i = 0; i < sizeof buffer; ++i)
-    buffer[i] = static_cast<u_char> (i);
+    {
+      buffer[i] = static_cast<u_char> (i);
+    }
 
   iovec iov[5];
 
-  iov[0].iov_base = reinterpret_cast<char *> (&buffer[0]);
+  iov[0].iov_base = buffer;
   iov[0].iov_len = 50;
 
-  iov[1].iov_base = reinterpret_cast<char *> (&buffer[50]);
+  iov[1].iov_base = buffer + 50;
   iov[1].iov_len = 25;
 
-  iov[2].iov_base = reinterpret_cast<char *> (&buffer[75]);
+  iov[2].iov_base = buffer + 75;
   iov[2].iov_len = 150;
 
-  iov[3].iov_base = reinterpret_cast<char *> (&buffer[225]);
+  iov[3].iov_base = buffer + 225;
   iov[3].iov_len = 29;
 
-  iov[4].iov_base = reinterpret_cast<char *> (&buffer[254]);
+  iov[4].iov_base = buffer + 254;
   iov[4].iov_len = 1;
 
   len = cli_stream.sendv (iov, 5);
@@ -117,7 +119,9 @@ client (void *arg)
       Test_Result = 1;
     }
   else
-    ACE_TEST_ASSERT (len == 255);
+    {
+      ACE_TEST_ASSERT (len == 255);
+    }
 
   //*******************   TEST 2   ******************************
   //
@@ -130,24 +134,27 @@ client (void *arg)
   len = cli_stream.recv (4,
                          buffer2,
                          150,
-                         &buffer2[150],
+                         buffer2 + 150,
                          105);
   if (len != 255)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) %p; len is %d, but should be 255!\n"),
+                  ACE_TEXT ("(%P|%t) %p; len is %b, but should be 255!\n"),
+                  ACE_TEXT ("recv"),
                   len));
     }
   ACE_TEST_ASSERT (len == 255);
 
-  for (i = 0; i < 255; i++)
-    if (buffer2[i] != buffer[i])
-      {
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) Test 2, rcvd byte %d is %d, not %d\n"),
-                    i, buffer2[i], buffer[i]));
-        Test_Result = 1;
-      }
+  for (i = 0; i < 255; ++i)
+    {
+      if (buffer2[i] != buffer[i])
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("(%P|%t) Test 2, rcvd byte %B is %d, not %d\n"),
+                      i, buffer2[i], buffer[i]));
+          Test_Result = 1;
+        }
+    }
 
   //*******************   TEST 3   ******************************
   //
@@ -157,17 +164,16 @@ client (void *arg)
   // case this tests only needs to be exercised if the socket is
   // non-blocking, so set that first.
 
-  ssize_t sent;
   char buff[Test3_Send_Size];
   ACE_TEST_ASSERT (cli_stream.enable (ACE_NONBLOCK) != -1);
   for (i = 0; i < Test3_Loops; ++i)
     {
       errno = 0;
-      sent = cli_stream.send_n (buff, sizeof (buff));
+      ssize_t const sent = cli_stream.send_n (buff, sizeof (buff));
       if (sent != sizeof (buff) && errno != 0)
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("(%P|%t) Test 3, pass %d, sent %d, %p\n"),
+                      ACE_TEXT ("(%P|%t) Test 3, pass %B, sent %b, %p\n"),
                       i, sent, ACE_TEXT ("error")));
           Test_Result = 1;   // Fail
         }
@@ -175,13 +181,13 @@ client (void *arg)
 
   cli_stream.close ();
 
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
-static void *
+static ACE_THR_FUNC_RETURN
 server (void *arg)
 {
-  ACE_SOCK_Acceptor *peer_acceptor = (ACE_SOCK_Acceptor *) arg;
+  ACE_SOCK_Acceptor *peer_acceptor = static_cast<ACE_SOCK_Acceptor *> (arg);
   ACE_SOCK_Stream sock_str;
   ACE_INET_Addr cli_addr;
   ACE_Time_Value timeout (ACE_DEFAULT_TIMEOUT);
@@ -190,13 +196,13 @@ server (void *arg)
   // Don't lock up if client doesn't connect
   if (peer_acceptor->accept (sock_str,
                              &cli_addr,
-                             &timeout) == -1)
+                             std::addressof (timeout)) == -1)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("(%P|%t) %p\n"),
                   ACE_TEXT ("accept")));
       Test_Result = 1;
-      return nullptr;
+      return ACE_THR_FUNC_RETURN_NULL;
     }
 
   ACE_DEBUG ((LM_DEBUG,
@@ -217,13 +223,13 @@ server (void *arg)
   ssize_t len;
   int i;
 
-  iov[0].iov_base = reinterpret_cast<char *> (&buffer[0]);
+  iov[0].iov_base = buffer;
   iov[0].iov_len = 75;
 
-  iov[1].iov_base = reinterpret_cast<char *> (&buffer[75]);
+  iov[1].iov_base = buffer + 75;
   iov[1].iov_len = 100;
 
-  iov[2].iov_base = reinterpret_cast<char *> (&buffer[175]);
+  iov[2].iov_base = buffer + 175;
   iov[2].iov_len = 80;
 
   len = sock_str.recvv_n (iov, 3);
@@ -236,16 +242,18 @@ server (void *arg)
     }
 
   ACE_TEST_ASSERT (len == 255);
-  for (i = 0; i < 255; i++)
-    if (buffer[i] != i)
-      {
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) Test 1, rcvd byte %d is %d, not %d\n"),
-                    i,
-                    buffer[i],
-                    i));
-        Test_Result = 1;
-      }
+  for (i = 0; i < 255; ++i)
+    {
+      if (buffer[i] != i)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("(%P|%t) Test 1, rcvd byte %d is %d, not %d\n"),
+                      i,
+                      buffer[i],
+                      i));
+          Test_Result = 1;
+        }
+    }
 
   //*******************   TEST 2   ******************************
   //
@@ -254,9 +262,9 @@ server (void *arg)
   len = sock_str.send (6,
                        buffer,
                        42,
-                       &buffer[42],
+                       buffer + 42,
                        189,
-                       &buffer[231],
+                       buffer + 231,
                        24);
   ACE_TEST_ASSERT (len == 255);
 
@@ -275,11 +283,13 @@ server (void *arg)
       errno = 0;
       got = sock_str.recv (buffer, sizeof (buffer));
       if (got < 0)
+        {
           break;
+        }
       total_recv += got;
     }
 
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Test 3 received %d bytes\n"),
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Test 3 received %B bytes\n"),
                 total_recv));
 
   if (total_recv == Test3_Total_Size)
@@ -287,7 +297,7 @@ server (void *arg)
       if (got != 0 || errno != 0)
         {
           ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("(%P|%t) Test 3 final recv status %d, expected 0\n"),
+                ACE_TEXT ("(%P|%t) Test 3 final recv status %b, expected 0\n"),
                 got));
           ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"),
                       ACE_TEXT ("expected errno == 0, instead")));
@@ -296,14 +306,14 @@ server (void *arg)
     }
   else
     {
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) Test 3 expected %d %p\n"),
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) Test 3 expected %B %p\n"),
                   Test3_Total_Size, ACE_TEXT ("bytes")));
       Test_Result = 1;
     }
 
   sock_str.close();
 
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 #endif /*ACE_HAS_IPV6*/
@@ -323,9 +333,11 @@ spawn ()
   // Bind listener to any port and then find out what the port was.
   if (peer_acceptor.open (ACE_Addr::sap_any, 0, AF_INET6) == -1
       || peer_acceptor.get_local_addr (server_addr) == -1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("(%P|%t) %p\n"),
-                ACE_TEXT ("open")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%P|%t) %p\n"),
+                  ACE_TEXT ("open")));
+    }
   else
     {
       ACE_DEBUG ((LM_DEBUG,
@@ -342,17 +354,17 @@ spawn ()
                       1));
           /* NOTREACHED */
         case 0:
-          client (&server_addr);
+          client (std::addressof (server_addr));
           ACE_OS::exit (0);
           /* NOTREACHED */
         default:
-          server (reinterpret_cast<void *> (&peer_acceptor));
+          server (std::addressof (peer_acceptor));
           ACE_OS::wait ();
         }
 #elif defined (ACE_HAS_THREADS)
       if (ACE_Thread_Manager::instance ()->spawn
-          (ACE_THR_FUNC (server),
-           reinterpret_cast<void *> (&peer_acceptor),
+          (server,
+           &peer_acceptor,
            THR_NEW_LWP | THR_DETACHED) == -1)
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("(%P|%t) %p\n%a"),
@@ -360,8 +372,8 @@ spawn ()
                     1));
 
       if (ACE_Thread_Manager::instance ()->spawn
-          (ACE_THR_FUNC (client),
-           reinterpret_cast<void *> (&server_addr),
+          (client,
+           &server_addr,
            THR_NEW_LWP | THR_DETACHED) == -1)
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("(%P|%t) %p\n%a"),

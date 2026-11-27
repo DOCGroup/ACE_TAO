@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    AnyTypeCode_Adapter_Impl.h
  *
  *  @author  Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-//=============================================================================
 
 #ifndef TAO_ANYTYPECODE_ADAPTER_IMPL_H
 #define TAO_ANYTYPECODE_ADAPTER_IMPL_H
@@ -31,7 +27,7 @@ class TAO_AnyTypeCode_Export TAO_AnyTypeCode_Adapter_Impl
   : public TAO_AnyTypeCode_Adapter
 {
 public:
-    // Used to force the initialization of the code.
+    /// Forces initialization of the code.
     static int Initializer ();
 
 #define ANYTYPECODE__EXCEPTION_LIST \
@@ -155,7 +151,6 @@ ANYTYPECODE__EXCEPTION_LIST
 
   void insert_into_any (CORBA::Any * any, CORBA::WStringSeq const & value) override;
 };
-
 
 ACE_STATIC_SVC_DECLARE (TAO_AnyTypeCode_Adapter_Impl)
 ACE_FACTORY_DECLARE (TAO_AnyTypeCode, TAO_AnyTypeCode_Adapter_Impl)

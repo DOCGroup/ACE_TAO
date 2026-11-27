@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    var_struct.h
  *
@@ -7,32 +5,26 @@
  *
  *  @author   Aniruddha Gokhale
  */
-//=============================================================================
-
 
 #ifndef PARAM_TEST_VAR_STRUCT_H
 #define PARAM_TEST_VAR_STRUCT_H
 
 #include "param_testC.h"
 
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-//           test variable sized structs
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+/// test variable sized structs
 
 class Test_Var_Struct
 {
 public:
-  /// ctor
   Test_Var_Struct ();
 
-  /// dtor
-  ~Test_Var_Struct ();
+  ~Test_Var_Struct () = default;
 
   /// run the SII test
   int run_sii_test (Param_Test_ptr objref);
 
   /// return operation name
-  const char *opname () const;
+  char const *opname () const;
 
   /// set values for parameters
   int init_parameters (Param_Test_ptr objref);
@@ -54,7 +46,7 @@ public:
 
 private:
   /// operation name
-  char *opname_;
+  char const *opname_;
 
   /// in parameter
   Param_Test::Var_Struct in_;

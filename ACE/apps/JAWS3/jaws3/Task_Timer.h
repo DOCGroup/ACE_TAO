@@ -1,4 +1,3 @@
-/* -*- c++ -*- */
 #ifndef JAWS_TASK_TIMER_H
 #define JAWS_TASK_TIMER_H
 
@@ -22,27 +21,23 @@ public:
   }
 
   void schedule_timer ( long *timer_id
-                      , const ACE_Time_Value &delta
+                      , ACE_Time_Value const &delta
                       , JAWS_Event_Completer *completer
-                      , void *act = 0
-                      );
+                      , void *act = nullptr) override;
 
   void schedule_absolute_timer ( long *timer_id
-                               , const ACE_Time_Value &tv
+                               , ACE_Time_Value const &tv
                                , JAWS_Event_Completer *completer
-                               , void *act = 0
-                               );
+                               , void *act = nullptr) override;
 
   void schedule_interval_timer ( long *timer_id
-                               , const ACE_Time_Value &interval
+                               , ACE_Time_Value const &interval
                                , JAWS_Event_Completer *completer
-                               , void *act = 0
-                               );
+                               , void *act = nullptr) override;
 
-  void cancel_timer (long timer_id);
-  // NOTE: Cancelling the timer causes handle_close to be called, but
-  // not handle_timeout (of couse, I mean in the ACE_Event_Handler that
-  // is being used as the timer helper).
+  /// Cancelling the timer causes handle_close to be called, but not
+  /// handle_timeout on the ACE_Event_Handler used as the timer helper.
+  void cancel_timer (long timer_id) override;
 
 private:
   ACE_Thread_Timer_Queue_Adapter<ACE_Timer_Wheel> timer_queue_;

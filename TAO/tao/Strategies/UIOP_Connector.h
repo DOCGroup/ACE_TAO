@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    UIOP_Connector.h
  *
@@ -9,8 +6,6 @@
  *  @author Fred Kuhns <fredk@cs.wustl.edu>
  *  @author Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_UIOP_CONNECTOR_H
 #define TAO_UIOP_CONNECTOR_H
@@ -32,6 +27,8 @@
 #include "tao/Resource_Factory.h"
 #include "tao/Connector_Impl.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_UIOP_Endpoint;
@@ -52,15 +49,14 @@ public:
    */
   TAO_UIOP_Connector ();
 
-  /// Destructor
-  ~TAO_UIOP_Connector () override;
+  ~TAO_UIOP_Connector () override = default;
 
   /**
    * @name The TAO_Connector Methods
    *
    * Please check the documentation in Transport_Connector.h for details.
    */
-  //@{
+  /// @{
   int open (TAO_ORB_Core *orb_core) override;
   int close () override;
 
@@ -74,7 +70,7 @@ public:
 
   /// Cancel the passed cvs handler from the connector
   int cancel_svc_handler (TAO_Connection_Handler *svc_handler) override;
-  //@}
+  /// @}
 
 public:
   using TAO_UIOP_CONNECT_CONCURRENCY_STRATEGY =
@@ -95,7 +91,7 @@ protected:
    *
    * Please check the documentation in Transport_Connector.h.
    */
-  //@{
+  /// @{
   int set_validate_endpoint (TAO_Endpoint *endpoint) override;
 
   TAO_Transport *make_connection (TAO::Profile_Transport_Resolver *r,
@@ -104,7 +100,7 @@ protected:
 
   TAO_Profile *make_profile () override;
 
-  //@}
+  /// @}
 
 private:
   TAO_UIOP_Connector (TAO_UIOP_Connector const &) = delete;
@@ -121,6 +117,9 @@ private:
 
   /// The connector initiating connection requests for UIOP.
   TAO_UIOP_BASE_CONNECTOR base_connector_;
+
+  std::unique_ptr<TAO_UIOP_CONNECT_CREATION_STRATEGY> creation_strategy_;
+  std::unique_ptr<TAO_UIOP_CONNECT_CONCURRENCY_STRATEGY> concurrency_strategy_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

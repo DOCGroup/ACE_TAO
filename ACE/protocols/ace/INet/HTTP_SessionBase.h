@@ -16,6 +16,7 @@
 #include "ace/INet/HTTP_Request.h"
 #include "ace/INet/HTTP_Response.h"
 #include "ace/INet/HTTP_IOStream.h"
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -36,9 +37,14 @@ namespace ACE
                            bool keep_alive = false);
 
               SessionBase (u_short port,
-                           const ACE_Time_Value& timeout,
+                           ACE_Time_Value const& timeout,
                            bool keep_alive = false,
-                           const ACE_Time_Value* alive_timeout = 0);
+                           ACE_Time_Value const* alive_timeout = nullptr);
+
+              SessionBase (SessionBase const&) = delete;
+              SessionBase& operator= (SessionBase const&) = delete;
+              SessionBase (SessionBase&&) = delete;
+              SessionBase& operator= (SessionBase&&) = delete;
 
               virtual ~SessionBase ();
 
@@ -48,22 +54,22 @@ namespace ACE
 
               virtual bool is_connected () const = 0;
 
-              void set_host (const ACE_CString& host,
+              void set_host (ACE_CString const& host,
                              u_short port);
 
-              void set_host (const ACE_CString& host);
+              void set_host (ACE_CString const& host);
 
               void set_port (u_short port);
 
-              void set_proxy_target (const ACE_CString& host, u_short port);
+              void set_proxy_target (ACE_CString const& host, u_short port);
 
-              const ACE_CString& get_host () const;
+              ACE_CString const& get_host () const;
 
               u_short get_port () const;
 
               bool is_proxy_connection () const;
 
-              const ACE_CString& get_proxy_target_host () const;
+              ACE_CString const& get_proxy_target_host () const;
 
               u_short get_proxy_target_port () const;
 
@@ -88,7 +94,7 @@ namespace ACE
 
               void close_streams ();
 
-              virtual bool connect_i (const ACE_Synch_Options& sync_opt) = 0;
+              virtual bool connect_i (ACE_Synch_Options const& sync_opt) = 0;
 
               virtual void close_i () = 0;
 
@@ -102,21 +108,21 @@ namespace ACE
 
               ACE_CString host_;
               u_short port_;
-              bool proxy_connection_;
+              bool proxy_connection_ {};
               ACE_CString proxy_target_host_;
-              u_short proxy_target_port_;
+              u_short proxy_target_port_ {};
 
-              bool reactive_;
-              IStream* in_stream_;
-              OStream* out_stream_;
+              bool reactive_ {};
+              std::unique_ptr<IStream> in_stream_;
+              std::unique_ptr<OStream> out_stream_;
               ACE_Time_Value http_timeout_;
               ACE_Time_Value keep_alive_timeout_;
               ACE_Time_Value reconnect_timer_;
               ACE_Countdown_Time reconnect_countdown_;
               bool keep_alive_;
-              bool needs_reconnect_;
-              bool cannot_reconnect_;
-              bool expects_response_body_;
+              bool needs_reconnect_ {};
+              bool cannot_reconnect_ {};
+              bool expects_response_body_ {};
           };
       }
   }

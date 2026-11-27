@@ -5,6 +5,8 @@
 #include "ace/Reactor.h"
 #include "ace/Monitor_Point_Registry.h"
 
+#include <memory>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE
@@ -13,17 +15,14 @@ namespace ACE
   {
     int
     Monitor_Point_Auto_Updater::handle_timeout (
-      const ACE_Time_Value& /* current_time */,
-      const void* monitor_point)
+      ACE_Time_Value const& /* current_time */,
+      void const* monitor_point)
     {
-      const Monitor_Base* const_mp =
-        reinterpret_cast<const Monitor_Base*> (monitor_point);
-      Monitor_Base* mp = const_cast<Monitor_Base*> (const_mp);
+      Monitor_Base* const mp = const_cast<Monitor_Base*> (
+        static_cast<Monitor_Base const*> (monitor_point));
       mp->update ();
       return 0;
     }
-
-    //====================================================================
 
     Monitor_Admin::Monitor_Admin ()
       : reactor_ (ACE_Reactor::instance ()),
@@ -48,22 +47,28 @@ namespace ACE
 
     bool
     Monitor_Admin::monitor_point (Monitor_Base* monitor_point,
-                                  const ACE_Time_Value& time)
+                                  ACE_Time_Value const& time)
     {
-      /// This call checks for a null monitor_point.
-      bool good_reg_add =
+      if (monitor_point == nullptr)
+        {
+          ACELIB_ERROR_RETURN ((LM_ERROR,
+                                "registration of null monitor failed\n"),
+                               false);
+        }
+
+      bool const good_reg_add =
         Monitor_Point_Registry::instance ()->add (monitor_point);
 
       if (!good_reg_add)
         {
           ACELIB_ERROR_RETURN ((LM_ERROR,
-                             "registration of %s failed\n",
+                             "registration of %C failed\n",
                              monitor_point->name ()),
                              good_reg_add);
         }
       else if (time != ACE_Time_Value::zero)
         {
-          this->reactor_->schedule_timer (&this->auto_updater_,
+          this->reactor_->schedule_timer (std::addressof (this->auto_updater_),
                                           monitor_point,
                                           ACE_Time_Value::zero,
                                           time);
@@ -73,16 +78,16 @@ namespace ACE
     }
 
     Monitor_Base*
-    Monitor_Admin::monitor_point (const char* name)
+    Monitor_Admin::monitor_point (char const * name)
     {
-      ACE_CString name_str (name, nullptr, false);
+      ACE_CString const name_str (name, nullptr, false);
       return Monitor_Point_Registry::instance ()->get (name_str);
     }
 
     void
     Monitor_Admin::auto_query (ACE_Event_Handler* handler,
                                Monitor_Query* query,
-                               const ACE_Time_Value& time)
+                               ACE_Time_Value const& time)
     {
       this->reactor_->schedule_timer (handler,
                                       query,

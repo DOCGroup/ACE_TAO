@@ -58,9 +58,12 @@ namespace ACE_RMCast
 
     for (;; ++sn)
     {
-      Queue::ENTRY* e = 0;
+      Queue::ENTRY* e {};
 
-      if (q.find (sn, e) == -1 || e->int_id_.lost ()) break;
+      if (q.find (sn, e) == -1 || e->int_id_.lost ())
+      {
+        break;
+      }
 
       Message_ptr m (e->int_id_.msg ());
       q.unbind (sn);
@@ -82,7 +85,9 @@ namespace ACE_RMCast
         Lock l (mutex_);
 
         if (stop_)
+        {
           break;
+        }
 
         if (hold_.current_size () != 0)
         {
@@ -92,7 +97,10 @@ namespace ACE_RMCast
           {
             Queue& q = (*i).int_id_;
 
-            if (q.current_size () == 0) continue;
+            if (q.current_size () == 0)
+            {
+              continue;
+            }
 
             track_queue ((*i).ext_id_, q, msgs);
           }
@@ -104,10 +112,10 @@ namespace ACE_RMCast
 
           // Send NRTM.
           //
-          unsigned short max_payload_size (
+          unsigned short const max_payload_size (
             params_.max_packet_size () - max_service_size);
 
-          u32 max_elem (NRTM::max_count (max_payload_size));
+          u32 const max_elem (NRTM::max_count (max_payload_size));
 
           Profile_ptr nrtm (create_nrtm (max_elem));
 
@@ -144,18 +152,24 @@ namespace ACE_RMCast
         Lock l (mutex_);
 
         while (!stop_)
-        {
-          if (cond_.wait (&time) == -1)
           {
-            if (errno != ETIME)
-              ACE_OS::abort ();
-            else
-              break;
+            if (cond_.wait (std::addressof (time)) == -1)
+              {
+                if (errno != ETIME)
+                  {
+                    ACE_OS::abort ();
+                  }
+                else
+                  {
+                    break;
+                  }
+              }
           }
-        }
 
         if (stop_)
-          break;
+          {
+            break;
+          }
       }
     }
   }
@@ -163,10 +177,10 @@ namespace ACE_RMCast
   void Acknowledge::
   track_queue (Address const& addr, Queue& q, Messages& msgs)
   {
-    unsigned short max_payload_size (
+    unsigned short const max_payload_size (
       params_.max_packet_size () - max_service_size);
 
-    u32 max_elem (NAK::max_count (max_payload_size));
+    u32 const max_elem (NAK::max_count (max_payload_size));
     u32 count (0);
 
     Queue::iterator i (q.begin ()), e (q.end ());
@@ -175,13 +189,13 @@ namespace ACE_RMCast
     //
     while (i != e)
     {
-      std::unique_ptr<NAK> nak (new NAK (addr));
+      std::unique_ptr<NAK> nak = std::make_unique<NAK> (addr);
 
       // Inner loop that fills NAK profile with up to max_elem elements.
       //
       for (; i != e && nak->count () < max_elem; ++i)
       {
-        u64 sn ((*i).ext_id_);
+        u64 const sn ((*i).ext_id_);
         Descr& d = (*i).int_id_;
 
         if (d.lost ())
@@ -240,17 +254,18 @@ namespace ACE_RMCast
     //
     Lock l (mutex_);
 
-    if (NRTM const* nrtm = static_cast<NRTM const*> (m->find (NRTM::id)))
+    NRTM const *nrtm = static_cast<NRTM const *> (m->find (NRTM::id));
+    if (nrtm != nullptr)
     {
       for (Map::iterator i (hold_.begin ()), e (hold_.end ()); i != e; ++i)
       {
-        u64 sn (nrtm->find ((*i).ext_id_));
+        u64 const sn (nrtm->find ((*i).ext_id_));
 
         if (sn != 0)
         {
           Queue& q = (*i).int_id_;
 
-          u64 old (q.max_sn ());
+          u64 const old (q.max_sn ());
 
           if (old < sn)
           {
@@ -264,12 +279,12 @@ namespace ACE_RMCast
 
     if (m->find (Data::id) || m->find (NoData::id))
     {
-      Address from (
+      Address const from (
         static_cast<From const*> (m->find (From::id))->address ());
 
-      u64 sn (static_cast<SN const*> (m->find (SN::id))->num ());
+      u64 const sn (static_cast<SN const*> (m->find (SN::id))->num ());
 
-      Map::ENTRY* e = 0;
+      Map::ENTRY* e {};
 
       if (hold_.find (from, e) == -1)
       {
@@ -317,15 +332,16 @@ namespace ACE_RMCast
 
   void Acknowledge::send (Message_ptr m)
   {
-    if (Data const* data = static_cast<Data const*> (m->find (Data::id)))
+    Data const *data = static_cast<Data const *> (m->find (Data::id));
+    if (data != nullptr)
     {
-      size_t max_payload_size (
+      size_t const max_payload_size (
         params_.max_packet_size () - max_service_size);
 
       if (max_payload_size > data->size ())
       {
-        u32 max_size (max_payload_size - data->size ());
-        u32 max_elem (NRTM::max_count (max_size));
+        u32 const max_size (max_payload_size - data->size ());
+        u32 const max_elem (NRTM::max_count (max_size));
 
         if (max_elem > 0)
         {
@@ -334,7 +350,9 @@ namespace ACE_RMCast
           Profile_ptr nrtm (create_nrtm (max_elem));
 
           if (nrtm.get ())
+          {
             m->add (nrtm);
+          }
         }
       }
 
@@ -349,35 +367,41 @@ namespace ACE_RMCast
   {
     // Prepare NRTM.
     //
-    std::unique_ptr<NRTM> nrtm (new NRTM ());
+    std::unique_ptr<NRTM> nrtm = std::make_unique<NRTM> ();
 
     // Gather the information.
     //
     {
       for (Map::iterator i (hold_.begin ()), e (hold_.end ()); i != e; ++i)
       {
-        Address addr ((*i).ext_id_);
-        Queue& q = (*i).int_id_;
+        Address const addr ((*i).ext_id_);
+        Queue const & q = (*i).int_id_;
 
         //@@ Should look for the highest known number.
         //
         nrtm->insert (addr, q.sn ());
 
         if (--max_elem == 0)
-          break;
+          {
+            break;
+          }
       }
     }
 
     if (nrtm->empty ())
-      return Profile_ptr (0);
+      {
+        return Profile_ptr (nullptr);
+      }
     else
-      return Profile_ptr (nrtm.release ());
+      {
+        return Profile_ptr (nrtm.release ());
+      }
   }
 
   ACE_THR_FUNC_RETURN Acknowledge::
   track_thunk (void* obj)
   {
-    reinterpret_cast<Acknowledge*> (obj)->track ();
-    return 0;
+    static_cast<Acknowledge*> (obj)->track ();
+    return ACE_THR_FUNC_RETURN_NULL;
   }
 }

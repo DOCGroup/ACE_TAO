@@ -1,5 +1,3 @@
-// -*- MPC -*-
-
 project(*idl): taoidldefaults, ami {
   IDL_Files {
     SharedIntf.idl

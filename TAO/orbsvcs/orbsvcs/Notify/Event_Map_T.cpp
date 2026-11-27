@@ -7,6 +7,8 @@
 #include "orbsvcs/Notify/Properties.h"
 #include "orbsvcs/Notify/Factory.h"
 
+#include <memory>
+
 #if ! defined (__ACE_INLINE__)
 #include "orbsvcs/Notify/Event_Map_T.inl"
 #endif /* __ACE_INLINE__ */
@@ -14,15 +16,10 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class PROXY, class ACE_LOCK>
-TAO_Notify_Event_Map_T<PROXY, ACE_LOCK>::TAO_Notify_Event_Map_T ()
-  :proxy_count_ (0)
-{
-}
+TAO_Notify_Event_Map_T<PROXY, ACE_LOCK>::TAO_Notify_Event_Map_T () = default;
 
 template <class PROXY, class ACE_LOCK>
-TAO_Notify_Event_Map_T<PROXY, ACE_LOCK>::~TAO_Notify_Event_Map_T ()
-{
-}
+TAO_Notify_Event_Map_T<PROXY, ACE_LOCK>::~TAO_Notify_Event_Map_T () = default;
 
 template <class PROXY, class ACE_LOCK> void
 TAO_Notify_Event_Map_T<PROXY, ACE_LOCK>::init ()
@@ -51,15 +48,15 @@ TAO_Notify_Event_Map_T<PROXY, ACE_LOCK>::disconnect (PROXY* proxy)
 }
 
 template <class PROXY, class ACE_LOCK> int
-TAO_Notify_Event_Map_T<PROXY, ACE_LOCK>::insert (PROXY* proxy, const TAO_Notify_EventType& event_type)
+TAO_Notify_Event_Map_T<PROXY, ACE_LOCK>::insert (PROXY* proxy, TAO_Notify_EventType const& event_type)
 {
-  ENTRY* entry = nullptr;
+  ENTRY* entry {};
 
   int result = -1;
 
-  if (event_type.is_special () == 1)
+  if (event_type.is_special ())
     {
-      entry = &this->broadcast_entry_;
+      entry = std::addressof (this->broadcast_entry_);
 
       result = 0;
     }
@@ -83,10 +80,14 @@ TAO_Notify_Event_Map_T<PROXY, ACE_LOCK>::insert (PROXY* proxy, const TAO_Notify_
     ACE_WRITE_GUARD_RETURN (ACE_LOCK, ace_mon, this->lock_, -1);
 
     if (map_.bind (event_type, entry) == -1)
-      throw CORBA::NO_MEMORY ();
+      {
+        throw CORBA::NO_MEMORY ();
+      }
 
-    if (this->event_types_.insert (event_type) == -1)
-      return -1;
+    if (this->event_types_.add (event_type) == -1)
+      {
+        return -1;
+      }
 
     return 1;
   }
@@ -99,13 +100,13 @@ TAO_Notify_Event_Map_T<PROXY, ACE_LOCK>::insert (PROXY* proxy, const TAO_Notify_
 }
 
 template <class PROXY, class ACE_LOCK> int
-TAO_Notify_Event_Map_T<PROXY, ACE_LOCK>::remove (PROXY* proxy, const TAO_Notify_EventType& event_type)
+TAO_Notify_Event_Map_T<PROXY, ACE_LOCK>::remove (PROXY* proxy, TAO_Notify_EventType const& event_type)
 {
-  ENTRY* entry = nullptr;
+  ENTRY* entry {};
 
-  if (event_type.is_special () == 1)
+  if (event_type.is_special ())
     {
-      entry = &this->broadcast_entry_;
+      entry = std::addressof (this->broadcast_entry_);
 
       entry->disconnected (proxy);
     }
@@ -136,10 +137,14 @@ TAO_Notify_Event_Map_T<PROXY, ACE_LOCK>::remove (PROXY* proxy, const TAO_Notify_
               this->map_.unbind (event_type);
 
               if (entry->_decr_refcnt () == 0)
-                delete entry;
+                {
+                  delete entry;
+                }
 
-              if (this->event_types_.remove (event_type) == -1)
-                return -1;
+              if (this->event_types_.erase (event_type) == -1)
+                {
+                  return -1;
+                }
 
               return 1;
             }

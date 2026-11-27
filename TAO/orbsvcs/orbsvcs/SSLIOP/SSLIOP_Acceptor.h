@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    SSLIOP_Acceptor.h
  *
@@ -9,8 +6,6 @@
  *  @author Carlos O'Ryan <coryan@uci.edu>
  *  @author Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_SSLIOP_ACCEPTOR_H
 #define TAO_SSLIOP_ACCEPTOR_H
@@ -30,6 +25,8 @@
 #include "orbsvcs/SSLIOPC.h"  /* CSIv1 */
 #include "orbsvcs/CSIIOPC.h"  /* CSIv2 */
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
@@ -45,12 +42,10 @@ namespace TAO
       : public IIOP_SSL_Acceptor
     {
     public:
-      /// Constructor.
       Acceptor (::Security::QOP qop,
-                const ACE_Time_Value & timeout,
+                ACE_Time_Value const & timeout,
                 bool check_host);
 
-      /// Destructor.
       ~Acceptor () override;
 
       using BASE_ACCEPTOR = TAO_Strategy_Acceptor<Connection_Handler, ACE_SSL_SOCK_Acceptor>;
@@ -63,33 +58,33 @@ namespace TAO
        *
        * Check the documentation in tao/Pluggable.h for details.
        */
-      //@{
+      /// @{
       int open (TAO_ORB_Core *orb_core,
                 ACE_Reactor *reactor,
                 int version_major,
                 int version_minor,
-                const char *address,
-                const char *options = nullptr) override;
+                char const *address,
+                char const *options = nullptr) override;
       int open_default (TAO_ORB_Core *orb_core,
                         ACE_Reactor *reactor,
                         int version_major,
                         int version_minor,
-                        const char *options = nullptr) override;
+                        char const *options = nullptr) override;
       int close () override;
-      int create_profile (const TAO::ObjectKey &object_key,
+      int create_profile (TAO::ObjectKey const &object_key,
                           TAO_MProfile &mprofile,
                           CORBA::Short priority) override;
-      int is_collocated (const TAO_Endpoint* endpoint) override;
-      //@}
+      bool is_collocated (TAO_Endpoint const* endpoint) override;
+      /// @}
 
       /// Retrieve the CSIv1 SSLIOP::SSL component associated with the
       /// endpoints set up by this acceptor.
-      const ::SSLIOP::SSL &ssl_component () const;
+      ::SSLIOP::SSL const &ssl_component () const;
 
     private:
       /// Implement the common part of the open*() methods.
       int ssliop_open_i (TAO_ORB_Core *orb_core,
-                         const ACE_INET_Addr& addr,
+                         ACE_INET_Addr const& addr,
                          ACE_Reactor *reactor);
 
       /// Parse protocol specific options.
@@ -103,13 +98,13 @@ namespace TAO
 
       /// Helper method to add a new profile to the mprofile for
       /// each endpoint.
-      int create_new_profile (const TAO::ObjectKey &object_key,
+      int create_new_profile (TAO::ObjectKey const &object_key,
                               TAO_MProfile &mprofile,
                               CORBA::Short priority);
 
       /// Helper method to create a profile that contains all of
       /// our endpoints.
-      int create_shared_profile (const TAO::ObjectKey &object_key,
+      int create_shared_profile (TAO::ObjectKey const &object_key,
                                  TAO_MProfile &mprofile,
                                  CORBA::Short priority);
 
@@ -122,9 +117,12 @@ namespace TAO
        *
        * Strategies used when accepting an incoming connection.
        */
-      CREATION_STRATEGY *creation_strategy_ {};
-      CONCURRENCY_STRATEGY *concurrency_strategy_ {};
-      ACCEPT_STRATEGY *accept_strategy_ {};
+      /// @{
+      /// Owned here; ssl_acceptor_ borrows these strategy pointers.
+      std::unique_ptr<CREATION_STRATEGY> creation_strategy_ {};
+      std::unique_ptr<CONCURRENCY_STRATEGY> concurrency_strategy_ {};
+      std::unique_ptr<ACCEPT_STRATEGY> accept_strategy_ {};
+      /// @}
 
       /// The CSIv1 SSL component.
       /**
@@ -147,7 +145,7 @@ namespace TAO
        */
       ACE_Time_Value const timeout_;
 
-      bool check_host_;
+      bool const check_host_;
     };
   }  // End SSLIOP namespace.
 }  // End TAO namespace.

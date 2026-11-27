@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  * @file Client_ORBInitializer.h
  *
  * @author Iliyan jeliazkov <iliyan@ociweb.com>
  */
-//=============================================================================
 
 #ifndef CLIENT_ORBINITIALIZER_T_H
 #define CLIENT_ORBINITIALIZER_T_H
@@ -30,12 +26,17 @@ namespace Test
     public virtual ::CORBA::LocalObject
   {
   public:
-    Client_ORBInitializer (PortableInterceptor::ClientRequestInterceptor_ptr interceptor);
-    virtual ~Client_ORBInitializer ();
+    explicit Client_ORBInitializer (PortableInterceptor::ClientRequestInterceptor_ptr interceptor);
+    ~Client_ORBInitializer () override;
 
-    virtual void pre_init(PortableInterceptor::ORBInitInfo*);
+    Client_ORBInitializer (Client_ORBInitializer const &) = delete;
+    Client_ORBInitializer (Client_ORBInitializer &&) = delete;
+    Client_ORBInitializer &operator= (Client_ORBInitializer const &) = delete;
+    Client_ORBInitializer &operator= (Client_ORBInitializer &&) = delete;
 
-    virtual void post_init(PortableInterceptor::ORBInitInfo*);
+    void pre_init (PortableInterceptor::ORBInitInfo *) override;
+
+    void post_init (PortableInterceptor::ORBInitInfo *) override;
 
   private:
     PortableInterceptor::ClientRequestInterceptor_var interceptor_;
@@ -45,5 +46,4 @@ namespace Test
 #include /**/ "ace/post.h"
 
 #endif  /* CLIENT_ORBINITIALIZER_T_H */
-
 

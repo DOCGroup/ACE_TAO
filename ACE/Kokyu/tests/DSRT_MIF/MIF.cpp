@@ -1,15 +1,16 @@
 #include "ace/ACE.h"
 #include "ace/Task.h"
 #include "ace/Sched_Params.h"
-#include "ace/Atomic_Op.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Barrier.h"
 #include "ace/Lock_Adapter_T.h"
 #include "ace/Countdown_Time.h"
+#include <atomic>
+#include <memory>
 
 #include "Kokyu_dsrt.h"
 
-ACE_Atomic_Op<ACE_SYNCH_MUTEX, long> guid=0;
+std::atomic<int> guid {};
 
 struct mif_scheduler_traits
 {
@@ -19,74 +20,67 @@ struct mif_scheduler_traits
   {
     using Importance_t = long;
 
-    long importance_;
+    long importance_ {};
   };
-
-  /*
-  static Time_t now()
-  {
-    ACE_Time_Value now = ACE_OS::gettimeofday ();
-    return now.sec () * 10000000 + now.usec () * 10;
-  }
-  */
 
   using QoSComparator_t = Kokyu::MIF_Comparator<QoSDescriptor_t>;
 
   struct Guid_Hash
   {
-    u_long operator () (const Guid_t& guid)
+    u_long operator () (Guid_t guid) const
     {
       return guid;
     }
   };
 };
 
-
 class MyTask : public ACE_Task_Base
 {
 public:
   MyTask (ACE_Barrier& bar,
           Kokyu::DSRT_Dispatcher<mif_scheduler_traits>* dispatcher,
-          mif_scheduler_traits::QoSDescriptor_t& qos,
+          mif_scheduler_traits::QoSDescriptor_t const &qos,
           int exec_duration)
-    :barrier_ (bar),
-     dispatcher_ (dispatcher),
-     qos_ (qos),
-     guid_ (++guid),
-     exec_duration_ (exec_duration)
+    : barrier_ (bar),
+      dispatcher_ (dispatcher),
+      qos_ (qos),
+      guid_ (++guid),
+      exec_duration_ (exec_duration)
   {}
 
-  int svc ();
+  MyTask (MyTask const &) = delete;
+  MyTask (MyTask &&) = delete;
+  MyTask &operator= (MyTask const &) = delete;
+  MyTask &operator= (MyTask &&) = delete;
+
+  int svc () override;
 
  private:
   ACE_Barrier& barrier_;
-  Kokyu::DSRT_Dispatcher<mif_scheduler_traits>* dispatcher_;
-  mif_scheduler_traits::QoSDescriptor_t qos_;
-  mif_scheduler_traits::Guid_t guid_;
-  int exec_duration_;
+  Kokyu::DSRT_Dispatcher<mif_scheduler_traits>* const dispatcher_; // Non-owning.
+  mif_scheduler_traits::QoSDescriptor_t const qos_;
+  mif_scheduler_traits::Guid_t const guid_;
+  int const exec_duration_;
 };
 
 int MyTask::svc ()
 {
-  ACE_hthread_t thr_handle;
-  ACE_Thread::self (thr_handle);
-
   ACE_DEBUG ((LM_DEBUG, "(%t|%T): task activated\n"));
-  ACE_ASSERT (dispatcher_ != 0);
+  ACE_ASSERT (dispatcher_ != nullptr);
 
   (void) dispatcher_->schedule (guid_, qos_);
 
   barrier_.wait ();
 
-  long prime_number = 9619899;
+  long const prime_number = 9619899;
 
   ACE_High_Res_Timer timer;
-  ACE_Time_Value elapsed_time;
-  ACE_Time_Value seconds_tracker(0,0);
+  ACE_Time_Value elapsed_time {};
+  ACE_Time_Value seconds_tracker {0, 0};
 
-  ACE_Time_Value one_second (1,0);
-  ACE_Time_Value compute_count_down_time (exec_duration_, 0);
-  ACE_Countdown_Time compute_count_down (&compute_count_down_time);
+  ACE_Time_Value const one_second {1, 0};
+  ACE_Time_Value compute_count_down_time {exec_duration_, 0};
+  ACE_Countdown_Time compute_count_down (std::addressof (compute_count_down_time));
 
   timer.start ();
   while (compute_count_down_time > ACE_Time_Value::zero)
@@ -100,13 +94,13 @@ int MyTask::svc ()
       timer.elapsed_time (elapsed_time);
       seconds_tracker += elapsed_time;
       if (seconds_tracker >= one_second)
-      {
-        seconds_tracker.set (0,0);
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%t) Currently running guid=%d")
-                    ACE_TEXT (", qos_.importance=%d\n"),
-                    guid_, qos_.importance_));
-      }
+        {
+          seconds_tracker.set (0, 0);
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%t) Currently running guid=%d")
+                      ACE_TEXT (", qos_.importance=%Ld\n"),
+                      guid_, qos_.importance_));
+        }
       timer.reset ();
       timer.start ();
     }
@@ -115,17 +109,14 @@ int MyTask::svc ()
   return 0;
 }
 
-
-
-
-int ACE_TMAIN (int,ACE_TCHAR**)
+int ACE_TMAIN (int, ACE_TCHAR **)
 {
   Kokyu::DSRT_ConfigInfo config_info;
 
   //  config_info.scheduler_type_ = Kokyu::SCHED_MIF;
   config_info.impl_type_ = Kokyu::DSRT_OS_BASED;
 
-  ACE_Barrier bar (3);
+  ACE_Barrier bar {3};
 
   ACE_DEBUG ((LM_DEBUG, "before create_dispatcher\n" ));
 
@@ -137,13 +128,11 @@ int ACE_TMAIN (int,ACE_TCHAR**)
 
   ACE_DEBUG ((LM_DEBUG, "after create_dispatcher\n" ));
 
-  ACE_ASSERT (disp.get () != 0);
+  ACE_ASSERT (disp.get () != nullptr);
 
-  mif_scheduler_traits::QoSDescriptor_t qos1, qos2, qos3;
-
-  qos1.importance_ = 1;
-  qos2.importance_ = 2;
-  qos3.importance_ = 3;
+  mif_scheduler_traits::QoSDescriptor_t const qos1 {1};
+  mif_scheduler_traits::QoSDescriptor_t const qos2 {2};
+  mif_scheduler_traits::QoSDescriptor_t const qos3 {3};
 
   MyTask mytask1 (bar, disp.get (), qos1, 15);
   MyTask mytask2 (bar, disp.get (), qos2, 6);
@@ -155,25 +144,35 @@ int ACE_TMAIN (int,ACE_TCHAR**)
     {
       flags = THR_BOUND;
       if (mytask1.activate (flags) == -1)
-        ACE_ERROR ((LM_ERROR,
-                        "EC (%P|%t) cannot activate task\n"));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "EC (%P|%t) cannot activate task\n"));
+        }
     }
 
   if (mytask2.activate (flags) == -1)
     {
       flags = THR_BOUND;
       if (mytask2.activate (flags) == -1)
-        ACE_ERROR ((LM_ERROR,
-                        "EC (%P|%t) cannot activate task\n"));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "EC (%P|%t) cannot activate task\n"));
+        }
     }
 
   if (mytask3.activate (flags) == -1)
     {
       flags = THR_BOUND;
       if (mytask3.activate (flags) == -1)
-        ACE_ERROR ((LM_ERROR,
-                        "EC (%P|%t) cannot activate task\n"));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "EC (%P|%t) cannot activate task\n"));
+        }
     }
+
+  mytask1.wait ();
+  mytask2.wait ();
+  mytask3.wait ();
 
   disp->shutdown ();
 

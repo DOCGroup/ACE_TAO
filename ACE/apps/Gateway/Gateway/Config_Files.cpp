@@ -7,8 +7,6 @@
 #include "ace/Log_Msg.h"
 #endif /* GATEWAY_DEBUGGING */
 
-
-
 // This fixes a nasty bug with cfront-based compilers (like
 // Centerline).
 using FP_RETURN_TYPE = FPRT::Return_Type;
@@ -17,45 +15,59 @@ FP_RETURN_TYPE
 Consumer_Config_File_Parser::read_entry (Consumer_Config_Info &entry,
                                          int &line_number)
 {
-  FP_RETURN_TYPE result;
+  FP_RETURN_TYPE result {};
 
   // Increment the line count.
-  line_number++;
+  ++line_number;
 
   // Ignore comments, check for EOF and EOLINE if this succeeds, we
   // have our connection id.
 
   while ((result = this->getint (entry.connection_id_)) != FPRT::RT_SUCCESS)
-    if (result == FPRT::RT_EOFILE)
-      return FPRT::RT_EOFILE;
-    else if (result == FPRT::RT_EOLINE
-             || result == FPRT::RT_COMMENT)
-      line_number++;
+    {
+      if (result == FPRT::RT_EOFILE)
+        {
+          return FPRT::RT_EOFILE;
+        }
+      else if (result == FPRT::RT_EOLINE
+               || result == FPRT::RT_COMMENT)
+        {
+          ++line_number;
+        }
+    }
 
   // Get the payload type.
   result = this->getint (entry.type_);
   if (result != FPRT::RT_SUCCESS)
-    return result;
+    {
+      return result;
+    }
 
   // get all the consumers.
   entry.total_consumers_ = 0;
 
   while ((result = this->getint
           (entry.consumers_[entry.total_consumers_])) == FPRT::RT_SUCCESS)
-    ++entry.total_consumers_; // do nothing (should check against max...)
+    {
+      ++entry.total_consumers_; // do nothing (should check against max...)
+    }
 
   if (result == FPRT::RT_EOLINE || result == FPRT::RT_EOFILE)
-    return FPRT::RT_SUCCESS;
+    {
+      return FPRT::RT_SUCCESS;
+    }
   else
-    return result;
+    {
+      return result;
+    }
 }
 
 FP_RETURN_TYPE
 Connection_Config_File_Parser::read_entry (Connection_Config_Info &entry,
                                            int &line_number)
 {
-  char buf[BUFSIZ];
-  FP_RETURN_TYPE result;
+  char buf[BUFSIZ] {};
+  FP_RETURN_TYPE result {};
 
   // Increment the line count.
   ++line_number;
@@ -64,18 +76,26 @@ Connection_Config_File_Parser::read_entry (Connection_Config_Info &entry,
   // have our connection id
 
   while ((result = this->getint (entry.connection_id_)) != FPRT::RT_SUCCESS)
-    if (result == FPRT::RT_EOFILE)
-      return FPRT::RT_EOFILE;
-    else if (result == FPRT::RT_EOLINE
-             || result == FPRT::RT_COMMENT)
-      ++line_number;
+    {
+      if (result == FPRT::RT_EOFILE)
+        {
+          return FPRT::RT_EOFILE;
+        }
+      else if (result == FPRT::RT_EOLINE
+               || result == FPRT::RT_COMMENT)
+        {
+          ++line_number;
+        }
+    }
 
   // Get the hostname.
   result = this->getword (entry.host_);
   if (result != FPRT::RT_SUCCESS)
-    return result;
+    {
+      return result;
+    }
 
-  ACE_INT32 port;
+  ACE_INT32 port {};
 
   // Get the port number.
   result = this->getint (port);
@@ -84,20 +104,32 @@ Connection_Config_File_Parser::read_entry (Connection_Config_Info &entry,
       // Get the proxy role, i.e., 'C' (Consumer) or 'S' (Supplier).
       result = this->getword (buf);
       if (result != FPRT::RT_SUCCESS)
-        return result;
+        {
+          return result;
+        }
       else
-        entry.connection_role_ = buf[0];
+        {
+          entry.connection_role_ = buf[0];
+        }
 
       if (entry.connection_role_ == 'C')
-        entry.remote_port_ = Options::instance ()->consumer_connector_port ();
+        {
+          entry.remote_port_ = Options::instance ()->consumer_connector_port ();
+        }
       else if (entry.connection_role_ == 'S')
-        entry.remote_port_ = Options::instance ()->supplier_connector_port ();
+        {
+          entry.remote_port_ = Options::instance ()->supplier_connector_port ();
+        }
       else
-        // Yikes, this is a *weird* error!
-        entry.remote_port_ = 0;
+        {
+          // Yikes, this is a *weird* error!
+          entry.remote_port_ = 0;
+        }
     }
   else if (result != FPRT::RT_SUCCESS)
-    return result;
+    {
+      return result;
+    }
   else
     {
       entry.remote_port_ = (unsigned short) port;
@@ -105,35 +137,53 @@ Connection_Config_File_Parser::read_entry (Connection_Config_Info &entry,
       // Get the proxy role, i.e., 'C' (Consumer) or 'S' (Supplier).
       result = this->getword (buf);
       if (result != FPRT::RT_SUCCESS)
-        return result;
+        {
+          return result;
+        }
       else
-        entry.connection_role_ = buf[0];
+        {
+          entry.connection_role_ = buf[0];
+        }
     }
 
   // Get the max retry delay.
   result = this->getint (entry.max_retry_timeout_);
   if (result == FPRT::RT_DEFAULT)
-    entry.max_retry_timeout_ = Options::instance ()->max_timeout ();
+    {
+      entry.max_retry_timeout_ = Options::instance ()->max_timeout ();
+    }
   else if (result != FPRT::RT_SUCCESS)
-    return result;
+    {
+      return result;
+    }
 
   // Get the local port number.
   result = this->getint (port);
   if (result == FPRT::RT_DEFAULT)
-    entry.local_port_ = 0; // @@ Should make this an option.
+    {
+      entry.local_port_ = 0; // @@ Should make this an option.
+    }
   else if (result != FPRT::RT_SUCCESS)
-    return result;
+    {
+      return result;
+    }
   else
-    entry.local_port_ = (unsigned short) port;
+    {
+      entry.local_port_ = (unsigned short) port;
+    }
 
-  ACE_INT32 priority;
+  ACE_INT32 priority {};
 
   // Get the priority.
   result = this->getint (priority);
   if (result != FPRT::RT_SUCCESS)
-    return result;
+    {
+      return result;
+    }
   else
-    entry.priority_ = priority;
+    {
+      entry.priority_ = priority;
+    }
 
   return FPRT::RT_SUCCESS;
 }
@@ -142,45 +192,49 @@ Connection_Config_File_Parser::read_entry (Connection_Config_Info &entry,
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  FP_RETURN_TYPE result;
-  int line_number = 0;
+  FP_RETURN_TYPE result {};
+  int line_number {};
 
   {
     Connection_Config_Info entry;
-    Connection_Config_File_Parser connection_config_file;
+    Connection_Config_File_Parser connection_parser;
 
-    connection_config_file.open (argc > 1 ? argv[1] : "connection_config");
-
-    int line_number = 0;
+    connection_parser.open (argc > 1 ? argv[1] : "connection_config");
 
     ACE_DEBUG ((LM_DEBUG,
                 "ConnID\tHost\t\tRPort\tRole\tRetry\tLPort\tPriority\n"));
 
     // Read config file line at a time.
-    while ((result = connection_config_file.read_entry (entry, line_number)) != FPRT::RT_EOFILE)
-      if (result == FPRT::RT_PARSE_ERROR)
-        ACE_DEBUG ((LM_DEBUG,
-                    "Error line %d.\n",
-                    line_number));
-      else
-        ACE_DEBUG ((LM_DEBUG,
-                    "%d\t%s\t%d\t%c\t%d\t%d\t%d\n",
-                    entry.connection_id_,
-                    entry.host_,
-                    entry.remote_port_,
-                    entry.connection_role_,
-                    entry.max_retry_timeout_,
-                    entry.local_port_,
-                    entry.priority_));
+    while ((result = connection_parser.read_entry (entry, line_number)) != FPRT::RT_EOFILE)
+      {
+        if (result == FPRT::RT_PARSE_ERROR)
+          {
+            ACE_DEBUG ((LM_DEBUG,
+                        "Error line %d.\n",
+                        line_number));
+          }
+        else
+          {
+            ACE_DEBUG ((LM_DEBUG,
+                        "%d\t%s\t%d\t%c\t%d\t%d\t%d\n",
+                        entry.connection_id_,
+                        entry.host_,
+                        entry.remote_port_,
+                        entry.connection_role_,
+                        entry.max_retry_timeout_,
+                        entry.local_port_,
+                        entry.priority_));
+          }
+      }
 
-    connection_config_file.close ();
+    connection_parser.close ();
   }
 
   {
     Consumer_Config_Info entry;
-    Consumer_Config_File_Parser consumer_config_file;
+    Consumer_Config_File_Parser consumer_parser;
 
-    consumer_config_file.open (argc > 2 ? argv[2] : "consumer_config");
+    consumer_parser.open (argc > 2 ? argv[2] : "consumer_config");
 
     line_number = 0;
 
@@ -188,27 +242,35 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                 "\nConnID\tLogic\tPayload\tDestinations\n"));
 
     // Read config file line at a time.
-    while ((result = consumer_config_file.read_entry (entry, line_number)) != FPRT::RT_EOFILE)
-      if (result == FPRT::RT_PARSE_ERROR)
-        ACE_DEBUG ((LM_DEBUG,
-                    "Error line %d.\n",
-                    line_number));
-      else
+    while ((result = consumer_parser.read_entry (entry, line_number)) != FPRT::RT_EOFILE)
         {
-          ACE_DEBUG ((LM_DEBUG,
-                      "%d\t%d\t",
-                      entry.connection_id_,
-                      entry.type_));
+          if (result == FPRT::RT_PARSE_ERROR)
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "Error line %d.\n",
+                          line_number));
+            }
+          else
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "%d\t%d\t",
+                          entry.connection_id_,
+                          entry.type_));
 
-          while (--entry.total_consumers_ >= 0)
-            ACE_DEBUG ((LM_DEBUG,
-                        "%d,",
-                        entry.consumers_[entry.total_consumers_]));
-          ACE_DEBUG ((LM_DEBUG,
-                      "\n"));
+              ACE_INT32 consumer_index = entry.total_consumers_;
+              while (consumer_index > 0)
+                {
+                  --consumer_index;
+                  ACE_DEBUG ((LM_DEBUG,
+                              "%d,",
+                              entry.consumers_[consumer_index]));
+                }
+              ACE_DEBUG ((LM_DEBUG,
+                          "\n"));
+            }
         }
 
-    consumer_config_file.close ();
+    consumer_parser.close ();
   }
 
   return 0;

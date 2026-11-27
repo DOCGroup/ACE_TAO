@@ -1,4 +1,3 @@
-//========================================================================
 /**
  * @file  StubTest.cpp
  *
@@ -7,11 +6,8 @@
  *
  * @author Frank Rehberger
  */
-//=========================================================================
-
 
 #include "ace/Log_Msg.h"
-#include "ace/OS_NS_string.h"
 #include "tao/ORB.h"
 #include "tao/Environment.h"
 #include "tao/SystemException.h"
@@ -19,6 +15,8 @@
 #include "tao/Stub.h"
 #include "tao/Profile.h"
 #include "tao/IIOP_Profile.h"
+
+#include <cstring>
 
 #ifndef FRANKS_ASSERT
 #define FRANKS_ASSERT(X) \
@@ -28,16 +26,16 @@
 #endif
 
 static bool
-is_endpoint (TAO_Profile *profile, const char *host, unsigned short port)
+is_endpoint (TAO_Profile *profile, char const *host, unsigned short port)
   {
     TAO_IIOP_Profile *iiop = dynamic_cast<TAO_IIOP_Profile*> (profile);
     TAO_Endpoint *endpoint = iiop->endpoint ();
     TAO_IIOP_Endpoint *iiop_endpoint = dynamic_cast<TAO_IIOP_Endpoint*> (endpoint);
-    const char     * endpoint_host = iiop_endpoint->host();
-    unsigned short   endpoint_port = iiop_endpoint->port();
+    char const *endpoint_host = iiop_endpoint->host();
+    unsigned short const endpoint_port = iiop_endpoint->port();
 
     bool const retval =
-      ACE_OS::strcmp (endpoint_host, host)==0
+      std::strcmp (endpoint_host, host) == 0
       && endpoint_port == port;
 
     return retval;
@@ -49,17 +47,17 @@ equal_endpoint (TAO_Profile *profile, TAO_Profile *other)
     TAO_IIOP_Profile *iiop = dynamic_cast<TAO_IIOP_Profile*> (profile);
     TAO_Endpoint *endpoint = iiop->endpoint ();
     TAO_IIOP_Endpoint *iiop_endpoint = dynamic_cast<TAO_IIOP_Endpoint*> (endpoint);
-    const char     * endpoint_host = iiop_endpoint->host();
-    unsigned short   endpoint_port = iiop_endpoint->port();
+    char const *endpoint_host = iiop_endpoint->host();
+    unsigned short const endpoint_port = iiop_endpoint->port();
 
     TAO_IIOP_Profile *other_iiop = dynamic_cast<TAO_IIOP_Profile*> (other);
     TAO_Endpoint *other_endpoint = other_iiop->endpoint ();
     TAO_IIOP_Endpoint *other_iiop_endpoint = dynamic_cast<TAO_IIOP_Endpoint*> (other_endpoint);
-    const char     * other_endpoint_host = other_iiop_endpoint->host();
-    unsigned short   other_endpoint_port = other_iiop_endpoint->port();
+    char const *other_endpoint_host = other_iiop_endpoint->host();
+    unsigned short const other_endpoint_port = other_iiop_endpoint->port();
 
     bool const retval =
-      ACE_OS::strcmp (endpoint_host, other_endpoint_host)==0
+      std::strcmp (endpoint_host, other_endpoint_host) == 0
       && endpoint_port == other_endpoint_port;
 
     return retval;
@@ -76,7 +74,9 @@ marshaled_equal_to_other (CORBA::ORB_ptr orb, CORBA::Object_ptr obj, TAO_MProfil
   TAO_MProfile *copy_mprofile  = &(stub_copy->base_profiles ());
 
   if (copy_mprofile->size() != other_mprofile->size())
+  {
     return false;
+  }
 
   for (size_t i=0; i<copy_mprofile->size(); ++i)
     {
@@ -84,7 +84,9 @@ marshaled_equal_to_other (CORBA::ORB_ptr orb, CORBA::Object_ptr obj, TAO_MProfil
       TAO_Profile *other_profile = other_mprofile->get_profile (i);
 
       if (! equal_endpoint (copy_profile, other_profile) )
+      {
         return false;
+      }
     }
 
   return true;
@@ -101,7 +103,7 @@ test_forward_permanent (CORBA::ORB_ptr orb)
   TAO_Stub *stub1 = obj1->_stubobj ();
   TAO_Stub *stub4 = obj4->_stubobj ();
 
-  TAO_Profile *profile = 0;
+  TAO_Profile *profile {};
 
   profile = stub1->profile_in_use ();
 
@@ -110,7 +112,7 @@ test_forward_permanent (CORBA::ORB_ptr orb)
   // ----- forward to obj2 permanently
   stub1->add_forward_profiles (stub4->base_profiles(), true /* permanent */);
 
-  FRANKS_ASSERT (stub1->forward_profiles () != 0);
+  FRANKS_ASSERT (stub1->forward_profiles () != nullptr);
 
   profile = stub1->profile_in_use ();
 
@@ -125,14 +127,13 @@ test_forward_permanent (CORBA::ORB_ptr orb)
 
   FRANKS_ASSERT (is_endpoint (profile, "192.168.1.3", 4444));
 
-
   // ----- reached end, next_profile() must yield NULL
 
   profile = stub1->next_profile ();
 
-  FRANKS_ASSERT (profile == 0);
+  FRANKS_ASSERT (profile == nullptr);
 
-  FRANKS_ASSERT (stub1->forward_profiles () != 0);
+  FRANKS_ASSERT (stub1->forward_profiles () != nullptr);
 }
 
 static void
@@ -154,7 +155,7 @@ test_forward_permanent_mix (CORBA::ORB_ptr orb)
   TAO_Stub *stub4 = obj4->_stubobj ();
   TAO_Stub *stub5 = obj5->_stubobj ();
 
-  TAO_Profile *profile = 0;
+  TAO_Profile *profile {};
 
   profile = stub1->profile_in_use ();
 
@@ -163,7 +164,7 @@ test_forward_permanent_mix (CORBA::ORB_ptr orb)
   // ----- forward to obj2
   stub1->add_forward_profiles (stub2->base_profiles(), false /* permanent */);
 
-  FRANKS_ASSERT (stub1->forward_profiles () != 0);
+  FRANKS_ASSERT (stub1->forward_profiles () != nullptr);
 
   profile = stub1->profile_in_use ();
 
@@ -172,7 +173,7 @@ test_forward_permanent_mix (CORBA::ORB_ptr orb)
   // ----- forward to obj3
   stub1->add_forward_profiles (stub3->base_profiles(), false /* permanent */);
 
-  FRANKS_ASSERT (stub1->forward_profiles () != 0);
+  FRANKS_ASSERT (stub1->forward_profiles () != nullptr);
 
   profile = stub1->profile_in_use ();
 
@@ -184,7 +185,7 @@ test_forward_permanent_mix (CORBA::ORB_ptr orb)
   // ----- forward to obj4 permanently
   stub1->add_forward_profiles (stub4->base_profiles(), true /* permanent */);
 
-  FRANKS_ASSERT (stub1->forward_profiles () != 0);
+  FRANKS_ASSERT (stub1->forward_profiles () != nullptr);
 
   profile = stub1->profile_in_use ();
 
@@ -201,7 +202,7 @@ test_forward_permanent_mix (CORBA::ORB_ptr orb)
   // ----- forward to obj2
   stub1->add_forward_profiles (stub2->base_profiles(), false /* permanent */);
 
-  FRANKS_ASSERT (stub1->forward_profiles () != 0);
+  FRANKS_ASSERT (stub1->forward_profiles () != nullptr);
 
   profile = stub1->profile_in_use ();
 
@@ -210,7 +211,7 @@ test_forward_permanent_mix (CORBA::ORB_ptr orb)
   // ----- forward to obj3
   stub1->add_forward_profiles (stub3->base_profiles(), false /* permanent */);
 
-  FRANKS_ASSERT (stub1->forward_profiles () != 0);
+  FRANKS_ASSERT (stub1->forward_profiles () != nullptr);
 
   profile = stub1->profile_in_use ();
 
@@ -222,7 +223,7 @@ test_forward_permanent_mix (CORBA::ORB_ptr orb)
   // ----- forward to obj5 permanently
   stub1->add_forward_profiles (stub5->base_profiles(), true /* permanent */);
 
-  FRANKS_ASSERT (stub1->forward_profiles () != 0);
+  FRANKS_ASSERT (stub1->forward_profiles () != nullptr);
 
   profile = stub1->profile_in_use ();
 
@@ -243,7 +244,7 @@ test_forward_permanent_mix (CORBA::ORB_ptr orb)
 
   profile = stub1->next_profile ();
 
-  FRANKS_ASSERT (profile == 0);
+  FRANKS_ASSERT (profile == nullptr);
 }
 
 static void
@@ -259,7 +260,7 @@ test_forward (CORBA::ORB_ptr orb)
   TAO_Stub *stub2 = obj2->_stubobj ();
   TAO_Stub *stub3 = obj3->_stubobj ();
 
-  TAO_Profile *profile = 0;
+  TAO_Profile *profile {};
 
   profile = stub1->profile_in_use ();
 
@@ -268,7 +269,7 @@ test_forward (CORBA::ORB_ptr orb)
   // ----- forward to obj2
   stub1->add_forward_profiles (stub2->base_profiles(), false /* permanent */);
 
-  FRANKS_ASSERT (stub1->forward_profiles () != 0);
+  FRANKS_ASSERT (stub1->forward_profiles () != nullptr);
 
   profile = stub1->profile_in_use ();
 
@@ -278,7 +279,7 @@ test_forward (CORBA::ORB_ptr orb)
 
   stub1->add_forward_profiles (stub3->base_profiles(), false /* permanent */);
 
-  FRANKS_ASSERT (stub1->forward_profiles () != 0);
+  FRANKS_ASSERT (stub1->forward_profiles () != nullptr);
 
   profile = stub1->profile_in_use ();
 
@@ -305,7 +306,7 @@ test_forward (CORBA::ORB_ptr orb)
 
   FRANKS_ASSERT (is_endpoint (profile, "192.168.1.3", 1111));
 
-  FRANKS_ASSERT (stub1->forward_profiles () == 0);
+  FRANKS_ASSERT (stub1->forward_profiles () == nullptr);
 
   // ----- reached end, next_profile() must yield NULL
 
@@ -328,12 +329,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       test_forward_permanent (orb.in());
       test_forward_permanent_mix (orb.in());
     }
-  catch (const CORBA::SystemException& sysex)
+  catch (CORBA::SystemException const &sysex)
     {
       sysex._tao_print_exception ("Unexpected system Exception!!\n");
       return -1;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Unexpected CORBA Exception!\n");
       return -1;

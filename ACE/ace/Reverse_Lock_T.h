@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//==========================================================================
 /**
  *  @file    Reverse_Lock_T.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//==========================================================================
 
 #ifndef ACE_REVERSE_LOCK_T_H
 #define ACE_REVERSE_LOCK_T_H
@@ -52,14 +48,14 @@ namespace ACE_Acquire_Method
  * @brief A reverse (or anti) lock.
  *
  * This is an interesting adapter class that changes a lock into
- * a reverse lock, i.e., <acquire> on this class calls <release>
- * on the lock, and <release> on this class calls <acquire> on
+ * a reverse lock, i.e., @c acquire on this class calls @c release
+ * on the lock, and @c release on this class calls @c acquire on
  * the lock.
  * One motivation for this class is when we temporarily want to
  * release a lock (which we have already acquired) but then
  * reacquire it soon after.  An alternative design would be to
- * add a Anti_Guard or Reverse_Guard class which would <release>
- * on construction and <acquire> destruction.  However, there
+ * add a Anti_Guard or Reverse_Guard class which would @c release
+ * on construction and @c acquire destruction.  However, there
  * are *many* varieties of the Guard class and this design
  * choice would lead to at least 6 new classes.  One new
  * ACE_Reverse_Lock class seemed more reasonable.
@@ -70,17 +66,20 @@ class ACE_Reverse_Lock : public ACE_Lock
 public:
   using ACE_LOCK = ACE_LOCKING_MECHANISM;
 
-  // = Initialization/Finalization methods.
+  /// @name Initialization and finalization
+  /// @{
 
   /// Constructor. All locking requests will be forwarded to @a lock.
   ACE_Reverse_Lock (ACE_LOCKING_MECHANISM &lock,
                     ACE_Acquire_Method::METHOD_TYPE acquire_method = ACE_Acquire_Method::ACE_REGULAR);
 
-  /// Destructor. If <lock_> was not passed in by the user, it will be
+  /// Destructor. If @c lock_ was not passed in by the user, it will be
   /// deleted.
   ~ACE_Reverse_Lock () override = default;
+  /// @}
 
-  // = Lock accessors.
+  /// @name Lock operations
+  /// @{
   /// Release the lock.
   int acquire () override;
 
@@ -107,6 +106,7 @@ public:
 
   /// Explicitly destroy the lock.
   int remove () override;
+  /// @}
 
 private:
   /// The concrete locking mechanism that all the methods delegate to.

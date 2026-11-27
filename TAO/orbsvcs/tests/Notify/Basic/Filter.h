@@ -1,5 +1,3 @@
-/* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file   Filter.h
  *
@@ -7,8 +5,6 @@
  *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef NOTIFY_TESTS_FILTER_H
 #define NOTIFY_TESTS_FILTER_H
@@ -16,6 +12,8 @@
 #include "Notify_Test_Client.h"
 #include "Notify_PushConsumer.h"
 #include "Notify_PushSupplier.h"
+
+#include <atomic>
 
 #if defined(_MSC_VER)
 #pragma warning(push)
@@ -27,13 +25,15 @@ class Filter;
 class Filter : public Notify_Test_Client
 {
 public:
-  // Initialization and termination code
+  /// @name Initialization and termination
+  /// @{
   Filter ();
-  virtual ~Filter ();
+  ~Filter () override;
+  /// @}
 
   /// initialization.
   int init (int argc,
-            ACE_TCHAR *argv []);
+            ACE_TCHAR *argv []) override;
 
   /// Run the test.
   void run_test ();
@@ -58,7 +58,7 @@ protected:
   CosNotifyFilter::FilterFactory_var ffact_;
 
   /// Number of events received so far.
-  ACE_Atomic_Op <TAO_SYNCH_MUTEX, int> result_count_;
+  std::atomic<int> result_count_ {0};
 
   /// Number of events to send
   int event_count_;
@@ -73,10 +73,10 @@ protected:
   CosNotifyChannelAdmin::SupplierAdmin_var supplier_admin_;
 
   /// Consumer.
-  TAO_Notify_Tests_PushConsumer* consumer_;
+  TAO_Notify_Tests_PushConsumer* consumer_ {};
 
   /// Supplier.
-  TAO_Notify_Tests_PushSupplier* supplier_;
+  TAO_Notify_Tests_PushSupplier* supplier_ {};
 };
 
 /***************************************************************************/

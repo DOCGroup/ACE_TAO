@@ -1,5 +1,3 @@
-/* -*- C++ -*-  */
-
 #ifndef TEST_I_H_
 #define TEST_I_H_
 
@@ -12,13 +10,11 @@
 class  Test_i : public virtual POA_Test
 {
 public:
-  //Constructor
   Test_i (short server_num, CORBA::Short reply_delay_secs);
 
-  //Destructor
-  virtual ~Test_i ();
+  ~Test_i () override;
 
-  virtual CORBA::Short get_server_num ();
+  CORBA::Short get_server_num () override;
 
 private:
   CORBA::Short server_num_;

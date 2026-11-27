@@ -8,7 +8,8 @@
 #include "ace/Guard_T.h"
 #include "ace/Recursive_Thread_Mutex.h"
 #include "ace/Log_Category.h"  // for ACE_ASSERT
-#include "ace/OS_NS_string.h"
+
+#include <cstring>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -39,14 +40,14 @@ ACE_Allocator::instance ()
           // that of a pointer, we allocate it as a pointer so that it
           // doesn't get constructed statically.  We never bother to
           // destroy it.
-          static void *allocator_instance = nullptr;
+          static void *allocator_instance {};
 
           // Check this critical assumption.  We put it in a variable
           // first to avoid stupid compiler warnings that the
           // condition may always be true/false.
 #         if !defined (ACE_NDEBUG)
-          int assertion = (sizeof allocator_instance ==
-                           sizeof (ACE_New_Allocator));
+          int const assertion = (sizeof allocator_instance ==
+                                 sizeof (ACE_New_Allocator));
           ACE_ASSERT (assertion);
 #         endif /* !ACE_NDEBUG */
 
@@ -94,22 +95,24 @@ ACE_Allocator::ACE_Allocator ()
 void *
 ACE_New_Allocator::malloc (size_t nbytes)
 {
-  char *ptr = nullptr;
+  char *ptr {};
   if (nbytes > 0)
+  {
     ACE_NEW_RETURN (ptr, char[nbytes], nullptr);
-  return (void *) ptr;
+  }
+  return ptr;
 }
 
 void *
 ACE_New_Allocator::calloc (size_t nbytes,
                            char initial_value)
 {
-  char *ptr = nullptr;
+  char *ptr {};
 
   ACE_NEW_RETURN (ptr, char[nbytes], nullptr);
 
-  ACE_OS::memset (ptr, initial_value, nbytes);
-  return (void *) ptr;
+  std::memset (ptr, initial_value, nbytes);
+  return ptr;
 }
 
 void *
@@ -124,7 +127,7 @@ ACE_New_Allocator::free (void *ptr)
 #ifdef ACE_FACE_SAFETY_BASE
   ACE_UNUSED_ARG (ptr);
 #else
-  delete [] (char *) ptr;
+  delete [] static_cast<char *> (ptr);
 #endif
 }
 
@@ -135,37 +138,37 @@ ACE_New_Allocator::remove ()
 }
 
 int
-ACE_New_Allocator::bind (const char *, void *, int)
+ACE_New_Allocator::bind (char const *, void *, int)
 {
   ACE_NOTSUP_RETURN (-1);
 }
 
 int
-ACE_New_Allocator::trybind (const char *, void *&)
+ACE_New_Allocator::trybind (char const *, void *&)
 {
   ACE_NOTSUP_RETURN (-1);
 }
 
 int
-ACE_New_Allocator::find (const char *, void *&)
+ACE_New_Allocator::find (char const *, void *&)
 {
   ACE_NOTSUP_RETURN (-1);
 }
 
 int
-ACE_New_Allocator::find (const char *)
+ACE_New_Allocator::find (char const *)
 {
   ACE_NOTSUP_RETURN (-1);
 }
 
 int
-ACE_New_Allocator::unbind (const char *)
+ACE_New_Allocator::unbind (char const *)
 {
   ACE_NOTSUP_RETURN (-1);
 }
 
 int
-ACE_New_Allocator::unbind (const char *, void *&)
+ACE_New_Allocator::unbind (char const *, void *&)
 {
   ACE_NOTSUP_RETURN (-1);
 }
@@ -224,7 +227,7 @@ ACE_Static_Allocator_Base::malloc (size_t nbytes)
       // of bytes requested, and return the original offset.
       char *ptr = &this->buffer_[this->offset_];
       this->offset_ += nbytes;
-      return (void *) ptr;
+      return ptr;
     }
 }
 
@@ -234,8 +237,8 @@ ACE_Static_Allocator_Base::calloc (size_t nbytes,
 {
   void *ptr = this->malloc (nbytes);
 
-  ACE_OS::memset (ptr, initial_value, nbytes);
-  return (void *) ptr;
+  std::memset (ptr, initial_value, nbytes);
+  return ptr;
 }
 
 void *
@@ -261,37 +264,37 @@ ACE_Static_Allocator_Base::remove ()
 }
 
 int
-ACE_Static_Allocator_Base::bind (const char *, void *, int)
+ACE_Static_Allocator_Base::bind (char const *, void *, int)
 {
   return -1;
 }
 
 int
-ACE_Static_Allocator_Base::trybind (const char *, void *&)
+ACE_Static_Allocator_Base::trybind (char const *, void *&)
 {
   return -1;
 }
 
 int
-ACE_Static_Allocator_Base::find (const char *, void *&)
+ACE_Static_Allocator_Base::find (char const *, void *&)
 {
   return -1;
 }
 
 int
-ACE_Static_Allocator_Base::find (const char *)
+ACE_Static_Allocator_Base::find (char const *)
 {
   return -1;
 }
 
 int
-ACE_Static_Allocator_Base::unbind (const char *)
+ACE_Static_Allocator_Base::unbind (char const *)
 {
   return -1;
 }
 
 int
-ACE_Static_Allocator_Base::unbind (const char *, void *&)
+ACE_Static_Allocator_Base::unbind (char const *, void *&)
 {
   return -1;
 }
@@ -334,8 +337,8 @@ ACE_Static_Allocator_Base::dump () const
   ACE_TRACE ("ACE_Static_Allocator_Base::dump");
 
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\noffset_ = %d"), this->offset_));
-  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nsize_ = %d\n"), this->size_));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\noffset_ = %B"), this->offset_));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nsize_ = %B\n"), this->size_));
   ACELIB_HEX_DUMP ((LM_DEBUG, this->buffer_, this->size_));
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
 

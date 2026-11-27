@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Countdown_Time_T.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef ACE_COUNTDOWN_TIME_T_H
 #define ACE_COUNTDOWN_TIME_T_H
@@ -25,7 +21,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
- * @class ACE_Countdown_Time
+ * @class ACE_Countdown_Time_T
  *
  * @brief Keeps track of the amount of elapsed time.
  *
@@ -37,16 +33,16 @@ template <typename TIME_POLICY = ACE_Default_Time_Policy>
 class ACE_Countdown_Time_T
 {
 public:
+  ACE_Countdown_Time_T () = delete;
+
   /// Cache the @a max_wait_time and call @c start().
-  ACE_Countdown_Time_T (ACE_Time_Value *max_wait_time,
-                        TIME_POLICY const & time_policy = TIME_POLICY());
+  explicit ACE_Countdown_Time_T (ACE_Time_Value *max_wait_time,
+                                 TIME_POLICY const & time_policy = TIME_POLICY {});
 
-  ACE_Countdown_Time_T (const ACE_Countdown_Time_T &) = delete;
+  ACE_Countdown_Time_T (ACE_Countdown_Time_T const &) = delete;
   ACE_Countdown_Time_T (ACE_Countdown_Time_T &&) = delete;
-  ACE_Countdown_Time_T &operator= (const ACE_Countdown_Time_T &) = delete;
+  ACE_Countdown_Time_T &operator= (ACE_Countdown_Time_T const &) = delete;
   ACE_Countdown_Time_T &operator= (ACE_Countdown_Time_T &&) = delete;
-
-
   /// Destructor, makes sure the max_wait_time that got passed as pointer
   /// to the constructor is updated with the time elapsed.
   ~ACE_Countdown_Time_T ();
@@ -83,7 +79,7 @@ private:
   ACE_Time_Value start_time_;
 
   /// Keeps track of whether we've already been stopped.
-  bool stopped_;
+  bool stopped_ {};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

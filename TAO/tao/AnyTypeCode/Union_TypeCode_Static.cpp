@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/AnyTypeCode/Union_TypeCode_Static.h"
 #include "tao/AnyTypeCode/TypeCode_Case_Base_T.h"
 #include "tao/AnyTypeCode/Any.h"
@@ -58,7 +57,7 @@ TAO::TypeCode::Union<char const *,
 
   // Note that we handle the default case below, too.
 
-  for (CORBA::ULong i = 0; i < this->ncases_; ++i)
+  for (CORBA::ULong i {}; i < this->ncases_; ++i)
     {
       case_type const & c = *this->cases_[i];
 
@@ -106,22 +105,26 @@ TAO::TypeCode::Union<char const *,
 
   CORBA::ULong const tc_count = tc->member_count ();
 
-  CORBA::Long tc_def = tc->default_index ();
+  CORBA::Long const tc_def = tc->default_index ();
 
   if (tc_count != this->ncases_ || tc_def != this->default_index_)
+  {
     return false;
+  }
 
   // Check the discriminator type.
-  CORBA::TypeCode_var tc_discriminator = tc->discriminator_type ();
+  CORBA::TypeCode_var const tc_discriminator = tc->discriminator_type ();
 
   CORBA::Boolean const equal_discriminators =
     Traits<char const *>::get_typecode (this->discriminant_type_)->equal (
       tc_discriminator.in ());
 
   if (!equal_discriminators)
+  {
     return false;
+  }
 
-  for (CORBA::ULong i = 0; i < this->ncases_; ++i)
+  for (CORBA::ULong i {}; i < this->ncases_; ++i)
     {
       if (this->default_index_ > -1
           && static_cast<CORBA::ULong> (this->default_index_) == i)
@@ -137,7 +140,9 @@ TAO::TypeCode::Union<char const *,
       bool const equal_case = lhs_case.equal (i, tc);
 
       if (!equal_case)
+      {
         return false;
+      }
     }
 
   return true;
@@ -155,21 +160,25 @@ TAO::TypeCode::Union<char const *,
   // member_name() operations.
   CORBA::ULong const tc_count = tc->member_count ();
 
-  CORBA::Long tc_def = tc->default_index ();
+  CORBA::Long const tc_def = tc->default_index ();
 
   if (tc_count != this->ncases_ || tc_def != this->default_index_)
+  {
     return false;
+  }
 
-  CORBA::TypeCode_var tc_discriminator = tc->discriminator_type ();
+  CORBA::TypeCode_var const tc_discriminator = tc->discriminator_type ();
 
   CORBA::Boolean const equiv_discriminators =
     Traits<char const *>::get_typecode (this->discriminant_type_)->equivalent (
       tc_discriminator.in ());
 
   if (!equiv_discriminators)
+  {
     return false;
+  }
 
-  for (CORBA::ULong i = 0; i < this->ncases_; ++i)
+  for (CORBA::ULong i {}; i < this->ncases_; ++i)
     {
       if (this->default_index_ > -1
           && static_cast<CORBA::ULong> (this->default_index_) == i)
@@ -185,7 +194,9 @@ TAO::TypeCode::Union<char const *,
       bool const equivalent_case = lhs_case.equivalent (i, tc);
 
       if (!equivalent_case)
+      {
         return false;
+      }
     }
 
   return true;
@@ -198,48 +209,6 @@ TAO::TypeCode::Union<char const *,
                                          CORBA::TypeCode_ptr const *> const * const *,
                      TAO::Null_RefCount_Policy>::get_compact_typecode_i () const
 {
-//   typedef ACE::Value_Ptr<TAO::TypeCode::Case<CORBA::String_var,
-//                                              CORBA::TypeCode_var> > elem_type;
-
-//   ACE_Array_Base<elem_type> tc_cases (this->ncases_);
-
-//   if (this->ncases_ > 0)
-//     {
-//       // Dynamically construct a new array of cases stripped of
-//       // member names.
-
-//       static char const empty_name[] = "";
-
-//       for (CORBA::ULong i = 0; i < this->ncases_; ++i)
-//         {
-//           // Member names will be stripped, i.e. not embedded within
-//           // the compact TypeCode.
-//           tc_cases[i].name = empty_name;
-//           tc_cases[i].type =
-//             this->cases_[i]->type ()->get_compact_typecode ();
-//         }
-//     }
-
-//   // Create the compact union TypeCode.
-//   TAO_TypeCodeFactory_Adapter * adapter =
-//     ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
-//       TAO_ORB_Core::typecodefactory_adapter_name ());
-
-//   if (adapter == 0)
-//     {
-//       throw ::CORBA::INTERNAL ();
-//     }
-
-//   return
-//     adapter->create_union_tc (
-//       this->base_attributes_.id (),
-//       "",  /* empty name */
-//       Traits<char const *>::get_typecode (this->discriminant_type_),
-//       tc_cases,
-//       this->ncases_,
-//       this->default_index_,
-//       "",
-//       Traits<char const *>::get_typecode (this->default_case_.type));
   throw ::CORBA::NO_IMPLEMENT ();
 }
 
@@ -288,7 +257,9 @@ TAO::TypeCode::Union<char const *,
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.
   if (index >= this->ncases_)
+  {
     throw ::CORBA::TypeCode::Bounds ();
+  }
 
   return this->cases_[index]->name ();
 }
@@ -302,7 +273,9 @@ TAO::TypeCode::Union<char const *,
   CORBA::ULong index) const
 {
   if (index >= this->ncases_)
+  {
     throw ::CORBA::TypeCode::Bounds ();
+  }
 
   return CORBA::TypeCode::_duplicate (this->cases_[index]->type ());
 }
@@ -316,13 +289,15 @@ TAO::TypeCode::Union<char const *,
   CORBA::ULong index) const
 {
   if (index >= this->ncases_)
+  {
     throw ::CORBA::TypeCode::Bounds ();
+  }
 
   // Default case.
   if (this->default_index_ > -1
       && static_cast<CORBA::ULong> (this->default_index_) == index)
     {
-      CORBA::Any *any = nullptr;
+      CORBA::Any *any {};
       ACE_NEW_THROW_EX (any,
                         CORBA::Any,
                         CORBA::NO_MEMORY ());

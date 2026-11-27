@@ -1,12 +1,8 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
  *  @file    INET_Addr.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef ACE_INET_ADDR_H
 #define ACE_INET_ADDR_H
@@ -36,21 +32,19 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_INET_Addr : public ACE_Addr
 {
 public:
-  /// Default constructor.
   ACE_INET_Addr ();
 
-  /// Copy constructor.
-  ACE_INET_Addr (const ACE_INET_Addr &);
+  ACE_INET_Addr (ACE_INET_Addr const &);
 
   /// Creates an ACE_INET_Addr from a sockaddr_in structure.
-  ACE_INET_Addr (const sockaddr_in *addr, int len);
+  ACE_INET_Addr (sockaddr_in const *addr, int len);
 
   /// Creates an ACE_INET_Addr from a @a port_number and the remote
   /// @a host_name. The port number is assumed to be in host byte order.
   /// To set a port already in network byte order, please @see set().
   /// Use address_family to select IPv6 (PF_INET6) vs. IPv4 (PF_INET).
   ACE_INET_Addr (u_short port_number,
-                 const char host_name[],
+                 char const host_name[],
                  int address_family = AF_UNSPEC);
 
   /**
@@ -64,7 +58,7 @@ public:
    * If there is no ':' in the @a address it is assumed to be a port number,
    * with the IP address being INADDR_ANY.
    */
-  explicit ACE_INET_Addr (const char address[],
+  explicit ACE_INET_Addr (char const address[],
                           int address_family = AF_UNSPEC);
 
   /**
@@ -78,40 +72,40 @@ public:
 
   /// Uses getservbyname() to create an ACE_INET_Addr from a
   /// @a port_name, the remote @a host_name, and the @a protocol.
-  ACE_INET_Addr (const char port_name[],
-                 const char host_name[],
-                 const char protocol[] = "tcp");
+  ACE_INET_Addr (char const port_name[],
+                 char const host_name[],
+                 char const protocol[] = "tcp");
 
   /**
    * Uses getservbyname() to create an ACE_INET_Addr from a
    * @a port_name, an Internet @a ip_addr, and the @a protocol.  This
    * method assumes that @a ip_addr is in host byte order.
    */
-  ACE_INET_Addr (const char port_name[],
+  ACE_INET_Addr (char const port_name[],
                  ACE_UINT32 ip_addr,
-                 const char protocol[] = "tcp");
+                 char const protocol[] = "tcp");
 
 #if defined (ACE_HAS_WCHAR)
   ACE_INET_Addr (u_short port_number,
-                 const wchar_t host_name[],
+                 wchar_t const host_name[],
                  int address_family = AF_UNSPEC);
 
-  explicit ACE_INET_Addr (const wchar_t address[],
+  explicit ACE_INET_Addr (wchar_t const address[],
                           int address_family = AF_UNSPEC);
 
-  ACE_INET_Addr (const wchar_t port_name[],
-                 const wchar_t host_name[],
-                 const wchar_t protocol[] = ACE_TEXT_WIDE ("tcp"));
+  ACE_INET_Addr (wchar_t const port_name[],
+                 wchar_t const host_name[],
+                 wchar_t const protocol[] = ACE_TEXT_WIDE ("tcp"));
 
-  ACE_INET_Addr (const wchar_t port_name[],
+  ACE_INET_Addr (wchar_t const port_name[],
                  ACE_UINT32 ip_addr,
-                 const wchar_t protocol[] = ACE_TEXT_WIDE ("tcp"));
+                 wchar_t const protocol[] = ACE_TEXT_WIDE ("tcp"));
 #endif /* ACE_HAS_WCHAR */
 
-  /// Default dtor.
   ~ACE_INET_Addr () override;
 
-  // = Direct initialization methods.
+  /// @name Direct initialization methods
+  /// @{
 
   // These methods are useful after the object has been constructed.
 
@@ -127,10 +121,10 @@ public:
   /// operation ends up, in the member-wise case, copying a bogus vector
   /// and doing lots of random damage. Thus, this operator is used to make
   /// life ordered in this common scenario.
-  ACE_INET_Addr & operator= (const ACE_INET_Addr &rhs);
+  ACE_INET_Addr & operator= (ACE_INET_Addr const &rhs);
 
   /// Initializes from another ACE_INET_Addr.
-  int set (const ACE_INET_Addr &);
+  int set (ACE_INET_Addr const &);
 
   /**
    * Initializes an ACE_INET_Addr from a @a port_number and the
@@ -142,7 +136,7 @@ public:
    * the value AF_INET6. To specify IPv4, use AF_INET.
    */
   int set (u_short port_number,
-           const char host_name[],
+           char const host_name[],
            int encode = 1,
            int address_family = AF_UNSPEC);
 
@@ -162,18 +156,18 @@ public:
 
   /// Uses getservbyname() to initialize an ACE_INET_Addr from a
   /// @a port_name, the remote @a host_name, and the @a protocol.
-  int set (const char port_name[],
-           const char host_name[],
-           const char protocol[] = "tcp");
+  int set (char const port_name[],
+           char const host_name[],
+           char const protocol[] = "tcp");
 
   /**
    * Uses getservbyname() to initialize an ACE_INET_Addr from a
    * @a port_name, an @a ip_addr, and the @a protocol.  This assumes that
    * @a ip_addr is already in network byte order.
    */
-  int set (const char port_name[],
+  int set (char const port_name[],
            ACE_UINT32 ip_addr,
-           const char protocol[] = "tcp");
+           char const protocol[] = "tcp");
 
   /**
    * Initializes an ACE_INET_Addr from the @a address, which can be
@@ -186,38 +180,39 @@ public:
    * If there is no ':' in the @a address it is assumed to be a port number,
    * with the IP address being INADDR_ANY.
    */
-  int set (const char addr[], int address_family = AF_UNSPEC);
+  int set (char const addr[], int address_family = AF_UNSPEC);
 
   /// Creates an ACE_INET_Addr from a sockaddr_in structure.
-  int set (const sockaddr_in *,
+  int set (sockaddr_in const *,
            int len);
 
 #if defined (ACE_HAS_WCHAR)
   int set (u_short port_number,
-           const wchar_t host_name[],
+           wchar_t const host_name[],
            int encode = 1,
            int address_family = AF_UNSPEC);
 
-  int set (const wchar_t port_name[],
-           const wchar_t host_name[],
-           const wchar_t protocol[] = ACE_TEXT_WIDE ("tcp"));
+  int set (wchar_t const port_name[],
+           wchar_t const host_name[],
+           wchar_t const protocol[] = ACE_TEXT_WIDE ("tcp"));
 
-  int set (const wchar_t port_name[],
+  int set (wchar_t const port_name[],
            ACE_UINT32 ip_addr,
-           const wchar_t protocol[] = ACE_TEXT_WIDE ("tcp"));
+           wchar_t const protocol[] = ACE_TEXT_WIDE ("tcp"));
 
-  int set (const wchar_t addr[], int address_family = AF_UNSPEC);
+  int set (wchar_t const addr[], int address_family = AF_UNSPEC);
 #endif /* ACE_HAS_WCHAR */
+  /// @}
 
   /// Return a pointer to the underlying network address.
   void *get_addr () const override;
   int get_addr_size() const;
 
   /// Set a pointer to the address.
-  void set_addr (const void *, int len) override;
+  void set_addr (void const *, int len) override;
 
   /// Set a pointer to the address.
-  virtual void set_addr (const void *, int len, int map);
+  virtual void set_addr (void const *, int len, int map);
 
   /**
    * Transform the current ACE_INET_Addr address into string format.
@@ -242,12 +237,12 @@ public:
    * If there is no ':' in the @a address it is assumed to be a port number,
    * with the IP address being INADDR_ANY.
    */
-  virtual int string_to_addr (const char address[],
+  virtual int string_to_addr (char const address[],
                               int address_family = AF_UNSPEC);
 
 #if defined (ACE_HAS_WCHAR)
   /*
-  virtual int string_to_addr (const char address[]);
+  virtual int string_to_addr (char const address[]);
   */
 #endif /* ACE_HAS_WCHAR */
 
@@ -270,7 +265,7 @@ public:
    * @a ip_addr is an IPv4 address, then this address is set to the IPv4-mapped
    * IPv6 address of it.
    */
-  int set_address (const char *ip_addr,
+  int set_address (char const *ip_addr,
                    int len,
                    int encode = 1,
                    int map = 0);
@@ -280,7 +275,7 @@ public:
    * Sets the interface that should be used for this address. This only has
    * an effect when the address is link local, otherwise it does nothing.
    */
-  int set_interface (const char *intf_name);
+  int set_interface (char const *intf_name);
 #endif /* (ACE_LINUX || ACE_WIN32) && ACE_HAS_IPV6 */
 
   /// Return the port number, converting it into host byte-order.
@@ -309,14 +304,14 @@ public:
    * (2) use the "reentrant" version of get_host_name() described
    * above.
    */
-  const char *get_host_name () const;
+  char const *get_host_name () const;
 
   /**
    * Return the "dotted decimal" Internet address representation of
    * the hostname storing it in the @a addr (which is assumed to be
    * @a addr_size bytes long).  This version is reentrant.
    */
-  const char *get_host_addr (char *addr, int addr_size) const;
+  char const *get_host_addr (char *addr, int addr_size) const;
 
   /**
    * Return the "dotted decimal" Internet address representation of
@@ -326,7 +321,7 @@ public:
    * using strdup() or (2) use the "reentrant" version of
    * get_host_addr() described above.
    */
-  const char *get_host_addr () const;
+  char const *get_host_addr () const;
 
   /// Return the 4-byte IP address, converting it into host byte
   /// order.
@@ -361,18 +356,18 @@ public:
    * number.  This operator makes it possible to use @c ACE_INET_Addrs
    * in STL maps.
    */
-  bool operator < (const ACE_INET_Addr &rhs) const;
+  bool operator < (ACE_INET_Addr const &rhs) const;
 
   /// Compare two addresses for equality.  The addresses are considered
   /// equal if they contain the same IP address and port number.
-  bool operator == (const ACE_INET_Addr &SAP) const;
+  bool operator == (ACE_INET_Addr const &SAP) const;
 
   /// Compare two addresses for inequality.
-  bool operator != (const ACE_INET_Addr &SAP) const;
+  bool operator != (ACE_INET_Addr const &SAP) const;
 
   /// A variation of the equality operator, this method only compares the
   /// IP address and ignores the port number.
-  bool is_ip_equal (const ACE_INET_Addr &SAP) const;
+  bool is_ip_equal (ACE_INET_Addr const &SAP) const;
 
   /// Computes and returns hash value.
   u_long hash () const override;
@@ -394,8 +389,8 @@ private:
   /// Insure that @a hostname is properly null-terminated.
   int get_host_name_i (char hostname[], size_t hostnamelen) const;
 
-  // Methods to gain access to the actual address of
-  // the underlying internet address structure.
+  /// Methods to gain access to the actual address of
+  /// the underlying internet address structure.
   void *ip_addr_pointer () const;
   int ip_addr_size () const;
   int determine_type () const;
@@ -413,8 +408,8 @@ private:
     sockaddr_in6 in6_;
 #endif /* ACE_HAS_IPV6 */
   } inet_addr_;
-  // If there is more than one address assigned to a given name, this
-  // holds all of them; one is always copied to inet_addr_.
+  /// If there is more than one address assigned to a given name, this
+  /// holds all of them; one is always copied to inet_addr_.
   std::vector<union ip46> inet_addrs_;
   std::vector<union ip46>::iterator inet_addrs_iter_;
 };

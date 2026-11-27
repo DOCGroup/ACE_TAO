@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #ifndef MESSENGERI_H_
 #define MESSENGERI_H_
 
@@ -12,8 +11,8 @@ public:
       orb_ (CORBA::ORB::_duplicate (orb))
   {}
 
-  virtual CORBA::Boolean
-  send_message (const char *user_name, const char *subject, char *&message);
+  CORBA::Boolean
+  send_message (char const *user_name, char const *subject, char *&message) override;
 
 private:
   int count_;

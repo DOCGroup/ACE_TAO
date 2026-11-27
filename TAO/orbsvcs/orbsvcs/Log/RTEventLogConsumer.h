@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   RTEventLogConsumer.h
  *
@@ -9,7 +6,6 @@
  *
  *  @author David A. Hanvey <d.hanvey@qub.ac.uk>
  */
-//=============================================================================
 
 #ifndef TAO_TLS_RTEVENTLOGCONSUMER_H
 #define TAO_TLS_RTEVENTLOGCONSUMER_H
@@ -35,7 +31,6 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_LogMgr_i;
@@ -54,10 +49,8 @@ class TAO_RTEventLogFactory_i;
 class TAO_RTEventLog_Serv_Export TAO_Rtec_LogConsumer : public virtual POA_RtecEventComm::PushConsumer
 {
 public:
-  /// Constructor.
-  TAO_Rtec_LogConsumer (TAO_RTEventLog_i * log);
+  explicit TAO_Rtec_LogConsumer (TAO_RTEventLog_i * log);
 
-  /// Destructor.
   ~TAO_Rtec_LogConsumer () override;
 
   /// Connect to RTEventLog.

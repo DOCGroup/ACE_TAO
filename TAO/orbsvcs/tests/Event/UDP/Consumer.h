@@ -1,12 +1,8 @@
-/* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file   Consumer.h
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  */
-//=============================================================================
-
 
 #ifndef CONSUMER_H
 #define CONSUMER_H
@@ -29,8 +25,11 @@
 class Consumer : public POA_RtecEventComm::PushConsumer
 {
 public:
-  /// Constructor
-  Consumer (bool valuetype);
+  explicit Consumer (bool valuetype);
+  Consumer (Consumer const &) = delete;
+  Consumer (Consumer&&) = delete;
+  Consumer& operator= (Consumer const &) = delete;
+  Consumer& operator= (Consumer&&) = delete;
 
   /// Connect to the Event Channel
   void connect (RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin);
@@ -38,21 +37,19 @@ public:
   /// Disconnect from the event channel
   void disconnect ();
 
-  // = The RtecEventComm::PushConsumer methods
-
-  /// The skeleton methods.
-  virtual void push (const RtecEventComm::EventSet& events);
-  virtual void disconnect_push_consumer ();
+  void push (RtecEventComm::EventSet const &events) override;
+  void disconnect_push_consumer () override;
 
   CORBA::ULong event_count () const;
+
 private:
   /// Keep track of the number of events received.
-  CORBA::ULong event_count_;
+  CORBA::ULong event_count_ {};
 
   /// The proxy
   RtecEventChannelAdmin::ProxyPushSupplier_var proxy_;
 
-  bool valuetype_;
+  bool valuetype_ {};
 };
 
 #endif /* CONSUMER_H */

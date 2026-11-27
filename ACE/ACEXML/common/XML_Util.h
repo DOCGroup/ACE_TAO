@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    XML_Util.h
  *
@@ -8,7 +5,6 @@
  *
  *  @author Justin Michel <michel_j@ociweb.com>
  */
-//=============================================================================
 
 #ifndef _ACEXML_XML_UTIL_H_
 #define _ACEXML_XML_UTIL_H_
@@ -23,8 +19,8 @@
 
 #include "ACEXML/common/XML_Types.h"
 
-ACEXML_Export ACEXML_String ACEXML_escape_string(const ACEXML_String& str);
-ACEXML_Export void ACEXML_escape_string(const ACEXML_String& in, ACEXML_String& out);
+ACEXML_Export ACEXML_String ACEXML_escape_string(ACEXML_String const& str);
+ACEXML_Export void ACEXML_escape_string(ACEXML_String const& in, ACEXML_String& out);
 
 #include /**/ "ace/post.h"
 

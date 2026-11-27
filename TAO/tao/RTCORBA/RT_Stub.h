@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    RT_Stub.h
  *
@@ -9,7 +6,6 @@
  *  @author  Angelo Corsaro <corsaro@cs.wustl.edu>
  *  @author  Frank Hunleth <fhunleth@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_RT_STUB_H_
 #define TAO_RT_STUB_H_
@@ -30,7 +26,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// Forward references.
 class TAO_PriorityModelPolicy;
 class TAO_PriorityBandedConnectionPolicy;
 class TAO_ClientProtocolPolicy;
@@ -45,12 +40,11 @@ class TAO_PrivateConnectionPolicy;
 class TAO_RTCORBA_Export TAO_RT_Stub : public TAO_Stub
 {
 public:
-  TAO_RT_Stub (const char *repository_id,
-               const TAO_MProfile &profiles,
+  TAO_RT_Stub (char const *repository_id,
+               TAO_MProfile const &profiles,
                TAO_ORB_Core *orb_core);
 
   ~TAO_RT_Stub () override;
-
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
@@ -63,7 +57,7 @@ public:
 
   CORBA::Policy_ptr get_cached_policy (TAO_Cached_Policy_Type type) override;
 
-  TAO_Stub* set_policy_overrides (const CORBA::PolicyList & policies,
+  TAO_Stub* set_policy_overrides (CORBA::PolicyList const & policies,
                                   CORBA::SetOverrideType set_add) override;
 
 #endif /* TAO_HAS_CORBA_MESSAGING */
@@ -93,20 +87,19 @@ private:
   /// in object's IOR.
   CORBA::Policy_ptr exposed_client_protocol ();
 
-  // = Methods for obtaining effective policies.
-  //
-  //   Effective policy is the one that would be used if a request
-  //   were made.  The policy is determined by obtaining the effective
-  //   override for a given policy type, and then reconciling it with
-  //   the policy value exported in the Object's IOR.
+  /**
+   * Methods for obtaining effective policies.
+   *
+   * The effective policy is the one that would be used for a request. It is
+   * determined by obtaining the effective override for a policy type and
+   * reconciling it with the policy value exported in the object's IOR.
+   */
 
   CORBA::Policy_ptr effective_priority_banded_connection ();
   CORBA::Policy_ptr effective_client_protocol ();
 
-  // The following attribute are used to cache
-  // the different kind of policies and avoid to
-  // parse the MProfile's policy list each time we
-  // are asked about a given policy.
+  /// These attributes cache policies and avoid reparsing the MProfile policy
+  /// list for each policy query.
 
   CORBA::Policy_var priority_model_policy_;
 
@@ -114,12 +107,13 @@ private:
 
   CORBA::Policy_var client_protocol_policy_;
 
-  bool are_policies_parsed_ {false};
+  bool are_policies_parsed_ {};
 
 private:
-  TAO_RT_Stub (const TAO_RT_Stub &) = delete;
+  TAO_RT_Stub () = delete;
+  TAO_RT_Stub (TAO_RT_Stub const &) = delete;
   TAO_RT_Stub (TAO_RT_Stub &&) = delete;
-  TAO_RT_Stub &operator = (const TAO_RT_Stub &) = delete;
+  TAO_RT_Stub &operator = (TAO_RT_Stub const &) = delete;
   TAO_RT_Stub &operator = (TAO_RT_Stub &&) = delete;
 };
 

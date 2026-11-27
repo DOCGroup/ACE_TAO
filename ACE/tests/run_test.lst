@@ -18,9 +18,11 @@ ACE_Test
 Aio_Platform_Test
 Arg_Shifter_Test
 ARGV_Test
+Array_Base_Test
 Array_Map_Test
 Atomic_Op_Test
 Auto_Event_Test
+Auto_Functor_Test
 Auto_IncDec_Test
 Barrier_Test
 Based_Pointer_Test: !STATIC !ACE_FOR_TAO !PHARLAP
@@ -290,5 +292,6 @@ Wild_Match_Test
 XML_Utils_Test: !NOXERCES
 SSL/Bug_2912_Regression_Test: SSL !ACE_FOR_TAO !BAD_AIO
 SSL/SSL_Asynch_Stream_Test: SSL !ACE_FOR_TAO !BAD_AIO !FIXED_BUGS_ONLY
+SSL/SSL_SOCK_Stream_Close_Test: SSL !ACE_FOR_TAO
 SSL/Thread_Pool_Reactor_SSL_Test: SSL
 UNIX_Addr_Test: !ACE_FOR_TAO

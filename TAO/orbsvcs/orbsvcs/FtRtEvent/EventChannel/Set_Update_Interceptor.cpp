@@ -5,6 +5,8 @@
 #include "orbsvcs/FTRTC.h"
 #include "orbsvcs/FtRtEvent/EventChannel/Request_Context_Repository.h"
 
+#include <cstring>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Set_Update_Interceptor::TAO_Set_Update_Interceptor ()
@@ -36,18 +38,20 @@ TAO_Set_Update_Interceptor::send_request (
 {
   CORBA::String_var operation = ri->operation ();
 
-  if (ACE_OS::strcmp(operation.in(), "set_update")==0 ||
-      ACE_OS::strcmp(operation.in(), "oneway_set_update") ==0)
+  if (std::strcmp (operation.in (), "set_update") == 0 ||
+      std::strcmp (operation.in (), "oneway_set_update") == 0)
     {
       CORBA::Any_var a = Request_Context_Repository().get_ft_request_service_context(ri);
 
-      const IOP::ServiceContext* scp {};
+      IOP::ServiceContext const *scp {};
 
-      if ((a.in() >>= scp) == 0)
+      if (!(a.in () >>= scp))
+      {
         return;
+      }
 
       IOP::ServiceContext sc = *scp;
-      ri->add_request_service_context (sc, 0);
+      ri->add_request_service_context (sc, false);
 
       FTRT::TransactionDepth transaction_depth =
         Request_Context_Repository().get_transaction_depth(ri);
@@ -56,11 +60,15 @@ TAO_Set_Update_Interceptor::send_request (
 
       if (transaction_depth) {
         if (!(cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER)))
+        {
           throw CORBA::MARSHAL ();
+        }
 
         // Add Transaction Depth Context
-        if ((cdr << transaction_depth) == 0)
+        if (!(cdr << transaction_depth))
+        {
           throw CORBA::MARSHAL ();
+        }
         sc.context_id = FTRT::FT_TRANSACTION_DEPTH;
 
         ACE_CDR::consolidate(&mb, cdr.begin());
@@ -74,13 +82,13 @@ TAO_Set_Update_Interceptor::send_request (
 
         // Now copy over each byte.
         char* base = mb.data_block ()->base ();
-        for(CORBA::ULong i = 0; i < length; i++)
+        for(CORBA::ULong i {}; i < length; ++i)
           {
             sc.context_data[i] = base[i];
           }
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
 
-        ri->add_request_service_context (sc, 0);
+        ri->add_request_service_context (sc, false);
 
         cdr.reset();
       }
@@ -93,9 +101,13 @@ TAO_Set_Update_Interceptor::send_request (
       ORBSVCS_DEBUG((LM_DEBUG, "send_request : sequence_number = %d\n", sequence_number));
       if (sequence_number != 0) {
         if (!(cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER)))
+        {
           throw CORBA::MARSHAL ();
-        if ((cdr << sequence_number) == 0)
+        }
+        if (!(cdr << sequence_number))
+        {
           throw CORBA::MARSHAL ();
+        }
         sc.context_id = FTRT::FT_SEQUENCE_NUMBER;
 
         ACE_CDR::consolidate(&mb, cdr.begin());
@@ -109,13 +121,13 @@ TAO_Set_Update_Interceptor::send_request (
 
         // Now copy over each byte.
         char* base = mb.data_block ()->base ();
-        for(CORBA::ULong i = 0; i < length; i++)
+        for(CORBA::ULong i {}; i < length; ++i)
           {
             sc.context_data[i] = base[i];
           }
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
 
-        ri->add_request_service_context (sc, 0);
+        ri->add_request_service_context (sc, false);
       }
     }
 }

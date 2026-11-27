@@ -5,47 +5,66 @@
 #include "Command_Processor.h"
 #include "URL_Visitor.h"
 
+#include <utility>
+#include <memory>
 
 Command::~Command () = default;
 
-URL_Command::URL_Command (URL *url)
-  : url_ (url)
+URL_Command::URL_Command (std::unique_ptr<URL> url)
+  : url_ (std::move (url))
 {
 }
+
+URL_Command::~URL_Command () = default;
 
 int
 URL_Command::execute ()
 {
-  ACE_CString check_string
+  ACE_CString const check_string
     (ACE_TEXT_ALWAYS_CHAR (this->url_->url_addr ().get_path_name ()));
   if (check_string.find ("news:") != ACE_CString::npos)
-    return 0;
+    {
+      return 0;
+    }
 
   if (check_string.find (".cgi") != ACE_CString::npos)
-     return 0;
+    {
+      return 0;
+    }
 
   if (check_string.find ("mailto") != ACE_CString::npos)
-    return 0;
+    {
+      return 0;
+    }
 
   if (check_string.find (".gif") != ACE_CString::npos)
-    return 0;
+    {
+      return 0;
+    }
 
   if (check_string.find (".pdf") != ACE_CString::npos)
-    return 0;
+    {
+      return 0;
+    }
 
   if (check_string.find (".map") != ACE_CString::npos)
-    return 0;
+    {
+      return 0;
+    }
 
   if (check_string.find (".bmp") != ACE_CString::npos)
-    return 0;
+    {
+      return 0;
+    }
 
   if (check_string.find (".jpg") != ACE_CString::npos)
-    return 0;
-
-  if (this->url_->accept (OPTIONS::instance ()->visitor ()) !=0)
     {
-      ACE_DEBUG ((LM_DEBUG,
-                "Coudnt accept url\n"));
+      return 0;
+    }
+
+  if (this->url_->accept (OPTIONS::instance ()->visitor ()) != 0)
+    {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Could not accept URL\n")));
       return -1;
     }
   return 0;
@@ -59,7 +78,14 @@ URL_Command::destroy ()
 }
 Command_Processor::Command_Processor () = default;
 
-Command_Processor::~Command_Processor () = default;
+Command_Processor::~Command_Processor ()
+{
+  Command *command {};
+  while (this->url_queue_.dequeue_head (command) == 0)
+    {
+      Destroyable_Unique_Ptr<Command> command_ptr (command);
+    }
+}
 
 int
 Command_Processor::destroy ()
@@ -71,19 +97,22 @@ Command_Processor::destroy ()
 int
 Command_Processor::execute ()
 {
-  Command *command;
-  while (this->url_queue_.is_empty () != 1)
+  while (!this->url_queue_.is_empty ())
     {
+      Command *command {};
       if (this->url_queue_.dequeue_head (command) != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "%p\n", "dequeue_head"),
-                          -1);
-      URL_Command *url_command = dynamic_cast<URL_Command *> (command);
-      Auto_Destroyer<URL_Command> url_command_ptr (url_command);
-      if (url_command_ptr->execute () != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "%p\n", "Couldnt execute command"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("%p\n"), ACE_TEXT ("dequeue_head")),
+                            -1);
+        }
+      Destroyable_Unique_Ptr<Command> command_ptr (command);
+      if (command_ptr->execute () != 0)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("%p\n"), ACE_TEXT ("Could not execute command")),
+                            -1);
+        }
     }
   return 0;
 }
@@ -92,23 +121,35 @@ int
 Command_Processor::insert (Command *command)
 {
   // According to the order specified the commands are removed from the queue.
-  if (this->url_queue_.is_full() != 1)
+  if (this->url_queue_.is_full ())
     {
-      if (ACE_OS::strcmp (OPTIONS::instance ()->order (), ACE_TEXT ("FIFO")) == 0)
-        {
-          if (this->url_queue_.enqueue_tail (command) !=0)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("%p\n"), ACE_TEXT ("enqueue_tail")),
-                              - 1);
-        }
-      if (ACE_OS::strcmp (OPTIONS::instance ()->order (), ACE_TEXT ("LIFO")) == 0)
-        {
-          if (this->url_queue_.enqueue_head (command) !=0)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("%p\n"), ACE_TEXT ("enqueue_head")),
-                              - 1);
-        }
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("command queue is full\n")), -1);
     }
+
+  ACE_TCHAR const * const order = OPTIONS::instance ()->order ();
+  if (ACE_OS::strcmp (order, ACE_TEXT ("FIFO")) == 0)
+    {
+      if (this->url_queue_.enqueue_tail (command) != 0)
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("%p\n"), ACE_TEXT ("enqueue_tail")),
+                          -1);
+      }
+    }
+  else if (ACE_OS::strcmp (order, ACE_TEXT ("LIFO")) == 0)
+    {
+      if (this->url_queue_.enqueue_head (command) != 0)
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("%p\n"), ACE_TEXT ("enqueue_head")),
+                          -1);
+      }
+    }
+  else
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("invalid command queue order\n")), -1);
+    }
+
   return 0;
 }
 

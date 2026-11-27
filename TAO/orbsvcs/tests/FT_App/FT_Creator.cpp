@@ -1,5 +1,3 @@
-/* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file    FT_Creator.cpp
  *
@@ -8,7 +6,6 @@
  *
  *  @author Dale Wilson <wilson_d@ociweb.com>
  */
-//=============================================================================
 
 #include "FT_Creator.h"
 // FUZZ: disable check_for_streams_include
@@ -17,11 +14,12 @@
 
 #include <ace/Get_Opt.h>
 #include <ace/OS_NS_stdio.h>
+#include <cstring>
 
 FTAPP::FT_Creator::FT_Creator ()
   : creator_ ()
   , orb_ (CORBA::ORB::_nil ())
-  , registry_ior_(0)
+  , registry_ior_ (nullptr)
   , replication_manager_ (::FT::ReplicationManager::_nil ())
   , have_replication_manager_ (0)
   , write_iors_ (0)
@@ -32,9 +30,7 @@ FTAPP::FT_Creator::FT_Creator ()
 {
 }
 
-FTAPP::FT_Creator::~FT_Creator ()
-{
-}
+FTAPP::FT_Creator::~FT_Creator () = default;
 
 int
 FTAPP::FT_Creator::parse_args (int argc, ACE_TCHAR *argv[])
@@ -50,12 +46,12 @@ FTAPP::FT_Creator::parse_args (int argc, ACE_TCHAR *argv[])
     {
       case 'r':
       {
-        this->create_roles_.push_back (ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ()));
+        this->create_roles_.emplace_back (ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ()));
         break;
       }
       case 'u':
       {
-        this->unregister_roles_.push_back (ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ()));
+        this->unregister_roles_.emplace_back (ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ()));
         break;
       }
       case 'f':
@@ -104,7 +100,7 @@ FTAPP::FT_Creator::parse_args (int argc, ACE_TCHAR *argv[])
     }
   }
 
-  if ( this->create_roles_.size() == 0 && this->unregister_roles_.size() == 0)
+  if (this->create_roles_.empty () && this->unregister_roles_.empty ())
   {
     //FUZZ: disable check_for_lack_ACE_OS
     ACE_OS::fprintf (stderr, "Creator: neither create (-t) nor kill (-u) specified.  Nothing to do.\n");
@@ -128,14 +124,13 @@ void FTAPP::FT_Creator::usage(FILE* out)const
                         " -n (toggle register iogr with name service (default true))\n");
 }
 
-
 int FTAPP::FT_Creator::init (CORBA::ORB_ptr orb)
 {
   int result = 0;
   this->orb_ = CORBA::ORB::_duplicate (orb);
 
   // if a factory IOR was specified on command line
-  if ( this->registry_ior_ != 0)
+  if (this->registry_ior_ != nullptr)
   {
     CORBA::Object_var registry_obj
       = this->orb_->string_to_object (this->registry_ior_);
@@ -151,7 +146,6 @@ int FTAPP::FT_Creator::init (CORBA::ORB_ptr orb)
   {
     result = this->creator_.init (orb);
   }
-
 
   if (result == 0 && this->ns_register_)
   {
@@ -178,7 +172,7 @@ int FTAPP::FT_Creator::run ()
   size_t nType = 0;
   for ( nType = 0; result == 0 && nType < typeCount; ++nType)
   {
-    const char * role = this->create_roles_[nType].c_str();
+    char const *role = this->create_roles_[nType].c_str();
     ACE_OS::fprintf (stdout, "\nCreator: Creating group of %s\n", role);
     PortableGroup::ObjectGroup_var group = this->creator_.create_group (
       role,
@@ -195,10 +189,10 @@ int FTAPP::FT_Creator::run ()
         role,
         this->iogr_seq_);
       FILE * iogr_file = ACE_OS::fopen (iogr_filename, "w");
-      if (iogr_file != 0)
+      if (iogr_file != nullptr)
       {
-        char const * siogr = static_cast<const char *> (iogr.in ());
-        ACE_OS::fwrite (siogr, 1, ACE_OS::strlen(siogr), iogr_file);
+        char const * siogr = static_cast<char const *> (iogr.in ());
+        ACE_OS::fwrite (siogr, 1, std::strlen (siogr), iogr_file);
         ACE_OS::fclose (iogr_file);
       }
       else
@@ -230,7 +224,7 @@ int FTAPP::FT_Creator::run ()
   typeCount = this->unregister_roles_.size();
   for ( nType = 0; result == 0 && nType < typeCount; ++nType)
   {
-    const char * role = this->unregister_roles_[nType].c_str();
+    char const *role = this->unregister_roles_[nType].c_str();
     result = this->creator_.unregister_role (role);
   }
 
@@ -264,7 +258,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       }
     }
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
   {
     ex._tao_print_exception ("FT_Creator::main\t\n");
     result = -1;

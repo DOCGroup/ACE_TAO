@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Default_Collocation_Resolver.h
  *
  *  @author  Irfan Pyarali
  */
-// ===================================================================
 
 #ifndef TAO_DEFAULT_COLLOCATION_RESOLVER_H
 #define TAO_DEFAULT_COLLOCATION_RESOLVER_H

@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    Reactor_Timer_Test.cpp
  *
@@ -9,7 +8,6 @@
  *
  *  @author Prashant Jain <pjain@cs.wustl.edu> and Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "ace/Timer_Queue.h"
@@ -28,14 +26,13 @@ static int odd = 0;
 class Time_Handler : public ACE_Event_Handler
 {
 public:
-  /// Default constructor
   Time_Handler ();
 
   /// Handle the timeout.
-  int handle_timeout (const ACE_Time_Value &tv,
-                              const void *arg) override;
+  int handle_timeout (ACE_Time_Value const &tv,
+                              void const *arg) override;
 
-  /// Called when <Time_Handler> is removed.
+  /// Called when @c Time_Handler is removed.
   int handle_close (ACE_HANDLE handle,
                             ACE_Reactor_Mask close_mask) override;
 
@@ -61,8 +58,8 @@ Time_Handler::handle_close (ACE_HANDLE handle,
                             ACE_Reactor_Mask close_mask)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("[%x] handle = %d, close_mask = %d, timer id = %d\n"),
-              this,
+              ACE_TEXT ("[%@] handle = %H, close_mask = %Lu, timer id = %Ld\n"),
+              static_cast<void *> (this),
               handle,
               close_mask,
               this->timer_id ()));
@@ -70,23 +67,27 @@ Time_Handler::handle_close (ACE_HANDLE handle,
 }
 
 int
-Time_Handler::handle_timeout (const ACE_Time_Value &tv,
-                              const void *arg)
+Time_Handler::handle_timeout (ACE_Time_Value const &tv,
+                              void const *arg)
 {
-  long current_count = static_cast<long> (reinterpret_cast<size_t> (arg));
+  long const current_count = static_cast<long> (reinterpret_cast<size_t> (arg));
   if (current_count >= 0)
+  {
     ACE_TEST_ASSERT (current_count == the_count);
+  }
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("[%x] Timer id %d with count #%d|%d timed out at %d!\n"),
-              this,
+              ACE_TEXT ("[%@] Timer id %Ld with count #%d|%Ld timed out at %:!\n"),
+              static_cast<void *> (this),
               this->timer_id (),
               the_count,
               current_count,
               tv.sec ()));
 
   if (current_count == long (ACE_MAX_TIMERS - 1))
-    done = 1;
+    {
+      done = 1;
+    }
   else if (the_count == long (ACE_MAX_TIMERS - 1))
     {
       done = 1;
@@ -94,11 +95,13 @@ Time_Handler::handle_timeout (const ACE_Time_Value &tv,
     }
   else if (current_count == -1)
     {
-      int result = ACE_Reactor::instance ()->reset_timer_interval (this->timer_id (),
+      int const result = ACE_Reactor::instance ()->reset_timer_interval (this->timer_id (),
                                                                    std::chrono::seconds {the_count + 1});
       if (result == -1)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("Error resetting timer interval\n")));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("Error resetting timer interval\n")));
+        }
     }
   the_count += (1 + odd);
   return 0;
@@ -125,18 +128,20 @@ test_registering_all_handlers ()
   Time_Handler rt[ACE_MAX_TIMERS];
   long t_id[ACE_MAX_TIMERS];
 
-  for (size_t i = 0; i < ACE_MAX_TIMERS; i++)
+  for (size_t i = 0; i < ACE_MAX_TIMERS; ++i)
     {
       t_id[i] =
-        ACE_Reactor::instance ()->schedule_timer (&rt[i],
-                                                  (const void *) i,
+        ACE_Reactor::instance ()->schedule_timer (std::addressof (rt[i]),
+                                                  reinterpret_cast<void const *> (i),
                                                   std::chrono::seconds {2 * i + 1});
       ACE_TEST_ASSERT (t_id[i] != -1);
       rt[i].timer_id (t_id[i]);
     }
 
   while (!done)
-    ACE_Reactor::instance ()->handle_events ();
+    {
+      ACE_Reactor::instance ()->handle_events ();
+    }
 }
 
 static void
@@ -151,17 +156,19 @@ test_registering_one_handler ()
   done = 0;
   the_count = 0;
 
-  for (size_t i = 0; i < ACE_MAX_TIMERS; i++)
+  for (size_t i = 0; i < ACE_MAX_TIMERS; ++i)
     {
       t_id[i] =
-        ACE_Reactor::instance ()->schedule_timer (&rt[0],
-                                                  (const void *) i,
+        ACE_Reactor::instance ()->schedule_timer (std::addressof (rt[0]),
+                                                  reinterpret_cast<void const *> (i),
                                                   ACE_Time_Value (2 * i + 1));
       ACE_TEST_ASSERT (t_id[i] != -1);
     }
 
   while (!done)
-    ACE_Reactor::instance ()->handle_events ();
+    {
+      ACE_Reactor::instance ()->handle_events ();
+    }
 }
 
 static void
@@ -177,28 +184,34 @@ test_canceling_odd_timers ()
   the_count = 1;
   odd = 1;
 
-  for (size_t i = 0; i < ACE_MAX_TIMERS; i++)
+  for (size_t i = 0; i < ACE_MAX_TIMERS; ++i)
     {
-      t_id[i] = ACE_Reactor::instance ()->schedule_timer (&rt[i],
-                                                          (const void *) i,
+      t_id[i] = ACE_Reactor::instance ()->schedule_timer (std::addressof (rt[i]),
+                                                          reinterpret_cast<void const *> (i),
                                                           ACE_Time_Value (2 * i + 1));
       ACE_TEST_ASSERT (t_id[i] != -1);
       rt[i].timer_id (t_id[i]);
     }
 
-  for (size_t j = 0; (u_long) j < ACE_MAX_TIMERS; j++)
-    // Cancel handlers with odd numbered timer ids.
-    if (ACE_ODD (rt[j].timer_id ()))
+  for (size_t j = 0; (u_long) j < ACE_MAX_TIMERS; ++j)
       {
-        int result =
-          ACE_Reactor::instance ()->cancel_timer (rt[j].timer_id ());
-        if (result == -1)
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("Error cancelling timer\n")));
+        // Cancel handlers with odd numbered timer ids.
+        if (ACE_ODD (rt[j].timer_id ()))
+          {
+            int const result =
+              ACE_Reactor::instance ()->cancel_timer (rt[j].timer_id ());
+            if (result == -1)
+              {
+                ACE_ERROR ((LM_ERROR,
+                            ACE_TEXT ("Error cancelling timer\n")));
+              }
+          }
       }
 
   while (!done)
-    ACE_Reactor::instance ()->handle_events ();
+    {
+      ACE_Reactor::instance ()->handle_events ();
+    }
 }
 
 static void
@@ -216,8 +229,8 @@ test_resetting_timer_intervals ()
 
   t_id =
     ACE_Reactor::instance ()->schedule_timer
-    (&rt,
-     (const void *) -1,
+    (std::addressof (rt),
+     reinterpret_cast<void const *> (-1),
      ACE_Time_Value (1),
      // Start off by making this an interval timer.
      ACE_Time_Value (1));
@@ -226,7 +239,9 @@ test_resetting_timer_intervals ()
   rt.timer_id (t_id);
 
   while (!done)
-    ACE_Reactor::instance ()->handle_events ();
+    {
+      ACE_Reactor::instance ()->handle_events ();
+    }
 }
 
 // If any command line arg is given, run the test with high res timer
@@ -249,22 +264,17 @@ run_main (int argc, ACE_TCHAR *[])
       // precision for a 1 second timer is beyond me ...  I think it
       // is a cut&paste error.
       //
-      // The use of auto_ptr<> is optional, ACE uses dangerous memory
-      // management idioms everywhere, I thought I could demonstrate how
-      // to do it right in at least one test.  Notice the lack of
-      // ACE_NEW_RETURN, that monstrosity has no business in proper C++
-      // code ...
-      std::unique_ptr<ACE_Timer_Heap_Variable_Time_Source> tq(
-          new ACE_Timer_Heap_Variable_Time_Source);
+      std::unique_ptr<ACE_Timer_Heap_Variable_Time_Source> tq =
+        std::make_unique<ACE_Timer_Heap_Variable_Time_Source> ();
       // ... notice how the policy is in the derived timer queue type.
       // The abstract timer queue does not have a time policy ...
-      tq->set_time_policy(&ACE_High_Res_Timer::gettimeofday_hr);
+      ACE_FPointer_Time_Policy const time_policy (&ACE_High_Res_Timer::gettimeofday_hr);
+      tq->set_time_policy (time_policy);
       // ... and then the timer queue is replaced.  Strangely, the
       // Reactor does *not* copy the timers, it just deletes the
       // existing timer queue ....
       r->timer_queue(tq.get());
-      // ... the Reactor has assumed ownership, release the
-      // auto_ptr<> ...
+      // The reactor takes ownership of the timer queue.
       tq.release();
     }
 

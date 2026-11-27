@@ -1,7 +1,3 @@
-// -*- C++ -*-
-
-//
-
 #ifndef LOG_WALKER_PEER_PROCESS_H
 #define LOG_WALKER_PEER_PROCESS_H
 
@@ -12,12 +8,13 @@
 #include "ace/Containers.h"
 #include "ace/streams.h"
 
+#include <string>
+
 class PeerObject;
 class HostProcess;
 class Invocation;
 class Session;
 class Thread;
-
 
 enum EndpointRole {
   ER_UNKNOWN,
@@ -30,7 +27,7 @@ class Endpoint
 public:
   Endpoint ();
   Endpoint (const Endpoint &other);
-  Endpoint (const char *addr, EndpointRole role = ER_UNKNOWN);
+  explicit Endpoint (const char *addr, EndpointRole role = ER_UNKNOWN);
   void assign (const char *addr, EndpointRole role = ER_UNKNOWN);
   Endpoint & operator = (const Endpoint &other);
   bool operator == (const Endpoint &other) const;
@@ -58,7 +55,6 @@ public:
   ACE_CString close_time_;
 };
 
-
 using PeerObjectTable = ACE_RB_Tree<u_long, PeerObject *, ACE_Less_Than<u_long>, ACE_Null_Mutex>;
 using ObjectByIndex = ACE_RB_Tree<long, PeerObject *, ACE_Less_Than<long>, ACE_Null_Mutex>;
 using InvocationList = ACE_DLList<Invocation>;
@@ -67,7 +63,7 @@ using TransportList = ACE_DLList<Transport>;
 class PeerProcess
 {
 public:
-  static char *nextIdent(bool is_server);
+  static std::string nextIdent (bool is_server);
   PeerProcess (size_t offset, const ACE_CString &time, bool is_server);
 
   virtual ~PeerProcess ();
@@ -104,7 +100,7 @@ public:
   virtual void dump_invocation_detail (ostream &strm);
 
 private:
-  char *ident_;
+  std::string ident_;
   char *origin_;
   HostProcess *owner_;
   HostProcess *remote_;
@@ -119,6 +115,5 @@ private:
   ObjectByIndex object_by_index_;
   ACE_CString first_time_;
 };
-
 
 #endif // LOG_WALKER_PEER_PROCESS_H

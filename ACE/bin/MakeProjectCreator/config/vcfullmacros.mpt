@@ -1,4 +1,3 @@
-// -*- MPC -*-
 // ACE specific macros for nmake, vc6, and vc7
 
 Static MFC Release {

@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*idl): taoidldefaults, smart_proxies {
   IDL_Files {
     test.idl

@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//==========================================================================
 /**
  *  @file    Functor_String.h
  *
@@ -10,7 +7,6 @@
  *   types to the rest of ACE+TAO. Hence they are placed in a separate
  *   file.
  */
-//==========================================================================
 #ifndef ACE_FUNCTOR_STRING_H
 #define ACE_FUNCTOR_STRING_H
 #include /**/ "ace/pre.h"
@@ -27,9 +23,8 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-////////////////////////////////////////////////////////////
-// STL-style Functor Classes and Template Specializations //
-////////////////////////////////////////////////////////////
+/// @name STL-style functor classes and template specializations
+/// @{
 
 // Forward declaration since we are going to specialize that template
 // here. The template itself requires this file so every user of the
@@ -46,10 +41,9 @@ template<>
 class ACE_Export ACE_Equal_To<ACE_CString>
 {
 public:
-  int operator () (const ACE_CString &lhs,
-                   const ACE_CString &rhs) const;
+  int operator () (ACE_CString const &lhs,
+                   ACE_CString const &rhs) const;
 };
-
 
 /**
  * @brief Function object for hashing a ACE_CString
@@ -59,9 +53,8 @@ class ACE_Export ACE_Hash<ACE_CString>
 {
 public:
   /// Calls ACE::hash_pjw
-  unsigned long operator () (const ACE_CString &lhs) const;
+  unsigned long operator () (ACE_CString const &lhs) const;
 };
-
 
 /**
  * @brief Function object for determining whether the first const string
@@ -72,8 +65,8 @@ class ACE_Export ACE_Less_Than<ACE_CString>
 {
 public:
   /// Simply calls ACE_OS::strcmp
-  int operator () (const ACE_CString &lhs,
-                   const ACE_CString &rhs) const;
+  int operator () (ACE_CString const &lhs,
+                   ACE_CString const &rhs) const;
 };
 
 /**
@@ -84,10 +77,9 @@ template<>
 class ACE_Export ACE_Equal_To<std::string>
 {
 public:
-  int operator () (const std::string &lhs,
-                   const std::string &rhs) const;
+  int operator () (std::string const &lhs,
+                   std::string const &rhs) const;
 };
-
 
 /**
  * @brief Function object for hashing a std::string
@@ -97,9 +89,8 @@ class ACE_Export ACE_Hash<std::string>
 {
 public:
   /// Calls ACE::hash_pjw
-  unsigned long operator () (const std::string &lhs) const;
+  unsigned long operator () (std::string const &lhs) const;
 };
-
 
 /**
  * @brief Function object for determining whether the first const string
@@ -110,10 +101,9 @@ class ACE_Export ACE_Less_Than<std::string>
 {
 public:
   /// Simply calls std::string::compare
-  int operator () (const std::string &lhs,
-                   const std::string &rhs) const;
+  int operator () (std::string const &lhs,
+                   std::string const &rhs) const;
 };
-
 
 #if defined (ACE_USES_WCHAR)
 
@@ -125,10 +115,9 @@ template<>
 class ACE_Export ACE_Equal_To<ACE_WString>
 {
 public:
-  int operator () (const ACE_WString &lhs,
-                   const ACE_WString &rhs) const;
+  int operator () (ACE_WString const &lhs,
+                   ACE_WString const &rhs) const;
 };
-
 
 /**
  * @brief Function object for hashing a ACE_WString
@@ -138,7 +127,7 @@ class ACE_Export ACE_Hash<ACE_WString>
 {
 public:
   /// Calls ACE::hash_pjw
-  unsigned long operator () (const ACE_WString &lhs) const;
+  unsigned long operator () (ACE_WString const &lhs) const;
 };
 
 /**
@@ -150,11 +139,12 @@ class ACE_Export ACE_Less_Than<ACE_WString>
 {
 public:
   /// Simply calls ACE_OS::strcmp
-  int operator () (const ACE_WString &lhs,
-                   const ACE_WString &rhs) const;
+  int operator () (ACE_WString const &lhs,
+                   ACE_WString const &rhs) const;
 };
 
 #endif /*ACE_USES_WCHAR*/
+/// @}
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 

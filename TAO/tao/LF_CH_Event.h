@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file LF_CH_Event.h
  *
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_LF_CH_EVENT_H
 #define TAO_LF_CH_EVENT_H
@@ -48,18 +44,16 @@ public:
    */
   friend class TAO_LF_Multi_Event;
 
-  /// Constructor
   TAO_LF_CH_Event ();
 
-  /// Destructor
   ~TAO_LF_CH_Event () override;
 
-  //@{
+  /// @{
 protected:
   /// Check whether we have reached the final state..
   bool is_state_final () const override;
 
-  //@}
+  /// @}
 private:
   /// Validate and change the state
   /*

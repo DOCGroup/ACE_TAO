@@ -1,5 +1,3 @@
-// -*- IDL -*-
-
 /**
  * @file IFR_Extended.pidl
  *
@@ -61,12 +59,16 @@ module CORBA
 
   interface ValueDef : Container, Contained, IDLType
   {
-    // read/write interface
+    /// @name Read/write interface
+    /// @{
     attribute InterfaceDefSeq supported_interfaces;
     attribute InitializerSeq initializers;
     attribute ValueDef base_value;
     attribute ValueDefSeq abstract_base_values;
-    // read interface
+    /// @}
+
+    /// @name Read interface
+    /// @{
     attribute boolean is_abstract;
     attribute boolean is_custom;
     attribute boolean is_truncatable;
@@ -94,6 +96,7 @@ module CORBA
     };
 
     FullValueDescription describe_value ();
+    /// @}
 
     ValueMemberDef create_value_member  (
         in RepositoryId id,
@@ -137,10 +140,14 @@ module CORBA
 
   interface ExtValueDef : ValueDef
   {
-    // read/write interface
+    /// @name Read/write interface
+    /// @{
     attribute ExtInitializerSeq ext_initializers;
 
-    // read interface
+    /// @}
+
+    /// @name Read interface
+    /// @{
     struct ExtFullValueDescription
     {
       Identifier name;
@@ -161,8 +168,10 @@ module CORBA
     };
 
     ExtFullValueDescription describe_ext_value ();
+    /// @}
 
-    // write interface
+    /// @name Write interface
+    /// @{
     ExtAttributeDef create_ext_attribute ( in RepositoryId id,
                                            in Identifier name,
                                            in VersionSpec version,
@@ -171,6 +180,7 @@ module CORBA
                                            in ExceptionDefSeq get_exceptions,
                                            in ExceptionDefSeq set_exceptions
       );
+    /// @}
   };
 
   interface ValueBoxDef : TypedefDef

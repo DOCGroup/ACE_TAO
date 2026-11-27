@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  * @file Monitor_Point_Registry.h
  *
  * @author Jeff Parsons <j.parsons@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef MONITOR_POINT_REGISTRY_H
 #define MONITOR_POINT_REGISTRY_H
@@ -54,14 +50,14 @@ namespace ACE
       bool add (Monitor_Base* type);
 
       /// Remove a monitor from the registry.
-      bool remove (const char* name);
+      bool remove (char const * name);
 
       /// Returns a list of names stored in the registry
       Monitor_Control_Types::NameList names ();
 
       /// Increments the refcount, so the caller is responsible for
       /// decrementing it when finished.
-      Monitor_Base* get (const ACE_CString& name) const;
+      Monitor_Base* get (ACE_CString const& name) const;
 
       /// Returns a unique id for a constraint when it is created.
       long constraint_id ();

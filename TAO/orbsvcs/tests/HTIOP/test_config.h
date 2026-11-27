@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-// ============================================================================
 /**
  *  @file test_config.h
  *
@@ -12,7 +9,6 @@
  *  @author Tim Harrison <harrison@cs.wustl.edu>
  *  @author David Levine <levine@cs.wustl.edu>
  */
-// ============================================================================
 
 #ifndef ACE_TEST_CONFIG_H
 #define ACE_TEST_CONFIG_H
@@ -63,7 +59,7 @@ size_t const ACE_MAX_THREADS = 4;
 
 #ifndef ACE_START_TEST
 #define ACE_START_TEST(NAME) \
-  const ACE_TCHAR *program = NAME; \
+  ACE_TCHAR const *program = NAME; \
   if (ACE_LOG_MSG->open (program, ACE_Log_Msg::OSTREAM | ACE_Log_Msg::VERBOSE_LITE) != 0) \
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("open log_msg failed")), -1); \
   if (ace_file_stream::instance()->set_output (program) != 0) \
@@ -80,7 +76,7 @@ size_t const ACE_MAX_THREADS = 4;
 #define ACE_CLOSE_TEST_LOG ace_file_stream::instance()->close ()
 
 #define ACE_APPEND_LOG(NAME) \
-  const ACE_TCHAR *program = NAME; \
+  ACE_TCHAR const *program = NAME; \
   if (ACE_LOG_MSG->open (program, ACE_Log_Msg::OSTREAM | ACE_Log_Msg::VERBOSE_LITE) != 0) \
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("open log_msg failed")), -1); \
   if (ace_file_stream::instance()->set_output (program, 1) != 0) \
@@ -139,12 +135,14 @@ class ACE_Test_Output
 public:
   ACE_Test_Output ();
   ~ACE_Test_Output ();
+  ACE_Test_Output (ACE_Test_Output const &) = delete;
+  ACE_Test_Output &operator= (ACE_Test_Output const &) = delete;
   static ACE_Test_Output *instance ();
-  int set_output (const ACE_TCHAR *filename, int append = 0);
+  int set_output (ACE_TCHAR const *filename, int append = 0);
   OFSTREAM *output_file ();
   void close ();
-  const ACE_TCHAR *dll_name ();
-  const ACE_TCHAR *name ();
+  ACE_TCHAR const *dll_name ();
+  ACE_TCHAR const *name ();
   static void close_singleton ();
 
 private:

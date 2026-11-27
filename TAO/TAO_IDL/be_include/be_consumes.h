@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #ifndef BE_CONSUMES_H
 #define BE_CONSUMES_H
 

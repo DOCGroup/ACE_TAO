@@ -1,12 +1,9 @@
-// -*- C++ -*-
-//=============================================================================
 /**
  *  @file   ImR_Activator_i.h
  *
  *  @author Priyanka Gontla <gontla_p@ociweb.com>
  *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef IMR_ACTIVATOR_I_H
 #define IMR_ACTIVATOR_I_H
@@ -20,6 +17,9 @@
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Null_Mutex.h"
 #include "ace/SString.h"
+
+#include <string>
+#include <unordered_set>
 #if defined (ACE_WIN32)
 # include "ace/Task.h"
 #endif /* ACE_WIN32 */
@@ -60,7 +60,7 @@ class Active_Pid_Setter;
 class Activator_Export Watchdog : public ACE_Task_Base
 {
 public:
-  Watchdog (ACE_Process_Manager& procman);
+  explicit Watchdog (ACE_Process_Manager& procman);
   int svc () override;
   bool start ();
   void stop ();
@@ -86,17 +86,21 @@ public:
   friend class Active_Pid_Setter;
 
   ImR_Activator_i ();
+  ImR_Activator_i (ImR_Activator_i const &) = delete;
+  ImR_Activator_i &operator= (ImR_Activator_i const &) = delete;
+  ImR_Activator_i (ImR_Activator_i &&) = delete;
+  ImR_Activator_i &operator= (ImR_Activator_i &&) = delete;
 
-  void start_server (const char* name,
-                     const char* cmdline,
-                     const char* dir,
-                     const ImplementationRepository::EnvironmentList & env);
+  void start_server (char const *name,
+                     char const *cmdline,
+                     char const *dir,
+                     const ImplementationRepository::EnvironmentList & env) override;
 
-  CORBA::Boolean kill_server (const char* name, CORBA::Long pid, CORBA::Short signum);
+  CORBA::Boolean kill_server (char const *name, CORBA::Long pid, CORBA::Short signum) override;
 
-  CORBA::Boolean still_alive (CORBA::Long pid);
+  CORBA::Boolean still_alive (CORBA::Long pid) override;
 
-  void shutdown();
+  void shutdown() override;
 
   /// Initialize the Server state - parsing arguments and waiting.
   int init (Activator_Options& opts);
@@ -104,7 +108,7 @@ public:
   /// Cleans up any state created by init*.
   int fini ();
 
-  int handle_timeout (const ACE_Time_Value &, const void *tok);
+  int handle_timeout (ACE_Time_Value const &, void const *tok) override;
 
   /// Runs the orb.
   int run ();
@@ -119,15 +123,15 @@ private:
 
   // Handles the death of the child processes of the ImR_Activator.
   // Informs the ImR_Locator too.
-  int handle_exit (ACE_Process * process);
+  int handle_exit (ACE_Process * process) override;
   int handle_exit_i (pid_t pid);
 
-  bool still_running_i (const char *name, pid_t& pid);
+  bool still_running_i (char const *name, pid_t& pid);
 
   bool in_upcall ();
 
 private:
-  using UniqueServerList = ACE_Unbounded_Set<ACE_CString>;
+  using UniqueServerList = std::unordered_set<std::string>;
 
   using ProcessMap = ACE_Hash_Map_Manager_Ex<pid_t,
                                               ACE_CString,

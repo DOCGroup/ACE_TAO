@@ -17,12 +17,12 @@ ACE_Thread::spawn_n (size_t n,
                      void *stack[],
                      size_t stack_size[],
                      ACE_Thread_Adapter *thread_adapter,
-                     const char *thr_name[])
+                     char const *thr_name[])
 {
   ACE_TRACE ("ACE_Thread::spawn_n");
   size_t i;
 
-  for (i = 0; i < n; i++)
+  for (i = 0; i < n; ++i)
    {
       ACE_thread_t t_id;
       // Bail out if error occurs.
@@ -35,8 +35,10 @@ ACE_Thread::spawn_n (size_t n,
                               stack == nullptr ? nullptr : stack[i],
                               stack_size == nullptr ? ACE_DEFAULT_THREAD_STACKSIZE : stack_size[i],
                               thread_adapter,
-                              thr_name == nullptr ? nullptr : &thr_name[i]) != 0)
+                              thr_name == nullptr ? nullptr : thr_name + i) != 0)
+      {
         break;
+      }
    }
 
   return i;
@@ -53,12 +55,12 @@ ACE_Thread::spawn_n (ACE_thread_t thread_ids[],
                      size_t stack_size[],
                      ACE_hthread_t thread_handles[],
                      ACE_Thread_Adapter *thread_adapter,
-                     const char *thr_name[])
+                     char const *thr_name[])
 {
   ACE_TRACE ("ACE_Thread::spawn_n");
   size_t i = 0;
 
-  for (i = 0; i < n; i++)
+  for (i = 0; i < n; ++i)
     {
       ACE_thread_t t_id;
       ACE_hthread_t t_handle;
@@ -73,18 +75,24 @@ ACE_Thread::spawn_n (ACE_thread_t thread_ids[],
                             stack == nullptr ? nullptr : stack[i],
                             stack_size == nullptr ? ACE_DEFAULT_THREAD_STACKSIZE : stack_size[i],
                             thread_adapter,
-                            thr_name == nullptr ? nullptr : &thr_name[i]);
+                            thr_name == nullptr ? nullptr : thr_name + i);
 
       if (result == 0)
         {
           if (thread_ids != nullptr)
+          {
             thread_ids[i] = t_id;
+          }
           if (thread_handles != nullptr)
+          {
             thread_handles[i] = t_handle;
+          }
         }
       else
-        // Bail out if error occurs.
-        break;
+        {
+          // Bail out if error occurs.
+          break;
+        }
     }
 
   return i;

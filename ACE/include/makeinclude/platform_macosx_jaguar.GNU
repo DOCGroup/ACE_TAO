@@ -1,5 +1,3 @@
-# -*- Makefile -*-
-
 # support for Mac OS X 10.2 (jaguar), 10.3 (panther)
 # Note: /sw/lib & /sw/include are inserted for the convience of Fink
 #       users. Non-Fink users should simply create these directories to

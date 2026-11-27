@@ -8,7 +8,6 @@ Event_List_var alarms;
 Criterion_List_var criterions;
 // Arriving events are tested against the list members.
 
-
 // Set the ORB pointer, register OBV factories and init the
 // lists declared above.
 
@@ -46,7 +45,6 @@ Checkpoint_i::orb (CORBA::ORB_ptr o)
   tc = static_cast<Temperature_Criterion*> (new Temperature_Criterion_impl (BATHROOM, 27));
   criterions->store_criterion (tc.in ());
 
-
   // Alarm if little Jonas is not in the child's room
 
   Point leftbottom = {1, 2, 3};
@@ -73,7 +71,6 @@ Checkpoint_i::orb (CORBA::ORB_ptr o)
     ACE_DEBUG ((LM_DEBUG, "\nNow waiting for events...\n"));
 }
 
-
 // Sidebar on assignment from pointer to _var type.
 //
 //   Event_var e_var (event);
@@ -98,7 +95,6 @@ Checkpoint_i::orb (CORBA::ORB_ptr o)
 //
 // Is there any general solution with faulty reference counting ?
 
-
 void
 Checkpoint_i::put_event (Event *event)
 {
@@ -107,7 +103,6 @@ Checkpoint_i::put_event (Event *event)
   // event handler then would (type-safe) downcast the event to the
   // concrete type it can handle. Here we only apply the list of
   // criterions to the event.
-
 
   // Let us see what event has arrived
   event->do_print ();
@@ -118,14 +113,12 @@ Checkpoint_i::put_event (Event *event)
       alarms->store_event (event);
     }
 
-
   // If we want to return the event (e.g. return type is Event *)
   // return (DUP_REF (event));
   // should be right.
 
   return;
 }
-
 
 Event_List *
 Checkpoint_i::get_critical_events ()
@@ -140,7 +133,6 @@ Checkpoint_i::get_critical_events ()
   return alarms.in ();
 }
 
-
 // Shutdown the server application.
 
 void
@@ -151,17 +143,4 @@ Checkpoint_i::shutdown ()
 
   // Instruct the ORB to shutdown.
   this->orb_->shutdown ();
-}
-
-
-// Constructor.
-
-Checkpoint_i::Checkpoint_i ()
-{
-}
-
-// Destructor.
-
-Checkpoint_i::~Checkpoint_i ()
-{
 }

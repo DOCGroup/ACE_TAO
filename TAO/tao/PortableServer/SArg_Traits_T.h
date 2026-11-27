@@ -1,20 +1,15 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    SArg_Traits_T.h
  *
  *  @author Jeff Parsons
  *  @author Carlos O'Ryan
  */
-//=============================================================================
-
 #ifndef TAO_SARG_TRAITS_T_H
 #define TAO_SARG_TRAITS_T_H
 
 #include /**/ "ace/pre.h"
 
-#include /**/ "tao/Versioned_Namespace.h"
+#include "tao/orbconf.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

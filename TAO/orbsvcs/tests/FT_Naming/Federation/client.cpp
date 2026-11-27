@@ -2,7 +2,6 @@
 #include "orbsvcs/CosNamingC.h"
 #include "ace/Get_Opt.h"
 
-
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
@@ -56,7 +55,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
           hello->shutdown ();
         }
-      catch (const CosNaming::NamingContext::CannotProceed&)
+      catch (CosNaming::NamingContext::CannotProceed const &)
         {
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("Caught correct exception\n")));
@@ -65,7 +64,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       orb->shutdown ();
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception (ACE_TEXT ("Exception caught:"));
       return 1;

@@ -19,10 +19,6 @@ Update_Manager::Update_Manager(ACE_Auto_Event& evt,
   signal_condition_.resize(num_backups);
 }
 
-Update_Manager::~Update_Manager()
-{
-}
-
 void Update_Manager::handle_reply(int id)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
@@ -33,7 +29,9 @@ void Update_Manager::handle_reply(int id)
     evt_.signal();
   }
   if (replied_ == suicide_condition_)
+  {
     delete this;
+  }
 }
 
 void Update_Manager::handle_exception(int id)
@@ -50,7 +48,9 @@ void Update_Manager::handle_exception(int id)
     evt_.signal();
   }
   if (replied_ == suicide_condition_)
+  {
     delete this;
+  }
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

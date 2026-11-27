@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 /**
  *  @file   EC_Priority_Dispatching.h
  *
@@ -25,6 +23,9 @@
 #include "orbsvcs/Event/sched_event_export.h"
 
 #include "ace/Thread_Manager.h"
+
+#include <memory>
+#include <vector>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -52,20 +53,28 @@ class TAO_RTSchedEvent_Export TAO_EC_Priority_Dispatching : public TAO_EC_Dispat
 public:
   /// The scheduler is used to find the range of priorities and similar
   /// info.
-  TAO_EC_Priority_Dispatching (TAO_EC_Event_Channel_Base* ec);
+  explicit TAO_EC_Priority_Dispatching (TAO_EC_Event_Channel_Base* ec);
+  ~TAO_EC_Priority_Dispatching () override;
 
-  // = The EC_Dispatching methods.
-  virtual void activate () override;
-  virtual void shutdown () override;
-  virtual void push (TAO_EC_ProxyPushSupplier* proxy,
+  TAO_EC_Priority_Dispatching (TAO_EC_Priority_Dispatching const &) = delete;
+  TAO_EC_Priority_Dispatching (TAO_EC_Priority_Dispatching &&) = delete;
+  TAO_EC_Priority_Dispatching &operator= (TAO_EC_Priority_Dispatching const &) = delete;
+  TAO_EC_Priority_Dispatching &operator= (TAO_EC_Priority_Dispatching &&) = delete;
+
+  /// @name The EC_Dispatching methods
+  /// @{
+  void activate () override;
+  void shutdown () override;
+  void push (TAO_EC_ProxyPushSupplier* proxy,
                      RtecEventComm::PushConsumer_ptr consumer,
-                     const RtecEventComm::EventSet& event,
+                     RtecEventComm::EventSet const & event,
                      TAO_EC_QOS_Info& qos_info) override;
-  virtual void push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
+  void push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
                             RtecEventComm::PushConsumer_ptr consumer,
                             RtecEventComm::EventSet& event,
                             TAO_EC_QOS_Info& qos_info) override;
 
+  /// @}
 private:
   /// Use our own thread manager.
   ACE_Thread_Manager thread_manager_;
@@ -74,7 +83,7 @@ private:
   int ntasks_;
 
   /// The tasks..
-  TAO_EC_Dispatching_Task** tasks_;
+  std::vector<std::unique_ptr<TAO_EC_Dispatching_Task>> tasks_;
 
   /// The scheduler
   RtecScheduler::Scheduler_var scheduler_;

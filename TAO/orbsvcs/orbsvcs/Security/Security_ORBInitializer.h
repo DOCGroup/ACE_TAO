@@ -1,13 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file     Security_ORBInitializer.h
  *
  *  @author  Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_SECURITY_ORB_INITIALIZER_H
 #define TAO_SECURITY_ORB_INITIALIZER_H
@@ -34,7 +29,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-/// Security ORB initializer.
 namespace TAO
 {
   namespace Security
@@ -60,11 +54,11 @@ namespace TAO
        * Methods required by the PortableInterceptor::ORBInitializer
        * interface.
        */
-      //@{
+      /// @{
       void pre_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 
       void post_init (PortableInterceptor::ORBInitInfo_ptr info) override;
-      //@}
+      /// @}
 
     private:
       /// Register Security policy factories.

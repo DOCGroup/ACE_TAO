@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file     HTIOP_Endpoint.h
  *
@@ -8,8 +5,6 @@
  *
  *  @author  Marina Spivak <marina@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef HTIOP_ENDPOINT_H
 #define HTIOP_ENDPOINT_H
@@ -47,59 +42,58 @@ namespace TAO
       friend class Profile;
       friend class TAO_SSLIOP_Profile;
 
-      /// Default constructor.
       Endpoint ();
+      Endpoint (Endpoint const&) = delete;
+      Endpoint (Endpoint&&) = delete;
+      Endpoint& operator= (Endpoint const&) = delete;
+      Endpoint& operator= (Endpoint&&) = delete;
 
       /// Constructor.  This is the most efficient constructor since it
       /// does not require any address resolution processing.
-      Endpoint (const char *host,
+      Endpoint (char const *host,
                 CORBA::UShort port,
-                const char *htid,
-                const ACE::HTBP::Addr &addr);
+                char const *htid,
+                ACE::HTBP::Addr const &addr);
 
-      /// Constructor.
-      Endpoint (const ACE::HTBP::Addr &addr,
+      Endpoint (ACE::HTBP::Addr const &addr,
                 int use_dotted_decimal_addresses);
 
       /// Constructor.  This constructor is used when decoding endpoints.
-      Endpoint (const char *host,
+      Endpoint (char const *host,
                 CORBA::UShort port,
-                const char *htid);
+                char const *htid);
 
-      /// Destructor.
       ~Endpoint () override;
 
-      // = Implementation of abstract TAO_Endpoint methods.  See
-      // Endpoint.h for their documentation.
-
+      /// @name TAO_Endpoint overrides
+      /// @{
       TAO_Endpoint *next () override;
       int addr_to_string (char *buffer, size_t length) override;
       virtual void reset_hint ();
 
-      /// Makes a copy of <this>
+      /// Makes a copy of @c *this.
       TAO_Endpoint *duplicate () override;
 
       /// Return true if this endpoint is equivalent to @a other_endpoint.  Two
       /// endpoints are equivalent if their port and host are the same.
-      CORBA::Boolean is_equivalent (const TAO_Endpoint *other_endpoint) override;
+      CORBA::Boolean is_equivalent (TAO_Endpoint const *other_endpoint) override;
 
       /// Return a hash value for this object.
       CORBA::ULong hash () override;
+      /// @}
 
-      // Allocates memory and returns a copy of <this>
-
-      // = HTIOP_Endpoint-specific methods.
-
-      /// Return a reference to the <object_addr>.
-      const ACE::HTBP::Addr &object_addr () const;
+      /// @name HTIOP_Endpoint-specific methods
+      /// @{
+      /// Return a reference to @c object_addr_.
+      ACE::HTBP::Addr const &object_addr () const;
 
       /// Return a pointer to the host string.  This object maintains
       /// ownership of this string.
-      const char *host () const;
+      char const *host () const;
 
-      /// Copy the string @a h into <host_> and return the resulting pointer.
+      /// Copy the string @a h into @c host_ and return the resulting pointer.
       /// This object maintains ownership of this string.
-      const char *host (const char *h);
+      char const *host (char const *h);
 
       /// Return the port number.
       CORBA::UShort port () const;
@@ -109,18 +103,16 @@ namespace TAO
 
       /// Return a pointer to the host string.  This object maintains
       /// ownership of this string.
-      const char *htid () const;
+      char const *htid () const;
 
-      /// Copy the string @a h into <host_> and return the resulting pointer.
+      /// Copy the string @a h into @c host_ and return the resulting pointer.
       /// This object maintains ownership of this string.
-      const char *htid (const char *h);
-
-      //Connection_Handler *&hint ();
-      // Access to our <hint_>.
+      char const *htid (char const *h);
+      /// @}
 
     private:
       /// Helper method for setting INET_Addr.
-      int set (const ACE::HTBP::Addr &addr,
+      int set (ACE::HTBP::Addr const &addr,
                int use_dotted_decimal_addresses);
 
       /// String representing the host name.
@@ -131,7 +123,7 @@ namespace TAO
 
       CORBA::String_var htid_;
 
-      /// Cached instance of <ACE::HTBP::Addr> for use in making
+      /// Cached instance of @c ACE::HTBP::Addr for use in making
       /// invocations, etc.
       ACE::HTBP::Addr object_addr_;
 

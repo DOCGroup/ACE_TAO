@@ -6,8 +6,11 @@
 #include "TestCompressor/TestCompressor_Factory.h"
 
 #include "common.h"
-static const ACE_TCHAR *ior = ACE_TEXT("file://") DEFAULT_IOR_FILENAME;
-static ::Compression::CompressionManager_var compression_manager = 0;
+
+#include <cstring>
+
+static ACE_TCHAR const *ior = ACE_TEXT("file://") DEFAULT_IOR_FILENAME;
+static ::Compression::CompressionManager_var compression_manager {};
 CORBA::ULong big_msg_size = 40000;
 
 int start_tests (Test::Hello_ptr hello, CORBA::ORB_ptr orb);
@@ -25,7 +28,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
         ior = get_opts.opt_arg ();
         break;
       case 's':
-        big_msg_size = ACE_OS::strtoul (get_opts.opt_arg (),0,10);
+        big_msg_size = ACE_OS::strtoul (get_opts.opt_arg (),nullptr,10);
         break;
       case 't':
         test = ACE_OS::atoi (get_opts.opt_arg ());
@@ -54,9 +57,11 @@ register_factories (CORBA::ORB_ptr orb)
             compression_manager_obj.in ());
 
   if (CORBA::is_nil(compression_manager.in ()))
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       " (%P|%t) Panic: nil compression manager\n"),
-                      1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         " (%P|%t) Panic: nil compression manager\n"),
+                        1);
+    }
   ::Compression::CompressorFactory_ptr compressor_factory;
   ::Compression::CompressorFactory_var compr_fact;
 
@@ -86,9 +91,13 @@ create_compressor_id_level_list_policy (CORBA::ORB_ptr orb, bool add_zlib_for_te
     {
     case 1:
       if (add_zlib_for_test_1)
-        compressor_id_list.length(2);
+        {
+          compressor_id_list.length(2);
+        }
       else
+      {
         compressor_id_list.length(1);
+      }
       compressor_id_list[0].compressor_id = ::Compression::COMPRESSORID_LZO;
       compressor_id_list[0].compression_level = CLIENT_COMPRESSION_LEVEL;
       if (add_zlib_for_test_1)
@@ -127,7 +136,9 @@ create_low_value_policy (CORBA::ORB_ptr orb)
   // make sure everything gets compressed.
   CORBA::ULong compression_low_value = 10;
   if (test == 3)
+  {
     compression_low_value = 5000000;
+  }
 
   CORBA::Any low_value_any;
   low_value_any <<= compression_low_value;
@@ -139,7 +150,7 @@ CORBA::Policy_ptr
 create_compression_enabled_policy (CORBA::ORB_ptr orb)
 {
   // Setting policy whether compression is used.
-  CORBA::Boolean compression_enabling = true;
+  CORBA::Boolean const compression_enabling = true;
   CORBA::Any compression_enabling_any;
   compression_enabling_any <<= CORBA::Any::from_boolean(compression_enabling);
 
@@ -231,12 +242,16 @@ check_results (CORBA::ORB_ptr orb)
         if (!CORBA::is_nil (compressor))
           {
             if (compressor->compressed_bytes () == 0)
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 ACE_TEXT ("ERROR : check_results, no compression used ")
-                                 ACE_TEXT ("during test 1a\n")),
-                                1);
+              {
+                ACE_ERROR_RETURN ((LM_ERROR,
+                                   ACE_TEXT ("ERROR : check_results, no compression used ")
+                                   ACE_TEXT ("during test 1a\n")),
+                                  1);
+              }
             else
-               return 0;
+            {
+              return 0;
+            }
           }
         else
           {
@@ -260,12 +275,16 @@ check_results (CORBA::ORB_ptr orb)
         if (!CORBA::is_nil (compressor))
           {
             if (compressor->compressed_bytes () != 0)
-              ACE_ERROR_RETURN ((LM_ERROR,
-                                 ACE_TEXT ("ERROR : check_results, compression used ")
-                                 ACE_TEXT ("during test %d\n"), test),
-                                1);
+              {
+                ACE_ERROR_RETURN ((LM_ERROR,
+                                   ACE_TEXT ("ERROR : check_results, compression used ")
+                                   ACE_TEXT ("during test %d\n"), test),
+                                  1);
+              }
             else
+            {
               return 0;
+            }
           }
         else
           {
@@ -313,7 +332,7 @@ run_string_test (Test::Hello_ptr hello)
                                                     "This is a test string");
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) - string returned <%C>\n",
               the_string.in ()));
-  if (ACE_OS::strstr (the_string.in (), "Hello there") == 0)
+  if (std::strstr (the_string.in (), "Hello there") == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("ERROR : run_string_test, unexpected string received\n")),
@@ -340,7 +359,7 @@ run_big_reply_test (Test::Hello_ptr hello)
   if (dummy->length () > 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT("get_big_reply, received = %d bytes\n"),
+                  ACE_TEXT("get_big_reply, received = %u bytes\n"),
                       dummy->length ()));
     }
   else
@@ -401,7 +420,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) != 0)
+      {
         return 1;
+      }
 
       Test::Hello_var hello = prepare_tests (orb.in ());
 
@@ -417,7 +438,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         {
           result += start_tests(hello.in (), orb.in ());
         }
-      catch (const CORBA::Exception& ex)
+      catch (CORBA::Exception const & ex)
         {
           ex._tao_print_exception ("Exception caught:");
           ++result;
@@ -433,7 +454,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Exception caught:");
       ++result;

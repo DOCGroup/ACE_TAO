@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project : orbsvcslib, concurrency, portableserver {
   after     += CosConcurrency_Skel
   libs      += TAO_CosConcurrency_Skel

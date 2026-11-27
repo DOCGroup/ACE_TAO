@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-// ================================================================
 /**
  *  @file   LRU_Connection_Purging_Strategy.h
  *
  *  @author Chad Elliott (elliott_c@ociweb.com)
  */
-// ================================================================
 
 #ifndef TAO_LRU_PURGING_STRATEGY_H
 #define TAO_LRU_PURGING_STRATEGY_H
@@ -37,14 +33,12 @@ class TAO_Export TAO_LRU_Connection_Purging_Strategy
   : public TAO_Connection_Purging_Strategy
 {
 public:
-  /// The constructor
-  TAO_LRU_Connection_Purging_Strategy (int cache_maximum);
+  explicit TAO_LRU_Connection_Purging_Strategy (int cache_maximum);
 
-  /// The destructor
   ~TAO_LRU_Connection_Purging_Strategy () override = default;
 
   /// Called when accessing an item from the cache
-  void update_item (TAO_Transport& transport) override;
+  void update_item (TAO_Transport &transport) override;
 
 private:
   /// The ordering information for each transport in the cache

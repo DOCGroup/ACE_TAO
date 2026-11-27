@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "ace/OS_NS_sys_uio.h"
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_unistd.h"
@@ -8,8 +7,6 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// Create an ACE_SPIPE_Stream.
-
 ACE_INLINE int
 ACE_SPIPE_Stream::get_remote_addr (ACE_SPIPE_Addr &remote_sap) const
 {
@@ -18,18 +15,18 @@ ACE_SPIPE_Stream::get_remote_addr (ACE_SPIPE_Addr &remote_sap) const
   return 0;
 }
 
-// Send exactly N bytes from BUF to this socket.  Keeping trying until
-// this many bytes are sent.
+/// Send exactly N bytes from BUF to this socket.  Keeping trying until
+/// this many bytes are sent.
 
 ACE_INLINE ssize_t
-ACE_SPIPE_Stream::send_n (const void *buf, size_t n) const
+ACE_SPIPE_Stream::send_n (void const *buf, size_t n) const
 {
   ACE_TRACE ("ACE_SPIPE_Stream::send_n");
   return ACE::write_n (this->get_handle (), buf, n);
 }
 
-// Receive exactly N bytes from this socket into BUF.  Keep trying
-// until this many bytes are received.
+/// Receive exactly N bytes from this socket into BUF.  Keep trying
+/// until this many bytes are received.
 
 ACE_INLINE ssize_t
 ACE_SPIPE_Stream::recv_n (void *buf, size_t n) const
@@ -39,10 +36,10 @@ ACE_SPIPE_Stream::recv_n (void *buf, size_t n) const
 }
 
 ACE_INLINE ssize_t
-ACE_SPIPE_Stream::send (const void *buf, size_t n) const
+ACE_SPIPE_Stream::send (void const *buf, size_t n) const
 {
   ACE_TRACE ("ACE_SPIPE_Stream::send");
-  return ACE_OS::write (this->get_handle (), (const char *) buf, n);
+  return ACE_OS::write (this->get_handle (), static_cast<char const *> (buf), n);
 }
 
 ACE_INLINE ssize_t
@@ -53,7 +50,7 @@ ACE_SPIPE_Stream::recv (void *buf, size_t n) const
 }
 
 ACE_INLINE ssize_t
-ACE_SPIPE_Stream::send (const ACE_Str_Buf *cntl, const ACE_Str_Buf *data, int flags) const
+ACE_SPIPE_Stream::send (ACE_Str_Buf const *cntl, ACE_Str_Buf const *data, int flags) const
 {
   ACE_TRACE ("ACE_SPIPE_Stream::send");
   return ACE_OS::putmsg (this->get_handle (), (strbuf const *) cntl, (strbuf const *) data, flags);
@@ -67,7 +64,7 @@ ACE_SPIPE_Stream::recv (ACE_Str_Buf *cntl, ACE_Str_Buf *data, int *flags) const
 }
 
 ACE_INLINE ssize_t
-ACE_SPIPE_Stream::send (const ACE_Str_Buf *cntl, const ACE_Str_Buf *data, int band, int flags) const
+ACE_SPIPE_Stream::send (ACE_Str_Buf const *cntl, ACE_Str_Buf const *data, int band, int flags) const
 {
   ACE_TRACE ("ACE_SPIPE_Stream::send");
   return ACE_OS::putpmsg (this->get_handle (), (strbuf const *) cntl, (strbuf const *) data, band, flags);
@@ -94,7 +91,7 @@ ACE_SPIPE_Stream::recv (iovec iov[], int n) const
   return ACE_OS::readv (this->get_handle (), iov, n);
 }
 
-// This routine sends an open file descriptor to this socket.
+/// This routine sends an open file descriptor to this socket.
 
 ACE_INLINE int
 ACE_SPIPE_Stream::send_handle (ACE_HANDLE handle) const
@@ -109,7 +106,9 @@ ACE_SPIPE_Stream::send_handle (ACE_HANDLE handle) const
   if (res != static_cast <ssize_t> (sizeof(procID)))
   {
     if(res != -1)
+      {
         errno = ENXIO;
+      }
     return -1;
   }
   if (::WSADuplicateSocket ((SOCKET)handle, procID, &protInfo) == -1)
@@ -121,7 +120,9 @@ ACE_SPIPE_Stream::send_handle (ACE_HANDLE handle) const
   if (res != static_cast <ssize_t> (sizeof(protInfo)))
   {
     if(res != -1)
+      {
         errno = ENXIO;
+      }
     return -1;
   }
   // This is just for synchronization, we will ignore the data
@@ -129,7 +130,9 @@ ACE_SPIPE_Stream::send_handle (ACE_HANDLE handle) const
   if (res != static_cast <ssize_t> (sizeof(procID)))
   {
     if(res != -1)
+      {
         errno = ENXIO;
+      }
     return -1;
   }
   return 0;
@@ -139,7 +142,7 @@ ACE_SPIPE_Stream::send_handle (ACE_HANDLE handle) const
 #endif /* ACE_HAS_STREAM_PIPES */
 }
 
-// This file receives an open file descriptor from this socket.
+/// This routine receives an open file descriptor from this socket.
 
 ACE_INLINE int
 ACE_SPIPE_Stream::recv_handle (ACE_HANDLE &handle) const
@@ -148,8 +151,10 @@ ACE_SPIPE_Stream::recv_handle (ACE_HANDLE &handle) const
 #if defined (ACE_HAS_STREAM_PIPES)
   strrecvfd recvfd;
 
-  if (ACE_OS::ioctl (this->get_handle (), I_RECVFD, (void *) &recvfd) == -1)
-    return -1;
+  if (ACE_OS::ioctl (this->get_handle (), I_RECVFD, &recvfd) == -1)
+    {
+      return -1;
+    }
   else
     {
       handle = recvfd.fd;
@@ -163,14 +168,18 @@ ACE_SPIPE_Stream::recv_handle (ACE_HANDLE &handle) const
   if (res != static_cast <ssize_t> (sizeof(procID)))
   {
     if(res != -1)
+      {
         errno = ENXIO;
+      }
     return -1;
   }
   res = this->recv(&protInfo, sizeof(protInfo));
   if (res != static_cast <ssize_t> (sizeof(protInfo)))
   {
     if(res != -1)
+      {
         errno = ENXIO;
+      }
      return -1;
   }
   handle = ACE_OS::socket (FROM_PROTOCOL_INFO, FROM_PROTOCOL_INFO, FROM_PROTOCOL_INFO,
@@ -185,7 +194,9 @@ ACE_SPIPE_Stream::recv_handle (ACE_HANDLE &handle) const
   if (res != static_cast <ssize_t> (sizeof(procID)))
   {
     if(res != -1)
+      {
         errno = ENXIO;
+      }
     return -1;
   }
   return 0;
@@ -195,15 +206,15 @@ ACE_SPIPE_Stream::recv_handle (ACE_HANDLE &handle) const
 #endif /* ACE_HAS_STREAM_PIPES */
 }
 
-// This file receives an open file descriptor from this socket and
-// also passes back the information about the address...
+/// This routine receives an open file descriptor from this socket and
+/// also passes back the address information.
 
 ACE_INLINE int
 ACE_SPIPE_Stream::recv_handle (strrecvfd &recvfd) const
 {
   ACE_TRACE ("ACE_SPIPE_Stream::recv_handle");
 #if defined (ACE_HAS_STREAM_PIPES)
-  return ACE_OS::ioctl (this->get_handle (), I_RECVFD, (void *) &recvfd);
+  return ACE_OS::ioctl (this->get_handle (), I_RECVFD, &recvfd);
 #else
   ACE_UNUSED_ARG (recvfd);
   ACE_NOTSUP_RETURN (-1);
@@ -211,12 +222,12 @@ ACE_SPIPE_Stream::recv_handle (strrecvfd &recvfd) const
 }
 
 ACE_INLINE ssize_t
-ACE_SPIPE_Stream::send (const void *buf, size_t n,
+ACE_SPIPE_Stream::send (void const *buf, size_t n,
                         ACE_OVERLAPPED *overlapped) const
 {
   ACE_TRACE ("ACE_SPIPE_Stream::send");
   return ACE_OS::write (this->get_handle (),
-                        (const char *) buf, n,
+                        static_cast<char const *> (buf), n,
                         overlapped);
 }
 
@@ -240,7 +251,7 @@ ACE_SPIPE_Stream::sendv_n (const iovec iov[],
                         n);
 }
 
-// Recv an n byte message from the Stream.
+/// Recv an n byte message from the Stream.
 
 ACE_INLINE ssize_t
 ACE_SPIPE_Stream::recvv_n (iovec iov[],
@@ -254,7 +265,7 @@ ACE_SPIPE_Stream::recvv_n (iovec iov[],
                         n);
 }
 
-// Send an <iovec> of size <n> to the Stream.
+/// Send an @c iovec of size @c n to the Stream.
 
 ACE_INLINE ssize_t
 ACE_SPIPE_Stream::sendv (const iovec iov[],

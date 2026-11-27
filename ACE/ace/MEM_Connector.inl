@@ -1,4 +1,3 @@
-// -*- C++ -*-
 // Establish a connection.
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

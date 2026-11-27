@@ -12,9 +12,7 @@ LifeCycle::LifeCycle ()
 {
 }
 
-LifeCycle::~LifeCycle ()
-{
-}
+LifeCycle::~LifeCycle () = default;
 
 int
 LifeCycle::parse_args (int argc,
@@ -23,10 +21,9 @@ LifeCycle::parse_args (int argc,
     ACE_Arg_Shifter arg_shifter (argc,
                                  argv);
 
-    const ACE_TCHAR *current_arg = 0;
-
     while (arg_shifter.is_anything_left ())
     {
+      ACE_TCHAR const *current_arg {};
       if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-count"))))
         {
           this->count_ = ACE_OS::atoi (current_arg);
@@ -93,7 +90,7 @@ LifeCycle::init (int argc, ACE_TCHAR *argv[])
 void
 LifeCycle::run_test()
 {
-  for (int i = 0; i < this->count_; ++i)
+  for (int i {}; i < this->count_; ++i)
     {
      this->create_ec ();
 
@@ -127,8 +124,10 @@ LifeCycle::create_ec ()
   }
 
   if (TAO_debug_level)
-    ACE_DEBUG ((LM_DEBUG,
-                "created event channel\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "created event channel\n"));
+    }
 }
 
 void
@@ -149,8 +148,10 @@ LifeCycle::create_supplier_admin ()
     }
 
   if (TAO_debug_level)
-    ACE_DEBUG ((LM_DEBUG,
-                "created supplier admin\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "created supplier admin\n"));
+    }
 }
 
 void
@@ -170,8 +171,10 @@ LifeCycle::create_consumer_admin ()
     }
 
   if (TAO_debug_level)
-   ACE_DEBUG ((LM_DEBUG,
-               "created consumer admin\n"));
+    {
+     ACE_DEBUG ((LM_DEBUG,
+                 "created consumer admin\n"));
+    }
 }
 
 void
@@ -180,8 +183,10 @@ LifeCycle::destroy_supplier_admin ()
   this->supplier_admin_->destroy ();
 
   if (TAO_debug_level)
-    ACE_DEBUG ((LM_DEBUG,
-                "destroyed supplier admin\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "destroyed supplier admin\n"));
+    }
 }
 
 void
@@ -190,8 +195,10 @@ LifeCycle::destroy_consumer_admin ()
   this->consumer_admin_->destroy ();
 
   if (TAO_debug_level)
-    ACE_DEBUG ((LM_DEBUG,
-                "destroyed consumer admin\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "destroyed consumer admin\n"));
+    }
 }
 
 void
@@ -200,10 +207,11 @@ LifeCycle::destroy_ec ()
   this->ec_->destroy ();
 
   if (TAO_debug_level)
-    ACE_DEBUG ((LM_DEBUG,
-                "destroyed event channel\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "destroyed event channel\n"));
+    }
 }
-
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
@@ -220,7 +228,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       test.run_test ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Error: ");
       return 1;

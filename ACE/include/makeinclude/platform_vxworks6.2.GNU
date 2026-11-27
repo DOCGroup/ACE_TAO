@@ -1,4 +1,3 @@
-# -*- Makefile -*-
 # VxWorks 6.2
 
 #### Notes:

@@ -6,6 +6,9 @@
 #endif /* __ACE_INLINE__ */
 
 #include "tao/debug.h"
+
+#include <cstring>
+#include <string>
 //#define DEBUG_LEVEL 10
 #ifndef DEBUG_LEVEL
 # define DEBUG_LEVEL TAO_debug_level
@@ -14,12 +17,9 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_POA_Helper::TAO_Notify_POA_Helper ()
-{
-}
+= default;
 
-TAO_Notify_POA_Helper::~TAO_Notify_POA_Helper ()
-{
-}
+TAO_Notify_POA_Helper::~TAO_Notify_POA_Helper () = default;
 
 ACE_CString
 TAO_Notify_POA_Helper::get_unique_id ()
@@ -27,14 +27,12 @@ TAO_Notify_POA_Helper::get_unique_id ()
   /// Factory for generating unique ids for the POAs.
   static TAO_Notify_ID_Factory poa_id_factory;
 
-  char buf[32];
-  ACE_OS::itoa (poa_id_factory.id (), buf, 10);
-
-  return ACE_CString (buf);
+  std::string const id = std::to_string (poa_id_factory.id ());
+  return ACE_CString (id.c_str ());
 }
 
 void
-TAO_Notify_POA_Helper::init (PortableServer::POA_ptr parent_poa, const char* poa_name)
+TAO_Notify_POA_Helper::init (PortableServer::POA_ptr parent_poa, char const *poa_name)
 {
   CORBA::PolicyList policy_list (2);
 
@@ -45,7 +43,7 @@ TAO_Notify_POA_Helper::init (PortableServer::POA_ptr parent_poa, const char* poa
 
 #if !defined (CORBA_E_MICRO)
 void
-TAO_Notify_POA_Helper::init_persistent (PortableServer::POA_ptr parent_poa, const char* poa_name)
+TAO_Notify_POA_Helper::init_persistent (PortableServer::POA_ptr parent_poa, char const *poa_name)
 {
   CORBA::PolicyList policy_list (2);
 
@@ -75,7 +73,6 @@ TAO_Notify_POA_Helper::set_policy (PortableServer::POA_ptr parent_poa, CORBA::Po
     parent_poa->create_id_assignment_policy (PortableServer::USER_ID);
 }
 
-
 #if !defined (CORBA_E_MICRO)
 void
 TAO_Notify_POA_Helper::set_persistent_policy (PortableServer::POA_ptr parent_poa, CORBA::PolicyList &policy_list)
@@ -90,11 +87,10 @@ TAO_Notify_POA_Helper::set_persistent_policy (PortableServer::POA_ptr parent_poa
 }
 #endif /* !CORBA_E_MICRO */
 
-
 void
 TAO_Notify_POA_Helper::create_i (
   PortableServer::POA_ptr parent_poa,
-  const char* poa_name,
+  char const *poa_name,
   CORBA::PolicyList &policy_list)
 {
   PortableServer::POAManager_var manager =
@@ -111,7 +107,7 @@ TAO_Notify_POA_Helper::create_i (
 
   /*
   // Destroy the policies
-  for (CORBA::ULong index = 0; index < policy_list.length (); ++index)
+  for (CORBA::ULong index {}; index < policy_list.length (); ++index)
     {
       policy_list[index]->destroy ();
     }
@@ -130,14 +126,14 @@ TAO_Notify_POA_Helper::long_to_ObjectId (CORBA::Long id) const
   CORBA::Octet *buffer = PortableServer::ObjectId::allocbuf (buffer_size);
 
   // Copy the contents
-  ACE_OS::memcpy (buffer, (char*)&id, buffer_size);
+  std::memcpy (buffer, (char*)&id, buffer_size);
 
   // @@ Pradeep: TAO guarantees that Long is 4 bytes wide, but the
   // standard only guarantees that it is at least 4 bytes wide. You
   // may want to think about that....
 
   // Create and return a new ID
-  PortableServer::ObjectId *obj_id = nullptr;
+  PortableServer::ObjectId *obj_id {};
   ACE_NEW_THROW_EX (obj_id,
                     PortableServer::ObjectId (buffer_size,
                                               buffer_size,
@@ -231,7 +227,6 @@ TAO_Notify_POA_Helper::servant_to_reference (
 {
   return poa_->servant_to_reference (servant);
 }
-
 
 void
 TAO_Notify_POA_Helper::destroy ()

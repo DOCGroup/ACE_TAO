@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  * @file Monitor_Query.h
  *
  * @author Jeff Parsons <j.parsons@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef MONITOR_QUERY_H
 #define MONITOR_QUERY_H
@@ -39,12 +35,15 @@ namespace ACE
       : public ACE_Event_Handler
     {
     public:
-      /// Default constructor
+      Monitor_Point_Auto_Query (Monitor_Point_Auto_Query const &) = delete;
+      Monitor_Point_Auto_Query (Monitor_Point_Auto_Query &&) = delete;
+      Monitor_Point_Auto_Query &operator= (Monitor_Point_Auto_Query const &) = delete;
+      Monitor_Point_Auto_Query &operator= (Monitor_Point_Auto_Query &&) = delete;
+
       Monitor_Point_Auto_Query ();
 
-      /// Override of ACE base class method.
-      virtual int handle_timeout (const ACE_Time_Value& current,
-                                  const void* monitor_query);
+      int handle_timeout (ACE_Time_Value const& current,
+                          void const* monitor_query) override;
     };
 
     /**
@@ -57,12 +56,13 @@ namespace ACE
     class MONITOR_CONTROL_Export Monitor_Query
     {
     public:
-      Monitor_Query (const char* monitor_name);
+      explicit Monitor_Query (char const* monitor_name);
 
-      void query ();
+      void query () const;
 
     private:
-      Monitor_Base* monitor_;
+      /// The registry owns this monitor; this query only borrows it.
+      Monitor_Base* monitor_ {};
     };
   }
 }

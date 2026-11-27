@@ -11,18 +11,15 @@
 
 #include "ace/Timeprobe.h"
 #include "ace/High_Res_Timer.h"
-#include "ace/OS_NS_string.h"
+
+#include <cstring>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class ACE_LOCK, class ALLOCATOR>
 ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::ACE_Timeprobe_Ex (u_long size)
-  : timeprobes_ (0),
-    lock_ (),
-    max_size_ (size),
-    current_size_ (0),
-    report_buffer_full_ (0),
-    allocator_ (0)
+  : lock_ (),
+    max_size_ (size)
 {
   ACE_timeprobe_t *temp;
   //FUZZ: disable check_for_lack_ACE_OS
@@ -39,14 +36,11 @@ template <class ACE_LOCK, class ALLOCATOR>
 ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::
 ACE_Timeprobe_Ex (ALLOCATOR *allocator,
                u_long size)
-  : timeprobes_ (0),
-    lock_ (),
+  : lock_ (),
     max_size_ (size),
-    current_size_ (0),
-    report_buffer_full_ (0),
     allocator_ (allocator)
 {
-  ACE_timeprobe_t *temp = nullptr;
+  ACE_timeprobe_t *temp {};
   //FUZZ: disable check_for_lack_ACE_OS
   ACE_NEW_MALLOC_ARRAY (temp,
                         (ACE_timeprobe_t *) this->allocator ()->
@@ -58,7 +52,7 @@ ACE_Timeprobe_Ex (ALLOCATOR *allocator,
 }
 
 template <class ACE_LOCK, class ALLOCATOR>
-ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::ACE_Timeprobe_Ex (const ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR> &)
+ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::ACE_Timeprobe_Ex (ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR> const &)
 {
   //
   // Stupid MSVC is forcing me to define this; please don't use it.
@@ -103,7 +97,7 @@ ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::timeprobe (u_long event)
 }
 
 template <class ACE_LOCK, class ALLOCATOR> void
-ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::timeprobe (const char *event)
+ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::timeprobe (char const *event)
 {
   ACE_GUARD (ACE_LOCK, ace_mon, this->lock_);
 
@@ -142,7 +136,7 @@ ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::increase_size (u_long size)
 
   if (size > this->max_size_)
     {
-      ACE_timeprobe_t *temp = nullptr;
+      ACE_timeprobe_t *temp {};
       //FUZZ: disable check_for_lack_ACE_OS
       ACE_NEW_MALLOC_ARRAY (temp,
                             (ACE_timeprobe_t *) this->allocator ()->
@@ -154,9 +148,7 @@ ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::increase_size (u_long size)
 
       if (this->max_size_ > 0)
         {
-          ACE_OS::memcpy (temp,
-                          this->timeprobes_,
-                          this->max_size_ * sizeof (ACE_timeprobe_t));
+          std::memcpy (temp, this->timeprobes_, this->max_size_ * sizeof (ACE_timeprobe_t));
 
           // Iterates over the array explicitly calling the destructor for
           // each probe instance, then deallocates the memory
@@ -208,7 +200,7 @@ ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::current_size ()
 }
 
 template <class ACE_LOCK, class ALLOCATOR> int
-ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::event_descriptions (const char **descriptions,
+ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::event_descriptions (char const **descriptions,
                                              u_long minimum_id)
 {
   ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->lock_, -1);
@@ -234,11 +226,13 @@ ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::print_times ()
                                           : this->current_size_;
 
   ACELIB_DEBUG ((LM_DEBUG,
-              "\nACE_Timeprobe_Ex; %u timestamps were recorded:\n",
+              "\nACE_Timeprobe_Ex; %Lu timestamps were recorded:\n",
               size));
 
   if (size == 0)
-    return;
+    {
+      return;
+    }
 
   ACELIB_DEBUG ((LM_DEBUG,
               "\n%-50.50s %8.8s %13.13s\n\n",
@@ -260,7 +254,9 @@ ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::print_times ()
               "START"));
 
   if (size == 1)
-    return;
+    {
+      return;
+    }
 
   bool has_timestamp_inversion = false;
 
@@ -281,7 +277,9 @@ ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::print_times ()
         (ACE_INT64) (this->timeprobes_[i].time_ - this->timeprobes_[j].time_);
 
       if (time_difference < 0)
-        has_timestamp_inversion = true;
+        {
+          has_timestamp_inversion = true;
+        }
 
       // Convert to microseconds.
       time_difference /= gsf;
@@ -320,11 +318,13 @@ ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::print_absolute_times ()
                                           : this->current_size_;
 
   ACELIB_DEBUG ((LM_DEBUG,
-              "\nACE_Timeprobe_Ex; %u timestamps were recorded:\n",
+              "\nACE_Timeprobe_Ex; %Lu timestamps were recorded:\n",
               size));
 
   if (size == 0)
-    return;
+    {
+      return;
+    }
 
   ACELIB_DEBUG ((LM_DEBUG,
               "\n%-50.50s %8.8s %13.13s\n\n",
@@ -340,11 +340,10 @@ ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::print_absolute_times ()
       ACE_High_Res_Timer::hrtime_to_tv (tv, this->timeprobes_ [i].time_);
 
       ACELIB_DEBUG ((LM_DEBUG,
-                  "%-50.50s %8.8x %12.12u\n",
+                  "%-50.50s %8.8x %12.12q\n",
                   this->find_description_i (i),
                   this->timeprobes_ [i].thread_,
-                  tv.sec () * 1000000
-                   + tv.usec ()));
+                  static_cast<ACE_INT64> (tv.sec () * 1000000 + tv.usec ())));
 
       // Modulus increment: loops around at the end.
       i = (i + 1) % this->max_size_;
@@ -352,23 +351,27 @@ ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::print_absolute_times ()
   while (i != this->current_size_);
 }
 
-template <class ACE_LOCK, class ALLOCATOR> const char *
+template <class ACE_LOCK, class ALLOCATOR> char const *
 ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::find_description_i (u_long i)
 {
   if (this->timeprobes_[i].event_type_ == ACE_timeprobe_t::STRING)
-    return this->timeprobes_[i].event_.event_description_;
+    {
+      return this->timeprobes_[i].event_.event_description_;
+    }
   else
     {
       EVENT_DESCRIPTIONS::iterator iterator = this->sorted_event_descriptions_.begin ();
       for (u_long j = 0;
            j < this->sorted_event_descriptions_.size () - 1;
-           iterator++, j++)
+           ++iterator, ++j)
         {
           EVENT_DESCRIPTIONS::iterator next_event_descriptions = iterator;
           ++next_event_descriptions;
 
           if (this->timeprobes_[i].event_.event_number_ < (*next_event_descriptions).minimum_id_)
-            break;
+            {
+              break;
+            }
         }
       return (*iterator).descriptions_[this->timeprobes_[i].event_.event_number_ - (*iterator).minimum_id_];
     }
@@ -377,20 +380,22 @@ ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::find_description_i (u_long i)
 template <class ACE_LOCK, class ALLOCATOR> void
 ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::sort_event_descriptions_i ()
 {
-  size_t total_elements = this->event_descriptions_.size ();
+  size_t const total_elements = this->event_descriptions_.size ();
 
   for (size_t i = 0;
        i < total_elements;
-       i++)
+       ++i)
     {
       EVENT_DESCRIPTIONS::iterator iterator = this->event_descriptions_.begin ();
       ACE_Event_Descriptions min_entry = *iterator;
 
       for (;
            iterator != this->event_descriptions_.end ();
-           iterator++)
+           ++iterator)
         if ((*iterator).minimum_id_ < min_entry.minimum_id_)
-          min_entry = *iterator;
+          {
+            min_entry = *iterator;
+          }
 
       this->sorted_event_descriptions_.insert (min_entry);
       this->event_descriptions_.remove (min_entry);

@@ -5,14 +5,9 @@
 #include "ace/Argv_Type_Converter.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
-#include "ace/OS_NS_string.h"
 #include "ace/os_include/os_netdb.h"
 
-// Constructor.
-Server_i::Server_i () = default;
-
-// Destructor.
-Server_i::~Server_i () = default;
+#include <cstring>
 
 // Parse the command-line arguments and set options.
 int
@@ -26,16 +21,18 @@ Server_i::parse_args (int argc,
     switch (c)
       {
       case 'd':  // debug flag.
-        TAO_debug_level++;
+        ++TAO_debug_level;
         break;
       case 'o':  // output the IOR to a file.
-        this->ior_output_file_ =
-          ACE_OS::fopen (get_opts.opt_arg (), ACE_TEXT("a"));
+        this->ior_output_file_.reset (
+          ACE_OS::fopen (get_opts.opt_arg (), ACE_TEXT ("a")));
 
-        if (this->ior_output_file_ == nullptr)
-          ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT("[SERVER] Process/Thread Id : (%P/%t)Unable to open %s for writing: %p\n"),
-                             get_opts.opt_arg ()), -1);
+        if (!this->ior_output_file_)
+          {
+            ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT("[SERVER] Process/Thread Id : (%P/%t)Unable to open %s for writing: %p\n"),
+                               get_opts.opt_arg (), ACE_TEXT ("fopen")), -1);
+          }
         break;
       case '?':  // display help for use of the server.
       default:
@@ -72,19 +69,17 @@ Server_i::create_server ()
   try
     {
       // Create a new server object.
-      ACE_NEW_RETURN (this->time_service_server_impl_,
+      TAO_Time_Service_Server *server_impl {};
+      ACE_NEW_RETURN (server_impl,
                       TAO_Time_Service_Server,
-                      0);
+                      -1);
+      PortableServer::ServantBase_var const server_impl_owner (server_impl);
 
-      // Register a servant with the child poa.
-      CORBA::String_var server_str =
-        this->orb_manager_.activate_under_child_poa ("server",
-                                                     this->time_service_server_impl_);
-
-      PortableServer::ObjectId_var id =
+      PortableServer::ObjectId_var const id =
         PortableServer::string_to_ObjectId ("server");
+      this->orb_manager_.child_poa ()->activate_object_with_id (id.in (), server_impl);
 
-      CORBA::Object_var server_ref =
+      CORBA::Object_var const server_ref =
         this->orb_manager_.child_poa ()->id_to_reference (id.in ());
 
       this->time_service_server_ = CosTime::TimeService::_narrow (server_ref.in ());
@@ -94,7 +89,7 @@ Server_i::create_server ()
 
       //Convert the server reference to a string.
 
-      CORBA::String_var objref_server =
+      CORBA::String_var const objref_server =
         this->orb_->object_to_string (server_ref.in ());
 
       // Print the server IOR on the console.
@@ -108,10 +103,10 @@ Server_i::create_server ()
       if (this->ior_output_file_)
         {
           // Write the IOR to the file.
-          ACE_OS::fprintf (this->ior_output_file_,
+          ACE_OS::fprintf (this->ior_output_file_.get (),
                            "%s\n",
                            objref_server.in ());
-          ACE_OS::fclose (this->ior_output_file_);
+          this->ior_output_file_.reset ();
         }
     }
   catch (CORBA::Exception const &ex)
@@ -122,7 +117,6 @@ Server_i::create_server ()
     }
   return 0;
 }
-
 
 // Bind the Server in the context 'ServerContext' with the name
 // 'Server:<hostname>'.
@@ -138,24 +132,22 @@ Server_i::register_server ()
 
       try
         {
-          CosNaming::NamingContext_var server_context =
-            this->naming_client_->bind_new_context(server_context_name);
+          this->naming_client_->bind_new_context (server_context_name);
         }
       catch (CosNaming::NamingContext::AlreadyBound const &)
         {
           // OK, naming context already exists.
         }
 
-      char host_name[MAXHOSTNAMELEN];
-      char server_mc_name[MAXHOSTNAMELEN];
+      char host_name[MAXHOSTNAMELEN] {};
       ACE_OS::hostname (host_name, MAXHOSTNAMELEN);
 
       CosNaming::Name server_name (server_context_name);
 
       server_name.length (2);
-      ACE_OS::strcpy (server_mc_name, "Server:");
-      ACE_OS::strcat (server_mc_name, host_name);
-      server_name[1].id = CORBA::string_dup (server_mc_name);
+      std::string server_mc_name {"Server:"};
+      server_mc_name += host_name;
+      server_name[1].id = CORBA::string_dup (server_mc_name.c_str ());
 
       // Bind the compound name (ServerContext(Server:<hostname>))
       // to the Naming Server.
@@ -199,10 +191,12 @@ Server_i::init (int argc,
                                            "time_server");
 
       if (retval == -1)
-        ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT("%p\n"),
-                           ACE_TEXT("init_child_poa")),
-                           -1);
+        {
+          ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT("%p\n"),
+                             ACE_TEXT("init_child_poa")),
+                             -1);
+        }
 
       // Activate the POA Manager.
       this->orb_manager_.activate_poa_manager ();
@@ -210,19 +204,32 @@ Server_i::init (int argc,
       int const result = this->parse_args (command.get_argc (), command.get_TCHAR_argv ());
 
       if (result != 0)
+      {
         return result;
+      }
 
       // Get the orb.
       this->orb_ = this->orb_manager_.orb ();
 
-      // Initialize Naming Service.
-      this->init_naming_service ();
+      // Initialize Naming Service. The server can still be used through
+      // its IOR file when no Naming Service is available.
+      int const naming_service_result = this->init_naming_service ();
+      if (naming_service_result != 0 && !this->ior_output_file_)
+      {
+        return -1;
+      }
 
       // Create the server object.
-      this->create_server ();
+      if (this->create_server () != 0)
+      {
+        return -1;
+      }
 
-      // Register the server object with the Naming Service.
-      this->register_server ();
+      // Register the server object when the Naming Service is available.
+      if (naming_service_result == 0 && this->register_server () != 0)
+      {
+        return -1;
+      }
     }
   catch (CORBA::Exception const &ex)
     {
@@ -233,7 +240,6 @@ Server_i::init (int argc,
   return 0;
 }
 
-
 // Run the event loop for ORB.
 
 int
@@ -242,8 +248,10 @@ Server_i::run ()
   int const retval = this->orb_manager_.run ();
 
   if (retval == -1)
-    ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT("[SERVER] Process/Thread Id : (%P/%t) Server_i::run")),
-                      -1);
+    {
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT("[SERVER] Process/Thread Id : (%P/%t) Server_i::run")),
+                        -1);
+    }
   return 0;
 }

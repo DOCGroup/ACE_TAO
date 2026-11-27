@@ -20,11 +20,11 @@ TAO_RT_Transport_Descriptor_Property*
 TAO_RT_Transport_Descriptor_Private_Connection_Property::duplicate ()
 {
   // Construct a copy of our class
-  TAO_RT_Transport_Descriptor_Private_Connection_Property *desc_prop = nullptr;
+  TAO_RT_Transport_Descriptor_Private_Connection_Property *desc_prop {};
 
   ACE_NEW_RETURN (desc_prop,
                   TAO_RT_Transport_Descriptor_Private_Connection_Property (this->object_id_),
-                  0);
+                  nullptr);
 
   return desc_prop;
 }
@@ -45,12 +45,12 @@ TAO_RT_Transport_Descriptor_Property*
 TAO_RT_Transport_Descriptor_Banded_Connection_Property::duplicate ()
 {
   // Construct a copy of our class
-  TAO_RT_Transport_Descriptor_Banded_Connection_Property *desc_prop = nullptr;
+  TAO_RT_Transport_Descriptor_Banded_Connection_Property *desc_prop {};
 
   ACE_NEW_RETURN (desc_prop,
                   TAO_RT_Transport_Descriptor_Banded_Connection_Property (this->low_priority_,
                                   this->high_priority_),
-                  0);
+                  nullptr);
 
   return desc_prop;
 }

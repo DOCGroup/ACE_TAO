@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-// ===================================================================
 /**
  *  @file   GIOP_Message_Generator_Parser.h
  *
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  */
-// ===================================================================
 
 #ifndef TAO_GIOP_MESSAGE_GENERATOR_PARSER_H
 #define TAO_GIOP_MESSAGE_GENERATOR_PARSER_H
@@ -50,7 +46,7 @@ public:
 
   /// Write the request header in to @a msg
   virtual bool write_request_header (
-      const TAO_Operation_Details &opdetails,
+      TAO_Operation_Details const &opdetails,
       TAO_Target_Specification &spec,
       TAO_OutputCDR &msg) = 0;
 

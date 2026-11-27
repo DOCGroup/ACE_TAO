@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #ifndef IMR_LOCATOR_I_H
 #define IMR_LOCATOR_I_H
 #include /**/ "ace/pre.h"
@@ -44,7 +43,7 @@ public:
   int init (Options& opts);
 
   /// Same as above, but use the given orb
-  int init_with_orb (CORBA::ORB_ptr orb); //, Options& opts);
+  int init_with_orb (CORBA::ORB_ptr orb);
 
   /// Cleans up any state created by init*.
   int fini ();
@@ -62,97 +61,97 @@ public:
   const Options *opts () const;
 
   static int debug ();
-  // Note : See the IDL for descriptions of the operations.
+  /// See the IDL for descriptions of the operations.
 
-  // Activator->Locator
+  /// Activator->Locator
 
-  virtual void register_activator
+  void register_activator
     (ImplementationRepository::AMH_LocatorResponseHandler_ptr _tao_rh,
-     const char* name,
-     ImplementationRepository::Activator_ptr admin);
+     char const *name,
+     ImplementationRepository::Activator_ptr admin) override;
 
-  virtual void unregister_activator
+  void unregister_activator
     (ImplementationRepository::AMH_LocatorResponseHandler_ptr _tao_rh,
-     const char* name,
-     CORBA::Long token);
+     char const *name,
+     CORBA::Long token) override;
 
-  virtual void child_death_pid
+  void child_death_pid
     (ImplementationRepository::AMH_LocatorResponseHandler_ptr _tao_rh,
-     const char* name, CORBA::Long pid);
+     char const *name, CORBA::Long pid) override;
 
-  virtual void spawn_pid
+  void spawn_pid
     (ImplementationRepository::AMH_LocatorResponseHandler_ptr _tao_rh,
-     const char* name, CORBA::Long pid);
+     char const *name, CORBA::Long pid) override;
 
   // tao_imr->Locator
 
-  virtual void activate_server
+  void activate_server
     (ImplementationRepository::AMH_AdministrationResponseHandler_ptr _tao_rh,
-     const char * name);
+     char const *name) override;
 
-  virtual void add_or_update_server
+  void add_or_update_server
     (ImplementationRepository::AMH_AdministrationResponseHandler_ptr _tao_rh,
-     const char * name,
-     const ImplementationRepository::StartupOptions &options);
+     char const *name,
+     const ImplementationRepository::StartupOptions &options) override;
 
-  virtual void link_servers
+  void link_servers
     (ImplementationRepository::AMH_AdministrationExtResponseHandler_ptr _tao_rh,
-     const char * name,
-     const CORBA::StringSeq & peers);
+     char const *name,
+     CORBA::StringSeq const & peers) override;
 
-  virtual void kill_server
+  void kill_server
     (ImplementationRepository::AMH_AdministrationExtResponseHandler_ptr _tao_rh,
-     const char * name,
-     CORBA::Short signum);
+     char const *name,
+     CORBA::Short signum) override;
 
-  virtual void remove_server
+  void remove_server
     (ImplementationRepository::AMH_AdministrationResponseHandler_ptr _tao_rh,
-     const char * name);
+     char const *name) override;
 
-  virtual void shutdown_server
+  void shutdown_server
     (ImplementationRepository::AMH_AdministrationResponseHandler_ptr _tao_rh,
-     const char * name);
+     char const *name) override;
 
-  virtual void force_remove_server
+  void force_remove_server
     (ImplementationRepository::AMH_AdministrationExtResponseHandler_ptr _tao_rh,
-     const char * name,
-     CORBA::Short signum);
+     char const *name,
+     CORBA::Short signum) override;
 
-  virtual void find
+  void find
     (ImplementationRepository::AMH_AdministrationResponseHandler_ptr _tao_rh,
-     const char * name);
+     char const *name) override;
 
-  virtual void list
+  void list
     (ImplementationRepository::AMH_AdministrationResponseHandler_ptr _tao_rh,
      CORBA::ULong how_many,
-     CORBA::Boolean determine_active_status);
+     CORBA::Boolean determine_active_status) override;
 
-  virtual void shutdown
+  void shutdown
     (ImplementationRepository::AMH_AdministrationResponseHandler_ptr _tao_rh,
      CORBA::Boolean activators,
-     CORBA::Boolean servers);
+     CORBA::Boolean servers) override;
 
   // Server->Locator
 
-  virtual void server_is_running
+  void server_is_running
     (ImplementationRepository::AMH_AdministrationResponseHandler_ptr _tao_rh,
-     const char* name,
-     const char* partial_ior,
-     ImplementationRepository::ServerObject_ptr server_object);
+     char const *name,
+     char const *partial_ior,
+     ImplementationRepository::ServerObject_ptr server_object) override;
 
-  virtual void server_is_shutting_down
+  void server_is_shutting_down
     (ImplementationRepository::AMH_AdministrationResponseHandler_ptr _tao_rh,
-     const char * name);
+     char const *name) override;
 
   // Used by the INS_Locator to start a sever given an object name synchronously
-  char* activate_server_by_object (const char* object_name);
-  char* activate_server_by_name (const char * name, bool manual_start);
+  char* activate_server_by_object (char const *object_name);
+  char* activate_server_by_name (char const *name, bool manual_start);
 
   // Asynchronous versions, used by both INS_Locator and Forwarder
   void activate_server_by_info (const Server_Info_Ptr &si,
                                 ImR_ResponseHandler *rh);
 
-  void activate_server_by_name (const char * name,
+  void activate_server_by_name (char const *name,
                                 bool manual_start,
                                 ImR_ResponseHandler *rh);
 
@@ -162,25 +161,25 @@ public:
 
   LiveCheck &pinger ();
   PortableServer::POA_ptr root_poa ();
-  Activator_Info_Ptr get_activator (const ACE_CString& name);
+  Activator_Info_Ptr get_activator (ACE_CString const& name);
 
   void remove_server_i (const Server_Info_Ptr &si);
-  void destroy_poa (const ACE_CString &poa_name);
+  void destroy_poa (ACE_CString const &poa_name);
   void remove_aam (AsyncAccessManager_ptr &aam);
-  void remove_aam (const char *name);
-  AsyncAccessManager *find_aam (const char *name, bool active = true);
-  AsyncAccessManager *find_not_running_aam (const char *name, bool active = true);
+  void remove_aam (char const *name);
+  AsyncAccessManager *find_aam (char const *name, bool active = true);
+  AsyncAccessManager *find_not_running_aam (char const *name, bool active = true);
   AsyncAccessManager *create_aam (UpdateableServerInfo &info, bool running = false);
-  void make_terminating (AsyncAccessManager_ptr &aam, const char *name, int pid);
+  void make_terminating (AsyncAccessManager_ptr &aam, char const *name, int pid);
   /// Receiving an update from remote peer
-  void remote_access_update (const char *name,
+  void remote_access_update (char const *name,
                              ImplementationRepository::AAM_Status state);
 
   CORBA::Object_ptr set_timeout_policy(CORBA::Object_ptr obj,
-                                       const ACE_Time_Value& to);
+                                       ACE_Time_Value const& to);
 
 private:
-  bool get_info_for_name (const char *name, Server_Info_Ptr &si);
+  bool get_info_for_name (char const *name, Server_Info_Ptr &si);
 
   void  activate_server_i (UpdateableServerInfo& info,
                            bool manual_start,
@@ -188,7 +187,7 @@ private:
 
   bool server_is_alive (UpdateableServerInfo& info);
 
-  void unregister_activator_i (const char* activator);
+  void unregister_activator_i (char const *activator);
 
   void connect_activator (Activator_Info& info);
 
@@ -196,11 +195,11 @@ private:
 
   void connect_server (UpdateableServerInfo& info);
 
-  PortableServer::POA_ptr findPOA (const char* name);
+  PortableServer::POA_ptr findPOA (char const *name);
 
-  void child_death_i (const char* name, int pid);
+  void child_death_i (char const *name, int pid);
 
-  void remove_aam_i (const char *name, bool active);
+  void remove_aam_i (char const *name, bool active);
 
   bool kill_server_i (const Server_Info_Ptr &si,
                       CORBA::Short signum,
@@ -213,10 +212,10 @@ private:
 private:
   static int debug_;
 
-  // The class that handles the forwarding.
+  /// The class that handles the forwarding.
   ImR_DSI_Forwarder dsi_forwarder_;
 
-  // Used for the forwarding of any type of POA.
+  /// Used for the forwarding of any type of POA.
   ImR_Adapter adapter_;
 
   /// The locator interface for the IORTable
@@ -226,7 +225,7 @@ private:
   LiveCheck pinger_;
 
   /// A collection of asynch activator instances
-  typedef ACE_Unbounded_Set<AsyncAccessManager_ptr> AAM_Set;
+  using AAM_Set = ACE_Unbounded_Set<AsyncAccessManager_ptr>;
   AAM_Set aam_active_;
   AAM_Set aam_terminating_;
 
@@ -245,22 +244,20 @@ private:
   public :
     ImR_Locator_i *owner_;
     Shutdown_Handler (ImR_Locator_i *owner) : owner_ (owner) {}
-    int handle_exception (ACE_HANDLE);
+    int handle_exception (ACE_HANDLE) override;
   } shutdown_handler_;
 };
-
-//----------------------------------------------------------------------------
 
 class SyncListener : public LiveListener
 {
  public:
-  SyncListener (const char *server, CORBA::ORB_ptr orb, LiveCheck &pinger);
+  SyncListener (char const *server, CORBA::ORB_ptr orb, LiveCheck &pinger);
 
   virtual ~SyncListener ();
 
   bool is_alive ();
 
-  bool status_changed (LiveStatus status);
+  bool status_changed (LiveStatus status) override;
 
  private:
   CORBA::ORB_var orb_;
@@ -270,7 +267,6 @@ class SyncListener : public LiveListener
   bool callback_;
 };
 
-//----------------------------------------------------------------------------
 /*
  * @class ImR_Loc_ResponseHandler
  *
@@ -280,11 +276,11 @@ class SyncListener : public LiveListener
 class ImR_SyncResponseHandler : public ImR_ResponseHandler
 {
 public:
-  ImR_SyncResponseHandler (const char *key, CORBA::ORB_ptr orb);
+  ImR_SyncResponseHandler (char const *key, CORBA::ORB_ptr orb);
   virtual ~ImR_SyncResponseHandler ();
 
-  virtual void send_ior (const char *pior);
-  virtual void send_exception (CORBA::Exception *ex);
+  void send_ior (char const *pior) override;
+  void send_exception (CORBA::Exception *ex) override;
 
   char *wait_for_result ();
 
@@ -295,7 +291,6 @@ private:
   CORBA::ORB_var orb_;
 };
 
-//----------------------------------------------------------------------------
 /*
  * @class ImR_Loc_ResponseHandler
  *
@@ -322,11 +317,11 @@ public:
                            ImplementationRepository::AMH_AdministrationExtResponseHandler_ptr rh);
   virtual ~ImR_Loc_ResponseHandler ();
 
-  virtual void send_ior (const char *pior);
-  virtual void send_exception (CORBA::Exception *ex);
+  void send_ior (char const *pior) override;
+  void send_exception (CORBA::Exception *ex) override;
 
 private:
-  void send_ior_ext (const char *pior);
+  void send_ior_ext (char const *pior);
   void send_exception_ext (CORBA::Exception *ex);
 
   Loc_Operation_Id op_id_;

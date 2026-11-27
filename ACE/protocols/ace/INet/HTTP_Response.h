@@ -37,44 +37,42 @@ namespace ACE
           : public ACE::INet::Response, public Header
           {
             public:
-              /// Constructor
               Response();
 
-              Response(const Status& status);
+              explicit Response(Status const& status);
 
-              Response(const ACE_CString& version, const Status& status = Status());
+              Response(ACE_CString const& version, Status const& status = Status());
 
-              /// Destructor
-              virtual ~Response();
+              ~Response () override;
 
               /// Reset the response object
               void reset ();
 
-              void reset (const Status& status);
+              void reset (Status const& status);
 
-              void reset (const ACE_CString& version, const Status& status = Status());
+              void reset (ACE_CString const& version, Status const& status = Status());
 
               /// Set the status.
-              void set_status(const Status& status);
+              void set_status(Status const& status);
 
               /// Return the status.
-              const Status& get_status() const;
+              Status const& get_status() const;
 
               /// Adds a Cookie header.
-              void add_cookie(const ACE_CString& cookie);
+              void add_cookie(ACE_CString const& cookie);
 
               /// Get cookies from Cookie header(s)).
               void get_cookies(ACE_Array<ACE_CString> & cookies) const;
 
               /// Writes the HTTP response to the given stream
-              virtual void write(std::ostream& str) const;
+              void write (std::ostream& str) const override;
 
               /// Reads the HTTP response from the
               /// given stream.
               /// 100 Continue responses are ignored.
-              virtual bool read(std::istream& str);
+              bool read (std::istream& str) override;
 
-              static const ACE_CString COOKIE;
+              static ACE_CString const COOKIE;
 
             private:
               enum Limits

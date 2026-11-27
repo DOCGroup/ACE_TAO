@@ -1,6 +1,3 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
  *  @file    exception_ctor.h
  *
@@ -9,7 +6,6 @@
  *
  *  @author Aniruddha Gokhale
  */
-//=============================================================================
 
 #ifndef _BE_VISITOR_EXCEPTION_EXCEPTION_CTOR_H_
 #define _BE_VISITOR_EXCEPTION_EXCEPTION_CTOR_H_

@@ -1,13 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file FTRT_ClientORB_Initializer.h
  *
  *  @author Huang-Ming Huang <hh1@cse.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef FTRT_CLIENTORB_INITIALIZER_H
 #define FTRT_CLIENTORB_INITIALIZER_H
@@ -37,19 +32,19 @@ class FTRT_ClientORB_Initializer
     public virtual ::CORBA::LocalObject
 {
 public:
-  /// Priority mapping types
-  FTRT_ClientORB_Initializer (int transaction_depth);
+  /// Creates an initializer with the configured transaction depth.
+  explicit FTRT_ClientORB_Initializer (int transaction_depth);
 
   void pre_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 
   void post_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 
-private:
   FTRT_ClientORB_Initializer (FTRT_ClientORB_Initializer const &) = delete;
   FTRT_ClientORB_Initializer &operator= (FTRT_ClientORB_Initializer const &) = delete;
   FTRT_ClientORB_Initializer (FTRT_ClientORB_Initializer &&) = delete;
   FTRT_ClientORB_Initializer &operator= (FTRT_ClientORB_Initializer &&) = delete;
 
+private:
   PortableInterceptor::ClientRequestInterceptor_var client_interceptor_;
 };
 
@@ -58,7 +53,6 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #if defined(_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
-
 
 #include /**/ "ace/post.h"
 

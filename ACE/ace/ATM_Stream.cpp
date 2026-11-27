@@ -4,6 +4,12 @@
 
 #include "ace/OS_NS_string.h"
 
+#if defined (ACE_HAS_FORE_ATM_WS2)
+#include "ace/OS_NS_ctype.h"
+#include <cassert>
+#include <fstream>
+#endif
+
 #if !defined (__ACE_INLINE__)
 #include "ace/ATM_Stream.inl"
 #endif /* __ACE_INLINE__ */
@@ -60,40 +66,47 @@ ACE_ATM_Stream::get_peer_name () const
 
   if (ACE_OS::getpeername (this->get_handle (),
                            (struct sockaddr *) &name,
-                           &nameSize) != 0) {
-    return 0;
-  }
+                           &nameSize) != 0)
+    {
+      return nullptr;
+    }
 
   char buffer[256];
-  for (unsigned int index = 0; index < ATM_ADDR_SIZE - 1; index++) {
-    buffer[ index * 3 ] = '\0';
-    ACE_OS::sprintf (buffer, "%s%02x.", buffer, name.satm_number.Addr[ index ]);
-  }
+  for (unsigned int index = 0; index < ATM_ADDR_SIZE - 1; ++index)
+    {
+      buffer[ index * 3 ] = '\0';
+      ACE_OS::sprintf (buffer, "%s%02x.", buffer, name.satm_number.Addr[ index ]);
+    }
   buffer[ (ATM_ADDR_SIZE - 1) * 3 ] = '\0';
   ACE_OS::sprintf (buffer, "%s%02x.", buffer, 0);
   buffer[ ATM_ADDR_SIZE * 3 - 1 ] = '\0';
-  for (index = 0; index < ACE_OS::strlen (buffer); ++index)
-    buffer[index] = ACE_OS::ace_tolower (buffer[index]);
+  for (size_t index = 0; index < ACE_OS::strlen (buffer); ++index)
+    {
+      buffer[index] = ACE_OS::ace_tolower (buffer[index]);
+    }
 
-  ifstream atm_hosts ("C:/WINNT/atmhosts");
+  std::ifstream atm_hosts ("C:/WINNT/atmhosts");
   assert (atm_hosts.is_open ());
 
   // Find the host address in the ATM hosts file and return the
   //  host name
   char line[256];
-  char *host_ptr, *host_name = 0;
-  ACE_NEW_RETURN (host_name, char[256], 0);
+  char *host_ptr;
+  char *host_name {};
+  ACE_NEW_RETURN (host_name, char[256], nullptr);
   while (!atm_hosts.eof ()) {
     atm_hosts.getline (line, 256);
     // Convert the line to lower case to ease comparison
-    for (index = 0; index < ACE_OS::strlen (line); ++index)
-      line[index] = ACE_OS::ace_tolower (line[index]);
-    if (ACE_OS::strstr (line, buffer) != 0)
+    for (size_t index = 0; index < ACE_OS::strlen (line); ++index)
+      {
+        line[index] = ACE_OS::ace_tolower (line[index]);
+      }
+    if (ACE_OS::strstr (line, buffer) != nullptr)
       {
         char *strtok_p;
         // Grab the second token which is the host name
         ACE_OS::strtok_r (line, " \t", &strtok_p);
-        host_ptr = ACE_OS::strtok (0, " \t", &strtok_p);
+        host_ptr = ACE_OS::strtok_r (nullptr, " \t", &strtok_p);
         ACE_OS::strcpy (host_name, host_ptr);
         break;
       }
@@ -105,24 +118,25 @@ ACE_ATM_Stream::get_peer_name () const
   int nameSize = sizeof (name.sockaddratmsvc);
 
   if (ACE_OS::getpeername (this->get_handle (),
- (struct sockaddr *) & (name.sockaddratmsvc),
-                          &nameSize) < 0) {
-    ACE_OS::perror ("ACE_ATM_Stream (get_peer_name) : ");
-    return 0;
-  }
+                           (struct sockaddr *) & (name.sockaddratmsvc),
+                           &nameSize) < 0)
+    {
+      ACE_OS::perror ("ACE_ATM_Stream (get_peer_name) : ");
+      return nullptr;
+    }
 
   static ACE_TCHAR buffer[MAX_ATM_ADDR_LEN + 1];
-  int total_len;
-  if ((total_len = atm2text (buffer,sizeof buffer,
- (struct sockaddr *) & (name.sockaddratmsvc),
-                            A2T_PRETTY|A2T_NAME)) < 0) {
-    ACELIB_DEBUG ((LM_DEBUG,ACE_TEXT ("ACE_ATM_Stream (get_peer_name) :%d"),errno));
-    return 0;
-  }
+  if (atm2text (buffer, sizeof buffer,
+                (struct sockaddr *) & (name.sockaddratmsvc),
+                A2T_PRETTY | A2T_NAME) < 0)
+    {
+      ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("ACE_ATM_Stream (get_peer_name) :%d"), errno));
+      return nullptr;
+    }
 
   return (char*) buffer;
 #else
-  return 0;
+  return nullptr;
 #endif /* ACE_HAS_FORE_ATM_XTI || ACE_HAS_FORE_ATM_WS2 || ACE_HAS_LINUX_ATM */
 }
 
@@ -156,8 +170,8 @@ ACE_ATM_Stream::get_vpi_vci (ACE_UINT16 &vpi,
       return -1;
     }
 
-  char *buf_req = (char *) ACE_OS::malloc (info.options);
-  if (buf_req == 0)
+  char *buf_req = static_cast<char *> (ACE_OS::malloc (info.options));
+  if (buf_req == nullptr)
     {
       ACE_OS::fprintf (stderr,
                       "Unable to allocate %ld bytes for options\n",
@@ -165,12 +179,13 @@ ACE_ATM_Stream::get_vpi_vci (ACE_UINT16 &vpi,
       return -1;
     }
 
-  char *buf_ret = (char *) ACE_OS::malloc (info.options);
-  if (buf_ret == 0)
+  char *buf_ret = static_cast<char *> (ACE_OS::malloc (info.options));
+  if (buf_ret == nullptr)
     {
       ACE_OS::fprintf (stderr,
                       "Unable to allocate %ld bytes for options\n",
                       info.options);
+      ACE_OS::free (buf_req);
       return -1;
     }
 
@@ -199,15 +214,16 @@ ACE_ATM_Stream::get_vpi_vci (ACE_UINT16 &vpi,
   opt_ret.opt.buf = (char *) popt_ret;
 
   if (ACE_OS::t_optmgmt (stream_.get_handle (),
-                        &opt_req,
-                        &opt_ret) < 0) {
-    ACE_OS::t_error ("t_optmgmt");
-    return -1;
-  }
+                         &opt_req,
+                         &opt_ret) < 0)
+    {
+      ACE_OS::t_error ("t_optmgmt");
+      ACE_OS::free (buf_ret);
+      ACE_OS::free (buf_req);
+      return -1;
+    }
 
-  ACE_OS::memcpy (connect_opts,
- (char *) popt_ret + sizeof (struct t_opthdr),
-                 opt_size);
+  ACE_OS::memcpy (connect_opts, (char *) popt_ret + sizeof (struct t_opthdr), opt_size);
 
   ACE_OS::free (buf_ret);
   ACE_OS::free (buf_req);

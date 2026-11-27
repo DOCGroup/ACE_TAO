@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    test_dynsequence.cpp
  *
@@ -6,15 +5,13 @@
  *
  *  @author Jeff Parsons <jp4@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #include "test_dynsequence.h"
 #include "da_testsC.h"
 #include "data.h"
 #include "analyzer.h"
 #include "tao/DynamicAny/DynamicAny.h"
-#include "ace/OS_NS_string.h"
+#include <cstring>
 
 namespace
 {
@@ -28,7 +25,7 @@ compare_string_sequence_elements(
 
     ACE_DEBUG ((LM_DEBUG, "elem[%d] = %C\n", i, lhs_string.in()));
 
-    CORBA::Boolean match =
+    CORBA::Boolean const match =
         lhs[i]->equal (rhs[i]);
 
     if (!match)
@@ -45,24 +42,16 @@ compare_string_sequence_elements(
 }
 }
 
-Test_DynSequence::Test_DynSequence (CORBA::ORB_var orb, int debug)
+Test_DynSequence::Test_DynSequence (CORBA::ORB_var orb, bool debug)
   : orb_ (orb),
-    test_name_ (CORBA::string_dup ("test_dynsequence")),
-    error_count_ (0),
     debug_ (debug)
 {
 }
 
-Test_DynSequence::~Test_DynSequence ()
-{
-  CORBA::string_free (this->test_name_);
-  this->test_name_ = 0;
-}
-
-const char*
+char const*
 Test_DynSequence::test_name () const
 {
-  return this->test_name_;
+  return "test_dynsequence";
 }
 
 int
@@ -137,7 +126,7 @@ Test_DynSequence::run_test ()
       CORBA::String_var out_str1 =
         fa1->get_string ();
 
-      if (!ACE_OS::strcmp (out_str1.in (), data.m_string1))
+      if (!std::strcmp (out_str1.in (), data.m_string1.in ()))
         {
           ACE_DEBUG ((LM_DEBUG,
                      "++ OK ++\n"));
@@ -152,7 +141,7 @@ Test_DynSequence::run_test ()
           "testing: set_elements_as_dyn_any/get_elements_as_dyn_any/equal\n"
         ));
 
-      static const char *values[] =
+      static char const* const values[] =
       {
         "zero",
         "one",
@@ -160,12 +149,8 @@ Test_DynSequence::run_test ()
       };
 
       CORBA::ULong length = 3;
-      DynamicAny::DynAnySeq *elem_ptr = 0;
-      ACE_NEW_RETURN (elem_ptr,
-                      DynamicAny::DynAnySeq (length),
-                      -1);
-      elem_ptr->length (length);
-      DynamicAny::DynAnySeq_var elements (elem_ptr);
+      DynamicAny::DynAnySeq elements (length);
+      elements.length (length);
       CORBA::ULong i;
 
       for (i = 0; i < length; ++i)
@@ -175,7 +160,7 @@ Test_DynSequence::run_test ()
           elements[i] = dynany_factory->create_dyn_any (elem_any);
         }
 
-      fa1->set_elements_as_dyn_any (elements.in ());
+      fa1->set_elements_as_dyn_any (elements);
 
       DynamicAny::DynAnySeq_var out_elems =
         fa1->get_elements_as_dyn_any ();
@@ -191,9 +176,9 @@ Test_DynSequence::run_test ()
       for (i = 0; i < length; ++i)
         {
           if (!compare_string_sequence_elements(i,
-                                                elements.in(), out_elems.in()))
+                                                elements, out_elems.in()))
           {
-              error_count_++;
+              ++error_count_;
           }
 
           // To show that calling destroy() on a component does
@@ -210,7 +195,7 @@ Test_DynSequence::run_test ()
           char replacement[] = "replacement";
           CORBA::Any tmp;
           tmp <<= CORBA::Any::from_string (replacement,20);
-          CORBA::ULong io_index = 0;
+          CORBA::ULong const io_index = 0;
           // Since we directly change an element in a sequence we give
           // ownership for the previous element to a local temporary object.
           DynamicAny::DynAny_var io_owner = out_elems[io_index].inout();
@@ -218,16 +203,15 @@ Test_DynSequence::run_test ()
 
           // Compare the value of the replaced string.
           CORBA::String_var new_str = out_elems[io_index]->get_string();
-          if (0 != ACE_OS::strcmp(new_str.in(), replacement))
+          if (std::strcmp (new_str.in (), replacement) != 0)
           {
               ACE_DEBUG((LM_DEBUG,
                          "  Mismatch after replacing through in/out.\n"
                          "  expected = %C, got = %C\n",
                          replacement, new_str.in()));
-              this->error_count_++;
+              ++this->error_count_;
           }
       }
-
 
       if (this->error_count_ == 0)
         {
@@ -271,7 +255,7 @@ Test_DynSequence::run_test ()
           LM_DEBUG,
           ACE_TEXT ("DynSequence::_narrow() returned nil\n")
           ));
-        this->error_count_++;
+        ++this->error_count_;
       }
 
       ACE_DEBUG ((
@@ -292,7 +276,7 @@ Test_DynSequence::run_test ()
           LM_DEBUG,
           ACE_TEXT ("DynSequence::_narrow() returned nil\n")
           ));
-        this->error_count_++;
+        ++this->error_count_;
       }
 
       ts[0] = CORBA::string_dup (data.m_string1);
@@ -305,10 +289,10 @@ Test_DynSequence::run_test ()
       CORBA::Any_var out_any1 =
         ftc1->to_any ();
 
-      const DynAnyTests::test_seq *ts_out = 0;
+      DynAnyTests::test_seq const* ts_out {};
       out_any1.in () >>= ts_out;
 
-      if (!ACE_OS::strcmp ((*ts_out)[0U], data.m_string1))
+      if (!std::strcmp ((*ts_out)[0U], data.m_string1.in ()))
         {
           ACE_DEBUG ((LM_DEBUG,
                      "++ OK ++\n"));
@@ -342,12 +326,12 @@ Test_DynSequence::run_test ()
       DynamicAny::AnySeq_var as_out =
         ftc1->get_elements ();
 
-      CORBA::ULong index = 2;
+      CORBA::ULong const index = 2;
       CORBA::Any out_any2 = as_out[index];
-      char* out_str2;
+      char* out_str2 {};
       out_any2 >>= CORBA::Any::to_string (out_str2, 8);
 
-      if (ACE_OS::strcmp (out_str2, data.m_string1))
+      if (std::strcmp (out_str2, data.m_string1.in ()))
         {
           ++this->error_count_;
         }
@@ -362,7 +346,7 @@ Test_DynSequence::run_test ()
 
       ftc1->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("test_dynsequence::run_test");
       ++this->error_count_;
@@ -371,7 +355,6 @@ Test_DynSequence::run_test ()
   ACE_DEBUG ((LM_DEBUG,
               "\n%d errors\n",
               this->error_count_));
-
 
   return !!error_count_;
 }

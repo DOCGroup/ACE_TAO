@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project : taoclient, anytypecode, codecfactory, valuetype {
   Source_Files {
     bug_2542_regression.cpp

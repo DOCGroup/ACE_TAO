@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Log_Msg_UNIX_Syslog.h
  *
  *  @author Jerry D. De Master <jdemaster@rite-solutions.com>
  */
-//=============================================================================
 
 #ifndef ACE_LOG_MSG_UNIX_SYSLOG_H
 #define ACE_LOG_MSG_UNIX_SYSLOG_H
@@ -34,10 +30,8 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Log_Msg_UNIX_Syslog : public ACE_Log_Msg_Backend
 {
 public:
-  /// Constructor
   ACE_Log_Msg_UNIX_Syslog () = default;
 
-  /// Destructor
   ~ACE_Log_Msg_UNIX_Syslog () override;
 
   /// Open a new event log.
@@ -48,7 +42,7 @@ public:
    *                   it is 0 (no name), the application name as
    *                   returned from ACE_Log_Msg::program_name() is used.
    */
-  int open (const ACE_TCHAR *logger_key) override;
+  int open (ACE_TCHAR const *logger_key) override;
 
   /// Reset the backend.
   int reset () override;

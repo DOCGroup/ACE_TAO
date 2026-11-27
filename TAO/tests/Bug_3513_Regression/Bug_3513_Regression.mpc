@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*Test) : taoserver, messaging, rtcorba, objreftemplate, rtscheduling, rtportableserver, ziop, tao_monitor {
   exename   = test
 

@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   IOGR_Maker.h
  *
  *  @author Huang-Ming Huang <hh1@cse.wustl.edu>
  */
-//=============================================================================
 
 #ifndef IOGR_MAKER_H
 #define IOGR_MAKER_H
@@ -33,33 +29,33 @@ public:
 
    /// Create a new object reference by merging the profiles lists in the
    /// supplied list of one or more object references.
-  CORBA::Object_ptr merge_iors(const TAO_IOP::TAO_IOR_Manipulation::IORList&);
+  CORBA::Object_ptr merge_iors(TAO_IOP::TAO_IOR_Manipulation::IORList const&);
 
    /// Create a new IOGR (with FT_PRIMARY and FT_GROUP components) by merging
    /// the profiles lists in the supplied list of one or more object references.
-  CORBA::Object_ptr make_iogr(const TAO_IOP::TAO_IOR_Manipulation::IORList&,
+  CORBA::Object_ptr make_iogr(TAO_IOP::TAO_IOR_Manipulation::IORList const&,
                               CORBA::ULong object_group_ref_version);
 
   /// Make an new IOGR with obj as primary.
   CORBA::Object_ptr forge_iogr(CORBA::Object_ptr obj);
 
   CORBA::Object_ptr ior_replace_key(CORBA::Object_ptr obj,
-                                    const TAO::ObjectKey& key);
+                                    TAO::ObjectKey const& key);
 
   bool copy_ft_group_component(CORBA::Object_ptr obj);
 
-  void set_ft_domain_id(const char*);
+  void set_ft_domain_id(char const *);
   void set_group_id(CORBA::ULongLong);
   void set_ref_version(CORBA::ULong);
   CORBA::ULong increment_ref_version();
   CORBA::ULong get_ref_version() const;
 
-private:
   IOGR_Maker(IOGR_Maker const&) = delete;
   IOGR_Maker(IOGR_Maker&&) = delete;
   IOGR_Maker& operator=(IOGR_Maker const&) = delete;
   IOGR_Maker& operator=(IOGR_Maker&&) = delete;
 
+private:
   void set_tag_components(CORBA::Object_ptr merged,
                           CORBA::Object_ptr primary,
                           FT::TagFTGroupTaggedComponent& ft_tag_component);

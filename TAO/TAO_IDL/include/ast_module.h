@@ -69,17 +69,15 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_scope.h"
 #include "ace/Unbounded_Set.h"
 
-// NOTE: add(AST_EnumValue *) is defined here because enums can
-// be defined manifest locally; the constants defined in these
-// enums are inserted in the enclosing scope.
-
 class AST_Template_Module_Inst;
 class AST_Template_Module_Ref;
 
+/// @note Constants of locally defined enums are inserted into this scope.
 class TAO_IDL_FE_Export AST_Module : public virtual AST_Decl,
                                      public virtual UTL_Scope
 {
 public:
+  AST_Module () = delete;
   AST_Module (AST_Module const &) = delete;
   AST_Module (AST_Module &&) = delete;
   AST_Module &operator= (AST_Module const &) = delete;

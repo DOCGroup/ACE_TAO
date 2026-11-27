@@ -1,4 +1,5 @@
-// -*- C++ -*-
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
@@ -11,7 +12,7 @@ TAO::CSD::Strategy_Proxy::dispatch_request
   if (this->strategy_impl_ == nullptr)
     {
       // This is the "default" strategy implementation.
-      upcall.servant()->_dispatch(server_request, &upcall);
+      upcall.servant()->_dispatch(server_request, std::addressof (upcall));
     }
   else
     {
@@ -30,7 +31,6 @@ TAO::CSD::Strategy_Proxy::poa_activated_event(TAO_ORB_Core& orb_core)
     : this->strategy_impl_->poa_activated_event(orb_core);
 }
 
-
 ACE_INLINE
 void
 TAO::CSD::Strategy_Proxy::poa_deactivated_event()
@@ -47,7 +47,7 @@ ACE_INLINE
 void
 TAO::CSD::Strategy_Proxy::servant_activated_event
                                   (PortableServer::Servant servant,
-                                   const PortableServer::ObjectId& oid)
+                                   PortableServer::ObjectId const &oid)
 {
   // We only need to do something if this proxy holds a custom strategy.
   if (this->strategy_impl_)
@@ -61,7 +61,7 @@ ACE_INLINE
 void
 TAO::CSD::Strategy_Proxy::servant_deactivated_event
                                   (PortableServer::Servant servant,
-                                   const PortableServer::ObjectId& oid)
+                                   PortableServer::ObjectId const &oid)
 {
   // We only need to do something if this proxy holds a custom strategy.
   if (this->strategy_impl_)

@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Account_i.h
  *
@@ -8,8 +5,6 @@
  *
  *  @author Vishal Kachroo <vishal@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef ACCOUNT_I_H
 #define ACCOUNT_I_H
@@ -28,29 +23,31 @@
 class Account_i : public POA_Bank::Account
 {
 public:
-  /// Constructor.
-  Account_i ();
+  Account_i () = default;
 
-  /// Constructor.
-  Account_i (const char *, CORBA::Float);
+  Account_i (char const *, CORBA::Float);
 
-  /// Destructor.
-  virtual ~Account_i ();
+  ~Account_i () override = default;
+
+  Account_i (Account_i const &) = delete;
+  Account_i &operator= (Account_i const &) = delete;
+  Account_i (Account_i &&) = delete;
+  Account_i &operator= (Account_i &&) = delete;
 
   /// Get the current balance in the account.
-  virtual CORBA::Float balance ();
+  CORBA::Float balance () override;
 
-  /// Get the name of the <Account> holder.
-  virtual char *name ();
+  /// Get the name of the @c Account holder.
+  char *name () override;
 
-  /// Set the name of the <Account> holder.
-  virtual void name (const char *name);
+  /// Set the name of the @c Account holder.
+  void name (char const *name) override;
 
   /// Deposit money in the account.
-  virtual void deposit (CORBA::Float);
+  void deposit (CORBA::Float) override;
 
   /// Withdraw money in the account.
-  virtual void withdraw (CORBA::Float);
+  void withdraw (CORBA::Float) override;
 
   /// Set the ORB pointer.
   void orb (CORBA::ORB_ptr o);
@@ -60,9 +57,9 @@ private:
   CORBA::ORB_var orb_;
 
   /// balance for this account
-  CORBA::Float balance_;
+  CORBA::Float balance_ {};
 
-  /// Name of the <Account> holder.
+  /// Name of the @c Account holder.
   CORBA::String_var name_;
 };
 

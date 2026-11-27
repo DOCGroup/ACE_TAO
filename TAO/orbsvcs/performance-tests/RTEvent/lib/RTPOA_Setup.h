@@ -24,7 +24,6 @@ class RTCORBA_Setup;
 class TAO_RTEC_Perf_Export RTPOA_Setup
 {
 public:
-  /// Constructor
   RTPOA_Setup (CORBA::ORB_ptr orb,
                const RTCORBA_Setup &rtcorba_setup);
 

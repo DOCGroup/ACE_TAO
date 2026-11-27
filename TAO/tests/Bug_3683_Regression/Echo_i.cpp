@@ -3,7 +3,7 @@
 // Set the ORB pointer.
 
 void
-Echo_i::orb (CORBA::ORB_ptr o)
+Echo_i::orb (CORBA::ORB_ptr const o)
 {
   this->orb_ = CORBA::ORB::_duplicate (o);
 }
@@ -13,13 +13,13 @@ Echo_i::orb (CORBA::ORB_ptr o)
 Echo::List *
 Echo_i::echo_list (char const *)
 {
-  Echo::List_var list;
+  Echo::List_var list {};
 
   {
-    Echo::List *tmp = nullptr;
+    Echo::List *tmp {};
     ACE_NEW_RETURN (tmp,
                     Echo::List (3),
-                    0);
+                    nullptr);
     // Pass ownership to the _var, pitty that ACE_NEW_RETURN cannot
     // assign to T_vars directly.
     list = tmp;
@@ -45,9 +45,11 @@ Echo_i::echo_list (char const *)
 char *
 Echo_i::echo_string (char const *mesg)
 {
-  // The pointer mesg was NULL, return.
+  // The pointer mesg was null, return.
   if (mesg == nullptr)
+  {
     return nullptr;
+  }
 
   CORBA::String_var str = CORBA::string_dup (mesg);
 
@@ -55,7 +57,9 @@ Echo_i::echo_string (char const *mesg)
   // raised.
 
   if (str.in () == nullptr)
+  {
     throw CORBA::NO_MEMORY ();
+  }
 
   // Got thru! now, make a deep copy of the mesg string and send it
   // back to the client.

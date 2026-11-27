@@ -1,13 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Reactor_Impl.h
  *
  *  @author Irfan Pyarali
  */
-//=============================================================================
-
 
 #ifndef ACE_REACTOR_IMPL_H
 #define ACE_REACTOR_IMPL_H
@@ -156,18 +151,20 @@ public:
   /// Close down and release all resources.
   virtual int close () = 0;
 
-  // = Event loop drivers.
+  /// @name Event loop drivers
+  /// @{
   /**
    * Returns non-zero if there are I/O events "ready" for dispatching,
    * but does not actually dispatch the event handlers.  By default,
    * don't block while checking this, i.e., "poll".
    */
-  virtual int work_pending (const ACE_Time_Value &max_wait_time =  ACE_Time_Value::zero)  = 0;
+  virtual int work_pending (ACE_Time_Value const &max_wait_time =  ACE_Time_Value::zero)  = 0;
 
   /**
    * This event loop driver blocks for up to @a max_wait_time before
-   * returning.  It will return earlier if events occur.  Note that
-   * @a max_wait_time can be 0, in which case this method blocks
+   * returning.  It will return earlier if events occur.
+   *
+   * @note @a max_wait_time can be 0, in which case this method blocks
    * indefinitely until events occur.
    *
    * @a max_wait_time is decremented to reflect how much time this call
@@ -202,8 +199,10 @@ public:
   virtual int handle_events (ACE_Time_Value &max_wait_time) = 0;
   virtual int alertable_handle_events (ACE_Time_Value &max_wait_time) = 0;
 
-  // = Event handling control.
+  /// @}
 
+  /// @name Event handling control
+  /// @{
   /**
    * Return the status of Reactor.  If this function returns 0, the reactor is
    * actively handling events.  If it returns non-zero, handling_events() and
@@ -213,12 +212,15 @@ public:
 
   /**
    * Control whether the Reactor will handle any more incoming events or not.
-   * If @a do_stop == 1, the Reactor will be disabled.  By default, a reactor
+   * If @a do_stop is true, the Reactor will be disabled.  By default, a reactor
    * is in active state and can be deactivated/reactived as wish.
    */
   virtual void deactivate (int do_stop) = 0;
 
-  // = Register and remove Handlers.
+  /// @}
+
+  /// @name Register and remove handlers
+  /// @{
 
   /// Register @a event_handler with @a mask.  The I/O handle will always
   /// come from get_handle() on the @a event_handler.
@@ -262,7 +264,7 @@ public:
                                 ACE_Reactor_Mask mask) = 0;
 
   /// Register @a event_handler with all the @a handles in the Handle_Set.
-  virtual int register_handler (const ACE_Handle_Set &handles,
+  virtual int register_handler (ACE_Handle_Set const &handles,
                                 ACE_Event_Handler *event_handler,
                                 ACE_Reactor_Mask mask) = 0;
 
@@ -279,7 +281,7 @@ public:
 
   /// Registers @a new_sh to handle a set of signals @a sigset using the
   /// @a new_disp.
-  virtual int register_handler (const ACE_Sig_Set &sigset,
+  virtual int register_handler (ACE_Sig_Set const &sigset,
                                 ACE_Event_Handler *new_sh,
                                 ACE_Sig_Action *new_disp = nullptr) = 0;
 
@@ -305,7 +307,7 @@ public:
    * ACE_Event_Handler::DONT_CALL then the handle_close() method of
    * the associated event_handlers is not invoked.
    */
-  virtual int remove_handler (const ACE_Handle_Set &handle_set,
+  virtual int remove_handler (ACE_Handle_Set const &handle_set,
                               ACE_Reactor_Mask mask) = 0;
 
   /**
@@ -320,9 +322,12 @@ public:
                               int sigkey = -1) = 0;
 
   /// Calls remove_handler() for every signal in @a sigset.
-  virtual int remove_handler (const ACE_Sig_Set &sigset) = 0;
+  virtual int remove_handler (ACE_Sig_Set const &sigset) = 0;
 
-  // = Suspend and resume Handlers.
+  /// @}
+
+  /// @name Suspend and resume handlers
+  /// @{
 
   /// Suspend @a event_handler temporarily.  Uses
   /// ACE_Event_Handler::get_handle() to get the handle.
@@ -332,9 +337,9 @@ public:
   virtual int suspend_handler (ACE_HANDLE handle) = 0;
 
   /// Suspend all @a handles in handle set temporarily.
-  virtual int suspend_handler (const ACE_Handle_Set &handles) = 0;
+  virtual int suspend_handler (ACE_Handle_Set const &handles) = 0;
 
-  /// Suspend all <handles> temporarily.
+  /// Suspend all @c handles temporarily.
   virtual int suspend_handlers () = 0;
 
   /// Resume @a event_handler. Uses ACE_Event_Handler::get_handle() to
@@ -345,7 +350,7 @@ public:
   virtual int resume_handler (ACE_HANDLE handle) = 0;
 
   /// Resume all @a handles in handle set.
-  virtual int resume_handler (const ACE_Handle_Set &handles) = 0;
+  virtual int resume_handler (ACE_Handle_Set const &handles) = 0;
 
   /// Resume all handles.
   virtual int resume_handlers () = 0;
@@ -359,9 +364,11 @@ public:
   /// for the handles that it waits on, false otherwise.
   virtual bool uses_event_associations () = 0;
 
-  // If we need to reset handles returned from accept/connect.
+  /// @}
 
-  // = Timer management.
+  /// @name Timer management
+  /// @{
+  // If we need to reset handles returned from accept/connect.
 
   /**
    * Schedule an ACE_Event_Handler that will expire after an amount
@@ -381,9 +388,9 @@ public:
    * @return -1 on failure, a timer_id value on success
    */
   virtual long schedule_timer (ACE_Event_Handler *event_handler,
-                               const void *arg,
-                               const ACE_Time_Value &delay,
-                               const ACE_Time_Value &interval = ACE_Time_Value::zero) = 0;
+                               void const *arg,
+                               ACE_Time_Value const &delay,
+                               ACE_Time_Value const &interval = ACE_Time_Value::zero) = 0;
 
   /**
    * Resets the interval of the timer represented by @a timer_id to
@@ -393,7 +400,7 @@ public:
    * timer.  Returns 0 if successful, -1 if not.
    */
   virtual int reset_timer_interval (long timer_id,
-                                    const ACE_Time_Value &interval) = 0;
+                                    ACE_Time_Value const &interval) = 0;
 
   /// Cancel all Event_Handlers that match the address of
   /// @a event_handler.  Returns number of handlers cancelled.
@@ -410,17 +417,20 @@ public:
    * wasn't found.
    */
   virtual int cancel_timer (long timer_id,
-                            const void **arg = nullptr,
+                            void const **arg = nullptr,
                             int dont_call_handle_close = 1) = 0;
 
-  // = High-level Event_Handler scheduling operations
+  /// @}
+
+  /// @name High-level event handler scheduling operations
+  /// @{
 
   /// Add @a masks_to_be_added to the @a event_handler's entry.
   /// @a event_handler must already have been registered.
   virtual int schedule_wakeup (ACE_Event_Handler *event_handler,
                                ACE_Reactor_Mask masks_to_be_added) = 0;
 
-  /// Add @a masks_to_be_added to the @a handle's entry.  <event_handler>
+  /// Add @a masks_to_be_added to the @a handle's entry.  @c event_handler
   /// associated with @a handle must already have been registered.
   virtual int schedule_wakeup (ACE_HANDLE handle,
                                ACE_Reactor_Mask masks_to_be_added) = 0;
@@ -433,8 +443,10 @@ public:
   virtual int cancel_wakeup (ACE_HANDLE handle,
                              ACE_Reactor_Mask masks_to_be_cleared) = 0;
 
-  // = Notification methods.
+  /// @}
 
+  /// @name Notification methods
+  /// @{
   /**
    * Notify @a event_handler of @a mask event.  The ACE_Time_Value
    * indicates how long to blocking trying to notify.  If @a timeout ==
@@ -473,6 +485,10 @@ public:
   virtual int purge_pending_notifications (ACE_Event_Handler * = nullptr,
                                            ACE_Reactor_Mask    = ACE_Event_Handler::ALL_EVENTS_MASK) = 0;
 
+  /// @}
+
+  /// @name Assorted helper methods
+  /// @{
   /**
    * Return the Event_Handler associated with @a handle.  Return 0 if
    * @a handle is not registered.
@@ -528,7 +544,10 @@ public:
   /// Get position of the owner thread.
   virtual int requeue_position () = 0;
 
-  // = Low-level wait_set mask manipulation methods.
+  /// @}
+
+  /// @name Low-level wait_set mask manipulation methods
+  /// @{
 
   /// GET/SET/ADD/CLR the dispatch mask "bit" bound with the
   /// @a event_handler and @a mask.
@@ -542,7 +561,11 @@ public:
                         ACE_Reactor_Mask mask,
                         int ops) = 0;
 
-  // = Low-level ready_set mask manipulation methods.
+  /// @}
+
+  /// @name Low-level ready_set mask manipulation methods
+  /// @{
+
   /// GET/SET/ADD/CLR the ready "bit" bound with the @a event_handler
   /// and @a mask.
   virtual int ready_ops (ACE_Event_Handler *event_handler,
@@ -553,6 +576,8 @@ public:
   virtual int ready_ops (ACE_HANDLE handle,
                          ACE_Reactor_Mask,
                          int ops) = 0;
+
+  /// @}
 
   /// Dump the state of an object.
   virtual void dump () const = 0;

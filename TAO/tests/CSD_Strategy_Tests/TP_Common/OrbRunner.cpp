@@ -2,18 +2,13 @@
 #include "OrbTask.h"
 #include "TestAppExceptionC.h"
 
-
 OrbRunner::OrbRunner(CORBA::ORB_ptr orb, unsigned num_orb_threads)
   : orb_(CORBA::ORB::_duplicate(orb)),
     num_orb_threads_(num_orb_threads)
 {
 }
 
-
-OrbRunner::~OrbRunner()
-{
-}
-
+OrbRunner::~OrbRunner() = default;
 
 void
 OrbRunner::run()
@@ -37,7 +32,7 @@ OrbRunner::run()
       OrbTask orb_task(this->orb_.in(), this->num_orb_threads_ - 1);
 
       // Activate the OrbTask worker threads
-      if (orb_task.open(0) != 0)
+      if (orb_task.open() != 0)
         {
           ACE_ERROR((LM_ERROR,
                      "(%P|%t) Failed to open the OrbTask.\n"));

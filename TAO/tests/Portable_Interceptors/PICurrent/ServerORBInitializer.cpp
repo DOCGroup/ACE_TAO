@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "ServerORBInitializer.h"
 #include "ServerRequestInterceptor.h"
 #include "ClientRequestInterceptor2.h"
@@ -9,8 +8,7 @@ PortableInterceptor::SlotId slot_id = 2093843221;
 
 void
 ServerORBInitializer::pre_init (
-    PortableInterceptor::ORBInitInfo_ptr /* info */
-    )
+    PortableInterceptor::ORBInitInfo_ptr /* info */)
 {
 }
 
@@ -34,7 +32,7 @@ ServerORBInitializer::post_init (
 
   ::slot_id = info->allocate_slot_id ();
 
-  PortableInterceptor::ServerRequestInterceptor_ptr server_tmp;
+  PortableInterceptor::ServerRequestInterceptor_ptr server_tmp {};
   ACE_NEW_THROW_EX (server_tmp,
                     ServerRequestInterceptor (::slot_id,
                                               pi_current.in ()),
@@ -49,7 +47,7 @@ ServerORBInitializer::post_init (
 
   info->add_server_request_interceptor (server_interceptor.in ());
 
-  PortableInterceptor::ClientRequestInterceptor_ptr client_tmp;
+  PortableInterceptor::ClientRequestInterceptor_ptr client_tmp {};
   ACE_NEW_THROW_EX (client_tmp,
                     ClientRequestInterceptor2 (::slot_id),
                     CORBA::NO_MEMORY (
@@ -72,5 +70,5 @@ ServerORBInitializer::post_init (
   TAO_ORBInitInfo_var tao_info =
     TAO_ORBInitInfo::_narrow (info);
 
-  tao_info->orb_core ()->optimize_collocation_objects (0);
+  tao_info->orb_core ()->optimize_collocation_objects (false);
 }

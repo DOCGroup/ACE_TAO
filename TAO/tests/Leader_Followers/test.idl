@@ -1,4 +1,3 @@
-
 interface test
 {
   unsigned long method (in unsigned long work);

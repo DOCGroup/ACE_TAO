@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /*
  * @file AsyncAccessManager.h
  *
@@ -8,10 +7,11 @@
 #ifndef IMR_ASYNCACCESSMANAGER_H_
 #define IMR_ASYNCACCESSMANAGER_H_
 
+#include <vector>
+
 #include "locator_export.h"
 
 #include "ImR_ActivatorS.h" // ImR_Activator_AMIS.h
-#include "ace/Vector_T.h"
 #include "ace/SString.h"
 
 #include "Forwarder.h"
@@ -28,7 +28,6 @@
 class ImR_Locator_i;
 struct Server_Info;
 
-//----------------------------------------------------------------------------
 /*
  * @class AsyncAccessManager
  *
@@ -60,15 +59,17 @@ class Locator_Export AsyncAccessManager
 
   bool is_terminating () const;
   bool is_running () const;
-  bool has_server (const char *name) const;
+  bool has_server (char const *name) const;
   void remote_state (ImplementationRepository::AAM_Status s);
 
   void add_interest (ImR_ResponseHandler *rh, bool manual);
   ImplementationRepository::AAM_Status status () const;
+  /// Stores and takes ownership of rh when no handler is registered. Returns
+  /// true when the caller retains ownership; nullptr clears the stored handler.
   bool force_remove_rh (ImR_ResponseHandler *rh);
 
   void activator_replied_start_running (bool success, int pid);
-  void server_is_running (const char *partial_ior,
+  void server_is_running (char const *partial_ior,
                           ImplementationRepository::ServerObject_ptr ref);
   void server_is_shutting_down ();
   void shutdown_initiated ();
@@ -78,12 +79,12 @@ class Locator_Export AsyncAccessManager
 
   AsyncAccessManager *_add_ref ();
   void _remove_ref ();
-  static const char *status_name (ImplementationRepository::AAM_Status s);
+  static char const *status_name (ImplementationRepository::AAM_Status s);
   static bool is_final (ImplementationRepository::AAM_Status s);
   void update_prev_pid ();
 
  private:
-  void report (const char* operation) const;
+  void report (char const *operation) const;
   void final_state (bool active = true);
   void notify_waiter (ImR_ResponseHandler *rh);
   void notify_waiters ();
@@ -97,7 +98,7 @@ class Locator_Export AsyncAccessManager
   ImR_ResponseHandler *remove_on_death_rh_;
   ImR_Locator_i &locator_;
   PortableServer::POA_var poa_;
-  ACE_Vector<ImR_ResponseHandler *> rh_list_;
+  std::vector<ImR_ResponseHandler *> rh_list_;
 
   ImplementationRepository::AAM_Status status_;
 
@@ -113,7 +114,6 @@ class Locator_Export AsyncAccessManager
 
 using AsyncAccessManager_ptr = TAO_Intrusive_Ref_Count_Handle<AsyncAccessManager>;
 
-//----------------------------------------------------------------------------
 /*
  * @class ActivatorReceiver
  *
@@ -127,8 +127,8 @@ public:
                      PortableServer::POA_ptr poa);
   virtual ~ActivatorReceiver ();
 
-  void start_server ();
-  void start_server_excep (Messaging::ExceptionHolder * excep_holder);
+  void start_server () override;
+  void start_server_excep (Messaging::ExceptionHolder * excep_holder) override;
 
   void shutdown ();
   void shutdown_excep (Messaging::ExceptionHolder * excep_holder);
@@ -141,24 +141,22 @@ private:
   PortableServer::POA_var poa_;
 };
 
-//----------------------------------------------------------------------------
-
 class AccessLiveListener : public LiveListener
 {
  public:
-  AccessLiveListener (const char * server,
+  AccessLiveListener (char const *server,
                       AsyncAccessManager *aam,
                       LiveCheck &pinger,
                       ImplementationRepository::ServerObject_ptr ref);
 
-  AccessLiveListener (const char * server,
+  AccessLiveListener (char const *server,
                       AsyncAccessManager *aam,
                       LiveCheck &pinger);
 
   virtual ~AccessLiveListener ();
   bool start ();
 
-  bool status_changed (LiveStatus status);
+  bool status_changed (LiveStatus status) override;
 
  private:
   AsyncAccessManager_ptr aam_;

@@ -9,8 +9,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_FTEC_Basic_Factory::TAO_FTEC_Basic_Factory ()
-{
-}
+= default;
 
 TAO_EC_ConsumerAdmin*
 TAO_FTEC_Basic_Factory::create_consumer_admin (TAO_EC_Event_Channel_Base* ec)

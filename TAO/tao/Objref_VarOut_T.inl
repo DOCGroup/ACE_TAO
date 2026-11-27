@@ -1,4 +1,3 @@
-// -*- C++ -*-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <typename T>
@@ -119,7 +118,7 @@ TAO_Objref_Out_T<T>::TAO_Objref_Out_T (TAO_Objref_Var_T<T> & p)
 
 template <typename T>
 ACE_INLINE
-TAO_Objref_Out_T<T>::TAO_Objref_Out_T (const TAO_Objref_Out_T<T> & p)
+TAO_Objref_Out_T<T>::TAO_Objref_Out_T (TAO_Objref_Out_T<T> const & p)
   : ptr_ (p.ptr_)
 {
 }
@@ -127,7 +126,7 @@ TAO_Objref_Out_T<T>::TAO_Objref_Out_T (const TAO_Objref_Out_T<T> & p)
 template <typename T>
 ACE_INLINE
 TAO_Objref_Out_T<T> &
-TAO_Objref_Out_T<T>::operator= (const TAO_Objref_Out_T<T> & p)
+TAO_Objref_Out_T<T>::operator= (TAO_Objref_Out_T<T> const & p)
 {
   this->ptr_ = p.ptr_;
   return *this;
@@ -136,7 +135,7 @@ TAO_Objref_Out_T<T>::operator= (const TAO_Objref_Out_T<T> & p)
 template <typename T>
 ACE_INLINE
 TAO_Objref_Out_T<T> &
-TAO_Objref_Out_T<T>::operator= (const TAO_Objref_Var_T<T> & p)
+TAO_Objref_Out_T<T>::operator= (TAO_Objref_Var_T<T> const & p)
 {
   this->ptr_ = TAO::Objref_Traits<T>::duplicate (p.ptr ());
   return *this;

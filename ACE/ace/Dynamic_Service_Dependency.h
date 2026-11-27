@@ -1,18 +1,13 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Dynamic_Service_Dependency.h
  *
  *  @author Iliyan Jeliazkov <iliyan@ociweb.com>
  */
-//=============================================================================
 
 #ifndef ACE_DYNAMIC_SERVICE_DEPENDENCY_H
 #define ACE_DYNAMIC_SERVICE_DEPENDENCY_H
 
 #include /**/ "ace/pre.h"
-
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -48,20 +43,19 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Dynamic_Service_Dependency
 {
 public:
-  ACE_Dynamic_Service_Dependency  (const ACE_Service_Gestalt *cfg,
-                                   const ACE_TCHAR *principal);
-  ACE_Dynamic_Service_Dependency  (const ACE_TCHAR *principal);
+  ACE_Dynamic_Service_Dependency  (ACE_Service_Gestalt const *cfg,
+                                   ACE_TCHAR const *principal);
+  explicit ACE_Dynamic_Service_Dependency  (ACE_TCHAR const *principal);
   ~ACE_Dynamic_Service_Dependency ();
 
 private:
-  void init (const ACE_Service_Gestalt *cfg, const ACE_TCHAR *principal);
+  void init (ACE_Service_Gestalt const *cfg, ACE_TCHAR const *principal);
 
 private:
   ACE_DLL tracker_;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
-
 
 #include /**/ "ace/post.h"
 

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #ifndef STUBBATCHCONSUMER_H
 #define STUBBATCHCONSUMER_H
 #include /**/ <ace/pre.h>
@@ -26,17 +25,11 @@ class StubBatchConsumer
   : public virtual POA_CosNotifyComm::SequencePushConsumer
 {
 public:
-  /**
-   * Default constructor.
-   */
   StubBatchConsumer ();
 
-  /**
-   * virtual destructor.
-   */
   virtual ~StubBatchConsumer ();
 
-  ::PortableServer::POA_ptr _default_POA ();
+  ::PortableServer::POA_ptr _default_POA () override;
   ::PortableServer::ObjectId objectId()const;
 
   /**
@@ -52,7 +45,7 @@ public:
   /**
    * Return a string to identify this object for logging/console message purposes.
    */
-  const char * identity () const;
+  char const *identity () const;
 
   /**
    * idle time activity.
@@ -66,32 +59,29 @@ public:
    */
   void fini ();
 
-
 public:
-    ////////////////
-    // CORBA methods
+  /// @name CORBA methods
+  /// @{
 
-    virtual void push_structured_events (
-        const CosNotification::EventBatch & notifications);
+  void push_structured_events (
+    CosNotification::EventBatch const &notifications) override;
 
-    virtual void disconnect_sequence_push_consumer ();
+  void disconnect_sequence_push_consumer () override;
 
-   virtual void offer_change (
-        const CosNotification::EventTypeSeq & added,
-        const CosNotification::EventTypeSeq & removed);
+  void offer_change (
+    CosNotification::EventTypeSeq const &added,
+    CosNotification::EventTypeSeq const &removed) override;
+  /// @}
 
-  ////////////////////
-  // Forbidden methods
 private:
-  StubBatchConsumer (const StubBatchConsumer & rhs);
-  StubBatchConsumer & operator = (const StubBatchConsumer & rhs);
+  /// @name Disabled operations
+  /// @{
+  StubBatchConsumer (StubBatchConsumer const & rhs);
+  StubBatchConsumer & operator = (StubBatchConsumer const & rhs);
+  /// @}
 
-  /////////////////////////
-  // Implementation methods
-private:
-  ///////////////
-  // Data Members
-private:
+  /// @name Data members
+  /// @{
   /**
    * The orb
    */
@@ -126,6 +116,7 @@ private:
    * consumer id assigned by the notifier
    */
   ::FT::FaultNotifier::ConsumerId consumer_id_;
+  /// @}
 };
 
 #include /**/ <ace/post.h>

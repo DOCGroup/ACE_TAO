@@ -1,13 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Thread_Exit.h
  *
  *  @author Carlos O'Ryan <coryan@uci.edu>
  */
-//=============================================================================
-
 
 #ifndef ACE_THREAD_EXIT_H
 #define ACE_THREAD_EXIT_H
@@ -21,6 +16,8 @@
 
 #include "ace/Thread_Control.h"
 
+#include <memory>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
@@ -28,13 +25,13 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  * @brief Keep exit information for a Thread in thread specific storage.
  * so that the thread-specific exit hooks will get called no
- * matter how the thread exits (e.g., via <ACE_Thread::exit>, C++
+ * matter how the thread exits (e.g., via @c ACE_Thread::exit, C++
  * or Win32 exception, "falling off the end" of the thread entry
  * point function, etc.).
  *
  * This clever little helper class is stored in thread-specific
- * storage using the <ACE_TSS> wrapper.  When a thread exits the
- * <ACE_TSS::cleanup> function deletes this object, thereby
+ * storage using the @c ACE_TSS wrapper.  When a thread exits the
+ * @c ACE_TSS::cleanup function deletes this object, thereby
  * closing it down gracefully.
  */
 class ACE_Export ACE_Thread_Exit
@@ -88,6 +85,10 @@ class ACE_Export ACE_Thread_Exit_Maybe
 public:
   /// Don't create an ACE_Thread_Exit instance by default.
   ACE_Thread_Exit_Maybe (int flag = 0);
+  ACE_Thread_Exit_Maybe (ACE_Thread_Exit_Maybe const &) = delete;
+  ACE_Thread_Exit_Maybe (ACE_Thread_Exit_Maybe &&) = delete;
+  ACE_Thread_Exit_Maybe &operator= (ACE_Thread_Exit_Maybe const &) = delete;
+  ACE_Thread_Exit_Maybe &operator= (ACE_Thread_Exit_Maybe &&) = delete;
 
   /// Destroys the underlying ACE_Thread_Exit instance if it exists.
   ~ACE_Thread_Exit_Maybe ();
@@ -100,7 +101,7 @@ public:
 
 private:
   /// Holds the underlying instance.
-  ACE_Thread_Exit *instance_;
+  std::unique_ptr<ACE_Thread_Exit> instance_ {};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

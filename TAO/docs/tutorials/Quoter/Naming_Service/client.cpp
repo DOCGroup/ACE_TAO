@@ -1,4 +1,3 @@
-
 #include "QuoterC.h"
 #include <orbsvcs/CosNamingC.h>
 #include "ace/streams.h"
@@ -15,7 +14,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
     // get quotes for.
     if (argc < 2) {
       cerr << "Usage: " << argv[0]
-                << "symbol symbol..." << endl;
+           << " symbol symbol..." << endl;
       return 1;
     }
 
@@ -44,16 +43,16 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 
         // Get its name, put it on a _var so it is automatically
         // released!
-        CORBA::String_var full_name = stock->full_name ();
+        CORBA::String_var full_name (stock->full_name ());
 
         // Now get the price
-        CORBA::Double price = stock->price ();
+        CORBA::Double const price = stock->price ();
 
         cout << "The price of a stock in \""
              << full_name.in () << "\" is $"
              << price << endl;
       }
-      catch (Quoter::Invalid_Stock_Symbol &) {
+      catch (Quoter::Invalid_Stock_Symbol const &) {
         cerr << "Invalid stock symbol <"
              << argv[i] << ">" << endl;
       }
@@ -62,7 +61,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
     // Finally destroy the ORB
     orb->destroy ();
   }
-  catch (const CORBA::Exception &) {
+  catch (CORBA::Exception const &) {
     cerr << "CORBA exception raised!" << endl;
   }
   return 0;

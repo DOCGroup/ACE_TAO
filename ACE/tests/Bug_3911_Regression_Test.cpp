@@ -20,7 +20,7 @@ init_test ()
 {
   // Cleanup the MMAP file so we won't trip over the leftover mmap
   // file from the previous crash.
-  ACE_MMAP_Memory_Pool_Options options (ACE_DEFAULT_BASE_ADDR);
+  ACE_MMAP_Memory_Pool_Options const options (ACE_DEFAULT_BASE_ADDR);
   //FUZZ: disable check_for_lack_ACE_OS
   ACE_MMAP_Memory_Pool mmap (MMAP_FILENAME, &options);
   //FUZZ: enable check_for_lack_ACE_OS
@@ -43,11 +43,11 @@ private:
         ACE_PI_Control_Block>*    c_memory_pool;
 
 protected:
-  ShmemMan(bool no_crash)
+  explicit ShmemMan(bool no_crash)
   {
     if (no_crash)
     {
-      ACE_MMAP_Memory_Pool_Options options (ACE_DEFAULT_BASE_ADDR);
+      ACE_MMAP_Memory_Pool_Options const options (ACE_DEFAULT_BASE_ADDR);
       c_memory_pool = new ACE_Malloc_T<ACE_MMAP_MEMORY_POOL,
                       ACE_Null_Mutex,
                       ACE_PI_Control_Block>(MMAP_FILENAME
@@ -63,6 +63,9 @@ protected:
   };
 
 public:
+  ShmemMan (ShmemMan const &) = delete;
+  ShmemMan &operator= (ShmemMan const &) = delete;
+
   ~ShmemMan()
   {
     c_memory_pool->release();
@@ -86,9 +89,9 @@ public:
     return 0;
   };
 
-  void* getMemoryBlock(const char* block_name, unsigned int block_size)
+  void* getMemoryBlock(char const * block_name, unsigned int block_size)
   {
-    void* shared = nullptr;
+    void* shared {};
 
     ACE_DEBUG((LM_INFO, ACE_TEXT("errno = %d. Looking for a Shared Memory block named %C\n"),
                         ACE_OS::last_error(),
@@ -130,9 +133,9 @@ public:
   };
 };
 
-ShmemMan* ShmemMan::c_instance = nullptr;
+ShmemMan* ShmemMan::c_instance {};
 
-const char* block_name = "block_1";
+char const * block_name = "block_1";
 
 // Main function.
 int
@@ -142,7 +145,7 @@ run_main (int argc, ACE_TCHAR * argv[])
 
   init_test ();
 
-  bool no_crash = (argc>1 && argv[1][0]=='1');
+  bool const no_crash = (argc>1 && argv[1][0]=='1');
   ShmemMan* smm = ShmemMan::getInstance (no_crash);
 
   void* buf = smm->getMemoryBlock (block_name, 10 * 4096);

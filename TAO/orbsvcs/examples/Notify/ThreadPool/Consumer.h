@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file Consumer.h
  *
@@ -14,7 +13,6 @@
 #include "tao/RTCORBA/RTCORBA.h"
 #include "orbsvcs/CosNotifyChannelAdminS.h"
 #include "orbsvcs/CosNotifyCommC.h"
-#include "ace/SString.h"
 #include "ace/OS_NS_time.h"
 
 /**
@@ -27,22 +25,25 @@ class TAO_Notify_ThreadPool_Consumer
   : public POA_CosNotifyComm::StructuredPushConsumer
 {
 public:
-  /// Constructor
-  TAO_Notify_ThreadPool_Consumer (TAO_Notify_ORB_Objects& orb_objects);
+  explicit TAO_Notify_ThreadPool_Consumer (TAO_Notify_ORB_Objects& orb_objects);
+
+  TAO_Notify_ThreadPool_Consumer (TAO_Notify_ThreadPool_Consumer const&) = delete;
+  TAO_Notify_ThreadPool_Consumer (TAO_Notify_ThreadPool_Consumer&&) = delete;
+  TAO_Notify_ThreadPool_Consumer& operator= (TAO_Notify_ThreadPool_Consumer const&) = delete;
+  TAO_Notify_ThreadPool_Consumer& operator= (TAO_Notify_ThreadPool_Consumer&&) = delete;
 
   /// Init
-  void init (PortableServer::POA_var& poa, CosNotifyChannelAdmin::ConsumerAdmin_var& admin, int proxy_supplier_thread_count, int max_events, long delay);
-
-  /// Run
-  void run ();
+  void init (PortableServer::POA_ptr poa,
+             CosNotifyChannelAdmin::ConsumerAdmin_ptr admin,
+             int proxy_supplier_thread_count,
+             int max_events,
+             long delay);
 
   /// Print the consumer throughput
   void dump_throughput ();
 
 protected:
-  // = Methods
-  /// Destructor
-  virtual ~TAO_Notify_ThreadPool_Consumer ();
+  ~TAO_Notify_ThreadPool_Consumer () override = default;
 
   /// Connect the Consumer to the EventChannel.
   /// Creates a new proxy supplier and connects to it.
@@ -54,62 +55,64 @@ protected:
   /// Deactivate.
   void deactivate ();
 
-  // = ServantBase operations
-  virtual PortableServer::POA_ptr _default_POA ();
+  /// @name ServantBase operations
+  /// @{
+  PortableServer::POA_ptr _default_POA () override;
+  /// @}
 
-  // = NotifyPublish method
-  virtual void offer_change (
-        const CosNotification::EventTypeSeq & added,
-        const CosNotification::EventTypeSeq & removed);
+  /// @name NotifyPublish method
+  /// @{
+  void offer_change (CosNotification::EventTypeSeq const& added,
+                     CosNotification::EventTypeSeq const& removed) override;
+  /// @}
 
-  // = StructuredPushSupplier methods
-  virtual void push_structured_event (
-        const CosNotification::StructuredEvent & notification);
+  /// @name StructuredPushConsumer methods
+  /// @{
+  void push_structured_event (CosNotification::StructuredEvent const& notification) override;
 
-  virtual void disconnect_structured_push_consumer ();
+  void disconnect_structured_push_consumer () override;
+  /// @}
 
-  // = Data members
-
+  /// @name Data members
+  /// @{
   /// Lock
   TAO_SYNCH_MUTEX lock_;
 
   /// ORB Objects.
-  TAO_Notify_ORB_Objects orb_objects_;
+  TAO_Notify_ORB_Objects& orb_objects_;
 
-  // POA.
+  /// POA.
   PortableServer::POA_var default_POA_;
 
   /// The proxy that we are connected to.
   CosNotifyChannelAdmin::StructuredProxyPushSupplier_var proxy_supplier_;
 
   /// The proxy_supplier id.
-  CosNotifyChannelAdmin::ProxyID proxy_supplier_id_;
+  CosNotifyChannelAdmin::ProxyID proxy_supplier_id_ {};
 
-  // The Consumer Admin
+  /// The Consumer Admin.
   CosNotifyChannelAdmin::ConsumerAdmin_var admin_;
 
-  /// The Type the Consumer should subscribe to.
-  ACE_CString event_type_;
-
   /// ProxySupplier thread count.
-  int proxy_supplier_thread_count_;
+  int proxy_supplier_thread_count_ {};
 
   /// Max events to receive
-  int max_events_;
+  int max_events_ {10};
 
   /// Count the number of events received.
-  int events_received_count_;
+  int events_received_count_ {};
 
   /// Time when the first sample was received.
   //ACE_UINT64 t_first_;
-  ACE_hrtime_t t_first_;
+  ACE_hrtime_t t_first_ {};
 
   /// Time when the last sample was received.
   //ACE_UINT64 t_last_;
-  ACE_hrtime_t t_last_;
+  ACE_hrtime_t t_last_ {};
 
   /// Delay: Sec of wait in each push.
-  ACE_Time_Value delay_;
+  ACE_Time_Value delay_ {};
+  /// @}
 };
 
 #include /**/ "ace/post.h"

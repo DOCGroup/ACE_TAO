@@ -1,13 +1,9 @@
-// -*- C++ -*-
-
-// ===================================================================
 /**
  *  @file   SHMIOP_Transport.h
  *
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  */
-// ===================================================================
 
 #ifndef TAO_SHMIOP_TRANSPORT_H
 #define TAO_SHMIOP_TRANSPORT_H
@@ -49,12 +45,10 @@ using TAO_SHMIOP_SVC_HANDLER = ACE_Svc_Handler<ACE_MEM_STREAM, ACE_NULL_SYNCH>;
 class TAO_Strategies_Export TAO_SHMIOP_Transport : public TAO_Transport
 {
 public:
-  /// Constructor.
   TAO_SHMIOP_Transport (TAO_SHMIOP_Connection_Handler *handler,
                         TAO_ORB_Core *orb_core);
 
-  /// Default destructor.
-  ~TAO_SHMIOP_Transport () override;
+  ~TAO_SHMIOP_Transport () override = default;
 
 protected:
   /**
@@ -62,7 +56,7 @@ protected:
    *
    * These are implementations of template methods declared by TAO_Transport.
    */
-  //@{
+  /// @{
   ACE_Event_Handler *event_handler_i () override;
   TAO_Connection_Handler *connection_handler_i () override;
 
@@ -78,7 +72,7 @@ protected:
 
   int handle_input (TAO_Resume_Handle &rh,
                     ACE_Time_Value *max_wait_time) override;
-  //@}
+  /// @}
 
 public:
   /// @todo These methods IMHO should have more meaningful names.
@@ -96,6 +90,7 @@ public:
                     ACE_Time_Value *max_time_wait = nullptr) override;
 
 private:
+  TAO_SHMIOP_Transport () = delete;
   TAO_SHMIOP_Transport (TAO_SHMIOP_Transport const &) = delete;
   TAO_SHMIOP_Transport &operator= (TAO_SHMIOP_Transport const &) = delete;
   TAO_SHMIOP_Transport (TAO_SHMIOP_Transport &&) = delete;

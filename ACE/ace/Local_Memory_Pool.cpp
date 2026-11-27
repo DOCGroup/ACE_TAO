@@ -1,4 +1,5 @@
 #include "ace/Local_Memory_Pool.h"
+#include "ace/Malloc_Base.h"
 #include "ace/OS_Memory.h"
 #include "ace/Log_Category.h"
 #include <memory>
@@ -15,8 +16,8 @@ ACE_Local_Memory_Pool::dump () const
 #endif /* ACE_HAS_DUMP */
 }
 
-ACE_Local_Memory_Pool::ACE_Local_Memory_Pool (const ACE_TCHAR *,
-                                              const OPTIONS *)
+ACE_Local_Memory_Pool::ACE_Local_Memory_Pool (ACE_TCHAR const *,
+                                              OPTIONS const *)
 {
   ACE_TRACE ("ACE_Local_Memory_Pool::ACE_Local_Memory_Pool");
 }
@@ -49,23 +50,25 @@ ACE_Local_Memory_Pool::acquire (size_t nbytes,
   ACE_TRACE ("ACE_Local_Memory_Pool::acquire");
   rounded_bytes = this->round_up (nbytes);
 
-  char *temp = nullptr;
+  char *temp {};
 #if defined (ACE_HAS_ALLOC_HOOKS)
   ACE_ALLOCATOR_RETURN (temp,
                         static_cast<char*>(ACE_Allocator::instance()->malloc(sizeof(char) * rounded_bytes)),
-                        0);
+                        nullptr);
 #else
   ACE_NEW_RETURN (temp,
                   char[rounded_bytes],
                   nullptr);
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
-  std::unique_ptr<char[]> cp (temp);
+  std::unique_ptr<char[], ACE_Array_Deleter<char>> cp (temp);
 
   if (this->allocated_chunks_.insert (cp.get ()) != 0)
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) insertion into set failed\n")),
-                      0);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                            ACE_TEXT ("(%P|%t) insertion into set failed\n")),
+                           0);
+    }
 
   return cp.release ();
 }
@@ -76,14 +79,14 @@ ACE_Local_Memory_Pool::release (int)
   ACE_TRACE ("ACE_Local_Memory_Pool::release");
 
   // Zap the memory we allocated.
-  for (ACE_Unbounded_Set<char *>::iterator i = this->allocated_chunks_.begin ();
-       i != this->allocated_chunks_.end ();
-       ++i)
+  for (char *const allocated_chunk : this->allocated_chunks_)
+    {
 #if defined (ACE_HAS_ALLOC_HOOKS)
-    ACE_Allocator::instance()->free(*i);
+      ACE_Allocator::instance()->free (allocated_chunk);
 #else
-    delete [] *i;
+      delete [] allocated_chunk;
 #endif /* ACE_HAS_ALLOC_HOOKS */
+    }
 
   this->allocated_chunks_.reset ();
   return 0;

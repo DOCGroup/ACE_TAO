@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-// ===================================================================
 /**
  *  @file   PolicyFactory_Registry_Adapter.h
  *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-// ===================================================================
 
 #ifndef TAO_POLICY_FACTORY_REGISTRY_ADAPTER_H
 #define TAO_POLICY_FACTORY_REGISTRY_ADAPTER_H
@@ -53,6 +49,12 @@ namespace TAO
   class TAO_Export PolicyFactory_Registry_Adapter
   {
   public:
+    PolicyFactory_Registry_Adapter () = default;
+    PolicyFactory_Registry_Adapter (PolicyFactory_Registry_Adapter const &) = default;
+    PolicyFactory_Registry_Adapter (PolicyFactory_Registry_Adapter &&) = default;
+    PolicyFactory_Registry_Adapter &operator= (PolicyFactory_Registry_Adapter const &) = default;
+    PolicyFactory_Registry_Adapter &operator= (PolicyFactory_Registry_Adapter &&) = default;
+
     virtual ~PolicyFactory_Registry_Adapter ();
 
     /// Register a PolicyFactory with the underlying PolicyFactory
@@ -73,7 +75,7 @@ namespace TAO
 
     /// Check if a @c PolicyFactory corresponding to the given type,
     /// exists.
-    virtual bool factory_exists (CORBA::PolicyType &type) const = 0;
+    virtual bool factory_exists (CORBA::PolicyType type) const = 0;
   };
 }
 

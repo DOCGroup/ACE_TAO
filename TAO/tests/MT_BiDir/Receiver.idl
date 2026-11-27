@@ -1,4 +1,3 @@
-
 interface Receiver
 {
   typedef sequence<octet> Payload;

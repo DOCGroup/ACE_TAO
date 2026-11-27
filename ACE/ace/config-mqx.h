@@ -171,7 +171,7 @@ inline size_t fread(void* ptr, size_t so, size_t no,FILE* f) {
 #endif
 #ifdef fwrite
 #undef fwrite
-inline size_t fwrite(const void* ptr, size_t so, size_t no, FILE* f) {
+inline size_t fwrite(void const* ptr, size_t so, size_t no, FILE* f) {
   return (_io_write((f),(void*)(ptr),(so)*(no))/(so));
 }
 #endif
@@ -187,7 +187,7 @@ inline int getline(char* x, int y) {
 #endif
 #ifdef read
 #undef read
-inline int read(FILE* f, const void* b, int a) {
+inline int read(FILE* f, void const* b, int a) {
   return _io_read(f, (void*)b, a);
 }
 #endif
@@ -207,7 +207,7 @@ inline int write(FILE* f, void* b, int a) {
 #endif
 #ifdef fprintf
 #undef fprintf
-inline int fprintf(FILE* s, const char* f, ...) {
+inline int fprintf(FILE* s, char const* f, ...) {
   va_list argp;
   va_start(argp, f);
   const int r = _io_vfprintf(s, f, argp);
@@ -225,7 +225,7 @@ inline int fprintf(FILE* s, const char* f, ...) {
 #endif
 #ifdef vfprintf
 #undef vfprintf
-inline int vfprintf(FILE* s, const char* f, va_list argp) {
+inline int vfprintf(FILE* s, char const* f, va_list argp) {
   return _io_vfprintf(s, f, argp);
 }
 #endif
@@ -249,13 +249,13 @@ inline char* fgets(char* b, int a, FILE* f) {
 #endif
 #ifdef fputs
 #undef fputs
-inline int fputs(const char* s, FILE* f) {
+inline int fputs(char const* s, FILE* f) {
   return _io_fputs(s, f);
 }
 #endif
 #ifdef fopen
 #undef fopen
-inline FILE* fopen(const char* f, const char* m) {
+inline FILE* fopen(char const* f, char const* m) {
   return _io_fopen(f, m);
 }
 #endif
@@ -283,7 +283,7 @@ inline int ioctl(FILE* f, unsigned int r, void* p)
 
 #ifdef def_printf
 #undef def_printf
-inline int printf(const char* f, ...) {
+inline int printf(char const* f, ...) {
   va_list argp;
   va_start(argp, f);
   const int r = _io_vprintf(f, argp);
@@ -293,7 +293,7 @@ inline int printf(const char* f, ...) {
 #endif
 #ifdef def_sprintf
 #undef def_sprintf
-inline int sprintf(char* s, const char* f, ...) {
+inline int sprintf(char* s, char const* f, ...) {
   va_list argp;
   va_start(argp, f);
   const int r = _io_vsprintf(s, f, argp);
@@ -303,19 +303,19 @@ inline int sprintf(char* s, const char* f, ...) {
 #endif
 #ifdef def_vprintf
 #undef def_vprintf
-inline int vprintf(const char* f, va_list argp) {
+inline int vprintf(char const* f, va_list argp) {
   return _io_vprintf(f, argp);
 }
 #endif
 #ifdef def_vsprintf
 #undef def_vsprintf
-inline int vsprintf(char* s, const char* f, va_list argp) {
+inline int vsprintf(char* s, char const* f, va_list argp) {
   return _io_vsprintf(s, f, argp);
 }
 #endif
 #ifdef def_puts
 #undef def_puts
-inline int puts(const char* str) {
+inline int puts(char const* str) {
   return _io_fputs(str, stdout);
 }
 #endif

@@ -9,6 +9,7 @@ class TAO_IDL_FE_Export AST_ValueType
   : public virtual AST_Interface
 {
 public:
+  AST_ValueType () = delete;
   AST_ValueType (AST_ValueType const &) = delete;
   AST_ValueType (AST_ValueType &&) = delete;
   AST_ValueType &operator= (AST_ValueType const &) = delete;
@@ -28,10 +29,10 @@ public:
 
   ~AST_ValueType () override;
 
+  /// Check whether this type or a type in the list is involved in recursion.
   bool in_recursion (std::vector<AST_Type *> &list) override;
-  // Are we or the node represented by node involved in recursion.
 
-  // This also calls the base class version.
+  /// Redefine the valuetype and call the base class version.
   void redefine (AST_Interface *from) override;
 
   AST_Type_List const& supports () const;
@@ -45,10 +46,10 @@ public:
   bool truncatable () const;
   bool custom () const;
 
+  /// Whether this valuetype will have a factory.
   virtual bool will_have_factory ();
-  // Called from y.tab.cpp to set the factory decl seen bit.
 
-  // Look up a scoped name in the supported interface list.
+  /// Look up a scoped name in the supported interface list.
   AST_Decl *look_in_supported (UTL_ScopedName *,
                                bool full_def_only) override;
 
@@ -57,9 +58,9 @@ public:
                             bool full_def_only,
                             AST_Decl *&final_parent_decl) override;
 
-  // Recursively called on valuetype to check for legal use as
-  // a primary key. Overridden for valuetype, struct, sequence,
-  // union, array, typedef, and interface.
+  /// Recursively checks whether the type is legal as a primary key.
+  /// Overridden for valuetypes, structs, sequences, unions, arrays,
+  /// typedefs and interfaces.
   bool legal_for_primary_key () const override;
 
   // Cleanup function.

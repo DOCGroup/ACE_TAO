@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project: ace_zzip {
   avoids   += ace_for_tao
   after    += ACEXML_Parser ACEXML

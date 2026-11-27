@@ -1,9 +1,7 @@
-
-//=============================================================================
 /**
  *  @file    TP_Reactor_Test.cpp
  *
- *  This program illustrates how the <ACE_TP_Reactor> can be used to
+ *  This program illustrates how the @c ACE_TP_Reactor can be used to
  *  implement an application that does various  operations.
  *  usage: TP_Reactor_Test
  *         -n number threads in the TP_Reactor thread pool
@@ -40,8 +38,6 @@
  *  @author   Alexander Libman <alibman@ihug.com.au>
  *  @author <alexl@rumblgroup.com>
  */
-//=============================================================================
-
 
 #include "test_config.h"
 
@@ -62,6 +58,8 @@
 #include "ace/Synch_Traits.h"
 #include "ace/Thread_Semaphore.h"
 
+#include <memory>
+
 //  Some debug helper functions
 static int disable_signal (int sigmin, int sigmax);
 
@@ -70,7 +68,7 @@ static int disable_signal (int sigmin, int sigmax);
 static int both = 0;
 
 // Host that we're connecting to.
-static const ACE_TCHAR *host = nullptr;
+static ACE_TCHAR const *host {};
 
 // number of Senders instances
 static int senders = 1;
@@ -152,12 +150,12 @@ MyTask::create_reactor ()
 
   ACE_TEST_ASSERT (this->my_reactor_ == nullptr);
 
-  ACE_TP_Reactor * pImpl = nullptr;
+  ACE_TP_Reactor * pImpl {};
 
   ACE_NEW_RETURN (pImpl,ACE_TP_Reactor, -1);
 
   ACE_NEW_RETURN (my_reactor_,
-                   ACE_Reactor (pImpl ,1),
+                   ACE_Reactor (pImpl ,true),
                    -1);
 
   ACE_DEBUG ((LM_DEBUG,
@@ -182,7 +180,7 @@ MyTask::delete_reactor ()
               ACE_TEXT (" (%t) Delete TP_Reactor\n")));
 
   delete this->my_reactor_;
-  ACE_Reactor::instance ((ACE_Reactor *) nullptr);
+  ACE_Reactor::instance (nullptr);
   this->my_reactor_ = nullptr;
   this->reactor (nullptr);
 
@@ -193,23 +191,28 @@ int
 MyTask::start (int num_threads)
 {
   if (this->create_reactor () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p.\n"),
-                       ACE_TEXT ("unable to create reactor")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p.\n"),
+                         ACE_TEXT ("unable to create reactor")),
+                        -1);
+    }
 
   if (this->activate (THR_NEW_LWP, num_threads) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p.\n"),
-                       ACE_TEXT ("unable to activate thread pool")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p.\n"),
+                         ACE_TEXT ("unable to activate thread pool")),
+                        -1);
+    }
 
-  for (; num_threads > 0 ; num_threads--)
-    sem_.acquire ();
+  for (; num_threads > 0 ; --num_threads)
+    {
+      sem_.acquire ();
+    }
 
   return 0;
 }
-
 
 int
 MyTask::stop ()
@@ -223,14 +226,18 @@ MyTask::stop ()
     }
 
   if (this->wait () == -1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p.\n"),
-                ACE_TEXT ("unable to stop thread pool")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("%p.\n"),
+                  ACE_TEXT ("unable to stop thread pool")));
+    }
 
   if (this->delete_reactor () == -1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p.\n"),
-                ACE_TEXT ("unable to delete reactor")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("%p.\n"),
+                  ACE_TEXT ("unable to delete reactor")));
+    }
 
   return 0;
 }
@@ -246,7 +253,9 @@ MyTask::svc ()
   sem_.release (1);
 
   while (ACE_Reactor::instance()->reactor_event_loop_done () == 0)
-    ACE_Reactor::instance()->run_reactor_event_loop ();
+    {
+      ACE_Reactor::instance()->run_reactor_event_loop ();
+    }
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" (%t) MyTask finished\n")));
   return 0;
@@ -255,7 +264,7 @@ MyTask::svc ()
 // *************************************************************
 
 Acceptor::Acceptor ()
-  : ACE_Acceptor<Receiver,ACE_SOCK_ACCEPTOR> ((ACE_Reactor *) nullptr),
+  : ACE_Acceptor<Receiver,ACE_SOCK_ACCEPTOR> (nullptr),
     sessions_ (0),
     total_snd_(0),
     total_rcv_(0),
@@ -264,8 +273,10 @@ Acceptor::Acceptor ()
 {
   ACE_GUARD (ACE_Recursive_Thread_Mutex, locker, this->mutex_);
 
-  for (size_t i = 0; i < MAX_RECEIVERS; ++i)
-     this->list_receivers_[i] =nullptr;
+  for (Receiver *&receiver : this->list_receivers_)
+    {
+      receiver = nullptr;
+    }
 }
 
 Acceptor::~Acceptor ()
@@ -282,10 +293,10 @@ Acceptor::stop ()
 
   ACE_GUARD (ACE_Recursive_Thread_Mutex, locker, this->mutex_);
 
-  for (size_t i = 0; i < MAX_RECEIVERS; ++i)
+  for (Receiver *&receiver : this->list_receivers_)
     {
-      delete this->list_receivers_[i];
-      this->list_receivers_[i] =nullptr;
+      delete receiver;
+      receiver = nullptr;
     }
 }
 
@@ -293,10 +304,10 @@ void
 Acceptor::on_new_receiver (Receiver &rcvr)
 {
   ACE_GUARD (ACE_Recursive_Thread_Mutex, locker, this->mutex_);
-  this->sessions_++;
-  this->list_receivers_[rcvr.index_] = & rcvr;
+  ++this->sessions_;
+  this->list_receivers_[rcvr.index_] = std::addressof (rcvr);
   ACE_DEBUG ((LM_DEBUG,
-              "Receiver::CTOR sessions_=%d\n",
+              "Receiver::CTOR sessions_=%B\n",
               this->sessions_));
 }
 
@@ -305,7 +316,7 @@ Acceptor::on_delete_receiver (Receiver &rcvr)
 {
   ACE_GUARD (ACE_Recursive_Thread_Mutex, locker, this->mutex_);
 
-  this->sessions_--;
+  --this->sessions_;
 
   this->total_snd_ += rcvr.get_total_snd ();
   this->total_rcv_ += rcvr.get_total_rcv ();
@@ -313,8 +324,10 @@ Acceptor::on_delete_receiver (Receiver &rcvr)
   this->total_r_   += rcvr.get_total_r ();
 
   if (rcvr.index_ < MAX_RECEIVERS
-      && this->list_receivers_[rcvr.index_] == &rcvr)
+      && this->list_receivers_[rcvr.index_] == std::addressof (rcvr))
+  {
     this->list_receivers_[rcvr.index_] = nullptr;
+  }
 
   ACE_TCHAR bufs [256];
   ACE_TCHAR bufr [256];
@@ -328,7 +341,7 @@ Acceptor::on_delete_receiver (Receiver &rcvr)
                     rcvr.get_total_r ());
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Receiver::~DTOR index=%d snd=%s rcv=%s sessions_=%d\n"),
+              ACE_TEXT ("Receiver::~DTOR index=%B snd=%s rcv=%s sessions_=%B\n"),
               rcvr.index_,
               bufs,
               bufr,
@@ -336,15 +349,17 @@ Acceptor::on_delete_receiver (Receiver &rcvr)
 }
 
 int
-Acceptor::start (const ACE_INET_Addr &addr)
+Acceptor::start (ACE_INET_Addr const &addr)
 {
   if (ACE_Acceptor<Receiver,ACE_SOCK_ACCEPTOR>::open (addr,
                                                       ACE_Reactor::instance (),
                                                       ACE_NONBLOCK) < 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT("%p\n"),
-                       ACE_TEXT("Acceptor::start () - open failed")),
-                       0);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT("%p\n"),
+                         ACE_TEXT("Acceptor::start () - open failed")),
+                        0);
+    }
   return 1;
 }
 
@@ -354,16 +369,20 @@ Acceptor::make_svc_handler (Receiver *&sh)
   ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, locker, this->mutex_, -1);
 
   if (sessions_ >= MAX_RECEIVERS)
-    return -1;
+    {
+      return -1;
+    }
 
   for (size_t i = 0; i < MAX_RECEIVERS; ++i)
-    if (this->list_receivers_ [i] == nullptr)
-      {
-        ACE_NEW_RETURN (sh,
-                        Receiver (this , i),
-                        -1);
-        return 0;
-      }
+    {
+      if (this->list_receivers_ [i] == nullptr)
+        {
+          ACE_NEW_RETURN (sh,
+                          Receiver (this , i),
+                          -1);
+          return 0;
+        }
+    }
   return -1;
 }
 
@@ -379,25 +398,30 @@ Receiver::Receiver (Acceptor * acceptor, size_t index)
     total_r_  (0)
 {
   if (acceptor_ != nullptr)
+  {
     acceptor_->on_new_receiver (*this);
+  }
 }
-
 
 Receiver::~Receiver ()
 {
   this->reactor (nullptr);
   if (acceptor_ != nullptr)
+  {
     acceptor_->on_delete_receiver (*this);
+  }
 
   this->index_ = 0;
 
   for (; ;)
     {
       ACE_Time_Value tv = ACE_Time_Value::zero;
-      ACE_Message_Block *mb = nullptr;
+      ACE_Message_Block *mb {};
 
-      if (this->getq (mb, &tv) < 0)
+      if (this->getq (mb, std::addressof (tv)) < 0)
+      {
         break;
+      }
 
       ACE_Message_Block::release (mb);
     }
@@ -407,7 +431,9 @@ int
 Receiver::check_destroy ()
 {
   if (flg_mask_ == ACE_Event_Handler::NULL_MASK)
+  {
     return -1;
+  }
 
   return 0;
 }
@@ -424,7 +450,9 @@ Receiver::open (void *)
   flg_mask_ = ACE_Event_Handler::NULL_MASK ;
 
   if (TPReactor->register_handler (this, flg_mask_) == -1)
+  {
     return -1;
+  }
 
   initiate_io (ACE_Event_Handler::READ_MASK);
 
@@ -435,10 +463,14 @@ int
 Receiver::initiate_io (ACE_Reactor_Mask mask)
 {
   if (ACE_BIT_ENABLED (flg_mask_, mask))
+  {
     return 0;
+  }
 
   if (ACE_Reactor::instance ()->schedule_wakeup  (this, mask) == -1)
+  {
     return -1;
+  }
 
   ACE_SET_BITS (flg_mask_, mask);
   return 0;
@@ -448,10 +480,14 @@ int
 Receiver::terminate_io (ACE_Reactor_Mask mask)
 {
   if (ACE_BIT_DISABLED (flg_mask_, mask))
+  {
     return 0;
+  }
 
   if (ACE_Reactor::instance ()->cancel_wakeup (this, mask) == -1)
+  {
     return -1;
+  }
 
   ACE_CLR_BITS (flg_mask_, mask);
   return 0;
@@ -475,7 +511,7 @@ Receiver::handle_input (ACE_HANDLE h)
 {
   ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, locker, this->mutex_, -1);
 
-  ACE_Message_Block *mb = nullptr;
+  ACE_Message_Block *mb {};
   ACE_NEW_RETURN (mb,
                   ACE_Message_Block (BUFSIZ),
                   -1);
@@ -483,7 +519,7 @@ Receiver::handle_input (ACE_HANDLE h)
   int err = 0;
   ssize_t res = this->peer ().recv (mb->rd_ptr (), BUFSIZ-1);
 
-  this->total_r_++;
+  ++this->total_r_;
 
   if (res >= 0)
     {
@@ -491,7 +527,9 @@ Receiver::handle_input (ACE_HANDLE h)
       this->total_rcv_ += res;
     }
   else
+  {
     err = errno ;
+  }
 
   mb->wr_ptr ()[0] = '\0';
 
@@ -499,10 +537,11 @@ Receiver::handle_input (ACE_HANDLE h)
     {
       LogLocker log_lock;
 
-      ACE_DEBUG ((LM_DEBUG, "**** Receiver::handle_input () SessionId=%d****\n", index_));
+      ACE_DEBUG ((LM_DEBUG, "**** Receiver::handle_input () SessionId=%B****\n", index_));
       ACE_DEBUG ((LM_DEBUG, "%C = %d\n", "bytes_to_read", BUFSIZ));
-      ACE_DEBUG ((LM_DEBUG, "%C = %d\n", "handle", h));
-      ACE_DEBUG ((LM_DEBUG, "%C = %d\n", "bytes_transferred", res));
+      ACE_DEBUG ((LM_DEBUG, "%C = %H\n", "handle",
+                  h));
+      ACE_DEBUG ((LM_DEBUG, "%C = %b\n", "bytes_transferred", res));
       ACE_DEBUG ((LM_DEBUG, "%C = %d\n", "error", err));
       ACE_DEBUG ((LM_DEBUG, "%C = %s\n", "message_block", mb->rd_ptr ()));
       ACE_DEBUG ((LM_DEBUG, "**** end of message ****************\n"));
@@ -523,7 +562,7 @@ Receiver::handle_input (ACE_HANDLE h)
 
   ACE_Time_Value tv = ACE_Time_Value::zero;
 
-  int qcount = this->putq (mb, & tv);
+  int const qcount = this->putq (mb, std::addressof (tv));
 
   if (qcount <= 0)  // failed to putq
     {
@@ -534,21 +573,31 @@ Receiver::handle_input (ACE_HANDLE h)
   int rc = 0;
 
   if (duplex == 0)      // half-duplex , stop read
-    rc = this->terminate_io (ACE_Event_Handler::READ_MASK);
+    {
+      rc = this->terminate_io (ACE_Event_Handler::READ_MASK);
+    }
   else                     // full duplex
     {
       if (qcount >= 20 )   // flow control, stop read
-        rc = this->terminate_io (ACE_Event_Handler::READ_MASK);
+        {
+          rc = this->terminate_io (ACE_Event_Handler::READ_MASK);
+        }
       else
-        rc = this->initiate_io (ACE_Event_Handler::READ_MASK);
+        {
+          rc = this->initiate_io (ACE_Event_Handler::READ_MASK);
+        }
     }
 
   if (rc == -1)
+  {
     return -1;
+  }
 
   //initiate write
   if (this->initiate_io (ACE_Event_Handler::WRITE_MASK) != 0)
+  {
     return -1;
+  }
 
   return check_destroy ();
 }
@@ -559,35 +608,39 @@ Receiver::handle_output (ACE_HANDLE h)
   ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, locker, this->mutex_, -1);
 
   ACE_Time_Value tv = ACE_Time_Value::zero;
-  ACE_Message_Block *mb = nullptr;
+  ACE_Message_Block *mb {};
 
   int     err = 0;
   ssize_t res = 0;
   size_t  bytes = 0;
 
-  int     qcount = this->getq (mb, &tv);
+  int const qcount = this->getq (mb, std::addressof (tv));
 
   if (mb != nullptr)  // qcount >= 0)
     {
       bytes = mb->length ();
       res = this->peer ().send (mb->rd_ptr (), bytes);
 
-      this->total_w_++;
+      ++this->total_w_;
 
       if (res < 0)
-        err = errno ;
+        {
+          err = errno ;
+        }
       else
-        this->total_snd_ += res;
-
+        {
+          this->total_snd_ += res;
+        }
 
       if (loglevel == 0 || res <= 0 || err!= 0)
         {
           LogLocker log_lock;
 
-          ACE_DEBUG ((LM_DEBUG, "**** Receiver::handle_output () SessionId=%d****\n", index_));
-          ACE_DEBUG ((LM_DEBUG, "%C = %d\n", "bytes_to_write", bytes));
-          ACE_DEBUG ((LM_DEBUG, "%C = %d\n", "handle", h));
-          ACE_DEBUG ((LM_DEBUG, "%C = %d\n", "bytes_transferred", res));
+          ACE_DEBUG ((LM_DEBUG, "**** Receiver::handle_output () SessionId=%B****\n", index_));
+          ACE_DEBUG ((LM_DEBUG, "%C = %B\n", "bytes_to_write", bytes));
+          ACE_DEBUG ((LM_DEBUG, "%C = %H\n", "handle",
+                      h));
+          ACE_DEBUG ((LM_DEBUG, "%C = %b\n", "bytes_transferred", res));
           ACE_DEBUG ((LM_DEBUG, "%C = %d\n", "error", err));
           ACE_DEBUG ((LM_DEBUG, "%C = %s\n", "message_block", mb->rd_ptr ()));
           ACE_DEBUG ((LM_DEBUG, "**** end of message ****************\n"));
@@ -597,15 +650,21 @@ Receiver::handle_output (ACE_HANDLE h)
   ACE_Message_Block::release (mb);
 
   if (err != 0  || res < 0)
+  {
     return -1;
+  }
 
   if (qcount <= 0)  // no more message blocks in queue
     {
       if (this->terminate_io (ACE_Event_Handler::WRITE_MASK) != 0)
+      {
         return -1;
+      }
 
       if (this->initiate_io (ACE_Event_Handler::READ_MASK) != 0)
+      {
         return -1;
+      }
     }
 
   return check_destroy ();
@@ -614,7 +673,7 @@ Receiver::handle_output (ACE_HANDLE h)
 // *************************************************************
 
 Connector::Connector ()
-  : ACE_Connector<Sender,ACE_SOCK_CONNECTOR> ((ACE_Reactor *) nullptr),
+  : ACE_Connector<Sender,ACE_SOCK_CONNECTOR> (nullptr),
     sessions_ (0),
     total_snd_(0),
     total_rcv_(0),
@@ -623,8 +682,10 @@ Connector::Connector ()
 {
   ACE_GUARD (ACE_Recursive_Thread_Mutex, locker, this->mutex_);
 
-  for (size_t i = 0; i < MAX_SENDERS; ++i)
-     this->list_senders_[i] = nullptr;
+  for (Sender *&sender : this->list_senders_)
+    {
+      sender = nullptr;
+    }
 }
 
 Connector::~Connector ()
@@ -642,10 +703,10 @@ Connector::stop ()
 
   ACE_GUARD (ACE_Recursive_Thread_Mutex, locker, this->mutex_);
 
-  for (size_t i = 0; i < MAX_SENDERS; ++i)
+  for (Sender *&sender : this->list_senders_)
     {
-      delete this->list_senders_[i];
-      this->list_senders_[i] =nullptr;
+      delete sender;
+      sender = nullptr;
     }
 }
 
@@ -653,10 +714,10 @@ void
 Connector::on_new_sender (Sender & sndr)
 {
   ACE_GUARD (ACE_Recursive_Thread_Mutex, locker, this->mutex_);
-  this->sessions_++;
-  this->list_senders_[sndr.index_] = &sndr;
+  ++this->sessions_;
+  this->list_senders_[sndr.index_] = std::addressof (sndr);
   ACE_DEBUG ((LM_DEBUG,
-              "Sender::CTOR sessions_=%d\n",
+              "Sender::CTOR sessions_=%B\n",
               this->sessions_));
 }
 
@@ -665,15 +726,17 @@ Connector::on_delete_sender (Sender & sndr)
 {
   ACE_GUARD (ACE_Recursive_Thread_Mutex, locker, this->mutex_);
 
-  this->sessions_--;
+  --this->sessions_;
   this->total_snd_ += sndr.get_total_snd();
   this->total_rcv_ += sndr.get_total_rcv();
   this->total_w_   += sndr.get_total_w();
   this->total_r_   += sndr.get_total_r();
 
   if (sndr.index_ < MAX_SENDERS
-      && this->list_senders_[sndr.index_] == &sndr)
+      && this->list_senders_[sndr.index_] == std::addressof (sndr))
+  {
     this->list_senders_[sndr.index_] = nullptr;
+  }
 
   ACE_TCHAR bufs [256];
   ACE_TCHAR bufr [256];
@@ -687,7 +750,7 @@ Connector::on_delete_sender (Sender & sndr)
                     sndr.get_total_r ());
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Sender::~DTOR index=%d snd=%s rcv=%s sessions_=%d\n"),
+              ACE_TEXT ("Sender::~DTOR index=%B snd=%s rcv=%s sessions_=%B\n"),
               sndr.index_,
               bufs,
               bufr,
@@ -695,28 +758,32 @@ Connector::on_delete_sender (Sender & sndr)
 }
 
 int
-Connector::start (const ACE_INET_Addr & addr, int num)
+Connector::start (ACE_INET_Addr const & addr, int num)
 {
   if (ACE_Connector<Sender,ACE_SOCK_CONNECTOR>::open (ACE_Reactor::instance (),
                                                       ACE_NONBLOCK) < 0)
-    ACE_ERROR_RETURN
-      ((LM_ERROR,
-        ACE_TEXT("%p\n"),
-        ACE_TEXT("Connector::start () - open failed")),
-       0);
-
-  int rc = 0;
-
-  for (int i = 0 ; i < num ; i++)
     {
-      Sender * sender = nullptr;
+      ACE_ERROR_RETURN
+        ((LM_ERROR,
+          ACE_TEXT("%p\n"),
+          ACE_TEXT("Connector::start () - open failed")),
+         0);
+    }
+
+  int const rc = 0;
+
+  for (int i = 0 ; i < num ; ++i)
+    {
+      Sender * sender {};
 
       if (ACE_Connector<Sender,ACE_SOCK_CONNECTOR>::connect (sender, addr) < 0)
-        ACE_ERROR_RETURN
-          ((LM_ERROR,
-            ACE_TEXT("%p\n"),
-            ACE_TEXT("Connector::start () - connect failed")),
-           rc);
+        {
+          ACE_ERROR_RETURN
+            ((LM_ERROR,
+              ACE_TEXT("%p\n"),
+              ACE_TEXT("Connector::start () - connect failed")),
+             rc);
+        }
     }
 
   return rc;
@@ -728,16 +795,20 @@ Connector::make_svc_handler (Sender * & sh)
   ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, locker, this->mutex_, -1);
 
   if (sessions_ >= MAX_SENDERS)
-    return -1;
+    {
+      return -1;
+    }
 
   for (size_t i = 0; i < MAX_SENDERS; ++i)
-    if (this->list_senders_ [i] == nullptr)
-      {
-        ACE_NEW_RETURN (sh,
-                        Sender (this , i),
-                        -1);
-        return 0;
-      }
+    {
+      if (this->list_senders_ [i] == nullptr)
+        {
+          ACE_NEW_RETURN (sh,
+                          Sender (this , i),
+                          -1);
+          return 0;
+        }
+    }
 
   return -1;
 }
@@ -754,27 +825,32 @@ Sender::Sender (Connector* connector, size_t index)
     total_r_  (0)
 {
   if (connector_ != nullptr)
+  {
     connector_->on_new_sender (*this);
+  }
 
   ACE_OS::snprintf (send_buf_, 1024, "%s", data);
 }
-
 
 Sender::~Sender ()
 {
   this->reactor (nullptr);
   if (connector_ != nullptr)
+  {
     connector_->on_delete_sender (*this);
+  }
 
   this->index_ = 0;
 
   for (; ;)
     {
       ACE_Time_Value tv = ACE_Time_Value::zero;
-      ACE_Message_Block *mb = nullptr;
+      ACE_Message_Block *mb {};
 
-      if (this->getq (mb, &tv) < 0)
+      if (this->getq (mb, std::addressof (tv)) < 0)
+      {
         break;
+      }
 
       ACE_Message_Block::release (mb);
     }
@@ -784,7 +860,9 @@ int
 Sender::check_destroy ()
 {
   if (flg_mask_ == ACE_Event_Handler::NULL_MASK)
+  {
     return -1;
+  }
 
   return 0;
 }
@@ -800,13 +878,19 @@ int Sender::open (void *)
   flg_mask_ = ACE_Event_Handler::NULL_MASK ;
 
   if (TPReactor->register_handler (this,flg_mask_) == -1)
+  {
     return -1;
+  }
 
   if (this->initiate_write () == -1)
+  {
     return -1;
+  }
 
   if (duplex != 0)
+  {
     initiate_io (ACE_Event_Handler::READ_MASK);
+  }
 
   return check_destroy ();
 }
@@ -816,9 +900,9 @@ Sender::initiate_write ()
 {
   if ( this->msg_queue ()->message_count () < 20) // flow control
     {
-      size_t nbytes = ACE_OS::strlen (send_buf_);
+      size_t const nbytes = ACE_OS::strlen (send_buf_);
 
-      ACE_Message_Block *mb = nullptr;
+      ACE_Message_Block *mb {};
       ACE_NEW_RETURN (mb,
                       ACE_Message_Block (nbytes+8),
                       -1);
@@ -830,7 +914,7 @@ Sender::initiate_write ()
 
       ACE_Time_Value tv = ACE_Time_Value::zero;
 
-      int qcount =this->putq (mb, & tv);
+      int const qcount =this->putq (mb, std::addressof (tv));
 
       if (qcount <= 0)
         {
@@ -846,10 +930,14 @@ int
 Sender::initiate_io (ACE_Reactor_Mask mask)
 {
   if (ACE_BIT_ENABLED (flg_mask_, mask))
+  {
     return 0;
+  }
 
   if (ACE_Reactor::instance ()->schedule_wakeup (this, mask) == -1)
+  {
     return -1;
+  }
 
   ACE_SET_BITS (flg_mask_, mask);
   return 0;
@@ -859,10 +947,14 @@ int
 Sender::terminate_io (ACE_Reactor_Mask mask)
 {
   if (ACE_BIT_DISABLED (flg_mask_, mask))
+  {
     return 0;
+  }
 
   if (ACE_Reactor::instance ()->cancel_wakeup (this, mask) == -1)
+  {
     return -1;
+  }
 
   ACE_CLR_BITS (flg_mask_, mask);
   return 0;
@@ -886,7 +978,7 @@ Sender::handle_input (ACE_HANDLE h)
 {
   ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, locker, this->mutex_, -1);
 
-  ACE_Message_Block *mb = nullptr;
+  ACE_Message_Block *mb {};
   ACE_NEW_RETURN (mb,
                   ACE_Message_Block (BUFSIZ),
                   -1);
@@ -894,7 +986,7 @@ Sender::handle_input (ACE_HANDLE h)
   int     err = 0;
   ssize_t res = this->peer ().recv (mb->rd_ptr (),
                                     BUFSIZ-1);
-  this->total_r_++;
+  ++this->total_r_;
 
   if (res >= 0)
     {
@@ -902,7 +994,9 @@ Sender::handle_input (ACE_HANDLE h)
       this->total_rcv_ += res;
     }
   else
+  {
     err = errno ;
+  }
 
   mb->wr_ptr ()[0] = '\0';
 
@@ -910,10 +1004,11 @@ Sender::handle_input (ACE_HANDLE h)
     {
       LogLocker log_lock;
 
-      ACE_DEBUG ((LM_DEBUG, "**** Sender::handle_input () SessionId=%d****\n", index_));
+      ACE_DEBUG ((LM_DEBUG, "**** Sender::handle_input () SessionId=%B****\n", index_));
       ACE_DEBUG ((LM_DEBUG, "%C = %d\n", "bytes_to_read", BUFSIZ));
-      ACE_DEBUG ((LM_DEBUG, "%C = %d\n", "handle", h));
-      ACE_DEBUG ((LM_DEBUG, "%C = %d\n", "bytes_transferred", res));
+      ACE_DEBUG ((LM_DEBUG, "%C = %H\n", "handle",
+                  h));
+      ACE_DEBUG ((LM_DEBUG, "%C = %b\n", "bytes_transferred", res));
       ACE_DEBUG ((LM_DEBUG, "%C = %d\n", "error", err));
       ACE_DEBUG ((LM_DEBUG, "%C = %s\n", "message_block", mb->rd_ptr ()));
       ACE_DEBUG ((LM_DEBUG, "**** end of message ****************\n"));
@@ -929,21 +1024,31 @@ Sender::handle_input (ACE_HANDLE h)
     }
 
   if (err !=0  || res <= 0)
+  {
     return -1;
+  }
 
   int rc = 0;
 
   if (duplex != 0)  // full duplex, continue read
-    rc = initiate_io (ACE_Event_Handler::READ_MASK);
+    {
+      rc = initiate_io (ACE_Event_Handler::READ_MASK);
+    }
   else
-    rc = terminate_io (ACE_Event_Handler::READ_MASK);
+    {
+      rc = terminate_io (ACE_Event_Handler::READ_MASK);
+    }
 
   if (rc != 0)
+  {
     return -1 ;
+  }
 
   rc = initiate_write ();
   if (rc != 0)
+  {
     return -1;
+  }
 
   return check_destroy ();
 }
@@ -954,34 +1059,39 @@ Sender::handle_output (ACE_HANDLE h)
   ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, locker, this->mutex_, -1);
 
   ACE_Time_Value tv = ACE_Time_Value::zero;
-  ACE_Message_Block *mb = nullptr;
+  ACE_Message_Block *mb {};
 
   int     err=0;
   ssize_t res=0;
   size_t  bytes=0;
 
-  int     qcount = this->getq (mb , & tv);
+  int const qcount = this->getq (mb , std::addressof (tv));
 
   if (mb != nullptr)  // qcount >= 0
     {
       bytes = mb->length ();
       res = this->peer ().send (mb->rd_ptr (), bytes);
 
-      this->total_w_++;
+      ++this->total_w_;
 
       if (res < 0)
-        err = errno ;
+        {
+          err = errno ;
+        }
       else
-        this->total_snd_ += res;
+        {
+          this->total_snd_ += res;
+        }
 
       if (loglevel == 0 || res <= 0 || err!= 0)
         {
           LogLocker log_lock;
 
-          ACE_DEBUG ((LM_DEBUG, "**** Sender::handle_output () SessionId=%d****\n", index_));
-          ACE_DEBUG ((LM_DEBUG, "%C = %d\n", "bytes_to_write", bytes));
-          ACE_DEBUG ((LM_DEBUG, "%C = %d\n", "handle", h));
-          ACE_DEBUG ((LM_DEBUG, "%C = %d\n", "bytes_transferred", res));
+          ACE_DEBUG ((LM_DEBUG, "**** Sender::handle_output () SessionId=%B****\n", index_));
+          ACE_DEBUG ((LM_DEBUG, "%C = %B\n", "bytes_to_write", bytes));
+          ACE_DEBUG ((LM_DEBUG, "%C = %H\n", "handle",
+                      h));
+          ACE_DEBUG ((LM_DEBUG, "%C = %b\n", "bytes_transferred", res));
           ACE_DEBUG ((LM_DEBUG, "%C = %d\n", "error", err));
           ACE_DEBUG ((LM_DEBUG, "%C = %s\n", "message_block", mb->rd_ptr ()));
           ACE_DEBUG ((LM_DEBUG, "**** end of message ****************\n"));
@@ -991,7 +1101,9 @@ Sender::handle_output (ACE_HANDLE h)
   ACE_Message_Block::release (mb);
 
   if (err != 0  || res < 0)
+  {
     return -1;
+  }
 
   int rc = 0;
 
@@ -999,21 +1111,28 @@ Sender::handle_output (ACE_HANDLE h)
     {
       if (duplex != 0 &&   // full duplex, continue write
           (this->total_snd_ - this->total_rcv_ ) < 1024*32 )  // flow control
-        rc = initiate_write ();
+        {
+          rc = initiate_write ();
+        }
       else
-        rc = terminate_io (ACE_Event_Handler::WRITE_MASK);
+        {
+          rc = terminate_io (ACE_Event_Handler::WRITE_MASK);
+        }
 
       if (rc == -1)
+      {
         return -1;
+      }
     }
 
   rc = initiate_io (ACE_Event_Handler::READ_MASK);
   if (rc == -1)
+  {
     return -1;
+  }
 
   return check_destroy ();
 }
-
 
 // *************************************************************
 //   Configuration helpers
@@ -1056,7 +1175,9 @@ parse_args (int argc, ACE_TCHAR *argv[])
       seconds = 20;           // time to run in seconds
 #if defined(SOMAXCONN) // The test is invalid if senders > SOMAXCONN
       if(SOMAXCONN < senders)
+      {
         senders = SOMAXCONN;
+      }
 #endif
       return 0;
     }
@@ -1071,9 +1192,13 @@ parse_args (int argc, ACE_TCHAR *argv[])
         case 'i':  // time to run
           seconds = ACE_OS::atoi (get_opt.opt_arg());
           if (seconds < MIN_TIME)
+          {
             seconds = MIN_TIME;
+          }
           if (seconds > MAX_TIME)
+          {
             seconds = MAX_TIME;
+          }
           break;
         case 'b':  // both client and server
           both = 1;
@@ -1096,7 +1221,9 @@ parse_args (int argc, ACE_TCHAR *argv[])
         case 's':     // number of senders
           senders = ACE_OS::atoi (get_opt.opt_arg());
           if (size_t (senders) > MAX_SENDERS)
+          {
             senders = MAX_SENDERS;
+          }
           break;
         case 'u':
         default:
@@ -1113,12 +1240,16 @@ disable_signal (int sigmin, int sigmax)
 #if !defined (ACE_LACKS_UNIX_SIGNALS)
   sigset_t signal_set;
   if (ACE_OS::sigemptyset (&signal_set) == - 1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT("Error: (%P | %t):%p\n"),
-                ACE_TEXT("sigemptyset failed")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT("Error: (%P | %t):%p\n"),
+                  ACE_TEXT("sigemptyset failed")));
+    }
 
-  for (int i = sigmin; i <= sigmax; i++)
-    ACE_OS::sigaddset (&signal_set, i);
+  for (int i = sigmin; i <= sigmax; ++i)
+    {
+      ACE_OS::sigaddset (&signal_set, i);
+    }
 
   // Put the <signal_set>.
 # if defined (ACE_LACKS_PTHREAD_THR_SIGSETMASK)
@@ -1128,10 +1259,12 @@ disable_signal (int sigmin, int sigmax)
 # else
   if (ACE_OS::thr_sigsetmask (SIG_BLOCK, &signal_set, nullptr) != 0)
 # endif /* ACE_LACKS_PTHREAD_THR_SIGSETMASK */
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Error: (%P|%t): %p\n"),
-                       ACE_TEXT ("SIG_BLOCK failed")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Error: (%P|%t): %p\n"),
+                         ACE_TEXT ("SIG_BLOCK failed")),
+                        -1);
+    }
 #else
   ACE_UNUSED_ARG(sigmin);
   ACE_UNUSED_ARG(sigmax);
@@ -1149,7 +1282,9 @@ run_main (int argc, ACE_TCHAR *argv[])
 
 #if defined(ACE_HAS_THREADS) && !defined ACE_LACKS_ACCEPT
   if (::parse_args (argc, argv) == -1)
+  {
     return -1;
+  }
 
   disable_signal (SIGPIPE, SIGPIPE);
 
@@ -1163,20 +1298,28 @@ run_main (int argc, ACE_TCHAR *argv[])
 
       ACE_INET_Addr addr (port);
       if (both != 0 || host == nullptr) // Acceptor
-        rc += acceptor.start (addr);
+        {
+          rc += acceptor.start (addr);
+        }
 
       if (both != 0 || host != nullptr)
         {
           if (host == nullptr)
+          {
             host = ACE_LOCALHOST;
+          }
 
           if (addr.set (port, host, 1, addr.get_type ()) == -1)
+          {
             ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), host));
+          }
           rc += connector.start (addr, senders);
         }
 
       if (rc > 0)
+      {
         ACE_OS::sleep (seconds);
+      }
     }
 
   task1.stop ();

@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-// ===================================================================
 /**
  *  @file   PICurrent.h
  *
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
-// ===================================================================
 
 #ifndef TAO_PI_CURRENT_H
 #define TAO_PI_CURRENT_H
@@ -57,8 +53,7 @@ namespace TAO
       public virtual ::CORBA::LocalObject
   {
   public:
-    /// Constructor.
-    PICurrent (TAO_ORB_Core &orb_core);
+    explicit PICurrent (TAO_ORB_Core &orb_core);
 
     /**
      * @name PortableInterceptor::Current Methods
@@ -66,15 +61,16 @@ namespace TAO
      * These are methods exposed by the PortableInterceptor::Current
      * interface.
      */
-    //@{
+    /// @{
+
     /// Retrieve information stored in the slot table at the given
     /// SlotId.
     CORBA::Any *get_slot (PortableInterceptor::SlotId id) override;
 
     /// Set information in the slot table at the given SlotId.
     void set_slot (PortableInterceptor::SlotId identifier,
-                   const CORBA::Any & data) override;
-    //@}
+                   CORBA::Any const &data) override;
+    /// @}
 
     CORBA::ORB_ptr _get_orb () override;
 
@@ -86,13 +82,12 @@ namespace TAO
     PICurrent_Impl * tsc ();
 
     /// Verify the validity of the given SlotId.
-    void check_validity (const PortableInterceptor::SlotId &identifier);
+    void check_validity (PortableInterceptor::SlotId const &identifier);
 
     /// Initialize the PICurrent object.
     void initialize (PortableInterceptor::SlotId sc);
 
   protected:
-    /// Destructor
     /**
      * Protected destructor to enforce the fact this class is reference
      * counted, and should not be destroyed using delete() by anything
@@ -101,10 +96,11 @@ namespace TAO
     ~PICurrent () override = default;
 
   private:
+    PICurrent () = delete;
     PICurrent (PICurrent const &) = delete;
-    void operator= (PICurrent const &) = delete;
+    PICurrent &operator= (PICurrent const &) = delete;
     PICurrent (PICurrent &&) = delete;
-    void operator= (PICurrent &&) = delete;
+    PICurrent &operator= (PICurrent &&) = delete;
 
   private:
     /// Reference to the orb core.

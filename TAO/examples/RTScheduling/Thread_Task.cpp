@@ -1,4 +1,5 @@
 #include "Thread_Task.h"
+#include "Guid_Utils.h"
 #include "DT_Creator.h"
 #include "Task_Stats.h"
 
@@ -16,10 +17,11 @@ Thread_Task::Thread_Task ()
    dt_creator_ (0),
    base_time_ (0),
    dist_ (0),
-   job_name_ (),
-   task_stats_ (0)
+   job_name_ ()
 {
 }
+
+Thread_Task::~Thread_Task () = default;
 
 int
 Thread_Task::svc ()
@@ -33,16 +35,14 @@ Thread_Task::svc ()
                       importance_));
         }
 
-      const char * name = 0;
+      char const *name {};
       CORBA::Policy_var implicit_sched_param = CORBA::Policy::_duplicate (sched_param_.in ());
       this->current_->begin_scheduling_segment (name,
                                                 sched_param_.in (),
                                                 implicit_sched_param.in ());
 
       RTScheduling::Current::IdType_var guid = this->current_->id ();
-      ACE_OS::memcpy (&count_,
-                      guid->get_buffer (),
-                      guid->length ());
+      count_ = rtscheduling_guid_value (guid.in ());
 
       ACE_TCHAR msg [BUFSIZ];
       ACE_OS::sprintf (msg,
@@ -60,11 +60,11 @@ Thread_Task::svc ()
 
       dt_creator_->dt_ended () ;
     }
-  catch (const CORBA::THREAD_CANCELLED &)
+  catch (CORBA::THREAD_CANCELLED const &)
     {
       // Threads can be cancelled.
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Caught exception:");
     }
@@ -89,8 +89,7 @@ Thread_Task::perform_task ()
   return 0;
 }
 
-
-const char*
+char const *
 Thread_Task::job ()
 {
   return job_name_.in ();
@@ -119,9 +118,11 @@ Thread_Task::dump_stats ()
                    count_);
 
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-    "File name %s\n",
-    fname));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+      "File name %s\n",
+      fname));
+    }
 
   ACE_TCHAR msg [BUFSIZ];
   ACE_OS::sprintf (msg,

@@ -1,14 +1,9 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    UPIPE_Stream.h
  *
  *  @author Gerhard Lenzer
  *  @author Douglas C. Schmidt
  */
-//=============================================================================
-
 
 #ifndef ACE_UPIPE_STREAM_H
 #define ACE_UPIPE_STREAM_H
@@ -51,7 +46,9 @@ public:
   /// Return the underlying I/O handle.
   ACE_HANDLE get_handle () const;
 
-  // = Send/recv ACE Message_Blocks.
+  /// @name Message block send and receive
+  /// @{
+
   /// Send a message through the message queue.  Returns -1 on error,
   /// else 0.
   int send (ACE_Message_Block *mb_p,
@@ -62,10 +59,14 @@ public:
   int recv (ACE_Message_Block *&mb_p,
             ACE_Time_Value *timeout  = nullptr);
 
-  // = Send/recv char buffers.
+  /// @}
+
+  /// @name Character buffer send and receive
+  /// @{
+
   /// Send a buffer of @a n bytes through the message queue.  Returns -1
   /// on error, else number of bytes sent.
-  ssize_t send (const char *buffer,
+  ssize_t send (char const *buffer,
                 size_t n,
                 ACE_Time_Value *timeout = nullptr);
 
@@ -77,7 +78,7 @@ public:
 
   /// Send a buffer of exactly @a n bytes to the message queue.  Returns
   /// -1 on error, else number of bytes written (which should == n).
-  ssize_t send_n (const char *buffer,
+  ssize_t send_n (char const *buffer,
                   size_t n,
                   ACE_Time_Value *timeout = nullptr);
 
@@ -86,6 +87,8 @@ public:
   ssize_t recv_n (char *buffer,
                   size_t n,
                   ACE_Time_Value *timeout = nullptr);
+
+  /// @}
 
   /// Perform control operations on the UPIPE_Stream.
   int control (int cmd, void *val) const;
@@ -99,13 +102,12 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
-  // = Meta-type info
   using PEER_ADDR = ACE_UPIPE_Addr;
 
 private:
   /// To hold the last ACE_Message_Block read out of the stream. Thus
   /// allowing subsequent reads from one ACE_Message_Block
-  ACE_Message_Block *mb_last_;
+  ACE_Message_Block *mb_last_ {};
 
   /// Address of who we are connected to.
   ACE_UPIPE_Addr remote_addr_;
@@ -115,7 +117,7 @@ private:
   MT_Stream stream_;
 
   /// Keep track of whether the sender and receiver have both shutdown.
-  int reference_count_;
+  int reference_count_ {};
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   /// Ensure that we are thread-safe.

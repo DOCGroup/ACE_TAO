@@ -1,4 +1,4 @@
-// -*- C++ -*-
+#include <memory>
 //
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -15,9 +15,10 @@ ACE_INLINE
 TAO_Resume_Handle::~TAO_Resume_Handle ()
 {
   if (this->flag_ == TAO_HANDLE_RESUMABLE)
-    this->resume_handle ();
+    {
+      this->resume_handle ();
+    }
 }
-
 
 ACE_INLINE void
 TAO_Resume_Handle::set_flag (TAO_Handle_Resume_Flag fl)
@@ -26,9 +27,9 @@ TAO_Resume_Handle::set_flag (TAO_Handle_Resume_Flag fl)
 }
 
 ACE_INLINE TAO_Resume_Handle &
-TAO_Resume_Handle::operator= (const TAO_Resume_Handle &rhs)
+TAO_Resume_Handle::operator= (TAO_Resume_Handle const &rhs)
 {
-  if (this != &rhs)
+  if (this != std::addressof (rhs))
     {
       this->orb_core_ = rhs.orb_core_;
       this->handle_ = rhs.handle_;

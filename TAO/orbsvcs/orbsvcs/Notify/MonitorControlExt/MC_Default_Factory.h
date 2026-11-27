@@ -32,32 +32,39 @@ class TAO_Notify_MC_Ext_Export TAO_MC_Default_Factory:
                                  public TAO_Notify_Default_Factory
 {
 public:
+  TAO_MC_Default_Factory () = default;
+
+  TAO_MC_Default_Factory (TAO_MC_Default_Factory const &) = delete;
+  TAO_MC_Default_Factory (TAO_MC_Default_Factory &&) = delete;
+  TAO_MC_Default_Factory &operator= (TAO_MC_Default_Factory const &) = delete;
+  TAO_MC_Default_Factory &operator= (TAO_MC_Default_Factory &&) = delete;
+
   /// Instruct the compiler that we want the create
   /// methods from the base class as well
   using TAO_Notify_Default_Factory::create;
 
   /// Create the channel factory.
-  virtual void create (TAO_Notify_EventChannelFactory*& factory,
-                       const char* name);
+  void create (TAO_Notify_EventChannelFactory*& factory,
+               char const *name) override;
 
   /// Create the event channel
-  virtual void create (TAO_Notify_EventChannel*& ec,
-                       const char* name);
+  void create (TAO_Notify_EventChannel*& ec,
+               char const *name) override;
 
   /// Create the supplier admin
-  virtual void create (TAO_Notify_SupplierAdmin*& admin);
+  void create (TAO_Notify_SupplierAdmin*& admin) override;
 
   /// Create the consumer admin
-  virtual void create (TAO_Notify_ConsumerAdmin*& admin);
+  void create (TAO_Notify_ConsumerAdmin*& admin) override;
 
   /// Create ProxyPushSupplier
-  virtual void create (TAO_Notify_ProxyPushSupplier*& proxy);
+  void create (TAO_Notify_ProxyPushSupplier*& proxy) override;
 
   /// Create StructuredProxyPushSupplier
-  virtual void create (TAO_Notify_StructuredProxyPushSupplier*& proxy);
+  void create (TAO_Notify_StructuredProxyPushSupplier*& proxy) override;
 
   /// Create SequenceProxyPushSupplier
-  virtual void create (TAO_Notify_SequenceProxyPushSupplier*& proxy);
+  void create (TAO_Notify_SequenceProxyPushSupplier*& proxy) override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

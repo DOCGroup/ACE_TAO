@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   DIOP_Transport.h
  *
  *  @author  Michael Kircher
  */
-//=============================================================================
 
 #ifndef TAO_DIOP_TRANSPORT_H
 #define TAO_DIOP_TRANSPORT_H
@@ -32,13 +28,12 @@ template class TAO_Strategies_Export ACE_Svc_Handler<ACE_SOCK_DGRAM, ACE_NULL_SY
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// Forward decls.
 class TAO_DIOP_Connection_Handler;
 class TAO_ORB_Core;
 class TAO_Operation_Details;
 class TAO_Acceptor;
 
-// Service Handler for this transport
+/// Service handler type for the DIOP transport.
 using TAO_DIOP_SVC_HANDLER = ACE_Svc_Handler<ACE_SOCK_DGRAM, ACE_NULL_SYNCH>;
 
 /**
@@ -50,12 +45,10 @@ using TAO_DIOP_SVC_HANDLER = ACE_Svc_Handler<ACE_SOCK_DGRAM, ACE_NULL_SYNCH>;
 class TAO_Strategies_Export TAO_DIOP_Transport : public TAO_Transport
 {
 public:
-  /// Constructor.
   TAO_DIOP_Transport (TAO_DIOP_Connection_Handler *handler,
                       TAO_ORB_Core *orb_core);
 
-  /// Default destructor.
-  ~TAO_DIOP_Transport () = default;
+  ~TAO_DIOP_Transport () override = default;
 
   /// Look for the documentation in Transport.h.
   int handle_input (TAO_Resume_Handle &rh,
@@ -65,7 +58,7 @@ protected:
    *
    * These are implementations of template methods declared by TAO_Transport.
    */
-  //@{
+  /// @{
   ACE_Event_Handler *event_handler_i () override;
   TAO_Connection_Handler *connection_handler_i () override;
 
@@ -81,7 +74,7 @@ protected:
 
   int register_handler () override;
 
-  ///@}
+  /// @}
 public:
   /// @todo These methods IMHO should have more meaningful names.
   /// The names seem to indicate nothing.
@@ -98,6 +91,7 @@ public:
                     ACE_Time_Value *max_time_wait = nullptr) override;
 
 private:
+  TAO_DIOP_Transport () = delete;
   TAO_DIOP_Transport (TAO_DIOP_Transport const &) = delete;
   TAO_DIOP_Transport &operator= (TAO_DIOP_Transport const &) = delete;
   TAO_DIOP_Transport (TAO_DIOP_Transport &&) = delete;

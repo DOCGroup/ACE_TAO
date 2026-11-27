@@ -1,4 +1,3 @@
-//  -*- MPC -*-
 project: kokyu {
   exename = EDF
 }

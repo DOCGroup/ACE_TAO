@@ -1,11 +1,6 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    ServantRetentionStrategyNonRetain.cpp
  */
-//=============================================================================
-
 #include "tao/PortableServer/ServantRetentionStrategyNonRetain.h"
 #include "tao/PortableServer/Non_Servant_Upcall.h"
 #include "tao/PortableServer/Servant_Upcall.h"
@@ -16,7 +11,9 @@
 
 #include "ace/OS_NS_sys_time.h"
 #include "ace/Time_Value.h"
-#include "ace/OS_NS_sys_time.h"
+
+#include <cstring>
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -38,7 +35,7 @@ namespace TAO
 
     void
     ServantRetentionStrategyNonRetain::deactivate_object (
-      const PortableServer::ObjectId &/*id*/)
+      PortableServer::ObjectId const &/*id*/)
     {
       // When using Non_Retain we don't have an active object map and we just
       // can't deactivate any object
@@ -47,18 +44,18 @@ namespace TAO
 
     PortableServer::Servant
     ServantRetentionStrategyNonRetain::find_servant (
-      const PortableServer::ObjectId &/*system_id*/)
+      PortableServer::ObjectId const &/*system_id*/)
     {
       throw PortableServer::POA::WrongPolicy ();
     }
 
     PortableServer::ObjectId *
     ServantRetentionStrategyNonRetain::system_id_to_object_id (
-      const PortableServer::ObjectId &system_id)
+      PortableServer::ObjectId const &system_id)
     {
       // The system id is the id (and no conversion/transformation is
       // needed).
-      PortableServer::ObjectId *id = nullptr;
+      PortableServer::ObjectId *id {};
       ACE_NEW_THROW_EX (id,
                         PortableServer::ObjectId (system_id),
                         CORBA::NO_MEMORY ());
@@ -68,14 +65,14 @@ namespace TAO
 
     PortableServer::Servant
     ServantRetentionStrategyNonRetain::user_id_to_servant (
-      const PortableServer::ObjectId &/*id*/)
+      PortableServer::ObjectId const &/*id*/)
     {
       throw PortableServer::POA::WrongPolicy ();
     }
 
     CORBA::Object_ptr
     ServantRetentionStrategyNonRetain::id_to_reference (
-      const PortableServer::ObjectId &/*id*/,
+      PortableServer::ObjectId const &/*id*/,
       bool /*indirect*/)
     {
       throw PortableServer::POA::WrongPolicy ();
@@ -83,7 +80,7 @@ namespace TAO
 
     TAO_Servant_Location
     ServantRetentionStrategyNonRetain::servant_present (
-      const PortableServer::ObjectId &/*system_id*/,
+      PortableServer::ObjectId const &/*system_id*/,
       PortableServer::Servant &/*servant*/)
     {
       return TAO_Servant_Location::Not_Found;
@@ -91,7 +88,7 @@ namespace TAO
 
     PortableServer::Servant
     ServantRetentionStrategyNonRetain::find_servant (
-      const PortableServer::ObjectId &system_id,
+      PortableServer::ObjectId const &system_id,
       TAO::Portable_Server::Servant_Upcall &servant_upcall,
       TAO::Portable_Server::POA_Current_Impl &poa_current_impl)
     {
@@ -101,14 +98,14 @@ namespace TAO
       // not own the data.
       poa_current_impl.replace_object_id (system_id);
 
-      servant_upcall.user_id (&system_id);
+      servant_upcall.user_id (std::addressof (system_id));
 
       return nullptr;
     }
 
     int
     ServantRetentionStrategyNonRetain::find_servant_priority (
-        const PortableServer::ObjectId &/*system_id*/,
+        PortableServer::ObjectId const &/*system_id*/,
         CORBA::Short &/*priority*/)
     {
       return -1;
@@ -158,7 +155,7 @@ namespace TAO
 
     void
     ServantRetentionStrategyNonRetain::activate_object_with_id (
-      const PortableServer::ObjectId &/*id*/,
+      PortableServer::ObjectId const &/*id*/,
       PortableServer::Servant /*servant*/,
       CORBA::Short /*priority*/,
       bool &/*wait_occurred_restart_call*/)
@@ -168,7 +165,7 @@ namespace TAO
 
     CORBA::Object_ptr
     ServantRetentionStrategyNonRetain::create_reference (
-      const char *intf,
+      char const *intf,
       CORBA::Short priority)
     {
       // This operation creates an object reference that encapsulates a
@@ -191,20 +188,20 @@ namespace TAO
       // and a timestamp isn't sufficient since multiple IDs may be
       // requested within the same time unit.
 
-      PortableServer::ObjectId *sys_id = nullptr;
+      PortableServer::ObjectId *sys_id {};
       ACE_NEW_THROW_EX (sys_id,
                         PortableServer::ObjectId (8),
                         CORBA::NO_MEMORY ());
 
       sys_id->length(8);
 
-      long count = this->sys_id_count_++;
-      ACE_Time_Value now = ACE_OS::gettimeofday();
-
-      ACE_UINT32 *id_ptr = reinterpret_cast<ACE_UINT32 *>(sys_id->get_buffer());
-
-      *(id_ptr++) = count;
-      *id_ptr = static_cast<ACE_UINT32>(now.sec());
+      // Only uniqueness is needed; this counter does not synchronize other state.
+      std::uint32_t const count =
+        this->sys_id_count_.fetch_add (1, std::memory_order_relaxed);
+      ACE_Time_Value const now = ACE_OS::gettimeofday();
+      std::uint32_t const seconds = static_cast<std::uint32_t> (now.sec ());
+      std::uint32_t const id_components[] {count, seconds};
+      std::memcpy (sys_id->get_buffer (), id_components, sizeof (id_components));
 
       system_id = sys_id;
 
@@ -214,8 +211,8 @@ namespace TAO
       // Remember params for potentially invoking <key_to_object> later.
       this->poa_->key_to_object_params_.set (system_id,
                                              intf,
-                                             0,
-                                             1,
+                                             nullptr,
+                                             true,
                                              priority,
                                              true);
 
@@ -225,8 +222,8 @@ namespace TAO
 #if !defined (CORBA_E_MICRO)
     CORBA::Object_ptr
     ServantRetentionStrategyNonRetain::create_reference_with_id (
-      const PortableServer::ObjectId &oid,
-      const char *intf,
+      PortableServer::ObjectId const &oid,
+      char const *intf,
       CORBA::Short priority)
     {
       // This operation creates an object reference that encapsulates the
@@ -237,12 +234,12 @@ namespace TAO
       // activated if necessary, or the default servant used, depending on
       // the applicable policies.
 
-      PortableServer::Servant servant = nullptr;
+      PortableServer::Servant servant {};
       PortableServer::ObjectId_var system_id;
 
       // Otherwise, it is the NON_RETAIN policy.  Therefore, user id
       // is the same as system id.
-      PortableServer::ObjectId *sys_id = nullptr;
+      PortableServer::ObjectId *sys_id {};
       ACE_NEW_THROW_EX (sys_id,
                         PortableServer::ObjectId (oid),
                         CORBA::NO_MEMORY ());
@@ -253,7 +250,7 @@ namespace TAO
       this->poa_->key_to_object_params_.set (system_id,
                                              intf,
                                              servant,
-                                             1,
+                                             true,
                                              priority,
                                              true);
 
@@ -264,8 +261,8 @@ namespace TAO
     int
     ServantRetentionStrategyNonRetain::rebind_using_user_id_and_system_id (
       PortableServer::Servant /*servant*/,
-      const PortableServer::ObjectId &/*user_id*/,
-      const PortableServer::ObjectId &/*system_id*/,
+      PortableServer::ObjectId const &/*user_id*/,
+      PortableServer::ObjectId const &/*system_id*/,
       TAO::Portable_Server::Servant_Upcall &/*servant_upcall*/)
     {
       return -1;
@@ -280,7 +277,7 @@ namespace TAO
 
     int
     ServantRetentionStrategyNonRetain::unbind_using_user_id (
-      const PortableServer::ObjectId &/*user_id*/)
+      PortableServer::ObjectId const &/*user_id*/)
     {
       return 0;
     }

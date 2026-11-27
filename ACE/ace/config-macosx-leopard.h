@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 // This configuration file is designed to work with the MacOS X operating system.
 
 #ifndef ACE_CONFIG_MACOSX_LEOPARD_H
@@ -53,7 +52,6 @@
 // Wcharness....
 #define ACE_HAS_WCHAR
 #define ACE_SIZEOF_WCHAR 4
-
 
 #define ACE_HAS_3_PARAM_WCSTOK
 #define ACE_LACKS_ITOW

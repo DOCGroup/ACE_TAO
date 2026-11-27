@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   Codeset_Descriptor_Base.h
  *
  *  @author Phil Mesnier
  */
-//=============================================================================
 
 #ifndef TAO_CODESET_DESCRIPTOR_BASE_H
 #define TAO_CODESET_DESCRIPTOR_BASE_H
@@ -36,8 +32,8 @@ class TAO_Export TAO_Codeset_Descriptor_Base
 public:
   virtual ~TAO_Codeset_Descriptor_Base ();
 
-  virtual void ncs (const ACE_TCHAR *name) = 0;
-  virtual void add_translator (const ACE_TCHAR *name) = 0;
+  virtual void ncs (ACE_TCHAR const *name) = 0;
+  virtual void add_translator (ACE_TCHAR const *name) = 0;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

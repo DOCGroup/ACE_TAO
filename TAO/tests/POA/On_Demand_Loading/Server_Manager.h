@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file     Server_Manager.h
  *
@@ -6,13 +5,14 @@
  *
  *  @author  Kirthika Parameswaran <kirthika@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef SERVER_MANAGER_H
 #define SERVER_MANAGER_H
 
 #include "Servant_Activator.h"
 #include "Servant_Locator.h"
+
+#include <memory>
 
 /**
  * @class Server_i
@@ -32,8 +32,12 @@ public:
   /// Initialisation.
   Server_i ();
 
-  /// Destruction.
   ~Server_i ();
+
+  Server_i (Server_i const &) = delete;
+  Server_i &operator= (Server_i const &) = delete;
+  Server_i (Server_i &&) = delete;
+  Server_i &operator= (Server_i &&) = delete;
 
   /// Initialisation of the ORB and poa.
   int init (int argc, ACE_TCHAR **argv);
@@ -42,31 +46,30 @@ public:
    * This method creates a POA from the root_poa with emphasis being
    * on the servant_retention_policy which decides the use of the
    * ServantActivator or ServantLocator interfaces. The
-   * servent_retention_policy value is 1 for the RETAIN policy and 0
-   * for the NONRETAIN policy.
+   * Pass true for RETAIN and false for NON_RETAIN.
    */
-  PortableServer::POA_ptr create_poa (const char* name,
-                                      int servant_retention_policy);
+  PortableServer::POA_ptr create_poa (char const *name,
+                                      bool retain_servants);
 
   /// A ServantActivator object is created and initialised.
-  int create_activator (PortableServer::POA_var first_poa);
+  int create_activator (PortableServer::POA_var const &first_poa);
 
   /// A ServantActivator object is created and initialised.
-  int create_locator (PortableServer::POA_var second_poa);
+  int create_locator (PortableServer::POA_var const &second_poa);
 
   /// The server is executed.
   int run ();
 
 private:
   /// Parses the input arguments.
-  int parse_args (int argc, ACE_TCHAR **argv);
+  int parse_args (int argc, ACE_TCHAR *argv[]);
 
   /// The IORs are written to a file for future use.
-  int write_iors_to_file (const char *first_ior,
-                          const char *second_ior);
+  int write_iors_to_file (char const *first_ior,
+                          char const *second_ior);
 
   /// Default ior file.
-  ACE_TCHAR *ior_output_file_;
+  ACE_TCHAR const *ior_output_file_ {};
 
   /// The orb pointer.
   CORBA::ORB_var orb_;
@@ -87,10 +90,10 @@ private:
   CORBA::Object_var second_test_;
 
   /// The servant activator object.
-  ServantActivator_i *servant_activator_impl_;
+  std::unique_ptr<ServantActivator_i> servant_activator_impl_;
 
   /// The servant locator object.
-  ServantLocator_i *servant_locator_impl_;
+  std::unique_ptr<ServantLocator_i> servant_locator_impl_;
 };
 
 #endif /* SERVER_MANAGER_H */

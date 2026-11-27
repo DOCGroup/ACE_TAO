@@ -1,7 +1,3 @@
-// -*- C++ -*-
-
-
-//=============================================================================
 /**
  *  @file    TypedefDef_i.h
  *
@@ -9,8 +5,6 @@
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_TYPEDEFDEF_I_H
 #define TAO_TYPEDEFDEF_I_H
@@ -30,16 +24,13 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
+/**
+ * Base interface for named non-object types: struct, union, enum, alias,
+ * native, and valuebox.
+ */
 class TAO_IFRService_Export TAO_TypedefDef_i : public virtual TAO_Contained_i,
                                                public virtual TAO_IDLType_i
 {
-  // = TITLE
-  //    TAO_TypedefDef_i
-  //
-  // = DESCRIPTION
-  //    Base interface inherited by all named non-object types:
-  //    struct, union, enum, alias, native, and valuebox.
-  //
 public:
   explicit TAO_TypedefDef_i (TAO_Repository_i *repo);
 

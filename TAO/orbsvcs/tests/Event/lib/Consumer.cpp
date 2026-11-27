@@ -17,7 +17,7 @@ EC_Consumer::EC_Consumer (EC_Driver *driver,
 void
 EC_Consumer::connect (
     RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin,
-    const RtecEventChannelAdmin::ConsumerQOS& qos,
+    RtecEventChannelAdmin::ConsumerQOS const & qos,
     int shutdown_event_type)
 {
   this->supplier_proxy_ =
@@ -28,11 +28,13 @@ EC_Consumer::connect (
 
 void
 EC_Consumer::connect (
-    const RtecEventChannelAdmin::ConsumerQOS& qos,
+    RtecEventChannelAdmin::ConsumerQOS const & qos,
     int shutdown_event_type)
 {
   if (CORBA::is_nil (this->supplier_proxy_.in ()))
+  {
     return; // @@ Throw?
+  }
 
   this->shutdown_event_type_ = shutdown_event_type;
 
@@ -56,7 +58,9 @@ void
 EC_Consumer::disconnect ()
 {
   if (CORBA::is_nil (this->supplier_proxy_.in ()))
+  {
     return;
+  }
 
   this->supplier_proxy_->disconnect_push_supplier ();
 
@@ -68,7 +72,9 @@ void
 EC_Consumer::shutdown ()
 {
   if (!this->is_active_)
+  {
     return;
+  }
 
   // Deactivate the servant
   PortableServer::POA_var poa =
@@ -81,7 +87,7 @@ EC_Consumer::shutdown ()
 }
 
 void
-EC_Consumer::dump_results (const ACE_TCHAR* name,
+EC_Consumer::dump_results (ACE_TCHAR const *name,
                            ACE_High_Res_Timer::global_scale_factor_type gsf)
 {
   this->throughput_.dump_results (name, gsf);
@@ -94,7 +100,7 @@ EC_Consumer::accumulate (ACE_Throughput_Stats& throughput) const
 }
 
 void
-EC_Consumer::push (const RtecEventComm::EventSet& events)
+EC_Consumer::push (RtecEventComm::EventSet const & events)
 {
   this->driver_->consumer_push (this->cookie_, events);
 
@@ -107,7 +113,9 @@ EC_Consumer::push (const RtecEventComm::EventSet& events)
 
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
   if (this->push_count_ == 0)
+  {
     this->throughput_start_ = ACE_OS::gethrtime ();
+  }
 
   this->push_count_ += events.length ();
 
@@ -121,18 +129,20 @@ EC_Consumer::push (const RtecEventComm::EventSet& events)
 
   for (u_int i = 0; i < events.length (); ++i)
     {
-      const RtecEventComm::Event& e = events[i];
+      RtecEventComm::Event const & e = events[i];
 
       ACE_hrtime_t creation;
       ORBSVCS_Time::TimeT_to_hrtime (creation,
                                      e.header.creation_time);
 
-      const ACE_hrtime_t now = ACE_OS::gethrtime ();
+      ACE_hrtime_t const now = ACE_OS::gethrtime ();
       this->throughput_.sample (now - this->throughput_start_,
                                 now - creation);
 
       if (e.header.type == this->shutdown_event_type_)
+      {
         this->driver_->consumer_shutdown (this->cookie_);
+      }
     }
 }
 

@@ -1,6 +1,5 @@
 #include "Driver.h"
 
-
 #include "ace/Dynamic_Service.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Arg_Shifter.h"
@@ -12,11 +11,12 @@
 #include "Command_Builder.h"
 #include "Name.h"
 #include "Activation_Manager.h"
+#include <memory>
 
-const char *
+char const *
 sched_policy_name (int sched_policy)
 {
-  const char *name = 0;
+  char const *name {};
 
   switch (sched_policy)
     {
@@ -60,10 +60,7 @@ check_supported_priorities (CORBA::ORB_ptr orb)
 }
 
 /*****************************************************************/
-TAO_Notify_Tests_Worker::TAO_Notify_Tests_Worker () :
-  cmd_builder_ (0)
-{
-}
+TAO_Notify_Tests_Worker::TAO_Notify_Tests_Worker () = default;
 
 void
 TAO_Notify_Tests_Worker::command_builder (TAO_Notify_Tests_Command_Builder* cmd_builder)
@@ -88,17 +85,15 @@ TAO_Notify_Tests_Worker::svc ()
   ACE_DEBUG ((LM_ERROR, "Activated Worker Thread for commands @ priority:%d\n", priority));
 #endif
 
-
   try
     {
       ACE_DEBUG ((LM_DEBUG, "Running Commands...\n"));
       this->cmd_builder_->execute ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Error: ORB run error\n");
     }
-
 
   ACE_DEBUG ((LM_DEBUG, "Finished executing commands\n"));
 
@@ -107,9 +102,7 @@ TAO_Notify_Tests_Worker::svc ()
 
 /*****************************************************************/
 
-TAO_Notify_Tests_ORB_Run_Worker::TAO_Notify_Tests_ORB_Run_Worker ()
-{
-}
+TAO_Notify_Tests_ORB_Run_Worker::TAO_Notify_Tests_ORB_Run_Worker () = default;
 
 void
 TAO_Notify_Tests_ORB_Run_Worker::orb (CORBA::ORB_ptr orb)
@@ -148,11 +141,11 @@ TAO_Notify_Tests_ORB_Run_Worker::svc ()
 
   try
     {
-      ACE_DEBUG ((LM_ERROR, "Running ORB, timeout in %d sec\n", this->run_period_.sec ()));
+      ACE_DEBUG ((LM_ERROR, "Running ORB, timeout in %: sec\n", this->run_period_.sec ()));
 
       this->orb_->run ();
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
     }
   return 0;
@@ -161,56 +154,61 @@ TAO_Notify_Tests_ORB_Run_Worker::svc ()
 /*****************************************************************/
 
 TAO_Notify_Tests_Driver::TAO_Notify_Tests_Driver ()
-  :cmd_builder_ (0), activation_manager_ (0), run_period_ (0,0), skip_priority_levels_check_ (0)
+  : activation_manager_ (std::make_unique<TAO_Notify_Tests_Activation_Manager> ()),
+    run_period_ (0, 0),
+    skip_priority_levels_check_ (0)
 {
-  this->activation_manager_ = new TAO_Notify_Tests_Activation_Manager ();
-  LOOKUP_MANAGER->_register (this->activation_manager_);
+  LOOKUP_MANAGER->_register (this->activation_manager_.get ());
 
   LOOKUP_MANAGER->_register (this);
 }
 
 TAO_Notify_Tests_Driver::~TAO_Notify_Tests_Driver ()
-{
-  delete this->activation_manager_;
-}
+= default;
 
 int
 TAO_Notify_Tests_Driver::parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Arg_Shifter arg_shifter (argc, argv);
 
-  const ACE_TCHAR *current_arg = 0;
+  ACE_TCHAR const *current_arg {};
 
   while (arg_shifter.is_anything_left ())
     {
-      if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Timeout")))) // -Timeout timeout_period_S
+      current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Timeout"));
+      if (current_arg != nullptr) // -Timeout timeout_period_S
         {
-          if (current_arg != 0)
+          this->run_period_ = ACE_Time_Value (ACE_OS::atoi (current_arg), 0);
+          arg_shifter.consume_arg ();
+          continue;
+        }
+      current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-IORoutput"));
+      if (current_arg != nullptr) // -IORoutput
+        {
+          if (this->activation_manager_->ior_output_file (current_arg) == -1)
             {
-              this->run_period_ = ACE_Time_Value (ACE_OS::atoi (current_arg), 0);
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "Unable to open %s for writing: %p\n",
+                                 current_arg), -1);
             }
 
           arg_shifter.consume_arg ();
+          continue;
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-IORoutput")))) // -IORoutput file_name
-        {
-          if (this->activation_manager_->ior_output_file (current_arg) == -1)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "Unable to open %s for writing: %p\n",
-                               current_arg), -1);
-
-          arg_shifter.consume_arg ();
-        }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-IORinput")))) // -IORinput file_name
+      current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-IORinput"));
+      if (current_arg != nullptr) // -IORinput file_name
         {
           if (this->activation_manager_->ior_input_file (current_arg) == -1)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "Unable to open %s for reading: %p\n",
-                               current_arg), -1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "Unable to open %s for reading: %p\n",
+                                 current_arg), -1);
+            }
 
           arg_shifter.consume_arg ();
+          continue;
         }
-      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Skip_Priority_Levels_Check")) == 0) // Skip the check for multiple priority levels.
+      if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Skip_Priority_Levels_Check")) == 0) // Skip the check for multiple priority levels.
         {
           this->skip_priority_levels_check_ = 1;
 
@@ -235,12 +233,16 @@ TAO_Notify_Tests_Driver::init (int argc, ACE_TCHAR *argv[])
                                 "");
 
   if (this->parse_args (argc, argv) == -1)
+  {
     return -1;
+  }
 
   // Make sure we can support multiple priorities that are required
   // for this test.
   if (skip_priority_levels_check_ == 0)
+  {
     check_supported_priorities (this->orb_.in());
+  }
 
   LOOKUP_MANAGER->init (this->orb_.in ());
 
@@ -251,7 +253,9 @@ TAO_Notify_Tests_Driver::init (int argc, ACE_TCHAR *argv[])
 
   // Set the run period.
   if (this->run_period_ != ACE_Time_Value::zero)
+  {
     this->orb_run_worker_.run_period (this->run_period_);
+  }
 
   // Set the ORB
   this->orb_run_worker_.orb (this->orb_.in ());
@@ -277,29 +281,36 @@ TAO_Notify_Tests_Driver::run ()
   if (this->worker_.activate (flags, 1, 0, priority) == -1)
     {
       if (ACE_OS::last_error () == EPERM)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("Insufficient privilege to activate ACE_Task.\n")));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("Insufficient privilege to activate ACE_Task.\n")));
+        }
       else
-        ACE_DEBUG ((LM_ERROR,
-                    ACE_TEXT ("(%t) Task activation at priority %d failed, ")
-                    ACE_TEXT ("exiting!\n%a"),
-                    ACE_DEFAULT_THREAD_PRIORITY,
-                    -1));
+        {
+          ACE_DEBUG ((LM_ERROR,
+                      ACE_TEXT ("(%t) Task activation at priority %d failed, ")
+                      ACE_TEXT ("exiting!\n%a"),
+                      ACE_DEFAULT_THREAD_PRIORITY,
+                      -1));
+        }
     }
-
 
   // Activate the ORB run worker.
   if (this->orb_run_worker_.activate (flags, 1, 0, priority) == -1)
     {
       if (ACE_OS::last_error () == EPERM)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("Insufficient privilege to activate ACE_Task.\n")));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("Insufficient privilege to activate ACE_Task.\n")));
+        }
       else
-        ACE_DEBUG ((LM_ERROR,
-                    ACE_TEXT ("(%t) Task activation at priority %d failed, ")
-                    ACE_TEXT ("exiting!\n%a"),
-                    ACE_DEFAULT_THREAD_PRIORITY,
-                    -1));
+        {
+          ACE_DEBUG ((LM_ERROR,
+                      ACE_TEXT ("(%t) Task activation at priority %d failed, ")
+                      ACE_TEXT ("exiting!\n%a"),
+                      ACE_DEFAULT_THREAD_PRIORITY,
+                      -1));
+        }
     }
 
   // Wait till we're done.

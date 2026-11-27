@@ -1,13 +1,9 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file     Bind_Dispatcher_Guard.h
  *
  *  @author  Carlos O'Ryan <coryan@uci.edu>
  *  @author  Chad Elliott <elliott_c@ociweb.com>
  */
-//=============================================================================
 
 #ifndef TAO_BIND_DISPATCHER_GUARD_H
 #define TAO_BIND_DISPATCHER_GUARD_H
@@ -26,8 +22,8 @@ class TAO_Export TAO_Bind_Dispatcher_Guard
 {
 public:
   TAO_Bind_Dispatcher_Guard (CORBA::ULong request_id,
-                             TAO_Reply_Dispatcher* rd,
-                             TAO_Transport_Mux_Strategy* tms);
+                             TAO_Reply_Dispatcher *rd,
+                             TAO_Transport_Mux_Strategy *tms);
 
   ~TAO_Bind_Dispatcher_Guard ();
 
@@ -50,9 +46,16 @@ public:
   void status (TAO_Bind_Dispatcher_Status status);
 
 private:
-  TAO_Bind_Dispatcher_Status  status_;
-  CORBA::ULong                request_id_;
-  TAO_Transport_Mux_Strategy* tms_;
+  TAO_Bind_Dispatcher_Guard () = delete;
+  TAO_Bind_Dispatcher_Guard (TAO_Bind_Dispatcher_Guard const &) = delete;
+  TAO_Bind_Dispatcher_Guard &operator= (TAO_Bind_Dispatcher_Guard const &) = delete;
+  TAO_Bind_Dispatcher_Guard (TAO_Bind_Dispatcher_Guard &&) = delete;
+  TAO_Bind_Dispatcher_Guard &operator= (TAO_Bind_Dispatcher_Guard &&) = delete;
+
+  TAO_Bind_Dispatcher_Status status_;
+  CORBA::ULong request_id_;
+  /// Non-owning mux strategy that owns the bound dispatcher entry.
+  TAO_Transport_Mux_Strategy *tms_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

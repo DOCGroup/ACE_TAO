@@ -1,12 +1,8 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
  *  @file    SPIPE_Stream.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef ACE_SPIPE_STREAM_H
 #define ACE_SPIPE_STREAM_H
@@ -42,10 +38,10 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * - On error, -1 is returned, errno is set to appropriate error.
  * - On EOF, 0 is returned, errno is irrelevant.
  *
- * Methods with <iovec> parameter are I/O vector variants of the I/O
+ * Methods with @c iovec parameter are I/O vector variants of the I/O
  * operations.
  *
- * The <send> and <revc> operations use "message" semantics rather
+ * The @c send and @c revc operations use "message" semantics rather
  * than "bytestream" semantics.
  */
 class ACE_Export ACE_SPIPE_Stream : public ACE_SPIPE
@@ -54,7 +50,6 @@ public:
   friend class ACE_SPIPE_Acceptor;
   friend class ACE_SPIPE_Connector;
 
-  /// Default constructor.
   ACE_SPIPE_Stream ();
 
   /// Obtain the address of whom we are connected with.
@@ -70,20 +65,20 @@ public:
   int recv_handle (strrecvfd &recvfd) const;
 
   /// Send @a len bytes, keep trying until @a len are sent.
-  ssize_t send_n (const void *buf, size_t len) const;
+  ssize_t send_n (void const *buf, size_t len) const;
 
   /// Recv @a len bytes, keep trying until @a len are received.
   ssize_t recv_n (void *buf, size_t len) const;
 
   /// Send bytes via STREAM pipes using "band" mode.
-  ssize_t send (const void *buf, size_t len) const;
+  ssize_t send (void const *buf, size_t len) const;
 
   /// Recv bytes via STREAM pipes using "band" mode.
   ssize_t recv (void *buf, size_t len) const;
 
   /// Send @a cntl and @a data via STREAM pipes.
-  ssize_t send (const ACE_Str_Buf *cntl,
-                const ACE_Str_Buf *data,
+  ssize_t send (ACE_Str_Buf const *cntl,
+                ACE_Str_Buf const *data,
                 int flags = 0) const;
 
   /// Recv @a cntl and @a data via STREAM pipes.
@@ -92,8 +87,8 @@ public:
                 int *flags) const;
 
   /// Send bytes via STREAM pipes using "band" mode.
-  ssize_t send (const ACE_Str_Buf *cntl,
-                const ACE_Str_Buf *data,
+  ssize_t send (ACE_Str_Buf const *cntl,
+                ACE_Str_Buf const *data,
                 int band,
                 int flags) const;
 
@@ -112,14 +107,14 @@ public:
 #ifndef ACE_LACKS_VA_FUNCTIONS
   /**
    * Send N char *ptrs and int lengths.  Note that the char *'s
-   * precede the ints (basically, an varargs version of writev).  The
+   * precede the ints (basically, a varargs version of @c writev()). The
    * count N is the *total* number of trailing arguments, *not* a
    * couple of the number of tuple pairs!
    */
   ssize_t send (size_t len, ...) const;
 
   /**
-   * This is an interface to ::readv, that doesn't use the struct
+   * This is an interface to @c readv(), that doesn't use the struct
    * iovec explicitly.  The ... can be passed as an arbitrary number
    * of (char *ptr, int len) tuples.  However, the count N is the
    * *total* number of trailing arguments, *not* a couple of the
@@ -128,26 +123,26 @@ public:
   ssize_t recv (size_t len, ...) const;
 #endif
 
-  /// Send @a len bytes via Win32 <WriteFile> using overlapped I/O.
-  ssize_t send (const void *buf, size_t len, ACE_OVERLAPPED *overlapped) const;
+  /// Send @a len bytes via Win32 @c WriteFile using overlapped I/O.
+  ssize_t send (void const *buf, size_t len, ACE_OVERLAPPED *overlapped) const;
 
-  /// Recv @a len bytes via Win32 <ReadFile> using overlapped I/O.
+  /// Recv @a len bytes via Win32 @c ReadFile using overlapped I/O.
   ssize_t recv (void *buf, size_t len, ACE_OVERLAPPED *overlapped) const;
 
-  /// Send an <iovec> of size @a len to the stream.
+  /// Send an @c iovec of size @a len to the stream.
   ssize_t sendv (const iovec iov[],
                  int len) const;
 
-  /// Send an <iovec> of size @a len to the stream.  Will block until all
+  /// Send an @c iovec of size @a len to the stream.  Will block until all
   /// bytes are sent or an error occurs.
   ssize_t sendv_n (const iovec iov[],
                    int len) const;
 
-  /// Receive an <iovec> of size @a len from the stream.
+  /// Receive an @c iovec of size @a len from the stream.
   ssize_t recvv_n (iovec iov[],
                    int len) const;
 
-  // = Meta-type info
+  /// Peer address type.
   using PEER_ADDR = ACE_SPIPE_Addr;
 
   /// Dump the state of an object.

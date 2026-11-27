@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    Tokens_Test.cpp
  *
@@ -16,7 +14,6 @@
  *
  *  @author Tim Harrison <harrison@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "ace/Process.h"
@@ -29,31 +26,34 @@
 #include "ace/Barrier.h"
 #include "ace/OS_NS_unistd.h"
 
+#include <cstring>
+#include <memory>
+
 #if defined (ACE_HAS_THREADS) && defined (ACE_HAS_TOKENS_LIBRARY)
 
 using TOKEN_INVARIANTS = ACE_Token_Invariant_Manager;
 
-static const ACE_TCHAR *server_host = ACE_DEFAULT_SERVER_HOST;
+static ACE_TCHAR const *server_host = ACE_DEFAULT_SERVER_HOST;
 static constexpr int server_port = 23456;
 
 // Synchronize starts of threads, so that they all start before one
 // has a chance to finish and clean up the TSS objects.  To avoid
 // creating a static object, it is dynamically allocated, before
 // spawning any threads.
-static ACE_Barrier *thread_start;
+static std::unique_ptr<ACE_Barrier> thread_start;
 
 struct Test_Params
 {
 public:
   ACE_Token_Proxy *token1_;
   ACE_Token_Proxy *token2_;
-  const ACE_TCHAR *collection_name_;
+  ACE_TCHAR const *collection_name_;
 };
 
-static void *
+static ACE_THR_FUNC_RETURN
 run_thread (void *vp)
 {
-  Test_Params *tp = (Test_Params *) vp;
+  Test_Params *tp = static_cast<Test_Params *> (vp);
   ACE_Token_Collection collection (1, tp->collection_name_);
   collection.insert (*(tp->token1_));
   collection.insert (*(tp->token2_));
@@ -76,7 +76,7 @@ run_thread (void *vp)
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("(%t) %p acquire failed\n"),
                       ACE_TEXT ("run_thread")));
-          return (void *) -1;
+          return ACE_THR_FUNC_RETURN (-1);
         }
 
       ACE_TEST_ASSERT ((TOKEN_INVARIANTS::instance ()->acquired (tp->token1_) == 1) ||
@@ -99,7 +99,7 @@ run_thread (void *vp)
             }
           ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p renew failed\n"),
                       ACE_TEXT ("run_thread")));
-          return (void *) -1;
+          return ACE_THR_FUNC_RETURN (-1);
         }
 
       ACE_TEST_ASSERT (TOKEN_INVARIANTS::instance ()->acquired (tp->token1_) == 1 ||
@@ -119,7 +119,7 @@ run_thread (void *vp)
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("(%t) %p release failed\n"),
                       ACE_TEXT ("run_thread")));
-          return (void *) -1;
+          return ACE_THR_FUNC_RETURN (-1);
         }
 
       ACE_DEBUG ((LM_DEBUG,
@@ -127,11 +127,10 @@ run_thread (void *vp)
                   collection.name ()));
     }
 
-
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) thread finished.\n")));
 
-  return 0;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 static int
@@ -160,24 +159,24 @@ run_test (ACE_Token_Proxy *A,
   // Spawn off three threads.
   ACE_Thread_Manager *mgr = ACE_Thread_Manager::instance ();
 
-  if (mgr->spawn (ACE_THR_FUNC (run_thread),
-                 (void *) &tp1,
+  if (mgr->spawn (run_thread,
+                  &tp1,
                   THR_BOUND) == -1)
     ACE_ERROR_RETURN ((LM_DEBUG,
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("spawn 1 failed")),
                       -1);
 
-  if (mgr->spawn (ACE_THR_FUNC (run_thread),
-                 (void *) &tp2,
+  if (mgr->spawn (run_thread,
+                  &tp2,
                   THR_BOUND) == -1)
     ACE_ERROR_RETURN ((LM_DEBUG,
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("spawn 2 failed")),
                       -1);
 
-  if (mgr->spawn (ACE_THR_FUNC (run_thread),
-                 (void *) &tp3,
+  if (mgr->spawn (run_thread,
+                  &tp3,
                   THR_BOUND) == -1)
     ACE_ERROR_RETURN ((LM_DEBUG,
                        ACE_TEXT ("%p\n"),
@@ -198,27 +197,52 @@ run_main (int, ACE_TCHAR *[])
   ACE_START_TEST (ACE_TEXT ("Tokens_Test"));
 #if defined (ACE_HAS_THREADS)
 #if defined (ACE_HAS_TOKENS_LIBRARY)
-  ACE_Token_Proxy *A = 0, *B = 0, *R = 0, *W = 0;
+  ACE_Token_Request request (0, 0, 0, ACE_TEXT ("token"), ACE_TEXT ("client"),
+                             ACE_Synch_Options::defaults);
+  ACE_Token_Request received (0, 0, 0, ACE_TEXT (""), ACE_TEXT (""),
+                              ACE_Synch_Options::defaults);
+  void *request_buffer {};
+  void *received_buffer {};
+  int const request_length = request.encode (request_buffer);
+  received.encode (received_buffer);
+  ACE_TEST_ASSERT (request_length == ACE_TOKEN_REQUEST_HEADER_SIZE + 14 * sizeof (ACE_TCHAR));
+  std::memcpy (received_buffer, request_buffer, request.length ());
+  int const decode_result = received.decode ();
+  ACE_TEST_ASSERT (decode_result == 0);
+  ACE_TEST_ASSERT (ACE_OS::strcmp (received.token_name (), ACE_TEXT ("token")) == 0);
+  ACE_TEST_ASSERT (ACE_OS::strcmp (received.client_id (), ACE_TEXT ("client")) == 0);
 
-  ACE_NEW_RETURN (A,
+  ACE_Token_Proxy *token {};
+  std::unique_ptr<ACE_Token_Proxy> A;
+  std::unique_ptr<ACE_Token_Proxy> B;
+  std::unique_ptr<ACE_Token_Proxy> R;
+  std::unique_ptr<ACE_Token_Proxy> W;
+
+  ACE_NEW_RETURN (token,
                   ACE_Local_Mutex (ACE_TEXT ("L Mutex A"), 0, 0),
                   -1);
-  ACE_NEW_RETURN (B,
+  A.reset (token);
+  ACE_NEW_RETURN (token,
                   ACE_Local_Mutex (ACE_TEXT ("L Mutex B"), 0, 0),
                   -1);
-  ACE_NEW_RETURN (R,
+  B.reset (token);
+  ACE_NEW_RETURN (token,
                   ACE_Local_RLock (ACE_TEXT ("L Reader Lock"), 0, 0),
                   -1);
-  ACE_NEW_RETURN (W,
+  R.reset (token);
+  ACE_NEW_RETURN (token,
                   ACE_Local_WLock (ACE_TEXT ("L Writer Lock"), 0, 0),
                   -1);
-  ACE_NEW_RETURN (thread_start,
+  W.reset (token);
+  ACE_Barrier *barrier {};
+  ACE_NEW_RETURN (barrier,
                   ACE_Barrier (3),
                   -1);
+  thread_start.reset (barrier);
 
-  run_test (A, B, R, W);
+  run_test (A.get (), B.get (), R.get (), W.get ());
 
-  const ACE_TCHAR *token_exe =
+  ACE_TCHAR const *token_exe =
     ACE_TEXT ("..") ACE_DIRECTORY_SEPARATOR_STR
     ACE_TEXT ("netsvcs") ACE_DIRECTORY_SEPARATOR_STR
     ACE_TEXT ("servers") ACE_DIRECTORY_SEPARATOR_STR
@@ -226,12 +250,14 @@ run_main (int, ACE_TCHAR *[])
 
   int status = ACE_OS::access (token_exe, F_OK);
   if (status == -1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                token_exe));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("%p\n"),
+                  token_exe));
+    }
   else
     {
-      const ACE_TCHAR *cl =
+      ACE_TCHAR const *cl =
         ACE_TEXT ("..") ACE_DIRECTORY_SEPARATOR_STR
         ACE_TEXT ("netsvcs") ACE_DIRECTORY_SEPARATOR_STR
         ACE_TEXT ("servers") ACE_DIRECTORY_SEPARATOR_STR
@@ -248,10 +274,12 @@ run_main (int, ACE_TCHAR *[])
       // Start up the token server for the remote test.
       ACE_Process new_process;
       if (new_process.spawn (options) == -1)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("%n; %p (%s), will not run remote test.\n"),
-                    ACE_TEXT ("Server fork failed"),
-                    cl));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("%n; %p (%s), will not run remote test.\n"),
+                      ACE_TEXT ("Server fork failed"),
+                      cl));
+        }
       else
         {
           ACE_DEBUG ((LM_DEBUG,
@@ -268,42 +296,38 @@ run_main (int, ACE_TCHAR *[])
           ACE_Remote_Mutex::set_server_address (ACE_INET_Addr (server_port,
                                                                server_host));
 
-          delete A;
-          delete B;
-          delete R;
-          delete W;
-
-          ACE_NEW_RETURN (A,
+          ACE_NEW_RETURN (token,
                           ACE_Remote_Mutex (ACE_TEXT ("R Mutex A"), 0, 1),
                           -1);
-          ACE_NEW_RETURN (B,
+          A.reset (token);
+          ACE_NEW_RETURN (token,
                           ACE_Remote_Mutex (ACE_TEXT ("R Mutex B"), 0, 1),
                           -1);
-          ACE_NEW_RETURN (R,
+          B.reset (token);
+          ACE_NEW_RETURN (token,
                           ACE_Remote_RLock (ACE_TEXT ("R Reader Lock"), 0, 1),
                           -1);
-          ACE_NEW_RETURN (W,
+          R.reset (token);
+          ACE_NEW_RETURN (token,
                           ACE_Remote_WLock (ACE_TEXT ("R Writer Lock"), 0, 1),
                           -1);
+          W.reset (token);
 
-          run_test (A, B, R, W);
+          run_test (A.get (), B.get (), R.get (), W.get ());
 
           // Wait for the server to finish.
           ACE_OS::sleep (3);
 
           // Kill the token server.
           if (new_process.terminate () == -1)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("Kill failed.\n")),
-                              -1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("Kill failed.\n")),
+                                -1);
+            }
         }
 
-      delete thread_start;
-      thread_start = 0;
-      delete A;
-      delete B;
-      delete R;
-      delete W;
+      thread_start.reset ();
     }
 
   ACE_DEBUG ((LM_DEBUG,

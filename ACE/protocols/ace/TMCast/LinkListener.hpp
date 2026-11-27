@@ -1,12 +1,15 @@
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
 
+#ifndef TMCAST_LINK_LISTENER_HPP
+#define TMCAST_LINK_LISTENER_HPP
+
 // OS primitives
-#include <ace/OS_NS_string.h>
 #include <ace/OS_NS_stdlib.h>
 #include <ace/Synch.h>
 #include <ace/SOCK_Dgram_Mcast.h>
 #include <ace/Refcounted_Auto_Ptr.h>
-
+#include <cstring>
+#include <memory>
 
 #include "Messaging.hpp"
 #include "Protocol.hpp"
@@ -18,13 +21,13 @@ namespace ACE_TMCast
   class LinkData : public virtual Message
   {
   public:
-    LinkData (Protocol::MessageHeader const* header,
-              void* payload,
+    LinkData (void const* header,
+              void const* payload,
               size_t size)
         : size_ (size)
     {
-      ACE_OS::memcpy (&header_, header, sizeof (Protocol::MessageHeader));
-      ACE_OS::memcpy (payload_, payload, size_);
+      std::memcpy (std::addressof (header_), header, sizeof (Protocol::MessageHeader));
+      std::memcpy (payload_, payload, size_);
     }
 
     Protocol::MessageHeader const&
@@ -45,15 +48,20 @@ namespace ACE_TMCast
       return size_;
     }
 
+    bool
+    valid () const
+    {
+      return header_.length == sizeof header_ + size_
+        && std::memchr (header_.member_id.id, '\0', sizeof header_.member_id.id) != nullptr;
+    }
+
   private:
     Protocol::MessageHeader header_;
     char payload_[Protocol::MAX_MESSAGE_SIZE];
     size_t size_;
   };
 
-  typedef
-  ACE_Refcounted_Auto_Ptr<LinkData, ACE_Null_Mutex>
-  LinkDataPtr;
+  using LinkDataPtr = ACE_Refcounted_Auto_Ptr<LinkData, ACE_Null_Mutex>;
 
   class LinkListener
   {
@@ -68,9 +76,17 @@ namespace ACE_TMCast
       if (ACE_OS::thr_create (&thread_thunk,
                               this,
                               THR_JOINABLE,
-                              &unused,
-                              &thread_) != 0) ACE_OS::abort ();
+                              std::addressof (unused),
+                              std::addressof (thread_)) != 0)
+        {
+          ACE_OS::abort ();
+        }
     }
+
+    LinkListener (LinkListener const&) = delete;
+    LinkListener (LinkListener&&) = delete;
+    LinkListener& operator= (LinkListener const&) = delete;
+    LinkListener& operator= (LinkListener&&) = delete;
 
     ~LinkListener ()
     {
@@ -80,7 +96,10 @@ namespace ACE_TMCast
         control_.push (MessagePtr (new Terminate));
       }
 
-      if (ACE_OS::thr_join (thread_, 0) != 0) ACE_OS::abort ();
+      if (ACE_OS::thr_join (thread_, nullptr) != 0)
+        {
+          ACE_OS::abort ();
+        }
 
       // cerr << "Link listener is down." << endl;
     }
@@ -89,17 +108,15 @@ namespace ACE_TMCast
     static ACE_THR_FUNC_RETURN
     thread_thunk (void* arg)
     {
-      LinkListener* obj = reinterpret_cast<LinkListener*> (arg);
+      LinkListener* obj = static_cast<LinkListener*> (arg);
 
       obj->execute ();
-      return 0;
+      return ACE_THR_FUNC_RETURN_NULL;
     }
 
     void
     execute ()
     {
-      char msg[Protocol::MAX_MESSAGE_SIZE];
-
       ssize_t header_size = sizeof (Protocol::MessageHeader);
 
       // OS::Time timeout (1000000); // one millisecond
@@ -110,12 +127,17 @@ namespace ACE_TMCast
       {
         while (true)
         {
+          char msg[Protocol::MAX_MESSAGE_SIZE];
+
           // Check control message queue
 
           {
             MessageQueueAutoLock lock (control_);
 
-            if (!control_.empty ()) break;
+            if (!control_.empty ())
+              {
+                break;
+              }
           }
 
           ACE_INET_Addr junk;
@@ -123,18 +145,18 @@ namespace ACE_TMCast
                                   Protocol::MAX_MESSAGE_SIZE,
                                   junk,
                                   0,
-                                  &timeout);
+                                  std::addressof (timeout));
 
           if (n != -1)
           {
-            if (n < header_size) throw false;
-
-            Protocol::MessageHeader* header =
-              reinterpret_cast<Protocol::MessageHeader*> (msg);
+            if (n < header_size)
+              {
+                continue;
+              }
 
             MessageQueueAutoLock lock (out_);
 
-            out_.push (MessagePtr (new LinkData (header,
+            out_.push (MessagePtr (new LinkData (msg,
                                                  msg + header_size,
                                                  n - header_size)));
           }
@@ -159,3 +181,5 @@ namespace ACE_TMCast
     MessageQueue  control_;
   };
 }
+
+#endif // TMCAST_LINK_LISTENER_HPP

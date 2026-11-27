@@ -8,12 +8,9 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_RT_Properties::TAO_Notify_RT_Properties ()
-{
-}
+= default;
 
-TAO_Notify_RT_Properties::~TAO_Notify_RT_Properties ()
-{
-}
+TAO_Notify_RT_Properties::~TAO_Notify_RT_Properties () = default;
 
 TAO_Notify_RT_Properties *
 TAO_Notify_RT_Properties::instance ()

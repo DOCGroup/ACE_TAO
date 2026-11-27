@@ -1,13 +1,8 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
  *  @file    Notifier_Server.h
  *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef _NOTIFIER_SERVER_H
 #define _NOTIFIER_SERVER_H
@@ -26,11 +21,14 @@
 class Notifier_Server
 {
 public:
-  /// Constructor.
-  Notifier_Server ();
+  Notifier_Server () = default;
 
-  /// Destructor.
-  ~Notifier_Server ();
+  ~Notifier_Server () = default;
+
+  Notifier_Server (Notifier_Server const &) = delete;
+  Notifier_Server &operator= (Notifier_Server const &) = delete;
+  Notifier_Server (Notifier_Server &&) = delete;
+  Notifier_Server &operator= (Notifier_Server &&) = delete;
 
   /// Initialize the Server state.
  int init (int argc, ACE_TCHAR *argv[]);
@@ -42,7 +40,7 @@ public:
   int close ();
 
   /// Reactor accessor.
-  ACE_Reactor *reactor();
+  ACE_Reactor *reactor () const;
 
 private:
   /// Initialises the name server and registers the Notifier server

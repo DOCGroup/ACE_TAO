@@ -1,6 +1,3 @@
-/* -*- c++ -*- */
-
-//=============================================================================
 /**
  *  @file    be_visitor_attribute.h
  *
@@ -8,7 +5,6 @@
  *
  *  @author Aniruddha Gokhale
  */
-//=============================================================================
 
 #ifndef TAO_BE_VISITOR_ATTRIBUTE_H
 #define TAO_BE_VISITOR_ATTRIBUTE_H

@@ -7,8 +7,6 @@
 #include "tao/ORB_Core.h"
 #include "tao/Exception.h"
 #include "tao/ORB_Constants.h"
-#include "tao/ORB_Core.h"
-#include "tao/PI/ORBInitInfo.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -70,12 +68,11 @@ TAO_FT_ClientORBInitializer::register_policy_factories (
   */
 }
 
-
 void
 TAO_FT_ClientORBInitializer::register_client_request_interceptors (
     PortableInterceptor::ORBInitInfo_ptr info)
 {
-  TAO::FT_ClientRequest_Interceptor* ftcri = nullptr;
+  TAO::FT_ClientRequest_Interceptor* ftcri {};
 
   ACE_NEW_THROW_EX (ftcri,
                     TAO::FT_ClientRequest_Interceptor,

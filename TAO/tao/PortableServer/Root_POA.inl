@@ -1,4 +1,3 @@
-// -*- C++ -*-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE CORBA::Boolean
@@ -41,7 +40,7 @@ TAO_Root_POA::get_adapter_template ()
       return this->ort_adapter_->get_adapter_template();
     }
 
-  return 0;
+  return nullptr;
 }
 
 ACE_INLINE PortableInterceptor::ObjectReferenceTemplate *
@@ -52,7 +51,7 @@ TAO_Root_POA::get_adapter_template_i ()
       return this->ort_adapter_->get_adapter_template ();
     }
 
-  return 0;
+  return nullptr;
 }
 
 ACE_INLINE PortableInterceptor::ObjectReferenceFactory *
@@ -65,7 +64,7 @@ TAO_Root_POA::get_obj_ref_factory ()
       return this->ort_adapter_->get_obj_ref_factory();
     }
 
-  return 0;
+  return nullptr;
 }
 
 ACE_INLINE CORBA::Boolean
@@ -80,7 +79,7 @@ TAO_Root_POA::persistent ()
   return (this->cached_policies_.lifespan () == PortableServer::PERSISTENT);
 }
 
-ACE_INLINE const ACE_CString &
+ACE_INLINE ACE_CString const &
 TAO_Root_POA::name () const
 {
   return this->name_;
@@ -92,13 +91,13 @@ TAO_Root_POA::the_name ()
   return CORBA::string_dup (this->name_.c_str ());
 }
 
-ACE_INLINE const TAO_Object_Adapter::poa_name &
+ACE_INLINE TAO_Object_Adapter::poa_name const &
 TAO_Root_POA::folded_name () const
 {
   return this->folded_name_;
 }
 
-ACE_INLINE const TAO_Object_Adapter::poa_name &
+ACE_INLINE TAO_Object_Adapter::poa_name const &
 TAO_Root_POA::system_name () const
 {
   return this->system_name_.in ();
@@ -215,7 +214,7 @@ TAO_Root_POA::get_adapter_state ()
 ACE_INLINE void *
 TAO_Root_POA::thread_pool () const
 {
-  return 0;
+  return nullptr;
 }
 
 ACE_INLINE TAO_SYNCH_CONDITION &

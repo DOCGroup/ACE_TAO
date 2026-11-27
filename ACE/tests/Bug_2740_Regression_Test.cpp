@@ -23,13 +23,14 @@
 #include "ace/Time_Value.h"
 #include "ace/OS_NS_string.h"
 
-const ACE_Time_Value MAX_CLIENT_TIMEOUT(30);  // 30 secs
+#include <memory>
+
+ACE_Time_Value const MAX_CLIENT_TIMEOUT (30);  // 30 secs
 
 // The number of clients we'll run. When the ClientsLeft gets back to 0 (it's
 // decremented when a ClientSvcHandler is deleted) the event loop can stop.
 const long NrClients = 10;
 static ACE_Atomic_Op<ACE_Thread_Mutex, long> ClientsLeft (10);
-
 
 class ClientSvcHandler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 {
@@ -40,29 +41,29 @@ public:
 
   // Each client will send/recv 'echo_cnt' times, close/reopen the socket,
   // then echo, etc. for ACE_MAX_ITERATIONS times.
-  ClientSvcHandler (const ACE_INET_Addr &addr, int echo_cnt);
+  ClientSvcHandler (ACE_INET_Addr const &addr, int echo_cnt);
   ~ClientSvcHandler () override;
 
   int open (void* factory) override;
   int handle_input (ACE_HANDLE handle = ACE_INVALID_HANDLE) override;
-  int handle_timeout (const ACE_Time_Value &now, const void *act = nullptr) override;
+  int handle_timeout (ACE_Time_Value const &now, void const *act = nullptr) override;
   int handle_close (ACE_HANDLE handle = ACE_INVALID_HANDLE,
                     ACE_Reactor_Mask mask = 0) override;
 
 protected:
-  static const char *send_str;
+  static char const *send_str;
 
   ACE_INET_Addr server_addr_;
   // Know when we've received 'echo_cnt' echoes of the data. Don't want to
   // get into record-marking, short-reads/writes, etc. so just count the number
   // of bytes it takes to echo the data. Don't care about verifying the
   // content - this is mostly a stress test for multithreaded reactor.
-  size_t echo_cnt_;
-  size_t iter_;
-  unsigned long timer_;
+  size_t echo_cnt_ {};
+  size_t iter_ {};
+  long timer_ {-1};
 };
 
-const char *ClientSvcHandler::send_str =
+char const *ClientSvcHandler::send_str =
   "1234567890123456789012345678901234567890";
 
 class ServerSvcHandler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
@@ -74,8 +75,7 @@ public:
                     ACE_Reactor_Mask mask = 0) override;
 };
 
-
-ClientSvcHandler::ClientSvcHandler (const ACE_INET_Addr &addr, int echo_cnt)
+ClientSvcHandler::ClientSvcHandler (ACE_INET_Addr const &addr, int echo_cnt)
   : ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>(),
     server_addr_ (addr),
     echo_cnt_ (ACE_OS::strlen (ClientSvcHandler::send_str) * echo_cnt),
@@ -97,7 +97,7 @@ int
 ClientSvcHandler::open (void* factory)
 {
   ++iter_;
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%t: client h %d, open for iteration %B\n"),
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%t: client h %H, open for iteration %B\n"),
               this->peer ().get_handle (), this->iter_));
 
   if (ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>::open (factory) == 0)
@@ -106,13 +106,15 @@ ClientSvcHandler::open (void* factory)
                                                        nullptr,
                                                        MAX_CLIENT_TIMEOUT);
 
-      size_t send_len = ACE_OS::strlen (ClientSvcHandler::send_str);
+      size_t const send_len = ACE_OS::strlen (ClientSvcHandler::send_str);
       if (-1 == this->peer().send_n (ClientSvcHandler::send_str, send_len))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%t: client h %d, %p\n"),
-                           this->peer ().get_handle(),
-                           ACE_TEXT ("send")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("%t: client h %H, %p\n"),
+                             this->peer ().get_handle (),
+                             ACE_TEXT ("send")),
+                            -1);
+        }
       return 0;
     }
 
@@ -130,7 +132,7 @@ ClientSvcHandler::handle_input (ACE_HANDLE handle)
     ssize_t bc;
     bc = this->peer ().recv (buffer, sizeof (buffer));
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("%t: client h %d recv %b bytes\n"),
+                ACE_TEXT ("%t: client h %H recv %b bytes\n"),
                 handle,
                 bc));
     if (bc > 0)
@@ -142,52 +144,59 @@ ClientSvcHandler::handle_input (ACE_HANDLE handle)
         // more data and await more echo.
         size_t ubc = (size_t)bc;
         if (ubc <= this->echo_cnt_)
+        {
           this->echo_cnt_ -= ubc;
+        }
         if (this->echo_cnt_ == 0)
           {
             ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("%t: client h %d end of echo\n"),
+                        ACE_TEXT ("%t: client h %H end of echo\n"),
                         handle));
             return -1;
           }
 
         // Not done yet; send more data and resched timer.
-        size_t send_len = ACE_OS::strlen (ClientSvcHandler::send_str);
+        size_t const send_len = ACE_OS::strlen (ClientSvcHandler::send_str);
         if (-1 == this->peer().send_n (ClientSvcHandler::send_str, send_len))
-          ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%t: client h %d: %p\n"),
-                             ACE_TEXT ("resending")),
-                            -1);
+          {
+            ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%t: client h %H: %p\n"),
+                               handle,
+                               ACE_TEXT ("resending")),
+                              -1);
+          }
         this->timer_ = reactor ()->schedule_timer (this, nullptr, MAX_CLIENT_TIMEOUT);
       }
     else if (bc == 0) // Socket was closed by server
       {
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%t: client h %d: closed by server\n"),
+                           ACE_TEXT ("%t: client h %H: closed by server\n"),
                            handle),
                           -1);
       }
     else if (errno == EWOULDBLOCK) // no data ready on socket
       {
         ACE_ERROR_RETURN ((LM_DEBUG,
-                           ACE_TEXT ("%t: client h %d: recv no data\n"),
+                           ACE_TEXT ("%t: client h %H: recv no data\n"),
                            handle),
                           0);
       }
     else
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("%t: client h %d: %p\n"),
-                         handle,
-                         ACE_TEXT ("send")),
-                        -1);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("%t: client h %H: %p\n"),
+                           handle,
+                           ACE_TEXT ("send")),
+                          -1);
+      }
 
     return 0;
 }
 
 int
-ClientSvcHandler::handle_timeout (const ACE_Time_Value &, const void*)
+ClientSvcHandler::handle_timeout (ACE_Time_Value const &, void const *)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("%t: client h %d: timeout\n"),
+              ACE_TEXT ("%t: client h %H: timeout\n"),
               this->peer ().get_handle ()));
   reactor()->remove_handler (this, ACE_Event_Handler::ALL_EVENTS_MASK);
   return 0;
@@ -197,14 +206,16 @@ int
 ClientSvcHandler::handle_close (ACE_HANDLE handle, ACE_Reactor_Mask mask)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("%t: client h %d handle_close\n"),
+              ACE_TEXT ("%t: client h %H handle_close\n"),
               handle));
 
   // If not done iterating, just close the socket and reopen the connection.
   // Else shut down and delete.
   if (this->iter_ >= ACE_MAX_ITERATIONS)
-    return ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>::handle_close(handle,
-                                                                          mask);
+    {
+      return ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>::handle_close (handle,
+                                                                             mask);
+    }
   this->shutdown ();
   ClientSvcHandler *p = const_cast<ClientSvcHandler *>(this);
   ACE_Connector<ClientSvcHandler, ACE_SOCK_CONNECTOR>
@@ -216,7 +227,7 @@ ClientSvcHandler::handle_close (ACE_HANDLE handle, ACE_Reactor_Mask mask)
 int
 ServerSvcHandler::open (void* factory)
 {
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%t: server h %d open\n"),
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%t: server h %H open\n"),
               this->peer ().get_handle ()));
 
   return ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>::open (factory);
@@ -225,7 +236,8 @@ ServerSvcHandler::open (void* factory)
 int
 ServerSvcHandler::handle_input (ACE_HANDLE handle)
 {
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%t: server h %d input\n"), handle));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%t: server h %H input\n"),
+              handle));
 
   // Receive whatever is here and send it back.
   char buffer[ACE_DEFAULT_MAX_SOCKET_BUFSIZ];
@@ -234,19 +246,21 @@ ServerSvcHandler::handle_input (ACE_HANDLE handle)
   if (bc > 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("%t: server h %d recv %b bytes\n"),
+                  ACE_TEXT ("%t: server h %H recv %b bytes\n"),
                   handle,
                   bc));
       if (-1 == this->peer ().send_n (buffer, bc))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%t: server h %d: %p\n"),
-                           handle, ACE_TEXT ("send")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("%t: server h %H: send failed %p\n"),
+                             handle),
+                            -1);
+        }
     }
   else if (bc == 0 || errno == ECONNRESET) // Socket was closed by client
     {
       ACE_ERROR_RETURN ((LM_DEBUG,
-                         ACE_TEXT ("%t: server h %d: closed by client\n"),
+                         ACE_TEXT ("%t: server h %H: closed by client\n"),
                          handle),
                         -1);
     }
@@ -255,15 +269,16 @@ ServerSvcHandler::handle_input (ACE_HANDLE handle)
       // The reactor shouldn't call back for input if there's no data, so
       // log an error, but keep running.
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("%t: server h %d: recv no data\n"),
+                         ACE_TEXT ("%t: server h %H: recv no data\n"),
                          handle),
                         0);
     }
   else
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%t: server h %d: %p\n"),
-                       handle,
-                       ACE_TEXT ("recv")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%t: server h %H: recv failed %p\n"),
+                         handle),
+                        -1);
+    }
 
   return 0;
 }
@@ -271,7 +286,8 @@ ServerSvcHandler::handle_input (ACE_HANDLE handle)
 int
 ServerSvcHandler::handle_close(ACE_HANDLE handle, ACE_Reactor_Mask mask)
 {
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%t: server h %d: handle_close\n"), handle));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%t: server h %H: handle_close\n"),
+              handle));
   return ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>::handle_close (handle,
                                                                          mask);
 }
@@ -282,12 +298,16 @@ disable_signal (int sigmin, int sigmax)
 #if !defined (ACE_LACKS_UNIX_SIGNALS)
   sigset_t signal_set;
   if (ACE_OS::sigemptyset (&signal_set) == - 1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("Error: (%P|%t):%p\n"),
-                ACE_TEXT ("sigemptyset failed")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Error: (%P|%t):%p\n"),
+                  ACE_TEXT ("sigemptyset failed")));
+    }
 
-  for (int i = sigmin; i <= sigmax; i++)
-    ACE_OS::sigaddset (&signal_set, i);
+  for (int i = sigmin; i <= sigmax; ++i)
+    {
+      ACE_OS::sigaddset (&signal_set, i);
+    }
 
   // Put the <signal_set>.
 # if defined (ACE_LACKS_PTHREAD_THR_SIGSETMASK)
@@ -297,10 +317,12 @@ disable_signal (int sigmin, int sigmax)
 # else
   if (ACE_OS::thr_sigsetmask (SIG_BLOCK, &signal_set, nullptr) != 0)
 # endif /* ACE_LACKS_PTHREAD_THR_SIGSETMASK */
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Error: (%P|%t): %p\n"),
-                       ACE_TEXT ("SIG_BLOCK failed")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Error: (%P|%t): %p\n"),
+                         ACE_TEXT ("SIG_BLOCK failed")),
+                        -1);
+    }
 #else
   ACE_UNUSED_ARG (sigmin);
   ACE_UNUSED_ARG (sigmax);
@@ -317,12 +339,11 @@ event_loop(void *arg)
   disable_signal (SIGPIPE, SIGPIPE);
 
   ACE_Reactor *reactor = static_cast<ACE_Reactor*>(arg);
-  int s = reactor->run_reactor_event_loop();
+  int const s = reactor->run_reactor_event_loop();
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%t: reactor loop done; status %d\n"), s));
   return ACE_THR_FUNC_RETURN_NULL;
 }
-
 
 int run_main(int, ACE_TCHAR *[])
 {
@@ -333,13 +354,14 @@ int run_main(int, ACE_TCHAR *[])
 
   ACE_Dev_Poll_Reactor dp_reactor;
   dp_reactor.restart (true);          // Restart on EINTR
-  ACE_Reactor reactor (&dp_reactor);
+  ACE_Reactor reactor (std::addressof (dp_reactor));
 
   // Bind acceptor to any port and then find out what the port was.
-  ACE_Acceptor<ServerSvcHandler, ACE_SOCK_Acceptor> acceptor (&reactor,
-                                                              ACE_NONBLOCK);
+  ACE_Acceptor<ServerSvcHandler, ACE_SOCK_Acceptor> acceptor (
+    std::addressof (reactor), ACE_NONBLOCK);
   ACE_SOCK_Acceptor::PEER_ADDR server_addr;
-  if (acceptor.open (ACE_sap_any_cast (const ACE_INET_Addr &), &reactor) == -1
+  if (acceptor.open (ACE_sap_any_cast (ACE_INET_Addr const &),
+                     std::addressof (reactor)) == -1
       || acceptor.acceptor ().get_local_addr (server_addr) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -354,10 +376,10 @@ int run_main(int, ACE_TCHAR *[])
 
   ACE_Thread_Manager::instance ()->spawn_n (ACE_MAX_THREADS,
                                             event_loop,
-                                            &reactor);
+                                            std::addressof (reactor));
 
-  ACE_Connector<ClientSvcHandler, ACE_SOCK_CONNECTOR> connector (&reactor,
-                                                                 ACE_NONBLOCK);
+  ACE_Connector<ClientSvcHandler, ACE_SOCK_CONNECTOR> connector (
+    std::addressof (reactor), ACE_NONBLOCK);
   // Spin up clients to connect and iterate
   long i;
   for (i = 0; i < NrClients; ++i)

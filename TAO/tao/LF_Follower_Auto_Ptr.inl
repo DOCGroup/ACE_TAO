@@ -1,10 +1,9 @@
-// -*- C++ -*-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 TAO_LF_Follower_Auto_Ptr::TAO_LF_Follower_Auto_Ptr (TAO_Leader_Follower &lf)
-  : leader_follower_ (lf)
-  , follower_ (leader_follower_.allocate_follower ())
+  : leader_follower_ (lf),
+    follower_ (leader_follower_.allocate_follower ())
 {
 }
 

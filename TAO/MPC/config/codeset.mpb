@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project {
   after   += Codeset
   libs    += TAO_Codeset

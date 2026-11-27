@@ -1,13 +1,8 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
  *  @file    LSOCK_Stream.h
  *
  *  @author Doug Schmidt
  */
-//=============================================================================
-
 
 #ifndef ACE_LOCAL_SOCK_STREAM_H
 #define ACE_LOCAL_SOCK_STREAM_H
@@ -35,13 +30,15 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_LSOCK_Stream : public ACE_SOCK_Stream, public ACE_LSOCK
 {
 public:
-  // = Send/recv methods.
-  /// Send iovecs via ::writev().
+  /// @name Send and receive methods
+  /// @{
+
+  /// Send iovecs and a handle.
   ssize_t send_msg (const iovec iov[],
                     size_t n,
                     ACE_HANDLE handle);
 
-  /// Send iovecs via ::writev().
+  /// Receive iovecs and a handle.
   ssize_t recv_msg (iovec iov[],
                     size_t n,
                     ACE_HANDLE &handle);
@@ -51,9 +48,12 @@ public:
 
   /// Overrides set_handle() from the base classes.
   void set_handle (ACE_HANDLE fd);
+  /// @}
 
-  // = Meta-type info
+  /// @name Meta-type traits
+  /// @{
   using PEER_ADDR = ACE_UNIX_Addr;
+  /// @}
 
   /// Dump the state of an object.
   void dump () const;

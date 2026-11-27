@@ -1,15 +1,9 @@
-// -*- C++ -*-
 #include "Server_ORBInitializer.h"
 #include "tao/ORB_Constants.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 
 #include "Server_Request_Interceptor.h"
-
-Server_ORBInitializer::Server_ORBInitializer ()
-  : server_interceptor_ ()
-{
-}
 
 void
 Server_ORBInitializer::pre_init (

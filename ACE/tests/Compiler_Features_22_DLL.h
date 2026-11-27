@@ -1,11 +1,8 @@
-
-//=============================================================================
 /**
  *  @file    Compiler_Features_22_DLL.h
  *
  *  Test DLL export with a template method specialization
  */
-//=============================================================================
 
 #ifndef ACE_TESTS_COMPILER_FEATURES_22_DLL_H
 #define ACE_TESTS_COMPILER_FEATURES_22_DLL_H

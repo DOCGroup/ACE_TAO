@@ -1,4 +1,3 @@
-/* -*- c++ -*- */
 #ifndef JAWS_HTTP_10_H
 #define JAWS_HTTP_10_H
 
@@ -19,9 +18,9 @@ class JAWS_HTTP_10_Read_Task : public JAWS_Pipeline_Handler
 {
 public:
   JAWS_HTTP_10_Read_Task ();
-  virtual ~JAWS_HTTP_10_Read_Task ();
+  ~JAWS_HTTP_10_Read_Task () override;
 
-  virtual int handle_put (JAWS_Data_Block *data, ACE_Time_Value *tv);
+  int handle_put (JAWS_Data_Block *data, ACE_Time_Value *tv) override;
 
 private:
 };
@@ -32,9 +31,9 @@ class JAWS_HTTP_10_Parse_Task : public JAWS_Pipeline_Handler
 {
 public:
   JAWS_HTTP_10_Parse_Task ();
-  virtual ~JAWS_HTTP_10_Parse_Task ();
+  ~JAWS_HTTP_10_Parse_Task () override;
 
-  virtual int handle_put (JAWS_Data_Block *data, ACE_Time_Value *tv);
+  int handle_put (JAWS_Data_Block *data, ACE_Time_Value *tv) override;
 };
 
 // Write the response
@@ -43,21 +42,23 @@ class JAWS_HTTP_10_Write_Task : public JAWS_Pipeline_Handler
 {
 public:
   JAWS_HTTP_10_Write_Task ();
-  virtual ~JAWS_HTTP_10_Write_Task ();
+  ~JAWS_HTTP_10_Write_Task () override;
 
-  virtual int handle_put (JAWS_Data_Block *data, ACE_Time_Value *tv);
+  int handle_put (JAWS_Data_Block *data, ACE_Time_Value *tv) override;
 
 private:
 };
 
 // Helpers
 
+/// Static functions to enhance the lives of HTTP programmers everywhere.
 class JAWS_HTTP_10_Helper
-// Static functions to enhance the lives of HTTP programmers everywhere.
 {
 public:
+  JAWS_HTTP_10_Helper () = delete;
+
+  /// Decode '%' escape codes in a URI.
   static char *HTTP_decode_string (char *path);
-  // Decode '%' escape codes in a URI
 };
 
 #endif /* !defined (JAWS_HTTP_10_H) */

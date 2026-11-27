@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    HTIOP_Acceptor.h
  *
@@ -8,8 +5,6 @@
  *
  *  @author Priyanka Gontla <gontla_p@ociweb.com>
  */
-//=============================================================================
-
 
 #ifndef HTIOP_ACCEPTOR_H
 #define HTIOP_ACCEPTOR_H
@@ -31,6 +26,9 @@
 #include "tao/Object_KeyC.h"
 
 #include "ace/SOCK_Acceptor.h"
+
+#include <memory>
+#include <string>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace ACE
@@ -61,19 +59,21 @@ namespace TAO
     class HTIOP_Export Acceptor : public TAO_Acceptor
     {
     public:
-      /// Constructor.
       Acceptor (ACE::HTBP::Environment *ht_env,
                 int is_inside);
+      Acceptor (Acceptor const&) = delete;
+      Acceptor (Acceptor&&) = delete;
+      Acceptor& operator= (Acceptor const&) = delete;
+      Acceptor& operator= (Acceptor&&) = delete;
 
-      /// Destructor.
       ~Acceptor () override;
 
       /// @@ Helper method for the implementation repository, should go
       ///    away
-      const ACE::HTBP::Addr& address () const;
+      ACE::HTBP::Addr const& address () const;
 
       /// Returns the array of endpoints in this acceptor
-      const ACE::HTBP::Addr *endpoints ();
+      ACE::HTBP::Addr const *endpoints ();
 
       using BASE_ACCEPTOR = TAO_Strategy_Acceptor<Completion_Handler, ACE_SOCK_ACCEPTOR>;
       using CREATION_STRATEGY = Creation_Strategy<Completion_Handler>;
@@ -88,22 +88,22 @@ namespace TAO
                         ACE_Reactor *reactor,
                         int version_major,
                         int version_minor,
-                        const char *address,
-                        const char *options = nullptr) override;
+                        char const *address,
+                        char const *options = nullptr) override;
 
       int open_default (TAO_ORB_Core *orb_core,
                                 ACE_Reactor *reactor,
                                 int version_major,
                                 int version_minor,
-                                const char *options = nullptr) override;
+                                char const *options = nullptr) override;
 
       int close () override;
 
-      int create_profile (const TAO::ObjectKey &object_key,
+      int create_profile (TAO::ObjectKey const &object_key,
                                   TAO_MProfile &mprofile,
                                   CORBA::Short priority) override;
 
-      int is_collocated (const TAO_Endpoint *endpoint) override;
+      bool is_collocated (TAO_Endpoint const *endpoint) override;
 
       CORBA::ULong endpoint_count () override;
 
@@ -120,7 +120,7 @@ namespace TAO
       int hostname (TAO_ORB_Core *orb_core,
                     ACE_INET_Addr &addr,
                     char *&host,
-                    const char *specified_hostname = nullptr);
+                    char const *specified_hostname = nullptr);
 
       /**
        * Set the host name for the given address using the dotted decimal
@@ -135,12 +135,12 @@ namespace TAO
        * virtual to allow a derived class implementation to be invoked
        * instead.
        */
-      virtual int open_i (const ACE::HTBP::Addr &addr,
+      virtual int open_i (ACE::HTBP::Addr const &addr,
                           ACE_Reactor *reactor);
 
       /**
        * Probe the system for available network interfaces, and initialize
-       * the <addrs_> array with an ACE::HTBP::Addr for each network
+       * the @c addrs_ array with an ACE::HTBP::Addr for each network
        * interface.  The port for each initialized ACE::HTBP::Addr will be
        * set in the open_i() method.  This method only gets invoked when
        * no explicit hostname is provided in the specified endpoint.
@@ -154,25 +154,24 @@ namespace TAO
        * in an alternative hostname in the object reference, such as that
        * of the outside of a firewall.
        */
-      virtual int parse_options (const char *options);
+      virtual int parse_options (char const *options);
 
       /// Helper method to add a new profile to the mprofile for
       /// each endpoint.
-      int create_new_profile (const TAO::ObjectKey &object_key,
+      int create_new_profile (TAO::ObjectKey const &object_key,
                               TAO_MProfile &mprofile,
                               CORBA::Short priority);
 
       /// Helper method to create a profile that contains all of
       /// our endpoints.
-      int create_shared_profile (const TAO::ObjectKey &object_key,
+      int create_shared_profile (TAO::ObjectKey const &object_key,
                                  TAO_MProfile &mprofile,
                                  CORBA::Short priority);
-
 
     protected:
       /// Array of ACE::HTBP::Addr instances, each one corresponding to a
       /// given network interface.
-      ACE::HTBP::Addr *addrs_;
+      std::unique_ptr<ACE::HTBP::Addr[]> addrs_;
 
       /**
        * Cache the information about the endpoints serviced by this
@@ -181,7 +180,7 @@ namespace TAO
        * example, if the IP address is INADDR_ANY (0.0.0.0) then there
        * will be possibly a different hostname for each interface.
        */
-      char **hosts_;
+      std::unique_ptr<char *[]> hosts_;
 
       /// The number of host names cached in the hosts_ array (equivalent
       /// to the number of endpoints opened by this Acceptor).
@@ -190,7 +189,7 @@ namespace TAO
       /**
        * Override the hostname used in the ORBEndPoint.
        */
-      char *hostname_in_ior_;
+      std::string hostname_in_ior_;
 
       /**
        * The GIOP version for this endpoint
@@ -207,9 +206,9 @@ namespace TAO
       BASE_ACCEPTOR base_acceptor_;
 
       /// Acceptor strategies.
-      CREATION_STRATEGY *creation_strategy_;
-      CONCURRENCY_STRATEGY *concurrency_strategy_;
-      ACCEPT_STRATEGY *accept_strategy_;
+      std::unique_ptr<CREATION_STRATEGY> creation_strategy_;
+      std::unique_ptr<CONCURRENCY_STRATEGY> concurrency_strategy_;
+      std::unique_ptr<ACCEPT_STRATEGY> accept_strategy_;
 
       ACE::HTBP::Environment *ht_env_;
 

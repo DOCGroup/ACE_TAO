@@ -1,12 +1,8 @@
-//=============================================================================
 /**
  *  @file    DynAnyFactory.cpp
  *
  *  @author Carlos O'Ryan <coryan@uci.edu>
  */
-//=============================================================================
-
-
 #include "tao/AnyTypeCode/AnyTypeCode_methods.h"
 
 #include "tao/DynamicAny/DynAnyFactory.h"
@@ -18,8 +14,6 @@
 #include "tao/DynamicAny/DynArray_i.h"
 #include "tao/DynamicAny/DynUnion_i.h"
 #include "tao/DynamicAny/DynAnyUtils_T.h"
-
-#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -69,16 +63,17 @@ TAO_DynAnyFactory::create_multiple_dyn_anys (
   // within each any, indirection will occur if a DynValue
   // self references with one of its own members.
 
-  const CORBA::ULong length = values.length ();
+  CORBA::ULong const length = values.length ();
 
-  DynamicAny::DynAnySeq_var retseq;
+  DynamicAny::DynAnySeq *raw_seq {};
   ACE_NEW_THROW_EX (
-    retseq.out (),
+    raw_seq,
     DynamicAny::DynAnySeq (length),
     CORBA::NO_MEMORY ());
+  DynamicAny::DynAnySeq_var retseq (raw_seq);
   retseq->length (length);
 
-  for (CORBA::ULong i= 0u; i < length; ++i)
+  for (CORBA::ULong i {}; i < length; ++i)
     {
       retseq[i]=
         (allow_truncate ?
@@ -101,18 +96,20 @@ TAO_DynAnyFactory::create_multiple_anys (
   // within each any, indirection will occur if a DynValue
   // self references with one of its own members.
 
-  const CORBA::ULong length = values.length ();
+  CORBA::ULong const length = values.length ();
 
-  DynamicAny::AnySeq_var retseq;
+  DynamicAny::AnySeq *raw_seq {};
   ACE_NEW_THROW_EX (
-    retseq.out (),
+    raw_seq,
     DynamicAny::AnySeq (length),
     CORBA::NO_MEMORY ());
+  DynamicAny::AnySeq_var retseq (raw_seq);
   retseq->length (length);
 
-  for (CORBA::ULong i= 0u; i < length; ++i)
+  for (CORBA::ULong i {}; i < length; ++i)
     {
-      retseq[i]= *values[i]->to_any ();
+      CORBA::Any_var const any = values[i]->to_any ();
+      retseq[i] = any.in ();
     }
 
   return retseq._retn ();
@@ -127,7 +124,7 @@ TAO_DynAnyFactory::unalias (CORBA::TypeCode_ptr tc)
 
   while (tck == CORBA::tk_alias)
     {
-      CORBA::TypeCode_var temp = tc->content_type ();
+      CORBA::TypeCode_var const temp = tc->content_type ();
 
       tck = TAO_DynAnyFactory::unalias (temp.in ());
     }

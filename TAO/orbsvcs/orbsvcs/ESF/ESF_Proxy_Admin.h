@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 /**
  *  @file   ESF_Proxy_Admin.h
  *
@@ -25,7 +23,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  * @brief Implement common tasks in the Admin interfaces.
  *
- * <H2>Requirements</H2>
+ * @par Requirements
  *
  * The EVENT_CHANNEL interface must implement:
  *
@@ -37,10 +35,10 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * void destroy_proxy (PROXY*);
  *
  * /// create a proxy collection
- * void create_proxy_collection (TAO_ESF_Proxy_Collection<PROXY>*&);
+ * void create_proxy_collection (TAO_ESF_Proxy_Collection@c PROXY*&);
  *
  * /// destroy a proxy collection
- * void destroy_proxy_collection (TAO_ESF_Proxy_Collection<PROXY>*&);
+ * void destroy_proxy_collection (TAO_ESF_Proxy_Collection@c PROXY*&);
  * @endverbatim
  *
  * In addition to the requirements imposed by
@@ -63,7 +61,7 @@ class TAO_ESF_Proxy_Admin
 {
 public:
   /// Constructor, allocate the internal collection
-  TAO_ESF_Proxy_Admin (EVENT_CHANNEL *ec);
+  explicit TAO_ESF_Proxy_Admin (EVENT_CHANNEL *ec);
 
   /// Cleanup internal resources, destroy the internal collection
   virtual ~TAO_ESF_Proxy_Admin ();
@@ -71,39 +69,34 @@ public:
   /// Iterate over its internal collection.
   void for_each (TAO_ESF_Worker<PROXY> *worker);
 
-  // @todo We should use INTERFACE::_ptr_type or PROXY::_ptr_type, but
-  // the MSVC compiler (v6.0) gets confused when we do so.  So we have
-  // to choose for the lesser evil.  The code works because TAO uses
-  // pointers to implement the _ptr types, and that is OK because this
-  // code is supposed to run under TAO only.
   /// Create a new PROXY and activate it.
-  virtual INTERFACE*
+  virtual typename INTERFACE::_ptr_type
       obtain ();
 
   /**
    * The Event Channel that owns this Admin object is going
-   * down. Invoke <shutdown> on all the proxies, cleanup the
+   * down. Invoke @c shutdown on all the proxies, cleanup the
    * collection and prepare to terminate.
    */
   virtual void shutdown ();
 
   /**
-   * A <proxy> has connected, this is invoked when the proxy's client
+   * A @c proxy has connected, this is invoked when the proxy's client
    * has invoked the connect_xxx_yyy() method.
    * The default implementation is a no-op.
    */
   virtual void connected (PROXY *proxy);
 
   /**
-   * A <proxy> has reconnected, i.e. its client has invoked the
+   * A @c proxy has reconnected, i.e. its client has invoked the
    * connect_xxx_yyy() method, but the proxy was connected already.
    * The default implementation delegates on the collection
-   * <reconnected> method
+   * @c reconnected method
    */
   virtual void reconnected (PROXY *proxy);
 
   /**
-   * A <proxy> has been disconnected. The default implementation
+   * A @c proxy has been disconnected. The default implementation
    * removes the object from the collection and deactivates the
    * proxy.
    */
@@ -113,12 +106,17 @@ protected:
   /// The Event Channel we belong to
   EVENT_CHANNEL *event_channel_;
 
+  TAO_ESF_Proxy_Admin (TAO_ESF_Proxy_Admin const &) = delete;
+  TAO_ESF_Proxy_Admin (TAO_ESF_Proxy_Admin &&) = delete;
+  TAO_ESF_Proxy_Admin &operator= (TAO_ESF_Proxy_Admin const &) = delete;
+  TAO_ESF_Proxy_Admin &operator= (TAO_ESF_Proxy_Admin &&) = delete;
+
 private:
   /// Shorthand for the Proxy collection
   using Collection = TAO_ESF_Proxy_Collection<PROXY>;
 
   /// The proxy collection object
-  Collection *collection_;
+  Collection *collection_ {};
 };
 
 // ****************************************************************
@@ -126,14 +124,15 @@ template <class COUNTED>
 class TAO_ESF_RefCountedRef
 {
 public:
-  TAO_ESF_RefCountedRef (COUNTED *counted);
+  explicit TAO_ESF_RefCountedRef (COUNTED *counted);
   ~TAO_ESF_RefCountedRef ();
-private:
+
   TAO_ESF_RefCountedRef (TAO_ESF_RefCountedRef const &) = delete;
   TAO_ESF_RefCountedRef (TAO_ESF_RefCountedRef &&) = delete;
-  TAO_ESF_RefCountedRef& operator= (TAO_ESF_RefCountedRef const &) = delete;
-  TAO_ESF_RefCountedRef& operator= (TAO_ESF_RefCountedRef &&) = delete;
+  TAO_ESF_RefCountedRef &operator= (TAO_ESF_RefCountedRef const &) = delete;
+  TAO_ESF_RefCountedRef &operator= (TAO_ESF_RefCountedRef &&) = delete;
 
+private:
   COUNTED *counted_;
 };
 

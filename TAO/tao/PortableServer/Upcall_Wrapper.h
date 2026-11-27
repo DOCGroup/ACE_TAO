@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Upcall_Wrapper.h
  *
@@ -8,8 +5,6 @@
  *  @author Jeff Parsons
  *  @author Carlos O'Ryan
  */
-//=============================================================================
-
 #ifndef TAO_UPCALL_WRAPPER_H
 #define TAO_UPCALL_WRAPPER_H
 
@@ -70,12 +65,11 @@ namespace TAO
      *                       argument list.
      * @param command        @c Command object that performs the
      *                       actual upcall into the servant.
-     * @param servant_upcall Object containing information for POA
-     *                       that dispatched the servant.
-     * @param exceptions     Array of user exceptions the operation
-     *                       may raise.
-     * @param nexceptions    The number of exceptions in the operation
-     *                       user exception array.
+     * @note When interceptors are enabled,
+     *       @c servant_upcall contains information for the POA that
+     *       dispatched the servant, @c exceptions lists the user
+     *       exceptions the operation may raise, and @c nexceptions
+     *       gives the number of exceptions in that array.
      */
     void upcall (TAO_ServerRequest & server_request,
                  TAO::Argument * const args[],

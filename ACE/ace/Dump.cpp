@@ -17,19 +17,19 @@ ACE_Dumpable::~ACE_Dumpable ()
   ACE_TRACE ("ACE_Dumpable::~ACE_Dumpable");
 }
 
-ACE_Dumpable::ACE_Dumpable (const void *this_ptr)
+ACE_Dumpable::ACE_Dumpable (void const *this_ptr)
   : this_ (this_ptr)
 {
   ACE_TRACE ("ACE_Dumpable::ACE_Dumpable");
 }
 
-ACE_Dumpable_Ptr::ACE_Dumpable_Ptr (const ACE_Dumpable *dumper)
+ACE_Dumpable_Ptr::ACE_Dumpable_Ptr (ACE_Dumpable const *dumper)
   : dumper_ (dumper)
 {
   ACE_TRACE ("ACE_Dumpable_Ptr::ACE_Dumpable_Ptr");
 }
 
-const ACE_Dumpable *
+ACE_Dumpable const *
 ACE_Dumpable_Ptr::operator->() const
 {
   ACE_TRACE ("ACE_Dumpable_Ptr::operator->");
@@ -37,7 +37,7 @@ ACE_Dumpable_Ptr::operator->() const
 }
 
 void
-ACE_Dumpable_Ptr::operator= (const ACE_Dumpable *dumper) const
+ACE_Dumpable_Ptr::operator= (ACE_Dumpable const *dumper) const
 {
   ACE_TRACE ("ACE_Dumpable_Ptr::operator=");
   if (this->dumper_ != dumper)
@@ -48,8 +48,6 @@ ACE_Dumpable_Ptr::operator= (const ACE_Dumpable *dumper) const
 }
 
 ACE_ODB::ACE_ODB ()
-  // Let the Tuple default constructor initialize object_table_
-  : current_size_ (0)
 {
   ACE_TRACE ("ACE_ODB::ACE_ODB");
 }
@@ -69,9 +67,11 @@ ACE_ODB::instance ()
         ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, *lock, nullptr));
 
       if (ACE_ODB::instance_ == nullptr)
-        ACE_NEW_RETURN (ACE_ODB::instance_,
-                        ACE_ODB,
-                        nullptr);
+        {
+          ACE_NEW_RETURN (ACE_ODB::instance_,
+                          ACE_ODB,
+                          nullptr);
+        }
     }
 
   return ACE_ODB::instance_;
@@ -81,11 +81,13 @@ void
 ACE_ODB::dump_objects ()
 {
   ACE_TRACE ("ACE_ODB::dump_objects");
-  for (int i = 0; i < this->current_size_; i++)
+  for (int i = 0; i < this->current_size_; ++i)
     {
       if (this->object_table_[i].this_ != nullptr)
-        // Dump the state of the object.
-        this->object_table_[i].dumper_->dump ();
+        {
+          // Dump the state of the object.
+          this->object_table_[i].dumper_->dump ();
+        }
     }
 }
 
@@ -93,16 +95,18 @@ ACE_ODB::dump_objects ()
 // duplicates and simply overwrites them.
 
 void
-ACE_ODB::register_object (const ACE_Dumpable *dumper)
+ACE_ODB::register_object (ACE_Dumpable const *dumper)
 {
   ACE_TRACE ("ACE_ODB::register_object");
   int i;
   int slot = 0;
 
-  for (i = 0; i < this->current_size_; i++)
+  for (i = 0; i < this->current_size_; ++i)
     {
       if (this->object_table_[i].this_ == nullptr)
-        slot = i;
+        {
+          slot = i;
+        }
       else if (this->object_table_[i].this_ == dumper->this_)
         {
           slot = i;
@@ -120,15 +124,17 @@ ACE_ODB::register_object (const ACE_Dumpable *dumper)
 }
 
 void
-ACE_ODB::remove_object (const void *this_ptr)
+ACE_ODB::remove_object (void const *this_ptr)
 {
   ACE_TRACE ("ACE_ODB::remove_object");
   int i;
 
-  for (i = 0; i < this->current_size_; i++)
+  for (i = 0; i < this->current_size_; ++i)
     {
       if (this->object_table_[i].this_ == this_ptr)
+      {
         break;
+      }
     }
 
   if (i < this->current_size_)
@@ -138,6 +144,6 @@ ACE_ODB::remove_object (const void *this_ptr)
     }
 }
 
-ACE_ODB *ACE_ODB::instance_ = nullptr;
+ACE_ODB *ACE_ODB::instance_ {};
 
 ACE_END_VERSIONED_NAMESPACE_DECL

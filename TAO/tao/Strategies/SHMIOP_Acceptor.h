@@ -1,5 +1,3 @@
-// -*- C++ -*-
-// ===================================================================
 /**
  *  @file   SHMIOP_Acceptor.h
  *
@@ -7,7 +5,6 @@
  *
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  */
-// ===================================================================
 
 #ifndef TAO_SHMIOP_ACCEPTOR_H
 #define TAO_SHMIOP_ACCEPTOR_H
@@ -28,7 +25,9 @@
 #include "ace/Acceptor.h"
 #include "ace/MEM_Acceptor.h"
 #include "tao/GIOP_Message_Version.h"
-// TAO SHMIOP_Acceptor concrete call definitions
+
+#include <memory>
+#include <string>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -40,10 +39,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Strategies_Export TAO_SHMIOP_Acceptor : public TAO_Acceptor
 {
 public:
-  /// Constructor.
   TAO_SHMIOP_Acceptor ();
 
-  /// Destructor.
   ~TAO_SHMIOP_Acceptor ();
 
   using TAO_SHMIOP_BASE_ACCEPTOR = TAO_Strategy_Acceptor<TAO_SHMIOP_Connection_Handler, ACE_MEM_ACCEPTOR>;
@@ -56,7 +53,7 @@ public:
    *
    * Please check the documentation in Transport_Acceptor.h for details.
    */
-  //@{
+  /// @{
   int open (TAO_ORB_Core *orb_core,
                     ACE_Reactor *reactor,
                     int version_major,
@@ -73,12 +70,12 @@ public:
                               TAO_MProfile &mprofile,
                       CORBA::Short priority) override;
 
-  int is_collocated (TAO_Endpoint const *endpoint) override;
+  bool is_collocated (TAO_Endpoint const *endpoint) override;
   CORBA::ULong endpoint_count () override;
 
   int object_key (IOP::TaggedProfile &profile,
                   TAO::ObjectKey &key) override;
-  //@}
+  /// @}
 
   /// Set the MMAP options the MEM_Stream this acceptor creates will
   /// use.
@@ -110,7 +107,7 @@ protected:
   ///    For example it the IP address is INADDR_ANY
   ///    (0.0.0.0) then there will be possibly a different hostname for
   ///    each interface.
-  ACE_CString host_;
+  std::string host_;
 
   /// A local endpoint.
   ACE_MEM_Addr address_;
@@ -131,9 +128,9 @@ private:
   TAO_SHMIOP_BASE_ACCEPTOR base_acceptor_;
 
   /// Acceptor strategies.
-  TAO_SHMIOP_CREATION_STRATEGY *creation_strategy_ {};
-  TAO_SHMIOP_CONCURRENCY_STRATEGY *concurrency_strategy_ {};
-  TAO_SHMIOP_ACCEPT_STRATEGY *accept_strategy_ {};
+  std::unique_ptr<TAO_SHMIOP_CREATION_STRATEGY> creation_strategy_;
+  std::unique_ptr<TAO_SHMIOP_CONCURRENCY_STRATEGY> concurrency_strategy_;
+  std::unique_ptr<TAO_SHMIOP_ACCEPT_STRATEGY> accept_strategy_;
 
   /// Determine the prefix (include path name) of the mmap file.
   ACE_TCHAR const *mmap_file_prefix_ {};

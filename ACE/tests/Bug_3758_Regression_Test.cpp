@@ -1,15 +1,7 @@
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = DESCRIPTION
-//    This simple test exercises ACE_OS::fileno.
-//
-// = AUTHOR
-//    Olli Savia <ops@iki.fi>
-//
-// ============================================================================
+/// @file Bug_3758_Regression_Test.cpp
+/// This simple test exercises ACE_OS::fileno.
+///
+/// @author Olli Savia <ops@iki.fi>
 
 #include "test_config.h"
 #include "ace/OS_NS_stdio.h"
@@ -97,10 +89,11 @@ run_main (int, ACE_TCHAR *[])
   ACE_START_TEST (ACE_TEXT ("Bug_3758_Regression_Test"));
 
   int status = 0;
-  int result;
 
-  if ((result = fileno_test ()) != 0)
+  if (fileno_test () != 0)
+  {
     status = -1;
+  }
 
   ACE_END_TEST;
   return status;

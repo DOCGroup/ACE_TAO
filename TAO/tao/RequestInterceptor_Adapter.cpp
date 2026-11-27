@@ -1,13 +1,9 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    RequestInterceptor_Adapter.cpp
  *
  *   This file an adapter class to simplify the support of
  *   interceptors.
  */
-//=============================================================================
 
 #include "tao/RequestInterceptor_Adapter.h"
 

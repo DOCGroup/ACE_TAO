@@ -1,13 +1,8 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
  *  @file    SMR_Client.h
  *
  *  @author Douglas C. Schmidt
  */
-//=============================================================================
-
 
 #ifndef _SMR_CLIENT_H
 #define _SMR_CLIENT_H
@@ -17,8 +12,8 @@
 class SMR_Client : public SM_Client
 {
 public:
-  SMR_Client (short port_number);
-  virtual ~SMR_Client ();
+  explicit SMR_Client (short port_number);
+  ~SMR_Client () override = default;
 };
 
 #endif /* _SMR_CLIENT_H */

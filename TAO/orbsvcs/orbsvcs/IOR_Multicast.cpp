@@ -5,6 +5,9 @@
 #include "ace/SOCK_Connector.h"
 #include "orbsvcs/Log_Macros.h"
 
+#include <cstring>
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_HANDLE
@@ -24,16 +27,18 @@ TAO_IOR_Multicast::TAO_IOR_Multicast (char const *ior,
                   port,
                   mcast_addr,
                   service_id) == -1)
-    ORBSVCS_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("TAO_IOR_Multicast")));
+    {
+      ORBSVCS_ERROR ((LM_ERROR,
+                      ACE_TEXT ("%p\n"),
+                      ACE_TEXT ("TAO_IOR_Multicast")));
+    }
 }
 
 TAO_IOR_Multicast::~TAO_IOR_Multicast ()
 {
   if (ior_.length () > 0 && this->mcast_dgram_.leave (this->mcast_addr_) == -1)
     {
-    ORBSVCS_ERROR ((LM_ERROR, "%p\n", "~TAO_IOR_Multicast()"));
+    ORBSVCS_ERROR ((LM_ERROR, "%p\n", ACE_TEXT ("~TAO_IOR_Multicast()")));
     }
 }
 
@@ -44,7 +49,9 @@ TAO_IOR_Multicast::init (char const *ior,
                          TAO_Service_ID service_id)
 {
   if (this->mcast_addr_.set (port, mcast_addr) == -1)
-    ORBSVCS_ERROR_RETURN ((LM_ERROR, "TAO_IOR_Multicast::init() %p\n", "set"), -1);
+  {
+    ORBSVCS_ERROR_RETURN ((LM_ERROR, "TAO_IOR_Multicast::init() %p\n", ACE_TEXT ("set")), -1);
+  }
   return this->common_init (ior, service_id);
 }
 
@@ -54,10 +61,10 @@ TAO_IOR_Multicast::init (char const *ior,
                          TAO_Service_ID service_id)
 {
   // Look for a '@' incase a nic is specified.
-  char const *tmpnic = ACE_OS::strchr (mcast_addr, '@');
+  char const *tmpnic = std::strchr (mcast_addr, '@');
 
   CORBA::String_var actual_mcast_addr;
-  CORBA::ULong length_addr;
+  CORBA::ULong length_addr {};
 
   if (tmpnic != nullptr)
     {
@@ -65,9 +72,7 @@ TAO_IOR_Multicast::init (char const *ior,
       length_addr = static_cast<CORBA::ULong> (tmpnic - mcast_addr + 1);
       actual_mcast_addr = CORBA::string_alloc (length_addr);
 
-      ACE_OS::strncpy (actual_mcast_addr.inout (),
-                       mcast_addr,
-                       length_addr - 1);
+      std::memcpy (actual_mcast_addr.inout (), mcast_addr, length_addr - 1);
 
       actual_mcast_addr[length_addr - 1] = '\0';
 
@@ -77,16 +82,18 @@ TAO_IOR_Multicast::init (char const *ior,
   else
     {
       actual_mcast_addr =
-        CORBA::string_alloc (static_cast<CORBA::ULong> (ACE_OS::strlen (mcast_addr)));
+        CORBA::string_alloc (static_cast<CORBA::ULong> (std::strlen (mcast_addr)));
 
       actual_mcast_addr = mcast_addr;
     }
 
   if (this->mcast_addr_.set (actual_mcast_addr.in ()) == -1)
-    ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "set"),
-                      -1);
+    {
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                             "%p\n",
+                             ACE_TEXT ("set")),
+                            -1);
+    }
 
   return this->common_init (ior, service_id);
 }
@@ -99,15 +106,17 @@ TAO_IOR_Multicast::common_init (char const *ior,
   this->ior_ = ior;
 
   if (this->response_addr_.set (static_cast<u_short> (0)) == -1)
-    ORBSVCS_ERROR_RETURN ((LM_ERROR,
-    "TAO_IOR_Multicast::common_init() %p\n",
-                       "set"),
-                      -1);
+    {
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                             "TAO_IOR_Multicast::common_init() %p\n",
+                             ACE_TEXT ("set")),
+                            -1);
+    }
   else if (this->response_.open (this->response_addr_) == -1)
     {
       ORBSVCS_ERROR_RETURN ((LM_ERROR,
                          "%p\n",
-                         "set"),
+                         ACE_TEXT ("set")),
                         -1);
     }
 
@@ -117,22 +126,26 @@ TAO_IOR_Multicast::common_init (char const *ior,
       if (this->mcast_dgram_.join (this->mcast_addr_,
                                    1,
                                    ACE_TEXT_CHAR_TO_TCHAR(this->mcast_nic_.c_str())) == -1)
-      ORBSVCS_ERROR_RETURN ((LM_ERROR, "TAO_IOR_Multicast::common_init() %p\n", "join"),-1);
+      {
+        ORBSVCS_ERROR_RETURN ((LM_ERROR, "TAO_IOR_Multicast::common_init() %p\n", ACE_TEXT ("join")),-1);
+      }
     }
   else
     {
       if (this->mcast_dgram_.join (this->mcast_addr_) == -1)
-        ORBSVCS_ERROR_RETURN ((LM_ERROR,
-      "TAO_IOR_Multicast::common_init() %p\n",
-                           "subscribe"),
-                          -1);
+        {
+          ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                                 "TAO_IOR_Multicast::common_init() %p\n",
+                                 ACE_TEXT ("subscribe")),
+                                -1);
+        }
     }
   return 0;
 }
 
 int
-TAO_IOR_Multicast::handle_timeout (const ACE_Time_Value &,
-                                   const void *)
+TAO_IOR_Multicast::handle_timeout (ACE_Time_Value const &,
+                                   void const *)
 {
   return 0;
 }
@@ -141,14 +154,16 @@ int
 TAO_IOR_Multicast::handle_input (ACE_HANDLE)
 {
   if (TAO_debug_level > 0)
+  {
     ORBSVCS_DEBUG ((LM_DEBUG, "Entered TAO_IOR_Multicast::handle_input\n"));
+  }
 
   // The length of the service name string that follows.
-  CORBA::Short header;
+  CORBA::Short header {};
   // Port to which to reply.
-  ACE_UINT16 remote_port;
+  ACE_UINT16 remote_port {};
   // Name of the service for which the client is looking.
-  char service_name[BUFSIZ];
+  char service_name[BUFSIZ] {};
 
   ACE_INET_Addr remote_addr;
 
@@ -159,17 +174,21 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
                                        remote_addr,
                                        MSG_PEEK);
   if (n <= 0)
-    ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                       "TAO_IOR_Multicast::handle_input - peek %d\n",
-                       n),
-                      0);
+    {
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                             "TAO_IOR_Multicast::handle_input - peek %d\n",
+                             n),
+                            0);
+    }
   else if (ACE_NTOHS (header) <= 0)
-    ORBSVCS_ERROR_RETURN ((LM_ERROR,
-    "TAO_IOR_Multicast::handle_input() Header value < 1\n"),
-                      0);
+    {
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                             "TAO_IOR_Multicast::handle_input() Header value < 1\n"),
+                            0);
+    }
 
   // Receive full client multicast request.
-  int const iovcnt = 3;
+  constexpr int iovcnt { 3 };
   iovec iov[iovcnt];
 
   iov[0].iov_base = reinterpret_cast<char *> (&header);
@@ -184,10 +203,12 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
                                iovcnt,
                                remote_addr);
   if (n <= 0)
-    ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                       "TAO_IOR_Multicast::handle_input recv = %d\n",
-                       n),
-                      0);
+    {
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                             "TAO_IOR_Multicast::handle_input recv = %b\n",
+                             n),
+                            0);
+    }
 
   if (TAO_debug_level > 0)
     {
@@ -202,16 +223,11 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
                   ACE_NTOHS (remote_port)));
     }
 
-  if (ACE_OS::strcmp (service_name,
-                      "NameService") != 0
-      && ACE_OS::strcmp (service_name,
-                         "TradingService") != 0
-      && ACE_OS::strcmp (service_name,
-                         "ImplRepoService") != 0
-      && ACE_OS::strcmp (service_name,
-                         "InterfaceRepository") != 0
-      && ACE_OS::strcmp (service_name,
-                         "MCASTServer") != 0)
+  if (std::strcmp (service_name, "NameService") != 0
+      && std::strcmp (service_name, "TradingService") != 0
+      && std::strcmp (service_name, "ImplRepoService") != 0
+      && std::strcmp (service_name, "InterfaceRepository") != 0
+      && std::strcmp (service_name, "MCASTServer") != 0)
     {
       ORBSVCS_ERROR_RETURN ((LM_ERROR,
         "IOR_Multicast::connect() Unknown service requested.\n"),0);
@@ -238,9 +254,10 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
       // connection using the IPv6 loopback address instead.
       ACE_INET_Addr peer_tmp (peer_addr);
       peer_tmp.set_port_number (static_cast<u_short> (0));
-      ACE_INET_Addr *tmp = nullptr;
-      size_t cnt = 0;
+      ACE_INET_Addr* tmp {};
+      size_t cnt {};
       int const err = ACE::get_ip_interfaces (cnt, tmp);
+      std::unique_ptr<ACE_INET_Addr[]> safe_tmp { tmp };
       if (err == 0)
         {
           for (size_t i = 0; i < cnt; ++i)
@@ -252,8 +269,6 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
                 break;
               }
           }
-
-          delete[] tmp;
         }
     }
 #endif /* ACE_HAS_IPV6 */
@@ -269,7 +284,9 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
 
   // Connect.
   if (connector.connect (stream, peer_addr) == -1)
+  {
     ORBSVCS_ERROR_RETURN ((LM_ERROR, "IOR_Multicast::connect failed\n"), 0);
+  }
   // Send the IOR back to the client.  (Send iovec, which contains ior
   // length as the first element, and ior itself as the second.)
 
@@ -278,7 +295,7 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
     ACE_HTONS (static_cast<CORBA::UShort> (this->ior_.length () + 1));
 
   // Vector to be sent.
-  int const cnt = 2;
+  constexpr int cnt { 2 };
   iovec iovp[cnt];
 
   // The length of ior to be sent.
@@ -295,17 +312,21 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
 
   // Check for error.
   if (result == -1)
+  {
     ORBSVCS_ERROR_RETURN ((LM_ERROR, "IOR_Multicast::send failed\n"), 0);
+  }
 
   if (TAO_debug_level > 0)
-    ORBSVCS_DEBUG ((LM_DEBUG,
-    "(%P|%t) TAO_IOR_Multicast::handle_input() ior_: <%s>\n"
-                "sent to %s:%u.\n"
-                "result from send = %d\n",
-                this->ior_.c_str (),
-                peer_addr.get_host_name (),
-                peer_addr.get_port_number (),
-                result));
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG,
+                      "(%P|%t) TAO_IOR_Multicast::handle_input() ior_: <%C>\n"
+                      "sent to %C:%u.\n"
+                      "result from send = %b\n",
+                      this->ior_.c_str (),
+                      peer_addr.get_host_name (),
+                      peer_addr.get_port_number (),
+                      result));
+    }
   return 0;
 }
 

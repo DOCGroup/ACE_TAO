@@ -34,14 +34,13 @@ int ACE_SOCK_Netlink::open (ACE_Netlink_Addr &local,
   }
 
   if (ACE_OS::bind(this->get_handle(),
-                   (sockaddr*)local.get_addr(),
+                   static_cast<sockaddr *> (local.get_addr ()),
                    local.get_addr_size())  == -1 ) {
     ACE_TRACE ("ACE_SOCK_Netlink::open failed to bind socket");
     return -1;
   }
   return 0;
 }
-
 
 ACE_SOCK_Netlink::ACE_SOCK_Netlink (ACE_Netlink_Addr &local,
                                     int protocol_family,
@@ -51,24 +50,26 @@ ACE_SOCK_Netlink::ACE_SOCK_Netlink (ACE_Netlink_Addr &local,
 
   if (this->open (local,
                   protocol_family,
-                  protocol)  == -1)
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACE_SOCK_Netlink")));
+                  protocol) == -1)
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("%p\n"),
+                     ACE_TEXT ("ACE_SOCK_Netlink")));
+    }
 }
 
 ssize_t
 ACE_SOCK_Netlink::send (const iovec iov[],
                         int n,
-                        const ACE_Addr &addr,
+                        ACE_Addr const &addr,
                         int flags) const
 {
   ACE_TRACE ("ACE_SOCK_Netlink::send");
   msghdr send_msg;
 
-  send_msg.msg_iov = (iovec *) iov;
+  send_msg.msg_iov = const_cast<iovec *> (iov);
   send_msg.msg_iovlen = n;
-  send_msg.msg_name = (char *) addr.get_addr ();
+  send_msg.msg_name = addr.get_addr ();
   send_msg.msg_namelen = addr.get_size ();
   send_msg.msg_control = nullptr;
   send_msg.msg_controllen = 0;
@@ -88,23 +89,25 @@ ACE_SOCK_Netlink::recv (iovec iov[],
   ACE_TRACE ("ACE_SOCK_Netlink::recv");
   msghdr recv_msg;
 
-  recv_msg.msg_iov = (iovec *) iov;
+  recv_msg.msg_iov = iov;
   recv_msg.msg_iovlen = n;
-  recv_msg.msg_name = (char *) addr.get_addr ();
+  recv_msg.msg_name = addr.get_addr ();
   recv_msg.msg_namelen = addr.get_size ();
   recv_msg.msg_control = nullptr;
   recv_msg.msg_controllen = 0;
   recv_msg.msg_flags = 0;
 
-  ssize_t status = ACE_OS::recvmsg (this->get_handle (),
+  ssize_t const status = ACE_OS::recvmsg (this->get_handle (),
                                     &recv_msg,
                                     flags);
 
   if (recv_msg.msg_flags & MSG_TRUNC)
+  {
     return -1;
+  }
 
   addr.set_size (recv_msg.msg_namelen);
-  addr.set_type (((sockaddr_in *) addr.get_addr())->sin_family);
+  addr.set_type (reinterpret_cast<sockaddr_in *> (addr.get_addr ())->sin_family);
 
   return status;
 }

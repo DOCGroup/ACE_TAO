@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file  ORB_Constants.h
  *
@@ -9,7 +6,6 @@
  *  @author  Jeff Parsons
  *  @author  Ossama Othman
  */
-//=============================================================================
 
 #ifndef TAO_ORB_CONSTANTS_H
 #define TAO_ORB_CONSTANTS_H
@@ -24,7 +20,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// A hash define for the regular two way operation.
+/// A hash define for the regular two way operation.
 #define TAO_TWOWAY_RESPONSE_FLAG 255
 
 namespace CORBA
@@ -69,7 +65,7 @@ namespace TAO
    *
    * @see @c MAX_MINOR_CODE
    */
-  const CORBA::ULong VMCID = 0x54410000U;
+  CORBA::ULong const VMCID = 0x54410000U;
 
   /// Maximum allowed TAO system exception minor code.
   /**
@@ -81,7 +77,7 @@ namespace TAO
    *
    * @see @c VMCID
    */
-  const CORBA::ULong MAX_MINOR_CODE = VMCID | 0xfffU;
+  CORBA::ULong const MAX_MINOR_CODE = VMCID | 0xfffU;
 
   /// TAO Vendor @c PolicyType Valueset ID (VPVID)
   /**
@@ -103,7 +99,7 @@ namespace TAO
    *
    * @see VMCID
    */
-  const CORBA::ULong VPVID = VMCID;
+  CORBA::ULong const VPVID = VMCID;
 }
 
 /// A dummy service context that is inserted in the service context
@@ -112,7 +108,7 @@ namespace TAO
 /**
  * @note This is *extremely* brittle but works.
  */
-const CORBA::ULong TAO_SVC_CONTEXT_ALIGN = 0x54414f00U;
+CORBA::ULong const TAO_SVC_CONTEXT_ALIGN = 0x54414f00U;
 
 /**
  * @name TAO-Specific Profile IDs
@@ -124,36 +120,38 @@ const CORBA::ULong TAO_SVC_CONTEXT_ALIGN = 0x54414f00U;
  *
  * @note The values below are subject to change at any point.
  */
-//@{
+/// @{
+
 /// Local IPC (Unix Domain)
-const CORBA::ULong TAO_TAG_UIOP_PROFILE = 0x54414f00U;
+CORBA::ULong const TAO_TAG_UIOP_PROFILE = 0x54414f00U;
 
 /// ATM/AAL5
 // const CORBA::ULong TAO_TAG_AIOP_PROFILE = 0x54414f01U;
 
 /// Shared memory
-const CORBA::ULong TAO_TAG_SHMEM_PROFILE = 0x54414f02U;
+CORBA::ULong const TAO_TAG_SHMEM_PROFILE = 0x54414f02U;
 
 /// Message Queue
 // const CORBA::ULong TAO_TAG_MSGQ_PROFILE = 0x54414f03U;
 
 /// UDP
-const CORBA::ULong TAO_TAG_DIOP_PROFILE = 0x54414f04U;
+CORBA::ULong const TAO_TAG_DIOP_PROFILE = 0x54414f04U;
 
 /// COIOP
-const CORBA::ULong TAO_TAG_COIOP_PROFILE = 0x54414f05U;
+CORBA::ULong const TAO_TAG_COIOP_PROFILE = 0x54414f05U;
 
 /// SCIOP
-const CORBA::ULong TAO_TAG_SCIOP_PROFILE = 0x54414f0EU;
+CORBA::ULong const TAO_TAG_SCIOP_PROFILE = 0x54414f0EU;
 
 /// Tandem (HP) File System Protocol
-const CORBA::ULong TAO_TAG_NSKFS_PROFILE = 0x00003039U;
+CORBA::ULong const TAO_TAG_NSKFS_PROFILE = 0x00003039U;
 
 /// Tandem (HP) Pathsend Protocol
-const CORBA::ULong TAO_TAG_NSKPW_PROFILE = 0x0000303AU;
+CORBA::ULong const TAO_TAG_NSKPW_PROFILE = 0x0000303AU;
 
-// Default DiffServ CodePoint.
-const int IPDSFIELD_DSCP_DEFAULT = 0x00;
+/// Default DiffServ CodePoint.
+int const IPDSFIELD_DSCP_DEFAULT = 0x00;
+/// @}
 
 /**
  * @name Minor Code Encoding
@@ -165,37 +163,37 @@ const int IPDSFIELD_DSCP_DEFAULT = 0x00;
  *          T           A        0    location      errno
  * @endverbatim
  **/
-//@{
+/// @{
 /**
  * @name Location Encoding
  *
  * The location encoding is the 5 bits, after the @ errno encoding.
  */
-//@{
-const CORBA::ULong TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE = (0x01U << 7);
-const CORBA::ULong TAO_INVOCATION_SEND_REQUEST_MINOR_CODE     = (0x02U << 7);
-const CORBA::ULong TAO_POA_DISCARDING                         = (0x03U << 7);
-const CORBA::ULong TAO_POA_HOLDING                            = (0x04U << 7);
-const CORBA::ULong TAO_UNHANDLED_SERVER_CXX_EXCEPTION         = (0x05U << 7);
-const CORBA::ULong TAO_INVOCATION_RECV_REQUEST_MINOR_CODE     = (0x06U << 7);
-const CORBA::ULong TAO_CONNECTOR_REGISTRY_NO_USABLE_PROTOCOL  = (0x07U << 7);
-const CORBA::ULong TAO_MPROFILE_CREATION_ERROR                = (0x08U << 7);
-const CORBA::ULong TAO_TIMEOUT_CONNECT_MINOR_CODE             = (0x09U << 7);
-const CORBA::ULong TAO_TIMEOUT_SEND_MINOR_CODE                = (0x0AU << 7);
-const CORBA::ULong TAO_TIMEOUT_RECV_MINOR_CODE                = (0x0BU << 7);
-const CORBA::ULong TAO_IMPLREPO_MINOR_CODE                    = (0x0CU << 7);
-const CORBA::ULong TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE   = (0x0DU << 7);
-const CORBA::ULong TAO_ORB_CORE_INIT_LOCATION_CODE            = (0x0EU << 7);
-const CORBA::ULong TAO_POLICY_NARROW_CODE                     = (0x0FU << 7);
-const CORBA::ULong TAO_GUARD_FAILURE                          = (0x10U << 7);
-const CORBA::ULong TAO_POA_BEING_DESTROYED                    = (0x11U << 7);
-const CORBA::ULong TAO_POA_INACTIVE                           = (0x12U << 7);
-const CORBA::ULong TAO_CONNECTOR_REGISTRY_INIT_LOCATION_CODE  = (0x13U << 7);
-const CORBA::ULong TAO_AMH_REPLY_LOCATION_CODE                = (0x14U << 7);
-const CORBA::ULong TAO_RTCORBA_THREAD_CREATION_LOCATION_CODE  = (0x15U << 7);
+/// @{
+CORBA::ULong const TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE = (0x01U << 7);
+CORBA::ULong const TAO_INVOCATION_SEND_REQUEST_MINOR_CODE     = (0x02U << 7);
+CORBA::ULong const TAO_POA_DISCARDING                         = (0x03U << 7);
+CORBA::ULong const TAO_POA_HOLDING                            = (0x04U << 7);
+CORBA::ULong const TAO_UNHANDLED_SERVER_CXX_EXCEPTION         = (0x05U << 7);
+CORBA::ULong const TAO_INVOCATION_RECV_REQUEST_MINOR_CODE     = (0x06U << 7);
+CORBA::ULong const TAO_CONNECTOR_REGISTRY_NO_USABLE_PROTOCOL  = (0x07U << 7);
+CORBA::ULong const TAO_MPROFILE_CREATION_ERROR                = (0x08U << 7);
+CORBA::ULong const TAO_TIMEOUT_CONNECT_MINOR_CODE             = (0x09U << 7);
+CORBA::ULong const TAO_TIMEOUT_SEND_MINOR_CODE                = (0x0AU << 7);
+CORBA::ULong const TAO_TIMEOUT_RECV_MINOR_CODE                = (0x0BU << 7);
+CORBA::ULong const TAO_IMPLREPO_MINOR_CODE                    = (0x0CU << 7);
+CORBA::ULong const TAO_ACCEPTOR_REGISTRY_OPEN_LOCATION_CODE   = (0x0DU << 7);
+CORBA::ULong const TAO_ORB_CORE_INIT_LOCATION_CODE            = (0x0EU << 7);
+CORBA::ULong const TAO_POLICY_NARROW_CODE                     = (0x0FU << 7);
+CORBA::ULong const TAO_GUARD_FAILURE                          = (0x10U << 7);
+CORBA::ULong const TAO_POA_BEING_DESTROYED                    = (0x11U << 7);
+CORBA::ULong const TAO_POA_INACTIVE                           = (0x12U << 7);
+CORBA::ULong const TAO_CONNECTOR_REGISTRY_INIT_LOCATION_CODE  = (0x13U << 7);
+CORBA::ULong const TAO_AMH_REPLY_LOCATION_CODE                = (0x14U << 7);
+CORBA::ULong const TAO_RTCORBA_THREAD_CREATION_LOCATION_CODE  = (0x15U << 7);
 // *Don't* use TAO_<location>_MINOR_CODE greater than 0x1FU!
-//@}
-//@}
+/// @}
+/// @}
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

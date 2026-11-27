@@ -73,12 +73,11 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 class AST_Expression;
 
-// Representation of string declaration.
-// A string type is represented by a maximum size.
-
+/// Represents a string type by its maximum size.
 class TAO_IDL_FE_Export AST_String : public virtual AST_ConcreteType
 {
 public:
+  AST_String () = delete;
   AST_String (AST_Decl::NodeType nt,
               UTL_ScopedName *n,
               AST_Expression *max_size,
@@ -108,11 +107,11 @@ public:
 private:
   // Data.
 
+  /// String maximum size.
   std::unique_ptr<AST_Expression> pd_max_size;
-  // String maximum size.
 
+  /// Width of the string.
   size_t pd_width;
-  // Width of string.
 };
 
 #endif           // _AST_STRING_AST_STRING_HH

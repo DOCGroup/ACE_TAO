@@ -1,5 +1,3 @@
-/* -*- C++ -*-  */
-
 #ifndef TEST_I_H_
 #define TEST_I_H_
 
@@ -14,10 +12,8 @@ class Terminator;
 class  Test_i : public virtual POA_Test
 {
 public:
-  //Constructor
   Test_i ();
 
-  //Destructor
   virtual ~Test_i ();
 
   virtual void foo ();

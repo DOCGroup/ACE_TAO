@@ -1,6 +1,8 @@
 // server.cpp
 // This version uses the Implementation Repository.
 
+#include <string>
+
 #include "Test_i.h"
 #include "Terminator.h"
 
@@ -16,13 +18,12 @@ namespace
 {
   ACE_CString toStr(int n)
   {
-    char buf[20];
-    return ACE_OS::itoa(n, buf, 10);
+    return ACE_CString (std::to_string (n).c_str ());
   }
 }
 
 PortableServer::POA_ptr
-createPOA(PortableServer::POA_ptr root_poa, const char* poa_name)
+createPOA(PortableServer::POA_ptr root_poa, char const *poa_name)
 {
   PortableServer::LifespanPolicy_var life =
     root_poa->create_lifespan_policy(PortableServer::PERSISTENT);
@@ -89,8 +90,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     Terminator terminator;
     if (terminator.open (0) == -1)
-      ACE_ERROR_RETURN((LM_ERROR,
-                        ACE_TEXT ("main Error opening terminator\n")),-1);
+      {
+        ACE_ERROR_RETURN((LM_ERROR,
+                          ACE_TEXT ("main Error opening terminator\n")),-1);
+      }
 
     PortableServer::Servant_var<Test_i> test_servant =
       new Test_i(server_num, terminator);
@@ -145,10 +148,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     orb->run();
 
-    root_poa->destroy(1,1);
+    root_poa->destroy(true,true);
     orb->destroy();
   }
-  catch(const CORBA::Exception& ex) {
+  catch(CORBA::Exception const & ex) {
     ex._tao_print_exception ("Server main()");
     return 1;
   }

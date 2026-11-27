@@ -23,16 +23,21 @@ public:
   /// This is here due to virtual functions.
   virtual ~TAO_NS_Control ();
 
+  TAO_NS_Control (TAO_NS_Control const&) = delete;
+  TAO_NS_Control (TAO_NS_Control&&) = delete;
+  TAO_NS_Control& operator= (TAO_NS_Control const&) = delete;
+  TAO_NS_Control& operator= (TAO_NS_Control&&) = delete;
+
   /// Return the name of this control object.
-  const ACE_CString& name () const;
+  ACE_CString const& name () const;
 
   /// Execute the control object.  Only return false if the command
   /// specified is not supported.
-  virtual bool execute (const char* command) = 0;
+  virtual bool execute (char const *command) = 0;
 
 protected:
   /// Construct a control object.
-  TAO_NS_Control (const char* name);
+  explicit TAO_NS_Control (char const *name);
 
 private:
   ACE_CString name_;

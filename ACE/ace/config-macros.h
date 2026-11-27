@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//==========================================================================
 /**
  *  @file   config-macros.h
  *
@@ -14,7 +11,6 @@
  *  Allows configuration values and macros to be used by some C
  *  language sources.
  */
-//==========================================================================
 
 #ifndef ACE_CONFIG_MACROS_H
 #define ACE_CONFIG_MACROS_H
@@ -80,20 +76,17 @@
 #   define ACE_INITIALIZE_MEMORY_BEFORE_USE
 # endif /* ACE_HAS_VALGRIND */
 
-// =========================================================================
-// Perfect Multicast filtering refers to RFC 3376, where a socket is only
-// delivered dgrams for groups joined even if it didn't bind the group
-// address.  We turn this option off by default, although most OS's
-// except for Windows probably lack perfect filtering.
-// =========================================================================
+/// Perfect multicast filtering refers to RFC 3376, where a socket is
+/// delivered datagrams only for groups it joined, even if it did not bind
+/// the group address. This option is disabled by default because most
+/// operating systems except Windows probably lack perfect filtering.
 
 # if !defined (ACE_LACKS_PERFECT_MULTICAST_FILTERING)
 #   define ACE_LACKS_PERFECT_MULTICAST_FILTERING 0
 # endif /* ACE_LACKS_PERFECT_MULTICAST_FILTERING */
 
-// =========================================================================
-// Enable/Disable Features By Default
-// =========================================================================
+/// @name Default feature settings
+/// @{
 
 # if !defined (ACE_HAS_POSITION_INDEPENDENT_POINTERS)
 #   define ACE_HAS_POSITION_INDEPENDENT_POINTERS 1
@@ -126,12 +119,11 @@
 # ifndef ACE_LACKS_POSIX_DEVCTL
 #   define ACE_LACKS_POSIX_DEVCTL
 # endif
+/// @}
 
-// =========================================================================
-// INLINE macros
-//
-// These macros handle all the inlining of code via the .i or .inl files
-// =========================================================================
+/// @name Inline macros
+/// @{
+/// These macros control inlining of code from the .i and .inl files.
 
 #if defined (ACE_LACKS_INLINE_FUNCTIONS) && !defined (ACE_NO_INLINE)
 #  define ACE_NO_INLINE
@@ -151,13 +143,12 @@
 #else
 #  define ACE_INLINE
 #endif /* __ACE_INLINE__ */
+/// @}
 
-// ============================================================================
-// EXPORT macros
-//
-// Since Win32 DLL's do not export all symbols by default, they must be
-// explicitly exported (which is done by *_Export macros).
-// ============================================================================
+/// @name Export macros
+/// @{
+/// Win32 DLLs do not export all symbols by default, so they must be
+/// explicitly exported through *_Export macros.
 
 // Win32 should have already defined the macros in config-win32-common.h
 #if !defined (ACE_HAS_CUSTOM_EXPORT_MACROS)
@@ -223,22 +214,19 @@
 // Someday, when template libraries are supported, we made need ...
 // ACE_DECLARE_EXPORT(template class, sometemplate) <class TYPE, class LOCK>;
 # define ACE_DECLARE_EXPORT(TS,ID) TS ACE_Export ID
+/// @}
 
-// ============================================================================
-// Cast macros
-//
-// These macros are used to choose between the old cast style and the new
-// *_cast<> operators
-// ============================================================================
+/// @name Cast macros
+/// @{
+/// These macros select between the old cast style and the *_cast<> operators.
 
 #   define ACE_sap_any_cast(TYPE)                                      reinterpret_cast<TYPE> (const_cast<ACE_Addr &> (ACE_Addr::sap_any))
+/// @}
 
-// ============================================================================
-// Compiler Silencing macros
-//
-// Some compilers complain about parameters that are not used.  This macro
-// should keep them quiet.
-// ============================================================================
+/// @name Compiler silencing macros
+/// @{
+/// Some compilers warn about unused parameters. These macros suppress
+/// those warnings.
 
 #if !defined (ACE_UNUSED_ARG)
 # if defined (__GNUC__) || defined (__BORLANDC__)
@@ -246,8 +234,8 @@
 # elif defined (__ghs__) || defined (__rational__) || defined (__USLC__) || defined (__DCC__) || defined (__PGI)
 // Some compilers complain about "statement with no effect" with (a).
 // This eliminates the warnings, and no code is generated for the null
-// conditional statement.  @note that may only be true if -O is enabled,
-// such as with GreenHills (ghs) 1.8.8.
+// conditional statement. This may only be true if -O is enabled, such as
+// with GreenHills (ghs) 1.8.8.
 #  define ACE_UNUSED_ARG(a) do {/* null */} while (&a == 0)
 # else /* __ghs__ ..... */
 #  define ACE_UNUSED_ARG(a) (a)
@@ -263,24 +251,23 @@
 #if !defined ACE_FALLTHROUGH
 #  define ACE_FALLTHROUGH [[fallthrough]]
 #endif /* ACE_FALLTHROUGH */
+/// @}
 
-// ============================================================================
-// ACE_ALLOC_HOOK* macros
-//
-// Macros to declare and define class-specific allocation operators.
-// ============================================================================
+/// @name ACE_ALLOC_HOOK macros
+/// @{
+/// These macros declare and define class-specific allocation operators.
 
 # if defined (ACE_HAS_ALLOC_HOOKS)
 #  define ACE_ALLOC_HOOK_DECLARE \
   void *operator new (size_t bytes); \
   void *operator new (size_t bytes, void *ptr); \
-  void *operator new (size_t bytes, const std::nothrow_t &) noexcept; \
+  void *operator new (size_t bytes, std::nothrow_t const &) noexcept; \
   void operator delete (void *ptr); \
-  void operator delete (void *ptr, const std::nothrow_t &); \
+  void operator delete (void *ptr, std::nothrow_t const &); \
   void *operator new[] (size_t size); \
   void operator delete[] (void *ptr); \
-  void *operator new[] (size_t size, const std::nothrow_t &) noexcept; \
-  void operator delete[] (void *ptr, const std::nothrow_t &)
+  void *operator new[] (size_t size, std::nothrow_t const &) noexcept; \
+  void operator delete[] (void *ptr, std::nothrow_t const &)
 
 #  define ACE_GENERIC_ALLOCS(MAKE_PREFIX, CLASS) \
   MAKE_PREFIX (void *, CLASS)::operator new (size_t bytes)        \
@@ -292,13 +279,23 @@
   }                                                               \
   MAKE_PREFIX (void *, CLASS)::operator new (size_t, void *ptr) { return ptr; }\
   MAKE_PREFIX (void *, CLASS)::operator new (size_t bytes, \
-                                             const std::nothrow_t &) noexcept \
+                                             std::nothrow_t const &) noexcept \
   { return ACE_Allocator::instance ()->malloc (bytes); } \
   MAKE_PREFIX (void, CLASS)::operator delete (void *ptr) \
-  { if (ptr) ACE_Allocator::instance ()->free (ptr); } \
+  { \
+    if (ptr) \
+      { \
+        ACE_Allocator::instance ()->free (ptr); \
+      } \
+  } \
   MAKE_PREFIX (void, CLASS)::operator delete (void *ptr, \
-                                              const std::nothrow_t &) \
-  { if (ptr) ACE_Allocator::instance ()->free (ptr); } \
+                                              std::nothrow_t const &) \
+  { \
+    if (ptr) \
+      { \
+        ACE_Allocator::instance ()->free (ptr); \
+      } \
+  } \
   MAKE_PREFIX (void *, CLASS)::operator new[] (size_t size)      \
   {                                                              \
     void *const ptr = ACE_Allocator::instance ()->malloc (size); \
@@ -307,13 +304,23 @@
     return ptr;                                                  \
   }                                                              \
   MAKE_PREFIX (void, CLASS)::operator delete[] (void *ptr) \
-  { if (ptr) ACE_Allocator::instance ()->free (ptr); } \
+  { \
+    if (ptr) \
+      { \
+        ACE_Allocator::instance ()->free (ptr); \
+      } \
+  } \
   MAKE_PREFIX (void *, CLASS)::operator new[] (size_t size, \
-                                               const std::nothrow_t &) noexcept\
+                                               std::nothrow_t const &) noexcept\
   { return ACE_Allocator::instance ()->malloc (size); } \
   MAKE_PREFIX (void, CLASS)::operator delete[] (void *ptr, \
-                                                const std::nothrow_t &) \
-  { if (ptr) ACE_Allocator::instance ()->free (ptr); }
+                                                std::nothrow_t const &) \
+  { \
+    if (ptr) \
+      { \
+        ACE_Allocator::instance ()->free (ptr); \
+      } \
+  }
 
 #  define ACE_ALLOC_HOOK_HELPER(RET, CLASS) RET CLASS
 #  define ACE_ALLOC_HOOK_DEFINE(CLASS) \
@@ -441,8 +448,8 @@
 #  define ACE_ALLOC_HOOK_DEFINE_Tcs(CLASS)
 #  define ACE_ALLOC_HOOK_DEFINE_Tmcc(CLASS)
 # endif /* ACE_HAS_ALLOC_HOOKS */
+/// @}
 
-// ============================================================================
 /**
  * ACE_OSCALL* macros
  *
@@ -461,7 +468,6 @@
  * does not hold for modern platforms, where that ability is
  * determined dynamically at run-time.
  */
-// ============================================================================
 
 #define ACE_OSCALL_RETURN(X,TYPE) \
   do \
@@ -499,9 +505,8 @@
   } while (0)
 #endif /* ACE_HAS_TR24731_2005_CRT */
 
-// ============================================================================
-// Fundamental types
-// ============================================================================
+/// @name Fundamental types
+/// @{
 
 #if defined (ACE_WIN32)
 
@@ -571,14 +576,13 @@ typedef ACE_THR_FUNC_RETURN (*ACE_THR_C_FUNC)(void *);
 # ifdef __cplusplus
 }
 # endif  /* __cplusplus */
+/// @}
 
-// ============================================================================
-// Macros for controlling the lifetimes of dlls loaded by ACE_DLL--including
-// all dlls loaded via the ACE Service Config framework.
-//
-// Please don't change these values or add new ones wantonly, since we use
-// the ACE_BIT_ENABLED, etc..., macros to test them.
-// ============================================================================
+/// @name ACE_DLL unload policy macros
+/// @{
+/// Control the lifetimes of DLLs loaded by ACE_DLL, including those loaded
+/// through the ACE Service Config framework. Avoid changing these values or
+/// adding new ones casually; ACE_BIT_ENABLED and related macros test them.
 
 // Per-process policy that unloads dlls eagerly.
 #define ACE_DLL_UNLOAD_POLICY_PER_PROCESS 0
@@ -597,10 +601,10 @@ typedef ACE_THR_FUNC_RETURN (*ACE_THR_C_FUNC)(void *);
 #define ACE_DLL_UNLOAD_POLICY(CLS,X) \
 extern "C" u_long CLS##_Export _get_dll_unload_policy () \
   { return X;}
+/// @}
 
-// ============================================================================
-// ACE_USES_CLASSIC_SVC_CONF macro
-// ============================================================================
+/// @name Service configuration format macros
+/// @{
 
 // For now, default is to use the classic svc.conf format.
 #if !defined (ACE_USES_CLASSIC_SVC_CONF)
@@ -616,18 +620,15 @@ extern "C" u_long CLS##_Export _get_dll_unload_policy () \
 # endif /* ACE_HAS_XML_SVC_CONF */
 #endif /* ACE_USES_CLASSIC_SVC_CONF */
 
-// ============================================================================
-// Default svc.conf file extension.
-// ============================================================================
 #if defined (ACE_USES_CLASSIC_SVC_CONF) && (ACE_USES_CLASSIC_SVC_CONF == 1)
 # define ACE_DEFAULT_SVC_CONF_EXT   ".conf"
 #else
 # define ACE_DEFAULT_SVC_CONF_EXT   ".conf.xml"
 #endif /* ACE_USES_CLASSIC_SVC_CONF && ACE_USES_CLASSIC_SVC_CONF == 1 */
+/// @}
 
-// ============================================================================
-// Miscellaneous macros
-// ============================================================================
+/// @name Miscellaneous macros
+/// @{
 
 #if !defined (ACE_OS_String)
 #  define ACE_OS_String ACE_OS
@@ -642,14 +643,12 @@ extern "C" u_long CLS##_Export _get_dll_unload_policy () \
 #  define ACE_OS_TLI ACE_OS
 #endif /* ACE_OS_TLI */
 
-// -------------------------------------------------------------------
 // Preprocessor symbols will not be expanded if they are
 // concatenated.  Force the preprocessor to expand them during the
 // argument prescan by calling a macro that itself calls another that
 // performs the actual concatenation.
 #define ACE_PREPROC_CONCATENATE_IMPL(A,B) A ## B
 #define ACE_PREPROC_CONCATENATE(A,B) ACE_PREPROC_CONCATENATE_IMPL(A,B)
-// -------------------------------------------------------------------
 
 /// If MPC is using a lib modifier this define will be set and this then
 /// is used by the service configurator framework
@@ -714,5 +713,7 @@ extern "C" u_long CLS##_Export _get_dll_unload_policy () \
 #ifndef ACE_LACKS_READDIR_R
 #  define ACE_LACKS_READDIR_R
 #endif
+
+/// @}
 
 #endif /* ACE_CONFIG_MACROS_H */

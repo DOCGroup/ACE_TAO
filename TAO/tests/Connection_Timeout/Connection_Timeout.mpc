@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*client): taoserver, messaging {
   exename = client
   avoids += ace_for_tao

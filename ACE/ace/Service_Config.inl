@@ -1,13 +1,12 @@
-// -*- C++ -*-
 #include "ace/OS_NS_string.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// This is the primary entry point into the ACE_Service_Config (the
-// constructor just handles simple initializations).
+/// This is the primary entry point into the ACE_Service_Config (the
+/// constructor just handles simple initializations).
 ACE_INLINE int
-ACE_Service_Config::open (const ACE_TCHAR program_name[],
-                          const ACE_TCHAR *logger_key,
+ACE_Service_Config::open (ACE_TCHAR const program_name[],
+                          ACE_TCHAR const *logger_key,
                           bool ignore_static_svcs,
                           bool ignore_default_svc_conf,
                           bool ignore_debug_flag)
@@ -18,7 +17,9 @@ ACE_Service_Config::open (const ACE_TCHAR program_name[],
                            ignore_static_svcs,
                            ignore_default_svc_conf,
                            ignore_debug_flag) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   return current()->open (program_name,
                           logger_key,
@@ -27,11 +28,10 @@ ACE_Service_Config::open (const ACE_TCHAR program_name[],
                           ignore_debug_flag);
 }
 
-
 ACE_INLINE int
 ACE_Service_Config::open (int argc,
                           ACE_TCHAR *argv[],
-                          const ACE_TCHAR *logger_key,
+                          ACE_TCHAR const *logger_key,
                           bool ignore_static_svcs,
                           bool ignore_default_svc_conf,
                           bool ignore_debug_flag)
@@ -39,14 +39,18 @@ ACE_Service_Config::open (int argc,
   ACE_TRACE ("ACE_Service_Config::open");
 
   if (singleton()->parse_args_i(argc, argv) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   if (singleton()->open_i (argv[0],
                            logger_key,
                            ignore_static_svcs,
                            ignore_default_svc_conf,
                            ignore_debug_flag) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   return current()->open (argc,
                           argv,
@@ -83,13 +87,12 @@ ACE_Service_Config::instance ()
   return ACE_Service_Config::current ();
 }
 
-// This method has changed to return the gestalt instead of the
-// container, underlying the service repository and defined
-// ACE_Service_Gestalt::insert (ACE_Static_Svc_Descriptor*). This way
-// the existing source code can keep using
-// ACE_Service_Config::static_svcs(), however now it is not necessary
-// to expose the repository storage *and* it is much easier to debug
-// service registration problems.
+/// This method now returns the service gestalt instead of exposing the
+/// underlying repository container. Existing code can continue to use
+/// ACE_Service_Config::static_svcs() through
+/// ACE_Service_Gestalt::insert (ACE_Static_Svc_Descriptor*), without
+/// exposing repository storage. This also makes service registration
+/// problems easier to debug.
 
 ACE_INLINE ACE_Service_Gestalt*
 ACE_Service_Config::static_svcs ()
@@ -119,8 +122,8 @@ ACE_Service_Config::signal_handler (ACE_Sig_Adapter *signal_handler)
 
 /// Initialize and activate a statically linked service.
 ACE_INLINE int
-ACE_Service_Config::initialize (const ACE_TCHAR *svc_name,
-                                const ACE_TCHAR *parameters)
+ACE_Service_Config::initialize (ACE_TCHAR const *svc_name,
+                                ACE_TCHAR const *parameters)
 {
   ACE_TRACE ("ACE_Service_Config::initialize");
   return ACE_Service_Config::current ()->initialize (svc_name,
@@ -130,8 +133,8 @@ ACE_Service_Config::initialize (const ACE_TCHAR *svc_name,
 /// Dynamically link the shared object file and retrieve a pointer to
 /// the designated shared object in this file.
 ACE_INLINE int
-ACE_Service_Config::initialize (const ACE_Service_Type *sr,
-                                const ACE_TCHAR *parameters)
+ACE_Service_Config::initialize (ACE_Service_Type const *sr,
+                                ACE_TCHAR const *parameters)
 {
   ACE_TRACE ("ACE_Service_Config::initialize");
   return ACE_Service_Config::current ()->initialize (sr, parameters);
@@ -139,14 +142,14 @@ ACE_Service_Config::initialize (const ACE_Service_Type *sr,
 
 /// Process a file containing a list of service configuration
 /// directives.
-ACE_INLINE int ACE_Service_Config::process_file (const ACE_TCHAR file[])
+ACE_INLINE int ACE_Service_Config::process_file (ACE_TCHAR const file[])
 {
   return ACE_Service_Config::current ()->process_file (file);
 }
 
 ///
 ACE_INLINE int
-ACE_Service_Config::process_directive (const ACE_TCHAR directive[])
+ACE_Service_Config::process_directive (ACE_TCHAR const directive[])
 {
   return ACE_Service_Config::current ()->process_directive (directive);
 }
@@ -160,7 +163,7 @@ ACE_Service_Config::process_directives ()
 }
 
 ACE_INLINE int
-ACE_Service_Config::process_directive (const ACE_Static_Svc_Descriptor &ssd,
+ACE_Service_Config::process_directive (ACE_Static_Svc_Descriptor const &ssd,
                                        bool force_replace)
 {
   return ACE_Service_Config::current ()->process_directive (ssd, force_replace);

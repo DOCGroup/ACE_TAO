@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Log_Record.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 // These need to go outside of the #ifdef to avoid problems with
 // circular dependencies...
@@ -50,7 +46,8 @@ public:
   /// Maximum size of a logging message with the verbose headers
   static constexpr int MAXVERBOSELOGMSGLEN = VERBOSE_LEN + MAXLOGMSGLEN;
 
-  // = Initialization
+  /// @name Initialization
+  /// @{
   /**
    * Create a Log_Record and set its priority, time stamp, and
    * process id.
@@ -60,15 +57,15 @@ public:
                   time_t time_stamp,
                   long pid);
   ACE_Log_Record (ACE_Log_Priority lp,
-                  const ACE_Time_Value &time_stamp,
+                  ACE_Time_Value const &time_stamp,
                   long pid);
+  /// @}
 
-  /// Default dtor.
   ~ACE_Log_Record ();
 
   /// Write the contents of the logging record to the appropriate
   /// FILE if the corresponding type is enabled.
-  int print (const ACE_TCHAR host_name[],
+  int print (ACE_TCHAR const host_name[],
              u_long verbose_flag,
 #if !defined (ACE_LACKS_STDERR)
              FILE *fp = stderr);
@@ -79,12 +76,12 @@ public:
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
   /// Write the contents of the logging record to the appropriate
   /// @a stream if the corresponding type is enabled.
-  int print (const ACE_TCHAR host_name[],
+  int print (ACE_TCHAR const host_name[],
              u_long verbose_flag,
              ACE_OSTREAM_TYPE &stream);
 #endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 
-  int format_msg (const ACE_TCHAR host_name[],
+  int format_msg (ACE_TCHAR const host_name[],
                   u_long verbose_flag,
                   ACE_TCHAR *verbose_msg,
                   size_t verbose_msg_size);
@@ -94,10 +91,10 @@ public:
    * ACE_Log_Priority parameter.  This is used for the verbose
    * printing format.
    */
-  static const ACE_TCHAR *priority_name (ACE_Log_Priority p);
+  static ACE_TCHAR const *priority_name (ACE_Log_Priority p);
 
-  /// IMPORTANT: @a name must be a statically allocated const ACE_TCHAR*
-  static void priority_name (ACE_Log_Priority p, const ACE_TCHAR *name);
+  /// IMPORTANT: @a name must be a statically allocated ACE_TCHAR const *
+  static void priority_name (ACE_Log_Priority p, ACE_TCHAR const *name);
 
   /// Get the type of the Log_Record.
   ACE_UINT32 type () const;
@@ -111,13 +108,13 @@ public:
   void category (ACE_Log_Category_TSS*);
 
   /**
-   * Get the priority of the Log_Record <type_>.  This is computed
-   * as the base 2 logarithm of <type_> (which must be a power of 2,
+   * Get the priority of the Log_Record @c type_.  This is computed
+   * as the base 2 logarithm of @c type_ (which must be a power of 2,
    * as defined by the enums in ACE_Log_Priority).
    */
   u_long priority () const;
 
-  /// Set the priority of the Log_Record <type_> (which must be a
+  /// Set the priority of the Log_Record @c type_ (which must be a
   /// power of 2, as defined by the enums in ACE_Log_Priority).
   void priority (u_long num);
 
@@ -133,7 +130,7 @@ public:
   ACE_Time_Value time_stamp () const;
 
   /// Set the time stamp of the Log_Record.
-  void time_stamp (const ACE_Time_Value &ts);
+  void time_stamp (ACE_Time_Value const &ts);
 
   /// Get the process id of the Log_Record.
   long pid () const;
@@ -142,12 +139,12 @@ public:
   void pid (long);
 
   /// Get the message data of the Log_Record.
-  const ACE_TCHAR *msg_data () const;
+  ACE_TCHAR const *msg_data () const;
 
   /// Set the message data of the record. If @a data is longer than the
   /// current msg_data_ buffer, a new msg_data_ buffer is allocated to
   /// fit. If such a reallocation fails, this method returns -1, else 0.
-  int msg_data (const ACE_TCHAR *data);
+  int msg_data (ACE_TCHAR const *data);
 
   /// Get the size of the message data of the Log_Record, including
   /// a byte for the NUL.
@@ -169,40 +166,39 @@ private:
    * correctly.  In addition, the field must be an ACE_INT32 in order
    * to be passed portable across platforms.
    */
-  ACE_INT32 length_;
+  ACE_INT32 length_ {};
 
   /// Type of logging record.
-  ACE_UINT32 type_;
+  ACE_UINT32 type_ {};
 
   /// Time that the logging record was generated.
-  time_t secs_;
-  ACE_UINT32 usecs_;
+  time_t secs_ {};
+  ACE_UINT32 usecs_ {};
 
   /// Id of process that generated the logging record.
-  ACE_UINT32 pid_;
+  ACE_UINT32 pid_ {};
 
-  /// Logging record data
-  ACE_TCHAR *msg_data_;   // Heap-allocated text message area
+  /// Heap-allocated logging record data.
+  ACE_TCHAR *msg_data_ {};
 
   /// Allocated size of msg_data_ in ACE_TCHARs
-  size_t msg_data_size_;
+  size_t msg_data_size_ {};
 
-  ///
-  ACE_Log_Category_TSS* category_;
+  ACE_Log_Category_TSS* category_ {};
 
-  ACE_Log_Record (const ACE_Log_Record&) = delete;
-  ACE_Log_Record& operator= (const ACE_Log_Record&) = delete;
-  ACE_Log_Record (ACE_Log_Record&&) = delete;
-  ACE_Log_Record& operator= (ACE_Log_Record&& rhs) = delete;
+  ACE_Log_Record (ACE_Log_Record const &) = delete;
+  ACE_Log_Record &operator= (ACE_Log_Record const &) = delete;
+  ACE_Log_Record (ACE_Log_Record &&) = delete;
+  ACE_Log_Record &operator= (ACE_Log_Record &&) = delete;
 };
 
 // Forward decls.
 class ACE_InputCDR;
 class ACE_OutputCDR;
 
-// iostream operators for ACE_Log_Record.
+/// iostream operators for ACE_Log_Record.
 ACE_Export int operator>> (ACE_InputCDR &cdr, ACE_Log_Record &log_record);
-ACE_Export int operator<< (ACE_OutputCDR &cdr, const ACE_Log_Record &log_record);
+ACE_Export int operator<< (ACE_OutputCDR &cdr, ACE_Log_Record const &log_record);
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 

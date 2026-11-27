@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   OS_NS_dlfcn.h
  *
@@ -8,7 +5,6 @@
  *  @author Jesper S. M|ller<stophph@diku.dk>
  *  @author and a cast of thousands...
  */
-//=============================================================================
 
 #ifndef ACE_OS_NS_DLFCN_H
 # define ACE_OS_NS_DLFCN_H
@@ -32,7 +28,8 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE_OS {
-  //@{ @name A set of wrappers for explicit dynamic linking.
+  /// @name A set of wrappers for explicit dynamic linking.
+  /// @{
   ACE_NAMESPACE_INLINE_FUNCTION
   int dlclose (ACE_SHLIB_HANDLE handle);
 
@@ -40,13 +37,13 @@ namespace ACE_OS {
   ACE_TCHAR *dlerror ();
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  ACE_SHLIB_HANDLE dlopen (const ACE_TCHAR *filename,
+  ACE_SHLIB_HANDLE dlopen (ACE_TCHAR const *filename,
                            int mode = ACE_DEFAULT_SHLIB_MODE);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   void *dlsym (ACE_SHLIB_HANDLE handle,
-               const ACE_TCHAR *symbol);
-  //@}
+               ACE_TCHAR const *symbol);
+  /// @}
 
 } /* namespace ACE_OS */
 

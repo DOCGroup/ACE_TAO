@@ -18,6 +18,7 @@
 #include "ace/INet/FTP_Response.h"
 #include "ace/INet/StreamHandler.h"
 #include "ace/INet/Sock_IOStream.h"
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -44,7 +45,12 @@ namespace ACE
 
               Session_T ();
 
-              Session_T (const ACE_Time_Value& timeout);
+              explicit Session_T (ACE_Time_Value const& timeout);
+
+              Session_T (Session_T const&) = delete;
+              Session_T& operator= (Session_T const&) = delete;
+              Session_T (Session_T&&) = delete;
+              Session_T& operator= (Session_T&&) = delete;
 
               virtual ~Session_T ();
 
@@ -52,13 +58,13 @@ namespace ACE
 
               bool is_new_connection () const;
 
-              void set_host (const ACE_CString& host, u_short port);
+              void set_host (ACE_CString const& host, u_short port);
 
-              void set_host (const ACE_CString& host);
+              void set_host (ACE_CString const& host);
 
               void set_port (u_short port);
 
-              const ACE_CString& get_host () const;
+              ACE_CString const& get_host () const;
 
               u_short get_port () const;
 
@@ -80,7 +86,7 @@ namespace ACE
 
               bool is_reactive () const;
 
-              const ACE_Time_Value& timeout () const;
+              ACE_Time_Value const& timeout () const;
 
               void get_local_addr (ACE_INET_Addr& loc_addr) const;
 
@@ -98,11 +104,13 @@ namespace ACE
               using sock_stream_type = ACE::IOS::Sock_IOStreamBase<ACE_SYNCH_USE>;
 
               bool reactive_;
-              connection_type* connection_;
-              sock_stream_type* sock_stream_;
+              /// The session holds an ACE event-handler reference to this connection.
+              connection_type* connection_ {};
+              std::unique_ptr<sock_stream_type> sock_stream_ {};
               ACE_Time_Value ftp_timeout_;
               bool cannot_reconnect_;
-              bool has_ftp_ext_; // RFC 2428 - IPv6 and NAT
+              /// Whether the server supports RFC 2428 IPv6/NAT extensions.
+              bool has_ftp_ext_;
               bool new_connect_;
           };
 

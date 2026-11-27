@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-// =========================================================================
 /**
  *  @file    Dev_Poll_Reactor.h
  *
@@ -8,8 +5,6 @@
  *
  *  @author  Ossama Othman <ossama@dre.vanderbilt.edu>
  */
-// =========================================================================
-
 
 #ifndef ACE_DEV_POLL_REACTOR_H
 #define ACE_DEV_POLL_REACTOR_H
@@ -51,7 +46,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Sig_Handler;
 class ACE_Dev_Poll_Reactor;
 
-// ---------------------------------------------------------------------
 
 /**
  * @class ACE_Dev_Poll_Reactor_Notify
@@ -66,7 +60,6 @@ class ACE_Dev_Poll_Reactor;
 class ACE_Dev_Poll_Reactor_Notify : public ACE_Reactor_Notify
 {
 public:
-  /// Constructor
   ACE_Dev_Poll_Reactor_Notify ();
 
   /**
@@ -150,7 +143,7 @@ public:
    * purged. Returns -1 on error.
    */
   int purge_pending_notifications (
-    ACE_Event_Handler * = 0,
+    ACE_Event_Handler * = nullptr,
     ACE_Reactor_Mask    = ACE_Event_Handler::ALL_EVENTS_MASK) override;
 
   /// Dump the state of an object.
@@ -159,9 +152,9 @@ public:
   /// Method called by ACE_Dev_Poll_Reactor to obtain one notification.
   /// THIS METHOD MUST BE CALLED WITH THE REACTOR TOKEN HELD!
   ///
-  /// @return -1 on error, else 0 and @arg nb has the notify to
-  ///            dispatch. Note that the contained event handler may be
-  ///            0 if there were only wake-ups (no handlers to dispatch).
+  /// @return -1 on error, else 0 and @a nb has the notification to dispatch.
+  /// @note The contained event handler may be 0 if there were only wake-ups
+  ///       (no handlers to dispatch).
   int dequeue_one (ACE_Notification_Buffer &nb);
 
   ACE_ALLOC_HOOK_DECLARE;
@@ -172,7 +165,7 @@ protected:
    * if NULL then the ACE_Dev_Poll_Reactor has been initialized with
    * disable_notify_pipe.
    */
-  ACE_Dev_Poll_Reactor *dp_reactor_;
+  ACE_Dev_Poll_Reactor *dp_reactor_ {};
 
   /**
    * Contains the ACE_HANDLE the ACE_Dev_Poll_Reactor is listening
@@ -206,7 +199,6 @@ protected:
 #endif /* ACE_HAS_REACTOR_NOTIFICATION_QUEUE */
 };
 
-// ---------------------------------------------------------------------
 
 /**
  * @class ACE_Dev_Poll_Reactor
@@ -293,8 +285,6 @@ class ACE_Export ACE_Dev_Poll_Reactor : public ACE_Reactor_Impl
   };
 
 
-  // ---------------------------------------------------------------------
-
   /**
    * @class Handler_Repository
    *
@@ -313,7 +303,6 @@ class ACE_Export ACE_Dev_Poll_Reactor : public ACE_Reactor_Impl
   class Handler_Repository
   {
   public:
-    /// Constructor.
     Handler_Repository ();
 
     /// Initialize a repository that can map handles up to the value @a size.
@@ -329,11 +318,11 @@ class ACE_Export ACE_Dev_Poll_Reactor : public ACE_Reactor_Impl
      *
      * Methods used to search and modify the handler repository.
      */
-    //@{
+    /// @{
+
     /// Return a pointer to the Event_Tuple associated with @a handle.
     /// If there is none associated, returns 0 and sets errno.
     Event_Tuple *find (ACE_HANDLE handle);
-
 
     /// Bind the ACE_Event_Handler to the @c ACE_HANDLE with the
     /// appropriate ACE_Reactor_Mask settings.
@@ -348,7 +337,7 @@ class ACE_Export ACE_Dev_Poll_Reactor : public ACE_Reactor_Impl
     /// Remove all the registered tuples.
     int unbind_all ();
 
-    //@}
+    /// @}
 
     /**
      * @name Sanity Checking
@@ -356,18 +345,18 @@ class ACE_Export ACE_Dev_Poll_Reactor : public ACE_Reactor_Impl
      * Methods used to prevent "out-of-range" errors when indexing the
      * underlying handler array.
      */
-    //@{
-    // Check the @a handle to make sure it's a valid @c ACE_HANDLE that
-    // within the range of legal handles (i.e., greater than or equal to
-    // zero and less than @c max_size_).
+    /// @{
+
+    /// Return true and set errno if @a handle is outside the legal range
+    /// (zero through @c max_size_ minus one).
     bool invalid_handle (ACE_HANDLE handle) const;
 
-    // Check the handle to make sure it's a valid @c ACE_HANDLE that is
-    // within the range of currently registered handles (i.e., greater
-    // than or equal to zero and less than @c max_handlep1_).
+    /// Check the handle to make sure it's a valid @c ACE_HANDLE that is
+    /// within the range of currently registered handles (i.e., greater
+    /// than or equal to zero and less than @c max_handlep1_).
     bool handle_in_range (ACE_HANDLE handle) const;
 
-    //@}
+    /// @}
 
     /// Returns the current table size.
     size_t size () const;
@@ -383,17 +372,17 @@ class ACE_Export ACE_Dev_Poll_Reactor : public ACE_Reactor_Impl
 
   private:
     /// Current number of handles.
-    int size_;
+    int size_ {};
 
     /// Maximum number of handles.
-    int max_size_;
+    int max_size_ {};
 
     /// The underlying array of event handlers.
     /**
      * The array of event handlers is directly indexed directly using
      * an @c ACE_HANDLE value.  This is Unix-specific.
      */
-    Event_Tuple *handlers_;
+    Event_Tuple *handlers_ {};
   };
 
 public:
@@ -402,8 +391,8 @@ public:
    * The default size for the @c ACE_Dev_Poll_Reactor is the maximum
    * number of open file descriptors for the process.
    */
-  ACE_Dev_Poll_Reactor (ACE_Sig_Handler * = 0,
-                        ACE_Timer_Queue * = 0,
+  ACE_Dev_Poll_Reactor (ACE_Sig_Handler * = nullptr,
+                        ACE_Timer_Queue * = nullptr,
                         int disable_notify_pipe = 0,
                         ACE_Reactor_Notify *notify = nullptr,
                         int mask_signals = 1,
@@ -423,8 +412,8 @@ public:
    */
   ACE_Dev_Poll_Reactor (size_t size,
                         bool restart = false,
-                        ACE_Sig_Handler * = 0,
-                        ACE_Timer_Queue * = 0,
+                        ACE_Sig_Handler * = nullptr,
+                        ACE_Timer_Queue * = nullptr,
                         int disable_notify_pipe = 0,
                         ACE_Reactor_Notify *notify = nullptr,
                         int mask_signals = 1,
@@ -436,10 +425,10 @@ public:
   /// Initialization.
   int open (size_t size,
                     bool restart = false,
-                    ACE_Sig_Handler * = 0,
-                    ACE_Timer_Queue * = 0,
+                    ACE_Sig_Handler * = nullptr,
+                    ACE_Timer_Queue * = nullptr,
                     int disable_notify_pipe = 0,
-                    ACE_Reactor_Notify * = 0) override;
+                    ACE_Reactor_Notify * = nullptr) override;
 
   /**
    * @param handle allows the reactor to check if the caller is
@@ -463,7 +452,9 @@ public:
   /// Close down and release all resources.
   int close () override;
 
-  // = Event loop drivers.
+  /// @name Event loop drivers
+  /// @{
+
   /**
    * Returns non-zero if there are I/O events "ready" for dispatching,
    * but does not actually dispatch the event handlers.  By default,
@@ -473,12 +464,13 @@ public:
    *       resolutions with the @c ACE_Dev_Poll_Reactor.
    */
   int work_pending (
-    const ACE_Time_Value &max_wait_time = ACE_Time_Value::zero) override;
+    ACE_Time_Value const &max_wait_time = ACE_Time_Value::zero) override;
 
   /**
    * This event loop driver blocks for up to @a max_wait_time before
-   * returning.  It will return earlier if events occur.  Note that
-   * @a max_wait_time can be 0, in which case this method blocks
+   * returning.  It will return earlier if events occur.
+   *
+   * @note @a max_wait_time can be 0, in which case this method blocks
    * indefinitely until events occur.
    * @par
    * @a max_wait_time is decremented to reflect how much time this
@@ -514,7 +506,10 @@ public:
   int handle_events (ACE_Time_Value &max_wait_time) override;
   int alertable_handle_events (ACE_Time_Value &max_wait_time) override;
 
-  // = Event handling control.
+  /// @}
+
+  /// @name Event handling control
+  /// @{
 
   /**
    * @return The status of Reactor.  If this function returns 0, the
@@ -532,7 +527,10 @@ public:
    */
   void deactivate (int do_stop) override;
 
-  // = Register and remove Handlers.
+  /// @}
+
+  /// @name Handler registration and removal
+  /// @{
 
   /// Register @a event_handler with @a mask.  The I/O handle will
   /// always come from get_handle on the event_handler.
@@ -557,7 +555,7 @@ public:
 
   /// Register @a event_handler with all the @a handles in the @c
   /// Handle_Set.
-  int register_handler (const ACE_Handle_Set &handles,
+  int register_handler (ACE_Handle_Set const &handles,
                                 ACE_Event_Handler *event_handler,
                                 ACE_Reactor_Mask mask) override;
 
@@ -570,12 +568,12 @@ public:
   int register_handler (int signum,
                                 ACE_Event_Handler *new_sh,
                                 ACE_Sig_Action *new_disp = nullptr,
-                                ACE_Event_Handler **old_sh = 0,
+                                ACE_Event_Handler **old_sh = nullptr,
                                 ACE_Sig_Action *old_disp = nullptr) override;
 
   /// Registers @a new_sh to handle a set of signals @a sigset using the
   /// @a new_disp.
-  int register_handler (const ACE_Sig_Set &sigset,
+  int register_handler (ACE_Sig_Set const &sigset,
                                 ACE_Event_Handler *new_sh,
                                 ACE_Sig_Action *new_disp = nullptr) override;
 
@@ -591,7 +589,7 @@ public:
 
   /**
    * Removes @a handle.  If @a mask == ACE_Event_Handler::DONT_CALL
-   * then the <handle_close> method of the associated <event_handler>
+   * then the @c handle_close method of the associated @c event_handler
    * is not invoked.
    */
   int remove_handler (ACE_HANDLE handle,
@@ -599,10 +597,10 @@ public:
 
   /**
    * Removes all handles in @a handle_set.  If @a mask ==
-   * ACE_Event_Handler::DONT_CALL then the <handle_close> method of
-   * the associated <event_handler>s is not invoked.
+   * ACE_Event_Handler::DONT_CALL then the @c handle_close method of
+   * the associated @c event_handlers is not invoked.
    */
-  int remove_handler (const ACE_Handle_Set &handle_set,
+  int remove_handler (ACE_Handle_Set const &handle_set,
                               ACE_Reactor_Mask mask) override;
 
   /**
@@ -616,10 +614,13 @@ public:
                               ACE_Sig_Action *old_disp = nullptr,
                               int sigkey = -1) override;
 
-  /// Calls <remove_handler> for every signal in @a sigset.
-  int remove_handler (const ACE_Sig_Set &sigset) override;
+  /// Calls @c remove_handler for every signal in @a sigset.
+  int remove_handler (ACE_Sig_Set const &sigset) override;
 
-  // = Suspend and resume Handlers.
+  /// @}
+
+  /// @name Suspending and resuming handlers
+  /// @{
 
   /// Suspend event_handler temporarily.  Use
   /// ACE_Event_Handler::get_handle() to get the handle.
@@ -629,7 +630,7 @@ public:
   int suspend_handler (ACE_HANDLE handle) override;
 
   /// Suspend all handles in handle set temporarily.
-  int suspend_handler (const ACE_Handle_Set &handles) override;
+  int suspend_handler (ACE_Handle_Set const &handles) override;
 
   /// Suspend all handles temporarily.
   int suspend_handlers () override;
@@ -642,7 +643,7 @@ public:
   int resume_handler (ACE_HANDLE handle) override;
 
   /// Resume all handles in handle set.
-  int resume_handler (const ACE_Handle_Set &handles) override;
+  int resume_handler (ACE_Handle_Set const &handles) override;
 
   /// Resume all handles.
   int resume_handlers () override;
@@ -656,7 +657,10 @@ public:
   /// for the handles that it waits on, false otherwise.
   bool uses_event_associations () override;
 
-  // = Timer management.
+  /// @}
+
+  /// @name Timer management
+  /// @{
 
   /**
    * Schedule an ACE_Event_Handler that will expire after an amount
@@ -678,19 +682,19 @@ public:
    * @return -1 on failure, a timer_id value on success
    */
   long schedule_timer (ACE_Event_Handler *event_handler,
-                               const void *arg,
-                               const ACE_Time_Value &delay,
-                               const ACE_Time_Value &interval = ACE_Time_Value::zero) override;
+                               void const *arg,
+                               ACE_Time_Value const &delay,
+                               ACE_Time_Value const &interval = ACE_Time_Value::zero) override;
 
   /**
    * Resets the interval of the timer represented by @a timer_id to
    * @a interval, which is specified in relative time to the current
-   * <gettimeofday>.  If @a interval is equal to
+   * @c gettimeofday.  If @a interval is equal to
    * ACE_Time_Value::zero, the timer will become a non-rescheduling
    * timer.  Returns 0 if successful, -1 if not.
    */
   int reset_timer_interval (long timer_id,
-                                    const ACE_Time_Value &interval) override;
+                                    ACE_Time_Value const &interval) override;
 
   /// Cancel all Event_Handlers that match the address of
   /// @a event_handler.  Returns number of handlers cancelled.
@@ -707,17 +711,20 @@ public:
    * wasn't found.
    */
   int cancel_timer (long timer_id,
-                            const void **arg = 0,
+                            void const **arg = nullptr,
                             int dont_call_handle_close = 1) override;
 
-  // = High-level event handler scheduling operations
+  /// @}
+
+  /// @name High-level event handler scheduling
+  /// @{
 
   /// Add @a masks_to_be_added to the @a event_handler's entry.
   /// @a event_handler must already have been registered.
   int schedule_wakeup (ACE_Event_Handler *event_handler,
                                ACE_Reactor_Mask masks_to_be_added) override;
 
-  /// Add @a masks_to_be_added to the @a handle's entry.  <event_handler>
+  /// Add @a masks_to_be_added to the @a handle's entry.  @c event_handler
   /// associated with @a handle must already have been registered.
   int schedule_wakeup (ACE_HANDLE handle,
                                ACE_Reactor_Mask masks_to_be_added) override;
@@ -730,7 +737,10 @@ public:
   int cancel_wakeup (ACE_HANDLE handle,
                              ACE_Reactor_Mask masks_to_be_cleared) override;
 
-  // = Notification methods.
+  /// @}
+
+  /// @name Notification methods
+  /// @{
 
   /**
    * Notify @a event_handler of @a mask event.  The ACE_Time_Value
@@ -740,7 +750,7 @@ public:
    */
   int notify (ACE_Event_Handler *event_handler = nullptr,
                       ACE_Reactor_Mask mask = ACE_Event_Handler::EXCEPT_MASK,
-                      ACE_Time_Value * = 0) override;
+                      ACE_Time_Value * = nullptr) override;
 
   /**
    * Set the maximum number of times that ACE_Reactor_Impl will
@@ -767,11 +777,13 @@ public:
    * ACE_Event_Handler object. Returns the number of notifications
    * purged. Returns -1 on error.
    */
-  int purge_pending_notifications (ACE_Event_Handler * = 0,
+  int purge_pending_notifications (ACE_Event_Handler * = nullptr,
                                            ACE_Reactor_Mask    = ACE_Event_Handler::ALL_EVENTS_MASK) override;
 
+  /// @}
+
   /**
-   * Return the Event_Handler associated with @a handle.  Return 0 if
+   * Return the Event_Handler associated with @a handle.  Return nullptr if
    * @a handle is not registered.
    */
   ACE_Event_Handler *find_handler (ACE_HANDLE handle) override;
@@ -779,19 +791,19 @@ public:
   /**
    * Check to see if @a handle is associated with a valid Event_Handler
    * bound to @a mask.  Return the @a event_handler associated with this
-   * @c handler if @a event_handler != 0.
+   * @c handler if @a event_handler != nullptr.
    */
   int handler (ACE_HANDLE handle,
                        ACE_Reactor_Mask mask,
-                       ACE_Event_Handler **event_handler = 0) override;
+                       ACE_Event_Handler **event_handler = nullptr) override;
 
   /**
    * Check to see if @a signum is associated with a valid Event_Handler
    * bound to a signal.  Return the @a event_handler associated with
-   * this @c handler if @a event_handler != 0.
+   * this @c handler if @a event_handler != nullptr.
    */
   int handler (int signum,
-                       ACE_Event_Handler ** = 0) override;
+                       ACE_Event_Handler ** = nullptr) override;
 
   /// Returns true if Reactor has been successfully initialized, else
   /// false.
@@ -859,7 +871,8 @@ public:
    * The "interest set," i.e. the wait set, can be directly
    * manipulated with these methods.
    */
-  //@{
+  /// @{
+
   /// GET/SET/ADD/CLR the dispatch mask "bit" bound with the
   /// event_handler and mask.
   /**
@@ -878,14 +891,15 @@ public:
                         ACE_Reactor_Mask mask,
                         int ops) override;
 
-  //@}
+  /// @}
 
   /**
    * @name Low-level ready_set mask manipulation methods
    *
    * These methods are unimplemented.
    */
-  //@{
+  /// @{
+
   /// GET/SET/ADD/CLR the ready "bit" bound with the event_handler
   /// and mask.
   int ready_ops (ACE_Event_Handler *event_handler,
@@ -897,7 +911,7 @@ public:
                          ACE_Reactor_Mask,
                          int ops) override;
 
-  //@}
+  /// @}
 
   /// Dump the state of an object.
   void dump () const override;
@@ -957,9 +971,9 @@ protected:
 
   /// Remove the event handler associated with the given handle and
   /// event mask from the "interest set." If @a eh is supplied, only do the
-  /// remove if @eh matches the event handler that's registered for @a handle.
+  /// remove if @a eh matches the event handler that's registered for @a handle.
   /// The caller is expected to be holding the repo token on entry and have
-  /// @repo_guard referencing that token. It will be temporarily released
+  /// @a repo_guard referencing that token. It will be temporarily released
   /// during a handle_close() callback if needed; if it is released for the
   //// callback it will be reacquired before return.
   // FUZZ: disable check_for_ACE_Guard
@@ -991,7 +1005,7 @@ protected:
 
 protected:
   /// Has the reactor been initialized.
-  bool initialized_;
+  bool initialized_ {};
 
   /// The file descriptor associated with the open `/dev/poll' or
   /// `/dev/epoll' device.
@@ -999,7 +1013,7 @@ protected:
    * All interactions with the `/dev/poll' or `/dev/epoll' device are
    * done through this file descriptor.
    */
-  ACE_HANDLE poll_fd_;
+  ACE_HANDLE poll_fd_ {ACE_INVALID_HANDLE};
 
 #if defined (ACE_HAS_EVENT_POLL)
   /// Event structure to be filled by epoll_wait. epoll_wait() only gets
@@ -1011,19 +1025,18 @@ protected:
 
 #else
   /// The pollfd array that `/dev/poll' will feed its results to.
-  struct pollfd *dp_fds_;
-
+  struct pollfd *dp_fds_ {};
 
   /// Pointer to the next pollfd array element that contains the next
   /// event to be dispatched.
-  struct pollfd *start_pfds_;
+  struct pollfd *start_pfds_ {};
 
   /// The last element in the pollfd array plus one.
   /**
    * The loop that dispatches IO events stops when this->start_pfds ==
    * this->end_pfds_.
    */
-  struct pollfd *end_pfds_;
+  struct pollfd *end_pfds_ {};
 #endif  /* ACE_HAS_EVENT_POLL */
 
   /// Token serializing event waiter threads.
@@ -1034,7 +1047,7 @@ protected:
 
   /// This flag is used to keep track of whether we are actively handling
   /// events or not.
-  sig_atomic_t deactivated_;
+  sig_atomic_t deactivated_ {};
 
   /// Token used to protect manipulation of the handler repository.
   /// No need to hold the waiter token to change the repo.
@@ -1045,26 +1058,26 @@ protected:
   Handler_Repository handler_rep_;
 
   /// Defined as a pointer to allow overriding by derived classes...
-  ACE_Timer_Queue *timer_queue_;
+  ACE_Timer_Queue *timer_queue_ {};
 
   /// Keeps track of whether we should delete the timer queue (if we
   /// didn't create it, then we don't delete it).
-  bool delete_timer_queue_;
+  bool delete_timer_queue_ {};
 
   /// Handle signals without requiring global/static variables.
-  ACE_Sig_Handler *signal_handler_;
+  ACE_Sig_Handler *signal_handler_ {};
 
   /// Keeps track of whether we should delete the signal handler (if we
   /// didn't create it, then we don't delete it).
-  bool delete_signal_handler_;
+  bool delete_signal_handler_ {};
 
-  /// Callback object that unblocks the <ACE_Select_Reactor> if it's
+  /// Callback object that unblocks the @c ACE_Select_Reactor if it's
   /// sleeping.
-  ACE_Reactor_Notify *notify_handler_;
+  ACE_Reactor_Notify *notify_handler_ {};
 
   /// Keeps track of whether we need to delete the notify handler (if
   /// we didn't create it, then we don't delete it).
-  bool delete_notify_handler_;
+  bool delete_notify_handler_ {};
 
   /// Flag that determines if signals are masked during event
   /// dispatching.
@@ -1079,7 +1092,7 @@ protected:
   /// Restart the handle_events event loop method automatically when
   /// polling function in use (ioctl() in this case) is interrupted
   /// via an EINTR signal.
-  bool restart_;
+  bool restart_ {};
 
 protected:
   /**
@@ -1092,7 +1105,7 @@ protected:
   {
   public:
     /// Constructor that will grab the token for us
-    Token_Guard (ACE_Dev_Poll_Reactor_Token &token);
+    explicit Token_Guard (ACE_Dev_Poll_Reactor_Token &token);
 
     /// Destructor. This will release the token if it hasn't been
     /// released till this point
@@ -1127,10 +1140,9 @@ protected:
     /// owns the token or not. A value of false indicates that this class
     /// hasn't got the token (and hence the thread) and a value of true
     /// vice-versa.
-    bool owner_;
+    bool owner_ {};
   };
 };
-
 
 /**
  * @class ACE_Dev_Poll_Handler_Guard
@@ -1146,7 +1158,6 @@ protected:
 class ACE_Dev_Poll_Handler_Guard
 {
 public:
-  /// Constructor
   /**
    * The constructor checks to see if @a eh is a reference-counted handler and
    * remember that for later. If @a eh is reference counted, its reference
@@ -1155,9 +1166,8 @@ public:
    * independently of this guard, for example, on a notify handler since
    * the reference count is incremented when the notify is queued.
    */
-  ACE_Dev_Poll_Handler_Guard (ACE_Event_Handler *eh, bool do_incr = true);
+  explicit ACE_Dev_Poll_Handler_Guard (ACE_Event_Handler *eh, bool do_incr = true);
 
-  /// Destructor
   /**
    * The destructor decrements the reference count on the event
    * handler corresponding to the given handle.
@@ -1173,7 +1183,7 @@ private:
   ACE_Event_Handler *eh_;
 
   /// true if eh_ is a reference-counted handler.
-  bool refcounted_;
+  bool refcounted_ {};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

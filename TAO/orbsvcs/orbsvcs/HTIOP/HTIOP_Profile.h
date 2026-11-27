@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file     HTIOP_Profile.h
  *
@@ -8,8 +5,6 @@
  *
  *  @author  Fred Kuhns <fredk@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef HTIOP_PROFILE_H
 #define HTIOP_PROFILE_H
@@ -49,33 +44,37 @@ namespace TAO
     {
     public:
       /// The object key delimiter that HTIOP uses or expects.
-      static const char object_key_delimiter_;
+      static char const object_key_delimiter_;
       char object_key_delimiter () const override;
 
       /// Return the char string prefix.
-      static const char *prefix ();
+      static char const *prefix ();
 
       /// Profile constructor, same as above except the object_key has
       /// already been marshaled.
-      Profile (const ACE::HTBP::Addr &addr,
-               const TAO::ObjectKey &object_key,
-               const TAO_GIOP_Message_Version &version,
+      Profile (ACE::HTBP::Addr const &addr,
+               TAO::ObjectKey const &object_key,
+               TAO_GIOP_Message_Version const &version,
                TAO_ORB_Core *orb_core);
 
       ///  Profile constructor, this is the most efficient since it
       /// doesn't require any address resolution processing.
-      Profile (const char *host,
+      Profile (char const *host,
                CORBA::UShort port,
-               const char *htid,
-               const TAO::ObjectKey &object_key,
-               const ACE::HTBP::Addr &addr,
-               const TAO_GIOP_Message_Version &version,
+               char const *htid,
+               TAO::ObjectKey const &object_key,
+               ACE::HTBP::Addr const &addr,
+               TAO_GIOP_Message_Version const &version,
                TAO_ORB_Core *orb_core);
 
       /// Profile constructor, default.
-      Profile (TAO_ORB_Core *orb_core);
+      explicit Profile (TAO_ORB_Core *orb_core);
+      Profile (Profile const&) = delete;
+      Profile (Profile&&) = delete;
+      Profile& operator= (Profile const&) = delete;
+      Profile& operator= (Profile&&) = delete;
 
-      /// Destructor is to be called only through <_decr_refcnt>.
+      /// Destructor is to be called only through @c _decr_refcnt().
       ~Profile () override;
 
       /**
@@ -101,9 +100,9 @@ namespace TAO
       CORBA::ULong endpoint_count () const override;
 
       /**
-       * Add <endp> to this profile's list of endpoints (it is inserted
+       * Add @a endp to this profile's list of endpoints (it is inserted
        * next to the head of the list).  This profiles takes ownership of
-       * <endp>.
+       * @a endp.
        */
       void add_endpoint (Endpoint *endp);
 
@@ -114,9 +113,9 @@ namespace TAO
       /// Template methods. Please see Profile.h for the documentation.
       int decode_profile (TAO_InputCDR &cdr) override;
       int decode_endpoints () override;
-      void parse_string_i (const char *string) override;
+      void parse_string_i (char const *string) override;
       void create_profile_body (TAO_OutputCDR &cdr) const override;
-      CORBA::Boolean do_is_equivalent (const TAO_Profile *other_profile) override;
+      CORBA::Boolean do_is_equivalent (TAO_Profile const *other_profile) override;
 
     protected:
       /**
@@ -126,12 +125,12 @@ namespace TAO
        *
        * Addressing info of the default endpoint, i.e., head of the list,
        * is transmitted using standard HTIOP ProfileBody components.  See
-       * <encode_endpoints> method documentation above for how the rest of
+       * @c encode_endpoints() method documentation above for how the rest of
        * the endpoint list is transmitted.
        */
       Endpoint endpoint_;
 
-      /// Number of endpoints in the list headed by <endpoint_>.
+      /// Number of endpoints in the list headed by @c endpoint_.
       CORBA::ULong count_;
     };
   }

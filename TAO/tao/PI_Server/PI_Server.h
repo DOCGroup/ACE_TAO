@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 /**
  *  @file   PI_Server.h
  *
@@ -27,6 +25,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_PI_Server_Export TAO_PI_Server_Init
 {
 public:
+  TAO_PI_Server_Init () = delete;
+
   /// Used to force the initialization of the ORB code.
   static int Initializer ();
 };

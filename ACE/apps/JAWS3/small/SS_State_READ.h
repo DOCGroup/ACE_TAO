@@ -1,4 +1,3 @@
-/* -*- c++ -*- */
 #ifndef TERA_SS_STATE_READ_H
 #define TERA_SS_STATE_READ_H
 
@@ -9,12 +8,11 @@
 class TeraSS_State_READ : public JAWS_Protocol_State
 {
 public:
-  int service (JAWS_Event_Completer *, void *data);
+  int service (JAWS_Event_Completer *, void *data) override;
 
-  JAWS_Protocol_State * transition ( const JAWS_Event_Result &result
-                                   , void *data
-                                   , void *act
-                                   );
+  JAWS_Protocol_State * transition (JAWS_Event_Result const &result,
+                                    void *data,
+                                    void *act) override;
 
   static JAWS_Protocol_State * instance ()
   {

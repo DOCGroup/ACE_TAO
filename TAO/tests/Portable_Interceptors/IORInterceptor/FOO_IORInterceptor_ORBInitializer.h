@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  * @file FOO_IORInterceptor_ORBInitializer.h
  *
@@ -9,7 +6,6 @@
  *
  * @author Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
 
 #ifndef FOO_IOR_INTERCEPTOR_ORB_INITIALIZER_H
 #define FOO_IOR_INTERCEPTOR_ORB_INITIALIZER_H
@@ -41,6 +37,12 @@ class FOO_IORInterceptor_ORBInitializer :
   public virtual ::CORBA::LocalObject
 {
 public:
+  FOO_IORInterceptor_ORBInitializer () = default;
+  FOO_IORInterceptor_ORBInitializer (FOO_IORInterceptor_ORBInitializer const &) = delete;
+  FOO_IORInterceptor_ORBInitializer (FOO_IORInterceptor_ORBInitializer &&) = delete;
+  FOO_IORInterceptor_ORBInitializer &operator= (FOO_IORInterceptor_ORBInitializer const &) = delete;
+  FOO_IORInterceptor_ORBInitializer &operator= (FOO_IORInterceptor_ORBInitializer &&) = delete;
+
   /**
    * @name Methods Required by the ORBInitializer Interface
    *
@@ -48,15 +50,13 @@ public:
    * virtual in the abstract base class.  They are the canonical
    * methods required for all ORB initializers.
    */
-  //@{
+  /// @{
   /// The pre-initialization hook.
-  virtual void pre_init (
-      PortableInterceptor::ORBInitInfo_ptr info);
+  void pre_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 
   /// The post-initialization hook.
-  virtual void post_init (
-      PortableInterceptor::ORBInitInfo_ptr info);
-  //@}
+  void post_init (PortableInterceptor::ORBInitInfo_ptr info) override;
+  /// @}
 };
 
 #if defined(_MSC_VER)

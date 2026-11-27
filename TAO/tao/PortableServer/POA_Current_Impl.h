@@ -1,13 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    POA_Current_Impl.h
  *
  *  @author Irfan Pyarali
  */
-//=============================================================================
-
 #ifndef TAO_POA_CURRENT_IMPL_H
 #define TAO_POA_CURRENT_IMPL_H
 
@@ -57,8 +52,8 @@ namespace TAO
      * The intent is that instances of this class are held in
      * Thread-Specific Storage so that upcalls can get context
      * information regarding their invocation.  The POA itself must
-     * insure that all <set_*> operations are performed in the
-     * execution thread so that the proper <TAO_POA_Current> pointer
+     * insure that all @c set_* operations are performed in the
+     * execution thread so that the proper @c TAO_POA_Current pointer
      * is obtained from TSS.
      */
     class TAO_PortableServer_Export POA_Current_Impl
@@ -72,7 +67,7 @@ namespace TAO
 
       /**
        * Return pointer to the object id through which this was invoked.
-       * This may be necessary in cases where a <Servant> is serving under
+       * This may be necessary in cases where a @c Servant is serving under
        * the guise of multiple object ids.
        */
       PortableServer::ObjectId *get_object_id ();
@@ -99,19 +94,19 @@ namespace TAO
       TAO_ORB_Core &orb_core () const;
 
       /// Set the object ID.
-      void object_id (const PortableServer::ObjectId &id);
+      void object_id (PortableServer::ObjectId const &id);
 
       /// Get the object ID.
-      const PortableServer::ObjectId &object_id () const;
+      PortableServer::ObjectId const &object_id () const;
 
       /// Just replace the object id smartly
-      void replace_object_id (const PortableServer::ObjectId &system_id);
+      void replace_object_id (PortableServer::ObjectId const &system_id);
 
       /// Set the object key.
-      void object_key (const TAO::ObjectKey &key);
+      void object_key (TAO::ObjectKey const &key);
 
       /// Get the object key.
-      const TAO::ObjectKey &object_key () const;
+      TAO::ObjectKey const &object_key () const;
 
       /// Set the servant for the current upcall.
       void servant (PortableServer::Servant servant);
@@ -135,17 +130,17 @@ namespace TAO
       void teardown ();
 
       /// Setup the current.
-      void setup (::TAO_Root_POA *impl, const TAO::ObjectKey &key);
+      void setup (::TAO_Root_POA *impl, TAO::ObjectKey const &key);
 
     private:
-      // = Hidden because we don't allow these
+      /// Copying and moving this current context is prohibited.
       POA_Current_Impl (POA_Current_Impl const &) = delete;
       POA_Current_Impl &operator= (POA_Current_Impl const &) = delete;
       POA_Current_Impl (POA_Current_Impl &&) = delete;
       POA_Current_Impl &operator= (POA_Current_Impl &&) = delete;
 
     protected:
-      /// The POA implementation invoking an upcall
+      /// Non-owning POA pointer, kept alive for the duration of this upcall.
       ::TAO_Root_POA *poa_ {};
 
       /// In order to avoid memory allocations, we will populate
@@ -159,7 +154,7 @@ namespace TAO
        */
       PortableServer::ObjectId object_id_;
 
-      /// The object key of the current context.
+      /// Non-owning object-key reference supplied for the current upcall.
       TAO::ObjectKey const *object_key_ {};
 
       /// The servant for the current upcall.
@@ -168,13 +163,13 @@ namespace TAO
       /// The priority for the current upcall.
       CORBA::Short priority_ {TAO_INVALID_PRIORITY};
 
-      /// Current previous from <this>.
+      /// Non-owning link to the previous stack-scoped current context.
       POA_Current_Impl *previous_current_impl_ {};
 
       /// Is setup complete?
       bool setup_done_ {};
 
-      /// Pointer to tss resources.
+      /// Non-owning pointer to the thread-specific resources singleton.
       TAO_TSS_Resources *tss_resources_ {};
     };
   }

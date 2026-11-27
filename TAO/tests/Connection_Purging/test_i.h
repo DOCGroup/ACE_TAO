@@ -1,4 +1,3 @@
-
 #ifndef TEST_I_H
 #define TEST_I_H
 #include /**/ "ace/pre.h"
@@ -9,10 +8,16 @@ class test_i
   : public virtual POA_test
 {
 public:
-  // = The skeleton methods
-  virtual void send_stuff (const char* string);
+  test_i () = default;
+  test_i (test_i const &) = delete;
+  test_i (test_i &&) = delete;
+  test_i & operator= (test_i const &) = delete;
+  test_i & operator= (test_i &&) = delete;
 
-private:
+  /// @name Skeleton methods
+  /// @{
+  void send_stuff (char const * string) override;
+  /// @}
 };
 
 #include /**/ "ace/post.h"

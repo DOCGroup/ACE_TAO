@@ -1,5 +1,3 @@
-/* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file    Fault_Notifier_Main.cpp
  *
@@ -10,7 +8,6 @@
  *
  *  @author Dale Wilson <wilson_d@ociweb.com>
  */
-//=============================================================================
 
 #include "tao/Utils/Server_Main.h"
 #include "FT_Notifier_i.h"

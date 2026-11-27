@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project : ace_compressionlib {
     libs    += ACE_RLECompression
     after   += ACE_RLECompression

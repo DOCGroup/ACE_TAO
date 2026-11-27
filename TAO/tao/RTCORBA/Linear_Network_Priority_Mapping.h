@@ -1,7 +1,3 @@
-// -*- C++ -*-
-
-
-//=============================================================================
 /**
  *  @file   Linear_Network_Priority_Mapping.h
  *
@@ -9,8 +5,6 @@
  *
  *  @author Yamuna Krishnamurthy (yamuna@oomworks.com)
  */
-//=============================================================================
-
 
 #ifndef TAO_LINEAR_NETWORK_PRIORITY_MAPPING_H
 #define TAO_LINEAR_NETWORK_PRIORITY_MAPPING_H

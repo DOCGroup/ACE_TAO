@@ -5,19 +5,19 @@
 // Listing 1 code/ch21
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  Temperature_Monitor_Options opt (argc, argv);
+  Temperature_Monitor_Options const opt {argc, argv};
   // Listing 1
 
   // Listing 2 code/ch21
   Naming_Context naming_context;
 
-  ACE_Name_Options *name_options = naming_context.name_options();
+  ACE_Name_Options *const name_options = naming_context.name_options ();
   // Listing 2
 
   // Listing 3 code/ch21
-  ACE_TCHAR *naming_options_argv[] = { argv[0] };
+  ACE_TCHAR *naming_options_argv[] = {argv[0]};
   name_options->parse_args
-    (sizeof(naming_options_argv) / sizeof(ACE_TCHAR*),
+    (sizeof (naming_options_argv) / sizeof (naming_options_argv[0]),
      naming_options_argv);
   name_options->context (ACE_Naming_Context::PROC_LOCAL);
   naming_context.open (name_options->context ());

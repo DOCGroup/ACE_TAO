@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Topology_Loader.h
  *
  *  @author Jonathan Pollack <pollack_j@ociweb.com>
  */
-//=============================================================================
 
 #ifndef TOPOLOGY_LOADER_H
 #define TOPOLOGY_LOADER_H
@@ -43,10 +39,8 @@ class Topology_Object;
 class TAO_Notify_Serv_Export Topology_Loader
 {
 public:
-  /// The constructor.
   Topology_Loader ();
 
-  /// The destructor.
   virtual ~Topology_Loader ();
 
   /** \brief Begin the restore process.

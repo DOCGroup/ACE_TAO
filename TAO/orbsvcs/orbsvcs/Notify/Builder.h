@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file Builder.h
  *
@@ -47,8 +46,8 @@ public:
 
   virtual ~TAO_Notify_Builder ();
 
-  ///= Factory Methods
-
+  /// @name Factory methods
+  /// @{
   /// Build EventChannel Factory.
   virtual CosNotifyChannelAdmin::EventChannelFactory_ptr
   build_event_channel_factory (PortableServer::POA_ptr poa
@@ -61,8 +60,8 @@ public:
   /// Build EventChannel.
   virtual CosNotifyChannelAdmin::EventChannel_ptr
   build_event_channel (TAO_Notify_EventChannelFactory* ecf
-                       , const CosNotification::QoSProperties & initial_qos
-                       , const CosNotification::AdminProperties & initial_admin
+                       , CosNotification::QoSProperties const & initial_qos
+                       , CosNotification::AdminProperties const & initial_admin
                        , CosNotifyChannelAdmin::ChannelID_out id
                        , char const *ec_name = nullptr);
 
@@ -71,7 +70,6 @@ public:
                        , const CosNotifyChannelAdmin::ChannelID id
                        , char const *ec_name = nullptr);
 
-
   /// Build ConsumerAdmin
   virtual CosNotifyChannelAdmin::ConsumerAdmin_ptr
   build_consumer_admin (TAO_Notify_EventChannel* ec
@@ -79,13 +77,12 @@ public:
                         , CosNotifyChannelAdmin::AdminID_out id);
 
   /// Build ConsumerAdmin during topology restore
-  /// TODO: this returns a reference to the actual type
-  /// to accomodate loadable builder/factory there should
-  /// be an appropriate base class for it to return.
+  /// @todo This returns a reference to the actual type. To accommodate a
+  /// loadable builder/factory, there should be an appropriate base class for
+  /// it to return.
   virtual TAO_Notify_ConsumerAdmin *
   build_consumer_admin (TAO_Notify_EventChannel* ec
-                        , const CosNotifyChannelAdmin::AdminID id //CORBA::Long id          // note: an in parameter!
-                        );
+                        , const CosNotifyChannelAdmin::AdminID id);
 
   /// Build SupplierAdmin
   virtual CosNotifyChannelAdmin::SupplierAdmin_ptr
@@ -94,20 +91,19 @@ public:
                         , CosNotifyChannelAdmin::AdminID_out id);
 
   /// Build ConsumerAdmin during topology restore
-  /// TODO: this returns a reference to the actual type
-  /// to accomodate loadable builder/factory there should
-  /// be an appropriate base class for it to return.
+  /// @todo This returns a reference to the actual type. To accommodate a
+  /// loadable builder/factory, there should be an appropriate base class for
+  /// it to return.
   virtual TAO_Notify_SupplierAdmin *
   build_supplier_admin (TAO_Notify_EventChannel * ec
-                        , const CosNotifyChannelAdmin::AdminID id //CORBA::Long id          // note: an in parameter!
-                        );
+                        , const CosNotifyChannelAdmin::AdminID id);
 
   /// Build ProxyConsumer
   virtual CosNotifyChannelAdmin::ProxyConsumer_ptr
   build_proxy (TAO_Notify_SupplierAdmin* sa
                , CosNotifyChannelAdmin::ClientType ctype
                , CosNotifyChannelAdmin::ProxyID_out proxy_id
-               , const CosNotification::QoSProperties & initial_qos);
+               , CosNotification::QoSProperties const & initial_qos);
 
   /// Reload ProxyConsumer
   virtual TAO_Notify_ProxyConsumer *
@@ -120,7 +116,7 @@ public:
   build_proxy (TAO_Notify_ConsumerAdmin* ca
                , CosNotifyChannelAdmin::ClientType ctype
                , CosNotifyChannelAdmin::ProxyID_out proxy_id
-               , const CosNotification::QoSProperties & initial_qos);
+               , CosNotification::QoSProperties const & initial_qos);
 
   /// Reload ProxySupplier.
   virtual TAO_Notify_ProxySupplier *
@@ -135,6 +131,7 @@ public:
   /// Build CosEC style ProxyConsumer.
   virtual CosEventChannelAdmin::ProxyPushConsumer_ptr
   build_proxy (TAO_Notify_SupplierAdmin* sa);
+  /// @}
 
   /// Apply Reactive concurrency.
   virtual void apply_reactive_concurrency (TAO_Notify_Object& object);
@@ -142,12 +139,12 @@ public:
   /// Apply Thread Pools.
   virtual void apply_thread_pool_concurrency (
       TAO_Notify_Object& object,
-      const NotifyExt::ThreadPoolParams& tp_params);
+      NotifyExt::ThreadPoolParams const& tp_params);
 
   /// Apply Thread Pools with Lanes.
   virtual void apply_lane_concurrency (
       TAO_Notify_Object& object,
-      const NotifyExt::ThreadPoolLanesParams& tpl_params);
+      NotifyExt::ThreadPoolLanesParams const& tpl_params);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

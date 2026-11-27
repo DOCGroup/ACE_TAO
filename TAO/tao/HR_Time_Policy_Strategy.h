@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   HR_Time_Policy_Strategy.h
  *
  *  @author Martin Corino <mcorino@remedy.nl>
  */
-//=============================================================================
 
 #ifndef HR_TIME_POLICY_STRATEGY_H
 #define HR_TIME_POLICY_STRATEGY_H

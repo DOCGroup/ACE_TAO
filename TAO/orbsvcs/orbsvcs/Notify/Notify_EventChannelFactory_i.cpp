@@ -10,7 +10,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CosNotifyChannelAdmin::EventChannelFactory_ptr
 TAO_Notify_EventChannelFactory_i::create (PortableServer::POA_ptr default_POA,
-                                          const char* factory_name)
+                                          char const *factory_name)
 {
   CosNotifyChannelAdmin::EventChannelFactory_var notify_factory;
 
@@ -25,7 +25,9 @@ TAO_Notify_EventChannelFactory_i::create (PortableServer::POA_ptr default_POA,
   TAO_Root_POA *poa = dynamic_cast <TAO_Root_POA*> (default_POA);
 
   if (poa == 0)
+  {
     return notify_factory._retn ();
+  }
 
   CORBA::ORB_ptr orb = poa->orb_core ().orb () ;
 

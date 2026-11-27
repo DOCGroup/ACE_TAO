@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    Signal_Test.cpp
  *
@@ -9,7 +7,6 @@
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "ace/Thread_Manager.h"
@@ -103,7 +100,7 @@ handle_signal (int signum)
 #if 0
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("(%P|%t) %p\n"),
-                  "sigwait"));
+                  ACE_TEXT ("sigwait")));
 #endif
       return -1;
       /* NOTREACHED */
@@ -116,6 +113,12 @@ handle_signal (int signum)
       return -1;
       /* NOTREACHED */
     }
+}
+
+static void
+handle_signal_async (int signum)
+{
+  static_cast<void> (handle_signal (signum));
 }
 
 // This function handles signals synchronously.
@@ -132,23 +135,29 @@ synchronous_signal_handler (void *)
       sigset.sig_add (SIGTERM);
     }
   else
+  {
     sigset.sig_add (SIGHUP);
+  }
 
   for (;;)
     {
       // Block waiting for SIGINT, SIGTERM, or SIGHUP, depending on
       // whether we're the parent or child process.
-      int signr = ACE_OS::sigwait (sigset);
+      int const signr = ACE_OS::sigwait (sigset);
       if (signr == -1)
         {
           if (errno != EINTR)
-            ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("(%P|%t) %p\n"),
-                        ACE_TEXT ("sigwait")));
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("(%P|%t) %p\n"),
+                          ACE_TEXT ("sigwait")));
+            }
           continue;
         }
       if (handle_signal (signr) == -1)
+      {
         break;
+      }
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) handled signal\n")));
     }
@@ -180,7 +189,7 @@ asynchronous_signal_handler (void *)
 
   // Register the <handle_signal> method to process all the signals in
   // <sigset>.
-  ACE_Sig_Action sa (sigset, (ACE_SignalHandler)handle_signal);
+  ACE_Sig_Action const sa (sigset, handle_signal_async);
   ACE_UNUSED_ARG (sa);
 
   return ACE_THR_FUNC_RETURN_NULL;
@@ -191,10 +200,10 @@ asynchronous_signal_handler (void *)
 static ACE_THR_FUNC_RETURN
 worker_child (void *arg)
 {
-  long handle_signals_synchronously =
+  long const handle_signals_synchronously =
     reinterpret_cast <long> (arg);
 
-  for (size_t i = 0; i < n_iterations; i++)
+  for (size_t i = 0; i < n_iterations; ++i)
     {
       if (shut_down > 0)
         {
@@ -250,7 +259,7 @@ worker_child (void *arg)
 static ACE_THR_FUNC_RETURN
 worker_parent (void *arg)
 {
-  long handle_signals_synchronously =
+  long const handle_signals_synchronously =
     reinterpret_cast <long> (arg);
   ACE_Process_Options options;
 
@@ -263,7 +272,7 @@ worker_parent (void *arg)
 
   // We're going to create a new process that runs this program again,
   // so we need to indicate that it's the child.
-  const ACE_TCHAR *t = ACE_TEXT (".")
+  ACE_TCHAR const *t = ACE_TEXT (".")
                        ACE_DIRECTORY_SEPARATOR_STR
                        ACE_TEXT ("%sSignal_Test")
                        ACE_PLATFORM_EXE_SUFFIX
@@ -289,11 +298,15 @@ worker_parent (void *arg)
   child_pid = pm.spawn (options);
 
   if (child_pid == ACE_INVALID_PID)
-    ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) spawning child process failed\n"), 0);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) spawning child process failed\n"), 0);
+    }
   else
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%P|%t) spawning child process %d\n"),
-                child_pid));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%P|%t) spawning child process %d\n"),
+                  child_pid));
+    }
 
   // Perform a <wait> until our child process has exited.
 
@@ -307,16 +320,20 @@ worker_parent (void *arg)
                   status));
     }
   else
-    while (shut_down == 0)
+    {
+      while (shut_down == 0)
       {
         // Wait for a signal to arrive.
         if (ACE_OS::sigsuspend (nullptr) == -1 && errno != EINTR)
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("(%P|%t) %p\n"),
-                      ACE_TEXT ("sigsuspend")));
+          {
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("(%P|%t) %p\n"),
+                        ACE_TEXT ("sigsuspend")));
+          }
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("(%P|%t) got signal!\n")));
       }
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) parent worker done\n")));
@@ -394,30 +411,32 @@ parse_args (int argc, ACE_TCHAR *argv[])
   int c;
 
   while ((c = get_opt ()) != -1)
-    switch (c)
     {
-    case 'i':
-      n_iterations = ACE_OS::atoi (get_opt.opt_arg ());
-      break;
-    case 'c':
-      child = 1;
-      break;
-    case 'p':
-      parent_pid = ACE_OS::atoi (get_opt.opt_arg ());
-      break;
-    case 't':
-      test_number = ACE_OS::atoi (get_opt.opt_arg ());
-      break;
-    case 'h':
-    default:
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%P|%t) usage:\n")
-                  ACE_TEXT ("-i <iterations>\n")
-                  ACE_TEXT ("-c\n")
-                  ACE_TEXT ("-p <parent_pid>\n")
-                  ACE_TEXT ("-t <test_number>\n")));
-      break;
-  }
+      switch (c)
+        {
+        case 'i':
+          n_iterations = ACE_OS::atoi (get_opt.opt_arg ());
+          break;
+        case 'c':
+          child = 1;
+          break;
+        case 'p':
+          parent_pid = ACE_OS::atoi (get_opt.opt_arg ());
+          break;
+        case 't':
+          test_number = ACE_OS::atoi (get_opt.opt_arg ());
+          break;
+        case 'h':
+        default:
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) usage:\n")
+                      ACE_TEXT ("-i <iterations>\n")
+                      ACE_TEXT ("-c\n")
+                      ACE_TEXT ("-p <parent_pid>\n")
+                      ACE_TEXT ("-t <test_number>\n")));
+          break;
+        }
+    }
 }
 
 int

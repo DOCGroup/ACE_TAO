@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    be_interface_fwd.cpp
  *
@@ -9,7 +7,6 @@
  *  @author Copyright 1994-1995 by Sun Microsystems
  *  @author Inc. and Aniruddha Gokhale
  */
-//=============================================================================
 
 #include "be_interface_fwd.h"
 #include "be_interface.h"

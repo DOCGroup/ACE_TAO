@@ -1,4 +1,3 @@
-
 #ifndef CALLBACK_SERVICE_H
 #define CALLBACK_SERVICE_H
 #include /**/ "ace/pre.h"
@@ -10,17 +9,22 @@ class Service
   : public virtual POA_Test::Service
 {
 public:
-  /// Constructor
-  Service (CORBA::ORB_ptr orb);
+  explicit Service (CORBA::ORB_ptr orb);
+  Service (Service const &) = delete;
+  Service &operator= (Service const &) = delete;
+  Service (Service &&) = delete;
+  Service &operator= (Service &&) = delete;
 
-  // = The skeleton methods
+  /// @name Skeleton methods
+  /// @{
   void run_test (Test::Callback_ptr callback) override;
 
   void shutdown () override;
+  /// @}
 
 private:
   /// Use an ORB reference to shutdown the application.
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var const orb_;
 };
 
 #include /**/ "ace/post.h"

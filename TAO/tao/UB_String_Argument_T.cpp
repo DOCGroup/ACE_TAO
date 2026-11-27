@@ -3,7 +3,12 @@
 
 #include "tao/UB_String_Argument_T.h"
 #include "tao/CDR.h"
+
 #include "ace/OS_NS_string.h"
+
+#include <algorithm>
+#include <memory>
+#include <utility>
 
 #if !defined (__ACE_INLINE__)
 #include "tao/UB_String_Argument_T.inl"
@@ -34,33 +39,19 @@ TAO::In_UB_String_Argument_T<S_var,Insert_Policy>::interceptor_value (
 
 template<typename S_var,
          template <typename> class Insert_Policy>
-TAO::In_UB_String_Clonable_Argument_T<S_var,Insert_Policy>::~In_UB_String_Clonable_Argument_T ()
-{
-  if (this->is_clone_)
-    {
-      typename S_var::s_traits::char_type * tmp =
-           const_cast<typename S_var::s_traits::char_type *> (this->x_);
-      S_var::s_traits::release (tmp);
-    }
-}
-
-template<typename S_var,
-         template <typename> class Insert_Policy>
 TAO::Argument*
 TAO::In_UB_String_Clonable_Argument_T<S_var,Insert_Policy>::clone ()
 {
+  using char_type = typename S_var::s_traits::char_type;
   size_t const len = ACE_OS::strlen (this->x_);
-  typename S_var::s_traits::char_type * clone_x =
-           new typename S_var::s_traits::char_type [len + 1];
-  ACE_OS::strncpy (clone_x, this->x_, len);
+  std::unique_ptr<char_type[], String_Deleter> clone_x (new char_type[len + 1]);
+  std::copy_n (this->x_, len, clone_x.get ());
   clone_x[len] = '\0';
-  In_UB_String_Clonable_Argument_T<S_var,Insert_Policy>* clone_arg =
-       new In_UB_String_Clonable_Argument_T<S_var,Insert_Policy> (clone_x);
-  clone_arg->is_clone_ = true;
-  return clone_arg;
+  std::unique_ptr<In_UB_String_Clonable_Argument_T<S_var,Insert_Policy>> clone_arg =
+    std::make_unique<In_UB_String_Clonable_Argument_T<S_var,Insert_Policy>> (clone_x.get ());
+  clone_arg->clone_buffer_ = std::move (clone_x);
+  return clone_arg.release ();
 }
-
-// ===========================================================
 
 template<typename S_var,
          template <typename> class Insert_Policy>
@@ -94,8 +85,6 @@ TAO::Inout_UB_String_Argument_T<S_var,Insert_Policy>::interceptor_value (
 
 #endif /* TAO_HAS_INTERCEPTORS */
 
-// ==============================================================
-
 template<typename S_var,
          template <typename> class Insert_Policy>
 CORBA::Boolean
@@ -116,8 +105,6 @@ TAO::Out_UB_String_Argument_T<S_var,Insert_Policy>::interceptor_value (
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
-
-// ============================================================
 
 template<typename S_var,
          template <typename> class Insert_Policy>

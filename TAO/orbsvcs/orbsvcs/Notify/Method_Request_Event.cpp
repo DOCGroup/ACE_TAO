@@ -4,27 +4,25 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_Method_Request_Event::TAO_Notify_Method_Request_Event (
-      const TAO_Notify_Event * event)
+      TAO_Notify_Event const * event)
   : event_ (event)
 {
 }
 
+TAO_Notify_Method_Request_Event::~TAO_Notify_Method_Request_Event () = default;
+
 TAO_Notify_Method_Request_Event::TAO_Notify_Method_Request_Event (
-      const TAO_Notify::Delivery_Request_Ptr & request)
+      TAO_Notify::Delivery_Request_Ptr const & request)
   : event_ (request->event ().get ())
   , delivery_request_ (request)
 {
 }
 
 TAO_Notify_Method_Request_Event::TAO_Notify_Method_Request_Event (
-      const TAO_Notify_Method_Request_Event & rhs,
-      const TAO_Notify_Event * event)
+      TAO_Notify_Method_Request_Event const & rhs,
+      TAO_Notify_Event const * event)
   : event_ (event)
   , delivery_request_ (rhs.delivery_request_)
-{
-}
-
-TAO_Notify_Method_Request_Event::~TAO_Notify_Method_Request_Event()
 {
 }
 
@@ -36,7 +34,6 @@ TAO_Notify_Method_Request_Event::complete ()
     this->delivery_request_->complete ();
   }
 }
-
 
 unsigned long
 TAO_Notify_Method_Request_Event::sequence ()
@@ -60,10 +57,9 @@ TAO_Notify_Method_Request_Event::should_retry ()
 
 /**********************************************************/
 
-
 TAO_Notify_Method_Request_Event_Queueable::TAO_Notify_Method_Request_Event_Queueable (
-      const TAO_Notify_Method_Request_Event & prev_request,
-      const TAO_Notify_Event::Ptr& event)
+      TAO_Notify_Method_Request_Event const & prev_request,
+      TAO_Notify_Event::Ptr const& event)
   : TAO_Notify_Method_Request_Queueable (event.get ())
   , TAO_Notify_Method_Request_Event (prev_request, event.get ())
   , event_var_ (event)
@@ -73,12 +69,9 @@ TAO_Notify_Method_Request_Event_Queueable::TAO_Notify_Method_Request_Event_Queue
 TAO_Notify_Method_Request_Event_Queueable::TAO_Notify_Method_Request_Event_Queueable (
     TAO_Notify::Delivery_Request_Ptr & request)
   : TAO_Notify_Method_Request_Queueable (request->event ().get ())
-  , TAO_Notify_Method_Request_Event (request, request->event ().get ())
+  , TAO_Notify_Method_Request_Event (
+      TAO_Notify_Method_Request_Event (request), request->event ().get ())
   , event_var_ (request->event ())
-{
-}
-
-TAO_Notify_Method_Request_Event_Queueable::~TAO_Notify_Method_Request_Event_Queueable ()
 {
 }
 
@@ -89,7 +82,7 @@ TAO_Notify_Method_Request_Event_Queueable::execute ()
   return -1;
 }
 
-const TAO_Notify_Event *
+TAO_Notify_Event const *
 TAO_Notify_Method_Request_Event::event() const
 {
   return this->event_;

@@ -1,5 +1,3 @@
-// -*- IDL -*-
-
 /**
  * @file IFR_Components.pidl
  *
@@ -96,10 +94,15 @@ module CORBA
 
     interface EventPortDef : Contained
     {
-      // read/write interface
+      /// @name Read/write interface
+      /// @{
       attribute EventDef event;
-      // read interface
+      /// @}
+
+      /// @name Read interface
+      /// @{
       boolean is_a (in RepositoryId event_id);
+      /// @}
     };
 
     struct EventPortDescription
@@ -125,11 +128,14 @@ module CORBA
 
     interface ComponentDef : ExtInterfaceDef
     {
-      // read/write interface
+      /// @name Read/write interface
+      /// @{
       attribute ComponentDef base_component;
       attribute InterfaceDefSeq supported_interfaces;
+      /// @}
 
-      // write interface
+      /// @name Write interface
+      /// @{
       ProvidesDef create_provides ( in RepositoryId id,
                                     in Identifier name,
                                     in VersionSpec version,
@@ -155,6 +161,7 @@ module CORBA
                                     in Identifier name,
                                     in VersionSpec version,
                                     in EventDef event );
+      /// @}
     };
 
     typedef sequence<ProvidesDescription> ProvidesDescriptionSeq;
@@ -188,13 +195,16 @@ module CORBA
 
     interface HomeDef : ExtInterfaceDef
     {
-      // read/write interface
+      /// @name Read/write interface
+      /// @{
       attribute HomeDef base_home;
       attribute InterfaceDefSeq supported_interfaces;
       attribute ComponentDef managed_component;
       attribute ValueDef primary_key;
+      /// @}
 
-      // write interface
+      /// @name Write interface
+      /// @{
       FactoryDef create_factory ( in RepositoryId id,
                                   in Identifier name,
                                   in VersionSpec version,
@@ -206,6 +216,7 @@ module CORBA
                                 in VersionSpec version,
                                 in ParDescriptionSeq params,
                                 in ExceptionDefSeq exceptions );
+      /// @}
     };
 
     struct HomeDescription

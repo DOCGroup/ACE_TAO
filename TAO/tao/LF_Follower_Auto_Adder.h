@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file LF_Follower_Auto_Adder.h
  *
  *  @author Carlos O'Ryan <coryan@uci.edu>
  */
-//=============================================================================
 
 #ifndef TAO_LF_FOLLOWER_AUTO_ADDER_H
 #define TAO_LF_FOLLOWER_AUTO_ADDER_H
@@ -32,17 +28,21 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Export TAO_LF_Follower_Auto_Adder
 {
 public:
-  /// Constructor
   TAO_LF_Follower_Auto_Adder (TAO_Leader_Follower &, TAO_LF_Follower *follower);
 
-  /// Destructor
   ~TAO_LF_Follower_Auto_Adder ();
+
+  TAO_LF_Follower_Auto_Adder () = delete;
+  TAO_LF_Follower_Auto_Adder (TAO_LF_Follower_Auto_Adder const &) = delete;
+  TAO_LF_Follower_Auto_Adder &operator= (TAO_LF_Follower_Auto_Adder const &) = delete;
+  TAO_LF_Follower_Auto_Adder (TAO_LF_Follower_Auto_Adder &&) = delete;
+  TAO_LF_Follower_Auto_Adder &operator= (TAO_LF_Follower_Auto_Adder &&) = delete;
 
 private:
   /// Keep a reference to the leader follower
   TAO_Leader_Follower &leader_follower_;
 
-  /// The follower
+  /// Follower temporarily registered in the leader/follower set.
   TAO_LF_Follower *follower_;
 };
 

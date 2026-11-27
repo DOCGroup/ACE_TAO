@@ -1,4 +1,3 @@
-// -*- C++ -*-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
@@ -13,7 +12,7 @@ TAO_Service_Context::service_info ()
   return this->service_context_;
 }
 
-ACE_INLINE const IOP::ServiceContextList &
+ACE_INLINE IOP::ServiceContextList const &
 TAO_Service_Context::service_info () const
 {
   return this->service_context_;
@@ -35,7 +34,7 @@ TAO_Service_Context::set_context (IOP::ServiceContext &context,
 ACE_INLINE bool
 TAO_Service_Context::is_service_id (IOP::ServiceId id)
 {
-  for (CORBA::ULong i = 0;
+  for (CORBA::ULong i {};
        i != this->service_context_.length ();
        ++i)
     {

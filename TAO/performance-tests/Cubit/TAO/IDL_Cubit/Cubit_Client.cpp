@@ -13,6 +13,8 @@
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_string.h"
 
+#include <cstring>
+
 #if defined (ACE_ENABLE_TIMEPROBES)
 
   static const char *Cubit_Client_Timeprobe_Description[] =
@@ -106,7 +108,6 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (Cubit_Client_Timeprobe_Description,
 
 #endif /* ACE_ENABLE_TIMEPROBES */
 
-
 // Bitmasks for each of the Cubit tests
 #define TAO_ENABLE_CUBIT_VOID              1 << 0
 #define TAO_ENABLE_CUBIT_OCTET             1 << 1
@@ -145,7 +146,6 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (Cubit_Client_Timeprobe_Description,
         TAO_ENABLE_CUBIT_ANY      |  \
         TAO_ENABLE_CUBIT_ANY_STRUCT
 
-// Constructor.
 Cubit_Client::Cubit_Client (int shutdown)
   : cubit_factory_key_ (0),
     loop_count_ (250),
@@ -188,19 +188,18 @@ Cubit_Client::read_ior (const ACE_TCHAR *filename)
     }
 
   ACE_Read_Buffer ior_buffer (this->f_handle_);
+  ACE_Read_Buffer_Unique_Ptr data (
+    ior_buffer.read (), {ior_buffer.alloc ()});
 
-  char *data = ior_buffer.read ();
-
-  if (data == 0)
+  if (!data)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "Unable to allocate memory to read ior: %p\n"),
+                         "Unable to allocate memory to read ior: %m\n"),
                         -1);
     }
 
-  this->cubit_factory_key_ = ACE_OS::strdup (ACE_TEXT_CHAR_TO_TCHAR(data));
-
-  ior_buffer.alloc ()->free (data);
+  this->cubit_factory_key_ = ACE_OS::strdup (
+    ACE_TEXT_CHAR_TO_TCHAR (data.get ()));
 
   return 0;
 }
@@ -216,97 +215,117 @@ Cubit_Client::parse_args ()
   u_int test_mask = 0;
 
   while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'b':
-        // bytes in octet sequence
-        result = ACE_OS::atoi (get_opts.opt_arg ());
+    {
+      switch (c)
+        {
+        case 'b':
+          // bytes in octet sequence
+          result = ACE_OS::atoi (get_opts.opt_arg ());
 
-        if (result <= 0)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Invalid number of bytes entered: <%s>\n",
-                             get_opts.opt_arg ()),
-                            -1);
+          if (result <= 0)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "Invalid number of bytes entered: <%s>\n",
+                                 get_opts.opt_arg ()),
+                                -1);
+            }
         else
-          this->bytes_in_octet_sequence_ = (u_int) result;
-        break;
-      case 't':
-        test_mask = this->opt_to_mask (get_opts.opt_arg ());
-        if (test_mask == 0)
-          return -1;
-        this->enable_test (test_mask);
-        break;
-      case 'z':
-        test_mask = this->opt_to_mask (get_opts.opt_arg ());
-        if (test_mask == 0)
-          return -1;
-        this->disable_test (test_mask);
-        break;
-      case 'v':
-        // For backward compatibility
-        test_mask = this->opt_to_mask (ACE_TEXT("void"));
-        if (test_mask == 0)
-          return -1;
-        this->enable_test (test_mask);
-        break;
-      case 'o':
-        // For backward compatibility
-        test_mask = this->opt_to_mask (ACE_TEXT("one_way"));
-        if (test_mask == 0)
-          return -1;
-        this->enable_test (test_mask);
-        break;
-      case 'd':  // debug flag
-        TAO_debug_level++;
-        break;
-      case 'n':                 // loop count
-        result = ACE_OS::atoi (get_opts.opt_arg ());
+          {
+            this->bytes_in_octet_sequence_ = (u_int) result;
+          }
+          break;
+        case 't':
+          test_mask = this->opt_to_mask (get_opts.opt_arg ());
+          if (test_mask == 0)
+          {
+            return -1;
+          }
+          this->enable_test (test_mask);
+          break;
+        case 'z':
+          test_mask = this->opt_to_mask (get_opts.opt_arg ());
+          if (test_mask == 0)
+          {
+            return -1;
+          }
+          this->disable_test (test_mask);
+          break;
+        case 'v':
+          // For backward compatibility
+          test_mask = this->opt_to_mask (ACE_TEXT("void"));
+          if (test_mask == 0)
+          {
+            return -1;
+          }
+          this->enable_test (test_mask);
+          break;
+        case 'o':
+          // For backward compatibility
+          test_mask = this->opt_to_mask (ACE_TEXT("one_way"));
+          if (test_mask == 0)
+          {
+            return -1;
+          }
+          this->enable_test (test_mask);
+          break;
+        case 'd':  // debug flag
+          ++TAO_debug_level;
+          break;
+        case 'n':                 // loop count
+          result = ACE_OS::atoi (get_opts.opt_arg ());
 
-        if (result <= 0)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "Invalid number of iterations entered: <%s>\n",
-                             get_opts.opt_arg ()),
-                            -1);
+          if (result <= 0)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "Invalid number of iterations entered: <%s>\n",
+                                 get_opts.opt_arg ()),
+                                -1);
+            }
         else
-          this->loop_count_ = (u_int) result;
-        break;
-      case 'f': // read the IOR from the file.
-        result = this->read_ior (get_opts.opt_arg ());
-        if (result < 0)
+          {
+            this->loop_count_ = (u_int) result;
+          }
+          break;
+        case 'f': // read the IOR from the file.
+          result = this->read_ior (get_opts.opt_arg ());
+          if (result < 0)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "Unable to read ior from <%s> : %p\n",
+                                 get_opts.opt_arg (),
+                                 ""),
+                                -1);
+            }
+          break;
+        case 'k': // read the cubit IOR from the command-line.
+          this->cubit_factory_key_ =
+            ACE_OS::strdup (get_opts.opt_arg ());
+          break;
+        case 'x':
+          ACE_DEBUG ((LM_DEBUG, "We will shutdown the server\n"));
+          this->shutdown_ = 1;
+          break;
+        case 'q':
+          this->quiet_ = 1;
+          break;
+        case '?':
+        default:
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Unable to read ior from <%s> : %p\n",
-                             get_opts.opt_arg (),
-                             ""),
+                             "usage:  %s"
+                             " [-b bytes-in-sequence]"
+                             " [-d]"
+                             " [-n loopcount]"
+                             " [-f cubit_factory-obj-ref-key-file]"
+                             " [-k cubit-obj-ref-key]"
+                             " [-x]"
+                             " [-s]"
+                             " [-t test-to-enable]"
+                             " [-z test-to-disable]"
+                             "\n",
+                             this->argv_ [0]),
                             -1);
-        break;
-      case 'k': // read the cubit IOR from the command-line.
-        this->cubit_factory_key_ =
-          ACE_OS::strdup (get_opts.opt_arg ());
-        break;
-      case 'x':
-        ACE_DEBUG ((LM_DEBUG, "We will shutdown the server\n"));
-        this->shutdown_ = 1;
-        break;
-      case 'q':
-        this->quiet_ = 1;
-        break;
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s"
-                           " [-b bytes-in-sequence]"
-                           " [-d]"
-                           " [-n loopcount]"
-                           " [-f cubit_factory-obj-ref-key-file]"
-                           " [-k cubit-obj-ref-key]"
-                           " [-x]"
-                           " [-s]"
-                           " [-t test-to-enable]"
-                           " [-z test-to-disable]"
-                           "\n",
-                           this->argv_ [0]),
-                          -1);
-      }
+        }
+    }
 
   // Indicates successful parsing of command line.
   return 0;
@@ -316,39 +335,73 @@ u_int
 Cubit_Client::opt_to_mask (const ACE_TCHAR *test_type)
 {
   if (ACE_OS::strcasecmp (test_type, ACE_TEXT("void")) == 0)
-    return TAO_ENABLE_CUBIT_VOID;
+    {
+      return TAO_ENABLE_CUBIT_VOID;
+    }
   else if (ACE_OS::strcasecmp (test_type, ACE_TEXT("octet")) == 0)
-    return TAO_ENABLE_CUBIT_OCTET;
+    {
+      return TAO_ENABLE_CUBIT_OCTET;
+    }
   else if (ACE_OS::strcasecmp (test_type, ACE_TEXT("short")) == 0)
-    return TAO_ENABLE_CUBIT_SHORT;
+    {
+      return TAO_ENABLE_CUBIT_SHORT;
+    }
   else if (ACE_OS::strcasecmp (test_type, ACE_TEXT("long")) == 0)
-    return TAO_ENABLE_CUBIT_LONG;
+    {
+      return TAO_ENABLE_CUBIT_LONG;
+    }
   else if (ACE_OS::strcasecmp (test_type, ACE_TEXT("struct")) == 0)
-    return TAO_ENABLE_CUBIT_STRUCT;
+    {
+      return TAO_ENABLE_CUBIT_STRUCT;
+    }
   else if (ACE_OS::strcasecmp (test_type, ACE_TEXT("union")) == 0)
-    return TAO_ENABLE_CUBIT_UNION;
+    {
+      return TAO_ENABLE_CUBIT_UNION;
+    }
   else if (ACE_OS::strcasecmp (test_type, ACE_TEXT("small_octet_seq")) == 0)
-    return TAO_ENABLE_CUBIT_SMALL_OCTET_SEQ;
+    {
+      return TAO_ENABLE_CUBIT_SMALL_OCTET_SEQ;
+    }
   else if (ACE_OS::strcasecmp (test_type, ACE_TEXT("small_long_seq")) == 0)
-    return TAO_ENABLE_CUBIT_SMALL_LONG_SEQ;
+    {
+      return TAO_ENABLE_CUBIT_SMALL_LONG_SEQ;
+    }
   else if (ACE_OS::strcasecmp (test_type, ACE_TEXT("small_struct_seq")) == 0)
-    return TAO_ENABLE_CUBIT_SMALL_STRUCT_SEQ;
+    {
+      return TAO_ENABLE_CUBIT_SMALL_STRUCT_SEQ;
+    }
   else if (ACE_OS::strcasecmp (test_type, ACE_TEXT("large_octet_seq")) == 0)
-    return TAO_ENABLE_CUBIT_LARGE_OCTET_SEQ;
+    {
+      return TAO_ENABLE_CUBIT_LARGE_OCTET_SEQ;
+    }
   else if (ACE_OS::strcasecmp (test_type, ACE_TEXT("large_long_seq")) == 0)
-    return TAO_ENABLE_CUBIT_LARGE_LONG_SEQ;
+    {
+      return TAO_ENABLE_CUBIT_LARGE_LONG_SEQ;
+    }
   else if (ACE_OS::strcasecmp (test_type, ACE_TEXT("large_struct_seq")) == 0)
-    return TAO_ENABLE_CUBIT_LARGE_STRUCT_SEQ;
+    {
+      return TAO_ENABLE_CUBIT_LARGE_STRUCT_SEQ;
+    }
   else if (ACE_OS::strcasecmp (test_type, ACE_TEXT("mixin")) == 0)
-    return TAO_ENABLE_CUBIT_MIXIN;
+    {
+      return TAO_ENABLE_CUBIT_MIXIN;
+    }
   else if (ACE_OS::strcasecmp (test_type, ACE_TEXT("rti_data")) == 0)
-    return TAO_ENABLE_CUBIT_RTI_DATA;
+    {
+      return TAO_ENABLE_CUBIT_RTI_DATA;
+    }
   else if (ACE_OS::strcasecmp (test_type, ACE_TEXT("one_way")) == 0)
-    return TAO_ENABLE_CUBIT_ONE_WAY;
+    {
+      return TAO_ENABLE_CUBIT_ONE_WAY;
+    }
   else if (ACE_OS::strcasecmp (test_type, ACE_TEXT("any")) == 0)
-    return TAO_ENABLE_CUBIT_ANY;
+    {
+      return TAO_ENABLE_CUBIT_ANY;
+    }
   else if (ACE_OS::strcasecmp (test_type, ACE_TEXT("any_struct")) == 0)
-    return TAO_ENABLE_CUBIT_ANY_STRUCT;
+    {
+      return TAO_ENABLE_CUBIT_ANY_STRUCT;
+    }
 
   ACE_ERROR_RETURN ((LM_ERROR,
                      "Incorrect test: %s\n"
@@ -373,7 +426,6 @@ Cubit_Client::disable_test (u_int mask)
   ACE_SET_BITS (this->test_disable_bitset_, mask);
 }
 
-
 int
 Cubit_Client::check_enabled (u_int mask) const
 {
@@ -389,7 +441,7 @@ Cubit_Client::cube_union ()
     {
       Cubit::oneof u;
 
-      this->call_count_++;
+      ++this->call_count_;
 
       u.l (3); // use the long union branch.
 
@@ -401,18 +453,19 @@ Cubit_Client::cube_union ()
         r = this->cubit_->cube_union (u);
       }
 
-
       if (TAO_debug_level > 2)
+      {
         ACE_DEBUG ((LM_DEBUG, "cube union ..."));
+      }
       u.l (u.l () * u.l () * u.l ()) ;
 
       if (u.l () != r.l ())
         {
           ACE_DEBUG ((LM_DEBUG, "** cube_union ERROR\n"));
-          this->error_count_++;
+          ++this->error_count_;
         }
 
-      this->call_count_++;
+      ++this->call_count_;
 
       Cubit::Many cm;
       cm.l = 7;
@@ -427,9 +480,10 @@ Cubit_Client::cube_union ()
         r = this->cubit_->cube_union (u);
       }
 
-
       if (TAO_debug_level > 2)
+      {
         ACE_DEBUG ((LM_DEBUG, "cube union ..."));
+      }
       u.cm ().l = u.cm ().l * u.cm ().l * u.cm ().l;
       u.cm ().s = u.cm ().s * u.cm ().s * u.cm ().s;
       u.cm ().o = u.cm ().o * u.cm ().o * u.cm ().o;
@@ -439,13 +493,13 @@ Cubit_Client::cube_union ()
           || u.cm ().o != r.cm ().o)
         {
           ACE_DEBUG ((LM_DEBUG, "** cube_union ERROR\n"));
-          this->error_count_++;
+          ++this->error_count_;
         }
     }
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("from cube_union");
-      this->error_count_++;
+      ++this->error_count_;
     }
 }
 
@@ -466,8 +520,7 @@ Cubit_Client::cube_short (int i)
         ret_short = cubit_->cube_short (arg_short);
       }
 
-
-      this->call_count_++;
+      ++this->call_count_;
 
       if (TAO_debug_level > 2)
         {
@@ -484,13 +537,13 @@ Cubit_Client::cube_short (int i)
                       (CORBA::Short) this->func (i),
                       ret_short));
 
-          this->error_count_++;
+          ++this->error_count_;
         }
     }
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("from cube_short");
-      this->error_count_++;
+      ++this->error_count_;
     }
 }
 
@@ -503,12 +556,12 @@ Cubit_Client::cube_oneway (int)
     {
       ACE_FUNCTION_TIMEPROBE (CUBIT_CLIENT_CUBE_ONEWAY_START);
       this->cubit_->cube_oneway ();
-      this->call_count_++;
+      ++this->call_count_;
     }
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("from cube_oneway");
-      this->error_count_++;
+      ++this->error_count_;
     }
 }
 
@@ -519,12 +572,12 @@ Cubit_Client::cube_void (int)
     {
       ACE_FUNCTION_TIMEPROBE (CUBIT_CLIENT_CUBE_VOID_START);
       this->cubit_->cube_void ();
-      this->call_count_++;
+      ++this->call_count_;
     }
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("from cube_void");
-      this->error_count_++;
+      ++this->error_count_;
     }
 }
 
@@ -545,8 +598,7 @@ Cubit_Client::cube_octet (int i)
         ret_octet = this->cubit_->cube_octet (arg_octet);
       }
 
-
-      this->call_count_++;
+      ++this->call_count_;
 
       if (TAO_debug_level > 2)
         {
@@ -564,13 +616,13 @@ Cubit_Client::cube_octet (int i)
                       (CORBA::Octet) this->func (i),
                       ret_octet));
 
-          this->error_count_++;
+          ++this->error_count_;
         }
     }
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("from cube_octet");
-      this->error_count_++;
+      ++this->error_count_;
     }
 }
 
@@ -591,8 +643,7 @@ Cubit_Client::cube_long (int i)
         ret_long = this->cubit_->cube_long (arg_long);
       }
 
-
-      this->call_count_++;
+      ++this->call_count_;
 
       if (TAO_debug_level > 2)
         {
@@ -613,13 +664,13 @@ Cubit_Client::cube_long (int i)
                       (CORBA::Long) this->func (i),
                       ret_long));
 
-          this->error_count_++;
+          ++this->error_count_;
         }
     }
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("from cube_long");
-      this->error_count_++;
+      ++this->error_count_;
     }
 }
 
@@ -633,7 +684,7 @@ Cubit_Client::cube_struct (int i)
       Cubit::Many arg_struct;
       Cubit::Many ret_struct;
 
-      this->call_count_++;
+      ++this->call_count_;
 
       arg_struct.l = this->func (i);
       arg_struct.s = this->func (i);
@@ -645,7 +696,6 @@ Cubit_Client::cube_struct (int i)
 
         ret_struct = this->cubit_->cube_struct (arg_struct);
       }
-
 
       if (TAO_debug_level > 2)
         {
@@ -663,13 +713,13 @@ Cubit_Client::cube_struct (int i)
         {
           ACE_ERROR ((LM_ERROR, "** cube_struct ERROR\n"));
 
-          this->error_count_++;
+          ++this->error_count_;
         }
     }
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("from cube_struct");
-      this->error_count_++;
+      ++this->error_count_;
     }
 }
 
@@ -681,7 +731,7 @@ Cubit_Client::cube_long_sequence (int,
 {
   try
     {
-      this->call_count_++;
+      ++this->call_count_;
 
       Cubit::long_seq input (l);
       input.length (l);
@@ -692,7 +742,7 @@ Cubit_Client::cube_long_sequence (int,
       input[0] = 4;
 
 #if defined (ACE_HAS_MEMORY_PROFILER)
-      for (int i = 1; i < l; i++)
+      for (int i = 1; i < l; ++i)
         input[i]=11;
 #endif /* ACE_HAS_MEMORY_PROFILER */
 
@@ -707,13 +757,12 @@ Cubit_Client::cube_long_sequence (int,
                                           vout);
       }
 
-
       if (output->length () != input.length ())
         {
           ACE_ERROR ((LM_ERROR,
                       "** cube sequence, wrong length\n"));
 
-          this->error_count_++;
+          ++this->error_count_;
 
           return;
         }
@@ -732,13 +781,13 @@ Cubit_Client::cube_long_sequence (int,
           ACE_ERROR ((LM_ERROR,
                       "** cube_long_sequence ERROR\n"));
 
-          this->error_count_++;
+          ++this->error_count_;
         }
     }
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("from cube_long_sequence");
-      this->error_count_++;
+      ++this->error_count_;
     }
 }
 
@@ -748,7 +797,7 @@ Cubit_Client::cube_octet_sequence (int,
 {
   try
     {
-      this->call_count_++;
+      ++this->call_count_;
 
       ACE_Message_Block mb (l);
       mb.wr_ptr (l);
@@ -763,12 +812,11 @@ Cubit_Client::cube_octet_sequence (int,
 
       // Now copy over each byte.
       char* base = mb.data_block ()->base ();
-      for(CORBA::ULong i = 0; i < length; i++)
+      for(CORBA::ULong i = 0; i < length; ++i)
         {
           input[i] = base[i];
         }
 #endif /* TAO_NO_COPY_OCTET_SEQUENCES == 1 */
-
 
       // Just set the first item, otherwise it is hard to compare the
       // results for longer sequences, i.e. more than just marshalling
@@ -776,8 +824,10 @@ Cubit_Client::cube_octet_sequence (int,
       input[0] = 4;
 
 #if defined (ACE_INITIALIZE_MEMORY_BEFORE_USE)
-      for (int i = 1 ; i < l; i++)
-        input[i]=10;
+      for (int i = 1 ; i < l; ++i)
+  {
+          input[i]=10;
+  }
 #endif /* ACE_INITIALIZE_MEMORY_BEFORE_USE */
 
       Cubit::octet_seq_var output;
@@ -791,13 +841,12 @@ Cubit_Client::cube_octet_sequence (int,
                                            vout);
       }
 
-
       if (output->length () != input.length ())
         {
           ACE_ERROR ((LM_ERROR,
                       "** cube octet, wrong length\n"));
 
-          this->error_count_++;
+          ++this->error_count_;
 
           return;
         }
@@ -815,13 +864,13 @@ Cubit_Client::cube_octet_sequence (int,
           ACE_ERROR ((LM_ERROR,
                       "** cube_octet ERROR\n"));
 
-          this->error_count_++;
+          ++this->error_count_;
         }
     }
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("from cube_octet_sequence");
-      this->error_count_++;
+      ++this->error_count_;
     }
 }
 
@@ -833,7 +882,7 @@ Cubit_Client::cube_many_sequence (int,
 {
   try
     {
-      this->call_count_++;
+      ++this->call_count_;
 
       Cubit::many_seq input (l);
       input.length (l);
@@ -847,7 +896,7 @@ Cubit_Client::cube_many_sequence (int,
       in.o = 6;
 
 #if defined (ACE_HAS_PURIFY) && (ACE_HAS_PURIFY == 1)
-      for(int i=1; i < l; i++)
+      for(int i=1; i < l; ++i)
         {
           Cubit::Many &inb = input[i];
           inb.l=7;
@@ -867,13 +916,12 @@ Cubit_Client::cube_many_sequence (int,
                                           vout);
       }
 
-
       if (output->length () != input.length ())
         {
           ACE_ERROR ((LM_ERROR,
                       "** cube sequence, wrong length\n"));
 
-          this->error_count_++;
+          ++this->error_count_;
 
           return;
         }
@@ -895,13 +943,13 @@ Cubit_Client::cube_many_sequence (int,
           ACE_ERROR ((LM_ERROR,
                       "** cube_long_sequence ERROR\n"));
 
-          this->error_count_++;
+          ++this->error_count_;
         }
     }
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("from cube_many_sequence");
-      this->error_count_++;
+      ++this->error_count_;
     }
 }
 
@@ -912,7 +960,7 @@ Cubit_Client::cube_rti_data (int,
 {
   try
     {
-      this->call_count_++;
+      ++this->call_count_;
 
       Cubit::RtiPacket input;
       input.packetHeader.packetLength = 1; // this is probably redundant
@@ -956,9 +1004,9 @@ Cubit_Client::cube_rti_data (int,
 #endif /* ACE_HAS_PURIFY == 1 */
               Cubit::HandleValuePair &hvp = oumh.messagePayload[k];
               hvp.handle = k * k;
-              const char *d1 = "somedata";
-              hvp.data.length (ACE_OS::strlen (d1)+1);
-              ACE_OS::strcpy ((char *) hvp.data.get_buffer (), d1);
+              char const data[] = "somedata";
+              hvp.data.length (sizeof data);
+              std::memcpy (hvp.data.get_buffer (), data, sizeof data);
             }
         }
 
@@ -981,7 +1029,6 @@ Cubit_Client::cube_rti_data (int,
                                      vout);
       }
 
-
       if (TAO_debug_level > 0)
 
         {
@@ -997,10 +1044,9 @@ Cubit_Client::cube_rti_data (int,
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("from cube_rtti_data");
-      this->error_count_++;
+      ++this->error_count_;
     }
 }
-
 
 // calculate the cube from long contained in an any
 
@@ -1024,7 +1070,7 @@ Cubit_Client::cube_any (int i)
 
       *ret_any >>= ret_long;
 
-      this->call_count_++;
+      ++this->call_count_;
 
       if (TAO_debug_level > 2)
         {
@@ -1043,7 +1089,7 @@ Cubit_Client::cube_any (int i)
                       (CORBA::Long) this->func (i),
                       ret_long, arg_long));
 
-          this->error_count_++;
+          ++this->error_count_;
         }
 
       delete ret_any;
@@ -1051,10 +1097,9 @@ Cubit_Client::cube_any (int i)
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("from cube_any");
-      this->error_count_++;
+      ++this->error_count_;
     }
 }
-
 
 // Cube the numbers in a struct
 
@@ -1064,9 +1109,9 @@ Cubit_Client::cube_any_struct (int i)
   try
     {
       Cubit::Many arg_struct;
-      const Cubit::Many * ret_struct = 0;
+      const Cubit::Many * ret_struct {};
 
-      this->call_count_++;
+      ++this->call_count_;
 
       arg_struct.l = this->func (i);
       arg_struct.s = this->func (i);
@@ -1100,7 +1145,7 @@ Cubit_Client::cube_any_struct (int i)
           ACE_ERROR ((LM_ERROR, "** cube_any_struct ERROR -- %d should be %d\n",
                       ret_struct->l, arg_struct.l));
 
-          this->error_count_++;
+          ++this->error_count_;
         }
 
       delete ret_any;
@@ -1108,10 +1153,9 @@ Cubit_Client::cube_any_struct (int i)
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("from cube_any_struct");
-      this->error_count_++;
+      ++this->error_count_;
     }
 }
-
 
 void
 Cubit_Client::print_stats (const char *call_name,
@@ -1588,7 +1632,6 @@ Cubit_Client::~Cubit_Client ()
   this->orb_ = CORBA::ORB::_nil ();
 }
 
-
 int
 Cubit_Client::init (int argc, ACE_TCHAR **argv)
 {
@@ -1611,13 +1654,16 @@ Cubit_Client::init (int argc, ACE_TCHAR **argv)
         {
           // Enable all tests if none were specified.
           if (this->test_enable_bitset_ == 0)
+          {
             this->enable_test (TAO_ENABLE_CUBIT_ALL);
+          }
 
           // Disable tests that were explicitly disabled.
           if (this->test_disable_bitset_ != 0)
+          {
             this->test_enable_bitset_ &= ~this->test_disable_bitset_;
+          }
         }
-
 
       if (this->cubit_factory_key_ == 0)
         {

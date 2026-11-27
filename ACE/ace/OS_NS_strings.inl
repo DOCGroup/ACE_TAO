@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #if defined (ACE_HAS_WCHAR)
 #  include "ace/OS_NS_wchar.h"
 #endif /* ACE_HAS_WCHAR */
@@ -6,7 +5,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE int
-ACE_OS::strcasecmp (const char *s, const char *t)
+ACE_OS::strcasecmp (char const *s, char const *t)
 {
 #if defined (ACE_LACKS_STRCASECMP)
   return ACE_OS::strcasecmp_emulation (s, t);
@@ -30,7 +29,7 @@ ACE_OS::strcasecmp (const wchar_t *s, const wchar_t *t)
 #endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE int
-ACE_OS::strncasecmp (const char *s, const char *t, size_t len)
+ACE_OS::strncasecmp (char const *s, char const *t, size_t len)
 {
 #if defined (ACE_LACKS_STRCASECMP)
   return ACE_OS::strncasecmp_emulation (s, t, len);

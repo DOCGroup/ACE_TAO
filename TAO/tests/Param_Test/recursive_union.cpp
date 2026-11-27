@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    recursive_union.cpp
  *
@@ -7,32 +5,22 @@
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #include "recursive_union.h"
 
-const CORBA::ULong MAX_DEPTH = 3;
-const CORBA::ULong MAX_SEQ_LENGTH = 2;
+CORBA::ULong const MAX_DEPTH = 3;
+CORBA::ULong const MAX_SEQ_LENGTH = 2;
 
 // ************************************************************************
 //               Test_Recursive_Union
 // ************************************************************************
 
 Test_Recursive_Union::Test_Recursive_Union ()
-  : opname_ (CORBA::string_dup ("test_recursive_union"))
+  : opname_ ("test_recursive_union")
 {
 }
 
-Test_Recursive_Union::~Test_Recursive_Union ()
-{
-  CORBA::string_free (this->opname_);
-  this->opname_ = 0;
-  // the other data members will be freed as they are "_var"s and objects
-  // (rather than pointers to objects)
-}
-
-const char *
+char const *
 Test_Recursive_Union::opname () const
 {
   return this->opname_;
@@ -49,7 +37,7 @@ Test_Recursive_Union::dii_req_invoke (CORBA::Request *req)
 
   req->invoke ();
 
-  const Param_Test::Recursive_Union *tmp = 0;
+  Param_Test::Recursive_Union const *tmp {};
   req->return_value () >>= tmp;
   this->ret_ = new Param_Test::Recursive_Union (*tmp);
 
@@ -86,7 +74,7 @@ Test_Recursive_Union::reset_parameters ()
   Generator *gen = GENERATOR::instance ();
 
   // Set the depth of recursion.
-  CORBA::ULong depth =
+  CORBA::ULong const depth =
     (CORBA::ULong) (gen->gen_long () % MAX_DEPTH) + 1;
 
   // Create a nested union to put in inout_.
@@ -109,7 +97,7 @@ Test_Recursive_Union::run_sii_test (Param_Test_ptr objref)
 {
   try
     {
-      Param_Test::Recursive_Union_out out (this->out_.out ());
+      Param_Test::Recursive_Union_out const out (this->out_.out ());
 
       this->ret_ = objref->test_recursive_union (this->in_,
                                                  this->inout_.inout (),
@@ -117,7 +105,7 @@ Test_Recursive_Union::run_sii_test (Param_Test_ptr objref)
 
       return 0;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Test_Recursive_Union::run_sii_test\n");
     }
@@ -135,7 +123,7 @@ Test_Recursive_Union::check_validity ()
       ACE_DEBUG ((LM_DEBUG,
                   "mismatch of inout arg\n"));
 
-      return 0;
+      return false;
     }
 
   if (this->deep_check (this->in_, this->out_.in ()) == 0)
@@ -143,7 +131,7 @@ Test_Recursive_Union::check_validity ()
       ACE_DEBUG ((LM_DEBUG,
                   "mismatch of out arg\n"));
 
-      return 0;
+      return false;
     }
 
   if (this->deep_check (this->in_, this->ret_.in ()) == 0)
@@ -151,11 +139,11 @@ Test_Recursive_Union::check_validity ()
       ACE_DEBUG ((LM_DEBUG,
                   "mismatch of ret value\n"));
 
-      return 0;
+      return false;
     }
 
   // If we get this far, all is correct.
-  return 1;
+  return true;
 }
 
 CORBA::Boolean
@@ -178,7 +166,7 @@ Test_Recursive_Union::deep_init (Param_Test::Recursive_Union &ru,
   if (level == 1)
   // No more recursion, just insert a nested_rec_union.
     {
-      CORBA::ULong nested_depth =
+      CORBA::ULong const nested_depth =
         (CORBA::ULong) (gen->gen_long () % MAX_DEPTH) + 1;
 
       Param_Test::nested_rec_union nru;
@@ -189,7 +177,7 @@ Test_Recursive_Union::deep_init (Param_Test::Recursive_Union &ru,
 
       ru.nested_member (nru);
 
-      Param_Test::RecUnionSeq tmp (MAX_SEQ_LENGTH);
+      Param_Test::RecUnionSeq const tmp (MAX_SEQ_LENGTH);
 
       ru.rec_member (tmp);
 
@@ -198,7 +186,7 @@ Test_Recursive_Union::deep_init (Param_Test::Recursive_Union &ru,
   else
     {
       // Generate a member sequence.
-      CORBA::ULong len =
+      CORBA::ULong const len =
         (CORBA::ULong) (gen->gen_long () % MAX_SEQ_LENGTH) + 1;
 
       // This line is TAO-specific, but some compilers we support
@@ -211,7 +199,7 @@ Test_Recursive_Union::deep_init (Param_Test::Recursive_Union &ru,
       ru.rec_member (tmp);
 
       // We recurse for each element of the member sequence.
-      for (CORBA::ULong i = 0; i < len; i++)
+      for (CORBA::ULong i = 0; i < len; ++i)
         {
           this->deep_init (ru.rec_member ()[i],
                            gen,
@@ -236,7 +224,7 @@ Test_Recursive_Union::deep_init_nested (Param_Test::nested_rec_union &nu,
   else
     {
       // Generate a sequence length.
-      CORBA::ULong len =
+      CORBA::ULong const len =
         (CORBA::ULong) (gen->gen_long () % MAX_SEQ_LENGTH) + 1;
 
       // This line is TAO-specific, but some compilers we support
@@ -249,7 +237,7 @@ Test_Recursive_Union::deep_init_nested (Param_Test::nested_rec_union &nu,
       nu.nested_rec_member (tmp);
 
       // We recurse for each element of the member sequence.
-      for (CORBA::ULong i = 0; i < len; i++)
+      for (CORBA::ULong i = 0; i < len; ++i)
         {
           this->deep_init_nested (nu.nested_rec_member ()[i],
                                   gen,
@@ -269,7 +257,7 @@ Test_Recursive_Union::deep_check (const Param_Test::Recursive_Union &in_union,
       ACE_DEBUG ((LM_DEBUG,
                   "mismatch of Recursive_Union discriminators\n"));
 
-      return 0;
+      return false;
     }
 
   switch (in_union._d ())
@@ -284,10 +272,10 @@ Test_Recursive_Union::deep_check (const Param_Test::Recursive_Union &in_union,
               ACE_DEBUG ((LM_DEBUG,
                           "mismatch of Recursive_Union member sequence lengths\n"));
 
-              return 0;
+              return false;
             }
 
-          for (CORBA::ULong i = 0; i < in_union.rec_member ().length (); i++)
+          for (CORBA::ULong i = 0; i < in_union.rec_member ().length (); ++i)
             {
               if (!this->deep_check (in_union.rec_member ()[i],
                                      test_union.rec_member ()[i]))
@@ -295,7 +283,7 @@ Test_Recursive_Union::deep_check (const Param_Test::Recursive_Union &in_union,
                   ACE_DEBUG ((LM_DEBUG,
                               "mismatch of contained Recursive_Unions\n"));
 
-                  return 0;
+                  return false;
                 }
             }
 
@@ -314,7 +302,7 @@ Test_Recursive_Union::deep_check (const Param_Test::Recursive_Union &in_union,
         break;
     }
 
-  return 1;
+  return true;
 }
 
 CORBA::Boolean
@@ -326,7 +314,7 @@ Test_Recursive_Union::deep_check_nested (const Param_Test::nested_rec_union &in,
       ACE_DEBUG ((LM_DEBUG,
                   "mismatch of nested union discriminators\n"));
 
-      return 0;
+      return false;
     }
 
   switch (in._d ())
@@ -339,7 +327,7 @@ Test_Recursive_Union::deep_check_nested (const Param_Test::nested_rec_union &in,
             ACE_DEBUG ((LM_DEBUG,
                         "mismatch of nested_rec_union member values\n"));
 
-            return 0;
+            return false;
           }
 
         break;
@@ -354,10 +342,10 @@ Test_Recursive_Union::deep_check_nested (const Param_Test::nested_rec_union &in,
               ACE_DEBUG ((LM_DEBUG,
                           "mismatch of nested_rec_union member sequence lengths\n"));
 
-              return 0;
+              return false;
             }
 
-          for (CORBA::ULong i = 0; i < in.nested_rec_member ().length (); i++)
+          for (CORBA::ULong i = 0; i < in.nested_rec_member ().length (); ++i)
             {
               if (!this->deep_check_nested (in.nested_rec_member ()[i],
                                             test.nested_rec_member ()[i]))
@@ -365,11 +353,11 @@ Test_Recursive_Union::deep_check_nested (const Param_Test::nested_rec_union &in,
                   ACE_DEBUG ((LM_DEBUG,
                               "mismatch of contained nested_rec_unions\n"));
 
-                  return 0;
+                  return false;
                 }
             }
         }
     }
 
-  return 1;
+  return true;
 }

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
@@ -20,15 +19,13 @@ CORBA::Context::_nil ()
   return nullptr;
 }
 
-// *************************************************************
 // Inline operations for class CORBA::ContextList
-// *************************************************************
 
 ACE_INLINE
 CORBA::ULong
 CORBA::ContextList::count ()
 {
-  return (CORBA::ULong) this->ctx_list_.size ();
+  return static_cast<CORBA::ULong> (this->ctx_list_.size ());
 }
 
 ACE_INLINE

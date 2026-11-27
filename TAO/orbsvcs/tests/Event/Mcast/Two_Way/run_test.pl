@@ -2,7 +2,6 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     & eval 'exec perl -S $0 $argv:q'
     if 0;
 
-# -*- perl -*-
 
 # This is a Perl script that runs Simple EC Mcast example.  It starts
 # consumer, supplier and two (federated) Event Channel servers.
@@ -21,6 +20,11 @@ my $apps_number = 3;
 
 $test = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 $test->AddLibPath ("../Common");
+my $payload_test = $test->CreateProcess ("heartbeat_payload_test");
+if ($payload_test->SpawnWaitKill ($test->ProcessStartWaitInterval ()) != 0) {
+    print STDERR "ERROR: heartbeat payload validation failed\n";
+    exit 1;
+}
 # Variables for command-line arguments to client and server executables.
 my $ec_ior  = "ec.ior";
 my $gw_conf = "gateway.conf";
@@ -53,8 +57,9 @@ sub run_test {
     # Start EC clients.
     for ($i = 0; $i < $apps_number; $i++) {
         my $ps_index = $apps_number + $i;
+        my $ec_index = $i;
         $ps[$ps_index] = $test->CreateProcess ("application", "-ORBLogFile $test_results[$ps_index] -d ".
-                                               "-ORBInitRef Event_Service=file://$test_ec_ior.$ps_index");
+                                               "-ORBInitRef Event_Service=file://$test_ec_ior$ec_index");
         if ($ps[$ps_index]->Spawn () == -1) {
             print STDERR "ERROR detected clients Spawn\n";
             kill_processes ();
@@ -105,7 +110,7 @@ sub wait_kill_processes
         }
     }
 
-    return 0;
+    return $result;
 }
 
 sub kill_processes
@@ -117,8 +122,10 @@ sub kill_processes
     return 0;
 }
 
+my %heartbeats = ();
+
 sub analyze_results {
-    my $filename = @$_[0];
+    my $filename = $_[0];
     if (! open (TEST_OUTPUT, "<$filename")) {
         print STDERR "ERROR: Could not open $filename\n";
         return -1;
@@ -143,18 +150,30 @@ sub analyze_results {
     }
     close (TEST_OUTPUT);
 
+    if ($status != 0) {
+        print STDERR "ERROR - check $filename for full output.\n";
+    }
+    return $status;
+}
+
+sub check_heartbeats {
+    my $status = 0;
+    if (scalar (keys %heartbeats) != $apps_number) {
+        print STDERR "ERROR: expected heartbeats from $apps_number applications\n";
+        $status = -1;
+    }
+
     foreach $pid (keys %heartbeats) {
         my $ideal_heartbeats = $apps_number * 50;
         my $received_heartbeats = $heartbeats{$pid};
-        my $in_range = (($ideal_heartbeats - $received_heartbeats)
-                        <= $number_of_applications);
+        my $in_range = abs ($ideal_heartbeats - $received_heartbeats) <= $apps_number;
         my $range_note = " (";
         if (! $in_range) {
             $range_note .= "NOT ";
             $status = -1;
         }
         $range_note.=
-            "within range of $number_of_applications from $ideal_heartbeats)";
+            "within range of $apps_number from $ideal_heartbeats)";
         print STDERR
             "Received $received_heartbeats heartbeats from pid $pid";
         print STDERR "$range_note\n";
@@ -164,8 +183,6 @@ sub analyze_results {
         print STDERR "SUCCESS\n";
         return 0;
     }
-
-    print STDERR "ERROR - check $filename for full output.\n";
     return -1;
 }
 
@@ -181,6 +198,10 @@ for ($i = 0; $i < 2*$apps_number; $i++) {
     if (analyze_results ($test_results[$i]) == -1) {
         $status = 1;
     }
+}
+
+if (check_heartbeats () == -1) {
+    $status = 1;
 }
 
 exit $status;

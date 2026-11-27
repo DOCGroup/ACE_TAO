@@ -1,14 +1,8 @@
-// -*- C++ -*-
-
-// ===================================================================
 /**
  *  @file   Bzip2Compressor.h
  *
- *  See http://www.zlib.net/manual.html for the zlib interface itself
- *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-// ===================================================================
 
 #ifndef TAO_BZIP2COMPRESSOR_H
 #define TAO_BZIP2COMPRESSOR_H
@@ -31,6 +25,8 @@ namespace TAO
   class TAO_BZIP2COMPRESSOR_Export Bzip2Compressor : public BaseCompressor
   {
     public:
+      Bzip2Compressor () = delete;
+
       Bzip2Compressor (::Compression::CompressorFactory_ptr compressor_factory,
                        ::Compression::CompressionLevel compression_level);
 
@@ -42,7 +38,6 @@ namespace TAO
           ::Compression::Buffer const & source,
           ::Compression::Buffer & target) override;
 
-    private:
       Bzip2Compressor (Bzip2Compressor const &) = delete;
       Bzip2Compressor &operator= (Bzip2Compressor const &) = delete;
       Bzip2Compressor (Bzip2Compressor &&) = delete;

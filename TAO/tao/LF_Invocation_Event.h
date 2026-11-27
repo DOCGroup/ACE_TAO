@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file LF_Invocation_Event.h
  *
  *  @author Carlos O'Ryan <coryan@uci.edu>
  */
-//=============================================================================
 
 #ifndef TAO_LF_INVOCATION_EVENT_H
 #define TAO_LF_INVOCATION_EVENT_H
@@ -36,10 +32,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Export TAO_LF_Invocation_Event: public TAO_LF_Event
 {
 public:
-  /// Constructor
   TAO_LF_Invocation_Event ();
 
-  /// Destructor
   ~TAO_LF_Invocation_Event () override;
 
 protected:

@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    SOCK_Dgram_Test.cpp
  *
@@ -9,8 +8,6 @@
  *
  *  @author Brian Buesker (bbuesker@qualcomm.com)
  */
-//=============================================================================
-
 
 #include "test_config.h"
 #include "ace/OS_NS_string.h"
@@ -21,17 +18,20 @@
 #include "ace/Log_Msg.h"
 #include "ace/Time_Value.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_sys_socket.h"
+
+#include <memory>
 
 #define SERVER_PORT 20000
 #define TEST_DATA ACE_TEXT ("UDP Open Test")
 
-static void *
+static ACE_THR_FUNC_RETURN
 client (void *arg)
 {
-  ACE_INET_Addr *remote_addr = (ACE_INET_Addr *) arg;
+  ACE_INET_Addr *remote_addr = static_cast<ACE_INET_Addr *> (arg);
   ACE_INET_Addr server_addr, peer_addr;
   ACE_SOCK_Dgram cli_dgram;
-  ACE_Time_Value timeout (1);
+  ACE_Time_Value const timeout (1);
 
   ACE_TCHAR buf[20];
   ACE_TCHAR hostname_string[100];
@@ -64,7 +64,7 @@ client (void *arg)
                  ACE_TEXT("(%P|%t) protocol %d, %p\n"),
                  server_addr.get_type (),
                  ACE_TEXT ("SOCK_Dgram open")));
-      return nullptr;
+      return ACE_THR_FUNC_RETURN_NULL;
     }
 
   {
@@ -74,7 +74,7 @@ client (void *arg)
       if (cli_dgram.set_option(IPPROTO_IP, ACE_RECVPKTINFO, &sockopt, sizeof sockopt) == -1) {
         ACE_ERROR((LM_ERROR,
                    ACE_TEXT("(%P|%t) setsockopt failed\n")));
-        return nullptr;
+        return ACE_THR_FUNC_RETURN_NULL;
       } else {
         ACE_DEBUG((LM_DEBUG,
                    ACE_TEXT("(%P|%t) setsockopt succeeded\n")));
@@ -88,7 +88,7 @@ client (void *arg)
       if (cli_dgram.set_option(IPPROTO_IPV6, ACE_RECVPKTINFO6, &sockopt, sizeof sockopt) == -1) {
         ACE_ERROR((LM_ERROR,
                    ACE_TEXT("(%P|%t) setsockopt failed\n")));
-        return nullptr;
+        return ACE_THR_FUNC_RETURN_NULL;
       } else {
         ACE_DEBUG((LM_DEBUG,
                    ACE_TEXT("(%P|%t) setsockopt succeeded\n")));
@@ -104,7 +104,7 @@ client (void *arg)
                  ACE_TEXT("(%P|%t) UDP send to %s %p\n"),
                  hostname_string,
                  ACE_TEXT ("failed")));
-      return nullptr;
+      return ACE_THR_FUNC_RETURN_NULL;
     }
 
     {
@@ -135,14 +135,14 @@ client (void *arg)
                                         sizeof (buf),
                                         peer_addr,
                                         0,
-                                        &timeout);
+                                        std::addressof (timeout));
 #else
       iovec iov[1];
       // Some platforms define iov_base as char* instead of void*.
-      iov[0].iov_base = (char *)buf;
+      iov[0].iov_base = reinterpret_cast<char *> (buf);
       iov[0].iov_len = sizeof buf;
 
-      ssize_t rcv_cnt = cli_dgram.recv (iov,
+      ssize_t const rcv_cnt = cli_dgram.recv (iov,
                                         1,
                                         peer_addr,
                                         0,
@@ -168,7 +168,7 @@ client (void *arg)
       else
         {
           // recv() ok, check data, 'from', and 'to' address
-          size_t rcv_siz = static_cast<size_t> (rcv_cnt);
+          size_t const rcv_siz = static_cast<size_t> (rcv_cnt);
           if (rcv_siz != sizeof (TEST_DATA))
             {
               ACE_ERROR ((LM_ERROR,
@@ -178,40 +178,47 @@ client (void *arg)
             }
           else
             {
-              buf[rcv_siz/sizeof (ACE_TCHAR)] = '\0';
-              if (ACE_OS::strncmp (buf, TEST_DATA, ACE_OS::strlen (TEST_DATA)))
-                ACE_ERROR ((LM_ERROR,
-                            ACE_TEXT ("(%P|%t) recv string should be %s; ")
-                            ACE_TEXT (" but is %s\n"),
-                            TEST_DATA, buf));
+              if (ACE_OS::memcmp (buf, TEST_DATA, sizeof (TEST_DATA)) != 0)
+                {
+                  ACE_ERROR ((LM_ERROR,
+                              ACE_TEXT ("(%P|%t) recv string should be %s; ")
+                              ACE_TEXT (" but the received bytes differ\n"),
+                              TEST_DATA));
+                }
             }
           if (peer_addr.get_type () != server_addr.get_type ())
-            ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("(%P|%t) recv addr type %d; should be %d\n"),
-                        peer_addr.get_type (),
-                        server_addr.get_type ()));
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("(%P|%t) recv addr type %d; should be %d\n"),
+                          peer_addr.get_type (),
+                          server_addr.get_type ()));
+            }
           if (peer_addr.get_size () != server_addr.get_size ())
-            ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("(%P|%t) recv addr size %d; should be %d\n"),
-                        peer_addr.get_size (),
-                        server_addr.get_size ()));
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("(%P|%t) recv addr size %d; should be %d\n"),
+                          peer_addr.get_size (),
+                          server_addr.get_size ()));
+            }
 #if (defined ACE_RECVPKTINFO6 || defined ACE_RECVPKTINFO) && !defined ACE_FACE_SAFETY_EXTENDED
           if (local_addr != to_addr)
-            ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("(%P|%t) local addr is not equal to sent-to addr\n")));
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("(%P|%t) local addr is not equal to sent-to addr\n")));
+            }
 #endif
         }
     }
 
   cli_dgram.close();
 
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
-static void *
+static ACE_THR_FUNC_RETURN
 server (void *arg)
 {
-  ACE_SOCK_Dgram *server_dgram = (ACE_SOCK_Dgram *) arg;
+  ACE_SOCK_Dgram *server_dgram = static_cast<ACE_SOCK_Dgram *> (arg);
   ACE_INET_Addr peer_addr;
 
   ACE_TCHAR buf[20];
@@ -225,7 +232,7 @@ server (void *arg)
   else
     {
       // recv() ok, check data and 'from' address
-      size_t rcv_siz = static_cast<size_t> (rcv_cnt);
+      size_t const rcv_siz = static_cast<size_t> (rcv_cnt);
       if (rcv_siz != sizeof (TEST_DATA))
         {
           ACE_ERROR ((LM_ERROR,
@@ -235,23 +242,28 @@ server (void *arg)
         }
       else
         {
-          buf[rcv_siz / sizeof (ACE_TCHAR)] = '\0';
-          if (ACE_OS::strncmp (buf, TEST_DATA, ACE_OS::strlen (TEST_DATA)))
-            ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("(%P|%t) recv string should be %s; ")
-                        ACE_TEXT (" but is %s\n"),
-                        TEST_DATA, buf));
+          if (ACE_OS::memcmp (buf, TEST_DATA, sizeof (TEST_DATA)) != 0)
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("(%P|%t) recv string should be %s; ")
+                          ACE_TEXT (" but the received bytes differ\n"),
+                          TEST_DATA));
+            }
         }
 
       if (0 == peer_addr.addr_to_string (hostname_string,
           sizeof (hostname_string)))
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%P|%t) Echoing data to %s\n"),
-                    hostname_string));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) Echoing data to %s\n"),
+                      hostname_string));
+        }
       else
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) %p\n"),
-                    ACE_TEXT ("addr_to_string")));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("(%P|%t) %p\n"),
+                      ACE_TEXT ("addr_to_string")));
+        }
       if (server_dgram->send (TEST_DATA, sizeof (TEST_DATA),
                               peer_addr, 0) == -1)
         {
@@ -262,7 +274,7 @@ server (void *arg)
     }
   server_dgram->close ();
 
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 static int
@@ -315,17 +327,17 @@ spawn (int proto)
                                 ACE_TEXT ("fork failed")));
               /* NOTREACHED */
             case 0:
-              client (&server_addr);
+              client (std::addressof (server_addr));
               ACE_OS::exit (0);
               /* NOTREACHED */
             default:
-              server ((void *) &server_dgram);
+              server (std::addressof (server_dgram));
               ACE_OS::wait ();
             }
 #elif defined (ACE_HAS_THREADS)
           if (ACE_Thread_Manager::instance ()->spawn
-              (ACE_THR_FUNC (server),
-               (void *) &server_dgram,
+              (server,
+               &server_dgram,
                THR_NEW_LWP | THR_DETACHED) == -1)
             ACE_ERROR_RETURN ((LM_ERROR,
                                ACE_TEXT ("(%P|%t) %p\n"),
@@ -333,8 +345,8 @@ spawn (int proto)
                                1);
 
           if (ACE_Thread_Manager::instance ()->spawn
-              (ACE_THR_FUNC (client),
-               (void *) &server_addr,
+              (client,
+               &server_addr,
                THR_NEW_LWP | THR_DETACHED) == -1)
             ACE_ERROR_RETURN ((LM_ERROR,
                         ACE_TEXT ("(%P|%t) %p\n"),
@@ -357,6 +369,84 @@ spawn (int proto)
   return 0;
 }
 
+#if defined (ACE_LINUX) && defined (ACE_HAS_IPV6) && defined (IP_MULTICAST_IF)
+int
+test_dual_stack_multicast_interface ()
+{
+  unsigned int const loopback_index = ACE_OS::if_nametoindex ("lo");
+  if (loopback_index == 0)
+    {
+      return 0;
+    }
+
+  ACE_SOCK_Dgram socket;
+  if (socket.open (ACE_Addr::sap_any, PF_INET6) == -1)
+    {
+      return 0;
+    }
+
+  in_addr multicast_interface {};
+  int option_length = sizeof (multicast_interface);
+  ACE_TCHAR const * const interfaces[] = {ACE_TEXT ("lo"), ACE_TEXT ("127.0.0.1")};
+  for (ACE_TCHAR const * const interface_name : interfaces)
+    {
+      int const set_result = socket.set_nic (interface_name);
+      int const get_result = socket.get_option (IPPROTO_IP, IP_MULTICAST_IF,
+                                                &multicast_interface, &option_length);
+      if (set_result == -1 || get_result == -1
+          || multicast_interface.s_addr != ACE_HTONL (INADDR_LOOPBACK))
+        {
+          socket.close ();
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Failed to set IPv4 multicast interface %s on a dual-stack socket\n"),
+                             interface_name),
+                            1);
+        }
+    }
+
+  unsigned int ipv6_interface {};
+  option_length = sizeof (ipv6_interface);
+  if (socket.set_nic (ACE_TEXT ("lo"), AF_INET6) == -1
+      || socket.get_option (IPPROTO_IPV6, IPV6_MULTICAST_IF,
+                            &ipv6_interface, &option_length) == -1
+      || ipv6_interface != loopback_index)
+    {
+      socket.close ();
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Failed to set IPv6 multicast interface\n")),
+                        1);
+    }
+
+  if (socket.set_nic (ACE_TEXT ("127.0.0.1"), AF_INET6) != -1)
+    {
+      socket.close ();
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Accepted an IPv4 address as an IPv6 interface\n")),
+                        1);
+    }
+  socket.close ();
+
+  ACE_SOCK_Dgram ipv4_socket;
+  if (ipv4_socket.open (ACE_Addr::sap_any, PF_INET) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Unable to open IPv4 datagram socket\n")), 1);
+    }
+  int const ipv4_result = ipv4_socket.set_nic (ACE_TEXT ("lo"));
+  option_length = sizeof (multicast_interface);
+  int const get_ipv4_result = ipv4_socket.get_option (IPPROTO_IP, IP_MULTICAST_IF,
+                                                       &multicast_interface, &option_length);
+  ipv4_socket.close ();
+  if (ipv4_result == -1 || get_ipv4_result == -1
+      || multicast_interface.s_addr != ACE_HTONL (INADDR_LOOPBACK))
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Failed to set multicast interface on an IPv4 socket\n")),
+                        1);
+    }
+  return 0;
+}
+#endif /* ACE_LINUX && ACE_HAS_IPV6 && IP_MULTICAST_IF */
+
 int run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("SOCK_Dgram_Test"));
@@ -369,6 +459,13 @@ int run_main (int, ACE_TCHAR *[])
     {
       retval = spawn (AF_INET6);
     }
+
+#if defined (ACE_LINUX) && defined (IP_MULTICAST_IF)
+  if (retval == 0)
+    {
+      retval = test_dual_stack_multicast_interface ();
+    }
+#endif /* ACE_LINUX && IP_MULTICAST_IF */
 
 #endif /* ACE_HAS_IPV6 */
 

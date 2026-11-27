@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #ifndef TAO_CLIENT_INTERCEPTOR_H
 #define TAO_CLIENT_INTERCEPTOR_H
 #include /**/ "ace/pre.h"
@@ -16,39 +15,40 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+/// Client-side echo interceptor.  For checking interceptor visually only.
 class Echo_Client_Request_Interceptor
   : public virtual PortableInterceptor::ClientRequestInterceptor,
     public virtual ::CORBA::LocalObject
 {
-  // = Client-side echo interceptor.  For checking interceptor visually only.
 public:
   Echo_Client_Request_Interceptor ();
-  // ctor.
-  virtual ~Echo_Client_Request_Interceptor ();
-  // dtor.
+  Echo_Client_Request_Interceptor (Echo_Client_Request_Interceptor const &) = delete;
+  Echo_Client_Request_Interceptor (Echo_Client_Request_Interceptor &&) = delete;
+  Echo_Client_Request_Interceptor &operator= (Echo_Client_Request_Interceptor const &) = delete;
+  Echo_Client_Request_Interceptor &operator= (Echo_Client_Request_Interceptor &&) = delete;
+  ~Echo_Client_Request_Interceptor () override = default;
 
-  virtual char * name ();
-  // Canonical name of the interceptor.
+  /// Canonical name of the interceptor.
+  char * name () override;
 
-  virtual void destroy ();
+  void destroy () override;
 
-  virtual void send_poll (
-      PortableInterceptor::ClientRequestInfo_ptr);
+  void send_poll (
+      PortableInterceptor::ClientRequestInfo_ptr) override;
 
-  virtual void send_request (PortableInterceptor::ClientRequestInfo_ptr ri);
+  void send_request (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
-  virtual void receive_other (
-        PortableInterceptor::ClientRequestInfo_ptr);
+  void receive_other (PortableInterceptor::ClientRequestInfo_ptr) override;
 
-  virtual void receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri);
+  void receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
-  virtual void receive_exception (
-      PortableInterceptor::ClientRequestInfo_ptr ri);
+  void receive_exception (
+      PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
   // Some identifiers that are used for error checking
   static CORBA::ULong client_interceptor_check_;
 private:
-  const char *myname_;
+  char const *const myname_;
 };
 
 #if defined (_MSC_VER)

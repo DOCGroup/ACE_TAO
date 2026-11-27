@@ -1,9 +1,9 @@
-// -*- C++ -*-
 #include "ace/ACE.h"
 #include "ace/OS_NS_sys_wait.h"
 #include "ace/OS_NS_signal.h"
 #include "ace/OS_NS_pwd.h"
 #include "ace/OS_NS_string.h"
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -66,8 +66,10 @@ ACE_Process::wait (ACE_exitcode *status,
                   , process_info_.hProcess
 #endif /* ACE_WIN32 */
                   );
-  if (status != 0)
-    *status = this->exit_code_;
+  if (status != nullptr)
+    {
+      *status = this->exit_code_;
+    }
 
   return retv;
 }
@@ -76,18 +78,26 @@ ACE_INLINE int
 ACE_Process::kill (int signum)
 {
   if (this->getpid () != -1)
-    return ACE_OS::kill (this->getpid (), signum);
+    {
+      return ACE_OS::kill (this->getpid (), signum);
+    }
   else
-    return -1;
+    {
+      return -1;
+    }
 }
 
 ACE_INLINE int
 ACE_Process::terminate ()
 {
   if (this->getpid () != -1)
-    return ACE::terminate_process (this->getpid ());
+    {
+      return ACE::terminate_process (this->getpid ());
+    }
   else
-    return -1;
+    {
+      return -1;
+    }
 }
 
 ACE_INLINE int
@@ -170,7 +180,7 @@ ACE_Process_Options::avoid_zombies (int avoid_zombies)
 ACE_INLINE ACE_TEXT_STARTUPINFO *
 ACE_Process_Options::startup_info ()
 {
-  return &startup_info_;
+  return std::addressof (startup_info_);
 }
 
 ACE_INLINE LPSECURITY_ATTRIBUTES
@@ -182,7 +192,7 @@ ACE_Process_Options::get_process_attributes () const
 ACE_INLINE LPSECURITY_ATTRIBUTES
 ACE_Process_Options::set_process_attributes ()
 {
-  process_attributes_ = &security_buf1_;
+  process_attributes_ = std::addressof (security_buf1_);
   return process_attributes_;
 }
 
@@ -195,7 +205,7 @@ ACE_Process_Options::get_thread_attributes () const
 ACE_INLINE LPSECURITY_ATTRIBUTES
 ACE_Process_Options::set_thread_attributes ()
 {
-  thread_attributes_ = &security_buf2_;
+  thread_attributes_ = std::addressof (security_buf2_);
   return thread_attributes_;
 }
 
@@ -237,12 +247,12 @@ ACE_Process_Options::inherit_environment (bool nv)
 }
 
 ACE_INLINE int
-ACE_Process_Options::setreugid (const ACE_TCHAR* user)
+ACE_Process_Options::setreugid (ACE_TCHAR const *user)
 {
 #if !defined (ACE_LACKS_PWD_FUNCTIONS)
   struct passwd *ent = ACE_OS::getpwnam (ACE_TEXT_ALWAYS_CHAR (user));
 
-  if (ent != 0)
+  if (ent != nullptr)
     {
       this->euid_ = ent->pw_uid;
       this->ruid_ = ent->pw_uid;
@@ -251,7 +261,9 @@ ACE_Process_Options::setreugid (const ACE_TCHAR* user)
       return 0;
     }
   else
-    return -1;
+    {
+      return -1;
+    }
 #else
   ACE_UNUSED_ARG (user);
   ACE_NOTSUP_RETURN (-1);
@@ -310,8 +322,10 @@ ACE_Process_Options::getegid () const
 ACE_INLINE ACE_TCHAR *
 ACE_Process_Options::command_line_buf (size_t *max_lenp)
 {
-  if (max_lenp != 0)
-    *max_lenp = this->command_line_buf_len_;
+  if (max_lenp != nullptr)
+    {
+      *max_lenp = this->command_line_buf_len_;
+    }
   return this->command_line_buf_;
 }
 
@@ -319,13 +333,17 @@ ACE_INLINE ACE_TCHAR *
 ACE_Process_Options::working_directory ()
 {
   if (working_directory_[0] == '\0')
-    return 0;
+    {
+      return nullptr;
+    }
   else
-    return working_directory_;
+    {
+      return working_directory_;
+    }
 }
 
 ACE_INLINE void
-ACE_Process_Options::working_directory (const char *wd)
+ACE_Process_Options::working_directory (char const *wd)
 {
   ACE_OS::strcpy (working_directory_, ACE_TEXT_CHAR_TO_TCHAR (wd));
 }
@@ -339,16 +357,18 @@ ACE_Process_Options::working_directory (const wchar_t *wd)
 #endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE void
-ACE_Process_Options::process_name (const ACE_TCHAR *p)
+ACE_Process_Options::process_name (ACE_TCHAR const *p)
 {
   ACE_OS::strcpy (this->process_name_, p);
 }
 
-ACE_INLINE const ACE_TCHAR *
+ACE_INLINE ACE_TCHAR const *
 ACE_Process_Options::process_name ()
 {
   if (process_name_[0] == '\0')
-    this->process_name (this->command_line_argv ()[0]);
+    {
+      this->process_name (this->command_line_argv ()[0]);
+    }
 
   return this->process_name_;
 }

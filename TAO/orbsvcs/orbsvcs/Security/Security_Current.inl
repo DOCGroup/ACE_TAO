@@ -1,4 +1,3 @@
-// -*- C++ -*-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE size_t
@@ -11,7 +10,9 @@ ACE_INLINE TAO::Security::Current_Impl *
 TAO_Security_Current::implementation ()
 {
   if (this->orb_core_ == nullptr && this->init () != 0)
-    return nullptr;
+    {
+      return nullptr;
+    }
 
   TAO::Security::Current_Impl *impl =
     static_cast<TAO::Security::Current_Impl *> (

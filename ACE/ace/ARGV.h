@@ -1,13 +1,9 @@
-// -*- C++ -*-
-
-//==========================================================================
 /**
  *  @file    ARGV.h
  *
  *  @author Doug Schmidt <d.schmidt@vanderbilt.edu>
  *  @author Everett Anderson <eea1@cs.wustl.edu>
  */
-//==========================================================================
 
 #ifndef ACE_ARGUMENT_VECTOR_H
 #define ACE_ARGUMENT_VECTOR_H
@@ -35,7 +31,7 @@ class ACE_ARGV_Queue_Entry_T
 {
 public:
   /// Initialize a ACE_ARGV_Queue_Entry_T.
-  ACE_ARGV_Queue_Entry_T ();
+  ACE_ARGV_Queue_Entry_T () = default;
 
   /**
    * Initialize a ACE_ARGV_Queue_Entry_T.
@@ -45,7 +41,7 @@ public:
    * @param quote_arg The argument @a arg need to be quoted
    *              while adding to the vector.
    */
-  ACE_ARGV_Queue_Entry_T (const CHAR_TYPE *arg,
+  ACE_ARGV_Queue_Entry_T (CHAR_TYPE const *arg,
                           bool quote_arg);
 
   /**
@@ -53,27 +49,25 @@ public:
    *
    * @param entry Pointer to a queue entry
    */
-  ACE_ARGV_Queue_Entry_T (const ACE_ARGV_Queue_Entry_T<CHAR_TYPE> &entry);
+  ACE_ARGV_Queue_Entry_T (ACE_ARGV_Queue_Entry_T<CHAR_TYPE> const &entry) = default;
 
-  ACE_ARGV_Queue_Entry_T (ACE_ARGV_Queue_Entry_T&&) = default;
-  ACE_ARGV_Queue_Entry_T &operator = (const ACE_ARGV_Queue_Entry_T &) = default;
-  ACE_ARGV_Queue_Entry_T &operator = (ACE_ARGV_Queue_Entry_T &&)  = default;
+  ACE_ARGV_Queue_Entry_T (ACE_ARGV_Queue_Entry_T &&) = default;
+  ACE_ARGV_Queue_Entry_T &operator= (ACE_ARGV_Queue_Entry_T const &) = default;
+  ACE_ARGV_Queue_Entry_T &operator= (ACE_ARGV_Queue_Entry_T &&) = default;
 
-  /// We need this destructor to keep some compilers from complaining.
-  /// It's just a no-op, however.
   ~ACE_ARGV_Queue_Entry_T () = default;
 
   /// Dump the state of this object.
   void dump () const;
 
-  // Declare the dynamic allocation hooks.
+  /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
   /// Pointer to the argument.
-  const CHAR_TYPE * arg_;
+  CHAR_TYPE const *arg_ {};
 
   /// The argument need to be quoted while adding to the vector.
-  bool quote_arg_;
+  bool quote_arg_ {};
 };
 
 /**
@@ -110,7 +104,7 @@ public:
    *              its environment variable value in the resultant vector
    *              in place of the environment variable name.
    */
-  explicit ACE_ARGV_T (const CHAR_TYPE buf[],
+  explicit ACE_ARGV_T (CHAR_TYPE const buf[],
                        bool substitute_env_args = true);
 
   /**
@@ -188,19 +182,23 @@ public:
 
   /**
    * Initialize this object so arguments can be added later using one
-   * of the add methods. This is referred to as the @i iterative method
+   * of the add methods. This is referred to as the iterative method
    * of adding arguments to this object.
    */
-  explicit ACE_ARGV_T (bool substitute_env_args = true);
+  ACE_ARGV_T (bool substitute_env_args = true);
 
-  /// Destructor.
   ~ACE_ARGV_T ();
+
+  ACE_ARGV_T (ACE_ARGV_T const &) = delete;
+  ACE_ARGV_T &operator= (ACE_ARGV_T const &) = delete;
+  ACE_ARGV_T (ACE_ARGV_T &&) = delete;
+  ACE_ARGV_T &operator= (ACE_ARGV_T &&) = delete;
 
   /** @name Accessor methods
    *
    * These methods access the argument vector contained in this object.
    */
-  //@{
+  /// @{
   /**
    * Returns the specified element of the current argument vector.
    *
@@ -209,7 +207,7 @@ public:
    * @retval Pointer to the indexed string.
    * @retval 0 if @a index is out of bounds.
    */
-  const CHAR_TYPE *operator[] (size_t index);
+  CHAR_TYPE const *operator[] (size_t index);
 
   /**
    * Returns the current argument vector. The returned pointers are to data
@@ -226,14 +224,14 @@ public:
    * pointer refers to memory maintained internally to this class. Do not
    * change or delete it.
    */
-  const CHAR_TYPE *buf ();
+  CHAR_TYPE const *buf ();
 
-  //@}
+  /// @}
 
   /// Dump the state of this object.
   void dump () const;
 
-  // Declare the dynamic allocation hooks.
+  /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
   /**
@@ -253,7 +251,7 @@ public:
    *       - EINVAL: This object is not in iterative mode.
    *       - ENOMEM: Not enough memory available to save @a next_arg.
    */
-  int add (const CHAR_TYPE *next_arg, bool quote_arg = false);
+  int add (CHAR_TYPE const *next_arg, bool quote_arg = false);
 
   /**
    * Add an array of arguments. This only works in the iterative mode.
@@ -276,11 +274,6 @@ public:
   int add (CHAR_TYPE *argv[], bool quote_args = false);
 
 private:
-  ACE_ARGV_T (const ACE_ARGV_T<CHAR_TYPE>&) = delete;
-  ACE_ARGV_T operator= (const ACE_ARGV_T<CHAR_TYPE>&) = delete;
-  ACE_ARGV_T (ACE_ARGV_T<CHAR_TYPE>&&) = delete;
-  ACE_ARGV_T operator= (ACE_ARGV_T<CHAR_TYPE>&&) = delete;
-
   /// Creates buf_ from the queue of added args, deletes previous buf_.
   int create_buf_from_queue ();
 
@@ -290,24 +283,24 @@ private:
   /// Replace args with environment variable values?
   bool substitute_env_args_;
 
-  bool iterative_;
+  bool iterative_ {};
 
   /// Number of arguments in the ARGV array.
-  int argc_;
+  int argc_ {};
 
-  /// The array of string arguments.
-  CHAR_TYPE **argv_;
+  /// Raw array required by ACE_OS::string_to_argv and the argv() API; released with its matching allocator.
+  CHAR_TYPE **argv_ {};
 
-  /// Buffer containing the argv contents.
-  CHAR_TYPE *buf_;
+  /// Raw buffer required by ACE_OS argument conversion; released with its matching allocator.
+  CHAR_TYPE *buf_ {};
 
   /// Total length of the arguments in the queue, not counting
   /// separating spaces
-  size_t length_;
+  size_t length_ {};
 
   /// Queue which keeps user supplied arguments.  This is only
   /// active in the "iterative" mode.
-  ACE_Unbounded_Queue<ACE_ARGV_Queue_Entry_T<CHAR_TYPE> > queue_;
+  ACE_Unbounded_Queue<ACE_ARGV_Queue_Entry_T<CHAR_TYPE>> queue_;
 };
 
 using ACE_ARGV_Queue_Entry = ACE_ARGV_Queue_Entry_T<ACE_TCHAR>;

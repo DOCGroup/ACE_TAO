@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    ub_array_seq.h
  *
@@ -7,32 +5,26 @@
  *
  *  @author   Jeff Parsons <parsons@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef PARAM_TEST_UNBOUNED_ARRAY_SEQUENCE_H
 #define PARAM_TEST_UNBOUNED_ARRAY_SEQUENCE_H
 
 #include "param_testC.h"
 
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-//           test sequence of arrays
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+/// test sequence of arrays
 
 class Test_Array_Sequence
 {
 public:
-  /// ctor
   Test_Array_Sequence ();
 
-  /// dtor
-  ~Test_Array_Sequence ();
+  ~Test_Array_Sequence () = default;
 
   /// run the SII test
   int run_sii_test (Param_Test_ptr objref);
 
   /// return operation name
-  const char *opname () const;
+  char const *opname () const;
 
   /// set values for parameters
   int init_parameters (Param_Test_ptr objref);
@@ -62,7 +54,7 @@ protected:
 
 private:
   /// operation name
- char *opname_;
+ char const *opname_;
 
   /// in parameter
   Param_Test::ArraySeq in_;
@@ -77,6 +69,5 @@ private:
   /// return value
   Param_Test::ArraySeq_var ret_;
 };
-
 
 #endif /* PARAM_TEST_UNBOUNED_ARRAY_SEQUENCE_H */

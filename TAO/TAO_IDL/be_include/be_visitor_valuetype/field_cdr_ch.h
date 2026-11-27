@@ -1,5 +1,3 @@
-/* -*- c++ -*- */
-//=============================================================================
 /**
  *  @file    field_cdr_ch.h
  *
@@ -7,7 +5,6 @@
  *
  *  @author Jeff Parsons
  */
-//=============================================================================
 
 #ifndef _BE_VISITOR_VALUETYPE_FIELD_CDR_CH_H_
 #define _BE_VISITOR_VALUETYPE_FIELD_CDR_CH_H_

@@ -19,21 +19,19 @@
 #include "orbsvcs/Notify/EventChannel.h"
 #include "orbsvcs/Notify/Routing_Slip.h"
 
+#include <utility>
+
 //#define DEBUG_LEVEL 10
 #ifndef DEBUG_LEVEL
 # define DEBUG_LEVEL TAO_debug_level
 #endif //DEBUG_LEVEL
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Notify_ProxyConsumer::TAO_Notify_ProxyConsumer ()
-  : supplier_admin_ (0)
-{
-}
+TAO_Notify_ProxyConsumer::TAO_Notify_ProxyConsumer () = default;
 
-TAO_Notify_ProxyConsumer::~TAO_Notify_ProxyConsumer ()
-{
-}
+TAO_Notify_ProxyConsumer::~TAO_Notify_ProxyConsumer () = default;
 
 TAO_Notify_Peer*
 TAO_Notify_ProxyConsumer::peer ()
@@ -53,7 +51,7 @@ TAO_Notify_ProxyConsumer::init (TAO_Notify::Topology_Parent* topology_parent)
 
   this->filter_admin_.event_channel (this->supplier_admin_->event_channel());
 
-  const CosNotification::QoSProperties &default_ps_qos =
+  CosNotification::QoSProperties const &default_ps_qos =
     TAO_Notify_PROPERTIES::instance ()->default_proxy_consumer_qos_properties ();
 
   {
@@ -70,7 +68,7 @@ TAO_Notify_ProxyConsumer::connect (TAO_Notify_Supplier *supplier)
   std::unique_ptr<TAO_Notify_Supplier> auto_supplier (supplier);
 
   TAO_Notify_Atomic_Property_Long& supplier_count = this->admin_properties().suppliers ();
-  const TAO_Notify_Property_Long& max_suppliers = this->admin_properties().max_suppliers ();
+  TAO_Notify_Property_Long const& max_suppliers = this->admin_properties().max_suppliers ();
 
   if (max_suppliers != 0 && supplier_count >= max_suppliers.value ())
   {
@@ -82,19 +80,19 @@ TAO_Notify_ProxyConsumer::connect (TAO_Notify_Supplier *supplier)
                         CORBA::INTERNAL ());
 
     // if supplier is set and reconnect not allowed we get out.
-    if (this->is_connected () && TAO_Notify_PROPERTIES::instance()->allow_reconnect() == false)
+    if (this->is_connected () && !TAO_Notify_PROPERTIES::instance()->allow_reconnect())
       {
         throw CosEventChannelAdmin::AlreadyConnected ();
       }
 
     // Adopt the supplier
-    this->supplier_ = std::move(auto_supplier);
+    this->supplier_ = std::move (auto_supplier);
 
     this->supplier_admin_->subscribed_types (this->subscribed_types_); // get the parents subscribed types.
   }
 
   // Inform QoS values.
-  ACE_ASSERT (this->supplier_.get() != nullptr);
+  ACE_ASSERT (this->supplier_);
   this->supplier_->qos_changed (this->qos_properties_);
 
   TAO_Notify_EventTypeSeq removed;
@@ -117,7 +115,9 @@ TAO_Notify_ProxyConsumer::push_i (TAO_Notify_Event * event)
       TAO_Notify::Routing_Slip_Ptr routing_slip =
         TAO_Notify::Routing_Slip::create (pevent);
       if (DEBUG_LEVEL > 0)
+      {
         ORBSVCS_DEBUG((LM_DEBUG, ACE_TEXT ("ProxyConsumer routing event.\n")));
+      }
       routing_slip->route (this, true);
       routing_slip->wait_persist ();
     }
@@ -131,7 +131,7 @@ TAO_Notify_ProxyConsumer::push_i (TAO_Notify_Event * event)
 bool
 TAO_Notify_ProxyConsumer::supports_reliable_events () const
 {
-  bool reliable = false;
+  bool reliable {};
   CosNotification::PropertyValue value;
   if (this->find_qos_property_value (CosNotification::EventReliability, value))
     {
@@ -161,12 +161,13 @@ int
 TAO_Notify_ProxyConsumer::shutdown ()
 {
   if (this->TAO_Notify_Object::shutdown () == 1)
+  {
     return 1;
-
+  }
 
   this->disconnect ();
 
-  if (this->supplier_.get() != nullptr)
+  if (this->supplier_)
   {
     this->supplier_->shutdown ();
   }
@@ -183,19 +184,16 @@ TAO_Notify_ProxyConsumer::destroy ()
   // It is not safe to delete the non-refcounted supplier here.
 }
 
-
 ACE_Time_Value
 TAO_Notify_ProxyConsumer::last_ping() const
 {
   return this->last_ping_.value ();
 }
 
-
 void
-TAO_Notify_ProxyConsumer::last_ping(const ACE_Time_Value& tv)
+TAO_Notify_ProxyConsumer::last_ping(ACE_Time_Value const& tv)
 {
   this->last_ping_ = tv;
 }
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL

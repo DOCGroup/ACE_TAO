@@ -3,22 +3,20 @@
 #include "orbsvcs/FtRtEvent/EventChannel/FTEC_Event_Channel.h"
 #include "orbsvcs/FtRtEvent/EventChannel/Request_Context_Repository.h"
 #include "../Utils/Log.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// The mutex has to be recursive; otherwise, if the second replicate_request() is
 /// called while the first replicate_request() is waiting for reply, we will get
 /// a deadlock.
-Basic_Replication_Strategy::Basic_Replication_Strategy(bool mt)
-  : sequence_num_(0)
-  , mutex_(mt ? new ACE_SYNCH_RECURSIVE_MUTEX : nullptr)
+Basic_Replication_Strategy::Basic_Replication_Strategy (bool mt)
+  : mutex_ (mt ? std::make_unique<ACE_SYNCH_RECURSIVE_MUTEX> ()
+               : std::unique_ptr<ACE_SYNCH_RECURSIVE_MUTEX> {})
 {
 }
 
-Basic_Replication_Strategy::~Basic_Replication_Strategy()
-{
-  delete mutex_;
-}
+Basic_Replication_Strategy::~Basic_Replication_Strategy () = default;
 
 void
 Basic_Replication_Strategy::check_validity()
@@ -42,30 +40,37 @@ Basic_Replication_Strategy::check_validity()
       throw FTRT::OutOfSequence(exception);
     }
     else
-      this->sequence_num_++;
+    {
+      ++this->sequence_num_;
+    }
 }
 
 void twoway_set_update(FtRtecEventChannelAdmin::EventChannel_var successor,
-                       const FTRT::State& state)
+                       FTRT::State const& state)
 {
   bool finished = true;
   do {
     try{
       successor->set_update(state);
     }
-    catch (const CORBA::COMM_FAILURE& ex){
-      if (ex.minor() == 6)   finished = false;
+    catch (CORBA::COMM_FAILURE const& ex){
+      if (ex.minor() == 6)
+        {
+          finished = false;
+        }
       else
+      {
         throw;
+      }
     }
   } while(!finished);
 }
 
 void
 Basic_Replication_Strategy::replicate_request(
-  const FTRT::State& state,
+  FTRT::State const& state,
   RollbackOperation rollback,
-  const FtRtecEventChannelAdmin::ObjectId& oid)
+  FtRtecEventChannelAdmin::ObjectId const& oid)
 {
   ACE_UNUSED_ARG(rollback);
   ACE_UNUSED_ARG(oid);
@@ -77,7 +82,9 @@ Basic_Replication_Strategy::replicate_request(
   FtRtecEventChannelAdmin::EventChannel_var successor = info_publisher->successor();
   if (!CORBA::is_nil(successor.in())) {
     if (info_publisher->is_primary())
-      this->sequence_num_++;
+    {
+      ++this->sequence_num_;
+    }
 
     TAO_FTRTEC::Log(1, ACE_TEXT("replicate_request : sequence no = %d\n"), sequence_num_);
     Request_Context_Repository().set_sequence_number(sequence_num_);
@@ -91,7 +98,7 @@ Basic_Replication_Strategy::replicate_request(
       try{
         successor->oneway_set_update(state);
       }
-      catch (const CORBA::Exception&){
+      catch (CORBA::Exception const&){
       }
     }
   }
@@ -102,7 +109,7 @@ Basic_Replication_Strategy::replicate_request(
 }
 
 void
-Basic_Replication_Strategy::add_member(const FTRT::ManagerInfo & info,
+Basic_Replication_Strategy::add_member(FTRT::ManagerInfo const & info,
                                        CORBA::ULong object_group_ref_version)
 {
   FtRtecEventChannelAdmin::EventChannel_var successor = GroupInfoPublisher::instance()->successor();
@@ -111,9 +118,15 @@ Basic_Replication_Strategy::add_member(const FTRT::ManagerInfo & info,
     try{
       successor->add_member(info, object_group_ref_version);
     }
-    catch (const CORBA::COMM_FAILURE& ex){
-      if (ex.minor() == 6) finished = false;
-      else throw;
+    catch (CORBA::COMM_FAILURE const& ex){
+      if (ex.minor() == 6)
+        {
+          finished = false;
+        }
+      else
+      {
+        throw;
+      }
     }
   } while (!finished);
 }

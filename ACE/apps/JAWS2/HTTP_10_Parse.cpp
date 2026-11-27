@@ -1,49 +1,44 @@
 #include "HTTP_10.h"
 
-#include "JAWS/JAWS.h"
-#include "JAWS/IO.h"
+#include "JAWS/Export.h"
+#include "JAWS/Jaws_IO.h"
 #include "JAWS/IO_Handler.h"
 #include "JAWS/Policy.h"
 
 #include "HTTP_10_Request.h"
 
-
 // --------------- PARSE TASK ----------------------
 
-JAWS_HTTP_10_Parse_Task::JAWS_HTTP_10_Parse_Task ()
-{
-}
+JAWS_HTTP_10_Parse_Task::JAWS_HTTP_10_Parse_Task () = default;
 
-JAWS_HTTP_10_Parse_Task::~JAWS_HTTP_10_Parse_Task ()
-{
-}
+JAWS_HTTP_10_Parse_Task::~JAWS_HTTP_10_Parse_Task () = default;
 
 int
 JAWS_HTTP_10_Parse_Task::handle_put (JAWS_Data_Block *data, ACE_Time_Value *)
 {
   JAWS_TRACE ("JAWS_HTTP_10_Parse_Task::handle_put");
 
-  JAWS_IO_Handler *handler = data->io_handler ();
-  JAWS_Dispatch_Policy *policy = this->policy ();
-  if (policy == 0) policy = data->policy ();
-  JAWS_IO *io = policy->io ();
+  JAWS_IO_Handler *handler_ptr = data->io_handler ();
+  JAWS_Dispatch_Policy *dispatch_policy = this->policy ();
+  if (dispatch_policy == nullptr)
+    {
+      dispatch_policy = data->policy ();
+    }
+  JAWS_IO *io_ptr = dispatch_policy->io ();
 
   JAWS_HTTP_10_Request *info;
 
   if (data->payload ())
-    info = reinterpret_cast<JAWS_HTTP_10_Request *> (data->payload ());
+    {
+      info = static_cast<JAWS_HTTP_10_Request *> (data->payload ());
+    }
   else
     {
       info = new JAWS_HTTP_10_Request;
-      if (info == 0)
-        {
-          ACE_ERROR ((LM_ERROR, "%p\n", "JAWS_HTTP_10_Parse_Task::handle_put"));
-          return -1;
-        }
-      data->payload (static_cast<void *> (info));
+      data->payload (info);
     }
 
-  while (info->receive (*(ACE_Message_Block *)data) == 0)
+  while (info->receive (*data) == 0)
     {
       int next_read_size = data->space ();
 
@@ -53,8 +48,8 @@ JAWS_HTTP_10_Parse_Task::handle_put (JAWS_Data_Block *data, ACE_Time_Value *)
           break;
         }
 
-      io->read (handler, data, next_read_size);
-      switch (handler->status ())
+      io_ptr->read (handler_ptr, data, next_read_size);
+      switch (handler_ptr->status ())
         {
         case JAWS_IO_Handler::READ_OK:
           // Behaved synchronously, reiterate

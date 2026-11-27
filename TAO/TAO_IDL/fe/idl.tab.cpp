@@ -2442,8 +2442,8 @@ namespace tao_yy {
           if (s != 0)
             {
               f = idl_global->gen ()->create_interface_fwd (&n,
-                                                            0,
-                                                            0);
+                                                            false,
+                                                            false);
               (void) s->fe_add_interface_fwd (f);
             }
 
@@ -2471,8 +2471,8 @@ namespace tao_yy {
           if (s != 0)
             {
               f = idl_global->gen ()->create_interface_fwd (&n,
-                                                            1,
-                                                            0);
+                                                            true,
+                                                            false);
               (void) s->fe_add_interface_fwd (f);
             }
 
@@ -2500,8 +2500,8 @@ namespace tao_yy {
           if (s != 0)
             {
               f = idl_global->gen ()->create_interface_fwd (&n,
-                                                            0,
-                                                            1);
+                                                            false,
+                                                            true);
               (void) s->fe_add_interface_fwd (f);
             }
 
@@ -5709,8 +5709,8 @@ namespace tao_yy {
                                         &sn,
                                         array_dims->length (),
                                         array_dims,
-                                        0,
-                                        0
+                                        false,
+                                        false
                                       );
               array->base_type_annotations (*base_type_annotations);
               sn.destroy ();

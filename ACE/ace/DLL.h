@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    DLL.h
  *
  *  @author Kirthika Parameswaran <kirthika@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef ACE_DLL_H
 #define ACE_DLL_H
@@ -54,8 +50,7 @@ public:
   explicit ACE_DLL (bool close_handle_on_destruction = true);
 
   /// Allow assignment
-  ACE_DLL& operator= (const ACE_DLL &rhs);
-
+  ACE_DLL &operator= (ACE_DLL const &rhs);
 
   /**
    * This constructor performs the actions of open() during construction.
@@ -76,12 +71,11 @@ public:
    *        is controlled in a scope other than that of this ACE_DLL object.
    *        For example, termination by ACE_DLL_Manager via ACE::fini().
    */
-  explicit ACE_DLL (const ACE_TCHAR *dll_name,
+  explicit ACE_DLL (ACE_TCHAR const *dll_name,
                     int open_mode = ACE_DEFAULT_SHLIB_MODE,
                     bool close_handle_on_destruction = true);
 
-  /// Copy constructor.
-  ACE_DLL (const ACE_DLL &);
+  ACE_DLL (ACE_DLL const &);
 
   /**
    * This method opens and dynamically links a specified DLL.
@@ -89,17 +83,17 @@ public:
    *        attempt to apply the platform's standard library/DLL prefixes
    *        and suffixes, allowing a simple, unadorned name to be passed
    *        regardless of platform. The set of name transforms is listed
-   *        below. A @i decorator is a platform's name designator for a debug
+   *        below. A @a decorator is a platform's name designator for a debug
    *        vs release build. For example, on Windows it is usually "d".
    *        @li Prefix + name + decorator + suffix
    *        @li Prefix + name + suffix
    *        @li Name + decorator + suffix
    *        @li Name + suffix
    *        @li Name
-   *        Note that the transforms with @i decorator will be avoided if
+   *        @note The transforms with @a decorator will be avoided if
    *        ACE is built with the @c ACE_DISABLE_DEBUG_DLL_CHECK config macro.
    *
-   *        @Note There is another mode for locating library/DLL files that
+   *        @note There is another mode for locating library/DLL files that
    *        was used in old versions of ACE. The alternate method builds
    *        more combinations of pathname by combining the names transforms
    *        above with locations listed in the platform's standard "path"
@@ -126,7 +120,7 @@ public:
    * @retval -1 On failure
    * @retval 0 On success.
    */
-  int open (const ACE_TCHAR *dll_name,
+  int open (ACE_TCHAR const *dll_name,
             int open_mode = ACE_DEFAULT_SHLIB_MODE,
             bool close_handle_on_destruction = true);
 
@@ -150,7 +144,7 @@ public:
    * @return Returns the value of @a symbol_name if it is a valid symbol
    *        in the DLL. Otherwise, returns 0.
    */
-  void *symbol (const ACE_TCHAR *symbol_name, int ignore_errors = 0);
+  void *symbol (ACE_TCHAR const *symbol_name, int ignore_errors = 0);
 
   /// Returns a pointer to a string explaining that an error occurred.  You
   /// will need to consult the error log for the actual error string
@@ -171,29 +165,28 @@ public:
                   bool close_handle_on_destruction = true);
 
 private:
-  int open_i (const ACE_TCHAR *dll_name,
+  int open_i (ACE_TCHAR const *dll_name,
               int open_mode = ACE_DEFAULT_SHLIB_MODE,
               bool close_handle_on_destruction = true,
-              ACE_SHLIB_HANDLE handle = 0);
-
+              ACE_SHLIB_HANDLE handle = nullptr);
 
 public:
   /// Open mode.
-  int open_mode_;
+  int open_mode_ {};
 
   /// Keep track of the name of the loaded dll, so it can be used
   /// to remove framework components, singletons that live in the dll,
   /// prior to unloading the dll in the close() method.
-  ACE_TCHAR *dll_name_;
+  ACE_TCHAR *dll_name_ {};
 
   /// This flag keeps track of whether we should close the handle
   /// automatically when the object is destroyed.
-  bool close_handle_on_destruction_;
+  bool close_handle_on_destruction_ {};
 
-  ACE_DLL_Handle *dll_handle_;
+  ACE_DLL_Handle *dll_handle_ {};
 
   /// Flag to record if the last operation had an error.
-  bool error_;
+  bool error_ {};
 
   /// Any error messages encountered during last operation.
   ACE_TString errmsg_;

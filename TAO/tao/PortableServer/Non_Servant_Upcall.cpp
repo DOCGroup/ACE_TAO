@@ -37,7 +37,7 @@ namespace TAO
       this->object_adapter_.non_servant_upcall_in_progress_ = this;
 
       // Adjust the nesting level.
-      this->object_adapter_.non_servant_upcall_nesting_level_++;
+      ++this->object_adapter_.non_servant_upcall_nesting_level_;
 
       // We always release
       this->object_adapter_.lock ().release ();
@@ -49,7 +49,7 @@ namespace TAO
       this->object_adapter_.lock ().acquire ();
 
       // Adjust the nesting level.
-      this->object_adapter_.non_servant_upcall_nesting_level_--;
+      --this->object_adapter_.non_servant_upcall_nesting_level_;
 
       // We are done with this nested upcall.
       this->object_adapter_.non_servant_upcall_in_progress_ = this->previous_;

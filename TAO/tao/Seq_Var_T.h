@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Seq_Var_T.h
  *
  *  @author Jeff Parsons
  */
-//=============================================================================
 
 #ifndef TAO_SEQ_VAR_T_H
 #define TAO_SEQ_VAR_T_H
@@ -17,7 +13,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include /**/ "tao/Versioned_Namespace.h"
+#include "tao/orbconf.h"
 
 #include "tao/Basic_Types.h"
 
@@ -36,14 +32,14 @@ public:
 
   TAO_Seq_Var_Base_T ();
   TAO_Seq_Var_Base_T (T *);
-  TAO_Seq_Var_Base_T (const TAO_Seq_Var_Base_T<T> &);
+  TAO_Seq_Var_Base_T (TAO_Seq_Var_Base_T<T> const &);
 
   ~TAO_Seq_Var_Base_T ();
 
   T *operator-> ();
-  const T *operator-> () const;
+  T const *operator-> () const;
 
-  operator const T & () const;
+  operator T const & () const;
   operator T & ();
   operator T & () const;
 
@@ -62,7 +58,7 @@ public:
   _retn_type    ptr () const;
 
 protected:
-  T * ptr_;
+  T * ptr_ {};
 };
 
 /**
@@ -80,19 +76,19 @@ public:
 
   TAO_FixedSeq_Var_T ();
   TAO_FixedSeq_Var_T (T *);
-  TAO_FixedSeq_Var_T (const TAO_FixedSeq_Var_T<T> &);
+  TAO_FixedSeq_Var_T (TAO_FixedSeq_Var_T<T> const &);
 
-  // Fixed-size base types only.
-  TAO_FixedSeq_Var_T (const T &);
+  /// Fixed-size base types only.
+  TAO_FixedSeq_Var_T (T const &);
 
   TAO_FixedSeq_Var_T & operator= (T *);
-  TAO_FixedSeq_Var_T & operator= (const TAO_FixedSeq_Var_T<T> &);
+  TAO_FixedSeq_Var_T & operator= (TAO_FixedSeq_Var_T<T> const &);
 
   T_elem operator[] (CORBA::ULong index);
   T_const_elem operator[] (CORBA::ULong index) const;
 
   /// Fixed-size base types only.
-  TAO_FixedSeq_Var_T & operator= (const T &);
+  TAO_FixedSeq_Var_T & operator= (T const &);
 };
 
 /**
@@ -110,10 +106,10 @@ public:
 
   TAO_VarSeq_Var_T ();
   TAO_VarSeq_Var_T (T *);
-  TAO_VarSeq_Var_T (const TAO_VarSeq_Var_T<T> &);
+  TAO_VarSeq_Var_T (TAO_VarSeq_Var_T<T> const &);
 
   TAO_VarSeq_Var_T & operator= (T *);
-  TAO_VarSeq_Var_T & operator= (const TAO_VarSeq_Var_T<T> &);
+  TAO_VarSeq_Var_T & operator= (TAO_VarSeq_Var_T<T> const &);
 
   T_elem operator[] (CORBA::ULong index);
   T_const_elem operator[] (CORBA::ULong index) const;

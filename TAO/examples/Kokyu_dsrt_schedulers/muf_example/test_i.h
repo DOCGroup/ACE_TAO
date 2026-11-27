@@ -1,13 +1,8 @@
-
-//=============================================================================
 /**
  *  @file   test_i.h
  *
  *  @author Carlos O'Ryan
  */
-//=============================================================================
-
-
 #ifndef TAO_MT_SERVER_TEST_I_H
 #define TAO_MT_SERVER_TEST_I_H
 
@@ -25,23 +20,28 @@
 class Simple_Server_i : public POA_Simple_Server
 {
 public:
-  /// ctor
   Simple_Server_i (CORBA::ORB_ptr orb,
                    RTScheduling::Current_ptr current,
-                   Task_Stats&,
-                   int);
+                   Task_Stats &task_stats,
+                   bool enable_yield);
+  Simple_Server_i (Simple_Server_i const &) = delete;
+  Simple_Server_i &operator= (Simple_Server_i const &) = delete;
+  Simple_Server_i (Simple_Server_i &&) = delete;
+  Simple_Server_i &operator= (Simple_Server_i &&) = delete;
 
-  // = The Simple_Server methods.
-  CORBA::Long test_method (CORBA::Long x);
+  /// @name Simple_Server methods
+  /// @{
+  CORBA::Long test_method (CORBA::Long x) override;
 
-  void shutdown ();
+  void shutdown () override;
+  /// @}
 
 private:
   /// The ORB
   CORBA::ORB_var orb_;
   RTScheduling::Current_var current_;
-  Task_Stats& task_stats_;
-  int enable_yield_;
+  Task_Stats &task_stats_;
+  bool enable_yield_;
 };
 
 #if defined(__ACE_INLINE__)

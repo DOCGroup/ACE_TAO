@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//==========================================================================
 /**
  *  @file    Thread_Semaphore.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//==========================================================================
 
 #ifndef ACE_THREAD_SEMAPHORE_H
 #define ACE_THREAD_SEMAPHORE_H
@@ -39,11 +35,10 @@ public:
   /// Initialize the semaphore, with an initial value of @a count,
   /// maximum value of @a max, and unlocked by default.
   ACE_Thread_Semaphore (unsigned int count = 1, // By default make this unlocked.
-                        const ACE_TCHAR *name = nullptr,
-                        void * = 0,
+                        ACE_TCHAR const *name = nullptr,
+                        void * = nullptr,
                         int max = 0x7FFFFFFF);
 
-  /// Default destructor.
   ~ACE_Thread_Semaphore ();
 
   /// Dump the state of an object.
@@ -68,7 +63,7 @@ template<>
 class ACE_Export ACE_Malloc_Lock_Adapter_T<ACE_Thread_Semaphore>
 {
 public:
-  ACE_Thread_Semaphore * operator () (const ACE_TCHAR *name);
+  ACE_Thread_Semaphore * operator () (ACE_TCHAR const *name);
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

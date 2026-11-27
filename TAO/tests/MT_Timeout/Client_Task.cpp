@@ -1,4 +1,3 @@
-
 #include "Client_Task.h"
 #include "ace/OS_NS_unistd.h"
 #include "tao/TimeBaseC.h"
@@ -15,9 +14,9 @@ Client_Task::Client_Task (CORBA::ORB_ptr orb,
   , iterations_ (iterations)
   , sleep_time_ (sleep_time)
   , timeout_ (timeout)
-  , successful_calls_ (0)
-  , timed_out_calls_ (0)
-  , too_big_difference_ (0)
+  , successful_calls_ {}
+  , timed_out_calls_ {}
+  , too_big_difference_ {}
 {
 }
 
@@ -42,19 +41,19 @@ Client_Task::too_big_difference_calls () const
 int
 Client_Task::svc ()
 {
-  int successful_calls = 0;
-  int timed_out_calls = 0;
+  int successful_call_count {};
+  int timed_out_call_count {};
 
   try
     {
       this->validate_connection ();
 
-      CORBA::Object_var object =
+      CORBA::Object_var const object =
         this->orb_->resolve_initial_references ("PolicyCurrent");
-      CORBA::PolicyCurrent_var policy_current =
+      CORBA::PolicyCurrent_var const policy_current =
         CORBA::PolicyCurrent::_narrow (object.in ());
 
-      TimeBase::TimeT timeout_period = 10 * this->timeout_;
+      TimeBase::TimeT const timeout_period = 10 * this->timeout_;
 
       CORBA::Any timeout_as_any;
       timeout_as_any <<= timeout_period;
@@ -70,32 +69,27 @@ Client_Task::svc ()
 
       for (int i = 0; i != this->iterations_; ++i)
         {
-          int retval = this->one_iteration ();
+          int const retval = this->one_iteration ();
 
           if (retval == 1)
-            ++successful_calls;
-          else if (retval == 0)
-            ++timed_out_calls;
-
-#if 0
-          if (i % 50 == 0)
             {
-              ACE_DEBUG ((LM_DEBUG,
-                          "(%P|%t) - Client_Task::svc %d / %d iterations\n",
-                          i, this->iterations_));
+              ++successful_call_count;
             }
-#endif /* 0 */
+          else if (retval == 0)
+            {
+              ++timed_out_call_count;
+            }
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return -1;
     }
 
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, -1);
-  this->successful_calls_ += successful_calls;
-  this->timed_out_calls_  += timed_out_calls;
+  this->successful_calls_ += successful_call_count;
+  this->timed_out_calls_  += timed_out_call_count;
 
   return 0;
 }
@@ -110,7 +104,7 @@ Client_Task::validate_connection ()
           (void) this->sleep_service_->go_to_sleep (0);
         }
     }
-  catch (const CORBA::TRANSIENT& )
+  catch (CORBA::TRANSIENT const&)
     {
       // Ignore transient exceptions
     }
@@ -121,11 +115,11 @@ Client_Task::one_iteration ()
 {
   try
     {
-      ACE_Time_Value start = ACE_OS::gettimeofday ();
+      ACE_Time_Value const start = ACE_OS::gettimeofday ();
 
       this->sleep_service_->go_to_sleep (this->sleep_time_);
 
-      ACE_Time_Value end = ACE_OS::gettimeofday ();
+      ACE_Time_Value const end = ACE_OS::gettimeofday ();
 
       if (this->sleep_time_ > this->timeout_)
         {
@@ -135,29 +129,29 @@ Client_Task::one_iteration ()
           // request, but the server cannot process it until the
           // previous sleep completes. The sleep times for multiple
           // requests accumulate, and the client always fails.
-          CORBA::ULong remainder =
+          CORBA::ULong const remainder =
             this->sleep_time_ - this->timeout_;
-          ACE_Time_Value tv (0, remainder);
+          ACE_Time_Value const tv (0, remainder);
           ACE_OS::sleep (tv);
         }
 
       if (this->timeout_ > 0)
         {
-          CORBA::ULong max_milliseconds = this->timeout_ / 1000;
+          CORBA::ULong const max_milliseconds = this->timeout_ / 1000;
 
-          ACE_Time_Value elapsed = end - start;
-          CORBA::ULong elapsed_milliseconds = elapsed.msec ();
+          ACE_Time_Value const elapsed = end - start;
+          CORBA::ULong const elapsed_milliseconds = elapsed.msec ();
 
           if (elapsed_milliseconds > max_milliseconds)
             {
-              CORBA::ULong difference =
+              CORBA::ULong const difference =
                 elapsed_milliseconds - max_milliseconds;
 
               // If the different is more than 10 milliseconds we are
               // *way* off, this is an error.
               if (difference > 10)
                 {
-                  this->too_big_difference_++;
+                  ++this->too_big_difference_;
                   ACE_ERROR ((LM_ERROR,
                               "(%P|%t) Elapsed time = %d, expected %d\n",
                               elapsed_milliseconds, max_milliseconds));
@@ -167,13 +161,13 @@ Client_Task::one_iteration ()
 
       return 1;
     }
-  catch (const CORBA::TIMEOUT& )
+  catch (CORBA::TIMEOUT const&)
     {
       // Ignore this exception, it is usually caused by a transient
       // condition
       return 0;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Exception caught:");
     }

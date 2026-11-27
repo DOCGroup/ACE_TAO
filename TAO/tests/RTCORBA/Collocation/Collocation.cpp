@@ -7,6 +7,8 @@
 #include "tao/RTPortableServer/RTPortableServer.h"
 #include "../check_supported_priorities.cpp"
 
+#include <memory>
+
 RTCORBA::Priority default_thread_priority;
 
 class test_i;
@@ -17,7 +19,7 @@ struct Test_Object_And_Servant
   test_i *servant_;
 };
 
-typedef ACE_Array_Base<Test_Object_And_Servant> Tests;
+using Tests = ACE_Array_Base<Test_Object_And_Servant>;
 
 void
 setup_test_parameters (Test_Object_And_Servant *test,
@@ -31,11 +33,11 @@ public:
           PortableServer::POA_ptr poa,
           Tests &tests);
 
-  void start ();
+  void start () override;
 
-  void method ();
+  void method () override;
 
-  PortableServer::POA_ptr _default_POA ();
+  PortableServer::POA_ptr _default_POA () override;
 
   int client_propagated ();
 
@@ -57,7 +59,7 @@ public:
 
   void serviced_by_rt_tp (int);
 
-  void thread_info (const char *method_name);
+  void thread_info (char const *method_name);
 
   void invocation_pool_and_lane (CORBA::ULong pool,
                                  CORBA::ULong lane);
@@ -213,7 +215,7 @@ test_i::start ()
   Tests::ITERATOR iterator (this->tests_);
   while (!iterator.done ())
     {
-      Test_Object_And_Servant *test = 0;
+      Test_Object_And_Servant *test {};
       iterator.next (test);
 
       setup_test_parameters (test,
@@ -238,7 +240,7 @@ test_i::start ()
 }
 
 void
-test_i::thread_info (const char *method_name)
+test_i::thread_info (char const *method_name)
 {
   // Get the ORB_Core's TSS resources.
   TAO_ORB_Core_TSS_Resources *tss =
@@ -302,19 +304,19 @@ setup_test_parameters (Test_Object_And_Servant *test,
       current_thread_priority =
         current->the_priority ();
     }
-  catch (const CORBA::INITIALIZE&)
+  catch (CORBA::INITIALIZE const&)
     {
       try
         {
           current_thread_priority = get_implicit_thread_CORBA_priority (orb);
         }
-      catch (const CORBA::Exception &ex)
+      catch (CORBA::Exception const &ex)
         {
           ex._tao_print_exception ("Exception in ::setup_test_parameters calling ::get_implicit_thread_CORBA_priority: ");
           throw;
         }
     }
-  catch (const CORBA::Exception& dc)
+  catch (CORBA::Exception const& dc)
     {
       dc._tao_print_exception ("Exception in ::setup_test_parameters calling current->the_priority(): ");
       throw;
@@ -340,9 +342,13 @@ setup_test_parameters (Test_Object_And_Servant *test,
       test->servant_->in_lane ())
     {
       if (current_thread_priority == default_thread_priority)
-        test->servant_->invocation_lane (0);
+        {
+          test->servant_->invocation_lane (0);
+        }
       else
+      {
         test->servant_->invocation_lane (1);
+      }
     }
 
   if (!test->servant_->serviced_by_rt_tp ())
@@ -373,10 +379,10 @@ public:
   Server (CORBA::ORB_ptr orb);
 
   void create_servant_in_root_poa ();
-  void create_poa_and_servant_with_tp_policy (const char *poa_name,
+  void create_poa_and_servant_with_tp_policy (char const *poa_name,
                                               int set_priority_model,
                                               RTCORBA::PriorityModel priority_model);
-  void create_poa_and_servant_with_tp_with_lanes_policy (const char *poa_name,
+  void create_poa_and_servant_with_tp_with_lanes_policy (char const *poa_name,
                                                          RTCORBA::PriorityModel priority_model);
   void test ();
   void start_testing ();
@@ -407,8 +413,8 @@ Server::Server (CORBA::ORB_ptr orb)
     stacksize_ (0),
     static_threads_ (1),
     dynamic_threads_ (0),
-    allow_request_buffering_ (0),
-    allow_borrowing_ (0),
+    allow_request_buffering_ (false),
+    allow_borrowing_ (false),
     max_buffered_requests_ (0),
     max_request_buffer_size_ (0)
 {
@@ -442,7 +448,7 @@ Server::Server (CORBA::ORB_ptr orb)
 void
 Server::create_servant_in_root_poa ()
 {
-  test_i *servant = 0;
+  test_i *servant {};
   ACE_NEW_THROW_EX (servant,
                     test_i (this->orb_.in (),
                             this->root_poa_.in (),
@@ -463,7 +469,7 @@ Server::create_servant_in_root_poa ()
 }
 
 void
-Server::create_poa_and_servant_with_tp_policy (const char *poa_name,
+Server::create_poa_and_servant_with_tp_policy (char const *poa_name,
                                                int set_priority_model,
                                                RTCORBA::PriorityModel priority_model)
 {
@@ -504,7 +510,7 @@ Server::create_poa_and_servant_with_tp_policy (const char *poa_name,
   RTPortableServer::POA_var rt_poa =
     RTPortableServer::POA::_narrow (poa.in ());
 
-  test_i *servant1 = 0;
+  test_i *servant1 {};
   ACE_NEW_THROW_EX (servant1,
                     test_i (this->orb_.in (),
                             poa.in (),
@@ -527,7 +533,7 @@ Server::create_poa_and_servant_with_tp_policy (const char *poa_name,
         }
       else
         {
-          test_i *servant2 = 0;
+          test_i *servant2 {};
 
           ACE_NEW_THROW_EX (servant2,
                             test_i (this->orb_.in (),
@@ -587,7 +593,7 @@ Server::create_poa_and_servant_with_tp_policy (const char *poa_name,
 }
 
 void
-Server::create_poa_and_servant_with_tp_with_lanes_policy (const char *poa_name,
+Server::create_poa_and_servant_with_tp_with_lanes_policy (char const *poa_name,
                                                           RTCORBA::PriorityModel priority_model)
 {
   RTCORBA::ThreadpoolLanes lanes (2);
@@ -634,7 +640,7 @@ Server::create_poa_and_servant_with_tp_with_lanes_policy (const char *poa_name,
   RTPortableServer::POA_var rt_poa =
     RTPortableServer::POA::_narrow (poa.in ());
 
-  test_i *servant1 = 0;
+  test_i *servant1 {};
   ACE_NEW_THROW_EX (servant1,
                     test_i (this->orb_.in (),
                             poa.in (),
@@ -657,7 +663,7 @@ Server::create_poa_and_servant_with_tp_with_lanes_policy (const char *poa_name,
     }
   else
     {
-      test_i *servant2 = 0;
+      test_i *servant2 {};
 
       ACE_NEW_THROW_EX (servant2,
                         test_i (this->orb_.in (),
@@ -712,14 +718,14 @@ Server::start_testing ()
   Tests::ITERATOR iterator (this->tests_);
   while (!iterator.done ())
     {
-      Test_Object_And_Servant *test = 0;
-      iterator.next (test);
+      Test_Object_And_Servant *test_object_and_servant {};
+      iterator.next (test_object_and_servant);
 
-      setup_test_parameters (test,
+      setup_test_parameters (test_object_and_servant,
                              this->current_.in (),
                              this->orb_.in ());
 
-      test->object_->start ();
+      test_object_and_servant->object_->start ();
 
       iterator.advance ();
     }
@@ -752,14 +758,14 @@ public:
   Task (ACE_Thread_Manager &thread_manager,
         CORBA::ORB_ptr orb);
 
-  int svc ();
+  int svc () override;
 
   CORBA::ORB_var orb_;
 };
 
 Task::Task (ACE_Thread_Manager &thread_manager,
             CORBA::ORB_ptr orb)
-  : ACE_Task_Base (&thread_manager),
+  : ACE_Task_Base (std::addressof (thread_manager)),
     orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
@@ -795,7 +801,7 @@ Task::svc ()
 
       server.shutdown ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return -1;
@@ -816,7 +822,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // Make sure we can support multiple priorities that are
       // required for this test.
       if (!check_supported_priorities (orb.in ()))
+      {
         return 2;
+      }
 
       // Thread Manager for managing task.
       ACE_Thread_Manager thread_manager;
@@ -839,15 +847,17 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           if (errno == EPERM)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
-                                 "Cannot create thread with scheduling policy %s\n"
+                                 "Cannot create thread with scheduling policy %C\n"
                                  "because the user does not have the appropriate privileges, terminating program....\n"
                                  "Check svc.conf options and/or run as root\n",
                                  sched_policy_name (orb->orb_core ()->orb_params ()->ace_sched_policy ())),
                                 2);
             }
           else
-            // Unexpected error.
-            ACE_ASSERT (0);
+            {
+              // Unexpected error.
+              ACE_ASSERT (0);
+            }
         }
 
       // Wait for task to exit.
@@ -855,7 +865,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         thread_manager.wait ();
       ACE_ASSERT (result != -1);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return -1;

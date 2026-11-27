@@ -1,12 +1,8 @@
-
-//=============================================================================
 /**
  *  @file   test_i.h
  *
  *  @author Carlos O'Ryan
  */
-//=============================================================================
-
 
 #ifndef TAO_MT_SERVER_TEST_I_H
 #define TAO_MT_SERVER_TEST_I_H
@@ -23,19 +19,23 @@
 class Simple_Server_i : public POA_Simple_Server
 {
 public:
-  /// ctor
-  Simple_Server_i (CORBA::ORB_ptr orb);
+  explicit Simple_Server_i (CORBA::ORB_ptr orb);
+  Simple_Server_i (Simple_Server_i const &) = delete;
+  Simple_Server_i (Simple_Server_i &&) = delete;
+  Simple_Server_i &operator= (Simple_Server_i const &) = delete;
+  Simple_Server_i &operator= (Simple_Server_i &&) = delete;
 
-  // = The Simple_Server methods.
-  CORBA::Long test_method (CORBA::Long x);
+  /// @name Simple_Server operations
+  /// @{
+  CORBA::Long test_method (CORBA::Long x) override;
 
-  void shutdown ();
+  void shutdown () override;
+  /// @}
 
 private:
   /// The ORB
   CORBA::ORB_var orb_;
 };
-
 
 /**
  * @class Another_One_i
@@ -47,11 +47,16 @@ private:
 class Another_One_i : public POA_Another_One
 {
 public:
-  /// ctor
-  Another_One_i (CORBA::ORB_ptr orb);
+  explicit Another_One_i (CORBA::ORB_ptr orb);
+  Another_One_i (Another_One_i const &) = delete;
+  Another_One_i (Another_One_i &&) = delete;
+  Another_One_i &operator= (Another_One_i const &) = delete;
+  Another_One_i &operator= (Another_One_i &&) = delete;
 
-  // = The Simple_Server methods.
-  CORBA::Long test_method (CORBA::Long x);
+  /// @name Simple_Server operations
+  /// @{
+  CORBA::Long test_method (CORBA::Long x) override;
+  /// @}
 
 private:
   /// The ORB

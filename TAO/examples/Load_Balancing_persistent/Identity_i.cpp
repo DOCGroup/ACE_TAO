@@ -1,5 +1,3 @@
-/* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file   Identity_i.cpp
  *
@@ -7,18 +5,13 @@
  *
  *  @author Marina Spivak <marina@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "Identity_i.h"
 
-Identity_i::Identity_i (const char *name,
+Identity_i::Identity_i (char const *name,
                         PortableServer::POA_ptr poa)
   : name_ (name),
     poa_ (PortableServer::POA::_duplicate (poa))
-{
-}
-
-Identity_i::~Identity_i ()
 {
 }
 

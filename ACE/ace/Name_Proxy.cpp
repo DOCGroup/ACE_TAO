@@ -17,7 +17,6 @@ ACE_Name_Proxy::dump () const
 #endif /* ACE_HAS_DUMP */
 }
 
-/// Default constructor.
 ACE_Name_Proxy::ACE_Name_Proxy ()
 {
   ACE_TRACE ("ACE_Name_Proxy::ACE_Name_Proxy");
@@ -25,14 +24,16 @@ ACE_Name_Proxy::ACE_Name_Proxy ()
 
 /// Establish binding with the ACE_Name Server at remote_addr.
 int
-ACE_Name_Proxy::open (const ACE_INET_Addr &remote_addr,
+ACE_Name_Proxy::open (ACE_INET_Addr const &remote_addr,
                       ACE_Synch_Options& options)
 {
   ACE_TRACE ("ACE_Name_Proxy::open");
   ACE_Time_Value *timeout {};
 
   if (options[ACE_Synch_Options::USE_TIMEOUT])
+  {
     timeout = const_cast<ACE_Time_Value *> (options.time_value ());
+  }
 
   // Initiate the connection.
   return this->connector_.connect (this->peer_, remote_addr, timeout);
@@ -40,15 +41,17 @@ ACE_Name_Proxy::open (const ACE_INET_Addr &remote_addr,
 
 /// Establish binding with the ACE_Name Server at remote_addr.
 ACE_Name_Proxy::ACE_Name_Proxy (
-  const ACE_INET_Addr &remote_addr,
+  ACE_INET_Addr const &remote_addr,
   ACE_Synch_Options& options)
 {
   ACE_TRACE ("ACE_Name_Proxy::ACE_Name_Proxy");
   if (this->open (remote_addr, options) == -1
       && options[ACE_Synch_Options::USE_TIMEOUT] && errno != EWOULDBLOCK)
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACE_Name_Proxy::ACE_Name_Proxy")));
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("%p\n"),
+                     ACE_TEXT ("ACE_Name_Proxy::ACE_Name_Proxy")));
+    }
 }
 
 /// Obtain underlying handle.
@@ -67,17 +70,21 @@ ACE_Name_Proxy::request_reply (ACE_Name_Request &request)
   ssize_t const length = request.encode (buffer);
 
   if (length == -1)
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("encode failed")),
-                      -1);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                            ACE_TEXT ("%p\n"),
+                            ACE_TEXT ("encode failed")),
+                           -1);
+    }
 
   // Transmit request via a blocking send.
   if (this->peer_.send_n (buffer, length) != length)
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("send_n failed")),
-                      -1);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("%p\n"),
+                           ACE_TEXT ("send_n failed")),
+                           -1);
+    }
   else
     {
       ACE_Name_Reply reply;
@@ -85,15 +92,19 @@ ACE_Name_Proxy::request_reply (ACE_Name_Request &request)
       // Receive reply via blocking read.
       if (this->peer_.recv_n (&reply,
                               sizeof reply) == -1)
-        ACELIB_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("recv failed")),
-                          -1);
+        {
+          ACELIB_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("%p\n"),
+                               ACE_TEXT ("recv failed")),
+                               -1);
+        }
       else if (reply.decode () == -1)
-        ACELIB_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("decode failed")),
-                          -1);
+        {
+          ACELIB_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("%p\n"),
+                               ACE_TEXT ("decode failed")),
+                               -1);
+        }
       errno = int (reply.errnum ());
       return reply.status ();
     }
@@ -107,17 +118,21 @@ ACE_Name_Proxy::send_request (ACE_Name_Request &request)
   ssize_t const length = request.encode (buffer);
 
   if (length == -1)
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("encode failed")),
-                      -1);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                            ACE_TEXT ("%p\n"),
+                            ACE_TEXT ("encode failed")),
+                           -1);
+    }
 
   // Transmit request via a blocking send.
   else if (this->peer_.send_n (buffer, length) != length)
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("send_n failed")),
-                      -1);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("%p\n"),
+                           ACE_TEXT ("send_n failed")),
+                           -1);
+    }
   return 0;
 }
 
@@ -128,7 +143,7 @@ ACE_Name_Proxy::recv_reply (ACE_Name_Request &reply)
   // Read the first 4 bytes to get the length of the message This
   // implementation assumes that the first 4 bytes are the length of
   // the message.
-  ssize_t n = this->peer_.recv ((void *) &reply, sizeof (ACE_UINT32));
+  ssize_t n = this->peer_.recv (&reply, sizeof (ACE_UINT32));
   if (n != sizeof (ACE_UINT32))
     {
       // Not the correct number of bytes. Sort out just what kind of fail,
@@ -141,7 +156,7 @@ ACE_Name_Proxy::recv_reply (ACE_Name_Request &reply)
       else if (n != 0)
         {
           ACELIB_ERROR ((LM_ERROR,
-                         ACE_TEXT ("%p got %d bytes, expected %d bytes\n"),
+                         ACE_TEXT ("%p got %b bytes, expected %B bytes\n"),
                          ACE_TEXT ("recv failed"),
                          n,
                          sizeof (ACE_UINT32)));
@@ -156,14 +171,14 @@ ACE_Name_Proxy::recv_reply (ACE_Name_Request &reply)
 
   // Receive the rest of the request message.
   // @@ beware of blocking read!!!.
-  n = this->peer_.recv ((void *) (((char *) &reply) + sizeof (ACE_UINT32)),
+  n = this->peer_.recv (reinterpret_cast<char *> (&reply) + sizeof (ACE_UINT32),
                         length - sizeof (ACE_UINT32));
 
   // Subtract off the size of the part we skipped over...
   if (n != ssize_t (length - sizeof (ACE_UINT32)))
     {
       ACELIB_ERROR ((LM_ERROR,
-                     ACE_TEXT ("%p expected %d, got %d\n"),
+                     ACE_TEXT ("%p expected %b, got %b\n"),
                      ACE_TEXT ("invalid length"),
                      length,
                      n));

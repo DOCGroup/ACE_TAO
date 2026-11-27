@@ -39,7 +39,6 @@ parse_args (int argc, ACE_TCHAR *argv[])
         shutdown_server = ACE_OS::atoi(get_opts.opt_arg ());
         break;
 
-
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -64,7 +63,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
 
     if (parse_args (argc, argv) != 0)
+    {
       return 1;
+    }
 
     CORBA::Object_var obj;
 
@@ -116,11 +117,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           {
             n = test->get_num_requests (request_delay_secs);
           }
-        catch (const CORBA::TIMEOUT &ex)
+        catch (CORBA::TIMEOUT const &ex)
           {
             ex._tao_print_exception ("timeout exception:");
             if (i == max_tries - 1)
+            {
               throw;
+            }
           }
       }
 
@@ -148,7 +151,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     return 0;
   }
-  catch(const CORBA::Exception& ex) {
+  catch(CORBA::Exception const & ex) {
     ex._tao_print_exception ("Client:");
   }
 

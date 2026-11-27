@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    SOCK_SEQPACK_Acceptor.h
  *
@@ -9,7 +6,6 @@
  *  @author  based on SOCK_STREAM_Acceptor
  *            by Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef ACE_SOCK_SEQ_ACCEPTOR_H
 #define ACE_SOCK_SEQ_ACCEPTOR_H
@@ -34,16 +30,15 @@ class ACE_Time_Value;
  *
  * @brief Defines a factory that creates new ACE_Associations passively.
  *
- * The <ACE_SOCK_SEQPACK_Acceptor> has its own "passive-mode" socket.
+ * The @c ACE_SOCK_SEQPACK_Acceptor has its own "passive-mode" socket.
  * This serves as a factory to create so-called "data-mode"
  * sockets, which are what the ACE_SOCK_SEQPACK_Association encapsulates.
- * Therefore, by inheriting from <ACE_SOCK>, <ACE_SOCK_SEQPACK_Acceptor>
+ * Therefore, by inheriting from @c ACE_SOCK, @c ACE_SOCK_SEQPACK_Acceptor
  * gets its very own socket.
  */
 class ACE_Export ACE_SOCK_SEQPACK_Acceptor : public ACE_SOCK
 {
 public:
-  /// Default constructor.
   ACE_SOCK_SEQPACK_Acceptor ();
 
   /**
@@ -52,7 +47,7 @@ public:
    * connections on.  If @a reuse_addr is 1 then we'll use the
    * @c SO_REUSEADDR to reuse this address.
    */
-  ACE_SOCK_SEQPACK_Acceptor (const ACE_Addr &local_sap,
+  ACE_SOCK_SEQPACK_Acceptor (ACE_Addr const &local_sap,
                              int reuse_addr = 0,
                              int protocol_family = PF_UNSPEC,
                              int backlog = ACE_DEFAULT_BACKLOG,
@@ -60,7 +55,7 @@ public:
 
   /// Multihomed version of same
 
-  ACE_SOCK_SEQPACK_Acceptor (const ACE_Multihomed_INET_Addr &local_sap,
+  ACE_SOCK_SEQPACK_Acceptor (ACE_Multihomed_INET_Addr const &local_sap,
                              int reuse_addr = 0,
                              int protocol_family = PF_UNSPEC,
                              int backlog = ACE_DEFAULT_BACKLOG,
@@ -68,7 +63,7 @@ public:
 
   /// Initialize a passive-mode QoS-enabled acceptor socket.  Returns 0
   /// on success and -1 on failure.
-  ACE_SOCK_SEQPACK_Acceptor (const ACE_Addr &local_sap,
+  ACE_SOCK_SEQPACK_Acceptor (ACE_Addr const &local_sap,
                              ACE_Protocol_Info *protocolinfo,
                              ACE_SOCK_GROUP g,
                              u_long flags,
@@ -84,7 +79,7 @@ public:
    * @c SO_REUSEADDR to reuse this address.  Returns 0 on success and
    * -1 on failure.
    */
-  int open (const ACE_Addr &local_sap,
+  int open (ACE_Addr const &local_sap,
             int reuse_addr = 0,
             int protocol_family = PF_UNSPEC,
             int backlog = ACE_DEFAULT_BACKLOG,
@@ -92,16 +87,15 @@ public:
 
   /// Multihomed version of same
 
-  int open (const ACE_Multihomed_INET_Addr &local_sap,
+  int open (ACE_Multihomed_INET_Addr const &local_sap,
             int reuse_addr = 0,
             int protocol_family = PF_UNSPEC,
             int backlog = ACE_DEFAULT_BACKLOG,
             int protocol = 132);
 
-
   /// Initialize a passive-mode QoS-enabled acceptor socket.  Returns 0
   /// on success and -1 on failure.
-  int open (const ACE_Addr &local_sap,
+  int open (ACE_Addr const &local_sap,
             ACE_Protocol_Info *protocolinfo,
             ACE_SOCK_GROUP g,
             u_long flags,
@@ -113,17 +107,17 @@ public:
   /// Close the socket.  Returns 0 on success and -1 on failure.
   int close ();
 
-  /// Default dtor.
   ~ACE_SOCK_SEQPACK_Acceptor ();
 
-  // = Passive connection <accept> methods.
+  /// @name Passive connection accept methods
+  /// @{
   /**
    * Accept a new ACE_SOCK_SEQPACK_Association connection.  A @a timeout of 0
-   * means block forever, a @a timeout of {0, 0} means poll.  <restart>
+   * means block forever, a @a timeout of {0, 0} means poll.  @c restart
    * == 1 means "restart if interrupted," i.e., if errno == EINTR.
-   * Note that <new_association> inherits the "blocking mode" of @c this
-   * <ACE_SOCK_SEQPACK_Acceptor>, i.e., if @c this acceptor factory is in
-   * non-blocking mode, the <net_association> will be in non-blocking mode
+   * @note @c new_association inherits the "blocking mode" of @c this
+   * @c ACE_SOCK_SEQPACK_Acceptor, i.e., if @c this acceptor factory is in
+   * non-blocking mode, the @c net_association will be in non-blocking mode
    * and vice versa.
    */
   int accept (ACE_SOCK_SEQPACK_Association &new_association,
@@ -132,9 +126,13 @@ public:
               bool restart = true,
               bool reset_new_handle = false) const;
 
-  // = Meta-type info
+  /// @}
+
+  /// @name Meta-type information
+  /// @{
   using PEER_ADDR = ACE_Multihomed_INET_Addr;
   using PEER_STREAM = ACE_SOCK_SEQPACK_Association;
+  /// @}
 
   /// Dump the state of an object.
   void dump () const;
@@ -143,30 +141,30 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-  /// Perform operations that must occur before <ACE_OS::accept> is
+  /// Perform operations that must occur before @c ACE_OS::accept is
   /// called.
   int shared_accept_start (ACE_Time_Value *timeout,
                            bool restart,
                            int &in_blocking_mode) const;
 
-  /// Perform operations that must occur after <ACE_OS::accept> is
+  /// Perform operations that must occur after @c ACE_OS::accept is
   /// called.
   int shared_accept_finish (ACE_SOCK_SEQPACK_Association new_association,
                             int in_blocking_mode,
                             bool reset_new_handle) const;
 
   /**
-   * This method factors out the common <open> code and is called by
-   * both the QoS-enabled <open> method and the BSD-style <open>
+   * This method factors out the common @c open code and is called by
+   * both the QoS-enabled @c open method and the BSD-style @c open
    * method.
    */
-  int shared_open (const ACE_Addr &local_sap,
+  int shared_open (ACE_Addr const &local_sap,
                    int protocol_family,
                    int backlog);
 
   /// Multihomed version of same.
 
-  int shared_open (const ACE_Multihomed_INET_Addr &local_sap,
+  int shared_open (ACE_Multihomed_INET_Addr const &local_sap,
                    int protocol_family,
                    int backlog);
 

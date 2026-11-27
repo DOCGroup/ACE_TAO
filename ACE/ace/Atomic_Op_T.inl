@@ -1,13 +1,8 @@
-// -*- C++ -*-
 #include "ace/Guard_T.h"
 
 #include <algorithm>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
-//
-// ACE_Atomic_Op_Ex inline functions
-//
 
 template <class ACE_LOCK, class TYPE>
 ACE_INLINE TYPE
@@ -182,17 +177,13 @@ ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::value_i ()
 template <class ACE_LOCK, class TYPE>
 ACE_INLINE ACE_Atomic_Op_Ex<ACE_LOCK, TYPE> &
 ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::operator= (
-  typename ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::arg_type rhs)
+  arg_type rhs)
 {
   // ACE_TRACE ("ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::operator=");
   ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, *this);
   this->value_ = rhs;
   return *this;
 }
-
-//
-// ACE_Atomic_Op inline functions
-//
 
 template <class ACE_LOCK, class TYPE> ACE_INLINE
 ACE_Atomic_Op<ACE_LOCK, TYPE>::ACE_Atomic_Op (
@@ -202,11 +193,10 @@ ACE_Atomic_Op<ACE_LOCK, TYPE>::ACE_Atomic_Op (
   // ACE_TRACE ("ACE_Atomic_Op<ACE_LOCK, TYPE>::ACE_Atomic_Op");
 }
 
-
 template <class ACE_LOCK, class TYPE>
 ACE_INLINE ACE_Atomic_Op<ACE_LOCK, TYPE> &
 ACE_Atomic_Op<ACE_LOCK, TYPE>::operator= (
-  typename ACE_Atomic_Op<ACE_LOCK, TYPE>::arg_type i)
+  arg_type i)
 {
   this->impl_ = i;
   return *this;
@@ -342,5 +332,4 @@ ACE_Atomic_Op<ACE_LOCK, TYPE>::value_i ()
 {
   return this->impl_.value_i ();
 }
-
 ACE_END_VERSIONED_NAMESPACE_DECL

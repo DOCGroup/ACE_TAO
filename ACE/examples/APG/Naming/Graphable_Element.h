@@ -1,9 +1,10 @@
-/* -*- C++ -*- */
 #ifndef GRAPHABLE_ELEMENT_H
 #define GRAPHABLE_ELEMENT_H
 
-#include "Name_Binding.h"
+#include <cstdio>
 #include <list>
+
+#include "Name_Binding.h"
 
 // A helper class that knows how to sort two ACE_Name_Binding objects
 // which contain temperature metrics. The value stored in the binding
@@ -13,10 +14,10 @@
 class Graphable_Element : public Name_Binding
 {
 public:
-  Graphable_Element (ACE_Name_Binding *entry)
-    : Name_Binding(entry)
+  explicit Graphable_Element (ACE_Name_Binding const *entry)
+    : Name_Binding (entry)
   {
-    sscanf (this->value (), "%d|%f", &this->when_, &this->temp_);
+    std::sscanf (this->value (), "%d|%f", &this->when_, &this->temp_);
   }
   // Listing 1
 
@@ -26,14 +27,14 @@ public:
     return this->when_;
   }
 
-  inline float temp ()
+  inline float temp () const
   {
     return this->temp_;
   }
   // Listing 2
 
   // Listing 3 code/ch21
-  inline bool operator< (const Graphable_Element &other) const
+  inline bool operator< (Graphable_Element const &other) const
   {
     return this->when () < other.when ();
   }
@@ -41,8 +42,8 @@ public:
 
   // Listing 4 code/ch21
 private:
-  int when_;
-  float temp_;
+  int when_ {};
+  float temp_ {};
 };
 
 using Graphable_Element_List = std::list<Graphable_Element>;

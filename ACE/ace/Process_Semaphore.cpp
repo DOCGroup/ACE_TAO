@@ -27,7 +27,7 @@ ACE_Process_Semaphore::dump () const
 }
 
 ACE_Process_Semaphore::ACE_Process_Semaphore (u_int count,
-                                              const ACE_TCHAR *name,
+                                              ACE_TCHAR const *name,
                                               void *arg,
                                               int max)
 #if defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM)
@@ -97,15 +97,19 @@ ACE_Process_Semaphore::release ()
 /*****************************************************************************/
 
 ACE_Process_Semaphore *
-ACE_Malloc_Lock_Adapter_T<ACE_Process_Semaphore>::operator () (const ACE_TCHAR *name)
+ACE_Malloc_Lock_Adapter_T<ACE_Process_Semaphore>::operator () (ACE_TCHAR const *name)
 {
-  ACE_Process_Semaphore *p = nullptr;
+  ACE_Process_Semaphore *p {};
   if (name == nullptr)
-    ACE_NEW_RETURN (p, ACE_Process_Semaphore (1, name), nullptr);
+    {
+      ACE_NEW_RETURN (p, ACE_Process_Semaphore (1, name), nullptr);
+    }
   else
-    ACE_NEW_RETURN (p, ACE_Process_Semaphore (1, ACE::basename (name,
-                                                                ACE_DIRECTORY_SEPARATOR_CHAR)),
-                    nullptr);
+    {
+      ACE_NEW_RETURN (p, ACE_Process_Semaphore (1, ACE::basename (name,
+                                                                  ACE_DIRECTORY_SEPARATOR_CHAR)),
+                      nullptr);
+    }
   return p;
 }
 

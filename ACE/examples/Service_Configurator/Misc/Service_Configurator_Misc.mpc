@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*Timer) : acelib {
   sharedname = Timer
   dynamicflags += ACE_BUILD_SVC_DLL

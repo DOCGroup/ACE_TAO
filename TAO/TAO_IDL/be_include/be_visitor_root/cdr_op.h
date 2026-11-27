@@ -1,6 +1,3 @@
-/* -*- c++ -*- */
-
-//=============================================================================
 /**
  *  @file    cdr_op.h
  *
@@ -10,7 +7,6 @@
  *
  *  @author Aniruddha Gokhale
  */
-//=============================================================================
 
 #ifndef _BE_VISITOR_ROOT_CDR_OP_H_
 #define _BE_VISITOR_ROOT_CDR_OP_H_
@@ -30,9 +26,9 @@ public:
 
   ~be_visitor_root_cdr_op () override;
 
-  be_visitor_root_cdr_op (const be_visitor_root_cdr_op &) = delete;
+  be_visitor_root_cdr_op (be_visitor_root_cdr_op const &) = delete;
   be_visitor_root_cdr_op (be_visitor_root_cdr_op &&) = delete;
-  be_visitor_root_cdr_op &operator= (const be_visitor_root_cdr_op &) = delete;
+  be_visitor_root_cdr_op &operator= (be_visitor_root_cdr_op const &) = delete;
   be_visitor_root_cdr_op &operator= (be_visitor_root_cdr_op &&) = delete;
 
   int visit_root (be_root *node) override;

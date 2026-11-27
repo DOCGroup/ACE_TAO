@@ -21,20 +21,22 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
       // This would greatly benefit from RTTI typesafe downcasting...
       const ACE_Service_Type_Impl *type = sr->type ();
-      const void *obj = type->object ();
-      ACE_Service_Object *so = (ACE_Service_Object *) obj;
-      Benchmark_Base *bb = (Benchmark_Base *) so;
+      void * const obj = type->object ();
+      ACE_Service_Object *so = static_cast<ACE_Service_Object *> (obj);
+      Benchmark_Base *bb = static_cast<Benchmark_Base *> (so);
 
       if (bb->benchmark_type () == Benchmark_Base::METHOD)
         {
-          Benchmark_Method_Base *bm = (Benchmark_Method_Base *) bb;
+          Benchmark_Method_Base *bm = static_cast<Benchmark_Method_Base *> (bb);
 
           ACE_DEBUG ((LM_DEBUG, "\n\nExecuting %s\n", sr->name ()));
 
           bm->exec (&sri);
         }
       else
+      {
         sri.advance ();
+      }
     }
   return 0;
 }

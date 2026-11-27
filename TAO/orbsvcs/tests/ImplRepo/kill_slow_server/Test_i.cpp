@@ -1,5 +1,3 @@
-/* -*- C++ -*-  */
-
 #include "Test_i.h"
 
 CORBA::Short
@@ -13,5 +11,4 @@ Test_i::terminate ()
 {
   exit (0);
 }
-
 

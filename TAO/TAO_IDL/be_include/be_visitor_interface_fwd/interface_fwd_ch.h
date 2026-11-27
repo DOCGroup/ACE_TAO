@@ -1,5 +1,3 @@
-/* -*- c++ -*- */
-//=============================================================================
 /**
  *  @file    interface_fwd_ch.h
  *
@@ -8,7 +6,6 @@
  *
  *  @author Aniruddha Gokhale
  */
-//=============================================================================
 
 #ifndef _BE_INTERFACE_INTERFACE_FWD_CH_H_
 #define _BE_INTERFACE_INTERFACE_FWD_CH_H_

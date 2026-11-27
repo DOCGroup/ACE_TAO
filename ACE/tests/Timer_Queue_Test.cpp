@@ -1,11 +1,9 @@
-
-//=============================================================================
 /**
  *  @file    Timer_Queue_Test.cpp
  *
- *    This is a simple test of <ACE_Timer_Queue> and four of its
- *    subclasses (<ACE_Timer_List>, <ACE_Timer_Heap>,
- *    <ACE_Timer_Wheel>, and <ACE_Timer_Hash>).  The test sets up a
+ *    This is a simple test of @c ACE_Timer_Queue and four of its
+ *    subclasses (@c ACE_Timer_List, @c ACE_Timer_Heap,
+ *    @c ACE_Timer_Wheel, and @c ACE_Timer_Hash).  The test sets up a
  *    bunch of timers and then adds them to a timer queue. The
  *    functionality of the timer queue is then tested. No command
  *    line arguments are needed to run the test.
@@ -14,7 +12,6 @@
  *  @author Prashant Jain <pjain@cs.wustl.edu>
  *  @author and Darrell Brunsch <brunsch@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "randomize.h"
@@ -24,13 +21,26 @@
 #include "ace/Timer_Heap.h"
 #include "ace/Timer_Wheel.h"
 #include "ace/Timer_Hash.h"
-#include "ace/Timer_Queue.h"
+#include <type_traits>
+
+static_assert (std::is_copy_constructible_v<ACE_Timer_List_Iterator>
+               && std::is_move_constructible_v<ACE_Timer_List_Iterator>
+               && std::is_copy_constructible_v<ACE_Timer_Heap_Iterator>
+               && std::is_move_constructible_v<ACE_Timer_Heap_Iterator>
+               && std::is_copy_constructible_v<ACE_Timer_Wheel_Iterator>
+               && std::is_move_constructible_v<ACE_Timer_Wheel_Iterator>
+               && std::is_copy_constructible_v<ACE_Timer_Hash_Iterator>
+               && std::is_move_constructible_v<ACE_Timer_Hash_Iterator>,
+               "Timer iterators preserve their copy construction behavior");
 #include "ace/Time_Policy.h"
 #include "ace/Recursive_Thread_Mutex.h"
 #include "ace/Null_Mutex.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/Containers_T.h"
 #include "ace/Event_Handler.h"
+
+#include <memory>
+#include <new>
 
 // Number of iterations for the performance tests.  Some platforms
 // have a very high ACE_DEFAULT_TIMERS (HP-UX is 400), so limit this
@@ -47,7 +57,7 @@ static int max_iterations = ACE_DEFAULT_TIMERS * 100;
 static int TIMER_DISTANCE = 50;
 
 // Array of timer ids assigned to us that we need to keep track of.
-static long *timer_ids = nullptr;
+static std::unique_ptr<long[]> timer_ids;
 
 class Example_Handler : public ACE_Event_Handler
 {
@@ -57,34 +67,35 @@ public:
   int handle_close (ACE_HANDLE, ACE_Reactor_Mask mask) override
   {
     ACE_TEST_ASSERT (mask == ACE_Event_Handler::TIMER_MASK);
-    this->close_count_++;
+    ++this->close_count_;
     return 0;
   }
 
-  int handle_timeout (const ACE_Time_Value &,
-                              const void *arg) override
+  int handle_timeout (ACE_Time_Value const &,
+                              void const *arg) override
   {
     int *act = (int *) arg;
     ACE_TEST_ASSERT (*act == 42 || *act == 007);
     int result = 0;
 
     if (*act == 007)
+    {
       result = -1; // This is the special value to trigger a handle_close
+    }
 
     delete act;
     return result;
   }
 
-  /// Keeps track of the number of times that <handle_close> is called.
+  /// Keeps track of the number of times that @c handle_close is called.
   int close_count_;
 };
-
 
 struct Interval_Handler : public ACE_Event_Handler
 {
   Interval_Handler () : trip_count_ (0) { }
 
-  int handle_timeout (const ACE_Time_Value & , const void *) override
+  int handle_timeout (ACE_Time_Value const & , void const *) override
   {
     ++trip_count_;
     return 0;
@@ -102,14 +113,14 @@ test_interval_timer (ACE_Timer_Queue *tq)
     Set up a timer to fire on a 50ms interval.
   */
   Interval_Handler ih;
-  ACE_Time_Value interval (0, 50 * 1000 /* number of usec in millisecond */);
+  ACE_Time_Value const interval (0, 50 * 1000 /* number of usec in millisecond */);
   const unsigned NUM_INTERVAL_FIRINGS = 50;
-  ACE_Time_Value loop_stop_time =
+  ACE_Time_Value const loop_stop_time =
     tq->gettimeofday () + (NUM_INTERVAL_FIRINGS * interval);
   const unsigned EXPECTED_TRIP_COUNT =
     NUM_INTERVAL_FIRINGS + 1 /* for the first immediate firing */;
 
-  long id = tq->schedule (&ih, nullptr /* no act */, ACE_Time_Value::zero, interval);
+  long const id = tq->schedule (&ih, nullptr /* no act */, ACE_Time_Value::zero, interval);
   ACE_TEST_ASSERT (id != -1);
 
   do
@@ -134,15 +145,15 @@ test_functionality (ACE_Timer_Queue *tq)
 {
   Example_Handler eh;
 
-  ACE_TEST_ASSERT (tq->is_empty () != 0);
+  ACE_TEST_ASSERT (tq->is_empty ());
   ACE_TEST_ASSERT (ACE_Time_Value::zero == ACE_Time_Value (0));
   long timer_id;
   long timer_id2;
 
   // Do a test on earliest_time.
-  ACE_Time_Value earliest_time = tq->gettimeofday ();
+  ACE_Time_Value const earliest_time = tq->gettimeofday ();
 
-  const void *timer_act = nullptr;
+  void const *timer_act {};
   ACE_NEW (timer_act, int (1));
   timer_id = tq->schedule (&eh, timer_act, earliest_time);
 
@@ -159,7 +170,7 @@ test_functionality (ACE_Timer_Queue *tq)
   tq->cancel (timer_id2, &timer_act);
   delete (int *) timer_act;
 
-  ACE_TEST_ASSERT (tq->is_empty () == 1);
+  ACE_TEST_ASSERT (tq->is_empty ());
   ACE_TEST_ASSERT (eh.close_count_ == 0);
 
   ACE_NEW (timer_act, int (1));
@@ -167,21 +178,21 @@ test_functionality (ACE_Timer_Queue *tq)
                            timer_act,
                            tq->gettimeofday ());
   ACE_TEST_ASSERT (timer_id != -1);
-  ACE_TEST_ASSERT (tq->is_empty () == 0); //==
+  ACE_TEST_ASSERT (!tq->is_empty ()); //==
 
   ACE_NEW (timer_act, int (42));
   result = tq->schedule (&eh,
                          timer_act,
                          tq->gettimeofday ());
   ACE_TEST_ASSERT (result != -1);
-  ACE_TEST_ASSERT (tq->is_empty () == 0); //==
+  ACE_TEST_ASSERT (!tq->is_empty ()); //==
 
   ACE_NEW (timer_act, int (42));
   result = tq->schedule (&eh,
                          timer_act,
                          tq->gettimeofday ());
   ACE_TEST_ASSERT (result != -1);
-  ACE_TEST_ASSERT (tq->is_empty () == 0); //==
+  ACE_TEST_ASSERT (!tq->is_empty ()); //==
 
   // The following method will trigger a call to <handle_close>.
   ACE_TEST_ASSERT (eh.close_count_ == 0);
@@ -189,7 +200,7 @@ test_functionality (ACE_Timer_Queue *tq)
   ACE_TEST_ASSERT (result == 1);
   delete (int *) timer_act;
 
-  ACE_TEST_ASSERT (tq->is_empty () == 0);
+  ACE_TEST_ASSERT (!tq->is_empty ());
   ACE_TEST_ASSERT (eh.close_count_ == 1);
 
   result = tq->expire ();
@@ -201,14 +212,14 @@ test_functionality (ACE_Timer_Queue *tq)
                          tq->gettimeofday ());
   ACE_TEST_ASSERT (result != -1);
 
-  const void *timer_act1 = nullptr;
+  void const *timer_act1 {};
   ACE_NEW (timer_act1, int (42));
   result = tq->schedule (&eh,
                          timer_act1,
                          tq->gettimeofday () + ACE_Time_Value (100));
   ACE_TEST_ASSERT (result != -1);
 
-  const void *timer_act2 = nullptr;
+  void const *timer_act2 {};
   ACE_NEW (timer_act2, int (42));
   result = tq->schedule (&eh,
                          timer_act2,
@@ -227,7 +238,7 @@ test_functionality (ACE_Timer_Queue *tq)
   ACE_TEST_ASSERT (result == 1);
   ACE_TEST_ASSERT (eh.close_count_ == 2);
 
-  ACE_TEST_ASSERT (tq->is_empty () != 0);
+  ACE_TEST_ASSERT (tq->is_empty ());
   delete (int *) timer_act2;
   delete (int *) timer_act1;
 
@@ -254,7 +265,7 @@ test_functionality (ACE_Timer_Queue *tq)
   delete (int *) timer_act;
 
   ACE_TEST_ASSERT (eh.close_count_ == 2); // Only one call to handle_close() even though two timers
-  ACE_TEST_ASSERT (tq->is_empty () != 0);
+  ACE_TEST_ASSERT (tq->is_empty ());
 
   result = tq->expire ();
   ACE_TEST_ASSERT (result == 0);
@@ -304,20 +315,25 @@ test_functionality (ACE_Timer_Queue *tq)
 
 static void
 test_performance (ACE_Timer_Queue *tq,
-                  const ACE_TCHAR *test_name)
+                  ACE_TCHAR const *test_name)
 {
   Example_Handler eh;
   ACE_Profile_Timer timer;
   int i;
-  const void *timer_act = nullptr;
+  void const *timer_act {};
 
-  ACE_TEST_ASSERT (tq->is_empty () != 0);
+  ACE_TEST_ASSERT (tq->is_empty ());
   ACE_TEST_ASSERT (ACE_Time_Value::zero == ACE_Time_Value (0));
 
   // Test the amount of time required to schedule all the timers.
 
-  ACE_Time_Value *times = nullptr;
-  ACE_NEW (times, ACE_Time_Value[max_iterations]);
+  std::unique_ptr<ACE_Time_Value[]> const times (
+    new (std::nothrow) ACE_Time_Value[max_iterations]);
+  if (!times)
+    {
+      errno = ENOMEM;
+      return;
+    }
 
   // Set up a bunch of times TIMER_DISTANCE ms apart.
   for (i = 0; i < max_iterations; ++i)
@@ -326,7 +342,7 @@ test_performance (ACE_Timer_Queue *tq,
         + ACE_Time_Value(0, i * TIMER_DISTANCE * 1000));
     }
 
-  ACE_Time_Value last_time = times[max_iterations-1];
+  ACE_Time_Value const last_time = times[max_iterations-1];
 
   timer.start ();
 
@@ -339,7 +355,7 @@ test_performance (ACE_Timer_Queue *tq,
       ACE_TEST_ASSERT (timer_ids[i] != -1);
     }
 
-  ACE_TEST_ASSERT (tq->is_empty () == 0);
+  ACE_TEST_ASSERT (!tq->is_empty ());
 
   timer.stop ();
 
@@ -369,7 +385,7 @@ test_performance (ACE_Timer_Queue *tq,
 
   timer.stop ();
 
-  ACE_TEST_ASSERT (tq->is_empty () != 0);
+  ACE_TEST_ASSERT (tq->is_empty ());
 
   timer.elapsed_time (et);
 
@@ -391,18 +407,18 @@ test_performance (ACE_Timer_Queue *tq,
   for (i = 0; i < max_iterations; ++i)
     {
       ACE_NEW (timer_act, int (42));
-      long result = tq->schedule (&eh, timer_act, times[i]);
+      long const result = tq->schedule (&eh, timer_act, times[i]);
       ACE_TEST_ASSERT (result != -1);
     }
 
-  ACE_TEST_ASSERT (tq->is_empty () == 0);
+  ACE_TEST_ASSERT (!tq->is_empty ());
 
   // Expire all the timers.
   tq->expire (last_time + ACE_Time_Value(1));
 
   timer.stop ();
 
-  ACE_TEST_ASSERT (tq->is_empty () != 0);
+  ACE_TEST_ASSERT (tq->is_empty ());
 
   timer.elapsed_time (et);
 
@@ -416,7 +432,7 @@ test_performance (ACE_Timer_Queue *tq,
               ACE_TEXT ("time per call = %f usecs\n"),
               (et.user_time / ACE_timer_t (max_iterations)) * 1000000));
 
-  randomize (times,
+  randomize (times.get (),
              max_iterations,
              static_cast<unsigned int> (ACE_OS::time (nullptr)));
 
@@ -432,17 +448,17 @@ test_performance (ACE_Timer_Queue *tq,
       ACE_TEST_ASSERT (timer_ids[i] != -1);
     }
 
-  ACE_TEST_ASSERT (tq->is_empty () == 0);
+  ACE_TEST_ASSERT (!tq->is_empty ());
 
   timer.start ();
 
-  for (i = max_iterations - 1; i >= 0; i--)
+  for (i = max_iterations - 1; i >= 0; --i)
     {
       tq->cancel (timer_ids[i], &timer_act);
       delete (int *) timer_act;
     }
 
-  ACE_TEST_ASSERT (tq->is_empty () != 0);
+  ACE_TEST_ASSERT (tq->is_empty ());
 
   timer.stop ();
 
@@ -476,7 +492,7 @@ test_performance (ACE_Timer_Queue *tq,
 
   timer.stop ();
 
-  ACE_TEST_ASSERT (tq->is_empty () == 0);
+  ACE_TEST_ASSERT (!tq->is_empty ());
 
   timer.elapsed_time (et);
 
@@ -514,7 +530,6 @@ test_performance (ACE_Timer_Queue *tq,
               ACE_TEXT ("time per call = %f usecs\n"),
               (et.user_time / ACE_timer_t (max_iterations)) * 1000000));
 
-  delete [] times;
 }
 
 // This test function was contributed with Bugzilla #2447 to test validity
@@ -525,7 +540,7 @@ test_unique_timer_heap_ids ()
 {
   Example_Handler eh;
   ACE_Timer_Heap timer_heap (44);
-  ACE_Time_Value anytime(1);
+  ACE_Time_Value const anytime(1);
   ACE_Bounded_Set<long> timer_ids (max_iterations);
   long timer_id = -1;
   bool all_unique = true;
@@ -542,13 +557,13 @@ test_unique_timer_heap_ids ()
           continue;
         }
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("Schedule timer %d. Timer id = %d\n"),
+                  ACE_TEXT ("Schedule timer %d. Timer id = %Ld\n"),
                   i,
                   timer_id));
       if (1 == timer_ids.insert (timer_id))
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("Pass %d, id %d is not unique\n"),
+                      ACE_TEXT ("Pass %d, id %Ld is not unique\n"),
                       i,
                       timer_id));
           all_unique = false;
@@ -557,21 +572,25 @@ test_unique_timer_heap_ids ()
       if (i == 0 || i == 1 || i == 47 || i == 48)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("Free Timer %d. Timer Id = %d\n"),
+                      ACE_TEXT ("Free Timer %d. Timer Id = %Ld\n"),
                       i,
                       timer_id));
           timer_heap.cancel (timer_id);
           if (timer_id == -1)
-            ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("%p\n"),
-                        ACE_TEXT ("Failed to cancel timer")));
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("%p\n"),
+                          ACE_TEXT ("Failed to cancel timer")));
+            }
 
           timer_ids.remove (timer_id);
         }
     }
 
   if (all_unique)
+  {
     ACE_DEBUG ((LM_INFO, ACE_TEXT ("All timer ids were unique.\n")));
+  }
 
   return;
 }
@@ -579,7 +598,7 @@ test_unique_timer_heap_ids ()
 /**
  * @class Timer_Queue_Stack
  *
- * @brief Keeps track of the <Timer_Queue>s that we're going to test.
+ * @brief Keeps track of the @c Timer_Queues that we're going to test.
  *
  * This data structure is organized as a stack to make it easy to implement.
  */
@@ -587,7 +606,7 @@ class Timer_Queue_Stack
 {
 public:
   Timer_Queue_Stack (ACE_Timer_Queue *queue,
-    const ACE_TCHAR *name,
+    ACE_TCHAR const *name,
     Timer_Queue_Stack *next = nullptr)
     : queue_ (queue),
     name_ (name),
@@ -595,13 +614,13 @@ public:
   {}
   // "Push" a new <queue> on the stack of <queue>s.
 
-  /// Pointer to the subclass of <ACE_Timer_Queue> that we're testing.
+  /// Pointer to the subclass of @c ACE_Timer_Queue that we're testing.
   ACE_Timer_Queue *queue_;
 
   /// Name of the Queue that we're testing.
-  const ACE_TCHAR *name_;
+  ACE_TCHAR const *name_;
 
-  /// Pointer to the next <Timer_Queue>.
+  /// Pointer to the next @c Timer_Queue.
   Timer_Queue_Stack *next_;
 };
 
@@ -611,11 +630,13 @@ run_main (int argc, ACE_TCHAR *argv[])
   ACE_START_TEST (ACE_TEXT ("Timer_Queue_Test"));
 
   if (argc > 1)
+  {
     max_iterations = ACE_OS::atoi (argv[1]);
+  }
 
-  // = Perform initializations.
+  // Perform initializations.
 
-  Timer_Queue_Stack *tq_stack = nullptr;
+  Timer_Queue_Stack *tq_stack {};
 
   // Add new Timer_Queue implementations here.  Note that these will
   // be executed in "reverse order".
@@ -691,11 +712,13 @@ run_main (int argc, ACE_TCHAR *argv[])
                                      tq_stack),
                   -1);
 
-
   // Create the Timer ID array
-  ACE_NEW_RETURN (timer_ids,
-                  long[max_iterations],
-                  -1);
+  timer_ids.reset (new (std::nothrow) long[max_iterations]);
+  if (!timer_ids)
+    {
+      errno = ENOMEM;
+      return -1;
+    }
 
   Timer_Queue_Stack *tq_ptr = tq_stack;
 
@@ -713,8 +736,6 @@ run_main (int argc, ACE_TCHAR *argv[])
       tq_ptr = tq_ptr->next_;
       delete temp;
     }
-  delete [] timer_ids;
-
   ACE_DEBUG
     ((LM_DEBUG,
       ACE_TEXT ("**** starting unique IDs test for ACE_Timer_Heap\n")));

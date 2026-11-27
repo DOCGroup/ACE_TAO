@@ -1,13 +1,8 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
  *  @file    Options.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
-
 
 #ifndef _OPTIONS_H
 #define _OPTIONS_H
@@ -30,7 +25,7 @@ class URL_Visitor;
  * @brief Maintains the global options.
  *
  * This class is converted into a Singleton by the
- * <ACE_Singleton> template.
+ * @c ACE_Singleton template.
  */
 class Options
 {
@@ -40,79 +35,87 @@ public:
 
   /// If non-0 and the link is an HTML file then recursively check all
   /// links that are embedded in the body of file.
-  int recurse () const;
+  bool recurse () const;
 
   /// Return the hostname of the initial Web server.
-  const ACE_TCHAR *hostname () const;
+  ACE_TCHAR const *hostname () const;
 
   /// Return the initial URI.
-  const ACE_TCHAR *path_name () const;
+  ACE_TCHAR const *path_name () const;
 
   /// String used to filter out which URLs to validate.
-  const ACE_TCHAR *url_filter () const;
+  ACE_TCHAR const *url_filter () const;
 
   /// Are we debugging?
-  int debug () const;
+  bool debug () const;
 
   /// Are we being verbose?
-  int verbose () const;
+  bool verbose () const;
 
   /// Which order? LIFO|FIFO??
-  const ACE_TCHAR *order () const;
+  ACE_TCHAR const *order () const;
 
   /// Port #
   int port_no () const;
 
-  /// Return the timeout used to prevent hanging on <recv> and
-  /// <connect> calls to broken servers.
-  const ACE_Time_Value *timeout () const;
+  /// Return the timeout used to prevent hanging on @c recv and
+  /// @c connect calls to broken servers.
+  ACE_Time_Value const *timeout () const;
 
-  // = Get/set the <Command_Processor>.
+  /// @name Command processor
+  /// @{
+
   Command_Processor *command_processor () const;
   void command_processor (Command_Processor *);
 
-  // = Get/set the <URL_Visitor>.
+  /// @}
+
+  /// @name URL visitor
+  /// @{
+
   URL_Visitor *visitor () const;
   void visitor (URL_Visitor *);
 
-  // Get the handle_limit.
-  int handle_limit ();
+  /// @}
+
+  /// Get the handle limit.
+  int handle_limit () const;
 private:
   /// Are we recursving.
-  int recurse_;
+  bool recurse_ {};
 
   /// Initial Web server name.
-  const ACE_TCHAR *hostname_;
+  ACE_TCHAR const *hostname_ {};
 
   /// Initial URI name.
-  const ACE_TCHAR *uri_;
+  ACE_TCHAR const *uri_ {};
 
   /// Are we debugging?
-  int debug_;
+  bool debug_ {};
 
   /// Are we being verbose?
-  int verbose_;
+  bool verbose_ {};
 
   /// Whether the URLs are traversed in FIFO or LIFO order.
-  const ACE_TCHAR *order_;
+  ACE_TCHAR const *order_ {};
 
-  /// Timeout on <recv> and <connect> to broken Web servers.
+  /// Timeout on @c recv and @c connect to broken Web servers.
   ACE_Time_Value timeout_;
 
   /// String used to filter out which URLs to validate.
-  const ACE_TCHAR *url_filter_;
+  ACE_TCHAR const *url_filter_ {};
 
   /// Pointer to the Command_Processor.
-  Command_Processor *command_processor_;
+  Command_Processor *command_processor_ {};
 
-  /// Pointer to the <URL_Visitor>.
-  URL_Visitor *visitor_;
+  /// Pointer to the @c URL_Visitor.
+  URL_Visitor *visitor_ {};
 
   /// Port no.
-  int port_no_;
+  int port_no_ {};
 
   /// The limit of the number of descriptors to be given for this process.
-  int handle_limit_;
+  int handle_limit_ {};
 };
 
 // Typedef an Options Singleton.

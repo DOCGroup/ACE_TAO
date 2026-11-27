@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #ifndef AST_PROVIDES_H
 #define AST_PROVIDES_H
 
@@ -7,6 +6,7 @@
 class TAO_IDL_FE_Export AST_Provides : public virtual AST_Field
 {
 public:
+  AST_Provides () = delete;
   AST_Provides (AST_Provides const &) = delete;
   AST_Provides (AST_Provides &&) = delete;
   AST_Provides &operator= (AST_Provides const &) = delete;

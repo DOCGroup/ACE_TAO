@@ -1,5 +1,3 @@
-/* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file    FT_Creator.h
  *
@@ -8,7 +6,6 @@
  *
  *  @author Dale Wilson <wilson_d@ociweb.com>
  */
-//=============================================================================
 
 #ifndef FT_CREATOR_H
 #define FT_CREATOR_H
@@ -16,6 +13,7 @@
 #include /**/ "ace/pre.h"
 
 #include <ace/ACE.h>
+#include <vector>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -28,7 +26,7 @@ namespace FTAPP
 {
   class FT_Creator
   {
-    typedef ACE_Vector<ACE_CString> StringVec;
+    using StringVec = std::vector<ACE_CString>;
    public:
     ///////////////////////////
     // construction/destruction
@@ -58,18 +56,17 @@ namespace FTAPP
     ////////////////////
     // forbidden methods
    private:
-      FT_Creator (const FT_Creator & rhs);
-      FT_Creator & operator = (const FT_Creator & rhs);
+      FT_Creator (FT_Creator const & rhs);
+      FT_Creator & operator = (FT_Creator const & rhs);
 
-    ////////////////
-    // Data members
+    /// @name Data members
+    /// @{
    private:
     TAO::Object_Group_Creator creator_;
     CORBA::ORB_var orb_;
-    const ACE_TCHAR * registry_ior_;
+    ACE_TCHAR const *registry_ior_;
     StringVec create_roles_;
     StringVec unregister_roles_;
-
 
     CosNaming::NamingContext_var naming_context_;
 
@@ -103,6 +100,7 @@ namespace FTAPP
      * prefix for names
      */
     ACE_CString prefix_;
+    /// @}
   };
 } // namespace TAO
 

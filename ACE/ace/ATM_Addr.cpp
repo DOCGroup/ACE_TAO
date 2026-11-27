@@ -5,6 +5,8 @@
 
 #include "ace/Log_Category.h"
 
+#include <memory>
+
 #if defined (ACE_HAS_FORE_ATM_WS2)
 #include /**/ "forews2.h"
 #endif /* ACE_HAS_FORE_ATM_WS2 */
@@ -39,8 +41,6 @@ const int ACE_ATM_Addr::OPT_FLAGS_PMP = 0;
 const int ACE_ATM_Addr::DEFAULT_SELECTOR = 0x0;
 #endif /* ACE_HAS_FORE_ATM_XTI || ACE_HAS_FORE_ATM_WS2 || ACE_HAS_LINUX_ATM */
 
-// Default constructor
-
 ACE_ATM_Addr::ACE_ATM_Addr (u_char selector)
 #if defined (ACE_HAS_FORE_ATM_XTI) || defined (ACE_HAS_FORE_ATM_WS2)
   : ACE_Addr (AF_ATM,
@@ -52,15 +52,13 @@ ACE_ATM_Addr::ACE_ATM_Addr (u_char selector)
               sizeof this->atm_addr_)
 {
   // ACE_TRACE ("ACE_ATM_Addr::ACE_ATM_Addr");
- (void) ACE_OS::memset ((void *) &this->atm_addr_,
+  (void) ACE_OS::memset (&this->atm_addr_,
                          0,
                          sizeof this->atm_addr_);
   this->init (selector);
 }
 
-// Copy constructor.
-
-ACE_ATM_Addr::ACE_ATM_Addr (const ACE_ATM_Addr &sap,
+ACE_ATM_Addr::ACE_ATM_Addr (ACE_ATM_Addr const &sap,
                             u_char selector)
 #if defined (ACE_HAS_FORE_ATM_XTI) || defined (ACE_HAS_FORE_ATM_WS2)
   : ACE_Addr (AF_ATM,
@@ -96,8 +94,7 @@ ACE_ATM_Addr::ACE_ATM_Addr (const ATM_Addr *sap,
   this->set (sap, selector);
 }
 
-
-ACE_ATM_Addr::ACE_ATM_Addr (const ACE_TCHAR sap[],
+ACE_ATM_Addr::ACE_ATM_Addr (ACE_TCHAR const sap[],
                             u_char selector)
 #if defined (ACE_HAS_FORE_ATM_XTI) || defined (ACE_HAS_FORE_ATM_WS2)
   : ACE_Addr (AF_ATM,
@@ -117,7 +114,7 @@ void *
 ACE_ATM_Addr::get_addr () const
 {
   ACE_TRACE ("ACE_ATM_Addr::get_addr");
-  return (void *) &this->atm_addr_;
+  return std::addressof (this->atm_addr_);
 }
 
 void
@@ -145,11 +142,9 @@ ACE_ATM_Addr::init (u_char selector)
   atm_addr_.sap.t_atm_sap_appl.SVE_tag = (int8_t) T_ATM_PRESENT;
   atm_addr_.sap.t_atm_sap_appl.ID_type = (u_int8_t) T_ATM_USER_APP_ID;
 
-  ACE_OS::memcpy (atm_addr_.sap.t_atm_sap_appl.ID.user_defined_ID,
-                  BHLI_MAGIC,
-                  sizeof atm_addr_.sap.t_atm_sap_appl.ID);
+  ACE_OS::memcpy (atm_addr_.sap.t_atm_sap_appl.ID.user_defined_ID, BHLI_MAGIC, sizeof atm_addr_.sap.t_atm_sap_appl.ID);
 #elif defined (ACE_HAS_FORE_ATM_WS2)
-  ACE_OS::memset ((void *)&atm_addr_, 0, sizeof atm_addr_);
+  ACE_OS::memset (&atm_addr_, 0, sizeof atm_addr_);
   atm_addr_.satm_number.Addr[ ATM_ADDR_SIZE - 1 ] = (char)selector;
   atm_addr_.satm_family = AF_ATM;
   atm_addr_.satm_number.AddressType = ATM_NSAP;
@@ -176,7 +171,7 @@ ACE_ATM_Addr::init (u_char selector)
 }
 
 int
-ACE_ATM_Addr::set (const ACE_ATM_Addr &sap,
+ACE_ATM_Addr::set (ACE_ATM_Addr const &sap,
                    u_char selector)
 {
   ACE_TRACE ("ACE_ATM_Addr::set");
@@ -192,8 +187,8 @@ ACE_ATM_Addr::set (const ACE_ATM_Addr &sap,
   ACE_ASSERT (sap.get_type () == PF_ATMSVC);
 #endif /* ACE_HAS_FORE_ATM_XTI || ACE_HAS_FORE_ATM_WS2 */
 
- (void) ACE_OS::memcpy ((void *) &this->atm_addr_,
- (void *) &sap.atm_addr_,
+  (void) ACE_OS::memcpy (&this->atm_addr_,
+                         &sap.atm_addr_,
                          sizeof this->atm_addr_);
   return 0;
 }
@@ -215,14 +210,14 @@ ACE_ATM_Addr::set (const ATM_Addr *sap,
 #endif /* ACE_HAS_FORE_ATM_XTI || ACE_HAS_FORE_ATM_WS2 */
                             sizeof (*sap));
 
- (void) ACE_OS::memcpy ((void *) &this->atm_addr_,
- (void *) sap,
+  (void) ACE_OS::memcpy (&this->atm_addr_,
+                         sap,
                          sizeof this->atm_addr_);
   return 0;
 }
 
 int
-ACE_ATM_Addr::set (const ACE_TCHAR address[],
+ACE_ATM_Addr::set (ACE_TCHAR const address[],
                    u_char selector)
 {
   ACE_TRACE ("ACE_ATM_Addr::set");
@@ -243,7 +238,7 @@ ACE_ATM_Addr::set (const ACE_TCHAR address[],
 // Transform the string into the current addressing format.
 
 int
-ACE_ATM_Addr::string_to_addr (const ACE_TCHAR sap[])
+ACE_ATM_Addr::string_to_addr (ACE_TCHAR const sap[])
 {
   ACE_TRACE ("ACE_ATM_Addr::string_to_addr");
 
@@ -256,30 +251,31 @@ ACE_ATM_Addr::string_to_addr (const ACE_TCHAR sap[])
 #endif /* ACE_HAS_FORE_ATM_XTI || ACE_HAS_FORE_ATM_WS2 || ACE_HAS_LINUX_ATM */
                             sizeof this->atm_addr_);
 #if defined (ACE_HAS_FORE_ATM_XTI)
-  struct hostent *entry;
-  struct atmnsap_addr *nsap;
-
   // Yow, someone gave us a NULL ATM address!
-  if (sap == 0)
+  if (sap == nullptr)
     {
       errno = EINVAL;
       return -1;
     }
-  else if ((entry = gethostbyname_atmnsap ((ACE_TCHAR *)sap)) != 0)
+
+  struct hostent *entry = gethostbyname_atmnsap (const_cast<ACE_TCHAR *> (sap));
+  if (entry != nullptr)
     {
       ACE_OS::memcpy (atm_addr_.sap.t_atm_sap_addr.address,
                       entry->h_addr_list[0],
                       ATMNSAP_ADDR_LEN - 1);
     }
-  else if ((nsap = atmnsap_addr (sap)) != 0)
+  else
     {
+      struct atmnsap_addr *nsap = atmnsap_addr (sap);
+      if (nsap == nullptr)
+        {
+          errno = EINVAL;
+          return -1;
+        }
       ACE_OS::memcpy (atm_addr_.sap.t_atm_sap_addr.address,
                       nsap->atmnsap,
                       ATMNSAP_ADDR_LEN);
-    }
-  else {
-      errno = EINVAL;
-      return -1;
     }
 #elif defined (ACE_HAS_FORE_ATM_WS2)
    DWORD dwValue;
@@ -335,12 +331,12 @@ ACE_ATM_Addr::string_to_addr (const ACE_TCHAR sap[])
       return -1;
    }
 #elif defined (ACE_HAS_LINUX_ATM)
-   if (sap == 0 || !ACE_OS::strcmp (sap,"")) {
+   if (sap == nullptr || !ACE_OS::strcmp (sap, "")) {
      errno = EINVAL;
      return -1;
    }
 
-   if (text2atm ((ACE_TCHAR *)sap,
+   if (text2atm (ACE_TEXT_ALWAYS_CHAR (sap),
  (struct sockaddr *)& (atm_addr_.sockaddratmsvc),
                  sizeof (atm_addr_.sockaddratmsvc),
                  T2A_SVC | T2A_NAME) < 0) {
@@ -378,27 +374,36 @@ ACE_ATM_Addr::addr_to_string (ACE_TCHAR addr[],
                    ACE_TEXT ("%s"),
                    atmnsap_ntoa (nsap));
 
-  size_t total_len = ACE_OS::strlen (buffer) + sizeof ('\0');
+  size_t const total_len = ACE_OS::strlen (buffer) + sizeof ('\0');
 
   if (addrlen < total_len)
-    return -1;
+    {
+      return -1;
+    }
   else
-    ACE_OS::strcpy (addr, buffer);
+    {
+      ACE_OS::strcpy (addr, buffer);
+    }
 
   return 0;
 #elif defined (ACE_HAS_FORE_ATM_WS2)
   ACE_TCHAR buffer[MAXNAMELEN + 1];
-  int i;
+  size_t const required_len = ATM_ADDR_SIZE * 3;
 
-  if (addrlen < ATM_ADDR_SIZE + 1)
-          return -1;
+  if (required_len > sizeof (buffer) / sizeof (buffer[0]) ||
+      addrlen < required_len)
+    {
+      return -1;
+    }
 
-  for (i = 0; i < ATM_ADDR_SIZE; i++) {
-    buffer[ i * 3 ] = '\0';
-          ACE_OS::sprintf (buffer, ACE_TEXT ("%s%02x."),
-                     buffer,
-                     atm_addr_.satm_number.Addr[ i ]);
-  }
+  for (size_t i = 0; i < ATM_ADDR_SIZE; ++i)
+    {
+      ACE_OS::sprintf (buffer + i * 3,
+                       ACE_TEXT ("%02x."),
+                       static_cast<unsigned int> (
+                         static_cast<unsigned char> (
+                           atm_addr_.satm_number.Addr[i])));
+    }
 
   buffer[ ATM_ADDR_SIZE * 3 - 1 ] = '\0';
   ACE_OS::strcpy (addr, buffer);
@@ -415,10 +420,14 @@ ACE_ATM_Addr::addr_to_string (ACE_TCHAR addr[],
     return -1;
   }
   if (addrlen < (size_t)total_len)
-    return -1;
+    {
+      return -1;
+    }
   else
-    ACE_OS::strcpy (addr,
-                   buffer);
+    {
+      ACE_OS::strcpy (addr,
+                      buffer);
+    }
 
   return 0;
 #else
@@ -428,7 +437,7 @@ ACE_ATM_Addr::addr_to_string (ACE_TCHAR addr[],
 #endif /* ACE_HAS_FORE_ATM_XTI && ACE_HAS_FORE_ATM_WS2 */
 }
 
-const ACE_TCHAR *
+ACE_TCHAR const *
 ACE_ATM_Addr::addr_to_string () const
 {
   ACE_TRACE ("ACE_ATM_Addr::addr_to_string");
@@ -436,14 +445,16 @@ ACE_ATM_Addr::addr_to_string () const
   static ACE_TCHAR addr[MAXHOSTNAMELEN + 1];
   if (this->addr_to_string (addr,
                             MAXHOSTNAMELEN + 1) < 0)
-    return 0;
+    {
+      return nullptr;
+    }
 
   return addr;
 }
 
 // Set a pointer to the address.
 void
-ACE_ATM_Addr::set_addr (const void *addr, int len)
+ACE_ATM_Addr::set_addr (void const *addr, int len)
 {
   ACE_TRACE ("ACE_ATM_Addr::set_addr");
 
@@ -461,7 +472,7 @@ ACE_ATM_Addr::set_addr (const void *addr, int len)
 // Compare two addresses for inequality.
 
 bool
-ACE_ATM_Addr::operator != (const ACE_ATM_Addr &sap) const
+ACE_ATM_Addr::operator != (ACE_ATM_Addr const &sap) const
 {
   ACE_TRACE ("ACE_ATM_Addr::operator !=");
   return ! ((*this) == sap);
@@ -470,7 +481,7 @@ ACE_ATM_Addr::operator != (const ACE_ATM_Addr &sap) const
 // Compare two addresses for equality.
 
 bool
-ACE_ATM_Addr::operator == (const ACE_ATM_Addr &sap) const
+ACE_ATM_Addr::operator == (ACE_ATM_Addr const &sap) const
 {
   ACE_TRACE ("ACE_ATM_Addr::operator ==");
 

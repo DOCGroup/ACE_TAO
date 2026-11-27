@@ -13,6 +13,8 @@
 #include "ace/WFMO_Reactor.h"
 #include "ace/OS_NS_errno.h"
 
+#include <memory>
+
 bool
 testit (ACE_Reactor_Impl *ri)
 {
@@ -45,14 +47,14 @@ run_main (int, ACE_TCHAR *[])
   int result = 0;
 
   ACE_Select_Reactor r1;
-  if (!testit (&r1))
+  if (!testit (std::addressof (r1)))
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("Select_Reactor failed\n")));
       result = 1;
     }
 
   ACE_TP_Reactor r2;
-  if (!testit (&r2))
+  if (!testit (std::addressof (r2)))
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("TP_Reactor failed\n")));
       result = 1;
@@ -60,7 +62,7 @@ run_main (int, ACE_TCHAR *[])
 
 #ifdef ACE_WIN32
   ACE_WFMO_Reactor r3;
-  if (!testit (&r3))
+  if (!testit (std::addressof (r3)))
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("WFMO_Reactor failed\n")));
       result = 1;
@@ -69,7 +71,7 @@ run_main (int, ACE_TCHAR *[])
 
 #if defined (ACE_HAS_EVENT_POLL) || defined (ACE_HAS_DEV_POLL)
   ACE_Dev_Poll_Reactor r4;
-  if (!testit (&r4))
+  if (!testit (std::addressof (r4)))
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("Dev_Poll_Reactor failed\n")));
       result = 1;

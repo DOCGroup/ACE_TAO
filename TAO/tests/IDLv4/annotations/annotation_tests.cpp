@@ -11,7 +11,7 @@
 
 namespace {
   void assert_node_has_annotation (
-    Annotation_Test &t, const char *node_name, AST_Annotation_Decl *annotation)
+    Annotation_Test &t, char const *node_name, AST_Annotation_Decl *annotation)
   {
     AST_Decl *node = t.assert_node (node_name);
     t.assert_annotation_appl_count (node, 1);
@@ -21,7 +21,7 @@ namespace {
   /**
    * Common Test IDL for what the IDL4 grammer calls "attr_dcl"
    */
-  const std::string common_attr_dcl_idl =
+  std::string const common_attr_dcl_idl =
     "  @test_annotation_1\n"
     "  attribute short rw_attribute;\n"
     "  @test_annotation_1\n"
@@ -37,7 +37,7 @@ namespace {
   /**
    * Common Test IDL for what the IDL4 grammer calls "export"
    */
-  const std::string common_export_idl =
+  std::string const common_export_idl =
     // op_dcl
     "  @test_annotation_1\n"
     "  void operation();\n"
@@ -84,7 +84,7 @@ namespace {
   /**
    * Common Test IDL for what the IDL4 grammer calls "value_element"
    */
-  const std::string common_value_element_idl =
+  std::string const common_value_element_idl =
     // export
     common_export_idl +
 

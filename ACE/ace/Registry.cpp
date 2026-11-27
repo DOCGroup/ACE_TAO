@@ -1,4 +1,5 @@
 #include "ace/Registry.h"
+#include <memory>
 
 #if defined (ACE_WIN32)
 
@@ -8,16 +9,18 @@
 // Funky macro to deal with strange error passing semantics
 // of Win32 Reg*() functions
 #define ACE_REGISTRY_CALL_RETURN(X) \
-  do { \
-    if (X != ERROR_SUCCESS) \
+  do \
     { \
-      errno = X; \
-      return -1; \
-    } \
+    if (X != ERROR_SUCCESS) \
+      { \
+        errno = X; \
+        return -1; \
+      } \
     else \
-      return 0; \
+      { \
+        return 0; \
+      } \
     } while (0)
-
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -44,7 +47,6 @@ ACE_Registry::Binding::Binding ()
 {
 }
 
-
 // Binding constructor
 // (Name version)
 ACE_Registry::Binding::Binding (const Name &name,
@@ -54,16 +56,14 @@ ACE_Registry::Binding::Binding (const Name &name,
 {
 }
 
-
 // Binding constructor
 // (String version)
-ACE_Registry::Binding::Binding (const ACE_TString &name,
+ACE_Registry::Binding::Binding (ACE_TString const &name,
                                 Binding_Type type)
   : name_ (name),
     type_ (type)
 {
 }
-
 
 bool
 ACE_Registry::Binding::operator== (const Binding &rhs) const
@@ -87,7 +87,6 @@ ACE_Registry::Binding::name (Name &name)
   name = ACE_Registry::make_name (this->name_);
 }
 
-
 // Name accessors
 // (String version)
 void
@@ -95,7 +94,6 @@ ACE_Registry::Binding::name (ACE_TString &name)
 {
   name = this->name_;
 }
-
 
 // Name accessors
 // (String version)
@@ -105,14 +103,12 @@ ACE_Registry::Binding::name ()
   return this->name_;
 }
 
-
 // Type accessor
 ACE_Registry::Binding_Type
 ACE_Registry::Binding::type ()
 {
   return this->type_;
 }
-
 
 // Simple object constructor
 ACE_Registry::Object::Object (void *data,
@@ -131,13 +127,11 @@ ACE_Registry::Object::data (void *data)
   this->data_ = data;
 }
 
-
 void *
 ACE_Registry::Object::data () const
 {
   return this->data_;
 }
-
 
 void
 ACE_Registry::Object::size (u_long size)
@@ -145,13 +139,11 @@ ACE_Registry::Object::size (u_long size)
   this->size_ = size;
 }
 
-
 u_long
 ACE_Registry::Object::size () const
 {
   return this->size_;
 }
-
 
 void
 ACE_Registry::Object::type (u_long type)
@@ -159,13 +151,11 @@ ACE_Registry::Object::type (u_long type)
   this->type_ = type;
 }
 
-
 u_long
 ACE_Registry::Object::type () const
 {
   return this->type_;
 }
-
 
 // Simple context constructor
 ACE_Registry::Naming_Context::Naming_Context ()
@@ -175,15 +165,13 @@ ACE_Registry::Naming_Context::Naming_Context ()
 {
 }
 
-
 // Context constructor
-ACE_Registry::Naming_Context::Naming_Context (const HKEY &key)
+ACE_Registry::Naming_Context::Naming_Context (HKEY const &key)
   : key_ (key),
     parent_key_ ((HKEY) 0),
     name_ ()
 {
 }
-
 
 ACE_Registry::Naming_Context::Naming_Context (const Naming_Context &rhs)
   : key_ (rhs.key_),
@@ -195,7 +183,6 @@ ACE_Registry::Naming_Context::Naming_Context (const Naming_Context &rhs)
   // But since this is private (and not used), I don't care much
 }
 
-
 const ACE_Registry::Naming_Context &
 ACE_Registry::Naming_Context::operator= (const Naming_Context &rhs)
 {
@@ -205,13 +192,10 @@ ACE_Registry::Naming_Context::operator= (const Naming_Context &rhs)
         return *this;
 }
 
-
-// Destructor
 ACE_Registry::Naming_Context::~Naming_Context ()
 {
   this->close ();
 }
-
 
 // Insert <object> with <name> into <this> context
 // (Name version)
@@ -222,25 +206,27 @@ ACE_Registry::Naming_Context::bind_new (const Name &name,
   return this->bind_new (ACE_Registry::make_string (name), object);
 }
 
-
 // Insert <object> with <name> into <this> context
 // (String version)
 int
-ACE_Registry::Naming_Context::bind_new (const ACE_TString &name,
+ACE_Registry::Naming_Context::bind_new (ACE_TString const &name,
                                         const Object &object)
 {
   // temporary object
   Object temp;
   long result = this->resolve (name, temp);
   if (result == 0)
-    // resolve succeeded
-    result = -1;
+    {
+      // resolve succeeded
+      result = -1;
+    }
   else
-    // resolve failed
-    result = this->bind (name, object);
+    {
+      // resolve failed
+      result = this->bind (name, object);
+    }
   return result;
 }
-
 
 // Insert or update <object> with <name> into <this> context
 // (Name version)
@@ -251,22 +237,21 @@ ACE_Registry::Naming_Context::bind (const Name &name,
   return this->bind (ACE_Registry::make_string (name), object);
 }
 
-
 // Insert or update <object> with <name> into <this> context
 // (String version)
 int
-ACE_Registry::Naming_Context::bind (const ACE_TString &name,
+ACE_Registry::Naming_Context::bind (ACE_TString const &name,
                                     const Object &object)
 {
   long result = ACE_TEXT_RegSetValueEx (this->key_,
                                         name.c_str (),
                                         0,
                                         object.type (),
-                                        (const BYTE *) object.data (),
+                                        static_cast<BYTE const *> (
+                                          object.data ()),
                                         object.size ());
   ACE_REGISTRY_CALL_RETURN (result);
 }
-
 
 // Update <object> with <name> in <this> context
 // (Name version)
@@ -277,22 +262,22 @@ ACE_Registry::Naming_Context::rebind (const Name &name,
   return this->rebind (ACE_Registry::make_string (name), new_object);
 }
 
-
 // Update <object> with <name> in <this> context
 // (String version)
 int
-ACE_Registry::Naming_Context::rebind (const ACE_TString &name,
+ACE_Registry::Naming_Context::rebind (ACE_TString const &name,
                                       const Object &new_object)
 {
   Object old_object;
   // find the old one first
   long result = this->resolve (name, old_object);
   if (result == 0)
-    // no need to delete first
-    result = this->bind (name, new_object);
+    {
+      // no need to delete first
+      result = this->bind (name, new_object);
+    }
   return result;
 }
-
 
 // Find <object> with <name> in <this> context
 // (Name version)
@@ -303,11 +288,10 @@ ACE_Registry::Naming_Context::resolve (const Name &name,
   return this->resolve (ACE_Registry::make_string (name), object);
 }
 
-
 // Find <object> with <name> in <this> context
 // (String version)
 int
-ACE_Registry::Naming_Context::resolve (const ACE_TString &name,
+ACE_Registry::Naming_Context::resolve (ACE_TString const &name,
                                        Object &object)
 {
   // Get object state
@@ -319,7 +303,7 @@ ACE_Registry::Naming_Context::resolve (const ACE_TString &name,
                                           name.c_str (),
                                           0,
                                           &type,
-                                          (BYTE *)data,
+                                          static_cast<BYTE *> (data),
                                           &size);
   if (result == ERROR_SUCCESS)
     {
@@ -332,7 +316,6 @@ ACE_Registry::Naming_Context::resolve (const ACE_TString &name,
   ACE_REGISTRY_CALL_RETURN (result);
 }
 
-
 // Remove object with <name> in <this> context
 // (Name version)
 int
@@ -341,18 +324,16 @@ ACE_Registry::Naming_Context::unbind (const Name &name)
   return this->unbind (ACE_Registry::make_string (name));
 }
 
-
 // Remove object with <name> in <this> context
 // (String version)
 int
-ACE_Registry::Naming_Context::unbind (const ACE_TString &name)
+ACE_Registry::Naming_Context::unbind (ACE_TString const &name)
 {
   long result = ACE_TEXT_RegDeleteValue (this->key_,
                                          name.c_str ());
 
   ACE_REGISTRY_CALL_RETURN (result);
 }
-
 
 // Create new <naming_context> relative to <this> context
 // This method may not mean a lot in this implementation
@@ -362,7 +343,6 @@ ACE_Registry::Naming_Context::new_context (Naming_Context &naming_context)
   // Make sure that we reset the state and close keys
   return naming_context.close ();
 }
-
 
 // Insert <naming_context> with <name> relative to <this> context
 // (Name version)
@@ -380,11 +360,10 @@ ACE_Registry::Naming_Context::bind_new_context (const Name &name,
                                  security_attributes);
 }
 
-
 // Insert <naming_context> with <name> relative to <this> context
 // (String version)
 int
-ACE_Registry::Naming_Context::bind_new_context (const ACE_TString &name,
+ACE_Registry::Naming_Context::bind_new_context (ACE_TString const &name,
                                                 Naming_Context &naming_context,
                                                 u_long persistence,
                                                 u_long security_access,
@@ -428,7 +407,6 @@ ACE_Registry::Naming_Context::bind_new_context (const ACE_TString &name,
   ACE_REGISTRY_CALL_RETURN (result);
 }
 
-
 // Insert or update <naming_context> with <name> relative to <this> context
 // (Name version)
 int
@@ -445,11 +423,10 @@ ACE_Registry::Naming_Context::bind_context (const Name &name,
                              security_attributes);
 }
 
-
 // Insert or update <naming_context> with <name> relative to <this> context
 // (String version)
 int
-ACE_Registry::Naming_Context::bind_context (const ACE_TString &name,
+ACE_Registry::Naming_Context::bind_context (ACE_TString const &name,
                                             /* const */ Naming_Context &naming_context,
                                             u_long persistence,
                                             u_long security_access,
@@ -477,7 +454,6 @@ ACE_Registry::Naming_Context::bind_context (const ACE_TString &name,
   ACE_REGISTRY_CALL_RETURN (result);
 }
 
-
 // Rename <naming_context> to <name>
 // (Name version)
 int
@@ -488,11 +464,10 @@ ACE_Registry::Naming_Context::rebind_context (const Name &name,
                                new_naming_context);
 }
 
-
 // Rename <naming_context> to <name>
 // (String version)
 int
-ACE_Registry::Naming_Context::rebind_context (const ACE_TString &name,
+ACE_Registry::Naming_Context::rebind_context (ACE_TString const &name,
                                               /* const */ Naming_Context &new_naming_context)
 {
   Naming_Context old_naming_context;
@@ -514,7 +489,6 @@ ACE_Registry::Naming_Context::rebind_context (const ACE_TString &name,
   return result;
 }
 
-
 // Remove naming_context with <name> from <this> context
 // (Name version)
 int
@@ -523,18 +497,16 @@ ACE_Registry::Naming_Context::unbind_context (const Name &name)
   return this->unbind_context (ACE_Registry::make_string (name));
 }
 
-
 // Remove naming_context with <name> from <this> context
 // (String version)
 int
-ACE_Registry::Naming_Context::unbind_context (const ACE_TString &name)
+ACE_Registry::Naming_Context::unbind_context (ACE_TString const &name)
 {
   long result = ACE_TEXT_RegDeleteKey (this->key_,
                                                        name.c_str ());
 
   ACE_REGISTRY_CALL_RETURN (result);
 }
-
 
 // Find <naming_context> with <name> in <this> context
 // (Name version)
@@ -548,11 +520,10 @@ ACE_Registry::Naming_Context::resolve_context (const Name &name,
                                 security_access);
 }
 
-
 // Find <naming_context> with <name> in <this> context
 // (String version)
 int
-ACE_Registry::Naming_Context::resolve_context (const ACE_TString &name,
+ACE_Registry::Naming_Context::resolve_context (ACE_TString const &name,
                                                Naming_Context &naming_context,
                                                u_long security_access)
 {
@@ -572,7 +543,6 @@ ACE_Registry::Naming_Context::resolve_context (const ACE_TString &name,
   ACE_REGISTRY_CALL_RETURN (result);
 }
 
-
 // Same as unbind_context() with <this> as naming_context
 int
 ACE_Registry::Naming_Context::destroy ()
@@ -584,7 +554,6 @@ ACE_Registry::Naming_Context::destroy ()
   ACE_REGISTRY_CALL_RETURN (result);
 }
 
-
 // Sync content of context to disk
 int
 ACE_Registry::Naming_Context::flush ()
@@ -593,7 +562,6 @@ ACE_Registry::Naming_Context::flush ()
   ACE_REGISTRY_CALL_RETURN (result);
 }
 
-
 // Close the handle of the context
 int
 ACE_Registry::Naming_Context::close ()
@@ -601,7 +569,6 @@ ACE_Registry::Naming_Context::close ()
   long result = this->key_ ? ::RegCloseKey (this->key_) : ERROR_SUCCESS;
   ACE_REGISTRY_CALL_RETURN (result);
 }
-
 
 // Convert a <name> to a <string>
 ACE_TString
@@ -613,11 +580,13 @@ ACE_Registry::make_string (const Name &const_name)
   // Iterator through the components of name
   for (Name::iterator iterator = name.begin ();
        iterator != name.end ();
-       iterator++)
+       ++iterator)
     {
       if (iterator != name.begin ())
-        // If this is not the first component, we will add separators
-        string += STRING_SEPARATOR;
+        {
+          // If this is not the first component, we will add separators
+          string += STRING_SEPARATOR;
+        }
       const Name_Component &component = *iterator;
       // Add to string
       string += component.id_;
@@ -626,10 +595,9 @@ ACE_Registry::make_string (const Name &const_name)
   return string;
 }
 
-
 // Convert a <string> to a <name>
 ACE_Registry::Name
-ACE_Registry::make_name (const ACE_TString &string)
+ACE_Registry::make_name (ACE_TString const &string)
 {
   ACE_TString::size_type new_position = 0;
   ACE_TString::size_type last_position = 0;
@@ -665,14 +633,12 @@ ACE_Registry::make_name (const ACE_TString &string)
   return name;
 }
 
-
 // Set key
 void
 ACE_Registry::Naming_Context::key (HKEY key)
 {
   this->key_ = key;
 }
-
 
 // Get key
 HKEY
@@ -681,7 +647,6 @@ ACE_Registry::Naming_Context::key ()
   return this->key_;
 }
 
-
 // Set parent
 void
 ACE_Registry::Naming_Context::parent (HKEY parent)
@@ -689,14 +654,12 @@ ACE_Registry::Naming_Context::parent (HKEY parent)
   this->parent_key_ = parent;
 }
 
-
 // Get parent
 HKEY
 ACE_Registry::Naming_Context::parent ()
 {
   return this->parent_key_;
 }
-
 
 // Set name
 // (Name version)
@@ -706,7 +669,6 @@ ACE_Registry::Naming_Context::name (const Name &name)
   this->name_ = ACE_Registry::make_string (name);
 }
 
-
 // Get name
 // (Name version)
 void
@@ -715,15 +677,13 @@ ACE_Registry::Naming_Context::name (Name &name)
   name = ACE_Registry::make_name (this->name_);
 }
 
-
 // Set name
 // (String version)
 void
-ACE_Registry::Naming_Context::name (const ACE_TString &name)
+ACE_Registry::Naming_Context::name (ACE_TString const &name)
 {
   this->name_ = name;
 }
-
 
 // Get name
 // (String version)
@@ -732,7 +692,6 @@ ACE_Registry::Naming_Context::name ()
 {
   return this->name_;
 }
-
 
 // Get name
 // (String version)
@@ -770,7 +729,6 @@ ACE_Registry::Naming_Context::list (u_long how_many,
   return iter.next_n (how_many, list);
 }
 
-
 // listing function: iterator creator
 // This gives back a listing of all entries in <this> context.
 int
@@ -788,21 +746,22 @@ ACE_Registry::Naming_Context::list (Binding_List &list)
   // Start iterations from the objects
   iterator.current_enumeration (iterator.object_iteration_);
 
-  long result = 0;
-  while (1)
+  while (true)
     {
       ACE_Registry::Binding binding;
-      result = iterator.next_one (binding);
+      long const result = iterator.next_one (binding);
       if (result == 0)
-        list.insert (binding);
+        {
+          list.insert (binding);
+        }
       else
-        break;
+        {
+          break;
+        }
     }
   return 0;
 }
 
-
-// Default constructor
 ACE_Registry::Binding_Iterator::Binding_Iterator ()
 {
   this->object_iteration_.iterator (this);
@@ -811,16 +770,14 @@ ACE_Registry::Binding_Iterator::Binding_Iterator ()
   this->reset ();
 }
 
-
 void
 ACE_Registry::Binding_Iterator::reset ()
 {
-  this->current_enumeration_ = &this->iteration_complete_;
+  this->current_enumeration_ = std::addressof (this->iteration_complete_);
   this->iteration_complete_.reset ();
   this->object_iteration_.reset ();
   this->context_iteration_.reset ();
 }
-
 
 void
 ACE_Registry::Binding_Iterator::Iteration_State::reset ()
@@ -828,22 +785,16 @@ ACE_Registry::Binding_Iterator::Iteration_State::reset ()
   this->index_ = 0;
 }
 
-
 void
 ACE_Registry::Binding_Iterator::Iteration_State::iterator (Binding_Iterator *iter)
 {
   this->parent_ = iter;
 }
 
-
 ACE_Registry::Binding_Iterator::Iteration_State::Iteration_State ()
-  : index_ (0)
-{
-}
+= default;
 
-ACE_Registry::Binding_Iterator::Iteration_State::~Iteration_State ()
-{
-}
+ACE_Registry::Binding_Iterator::Iteration_State::~Iteration_State () = default;
 
 // Next entry
 int
@@ -856,12 +807,13 @@ ACE_Registry::Binding_Iterator::next_one (Binding &binding)
   long result = this->next_n (how_many, list);
 
   if (result == 0)
-    // Success
-    binding = (*list.begin ());
+    {
+      // Success
+      binding = (*list.begin ());
+    }
 
   return result;
 }
-
 
 // Next <how_many> entries
 int
@@ -874,7 +826,6 @@ ACE_Registry::Binding_Iterator::next_n (u_long how_many,
   return this->current_enumeration_->next_n (how_many, list);
 }
 
-
 // Destroy iterator
 int
 ACE_Registry::Binding_Iterator::destroy ()
@@ -883,14 +834,12 @@ ACE_Registry::Binding_Iterator::destroy ()
   return 0;
 }
 
-
 // Set/Get naming_context
 void
 ACE_Registry::Binding_Iterator::naming_context (Naming_Context &naming_context)
 {
-  this->naming_context_ = &naming_context;
+  this->naming_context_ = std::addressof (naming_context);
 }
-
 
 ACE_Registry::Naming_Context &
 ACE_Registry::Binding_Iterator::naming_context ()
@@ -898,21 +847,18 @@ ACE_Registry::Binding_Iterator::naming_context ()
   return *this->naming_context_;
 }
 
-
 // Set/Get current enumeration
 void
 ACE_Registry::Binding_Iterator::current_enumeration (Iteration_State &current_enumeration)
 {
-  this->current_enumeration_ = &current_enumeration;
+  this->current_enumeration_ = std::addressof (current_enumeration);
 }
-
 
 ACE_Registry::Binding_Iterator::Iteration_State &
 ACE_Registry::Binding_Iterator::current_enumeration ()
 {
   return *this->current_enumeration_;
 }
-
 
 int
 ACE_Registry::Binding_Iterator::Object_Iteration::next_n (u_long how_many,
@@ -940,8 +886,8 @@ ACE_Registry::Binding_Iterator::Object_Iteration::next_n (u_long how_many,
           // Object found
           {
             // Readjust counters
-            this->index_++;
-            how_many--;
+            ++this->index_;
+            --how_many;
 
             // Add to list
             // Create binding
@@ -963,9 +909,13 @@ ACE_Registry::Binding_Iterator::Object_Iteration::next_n (u_long how_many,
                                                                  list);
           // If we were able to add objects
           if (requested != how_many)
-            return 0;
+            {
+              return 0;
+            }
           else
-            return result;
+            {
+              return result;
+            }
 
         default:
           // Strange error
@@ -982,7 +932,6 @@ ACE_Registry::Binding_Iterator::Object_Iteration::next_n (u_long how_many,
   // current enumeration will remain OBJECTS
   return 0;
 }
-
 
 int
 ACE_Registry::Binding_Iterator::Context_Iteration::next_n (u_long how_many,
@@ -1010,8 +959,8 @@ ACE_Registry::Binding_Iterator::Context_Iteration::next_n (u_long how_many,
           // Object found
           {
             // Readjust counters
-            this->index_++;
-            how_many--;
+            ++this->index_;
+            --how_many;
 
             // Add to list
             // Create binding
@@ -1037,9 +986,13 @@ ACE_Registry::Binding_Iterator::Context_Iteration::next_n (u_long how_many,
 
           // If we were able to add contexts
           if (requested != how_many)
-            return 0;
+            {
+              return 0;
+            }
           else
-            return -1;
+            {
+              return -1;
+            }
         }
     }
   // If we reach here, all of <how_many> pairs were added to the list
@@ -1047,7 +1000,6 @@ ACE_Registry::Binding_Iterator::Context_Iteration::next_n (u_long how_many,
   // current enumeration will remain CONTEXTS
   return 0;
 }
-
 
 int
 ACE_Registry::Binding_Iterator::Iteration_Complete::next_n (u_long how_many,
@@ -1060,7 +1012,6 @@ ACE_Registry::Binding_Iterator::Iteration_Complete::next_n (u_long how_many,
         return -1;
 }
 
-
 // Factory method to connect to predefined registries
 // This method works for both remote and local machines
 // However, for remote machines CLASSES_ROOT and CURRENT_USER
@@ -1069,29 +1020,35 @@ ACE_Registry::Binding_Iterator::Iteration_Complete::next_n (u_long how_many,
 int
 ACE_Predefined_Naming_Contexts::connect (ACE_Registry::Naming_Context &naming_context,
                                          HKEY predefined,
-                                         const ACE_TCHAR *machine_name)
+                                         ACE_TCHAR const *machine_name)
 {
   long result = -1;
 
   if (machine_name != 0 && ACE_OS::strcmp (ACE_TEXT ("localhost"), machine_name) == 0)
-    machine_name = 0;
+    {
+      machine_name = 0;
+    }
 
   if (predefined == HKEY_LOCAL_MACHINE || predefined == HKEY_USERS)
-    result =
-      ACE_TEXT_RegConnectRegistry (const_cast<ACE_TCHAR *> (machine_name),
-                                   predefined,
-                                   &naming_context.key_);
+    {
+      result =
+        ACE_TEXT_RegConnectRegistry (const_cast<ACE_TCHAR *> (machine_name),
+                                     predefined,
+                                     &naming_context.key_);
+    }
   if (predefined == HKEY_CURRENT_USER || predefined == HKEY_CLASSES_ROOT)
     {
-    // Make sure that for these types, the machine is local
-    if (machine_name == 0 ||
-        ACE_Predefined_Naming_Contexts::is_local_host (machine_name))
-      {
-        naming_context.key_ = predefined;
-        result = 0;
-      }
-    else
-      result = -1;
+      // Make sure that for these types, the machine is local
+      if (machine_name == 0 ||
+          ACE_Predefined_Naming_Contexts::is_local_host (machine_name))
+        {
+          naming_context.key_ = predefined;
+          result = 0;
+        }
+      else
+        {
+          result = -1;
+        }
     }
 
   ACE_REGISTRY_CALL_RETURN (result);
@@ -1099,16 +1056,16 @@ ACE_Predefined_Naming_Contexts::connect (ACE_Registry::Naming_Context &naming_co
 
 /// Check if @a machine_name is the local host
 /* static */
-int
-ACE_Predefined_Naming_Contexts::is_local_host (const ACE_TCHAR *machine_name)
+bool
+ACE_Predefined_Naming_Contexts::is_local_host (ACE_TCHAR const *machine_name)
 {
   ACE_TCHAR local_host[MAXHOSTNAMELEN];
-  int result = ACE_OS::hostname (local_host, sizeof local_host / sizeof (ACE_TCHAR));
-  if (result == 0)
-    result = !ACE_OS::strcmp (local_host, machine_name);
-  else
-    result = 0;
-  return result;
+  if (ACE_OS::hostname (local_host, sizeof local_host / sizeof (ACE_TCHAR)) == 0)
+    {
+      return ACE_OS::strcmp (local_host, machine_name) == 0;
+    }
+
+  return false;
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

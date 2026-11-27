@@ -1,10 +1,6 @@
-
-//=============================================================================
 /**
  *  @file    Bug_3729_Regression_Test.cpp
  */
-//=============================================================================
-
 
 #include "test_config.h"
 #include "ace/OS_NS_string.h"
@@ -13,7 +9,7 @@
 
 struct Multicast_Address
 {
-  const char *addr_;
+  char const *addr_;
   bool is_multicast_;
 };
 
@@ -24,7 +20,7 @@ int run_main (int, ACE_TCHAR *[])
   int status = 0;     // Innocent until proven guilty
 
   // Test is_multicast()
-  Multicast_Address mcast_addresses[] =
+  Multicast_Address const mcast_addresses[] =
     {
       { "223.0.0.5:23006", false },
       { "224.0.0.0:23006", true },
@@ -37,7 +33,7 @@ int run_main (int, ACE_TCHAR *[])
 
   for (int i = 0; mcast_addresses[i].addr_; ++i)
     {
-      ACE_INET_Addr addr (mcast_addresses[i].addr_);
+      ACE_INET_Addr const addr (mcast_addresses[i].addr_);
 
       if (addr.is_multicast () != mcast_addresses[i].is_multicast_)
         {

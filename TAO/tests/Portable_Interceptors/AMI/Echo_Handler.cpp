@@ -5,11 +5,6 @@
  */
 #include "Echo_Handler.h"
 
-Echo_Handler::Echo_Handler()
-  : replies_ (0)
-{
-}
-
 void
 Echo_Handler::echo_operation (char const *)
 {

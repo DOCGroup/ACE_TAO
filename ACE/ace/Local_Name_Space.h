@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Local_Name_Space.h
  *
@@ -8,7 +5,6 @@
  *  @author Irfan Pyarali (irfan@wuerl.wustl.edu)
  *  @author Douglas C. Schmidt (d.schmidt@vanderbilt.edu).
  */
-//=============================================================================
 
 #ifndef ACE_LOCAL_NAME_SPACE_H
 #define ACE_LOCAL_NAME_SPACE_H
@@ -32,24 +28,26 @@ class ACE_NS_WString;
  * with the Map_Manager.
  *
  * In order to work correctly, this class must be able to
- * convert back and forth with <ACE_NS_WStrings>.
+ * convert back and forth with @c ACE_NS_WStrings.
  */
 class ACE_Export ACE_NS_String
 {
 public:
-  // = Initialization.
+  /// @name Initialization
+  /// @{
+
   /// Default "no-op" constructor.
   ACE_NS_String ();
 
   /// Initialization method.
   ACE_NS_String (ACE_WCHAR_T *dst,
-                 const ACE_WCHAR_T *src,
+                 ACE_WCHAR_T const *src,
                  size_t len);
 
   /// Converts an ACE_NS_WString to an ACE_NS_String;
-  ACE_NS_String (const ACE_NS_WString &);
+  ACE_NS_String (ACE_NS_WString const &);
+  /// @}
 
-  /// Destructor
   ~ACE_NS_String ();
 
   /// Converts an ACE_NS_String to fresh copy of an ACE_NS_WString;
@@ -59,13 +57,13 @@ public:
   char *char_rep () const;
 
   /// Matches on substrings.
-  int strstr (const ACE_NS_String &) const;
+  int strstr (ACE_NS_String const &) const;
 
   /// Compare an ACE_NS_String.
-  bool operator == (const ACE_NS_String &) const;
+  bool operator == (ACE_NS_String const &) const;
 
   /// Compare an ACE_NS_String.
-  bool operator != (const ACE_NS_String &) const;
+  bool operator != (ACE_NS_String const &) const;
 
   /// Returns length of the string
   size_t len () const;
@@ -78,14 +76,14 @@ public:
 
 private:
   /// Length of the string.
-  size_t len_;
+  size_t len_ {};
 
   /// This actually points into shared/persistent memory.
-  ACE_WCHAR_T *rep_;
+  ACE_WCHAR_T *rep_ {};
 
   /// Should rep_ be deleted when destructed (only used
   /// for WString conversions)
-  bool delete_rep_;
+  bool delete_rep_ {false};
 };
 
 /**
@@ -100,24 +98,23 @@ public:
   /// No-op constructor.
   ACE_NS_Internal ();
 
-  /// Constructor.
-  ACE_NS_Internal (ACE_NS_String &value, const char *type);
+  ACE_NS_Internal (ACE_NS_String &value, char const *type);
 
   /// Compare an ACE_NS_Internal
-  bool operator == (const ACE_NS_Internal &) const;
+  bool operator == (ACE_NS_Internal const &) const;
 
   /// Return value.
   ACE_NS_String value ();
 
   /// Return type.
-  const char *type ();
+  char const *type ();
 
 private:
   /// Contains the value of the string.
   ACE_NS_String value_;
 
   /// Contains the type of the string.
-  const char *type_;
+  char const *type_ {};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

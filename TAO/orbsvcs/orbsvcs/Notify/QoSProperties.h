@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 /**
  *  @file QoSProperties.h
  *
@@ -32,14 +30,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Notify_Serv_Export TAO_Notify_QoSProperties : public TAO_Notify_PropertySeq
 {
 public:
-  /// Constructor
   TAO_Notify_QoSProperties ();
 
-  /// Destructor
   virtual ~TAO_Notify_QoSProperties ();
 
   /// Return 0 on success, 1 if unsupported properties were detected and -1 on error.
-  int init (const CosNotification::PropertySeq& prop_seq, CosNotification::PropertyErrorSeq& err_seq);
+  int init (CosNotification::PropertySeq const& prop_seq, CosNotification::PropertyErrorSeq& err_seq);
 
   /// This version initializes the base from our members
   void init ();
@@ -50,23 +46,24 @@ public:
   /// Populate @a qos_properties with properties that can be transfered.Returns -1 on error.
   int transfer (TAO_Notify_QoSProperties& qos_properties);
 
-  ///= Accessors
-  const TAO_Notify_Property_ThreadPool& thread_pool () const;
-  const TAO_Notify_Property_ThreadPoolLanes& thread_pool_lane () const;
+  /// @name QoS property accessors
+  /// @{
+  TAO_Notify_Property_ThreadPool const& thread_pool () const;
+  TAO_Notify_Property_ThreadPoolLanes const& thread_pool_lane () const;
 
-  const TAO_Notify_Property_Short& event_reliability () const;
-  const TAO_Notify_Property_Short& connection_reliability () const;
-  const TAO_Notify_Property_Short& priority () const;
-  const TAO_Notify_Property_Time& timeout () const;
-  const TAO_Notify_Property_Boolean& stop_time_supported () const;
-  const TAO_Notify_Property_Long& maximum_batch_size () const;
-  const TAO_Notify_Property_Time& pacing_interval () const;
-  const TAO_Notify_Property_Long& max_events_per_consumer () const;
-  const TAO_Notify_Property_Short& discard_policy() const;
-  const TAO_Notify_Property_Short& order_policy() const;
-  const TAO_Notify_Property_Time& blocking_policy() const;
+  TAO_Notify_Property_Short const& event_reliability () const;
+  TAO_Notify_Property_Short const& connection_reliability () const;
+  TAO_Notify_Property_Short const& priority () const;
+  TAO_Notify_Property_Time const& timeout () const;
+  TAO_Notify_Property_Boolean const& stop_time_supported () const;
+  TAO_Notify_Property_Long const& maximum_batch_size () const;
+  TAO_Notify_Property_Time const& pacing_interval () const;
+  TAO_Notify_Property_Long const& max_events_per_consumer () const;
+  TAO_Notify_Property_Short const& discard_policy() const;
+  TAO_Notify_Property_Short const& order_policy() const;
+  TAO_Notify_Property_Time const& blocking_policy() const;
 
-  // The non-const accessors are used during topology load
+  /// The non-const accessors are used during topology load.
   TAO_Notify_Property_Short& event_reliability ();
   TAO_Notify_Property_Short& connection_reliability ();
   TAO_Notify_Property_Short& priority ();
@@ -78,17 +75,21 @@ public:
   TAO_Notify_Property_Short& discard_policy();
   TAO_Notify_Property_Short& order_policy();
   TAO_Notify_Property_Time& blocking_policy();
+  /// @}
 
 protected:
-  /// Return 1 if <value> is unsupported.
+  /// Return 1 if @c value is unsupported.
   int unsupported (ACE_CString& name);
 
-  enum {UNSUPPORTED_PROPERTY_COUNT = 1};
+  static constexpr int UNSUPPORTED_PROPERTY_COUNT = 1;
 
-  ///= Unsupported Properties.
+  /// @name Unsupported properties
+  /// @{
   ACE_CString unsupported_[UNSUPPORTED_PROPERTY_COUNT];
+  /// @}
 
-  ///= Supported standard properties
+  /// @name Supported standard properties
+  /// @{
   TAO_Notify_Property_Short event_reliability_;
   TAO_Notify_Property_Short connection_reliability_;
   TAO_Notify_Property_Short priority_;
@@ -99,6 +100,7 @@ protected:
   TAO_Notify_Property_Long max_events_per_consumer_;
   TAO_Notify_Property_Short discard_policy_;
   TAO_Notify_Property_Short order_policy_;
+  /// @}
 
   /// TAO Extensions
   TAO_Notify_Property_ThreadPool thread_pool_;

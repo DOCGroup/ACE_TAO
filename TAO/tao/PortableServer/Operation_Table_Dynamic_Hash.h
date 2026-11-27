@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /**
  *  @file    Operation_Table_Dynamic_Hash.h
  *
@@ -46,6 +45,7 @@ public:
 
   ~TAO_Dynamic_Hash_OpTable () override;
 
+  TAO_Dynamic_Hash_OpTable () = delete;
   TAO_Dynamic_Hash_OpTable (TAO_Dynamic_Hash_OpTable const &) = delete;
   TAO_Dynamic_Hash_OpTable &operator= (TAO_Dynamic_Hash_OpTable const &) = delete;
   TAO_Dynamic_Hash_OpTable (TAO_Dynamic_Hash_OpTable &&) = delete;
@@ -64,10 +64,10 @@ public:
             TAO::Collocation_Strategy s,
             size_t const length = 0) override;
 private:
-  using OP_MAP_MANAGER = ACE_Hash_Map_Manager_Ex<const char *,
+  using OP_MAP_MANAGER = ACE_Hash_Map_Manager_Ex<char const *,
                                   TAO::Operation_Skeletons,
-                                  ACE_Hash<const char *>,
-                                  ACE_Equal_To<const char *>,
+                                  ACE_Hash<char const *>,
+                                  ACE_Equal_To<char const *>,
                                   ACE_Null_Mutex>;
 
   /// The hash table data structure.

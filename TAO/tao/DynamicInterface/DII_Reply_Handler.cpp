@@ -24,8 +24,6 @@ TAO_DII_Reply_Handler::_nil ()
 // DII Request class implementation
 int TAO_DII_Reply_Handler::_tao_class_id = 0;
 
-TAO_DII_Reply_Handler::~TAO_DII_Reply_Handler () = default;
-
 TAO_DII_Reply_Handler_ptr
 TAO_DII_Reply_Handler::_narrow (CORBA::Object_ptr obj)
 {
@@ -36,7 +34,9 @@ TAO_DII_Reply_Handler_ptr
 TAO_DII_Reply_Handler::_unchecked_narrow (CORBA::Object_ptr obj)
 {
   if (CORBA::is_nil (obj))
+  {
     return TAO_DII_Reply_Handler::_nil ();
+  }
 
   return
     reinterpret_cast<TAO_DII_Reply_Handler_ptr> (

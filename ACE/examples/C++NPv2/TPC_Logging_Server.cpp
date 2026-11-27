@@ -13,7 +13,7 @@
 #include "TPCLS_export.h"
 
 int TPC_Logging_Handler::open (void *) {
-  static const ACE_TCHAR LOGFILE_SUFFIX[] = ACE_TEXT (".log");
+  static ACE_TCHAR const LOGFILE_SUFFIX[] = ACE_TEXT (".log");
   ACE_TCHAR filename[MAXHOSTNAMELEN + sizeof (LOGFILE_SUFFIX)];
   ACE_INET_Addr logging_peer_addr;
 
@@ -24,7 +24,7 @@ int TPC_Logging_Handler::open (void *) {
   ACE_FILE_Connector connector;
   connector.connect (log_file_,
                      ACE_FILE_Addr (filename),
-                     0, // No timeout.
+                     nullptr, // No timeout.
                      ACE_Addr::sap_any, // Ignored.
                      0, // Don't try to reuse the addr.
                      O_RDWR | O_CREAT | O_APPEND,
@@ -35,7 +35,6 @@ int TPC_Logging_Handler::open (void *) {
   return activate (THR_NEW_LWP | THR_DETACHED);
 }
 
-
 #if !defined (TPC_CERTIFICATE_FILENAME)
 #  define TPC_CERTIFICATE_FILENAME "tpc-cert.pem"
 #endif /* !TPC_CERTIFICATE_FILENAME */
@@ -44,15 +43,20 @@ int TPC_Logging_Handler::open (void *) {
 #endif /* !TPC_KEY_FILENAME */
 
 int TPC_Logging_Acceptor::open
-    (const ACE_SOCK_Acceptor::PEER_ADDR &local_addr,
+    (ACE_SOCK_Acceptor::PEER_ADDR const &local_addr,
            ACE_Reactor *reactor,
            int flags, int use_select, int reuse_addr) {
   if (PARENT::open (local_addr, reactor, flags,
                     use_select, reuse_addr) != 0)
+  {
     return -1;
+  }
   OpenSSL_add_ssl_algorithms ();
   ssl_ctx_ = SSL_CTX_new (SSLv23_server_method ());
-  if (ssl_ctx_ == nullptr) return -1;
+  if (ssl_ctx_ == nullptr)
+  {
+    return -1;
+  }
 
   if (SSL_CTX_use_certificate_file (ssl_ctx_,
                                     TPC_CERTIFICATE_FILENAME,
@@ -61,11 +65,12 @@ int TPC_Logging_Acceptor::open
                                       TPC_KEY_FILENAME,
                                       SSL_FILETYPE_PEM) <= 0
       || !SSL_CTX_check_private_key (ssl_ctx_))
+  {
     return -1;
+  }
   ssl_ = SSL_new (ssl_ctx_);
   return ssl_ == nullptr ? -1 : 0;
 }
-
 
 int TPC_Logging_Acceptor::handle_close (ACE_HANDLE h,
                                         ACE_Reactor_Mask mask) {
@@ -74,10 +79,12 @@ int TPC_Logging_Acceptor::handle_close (ACE_HANDLE h,
   return 0;
 }
 
-
 int TPC_Logging_Acceptor::accept_svc_handler
     (TPC_Logging_Handler *sh) {
-  if (PARENT::accept_svc_handler (sh) == -1) return -1;
+  if (PARENT::accept_svc_handler (sh) == -1)
+  {
+    return -1;
+  }
   SSL_clear (ssl_);  // Reset for new SSL connection.
 #if defined (ACE_WIN32)
   // ACE_WIN32 is the only platform where ACE_HANDLE is not an int.
@@ -92,7 +99,10 @@ int TPC_Logging_Acceptor::accept_svc_handler
      SSL_VERIFY_PEER | SSL_VERIFY_FAIL_IF_NO_PEER_CERT,
      nullptr);
   if (SSL_accept (ssl_) == -1
-      || SSL_shutdown (ssl_) == -1) return -1;
+      || SSL_shutdown (ssl_) == -1)
+  {
+    return -1;
+  }
   return 0;
 }
 

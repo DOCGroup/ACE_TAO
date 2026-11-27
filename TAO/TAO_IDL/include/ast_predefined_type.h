@@ -72,6 +72,7 @@ class ast_visitor;
 class TAO_IDL_FE_Export AST_PredefinedType : public virtual AST_ConcreteType
 {
 public:
+  AST_PredefinedType () = delete;
   AST_PredefinedType (AST_PredefinedType const &) = delete;
   AST_PredefinedType (AST_PredefinedType &&) = delete;
   AST_PredefinedType &operator= (AST_PredefinedType const &) = delete;
@@ -122,14 +123,14 @@ public:
   static AST_Decl::NodeType const NT;
 
 protected:
+  /// Compute the size type if it is unknown.
   int compute_size_type () override;
-  // Compute the size type if it is unknown.
 
 private:
   // Data.
 
+  /// The specific predefined type.
   PredefinedType const pd_pt;
-  // The specific predefined type.
 };
 
 #endif           // _AST_PREDEFINED_TYPE_AST_PREDEFINED_TYPE_HH

@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    High_Res_Timer_Test.cpp
  *
@@ -6,7 +5,6 @@
  *
  *  @author David L. Levine <levine@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "ace/Log_Msg.h"
@@ -27,15 +25,19 @@ check (const time_t interval, const time_t measured)
   time_t const percentage_difference = difference * 100 / interval;
 
   if (percentage_difference < threshold)
-    return 0;
+    {
+      return 0;
+    }
   else
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("The measured time of %Q differs from ")
-                       ACE_TEXT ("the interval of %Q by %Q percent.\n"),
-                       measured,
-                       interval,
-                       percentage_difference),
-                      1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("The measured time of %Q differs from ")
+                         ACE_TEXT ("the interval of %Q by %Q percent.\n"),
+                         measured,
+                         interval,
+                         percentage_difference),
+                        1);
+    }
 }
 
 // Does a sanity check of the microseconds vs nanoseconds. They're supposed
@@ -61,19 +63,21 @@ check_micro_nano (ACE_hrtime_t microinterval, ACE_hrtime_t nanointerval)
       return 0;
     }
   else
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("The microseconds * 1000 of %Q ")
-                       ACE_TEXT ("differs from the nanoseconds of %Q ")
-                       ACE_TEXT (" by %Q promille\n"),
-                       microinterval,
-                       nanointerval,
-                       promille_difference),
-                      1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("The microseconds * 1000 of %Q ")
+                         ACE_TEXT ("differs from the nanoseconds of %Q ")
+                         ACE_TEXT (" by %Q promille\n"),
+                         microinterval,
+                         nanointerval,
+                         promille_difference),
+                        1);
+    }
 }
 
 static
 ACE_Time_Value
-time_interval (const ACE_Time_Value &interval,
+time_interval (ACE_Time_Value const &interval,
                ACE_hrtime_t& nanoseconds,
                ACE_hrtime_t& microseconds)
 {
@@ -90,7 +94,6 @@ time_interval (const ACE_Time_Value &interval,
   return measured;
 }
 
-
 static u_int const intervals[] =
   {0, 1, 10, 100, 1000, 10000, 100000, 1000000, 4000000}; /*usec*/
 
@@ -100,9 +103,10 @@ run_main (int argc, ACE_TCHAR *argv[])
   ACE_START_TEST (ACE_TEXT ("High_Res_Timer_Test"));
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("The ACE_High_Res_Timer scale factor is %u ")
+              ACE_TEXT ("The ACE_High_Res_Timer scale factor is %Q ")
               ACE_TEXT ("1/microsecond\n"),
-              ACE_High_Res_Timer::global_scale_factor ()));
+              static_cast<ACE_UINT64> (
+                ACE_High_Res_Timer::global_scale_factor ())));
 
   u_int errors = 0;
 
@@ -123,11 +127,11 @@ run_main (int argc, ACE_TCHAR *argv[])
   // value because the OS has a finite resolution anyway.
   static u_int const TIMER_RESOLUTION = 10000;
 
-  for (u_int i = 0; i < sizeof intervals / sizeof (u_int); ++i)
+  for (u_int interval_value : intervals)
     {
       for (u_int j = 0; j < iterations; ++j)
         {
-          ACE_Time_Value const interval (0, intervals[i]);
+          ACE_Time_Value const interval (0, interval_value);
           ACE_hrtime_t nanoseconds;
           ACE_hrtime_t microseconds;
           ACE_Time_Value const measured = time_interval (interval,
@@ -142,11 +146,11 @@ run_main (int argc, ACE_TCHAR *argv[])
                       ACE_TEXT ("interval: %: usec, measured: %: usec %s\n"),
                       interval_usec,
                       measured_usec,
-                      (intervals[i] <= TIMER_RESOLUTION
+                      (interval_value <= TIMER_RESOLUTION
                        ? ACE_TEXT (" (interval and measured may differ)")
                        : ACE_TEXT (""))));
 
-          if (intervals[i] > TIMER_RESOLUTION)
+          if (interval_value > TIMER_RESOLUTION)
             {
               errors += check (interval.sec () * ACE_ONE_SECOND_IN_USECS
                                + interval.usec (),

@@ -6,7 +6,7 @@
 
 // Type based log message receiver
 template<ACE_SYNCH_DECL> void
-Static_Log_Message_Receiver<ACE_SYNCH_USE>::log_record (const ACE_TCHAR *hostname,
+Static_Log_Message_Receiver<ACE_SYNCH_USE>::log_record (ACE_TCHAR const *hostname,
                                                         ACE_Log_Record &record)
 {
 #if defined (ACE_HAS_THREADS)
@@ -20,7 +20,7 @@ Static_Log_Message_Receiver<ACE_SYNCH_USE>::log_record (const ACE_TCHAR *hostnam
 }
 
 template<ACE_SYNCH_DECL> void
-Static_Log_Message_Receiver<ACE_SYNCH_USE>::log_output (const ACE_TCHAR *hostname,
+Static_Log_Message_Receiver<ACE_SYNCH_USE>::log_output (ACE_TCHAR const *hostname,
                                                         ACE_Log_Record &record,
                                                         ostream *outputfile)
 {
@@ -74,12 +74,14 @@ Log_Message_Receiver_Impl<ACE_SYNCH_USE>::detach (Log_Message_Receiver_Impl<ACE_
   ACE_GUARD (ACE_SYNCH_MUTEX_T, guard, copy_lock_);
 #endif /* ACE_HAS_THREADS */
   if (body->count_-- == 0)
-    delete body;
+    {
+      delete body;
+    }
 }
 
 // Type based log message receiver
 template<ACE_SYNCH_DECL> void
-Log_Message_Receiver_Impl<ACE_SYNCH_USE>::log_record (const ACE_TCHAR *hostname,
+Log_Message_Receiver_Impl<ACE_SYNCH_USE>::log_record (ACE_TCHAR const *hostname,
                                                       ACE_Log_Record &record)
 {
   ACE_GUARD (ACE_SYNCH_MUTEX_T, guard, print_lock_);
@@ -89,7 +91,7 @@ Log_Message_Receiver_Impl<ACE_SYNCH_USE>::log_record (const ACE_TCHAR *hostname,
 }
 
 template<ACE_SYNCH_DECL> void
-Log_Message_Receiver_Impl<ACE_SYNCH_USE>::log_output (const ACE_TCHAR *hostname,
+Log_Message_Receiver_Impl<ACE_SYNCH_USE>::log_output (ACE_TCHAR const *hostname,
                                                       ACE_Log_Record &record,
                                                       ostream *outputfile)
 {
@@ -125,7 +127,7 @@ Log_Message_Receiver<ACE_SYNCH_USE>::Log_Message_Receiver
 
 // Type based log message receiver
 template<ACE_SYNCH_DECL> void
-Log_Message_Receiver<ACE_SYNCH_USE>::log_record(const ACE_TCHAR *hostname,
+Log_Message_Receiver<ACE_SYNCH_USE>::log_record(ACE_TCHAR const *hostname,
                                                 ACE_Log_Record &record)
 {
   ACE_ASSERT (receiver_impl_ != 0);
@@ -133,7 +135,7 @@ Log_Message_Receiver<ACE_SYNCH_USE>::log_record(const ACE_TCHAR *hostname,
 }
 
 template<ACE_SYNCH_DECL> void
-Log_Message_Receiver<ACE_SYNCH_USE>::log_output(const ACE_TCHAR *hostname,
+Log_Message_Receiver<ACE_SYNCH_USE>::log_output(ACE_TCHAR const *hostname,
                                                 ACE_Log_Record &record,
                                                 ostream *outputfile)
 {

@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Wait_On_Leader_Follower.h
  *
  *  @author  Alexander Babu Arulanthu <alex@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_WAIT_ON_LEADER_FOLLOWER_H
 #define TAO_WAIT_ON_LEADER_FOLLOWER_H
@@ -29,8 +25,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * condition variable.
  *
  * This implementation is to work with the Muxed Transport
- * Mechanism. Here the state variables such as <Condition
- * Variable> etc cannot be kept in the Wait Strategy, since the
+ * Mechanism. Here the state variables such as the condition variable cannot be kept in the Wait Strategy, since the
  * Wait Strategy is per Transport object and here the Transport
  * is Muxed and hence there are multiple threads running in the
  * same Transport context.
@@ -38,26 +33,31 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Wait_On_Leader_Follower : public TAO_Wait_Strategy
 {
 public:
-  /// Constructor.
+  TAO_Wait_On_Leader_Follower () = delete;
   explicit TAO_Wait_On_Leader_Follower (TAO_Transport *transport);
 
-  /// Destructor.
   ~TAO_Wait_On_Leader_Follower () override = default;
 
-   /*! @copydoc TAO_Wait_Strategy::sending_request() */
+  /// @copydoc TAO_Wait_Strategy::sending_request()
   int sending_request (TAO_ORB_Core *orb_core, TAO_Message_Semantics msg_semantics) override;
 
-   /*! @copydoc TAO_Wait_Strategy::wait() */
+  /// @copydoc TAO_Wait_Strategy::wait()
   int wait (ACE_Time_Value *max_wait_time, TAO_Synch_Reply_Dispatcher &rd) override;
 
-   /*! @copydoc TAO_Wait_Strategy::register_handler() */
+  /// @copydoc TAO_Wait_Strategy::register_handler()
   int register_handler () override;
 
-   /*! @copydoc TAO_Wait_Strategy::non_blocking() */
+  /// @copydoc TAO_Wait_Strategy::non_blocking()
   bool non_blocking () const override;
 
-   /*! @copydoc TAO_Wait_Strategy::can_process_upcalls() */
+  /// @copydoc TAO_Wait_Strategy::can_process_upcalls()
   bool can_process_upcalls () const override;
+
+private:
+  TAO_Wait_On_Leader_Follower (TAO_Wait_On_Leader_Follower const &) = delete;
+  TAO_Wait_On_Leader_Follower &operator= (TAO_Wait_On_Leader_Follower const &) = delete;
+  TAO_Wait_On_Leader_Follower (TAO_Wait_On_Leader_Follower &&) = delete;
+  TAO_Wait_On_Leader_Follower &operator= (TAO_Wait_On_Leader_Follower &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

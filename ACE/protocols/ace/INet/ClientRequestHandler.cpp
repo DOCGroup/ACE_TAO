@@ -5,28 +5,27 @@
 #include "ace/INet/ClientRequestHandler.inl"
 #endif
 
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE
 {
   namespace INet
   {
-    ClientRequestHandler::ClientRequestHandler () {}
+    ClientRequestHandler::ClientRequestHandler () = default;
 
-    ClientRequestHandler::~ClientRequestHandler () {}
+    ClientRequestHandler::~ClientRequestHandler () = default;
 
     ConnectionCache& ClientRequestHandler::connection_cache ()
       {
         return *TConnectionCacheSingleton::instance ();
       }
 
-    ClientINetRequestHandler::ClientINetRequestHandler () {}
+    ClientINetRequestHandler::ClientINetRequestHandler () = default;
 
-    ClientINetRequestHandler::~ClientINetRequestHandler () {}
+    ClientINetRequestHandler::~ClientINetRequestHandler () = default;
 
     ClientINetRequestHandler::INetConnectionKey::INetConnectionKey (
-        const ACE_CString& host,
+        ACE_CString const& host,
         u_short port)
       : ConnectionKey (),
         host_ (host),
@@ -34,8 +33,7 @@ namespace ACE
       {
       }
 
-    ClientINetRequestHandler::INetConnectionKey::~INetConnectionKey ()
-      {}
+    ClientINetRequestHandler::INetConnectionKey::~INetConnectionKey () = default;
 
     u_long ClientINetRequestHandler::INetConnectionKey::hash () const
       {
@@ -44,17 +42,17 @@ namespace ACE
 
     ConnectionKey* ClientINetRequestHandler::INetConnectionKey::duplicate () const
       {
-        ConnectionKey* k = 0;
+        ConnectionKey* k {};
         ACE_NEW_RETURN (k,
                         INetConnectionKey (this->host_, this->port_),
-                        0);
+                        nullptr);
         return k;
       }
 
-    bool ClientINetRequestHandler::INetConnectionKey::equal (const ConnectionKey& key) const
+    bool ClientINetRequestHandler::INetConnectionKey::equal (ConnectionKey const& key) const
       {
         try {
-          const INetConnectionKey& ikey = dynamic_cast<const INetConnectionKey&> (key);
+          INetConnectionKey const& ikey = dynamic_cast<INetConnectionKey const&> (key);
           return this->host_ == ikey.host_ && this->port_ == ikey.port_;
         }
         catch (...) {

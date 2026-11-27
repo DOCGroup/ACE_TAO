@@ -17,10 +17,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_ECG_UDP_Sender::~TAO_ECG_UDP_Sender ()
-{
-}
-
 void
 TAO_ECG_UDP_Sender::init (RtecEventChannelAdmin::EventChannel_ptr lcl_ec,
                           RtecUDPAdmin::AddrServer_ptr addr_server,
@@ -50,7 +46,7 @@ TAO_ECG_UDP_Sender::init (RtecEventChannelAdmin::EventChannel_ptr lcl_ec,
 }
 
 void
-TAO_ECG_UDP_Sender::connect (const RtecEventChannelAdmin::ConsumerQOS& sub)
+TAO_ECG_UDP_Sender::connect (RtecEventChannelAdmin::ConsumerQOS const &sub)
 {
   if (CORBA::is_nil (this->lcl_ec_.in ()))
     {
@@ -80,11 +76,11 @@ TAO_ECG_UDP_Sender::connect (const RtecEventChannelAdmin::ConsumerQOS& sub)
 }
 
 void
-TAO_ECG_UDP_Sender::new_connect (const RtecEventChannelAdmin::ConsumerQOS& sub)
+TAO_ECG_UDP_Sender::new_connect (RtecEventChannelAdmin::ConsumerQOS const &sub)
 {
   // Activate with poa.
   RtecEventComm::PushConsumer_var consumer_ref;
-  PortableServer::POA_var poa = this->_default_POA ();
+  PortableServer::POA_var const poa = this->_default_POA ();
 
   TAO_EC_Object_Deactivator deactivator;
   activate (consumer_ref,
@@ -93,7 +89,7 @@ TAO_ECG_UDP_Sender::new_connect (const RtecEventChannelAdmin::ConsumerQOS& sub)
             deactivator);
 
   // Connect as a consumer to the local EC.
-  RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
+  RtecEventChannelAdmin::ConsumerAdmin_var const consumer_admin =
     this->lcl_ec_->for_consumers ();
 
   RtecEventChannelAdmin::ProxyPushSupplier_var proxy =
@@ -110,13 +106,13 @@ TAO_ECG_UDP_Sender::new_connect (const RtecEventChannelAdmin::ConsumerQOS& sub)
 }
 
 void
-TAO_ECG_UDP_Sender::reconnect (const RtecEventChannelAdmin::ConsumerQOS& sub)
+TAO_ECG_UDP_Sender::reconnect (RtecEventChannelAdmin::ConsumerQOS const &sub)
 {
   // Obtain our object reference from the POA.
   RtecEventComm::PushConsumer_var consumer_ref;
-  PortableServer::POA_var poa = this->_default_POA ();
+  PortableServer::POA_var const poa = this->_default_POA ();
 
-  CORBA::Object_var obj = poa->servant_to_reference (this);
+  CORBA::Object_var const obj = poa->servant_to_reference (this);
   consumer_ref =
     RtecEventComm::PushConsumer::_narrow (obj.in ());
 
@@ -155,7 +151,7 @@ TAO_ECG_UDP_Sender::shutdown ()
 }
 
 void
-TAO_ECG_UDP_Sender::push (const RtecEventComm::EventSet &events)
+TAO_ECG_UDP_Sender::push (RtecEventComm::EventSet const &events)
 {
   if (events.length () == 0)
     {
@@ -168,20 +164,22 @@ TAO_ECG_UDP_Sender::push (const RtecEventComm::EventSet &events)
   // Send each event in a separate message.
   // @@ TODO It is interesting to group events destined to the
   // same mcast group in a single message.
-  for (u_int i = 0; i < events.length (); ++i)
+  for (u_int i {}; i < events.length (); ++i)
     {
       // To avoid loops we keep a TTL field on the events and skip the
       // events with TTL <= 0
       if (events[i].header.ttl <= 0)
+      {
         continue;
+      }
 
-      const RtecEventComm::Event& e = events[i];
+      RtecEventComm::Event const &e = events[i];
 
       // We need to modify the TTL field, but copying the entire event
       // would be wasteful; instead we create a new header and only
       // modify the header portion.
       RtecEventComm::EventHeader header = e.header;
-      header.ttl--;
+      --header.ttl;
 
       // Start building the message
       TAO_OutputCDR cdr;
@@ -192,7 +190,9 @@ TAO_ECG_UDP_Sender::push (const RtecEventComm::EventSet &events)
       cdr.write_ulong (1);
       if (!(cdr << header)
           || !(cdr << e.data))
+      {
         throw CORBA::MARSHAL ();
+      }
 
       ACE_INET_Addr inet_addr;
       try

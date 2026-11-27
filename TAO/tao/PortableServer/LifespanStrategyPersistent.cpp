@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/PortableServer/LifespanStrategyPersistent.h"
 #include "tao/PortableServer/Root_POA.h"
 #include "tao/PortableServer/POAManager.h"
@@ -158,6 +157,5 @@ namespace TAO
 
   } /* namespace Portable_Server */
 } /* namespace TAO */
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL

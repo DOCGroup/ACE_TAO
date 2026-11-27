@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  * @file test_i.h
  *
  * @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-//=============================================================================
 
 #ifndef TEST_I_H
 #define TEST_I_H
@@ -23,11 +19,14 @@
 class test_i : public virtual POA_TestModule::test
 {
 public:
-  /// Constructor.
-  test_i ();
+  test_i () = default;
 
-  /// Destructor.
-  ~test_i ();
+  ~test_i () override = default;
+
+  test_i (test_i const &) = delete;
+  test_i (test_i &&) = delete;
+  test_i &operator= (test_i const &) = delete;
+  test_i &operator= (test_i &&) = delete;
 
 private:
 };

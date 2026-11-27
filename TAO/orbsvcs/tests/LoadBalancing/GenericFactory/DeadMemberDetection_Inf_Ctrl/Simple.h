@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #ifndef SIMPLE_H
 #define SIMPLE_H
 
@@ -14,8 +13,12 @@ class Simple
   : public virtual POA_Test::Simple
 {
 public:
-  Simple (int server_id);
-  /// Constructor
+  explicit Simple (int server_id, int pong_delay = 0);
+
+  Simple (Simple const &) = delete;
+  Simple &operator= (Simple const &) = delete;
+  Simple (Simple &&) = delete;
+  Simple &operator= (Simple &&) = delete;
 
   /// Default _non_existent: always returns false.
   CORBA::Boolean _non_existent () override;
@@ -25,7 +28,8 @@ public:
   void exit () override;
 
 private:
-  int server_id_;
+  int const server_id_;
+  int const pong_delay_;
 };
 
 #if defined(_MSC_VER)

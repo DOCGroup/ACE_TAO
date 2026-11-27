@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    MT_Reference_Counted_Event_Handler_Test.cpp
  *
@@ -17,7 +15,6 @@
  *
  *  @author Irfan Pyarali <irfan@oomworks.com>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "ace/Reactor.h"
@@ -34,6 +31,9 @@
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_sys_socket.h"
 #include "ace/OS_NS_unistd.h"
+
+#include <memory>
+#include <vector>
 
 #if defined (ACE_HAS_THREADS) && !defined ACE_LACKS_ACCEPT
 
@@ -104,12 +104,16 @@ disable_signal (int sigmin, int sigmax)
 #if !defined (ACE_LACKS_UNIX_SIGNALS)
   sigset_t signal_set;
   if (ACE_OS::sigemptyset (&signal_set) == - 1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("Error: (%P|%t):%p\n"),
-                ACE_TEXT ("sigemptyset failed")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Error: (%P|%t):%p\n"),
+                  ACE_TEXT ("sigemptyset failed")));
+    }
 
-  for (int i = sigmin; i <= sigmax; i++)
-    ACE_OS::sigaddset (&signal_set, i);
+  for (int i = sigmin; i <= sigmax; ++i)
+    {
+      ACE_OS::sigaddset (&signal_set, i);
+    }
 
   // Put the <signal_set>.
 # if defined (ACE_LACKS_PTHREAD_THR_SIGSETMASK)
@@ -119,10 +123,12 @@ disable_signal (int sigmin, int sigmax)
 # else
   if (ACE_OS::thr_sigsetmask (SIG_BLOCK, &signal_set, nullptr) != 0)
 # endif /* ACE_LACKS_PTHREAD_THR_SIGSETMASK */
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Error: (%P|%t): %p\n"),
-                       ACE_TEXT ("SIG_BLOCK failed")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Error: (%P|%t): %p\n"),
+                         ACE_TEXT ("SIG_BLOCK failed")),
+                        -1);
+    }
 #else
   ACE_UNUSED_ARG (sigmin);
   ACE_UNUSED_ARG (sigmax);
@@ -165,14 +171,18 @@ Pipe::open ()
   // Bind listener to any port and then find out what the port was.
   if (acceptor.open (ACE_Addr::sap_any) == -1
       || acceptor.get_local_addr (my_addr) == -1)
-    result = -1;
+    {
+      result = -1;
+    }
   else
     {
-      int af = my_addr.get_type ();
-      const ACE_TCHAR *local = ACE_LOCALHOST;
+      int const af = my_addr.get_type ();
+      ACE_TCHAR const *local = ACE_LOCALHOST;
 #if defined (ACE_HAS_IPV6)
       if (af == AF_INET6)
-        local = ACE_IPV6_LOCALHOST;
+        {
+          local = ACE_IPV6_LOCALHOST;
+        }
 #endif /* ACE_HAS_IPV6 */
       ACE_INET_Addr sv_addr (my_addr.get_port_number (),
                              local,
@@ -180,7 +190,9 @@ Pipe::open ()
 
       // Establish a connection within the same process.
       if (connector.connect (writer, sv_addr) == -1)
-        result = -1;
+        {
+          result = -1;
+        }
       else if (acceptor.accept (reader) == -1)
         {
           writer.close ();
@@ -191,7 +203,9 @@ Pipe::open ()
   // Close down the acceptor endpoint since we don't need it anymore.
   acceptor.close ();
   if (result == -1)
+  {
     return -1;
+  }
 
   this->handles_[0] = reader.get_handle ();
   this->handles_[1] = writer.get_handle ();
@@ -220,7 +234,7 @@ Pipe::write_handle () const
 class Connection_Cache;
 class Event_Loop_Thread;
 
-static Event_Loop_Thread *global_event_loop_thread_variable = nullptr;
+static Event_Loop_Thread *global_event_loop_thread_variable {};
 
 class Sender : public ACE_Event_Handler
 {
@@ -275,7 +289,7 @@ public:
     State state_;
   };
 
-  Entry *entries_;
+  std::vector<Entry> entries_;
 
   ACE_SYNCH_MUTEX lock_;
 };
@@ -290,17 +304,21 @@ Sender::Sender (ACE_HANDLE handle,
     (ACE_Event_Handler::Reference_Counting_Policy::ENABLED);
 
   if (debug)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%t) Reference count in Sender::Sender() is %d\n"),
-                this->reference_count_.load ()));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%t) Reference count in Sender::Sender() is %q\n"),
+                  static_cast<ACE_INT64> (this->reference_count_.load ())));
+    }
 }
 
 Sender::~Sender ()
 {
   if (debug)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%t) Reference count in ~Sender::Sender() is %d\n"),
-                this->reference_count_.load ()));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%t) Reference count in ~Sender::Sender() is %q\n"),
+                  static_cast<ACE_INT64> (this->reference_count_.load ())));
+    }
 
   // Close the socket that we are responsible for.
   ACE_OS::closesocket (this->handle_);
@@ -310,9 +328,11 @@ int
 Sender::handle_input (ACE_HANDLE)
 {
   if (debug)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%t) Reference count in Sender::handle_input() is %d\n"),
-                this->reference_count_.load ()));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%t) Reference count in Sender::handle_input() is %q\n"),
+                  static_cast<ACE_INT64> (this->reference_count_.load ())));
+    }
 
   //
   // In this test, this method is only called when the connection has
@@ -321,7 +341,7 @@ Sender::handle_input (ACE_HANDLE)
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Event loop thread calling Sender::close() ")
-              ACE_TEXT ("for handle %d\n"),
+              ACE_TEXT ("for handle %H\n"),
               this->handle_));
 
   this->close ();
@@ -335,8 +355,10 @@ Sender::close ()
   // Remove socket from Reactor (may fail if another thread has already
   // removed the handle from the Reactor).
   if (this->reactor() != nullptr)
-    this->reactor ()->remove_handler (this->handle_,
-                                      ACE_Event_Handler::ALL_EVENTS_MASK);
+    {
+      this->reactor ()->remove_handler (this->handle_,
+                                        ACE_Event_Handler::ALL_EVENTS_MASK);
+    }
 
   // Remove self from connection cache (may fail if another thread has
   // already removed "this" from the cache).
@@ -351,7 +373,7 @@ Sender::send_message ()
   return ACE::send_n (this->handle_,
                       message,
                       message_size,
-                      &timeout);
+                      std::addressof (timeout));
 }
 
 class Event_Loop_Thread : public ACE_Task_Base
@@ -396,7 +418,7 @@ public:
 Receiver::Receiver (ACE_Thread_Manager &thread_manager,
                     ACE_HANDLE handle,
                     int nested_upcalls)
-  : ACE_Task_Base (&thread_manager),
+  : ACE_Task_Base (std::addressof (thread_manager)),
     handle_ (handle),
     counter_ (1),
     nested_upcalls_ (nested_upcalls),
@@ -407,17 +429,21 @@ Receiver::Receiver (ACE_Thread_Manager &thread_manager,
     (ACE_Event_Handler::Reference_Counting_Policy::ENABLED);
 
   if (debug)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%t) Reference count in Receiver::Receiver() is %d\n"),
-                this->reference_count_.load ()));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%t) Reference count in Receiver::Receiver() is %q\n"),
+                  static_cast<ACE_INT64> (this->reference_count_.load ())));
+    }
 }
 
 Receiver::~Receiver ()
 {
   if (debug)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%t) Reference count in ~Receiver::Receiver() is %d\n"),
-                this->reference_count_.load ()));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%t) Reference count in ~Receiver::Receiver() is %q\n"),
+                  static_cast<ACE_INT64> (this->reference_count_.load ())));
+    }
 
   // Close the socket that we are responsible for.
   ACE_OS::closesocket (this->handle_);
@@ -433,7 +459,7 @@ Receiver::svc ()
 
   int result = 0;
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT("(%t) Receiver::svc commencing, handle = %d\n"),
+              ACE_TEXT("(%t) Receiver::svc commencing, handle = %H\n"),
               this->handle_));
 
   disable_signal (SIGPIPE, SIGPIPE);
@@ -444,7 +470,7 @@ Receiver::svc ()
         this->handle_input (this->handle_);
     }
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT("(%t) Receiver::svc terminating, handle = %d\n"),
+              ACE_TEXT("(%t) Receiver::svc terminating, handle = %H\n"),
               this->handle_));
   return 0;
 }
@@ -461,53 +487,67 @@ Receiver::handle_input (ACE_HANDLE handle)
     ACE::recv_n (handle,
                  buf,
                  message_size,
-                 &timeout);
+                 std::addressof (timeout));
 
   if (debug && result < 1)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT("(%t) Receiver::handle input, ")
-                ACE_TEXT("h = %d, result = %d %p\n"),
-                handle_, result, ACE_TEXT("ACE::recv_n")));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT("(%t) Receiver::handle input, ")
+                  ACE_TEXT("h = %H, result = %b %p\n"),
+                  handle_, result, ACE_TEXT("ACE::recv_n")));
+    }
 
   if (this->reactor ())
-    this->reactor ()->resume_handler (handle);
+    {
+      this->reactor ()->resume_handler (handle);
+    }
 
   if (result == message_size)
     {
       if (debug)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%t) Message %d received on handle %d\n"),
-                    this->counter_++,
-                    handle));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%t) Message %d received on handle %H\n"),
+                      this->counter_++,
+                      handle));
+        }
 
       if (this->thr_count () == 0 &&
           this->nested_upcalls_)
         {
-          this->nested_upcalls_level_++;
+          ++this->nested_upcalls_level_;
 
           if (debug)
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("(%t) Nesting level %d\n"),
-                        this->nested_upcalls_level_));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("(%t) Nesting level %d\n"),
+                          this->nested_upcalls_level_));
+            }
 
           if ((this->nested_upcalls_level_ != max_nested_upcall_level) &&
             (global_event_loop_thread_variable != nullptr))
-            global_event_loop_thread_variable->svc ();
+            {
+              global_event_loop_thread_variable->svc ();
+            }
 
-          this->nested_upcalls_level_--;
+          --this->nested_upcalls_level_;
           return 0;
         }
       else
-        return 0;
+        {
+          return 0;
+        }
     }
   else
     {
       if (debug)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%t) /*** Problem in receiving message %d on handle")
-                    ACE_TEXT (" %d: shutting down receiving thread ***/\n"),
-                    this->counter_,
-                    handle));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%t) /*** Problem in receiving message %d on handle")
+                      ACE_TEXT (" %H: shutting down receiving thread ***/\n"),
+                      this->counter_,
+                      handle));
+        }
 
       return -1;
     }
@@ -578,10 +618,14 @@ Connector::connect (ACE_HANDLE &client_handle,
         pipe.open ();
 
       if (result == 0)
+      {
         break;
+      }
 
       if (result == -1)
+      {
         ACE_OS::sleep (pipe_retry_timeout);
+      }
     }
 
   ACE_TEST_ASSERT (result == 0);
@@ -594,8 +638,10 @@ Connector::connect (ACE_HANDLE &client_handle,
 
   // Either the receiver is threaded or register it with the Reactor.
   if (run_receiver_thread)
-    result =
-      receiver->activate ();
+    {
+      result =
+        receiver->activate ();
+    }
   else
     {
       result =
@@ -618,20 +664,20 @@ Connector::connect (ACE_HANDLE &client_handle,
     pipe.write_handle ();
 
   if (debug)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%t) New connection: client handle = %d, ")
-                ACE_TEXT ("server handle = %d\n"),
-                client_handle, server_handle));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%t) New connection: client handle = %H, ")
+                  ACE_TEXT ("server handle = %H\n"),
+                  client_handle,
+                  server_handle));
+    }
 
   return 0;
 }
 
 Connection_Cache::Connection_Cache ()
+  : entries_ (number_of_connections)
 {
-  // Initialize the connection cache.
-  this->entries_ =
-    new Entry[number_of_connections];
-
   for (int i = 0; i < number_of_connections; ++i)
     {
       this->entries_[i].sender_ = nullptr;
@@ -645,7 +691,9 @@ Connection_Cache::find (Sender *sender)
   for (int i = 0; i < number_of_connections; ++i)
     {
       if (this->entries_[i].sender_ == sender)
+      {
         return i;
+      }
     }
 
   return -1;
@@ -660,7 +708,7 @@ Connection_Cache::add_connection (Sender *sender)
   // expected. <sender> should not be already in the cache.
   ACE_TEST_ASSERT (this->find (sender) == -1);
 
-  int empty_index =
+  int const empty_index =
     this->find (nullptr);
 
   sender->add_reference ();
@@ -675,11 +723,13 @@ Connection_Cache::remove_connection (Sender *sender)
 
   // Make sure that the state of the connection cache is as expected.
   // remove_connection() may already have been called.
-  int index =
+  int const index =
     this->find (sender);
 
   if (index == -1)
+  {
     return;
+  }
 
   // If we still have the sender, remove it.
   sender->remove_reference ();
@@ -700,11 +750,15 @@ Connection_Cache::acquire_connection ()
     {
       if (this->entries_[i].sender_ &&
           this->entries_[i].state_ == IDLE)
+      {
         index = i;
+      }
     }
 
   if (index == -1)
+  {
     return nullptr;
+  }
 
   this->entries_[index].sender_->add_reference ();
   this->entries_[index].state_ = BUSY;
@@ -720,11 +774,13 @@ Connection_Cache::release_connection (Sender *sender)
   // Make sure that the state of the connection cache is as expected.
   // remove_connection() may have already removed the connection from
   // the cache.
-  int index =
+  int const index =
     this->find (sender);
 
   if (index == -1)
+  {
     return;
+  }
 
   // If we still have the sender, idle it.
   this->entries_[index].state_ = IDLE;
@@ -741,10 +797,10 @@ Connection_Cache::~Connection_Cache ()
   for (int i = 0; i < number_of_connections; ++i)
     {
       if (this->entries_[i].sender_)
+      {
         this->remove_connection (this->entries_[i].sender_);
+      }
     }
-
-  delete[] this->entries_;
 }
 
 class Invocation_Thread : public ACE_Task_Base
@@ -784,7 +840,7 @@ Invocation_Thread::Invocation_Thread (ACE_Thread_Manager &thread_manager,
                                       int make_invocations,
                                       int run_receiver_thread,
                                       int nested_upcalls)
-  : ACE_Task_Base (&thread_manager),
+  : ACE_Task_Base (std::addressof (thread_manager)),
     connection_cache_ (connection_cache),
     reactor_ (reactor),
     thread_manager_ (thread_manager),
@@ -847,9 +903,11 @@ Invocation_Thread::create_connection ()
   ACE_UNUSED_ARG (result);
 #else
   if (result != 0)
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) create_connection h %d, %p\n"),
-                client_handle,
-                ACE_TEXT ("register_handler")));
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) create_connection h %H, %p\n"),
+                  client_handle,
+                  ACE_TEXT ("register_handler")));
+    }
 #endif
   return sender;
 }
@@ -878,7 +936,7 @@ Invocation_Thread::svc ()
 
               // This lets the Close_Socket_Thread know that the new
               // connection has been created.
-              int result =
+              int const result =
                 this->new_connection_event_.signal ();
               ACE_TEST_ASSERT (result == 0);
               ACE_UNUSED_ARG (result);
@@ -887,9 +945,11 @@ Invocation_Thread::svc ()
               message_counter = 1;
             }
           else
-            // Stop the thread, if the maximum number of connections
-            // for the test has been reached.
-            break;
+            {
+              // Stop the thread, if the maximum number of connections
+              // for the test has been reached.
+              break;
+            }
         }
 
       // The reference count on the sender was increased by the cache
@@ -915,11 +975,13 @@ Invocation_Thread::svc ()
           if (result == message_size)
             {
               if (debug)
-                ACE_DEBUG ((LM_DEBUG,
-                            ACE_TEXT ("(%t) Message %d:%d delivered on handle %d\n"),
-                            connection_counter,
-                            message_counter,
-                            sender->handle_));
+                {
+                  ACE_DEBUG ((LM_DEBUG,
+                              ACE_TEXT ("(%t) Message %d:%d delivered on handle %H\n"),
+                              connection_counter,
+                              message_counter,
+                              sender->handle_));
+                }
 
               this->connection_cache_.release_connection (sender);
             }
@@ -927,17 +989,19 @@ Invocation_Thread::svc ()
             {
               // If failure in making invocation, close the sender.
               if (debug)
-                ACE_DEBUG ((LM_DEBUG,
-                            ACE_TEXT ("(%t) /*** Problem in delivering message ")
-                            ACE_TEXT ("%d:%d on handle %d: shutting down ")
-                            ACE_TEXT ("invocation thread ***/\n"),
-                            connection_counter,
-                            message_counter,
-                            sender->handle_));
+                {
+                  ACE_DEBUG ((LM_DEBUG,
+                              ACE_TEXT ("(%t) /*** Problem in delivering message ")
+                              ACE_TEXT ("%d:%d on handle %H: shutting down ")
+                              ACE_TEXT ("invocation thread ***/\n"),
+                              connection_counter,
+                              message_counter,
+                              sender->handle_));
+                }
 
               ACE_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("(%t) Invocation thread calling ")
-                          ACE_TEXT ("Sender::close() for handle %d\n"),
+                          ACE_TEXT ("Sender::close() for handle %H\n"),
                           sender->handle_));
 
               sender->close ();
@@ -980,7 +1044,7 @@ Close_Socket_Thread::Close_Socket_Thread (ACE_Thread_Manager &thread_manager,
                                           ACE_Auto_Event &new_connection_event,
                                           int make_invocations,
                                           int run_receiver_thread)
-  : ACE_Task_Base (&thread_manager),
+  : ACE_Task_Base (std::addressof (thread_manager)),
     new_connection_event_ (new_connection_event),
     reactor_ (reactor),
     make_invocations_ (make_invocations),
@@ -1001,15 +1065,17 @@ Close_Socket_Thread::svc ()
   for (; !this->reactor_.reactor_event_loop_done ();)
     {
       // Wait for the new connection to be established.
-      int result =
-        this->new_connection_event_.wait (&timeout,
+      int const result =
+        this->new_connection_event_.wait (std::addressof (timeout),
                                           0);
       ACE_TEST_ASSERT (result == 0 ||
                   (result == -1 && errno == ETIME));
 
       if (result == -1 &&
           errno == ETIME)
+      {
         continue;
+      }
 
       // Sleep for half a second.
       ACE_OS::sleep (timeout);
@@ -1020,25 +1086,33 @@ Close_Socket_Thread::svc ()
       // receiver is threaded, either socket can be closed.
       if (this->make_invocations_ &&
           this->run_receiver_thread_)
-        // Randomize which socket to close.
-        close_client = ACE_OS::rand_r (&seed) % 2;
+        {
+          // Randomize which socket to close.
+          close_client = ACE_OS::rand_r (&seed) % 2;
+        }
 
       // If the invocation thread is making invocations, only close
       // the client socket.
       else if (this->make_invocations_)
-        close_client = 1;
+        {
+          close_client = 1;
+        }
       else
-        // If the receiver is threaded, only close the server socket.
-        close_client = 0;
+        {
+          // If the receiver is threaded, only close the server socket.
+          close_client = 0;
+        }
 
       if (close_client)
         {
           // Close the client socket.
           if (debug)
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("(%t) Close socket thread closing client ")
-                        ACE_TEXT ("handle %d\n"),
-                        client_handle));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("(%t) Close socket thread closing client ")
+                          ACE_TEXT ("handle %H\n"),
+                          client_handle));
+            }
 
           ACE_OS::shutdown (client_handle, ACE_SHUTDOWN_BOTH);
           ACE_OS::closesocket (client_handle);
@@ -1047,10 +1121,12 @@ Close_Socket_Thread::svc ()
         {
           // Close the server socket.
           if (debug)
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("(%t) Close socket thread closing server ")
-                        ACE_TEXT ("handle %d\n"),
-                        server_handle));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("(%t) Close socket thread closing server ")
+                          ACE_TEXT ("handle %H\n"),
+                          server_handle));
+            }
           ACE_OS::shutdown (server_handle, ACE_SHUTDOWN_BOTH);
           ACE_OS::closesocket (server_handle);
         }
@@ -1063,7 +1139,7 @@ Close_Socket_Thread::svc ()
 
 Event_Loop_Thread::Event_Loop_Thread (ACE_Thread_Manager &thread_manager,
                                       ACE_Reactor &reactor)
-  : ACE_Task_Base (&thread_manager),
+  : ACE_Task_Base (std::addressof (thread_manager)),
     reactor_ (reactor)
 {
 }
@@ -1105,7 +1181,7 @@ public:
 Purger_Thread::Purger_Thread (ACE_Thread_Manager &thread_manager,
                               ACE_Reactor &reactor,
                               Connection_Cache &connection_cache)
-  : ACE_Task_Base (&thread_manager),
+  : ACE_Task_Base (std::addressof (thread_manager)),
     reactor_ (reactor),
     connection_cache_ (connection_cache)
 {
@@ -1127,7 +1203,9 @@ Purger_Thread::svc ()
 
       // If no connection is available in the cache, sleep for a while.
       if (sender == nullptr)
-        ACE_OS::sleep (ACE_Time_Value (0, 10 * 1000));
+        {
+          ACE_OS::sleep (ACE_Time_Value (0, 10 * 1000));
+        }
       else
         {
           // The reference count on the sender was increased by the
@@ -1137,7 +1215,7 @@ Purger_Thread::svc ()
           // Actively close the connection.
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%t) Purger thread calling Sender::close() ")
-                      ACE_TEXT ("for handle %d\n"),
+                      ACE_TEXT ("for handle %H\n"),
                       sender->handle_));
 
           sender->close ();
@@ -1251,7 +1329,7 @@ test<REACTOR_IMPL>::test (int ignore_nested_upcalls,
 {
   for (int i = 0;
        i < (int) (sizeof test_configs / (sizeof (int) * number_of_options));
-       i++)
+       ++i)
     {
       if ((make_invocations == -1 ||
            make_invocations == test_configs[i][0]) &&
@@ -1288,14 +1366,18 @@ test<REACTOR_IMPL>::test (int ignore_nested_upcalls,
 #endif /* linux */
 
           if (test_configs[i][4] && ignore_nested_upcalls)
+          {
             continue;
+          }
 
           if (!test_configs[i][1] && require_event_loop_thread)
+          {
             continue;
+          }
 
           ACE_Reactor reactor (new REACTOR_IMPL, true);
 
-          testing (&reactor,
+          testing (std::addressof (reactor),
                    test_configs[i][0],
                    test_configs[i][1],
                    test_configs[i][2],
@@ -1394,18 +1476,20 @@ run_main (int argc, ACE_TCHAR *argv[])
   ACE_START_TEST (ACE_TEXT ("MT_Reference_Counted_Event_Handler_Test"));
 
   // Validate options.
-  int result =
+  int const result =
     parse_args (argc, argv);
   if (result != 0)
+  {
     return result;
+  }
 
   disable_signal (SIGPIPE, SIGPIPE);
 
-  int ignore_nested_upcalls = 1;
-  int perform_nested_upcalls = 0;
+  int const ignore_nested_upcalls = 1;
+  int const perform_nested_upcalls = 0;
 
-  int event_loop_thread_required = 1;
-  int event_loop_thread_not_required = 0;
+  int const event_loop_thread_required = 1;
+  int const event_loop_thread_not_required = 0;
 
   if (test_select_reactor)
     {

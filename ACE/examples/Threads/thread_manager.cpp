@@ -9,7 +9,6 @@
 #include "ace/Thread_Manager.h"
 #include "ace/Signal.h"
 
-
 #if defined (ACE_HAS_THREADS)
 
 extern "C" void
@@ -18,10 +17,11 @@ handler (int signum)
   ACE_DEBUG ((LM_DEBUG, "(%t) received signal %d\n", signum));
 }
 
-static void *
-worker (intptr_t iterations)
+static ACE_THR_FUNC_RETURN
+worker (void *arg)
 {
-  for (intptr_t i = 0; i < iterations; i++)
+  intptr_t const iterations = reinterpret_cast<intptr_t> (arg);
+  for (intptr_t i = 0; i < iterations; ++i)
     {
       if ((i % 1000) == 0)
         {
@@ -39,12 +39,12 @@ worker (intptr_t iterations)
         }
     }
 
-  // Destructor removes thread from Thread_Manager.
-  return nullptr;
+  // Thread_Manager removes this worker when it exits.
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
-static const int DEFAULT_THREADS = ACE_DEFAULT_THREADS;
-static const intptr_t DEFAULT_ITERATIONS = 100000;
+static constexpr int DEFAULT_THREADS = ACE_DEFAULT_THREADS;
+static constexpr intptr_t DEFAULT_ITERATIONS = 100000;
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
@@ -54,17 +54,17 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   daemon.open (argv[0]);
 
   // Register a signal handler.
-  ACE_Sig_Action sa ((ACE_SignalHandler) handler, SIGINT);
+  ACE_Sig_Action const sa ((ACE_SignalHandler) handler, SIGINT);
   ACE_UNUSED_ARG (sa);
 
-  int n_threads = argc > 1 ? ACE_OS::atoi (argv[1]) : DEFAULT_THREADS;
-  intptr_t n_iterations =
+  int const n_threads = argc > 1 ? ACE_OS::atoi (argv[1]) : DEFAULT_THREADS;
+  intptr_t const n_iterations =
     argc > 2 ? ACE_OS::atoi (argv[2]) : DEFAULT_ITERATIONS;
 
   ACE_Thread_Manager *thr_mgr = ACE_Thread_Manager::instance ();
 
-  int grp_id = thr_mgr->spawn_n (n_threads,
-                                 ACE_THR_FUNC (worker),
+  int const grp_id = thr_mgr->spawn_n (n_threads,
+                                 worker,
                                  reinterpret_cast<void *> (n_iterations),
                                  THR_NEW_LWP | THR_DETACHED);
 
@@ -72,27 +72,35 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_OS::sleep (1);
   ACE_DEBUG ((LM_DEBUG, "(%t) suspending group\n"));
   if (thr_mgr->suspend_grp (grp_id) == -1)
+  {
     ACE_ERROR ((LM_DEBUG, "(%t) %p\n", "suspend_grp"));
+  }
 
   // Wait for 1 more second and then resume every thread in the
   // group.
   ACE_OS::sleep (ACE_Time_Value (1));
   ACE_DEBUG ((LM_DEBUG, "(%t) resuming group\n"));
   if (thr_mgr->resume_grp (grp_id) == -1)
+  {
     ACE_ERROR ((LM_DEBUG, "(%t) %p\n", "resume_grp"));
+  }
 
   // Wait for 1 more second and then send a SIGINT to every thread in
   // the group.
   ACE_OS::sleep (ACE_Time_Value (1));
   ACE_DEBUG ((LM_DEBUG, "(%t) signaling group\n"));
   if (thr_mgr->kill_grp (grp_id, SIGINT) == -1)
+  {
     ACE_ERROR ((LM_DEBUG, "(%t) %p\n", "kill_grp"));
+  }
 
   // Wait for 1 more second and then cancel all the threads.
   ACE_OS::sleep (ACE_Time_Value (1));
   ACE_DEBUG ((LM_DEBUG, "(%t) cancelling group\n"));
   if (thr_mgr->cancel_grp (grp_id) == -1)
+  {
     ACE_ERROR ((LM_DEBUG, "(%t) %p\n", "cancel_grp"));
+  }
 
   // Perform a barrier wait until all the threads have shut down.
   thr_mgr->wait ();

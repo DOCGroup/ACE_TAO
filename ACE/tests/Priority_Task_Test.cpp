@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    Priority_Task_Test.cpp
  *
@@ -9,8 +7,6 @@
  *
  *  @author Carlos O'Ryan <coryan@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #include "test_config.h"
 #include "ace/Task.h"
@@ -18,7 +14,7 @@
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_string.h"
 
-static const ACE_TCHAR *usage = ACE_TEXT ("usage: %s [-d]\n");
+static ACE_TCHAR const *usage = ACE_TEXT ("usage: %s [-d]\n");
 
 #if defined (ACE_HAS_THREADS)
 
@@ -34,7 +30,6 @@ static const ACE_TCHAR *usage = ACE_TEXT ("usage: %s [-d]\n");
 class Priority_Task : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
-  /// The constructor
   Priority_Task ();
 
   //FUZZ: disable check_for_lack_ACE_OS
@@ -86,18 +81,18 @@ Priority_Task::open (void *arg)
       // let the superuser run an interesting test, but for other
       // users use the minimum ACE_SCHED_OTHER thread priority.
 
-      long fallback_priority =
+      long const fallback_priority =
         ACE_Sched_Params::priority_min (ACE_SCHED_OTHER,
                                         ACE_SCOPE_THREAD);
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%t) task activation at priority %d with ")
-                  ACE_TEXT ("flags 0x%X failed; retry at priority %d with ")
-                  ACE_TEXT ("flags 0x%X (errno is %d%p)\n"),
+                  ACE_TEXT ("flags %Q failed; retry at priority %Ld with ")
+                  ACE_TEXT ("flags %Q (errno is %d%p)\n"),
                   this->priority_,
-                  flags,
+                  static_cast<ACE_UINT64> (flags),
                   fallback_priority,
-                  THR_NEW_LWP,
+                  static_cast<ACE_UINT64> (THR_NEW_LWP),
                   ACE_ERRNO_GET,
                   ACE_TEXT ("")));
 
@@ -110,15 +105,19 @@ Priority_Task::open (void *arg)
                           this->priority_) == -1)
         {
           if (ACE_OS::last_error () == EPERM)
-            ACE_ERROR_RETURN ((LM_INFO,
-                               ACE_TEXT ("Insufficient privilege to run this test.\n")),
-                              -1);
+            {
+              ACE_ERROR_RETURN ((LM_INFO,
+                                 ACE_TEXT ("Insufficient privilege to run this test.\n")),
+                                -1);
+            }
           else
-            ACE_DEBUG ((LM_ERROR,
-                        ACE_TEXT ("(%t) task activation at priority %d failed, ")
-                        ACE_TEXT ("exiting!\n%a"),
-                        this->priority_,
-                        -1));
+            {
+              ACE_DEBUG ((LM_ERROR,
+                          ACE_TEXT ("(%t) task activation at priority %d failed, ")
+                          ACE_TEXT ("exiting!\n%a"),
+                          this->priority_,
+                          -1));
+            }
         }
     }
   return 0;
@@ -147,9 +146,11 @@ Priority_Task::svc ()
   }
 
   if (prio == this->priority_)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%t) actual prio of %d equals desired priority\n"),
-                prio));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%t) actual prio of %d equals desired priority\n"),
+                  prio));
+    }
   else
     {
       ACE_DEBUG ((LM_ERROR,
@@ -170,24 +171,30 @@ run_main (int argc, ACE_TCHAR *argv[])
   ACE_START_TEST (ACE_TEXT ("Priority_Task_Test"));
 
   if (argc <= 1)
-    // Disable LM_DEBUG messages.
-    ACE_Log_Msg::instance ()->priority_mask
-      (ACE_Log_Msg::instance ()->priority_mask () &~ LM_DEBUG);
+    {
+      // Disable LM_DEBUG messages.
+      ACE_Log_Msg::instance ()->priority_mask
+        (ACE_Log_Msg::instance ()->priority_mask () &~ LM_DEBUG);
+    }
   else if (argc == 2)
     {
       if (ACE_OS::strcmp (argv[1],
                           ACE_TEXT ("-d")) != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           usage,
-                           argv [0]),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             usage,
+                             argv [0]),
+                            -1);
+        }
       // else -d option: don't disable LM_DEBUG messages
     }
   else
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       usage,
-                       argv [0]),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         usage,
+                         argv [0]),
+                        -1);
+    }
 
   int status = 0;
 
@@ -202,15 +209,19 @@ run_main (int argc, ACE_TCHAR *argv[])
   ACE_Sched_Priority_Iterator priority (ACE_SCHED_FIFO,
                                         ACE_SCOPE_THREAD);
 
-  for (i = 0; i < ACE_MAX_ITERATIONS; i++)
+  for (i = 0; i < ACE_MAX_ITERATIONS; ++i)
     {
       int p = priority.priority ();
       if (tasks[i].open ((void *) &p) == -1)
+      {
         break; // Out of enclosing loop.
+      }
 
       // If there are more priorities get the next one...
       if (priority.more ())
+      {
         priority.next ();
+      }
     }
 
   ACE_DEBUG ((LM_DEBUG,
@@ -220,12 +231,14 @@ run_main (int argc, ACE_TCHAR *argv[])
   // Wait for all tasks to exit.
   ACE_Thread_Manager::instance ()->wait ();
 
-  for (i = 0; i < ACE_MAX_ITERATIONS; i++)
-    if (!tasks[i].succeeded ())
-      {
-        ++status;
-        break;
-      }
+  for (i = 0; i < ACE_MAX_ITERATIONS; ++i)
+    {
+      if (!tasks[i].succeeded ())
+        {
+          ++status;
+          break;
+        }
+    }
 
 #else
   ACE_ERROR ((LM_DEBUG,

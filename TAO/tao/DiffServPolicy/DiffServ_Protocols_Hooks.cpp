@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/DiffServPolicy/DiffServ_Protocols_Hooks.h"
 #include "tao/Stub.h"
 #include "tao/Profile.h"
@@ -7,7 +6,7 @@
 #include "tao/CDR.h"
 #include "tao/SystemException.h"
 #include "tao/DiffServPolicy/Client_Network_Priority_Policy.h"
-#include "ace/OS_NS_string.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -22,23 +21,23 @@ TAO_DS_Network_Priority_Protocols_Hooks::get_dscp_codepoint (
   TAO_Service_Context &sc)
 {
   CORBA::Long dscp_codepoint {};
-  IOP::ServiceContext const* context = nullptr;
+  IOP::ServiceContext const *context {};
 
-  if (sc.get_context (IOP::REP_NWPRIORITY, &context) == 1)
+  if (sc.get_context (IOP::REP_NWPRIORITY, std::addressof (context)) != 0)
     {
       TAO_InputCDR cdr (reinterpret_cast
-                        <char const*>
+                        <char const *>
                         (context->context_data.get_buffer ()),
                         context->context_data.length ());
 
       CORBA::Boolean byte_order {};
-      if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
+      if (!(cdr >> ACE_InputCDR::to_boolean (byte_order)))
         {
           throw CORBA::MARSHAL ();
         }
       cdr.reset_byte_order (static_cast<int> (byte_order));
 
-      if ((cdr >> dscp_codepoint) == 0)
+      if (!(cdr >> dscp_codepoint))
         {
           throw CORBA::MARSHAL ();
         }
@@ -49,26 +48,24 @@ TAO_DS_Network_Priority_Protocols_Hooks::get_dscp_codepoint (
 
 CORBA::Long
 TAO_DS_Network_Priority_Protocols_Hooks::get_dscp_codepoint (
-  TAO_Stub * stub, CORBA::Object * object)
+  TAO_Stub *stub, CORBA::Object *object)
 {
-  CORBA::Long dscp {};
-  TAO::DiffservCodepoint diffserv_codepoint;
   CORBA::Policy_var server_nw_priority_policy;
 
-  CORBA::Policy_var client_nw_priority_policy =
+  CORBA::Policy_var const client_nw_priority_policy =
     stub->get_cached_policy (
         TAO_CACHED_POLICY_CLIENT_NETWORK_PRIORITY);
 
   if (CORBA::is_nil (client_nw_priority_policy.in ()))
     {
-      TAO_Stub *server_stub = object->_stubobj ();
+      TAO_Stub * const server_stub = object->_stubobj ();
       TAO_MProfile server_profiles = server_stub->base_profiles ();
       CORBA::PolicyList_var policy_list =
         server_profiles.policy_list ();
 
-      CORBA::ULong length = policy_list->length ();
+      CORBA::ULong const length = policy_list->length ();
 
-      for (CORBA::ULong i = 0; i < length; ++i)
+      for (CORBA::ULong i {}; i < length; ++i)
         {
           if (policy_list[i]->policy_type () == TAO::NETWORK_PRIORITY_TYPE)
             {
@@ -79,47 +76,37 @@ TAO_DS_Network_Priority_Protocols_Hooks::get_dscp_codepoint (
 
       if (CORBA::is_nil (server_nw_priority_policy.in ()))
         {
-          return dscp;
+          return 0;
         }
-      else
+      TAO::NetworkPriorityPolicy_var const npp =
+        TAO::NetworkPriorityPolicy::_narrow (
+          server_nw_priority_policy.in ());
+
+      if (!CORBA::is_nil (npp.in ()))
         {
-          TAO::NetworkPriorityPolicy_var npp =
-            TAO::NetworkPriorityPolicy::_narrow (
-              server_nw_priority_policy.in ());
+          TAO::NetworkPriorityModel const network_priority_model =
+            npp->network_priority_model ();
 
-          if (!CORBA::is_nil (npp.in ()))
+          if (network_priority_model ==
+              TAO::SERVER_DECLARED_NETWORK_PRIORITY)
             {
-              TAO::NetworkPriorityModel network_priority_model =
-                npp->network_priority_model ();
-
-              if (network_priority_model ==
-                  TAO::SERVER_DECLARED_NETWORK_PRIORITY)
-                {
-                  diffserv_codepoint =
-                    npp->request_diffserv_codepoint ();
-                  dscp = diffserv_codepoint;
-                  return dscp;
-                }
+              return npp->request_diffserv_codepoint ();
             }
         }
     }
   else
     {
-      TAO::NetworkPriorityPolicy_var client_nw_priority =
+      TAO::NetworkPriorityPolicy_var const client_nw_priority =
         TAO::NetworkPriorityPolicy::_narrow (client_nw_priority_policy.in ());
 
       if (!CORBA::is_nil (client_nw_priority.in ()))
         {
-          diffserv_codepoint =
-            client_nw_priority->request_diffserv_codepoint ();
-          dscp = diffserv_codepoint;
-          return dscp;
+          return client_nw_priority->request_diffserv_codepoint ();
         }
     }
 
-  return dscp;
+  return 0;
 }
-
 
 ACE_STATIC_SVC_DEFINE (TAO_DS_Network_Priority_Protocols_Hooks,
                        ACE_TEXT ("DS_Network_Priority_Protocols_Hooks"),

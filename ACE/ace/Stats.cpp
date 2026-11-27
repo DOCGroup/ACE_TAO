@@ -42,10 +42,14 @@ ACE_Stats::sample (const ACE_INT32 value)
         }
 
       if (value < min_)
+      {
         min_ = value;
+      }
 
       if (value > max_)
+      {
         max_ = value;
+      }
 
       return 0;
     }
@@ -60,11 +64,11 @@ ACE_Stats::sample (const ACE_INT32 value)
 
 void
 ACE_Stats::mean (ACE_Stats_Value &m,
-                 const ACE_UINT32 scale_factor)
+                 ACE_UINT32 const scale_factor)
 {
   if (number_of_samples_ > 0)
     {
-      const ACE_UINT64 ACE_STATS_INTERNAL_OFFSET =
+      ACE_UINT64 const ACE_STATS_INTERNAL_OFFSET =
         ACE_UINT64_LITERAL (0x100000000);
 
       ACE_UINT64 sum = ACE_STATS_INTERNAL_OFFSET;
@@ -94,7 +98,7 @@ ACE_Stats::mean (ACE_Stats_Value &m,
 
 int
 ACE_Stats::std_dev (ACE_Stats_Value &std_dev,
-                    const ACE_UINT32 scale_factor)
+                    ACE_UINT32 const scale_factor)
 {
   if (number_of_samples_ <= 1)
     {
@@ -103,7 +107,7 @@ ACE_Stats::std_dev (ACE_Stats_Value &std_dev,
     }
   else
     {
-      const ACE_UINT32 field = std_dev.fractional_field ();
+      ACE_UINT32 const field = std_dev.fractional_field ();
 
       // The sample standard deviation is:
       //
@@ -125,11 +129,11 @@ ACE_Stats::std_dev (ACE_Stats_Value &std_dev,
           ACE_INT32 *sample;
           if (i.next (sample))
             {
-              const ACE_UINT64 original_sum_of_squares = sum_of_squares;
+              ACE_UINT64 const original_sum_of_squares = sum_of_squares;
 
               // Scale up by field width so that we don't lose the
               // precision of the mean.  Carefully . . .
-              const ACE_UINT64 product (*sample * field);
+              ACE_UINT64 const product (*sample * field);
 
               ACE_UINT64 difference;
               // NOTE: please do not reformat this code!  It //
@@ -186,7 +190,6 @@ ACE_Stats::std_dev (ACE_Stats_Value &std_dev,
   return 0;
 }
 
-
 void
 ACE_Stats::reset ()
 {
@@ -198,8 +201,8 @@ ACE_Stats::reset ()
 }
 
 int
-ACE_Stats::print_summary (const u_int precision,
-                          const ACE_UINT32 scale_factor,
+ACE_Stats::print_summary (u_int const precision,
+                          ACE_UINT32 const scale_factor,
                           FILE *file) const
 {
   ACE_TCHAR mean_string [128];
@@ -215,9 +218,13 @@ ACE_Stats::print_summary (const u_int precision,
       // Build a format string, in case the C library doesn't support %*u.
       ACE_TCHAR format[32];
       if (tmp_precision == 0)
-        ACE_OS::snprintf (format, 32, ACE_TEXT ("%%%d"), tmp_precision);
+        {
+          ACE_OS::snprintf (format, 32, ACE_TEXT ("%%%d"), tmp_precision);
+        }
       else
-        ACE_OS::snprintf (format, 32, ACE_TEXT ("%%d.%%0%du"), tmp_precision);
+        {
+          ACE_OS::snprintf (format, 32, ACE_TEXT ("%%d.%%0%du"), tmp_precision);
+        }
 
       ACE_Stats_Value u (tmp_precision);
       ((ACE_Stats *) this)->mean (u, scale_factor);
@@ -239,12 +246,12 @@ ACE_Stats::print_summary (const u_int precision,
       ACE_Stats_Value minimum (tmp_precision), maximum (tmp_precision);
       if (min_ != 0)
         {
-          const ACE_UINT64 m (min_);
+          ACE_UINT64 const m (min_);
           quotient (m, scale_factor, minimum);
         }
       if (max_ != 0)
         {
-          const ACE_UINT64 m (max_);
+          ACE_UINT64 const m (max_);
           quotient (m, scale_factor, maximum);
         }
       ACE_OS::snprintf (min_string, 128, format,
@@ -272,8 +279,8 @@ ACE_Stats::print_summary (const u_int precision,
 }
 
 void
-ACE_Stats::quotient (const ACE_UINT64 dividend,
-                     const ACE_UINT32 divisor,
+ACE_Stats::quotient (ACE_UINT64 const dividend,
+                     ACE_UINT32 const divisor,
                      ACE_Stats_Value &quotient)
 {
   // The whole part of the division comes from simple integer division.
@@ -282,7 +289,7 @@ ACE_Stats::quotient (const ACE_UINT64 dividend,
 
   if (quotient.precision () > 0  ||  divisor == 0)
     {
-      const ACE_UINT32 field = quotient.fractional_field ();
+      ACE_UINT32 const field = quotient.fractional_field ();
 
       // Fractional = (dividend % divisor) * 10^precision / divisor
 
@@ -303,8 +310,8 @@ ACE_Stats::quotient (const ACE_UINT64 dividend,
 }
 
 void
-ACE_Stats::quotient (const ACE_Stats_Value &dividend,
-                     const ACE_UINT32 divisor,
+ACE_Stats::quotient (ACE_Stats_Value const &dividend,
+                     ACE_UINT32 const divisor,
                      ACE_Stats_Value &quotient)
 {
   // The whole part of the division comes from simple integer division.
@@ -312,7 +319,7 @@ ACE_Stats::quotient (const ACE_Stats_Value &dividend,
 
   if (quotient.precision () > 0  ||  divisor == 0)
     {
-      const ACE_UINT32 field = quotient.fractional_field ();
+      ACE_UINT32 const field = quotient.fractional_field ();
 
       // Fractional = (dividend % divisor) * 10^precision / divisor.
       quotient.fractional (dividend.whole () % divisor * field / divisor  +
@@ -327,7 +334,7 @@ ACE_Stats::quotient (const ACE_Stats_Value &dividend,
 }
 
 void
-ACE_Stats::square_root (const ACE_UINT64 n,
+ACE_Stats::square_root (ACE_UINT64 const n,
                         ACE_Stats_Value &square_root)
 {
   ACE_UINT32 floor = 0;
@@ -340,18 +347,26 @@ ACE_Stats::square_root (const ACE_UINT64 n,
     {
       mid = (ceiling - floor) / 2  +  floor;
       if (floor == mid)
-        // Can't divide the interval any further.
-        break;
+        {
+          // Can't divide the interval any further.
+          break;
+        }
       else
         {
           // Multiply carefully to avoid overflow.
           ACE_UINT64 mid_squared = mid; mid_squared *= mid;
           if (mid_squared == n)
-            break;
+            {
+              break;
+            }
           else if (mid_squared < n)
-            floor = mid;
+            {
+              floor = mid;
+            }
           else
-            ceiling = mid;
+            {
+              ceiling = mid;
+            }
         }
     }
 
@@ -363,7 +378,7 @@ ACE_Stats::square_root (const ACE_UINT64 n,
       // (mid * 10^precision + fractional)^2 ==
       //   n^2 * 10^(precision * 2)
 
-      const ACE_UINT32 field = square_root.fractional_field ();
+      ACE_UINT32 const field = square_root.fractional_field ();
 
       floor = 0;
       ceiling = field;
@@ -389,9 +404,13 @@ ACE_Stats::square_root (const ACE_UINT64 n,
               break;
             }
           else if (current <= target)
-            floor = mid;
+            {
+              floor = mid;
+            }
           else
-            ceiling = mid;
+            {
+              ceiling = mid;
+            }
         }
 
       // Check to see if the fractional part should be one greater.

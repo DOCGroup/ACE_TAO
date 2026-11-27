@@ -1,4 +1,3 @@
-
 #include "ace/Task.h"
 #include "ace/Get_Opt.h"
 #include "orbsvcs/PortableGroup/GOA.h"
@@ -77,7 +76,7 @@ public:
       {
         this->orb_->run ();
       }
-    catch (const CORBA::Exception& ex)
+    catch (CORBA::Exception const & ex)
       {
         ex._tao_print_exception ("Exception caught in OrbThread:");
         return -1;
@@ -98,9 +97,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("ERROR: wrong arguments\n")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("ERROR: wrong arguments\n")),
+                            -1);
+        }
 
       CORBA::Object_var poa_object =
         orb->resolve_initial_references("RootPOA");
@@ -109,9 +110,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         PortableGroup::GOA::_narrow (poa_object.in ());
 
       if (CORBA::is_nil (root_goa.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("ERROR: nil RootPOA\n")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("ERROR: nil RootPOA\n")),
+                            -1);
+        }
 
       PortableServer::POAManager_var poa_manager = root_goa->the_POAManager ();
 
@@ -136,9 +139,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         Test::UIPMC_Object::_unchecked_narrow (obj.in ());
 
       if (CORBA::is_nil (uipmc_obj.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("ERROR: nil Hello object\n")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("ERROR: nil Hello object\n")),
+                            -1);
+        }
       CORBA::String_var ior = orb->object_to_string (obj.in ());
 
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("MIOP object is <%C>\n"), ior.in ()));
@@ -182,21 +187,22 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         orb_thr.wait ();
       }
 
-      root_goa->destroy (1, 1);
+      root_goa->destroy (true, true);
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Exception caught in server main ():");
       return -1;
     }
 
-  if (Number_of_Problems.value ())
+  u_long const problem_count = Number_of_Problems.load ();
+  if (problem_count)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("\nServer finished with *Possibly* %u PROBLEMS.\n"),
-                  Number_of_Problems.value ()));
+                  ACE_TEXT ("\nServer finished with *Possibly* %Lu PROBLEMS.\n"),
+                  problem_count));
       return 1;
     }
 

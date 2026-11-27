@@ -8,6 +8,8 @@
  * @author Jeff Parsons
  */
 
+#include <memory>
+#include <utility>
 #include <vector>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -18,7 +20,7 @@ namespace TAO
   bool
   marshal_value_vector (
     TAO_OutputCDR &strm,
-    const std::vector<T> &source)
+    std::vector<T> const &source)
   {
     ::CORBA::ULong const length = source.size ();
 
@@ -47,7 +49,7 @@ namespace TAO
     TAO_InputCDR &strm,
     std::vector<T> &target)
   {
-    ::CORBA::ULong new_length = 0;
+    ::CORBA::ULong new_length {};
 
     if (! (strm >> new_length))
       {
@@ -60,10 +62,10 @@ namespace TAO
       }
 
     std::vector<T> tmp;
-    tmp.reserve (new_length);
+    tmp.resize (new_length);
     T tmp_elem;
 
-    for ( ::CORBA::ULong i = 0; i < new_length; ++i)
+    for ( ::CORBA::ULong i {}; i < new_length; ++i)
       {
         if (! (strm >> tmp_elem))
           {
@@ -73,7 +75,7 @@ namespace TAO
         tmp[i] = tmp_elem;
       }
 
-    tmp.swap(target);
+    tmp.swap (target);
     return true;
   }
 
@@ -81,7 +83,7 @@ namespace TAO
   bool
   marshal_objref_vector (
     TAO_OutputCDR &strm,
-    const std::vector<typename T::_ptr_type> &source)
+    std::vector<typename T::_ptr_type> const &source)
   {
     ::CORBA::ULong const length = source.size ();
 
@@ -110,7 +112,7 @@ namespace TAO
     TAO_InputCDR &strm,
     std::vector<typename T::_ptr_type> &target)
   {
-    ::CORBA::ULong new_length = 0;
+    ::CORBA::ULong new_length {};
 
     if (! (strm >> new_length))
       {
@@ -123,20 +125,24 @@ namespace TAO
       }
 
     std::vector<typename T::_ptr_type> tmp;
-    tmp.reserve (new_length);
-    typename T::_ptr_type tmp_elem = T::_nil ();
+    tmp.resize (new_length, T::_nil ());
+    std::vector<typename T::_var_type> owners (new_length);
 
-    for ( ::CORBA::ULong i = 0; i < new_length; ++i)
+    for ( ::CORBA::ULong i {}; i < new_length; ++i)
       {
-        if (! (strm >> tmp_elem))
+        if (! (strm >> owners[i].out ()))
           {
             return false;
           }
 
-        tmp[i] = tmp_elem;
+        tmp[i] = owners[i].in ();
       }
 
     tmp.swap (target);
+    for (typename T::_var_type &owner : owners)
+      {
+        owner._retn ();
+      }
     return true;
   }
 
@@ -144,11 +150,12 @@ namespace TAO
   bool
   marshal_array_vector (
     TAO_OutputCDR &strm,
-    const std::vector<typename T_forany::_slice_type *> &source)
+    std::vector<typename T_forany::_slice_type *> const &source)
   {
     using var_type = TAO_FixedArray_Var_T<typename T_forany::_array_type,
                                           typename T_forany::_slice_type,
                                           typename T_forany::_tag_type>;
+    using vector_type = std::vector<typename T_forany::_slice_type *>;
     ::CORBA::ULong const length = source.size ();
 
     if (! (strm << length))
@@ -156,7 +163,7 @@ namespace TAO
         return false;
       }
 
-    for (std::vector<typename T_forany::_slice_type *> i =
+    for (typename vector_type::const_iterator i =
            source.begin ();
          i != source.end ();
          ++i)
@@ -178,10 +185,12 @@ namespace TAO
   bool
   demarshal_array_vector (
     TAO_InputCDR &strm,
-    const std::vector<typename T_forany::_slice_type *> &source)
+    std::vector<typename T_forany::_slice_type *> &target)
   {
     using array_traits = TAO::Array_Traits<T_forany>;
-    ::CORBA::ULong new_length = 0;
+    using slice_type = typename T_forany::_slice_type;
+    using slice_owner = std::unique_ptr<slice_type, decltype (&array_traits::free)>;
+    ::CORBA::ULong new_length {};
 
     if (! (strm >> new_length))
       {
@@ -193,28 +202,40 @@ namespace TAO
         return false;
       }
 
-    std::vector<typename T_forany::_slice_type *> tmp_vec;
+    std::vector<slice_owner> tmp_vec;
     tmp_vec.reserve (new_length);
 
-    for ( ::CORBA::ULong i = 0; i < new_length; ++i)
+    for ( ::CORBA::ULong i {}; i < new_length; ++i)
       {
-        T_forany tmp_array (array_traits::alloc ());
-        bool const _tao_marshal_flag = (strm >> tmp_array);
-
-        if (_tao_marshal_flag)
-          {
-            array_traits::copy (tmp_vec[i], tmp_array.in ());
-          }
-
-        array_traits::free (tmp_array.inout ());
-
-        if (!_tao_marshal_flag)
+        slice_owner tmp_array_data (array_traits::alloc (), &array_traits::free);
+        if (!tmp_array_data)
           {
             return false;
           }
+
+        T_forany tmp_array (tmp_array_data.get ());
+
+        if (! (strm >> tmp_array))
+          {
+            return false;
+          }
+
+        tmp_vec.push_back (std::move (tmp_array_data));
       }
 
-    tmp_vec.swap (source);
+    std::vector<slice_type *> tmp_target;
+    tmp_target.reserve (tmp_vec.size ());
+    for (slice_owner &array : tmp_vec)
+      {
+        tmp_target.push_back (array.get ());
+      }
+
+    tmp_target.swap (target);
+    for (slice_owner &array : tmp_vec)
+      {
+        array.release ();
+      }
+
     return true;
   }
 }

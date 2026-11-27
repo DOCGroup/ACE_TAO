@@ -1,12 +1,8 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
  *  @file    IIOP_Current_Loader.h
  *
  *  @author Iliyan Jeliazkov <iliyan@ociweb.com>
  */
-//=============================================================================
 
 #ifndef TAO_TRANSPORT_IIOP_TRAITS_LOADER_H
 #define TAO_TRANSPORT_IIOP_TRAITS_LOADER_H
@@ -31,9 +27,14 @@ namespace TAO
         : public TAO::Transport::Current_Loader
       {
       public:
+        Current_Loader (Current_Loader const &) = delete;
+        Current_Loader &operator= (Current_Loader const &) = delete;
+        Current_Loader (Current_Loader &&) = delete;
+        Current_Loader &operator= (Current_Loader &&) = delete;
+
         /// Initializes object when dynamic linking occurs.
         int init (int argc, ACE_TCHAR *argv[]) override;
-        ~Current_Loader () override;
+        ~Current_Loader () override = default;
         Current_Loader () = default;
       };
     }

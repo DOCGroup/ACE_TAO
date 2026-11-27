@@ -3,6 +3,9 @@
 
 #include "tao/Vector_Argument_T.h"
 
+#include <memory>
+#include <utility>
+
 #if !defined (__ACE_INLINE__)
 #include "tao/Vector_Argument_T.inl"
 #endif /* __ACE_INLINE__ */
@@ -32,28 +35,15 @@ TAO::In_Vector_Argument_T<S,Insert_Policy>::interceptor_value (
 
 template<typename S,
          template <typename> class Insert_Policy>
-TAO::In_Vector_Clonable_Argument_T<S,Insert_Policy>::~In_Vector_Clonable_Argument_T ()
-{
-  if (this->is_clone_)
-    {
-      S & tmp = const_cast<S &> (this->x_);
-      delete tmp;
-    }
-}
-
-template<typename S,
-         template <typename> class Insert_Policy>
 TAO::Argument*
 TAO::In_Vector_Clonable_Argument_T<S,Insert_Policy>::clone ()
 {
-  S* clone_x = new S (this->x_);
-  In_Vector_Clonable_Argument_T<S,Insert_Policy>* clone_arg
-    = new In_Vector_Clonable_Argument_T<S,Insert_Policy> (*clone_x);
-  clone_arg->is_clone_ = true;
-  return clone_arg;
+  std::unique_ptr<S> clone_x = std::make_unique<S> (this->x_);
+  std::unique_ptr<In_Vector_Clonable_Argument_T<S,Insert_Policy>> clone_arg
+    = std::make_unique<In_Vector_Clonable_Argument_T<S,Insert_Policy>> (*clone_x);
+  clone_arg->clone_value_ = std::move (clone_x);
+  return clone_arg.release ();
 }
-
-// ===========================================================
 
 template<typename S,
          template <typename> class Insert_Policy>
@@ -86,8 +76,6 @@ TAO::Inout_Vector_Argument_T<S,Insert_Policy>::interceptor_value (
 
 #endif /* TAO_HAS_INTERCEPTORS */
 
-// ==============================================================
-
 template<typename S,
          template <typename> class Insert_Policy>
 CORBA::Boolean
@@ -109,8 +97,6 @@ TAO::Out_Vector_Argument_T<S,Insert_Policy>::interceptor_value (
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
-
-// ============================================================
 
 template<typename S,
          template <typename> class Insert_Policy>

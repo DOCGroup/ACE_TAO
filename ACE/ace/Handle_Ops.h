@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   Handle_Ops.h
  *
  *  Handle operations.
  */
-//=============================================================================
 
 #ifndef ACE_HANDLE_OPS_H
 #define ACE_HANDLE_OPS_H
@@ -25,7 +21,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class ACE_Time_Value;
 
-// = Operations on HANDLEs.
+/// Operations on HANDLEs.
 namespace ACE
 {
   /**
@@ -35,7 +31,7 @@ namespace ACE
    */
   extern ACE_Export ACE_HANDLE handle_timed_open (
     ACE_Time_Value *timeout,
-    const ACE_TCHAR *name,
+    ACE_TCHAR const *name,
     int flags,
     int perms,
     LPSECURITY_ATTRIBUTES sa = 0);

@@ -94,7 +94,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_fcntl.h"
-#include "ace/OS_NS_sys_stat.h"
 
 // Storage for preprocessor args.
 constexpr unsigned long DRV_MAX_ARGCOUNT = 1024;
@@ -1435,7 +1434,7 @@ DRV_pre_proc (std::string const& myfile)
 
   if (idl_global->compile_flags () & IDL_CF_ONLY_PREPROC)
     {
-      FE_Utils::File_Handle preproc (
+      FE_Utils::File_Handle const preproc (
         ACE_OS::fopen (t_file.c_str (), "r"), ACE_OS::fclose);
       char buffer[ACE_MAXLOGMSGLEN];
       size_t bytes;

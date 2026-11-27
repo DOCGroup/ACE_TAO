@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//==========================================================================
 /**
  *  @file    TSS_T.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//==========================================================================
 
 #ifndef ACE_TSS_T_H
 #define ACE_TSS_T_H
@@ -24,7 +20,7 @@
 // 'ACE_TSS_GET()->xyz_ = value', so the macro would have been too
 // complicated.
 # if defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION))
-#   define ACE_TSS_TYPE(T) ACE_TSS< T >
+#   define ACE_TSS_TYPE(T) ACE_TSS<T>
 #   define ACE_TSS_GET(I, T) ((I)->operator T * ())
 # else
 #   define ACE_TSS_TYPE(T) T
@@ -89,9 +85,9 @@ public:
    */
   ACE_TSS (TYPE *ts_obj = nullptr);
 
-  ACE_TSS (const ACE_TSS &) = delete;
+  ACE_TSS (ACE_TSS const &) = delete;
   ACE_TSS (ACE_TSS &&) = delete;
-  ACE_TSS &operator= (const ACE_TSS &) = delete;
+  ACE_TSS &operator= (ACE_TSS const &) = delete;
   ACE_TSS &operator= (ACE_TSS &&) = delete;
 
   /// Deregister this object from thread-specific storage administration.
@@ -122,7 +118,7 @@ public:
    * thread's copy of the data has not yet been set. See specific method
    * descriptions for complete details.
    */
-  //@{
+  /// @{
   /**
    * Get the thread-specific object for this object.
    *
@@ -160,12 +156,10 @@ public:
    */
   operator TYPE *() const;
 
-  //@}
+  /// @}
 
   /// Hook for construction parameters.
   virtual TYPE *make_TSS_TYPE () const;
-
-  // = Utility methods.
 
   /// Dump the state of an object.
   void dump () const;
@@ -190,7 +184,7 @@ protected:
   ACE_Thread_Mutex keylock_;
 
   /// "First time in" flag.
-  volatile bool once_;
+  volatile bool once_ {};
 
   /// Key for the thread-specific error data.
   ACE_thread_key_t key_;
@@ -221,12 +215,12 @@ protected:
  *
  * Wraps a value of a built-in type, providing conversions to
  * and from the type.  Example use with ACE_TSS:
- * ACE_TSS<ACE_TSS_Type_Adapter<int> > i;
+ * ACE_TSS<ACE_TSS_Type_Adapter<int>> i;
  * *i = 37;
  * ACE_OS::fprintf (stderr, "%d\n", *i);
  * Unfortunately, though, some compilers have trouble with the
  * implicit type conversions.  This seems to work better:
- * ACE_TSS<ACE_TSS_Type_Adapter<int> > i;
+ * ACE_TSS<ACE_TSS_Type_Adapter<int>> i;
  * i->operator int & () = 37;
  * ACE_OS::fprintf (stderr, "%d\n", i->operator int ());
  */
@@ -235,7 +229,7 @@ class ACE_TSS_Type_Adapter
 {
 public:
   /// Constructor.  Inlined here so that it should _always_ be inlined.
-  ACE_TSS_Type_Adapter (const TYPE value = 0): value_ (value) {}
+  ACE_TSS_Type_Adapter (TYPE const value = 0): value_ (value) {}
 
   /// TYPE conversion.  Inlined here so that it should _always_ be
   /// inlined.

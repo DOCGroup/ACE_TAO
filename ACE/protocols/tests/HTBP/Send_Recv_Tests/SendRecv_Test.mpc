@@ -1,5 +1,3 @@
-// -*- MPC -*-
-
 project(*server): aceexe, htbp {
   exename = server
 

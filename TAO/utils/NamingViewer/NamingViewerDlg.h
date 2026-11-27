@@ -16,9 +16,9 @@
 
 class CNamingViewerDlg : public CDialog
 {
-// Construction
 public:
-  CNamingViewerDlg(CORBA::ORB_ptr pORB, CWnd* pParent = 0); // standard constructor
+  /// standard constructor
+  CNamingViewerDlg(CORBA::ORB_ptr pORB, CWnd* pParent = nullptr);
 
 // Dialog Data
   //{{AFX_DATA(CNamingViewerDlg)
@@ -30,7 +30,8 @@ public:
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(CNamingViewerDlg)
   protected:
-  virtual void DoDataExchange(CDataExchange* pDX); // DDX/DDV support
+  /// DDX/DDV support
+  virtual void DoDataExchange(CDataExchange* pDX);
   //}}AFX_VIRTUAL
 
 // Implementation

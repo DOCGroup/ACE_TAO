@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*HA Status) : aceexe, avoids_ace_for_tao {
   exename = HA_Status
   Source_Files {

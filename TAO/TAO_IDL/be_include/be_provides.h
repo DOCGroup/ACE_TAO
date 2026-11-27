@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #ifndef BE_PROVIDES_H
 #define BE_PROVIDES_H
 

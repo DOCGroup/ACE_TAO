@@ -1,4 +1,3 @@
-// -*- C++ -*-
 // SOCK_Dgram.i
 
 #include "ace/OS_NS_sys_socket.h"
@@ -22,16 +21,16 @@ ACE_SOCK_Dgram::~ACE_SOCK_Dgram ()
 // <sendto> an N byte datagram to <addr> (connectionless version).
 
 ACE_INLINE ssize_t
-ACE_SOCK_Dgram::send (const void *buf,
+ACE_SOCK_Dgram::send (void const *buf,
                       size_t n,
-                      const ACE_Addr &addr,
+                      ACE_Addr const &addr,
                       int flags) const
 {
   ACE_TRACE ("ACE_SOCK_Dgram::send");
   sockaddr *saddr = (sockaddr *) addr.get_addr ();
   int len = addr.get_size ();
   return ACE_OS::sendto (this->get_handle (),
-                         (const char *) buf,
+                         (char const *) buf,
                          n,
                          flags,
                          (struct sockaddr *) saddr,
@@ -66,7 +65,7 @@ ACE_SOCK_Dgram::send (const iovec buffers[],
                       int buffer_count,
                       size_t &number_of_bytes_sent,
                       int flags,
-                      const ACE_Addr &addr,
+                      ACE_Addr const &addr,
                       ACE_OVERLAPPED *overlapped,
                       ACE_OVERLAPPED_COMPLETION_FUNC func) const
 {
@@ -78,7 +77,7 @@ ACE_SOCK_Dgram::send (const iovec buffers[],
                          buffer_count,
                          number_of_bytes_sent,
                          flags,
-                         (const sockaddr *) saddr,
+                         (sockaddr const *) saddr,
                          len,
                          overlapped,
                          func);
@@ -114,9 +113,9 @@ ACE_SOCK_Dgram::recv (iovec buffers[],
 // <sendto> an N byte datagram to <addr> (connectionless version).
 
 ACE_INLINE ssize_t
-ACE_SOCK_Dgram::send (const void *buf,
+ACE_SOCK_Dgram::send (void const *buf,
                       size_t n,
-                      const ACE_Addr &addr,
+                      ACE_Addr const &addr,
                       int flags,
                       ACE_OVERLAPPED *overlapped,
                       ACE_OVERLAPPED_COMPLETION_FUNC func) const

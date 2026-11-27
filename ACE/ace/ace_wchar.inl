@@ -1,4 +1,3 @@
-// -*- C++ -*-
 // These are always inlined
 // FUZZ: disable check_for_inline
 
@@ -26,8 +25,10 @@ inline char *
 ACE_Wide_To_Ascii::convert (const wchar_t *wstr)
 {
   // Short circuit null pointer case
-  if (wstr == 0)
-    return 0;
+  if (wstr == nullptr)
+    {
+      return nullptr;
+    }
 
 # if defined (ACE_WIN32)
   UINT const cp = GetACP ();  // Codepage
@@ -68,7 +69,7 @@ ACE_Wide_To_Ascii::convert (const wchar_t *wstr)
   if ((hr==size_t(-1))||(lensi==ACE_MAX_ICONV_BUFFER))
     {
       char *str=new char[len];
-      for (size_t i = 0; i < len; i++)
+      for (size_t i = 0; i < len; ++i)
         {
           wchar_t *t = const_cast <wchar_t *> (wstr);
           str[i] = static_cast<char> (*(t + i));
@@ -113,11 +114,13 @@ ACE_Ascii_To_Wide::wchar_rep ()
 }
 
 inline wchar_t *
-ACE_Ascii_To_Wide::convert (const char *str)
+ACE_Ascii_To_Wide::convert (char const *str)
 {
   // Short circuit null pointer case
   if (!str)
-    return nullptr;
+    {
+      return nullptr;
+    }
 
 # if defined (ACE_WIN32)
   UINT const cp = GetACP ();  // Codepage
@@ -144,9 +147,8 @@ ACE_Ascii_To_Wide::convert (const char *str)
   size_t hr=iconv(ACE_Ascii_To_Wide_iconv_env, &stri, &lensi, (char**)&wstri, &lenwi);
   if((hr==size_t(-1))||(lenwi==ACE_MAX_ICONV_BUFFER)){
   wchar_t *wstr=new wchar_t[len*sizeof(wchar_t)];
-  for (size_t i = 0; i < len; i++){
-    char *t = const_cast<char *> (str);
-    wstr[i] = static_cast<wchar_t> (*((unsigned char*)t + i));
+  for (size_t i = 0; i < len; ++i){
+    wstr[i] = static_cast<wchar_t> (static_cast<unsigned char> (str[i]));
   }
 
   return wstr;
@@ -156,15 +158,14 @@ ACE_Ascii_To_Wide::convert (const char *str)
 # else /* ACE_HAS_ICONV */
   for (size_t i = 0; i < len; ++i)
     {
-      char *t = const_cast<char *> (str);
-      wstr[i] = static_cast<wchar_t> (*((unsigned char*)(t + i)));
+      wstr[i] = static_cast<wchar_t> (static_cast<unsigned char> (str[i]));
     }
 # endif /* ACE_WIN32 */
   return wstr;
 }
 
 inline
-ACE_Ascii_To_Wide::ACE_Ascii_To_Wide (const char *s)
+ACE_Ascii_To_Wide::ACE_Ascii_To_Wide (char const *s)
 {
 #if defined(ACE_HAS_ICONV)
   if (ACE_Ascii_To_Wide_iconv_env == 0)

@@ -1,11 +1,12 @@
-// -*- C++ -*-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE int
 TAO_LF_Event::bind (TAO_LF_Follower *follower)
 {
   if (this->follower_ != 0)
-    return -1;
+    {
+      return -1;
+    }
   this->follower_ = follower;
   return 0;
 }
@@ -14,7 +15,9 @@ ACE_INLINE int
 TAO_LF_Event::unbind (TAO_LF_Follower *)
 {
   if (this->follower_ == 0)
-    return -1;
+    {
+      return -1;
+    }
   this->follower_ = 0;
   return 0;
 }
@@ -31,7 +34,7 @@ TAO_LF_Event::keep_waiting_i () const
   return (!this->successful_i ()) && (!this->error_detected_i ());
 }
 
-ACE_INLINE const char *
+ACE_INLINE char const *
 TAO_LF_Event::state_name (LFS_STATE st)
 {
 #define TAO_LF_EVENT_ENTRY(X) case X: return #X

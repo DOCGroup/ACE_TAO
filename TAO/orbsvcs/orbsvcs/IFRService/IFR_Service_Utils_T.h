@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    IFR_Service_Utils_T.h
  *
@@ -8,8 +5,6 @@
  *
  *  @author Jeff Parsons <j.parsons@vanderbilt.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_IFR_SERVICE_UTILS_T_H
 #define TAO_IFR_SERVICE_UTILS_T_H
@@ -37,15 +32,15 @@ template<typename T>
 class TAO_IFR_Generic_Utils
 {
 public:
-  static void destroy_special (const ACE_TCHAR *section_name,
+  static void destroy_special (ACE_TCHAR const *section_name,
                                TAO_Repository_i *repo,
                                ACE_Configuration_Section_Key &key);
 
-  static void set_initializers (const T &initializers,
-                                ACE_Configuration *config,
-                                ACE_Configuration_Section_Key &key);
   /// Common to Container::create_value(), create_ext_value
   /// and ValueDef::initializers().
+  static void set_initializers (T const &initializers,
+                                ACE_Configuration *config,
+                                ACE_Configuration_Section_Key &key);
 };
 
 template<typename T_desc, typename T_impl>

@@ -21,7 +21,7 @@
 module PortableInterceptor
 {
 
-   // ProcessingMode Policy (default = LOCAL_AND_REMOTE)
+   /// ProcessingMode Policy (default = LOCAL_AND_REMOTE)
    typedef short ProcessingMode;
    const ProcessingMode LOCAL_AND_REMOTE = 0;
    const ProcessingMode REMOTE_ONLY      = 1;

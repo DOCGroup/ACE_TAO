@@ -1,10 +1,8 @@
-/* -*- C++ -*- */
 #include "Supplier.h"
 
 void
-Supplier::open (CosEventChannelAdmin::EventChannel_ptr event_channel)
+Supplier::open (CosEventChannelAdmin::EventChannel_ptr const event_channel)
 {
-  // = Connect as a consumer.
   this->supplier_admin_ =
     event_channel->for_suppliers ();
 }
@@ -22,12 +20,14 @@ void
 Supplier::connect ()
 {
   if (CORBA::is_nil (this->supplier_admin_.in ()))
+  {
     return;
+  }
 
   this->consumer_proxy_ =
     this->supplier_admin_->obtain_push_consumer ();
 
-  CosEventComm::PushSupplier_var objref = this->_this ();
+  CosEventComm::PushSupplier_var const objref = this->_this ();
 
   this->consumer_proxy_->connect_push_supplier (objref.in ());
 }
@@ -37,7 +37,9 @@ Supplier::disconnect ()
 {
   if (CORBA::is_nil (this->consumer_proxy_.in ())
       || CORBA::is_nil (this->supplier_admin_.in ()))
+  {
     return;
+  }
 
   this->consumer_proxy_->disconnect_push_consumer ();
 
@@ -46,7 +48,7 @@ Supplier::disconnect ()
 }
 
 void
-Supplier::send_event (const CORBA::Any & data)
+Supplier::send_event (CORBA::Any const &data)
 {
   this->consumer_proxy_->push (data);
 }
@@ -56,10 +58,10 @@ Supplier::disconnect_push_supplier ()
 {
   // Deactivate this object.
 
-  PortableServer::POA_var poa =
+  PortableServer::POA_var const poa =
     this->_default_POA ();
 
-  PortableServer::ObjectId_var id =
+  PortableServer::ObjectId_var const id =
     poa->servant_to_id (this);
 
   poa->deactivate_object (id.in ());

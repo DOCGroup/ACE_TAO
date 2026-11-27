@@ -1,4 +1,5 @@
 #include "ace/Mutex.h"
+#include <memory>
 
 #if !defined (__ACE_INLINE__)
 #include "ace/Mutex.inl"
@@ -24,7 +25,7 @@ ACE_Mutex::dump () const
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
 # ifdef ACE_MUTEX_USE_PROCESS_LOCK
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("lockname_ = %s\n"), this->lockname_));
-  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("process_lock_ = %x\n"), this->process_lock_));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("process_lock_ = %@\n"), this->process_lock_));
 # endif /* ACE_MUTEX_USE_PROCESS_LOCK */
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
   ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
@@ -32,7 +33,7 @@ ACE_Mutex::dump () const
 }
 
 int
-ACE_Mutex::unlink (const ACE_TCHAR *name)
+ACE_Mutex::unlink (ACE_TCHAR const *name)
 {
 #ifdef ACE_MUTEX_PROCESS_LOCK_IS_SEMA
   return ACE_OS::sema_unlink (ACE_TEXT_ALWAYS_CHAR (name));
@@ -42,14 +43,8 @@ ACE_Mutex::unlink (const ACE_TCHAR *name)
 #endif
 }
 
-ACE_Mutex::ACE_Mutex (int type, const ACE_TCHAR *name,
+ACE_Mutex::ACE_Mutex (int type, ACE_TCHAR const *name,
                       ACE_mutexattr_t *arg, mode_t mode)
-  :
-#ifdef ACE_MUTEX_USE_PROCESS_LOCK
-    process_lock_ (nullptr),
-    lockname_ (nullptr),
-#endif /* ACE_MUTEX_USE_PROCESS_LOCK */
-    removed_ (false)
 {
   // ACE_TRACE ("ACE_Mutex::ACE_Mutex");
 
@@ -62,9 +57,13 @@ ACE_Mutex::ACE_Mutex (int type, const ACE_TCHAR *name,
       if (fd == ACE_INVALID_HANDLE)
         {
           if (errno == EEXIST)
-            fd = ACE_OS::shm_open (name, O_RDWR | O_CREAT, mode);
+            {
+              fd = ACE_OS::shm_open (name, O_RDWR | O_CREAT, mode);
+            }
           else
+          {
             return;
+          }
         }
       else
         {
@@ -84,15 +83,17 @@ ACE_Mutex::ACE_Mutex (int type, const ACE_TCHAR *name,
         }
 
       this->process_lock_ =
-        (ACE_mutex_t *) ACE_OS::mmap (nullptr,
-                                      sizeof (ACE_mutex_t),
-                                      PROT_RDWR,
-                                      MAP_SHARED,
-                                      fd,
-                                      0);
+        static_cast<ACE_mutex_t *> (ACE_OS::mmap (nullptr,
+                                                 sizeof (ACE_mutex_t),
+                                                 PROT_RDWR,
+                                                 MAP_SHARED,
+                                                 fd,
+                                                 0));
       ACE_OS::close (fd);
       if (this->process_lock_ == MAP_FAILED)
+      {
         return;
+      }
 
       if (this->lockname_
           && ACE_OS::mutex_init (this->process_lock_,
@@ -111,22 +112,24 @@ ACE_Mutex::ACE_Mutex (int type, const ACE_TCHAR *name,
   if (type == USYNC_PROCESS)
     {
       if (name)
-        this->lockname_ = ACE_OS::strdup (name);
+        {
+          this->lockname_ = ACE_OS::strdup (name);
+        }
       else
         {
-          const size_t un_len = (ACE_UNIQUE_NAME_LEN + 1) * sizeof (ACE_TCHAR);
+          size_t const un_len = (ACE_UNIQUE_NAME_LEN + 1) * sizeof (ACE_TCHAR);
           ACE_TCHAR *const un =
 # ifdef ACE_HAS_ALLOC_HOOKS
-            (ACE_TCHAR *) ACE_Allocator::instance ()->malloc (un_len);
+            static_cast<ACE_TCHAR *> (ACE_Allocator::instance ()->malloc (un_len));
 # else
-            (ACE_TCHAR *) ACE_OS::malloc (un_len);
+            static_cast<ACE_TCHAR *> (ACE_OS::malloc (un_len));
 # endif /* ACE_HAS_ALLOC_HOOKS */
           un[0] = ACE_TEXT ('/');
           ACE_OS::unique_name (this, un + 1, ACE_UNIQUE_NAME_LEN);
           this->lockname_ = un;
         }
 
-      this->process_lock_ = &this->process_sema_;
+      this->process_lock_ = std::addressof (this->process_sema_);
       if (ACE_OS::sema_init (&this->process_sema_, 1 /*mutex unlocked*/,
                              USYNC_PROCESS, this->lockname_) != 0)
         ACELIB_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"),
@@ -139,8 +142,10 @@ ACE_Mutex::ACE_Mutex (int type, const ACE_TCHAR *name,
 #endif /* ACE_MUTEX_PROCESS_LOCK_IS_MUTEX */
 
   if (ACE_OS::mutex_init (&this->lock_, type, name, arg) != 0)
-    ACELIB_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"),
-                   ACE_TEXT ("ACE_Mutex::ACE_Mutex")));
+    {
+      ACELIB_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"),
+                     ACE_TEXT ("ACE_Mutex::ACE_Mutex")));
+    }
 }
 
 ACE_Mutex::~ACE_Mutex ()

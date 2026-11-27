@@ -16,7 +16,7 @@ class ORB_Runner : public ACE_Task_Base
 {
 public:
   ORB_Runner (CORBA::ORB_var orb) : orb_(orb) {}
-  int svc ()
+  int svc () override
   {
     this->orb_->run ();
     return 0;
@@ -25,7 +25,6 @@ public:
 private:
   CORBA::ORB_var orb_;
 };
-
 
 PortableServer::POA_var root_poa;
 PortableServer::POA_var poa_a;
@@ -65,14 +64,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
   ORB_Runner *runner = new ORB_Runner (orb);
-  int poa_delay = 10;
-
   try
     {
+      int poa_delay = 10;
       ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("p:?"));
       int c;
 
       while ((c = get_opts ()) != -1)
+      {
         switch (c)
           {
           case 'p':
@@ -87,6 +86,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             return 1;
             break;
           }
+      }
 
       //      ACE_OS::sleep (poa_delay);
       CORBA::Object_var obj = orb->resolve_initial_references ("RootPOA");
@@ -140,10 +140,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       table->bind (base.c_str (), test_ior.in ());
 
       runner->wait ();
-      root_poa->destroy(1,1);
+      root_poa->destroy(true,true);
       orb->destroy();
     }
-  catch(const CORBA::Exception& ex)
+  catch(CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Server main()");
       return 1;

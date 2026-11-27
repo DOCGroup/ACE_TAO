@@ -1,7 +1,3 @@
-// -*- C++ -*-
-
-
-//=============================================================================
 /**
  *  @file    Channel_Clients_T.h
  *
@@ -12,8 +8,6 @@
  *  accomplished with adapters to prevent the use of multiple
  *  inheritance (which is this root of all evil.)
  */
-//=============================================================================
-
 
 #ifndef ACE_CHANNEL_CLIENTS_T_H
 #define ACE_CHANNEL_CLIENTS_T_H
@@ -35,13 +29,13 @@ class ACE_PushConsumer_Adapter : public POA_RtecEventComm::PushConsumer
 {
 public:
   /// Forwards all calls to @a target.
-  ACE_PushConsumer_Adapter (TARGET *target);
+  explicit ACE_PushConsumer_Adapter (TARGET *target);
 
   /// Forwards to target_.
-  virtual void push (const RtecEventComm::EventSet& events);
+  void push (RtecEventComm::EventSet const& events) override;
 
   /// Forwards to target_.
-  virtual void disconnect_push_consumer ();
+  void disconnect_push_consumer () override;
 
 private:
   TARGET *target_;
@@ -60,11 +54,11 @@ template <class TARGET>
 class ACE_PushSupplier_Adapter : public POA_RtecEventComm::PushSupplier
 {
 public:
-  /// Forwards all calls to <owner>.
-  ACE_PushSupplier_Adapter (TARGET *target);
+/// Forwards all calls to @c target_.
+  explicit ACE_PushSupplier_Adapter (TARGET *target);
 
   /// Forwards to target_.
-  virtual void disconnect_push_supplier ();
+  void disconnect_push_supplier () override;
 
 private:
   TARGET *target_;

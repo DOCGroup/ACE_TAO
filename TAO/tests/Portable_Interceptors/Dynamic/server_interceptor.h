@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #ifndef TAO_SERVER_INTERCEPTOR_H
 #define TAO_SERVER_INTERCEPTOR_H
 
@@ -21,9 +20,9 @@ class Echo_Server_Request_Interceptor
     public virtual ::CORBA::LocalObject
 {
 public:
-  Echo_Server_Request_Interceptor (int& result);
+  explicit Echo_Server_Request_Interceptor (int& result);
 
-  // Canonical name of the interceptor.
+  /// Canonical name of the interceptor.
   char * name () override;
 
   void destroy () override;

@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  * @file   ServerORBInitializer.h
  *
@@ -9,7 +6,6 @@
  *
  * @author Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
 
 #ifndef SERVER_ORB_INITIALIZER_H
 #define SERVER_ORB_INITIALIZER_H
@@ -49,6 +45,12 @@ class ServerORBInitializer :
   public virtual ::CORBA::LocalObject
 {
 public:
+  ServerORBInitializer () = default;
+  ServerORBInitializer (ServerORBInitializer const &) = delete;
+  ServerORBInitializer (ServerORBInitializer &&) = delete;
+  ServerORBInitializer &operator= (ServerORBInitializer const &) = delete;
+  ServerORBInitializer &operator= (ServerORBInitializer &&) = delete;
+
   /**
    * @name Methods Required by the ORBInitializer Interface
    *
@@ -56,15 +58,15 @@ public:
    * virtual in the abstract base class.  They are the canonical
    * methods required for all ORB initializers.
    */
-  //@{
+  /// @{
   /// The pre-initialization hook.
-  virtual void pre_init (
-      PortableInterceptor::ORBInitInfo_ptr info);
+  void pre_init (
+      PortableInterceptor::ORBInitInfo_ptr info) override;
 
   /// The post-initialization hook.
-  virtual void post_init (
-      PortableInterceptor::ORBInitInfo_ptr info);
-  //@}
+  void post_init (
+      PortableInterceptor::ORBInitInfo_ptr info) override;
+  /// @}
 };
 
 #if defined(_MSC_VER)

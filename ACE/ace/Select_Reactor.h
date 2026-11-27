@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Select_Reactor.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef ACE_SELECT_REACTOR_H
 #define ACE_SELECT_REACTOR_H
@@ -31,7 +27,7 @@ using ACE_Select_Reactor = ACE_Select_Reactor_T<ACE_Select_Reactor_Token>;
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE == 0)
 // FUZZ: disable check_for_ACE_Guard
 /**
- * @class ACE_Guard< ACE_Reactor_Token_T<ACE_Noop_Token> >
+ * @class ACE_Guard<ACE_Reactor_Token_T<ACE_Noop_Token>>
  *
  * @brief Template specialization of ACE_Guard for the
  * ACE_Null_Mutex.
@@ -40,7 +36,7 @@ using ACE_Select_Reactor = ACE_Select_Reactor_T<ACE_Select_Reactor_Token>;
  * performance of the "Null_Mutex" considerably.
  */
 template<>
-class ACE_Export ACE_Guard< ACE_Reactor_Token_T<ACE_Noop_Token> >
+class ACE_Export ACE_Guard<ACE_Reactor_Token_T<ACE_Noop_Token>>
 {
 public:
   ACE_Guard (ACE_Reactor_Token_T<ACE_Noop_Token> &) {}
@@ -55,10 +51,10 @@ public:
   void dump () const {}
 
 private:
-  ACE_Guard (const ACE_Guard< ACE_Reactor_Token_T<ACE_Noop_Token> > &) = delete;
-  void operator= (const ACE_Guard< ACE_Reactor_Token_T<ACE_Noop_Token> > &) = delete;
-  ACE_Guard (ACE_Guard<ACE_Reactor_Token_T<ACE_Noop_Token> > &&) = delete;
-  void operator= (ACE_Guard<ACE_Reactor_Token_T<ACE_Noop_Token> > &&) = delete;
+  ACE_Guard (ACE_Guard<ACE_Reactor_Token_T<ACE_Noop_Token>> const &) = delete;
+  void operator= (ACE_Guard<ACE_Reactor_Token_T<ACE_Noop_Token>> const &) = delete;
+  ACE_Guard (ACE_Guard<ACE_Reactor_Token_T<ACE_Noop_Token>> &&) = delete;
+  void operator= (ACE_Guard<ACE_Reactor_Token_T<ACE_Noop_Token>> &&) = delete;
 };
 // FUZZ: enable check_for_ACE_Guard
 #endif /* ACE_MT_SAFE && ACE_MT_SAFE == 0 */

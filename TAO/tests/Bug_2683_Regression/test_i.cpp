@@ -18,7 +18,6 @@ test_i::shutdown ()
   this->killer_->activate ();
 }
 
-
 ORB_Killer::ORB_Killer (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
 {
@@ -29,7 +28,7 @@ ORB_Killer::svc ()
 {
   ACE_OS::sleep (1);
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) doing shutdown\n"));
-  orb_->shutdown (true);
+  this->orb_->shutdown (true);
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) shutdown complete\n"));
   return 0;
 }

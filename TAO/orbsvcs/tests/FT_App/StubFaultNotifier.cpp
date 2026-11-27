@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "StubFaultNotifier.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
@@ -7,17 +6,13 @@
 #include "ace/streams.h"
 
 StubFaultNotifier::StubFaultNotifier ()
-  : ior_output_file_(0)
-  , detector_ior_(0)
+  : ior_output_file_ (nullptr)
+  , detector_ior_ (nullptr)
   , ns_name_("")
 {
 }
 
-
-StubFaultNotifier::~StubFaultNotifier ()
-{
-}
-
+StubFaultNotifier::~StubFaultNotifier () = default;
 
 ::PortableServer::POA_ptr StubFaultNotifier::_default_POA ()
 {
@@ -70,14 +65,14 @@ int StubFaultNotifier::parse_args (int argc, ACE_TCHAR * argv[])
 
   if(! optionError)
   {
-    if (iorReplicaFiles_.size() == 0)
+    if (iorReplicaFiles_.empty ())
     {
       ACE_ERROR ((LM_ERROR,
         "-r option is required.\n"
         ));
       optionError = -1;
     }
-    if (0 == this->detector_ior_)
+    if (this->detector_ior_ == nullptr)
     {
       ACE_ERROR ((LM_ERROR,
         "-d option is required.\n"
@@ -129,7 +124,6 @@ int StubFaultNotifier::fini ()
   return 0;
 }
 
-
 /**
  * Publish this objects IOR.
  */
@@ -143,14 +137,15 @@ int StubFaultNotifier::init (CORBA::ORB_ptr orb)
     this->orb_->resolve_initial_references (TAO_OBJID_ROOTPOA);
 
   if (CORBA::is_nil (poa_object.in ()))
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT (" (%P|%t) Unable to initialize the POA.\n")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT (" (%P|%t) Unable to initialize the POA.\n")),
+                        -1);
+    }
 
   // Get the POA object.
   this->poa_ =
     PortableServer::POA::_narrow (poa_object.in ());
-
 
   if (CORBA::is_nil(this->poa_.in ()))
   {
@@ -187,12 +182,12 @@ int StubFaultNotifier::init (CORBA::ORB_ptr orb)
   {
     ////////////////////////////////////
     // resolve references to replicas
-    size_t replicaCount = this->iorReplicaFiles_.size();
+    size_t const replicaCount = this->iorReplicaFiles_.size();
     for(size_t nRep = 0; result == 0 && nRep < replicaCount; ++nRep)
     {
-      const char * iorName = this->iorReplicaFiles_[nRep];
-      CORBA::Object_var obj = this->orb_->string_to_object(iorName);
-      FT::PullMonitorable_var replica = FT::PullMonitorable::_narrow(obj.in ());
+      char const *iorName = this->iorReplicaFiles_[nRep];
+      CORBA::Object_var replica_object = this->orb_->string_to_object(iorName);
+      FT::PullMonitorable_var replica = FT::PullMonitorable::_narrow(replica_object.in ());
       if (CORBA::is_nil(replica.in ()))
       {
         ACE_OS::fprintf (stderr, "Can't resolve Replica IOR %s\n", iorName);
@@ -213,7 +208,6 @@ int StubFaultNotifier::init (CORBA::ORB_ptr orb)
         ::FT::FaultNotifier_var notifier = ::FT::FaultNotifier::_narrow(this_obj.in ());
         value <<= notifier.in ();
         encoder.add(::FT::FT_NOTIFIER, value);
-
 
         value <<= replica.in ();
         encoder.add(::FT::FT_MONITORABLE, value);
@@ -240,7 +234,7 @@ int StubFaultNotifier::init (CORBA::ORB_ptr orb)
         PortableGroup::Criteria_var criteria;
         ACE_NEW_NORETURN (criteria,
           PortableGroup::Criteria);
-        if (criteria.ptr() == 0)
+        if (criteria.ptr() == nullptr)
         {
           ACE_ERROR((LM_ERROR,
             "Error cannot allocate criteria.\n"
@@ -260,7 +254,7 @@ int StubFaultNotifier::init (CORBA::ORB_ptr orb)
       }
     }
 
-    if (this->ior_output_file_ != 0)
+    if (this->ior_output_file_ != nullptr)
     {
       this->identity_ = ACE_TEXT("file:");
       this->identity_ += this->ior_output_file_;
@@ -316,7 +310,7 @@ int StubFaultNotifier::write_ior_file()
 /**
  * Return a string to identify this object for logging/console message purposes.
  */
-const ACE_TCHAR * StubFaultNotifier::identity () const
+ACE_TCHAR const *StubFaultNotifier::identity () const
 {
   return this->identity_.c_str();
 }
@@ -330,79 +324,67 @@ void StubFaultNotifier::shutdown_i ()
 }
 
 void StubFaultNotifier::push_structured_fault (
-    const CosNotification::StructuredEvent & event
-  )
+    CosNotification::StructuredEvent const & event)
 {
   ACE_ERROR ((LM_ERROR,
     "FaultNotifier: Received Fault notification:\n"
     "FaultNotifier:   Header EventType domain: %s\n"
     "FaultNotifier:   Header EventType type: %s\n"
     "FaultNotifier:   Header EventName: %s\n",
-    static_cast<const char *> (event.header.fixed_header.event_type.domain_name),
-    static_cast<const char *> (event.header.fixed_header.event_type.type_name),
-    static_cast<const char *> (event.header.fixed_header.event_name)
+    static_cast<char const *> (event.header.fixed_header.event_type.domain_name),
+    static_cast<char const *> (event.header.fixed_header.event_type.type_name),
+    static_cast<char const *> (event.header.fixed_header.event_name)
     ));
-  const CosNotification::FilterableEventBody & filterable = event.filterable_data;
+  CosNotification::FilterableEventBody const & filterable = event.filterable_data;
 
-  size_t propertyCount = filterable.length ();
+  size_t const propertyCount = filterable.length ();
   for (size_t nProp = 0; nProp < propertyCount; ++nProp)
   {
-    const CosNotification::Property & property = filterable[nProp];
+    CosNotification::Property const & property = filterable[nProp];
     ACE_ERROR ((LM_ERROR,
       "FaultNotifier:   Property Name: %s\n",
-      static_cast<const char *> (property.name)
+      static_cast<char const *> (property.name)
       ));
     //@@ we could stand to decode more--just for completeness
   }
 }
 
-
 void StubFaultNotifier::push_sequence_fault (
-    const CosNotification::EventBatch & events
-  )
+    CosNotification::EventBatch const & events)
 {
   ACE_UNUSED_ARG (events);
   throw CORBA::NO_IMPLEMENT();
 }
 
 ::CosNotifyFilter::Filter_ptr StubFaultNotifier::create_subscription_filter (
-    const char * constraint_grammar
-  )
+    char const *constraint_grammar)
 {
   ACE_UNUSED_ARG (constraint_grammar);
   throw CORBA::NO_IMPLEMENT();
-  return 0;
 }
-
 
 FT::FaultNotifier::ConsumerId StubFaultNotifier::connect_structured_fault_consumer (
     CosNotifyComm::StructuredPushConsumer_ptr push_consumer,
-    CosNotifyFilter::Filter_ptr filter
-  )
+    CosNotifyFilter::Filter_ptr filter)
 {
   ACE_UNUSED_ARG(push_consumer);
   ACE_UNUSED_ARG(filter);
 
   throw CORBA::NO_IMPLEMENT();
-  return 0;
 }
-
 
 FT::FaultNotifier::ConsumerId StubFaultNotifier::connect_sequence_fault_consumer (
     CosNotifyComm::SequencePushConsumer_ptr push_consumer,
-    CosNotifyFilter::Filter_ptr filter
-  )
+    CosNotifyFilter::Filter_ptr filter)
 {
   ACE_UNUSED_ARG(push_consumer);
   ACE_UNUSED_ARG(filter);
 
   throw CORBA::NO_IMPLEMENT();
-  return 0;
 }
 
 void StubFaultNotifier::disconnect_consumer (
-    FT::FaultNotifier::ConsumerId connection
-  )
+    FT::FaultNotifier::ConsumerId connection)
 {
   ACE_UNUSED_ARG(connection);
 
@@ -411,7 +393,7 @@ void StubFaultNotifier::disconnect_consumer (
 
 CORBA::Boolean StubFaultNotifier::is_alive ()
 {
-  return 1;
+  return true;
 }
 
 int StubFaultNotifier::idle(int & result)
@@ -429,7 +411,7 @@ int StubFaultNotifier::idle(int & result)
       }
     }
   }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
   {
     quit = 1;
   }

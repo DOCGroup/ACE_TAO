@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Svc_Conf_Param.h
  *
@@ -8,16 +5,14 @@
  *  @author Based on code originally found in Svc_Conf.h by Doug
             Schmidt and Ossama Othman.
  */
-//=============================================================================
-
 
 #ifndef ACE_SVC_CONF_PARAM_H
 #define ACE_SVC_CONF_PARAM_H
 
 #include /**/ "ace/pre.h"
 
-// Globally visible macros, type decls, and extern var decls for
-// Service Configurator utility.
+/// Globally visible macros, type declarations, and extern variable
+/// declarations for the Service Configurator utility.
 
 #include "ace/Obstack.h"
 
@@ -61,7 +56,6 @@ public:
       SVC_CONF_DIRECTIVE
     };
 
-  /// Constructor
   ACE_Svc_Conf_Param (ACE_Service_Gestalt *gestalt, FILE *file)
     : type (SVC_CONF_FILE),
       yyerrno (0),
@@ -73,8 +67,7 @@ public:
     source.file = file;
   }
 
-  /// Constructor
-  ACE_Svc_Conf_Param (ACE_Service_Gestalt *gestalt, const ACE_TCHAR *directive)
+  ACE_Svc_Conf_Param (ACE_Service_Gestalt *gestalt, ACE_TCHAR const *directive)
     : type (SVC_CONF_DIRECTIVE),
       yyerrno (0),
       yylineno (1),
@@ -97,7 +90,7 @@ public:
     FILE *file;
 
     /// String containing directive that will be scanned and parsed.
-    const ACE_TCHAR *directive;
+    ACE_TCHAR const *directive;
   } source;
 
   /// Discriminant use to determine which union member to use.
@@ -120,7 +113,6 @@ public:
   /// A reference to the configuration
   ACE_Service_Gestalt *config;
 };
-
 
 // Parameter that is passed down to the yyparse() function, and
 // eventually to yylex().

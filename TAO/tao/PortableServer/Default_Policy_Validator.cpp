@@ -19,62 +19,78 @@ TAO_POA_Default_Policy_Validator::validate_impl (TAO_Policy_Set &policies)
   CORBA::Policy_var policy =
     policies.get_cached_policy (TAO_CACHED_POLICY_SERVANT_RETENTION);
 
-  PortableServer::ServantRetentionPolicy_var srp =
+  PortableServer::ServantRetentionPolicy_var const srp =
     PortableServer::ServantRetentionPolicy::_narrow (policy.in ());
-  PortableServer::ServantRetentionPolicyValue servant_retention =
+  PortableServer::ServantRetentionPolicyValue const servant_retention =
     srp->value ();
 
   policy = policies.get_cached_policy (TAO_CACHED_POLICY_REQUEST_PROCESSING);
 
-  PortableServer::RequestProcessingPolicy_var rpp =
+  PortableServer::RequestProcessingPolicy_var const rpp =
     PortableServer::RequestProcessingPolicy::_narrow (policy.in ());
-  PortableServer::RequestProcessingPolicyValue request_processing =
+  PortableServer::RequestProcessingPolicyValue const request_processing =
     rpp->value ();
 
   // The NON_RETAIN policy requires either the USE_DEFAULT_SERVANT or
   // USE_SERVANT_MANAGER policies.
   if (servant_retention == PortableServer::NON_RETAIN)
-    if (request_processing != PortableServer::USE_SERVANT_MANAGER &&
-        request_processing  != PortableServer::USE_DEFAULT_SERVANT)
-      throw PortableServer::POA::InvalidPolicy ();
+    {
+      if (request_processing != PortableServer::USE_SERVANT_MANAGER &&
+          request_processing  != PortableServer::USE_DEFAULT_SERVANT)
+        {
+          throw PortableServer::POA::InvalidPolicy ();
+        }
+    }
 
   // USE_ACTIVE_OBJECT_MAP_ONLY requires the RETAIN policy.
   if (request_processing == PortableServer::USE_ACTIVE_OBJECT_MAP_ONLY)
-    if (servant_retention != PortableServer::RETAIN)
-      throw PortableServer::POA::InvalidPolicy ();
+    {
+      if (servant_retention != PortableServer::RETAIN)
+        {
+          throw PortableServer::POA::InvalidPolicy ();
+        }
+    }
 
   policy = policies.get_cached_policy (TAO_CACHED_POLICY_ID_UNIQUENESS);
 
-  PortableServer::IdUniquenessPolicy_var iup =
+  PortableServer::IdUniquenessPolicy_var const iup =
     PortableServer::IdUniquenessPolicy::_narrow (policy.in ());
-  PortableServer::IdUniquenessPolicyValue id_uniqueness =
+  PortableServer::IdUniquenessPolicyValue const id_uniqueness =
     iup->value ();
 
   policy =
     policies.get_cached_policy (TAO_CACHED_POLICY_IMPLICIT_ACTIVATION);
 
-  PortableServer::ImplicitActivationPolicy_var iap =
+  PortableServer::ImplicitActivationPolicy_var const iap =
     PortableServer::ImplicitActivationPolicy::_narrow (policy.in ());
-  PortableServer::ImplicitActivationPolicyValue implicit_activation =
+  PortableServer::ImplicitActivationPolicyValue const implicit_activation =
     iap->value ();
 
   policy = policies.get_cached_policy (TAO_CACHED_POLICY_ID_ASSIGNMENT);
 
-  PortableServer::IdAssignmentPolicy_var idap =
+  PortableServer::IdAssignmentPolicy_var const idap =
     PortableServer::IdAssignmentPolicy::_narrow (policy.in ());
-  PortableServer::IdAssignmentPolicyValue id_assignment =
+  PortableServer::IdAssignmentPolicyValue const id_assignment =
     idap->value ();
 
   // USE_DEFAULT_SERVANT requires the MULTIPLE_ID policy.
   if (request_processing == PortableServer::USE_DEFAULT_SERVANT)
-    if (id_uniqueness != PortableServer::MULTIPLE_ID)
-      throw PortableServer::POA::InvalidPolicy ();
+    {
+      if (id_uniqueness != PortableServer::MULTIPLE_ID)
+        {
+          throw PortableServer::POA::InvalidPolicy ();
+        }
+    }
 
   // IMPLICIT_ACTIVATION requires the SYSTEM_ID and RETAIN policies.
   if (implicit_activation == PortableServer::IMPLICIT_ACTIVATION)
-    if (servant_retention != PortableServer::RETAIN ||
-        id_assignment != PortableServer::SYSTEM_ID)
-      throw PortableServer::POA::InvalidPolicy ();
+    {
+      if (servant_retention != PortableServer::RETAIN ||
+          id_assignment != PortableServer::SYSTEM_ID)
+        {
+          throw PortableServer::POA::InvalidPolicy ();
+        }
+    }
 #else /* TAO_HAS_MINIMUM_POA == 0 */
   ACE_UNUSED_ARG (policies);
 #endif /* TAO_HAS_MINIMUM_POA == 0 */

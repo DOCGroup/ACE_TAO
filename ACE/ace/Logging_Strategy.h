@@ -1,13 +1,9 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Logging_Strategy.h
  *
  *  @author Prashant Jain <pjain@cs.wustl.edu>
  *  @author Orlando Ribeiro <oribeiro@inescporto.pt>
  */
-//=============================================================================
 
 #ifndef ACE_LOGGING_STRATEGY_H
 #define ACE_LOGGING_STRATEGY_H
@@ -78,10 +74,8 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Logging_Strategy : public ACE_Service_Object
 {
 public:
-  /// Constructor.
   ACE_Logging_Strategy ();
 
-  /// Destructor.
   ~ACE_Logging_Strategy () override;
 
   /// Dynamic linking initialization hook.
@@ -95,7 +89,7 @@ public:
    * size exceeds @c max_size_, the current logfile is closed, saved to
    * logfile.old, and a new logfile is reopened.
    */
-  int handle_timeout (const ACE_Time_Value& tv, const void* arg) override;
+  int handle_timeout (ACE_Time_Value const& tv, void const* arg) override;
   /**
    * This function helps to cancel timer events for this logging strategy
    * in reactor during shutdown.

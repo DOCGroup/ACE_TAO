@@ -1,13 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file LifespanStrategy.h
  *
  *  @author  Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-//=============================================================================
-
 #ifndef TAO_PORTABLESERVER_LIFESPANPOLICY_H
 #define TAO_PORTABLESERVER_LIFESPANPOLICY_H
 #include /**/ "ace/pre.h"
@@ -78,6 +73,7 @@ namespace TAO
         char const *type_id) const = 0;
 
     protected:
+      /// Non-owning back-reference set by the POA during strategy initialization.
       TAO_Root_POA *poa_ {};
     };
   } /* namespace Portable_Server */

@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file Queued_Message.h
  *
  *  @author Carlos O'Ryan <coryan@uci.edu>
  */
-//=============================================================================
 
 #ifndef TAO_QUEUED_MESSAGE_H
 #define TAO_QUEUED_MESSAGE_H
@@ -56,7 +52,7 @@ class TAO_ORB_Core;
  * can be required to wake up before its message completes.
  * Each message may contain a 'Sent_Notifier'
  *
- * <H4>NOTE:</H4> The contents of the ACE_Message_Block may have been
+ * @note The contents of the ACE_Message_Block may have been
  * allocated from TSS storage, in that case we cannot steal them.
  * However, we do not need to perform a deep copy all the time, for
  * example, in a twoway request the sending thread blocks until the
@@ -72,13 +68,16 @@ class TAO_ORB_Core;
 class TAO_Export TAO_Queued_Message : public TAO_LF_Invocation_Event
 {
 public:
-  /// Constructor
+  TAO_Queued_Message () = delete;
   TAO_Queued_Message (TAO_ORB_Core *oc,
                       ACE_Allocator *alloc = nullptr,
                       bool is_heap_allocated = false);
 
-  /// Destructor
   ~TAO_Queued_Message () override;
+  TAO_Queued_Message (TAO_Queued_Message const &) = delete;
+  TAO_Queued_Message &operator= (TAO_Queued_Message const &) = delete;
+  TAO_Queued_Message (TAO_Queued_Message &&) = delete;
+  TAO_Queued_Message &operator= (TAO_Queued_Message &&) = delete;
 
   /** @name Intrusive list manipulation
    *
@@ -104,7 +103,8 @@ public:
    * };<BR>
    *
    */
-  //@{
+  /// @{
+
   /// Set/get the next element in the list
   TAO_Queued_Message *next () const;
 
@@ -122,11 +122,12 @@ public:
   /// Insert the current element at the head of the queue.
   void push_front (TAO_Queued_Message *&head,
                    TAO_Queued_Message *&tail);
-  //@}
+  /// @}
 
   /** @name Template Methods
    */
-  //@{
+  /// @{
+
   /// Return the length of the message
   /**
    * If the message has been partially sent it returns the number of
@@ -166,8 +167,6 @@ public:
    * @param byte_count The number of bytes successfully sent.  The
    *                   TAO_Queued_Message should decrement this value
    *                   by the number of bytes that must still be sent.
-   * @return Returns 1 if the TAO_Queued_Message has any more data to
-   *         send.
    */
   virtual void bytes_transferred (size_t &byte_count) = 0;
 
@@ -200,15 +199,15 @@ public:
    *  of this method (which will be called in a tight loop).
    * @return true if the relative roundtrip timeout has expired.
    */
-  virtual bool is_expired (const ACE_Time_Value &now) const;
+  virtual bool is_expired (ACE_Time_Value const &now) const;
 
   /// Provide a hook for copying the underlying data
   /**
    * @param chain For use in determining origin of underlying data.
    * This parameter must not be modified (through const_cast).
    */
-  virtual void copy_if_necessary (const ACE_Message_Block* chain) = 0;
-  //@}
+  virtual void copy_if_necessary (ACE_Message_Block const *chain) = 0;
+  /// @}
 
 protected:
   /*
@@ -227,14 +226,9 @@ protected:
   TAO_ORB_Core *orb_core_;
 
 private:
-  TAO_Queued_Message (TAO_Queued_Message const &) = delete;
-  TAO_Queued_Message &operator= (TAO_Queued_Message const &) = delete;
-  TAO_Queued_Message (TAO_Queued_Message &&) = delete;
-  TAO_Queued_Message &operator= (TAO_Queued_Message &&) = delete;
-
   /// Implement an intrusive double-linked list for the message queue
-  TAO_Queued_Message *next_;
-  TAO_Queued_Message *prev_;
+  TAO_Queued_Message *next_ {};
+  TAO_Queued_Message *prev_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
@@ -242,7 +236,6 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #if defined (__ACE_INLINE__)
 # include "tao/Queued_Message.inl"
 #endif /* __ACE_INLINE__ */
-
 
 #include /**/ "ace/post.h"
 

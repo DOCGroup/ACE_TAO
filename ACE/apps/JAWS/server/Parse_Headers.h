@@ -1,13 +1,8 @@
-/* -*- c++ -*- */
-
-//=============================================================================
 /**
  *  @file    Parse_Headers.h
  *
  *  @author James Hu
  */
-//=============================================================================
-
 
 #ifndef PARSE_HEADERS_H
 #define PARSE_HEADERS_H
@@ -25,20 +20,23 @@ friend class Headers;
 
 private:
   Headers_Map_Item ();
+  Headers_Map_Item (Headers_Map_Item const &) = delete;
+  Headers_Map_Item (Headers_Map_Item &&) = delete;
   ~Headers_Map_Item ();
 
   // operator const char * () const;
   Headers_Map_Item &operator= (char *);
-  Headers_Map_Item &operator= (const char *);
-  Headers_Map_Item &operator= (const Headers_Map_Item &);
+  Headers_Map_Item &operator= (char const *);
+  Headers_Map_Item &operator= (Headers_Map_Item const &);
+  Headers_Map_Item &operator= (Headers_Map_Item &&) = delete;
 
 public:
-  const char *header () const;
-  const char *value () const;
+  char const *header () const;
+  char const *value () const;
 
 private:
-  const char *header_;
-  const char *value_;
+  char const *header_ {};
+  char const *value_ {};
 };
 
 /**
@@ -51,28 +49,32 @@ class Headers_Map
 {
 public:
   Headers_Map ();
-  ~Headers_Map ();
+  Headers_Map (Headers_Map const &) = delete;
+  Headers_Map (Headers_Map &&) = delete;
+  Headers_Map &operator= (Headers_Map const &) = delete;
+  Headers_Map &operator= (Headers_Map &&) = delete;
+  ~Headers_Map () = default;
 
-  Headers_Map_Item &operator[] (const char *const header);
-  const Headers_Map_Item &operator[] (const char *const header) const;
+  Headers_Map_Item &operator[] (char const *const header);
+  Headers_Map_Item const &operator[] (char const *const header) const;
 
   enum
   {
     MAX_HEADERS = 100
   };
 
-  int mapped (const char *const header) const;
+  int mapped (char const *const header) const;
 
 private:
-  Headers_Map_Item *find (const char *const header) const;
-  Headers_Map_Item *place (const char *const header);
-  static int compare (const void *item1, const void *item2);
+  Headers_Map_Item *find (char const *const header) const;
+  Headers_Map_Item *place (char const *const header);
+  static int compare (void const *item1, void const *item2);
 
 private:
   Headers_Map_Item map_[MAX_HEADERS];
   Headers_Map_Item garbage_;
 
-  int num_headers_;
+  int num_headers_ {};
 };
 
 /**
@@ -88,9 +90,13 @@ class Headers
 {
 public:
   Headers ();
-  ~Headers ();
+  Headers (Headers const &) = delete;
+  Headers (Headers &&) = delete;
+  Headers &operator= (Headers const &) = delete;
+  Headers &operator= (Headers &&) = delete;
+  ~Headers () = default;
 
-  void recognize (const char *const header);
+  void recognize (char const *const header);
 
   void parse_header_line (char *const header_line);
 
@@ -108,15 +114,15 @@ public:
     MAX_HEADER_LINE_LENGTH = 8192
   };
 
-  Headers_Map_Item &operator[] (const char *const header);
-  const Headers_Map_Item &operator[] (const char *const header) const;
+  Headers_Map_Item &operator[] (char const *const header);
+  Headers_Map_Item const &operator[] (char const *const header) const;
 
 private:
   int end_of_line (char *&line, int &offset) const;
 
 private:
   Headers_Map map_;
-  int done_;
+  bool done_ {};
 };
 
 #endif /* PARSE_HEADERS_H */

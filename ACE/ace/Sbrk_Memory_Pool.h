@@ -1,13 +1,9 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file     Sbrk_Memory_Pool.h
  *
  *  @author Dougls C. Schmidt <d.schmidt@vanderbilt.edu>
  *  @author Prashant Jain <pjain@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef ACE_SBRK_MEMORY_POOL_H
 #define ACE_SBRK_MEMORY_POOL_H
@@ -24,7 +20,6 @@
 
 #include "ace/ACE.h"
 #include "ace/os_include/sys/os_mman.h"
-
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -51,12 +46,13 @@ public:
   using OPTIONS = ACE_Sbrk_Memory_Pool_Options;
 
   /// Initialize the pool.
-  ACE_Sbrk_Memory_Pool (const ACE_TCHAR *backing_store_name = nullptr,
-                        const OPTIONS *options = nullptr);
+  ACE_Sbrk_Memory_Pool (ACE_TCHAR const *backing_store_name = nullptr,
+                        OPTIONS const *options = nullptr);
 
   virtual ~ACE_Sbrk_Memory_Pool ();
 
-  // = Implementor operations.
+  /// @name Memory pool operations
+  /// @{
   /// Ask system for initial chunk of local memory.
   virtual void *init_acquire (size_t nbytes,
                               size_t &rounded_bytes,
@@ -91,6 +87,7 @@ public:
   /// Change the protection of the pages of the mapped region to @a prot
   /// starting at @a addr up to @a len bytes.
   virtual int protect (void *addr, size_t len, int prot = PROT_RDWR);
+  /// @}
 
   /// Dump the state of an object.
   virtual void dump () const;

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #ifndef TAO_ECHO_CLIENT_ORB_INITIALIZER_H
 #define TAO_ECHO_CLIENT_ORB_INITIALIZER_H
 
@@ -27,11 +26,11 @@ class Echo_Client_ORBInitializer :
   public virtual ::CORBA::LocalObject
 {
 public:
-  Echo_Client_ORBInitializer (int& result);
+  explicit Echo_Client_ORBInitializer (int& result);
 
-  virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info);
+  void pre_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 
-  virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info);
+  void post_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 
 private:
   int& result_;

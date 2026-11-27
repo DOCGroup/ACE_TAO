@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//==========================================================================
 /**
  *  @file    Mem_Map.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//==========================================================================
 
 #ifndef ACE_MEM_MAP_H
 #define ACE_MEM_MAP_H
@@ -38,12 +34,11 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Mem_Map
 {
 public:
-  /// Default constructor.
   ACE_Mem_Map ();
 
-  ACE_Mem_Map (const ACE_Mem_Map &) = delete;
+  ACE_Mem_Map (ACE_Mem_Map const &) = delete;
   ACE_Mem_Map (ACE_Mem_Map &&) = delete;
-  ACE_Mem_Map &operator= (const ACE_Mem_Map &) = delete;
+  ACE_Mem_Map &operator= (ACE_Mem_Map const &) = delete;
   ACE_Mem_Map &operator= (ACE_Mem_Map &&) = delete;
 
   /// Map a file from an open file descriptor @a handle.  This function
@@ -57,7 +52,7 @@ public:
                LPSECURITY_ATTRIBUTES sa = 0);
 
   /// Map a file specified by @a file_name.
-  ACE_Mem_Map (const ACE_TCHAR *filename,
+  ACE_Mem_Map (ACE_TCHAR const *filename,
                size_t length = static_cast<size_t> (-1),
                int flags = O_RDWR | O_CREAT,
                mode_t mode = ACE_DEFAULT_FILE_PERMS,
@@ -77,7 +72,7 @@ public:
            ACE_OFF_T offset = 0,
            LPSECURITY_ATTRIBUTES sa = 0);
 
-  /// Remap the file associated with <handle_>.
+  /// Remap the file associated with @c handle_.
   int map (size_t length = static_cast<size_t> (-1),
            int prot = PROT_RDWR,
            int share = ACE_MAP_PRIVATE,
@@ -86,7 +81,7 @@ public:
            LPSECURITY_ATTRIBUTES sa = 0);
 
   /// Map a file specified by @a filename.
-  int map (const ACE_TCHAR *filename,
+  int map (ACE_TCHAR const *filename,
            size_t length = static_cast<size_t> (-1),
            int flags = O_RDWR | O_CREAT,
            mode_t mode = ACE_DEFAULT_FILE_PERMS,
@@ -96,23 +91,22 @@ public:
            ACE_OFF_T offset = 0,
            LPSECURITY_ATTRIBUTES sa = 0);
 
-  /// Destructor.
   ~ACE_Mem_Map ();
 
   /// Open the file without mapping it.
-  int open (const ACE_TCHAR *filename,
+  int open (ACE_TCHAR const *filename,
             int flags = O_RDWR | O_CREAT,
             mode_t perms = ACE_DEFAULT_FILE_PERMS,
             LPSECURITY_ATTRIBUTES sa = 0);
 
-  /// Close down the <handle_> if necessary and unmap the mapping.
+  /// Close down the @c handle_ if necessary and unmap the mapping.
   int close ();
 
-  /// Close down the <handle_> if necessary.
+  /// Close down the @c handle_ if necessary.
   int close_handle ();
 
   /**
-   * Close down the internal <file_mapping_> if necessary.  This is
+   * Close down the internal @c file_mapping_ if necessary.  This is
    * mostly necessary on Win32, which has a different handle for
    * file-mapping kernel object.
    */
@@ -174,11 +168,11 @@ public:
   /// Hook into the underlying VM system.
   int advise (int behavior, int len = -1);
 
-  /// Return the underlying <handle_>.
+  /// Return the underlying @c handle_.
   ACE_HANDLE handle () const;
 
   /// Return the name of file that is mapped (if any).
-  const ACE_TCHAR *filename () const;
+  ACE_TCHAR const *filename () const;
 
   /// Dump the state of an object.
   void dump () const;
@@ -187,7 +181,7 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-  /// This method does the dirty work of actually calling ::mmap to map
+  /// This method does the dirty work of actually calling @c mmap to map
   /// the file into memory.
   int map_it (ACE_HANDLE handle,
               size_t len = static_cast<size_t> (-1),
@@ -205,7 +199,7 @@ private:
   ACE_TCHAR filename_[MAXPATHLEN + 1];
 
   /// Length of the mapping.
-  size_t length_;
+  size_t length_ {};
 
   /// HANDLE for the open file.
   ACE_HANDLE handle_;
@@ -215,7 +209,7 @@ private:
 
   /// Keeps track of whether we need to close the handle.  This is set
   /// if we opened the file.
-  bool close_handle_;
+  bool close_handle_ {};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

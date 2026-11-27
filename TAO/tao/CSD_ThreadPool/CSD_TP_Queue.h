@@ -1,13 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    CSD_TP_Queue.h
  *
  *  @author  Tim Bradley <bradley_t@ociweb.com>
  */
-//=============================================================================
-
 #ifndef TAO_CSD_TP_QUEUE_H
 #define TAO_CSD_TP_QUEUE_H
 
@@ -41,15 +36,15 @@ namespace TAO
      * a servant request to the strategy object, it will create the
      * appropriate (subclass of) TP_Request object to "wrap"
      * the servant request in a "queue-friendly" wrapper.  The ORB thread
-     * will then place the TP_Request object on to the queue.  Note that
-     * this scenario pertains to what are being called "remote requests".
-     * There are other scenarios in which other types of requests can
-     * get added to this queue.
+     * will then place the TP_Request object on to the queue.
      *
      * The strategy object will employ a set of worker threads that are
      * responsible for "servicing" the servant requests in the queue.
      *
-     * Note: In the future, support will be added to allow the client
+     * @note This scenario pertains to remote requests. Other types of
+     * requests can also be added to this queue.
+     *
+     * @note In the future, support will be added to allow the client
      *       application inject "custom" TP_Request objects into
      *       a TP_Strategy object, causing them to be placed in
      *       the queue.
@@ -57,12 +52,9 @@ namespace TAO
     class TAO_CSD_TP_Export TP_Queue
     {
     public:
-      /// Default Constructor.
       TP_Queue() = default;
 
-      /// Destructor.
-      ~TP_Queue();
-
+      ~TP_Queue() = default;
       /// Place a request at the end of the queue.
       void put(TP_Request* request);
 
@@ -74,16 +66,16 @@ namespace TAO
       /// visiting every request).
       void accept_visitor(TP_Queue_Visitor& visitor);
 
-    private:
       TP_Queue (TP_Queue const &) = delete;
       TP_Queue &operator= (TP_Queue const &) = delete;
       TP_Queue (TP_Queue &&) = delete;
       TP_Queue &operator= (TP_Queue &&) = delete;
 
-      /// The request at the front of the queue.
+    private:
+      /// Non-owning front link; put() adds a reference for each queued request.
       TP_Request* head_ {};
 
-      /// The request at the end of the queue.
+      /// Non-owning tail link to a request whose queue reference is held by put().
       TP_Request* tail_ {};
     };
   }

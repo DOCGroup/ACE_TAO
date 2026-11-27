@@ -1,11 +1,9 @@
-// -*- C++ -*-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_INLINE const ACE_INET_Addr&
+ACE_INLINE ACE_INET_Addr const &
 TAO_UIPMC_Acceptor::address () const
 {
-  ACE_ASSERT (this->addrs_ != 0);
+  ACE_ASSERT (this->addrs_ != nullptr);
 
   // @@ This is busted.
   //    The Implementation Repository will have to start supporting
@@ -15,12 +13,12 @@ TAO_UIPMC_Acceptor::address () const
   return this->addrs_[0];
 }
 
-ACE_INLINE const ACE_INET_Addr *
+ACE_INLINE ACE_INET_Addr const *
 TAO_UIPMC_Acceptor::endpoints ()
 {
-  ACE_ASSERT (this->addrs_ != 0);
+  ACE_ASSERT (this->addrs_ != nullptr);
 
-  return this->addrs_;
+  return this->addrs_.get ();
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

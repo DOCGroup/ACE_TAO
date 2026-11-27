@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    WIN32_Asynch_IO.h
  *
@@ -16,7 +13,6 @@
  *  @author Roger Tragin <r.tragin@computer.org>
  *  @author Alexander Libman <alibman@ihug.com.au>
  */
-//=============================================================================
 
 #ifndef ACE_WIN32_ASYNCH_IO_H
 #define ACE_WIN32_ASYNCH_IO_H
@@ -70,17 +66,17 @@ public:
   size_t bytes_transferred () const;
 
   /// ACT associated with the operation.
-  const void *act () const;
+  void const *act () const;
 
   /// Did the operation succeed?
-  int success () const;
+  bool success () const;
 
   /**
    * This returns the ACT associated with the handle when it was
    * registered with the I/O completion port.  This ACT is not the
    * same as the ACT associated with the asynchronous operation.
    */
-  const void *completion_key () const;
+  void const *completion_key () const;
 
   /// Error value if the operation fail.
   u_long error () const;
@@ -104,7 +100,6 @@ public:
   /// Post @c this to the Proactor's completion port.
   int post_completion (ACE_Proactor_Impl *proactor);
 
-  /// Destructor.
   virtual ~ACE_WIN32_Asynch_Result ();
 
   /// Simulate error value to use in the post_completion()
@@ -114,9 +109,8 @@ public:
   void set_bytes_transferred (size_t nbytes);
 
 protected:
-  /// Constructor.
-  ACE_WIN32_Asynch_Result (const ACE_Handler::Proxy_Ptr &handler_proxy,
-                           const void* act,
+  ACE_WIN32_Asynch_Result (ACE_Handler::Proxy_Ptr const &handler_proxy,
+                           void const * act,
                            ACE_HANDLE event,
                            u_long offset,
                            u_long offset_high,
@@ -127,16 +121,16 @@ protected:
   ACE_Handler::Proxy_Ptr handler_proxy_;
 
   /// ACT for this operation.
-  const void *act_;
+  void const *act_;
 
   /// Bytes transferred by this operation.
   size_t bytes_transferred_;
 
   /// Success indicator.
-  int success_;
+  bool success_;
 
   /// ACT associated with handle.
-  const void *completion_key_;
+  void const *completion_key_;
 
   /// Error if operation failed.
   u_long error_;
@@ -157,9 +151,9 @@ public:
    * ACE_Handler::handle() will be called on the @a handler to get the
    * correct handle.
    */
-  int open (const ACE_Handler::Proxy_Ptr &handler_proxy,
+  int open (ACE_Handler::Proxy_Ptr const &handler_proxy,
             ACE_HANDLE handle,
-            const void *completion_key,
+            void const *completion_key,
             ACE_Proactor *proactor);
 
   /**
@@ -169,16 +163,12 @@ public:
    */
   int cancel ();
 
-  // = Access methods.
-
   /// Return the underlying proactor.
   ACE_Proactor* proactor () const;
 
 protected:
-  /// Constructor.
   ACE_WIN32_Asynch_Operation (ACE_WIN32_Proactor *win32_proactor);
 
-  /// Destructor.
   virtual ~ACE_WIN32_Asynch_Operation ();
 
   /// Win32 Proactor.
@@ -227,17 +217,17 @@ public:
   size_t bytes_transferred () const;
 
   /// ACT associated with the operation.
-  const void *act () const;
+  void const *act () const;
 
   /// Did the operation succeed?
-  int success () const;
+  bool success () const;
 
   /**
    * This returns the ACT associated with the handle when it was
    * registered with the I/O completion port.  This ACT is not the
    * same as the ACT associated with the asynchronous operation.
    */
-  const void *completion_key () const;
+  void const *completion_key () const;
 
   /// Error value if the operation fail.
   u_long error () const;
@@ -267,11 +257,11 @@ public:
 protected:
   /// Constructor is protected since creation is limited to
   /// ACE_Asynch_Read_Stream factory.
-  ACE_WIN32_Asynch_Read_Stream_Result (const ACE_Handler::Proxy_Ptr &handler_proxy,
+  ACE_WIN32_Asynch_Read_Stream_Result (ACE_Handler::Proxy_Ptr const &handler_proxy,
                                        ACE_HANDLE handle,
                                        ACE_Message_Block &message_block,
                                        size_t bytes_to_read,
-                                       const void* act,
+                                       void const * act,
                                        ACE_HANDLE event,
                                        int priority,
                                        int signal_number = 0,
@@ -280,10 +270,9 @@ protected:
   /// Proactor will call this method when the read completes.
   virtual void complete (size_t bytes_transferred,
                          int success,
-                         const void *completion_key,
+                         void const *completion_key,
                          u_long error);
 
-  /// Destructor.
   virtual ~ACE_WIN32_Asynch_Read_Stream_Result ();
 
   /// Bytes requested when the asynchronous read was initiated.
@@ -308,21 +297,20 @@ protected:
  *     Once open() is called, multiple asynchronous read()s can
  *     started using this class.  An ACE_Asynch_Read_Stream::Result
  *     will be passed back to the @a handler when the asynchronous
- *     reads completes through the <ACE_Handler::handle_read_stream>
+ *     reads completes through the @c ACE_Handler::handle_read_stream
  *     callback.
  */
 class ACE_Export ACE_WIN32_Asynch_Read_Stream : public virtual ACE_Asynch_Read_Stream_Impl,
                                                 public ACE_WIN32_Asynch_Operation
 {
 public:
-  /// Constructor.
   ACE_WIN32_Asynch_Read_Stream (ACE_WIN32_Proactor *win32_proactor);
 
   /// This starts off an asynchronous read.  Upto @a bytes_to_read will
   /// be read and stored in the @a message_block.
   int read (ACE_Message_Block &message_block,
             size_t bytes_to_read,
-            const void *act,
+            void const *act,
             int priority,
             int signal_number = 0);
 
@@ -332,16 +320,15 @@ public:
   */
   int readv (ACE_Message_Block &message_block,
              size_t bytes_to_read,
-             const void *act,
+             void const *act,
              int priority,
              int signal_number = 0);
 
-  /// Destructor.
   virtual ~ACE_WIN32_Asynch_Read_Stream ();
 
-  // Methods belong to ACE_WIN32_Asynch_Operation base class. These
-  // methods are defined here to avoid VC++ warnings. They route the
-  // call to the ACE_WIN32_Asynch_Operation base class.
+  /// Methods belong to ACE_WIN32_Asynch_Operation base class. These
+  /// methods are defined here to avoid VC++ warnings. They route the
+  /// call to the ACE_WIN32_Asynch_Operation base class.
 
   /**
    * Initializes the factory with information which will be used with
@@ -349,9 +336,9 @@ public:
    * ACE_Handler::handle() will be called on the @a handler to get the
    * correct handle.
    */
-  int open (const ACE_Handler::Proxy_Ptr &handler_proxy,
+  int open (ACE_Handler::Proxy_Ptr const &handler_proxy,
             ACE_HANDLE handle,
-            const void *completion_key,
+            void const *completion_key,
             ACE_Proactor *proactor);
 
   /**
@@ -396,24 +383,26 @@ public:
   /// I/O handle used for writing.
   ACE_HANDLE handle () const;
 
-  // = Base class operations. These operations are here to kill some
-  //   warnings. These methods call the base class methods.
+  /// @name Base result accessors
+  /// @{
+  /// These accessors forward to the base class to avoid compiler
+  /// warnings.
 
   /// Number of bytes transferred by the operation.
   size_t bytes_transferred () const;
 
   /// ACT associated with the operation.
-  const void *act () const;
+  void const *act () const;
 
   /// Did the operation succeed?
-  int success () const;
+  bool success () const;
 
   /**
    * This returns the ACT associated with the handle when it was
    * registered with the I/O completion port.  This ACT is not the
    * same as the ACT associated with the asynchronous operation.
    */
-  const void *completion_key () const;
+  void const *completion_key () const;
 
   /// Error value if the operation fail.
   u_long error () const;
@@ -439,15 +428,16 @@ public:
 
   /// Accessor for the gather write flag
   int gather_enabled () const;
+  /// @}
 
 protected:
   /// Constructor is protected since creation is limited to
   /// ACE_Asynch_Write_Stream factory.
-  ACE_WIN32_Asynch_Write_Stream_Result (const ACE_Handler::Proxy_Ptr &handler_proxy,
+  ACE_WIN32_Asynch_Write_Stream_Result (ACE_Handler::Proxy_Ptr const &handler_proxy,
                                         ACE_HANDLE handle,
                                         ACE_Message_Block &message_block,
                                         size_t bytes_to_write,
-                                        const void* act,
+                                        void const * act,
                                         ACE_HANDLE event,
                                         int priority,
                                         int signal_number = 0,
@@ -456,10 +446,9 @@ protected:
   /// ACE_Proactor will call this method when the write completes.
   virtual void complete (size_t bytes_transferred,
                          int success,
-                         const void *completion_key,
+                         void const *completion_key,
                          u_long error);
 
-  /// Destructor.
   virtual ~ACE_WIN32_Asynch_Write_Stream_Result ();
 
   /// The number of bytes which were requested at the start of the
@@ -482,8 +471,8 @@ protected:
  * @brief This class is a factory for starting off asynchronous writes
  *    on a stream.
  *
- *     Once open() is called, multiple asynchronous <writes>s can
- *     started using this class.  A ACE_Asynch_Write_Stream::Result
+ *     Once open() is called, multiple asynchronous write operations can
+ *     be started using this class.  A ACE_Asynch_Write_Stream::Result
  *     will be passed back to the @a handler when the asynchronous
  *     write completes through the
  *     ACE_Handler::handle_write_stream() callback.
@@ -492,14 +481,13 @@ class ACE_Export ACE_WIN32_Asynch_Write_Stream : public virtual ACE_Asynch_Write
                                                  public ACE_WIN32_Asynch_Operation
 {
 public:
-  /// Constructor.
   ACE_WIN32_Asynch_Write_Stream (ACE_WIN32_Proactor *win32_proactor);
 
   /// This starts off an asynchronous write.  Upto @a bytes_to_write
   /// will be written from the @a message_block.
   int write (ACE_Message_Block &message_block,
              size_t bytes_to_write,
-             const void *act,
+             void const *act,
              int priority,
              int signal_number = 0);
 
@@ -509,17 +497,16 @@ public:
   */
   int writev (ACE_Message_Block &message_block,
               size_t bytes_to_write,
-              const void *act,
+              void const *act,
               int priority,
               int signal_number = 0);
 
-  /// Destructor.
   virtual ~ACE_WIN32_Asynch_Write_Stream ();
 
-  // = Methods belonging to <ACE_WIN32_Asynch_Operation> base class.
-
-  // These methods are defined here to avoid VC++ warnings. They route
-  // the call to the <ACE_WIN32_Asynch_Operation> base class.
+  /// @name ACE_WIN32_Asynch_Operation methods
+  /// @{
+  /// These methods forward to ACE_WIN32_Asynch_Operation to avoid
+  /// compiler warnings.
 
   /**
    * Initializes the factory with information which will be used with
@@ -527,9 +514,9 @@ public:
    * ACE_Handler::handle() will be called on the @a handler to get the
    * correct handle.
    */
-  int open (const ACE_Handler::Proxy_Ptr &handler_proxy,
+  int open (ACE_Handler::Proxy_Ptr const &handler_proxy,
             ACE_HANDLE handle,
-            const void *completion_key,
+            void const *completion_key,
             ACE_Proactor *proactor);
 
   /**
@@ -541,6 +528,7 @@ public:
 
   /// Return the underlying proactor.
   ACE_Proactor* proactor () const;
+  /// @}
 };
 
 /**
@@ -559,25 +547,26 @@ class ACE_Export ACE_WIN32_Asynch_Read_File_Result : public virtual ACE_Asynch_R
   friend class ACE_WIN32_Proactor;
 
 public:
-  // = These methods belong to ACE_WIN32_Asynch_Result class base
-  //   class. These operations are here to kill some warnings. These
-  //   methods call the base class methods.
+  /// @name ACE_WIN32_Asynch_Result methods
+  /// @{
+  /// These methods forward to ACE_WIN32_Asynch_Result to avoid
+  /// compiler warnings.
 
   /// Number of bytes transferred by the operation.
   size_t bytes_transferred () const;
 
   /// ACT associated with the operation.
-  const void *act () const;
+  void const *act () const;
 
   /// Did the operation succeed?
-  int success () const;
+  bool success () const;
 
   /**
    * This returns the ACT associated with the handle when it was
    * registered with the I/O completion port.  This ACT is not the
    * same as the ACT associated with the asynchronous operation.
    */
-  const void *completion_key () const;
+  void const *completion_key () const;
 
   /// Error value if the operation fail.
   u_long error () const;
@@ -597,11 +586,12 @@ public:
 
   /// No-op. Returns 0.
   int signal_number () const;
+  /// @}
 
-  // The following methods belong to
-  // ACE_WIN32_Asynch_Read_Stream_Result. They are here to avoid VC++
-  // dominance warnings. These methods route their call to the
-  // ACE_WIN32_Asynch_Read_Stream_Result base class.
+  /// @name ACE_WIN32_Asynch_Read_Stream_Result methods
+  /// @{
+  /// These methods forward to ACE_WIN32_Asynch_Read_Stream_Result to
+  /// avoid compiler dominance warnings.
 
   /// The number of bytes which were requested at the start of the
   /// asynchronous read.
@@ -615,15 +605,16 @@ public:
 
   /// Post @c this to the Proactor's completion port.
   int post_completion (ACE_Proactor_Impl *proactor);
+  /// @}
 
 protected:
   /// Constructor is protected since creation is limited to
   /// ACE_Asynch_Read_File factory.
-  ACE_WIN32_Asynch_Read_File_Result (const ACE_Handler::Proxy_Ptr &handler_proxy,
+  ACE_WIN32_Asynch_Read_File_Result (ACE_Handler::Proxy_Ptr const &handler_proxy,
                                      ACE_HANDLE handle,
                                      ACE_Message_Block &message_block,
                                      size_t bytes_to_read,
-                                     const void* act,
+                                     void const * act,
                                      u_long offset,
                                      u_long offset_high,
                                      ACE_HANDLE event,
@@ -634,10 +625,9 @@ protected:
   /// ACE_Proactor will call this method when the read completes.
   virtual void complete (size_t bytes_transferred,
                          int success,
-                         const void *completion_key,
+                         void const *completion_key,
                          u_long error);
 
-  /// Destructor.
   virtual ~ACE_WIN32_Asynch_Read_File_Result ();
 };
 
@@ -647,10 +637,10 @@ protected:
  * @brief This class is a factory for starting off asynchronous reads
  *     on a file.
  *
- *     Once <open> is called, multiple asynchronous <read>s can
- *     started using this class.  A ACE_Asynch_Read_File::Result
+ *     Once @c open() is called, multiple asynchronous read operations can
+ *     be started using this class.  A ACE_Asynch_Read_File::Result
  *     will be passed back to the @a handler when the asynchronous
- *     reads completes through the <ACE_Handler::handle_read_file>
+ *     reads completes through the @c ACE_Handler::handle_read_file
  *     callback.
  *
  *     This class differs slightly from ACE_Asynch_Read_Stream as it
@@ -660,7 +650,6 @@ class ACE_Export ACE_WIN32_Asynch_Read_File : public virtual ACE_Asynch_Read_Fil
                                               public ACE_WIN32_Asynch_Read_Stream
 {
 public:
-  /// Constructor.
   ACE_WIN32_Asynch_Read_File (ACE_WIN32_Proactor *win32_proactor);
 
   /**
@@ -672,7 +661,7 @@ public:
             size_t bytes_to_read,
             u_long offset,
             u_long offset_high,
-            const void *act,
+            void const *act,
             int priority,
             int signal_number = 0);
 
@@ -687,27 +676,26 @@ public:
              size_t bytes_to_read,
              u_long offset,
              u_long offset_high,
-             const void *act,
+             void const *act,
              int priority,
              int signal_number = 0);
 
-
-  /// Destructor.
   virtual ~ACE_WIN32_Asynch_Read_File ();
 
-  // = Methods belong to ACE_WIN32_Asynch_Operation base class. These
-  //   methods are defined here to avoid VC++ warnings. They route the
-  //   call to the ACE_WIN32_Asynch_Operation base class.
+  /// @name ACE_WIN32_Asynch_Operation methods
+  /// @{
+  /// These methods forward to ACE_WIN32_Asynch_Operation to avoid
+  /// compiler warnings.
 
   /**
    * Initializes the factory with information which will be used with
-   * each asynchronous call.  If (<handle> == ACE_INVALID_HANDLE),
-   * <ACE_Handler::handle> will be called on the @a handler to get the
-   * correct handle.
+   * each asynchronous call.  If (@a handle == ACE_INVALID_HANDLE),
+   * @c ACE_Handler::handle will be called on the handler referenced by
+   * @a handler_proxy to get the correct handle.
    */
-  int open (const ACE_Handler::Proxy_Ptr &handler_proxy,
+  int open (ACE_Handler::Proxy_Ptr const &handler_proxy,
             ACE_HANDLE handle,
-            const void *completion_key,
+            void const *completion_key,
             ACE_Proactor *proactor);
 
   /**
@@ -719,6 +707,7 @@ public:
 
   /// Return the underlying proactor.
   ACE_Proactor* proactor () const;
+  /// @}
 
 private:
   /**
@@ -728,7 +717,7 @@ private:
    */
   int read (ACE_Message_Block &message_block,
             size_t bytes_to_read,
-            const void *act,
+            void const *act,
             int priority,
             int signal_number = 0);
 
@@ -738,7 +727,7 @@ private:
   */
   int readv (ACE_Message_Block &message_block,
              size_t bytes_to_read,
-             const void *act,
+             void const *act,
              int priority,
              int signal_number = 0);
 };
@@ -755,8 +744,8 @@ private:
  *
  *     This class differs slightly from
  *     ACE_Asynch_Write_Stream::Result as it calls back
- *     <ACE_Handler::handle_write_file> on the @a handler instead
- *     of <ACE_Handler::handle_write_stream>.  No additional state
+ *     @c ACE_Handler::handle_write_file on the @a handler instead
+ *     of @c ACE_Handler::handle_write_stream.  No additional state
  *     is required by this class as ACE_Asynch_Result can store
  *     the @a offset.
  */
@@ -770,24 +759,26 @@ class ACE_Export ACE_WIN32_Asynch_Write_File_Result : public virtual ACE_Asynch_
   friend class ACE_WIN32_Proactor;
 
 public:
-  // = Base class operations. These operations are here to kill some
-  //   warnings. These methods call the base class methods.
+  /// @name Base result accessors
+  /// @{
+  /// These accessors forward to the base class to avoid compiler
+  /// warnings.
 
   /// Number of bytes transferred by the operation.
   size_t bytes_transferred () const;
 
   /// ACT associated with the operation.
-  const void *act () const;
+  void const *act () const;
 
   /// Did the operation succeed?
-  int success () const;
+  bool success () const;
 
   /**
    * This returns the ACT associated with the handle when it was
    * registered with the I/O completion port.  This ACT is not the
    * same as the ACT associated with the asynchronous operation.
    */
-  const void *completion_key () const;
+  void const *completion_key () const;
 
   /// Error value if the operation fail.
   u_long error () const;
@@ -808,10 +799,12 @@ public:
   /// No-op. Returns 0.
   int signal_number () const;
 
-  // The following methods belong to
-  // ACE_WIN32_Asynch_Read_Stream_Result. They are here to avoid VC++
-  // warnings. These methods route their call to the
-  // ACE_WIN32_Asynch_Read_Stream_Result base class.
+  /// @}
+
+  /// @name ACE_WIN32_Asynch_Write_Stream_Result methods
+  /// @{
+  /// These methods forward to ACE_WIN32_Asynch_Write_Stream_Result to
+  /// avoid compiler dominance warnings.
 
   /// The number of bytes which were requested at the start of the
   /// asynchronous write.
@@ -825,15 +818,16 @@ public:
 
   /// Post @c this to the Proactor's completion port.
   int post_completion (ACE_Proactor_Impl *proactor);
+  /// @}
 
 protected:
   /// Constructor is protected since creation is limited to
   /// ACE_Asynch_Write_File factory.
-  ACE_WIN32_Asynch_Write_File_Result (const ACE_Handler::Proxy_Ptr &handler_proxy,
+  ACE_WIN32_Asynch_Write_File_Result (ACE_Handler::Proxy_Ptr const &handler_proxy,
                                       ACE_HANDLE handle,
                                       ACE_Message_Block &message_block,
                                       size_t bytes_to_write,
-                                      const void* act,
+                                      void const * act,
                                       u_long offset,
                                       u_long offset_high,
                                       ACE_HANDLE event,
@@ -844,10 +838,9 @@ protected:
   /// ACE_Proactor will call this method when the write completes.
   virtual void complete (size_t bytes_transferred,
                          int success,
-                         const void *completion_key,
+                         void const *completion_key,
                          u_long error);
 
-  /// Destructor.
   virtual ~ACE_WIN32_Asynch_Write_File_Result ();
 };
 
@@ -857,17 +850,16 @@ protected:
  * @brief This class is a factory for starting off asynchronous writes
  *     on a file.
  *
- *     Once <open> is called, multiple asynchronous <write>s can be
+ *     Once @c open() is called, multiple asynchronous write operations can be
  *     started using this class.  A ACE_Asynch_Write_File::Result
  *     will be passed back to the @a handler when the asynchronous
- *     writes completes through the <ACE_Handler::handle_write_file>
+ *     writes completes through the @c ACE_Handler::handle_write_file
  *     callback.
  */
 class ACE_Export ACE_WIN32_Asynch_Write_File : public virtual ACE_Asynch_Write_File_Impl,
                                                public ACE_WIN32_Asynch_Write_Stream
 {
 public:
-  /// Constructor.
   ACE_WIN32_Asynch_Write_File (ACE_WIN32_Proactor *win32_proactor);
 
   /**
@@ -879,7 +871,7 @@ public:
              size_t bytes_to_write,
              u_long offset,
              u_long offset_high,
-             const void *act,
+             void const *act,
              int priority,
              int signal_number = 0);
 
@@ -894,26 +886,26 @@ public:
               size_t bytes_to_write,
               u_long offset,
               u_long offset_high,
-              const void *act,
+              void const *act,
               int priority,
               int signal_number = 0);
 
-  /// Destrcutor.
   virtual ~ACE_WIN32_Asynch_Write_File ();
 
-  // = Methods belong to ACE_WIN32_Asynch_Operation base class. These
-  //   methods are defined here to avoid VC++ warnings. They route the
-  //   call to the ACE_WIN32_Asynch_Operation base class.
+  /// @name ACE_WIN32_Asynch_Operation methods
+  /// @{
+  /// These methods forward to ACE_WIN32_Asynch_Operation to avoid
+  /// compiler warnings.
 
   /**
    * Initializes the factory with information which will be used with
-   * each asynchronous call.  If (<handle> == ACE_INVALID_HANDLE),
-   * <ACE_Handler::handle> will be called on the @a handler to get the
-   * correct handle.
+   * each asynchronous call.  If (@a handle == ACE_INVALID_HANDLE),
+   * @c ACE_Handler::handle will be called on the handler referenced by
+   * @a handler_proxy to get the correct handle.
    */
-  int open (const ACE_Handler::Proxy_Ptr &handler_proxy,
+  int open (ACE_Handler::Proxy_Ptr const &handler_proxy,
             ACE_HANDLE handle,
-            const void *completion_key,
+            void const *completion_key,
             ACE_Proactor *proactor);
 
   /**
@@ -925,6 +917,7 @@ public:
 
   /// Return the underlying proactor.
   ACE_Proactor* proactor () const;
+  /// @}
 
 private:
   /**
@@ -934,7 +927,7 @@ private:
    */
   int write (ACE_Message_Block &message_block,
              size_t bytes_to_write,
-             const void *act,
+             void const *act,
              int priority,
              int signal_number = 0);
 
@@ -944,7 +937,7 @@ private:
   */
   int writev (ACE_Message_Block &message_block,
               size_t bytes_to_write,
-              const void *act,
+              void const *act,
               int priority,
               int signal_number = 0);
 };
@@ -982,24 +975,26 @@ public:
   /// I/O handle for the new connection.
   ACE_HANDLE accept_handle () const;
 
-  // = Base class operations. These operations are here to kill some
-  //   warnings. These methods call the base class methods.
+  /// @name Base result accessors
+  /// @{
+  /// These accessors forward to the base class to avoid compiler
+  /// warnings.
 
   /// Number of bytes transferred by the operation.
   size_t bytes_transferred () const;
 
   /// ACT associated with the operation.
-  const void *act () const;
+  void const *act () const;
 
   /// Did the operation succeed?
-  int success () const;
+  bool success () const;
 
   /**
    * This returns the ACT associated with the handle when it was
    * registered with the I/O completion port.  This ACT is not the
    * same as the ACT associated with the asynchronous operation.
    */
-  const void *completion_key () const;
+  void const *completion_key () const;
 
   /// Error value if the operation fail.
   u_long error () const;
@@ -1022,16 +1017,17 @@ public:
 
   /// Post @c this to the Proactor's completion port.
   int post_completion (ACE_Proactor_Impl *proactor);
+  /// @}
 
 protected:
   /// Constructor is protected since creation is limited to
   /// ACE_Asynch_Accept factory.
-  ACE_WIN32_Asynch_Accept_Result (const ACE_Handler::Proxy_Ptr &handler_proxy,
+  ACE_WIN32_Asynch_Accept_Result (ACE_Handler::Proxy_Ptr const &handler_proxy,
                                   ACE_HANDLE listen_handle,
                                   ACE_HANDLE accept_handle,
                                   ACE_Message_Block &message_block,
                                   size_t bytes_to_read,
-                                  const void* act,
+                                  void const * act,
                                   ACE_HANDLE event,
                                   int priority,
                                   int signal_number = 0);
@@ -1039,10 +1035,9 @@ protected:
   /// ACE_Proactor will call this method when the accept completes.
   virtual void complete (size_t bytes_transferred,
                          int success,
-                         const void *completion_key,
+                         void const *completion_key,
                          u_long error);
 
-  /// Destructor.
   virtual ~ACE_WIN32_Asynch_Accept_Result ();
 
   /// Bytes requested when the asynchronous read was initiated.
@@ -1064,25 +1059,24 @@ protected:
  * @brief This class is a factory for starting off asynchronous accepts
  *     on a listen handle.
  *
- *     Once <open> is called, multiple asynchronous <accept>s can
- *     started using this class.  A ACE_Asynch_Accept::Result will
+ *     Once @c open() is called, multiple asynchronous accept operations can
+ *     be started using this class.  A ACE_Asynch_Accept::Result will
  *     be passed back to the @a handler when the asynchronous accept
- *     completes through the <ACE_Handler::handle_accept>
+ *     completes through the @c ACE_Handler::handle_accept
  *     callback.
  */
 class ACE_Export ACE_WIN32_Asynch_Accept : public virtual ACE_Asynch_Accept_Impl,
                                            public ACE_WIN32_Asynch_Operation
 {
 public:
-  /// Constructor.
   ACE_WIN32_Asynch_Accept (ACE_WIN32_Proactor *win32_proactor);
 
   /**
    * This starts off an asynchronous accept.  The asynchronous accept
    * call also allows any initial data to be returned to the
    * @a handler.  Upto @a bytes_to_read will be read and stored in the
-   * @a message_block.  The <accept_handle> will be used for the
-   * <accept> call.  If (<accept_handle> == INVALID_HANDLE), a new
+   * @a message_block.  The @a accept_handle will be used for the
+   * @c accept() call.  If (@a accept_handle == INVALID_HANDLE), a new
    * handle will be created.
    *
    * @a message_block must be specified. This is because the address of
@@ -1091,27 +1085,26 @@ public:
   int accept (ACE_Message_Block &message_block,
               size_t bytes_to_read,
               ACE_HANDLE accept_handle,
-              const void *act,
+              void const *act,
               int priority,
               int signal_number = 0,
               int addr_family = AF_INET);
 
-  /// Destructor.
   ~ACE_WIN32_Asynch_Accept ();
 
-  // Methods belong to ACE_WIN32_Asynch_Operation base class. These
-  // methods are defined here to avoid VC++ warnings. They route the
-  // call to the ACE_WIN32_Asynch_Operation base class.
+  /// Methods belong to ACE_WIN32_Asynch_Operation base class. These
+  /// methods are defined here to avoid VC++ warnings. They route the
+  /// call to the ACE_WIN32_Asynch_Operation base class.
 
   /**
    * Initializes the factory with information which will be used with
-   * each asynchronous call.  If (<handle> == ACE_INVALID_HANDLE),
-   * <ACE_Handler::handle> will be called on the @a handler to get the
-   * correct handle.
+   * each asynchronous call.  If (@a handle == ACE_INVALID_HANDLE),
+   * @c ACE_Handler::handle will be called on the handler referenced by
+   * @a handler_proxy to get the correct handle.
    */
-  int open (const ACE_Handler::Proxy_Ptr &handler_proxy,
+  int open (ACE_Handler::Proxy_Ptr const &handler_proxy,
             ACE_HANDLE handle,
-            const void *completion_key,
+            void const *completion_key,
             ACE_Proactor *proactor);
 
   /**
@@ -1148,24 +1141,26 @@ public:
   /// I/O handle for the  connection.
   ACE_HANDLE connect_handle () const;
 
-  // = Base class operations. These operations are here to kill some
-  //   warnings. These methods call the base class methods.
+  /// @name Base result accessors
+  /// @{
+  /// These accessors forward to the base class to avoid compiler
+  /// warnings.
 
   /// Number of bytes transferred by the operation.
   size_t bytes_transferred () const;
 
   /// ACT associated with the operation.
-  const void *act () const;
+  void const *act () const;
 
   /// Did the operation succeed?
-  int success () const;
+  bool success () const;
 
   /**
    * Returns the ACT associated with the handle when it was
    * registered with the I/O completion port.  This ACT is not the
    * same as the ACT associated with the asynchronous operation.
    */
-  const void *completion_key () const;
+  void const *completion_key () const;
 
   /// Error value if the operation fail.
   u_long error () const;
@@ -1188,13 +1183,14 @@ public:
 
   /// Post this object to the Proactor's completion port.
   int post_completion (ACE_Proactor_Impl *proactor);
+  /// @}
 
 protected:
   /// Constructor is protected since creation is limited to
   /// ACE_Asynch_Connect factory.
-  ACE_WIN32_Asynch_Connect_Result (const ACE_Handler::Proxy_Ptr &handler_proxy,
+  ACE_WIN32_Asynch_Connect_Result (ACE_Handler::Proxy_Ptr const &handler_proxy,
                                    ACE_HANDLE  connect_handle,
-                                   const void* act,
+                                   void const * act,
                                    ACE_HANDLE  event,
                                    int priority,
                                    int signal_number);
@@ -1202,10 +1198,9 @@ protected:
   /// ACE_Proactor will call this method when the accept completes.
   virtual void complete (size_t bytes_transferred,
                          int success,
-                         const void *completion_key,
+                         void const *completion_key,
                          u_long error);
 
-  /// Destructor.
   virtual ~ACE_WIN32_Asynch_Connect_Result ();
 
   /// Set the I/O handle for the new connection.
@@ -1213,7 +1208,6 @@ protected:
 
   ACE_HANDLE  connect_handle_;
 };
-
 
 /**
  * @class ACE_WIN32_Asynch_Connect
@@ -1224,10 +1218,8 @@ class ACE_Export ACE_WIN32_Asynch_Connect :
   public ACE_Event_Handler
 {
 public:
-  /// Constructor.
-  ACE_WIN32_Asynch_Connect (ACE_WIN32_Proactor * win32_proactor);
+  explicit ACE_WIN32_Asynch_Connect (ACE_WIN32_Proactor * win32_proactor);
 
-  /// Destructor.
   virtual ~ACE_WIN32_Asynch_Connect ();
 
  /**
@@ -1235,9 +1227,9 @@ public:
    * this call to that method. We have put this here to avoid the
    * compiler warnings.
    */
-  int open (const ACE_Handler::Proxy_Ptr &handler_proxy,
+  int open (ACE_Handler::Proxy_Ptr const &handler_proxy,
             ACE_HANDLE handle,
-            const void *completion_key,
+            void const *completion_key,
             ACE_Proactor *proactor = nullptr);
 
   /**
@@ -1250,10 +1242,10 @@ public:
    * @retval -1 Error
    */
   int connect (ACE_HANDLE connect_handle,
-               const ACE_Addr &remote_sap,
-               const ACE_Addr &local_sap,
+               ACE_Addr const &remote_sap,
+               ACE_Addr const &local_sap,
                int  reuse_addr,
-               const void *act,
+               void const *act,
                int priority,
                int signal_number = 0);
 
@@ -1283,16 +1275,18 @@ public:
   /// Virtual from ACE_Event_Handler
   int handle_close (ACE_HANDLE handle, ACE_Reactor_Mask close_mask) ;
 
-  // = Methods belong to ACE_WIN32_Asynch_Operation base class. These
-  //   methods are defined here to avoid dominace warnings. They route
-  //   the call to the ACE_WIN32_Asynch_Operation base class.
+  /// @name ACE_WIN32_Asynch_Operation methods
+  /// @{
+  /// This method forwards to ACE_WIN32_Asynch_Operation to avoid
+  /// compiler dominance warnings.
   /// Return the underlying proactor.
   ACE_Proactor* proactor () const;
+  /// @}
 
 private:
   int connect_i (ACE_WIN32_Asynch_Connect_Result *result,
-                 const ACE_Addr &remote_sap,
-                 const ACE_Addr &local_sap,
+                 ACE_Addr const &remote_sap,
+                 ACE_Addr const &local_sap,
                  int reuse_addr);
 
   int post_result (ACE_WIN32_Asynch_Connect_Result *result, bool flg_post);
@@ -1320,7 +1314,7 @@ private:
   typedef ACE_Map_Manager<ACE_HANDLE, ACE_WIN32_Asynch_Connect_Result *, ACE_SYNCH_NULL_MUTEX>
           MAP_MANAGER;
 
-  /// Map of Result pointers that correspond to all the <accept>'s
+  /// Map of Result pointers that correspond to all the accepts
   /// pending.
   MAP_MANAGER result_map_;
 
@@ -1377,17 +1371,17 @@ public:
   size_t bytes_transferred () const;
 
   /// ACT associated with the operation.
-  const void *act () const;
+  void const *act () const;
 
   /// Did the operation succeed?
-  int success () const;
+  bool success () const;
 
   /**
    * This returns the ACT associated with the handle when it was
    * registered with the I/O completion port.  This ACT is not the
    * same as the ACT associated with the asynchronous operation.
    */
-  const void *completion_key () const;
+  void const *completion_key () const;
 
   /// Error value if the operation fail.
   u_long error () const;
@@ -1414,7 +1408,7 @@ public:
 protected:
   /// Constructor is protected since creation is limited to
   /// ACE_Asynch_Transmit_File factory.
-  ACE_WIN32_Asynch_Transmit_File_Result (const ACE_Handler::Proxy_Ptr &handler_proxy,
+  ACE_WIN32_Asynch_Transmit_File_Result (ACE_Handler::Proxy_Ptr const &handler_proxy,
                                          ACE_HANDLE socket,
                                          ACE_HANDLE file,
                                          ACE_Asynch_Transmit_File::Header_And_Trailer *header_and_trailer,
@@ -1423,7 +1417,7 @@ protected:
                                          u_long offset_high,
                                          size_t bytes_per_send,
                                          u_long flags,
-                                         const void *act,
+                                         void const *act,
                                          ACE_HANDLE event,
                                          int priority,
                 int signal_number = 0);
@@ -1431,10 +1425,9 @@ protected:
   /// Proactor will call this method when the write completes.
   virtual void complete (size_t bytes_transferred,
                          int success,
-                         const void *completion_key,
+                         void const *completion_key,
                          u_long error);
 
-  /// Destructor.
   virtual ~ACE_WIN32_Asynch_Transmit_File_Result ();
 
   /// Network I/O handle.
@@ -1464,11 +1457,11 @@ protected:
  * @brief This class is a factory for starting off asynchronous
  *     transmit files on a stream.
  *
- *     Once <open> is called, multiple asynchronous <transmit_file>s
- *     can started using this class.  A
+ *     Once @c open() is called, multiple asynchronous transmit_file operations
+ *     can be started using this class.  A
  *     ACE_Asynch_Transmit_File::Result will be passed back to the
  *     @a handler when the asynchronous transmit file completes
- *     through the <ACE_Handler::handle_transmit_file> callback.
+ *     through the @c ACE_Handler::handle_transmit_file callback.
  *
  *     The transmit_file function transmits file data over a
  *     connected network connection. The function uses the operating
@@ -1481,16 +1474,15 @@ class ACE_Export ACE_WIN32_Asynch_Transmit_File : public virtual ACE_Asynch_Tran
                                                   public ACE_WIN32_Asynch_Operation
 {
 public:
-  /// Constructor.
   ACE_WIN32_Asynch_Transmit_File (ACE_WIN32_Proactor *win32_proactor);
 
   /**
-   * This starts off an asynchronous transmit file. The <file> is a
-   * handle to an open file.  <header_and_trailer> is a pointer to a
+   * This starts off an asynchronous transmit file. The @a file is a
+   * handle to an open file.  @a header_and_trailer is a pointer to a
    * data structure that contains pointers to data to send before and
    * after the file data is sent.  Set this parameter to 0 if you only
    * want to transmit the file data.  Upto @a bytes_to_write will be
-   * written to the <socket>.  If you want to send the entire file,
+   * written to the socket.  If you want to send the entire file,
    * let @a bytes_to_write = 0.  @a bytes_per_send is the size of each
    * block of data sent per send operation.  Please read the Win32
    * documentation on what the flags should be.
@@ -1502,26 +1494,25 @@ public:
                      u_long offset_high,
                      size_t bytes_per_send,
                      u_long flags,
-                     const void *act,
+                     void const *act,
                      int priority,
                      int signal_number = 0);
 
-  /// Destructor.
   ~ACE_WIN32_Asynch_Transmit_File ();
 
-  // Methods belong to ACE_WIN32_Asynch_Operation base class. These
-  // methods are defined here to avoid VC++ warnings. They route the
-  // call to the ACE_WIN32_Asynch_Operation base class.
+  /// Methods belong to ACE_WIN32_Asynch_Operation base class. These
+  /// methods are defined here to avoid VC++ warnings. They route the
+  /// call to the ACE_WIN32_Asynch_Operation base class.
 
   /**
    * Initializes the factory with information which will be used with
-   * each asynchronous call.  If (<handle> == ACE_INVALID_HANDLE),
-   * <ACE_Handler::handle> will be called on the @a handler to get the
-   * correct handle.
+   * each asynchronous call.  If (@a handle == ACE_INVALID_HANDLE),
+   * @c ACE_Handler::handle will be called on the handler referenced by
+   * @a handler_proxy to get the correct handle.
    */
-  int open (const ACE_Handler::Proxy_Ptr &handler_proxy,
+  int open (ACE_Handler::Proxy_Ptr const &handler_proxy,
             ACE_HANDLE handle,
-            const void *completion_key,
+            void const *completion_key,
             ACE_Proactor *proactor);
 
   /**
@@ -1576,17 +1567,17 @@ public:
   size_t bytes_transferred () const;
 
   /// ACT associated with the operation.
-  const void *act () const;
+  void const *act () const;
 
   /// Did the operation succeed?
-  int success () const;
+  bool success () const;
 
   /**
    * This returns the ACT associated with the handle when it was
    * registered with the I/O completion port.  This ACT is not the
    * same as the ACT associated with the asynchronous operation.
    */
-  const void *completion_key () const;
+  void const *completion_key () const;
 
   /// Error value if the operation fail.
   u_long error () const;
@@ -1613,13 +1604,13 @@ public:
 protected:
   /// Constructor is protected since creation is limited to
   /// ACE_Asynch_Read_Dgram factory.
-  ACE_WIN32_Asynch_Read_Dgram_Result (const ACE_Handler::Proxy_Ptr &handler_proxy,
+  ACE_WIN32_Asynch_Read_Dgram_Result (ACE_Handler::Proxy_Ptr const &handler_proxy,
                                       ACE_HANDLE handle,
                                       ACE_Message_Block *message_block,
                                       size_t bytes_to_read,
                                       int flags,
                                       int protocol_family,
-                                      const void* act,
+                                      void const * act,
                                       ACE_HANDLE event,
                                       int priority,
                                       int signal_number = 0);
@@ -1627,10 +1618,9 @@ protected:
   /// Proactor will call this method when the read completes.
   virtual void complete (size_t bytes_transferred,
                          int success,
-                         const void *completion_key,
+                         void const *completion_key,
                          u_long error);
 
-  /// Destructor.
   virtual ~ACE_WIN32_Asynch_Read_Dgram_Result ();
 
   /// Bytes requested when the asynchronous read was initiated.
@@ -1657,60 +1647,58 @@ protected:
  * @brief This class is a factory for starting off asynchronous reads
  *     on a UDP socket.
  *
- *     Once <open> is called, multiple asynchronous <read>s can be
+ *     Once @c open() is called, multiple asynchronous read operations can be
  *     started using this class.  An ACE_Asynch_Read_Dgram::Result
  *     will be passed back to the @a handler when the asynchronous
- *     reads completes through the <ACE_Handler::handle_read_stream>
+ *     reads completes through the @c ACE_Handler::handle_read_stream
  *     callback.
  */
 class ACE_Export ACE_WIN32_Asynch_Read_Dgram : public virtual ACE_Asynch_Read_Dgram_Impl,
                                                public ACE_WIN32_Asynch_Operation
 {
 public:
-  /// Constructor.
   ACE_WIN32_Asynch_Read_Dgram (ACE_WIN32_Proactor *win32_proactor);
 
-  /// Destructor.
   virtual ~ACE_WIN32_Asynch_Read_Dgram ();
 
    /** This starts off an asynchronous read.  Upto
-   * <message_block->total_size()> will be read and stored in the
-   * @a message_block.  @a message_block's <wr_ptr> will be updated to reflect
+   * @c message_block->total_size() will be read and stored in the
+   * @a message_block.  @a message_block's @c wr_ptr will be updated to reflect
    * the added bytes if the read operation is successfully completed.
-   * Return code of 1 means immediate success and <number_of_bytes_recvd>
-   * will contain number of bytes read.  The <ACE_Handler::handle_read_dgram>
+   * Return code of 1 means immediate success and @a number_of_bytes_recvd
+   * will contain number of bytes read.  The @c ACE_Handler::handle_read_dgram
    * method will still be called.  Return code of 0 means the IO will
    * complete proactively.  Return code of -1 means there was an error, use
    * errno to get the error code.
    *
-   * Scatter/gather is supported on WIN32 by using the <message_block->cont()>
+   * Scatter/gather is supported on WIN32 by using the @c message_block->cont()
    * method.  Up to ACE_IOV_MAX @a message_block's are supported.  Upto
-   * <message_block->size()> bytes will be read into each <message block> for
-   * a total of <message_block->total_size()> bytes.  All @a message_block's
-   * <wr_ptr>'s will be updated to reflect the added bytes for each
+   * @c message_block->size() bytes will be read into each message block for
+   * a total of @c message_block->total_size() bytes.  All @a message_block's
+   * @c wr_ptr pointers will be updated to reflect the added bytes for each
    * @a message_block
    */
   virtual ssize_t recv (ACE_Message_Block *message_block,
                         size_t &number_of_bytes_recvd,
                         int flags,
                         int protocol_family,
-                        const void *act,
+                        void const *act,
                         int priority,
                         int signal_number);
 
-  // Methods belong to ACE_WIN32_Asynch_Operation base class. These
-  // methods are defined here to avoid VC++ warnings. They route the
-  // call to the ACE_WIN32_Asynch_Operation base class.
+  /// Methods belong to ACE_WIN32_Asynch_Operation base class. These
+  /// methods are defined here to avoid VC++ warnings. They route the
+  /// call to the ACE_WIN32_Asynch_Operation base class.
 
   /**
    * Initializes the factory with information which will be used with
-   * each asynchronous call.  If (<handle> == ACE_INVALID_HANDLE),
-   * <ACE_Handler::handle> will be called on the @a handler to get the
-   * correct handle.
+   * each asynchronous call.  If (@a handle == ACE_INVALID_HANDLE),
+   * @c ACE_Handler::handle will be called on the handler referenced by
+   * @a handler_proxy to get the correct handle.
    */
-  int open (const ACE_Handler::Proxy_Ptr &handler_proxy,
+  int open (ACE_Handler::Proxy_Ptr const &handler_proxy,
             ACE_HANDLE handle,
-            const void *completion_key,
+            void const *completion_key,
             ACE_Proactor *proactor);
 
   /**
@@ -1757,24 +1745,26 @@ public:
   /// I/O handle used for writing.
   ACE_HANDLE handle () const;
 
-  // = Base class operations. These operations are here to kill some
-  //   warnings. These methods call the base class methods.
+  /// @name Base result accessors
+  /// @{
+  /// These accessors forward to the base class to avoid compiler
+  /// warnings.
 
   /// Number of bytes transferred by the operation.
   size_t bytes_transferred () const;
 
   /// ACT associated with the operation.
-  const void *act () const;
+  void const *act () const;
 
   /// Did the operation succeed?
-  int success () const;
+  bool success () const;
 
   /**
    * This returns the ACT associated with the handle when it was
    * registered with the I/O completion port.  This ACT is not the
    * same as the ACT associated with the asynchronous operation.
    */
-  const void *completion_key () const;
+  void const *completion_key () const;
 
   /// Error value if the operation fail.
   u_long error () const;
@@ -1797,16 +1787,17 @@ public:
 
   /// Post @c this to the Proactor's completion port.
   int post_completion (ACE_Proactor_Impl *proactor);
+  /// @}
 
 protected:
   /// Constructor is protected since creation is limited to
   /// ACE_Asynch_Write_Stream factory.
-  ACE_WIN32_Asynch_Write_Dgram_Result (const ACE_Handler::Proxy_Ptr &handler_proxy,
+  ACE_WIN32_Asynch_Write_Dgram_Result (ACE_Handler::Proxy_Ptr const &handler_proxy,
                                        ACE_HANDLE handle,
                                        ACE_Message_Block *message_block,
                                        size_t bytes_to_write,
                                        int flags,
-                                       const void* act,
+                                       void const * act,
                                        ACE_HANDLE event,
                                        int priority,
                                        int signal_number = 0);
@@ -1814,10 +1805,9 @@ protected:
   /// ACE_Proactor will call this method when the write completes.
   virtual void complete (size_t bytes_transferred,
                          int success,
-                         const void *completion_key,
+                         void const *completion_key,
                          u_long error);
 
-  /// Destructor.
   virtual ~ACE_WIN32_Asynch_Write_Dgram_Result ();
 
   /// The number of bytes which were requested at the start of the
@@ -1840,61 +1830,59 @@ protected:
  * @brief This class is a factory for starting off asynchronous writes
  *    on a UDP socket.
  *
- *     Once <open> is called, multiple asynchronous <writes>s can
- *     started using this class.  A ACE_Asynch_Write_Stream::Result
+ *     Once @c open() is called, multiple asynchronous write operations can
+ *     be started using this class.  A ACE_Asynch_Write_Stream::Result
  *     will be passed back to the @a handler when the asynchronous
  *     write completes through the
- *     <ACE_Handler::handle_write_stream> callback.
+ *     @c ACE_Handler::handle_write_stream callback.
  */
 class ACE_Export ACE_WIN32_Asynch_Write_Dgram : public virtual ACE_Asynch_Write_Dgram_Impl,
                                                 public ACE_WIN32_Asynch_Operation
 {
 public:
-  /// Constructor.
   ACE_WIN32_Asynch_Write_Dgram (ACE_WIN32_Proactor *win32_proactor);
 
-  /// Destructor.
   virtual ~ACE_WIN32_Asynch_Write_Dgram ();
 
   /** This starts off an asynchronous send.  Upto
-   * <message_block->total_length()> will be sent.  @a message_block's
-   * <rd_ptr> will be updated to reflect the sent bytes if the send operation
+   * @c message_block->total_length() will be sent.  @a message_block's
+   * @c rd_ptr will be updated to reflect the sent bytes if the send operation
    * is successfully completed.
-   * Return code of 1 means immediate success and <number_of_bytes_sent>
-   * is updated to number of bytes sent.  The <ACE_Handler::handle_write_dgram>
+   * Return code of 1 means immediate success and @a number_of_bytes_sent
+   * is updated to number of bytes sent.  The @c ACE_Handler::handle_write_dgram
    * method will still be called.  Return code of 0 means the IO will
    * complete proactively.  Return code of -1 means there was an error, use
    * errno to get the error code.
    *
-   * Scatter/gather is supported on WIN32 by using the <message_block->cont()>
+   * Scatter/gather is supported on WIN32 by using the @c message_block->cont()
    * method.  Up to ACE_IOV_MAX @a message_block's are supported.  Upto
-   * <message_block->length()> bytes will be sent from each <message block>
-   * for a total of <message_block->total_length()> bytes.  All
-   * @a message_block's <rd_ptr>'s will be updated to reflect the bytes sent
+   * @c message_block->length() bytes will be sent from each message block
+   * for a total of @c message_block->total_length() bytes.  All
+   * @a message_block's @c rd_ptr pointers will be updated to reflect the bytes sent
    * from each @a message_block.
    */
   virtual ssize_t send (ACE_Message_Block *message_block,
                         size_t &number_of_bytes_sent,
                         int flags,
-                        const ACE_Addr &addr,
-                        const void *act,
+                        ACE_Addr const &addr,
+                        void const *act,
                         int priority,
                         int signal_number);
 
-  // = Methods belonging to <ACE_WIN32_Asynch_Operation> base class.
-
-  // These methods are defined here to avoid VC++ warnings. They route
-  // the call to the <ACE_WIN32_Asynch_Operation> base class.
+  /// @name ACE_WIN32_Asynch_Operation methods
+  /// @{
+  /// These methods forward to ACE_WIN32_Asynch_Operation to avoid
+  /// compiler warnings.
 
   /**
    * Initializes the factory with information which will be used with
-   * each asynchronous call.  If (<handle> == ACE_INVALID_HANDLE),
-   * <ACE_Handler::handle> will be called on the @a handler to get the
-   * correct handle.
+   * each asynchronous call.  If (@a handle == ACE_INVALID_HANDLE),
+   * @c ACE_Handler::handle will be called on the handler referenced by
+   * @a handler_proxy to get the correct handle.
    */
-  int open (const ACE_Handler::Proxy_Ptr &handler_proxy,
+  int open (ACE_Handler::Proxy_Ptr const &handler_proxy,
             ACE_HANDLE handle,
-            const void *completion_key,
+            void const *completion_key,
             ACE_Proactor *proactor);
 
   /**
@@ -1906,6 +1894,7 @@ public:
 
   /// Return the underlying proactor.
   ACE_Proactor* proactor () const;
+  /// @}
 
 protected:
   /// Do-nothing constructor.

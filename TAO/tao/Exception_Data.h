@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Exception_Data.h
  *
  *  @author  balachandran Natarajan <bala@dre.vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef TAO_EXCEPTION_DATA_H
 #define TAO_EXCEPTION_DATA_H

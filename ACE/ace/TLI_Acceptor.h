@@ -1,13 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    TLI_Acceptor.h
  *
  *  @author Doug Schmidt
  */
-//=============================================================================
-
 
 #ifndef ACE_TLI_ACCEPTOR_H
 #define ACE_TLI_ACCEPTOR_H
@@ -45,33 +40,30 @@ class ACE_Export ACE_TLI_Acceptor : public ACE_TLI
 public:
   friend class ACE_Request_Queue;
 
-  /// Default constructor.
   ACE_TLI_Acceptor ();
 
   /// Initiate a passive mode socket.
-  ACE_TLI_Acceptor (const ACE_Addr &remote_sap,
+  ACE_TLI_Acceptor (ACE_Addr const &remote_sap,
                     int reuse_addr = 0,
                     int oflag = O_RDWR,
                     struct t_info *info = nullptr,
                     int backlog = ACE_DEFAULT_BACKLOG,
-                    const char device[] = ACE_TLI_TCP_DEVICE);
+                    char const device[] = ACE_TLI_TCP_DEVICE);
 
   /// Initiate a passive mode socket.
-  ACE_HANDLE open (const ACE_Addr &remote_sap,
+  ACE_HANDLE open (ACE_Addr const &remote_sap,
                    int reuse_addr = 0,
                    int oflag = O_RDWR,
                    struct t_info *info = nullptr,
                    int backlog = ACE_DEFAULT_BACKLOG,
-                   const char device[] = ACE_TLI_TCP_DEVICE);
+                   char const device[] = ACE_TLI_TCP_DEVICE);
 
   /// Close down the acceptor and release resources.
   int close ();
 
-  // = Passive connection acceptance method.
-
   /**
    * Accept a new data transfer connection.  A @a timeout of 0 means
-   * block forever, a @a timeout of {0, 0} means poll.  <restart> == 1
+   * block forever, a @a timeout of {0, 0} means poll.  @c restart == 1
    * means "restart if interrupted."
    */
   int accept (ACE_TLI_Stream &new_tli_sap,
@@ -83,9 +75,11 @@ public:
               netbuf *udata = nullptr,
               netbuf *opt = nullptr);
 
-  // = Meta-type info
+  /// @name Peer types
+  /// @{
   using PEER_ADDR = ACE_INET_Addr;
   using PEER_STREAM = ACE_TLI_Stream;
+  /// @}
 
   /// Dump the state of an object.
   void dump () const;
@@ -95,22 +89,22 @@ public:
 
 private:
   /// Network "device" we are using.
-  const char *device_;
+  char const *device_ {};
 
   /// Number of connections to queue.
-  int backlog_;
+  int backlog_ {};
 
   /// Are we using "tirdwr" mod?
-  int rwflag_;
+  int rwflag_ {};
 
   /// Handle TLI accept insanity...
   int handle_async_event (bool restart, int rwflag);
 
   /// Used for queueing up pending requests.
-  ACE_TLI_Request_Queue *queue_;
+  ACE_TLI_Request_Queue *queue_ {};
 
   /// Used for handling disconnects
-  struct t_discon *disp_;
+  struct t_discon *disp_ {};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

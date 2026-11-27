@@ -9,7 +9,7 @@
  * @author Carlos O'Ryan
  */
 
-#include /**/ "tao/Versioned_Namespace.h"
+#include "tao/orbconf.h"
 
 #include <algorithm>
 

@@ -2,10 +2,6 @@
 #include "orbsvcs/RtecEventChannelAdminS.h"
 #include "orbsvcs/Event_Service_Constants.h"
 
-Supplier::Supplier ()
-{
-}
-
 void
 Supplier::connect (RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin)
 {
@@ -17,11 +13,11 @@ Supplier::connect (RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin)
 
   // Simple publication, but usually the helper classes in
   // $TAO_ROOT/orbsvcs/Event_Utils.h are a better way to do this.
-  RtecEventChannelAdmin::SupplierQOS qos;
-  qos.is_gateway = 0;
+  RtecEventChannelAdmin::SupplierQOS qos {};
+  qos.is_gateway = false;
 
   qos.publications.length (1);
-  RtecEventComm::EventHeader& h0 =
+  RtecEventComm::EventHeader &h0 =
     qos.publications[0].event.header;
   h0.type   = ACE_ES_EVENT_UNDEFINED; // first free event type
   h0.source = 1;                      // first free event source
@@ -37,7 +33,7 @@ Supplier::disconnect ()
     {
       this->proxy_->disconnect_push_consumer ();
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
     }
 
@@ -56,14 +52,14 @@ Supplier::perform_push ()
       // The event type and source must match our publications
       RtecEventComm::EventSet event (1);
       event.length (1);
-      event[0].header.type   = ACE_ES_EVENT_UNDEFINED;
+      event[0].header.type = ACE_ES_EVENT_UNDEFINED;
       event[0].header.source = 1;
       // Avoid loops throught the event channel federations
-      event[0].header.ttl    = 1;
+      event[0].header.ttl = 1;
 
       this->proxy_->push (event);
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
     }
 }

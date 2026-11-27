@@ -1,6 +1,3 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
 *  @file Shared_Backing_Store.h
 *
@@ -10,7 +7,6 @@
 *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
 *  @author Priyanka Gontla <gontla_p@ociweb.com>
 */
-//=============================================================================
 
 #ifndef SHARED_BACKING_STORE_H
 #define SHARED_BACKING_STORE_H
@@ -65,12 +61,12 @@ public:
                         CORBA::ORB_ptr orb,
                         ImR_Locator_i *loc_impl);
 
-  virtual ~Shared_Backing_Store();
+  ~Shared_Backing_Store() override;
 
-  virtual void shutdown ();
+  void shutdown () override;
 
   /// indicate the persistence mode for the repository
-  virtual const ACE_TCHAR* repo_mode() const;
+  ACE_TCHAR const *repo_mode() const override;
 
   /// enum to indicate whether the repo is in-sync, individual
   /// server and/or activator files need to be sync-ed or if
@@ -83,9 +79,9 @@ public:
   ///        existed when data was persisted
   /// @param extra_params extra name value pairs that
   ///        were reported for the server
-  virtual void load_server (Server_Info *info,
-                            bool server_started,
-                            const NameValues& extra_params);
+  void load_server (Server_Info *info,
+                    bool server_started,
+                    const NameValues& extra_params) override;
 
   /// create the Activator_Info activator object
   /// @param activator_name the Activator_Info name
@@ -93,18 +89,18 @@ public:
   /// @param ior the Activator_Info ior
   /// @param extra_params extra name value pairs that
   ///        were reported for the activator
-  virtual void load_activator (const ACE_CString& activator_name,
-                               long token,
-                               const ACE_CString& ior,
-                               const NameValues& extra_params);
+  void load_activator (ACE_CString const& activator_name,
+                       long token,
+                       ACE_CString const& ior,
+                       const NameValues& extra_params) override;
 
-  virtual void notify_remote_access (const char * id,
-                                     ImplementationRepository::AAM_Status s);
+  void notify_remote_access (char const *id,
+                             ImplementationRepository::AAM_Status s) override;
 
   /// calls Locator_Repository::report_ior with the Fault Tolerant ImR
   /// Locator's IOR if available, otherwise reporting the ior is delayed
   /// until the peer replica registers with this replica
-  virtual int report_ior(PortableServer::POA_ptr imr_poa);
+  int report_ior(PortableServer::POA_ptr imr_poa) override;
 
   void gen_ior (char*& ft_imr_ior);
   void updates_available (const ImplementationRepository::UpdateInfoSeq& info,
@@ -117,44 +113,44 @@ protected:
   /// trys to connect to the peer replica, unless it is a
   /// STANDALONE_IMR, clears out the persisted store if needed,
   /// and loads the repo from the persisted store)
-  virtual int init_repo(PortableServer::POA_ptr imr_poa);
+  int init_repo(PortableServer::POA_ptr imr_poa) override;
 
   /// perform server persistent update
-  virtual int persistent_update(const Server_Info_Ptr& info, bool add);
+  int persistent_update(const Server_Info_Ptr& info, bool add) override;
 
   /// perform activator persistent update
-  virtual int persistent_update(const Activator_Info_Ptr& info, bool add);
+  int persistent_update(const Activator_Info_Ptr& info, bool add) override;
 
   /// perform persistent remove
-  virtual int persistent_remove(const ACE_CString& name, bool activator);
+  int persistent_remove(ACE_CString const& name, bool activator) override;
 
   /// perform sync of repo with backing store
   /// uses sync_needed_ and sync_files_ to determine what to update
-  virtual int sync_load ();
+  int sync_load () override;
 
   /// create the Fault Tolerant ImR Locator IOR, using the peer_ior and
   /// this ImR Locator's IOR
-  char* locator_service_ior(const char* peer_ior) const;
+  char* locator_service_ior(char const *peer_ior) const;
 
   int connect_replicas ();
 
 private:
   /// map management helper functions
-  void bind_unique_id (const ACE_CString& key,
+  void bind_unique_id (ACE_CString const& key,
                        UniqueIdMap& unique_ids,
                        const UniqueId& id);
 
-  void find_unique_id (const ACE_CString &key,
+  void find_unique_id (ACE_CString const &key,
                        UniqueIdMap &unique_ids,
                        UniqueId &uid);
 
-  void update_unique_id (const ACE_CString &key,
+  void update_unique_id (ACE_CString const &key,
                          UniqueIdMap& unique_ids,
                          Options::ImrType& entry_repo_type,
                          unsigned int& entry_repo_id,
                          UniqueId& uid);
 
-  void verify_unique_id (const ACE_CString& key,
+  void verify_unique_id (ACE_CString const& key,
                          const XML_Backing_Store::NameValues& extra_params,
                          UniqueIdMap& unique_ids);
 
@@ -165,10 +161,9 @@ private:
   class LocatorListings_XMLHandler : public ACEXML_DefaultHandler
   {
   public:
-    /// constructor
     /// @param dir the directory path to add to the server or activator
     ///        filename
-    LocatorListings_XMLHandler(const ACE_TString& dir);
+    explicit LocatorListings_XMLHandler(ACE_TString const& dir);
 
     /// constructor for tracking only changes to what servers and activators
     /// are currently in the repo
@@ -176,20 +171,20 @@ private:
     ///        filename
     /// @param servers a map of servers currently in the repo
     /// @param activators a map of activators currently in the repo
-    LocatorListings_XMLHandler(const ACE_TString& dir,
+    LocatorListings_XMLHandler(ACE_TString const& dir,
                                const Locator_Repository::SIMap& servers,
                                const Locator_Repository::AIMap& activators);
 
     /// provide implementation for handling a new XML element
-    virtual void startElement (const ACEXML_Char* namespaceURI,
-                               const ACEXML_Char* localName,
-                               const ACEXML_Char* qName,
-                               ACEXML_Attributes* attrs);
+    void startElement (const ACEXML_Char* namespaceURI,
+                       const ACEXML_Char* localName,
+                       const ACEXML_Char* qName,
+                       ACEXML_Attributes* attrs) override;
 
     /// provide implementation for handling terminating an XML element
-    virtual void endElement (const ACEXML_Char* namespaceURI,
-                             const ACEXML_Char* localName,
-                             const ACEXML_Char* qName);
+    void endElement (const ACEXML_Char* namespaceURI,
+                     const ACEXML_Char* localName,
+                     const ACEXML_Char* qName) override;
 
     /// remove the servers and activators that were in the repo but not
     /// in the listings file (this does nothing if existing servers and
@@ -198,11 +193,11 @@ private:
 
     /// the filenames identified in the listings file, if tracking changes
     /// only then only the filenames of the new servers and activators
-    const ACE_Vector<ACE_TString>& filenames() const;
+    ACE_Vector<ACE_TString> const& filenames() const;
 
   private:
     /// the directory to add to the listings file relative filenames
-    const ACE_TString& dir_;
+    ACE_TString const& dir_;
     /// the filenames identified in the listings file (or the new filenames)
     ACE_Vector<ACE_TString> filenames_;
     /// the existing servers in the repo that were not present in the
@@ -212,10 +207,10 @@ private:
     /// listings file
     Locator_Repository::AIMap unmatched_activators_;
     /// indicates if only changes should be tracked
-    const bool only_changes_;
+    bool const only_changes_;
   };
-  typedef ACE_Strong_Bound_Ptr
-    <LocatorListings_XMLHandler, ACE_Null_Mutex> XMLHandler_Ptr;
+  using XMLHandler_Ptr = ACE_Strong_Bound_Ptr<LocatorListings_XMLHandler,
+                                               ACE_Null_Mutex>;
 
   /// determine the filename where the replica ior is reported
   /// @param peer_ior_file if this is the filename for the peer
@@ -250,7 +245,7 @@ private:
   int connect_replicas(Replica_ptr this_replica);
 
   /// the path and filename for the listings file
-  const ACE_TString listing_file_;
+  ACE_TString const listing_file_;
   /// the imr type of this Shared_Backing_Store
   const Options::ImrType imr_type_;
   /// the current type of sync needed by the repo
@@ -261,7 +256,7 @@ private:
   /// the ior for just this ImR Locator
   CORBA::String_var non_ft_imr_ior_;
   /// an array associating ImrType with the appropriate name
-  const char* IMR_REPLICA[3];
+  char const *IMR_REPLICA[3];
   /// map  for server unique ids
   UniqueIdMap server_uids_;
   /// map  for activator unique ids
@@ -286,7 +281,7 @@ private:
   public :
     Shared_Backing_Store *owner_;
     Update_Handler (Shared_Backing_Store *owner) : owner_ (owner) {}
-    int handle_exception (ACE_HANDLE);
+    int handle_exception (ACE_HANDLE) override;
   } update_handler_;
 };
 

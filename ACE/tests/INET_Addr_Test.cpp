@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    INET_Addr_Test.cpp
  *
@@ -9,8 +7,6 @@
  *
  *  @author John Aughey (jha@aughey.com)
  */
-//=============================================================================
-
 
 #include "test_config.h"
 #include "ace/OS_NS_string.h"
@@ -20,9 +16,11 @@
 #include "ace/SString.h"
 #include "ace/OS_NS_unistd.h"
 
+#include <cstring>
+
 // Make sure that ACE_Addr::addr_type_ is the same
 // as the family of the inet_addr_.
-static int check_type_consistency (const ACE_INET_Addr &addr)
+static int check_type_consistency (ACE_INET_Addr const &addr)
 {
   int family = -1;
 
@@ -70,7 +68,7 @@ static bool test_tao_use ()
 
   addr.set (full.c_str ());
 
-  u_short p = addr.get_port_number ();
+  u_short const p = addr.get_port_number ();
 
   if (p != 12345)
     {
@@ -152,7 +150,9 @@ static bool test_multiple ()
     }
   while (ntp6.next ());
   if (count <= 1)
-    success = false;
+    {
+      success = false;
+    }
 #endif /* ACE_HAS_IPV6 */
 
   return success;
@@ -196,7 +196,7 @@ static bool test_port_names()
 }
 
 struct Address {
-  const char* name;
+  char const * name;
   bool loopback;
 };
 
@@ -207,9 +207,9 @@ int run_main (int, ACE_TCHAR *[])
   int status = 0;     // Innocent until proven guilty
 
   // Try to set up known IP and port.
-  u_short port (80);
+  u_short const port (80);
   ACE_UINT32 const ia_any = INADDR_ANY;
-  ACE_INET_Addr local_addr(port, ia_any);
+  ACE_INET_Addr const local_addr(port, ia_any);
   status |= check_type_consistency (local_addr);
   if (local_addr.get_port_number () != 80)
     {
@@ -225,7 +225,7 @@ int run_main (int, ACE_TCHAR *[])
     }
 
   // Assignment constructor
-  ACE_INET_Addr local_addr2 (local_addr);
+  ACE_INET_Addr const local_addr2 (local_addr);
   status |= check_type_consistency (local_addr2);
   if (local_addr2.get_port_number () != 80)
     {
@@ -247,7 +247,7 @@ int run_main (int, ACE_TCHAR *[])
 
   // Try to parse out a simple address:port string. Intentionally reuse
   // the ACE_INET_Addr to ensure resetting an address works.
-  const char *addr_ports[] =
+  char const *addr_ports[] =
     {
       "127.0.0.1:80", "www.dre.vanderbilt.edu:80", nullptr
     };
@@ -265,7 +265,7 @@ int run_main (int, ACE_TCHAR *[])
                           addr_ports[i]));
               status = 1;
             }
-          ACE_INET_Addr check (addr_ports[i]);
+          ACE_INET_Addr const check (addr_ports[i]);
           if (addr_port != check)
             {
               ACE_ERROR ((LM_ERROR, ACE_TEXT ("Reset on iter %d failed\n"), i));
@@ -299,9 +299,9 @@ int run_main (int, ACE_TCHAR *[])
                     , (int)addr_port_in6->sin6_scope_id, (int)check_in6->sin6_scope_id));
 
                   ACE_ERROR((LM_DEBUG, ACE_TEXT ("  addr_port_in6->sin6_addr=")));
-                  ACE_HEX_DUMP((LM_DEBUG, reinterpret_cast<const char*>(&addr_port_in6->sin6_addr), sizeof(addr_port_in6->sin6_addr)));
+                  ACE_HEX_DUMP((LM_DEBUG, reinterpret_cast<char const *>(&addr_port_in6->sin6_addr), sizeof(addr_port_in6->sin6_addr)));
                   ACE_ERROR((LM_DEBUG, ACE_TEXT ("  check_in6->sin6_addr=")));
-                  ACE_HEX_DUMP((LM_DEBUG, reinterpret_cast<const char*>(&check_in6->sin6_addr), sizeof(check_in6->sin6_addr)));
+                  ACE_HEX_DUMP((LM_DEBUG, reinterpret_cast<char const *>(&check_in6->sin6_addr), sizeof(check_in6->sin6_addr)));
                 }
               }
 #endif
@@ -330,7 +330,7 @@ int run_main (int, ACE_TCHAR *[])
         }
     }
 
-  const char *ipv4_addresses[] =
+  char const *ipv4_addresses[] =
     {
       "127.0.0.1", "138.38.180.251", "64.219.54.121", "192.0.0.1", "10.0.0.1", nullptr
     };
@@ -339,7 +339,7 @@ int run_main (int, ACE_TCHAR *[])
   status |= check_type_consistency (addr);
   char hostaddr[1024];
 
-  for (int i=0; ipv4_addresses[i] != nullptr; i++)
+  for (int i=0; ipv4_addresses[i] != nullptr; ++i)
     {
       struct in_addr addrv4;
       ACE_OS::memset ((void *) &addrv4, 0, sizeof addrv4);
@@ -368,7 +368,7 @@ int run_main (int, ACE_TCHAR *[])
         }
 
       if (addr.get_host_addr () != nullptr &&
-          ACE_OS::strcmp (addr.get_host_addr(), ipv4_addresses[i]) != 0)
+          std::strcmp (addr.get_host_addr(), ipv4_addresses[i]) != 0)
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("%C failed get_host_addr() check\n")
@@ -380,25 +380,25 @@ int run_main (int, ACE_TCHAR *[])
         }
 
       // Now we check the operation of get_host_addr(char*,int)
-      const char* haddr = addr.get_host_addr (&hostaddr[0], sizeof(hostaddr));
+      char const * haddr = addr.get_host_addr (hostaddr, sizeof(hostaddr));
       if (haddr != nullptr &&
-          ACE_OS::strcmp (&hostaddr[0], haddr) != 0)
+          std::strcmp (hostaddr, haddr) != 0)
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("%C failed get_host_addr(char* buf,int) check\n")
                       ACE_TEXT ("buf ['%C'] != return value ['%C']\n"),
                       ipv4_addresses[i],
-                      &hostaddr[0],
+                      hostaddr,
                       haddr));
           status = 1;
         }
-      if (ACE_OS::strcmp (&hostaddr[0], ipv4_addresses[i]) != 0)
+      if (std::strcmp (hostaddr, ipv4_addresses[i]) != 0)
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("%C failed get_host_addr(char*,int) check\n")
                       ACE_TEXT ("buf ['%C'] != expected value ['%C']\n"),
                       ipv4_addresses[i],
-                      &hostaddr[0],
+                      hostaddr,
                       ipv4_addresses[i]));
           status = 1;
         }
@@ -418,7 +418,7 @@ int run_main (int, ACE_TCHAR *[])
       status |= check_type_consistency(addr);
 
       if (addr.get_host_addr () != nullptr &&
-          ACE_OS::strcmp (addr.get_host_addr (), ipv4_addresses[i]) != 0)
+          std::strcmp (addr.get_host_addr (), ipv4_addresses[i]) != 0)
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("%C failed second get_host_addr() check\n")
@@ -462,28 +462,28 @@ int run_main (int, ACE_TCHAR *[])
     {
       char local_host_name[1024];
       ACE_OS::hostname(local_host_name, 1024);
-      const char* local_names[] = {"localhost", local_host_name};
+      char const * local_names[] = {"localhost", local_host_name};
 
-      for (int i = 0; i < 2; ++i)
+      for (char const *local_name : local_names)
       {
          ACE_INET_Addr addr;
-         int old_type = addr.get_type();
-         if (addr.set(12345, local_names[i]) == 0) {
+         int const old_type = addr.get_type();
+         if (addr.set(12345, local_name) == 0) {
            if (addr.get_type() != old_type) {
              ACE_ERROR ((LM_ERROR,
                          ACE_TEXT ("IPv6 set failed: addr.set(12345, \"%C\"), old addr.type() = %d, new addr_type()= %d\n"),
-                         local_names[i],
+                         local_name,
                          old_type,
                          addr.get_type ()));
              status = 1;
            }
          }
          else {
-           ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("IPv6 set failed: addr.set(12345, \"%C\") returns nonzero\n"), local_names[i]));
+           ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("IPv6 set failed: addr.set(12345, \"%C\") returns nonzero\n"), local_name));
          }
       }
 
-      const char *ipv6_addresses[] = {
+      char const *ipv6_addresses[] = {
         "1080::8:800:200c:417a", // unicast address
         "ff01::101",             // multicast address
         "::1",                   // loopback address
@@ -491,12 +491,12 @@ int run_main (int, ACE_TCHAR *[])
         nullptr
       };
 
-      for (int i=0; ipv6_addresses[i] != nullptr; i++)
+      for (int i=0; ipv6_addresses[i] != nullptr; ++i)
         {
-          ACE_INET_Addr addr (80, ipv6_addresses[i]);
+          ACE_INET_Addr const addr (80, ipv6_addresses[i]);
           status |= check_type_consistency (addr);
 
-          if (0 != ACE_OS::strcmp (addr.get_host_addr (), ipv6_addresses[i]))
+          if (0 != std::strcmp (addr.get_host_addr (), ipv6_addresses[i]))
             {
               ACE_ERROR ((LM_ERROR,
                           ACE_TEXT ("IPv6 get_host_addr failed: %C != %C\n"),
@@ -506,33 +506,35 @@ int run_main (int, ACE_TCHAR *[])
             }
         }
 
-      const char *ipv6_names[] = {
+      char const *ipv6_names[] = {
         "naboo.dre.vanderbilt.edu",
         "v6.ipv6-test.com",
         nullptr
       };
-      for (int i=0; ipv6_names[i] != nullptr; i++)
+      for (int i=0; ipv6_names[i] != nullptr; ++i)
         {
-          ACE_INET_Addr addr (80, ipv6_names[i]);
+          ACE_INET_Addr const addr (80, ipv6_names[i]);
           status |= check_type_consistency (addr);
 
-          if (0 != ACE_OS::strcmp (addr.get_host_name (), ipv6_names[i]))
+          if (0 != std::strcmp (addr.get_host_name (), ipv6_names[i]))
             {
               // Alias? Check lookup on the reverse.
               ACE_INET_Addr alias_check;
               if (alias_check.set (80, addr.get_host_name ()) == 0)
                 {
                   if (addr != alias_check)
-                    ACE_ERROR ((LM_WARNING,
-                                ACE_TEXT ("IPv6 name mismatch: %s (%s) != %s\n"),
-                                addr.get_host_name (),
-                                addr.get_host_addr (),
-                                ipv6_names[i]));
+                        {
+                          ACE_ERROR ((LM_WARNING,
+                                      ACE_TEXT ("IPv6 name mismatch: %C (%C) != %C\n"),
+                                      addr.get_host_name (),
+                                      addr.get_host_addr (),
+                                      ipv6_names[i]));
+                        }
                 }
               else
                 {
                   ACE_ERROR ((LM_WARNING,
-                              ACE_TEXT ("IPv6 reverse lookup mismatch: %s (%s) != %s\n"),
+                              ACE_TEXT ("IPv6 reverse lookup mismatch: %C (%C) != %C\n"),
                               addr.get_host_name (),
                               addr.get_host_addr (),
                               ipv6_names[i]));
@@ -545,13 +547,13 @@ int run_main (int, ACE_TCHAR *[])
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("ACE_HAS_IPV6 not set; no IPv6 tests run\n")));
 #endif
 
-  struct Address loopback_addresses[] =
+  struct Address const loopback_addresses[] =
     { {"127.0.0.1", true}, {"127.1.2.3", true}
       , {"127.0.0.0", true}, {"127.255.255.255", true}
       , {"126.255.255.255", false}, {"128.0.0.0", false}, {nullptr, true}
     };
 
-  for (int i=0; loopback_addresses[i].name != nullptr; i++)
+  for (int i=0; loopback_addresses[i].name != nullptr; ++i)
     {
       struct in_addr addrv4;
       ACE_UINT32 addr32 = 0;
@@ -581,16 +583,22 @@ int run_main (int, ACE_TCHAR *[])
     }
 
   if (!test_tao_use ())
+  {
     status = 1;
+  }
 
   if (!test_multiple ())
+  {
     status = 1;
+  }
 
   if (!test_port_assignment ())
+  {
     status = 1;
+  }
 
-  ACE_INET_Addr a1 (80, "127.0.0.1");
-  ACE_INET_Addr a2 = a1;
+  ACE_INET_Addr const a1 (80, "127.0.0.1");
+  ACE_INET_Addr const a2 = a1;
   if (a1 != a2)
     {
       ACE_ERROR ((LM_ERROR,
@@ -599,7 +607,9 @@ int run_main (int, ACE_TCHAR *[])
     }
 
   if (!test_port_names ())
+  {
     status = 1;
+  }
 
   ACE_END_TEST;
 

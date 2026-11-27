@@ -1,13 +1,8 @@
-// -*- C++ -*-
-
-//=======================================================================
 /**
  *  @file    FT_Location_Index_Map.h
  *
  *  @author  Kevin Stanley <stanleyk@ociweb.com>
  */
-//=======================================================================
-
 
 #ifndef TAO_FT_LOCATION_INDEX_MAP_H
 #define TAO_FT_LOCATION_INDEX_MAP_H

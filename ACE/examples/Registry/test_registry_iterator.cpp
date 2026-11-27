@@ -14,9 +14,8 @@
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
 
-
 // Indentation while printing names
-static const u_long INDENTATION_LEVEL = 3;
+static constexpr u_long INDENTATION_LEVEL = 3;
 
 // Prototypes
 static int print_naming_context (ACE_Registry::Naming_Context &naming_context,
@@ -40,19 +39,28 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                                     // HKEY_CLASSES_ROOT,
                                                     // HKEY_USERS,
                                                     // HKEY_CURRENT_USER,
-                                                    argc == 2 ? argv[1] : 0);
+                                                    argc == 2 ? argv[1] : nullptr);
 
   if (result != 0)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_Predefined_Naming_Contexts::connect failed"), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("ACE_Predefined_Naming_Contexts::connect failed")),
+                        -1);
+    }
 
   // Print contents of naming context
   result = ::print_naming_context (naming_context, 0);
   if (result != 0)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "print_naming_context failed"), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("print_naming_context failed")),
+                        -1);
+    }
 
   return 0;
 }
-
 
 // Print contents of <naming_context>
 static int
@@ -64,7 +72,12 @@ print_naming_context (ACE_Registry::Naming_Context &naming_context,
   // Get the list of all entries
   int result = naming_context.list (list);
   if (result != 0)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "ACE_Registry::Naming_Context::list"), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("ACE_Registry::Naming_Context::list")),
+                        -1);
+    }
 
   // Iterator through all entries
   for (ACE_Registry::Binding_List::iterator i = list.begin ();
@@ -75,18 +88,21 @@ print_naming_context (ACE_Registry::Naming_Context &naming_context,
       ACE_Registry::Binding &binding = *i;
 
       if (binding.type () == ACE_Registry::OBJECT)
-        // If object
-        ::print_object (binding.name (),
-                        indentation);
+        {
+          // If object
+          ::print_object (binding.name (),
+                          indentation);
+        }
       else
-        // If context
-        ::print_context (naming_context,
-                         binding.name (),
-                         indentation);
+        {
+          // If context
+          ::print_context (naming_context,
+                           binding.name (),
+                           indentation);
+        }
     }
   return 0;
 }
-
 
 // Print an object with <name>
 static void
@@ -97,7 +113,6 @@ print_object (const ACE_TString &name,
   ::indent (indentation);
   cout << name << endl;
 }
-
 
 // Print an context with <name> and <parent>
 static void
@@ -115,24 +130,34 @@ print_context (ACE_Registry::Naming_Context &parent,
                                        child_context,
                                        KEY_READ);
   if (result != 0)
-    ACE_ERROR ((LM_ERROR, "%s %s\n", "ACE_Registry::Naming_Context::resolve_context failed for:", name.c_str ()));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("%s %s\n"),
+                  ACE_TEXT ("ACE_Registry::Naming_Context::resolve_context failed for:"),
+                  name.c_str ()));
+    }
   else
     {
       // Print contents of the child
       result = ::print_naming_context (child_context,
                                        indentation + INDENTATION_LEVEL);
       if (result != 0)
-        ACE_ERROR ((LM_ERROR, "%p\n", "print_naming_context failed"));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("%p\n"),
+                      ACE_TEXT ("print_naming_context failed")));
+        }
     }
 }
-
 
 // Pretty formating
 static void
 indent (u_long indentation)
 {
-  for (; indentation > 0; indentation--)
-    cout << " ";
+  for (; indentation > 0; --indentation)
+    {
+      cout << " ";
+    }
 }
 #else /* !ACE_WIN32 || ACE_LACKS_WIN32_REGISTRY */
 int

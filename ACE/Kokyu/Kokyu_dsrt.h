@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file   Kokyu_dsrt.h
  *
@@ -36,13 +35,14 @@ namespace Kokyu
     using Guid_t = typename DSRT_Scheduler_Traits::Guid_t;
     using DSRT_QoSDescriptor = typename DSRT_Scheduler_Traits::QoSDescriptor_t;
 
-    // = Scheduling methods.
+    /// @name Scheduling methods
+    /// @{
 
     /// Schedule a thread dynamically based on the qos info supplied.
-    int schedule (Guid_t guid, const DSRT_QoSDescriptor&);
+    int schedule (Guid_t guid, DSRT_QoSDescriptor const &);
 
     /// Update the schedule for a thread. This could alter the current schedule.
-    int update_schedule (Guid_t guid, const DSRT_QoSDescriptor&);
+    int update_schedule (Guid_t guid, DSRT_QoSDescriptor const &);
 
     /// Inform the scheduler that the caller thread is about to
     /// block. This could alter the current schedule.
@@ -51,31 +51,31 @@ namespace Kokyu
     /// Cancel the schedule for a thread. This could alter the current schedule.
     int cancel_schedule (Guid_t guid);
 
-    /// Supply this interface with an appropriate implementation.
+    /// Takes ownership of the implementation.
     void implementation (DSRT_Dispatcher_Impl<DSRT_Scheduler_Traits>*);
+    /// @}
 
-    // = Termination methods.
+    /// @name Termination methods
+    /// @{
 
     /// Shut down the dispatcher. The dispatcher will stop processing requests.
     int shutdown ();
+    /// @}
 
     DSRT_Dispatcher () = default;
 
-    DSRT_Dispatcher (const DSRT_Dispatcher &) = delete;
+    DSRT_Dispatcher (DSRT_Dispatcher const &) = delete;
     DSRT_Dispatcher (DSRT_Dispatcher &&) = delete;
-    DSRT_Dispatcher &operator= (const DSRT_Dispatcher &) = delete;
+    DSRT_Dispatcher &operator= (DSRT_Dispatcher const &) = delete;
     DSRT_Dispatcher &operator= (DSRT_Dispatcher &&) = delete;
 
-    /// Non virtual destructor. Read as <b><i>this class not available
-    /// for inheritance<i></b>.
+    /// @note This class is not intended to be used as a base class.
     ~DSRT_Dispatcher ();
 
   private:
-    /// Auto ptr to the implementation. Implementation will be created on the
-    /// heap and deleted automatically when the dispatcher object is destructed.
-    std::unique_ptr<DSRT_Dispatcher_Impl<DSRT_Scheduler_Traits> > dispatcher_impl_;
+    /// Owns the implementation created for this dispatcher.
+    std::unique_ptr<DSRT_Dispatcher_Impl<DSRT_Scheduler_Traits>> dispatcher_impl_;
   };
-
 
   /**
    * @class DSRT_Dispatcher_Factory
@@ -91,9 +91,9 @@ namespace Kokyu
   class DSRT_Dispatcher_Factory
   {
   public:
-    DSRT_Dispatcher_Factory (const DSRT_Dispatcher_Factory &) = delete;
+    DSRT_Dispatcher_Factory (DSRT_Dispatcher_Factory const &) = delete;
     DSRT_Dispatcher_Factory (DSRT_Dispatcher_Factory &&) = delete;
-    DSRT_Dispatcher_Factory &operator= (const DSRT_Dispatcher_Factory &) = delete;
+    DSRT_Dispatcher_Factory &operator= (DSRT_Dispatcher_Factory const &) = delete;
     DSRT_Dispatcher_Factory &operator= (DSRT_Dispatcher_Factory &&) = delete;
 
     using DSRT_Dispatcher_Auto_Ptr = std::unique_ptr<DSRT_Dispatcher<DSRT_Scheduler_Traits>>;
@@ -107,7 +107,7 @@ namespace Kokyu
       *
       * @return pointer to the DSRT dispatcher.
       */
-    static DSRT_Dispatcher<DSRT_Scheduler_Traits>* create_DSRT_dispatcher (const DSRT_ConfigInfo&);
+    static DSRT_Dispatcher<DSRT_Scheduler_Traits>* create_DSRT_dispatcher (DSRT_ConfigInfo const &);
   };
 
   /**
@@ -123,8 +123,8 @@ namespace Kokyu
   public:
     using Importance_t = typename QoSDesc::Importance_t;
 
-    int operator ()(const QoSDesc& qos1,
-                    const QoSDesc& qos2);
+    int operator ()(QoSDesc const &qos1,
+                    QoSDesc const &qos2);
   };
 
   /**
@@ -140,8 +140,8 @@ namespace Kokyu
   public:
     using Priority_t = typename QoSDesc::Priority_t;
 
-    int operator ()(const QoSDesc& qos1,
-                    const QoSDesc& qos2);
+    int operator ()(QoSDesc const &qos1,
+                    QoSDesc const &qos2);
   };
 
   /**
@@ -158,8 +158,8 @@ namespace Kokyu
     using Criticality_t = typename QoSDesc::Criticality_t;
     using Time_t = typename QoSDesc::Time_t;
 
-    int operator ()(const QoSDesc& qos1,
-                    const QoSDesc& qos2);
+    int operator ()(QoSDesc const &qos1,
+                    QoSDesc const &qos2);
   };
 
 } //end of namespace

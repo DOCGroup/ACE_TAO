@@ -11,9 +11,9 @@ struct X
   X() { ++count_; }
   ~X() { --count_; }
 
-  X (const X &) = delete;
+  X (X const &) = delete;
   X (X &&) = delete;
-  X &operator= (const X &) = delete;
+  X &operator= (X const &) = delete;
   X &operator= (X &&) = delete;
 };
 

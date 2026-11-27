@@ -9,9 +9,9 @@ Sleep_Service::Sleep_Service (CORBA::ORB_ptr orb)
 void
 Sleep_Service::go_to_sleep (CORBA::ULong microseconds)
 {
-  CORBA::ULong  secs = microseconds / 1000000;
-  CORBA::ULong usecs = microseconds % 1000000;
-  ACE_Time_Value tv (secs, usecs);
+  CORBA::ULong const secs = microseconds / 1000000;
+  CORBA::ULong const usecs = microseconds % 1000000;
+  ACE_Time_Value const tv (secs, usecs);
 
   ACE_OS::sleep (tv);
 }

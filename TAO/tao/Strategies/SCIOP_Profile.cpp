@@ -11,7 +11,12 @@
 #include "tao/Strategies/sciop_endpointsC.h"
 #include "ace/os_include/os_netdb.h"
 
-static const char prefix_[] = "sciop";
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
+#include <memory>
+
+static char const prefix_[] = "sciop";
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -21,9 +26,9 @@ TAO_SCIOP_Profile::object_key_delimiter () const
   return TAO_SCIOP_Profile::object_key_delimiter_;
 }
 
-TAO_SCIOP_Profile::TAO_SCIOP_Profile (const ACE_INET_Addr &addr,
-                                    const TAO::ObjectKey &object_key,
-                                    const TAO_GIOP_Message_Version &version,
+TAO_SCIOP_Profile::TAO_SCIOP_Profile (ACE_INET_Addr const &addr,
+                                    TAO::ObjectKey const &object_key,
+                                    TAO_GIOP_Message_Version const &version,
                                     TAO_ORB_Core *orb_core)
   : TAO_Profile (TAO_TAG_SCIOP_PROFILE,
                  orb_core,
@@ -34,11 +39,11 @@ TAO_SCIOP_Profile::TAO_SCIOP_Profile (const ACE_INET_Addr &addr,
 {
 }
 
-TAO_SCIOP_Profile::TAO_SCIOP_Profile (const char* host,
+TAO_SCIOP_Profile::TAO_SCIOP_Profile (char const *host,
                                     CORBA::UShort port,
-                                    const TAO::ObjectKey &object_key,
-                                    const ACE_INET_Addr &addr,
-                                    const TAO_GIOP_Message_Version &version,
+                                    TAO::ObjectKey const &object_key,
+                                    ACE_INET_Addr const &addr,
+                                    TAO_GIOP_Message_Version const &version,
                                     TAO_ORB_Core *orb_core)
   : TAO_Profile (TAO_TAG_SCIOP_PROFILE,
                  orb_core,
@@ -60,7 +65,7 @@ TAO_SCIOP_Profile::~TAO_SCIOP_Profile ()
 {
   // Clean up the list of endpoints since we own it.
   // Skip the head, since it is not dynamically allocated.
-  TAO_Endpoint *tmp = nullptr;
+  TAO_Endpoint *tmp {};
 
   for (TAO_Endpoint *next = this->endpoint ()->next ();
        next != nullptr;
@@ -83,17 +88,19 @@ TAO_SCIOP_Profile::decode_profile (TAO_InputCDR& cdr)
   if (cdr.read_ushort (this->endpoint_.port_) == 0)
     {
       if (TAO_debug_level > 0)
-        TAOLIB_DEBUG ((LM_DEBUG,
+        {
+          TAOLIB_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) SCIOP_Profile::decode - ")
                     ACE_TEXT ("error while decoding host/port")));
+        }
       return -1;
     }
 
   // Add multiple endpoints > 1
 
-  for (int i=endpointSeq.length() - 1; i > 0 ; i--)
+  for (int i = endpointSeq.length () - 1; i > 0; --i)
     {
-      TAO_SCIOP_Endpoint *endpoint = nullptr;
+      TAO_SCIOP_Endpoint *endpoint {};
       ACE_NEW_RETURN (endpoint,
                       TAO_SCIOP_Endpoint (endpointSeq[i],
                                           this->endpoint_.port_,
@@ -110,9 +117,10 @@ TAO_SCIOP_Profile::decode_profile (TAO_InputCDR& cdr)
   // We are ignoring it for now since ACE SCTP code fixes at 1 anyway.
 
   CORBA::UShort max_streams;
-  if ((cdr.read_ushort(max_streams)) == 0) {
-    return -1;
-  }
+  if ((cdr.read_ushort(max_streams)) == 0)
+    {
+      return -1;
+    }
 
   if (cdr.good_bit ())
     {
@@ -126,12 +134,12 @@ TAO_SCIOP_Profile::decode_profile (TAO_InputCDR& cdr)
 }
 
 void
-TAO_SCIOP_Profile::parse_string_i (const char *ior)
+TAO_SCIOP_Profile::parse_string_i (char const *ior)
 {
   // Pull off the "hostname:port/" part of the objref
   // Copy the string because we are going to modify it...
 
-  const char *okd = std::strchr (ior, this->object_key_delimiter_);
+  char const *okd = std::strchr (ior, this->object_key_delimiter_);
 
   if (okd == nullptr || okd == ior)
     {
@@ -144,9 +152,9 @@ TAO_SCIOP_Profile::parse_string_i (const char *ior)
     }
 
   // Length of host string.
-  CORBA::ULong length_host = 0;
+  CORBA::ULong length_host {};
 
-  const char *cp_pos = std::strchr (ior, ':');  // Look for a port
+  char const *cp_pos = std::strchr (ior, ':');  // Look for a port
 
   if (cp_pos == ior)
     {
@@ -164,26 +172,28 @@ TAO_SCIOP_Profile::parse_string_i (const char *ior)
 
       CORBA::String_var tmp = CORBA::string_alloc (length_port);
 
-      ACE_OS::strncpy (tmp.inout (), cp_pos + 1, length_port);
+      std::memcpy (tmp.inout (), cp_pos + 1, length_port);
       tmp[length_port] = '\0';
 
       this->endpoint_.port_ =
-        static_cast<CORBA::UShort> (ACE_OS::atoi (tmp.in ()));
+        static_cast<CORBA::UShort> (std::atoi (tmp.in ()));
 
       length_host = cp_pos - ior;
     }
   else
-    length_host = okd - ior;
+    {
+      length_host = okd - ior;
+    }
 
   CORBA::String_var tmp = CORBA::string_alloc (length_host);
 
   // Skip the trailing '/'
-  ACE_OS::strncpy (tmp.inout (), ior, length_host);
+  std::memcpy (tmp.inout (), ior, length_host);
   tmp[length_host] = '\0';
 
   this->endpoint_.host_ = tmp._retn ();
 
-  if (ACE_OS::strcmp (this->endpoint_.host_.in (), "") == 0)
+  if (std::strcmp (this->endpoint_.host_.in (), "") == 0)
     {
       ACE_INET_Addr host_addr;
 
@@ -198,11 +208,13 @@ TAO_SCIOP_Profile::parse_string_i (const char *ior)
           // initialized.  Just throw an exception.
 
           if (TAO_debug_level > 0)
-            TAOLIB_DEBUG ((LM_DEBUG,
+            {
+              TAOLIB_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("\n\nTAO (%P|%t) ")
                         ACE_TEXT ("SCIOP_Profile::parse_string ")
                         ACE_TEXT ("- %p\n\n"),
                         ACE_TEXT ("cannot determine hostname")));
+            }
 
           // @@ What's the right exception to throw here?
           throw ::CORBA::INV_OBJREF (
@@ -226,24 +238,30 @@ TAO_SCIOP_Profile::parse_string_i (const char *ior)
 }
 
 CORBA::Boolean
-TAO_SCIOP_Profile::do_is_equivalent (const TAO_Profile *other_profile)
+TAO_SCIOP_Profile::do_is_equivalent (TAO_Profile const *other_profile)
 {
-  const TAO_SCIOP_Profile *op =
-    dynamic_cast<const TAO_SCIOP_Profile *> (other_profile);
+  TAO_SCIOP_Profile const *op =
+    dynamic_cast<TAO_SCIOP_Profile const *> (other_profile);
 
   if (op == nullptr)
-    return false;
+    {
+      return false;
+    }
 
   // Check endpoints equivalence.
-  const TAO_SCIOP_Endpoint *other_endp = &op->endpoint_;
-  for (TAO_SCIOP_Endpoint *endp = &this->endpoint_;
+  TAO_SCIOP_Endpoint const *other_endp = std::addressof (op->endpoint_);
+  for (TAO_SCIOP_Endpoint *endp = std::addressof (this->endpoint_);
        endp != nullptr;
        endp = endp->next_)
     {
       if (endp->is_equivalent (other_endp))
-        other_endp = other_endp->next_;
+        {
+          other_endp = other_endp->next_;
+        }
       else
-        return false;
+        {
+          return false;
+        }
     }
 
   return true;
@@ -253,8 +271,8 @@ CORBA::ULong
 TAO_SCIOP_Profile::hash (CORBA::ULong max)
 {
   // Get the hash value for all endpoints.
-  CORBA::ULong hashval = 0;
-  for (TAO_SCIOP_Endpoint *endp = &this->endpoint_;
+  CORBA::ULong hashval {};
+  for (TAO_SCIOP_Endpoint *endp = std::addressof (this->endpoint_);
        endp != nullptr;
        endp = endp->next_)
     {
@@ -264,7 +282,7 @@ TAO_SCIOP_Profile::hash (CORBA::ULong max)
   hashval += this->version_.minor;
   hashval += this->tag ();
 
-  const TAO::ObjectKey &ok =
+  TAO::ObjectKey const &ok =
     this->ref_object_key_->object_key ();
 
   if (ok.length () >= 4)
@@ -281,7 +299,7 @@ TAO_SCIOP_Profile::hash (CORBA::ULong max)
 TAO_Endpoint*
 TAO_SCIOP_Profile::endpoint ()
 {
-  return &this->endpoint_;
+  return std::addressof (this->endpoint_);
 }
 
 CORBA::ULong
@@ -296,7 +314,7 @@ TAO_SCIOP_Profile::add_endpoint (TAO_SCIOP_Endpoint *endp)
   endp->next_ = this->endpoint_.next_;
   this->endpoint_.next_ = endp;
 
-  this->count_++;
+  ++this->count_;
 }
 
 char *
@@ -306,25 +324,25 @@ TAO_SCIOP_Profile::to_string () const
   TAO::ObjectKey::encode_sequence_to_string (key.inout(),
                                              this->ref_object_key_->object_key());
 
-  size_t buflen = (8 /* "corbaloc" */ +
-                   1 /* colon separator */ +
-                   ACE_OS::strlen (::prefix_) +
-                   1 /* colon separator */ +
-                   1 /* major version */ +
-                   1 /* decimal point */ +
-                   1 /* minor version */ +
-                   1 /* `@' character */ +
-                   ACE_OS::strlen (this->endpoint_.host ()) +
-                   1 /* colon separator */ +
-                   5 /* port number */ +
-                   1 /* object key separator */ +
-                   ACE_OS::strlen (key.in ()));
+  size_t const buflen = (8 /* "corbaloc" */ +
+                         1 /* colon separator */ +
+                         std::strlen (::prefix_) +
+                         1 /* colon separator */ +
+                         1 /* major version */ +
+                         1 /* decimal point */ +
+                         1 /* minor version */ +
+                         1 /* `@' character */ +
+                         std::strlen (this->endpoint_.host ()) +
+                         1 /* colon separator */ +
+                         5 /* port number */ +
+                         1 /* object key separator */ +
+                         std::strlen (key.in ()));
 
   char * buf = CORBA::string_alloc (static_cast<CORBA::ULong> (buflen));
 
-  static const char digits [] = "0123456789";
+  static char const digits [] = "0123456789";
 
-  ACE_OS::sprintf (buf,
+  std::sprintf (buf,
                    "corbaloc:%s:%c.%c@%s:%d%c%s",
                    ::prefix_,
                    digits [this->version_.major],
@@ -337,7 +355,7 @@ TAO_SCIOP_Profile::to_string () const
   return buf;
 }
 
-const char *
+char const *
 TAO_SCIOP_Profile::prefix ()
 {
   return ::prefix_;
@@ -358,8 +376,8 @@ TAO_SCIOP_Profile::create_profile_body (TAO_OutputCDR &encap) const
   CORBA::StringSeq strseq;
   strseq.length(this->count_);
 
-  const TAO_SCIOP_Endpoint *endpoint = &this->endpoint_;
-  for (CORBA::ULong i = 0;
+  TAO_SCIOP_Endpoint const *endpoint = std::addressof (this->endpoint_);
+  for (CORBA::ULong i {};
        i < this->count_;
        ++i)
     {
@@ -378,7 +396,9 @@ TAO_SCIOP_Profile::create_profile_body (TAO_OutputCDR &encap) const
 
   // OCTET SEQUENCE for object key
   if (this->ref_object_key_)
-    encap << this->ref_object_key_->object_key ();
+    {
+      encap << this->ref_object_key_->object_key ();
+    }
   else
     {
       TAOLIB_ERROR ((LM_ERROR,
@@ -393,17 +413,19 @@ TAO_SCIOP_Profile::create_profile_body (TAO_OutputCDR &encap) const
 int
 TAO_SCIOP_Profile::encode_endpoints ()
 {
-  CORBA::ULong actual_count = 0;
+  CORBA::ULong actual_count {};
 
-  const TAO_SCIOP_Endpoint *endpoint = &this->endpoint_;
+  TAO_SCIOP_Endpoint const *endpoint = std::addressof (this->endpoint_);
 
   // Count the number of endpoints that needs to be encoded
-  for (CORBA::ULong c = 0;
+  for (CORBA::ULong c {};
        c != this->count_;
        ++c)
     {
       if (endpoint->is_encodable_)
-        ++actual_count;
+        {
+          ++actual_count;
+        }
 
       endpoint = endpoint->next_;
     }
@@ -418,9 +440,9 @@ TAO_SCIOP_Profile::encode_endpoints ()
   TAO_SCIOPEndpointSequence endpoints;
   endpoints.length (actual_count);
 
-  endpoint = &this->endpoint_;
+  endpoint = std::addressof (this->endpoint_);
 
-  for (CORBA::ULong i = 0;
+  for (CORBA::ULong i {};
        i < this->count_;
        ++i)
     {
@@ -436,10 +458,11 @@ TAO_SCIOP_Profile::encode_endpoints ()
 
   // Encode the data structure.
   TAO_OutputCDR out_cdr;
-  if ((out_cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER)
-       == 0)
+  if ((out_cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER)) == 0
       || (out_cdr << endpoints) == 0)
-    return -1;
+    {
+      return -1;
+    }
 
   this->set_tagged_components (out_cdr);
 
@@ -454,23 +477,27 @@ TAO_SCIOP_Profile::decode_endpoints ()
 
   if (this->tagged_components_.get_component (tagged_component))
     {
-      const CORBA::Octet *buf =
+      CORBA::Octet const *buf =
         tagged_component.component_data.get_buffer ();
 
-      TAO_InputCDR in_cdr (reinterpret_cast<const char*> (buf),
+      TAO_InputCDR in_cdr (reinterpret_cast<char const *> (buf),
                            tagged_component.component_data.length ());
 
       // Extract the Byte Order.
       CORBA::Boolean byte_order;
       if ((in_cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
-        return -1;
+        {
+          return -1;
+        }
       in_cdr.reset_byte_order (static_cast<int> (byte_order));
 
       // Extract endpoints sequence.
       TAO_SCIOPEndpointSequence endpoints;
 
       if ((in_cdr >> endpoints) == 0)
-        return -1;
+        {
+          return -1;
+        }
 
       // Get the priority of the first endpoint (head of the list.
       // It's other data is extracted as part of the standard profile
@@ -487,7 +514,7 @@ TAO_SCIOP_Profile::decode_endpoints ()
            i > 0;
            --i)
         {
-          TAO_SCIOP_Endpoint *endpoint = nullptr;
+          TAO_SCIOP_Endpoint *endpoint {};
           ACE_NEW_RETURN (endpoint,
                           TAO_SCIOP_Endpoint (endpoints[i].host,
                                              endpoints[i].port,

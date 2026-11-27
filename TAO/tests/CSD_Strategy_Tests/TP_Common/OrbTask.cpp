@@ -1,15 +1,13 @@
-//=============================================================================
 /**
  *  @file    OrbTask.cpp
  *
  *  @author  Tim Bradley <bradley_t@ociweb.com>
  */
-//=============================================================================
 
 #include "OrbTask.h"
 #include "ace/CORBA_macros.h"
 
-namespace { enum { MAX_ORB_TASK_WORKER_THREADS = 20 }; }
+namespace { unsigned constexpr MAX_ORB_TASK_WORKER_THREADS = 20; }
 
 OrbTask::OrbTask(CORBA::ORB_ptr orb, unsigned num_threads)
   : orb_(CORBA::ORB::_duplicate(orb)),
@@ -59,7 +57,6 @@ OrbTask::open(void*)
 
   return 0;
 }
-
 
 int
 OrbTask::svc()

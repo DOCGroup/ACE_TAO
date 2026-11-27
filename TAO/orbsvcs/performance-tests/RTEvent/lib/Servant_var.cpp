@@ -17,12 +17,14 @@
 template<class SERVANT>
 Servant_var<SERVANT>::~Servant_var ()
 {
-  if (this->ptr_ == 0)
-    return;
+  if (this->ptr_ == nullptr)
+    {
+      return;
+    }
 
   try{
     this->ptr_->_remove_ref ();
-  } catch (const CORBA::Exception&) {
+  } catch (CORBA::Exception const&) {
     // @@ TODO This event should be logged. Cannot throw because that
     //    would make it impossible to use this class effectively.
     //

@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project (bug2936-exe): aceexe {
   exename=server
   Source_Files {

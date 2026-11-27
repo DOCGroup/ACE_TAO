@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Refcounted_Auto_Ptr.h
  *
  *  @author John Tucker <JTucker@infoglide.com>
  */
-//=============================================================================
 
 #ifndef ACE_REFCOUNTED_AUTO_PTR_H
 #define ACE_REFCOUNTED_AUTO_PTR_H
@@ -44,10 +40,6 @@ template <class X, class ACE_LOCK> class ACE_Refcounted_Auto_Ptr;
 template <class X, class ACE_LOCK>
 class ACE_Refcounted_Auto_Ptr
 {
-  /// Used to define a proper boolean conversion for "if (sp) ..."
-  static void unspecified_bool(ACE_Refcounted_Auto_Ptr<X, ACE_LOCK>***){}
-  using unspecified_bool_type = void (*)(ACE_Refcounted_Auto_Ptr<X, ACE_LOCK> ***);
-
 public:
   /// Constructor that initializes an ACE_Refcounted_Auto_Ptr to
   /// the specified pointer value.
@@ -56,7 +48,7 @@ public:
   /// Copy constructor binds the new ACE_Refcounted_Auto_Ptr to the
   /// representation object referenced by @a r.
   /// An ACE_Refcounted_Auto_Ptr_Rep is created if necessary.
-  ACE_Refcounted_Auto_Ptr (const ACE_Refcounted_Auto_Ptr<X, ACE_LOCK> &r);
+  ACE_Refcounted_Auto_Ptr (ACE_Refcounted_Auto_Ptr<X, ACE_LOCK> const &r);
 
   /// Destructor. Releases the reference to the underlying representation.
   /// If the release of that reference causes its reference count to reach 0,
@@ -66,7 +58,7 @@ public:
   /// Assignment operator that binds the current object and @a r to the same
   /// ACE_Refcounted_Auto_Ptr_Rep. An ACE_Refcounted_Auto_Ptr_Rep
   /// is created if necessary.
-  void operator = (const ACE_Refcounted_Auto_Ptr<X, ACE_LOCK> &r);
+  void operator = (ACE_Refcounted_Auto_Ptr<X, ACE_LOCK> const &r);
 
   /// Equality operator that returns @c true if both
   /// ACE_Refcounted_Auto_Ptr objects point to the same underlying
@@ -75,10 +67,10 @@ public:
    * @note It also returns @c true if both objects have just been
    *       instantiated and not used yet.
    */
-  bool operator == (const ACE_Refcounted_Auto_Ptr<X, ACE_LOCK> &r) const;
+  bool operator == (ACE_Refcounted_Auto_Ptr<X, ACE_LOCK> const &r) const;
 
   /// Inequality operator, which is the opposite of equality.
-  bool operator != (const ACE_Refcounted_Auto_Ptr<X, ACE_LOCK> &r) const;
+  bool operator != (ACE_Refcounted_Auto_Ptr<X, ACE_LOCK> const &r) const;
 
   /// Redirection operator
   X *operator-> () const;
@@ -90,7 +82,7 @@ public:
   bool operator !() const;
 
   /// Check rep easily.
-  operator unspecified_bool_type() const;
+  explicit operator bool () const;
 
   /// Releases the reference to the underlying representation object.
   /// @retval The pointer value prior to releasing it.
@@ -145,27 +137,30 @@ private:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
-  // = Encapsulate reference count and object lifetime of instances.
+  /// @name Reference-counted representation management
+  /// @{
 
-  /// Allocate a new ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK> instance,
-  /// returning NULL if it cannot be created.
+  /// Allocate a new ACE_Refcounted_Auto_Ptr_Rep instance,
+  /// returning nullptr if it cannot be created.
   static ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK> *internal_create (X *p);
 
-  /// Create a ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK> and initialize
+  /// Create an ACE_Refcounted_Auto_Ptr_Rep and initialize
   /// the reference count.
   static ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK> *create (X *p);
 
   /// Increase the reference count on @a rep.
   ///
-  /// @retval @a rep if success, 0 if there's an error obtaining the lock
-  ///         on @a rep.
-  static ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK> *attach (ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK> *&rep);
+  /// @return @a rep on success, or 0 if there's an error obtaining the
+  ///         lock on @a rep.
+  static ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK> *attach (
+    ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK> *rep);
 
   /// Decreases the reference count and and deletes rep if there are no
   /// more references to rep.
   ///
   /// Precondition (rep != 0)
   static void detach (ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK> *&rep);
+  /// @}
 
   /// Pointer to the result.
   std::unique_ptr<X> ptr_;
@@ -174,7 +169,6 @@ private:
   mutable ACE_Atomic_Op<ACE_LOCK, long> ref_count_;
 
 private:
-  // = Constructor and destructor private.
   ACE_Refcounted_Auto_Ptr_Rep (X *p = nullptr);
   ~ACE_Refcounted_Auto_Ptr_Rep ();
 };

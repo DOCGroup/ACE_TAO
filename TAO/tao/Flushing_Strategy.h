@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file Flushing_Strategy.h
  *
  *  @author Carlos O'Ryan <coryan@uci.edu>
  */
-//=============================================================================
 
 #ifndef TAO_FLUSHING_STRATEGY_H
 #define TAO_FLUSHING_STRATEGY_H
@@ -50,7 +46,6 @@ class TAO_Queued_Message;
 class TAO_Flushing_Strategy
 {
 public:
-  /// Destructor
   virtual ~TAO_Flushing_Strategy ();
 
   enum SCHEDULE_OUTPUT_RETURN { MUST_FLUSH = -2 };

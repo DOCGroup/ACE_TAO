@@ -1,0 +1,6 @@
+project(INet_Stream_Buffer_Test) : aceexe, inet {
+  exename = inet_stream_buffer_test
+  Source_Files {
+    Stream_Buffer.cpp
+  }
+}

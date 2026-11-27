@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file     test_aiosig.cpp
  *
@@ -9,8 +8,6 @@
  *
  *  @author  Programming for the Real World. Bill O. GallMeister.  Modified by Alexander Babu Arulanthu <alex@cs.wustl.edu>
  */
-//=============================================================================
-
 
 //FUZZ: disable check_for_lack_ACE_OS
 //FUZZ: disable check_for_improper_main_declaration
@@ -80,7 +77,7 @@ issue_aio_calls ()
   aiocb1.aio_reqprio = 0;
   aiocb1.aio_sigevent.sigev_notify = SIGEV_SIGNAL;
   aiocb1.aio_sigevent.sigev_signo = SIGRTMIN;
-  aiocb1.aio_sigevent.sigev_value.sival_ptr = (void *) &aiocb1;
+  aiocb1.aio_sigevent.sigev_value.sival_ptr = &aiocb1;
 
   // Fire off the aio write.
   if (aio_read (&aiocb1) == -1)
@@ -98,7 +95,7 @@ issue_aio_calls ()
   aiocb2.aio_reqprio = 0;
   aiocb2.aio_sigevent.sigev_notify = SIGEV_SIGNAL;
   aiocb2.aio_sigevent.sigev_signo = SIGRTMIN;
-  aiocb2.aio_sigevent.sigev_value.sival_ptr = (void *) &aiocb2;
+  aiocb2.aio_sigevent.sigev_value.sival_ptr = &aiocb2;
 
   // Fire off the aio write.
   if (aio_read (&aiocb2) == -1)
@@ -116,7 +113,7 @@ query_aio_completions ()
   size_t number_of_compleions = 0;
   for (number_of_compleions = 0;
        number_of_compleions < 2;
-       number_of_compleions ++)
+       ++number_of_compleions)
     {
       // Wait for <milli_seconds> amount of time.
       // @@ Assigning <milli_seconds> to tv_sec.
@@ -128,7 +125,7 @@ query_aio_completions ()
       siginfo_t sig_info;
 
       // Await the RT completion signal.
-      int sig_return = sigtimedwait (&completion_signal,
+      int const sig_return = sigtimedwait (&completion_signal,
                                      &sig_info,
                                      &timeout);
 
@@ -176,12 +173,12 @@ query_aio_completions ()
         }
 
       // Retrive the aiocb.
-      aiocb* aiocb_ptr = (aiocb *) sig_info.si_value.sival_ptr;
+      aiocb *aiocb_ptr = static_cast<aiocb *> (sig_info.si_value.sival_ptr);
 
       // Analyze error and return values. Return values are
       // actually <errno>'s associated with the <aio_> call
       // corresponding to aiocb_ptr.
-      int error_code = aio_error (aiocb_ptr);
+      int const error_code = aio_error (aiocb_ptr);
       if (error_code == -1)
         {
           perror ("Error:Invalid control block was sent to <aio_error> for compleion querying\n");
@@ -198,7 +195,7 @@ query_aio_completions ()
         }
 
       // No error occurred in the AIO operation.
-      int nbytes = aio_return (aiocb_ptr);
+      int const nbytes = aio_return (aiocb_ptr);
       if (nbytes == -1)
         {
           perror ("Error:Invalid control block was send to <aio_return>\n");
@@ -206,15 +203,19 @@ query_aio_completions ()
         }
 
       if (number_of_compleions == 0)
-        // Print the buffer.
-        printf ("Number of bytes transferred : %d\n The buffer : %s\n",
-                nbytes,
-                mb1);
+        {
+          // Print the buffer.
+          printf ("Number of bytes transferred : %d\n The buffer : %s\n",
+                  nbytes,
+                  mb1);
+        }
       else
-        // Print the buffer.
-        printf ("Number of bytes transferred : %d\n The buffer : %s\n",
-                nbytes,
-                mb2);
+        {
+          // Print the buffer.
+          printf ("Number of bytes transferred : %d\n The buffer : %s\n",
+                  nbytes,
+                  mb2);
+        }
     }
   return 0;
 }
@@ -233,13 +234,19 @@ test_aio_calls ()
     }
 
   if (setup_signal_delivery () < 0)
-    return -1;
+    {
+      return -1;
+    }
 
   if (issue_aio_calls () < 0)
-    return -1;
+    {
+      return -1;
+    }
 
   if (query_aio_completions () < 0)
-    return -1;
+    {
+      return -1;
+    }
 
   return 0;
 }
@@ -263,7 +270,7 @@ setup_signal_handler (int signal_number)
   reaction.sa_flags &= SA_SIGACTION;
 #endif /* SA_SIGACTION */
   reaction.sa_sigaction = null_handler;     // Null handler.
-  int sigaction_return = sigaction (SIGRTMIN,
+  int const sigaction_return = sigaction (SIGRTMIN,
                                     &reaction,
                                     0);
   if (sigaction_return == -1)
@@ -279,10 +286,14 @@ int
 main (int, char *[])
 {
   if (test_aio_calls () == 0)
-    printf ("RT SIG test successful:\n"
-            "ACE_POSIX_SIG_PROACTOR should work in this platform\n");
+    {
+      printf ("RT SIG test successful:\n"
+              "ACE_POSIX_SIG_PROACTOR should work in this platform\n");
+    }
   else
-    printf ("RT SIG test failed:\n"
-            "ACE_POSIX_SIG_PROACTOR may not work in this platform\n");
+    {
+      printf ("RT SIG test failed:\n"
+              "ACE_POSIX_SIG_PROACTOR may not work in this platform\n");
+    }
   return 0;
 }

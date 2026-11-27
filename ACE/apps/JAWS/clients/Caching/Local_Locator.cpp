@@ -9,12 +9,12 @@
 
 int
 ACE_URL_Local_Locator::url_query (const ACE_URL_Locator::ACE_Selection_Criteria how,
-                                  const ACE_URL_Property_Seq *pseq,
-                                  const size_t how_many,
+                                  ACE_URL_Property_Seq const *pseq,
+                                  size_t const how_many,
                                   size_t &num_query,
                                   ACE_URL_Offer_Seq *offer)
 {
-  ACE_URL_Record *item = 0;
+  ACE_URL_Record *item {};
 
   ACE_NEW_RETURN (offer, ACE_URL_Offer_Seq (how_many), -1);
 
@@ -36,8 +36,8 @@ ACE_URL_Local_Locator::url_query (const ACE_URL_Locator::ACE_Selection_Criteria 
       // Now this is a stupid implementation.  Perhaps we can
       // implement this using Hash_Map.  Better yet, I think we should
       // put this in a database and put SQL query here.
-      for (i_query = 0; found == 0 && i_query < pseq->size (); i_query++)
-        for (i_db = 0; i_db < item->offer_->url_properties ().size (); i_db++)
+      for (i_query = 0; found == 0 && i_query < pseq->size (); ++i_query)
+        for (i_db = 0; i_db < item->offer_->url_properties ().size (); ++i_db)
           {
             if ((*pseq)[i_query].name () == item->offer_->url_properties ()[i_db].name ())
               if (how == ACE_URL_Locator::SOME)
@@ -57,7 +57,9 @@ ACE_URL_Local_Locator::url_query (const ACE_URL_Locator::ACE_Selection_Criteria 
               shouldn't happen, internal error
 
       if (num_query == how_many)
-        break;
+        {
+          break;
+        }
     }
 
   return 0;
@@ -67,7 +69,7 @@ int
 ACE_URL_Local_Locator::export_offer (ACE_URL_Offer *offer,
                                      ACE_WString &offer_id)
 {
-  ACE_URL_Record *item = 0;
+  ACE_URL_Record *item {};
 
   // First check if we have registered this URL already.
   for (ACE_Unbounded_Set_Iterator<ACE_URL_Record> iter (this->repository_);
@@ -79,7 +81,7 @@ ACE_URL_Local_Locator::export_offer (ACE_URL_Offer *offer,
         return -1;
       }
 
-  ACE_URL_Record *new_offer;
+  ACE_URL_Record *new_offer {};
 
   // Offer is not in repository, we can add new one in safely.
   ACE_NEW_RETURN (new_offer, ACE_URL_Record (offer),
@@ -92,9 +94,9 @@ ACE_URL_Local_Locator::export_offer (ACE_URL_Offer *offer,
 }
 
 int
-ACE_URL_Local_Locator::withdraw_offer (const ACE_WString &offer_id)
+ACE_URL_Local_Locator::withdraw_offer (ACE_WString const &offer_id)
 {
-  ACE_URL_Record *item = 0;
+  ACE_URL_Record *item {};
 
   // Iterate thru repository and remove offer with <offer_id>.
   for (ACE_Unbounded_Set_Iterator<ACE_URL_Record> iter (this->repository_);
@@ -103,7 +105,9 @@ ACE_URL_Local_Locator::withdraw_offer (const ACE_WString &offer_id)
       if (offer_id == *item->id_)
         {
           if (this->repository_.remove (*item) == 0)
-            return 0
+            {
+              return 0;
+            }
           else
             {
               errno = ACE_URL_Locator::UNKNOWN;
@@ -116,10 +120,10 @@ ACE_URL_Local_Locator::withdraw_offer (const ACE_WString &offer_id)
 }
 
 int
-ACE_URL_Local_Locator::describe_offer (const ACE_WString &offer_id,
+ACE_URL_Local_Locator::describe_offer (ACE_WString const &offer_id,
                                        ACE_URL_Offer *offer)
 {
-  ACE_URL_Record *item = 0;
+  ACE_URL_Record *item {};
 
   // Iterate thru the repository and produce a copy of offer's
   // description.
@@ -137,38 +141,40 @@ ACE_URL_Local_Locator::describe_offer (const ACE_WString &offer_id,
 }
 
 int
-ACE_URL_Local_Locator::modify_offer (const ACE_WString &offer_id,
-                                     const ACE_WString *url,
-                                     const ACE_URL_Property_Seq *del,
-                                     const ACE_URL_Property_Seq *modify)
+ACE_URL_Local_Locator::modify_offer (ACE_WString const &offer_id,
+                                     ACE_WString const *url,
+                                     ACE_URL_Property_Seq const *del,
+                                     ACE_URL_Property_Seq const *modify)
 {
   ACE_Unbounded_Set_Iterator<ACE_URL_Record> iter (this->repository_);
-  ACE_URL_Record *item = 0;
-  ACE_URL_Record *target = 0;
+  ACE_URL_Record *item {};
+  ACE_URL_Record *target {};
 
   // Errno Checking
 
   for (; iter.next (item) != 0; iter.advance ())
     {
-      if (url != 0 && *url == item->offer_->url ())
+      if (url != nullptr && *url == item->offer_->url ())
         {
           errno = ACE_URL_Locator::OFFER_EXIST;
           return -1;
         }
       if (offer_id == *item->id_)
-        target = item;
+        {
+          target = item;
+        }
     }
 
-  if (target != 0)  // Aha, we found a target to work on
+  if (target != nullptr)  // Aha, we found a target to work on
     {
-      if (del != 0 && modify != 0)
+      if (del != nullptr && modify != nullptr)
         {
           // We need to make a copy of the original property sequence
           // so if any error occurs, we can revert our change easily.
 
           // First we need to calculate the maximum number of perperties.
           int psize = target->offer_->url_properties ().size ();
-          if (del != 0)
+          if (del != nullptr)
             if ((psize -= del->size ()) < 0)
               {
                 // If you try to delete more properties than we have,
@@ -176,9 +182,11 @@ ACE_URL_Local_Locator::modify_offer (const ACE_WString &offer_id,
                 errno = ACE_URL_Locator::INVALID_ARGUMENT;
                 return -1;
               }
-          if (modify != 0)
-            // In the worst case, all properties in <modify> will be added.
-            psize += modify->size ();
+          if (modify != nullptr)
+            {
+              // In the worst case, all properties in <modify> will be added.
+              psize += modify->size ();
+            }
 
           // Now, create a temporary work space.
           ACE_URL_Property_Seq working (psize);
@@ -186,14 +194,14 @@ ACE_URL_Local_Locator::modify_offer (const ACE_WString &offer_id,
           for (; sz < item->offer_->url_properties ().size ())
             working[sz] = item->offer_->url_properties() [sz];
 
-          if (del != 0)
+          if (del != nullptr)
             {
               // Argh, this is really a stupid design.
               // Go thru every property we want to delete
-              for (size_t i = 0; i < del->size () && sz > 0; i++)
+              for (size_t i = 0; i < del->size () && sz > 0; ++i)
                 // For earch, go thru our property sequence and
                 // search for the property.
-                for (size_t j = 0; j < sz; j++)
+                for (size_t j = 0; j < sz; ++j)
                   if ((*del)[i].name () == working[j].name ())
                     {
                       sz -= 1;
@@ -204,15 +212,15 @@ ACE_URL_Local_Locator::modify_offer (const ACE_WString &offer_id,
               // imaginary property.  Is this appropriate?
             }
 
-          if (modify != 0)
+          if (modify != nullptr)
             {
               // This is also stupid.
               // Go thru every property we want to modify/add
-              for (size_t i = 0; i < modify->size () && sz > 0; i++)
+              for (size_t i = 0; i < modify->size () && sz > 0; ++i)
                 {
                   // For each property, go thru our property list
                   // and search for the matching property
-                  for (size_t j = 0; j < sz; j++)
+                  for (size_t j = 0; j < sz; ++j)
                     if ((*modify)[i].name () == working[j].name ())
                       {
                         // A match found.
@@ -223,18 +231,22 @@ ACE_URL_Local_Locator::modify_offer (const ACE_WString &offer_id,
                   // No matching property name were found,
                   // We want to add this property into the list.
                   if (j == sz)
-                    working[sz++] = (*modify)[i];
+                    {
+                      working[sz++] = (*modify)[i];
+                    }
                 }
             }
         }
 
       // Yes, all operations passed.  We can now copy the working version back.
       item->offer_->url_properties (ACE_URL_Property_Seq (sz));
-      for (size_t i = 0; i < sz; i ++)
+      for (size_t i = 0; i < sz; ++i)
         item->offer_->url_properties ()[i] = working[i];
 
-      if (url != 0)
-        item->offer_->url (url->fast_rep ()); // replace URL location.
+      if (url != nullptr)
+        {
+          item->offer_->url (url->fast_rep ()); // replace URL location.
+        }
       return 0;
     }
   errno = ACE_URL_Locator::NO_SUCH_OFFER;

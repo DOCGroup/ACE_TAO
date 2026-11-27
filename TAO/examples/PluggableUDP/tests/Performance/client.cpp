@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    client.cpp
  *
@@ -7,11 +5,11 @@
  *
  *  @author Michael Kircher <Michael.Kircher@mchp.siemens.de>
  */
-//=============================================================================
-
 
 #include "ace/Get_Opt.h"
 #include "ace/Task.h"
+
+#include <memory>
 
 #include "UDPC.h"
 
@@ -22,14 +20,14 @@
 // executable and initialized for static builds.
 #include "tao/Strategies/advanced_resource.h"
 
+struct Client_Options
+{
+  ACE_TCHAR const *ior { ACE_TEXT("file://test.ior") };
+  ACE_UINT32 burst_messages { 1000 };
+};
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
-ACE_UINT32 burst_messages = 1000;
-
-unsigned char performance_test = 0;
-
-int
-parse_args (int argc, ACE_TCHAR *argv[])
+static int
+parse_args (Client_Options &options, int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:t:"));
   int c;
@@ -38,18 +36,24 @@ parse_args (int argc, ACE_TCHAR *argv[])
     switch (c)
       {
       case 'k':
-        ior = get_opts.opt_arg ();
+        options.ior = get_opts.opt_arg ();
         break;
       case 't':
-        burst_messages = ACE_OS::atoi (get_opts.opt_arg ());
+        {
+          int const burst_messages = ACE_OS::atoi (get_opts.opt_arg ());
+          if (burst_messages <= 0)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("The burst message count must be positive.\n")),
+                                -1);
+            }
+          options.burst_messages = static_cast<ACE_UINT32> (burst_messages);
+        }
         break;
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-k <ior> "
-                           "-t <burst_messages> "
-                           "\n",
+                           ACE_TEXT ("usage:  %s -k <ior> -t <burst_messages>\n"),
                            argv [0]),
                           -1);
       }
@@ -65,11 +69,14 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, "PerformanceClient");
 
-      if (parse_args (argc, argv) != 0)
+      Client_Options options;
+      if (parse_args (options, argc, argv) != 0)
+      {
         return 1;
+      }
 
       CORBA::Object_var object =
-        orb->string_to_object (ior);
+        orb->string_to_object (options.ior);
 
       UDP_var udp_var =
         UDP::_narrow (object.in ());
@@ -77,8 +84,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (CORBA::is_nil (udp_var.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Object reference <%s> is nil.\n",
-                             ior),
+                             ACE_TEXT ("Object reference <%s> is nil.\n"),
+                             options.ior),
                             1);
         }
 
@@ -87,9 +94,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         orb->resolve_initial_references("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize the POA.\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Unable to initialize the POA.\n"),
+                            1);
+        }
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
@@ -109,10 +118,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         udp_i._this ();
 
       // Instantiate client
-      ACE_Task_Base* client = new UDP_PerformanceClient (orb.in (),
-                                                         udp_var.in (),
-                                                         &udp_i,
-                                                         burst_messages);
+      std::unique_ptr<UDP_PerformanceClient> client =
+        std::make_unique<UDP_PerformanceClient> (orb.in (),
+                                                 udp_var.in (),
+                                                 udp_i,
+                                                 options.burst_messages);
 
       // let the client run in a separate thread
       client->activate ();
@@ -122,19 +132,15 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "ORB finished\n"));
 
+      // The worker triggers shutdown; join it before destroying the callback servant.
       client->wait ();
 
       root_poa->destroy (true,  // ethernalize objects
                          false); // wait for completion
 
       orb->destroy ();
-
-      // it is save to delete the client, because the client was actually
-      // the one calling orb->shutdown () triggering the end of the ORB
-      // event loop.
-      delete client;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return 1;

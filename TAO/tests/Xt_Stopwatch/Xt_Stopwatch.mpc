@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*Server): taoserver, tao_xtresource, ace_motif {
   Source_Files {
     test_i.cpp

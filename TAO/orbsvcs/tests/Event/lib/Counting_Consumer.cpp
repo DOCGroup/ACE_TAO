@@ -1,7 +1,6 @@
 #include "Counting_Consumer.h"
 
-
-EC_Counting_Consumer::EC_Counting_Consumer (const char* name)
+EC_Counting_Consumer::EC_Counting_Consumer (char const *name)
   : event_count (0),
     disconnect_count (0),
     name_ (name)
@@ -10,7 +9,7 @@ EC_Counting_Consumer::EC_Counting_Consumer (const char* name)
 
 void
 EC_Counting_Consumer::connect (RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin,
-                   const RtecEventChannelAdmin::ConsumerQOS &qos)
+                   RtecEventChannelAdmin::ConsumerQOS const &qos)
 {
   // The canonical protocol to connect to the EC
 
@@ -72,7 +71,7 @@ EC_Counting_Consumer::dump_results (int expected_count, int tolerance)
 }
 
 void
-EC_Counting_Consumer::push (const RtecEventComm::EventSet& events)
+EC_Counting_Consumer::push (RtecEventComm::EventSet const & events)
 {
   if (events.length () == 0)
     {
@@ -81,7 +80,7 @@ EC_Counting_Consumer::push (const RtecEventComm::EventSet& events)
       return;
     }
 
-  this->event_count ++;
+  ++this->event_count;
 #if 0
   if (this->event_count % 10 == 0)
     {
@@ -96,7 +95,7 @@ EC_Counting_Consumer::push (const RtecEventComm::EventSet& events)
 void
 EC_Counting_Consumer::disconnect_push_consumer ()
 {
-  this->disconnect_count++;
+  ++this->disconnect_count;
   this->supplier_proxy_ =
     RtecEventChannelAdmin::ProxyPushSupplier::_nil ();
 }

@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//==========================================================================
 /**
  *  @file    SPIPE_Addr.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//==========================================================================
 
 #ifndef ACE_SPIPE_ADDR_H
 #define ACE_SPIPE_ADDR_H
@@ -33,48 +29,48 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_SPIPE_Addr : public ACE_Addr
 {
 public:
-  /// Default constructor.
   ACE_SPIPE_Addr ();
 
-  /// Copy constructor.
-  ACE_SPIPE_Addr (const ACE_SPIPE_Addr &sa);
+  ACE_SPIPE_Addr (ACE_SPIPE_Addr const &sa);
 
-  /// Assignment operator
-  ACE_SPIPE_Addr& operator= (const ACE_SPIPE_Addr&) = default;
+  ACE_SPIPE_Addr& operator= (ACE_SPIPE_Addr const&) = default;
 
   /// Create a ACE_SPIPE_Addr from a rendezvous point in the file
   /// system.
-  ACE_SPIPE_Addr (const ACE_TCHAR *rendezvous_point, gid_t = 0, uid_t = 0);
+  ACE_SPIPE_Addr (ACE_TCHAR const *rendezvous_point, gid_t = 0, uid_t = 0);
 
   /// Acts like a copy constructor...
-  int set (const ACE_SPIPE_Addr &sa);
+  int set (ACE_SPIPE_Addr const &sa);
 
   /// Create a ACE_SPIPE_Addr from a rendezvous point in the file
   /// system.
-  int set (const ACE_TCHAR *rendezvous_point, gid_t = 0, uid_t = 0);
+  int set (ACE_TCHAR const *rendezvous_point, gid_t = 0, uid_t = 0);
 
   /// Return a pointer to the address.
   void *get_addr () const override;
 
   /// Set a pointer to the underlying network address.
-  void set_addr (const void *addr, int len) override;
+  void set_addr (void const *addr, int len) override;
 
   /// Transform the current address into string format.
   virtual int addr_to_string (ACE_TCHAR *addr, size_t) const;
 
   /// Transform the string into the current addressing format.
-  virtual int string_to_addr (const ACE_TCHAR *addr);
+  virtual int string_to_addr (ACE_TCHAR const *addr);
 
-  // = Equality/inequality tests
+  /// @name Equality comparisons
+  /// @{
   /// Check for equality.
-  bool operator == (const ACE_SPIPE_Addr &SAP) const;
+  bool operator == (ACE_SPIPE_Addr const &SAP) const;
 
   /// Check for inequality
-  bool operator != (const ACE_SPIPE_Addr &SAP) const;
+  bool operator != (ACE_SPIPE_Addr const &SAP) const;
+  /// @}
 
-  // = SPIPE-specific address operations
+  /// @name SPIPE address operations
+  /// @{
   /// Pathname of rendezvous point in file system.
-  const ACE_TCHAR *get_path_name () const;
+  ACE_TCHAR const *get_path_name () const;
 
   /// Get user id.
   uid_t user_id () const;
@@ -87,6 +83,7 @@ public:
 
   /// Get group ids.
   gid_t group_id () const;
+  /// @}
 
   /// Dump the state of an object.
   void dump () const;
@@ -95,7 +92,7 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-  /// Contains security attributes.
+  /// Contains the security attributes and rendezvous pathname.
   struct SPIPE_Addr
   {
     /// Group id.
@@ -107,7 +104,6 @@ private:
     /// Pathname in the file system.
     ACE_TCHAR rendezvous_[MAXPATHLEN + 1];
   } SPIPE_addr_;
-  // Contents of an SPIPE address.
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

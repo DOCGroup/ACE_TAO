@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    Log_Msg_Backend_Test.cpp
  *
@@ -9,13 +7,14 @@
  *
  *  @author Steve Huston <shuston@riverace.com>
  */
-//=============================================================================
 
 #include "test_config.h"
 
 #include "ace/Log_Msg.h"
 #include "ace/Log_Msg_Backend.h"
 #include "ace/Log_Record.h"
+
+#include <memory>
 
 class Backend : public ACE_Log_Msg_Backend
 {
@@ -25,7 +24,7 @@ public:
 
   //FUZZ: disable check_for_lack_ACE_OS
   ///FUZZ: enable check_for_lack_ACE_OS
-  int open (const ACE_TCHAR *logger_key) override;
+  int open (ACE_TCHAR const *logger_key) override;
 
   int reset () override;
 
@@ -47,7 +46,7 @@ private:
 };
 
 int
-Backend::open (const ACE_TCHAR *)
+Backend::open (ACE_TCHAR const *)
 {
   this->open_ = true;
   return 0;
@@ -78,8 +77,8 @@ bool
 Backend::hooks_ok () const
 {
   // Close should not have been called yet.
-  const ACE_TCHAR *yes = ACE_TEXT ("yes");
-  const ACE_TCHAR *no = ACE_TEXT ("no");
+  ACE_TCHAR const *yes = ACE_TEXT ("yes");
+  ACE_TCHAR const *no = ACE_TEXT ("no");
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Open: %s, Reset: %s, Close: %s\n"),
               this->open_ ? yes : no,
@@ -96,7 +95,7 @@ run_main (int, ACE_TCHAR *[])
   // Set up the backend prior to ACE_START_TEST so the initialization can
   // call the back end's reset().
   Backend b;
-  ACE_Log_Msg_Backend *old_b = ACE_Log_Msg::msg_backend (&b);
+  ACE_Log_Msg_Backend *old_b = ACE_Log_Msg::msg_backend (std::addressof (b));
 
   ACE_START_TEST (ACE_TEXT ("Log_Msg_Backend_Test"));
 
@@ -106,7 +105,7 @@ run_main (int, ACE_TCHAR *[])
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("Old backend (%@) not 0 at start\n"),
-                  old_b));
+                  static_cast<void *> (old_b)));
       ++status;
     }
 
@@ -123,7 +122,7 @@ run_main (int, ACE_TCHAR *[])
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Message 1\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Message 2\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Message 3\n")));
-  unsigned int count = b.log_count ();
+  unsigned int const count = b.log_count ();
   if (count != 3)
     {
       ACE_ERROR ((LM_ERROR,

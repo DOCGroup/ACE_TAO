@@ -1,10 +1,8 @@
-//=============================================================================
 /**
  *  @file    Activator_Options.cpp
  *
  *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
  */
-//=============================================================================
 #include "Activator_Options.h"
 
 #include "ace/Arg_Shifter.h"
@@ -14,7 +12,7 @@
 #if defined (ACE_WIN32)
 static const HKEY SERVICE_REG_ROOT = HKEY_LOCAL_MACHINE;
 // This string must agree with the one used in Activator_NT_Service.h
-static const ACE_TCHAR *SERVICE_REG_PATH =
+static ACE_TCHAR const *SERVICE_REG_PATH =
   ACE_TEXT ("SYSTEM\\CurrentControlSet\\Services\\TAOImRActivator\\Parameters");
 #endif /* ACE_WIN32 */
 
@@ -214,7 +212,7 @@ Activator_Options::init (int argc, ACE_TCHAR *argv[])
       return result;
     }
 
-  for (int i = 0; i < argc; ++i)
+  for (int i {}; i < argc; ++i)
     {
       this->cmdline_ += ACE_CString (ACE_TEXT_ALWAYS_CHAR(argv[i])) + ACE_CString (" ");
     }

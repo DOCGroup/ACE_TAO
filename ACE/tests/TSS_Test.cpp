@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    TSS_Test.cpp
  *
@@ -11,8 +9,6 @@
  *
  *  @author Prashant Jain <pjain@cs.wustl.edu> and Doug Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
-
 
 #include "test_config.h"
 #include "ace/OS_NS_unistd.h"
@@ -21,7 +17,6 @@
 #include "ace/Thread_Mutex.h"
 #include "ace/Signal.h"
 #include "TSS_Test_Errno.h"
-
 
 static u_int errors = 0;
 
@@ -49,7 +44,7 @@ int Errno::flags_;
 int Errno::created_;
 int Errno::deleted_;
 
-ACE_Thread_Mutex *Errno::lock_ = nullptr;
+ACE_Thread_Mutex *Errno::lock_ {};
 
 // This is our thread-specific error handler . . .
 // See comment below about why it's dynamically allocated.
@@ -57,7 +52,7 @@ static ACE_TSS<Errno> *tss_error;
 
 // This is for testing/demonstrating ACE_TSS_Type_Adapter.  It's
 // dynamically allocated to avoid static objects, also.
-static ACE_TSS<ACE_TSS_Type_Adapter<u_int> > *u;
+static ACE_TSS<ACE_TSS_Type_Adapter<u_int>> *u;
 
 // Serializes output.
 static ACE_Thread_Mutex output_lock;
@@ -77,15 +72,15 @@ cleanup (void *ptr)
 
 // This worker function is the entry point for each thread.
 
-static void *
+static ACE_THR_FUNC_RETURN
 worker (void *c)
 {
-  int count = *(static_cast<int*> (c));
+  int const count = *(static_cast<int*> (c));
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) worker, iterations = %d\n"), count));
 
   ACE_thread_key_t key = ACE_OS::NULL_key;
-  int *ip = nullptr;
+  int *ip {};
 
   // Make one key that will be available when the thread exits so that
   // we'll have something to cleanup!
@@ -94,16 +89,18 @@ worker (void *c)
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p (no keys available)\n"),
                   ACE_TEXT ("ACE_Thread::keycreate")));
-      return (void *) -1;
+      return ACE_THR_FUNC_RETURN (-1);
     }
 
-  ACE_NEW_RETURN (ip, int, nullptr);
+  ACE_NEW_RETURN (ip, int, ACE_THR_FUNC_RETURN_NULL);
 
   if (ACE_Thread::setspecific (key, (void *) ip) == -1)
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
-                ACE_TEXT ("ACE_Thread::setspecific")));
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
+                  ACE_TEXT ("ACE_Thread::setspecific")));
+    }
 
-  for (int i = 0; i < count; i++)
+  for (int i = 0; i < count; ++i)
     {
       if (ACE_Thread::keycreate (&key, cleanup) == -1)
         {
@@ -112,34 +109,42 @@ worker (void *c)
           break;
         }
 
-      ACE_NEW_RETURN (ip, int, nullptr);
+      ACE_NEW_RETURN (ip, int, ACE_THR_FUNC_RETURN_NULL);
 
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) in worker at location 1, ")
-                            ACE_TEXT ("key = %d, ip = %x\n"),
-                  key, ip));
+                            ACE_TEXT ("key = %d, ip = %@\n"),
+                  key, static_cast<void *> (ip)));
 
       // Needed to work around (possibly broken?) strict aliasing warning in GCC.
       void *v_ip (reinterpret_cast <void *> (ip));
 
       if (ACE_Thread::setspecific (key, v_ip) == -1)
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
-                    ACE_TEXT ("ACE_Thread::setspecific")));
+        {
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
+                      ACE_TEXT ("ACE_Thread::setspecific")));
+        }
 
       if (ACE_Thread::getspecific (key, &v_ip) == -1)
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
-                    ACE_TEXT ("ACE_Thread::getspecific")));
+        {
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
+                      ACE_TEXT ("ACE_Thread::getspecific")));
+        }
 
       if (ACE_Thread::setspecific (key, (void *) nullptr) == -1)
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
-                    ACE_TEXT ("ACE_Thread::setspecific")));
+        {
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
+                      ACE_TEXT ("ACE_Thread::setspecific")));
+        }
 
       // See comment in cleanup () above.
       delete ip;
 
 #if defined (ACE_HAS_TSS_EMULATION)
       if (ACE_Thread::keyfree (key) == -1)
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
-                    ACE_TEXT ("ACE_Thread::keyfree")));
+        {
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
+                      ACE_TEXT ("ACE_Thread::keyfree")));
+        }
 #endif /* ACE_HAS_TSS_EMULATION */
 
       // Cause an error.
@@ -155,7 +160,8 @@ worker (void *c)
 
       {
         // Use the guard to serialize access
-        ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, output_lock, nullptr));
+        ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, output_lock,
+                                  ACE_THR_FUNC_RETURN_NULL));
         ACE_TEST_ASSERT ((*tss_error)->flags () == ITERATIONS);
       }
 
@@ -171,7 +177,7 @@ worker (void *c)
         {
           // Use the guard to serialize access to errors.
           ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, output_lock,
-                                    nullptr));
+                                    ACE_THR_FUNC_RETURN_NULL));
           ACE_DEBUG ((LM_ERROR,
                       ACE_TEXT ("use of ACE_TSS_Type_Adapter failed, value ")
                       ACE_TEXT ("is %u, it should be 37!\n"),
@@ -190,26 +196,32 @@ worker (void *c)
           break;
         }
 
-      ACE_NEW_RETURN (ip, int, 0);
+      ACE_NEW_RETURN (ip, int, ACE_THR_FUNC_RETURN_NULL);
 
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) in worker at location 2, ")
-                            ACE_TEXT ("key = %d, ip = %x\n"),
-                  key, ip));
+                            ACE_TEXT ("key = %d, ip = %@\n"),
+                  key, static_cast<void *> (ip)));
 
       // Needed to work around (possibly broken?) strict aliasing warning in GCC.
       void *v_ip2 (reinterpret_cast <void *> (ip));
 
       if (ACE_Thread::setspecific (key, v_ip2) == -1)
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
-                    ACE_TEXT ("ACE_Thread::setspecific")));
+        {
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
+                      ACE_TEXT ("ACE_Thread::setspecific")));
+        }
 
       if (ACE_Thread::getspecific (key, &v_ip2) == -1)
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
-                    ACE_TEXT ("ACE_Thread::getspecific")));
+        {
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
+                      ACE_TEXT ("ACE_Thread::getspecific")));
+        }
 
       if (ACE_Thread::setspecific (key, (void *) 0) == -1)
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
-                    ACE_TEXT ("ACE_Thread::setspecific")));
+        {
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
+                      ACE_TEXT ("ACE_Thread::setspecific")));
+        }
 
       // See comment in cleanup () above.
       delete ip;
@@ -217,12 +229,14 @@ worker (void *c)
       // ACE_HAS_TSS_EMULATION is turned on, then it should work.
 #  if defined (ACE_HAS_TSS_EMULATION)
       if (ACE_Thread::keyfree (key) == -1)
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
-                    ACE_TEXT ("ACE_Thread::keyfree")));
+        {
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
+                      ACE_TEXT ("ACE_Thread::keyfree")));
+        }
 #  endif /* defined (ACE_HAS_TSS_EMULATION) */
 #endif /* ACE_HAS_TSS_EMULATION */
     }
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 #endif /* ACE_HAS_THREADS */
@@ -246,16 +260,18 @@ run_main (int, ACE_TCHAR *[])
   ACE_NEW_RETURN (tss_error, ACE_TSS<Errno>, 1);
 
   // Similarly, dynamically allocate u.
-  ACE_NEW_RETURN (u, ACE_TSS<ACE_TSS_Type_Adapter<u_int> >, 1);
+  ACE_NEW_RETURN (u, ACE_TSS<ACE_TSS_Type_Adapter<u_int>>, 1);
 
   int iterations = ITERATIONS;
   if (ACE_Thread_Manager::instance ()->spawn_n
       (threads,
-       ACE_THR_FUNC (worker),
+       worker,
        &iterations,
        THR_BOUND) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"), ACE_TEXT ("spawn_n")), 1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"), ACE_TEXT ("spawn_n")), 1);
+    }
 
   ACE_Thread_Manager::instance ()->wait ();
 
@@ -263,7 +279,6 @@ run_main (int, ACE_TCHAR *[])
   delete tss_error;
 
   Errno::deallocate_lock ();
-
 
   if (Errno::created () != Errno::deleted ())
     {

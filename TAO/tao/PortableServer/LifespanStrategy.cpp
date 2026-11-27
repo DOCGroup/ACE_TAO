@@ -1,11 +1,6 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    LifespanStrategy.cpp
  */
-//=============================================================================
-
 #include "tao/PortableServer/LifespanStrategy.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

@@ -473,7 +473,7 @@ module SecurityLevel3 {
          */
         /// For example, if a client uses the User/Password mechanism to
         /// communicate with a target, the client's OwnCredentials, created
-        /// using a PasswordGenerator, will have the <code>authenticated</code>
+        /// using a PasswordGenerator, will have the @c authenticated
         /// field in the principal in the initiator being true,
         /// although the client may not have been authenticated to the target.
         ///
@@ -920,7 +920,7 @@ module SecurityLevel3 {
      * Security Contexts may be long lived and not established on
      * every request. Therefore, an identifier is assigned.
      * <p>
-     * Note that this Context Id is not directly related to the context
+     * @note This Context Id is not directly related to the context
      * defined in the CSIv2 specification.
      */
     typedef string ContextId;
@@ -1017,8 +1017,8 @@ module SecurityLevel3 {
     const FeatureDirective FD_DoNotUse             = -2;
     /**
      * The FD_DoNotUseIfPossible FeatureDirective means not to use
-     * the feature if it is possible. Note, some mechanisms may always
-     * use confidentiality.
+     * the feature if it is possible.
+     * @note Some mechanisms may always use confidentiality.
      */
     const FeatureDirective FD_DoNotUseIfPossible   = -1;
     /**
@@ -1080,7 +1080,7 @@ module SecurityLevel3 {
         /**
          * The principal attribute contains a local view of the
          * Principal that the Credentials intend to represent.
-         * Note that during context establishment, the actual establish
+         * @note During context establishment, the actual establish
          * client principal may be represented differently, especially
          * with respect to environmental attributes. Some environmental
          * attributes are a direct result of context establishment.
@@ -1146,7 +1146,7 @@ module SecurityLevel3 {
         /**
          * The principal attribute contains a local view of the
          * Principal that the Credentials intend to represent.
-         * Note that during context establishment, the actual establish
+         * @note During context establishment, the actual establish
          * target principal may be represented differently, especially
          * with respect to environmental attributes. Some environmental
          * attributes are a direct result of context establishment.
@@ -1551,7 +1551,7 @@ module SecurityLevel3 {
      *       The credentials must be
      *       IT_Simple, IT_Quoting, or IT_Proxy own credentials
      *       that supports endorsement.
-     *       Note, a Initiator Credentials that is a IT_Proxy
+     *       @note An Initiator Credentials object that is an IT_Proxy
      *       may have an endorsement statement that not only
      *       endorses this immediate client, but may very well
      *       apply to the next target.

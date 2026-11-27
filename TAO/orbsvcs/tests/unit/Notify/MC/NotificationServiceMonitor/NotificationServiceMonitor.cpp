@@ -26,16 +26,16 @@ ACE_TMAIN (int, ACE_TCHAR*[])
       // portable we get the starting size here and make sure that
       // the monitors we add subsequently are recognized.
       Monitor_Control_Types::NameList start_names = reg->names ();
-      size_t start_size = start_names.size ();
+      size_t const start_size = start_names.size ();
 
       // Test registry addition.
-      Monitor_Base* s = 0;
+      Monitor_Base *s {};
       ACE_NEW_RETURN (s,
                       Monitor_Base ("test1",
                                     Monitor_Control_Types::MC_COUNTER),
                       2);
 
-      if (reg->add (s) == false)
+      if (!reg->add (s))
         {
           ACE_ERROR_RETURN ((LM_ERROR, "clean Monitor_Point_Registry::add() failed\n"), 1);
         }
@@ -53,7 +53,7 @@ ACE_TMAIN (int, ACE_TCHAR*[])
                                     Monitor_Control_Types::MC_NUMBER),
                       2);
 
-      if (reg->add (s) == false)
+      if (!reg->add (s))
         {
           ACE_ERROR_RETURN ((LM_ERROR, "second Monitor_Point_Registry::add() failed\n"), 1);
         }
@@ -68,7 +68,7 @@ ACE_TMAIN (int, ACE_TCHAR*[])
                                     Monitor_Control_Types::MC_INTERVAL),
                       2);
 
-      if (reg->add (s) == false)
+      if (!reg->add (s))
         {
           ACE_ERROR_RETURN ((LM_ERROR, "third Monitor_Point_Registry::add() failed\n"), 1);
         }
@@ -83,7 +83,7 @@ ACE_TMAIN (int, ACE_TCHAR*[])
       Monitor::NameList_var safe_names = names;
 
       // We added 3 to whatever was there already.
-      if (names == 0 || names->length () != start_size + 3)
+      if (names == nullptr || names->length () != start_size + 3)
         {
           ACE_ERROR_RETURN ((LM_ERROR, "get_statistic_names() returned the incorrect number of names\n"), 1);
         }
@@ -103,7 +103,7 @@ ACE_TMAIN (int, ACE_TCHAR*[])
         monitor.get_statistics (*names);
 
       // We added 3 monitors to whatever was there already.
-      if (data.ptr () == 0 || data.in ().length () != start_size + 3)
+      if (data.ptr () == nullptr || data.in ().length () != start_size + 3)
         {
           ACE_ERROR_RETURN ((LM_ERROR, "get_statistics() returned the incorrect number of data elements\n"), 1);
         }
@@ -119,7 +119,7 @@ ACE_TMAIN (int, ACE_TCHAR*[])
       data = monitor.get_and_clear_statistics (*names);
 
       // We added 3 to whatever was there already.
-      if (data.ptr () == 0 || data.in ().length () != start_size + 3)
+      if (data.ptr () == nullptr || data.in ().length () != start_size + 3)
         {
           ACE_ERROR_RETURN ((LM_ERROR, "get_and_clear_statistics() returned the incorrect number of data elements\n"), 1);
         }
@@ -150,7 +150,7 @@ ACE_TMAIN (int, ACE_TCHAR*[])
 
       TAO_Singleton_Manager::instance ()->fini ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("NotificationServiceMonitor: ");
       return 1;

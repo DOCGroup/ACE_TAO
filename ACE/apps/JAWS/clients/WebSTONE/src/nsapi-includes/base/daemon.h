@@ -7,16 +7,13 @@
  * parties.
  */
 
-
 /* ------------------------------------------------------------------------ */
-
 
 /*
  * daemon.h: Things related to the accepting connections
  *
  * Rob McCool
  */
-
 
 #ifndef DAEMON_H
 #define DAEMON_H
@@ -30,12 +27,9 @@
 
 #include <pwd.h>    /* struct passwd */
 
-
 /* ------------------------------- Defines -------------------------------- */
 
-
 #define child_exit exit
-
 
 /* Codes for child_status */
 #define CHILD_EMPTY_SLOT 0xfe
@@ -44,7 +38,6 @@
 #define CHILD_READING 0x01
 #define CHILD_WRITING 0x02
 #define CHILD_RESOLVING 0x03
-
 
 typedef struct {
     char *ipstr;
@@ -65,7 +58,6 @@ typedef struct {
     int security;
 #endif
 } daemon_s;
-
 
 /* ------------------------------ Prototypes ------------------------------ */
 
@@ -102,7 +94,6 @@ void daemon_run(int det, void (*child_callback)(Session *), daemon_s *d);
 
 pid_t child_fork();
 
-
 /*
  * Set status to the given code for statistics reporting
  */
@@ -112,7 +103,6 @@ void child_status(int code);
 #else
 #define child_status(code) (void)(code)
 #endif
-
 
 #endif
 #endif

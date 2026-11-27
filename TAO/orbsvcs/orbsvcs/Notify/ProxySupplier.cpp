@@ -15,14 +15,9 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Notify_ProxySupplier::TAO_Notify_ProxySupplier ()
-  : consumer_admin_ (0)
-{
-}
+TAO_Notify_ProxySupplier::TAO_Notify_ProxySupplier () = default;
 
-TAO_Notify_ProxySupplier::~TAO_Notify_ProxySupplier ()
-{
-}
+TAO_Notify_ProxySupplier::~TAO_Notify_ProxySupplier () = default;
 
 void
 TAO_Notify_ProxySupplier::init (TAO_Notify_ConsumerAdmin* consumer_admin)
@@ -36,7 +31,7 @@ TAO_Notify_ProxySupplier::init (TAO_Notify_ConsumerAdmin* consumer_admin)
   this->filter_admin_.event_channel (
     this->consumer_admin_->event_channel());
 
-  const CosNotification::QoSProperties &default_ps_qos =
+  CosNotification::QoSProperties const &default_ps_qos =
     TAO_Notify_PROPERTIES::instance ()->default_proxy_supplier_qos_properties ();
 
   {
@@ -59,7 +54,7 @@ TAO_Notify_ProxySupplier::connect (TAO_Notify_Consumer *consumer)
   TAO_Notify_Consumer::Ptr auto_consumer (consumer);
 
   TAO_Notify_Atomic_Property_Long& consumer_count = this->admin_properties().consumers ();
-  const TAO_Notify_Property_Long& max_consumers = this->admin_properties().max_consumers ();
+  TAO_Notify_Property_Long const& max_consumers = this->admin_properties().max_consumers ();
 
   if (max_consumers != 0 && consumer_count >= max_consumers.value ())
   {
@@ -71,14 +66,16 @@ TAO_Notify_ProxySupplier::connect (TAO_Notify_Consumer *consumer)
                         CORBA::INTERNAL ());
 
     // if consumer is set and reconnect not allowed we get out.
-    if (this->is_connected () && TAO_Notify_PROPERTIES::instance()->allow_reconnect() == false)
+    if (this->is_connected () && !TAO_Notify_PROPERTIES::instance()->allow_reconnect())
       {
           throw CosEventChannelAdmin::AlreadyConnected ();
       }
 
     // Adopt the consumer
     if (this->consumer_.get() != nullptr)
+    {
       auto_consumer->assume_pending_events (*this->consumer_.get ());
+    }
     this->consumer_ = auto_consumer;
 
     this->consumer_admin_->subscribed_types (this->subscribed_types_); // get the parents subscribed types.
@@ -115,8 +112,9 @@ int
 TAO_Notify_ProxySupplier::shutdown ()
 {
   if (this->TAO_Notify_Object::shutdown () == 1)
+  {
     return 1;
-
+  }
 
   this->disconnect ();
 
@@ -150,7 +148,7 @@ TAO_Notify_ProxySupplier::deliver (TAO_Notify_Method_Request_Dispatch_No_Copy & 
 }
 
 void
-TAO_Notify_ProxySupplier::qos_changed (const TAO_Notify_QoSProperties& qos_properties)
+TAO_Notify_ProxySupplier::qos_changed (TAO_Notify_QoSProperties const &qos_properties)
 {
   TAO_Notify_Proxy::qos_changed (qos_properties);
 }

@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-// ===================================================================
 /**
  *  @file   Transport_Descriptor_Interface.h
  *
  *  @author Bala Natarajan <bala@cs.wustl.edu>
  */
-// ===================================================================
 
 #ifndef TAO_CONNECTION_DESCRIPTOR_INTERFACE_H
 #define TAO_CONNECTION_DESCRIPTOR_INTERFACE_H
@@ -21,6 +17,8 @@
 
 #include "tao/Basic_Types.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Endpoint;
@@ -34,7 +32,7 @@ class TAO_Endpoint;
  * on which the Transport Caching scheme is based on. Concrete
  * connection properties can be got by inheriting from this class and
  * implementing the virtual functions.
- * Note 1: Additional properties for connection like Qos,
+ * @note 1: Additional properties for connection like Qos,
  * Priority that the RT folks would need, can be added by
  * inheriting from this class and providing the following
  * methods.
@@ -45,7 +43,6 @@ class TAO_Endpoint;
 class TAO_Export TAO_Transport_Descriptor_Interface
 {
 public:
-  /// Destructor
   virtual ~TAO_Transport_Descriptor_Interface ();
 
   /// This call allocates and copies the contents of this class and
@@ -54,7 +51,7 @@ public:
 
   /// Try to determine if this object is same as the @a other_prop.
   virtual CORBA::Boolean is_equivalent (
-      const TAO_Transport_Descriptor_Interface *other_prop) = 0;
+      TAO_Transport_Descriptor_Interface const *other_prop) = 0;
 
   /// Generate hash value for our class
   virtual u_long hash () const = 0;
@@ -73,22 +70,25 @@ public:
   void set_bidir_flag (CORBA::Boolean flag);
 
 protected:
-  /// Default Constructor
   TAO_Transport_Descriptor_Interface ();
 
-  /// Constructor
   TAO_Transport_Descriptor_Interface (TAO_Endpoint *endpoint,
                                       CORBA::Boolean take_ownership = false);
 
   /// The base property of the connection ie. the peer's endpoint
-  TAO_Endpoint *endpoint_;
+  TAO_Endpoint *endpoint_ {};
+
+  /// Own the endpoint when ownership was transferred to this descriptor.
+  std::unique_ptr<TAO_Endpoint> owned_endpoint_ {};
 
   /// Should the endpoint be used in either direction?
-  CORBA::Boolean bidir_flag_;
+  CORBA::Boolean bidir_flag_ {};
 
-  /// Is the endpoint allocated on the heap? If so, we will have to
-  /// delete it when we destruct ourselves.
-  CORBA::Boolean release_;
+private:
+  TAO_Transport_Descriptor_Interface (TAO_Transport_Descriptor_Interface const &) = delete;
+  TAO_Transport_Descriptor_Interface &operator= (TAO_Transport_Descriptor_Interface const &) = delete;
+  TAO_Transport_Descriptor_Interface (TAO_Transport_Descriptor_Interface &&) = delete;
+  TAO_Transport_Descriptor_Interface &operator= (TAO_Transport_Descriptor_Interface &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

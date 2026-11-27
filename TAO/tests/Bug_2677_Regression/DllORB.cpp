@@ -1,19 +1,13 @@
 #include "DllORB.h"
-#include "ace/Arg_Shifter.h"
-#include "ace/Argv_Type_Converter.h"
 #include "ace/OS_NS_unistd.h"
 #include "tao/TAO_Singleton_Manager.h"
 
 DllORB::DllORB ()
   : failPrePostInit_ (3)
-  , mv_orb_ ()
-  , mv_rootPOA_ ()
 {
 }
 
-DllORB::~DllORB ()
-{
-}
+DllORB::~DllORB () = default;
 
 int
 DllORB::init (int argc, ACE_TCHAR *argv[])
@@ -24,10 +18,8 @@ DllORB::init (int argc, ACE_TCHAR *argv[])
         {
           ACE_DEBUG ((LM_INFO,
                       ACE_TEXT ("Pre-ORB initialization ...\n")));
-          // -----------------------------------------------------------------
           // Pre-ORB initialization steps necessary for proper DLL ORB
           // support.
-          // -----------------------------------------------------------------
           // Make sure TAO's singleton manager is initialized, and set to not
           // register itself with the ACE_Object_Manager since it is under the
           // control of the Service Configurator.  If we register with the
@@ -36,8 +28,9 @@ DllORB::init (int argc, ACE_TCHAR *argv[])
           // module and destroyed by this object when it is dynamically
           // unloaded.
           int const register_with_object_manager = 0;
-          TAO_Singleton_Manager *p_tsm = TAO_Singleton_Manager::instance ();
-          int result = p_tsm->init (register_with_object_manager);
+          // This singleton pointer is borrowed from the manager.
+          TAO_Singleton_Manager * const p_tsm = TAO_Singleton_Manager::instance ();
+          int const result = p_tsm->init (register_with_object_manager);
 
           if (result == -1)
             {
@@ -73,7 +66,7 @@ DllORB::init (int argc, ACE_TCHAR *argv[])
           return -1;
         }
 
-      CORBA::Object_var v_poa =
+      CORBA::Object_var const v_poa =
         mv_orb_->resolve_initial_references ("RootPOA");
 
       mv_rootPOA_ = PortableServer::POA::_narrow (v_poa.in ());
@@ -101,7 +94,6 @@ DllORB::init (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-
 int
 DllORB::fini ()
 {
@@ -125,7 +117,7 @@ DllORB::fini ()
       mv_orb_->destroy ();
       mv_orb_ = CORBA::ORB::_nil ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return -1;
@@ -133,14 +125,13 @@ DllORB::fini ()
 
   if (failPrePostInit_ < 3)
     {
-      // -----------------------------------------------------------------
       // Post-ORB finalization steps necessary for proper DLL ORB
       // support.
-      // -----------------------------------------------------------------
       // Explicitly clean up singletons created by TAO before
       // unloading this module.
-      TAO_Singleton_Manager *p_tsm = TAO_Singleton_Manager::instance ();
-      int result = p_tsm->fini ();
+      // This singleton pointer is borrowed from the manager.
+      TAO_Singleton_Manager * const p_tsm = TAO_Singleton_Manager::instance ();
+      int const result = p_tsm->fini ();
       if (result == -1)
         {
           if (failPrePostInit_ == 0)
@@ -169,6 +160,5 @@ DllORB::fini ()
 
   return 0;
 }
-
 
 ACE_FACTORY_DEFINE (bug_2677_regression, DllORB)

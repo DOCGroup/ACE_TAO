@@ -31,7 +31,9 @@ CORBA::ServerRequest::_decr_refcount ()
   CORBA::ULong const new_count = --this->refcount_;
 
   if (new_count == 0)
+  {
     delete this;
+  }
 
   return new_count;
 }
@@ -48,9 +50,6 @@ CORBA::ServerRequest::~ServerRequest ()
     {
       ::CORBA::release (this->params_);
     }
-
-  delete this->retval_;
-  delete this->exception_;
 }
 
 // Unmarshal in/inout params, and set up to marshal the appropriate
@@ -115,9 +114,11 @@ CORBA::ServerRequest::set_result (CORBA::Any const& value)
       throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 8, CORBA::COMPLETED_NO);
     }
 
-  ACE_NEW_THROW_EX (this->retval_,
+  CORBA::Any *retval {};
+  ACE_NEW_THROW_EX (retval,
                     CORBA::Any (value),
                     CORBA::NO_MEMORY ());
+  this->retval_.reset (retval);
 }
 
   // NOTE: if "" is set, there has been a system exception,
@@ -131,7 +132,7 @@ CORBA::ServerRequest::set_result (CORBA::Any const& value)
 void
 CORBA::ServerRequest::set_exception (CORBA::Any const& value)
 {
-  CORBA::TypeCode_var tc = value.type ();
+  CORBA::TypeCode_var const tc = value.type ();
 
   CORBA::TCKind const kind = tc->kind ();
 
@@ -142,9 +143,11 @@ CORBA::ServerRequest::set_exception (CORBA::Any const& value)
       throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 21, CORBA::COMPLETED_MAYBE);
     }
 
-  ACE_NEW_THROW_EX (this->exception_,
+  CORBA::Any *exception {};
+  ACE_NEW_THROW_EX (exception,
                     CORBA::Any (value),
                     CORBA::NO_MEMORY ());
+  this->exception_.reset (exception);
 
   this->orb_server_request_.reply_status (GIOP::USER_EXCEPTION);
 }
@@ -256,7 +259,7 @@ CORBA::ServerRequest::gateway_exception_reply (ACE_CString &raw_exception)
   // of bytes. The outgoing stream's byte order has already been matched
   // to the original source of the reply.
   this->orb_server_request_.outgoing ()->write_octet_array (
-      reinterpret_cast<const CORBA::Octet *> (raw_exception.fast_rep ()),
+      reinterpret_cast<CORBA::Octet const *> (raw_exception.fast_rep ()),
       static_cast<CORBA::ULong> (raw_exception.length () + ACE_CDR::MAX_ALIGNMENT));
 
   // This will prevent the marshaling of any parameters into this reply.

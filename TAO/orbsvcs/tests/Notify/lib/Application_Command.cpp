@@ -1,29 +1,24 @@
 #include "Application_Command.h"
 
-
 #include "tao/PortableServer/PortableServer.h"
 #include "LookupManager.h"
 #include "Name.h"
 #include "Activation_Manager.h"
 #include "Driver_Base.h"
 #include "Priority_Mapping.h"
+#include <memory>
 
-TAO_Notify_Tests_Application_Command::TAO_Notify_Tests_Application_Command ()
-  : dump_samples_ (0)
-{
-}
+TAO_Notify_Tests_Application_Command::TAO_Notify_Tests_Application_Command () = default;
 
-TAO_Notify_Tests_Application_Command::~TAO_Notify_Tests_Application_Command ()
-{
-}
+TAO_Notify_Tests_Application_Command::~TAO_Notify_Tests_Application_Command () = default;
 
-const char*
+char const *
 TAO_Notify_Tests_Application_Command::get_name ()
 {
   return TAO_Notify_Tests_Application_Command::name ();
 }
 
-const char*
+char const *
 TAO_Notify_Tests_Application_Command::name ()
 {
   return TAO_Notify_Tests_Name::application_command;
@@ -67,7 +62,7 @@ TAO_Notify_Tests_Application_Command::init (ACE_Arg_Shifter& arg_shifter)
 
           if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Samples")) == 0)
             {
-              this->dump_samples_ = 1;
+              this->dump_samples_ = true;
 
               arg_shifter.consume_arg ();
             }
@@ -101,9 +96,8 @@ TAO_Notify_Tests_Application_Command::handle_init ()
   /// Activate the root POA.
   poa_manager->activate ();
 
-  TAO_Notify_Tests_Priority_Mapping* mapping = new TAO_Notify_Tests_Priority_Mapping ();
-
-  LOOKUP_MANAGER->_register (mapping);
+  this->priority_mapping_ = std::make_unique<TAO_Notify_Tests_Priority_Mapping> ();
+  LOOKUP_MANAGER->_register (this->priority_mapping_.get ());
 }
 
 void
@@ -111,7 +105,7 @@ TAO_Notify_Tests_Application_Command::handle_wait_for_completion ()
 {
   ACE_DEBUG ((LM_DEBUG, "(%P, %t) Waiting for suppliers and consumers to finish...\n"));
 
-  TAO_Notify_Tests_Activation_Manager* act_mgr = 0;
+  TAO_Notify_Tests_Activation_Manager* act_mgr {};
   LOOKUP_MANAGER->resolve (act_mgr);
 
   act_mgr->wait_for_completion ();
@@ -122,7 +116,7 @@ TAO_Notify_Tests_Application_Command::handle_shutdown ()
 {
   ACE_DEBUG ((LM_DEBUG, "(%P, %t)Shutting down the Application...\n"));
 
-  TAO_Notify_Tests_Driver_Base* driver = 0;
+  TAO_Notify_Tests_Driver_Base* driver {};
   LOOKUP_MANAGER->resolve (driver);
 
   driver->shutdown ();
@@ -133,7 +127,7 @@ TAO_Notify_Tests_Application_Command::handle_dump_stats ()
 {
   ACE_DEBUG ((LM_DEBUG, "(%P, %t)Dumpimg stats...\n"));
 
-  TAO_Notify_Tests_Activation_Manager* act_mgr = 0;
+  TAO_Notify_Tests_Activation_Manager* act_mgr {};
   LOOKUP_MANAGER->resolve (act_mgr);
 
   act_mgr->dump_stats (this->dump_samples_);
@@ -142,23 +136,23 @@ TAO_Notify_Tests_Application_Command::handle_dump_stats ()
 void
 TAO_Notify_Tests_Application_Command::handle_run ()
 {
-  // Run the Consumers
-
-
-  //= Run the Suppliers
-  TAO_Notify_Tests_Activation_Manager* act_mgr = 0;
+  TAO_Notify_Tests_Activation_Manager* act_mgr {};
   LOOKUP_MANAGER->resolve (act_mgr);
 
   if (act_mgr->activate_suppliers () == 0)
-    ACE_DEBUG ((LM_DEBUG, "Suppliers activated...\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG, "Suppliers activated...\n"));
+    }
   else
-    ACE_DEBUG ((LM_DEBUG, "Suppliers activation failed!...\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG, "Suppliers activation failed!...\n"));
+    }
 }
 
 void
 TAO_Notify_Tests_Application_Command::handle_signal_peer ()
 {
-  TAO_Notify_Tests_Activation_Manager* act_mgr = 0;
+  TAO_Notify_Tests_Activation_Manager* act_mgr {};
   LOOKUP_MANAGER->resolve (act_mgr);
 
   act_mgr->signal_peer ();
@@ -167,7 +161,7 @@ TAO_Notify_Tests_Application_Command::handle_signal_peer ()
 void
 TAO_Notify_Tests_Application_Command::handle_wait_to_start ()
 {
-  TAO_Notify_Tests_Activation_Manager* act_mgr = 0;
+  TAO_Notify_Tests_Activation_Manager* act_mgr {};
   LOOKUP_MANAGER->resolve (act_mgr);
 
   act_mgr->write_ior ();

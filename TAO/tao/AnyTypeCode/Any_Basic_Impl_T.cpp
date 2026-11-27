@@ -19,7 +19,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<typename T>
 TAO::Any_Basic_Impl_T<T>::Any_Basic_Impl_T (CORBA::TypeCode_ptr tc,
-                                            const T & val)
+                                            T const & val)
   : Any_Impl (nullptr,
               tc),
     value_ (val)
@@ -30,9 +30,9 @@ template<typename T>
 void
 TAO::Any_Basic_Impl_T<T>::insert (CORBA::Any & any,
                                   CORBA::TypeCode_ptr tc,
-                                  const T & value)
+                                  T const & value)
 {
-  Any_Basic_Impl_T<T> *new_impl = nullptr;
+  Any_Basic_Impl_T<T> *new_impl {};
   ACE_NEW (new_impl,
            Any_Basic_Impl_T (tc,
                              value));
@@ -41,7 +41,7 @@ TAO::Any_Basic_Impl_T<T>::insert (CORBA::Any & any,
 
 template<typename T>
 CORBA::Boolean
-TAO::Any_Basic_Impl_T<T>::extract (const CORBA::Any & any,
+TAO::Any_Basic_Impl_T<T>::extract (CORBA::Any const & any,
                                    CORBA::TypeCode_ptr tc,
                                    T & _tao_elem)
 {
@@ -49,7 +49,7 @@ TAO::Any_Basic_Impl_T<T>::extract (const CORBA::Any & any,
     {
       CORBA::TypeCode_ptr any_tc = any._tao_get_typecode ();
       CORBA::Boolean const _tao_equiv = any_tc->equivalent (tc);
-      if (_tao_equiv == false)
+      if (!_tao_equiv)
         {
           return false;
         }
@@ -73,14 +73,16 @@ TAO::Any_Basic_Impl_T<T>::extract (const CORBA::Any & any,
       TAO::Any_Basic_Impl_T<T> * const replacement =
         TAO::Any_Basic_Impl_T<T>::create_empty (any_tc);
 
-      std::unique_ptr<TAO::Any_Basic_Impl_T<T> > replacement_safety (replacement);
+      std::unique_ptr<TAO::Any_Basic_Impl_T<T>> replacement_safety (replacement);
 
       // We know this will work since the unencoded case is covered above.
       TAO::Unknown_IDL_Type * const unk =
         dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
 
       if (!unk)
-        return false;
+        {
+          return false;
+        }
 
       // We don't want the rd_ptr of unk to move, in case it is
       // shared by another Any. This copies the state, not the buffer.
@@ -100,7 +102,7 @@ TAO::Any_Basic_Impl_T<T>::extract (const CORBA::Any & any,
       // Duplicated by Any_Impl base class constructor.
       ::CORBA::release (any_tc);
     }
-  catch (const ::CORBA::Exception&)
+  catch (::CORBA::Exception const &)
     {
     }
 
@@ -115,21 +117,21 @@ TAO::Any_Basic_Impl_T<T>::marshal_value (TAO_OutputCDR &cdr)
 }
 
 template<typename T>
-const void *
+void const *
 TAO::Any_Basic_Impl_T<T>::value () const
 {
-  return &this->value_;
+  return std::addressof (this->value_);
 }
 
 template<typename T>
 TAO::Any_Basic_Impl_T<T> *
 TAO::Any_Basic_Impl_T<T>::create_empty (CORBA::TypeCode_ptr tc)
 {
-  TAO::Any_Basic_Impl_T<T> * retval = nullptr;
+  TAO::Any_Basic_Impl_T<T> * retval {};
   ACE_NEW_RETURN (retval,
                   TAO::Any_Basic_Impl_T<T> (tc,
-                                            static_cast<T> (0)),
-                  0);
+                                            T{}),
+                  nullptr);
   return retval;
 }
 

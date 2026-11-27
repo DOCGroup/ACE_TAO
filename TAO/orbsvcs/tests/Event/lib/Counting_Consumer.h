@@ -1,12 +1,8 @@
-/* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file   Counting_Consumer.h
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  */
-//=============================================================================
-
 
 #ifndef EC_COUNTING_CONSUMER_H
 #define EC_COUNTING_CONSUMER_H
@@ -30,12 +26,11 @@
 class EC_Test_Export EC_Counting_Consumer : public POA_RtecEventComm::PushConsumer
 {
 public:
-  /// Constructor
-  EC_Counting_Consumer (const char* name);
+  EC_Counting_Consumer (char const *name);
 
   /// Simple connect/disconnect methods..
   void connect (RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin,
-                const RtecEventChannelAdmin::ConsumerQOS &qos);
+                RtecEventChannelAdmin::ConsumerQOS const &qos);
   void disconnect ();
   void deactivate ();
 
@@ -43,11 +38,12 @@ public:
   /// expected count.
   void dump_results (int expected_count, int tolerance);
 
-  // = The RtecEventComm::PushConsumer methods
-
+  /// @name RtecEventComm::PushConsumer operations
+  /// @{
   /// The skeleton methods.
-  virtual void push (const RtecEventComm::EventSet& events);
-  virtual void disconnect_push_consumer ();
+  void push (RtecEventComm::EventSet const & events) override;
+  void disconnect_push_consumer () override;
+  /// @}
 
   /// Keep track of the number of events received.
   CORBA::ULong event_count;
@@ -60,7 +56,7 @@ protected:
   RtecEventChannelAdmin::ProxyPushSupplier_var supplier_proxy_;
 
   /// The name
-  const char* name_;
+  char const *name_;
 };
 
 #endif /* ECT_CONSUMER_H */

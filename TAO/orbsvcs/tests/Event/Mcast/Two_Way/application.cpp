@@ -1,4 +1,5 @@
 #include "Constants.h"
+#include "Heartbeat_Payload.h"
 
 #include "orbsvcs/Event_Utilities.h"
 #include "orbsvcs/Event/EC_Lifetime_Utils_T.h"
@@ -16,9 +17,14 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/os_include/os_netdb.h"
 
+#include <array>
+#include <cstddef>
+#include <cstring>
+#include <memory>
+
 // Indicates whether this application is responsible for destroying
 // the Event Channel it's using upon exit.
-int destroy_ec_flag = 0;
+bool destroy_ec_flag {};
 
 /**
  * @class Heartbeat_Application
@@ -26,7 +32,7 @@ int destroy_ec_flag = 0;
  * @brief A simple application for testing federation of Event
  *        Channels via multicast.
  *
- *        NOTE: Contains platform-specific code (event data), i.e.,
+ *        @note Contains platform-specific code (event data), i.e.,
  *              might not work cross-platform.
  *
  * This class acts both as a receiver and a supplier of HEARTBEAT events
@@ -39,11 +45,14 @@ class Heartbeat_Application :
   public TAO_EC_Deactivated_Object
 {
 public:
-  /// Constructor.
   Heartbeat_Application ();
 
-  /// Destructor.
-  ~Heartbeat_Application ();
+  ~Heartbeat_Application () override = default;
+
+  Heartbeat_Application (Heartbeat_Application const &) = delete;
+  Heartbeat_Application (Heartbeat_Application &&) = delete;
+  Heartbeat_Application &operator= (Heartbeat_Application const &) = delete;
+  Heartbeat_Application &operator= (Heartbeat_Application &&) = delete;
 
   // Initializes the object: connects with EC as a supplier and a
   // consumer and registers with reactor for timeouts.  If init ()
@@ -64,17 +73,17 @@ public:
 
   /// Send another heartbeat or, if we already sent/attempted the required
   /// number of heartbeats, perform shutdown().
-  int handle_timeout (const ACE_Time_Value& tv,
-                      const void* act);
+  int handle_timeout (ACE_Time_Value const &tv,
+                      void const *act);
 
   /// PushConsumer methods.
-  //@{
-  /// Update our <heartbeats_> database to reflect newly received heartbeats.
-  virtual void push (const RtecEventComm::EventSet &events);
+  /// @{
+  /// Update the @c heartbeats_ database with newly received heartbeats.
+  void push (RtecEventComm::EventSet const &events) override;
 
   /// Initiate shutdown().
-  virtual void disconnect_push_consumer ();
-  //@}
+  void disconnect_push_consumer () override;
+  /// @}
 
 private:
   /**
@@ -85,18 +94,23 @@ private:
   class Timeout_Handler : public ACE_Event_Handler
   {
   public:
-    /// Constructor.
-    Timeout_Handler (Heartbeat_Application *recv);
+    explicit Timeout_Handler (Heartbeat_Application *recv);
+
+    Timeout_Handler (Timeout_Handler const &) = delete;
+    Timeout_Handler (Timeout_Handler &&) = delete;
+    Timeout_Handler &operator= (Timeout_Handler const &) = delete;
+    Timeout_Handler &operator= (Timeout_Handler &&) = delete;
+
     /// Reactor callback.
-    virtual int handle_timeout (const ACE_Time_Value& tv,
-                                const void* act);
+    int handle_timeout (ACE_Time_Value const &tv,
+                        void const *act) override;
   private:
     /// We callback to this object when a message arrives.
-    Heartbeat_Application* receiver_;
+    Heartbeat_Application *receiver_ {};
   };
 
   /// Helpers.
-  //@{
+  /// @{
   /// Verify that arguments are not nil and store their values.
   int check_args (CORBA::ORB_var orb,
                   RtecEventChannelAdmin::EventChannel_var ec);
@@ -111,30 +125,30 @@ private:
   int register_for_timeouts ();
   /// Deregister from reactor.
   void stop_timeouts ();
-  //@}
+  /// @}
 
   /// Flag indicating whether this object has been fully initialized.
-  int initialized_;
+  bool initialized_ {};
 
   /// Helper object for receiving timeouts from Reactor.
   Timeout_Handler timeout_handler_;
 
   /// Number of heartbeats we sent so far.
-  size_t n_timeouts_;
+  size_t n_timeouts_ {};
 
   /// Info we keep on each HEARTBEAT source.
-  typedef struct {
-    pid_t pid;
-    char hostname [MAXHOSTNAMELEN];
-    int total;
-  } HEARTBEAT_SOURCE_ENTRY;
+  struct HEARTBEAT_SOURCE_ENTRY {
+    pid_t pid {};
+    std::array<char, MAXHOSTNAMELEN + 1> hostname {};
+    size_t total {};
+  };
 
   /// Stores info on all heartbeats we received so far.
   ACE_Array_Base<HEARTBEAT_SOURCE_ENTRY> heartbeats_;
 
   /// Our identity: pid followed by hostname.  We include this info into each
   /// heartbeat we send.
-  char hostname_and_pid_ [MAXHOSTNAMELEN+11];
+  std::array<char, MAXHOSTNAMELEN + 11> hostname_and_pid_ {};
 
   /// ORB and EC pointers - to allow cleanup down the road.
   CORBA::ORB_var orb_;
@@ -143,10 +157,10 @@ private:
   /// Consumer proxy which represents us in EC as a supplier.
   RtecEventChannelAdmin::ProxyPushConsumer_var consumer_;
 
-  typedef TAO_EC_Auto_Command<TAO_ECG_UDP_Sender_Disconnect_Command>
-  Supplier_Proxy_Disconnect;
-  typedef TAO_EC_Auto_Command<TAO_ECG_UDP_Receiver_Disconnect_Command>
-  Consumer_Proxy_Disconnect;
+  using Supplier_Proxy_Disconnect =
+    TAO_EC_Auto_Command<TAO_ECG_UDP_Sender_Disconnect_Command>;
+  using Consumer_Proxy_Disconnect =
+    TAO_EC_Auto_Command<TAO_ECG_UDP_Receiver_Disconnect_Command>;
 
   /// Manages our connection to Supplier Proxy.
   Supplier_Proxy_Disconnect supplier_proxy_disconnect_;
@@ -156,15 +170,15 @@ private:
 // **************************************************************************
 
 Heartbeat_Application::Timeout_Handler::
-Timeout_Handler (Heartbeat_Application* r)
-  :  receiver_ (r)
+Timeout_Handler (Heartbeat_Application *r)
+  : receiver_ (r)
 {
 }
 
 int
 Heartbeat_Application::Timeout_Handler::
-handle_timeout (const ACE_Time_Value& tv,
-                const void* act)
+handle_timeout (ACE_Time_Value const &tv,
+                void const *act)
 {
   return this->receiver_->handle_timeout (tv, act);
 }
@@ -172,18 +186,7 @@ handle_timeout (const ACE_Time_Value& tv,
 // **************************************************************************
 
 Heartbeat_Application::Heartbeat_Application ()
-  : initialized_ (0)
-  , timeout_handler_ (this)
-  , n_timeouts_ (0)
-  , orb_ ()
-  , ec_ ()
-  , consumer_ ()
-  , supplier_proxy_disconnect_ ()
-  , consumer_proxy_disconnect_ ()
-{
-}
-
-Heartbeat_Application::~Heartbeat_Application ()
+  : timeout_handler_ (this)
 {
 }
 
@@ -224,12 +227,10 @@ Heartbeat_Application::init (CORBA::ORB_var orb,
     }
 
   // Get hostname & process id, i.e., identity of this application.
-  pid_t pid = ACE_OS::getpid ();
-  ACE_OS::memcpy (this->hostname_and_pid_,
-                  &pid,
-                  sizeof (pid));
+  pid_t const pid = ACE_OS::getpid ();
+  std::memcpy (this->hostname_and_pid_.data (), &pid, sizeof (pid));
 
-  if (gethostname (this->hostname_and_pid_ + sizeof (pid),
+  if (gethostname (this->hostname_and_pid_.data () + sizeof (pid),
                    MAXHOSTNAMELEN)
       != 0)
     {
@@ -247,7 +248,7 @@ Heartbeat_Application::init (CORBA::ORB_var orb,
     {
       this->connect_as_consumer ();
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       this->consumer_proxy_disconnect_.execute ();
       throw;
@@ -262,17 +263,17 @@ Heartbeat_Application::init (CORBA::ORB_var orb,
       throw CORBA::INTERNAL ();
     }
 
-  this->initialized_ = 1;
+  this->initialized_ = true;
 }
 
 int
 Heartbeat_Application::register_for_timeouts ()
 {
   // Schedule timeout every 0.5 seconds, for sending heartbeat events.
-  ACE_Time_Value timeout_interval (0, 500000);
-  ACE_Reactor *reactor = this->orb_->orb_core ()->reactor ();
+  ACE_Time_Value const timeout_interval (0, 500000);
+  ACE_Reactor * const reactor = this->orb_->orb_core ()->reactor ();
   if (!reactor
-      || reactor->schedule_timer (&this->timeout_handler_, 0,
+      || reactor->schedule_timer (std::addressof (this->timeout_handler_), 0,
                                   timeout_interval,
                                   timeout_interval) == -1)
     {
@@ -288,9 +289,9 @@ Heartbeat_Application::register_for_timeouts ()
 void
 Heartbeat_Application::stop_timeouts ()
 {
-  ACE_Reactor *reactor = this->orb_->orb_core ()->reactor ();
+  ACE_Reactor * const reactor = this->orb_->orb_core ()->reactor ();
   if (!reactor
-      || reactor->cancel_timer (&this->timeout_handler_) == -1)
+      || reactor->cancel_timer (std::addressof (this->timeout_handler_)) == -1)
     {
       ACE_ERROR ((LM_ERROR,
                   "Heartbeat_Application::stop_timeouts - "
@@ -356,13 +357,14 @@ Heartbeat_Application::connect_as_consumer ()
 }
 
 int
-Heartbeat_Application::handle_timeout (const ACE_Time_Value&,
-                                       const void*)
+Heartbeat_Application::handle_timeout (ACE_Time_Value const &,
+                                       void const *)
 {
   try
     {
-      if (this->n_timeouts_++ < HEARTBEATS_TO_SEND)
+      if (this->n_timeouts_ < HEARTBEATS_TO_SEND)
         {
+          ++this->n_timeouts_;
           RtecEventComm::EventSet events (1);
           events.length (1);
           // Events travelling through gateways must have a ttl count of at
@@ -373,10 +375,11 @@ Heartbeat_Application::handle_timeout (const ACE_Time_Value&,
 
           // Store our hostname and process id in the data portion of
           // the event.
-          events[0].data.payload.replace (MAXHOSTNAMELEN+11,
-                                          MAXHOSTNAMELEN+11,
-                                          (u_char *)this->hostname_and_pid_,
-                                          0);
+          events[0].data.payload.replace (MAXHOSTNAMELEN + 11,
+                                          MAXHOSTNAMELEN + 11,
+                                          reinterpret_cast<u_char *> (
+                                            this->hostname_and_pid_.data ()),
+                                          false);
 
           this->consumer_->push (events);
         }
@@ -387,7 +390,7 @@ Heartbeat_Application::handle_timeout (const ACE_Time_Value&,
           this->shutdown ();
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         "Suppressed the following exception in ""Heartbeat_Application::handle_timeout:\n");
@@ -396,26 +399,31 @@ Heartbeat_Application::handle_timeout (const ACE_Time_Value&,
 }
 
 void
-Heartbeat_Application::push (const RtecEventComm::EventSet &events)
+Heartbeat_Application::push (RtecEventComm::EventSet const &events)
 {
-  for (CORBA::ULong i = 0; i < events.length (); ++i)
+  for (CORBA::ULong i {}; i < events.length (); ++i)
     {
       // Figure out heartbeat source.
-      const u_char * buffer = events[i].data.payload.get_buffer ();
-      pid_t pid = *((pid_t*) buffer);
-      char * host = (char*) buffer + sizeof (pid);
+      pid_t pid {};
+      char const *host {};
+      size_t host_length {};
+      if (!Heartbeat_Payload::decode (events[i].data.payload, pid, host, host_length))
+        {
+          ACE_ERROR ((LM_ERROR, "Heartbeat payload is invalid\n"));
+          continue;
+        }
 
       // Update heartbeat database.
-      int found = 0;
-      size_t size = this->heartbeats_.size ();
-      for (size_t j = 0; j < size; ++j)
+      bool found {};
+      size_t const size = this->heartbeats_.size ();
+      for (size_t j {}; j < size; ++j)
         {
           if (this->heartbeats_[j].pid == pid
-              && ACE_OS::strcmp (this->heartbeats_[j].hostname, host)
+              && std::strcmp (this->heartbeats_[j].hostname.data (), host)
               == 0)
             {
-              this->heartbeats_[j].total++;
-              found = 1;
+              ++this->heartbeats_[j].total;
+              found = true;
               break;
             }
         }
@@ -433,9 +441,7 @@ Heartbeat_Application::push (const RtecEventComm::EventSet &events)
 
           this->heartbeats_[size].pid = pid;
           this->heartbeats_[size].total = 1;
-          ACE_OS::memcpy (this->heartbeats_[size].hostname,
-                          host,
-                          ACE_OS::strlen (host) + 1);
+          std::memcpy (this->heartbeats_[size].hostname.data (), host, host_length + 1);
         }
     }
 }
@@ -455,7 +461,7 @@ Heartbeat_Application::destroy_ec ()
         {
           this->ec_->destroy ();
         }
-      catch (const CORBA::Exception& ex)
+      catch (CORBA::Exception const &ex)
         {
           ex._tao_print_exception (
             "Suppressed the following exception in ""Application_Heartbeat::destroy_ec\n");
@@ -468,9 +474,11 @@ void
 Heartbeat_Application::shutdown ()
 {
   if (!this->initialized_)
+  {
     return;
+  }
 
-  this->initialized_ = 0;
+  this->initialized_ = false;
 
   // Deregister from Reactor.
   this->stop_timeouts ();
@@ -489,9 +497,9 @@ Heartbeat_Application::shutdown ()
   this->deactivator_.deactivate ();
 
   // Print out heartbeats report.
-  pid_t pid = ACE_OS::getpid ();
-  char hostname[MAXHOSTNAMELEN + 1];
-  if (gethostname (hostname, MAXHOSTNAMELEN) != 0)
+  pid_t const pid = ACE_OS::getpid ();
+  std::array<char, MAXHOSTNAMELEN + 1> hostname {};
+  if (gethostname (hostname.data (), MAXHOSTNAMELEN) != 0)
     {
       ACE_ERROR ((LM_ERROR,
                   "Heartbeat_Application::shutdown - "
@@ -500,12 +508,12 @@ Heartbeat_Application::shutdown ()
     }
   ACE_DEBUG ((LM_DEBUG,
               "%d@%s Received following heartbeats:\n",
-              pid, hostname));
-  for (size_t i = 0; i < this->heartbeats_.size (); ++i)
+              pid, hostname.data ()));
+  for (size_t i {}; i < this->heartbeats_.size (); ++i)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "Host %s, pid %d - total of %u\n",
-                  this->heartbeats_[i].hostname,
+                  "Host %s, pid %d - total of %B\n",
+                  this->heartbeats_[i].hostname.data (),
                   this->heartbeats_[i].pid,
                   this->heartbeats_[i].total));
     }
@@ -515,7 +523,7 @@ Heartbeat_Application::shutdown ()
     {
       this->orb_->shutdown (false);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         "The following exception occurred in ""Heartbeat_Application::shutdown:\n");
@@ -524,29 +532,33 @@ Heartbeat_Application::shutdown ()
 
 ////////////////////////////////////////////////////////////
 int
-check_for_nil (CORBA::Object_ptr obj, const char *message)
+check_for_nil (CORBA::Object_ptr obj, char const *message)
 {
   if (CORBA::is_nil (obj))
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "ERROR: Object reference <%s> is nil\n",
-                       message),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "ERROR: Object reference <%s> is nil\n",
+                         message),
+                        -1);
+    }
   else
+  {
     return 0;
+  }
 }
 
 int
 parse_args (int argc, ACE_TCHAR ** argv)
 {
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("d"));
-  int opt;
+  int opt {};
 
   while ((opt = get_opt ()) != EOF)
     {
       switch (opt)
         {
         case 'd':
-          destroy_ec_flag = 1;
+          destroy_ec_flag = true;
           break;
 
         case '?':
@@ -564,7 +576,7 @@ parse_args (int argc, ACE_TCHAR ** argv)
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   // We may want this to be alive beyond the next block.
   PortableServer::Servant_var<Heartbeat_Application> app;
@@ -576,14 +588,18 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) == -1)
+      {
         return 1;
+      }
 
       CORBA::Object_var obj =
         orb->resolve_initial_references ("RootPOA");
       PortableServer::POA_var poa =
         PortableServer::POA::_narrow (obj.in ());
       if (check_for_nil (poa.in (), "POA") == -1)
+      {
         return 1;
+      }
 
       PortableServer::POAManager_var manager =
         poa->the_POAManager ();
@@ -593,12 +609,16 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       RtecEventChannelAdmin::EventChannel_var ec =
         RtecEventChannelAdmin::EventChannel::_narrow (obj.in ());
       if (check_for_nil (ec.in (), "EC") == -1)
+      {
         return 1;
+      }
 
       // Init our application.
       app = new Heartbeat_Application;
       if (!app.in ())
+      {
         return 1;
+      }
 
       app->init (orb, ec);
 
@@ -608,7 +628,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // Receive events from EC.
       orb->run ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception in Heartbeat Application:");
       // Since there was an exception, application might not have had

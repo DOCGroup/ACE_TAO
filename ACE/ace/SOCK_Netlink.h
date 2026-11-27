@@ -1,11 +1,9 @@
-//=============================================================================
 /**
  *  @file    SOCK_Netlink.h
  *
  *  @author Robert Iakobashvilli <coroberti@gmail.com>
  *  @author Raz Ben Yehuda <raziebe@013.net.il>
  */
-//=============================================================================
 
 #ifndef ACE_SOCK_NETLINK_H
 #define ACE_SOCK_NETLINK_H
@@ -40,7 +38,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_SOCK_Netlink : public ACE_SOCK
 {
 public:
-  /// Default constructor.
   ACE_SOCK_Netlink();
   ~ACE_SOCK_Netlink();
   ACE_SOCK_Netlink (ACE_Netlink_Addr &local,
@@ -81,7 +78,7 @@ public:
   */
   ssize_t send (const iovec iov[],
                 int n,
-                const ACE_Addr &addr,
+                ACE_Addr const &addr,
                 int flags = 0) const;
 
   /// Declare the dynamic allocation hooks.

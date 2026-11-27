@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Caching_Utility_T.h
  *
  *  @author Kirthika Parameswaran <kirthika@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef ACE_CACHING_UTILITY_H
 #define ACE_CACHING_UTILITY_H
@@ -21,6 +17,8 @@
 
 #include "ace/Global_Macros.h"
 #include "ace/Cleanup_Strategies_T.h"
+
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -43,18 +41,18 @@ class ACE_Pair_Caching_Utility
 {
 public:
   using CLEANUP_STRATEGY = ACLE<KEY, VALUE, CONTAINER>;
+  using CLEANUP_STRATEGY_BASE = ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER>;
 
-  /// Constructor.
-  ACE_Pair_Caching_Utility (ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_strategy = nullptr,
-                            bool delete_cleanup_strategy = false);
+  ACE_Pair_Caching_Utility (
+    ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_strategy = nullptr,
+    bool delete_cleanup_strategy = false);
 
-  /// Destructor.
-  ~ACE_Pair_Caching_Utility ();
+  ~ACE_Pair_Caching_Utility () = default;
 
-  ACE_Pair_Caching_Utility (const ACE_Pair_Caching_Utility &) = delete;
-  ACE_Pair_Caching_Utility (ACE_Pair_Caching_Utility &&) = delete;
-  ACE_Pair_Caching_Utility &operator= (const ACE_Pair_Caching_Utility &) = delete;
-  ACE_Pair_Caching_Utility &operator= (ACE_Pair_Caching_Utility &&) = delete;
+  ACE_Pair_Caching_Utility (ACE_Pair_Caching_Utility const&) = delete;
+  ACE_Pair_Caching_Utility& operator= (ACE_Pair_Caching_Utility const&) = delete;
+  ACE_Pair_Caching_Utility (ACE_Pair_Caching_Utility&&) = delete;
+  ACE_Pair_Caching_Utility& operator= (ACE_Pair_Caching_Utility&&) = delete;
 
   /**
    * Purge entries from the @a container. The Cleanup_Strategy will do the
@@ -68,12 +66,11 @@ protected:
                 KEY *&key_to_remove,
                 VALUE *&value_to_remove);
 
-  /// The cleanup strategy which can be used to destroy the entries of
-  /// the container.
-  CLEANUP_STRATEGY *cleanup_strategy_;
+  /// Owns the cleanup strategy when this utility creates or receives it.
+  std::unique_ptr<CLEANUP_STRATEGY_BASE> owned_cleanup_strategy_ {};
 
-  /// Whether the cleanup_strategy should be destroyed or not.
-  bool delete_cleanup_strategy_;
+  /// Views the cleanup strategy, which may be borrowed.
+  CLEANUP_STRATEGY_BASE *cleanup_strategy_ {};
 };
 
 /**
@@ -97,17 +94,16 @@ public:
   using CLEANUP_STRATEGY = ARHCLE<KEY, VALUE, CONTAINER>;
   using CLEANUP_STRATEGY_BASE = ACLE<KEY, VALUE, CONTAINER>;
 
-  /// Constructor.
-  ACE_Recyclable_Handler_Caching_Utility (ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_strategy = nullptr,
-                                          bool delete_cleanup_strategy = false);
+  ACE_Recyclable_Handler_Caching_Utility (
+    ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_strategy = nullptr,
+    bool delete_cleanup_strategy = false);
 
-  /// Destructor.
-  ~ACE_Recyclable_Handler_Caching_Utility ();
+  ~ACE_Recyclable_Handler_Caching_Utility () = default;
 
-  ACE_Recyclable_Handler_Caching_Utility (const ACE_Recyclable_Handler_Caching_Utility &) = delete;
-  ACE_Recyclable_Handler_Caching_Utility (ACE_Recyclable_Handler_Caching_Utility &&) = delete;
-  ACE_Recyclable_Handler_Caching_Utility &operator= (const ACE_Recyclable_Handler_Caching_Utility &) = delete;
-  ACE_Recyclable_Handler_Caching_Utility &operator= (ACE_Recyclable_Handler_Caching_Utility &&) = delete;
+  ACE_Recyclable_Handler_Caching_Utility (ACE_Recyclable_Handler_Caching_Utility const&) = delete;
+  ACE_Recyclable_Handler_Caching_Utility& operator= (ACE_Recyclable_Handler_Caching_Utility const&) = delete;
+  ACE_Recyclable_Handler_Caching_Utility (ACE_Recyclable_Handler_Caching_Utility&&) = delete;
+  ACE_Recyclable_Handler_Caching_Utility& operator= (ACE_Recyclable_Handler_Caching_Utility&&) = delete;
 
   /**
    * Purge entries from the @a container. The Cleanup_Strategy will do
@@ -123,11 +119,11 @@ protected:
                 KEY *&key_to_remove,
                 VALUE *&value_to_remove);
 
-  /// This is the default Cleanup Strategy for this utility.
-  CLEANUP_STRATEGY_BASE *cleanup_strategy_;
+  /// Owns the cleanup strategy when this utility creates or receives it.
+  std::unique_ptr<CLEANUP_STRATEGY_BASE> owned_cleanup_strategy_ {};
 
-  /// Whether the cleanup_strategy should be destroyed or not.
-  bool delete_cleanup_strategy_;
+  /// Views the cleanup strategy, which may be borrowed.
+  CLEANUP_STRATEGY_BASE *cleanup_strategy_ {};
 };
 
 /**
@@ -152,17 +148,20 @@ public:
   using CLEANUP_STRATEGY = ARRHCLE<KEY, VALUE, CONTAINER>;
   using CLEANUP_STRATEGY_BASE = ACLE<KEY, VALUE, CONTAINER>;
 
-  /// Constructor.
-  ACE_Refcounted_Recyclable_Handler_Caching_Utility (ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_strategy = nullptr,
-                                                     bool delete_cleanup_strategy = false);
+  ACE_Refcounted_Recyclable_Handler_Caching_Utility (
+    ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_strategy = nullptr,
+    bool delete_cleanup_strategy = false);
 
-  /// Destructor.
-  ~ACE_Refcounted_Recyclable_Handler_Caching_Utility ();
+  ~ACE_Refcounted_Recyclable_Handler_Caching_Utility () = default;
 
-  ACE_Refcounted_Recyclable_Handler_Caching_Utility (const ACE_Refcounted_Recyclable_Handler_Caching_Utility &) = delete;
-  ACE_Refcounted_Recyclable_Handler_Caching_Utility (ACE_Refcounted_Recyclable_Handler_Caching_Utility &&) = delete;
-  ACE_Refcounted_Recyclable_Handler_Caching_Utility &operator= (const ACE_Refcounted_Recyclable_Handler_Caching_Utility &) = delete;
-  ACE_Refcounted_Recyclable_Handler_Caching_Utility &operator= (ACE_Refcounted_Recyclable_Handler_Caching_Utility &&) = delete;
+  ACE_Refcounted_Recyclable_Handler_Caching_Utility (
+    ACE_Refcounted_Recyclable_Handler_Caching_Utility const&) = delete;
+  ACE_Refcounted_Recyclable_Handler_Caching_Utility& operator= (
+    ACE_Refcounted_Recyclable_Handler_Caching_Utility const&) = delete;
+  ACE_Refcounted_Recyclable_Handler_Caching_Utility (
+    ACE_Refcounted_Recyclable_Handler_Caching_Utility&&) = delete;
+  ACE_Refcounted_Recyclable_Handler_Caching_Utility& operator= (
+    ACE_Refcounted_Recyclable_Handler_Caching_Utility&&) = delete;
 
   /**
    * Purge entries from the @a container. The Cleanup_Strategy will do
@@ -179,17 +178,18 @@ protected:
                 VALUE *&value_to_remove);
 
   /// This is the default Cleanup Strategy for this utility.
-  CLEANUP_STRATEGY_BASE *cleanup_strategy_;
+  /// Owns the cleanup strategy when this utility creates or receives it.
+  std::unique_ptr<CLEANUP_STRATEGY_BASE> owned_cleanup_strategy_ {};
 
-  /// Whether the cleanup_strategy should be destroyed or not.
-  bool delete_cleanup_strategy_;
+  /// Views the cleanup strategy, which may be borrowed.
+  CLEANUP_STRATEGY_BASE *cleanup_strategy_ {};
 
   /**
    * This figure denotes the number of entries are there in the
    * container which have been marked as closed already but might
    * not have been unbound from the container.
    */
-  size_t marked_as_closed_entries_;
+  size_t marked_as_closed_entries_ {};
 };
 
 /**
@@ -213,17 +213,16 @@ public:
   using CLEANUP_STRATEGY = ACE_Handler_Cleanup_Strategy<KEY, VALUE, CONTAINER>;
   using CLEANUP_STRATEGY_BASE = ACLE<KEY, VALUE, CONTAINER>;
 
-  /// Constructor.
-  ACE_Handler_Caching_Utility (ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_strategy = nullptr,
-                               bool delete_cleanup_strategy = false);
+  ACE_Handler_Caching_Utility (
+    ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_strategy = nullptr,
+    bool delete_cleanup_strategy = false);
 
-  ACE_Handler_Caching_Utility (const ACE_Handler_Caching_Utility &) = delete;
-  ACE_Handler_Caching_Utility (ACE_Handler_Caching_Utility &&) = delete;
-  ACE_Handler_Caching_Utility &operator= (const ACE_Handler_Caching_Utility &) = delete;
-  ACE_Handler_Caching_Utility &operator= (ACE_Handler_Caching_Utility &&) = delete;
+  ACE_Handler_Caching_Utility (ACE_Handler_Caching_Utility const&) = delete;
+  ACE_Handler_Caching_Utility& operator= (ACE_Handler_Caching_Utility const&) = delete;
+  ACE_Handler_Caching_Utility (ACE_Handler_Caching_Utility&&) = delete;
+  ACE_Handler_Caching_Utility& operator= (ACE_Handler_Caching_Utility&&) = delete;
 
-  /// Destructor.
-  ~ACE_Handler_Caching_Utility ();
+  ~ACE_Handler_Caching_Utility () = default;
 
   /**
    * Purge entries from the @a container. The Cleanup_Strategy will do
@@ -246,10 +245,11 @@ protected:
 
   /// The cleanup strategy which can be used to destroy the entries of
   /// the container.
-  CLEANUP_STRATEGY_BASE *cleanup_strategy_;
+  /// Owns the cleanup strategy when this utility creates or receives it.
+  std::unique_ptr<CLEANUP_STRATEGY_BASE> owned_cleanup_strategy_ {};
 
-  /// Whether the cleanup_strategy should be destroyed or not.
-  bool delete_cleanup_strategy_;
+  /// Views the cleanup strategy, which may be borrowed.
+  CLEANUP_STRATEGY_BASE *cleanup_strategy_ {};
 };
 
 /**
@@ -271,32 +271,34 @@ public:
   using CLEANUP_STRATEGY = ANCLE<KEY, VALUE, CONTAINER>;
   using CLEANUP_STRATEGY_BASE = ACLE<KEY, VALUE, CONTAINER>;
 
-  /// Constructor.
-  ACE_Null_Caching_Utility (ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_strategy = nullptr,
-                            bool delete_cleanup_strategy = false);
+  ACE_Null_Caching_Utility (
+    ACE_Cleanup_Strategy<KEY, VALUE, CONTAINER> *cleanup_strategy = nullptr,
+    bool delete_cleanup_strategy = false);
 
-  ACE_Null_Caching_Utility (const ACE_Null_Caching_Utility &) = delete;
-  ACE_Null_Caching_Utility (ACE_Null_Caching_Utility &&) = delete;
-  ACE_Null_Caching_Utility &operator= (const ACE_Null_Caching_Utility &) = delete;
-  ACE_Null_Caching_Utility &operator= (ACE_Null_Caching_Utility &&) = delete;
+  ACE_Null_Caching_Utility (ACE_Null_Caching_Utility const&) = delete;
+  ACE_Null_Caching_Utility& operator= (ACE_Null_Caching_Utility const&) = delete;
+  ACE_Null_Caching_Utility (ACE_Null_Caching_Utility&&) = delete;
+  ACE_Null_Caching_Utility& operator= (ACE_Null_Caching_Utility&&) = delete;
 
-  /// Destructor.
-  ~ACE_Null_Caching_Utility ();
+  ~ACE_Null_Caching_Utility () = default;
 
   /**
    * Purge entries from the @a container. The Cleanup_Strategy will do
    * the actual job of cleanup once the entries to be cleaned up are
-   * decided. @note Here it is a no-op.
+   * decided.
+   *
+   * @note This is a no-op.
    */
   int clear_cache (CONTAINER &container,
                    double purge_percent);
 
 protected:
   /**
-   * Find the entry with minimum caching attributes.  This is handler
-   * specific since this utility is to be used very specifically for
-   * handler who have caching_attributes for server side acched
-   * connection management.@note Here it is a no-op.
+   * Find the entry with minimum caching attributes. This is handler
+   * specific since this utility is intended for handlers that have
+   * caching attributes for server-side cached connection management.
+   *
+   * @note This method is a no-op.
    */
   void minimum (CONTAINER &container,
                 KEY *&key_to_remove,
@@ -304,10 +306,11 @@ protected:
 
   /// The cleanup strategy which can be used to destroy the entries of
   /// the container.
-  CLEANUP_STRATEGY_BASE *cleanup_strategy_;
+  /// Owns the cleanup strategy when this utility creates or receives it.
+  std::unique_ptr<CLEANUP_STRATEGY_BASE> owned_cleanup_strategy_ {};
 
-  /// Whether the cleanup_strategy should be destroyed or not.
-  bool delete_cleanup_strategy_;
+  /// Views the cleanup strategy, which may be borrowed.
+  CLEANUP_STRATEGY_BASE *cleanup_strategy_ {};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

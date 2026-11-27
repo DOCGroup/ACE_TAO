@@ -39,12 +39,18 @@ TAO_EC_Simple_Queue_Full_Action::init (int argc, ACE_TCHAR* argv[])
 
   do {
     if (argc == 0)
+    {
       break;
+    }
 
     if (ACE_OS::strcasecmp (ACE_TEXT("wait"), argv[0]) == 0)
-      this->queue_full_action_return_value_ = WAIT_TO_EMPTY;
+      {
+        this->queue_full_action_return_value_ = WAIT_TO_EMPTY;
+      }
     else if (ACE_OS::strcasecmp (ACE_TEXT("discard"), argv[0]) == 0)
-      this->queue_full_action_return_value_ = SILENTLY_DISCARD;
+      {
+        this->queue_full_action_return_value_ = SILENTLY_DISCARD;
+      }
 #if 0
     else
       ;
@@ -80,7 +86,6 @@ ACE_STATIC_SVC_DEFINE (TAO_EC_Simple_Queue_Full_Action,
                        0)
 ACE_FACTORY_DEFINE (TAO_RTEvent_Serv, TAO_EC_Simple_Queue_Full_Action)
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 bool
 TAO_EC_Queue::is_full_i ()
@@ -93,13 +98,13 @@ TAO_EC_Queue::is_full_i ()
 int
 TAO_EC_Dispatching_Task::svc ()
 {
-  bool done = false;
+  bool done {};
 
   while (!done)
     {
       try
         {
-          ACE_Message_Block *mb = nullptr;
+          ACE_Message_Block *mb {};
 
           if (this->getq (mb) == -1)
             {
@@ -132,7 +137,7 @@ TAO_EC_Dispatching_Task::svc ()
               done = true;
             }
         }
-      catch (const CORBA::Exception& ex)
+      catch (CORBA::Exception const& ex)
         {
           ex._tao_print_exception ("EC (%P|%t) exception in dispatching queue");
         }
@@ -150,24 +155,30 @@ TAO_EC_Dispatching_Task::push (TAO_EC_ProxyPushSupplier *proxy,
     {
       if (nullptr != this->queue_full_service_object_)
         {
-          int action =
+          int const action =
             this->queue_full_service_object_->queue_full_action (this, proxy,
                                                                  consumer, event);
 
           if (action == TAO_EC_Queue_Full_Service_Object::SILENTLY_DISCARD)
+          {
             return;
+          }
           // if action == WAIT_TO_EMPTY then we just go ahead and queue it
         }
         // else go ahead and queue it
     }
 
   if (this->allocator_ == nullptr)
+  {
     this->allocator_ = ACE_Allocator::instance ();
+  }
 
   void* buf = this->allocator_->malloc (sizeof (TAO_EC_Push_Command));
 
   if (buf == nullptr)
+  {
     throw CORBA::NO_MEMORY (TAO::VMCID, CORBA::COMPLETED_NO);
+  }
 
   ACE_Message_Block *mb =
     new (buf) TAO_EC_Push_Command (proxy,
@@ -179,10 +190,6 @@ TAO_EC_Dispatching_Task::push (TAO_EC_ProxyPushSupplier *proxy,
 }
 
 // ****************************************************************
-
-TAO_EC_Dispatch_Command::~TAO_EC_Dispatch_Command ()
-{
-}
 
 // ****************************************************************
 

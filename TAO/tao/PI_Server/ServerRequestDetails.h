@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 /**
  *  @file    ServerRequestDetails.h
  *

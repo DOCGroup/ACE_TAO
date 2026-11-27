@@ -1,12 +1,8 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
  *  @file    IORInterceptor.h
  *
  *  @author Bala Natarajan <bala@dre.vanderbilt.edu>
  */
-//=============================================================================
 #ifndef TAO_IORINTERCEPTOR_IORINTERCEPTOR_H
 #define TAO_IORINTERCEPTOR_IORINTERCEPTOR_H
 #include /**/ "ace/pre.h"

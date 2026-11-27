@@ -1,25 +1,30 @@
 #define  ACE_BUILD_SVC_DLL
-#include "ace/Log_Msg.h"
 #include "Adaptive_Lock_Performance_Test_Base.h"
 #include "ace/Lock_Adapter_T.h"
 
 #if defined (ACE_HAS_THREADS)
+#include <memory>
 
 class ACE_Svc_Export Adaptive_Mutex_Test : public Adaptive_Lock_Performance_Test_Base
 {
 public:
-  virtual int init (int, ACE_TCHAR *[]);
+  Adaptive_Mutex_Test () = default;
+  Adaptive_Mutex_Test (Adaptive_Mutex_Test const &) = delete;
+  Adaptive_Mutex_Test (Adaptive_Mutex_Test &&) = delete;
+  Adaptive_Mutex_Test &operator= (Adaptive_Mutex_Test const &) = delete;
+  Adaptive_Mutex_Test &operator= (Adaptive_Mutex_Test &&) = delete;
+  int init (int, ACE_TCHAR *[]) override;
 };
 
 int
 Adaptive_Mutex_Test::init (int, ACE_TCHAR *[])
 {
-  ACE_Lock *lock;
+  ACE_Lock *lock {};
   ACE_NEW_RETURN (lock,
                   ACE_Lock_Adapter<ACE_Thread_Mutex> (),
                   -1);
 
-  return this->set_lock (lock);
+  return this->set_lock (std::unique_ptr<ACE_Lock> {lock});
 }
 
 ACE_SVC_FACTORY_DECLARE (Adaptive_Mutex_Test)

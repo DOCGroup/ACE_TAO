@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Framework_Component_T.h
  *
  *  @author Don Hinton <dhinton@ieee.org>
  */
-//=============================================================================
 
 #ifndef ACE_FRAMEWORK_COMPONENT_T_H
 #define ACE_FRAMEWORK_COMPONENT_T_H
@@ -36,10 +32,14 @@ template <class Concrete>
 class ACE_Framework_Component_T : public ACE_Framework_Component
 {
 public:
-  /// Constructor.
-  ACE_Framework_Component_T (Concrete *concrete);
+  ACE_Framework_Component_T () = delete;
+  ACE_Framework_Component_T (ACE_Framework_Component_T const &) = delete;
+  ACE_Framework_Component_T (ACE_Framework_Component_T &&) = delete;
+  ACE_Framework_Component_T &operator= (ACE_Framework_Component_T const &) = delete;
+  ACE_Framework_Component_T &operator= (ACE_Framework_Component_T &&) = delete;
 
-  /// Destructor.
+  explicit ACE_Framework_Component_T (Concrete *concrete);
+
   ~ACE_Framework_Component_T () override;
 
   /// Close the contained singleton.

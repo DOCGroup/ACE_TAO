@@ -94,18 +94,18 @@
     second SIGQUIT we exit and dump core since that's what
     happens with the default disposition for SIGQUIT. */
 
-
 #include "ace/Reactor.h"
 #include "ace/WFMO_Reactor.h"
 #include "ace/Select_Reactor.h"
 #include "ace/Log_Msg.h"
 #include "ace/Signal.h"
 
+#include <memory>
 
 class Sig_Handler_1 : public ACE_Event_Handler
 {
 public:
-  Sig_Handler_1 (ACE_Reactor &reactor, const char *msg)
+  Sig_Handler_1 (ACE_Reactor &reactor, char const *msg)
     : msg_ (msg),
       count_ (0),
       reactor_ (reactor)
@@ -117,16 +117,23 @@ public:
       reactor.register_handler (SIGINT, this);
 
     if (this->quit_sigkey_ == -1 || this->int_sigkey_ == -1)
-      ACE_ERROR ((LM_ERROR,
-                  "%p\n",
-                  "register_handler"));
+      {
+        ACE_ERROR ((LM_ERROR,
+                    "%p\n",
+                    "register_handler"));
+      }
   }
+
+  Sig_Handler_1 (Sig_Handler_1 const &) = delete;
+  Sig_Handler_1 (Sig_Handler_1 &&) = delete;
+  Sig_Handler_1 &operator= (Sig_Handler_1 const &) = delete;
+  Sig_Handler_1 &operator= (Sig_Handler_1 &&) = delete;
 
   // @@ Note that this code is not portable to all OS platforms since
   // it does print statements within the signal handler.
   int handle_signal (int signum, siginfo_t *, ucontext_t *) override
   {
-    this->count_++;
+    ++this->count_;
     ACE_DEBUG ((LM_DEBUG,
                 "\nsignal %S occurred in Sig_Handler_1 (%s, %d, %d) with count = %d",
                 signum,
@@ -141,15 +148,19 @@ public:
                                            nullptr,
                                            nullptr,
                                            this->quit_sigkey_) == -1)
-          ACE_ERROR ((LM_ERROR,
-                      "\n%p",
-                      "remove_handler"));
+          {
+            ACE_ERROR ((LM_ERROR,
+                        "\n%p",
+                        "remove_handler"));
+          }
         else
-          ACE_DEBUG ((LM_DEBUG,
-                      "\nshutting down SIGQUIT in Sig_Handler_1 (%s, %d, %d)",
-                      this->msg_,
-                      this->int_sigkey_,
-                      this->quit_sigkey_));
+          {
+            ACE_DEBUG ((LM_DEBUG,
+                        "\nshutting down SIGQUIT in Sig_Handler_1 (%s, %d, %d)",
+                        this->msg_,
+                        this->int_sigkey_,
+                        this->quit_sigkey_));
+          }
       }
     else if (this->count_ != 2 && signum == SIGINT)
       {
@@ -157,21 +168,25 @@ public:
                                            nullptr,
                                            nullptr,
                                            this->int_sigkey_) == -1)
-          ACE_ERROR ((LM_ERROR,
-                      "\n%p",
-                      "remove_handler"));
+          {
+            ACE_ERROR ((LM_ERROR,
+                        "\n%p",
+                        "remove_handler"));
+          }
         else
-          ACE_DEBUG ((LM_DEBUG,
-                      "\nshutting down SIGINT in Sig_Handler_1 (%s, %d, %d)",
-                      this->msg_,
-                      this->int_sigkey_,
-                      this->quit_sigkey_));
+          {
+            ACE_DEBUG ((LM_DEBUG,
+                        "\nshutting down SIGINT in Sig_Handler_1 (%s, %d, %d)",
+                        this->msg_,
+                        this->int_sigkey_,
+                        this->quit_sigkey_));
+          }
       }
     return 0;
   }
 
 protected:
-  const char *msg_;
+  char const *msg_;
   int count_;
   int int_sigkey_;
   int quit_sigkey_;
@@ -181,14 +196,14 @@ protected:
 class Sig_Handler_2 : public Sig_Handler_1
 {
 public:
-  Sig_Handler_2 (ACE_Reactor &reactor, const char *msg)
+  Sig_Handler_2 (ACE_Reactor &reactor, char const *msg)
     : Sig_Handler_1 (reactor, msg)
   {
   }
 
   int handle_signal (int signum, siginfo_t *, ucontext_t *) override
   {
-    this->count_++;
+    ++this->count_;
     ACE_DEBUG ((LM_DEBUG,
                 "\nsignal %S occurred in Sig_Handler_2 (%s, %d, %d) with count = %d",
                 signum,
@@ -199,15 +214,19 @@ public:
     if (this->count_ != 0 && signum == SIGQUIT)
       {
         if (this->reactor_.remove_handler (SIGQUIT, nullptr, nullptr, this->quit_sigkey_) == -1)
-          ACE_ERROR ((LM_ERROR,
-                      "\n%p",
-                      "remove_handler"));
+          {
+            ACE_ERROR ((LM_ERROR,
+                        "\n%p",
+                        "remove_handler"));
+          }
           else
-            ACE_DEBUG ((LM_DEBUG,
-                        "\nshutting down SIGQUIT in Sig_Handler_2 (%s, %d, %d)",
-                        this->msg_,
-                        this->int_sigkey_,
-                        this->quit_sigkey_));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "\nshutting down SIGQUIT in Sig_Handler_2 (%s, %d, %d)",
+                          this->msg_,
+                          this->int_sigkey_,
+                          this->quit_sigkey_));
+            }
       }
     return 0;
   }
@@ -231,20 +250,20 @@ ACE_TMAIN (int argc, ACE_TCHAR *[])
 #if defined (ACE_WIN32)
   ACE_WFMO_Reactor reactor_impl (argc > 1
                                  ? &multi_handlers
-                                 : (ACE_Sig_Handler *) 0);
+                                 : nullptr);
 #else
   ACE_Select_Reactor reactor_impl (argc > 1
                                    ? &multi_handlers
-                                   : (ACE_Sig_Handler *) nullptr);
+                                   : nullptr);
 #endif /* ACE_WIN32 */
-  ACE_Reactor reactor (&reactor_impl);
+  ACE_Reactor reactor (std::addressof (reactor_impl));
 
   if (argc > 1)
     {
       // Register an "external" signal handler so that the
       // ACE_Sig_Handlers code will have something to incorporate!
 
-      ACE_SignalHandler eh = (ACE_SignalHandler) external_handler;
+      ACE_SignalHandler eh = &external_handler;
       ACE_Sig_Action sa (eh);
 
       sa.register_action (SIGINT);
@@ -264,9 +283,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *[])
                   "\nwaiting for SIGINT or SIGQUIT\n"));
 
       if (reactor.handle_events () == -1)
-        ACE_ERROR ((LM_ERROR,
-                    "%p\n",
-                    "handle_events"));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "%p\n",
+                      "handle_events"));
+        }
     }
 
   ACE_NOTREACHED (return 0);

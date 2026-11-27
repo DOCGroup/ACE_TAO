@@ -33,9 +33,12 @@ namespace ACE
       {
         ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->mutex_, false);
 
-        type->add_ref ();
-
         status = this->map_.bind (type->name (), type);
+
+        if (status == 0)
+          {
+            type->add_ref ();
+          }
       }
 
       if (status == -1)
@@ -49,7 +52,7 @@ namespace ACE
     }
 
     bool
-    Monitor_Point_Registry::remove (const char* name)
+    Monitor_Point_Registry::remove (char const * name)
     {
       if (name == nullptr)
         {
@@ -64,7 +67,7 @@ namespace ACE
       {
         ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->mutex_, false);
 
-        ACE_CString name_str (name, nullptr, false);
+        ACE_CString const name_str (name, nullptr, false);
         status = this->map_.unbind (name_str, mp);
       }
 
@@ -95,7 +98,10 @@ namespace ACE
       Monitor_Control_Types::NameList name_holder_;
 
       {
-        ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->mutex_, 0);
+        ACE_GUARD_RETURN (ACE_SYNCH_MUTEX,
+                          guard,
+                          this->mutex_,
+                          Monitor_Control_Types::NameList {});
 
         for (Map::CONST_ITERATOR i (this->map_); !i.done (); i.advance ())
           {
@@ -107,7 +113,7 @@ namespace ACE
     }
 
     Monitor_Base*
-    Monitor_Point_Registry::get (const ACE_CString& name) const
+    Monitor_Point_Registry::get (ACE_CString const& name) const
     {
       Map::data_type mp = nullptr;
 
@@ -146,7 +152,7 @@ namespace ACE
            i != this->map_.end ();
            i.advance ())
         {
-          Map::ENTRY* entry = nullptr;
+          Map::ENTRY* entry {};
           i.next (entry);
           entry->int_id_->remove_ref ();
         }

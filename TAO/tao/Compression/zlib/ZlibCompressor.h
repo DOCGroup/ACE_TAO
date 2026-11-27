@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-// ===================================================================
 /**
  *  @file   ZlibCompressor.h
  *
@@ -8,7 +5,6 @@
  *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-// ===================================================================
 
 #ifndef TAO_ZLIBCOMPRESSOR_H
 #define TAO_ZLIBCOMPRESSOR_H
@@ -31,6 +27,8 @@ namespace TAO
   class TAO_ZLIBCOMPRESSOR_Export ZlibCompressor : public BaseCompressor
   {
     public:
+      ZlibCompressor () = delete;
+
       ZlibCompressor (::Compression::CompressorFactory_ptr compressor_factory,
                       ::Compression::CompressionLevel compression_level);
 
@@ -42,7 +40,6 @@ namespace TAO
           ::Compression::Buffer const & source,
           ::Compression::Buffer & target) override;
 
-    private:
       ZlibCompressor (ZlibCompressor const &) = delete;
       ZlibCompressor &operator= (ZlibCompressor const &) = delete;
       ZlibCompressor (ZlibCompressor &&) = delete;

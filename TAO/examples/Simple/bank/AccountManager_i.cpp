@@ -3,17 +3,6 @@
 #include "tao/debug.h"
 #include "tao/Utils/ORB_Manager.h"
 
-// Constructor
-AccountManager_i::AccountManager_i () :
-  orb_manager_ (0)
-{
-}
-
-// Destructor
-AccountManager_i::~AccountManager_i ()
-{
-}
-
 // Set the ORB pointer
 void
 AccountManager_i::orb (CORBA::ORB_ptr o)
@@ -36,7 +25,7 @@ AccountManager_i::set_orb_manager (TAO_ORB_Manager *orb_manager)
 // Open an account for the given name.
 
 Bank::Account_ptr
-AccountManager_i::open (const char *name,
+AccountManager_i::open (char const *name,
                         CORBA::Float initial_balance)
 {
   // If name is already in the map, <find> will assign <result> to the
@@ -49,7 +38,7 @@ AccountManager_i::open (const char *name,
                   name,
                   initial_balance));
 
-      Account_i *tmp = 0;
+      Account_i *tmp {};
       ACE_NEW_THROW_EX (tmp,
                         Account_i (name,
                                    initial_balance),
@@ -68,9 +57,11 @@ AccountManager_i::open (const char *name,
     }
 
   if (TAO_debug_level > 0)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("[SERVER] Process/Thread Id : (%P/%t) Account already exists for %C\n"),
-                name));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("[SERVER] Process/Thread Id : (%P/%t) Account already exists for %C\n"),
+                  name));
+    }
   // Generate an IOR for the result object and register it with the
   // POA.  In case the object already exists then the previously
   // generated IOR is returned.
@@ -90,24 +81,27 @@ AccountManager_i::close (Bank::Account_ptr account)
                  ACE_TEXT ("[SERVER] Process/Thread Id : (%P/%t) Closing Account for %C\n"),
                  name.in ()));
 
-      Account_i_var account;
-      if (hash_map_.unbind (name.in (), account) == -1)
+      Account_i_var account_impl;
+      if (hash_map_.unbind (name.in (), account_impl) == -1)
         {
           if (TAO_debug_level > 0)
-            ACE_DEBUG((LM_DEBUG,
-                       ACE_TEXT ("Unable to close account\n")));
+            {
+              ACE_DEBUG((LM_DEBUG,
+                         ACE_TEXT ("Unable to close account\n")));
+            }
         }
 
-      if (!account.is_nil ())
+      if (!account_impl.is_nil ())
         {
-          PortableServer::POA_var poa = account->_default_POA ();
+          PortableServer::POA_var account_poa = account_impl->_default_POA ();
 
-          PortableServer::ObjectId_var id = poa->servant_to_id (account.in ());
+          PortableServer::ObjectId_var account_id =
+            account_poa->servant_to_id (account_impl.in ());
 
-          poa->deactivate_object (id.in ());
+          account_poa->deactivate_object (account_id.in ());
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Unable to close Account\n");
     }

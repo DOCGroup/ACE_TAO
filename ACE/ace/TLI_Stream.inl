@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "ace/TLI_Stream.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

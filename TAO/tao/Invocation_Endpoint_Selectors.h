@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   Invocation_Endpoint_Selectors.h
  *
@@ -9,7 +6,6 @@
  *
  *  @author Marina Spivak <marina@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_INVOCATION_ENDPOINT_SELECTOR_H
 #define TAO_INVOCATION_ENDPOINT_SELECTOR_H
@@ -58,7 +54,6 @@ namespace CORBA
 class TAO_Export TAO_Invocation_Endpoint_Selector
 {
 public:
-  /// Destructor.
   virtual ~TAO_Invocation_Endpoint_Selector ();
 
   /// Select the endpoint and set @a r's @c profile_
@@ -84,11 +79,10 @@ class TAO_Export TAO_Default_Endpoint_Selector
   : public TAO_Invocation_Endpoint_Selector
 {
 public:
-  /// Destructor.
-  virtual ~TAO_Default_Endpoint_Selector ();
+  ~TAO_Default_Endpoint_Selector () override;
 
-  virtual void select_endpoint (TAO::Profile_Transport_Resolver *r,
-                                ACE_Time_Value *val);
+  void select_endpoint (TAO::Profile_Transport_Resolver *r,
+                        ACE_Time_Value *val) override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

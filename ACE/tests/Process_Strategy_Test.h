@@ -1,6 +1,3 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
  *  @file    Process_Strategy_Test.h
  *
@@ -9,8 +6,6 @@
  *
  *  @author Doug Schmidt <d.schmidt@vanderbilt.edu> and Kevin Boyle <kboyle@sanwafp.com>
  */
-//=============================================================================
-
 
 #ifndef ACE_TESTS_PROCESS_STRATEGY_TEST_H
 #define ACE_TESTS_PROCESS_STRATEGY_TEST_H
@@ -32,58 +27,56 @@
  * @brief Reads and increments the count in a shared file.
  *
  * Objects of this class execute in a separate process as a
- * result of the <ACE_Strategy_Acceptor> and
- * <ACE_Process_Strategy>.
+ * result of the @c ACE_Strategy_Acceptor and
+ * @c ACE_Process_Strategy.
  */
 class Counting_Service : public ACE_Svc_Handler <ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 {
 public:
-  /// Constructor.
-  Counting_Service (ACE_Thread_Manager * = 0);
+  Counting_Service (ACE_Thread_Manager * = nullptr);
 
   /// Hook that is used to initialize the service (called by the
-  /// <ACE_Strategy_Acceptor::handle_input> Template Method).
-  virtual int open (void *v);
+  /// @c ACE_Strategy_Acceptor::handle_input Template Method).
+  int open (void *v) override;
 
 protected:
-  // = Methods invoked via "pointer to method" table entry.
-
   /// Handle the THREAD case.
-  virtual int svc ();
+  int svc () override;
 
-  // = Operations corresponding to requests from the client.
+  /// @name Operations corresponding to client requests
+  /// @{
   /// Execute the read operation on the file.
   int read ();
 
   /// Execute the increment operation on the file.
   int inc ();
+  /// @}
 
-  // = Hooks called by <Reactor> and <Strategy_Acceptor>.
-
-  /// Hook called by the <Reactor> when data arrives from the client.
-  virtual int handle_input (ACE_HANDLE p = ACE_INVALID_HANDLE);
+  /// @name Reactor and acceptor hooks
+  /// @{
+  /// Hook called by the @c Reactor when data arrives from the client.
+  int handle_input (ACE_HANDLE p = ACE_INVALID_HANDLE) override;
 
   /// Closing down
-  virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
-                            ACE_Reactor_Mask = ACE_Event_Handler::ALL_EVENTS_MASK);
+  int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
+                    ACE_Reactor_Mask = ACE_Event_Handler::ALL_EVENTS_MASK) override;
+  /// @}
 };
 
 class Process_Strategy : public ACE_Process_Strategy<Counting_Service>
 {
 public:
-  // Constructor
   Process_Strategy (size_t n_processes = 1,
-                    ACE_Event_Handler *acceptor = 0,
-                    ACE_Reactor * = 0,
+                    ACE_Event_Handler *acceptor = nullptr,
+                    ACE_Reactor * = nullptr,
                     int flags = 0);
 
-  // Destructor
   ~Process_Strategy ();
 
   // Overwrite the process creation method to include connection
   // counting
-  virtual int activate_svc_handler (Counting_Service *svc_handler,
-                                    void *arg = 0);
+  int activate_svc_handler (Counting_Service *svc_handler,
+                            void *arg = nullptr) override;
 };
 
 /**
@@ -94,10 +87,8 @@ public:
 class Options : public ACE_Event_Handler
 {
 public:
-  /// Constructor.
   Options ();
 
-  /// Destructor.
   ~Options ();
 
   /// Read command-line arguments and initialize options.
@@ -110,15 +101,17 @@ public:
     THREAD    // Run the test as in separate threads.
   };
 
-  // = Get/set concurrency type.
+  /// @name Get and set the concurrency type
+  /// @{
   Concurrency_Type concurrency_type ();
   void concurrency_type (Concurrency_Type);
+  /// @}
 
   /// Returns the file lock.
   ACE_File_Lock &file_lock ();
 
   /// Returns the filename that we're using as the lock.
-  const ACE_TCHAR *filename ();
+  ACE_TCHAR const *filename ();
 
   /// Returns the concurrency strategy.
   ACE_Concurrency_Strategy <Counting_Service> *concurrency_strategy ();

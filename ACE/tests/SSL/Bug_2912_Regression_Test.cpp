@@ -35,6 +35,8 @@
 #include "ace/Manual_Event.h"
 #include "ace/OS_NS_unistd.h"
 
+#include <memory>
+
 /* Linux kernels can't hack multiple outstanding I/O, which this
    test requires */
 #if defined (ACE_HAS_THREADS) && \
@@ -55,25 +57,29 @@ disable_signal (int sigmin, int sigmax)
 #if !defined (ACE_LACKS_UNIX_SIGNALS)
   sigset_t signal_set;
   if (ACE_OS::sigemptyset (&signal_set) == - 1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("Error: (%P|%t):%p\n"),
-                ACE_TEXT ("sigemptyset failed")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("Error: (%P|%t): %p\n"),
+                  ACE_TEXT ("sigemptyset failed")));
+    }
 
-  for (int i = sigmin; i <= sigmax; i++)
+  for (int i = sigmin; i <= sigmax; ++i)
     ACE_OS::sigaddset (&signal_set, i);
 
   // Put the <signal_set>.
 # if defined (ACE_LACKS_PTHREAD_THR_SIGSETMASK)
   // In multi-threaded application this is not POSIX compliant
   // but let's leave it just in case.
-  if (ACE_OS::sigprocmask (SIG_BLOCK, &signal_set, 0) != 0)
+  if (ACE_OS::sigprocmask (SIG_BLOCK, &signal_set, nullptr) != 0)
 # else
-  if (ACE_OS::thr_sigsetmask (SIG_BLOCK, &signal_set, 0) != 0)
+  if (ACE_OS::thr_sigsetmask (SIG_BLOCK, &signal_set, nullptr) != 0)
 # endif /* ACE_LACKS_PTHREAD_THR_SIGSETMASK */
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Error: (%P|%t): %p\n"),
-                       ACE_TEXT ("SIG_BLOCK failed")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Error: (%P|%t): %p\n"),
+                         ACE_TEXT ("SIG_BLOCK failed")),
+                        -1);
+    }
 #else
   ACE_UNUSED_ARG (sigmin);
   ACE_UNUSED_ARG (sigmax);
@@ -95,7 +101,7 @@ using Client_Proactor_Singleton = ACE_Singleton<Client_Proactor, ACE_SYNCH_RECUR
 class Client_Proactor_Task : public ACE_Task_Base
 {
 public:
-  virtual int svc ();
+  int svc () override;
 };
 
 using Client_Proactor_Task_Singleton = ACE_Singleton<Client_Proactor_Task, ACE_SYNCH_RECURSIVE_MUTEX>;
@@ -122,7 +128,7 @@ using Server_Proactor_Singleton = ACE_Singleton<Server_Proactor, ACE_SYNCH_RECUR
 class Server_Proactor_Task : public ACE_Task_Base
 {
 public:
-  virtual int svc ();
+  int svc () override;
 };
 
 using Server_Proactor_Task_Singleton = ACE_Singleton<Server_Proactor_Task, ACE_SYNCH_RECURSIVE_MUTEX>;
@@ -142,7 +148,7 @@ Server_Proactor_Task::svc ()
 /**
  * This test depends on ADH since the error is related to a missing cert.pem
  */
-static DH* dh1024 = 0;
+static DH *dh1024 {};
 
 DH*
 get_dh1024 ()
@@ -163,27 +169,30 @@ get_dh1024 ()
   static unsigned char dh1024_g[]={
     0x02,
   };
-  DH *dh;
+  DH *dh = DH_new ();
 
-  if ((dh=DH_new()) == 0) return(0);
+  if (dh == nullptr)
+    {
+      return nullptr;
+    }
 
   BIGNUM* p = BN_bin2bn(dh1024_p,sizeof(dh1024_p),0);
   BIGNUM* g = BN_bin2bn(dh1024_g,sizeof(dh1024_g),0);
 
-  if ((p == 0) || (g == 0))
+  if ((p == nullptr) || (g == nullptr))
     {
       DH_free(dh);
-      return(0);
+      return nullptr;
     }
 
 #if (OPENSSL_VERSION_NUMBER < 0x10100000L)
   dh->p = p;
   dh->g = g;
 #else
-  DH_set0_pqg(dh, p, 0, g);
+  DH_set0_pqg(dh, p, nullptr, g);
 #endif
 
-  return(dh);
+  return dh;
 }
 
 extern "C" DH*
@@ -194,7 +203,7 @@ tmp_dh_callback (SSL *s, int is_export, int keylength)
 
   switch (keylength) {
   case 1024:
-    if (dh1024 == 0)
+    if (dh1024 == nullptr)
     {
       dh1024 = get_dh1024();
     }
@@ -205,7 +214,7 @@ tmp_dh_callback (SSL *s, int is_export, int keylength)
       ACE_TEXT ("tmp_dh_callback, unsupported key length, %d\n"),
       keylength));
   }
-  return(0);
+  return nullptr;
 }
 
 bool
@@ -229,7 +238,6 @@ init_ssl ()
   }
 }
 
-
 /**
  * Server's ACE_Service_Handler
  */
@@ -238,19 +246,17 @@ class Server_Service_Handler : public ACE_Service_Handler
 public:
   Server_Service_Handler ();
 
-  virtual ~Server_Service_Handler ();
+  ~Server_Service_Handler () override;
 
   //FUZZ: disable check_for_lack_ACE_OS
-  virtual void open (ACE_HANDLE h, ACE_Message_Block&);
+  void open (ACE_HANDLE h, ACE_Message_Block &) override;
   //FUZZ: enable check_for_lack_ACE_OS
 
-  virtual void handle_read_stream (
-    const ACE_Asynch_Read_Stream::Result &result);
+  void handle_read_stream (const ACE_Asynch_Read_Stream::Result &result) override;
 
-  virtual void handle_write_stream (
-    const ACE_Asynch_Write_Stream::Result &result);
+  void handle_write_stream (const ACE_Asynch_Write_Stream::Result &result) override;
 
-  virtual void handle_wakeup ();
+  void handle_wakeup () override;
 
   void cancel_and_close ();
 
@@ -300,7 +306,7 @@ Server_Service_Handler::open (ACE_HANDLE h, ACE_Message_Block&)
 {
   ACE_GUARD (ACE_SYNCH_RECURSIVE_MUTEX, guard, this->mtx_);
 
-  if (this->ssl_stream_.open (*this, h, 0, this->proactor ()) != 0)
+  if (this->ssl_stream_.open (*this, h, nullptr, this->proactor ()) != 0)
   {
     //FUZZ: disable check_for_lack_ACE_OS
     ACE_DEBUG ((LM_DEBUG,
@@ -326,7 +332,7 @@ Server_Service_Handler::handle_read_stream(
 {
   ACE_GUARD (ACE_SYNCH_RECURSIVE_MUTEX, guard, this->mtx_);
 
-  this->pending_reads_--;
+  --this->pending_reads_;
 
   if (!result.success () || 0 == result.bytes_transferred ())
   {
@@ -341,7 +347,7 @@ Server_Service_Handler::handle_read_stream(
       if (!result.success ())
       {
         ACE_DEBUG ((LM_DEBUG,
-          ACE_TEXT ("Server_Service_Handler::handle_read_stream: error: %d\n"),
+          ACE_TEXT ("Server_Service_Handler::handle_read_stream: error: %Lu\n"),
           result.error ()));
       }
       else
@@ -393,7 +399,7 @@ Server_Service_Handler::handle_write_stream (
 {
   ACE_GUARD (ACE_SYNCH_RECURSIVE_MUTEX, guard, this->mtx_);
 
-  this->pending_writes_--;
+  --this->pending_writes_;
 
   if (!result.success () || 0 == result.bytes_transferred ())
   {
@@ -402,7 +408,7 @@ Server_Service_Handler::handle_write_stream (
     result.message_block ().release ();
 
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT (
-      "Server_Service_Handler::handle_write_stream: error: %d\n"),
+      "Server_Service_Handler::handle_write_stream: error: %Lu\n"),
       result.error ()));
 
     this->cancel_and_close ();
@@ -450,7 +456,7 @@ Server_Service_Handler::read_data ()
 {
   ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard, this->mtx_, -1);
 
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb {};
   ACE_NEW_NORETURN(mb, ACE_Message_Block (DATA_SIZE));
 
   int ret = this->read (*mb, DATA_SIZE);
@@ -470,7 +476,7 @@ Server_Service_Handler::write_data ()
 {
   ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard, this->mtx_, -1);
 
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb {};
   ACE_NEW_NORETURN(mb, ACE_Message_Block (DATA_SIZE));
   ACE_OS::memcpy (mb->wr_ptr (), DATA, DATA_SIZE);
   mb->wr_ptr (DATA_SIZE);
@@ -500,7 +506,7 @@ Server_Service_Handler::read (ACE_Message_Block &mb, size_t bytes_to_read)
   }
   else
   {
-    this->pending_reads_++;
+    ++this->pending_reads_;
   }
   return ret;
 }
@@ -518,7 +524,7 @@ Server_Service_Handler::write (ACE_Message_Block &mb, size_t bytes_to_write)
   }
   else
   {
-    this->pending_writes_++;
+    ++this->pending_writes_;
   }
   return ret;
 }
@@ -541,20 +547,20 @@ class Acceptor : public ACE_Asynch_Acceptor<Server_Service_Handler>
 public:
   Acceptor ();
 
-  virtual ~Acceptor ();
+  ~Acceptor () override;
 
-  virtual int cancel ();
+  int cancel () override;
 
-  virtual int validate_connection (const ACE_Asynch_Accept::Result& result,
+  int validate_connection (const ACE_Asynch_Accept::Result &result,
     const ACE_INET_Addr &remote, const ACE_INET_Addr& local);
 
-  virtual Server_Service_Handler *make_handler ();
+  Server_Service_Handler *make_handler () override;
 
   //FUZZ: disable check_for_lack_ACE_OS
-  virtual int accept (size_t bytes_to_read = 0, const void *act = 0);
+  int accept (size_t bytes_to_read = 0, const void *act = nullptr) override;
   //FUZZ: enable check_for_lack_ACE_OS
 
-  virtual void handle_accept (const ACE_Asynch_Accept::Result &result);
+  void handle_accept (const ACE_Asynch_Accept::Result &result) override;
 
   int safe_to_delete () const;
 
@@ -572,13 +578,11 @@ using Acceptor_Singleton = ACE_Singleton<Acceptor, ACE_SYNCH_RECURSIVE_MUTEX>;
 Acceptor::Acceptor () :
   accept_cnt_ (0),
   cancel_flag_ (0),
-  service_handler_ (0)
+  service_handler_ (nullptr)
 {
 }
 
-Acceptor::~Acceptor ()
-{
-}
+Acceptor::~Acceptor () = default;
 
 int
 Acceptor::cancel ()
@@ -586,7 +590,7 @@ Acceptor::cancel ()
   ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard, this->mtx_, -1);
 
   this->cancel_flag_ = 1;
-  this->reissue_accept (0);
+  this->reissue_accept (false);
 
   ACE_HANDLE h = this->get_handle ();
   if (h != ACE_INVALID_HANDLE)
@@ -620,7 +624,7 @@ Acceptor::validate_connection (const ACE_Asynch_Accept::Result& result,
 {
   ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard, this->mtx_, -1);
 
-  if (0 != this->service_handler_ && result.success ())
+  if (this->service_handler_ != nullptr && result.success ())
   {
     return 0;
   }
@@ -633,11 +637,11 @@ Acceptor::validate_connection (const ACE_Asynch_Accept::Result& result,
 Server_Service_Handler*
 Acceptor::make_handler ()
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard, this->mtx_, 0);
+  ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard, this->mtx_, nullptr);
 
-  ACE_ASSERT (0 != this->service_handler_);
+  ACE_ASSERT (this->service_handler_ != nullptr);
   Server_Service_Handler *service_handler = this->service_handler_;
-  this->service_handler_ = 0;
+  this->service_handler_ = nullptr;
   return service_handler;
 }
 
@@ -647,13 +651,17 @@ Acceptor::accept (size_t bytes_to_read, const void *act)
   ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard, this->mtx_, -1);
 
   if  (this->cancel_flag_!= 0)
-    return -1;
+    {
+      return -1;
+    }
 
-  this->accept_cnt_++;
+  ++this->accept_cnt_;
   int rc = this->ACE_Asynch_Acceptor<Server_Service_Handler>::accept (
     bytes_to_read, act);
   if (rc != 0)
-    this->accept_cnt_--;
+    {
+      --this->accept_cnt_;
+    }
 
   return rc;
 }
@@ -668,7 +676,6 @@ Acceptor::handle_accept (const ACE_Asynch_Accept::Result &result)
   --this->accept_cnt_;
 }
 
-
 /**
  * Client's ACE_Service_Handler
  */
@@ -677,19 +684,17 @@ class Client_Service_Handler : public ACE_Service_Handler
 public:
   Client_Service_Handler ();
 
-  virtual ~Client_Service_Handler ();
+  ~Client_Service_Handler () override;
 
   //FUZZ: disable check_for_lack_ACE_OS
-  virtual void open (ACE_HANDLE h, ACE_Message_Block&);
+  void open (ACE_HANDLE h, ACE_Message_Block &) override;
   //FUZZ: enable check_for_lack_ACE_OS
 
-  virtual void handle_read_stream (
-    const ACE_Asynch_Read_Stream::Result &result);
+  void handle_read_stream (const ACE_Asynch_Read_Stream::Result &result) override;
 
-  virtual void handle_write_stream (
-    const ACE_Asynch_Write_Stream::Result &result);
+  void handle_write_stream (const ACE_Asynch_Write_Stream::Result &result) override;
 
-  virtual void handle_wakeup ();
+  void handle_wakeup () override;
 
   void cancel_and_close ();
 
@@ -751,7 +756,7 @@ Client_Service_Handler::open (ACE_HANDLE h, ACE_Message_Block&)
 {
   ACE_GUARD (ACE_SYNCH_RECURSIVE_MUTEX, guard, this->mtx_);
 
-  if (this->ssl_stream_.open (*this, h, 0, this->proactor ()) != 0)
+  if (this->ssl_stream_.open (*this, h, nullptr, this->proactor ()) != 0)
   {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT (
       "Client_Service_Handler::open: ACE_SSL_Asynch_Stream::open failed, %d\n"),
@@ -760,7 +765,7 @@ Client_Service_Handler::open (ACE_HANDLE h, ACE_Message_Block&)
   }
   else
   {
-    ACE_Message_Block *mb = 0;
+    ACE_Message_Block *mb {};
     ACE_NEW_NORETURN(mb, ACE_Message_Block (DATA_SIZE));
 
     if (this->read_data () < 0 || this->write_data () < 0)
@@ -776,7 +781,7 @@ Client_Service_Handler::handle_read_stream (
 {
   ACE_GUARD (ACE_SYNCH_RECURSIVE_MUTEX, guard, this->mtx_);
 
-  this->pending_reads_--;
+  --this->pending_reads_;
 
   if (!result.success () || 0 == result.bytes_transferred ())
   {
@@ -791,7 +796,7 @@ Client_Service_Handler::handle_read_stream (
       if (!result.success ())
       {
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT (
-          "Client_Service_Handler::handle_read_stream: error: %d\n"),
+          "Client_Service_Handler::handle_read_stream: error: %Lu\n"),
           result.error ()));
       }
       else
@@ -821,7 +826,7 @@ Client_Service_Handler::handle_read_stream (
   {
     // Read it all
 
-    this->completed_reads_++;
+    ++this->completed_reads_;
 
     result.message_block ().release ();
 
@@ -854,7 +859,7 @@ Client_Service_Handler::handle_write_stream (
 {
   ACE_GUARD (ACE_SYNCH_RECURSIVE_MUTEX, guard, this->mtx_);
 
-  this->pending_writes_--;
+  --this->pending_writes_;
 
   if (!result.success () || 0 == result.bytes_transferred ())
   {
@@ -863,7 +868,7 @@ Client_Service_Handler::handle_write_stream (
     result.message_block ().release ();
 
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT (
-      "Client_Service_Handler::handle_write_stream: error: %d\n"),
+      "Client_Service_Handler::handle_write_stream: error: %Lu\n"),
       result.error ()));
 
     this->cancel_and_close ();
@@ -911,7 +916,7 @@ Client_Service_Handler::read_data ()
 {
   ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard, this->mtx_, -1);
 
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb {};
   ACE_NEW_NORETURN(mb, ACE_Message_Block (DATA_SIZE));
 
   int ret = this->read (*mb, DATA_SIZE);
@@ -931,7 +936,7 @@ Client_Service_Handler::write_data ()
 {
   ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard, this->mtx_, -1);
 
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb {};
   ACE_NEW_NORETURN (mb, ACE_Message_Block (DATA_SIZE));
   ACE_OS::memcpy (mb->wr_ptr (), DATA, DATA_SIZE);
   mb->wr_ptr (DATA_SIZE);
@@ -961,7 +966,7 @@ Client_Service_Handler::read (ACE_Message_Block &mb, size_t bytes_to_read)
   }
   else
   {
-    this->pending_reads_++;
+    ++this->pending_reads_;
   }
   return ret;
 }
@@ -979,7 +984,7 @@ Client_Service_Handler::write (ACE_Message_Block &mb, size_t bytes_to_write)
   }
   else
   {
-    this->pending_writes_++;
+    ++this->pending_writes_;
   }
   return ret;
 }
@@ -1020,30 +1025,30 @@ class Connector : public ACE_Asynch_Connector<Client_Service_Handler>
 public:
   Connector ();
 
-  virtual ~Connector ();
+  ~Connector () override;
 
   //FUZZ: disable check_for_lack_ACE_OS
-  virtual int connect (
+  int connect (
     const ACE_INET_Addr &remote_sap,
     const ACE_INET_Addr &local_sap =
       (const ACE_INET_Addr &)ACE_Addr::sap_any,
     int reuse_addr = 1,
-    const void *act = 0);
+    const void *act = nullptr) override;
   //FUZZ: enable check_for_lack_ACE_OS
 
-  virtual int validate_connection (
+  int validate_connection (
     const ACE_Asynch_Connect::Result& result,
     const ACE_INET_Addr &remote,
-    const ACE_INET_Addr& local);
+    const ACE_INET_Addr &local) override;
 
   int safe_to_delete () const;
 
   void prepare_for_connection (Client_Service_Handler *service_handler);
 
 protected:
-  virtual void handle_connect (const ACE_Asynch_Connect::Result &result);
+  void handle_connect (const ACE_Asynch_Connect::Result &result) override;
 
-  virtual Client_Service_Handler* make_handler ();
+  Client_Service_Handler *make_handler () override;
 
   mutable ACE_SYNCH_RECURSIVE_MUTEX  mtx_;
   Client_Service_Handler *service_handler_;
@@ -1054,13 +1059,11 @@ using Connector_Singleton = ACE_Singleton<Connector, ACE_SYNCH_RECURSIVE_MUTEX>;
 #define CONNECTOR Connector_Singleton::instance ()
 
 Connector::Connector () :
-  service_handler_ (0)
+  service_handler_ (nullptr)
 {
 }
 
-Connector::~Connector ()
-{
-}
+Connector::~Connector () = default;
 
 int
 Connector::connect (const ACE_INET_Addr &remote_sap,
@@ -1087,7 +1090,8 @@ Connector::validate_connection (const ACE_Asynch_Connect::Result& result,
   if (!result.success ())
   {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT (
-      "Connector::validate_connection failed: %d\n"), result.error ()));
+      "Connector::validate_connection failed: %Lu\n"),
+      result.error ()));
     return -1;
   }
   else
@@ -1109,11 +1113,11 @@ Connector::handle_connect (const ACE_Asynch_Connect::Result &result)
 Client_Service_Handler*
 Connector::make_handler ()
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard, this->mtx_, 0);
+  ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard, this->mtx_, nullptr);
 
-  ACE_ASSERT(0 != this->service_handler_);
+  ACE_ASSERT (this->service_handler_ != nullptr);
   Client_Service_Handler *service_handler = this->service_handler_;
-  this->service_handler_ = 0;
+  this->service_handler_ = nullptr;
   return service_handler;
 }
 
@@ -1176,7 +1180,7 @@ run_main (int, ACE_TCHAR *[])
 
   if (0 == ret)
   {
-    ret = CONNECTOR->open (0, CLIENT_PROACTOR, 1);
+    ret = CONNECTOR->open (false, CLIENT_PROACTOR, true);
 
     if (-1 == ret)
     {
@@ -1205,7 +1209,8 @@ run_main (int, ACE_TCHAR *[])
 
   if (0 == ret)
   {
-    ret = client_handler.wait_for_external_write_queue (&wait_time);
+    ret = client_handler.wait_for_external_write_queue (
+      std::addressof (wait_time));
     if (-1 == ret)
     {
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT (
@@ -1224,7 +1229,8 @@ run_main (int, ACE_TCHAR *[])
 
   if (0 == ret)
   {
-    ret = client_handler.wait_for_read_completed (&wait_time);
+    ret = client_handler.wait_for_read_completed (
+      std::addressof (wait_time));
 
     if (-1 == ret)
     {

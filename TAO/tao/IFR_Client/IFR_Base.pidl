@@ -1,5 +1,3 @@
-// -*- IDL -*-
-
 /**
  * @file IFR_Base.pidl
  *
@@ -64,11 +62,15 @@ module CORBA
 
   interface IRObject
   {
-    // read interface
+    /// @name Read interface
+    /// @{
     readonly attribute DefinitionKind def_kind;
+    /// @}
 
-    // write interface
+    /// @name Write interface
+    /// @{
     void destroy ();
+    /// @}
   };
 
   typedef string VersionSpec;
@@ -79,12 +81,16 @@ module CORBA
 
   interface Contained : IRObject
   {
-    // read/write interface
+    /// @name Read/write interface
+    /// @{
     attribute RepositoryId id;
     attribute Identifier name;
     attribute VersionSpec version;
 
-    // read interface
+    /// @}
+
+    /// @name Read interface
+    /// @{
     readonly attribute Container defined_in;
     readonly attribute ScopedName absolute_name;
     readonly attribute Repository containing_repository;
@@ -96,12 +102,15 @@ module CORBA
     };
 
     Description describe ();
+    /// @}
 
-    // write interface
+    /// @name Write interface
+    /// @{
     void move (
         in Container new_container,
         in Identifier new_name,
         in VersionSpec new_version);
+    /// @}
   };
 
   interface ModuleDef;
@@ -196,7 +205,8 @@ module CORBA
 
   interface Container : IRObject
   {
-    // read interface
+    /// @name Read interface
+    /// @{
     Contained lookup (
         in ScopedName search_name);
     ContainedSeq contents (
@@ -221,8 +231,10 @@ module CORBA
         in boolean exclude_inherited,
         in long max_returned_objs
       );
+    /// @}
 
-    // write interface
+    /// @name Write interface
+    /// @{
 
     ModuleDef create_module (
         in RepositoryId id,
@@ -318,6 +330,7 @@ module CORBA
                                    in ValueDefSeq abstract_base_values,
                                    in InterfaceDefSeq supported_interfaces,
                                    in ExtInitializerSeq initializers );
+    /// @}
   };
 
   interface IDLType : IRObject

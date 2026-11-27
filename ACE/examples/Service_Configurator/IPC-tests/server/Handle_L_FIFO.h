@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /* Handle connections from local UNIX ACE_FIFO */
 /* Read from a well known ACE_FIFO and write to stdout. */
 
@@ -21,17 +20,21 @@ class ACE_Svc_Export Handle_L_FIFO : public ACE_Service_Object, public ACE_FIFO_
 {
 public:
   Handle_L_FIFO ();
-  virtual int init (int argc, ACE_TCHAR *argv[]);
-  virtual int info (ACE_TCHAR **, size_t) const;
-  virtual int fini ();
+  Handle_L_FIFO (Handle_L_FIFO const &) = delete;
+  Handle_L_FIFO (Handle_L_FIFO &&) = delete;
+  Handle_L_FIFO &operator= (Handle_L_FIFO const &) = delete;
+  Handle_L_FIFO &operator= (Handle_L_FIFO &&) = delete;
+  int init (int argc, ACE_TCHAR *argv[]) override;
+  int info (ACE_TCHAR **, size_t) const override;
+  int fini () override;
 
 private:
-  int open (const ACE_TCHAR *rendezvous_fifo);
-  virtual ACE_HANDLE get_handle () const;
-  virtual int handle_input (ACE_HANDLE fd);
-  virtual int handle_close (ACE_HANDLE fd, ACE_Reactor_Mask);
+  int open (ACE_TCHAR const *rendezvous_fifo);
+  ACE_HANDLE get_handle () const override;
+  int handle_input (ACE_HANDLE fd) override;
+  int handle_close (ACE_HANDLE fd, ACE_Reactor_Mask) override;
 
-  static const ACE_TCHAR *DEFAULT_RENDEZVOUS;
+  static ACE_TCHAR const *DEFAULT_RENDEZVOUS;
 };
 
 extern ACE_Service_Object_Type lf;

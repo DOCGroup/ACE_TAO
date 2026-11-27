@@ -1,4 +1,3 @@
-// -*- C++ -*-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
@@ -30,7 +29,7 @@ CORBA::LocalObject::_narrow (CORBA::Object_ptr obj)
           dynamic_cast<CORBA::LocalObject_ptr> (obj));
     }
 
-  return 0;
+  return nullptr;
 }
 
 ACE_INLINE

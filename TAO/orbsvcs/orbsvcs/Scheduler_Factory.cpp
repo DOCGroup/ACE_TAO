@@ -18,7 +18,6 @@ RtecScheduler::Scheduler_ptr ACE_Scheduler_Factory::server_ = nullptr;
 ACE_Scheduler_Factory::Factory_Status ACE_Scheduler_Factory::status_ =
   ACE_Scheduler_Factory::UNINITIALIZED;
 
-
 RtecScheduler::Period_t ACE_Scheduler_Factory::period_default_ = 0;
 RtecScheduler::Threads_t ACE_Scheduler_Factory::threads_default_ = 0;
 RtecScheduler::Importance_t ACE_Scheduler_Factory::importance_default_ = RtecScheduler::MEDIUM_IMPORTANCE;
@@ -78,32 +77,31 @@ void ACE_Scheduler_Factory::rt_info_enable_state_default(RtecScheduler::RT_Info_
 // This symbols are extern because the automatic template
 // instantiation mechanism in SunCC gets confused otherwise.
 int TAO_SF_config_count = -1;
-ACE_Scheduler_Factory::POD_Config_Info* TAO_SF_config_info = nullptr;
+ACE_Scheduler_Factory::POD_Config_Info* TAO_SF_config_info {};
 int TAO_SF_entry_count = -1;
-ACE_Scheduler_Factory::POD_RT_Info* TAO_SF_rt_info = nullptr;
+ACE_Scheduler_Factory::POD_RT_Info* TAO_SF_rt_info {};
 int TAO_SF_dependency_count = -1;
-ACE_Scheduler_Factory::POD_Dependency_Info* TAO_SF_dep_info = nullptr;
+ACE_Scheduler_Factory::POD_Dependency_Info* TAO_SF_dep_info {};
 
 struct ACE_Scheduler_Factory_Data
 {
-  // = TITLE
-  //   Helper struct, to encapsulate the singleton static server and
-  //   ACE_TSS objects.  We can't use ACE_Singleton directly, because
-  //   construction of ACE_Runtime_Scheduler takes arguments.
+  /**
+   * Encapsulates the singleton scheduler and ACE_TSS objects. ACE_Singleton
+   * cannot be used directly because ACE_Runtime_Scheduler requires arguments
+   * during construction.
+   */
 
 /* WSOA merge - commented out
   ACE_Runtime_Scheduler scheduler_;
   // The static runtime scheduler.
 */
 
+  /// The scheduler instance.
   TAO_Reconfig_Scheduler<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX> scheduler_;
-  // The scheduler.
 
-  ACE_TSS<ACE_TSS_Type_Adapter<RtecScheduler::Preemption_Priority_t> >
+  /// Dispatch queue number for the calling thread, set by the application or Event Channel.
+  ACE_TSS<ACE_TSS_Type_Adapter<RtecScheduler::Preemption_Priority_t>>
   preemption_priority_;
-  // The dispatch queue number of the calling thread.  For access by
-  // applications; must be set by either the application or Event
-  // Channel.
 
   ACE_Scheduler_Factory_Data ()
     : scheduler_ (TAO_SF_config_count,
@@ -118,7 +116,7 @@ struct ACE_Scheduler_Factory_Data
   }
 };
 
-static ACE_Scheduler_Factory_Data *ace_scheduler_factory_data = nullptr;
+static ACE_Scheduler_Factory_Data *ace_scheduler_factory_data {};
 
 int ACE_Scheduler_Factory::use_runtime (int cc,
                                         POD_Config_Info cfgi[],
@@ -126,10 +124,12 @@ int ACE_Scheduler_Factory::use_runtime (int cc,
                                         POD_RT_Info rti[])
 {
   if (server_ != nullptr || TAO_SF_entry_count != -1)
-    ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT("ACE_Scheduler_Factory::use_runtime - ")
-                       ACE_TEXT("server already configured\n")),
-                      -1);
+    {
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT("ACE_Scheduler_Factory::use_runtime - ")
+                             ACE_TEXT("server already configured\n")),
+                            -1);
+    }
   TAO_SF_config_count = cc;
   TAO_SF_config_info = cfgi;
   TAO_SF_entry_count = ec;
@@ -152,7 +152,9 @@ static_server ()
       (ace_scheduler_factory_data =
          ACE_Singleton<ACE_Scheduler_Factory_Data,
                        ACE_Null_Mutex>::instance ()) == nullptr)
-        return nullptr;
+  {
+    return nullptr;
+  }
 
   try
     {
@@ -161,7 +163,7 @@ static_server ()
       ORBSVCS_DEBUG ((LM_DEBUG,
                   ACE_TEXT("ACE_Scheduler_Factory - configured static server\n")));
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception (
         ACE_TEXT("ACE_Scheduler_Factory::config_runtime - ")
@@ -180,12 +182,14 @@ ACE_Scheduler_Factory::use_config (CosNaming::NamingContext_ptr naming)
 
 int
 ACE_Scheduler_Factory::use_config (CosNaming::NamingContext_ptr naming,
-                                   const char* name)
+                                   char const *name)
 {
   if (server_ != nullptr || TAO_SF_entry_count != -1)
-    // No errors, runtime execution simply takes precedence over
-    // config runs.
-    return 0;
+    {
+      // No errors, runtime execution simply takes precedence over
+      // config runs.
+      return 0;
+    }
 
   try
     {
@@ -198,7 +202,7 @@ ACE_Scheduler_Factory::use_config (CosNaming::NamingContext_ptr naming,
       server_ =
         RtecScheduler::Scheduler::_narrow(objref.in ());
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       server_ = nullptr;
       ex._tao_print_exception (
@@ -214,7 +218,9 @@ int
 ACE_Scheduler_Factory::server (RtecScheduler::Scheduler_ptr sptr)
 {
   if (server_ != nullptr || TAO_SF_entry_count != -1)
+  {
     return -1;
+  }
 
   server_ = RtecScheduler::Scheduler::_duplicate (sptr);
   return 0;
@@ -224,13 +230,17 @@ RtecScheduler::Scheduler_ptr
 ACE_Scheduler_Factory::server ()
 {
   if (server_ == nullptr && TAO_SF_entry_count != -1)
+  {
     server_ = static_server ();
+  }
 
   if (server_ == nullptr)
-    ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT("ACE_Scheduler_Factor::server - ")
-                       ACE_TEXT("no scheduling service configured\n")),
-                      0);
+    {
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT("ACE_Scheduler_Factor::server - ")
+                             ACE_TEXT("no scheduling service configured\n")),
+                            0);
+    }
   return server_;
 }
 
@@ -289,14 +299,14 @@ static char end_configs_empty[] =
 "static int configs_size = 0;\n\n";
 
 int ACE_Scheduler_Factory::dump_schedule
-   (const RtecScheduler::RT_Info_Set& infos,
-    const RtecScheduler::Dependency_Set& dependencies,
-    const RtecScheduler::Config_Info_Set& configs,
-    const RtecScheduler::Scheduling_Anomaly_Set& anomalies,
-    const ACE_TCHAR* file_name,
-    const char* rt_info_format,
-    const char* dependency_format,
-    const char* config_info_format,
+   (RtecScheduler::RT_Info_Set const& infos,
+    RtecScheduler::Dependency_Set const& dependencies,
+    RtecScheduler::Config_Info_Set const& configs,
+    RtecScheduler::Scheduling_Anomaly_Set const& anomalies,
+    ACE_TCHAR const *file_name,
+    char const *rt_info_format,
+    char const *dependency_format,
+    char const *config_info_format,
     int dump_disabled_infos,
     int dump_disabled_dependencies)
 {
@@ -305,40 +315,47 @@ int ACE_Scheduler_Factory::dump_schedule
 
   // Default format for printing RT_Info output.
   if (rt_info_format == nullptr)
-    rt_info_format = "{%20s, /* entry_point */\n"
-                     "%10d, /* handle */\n"
-                     "%10d, /* worst_case_execution_time */,\n"
-                     "%10d, /* typical_execution_time */,\n"
-                     "%10d, /* cached_execution_time */,\n"
-                     "%10d, /* period */\n"
-                     "(RtecScheduler::Criticality_t) %d, /* [ VL_C = 0, L_C = 1, M_C = 2, H_C = 3, VH_C = 4] */\n"
-                     "(RtecScheduler::Importance_t) %d, /* [ VL_I = 0, L_I = 1, M_I = 2, H_I = 3, VH_I = 4] */\n"
-                     "%10d, /* quantum */\n"
-                     "%10d, /* threads */\n"
-                     "%10d, /* priority */\n"
-                     "%10d, /* preemption_subpriority */\n"
-                     "%10d, /* preemption_priority */\n"
-                     "(RtecScheduler::Info_Type_t) %d, /* [OPERATION = 0, CONJUNCTION = 1, DISJUNCTION = 2, REMOTE_DEPENDANT = 3] */\n"
-                     "(RtecScheduler::RT_Info_Enabled_Type_t) %d } /* [RT_INFO_DISABLED = 0, RT_INFO_ENABLED = 1, RT_INFO_NON_VOLATILE = 2] */\n";
-
+    {
+      rt_info_format = "{%20s, /* entry_point */\n"
+                       "%10d, /* handle */\n"
+                       "%10d, /* worst_case_execution_time */,\n"
+                       "%10d, /* typical_execution_time */,\n"
+                       "%10d, /* cached_execution_time */,\n"
+                       "%10d, /* period */\n"
+                       "(RtecScheduler::Criticality_t) %d, /* [ VL_C = 0, L_C = 1, M_C = 2, H_C = 3, VH_C = 4] */\n"
+                       "(RtecScheduler::Importance_t) %d, /* [ VL_I = 0, L_I = 1, M_I = 2, H_I = 3, VH_I = 4] */\n"
+                       "%10d, /* quantum */\n"
+                       "%10d, /* threads */\n"
+                       "%10d, /* priority */\n"
+                       "%10d, /* preemption_subpriority */\n"
+                       "%10d, /* preemption_priority */\n"
+                       "(RtecScheduler::Info_Type_t) %d, /* [OPERATION = 0, CONJUNCTION = 1, DISJUNCTION = 2, REMOTE_DEPENDANT = 3] */\n"
+                       "(RtecScheduler::RT_Info_Enabled_Type_t) %d } /* [RT_INFO_DISABLED = 0, RT_INFO_ENABLED = 1, RT_INFO_NON_VOLATILE = 2] */\n";
+    }
 
   // Default format for printing dependency output.
   if (dependency_format == nullptr)
+    {
       dependency_format = "  { (RtecScheduler::Dependency_Type_t) %d, %10d, "
                           "%10d, %10d,"
                           "(RtecScheduler::Dependency_Enabled_Type_t) %d }";
+    }
 
   // Default format for printing Config_Info output.
   if (config_info_format == nullptr)
-    config_info_format = "  { %10d, %10d, "
-                         "(RtecScheduler::Dispatching_Type_t) %d }";
+    {
+      config_info_format = "  { %10d, %10d, "
+                           "(RtecScheduler::Dispatching_Type_t) %d }";
+    }
 
   FILE* file = stdout;
   if (file_name != nullptr)
     {
       file = ACE_OS::fopen (file_name, ACE_TEXT("w"));
       if (file == nullptr)
-          return -1;
+      {
+        return -1;
+      }
     }
   ACE_OS::fprintf (file, "%s", header);
 
@@ -350,7 +367,7 @@ int ACE_Scheduler_Factory::dump_schedule
 
   for (i = 0; i < anomalies.length (); ++i)
     {
-      const RtecScheduler::Scheduling_Anomaly& anomaly = anomalies[i];
+      RtecScheduler::Scheduling_Anomaly const& anomaly = anomalies[i];
       switch (anomaly.severity)
         {
           case RtecScheduler::ANOMALY_FATAL:
@@ -372,7 +389,7 @@ int ACE_Scheduler_Factory::dump_schedule
 
       ACE_OS::fprintf (file,
                        "%s\n",
-                       (const char *) anomaly.description);
+                       (char const *) anomaly.description);
     }
 
   // Print out banner indicating which infos are dumped.
@@ -392,22 +409,24 @@ int ACE_Scheduler_Factory::dump_schedule
        i < infos.length ();
        ++i)
     {
-      const RtecScheduler::RT_Info& info = infos[i];
+      RtecScheduler::RT_Info const& info = infos[i];
 
       if (dump_disabled_infos
           || info.enabled == RtecScheduler::RT_INFO_ENABLED
           || info.enabled == RtecScheduler::RT_INFO_NON_VOLATILE)
         {
       if (i != 0)
-        // Finish previous line.
-        ACE_OS::fprintf(file, ",\n");
+        {
+          // Finish previous line.
+          ACE_OS::fprintf(file, ",\n");
+        }
 
-      const RtecScheduler::RT_Info& info = infos[i];
+      RtecScheduler::RT_Info const& info = infos[i];
 
       // Put quotes around the entry point name, exactly as it is stored.
       ACE_OS::sprintf (entry_point,
                        "\"%s\"",
-                       (const char *) info.entry_point);
+                       (char const *) info.entry_point);
 
       // @@ TODO Eventually the TimeT structure will be a 64-bit
       // unsigned int, we will have to change this dump method then.
@@ -435,9 +454,13 @@ int ACE_Scheduler_Factory::dump_schedule
   ACE_OS::fprintf(file, "\n");
 
   if (infos.length () > 0)
-    ACE_OS::fprintf (file, "%s", end_infos);
+    {
+      ACE_OS::fprintf (file, "%s", end_infos);
+    }
   else
+  {
     ACE_OS::fprintf (file, "%s", end_infos_empty);
+  }
 
   // Print out banner indicating which dependencies are dumped.
   if (dump_disabled_dependencies)
@@ -456,7 +479,7 @@ int ACE_Scheduler_Factory::dump_schedule
        i < dependencies.length ();
        ++i)
     {
-      const RtecScheduler::Dependency_Info& dep = dependencies[i];
+      RtecScheduler::Dependency_Info const& dep = dependencies[i];
 
       if (dump_disabled_infos
           || dep.enabled == RtecBase::DEPENDENCY_ENABLED
@@ -482,10 +505,13 @@ int ACE_Scheduler_Factory::dump_schedule
   ACE_OS::fprintf (file, "\n");
 
   if (dependencies.length () > 0)
-    ACE_OS::fprintf (file, "%s", end_dependencies);
+    {
+      ACE_OS::fprintf (file, "%s", end_dependencies);
+    }
   else
+  {
     ACE_OS::fprintf (file, "%s", end_dependencies_empty);
-
+  }
 
   // Print out queue configuration info.
   ACE_OS::fprintf (file, "%s", start_configs);
@@ -495,10 +521,12 @@ int ACE_Scheduler_Factory::dump_schedule
        ++i)
     {
       if (i != 0)
-        // Finish previous line.
-        ACE_OS::fprintf (file, ",\n");
+        {
+          // Finish previous line.
+          ACE_OS::fprintf (file, ",\n");
+        }
 
-      const RtecScheduler::Config_Info& config = configs[i];
+      RtecScheduler::Config_Info const& config = configs[i];
       ACE_OS::fprintf (file,
                        config_info_format,
                        config.preemption_priority,
@@ -510,9 +538,13 @@ int ACE_Scheduler_Factory::dump_schedule
   ACE_OS::fprintf (file, "\n");
 
   if (configs.length () > 0)
-    ACE_OS::fprintf (file, "%s", end_configs);
+    {
+      ACE_OS::fprintf (file, "%s", end_configs);
+    }
   else
+  {
     ACE_OS::fprintf (file, "%s", end_configs_empty);
+  }
 
   ACE_OS::fprintf (file, "%s", footer);
   ACE_OS::fclose (file);
@@ -528,7 +560,7 @@ void ACE_Scheduler_Factory::log_scheduling_entry(TAO_Reconfig_Scheduler_Entry * 
    }
 
    // Print out the actual rt_info data
-   const char* rt_info_format = "{%20s, /* entry_point */\n"
+   char const *rt_info_format = "{%20s, /* entry_point */\n"
                                  "%10d, /* handle */\n"
                                  "%10d, /* period */\n"
                                  "%10d, /* criticality */\n"
@@ -552,9 +584,8 @@ void ACE_Scheduler_Factory::log_scheduling_entry(TAO_Reconfig_Scheduler_Entry * 
                     actual_info->preemption_priority,
                     actual_info->enabled);
 
-
    // Print out the current admitted tuple
-   const char* admitted_tuple_format = "             {"
+   char const *admitted_tuple_format = "             {"
                                        "%13d, /* handle */\n"
                                        "%13d, /* rate_index */\n"
                                        "%13d, /* period */\n"
@@ -601,7 +632,7 @@ void ACE_Scheduler_Factory::log_tuple_subset(TUPLE_SET & tuple_subset,
                       FILE* file)
 {
    TAO_RT_Info_Tuple **tuple_ptr_ptr;
-   const char* subset_tuple_format = "             {\n"
+   char const *subset_tuple_format = "             {\n"
                                      "%13d, /* handle */\n"
                                      "%13d, /* rate_index */\n"
                                      "%13d, /* period */\n"
@@ -614,7 +645,6 @@ void ACE_Scheduler_Factory::log_tuple_subset(TUPLE_SET & tuple_subset,
 
    TUPLE_SET_ITERATOR
       tuple_iter (tuple_subset);
-
 
    while (tuple_iter.done () == 0)
    {
@@ -648,7 +678,7 @@ void ACE_Scheduler_Factory::log_tuple_subset(TUPLE_SET & tuple_subset,
 int
 ACE_Scheduler_Factory::log_scheduling_entries(TAO_Reconfig_Scheduler_Entry ** entry_ptr_array,
                                               long entry_ptr_array_size,
-                                              const char* file_name)
+                                              char const *file_name)
 {
    // Open the file
    FILE* file = stdout;
@@ -656,9 +686,10 @@ ACE_Scheduler_Factory::log_scheduling_entries(TAO_Reconfig_Scheduler_Entry ** en
    {
       file = ACE_OS::fopen (file_name, ACE_TEXT ("w"));
       if (file == nullptr)
+      {
         return -1;
+      }
     }
-
 
    // Iterate through the array.  The index is the (handle - 1) of the rt_info in the array
    for(int index = 0; index < entry_ptr_array_size; ++index)
@@ -669,7 +700,6 @@ ACE_Scheduler_Factory::log_scheduling_entries(TAO_Reconfig_Scheduler_Entry ** en
       log_scheduling_entry(entry, file);
    }
 
-
    ACE_OS::fclose (file);
    return 0;
 }
@@ -678,7 +708,7 @@ void
 ACE_Scheduler_Factory::log_scheduling_tuples(
   TAO_RT_Info_Tuple ** tuple_ptr_array,
   long tuple_ptr_array_size,
-  const char* file_name)
+  char const *file_name)
 {
    // Open the file
    FILE* file = stdout;
@@ -686,10 +716,12 @@ ACE_Scheduler_Factory::log_scheduling_tuples(
    {
       file = ACE_OS::fopen (file_name, ACE_TEXT ("w"));
       if (file == nullptr)
+      {
         return;
+      }
     }
 
-   static const char subset_tuple_format[] =
+   static char const subset_tuple_format[] =
      "             {\n"
      "%13d, /* handle */\n"
      "%13lu, /* rate_index */\n"
@@ -700,7 +732,7 @@ ACE_Scheduler_Factory::log_scheduling_tuples(
      "%13d, /* preemption_priority */\n"
      "%13d } /* enabled */\n";
 
-   for (int ndx = 0; ndx < tuple_ptr_array_size; ndx++)
+   for (int ndx = 0; ndx < tuple_ptr_array_size; ++ndx)
      {
        ACE_OS::fprintf(file,
                        subset_tuple_format,
@@ -731,7 +763,9 @@ ACE_Scheduler_Factory::preemption_priority ()
       return preemption_priority;
     }
   else
+  {
     return static_cast<RtecScheduler::Preemption_Priority_t> (-1);
+  }
 }
 
 void
@@ -745,11 +779,12 @@ ACE_Scheduler_Factory::set_preemption_priority
       && (ace_scheduler_factory_data =
           ACE_Singleton<ACE_Scheduler_Factory_Data,
           ACE_Null_Mutex>::instance ()) == nullptr)
-        return;
+  {
+    return;
+  }
 
   ace_scheduler_factory_data->preemption_priority_->
     operator RtecScheduler::Preemption_Priority_t & () = preemption_priority;
 }
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL

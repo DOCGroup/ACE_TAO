@@ -24,7 +24,7 @@ namespace ACE
         * @brief Provides the functionality to attach an SSL_SOCK_Stream
         *   to an established socket of a proxy tunneling service.
         *
-        * The <connect> method will finalize the setting up an SSL connection
+        * The @c connect method will finalize the setting up an SSL connection
         * over the tunnel by performing an SSL handhake after setting the socket
         * in the @c SSL_SOCK_Stream.
         */
@@ -43,11 +43,11 @@ namespace ACE
               */
               int connect (ACE_SSL_SOCK_Stream& new_stream,
                            ACE_HANDLE proxy_handle,
-                           const ACE_Time_Value *timeout = 0);
+                           ACE_Time_Value const *timeout = nullptr);
             protected:
               /// Complete non-blocking SSL active connection.
               int ssl_connect (ACE_SSL_SOCK_Stream &new_stream,
-                              const ACE_Time_Value *timeout);
+                              ACE_Time_Value const *timeout);
           };
       }
   }

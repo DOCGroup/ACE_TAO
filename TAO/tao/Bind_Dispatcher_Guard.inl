@@ -1,14 +1,6 @@
-// -*- C++ -*-
-// ===========================================================================
-//
-// = LIBRARY
-//     TAO
-//
-// = AUTHOR
-//     Carlos O'Ryan <coryan@uci.edu>,
-//     Chad Elliott <elliott_c@ociweb.com>
-//
-// ===========================================================================
+/// @file
+/// @author Carlos O'Ryan <coryan@uci.edu>
+/// @author Chad Elliott <elliott_c@ociweb.com>
 
 #include "tao/Reply_Dispatcher.h"
 #include "tao/Transport_Mux_Strategy.h"

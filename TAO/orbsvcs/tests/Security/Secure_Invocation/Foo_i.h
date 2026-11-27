@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  * @file Foo_i.h
  *
@@ -8,7 +5,6 @@
  *
  * @author Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
 
 #ifndef SECURE_INVOCATION_FOO_I_H
 #define SECURE_INVOCATION_FOO_I_H
@@ -19,14 +15,17 @@
 class Foo_i : public virtual POA_Foo::Bar
 {
 public:
-  /// Constructor.
   Foo_i (CORBA::ORB_ptr,
          SecurityLevel3::SecurityCurrent_ptr current);
+  Foo_i (Foo_i const &) = delete;
+  Foo_i (Foo_i &&) = delete;
+  Foo_i &operator= (Foo_i const &) = delete;
+  Foo_i &operator= (Foo_i &&) = delete;
 
   /// Test method.
-  virtual void baz ();
+  void baz () override;
 
-  virtual void shutdown ();
+  void shutdown () override;
 
 private:
   /// Reference to the ORB.

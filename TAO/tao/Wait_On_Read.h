@@ -1,10 +1,8 @@
-//=============================================================================
 /**
  *  @file    Wait_On_Read.h
  *
  *  @author  Alexander Babu Arulanthu <alex@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_WAIT_ON_READ_H
 #define TAO_WAIT_ON_READ_H
@@ -24,32 +22,37 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  * Simply block on read() to wait for the reply.
  */
-class TAO_Wait_On_Read :  public TAO_Wait_Strategy
+class TAO_Wait_On_Read : public TAO_Wait_Strategy
 {
 public:
-  /// Constructor.
+  TAO_Wait_On_Read () = delete;
   explicit TAO_Wait_On_Read (TAO_Transport *transport);
 
-  /// Destructor.
   ~TAO_Wait_On_Read () override = default;
 
-  /*! @copydoc TAO_Wait_Strategy::sending_request() */
+  /// @copydoc TAO_Wait_Strategy::sending_request()
   int sending_request (TAO_ORB_Core *orb_core, TAO_Message_Semantics msg_semantics) override;
 
-   /*! @copydoc TAO_Wait_Strategy::finished_request() */
+  /// @copydoc TAO_Wait_Strategy::finished_request()
   void finished_request () override;
 
-  /*! @copydoc TAO_Wait_Strategy::wait() */
+  /// @copydoc TAO_Wait_Strategy::wait()
   int wait (ACE_Time_Value *max_wait_time, TAO_Synch_Reply_Dispatcher &rd) override;
 
-  /*! @copydoc TAO_Wait_Strategy::register_handler() */
+  /// @copydoc TAO_Wait_Strategy::register_handler()
   int register_handler () override;
 
-  /*! @copydoc TAO_Wait_Strategy::non_blocking() */
+  /// @copydoc TAO_Wait_Strategy::non_blocking()
   bool non_blocking () const override;
 
-  /*! @copydoc TAO_Wait_Strategy::can_process_upcalls() */
+  /// @copydoc TAO_Wait_Strategy::can_process_upcalls()
   bool can_process_upcalls () const override;
+
+private:
+  TAO_Wait_On_Read (TAO_Wait_On_Read const &) = delete;
+  TAO_Wait_On_Read &operator= (TAO_Wait_On_Read const &) = delete;
+  TAO_Wait_On_Read (TAO_Wait_On_Read &&) = delete;
+  TAO_Wait_On_Read &operator= (TAO_Wait_On_Read &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

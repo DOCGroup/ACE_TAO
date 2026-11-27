@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Objref_VarOut_T.h
  *
  *  @author Jeff Parsons
  */
-//=============================================================================
 
 #ifndef TAO_OBJREF_VAROUT_T_H
 #define TAO_OBJREF_VAROUT_T_H
@@ -49,11 +45,13 @@ class TAO_Objref_Var_T : private TAO_Base_var
 public:
   TAO_Objref_Var_T ();
   TAO_Objref_Var_T (T * p) : ptr_ (p) {}
-  TAO_Objref_Var_T (const TAO_Objref_Var_T<T> &);
+  TAO_Objref_Var_T (TAO_Objref_Var_T<T> const &);
   ~TAO_Objref_Var_T ();
 
   TAO_Objref_Var_T<T> & operator= (T *);
-  TAO_Objref_Var_T<T> & operator= (const TAO_Objref_Var_T<T> &);
+  TAO_Objref_Var_T<T> & operator= (TAO_Objref_Var_T<T> const &);
+  TAO_Objref_Var_T (TAO_Base_var const &) = delete;
+  TAO_Objref_Var_T &operator= (TAO_Base_var const &) = delete;
   T * operator-> () const;
 
   /// Cast operators.
@@ -78,11 +76,6 @@ protected:
   T * ptr_;
   void free ();
   void reset (T *);
-
-private:
-  // Unimplemented - prevents widening assignment.
-  TAO_Objref_Var_T (const TAO_Base_var &);
-  void operator= (const TAO_Base_var &);
 };
 
 /**
@@ -96,11 +89,11 @@ class TAO_Objref_Out_T
 public:
   TAO_Objref_Out_T (T *&p);
   TAO_Objref_Out_T (TAO_Objref_Var_T<T> &p);
-  TAO_Objref_Out_T (const TAO_Objref_Out_T<T> &p);
+  TAO_Objref_Out_T (TAO_Objref_Out_T<T> const &p);
 
   TAO_Objref_Out_T &operator= (T *p);
-  TAO_Objref_Out_T &operator= (const TAO_Objref_Out_T<T> &p);
-  TAO_Objref_Out_T &operator= (const TAO_Objref_Var_T<T> &p);
+  TAO_Objref_Out_T &operator= (TAO_Objref_Out_T<T> const &p);
+  TAO_Objref_Out_T &operator= (TAO_Objref_Var_T<T> const &p);
 
   /// Cast operator.
   operator T *& ();

@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Static_Object_Lock.h
  *
@@ -8,7 +5,6 @@
  *  @author Matthias Kerkhoff
  *  @author Per Andersson
  */
-//=============================================================================
 
 #ifndef ACE_STATIC_OBJECT_LOCK_H
 #define ACE_STATIC_OBJECT_LOCK_H

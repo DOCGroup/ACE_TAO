@@ -1,10 +1,6 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  * @file   Interpreter_Utils.h
  */
-//=============================================================================
 
 #ifndef TAO_INTERPRETER_UTILS_H
 #define TAO_INTERPRETER_UTILS_H
@@ -15,7 +11,7 @@
 #include "ace/Null_Mutex.h"
 #include "ace/Functor.h"
 #include "ace/ACE.h"
-#include "ace/OS_NS_string.h"
+#include <cstring>
 
 #include "tao/AnyTypeCode/TypeCode.h"
 #include "tao/CORBA_String.h"
@@ -29,7 +25,7 @@ template<>
 class TAO_Trading_Serv_Export ACE_Hash<CORBA::String_var>
 {
 public:
-  unsigned long operator () (const CORBA::String_var& string) const
+  unsigned long operator () (CORBA::String_var const& string) const
   {
     unsigned long ret = ACE::hash_pjw (string.in ());
     return ret;
@@ -43,7 +39,7 @@ public:
   int operator () (CORBA::String_var const& lhs,
                    CORBA::String_var const& rhs) const
   {
-    return ACE_OS::strcmp (lhs.in (), rhs.in ()) < 0;
+    return std::strcmp (lhs.in (), rhs.in ()) < 0;
   }
 };
 
@@ -54,7 +50,7 @@ public:
   int operator () (CORBA::String_var const& lhs,
                    CORBA::String_var const& rhs) const
   {
-    return ACE_OS::strcmp (lhs.in (), rhs.in ()) == 0;
+    return std::strcmp (lhs.in (), rhs.in ()) == 0;
   }
 };
 
@@ -76,14 +72,15 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 // TAO_Sequence_Extracter_Base
 // *************************************************************
 
+/// Static methods used by the TAO_Sequence_Extracter class.
 class TAO_Sequence_Extracter_Base
-// = TITLE
-//   Static methods used by the TAO_Sequence_Extracter class.
 {
 public:
+  TAO_Sequence_Extracter_Base () = delete;
+
+  /// Return the sequence element type for the sequence whose typecode
+  /// is @c code.
   static CORBA::TCKind sequence_type (CORBA::TypeCode* code);
-  // Return the sequence element type for the sequence whose typecode
-  // is <code>.
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

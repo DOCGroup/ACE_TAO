@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file Consumer.h
  *
@@ -24,6 +23,9 @@
 #include "orbsvcs/Notify/Timer.h"
 #include "ace/Event_Handler.h"
 #include "ace/Atomic_Op.h"
+#include "ace/Unbounded_Queue.h"
+
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -51,13 +53,16 @@ public:
   };
 
 public:
-using Ptr = TAO_Notify_Refcountable_Guard_T< TAO_Notify_Consumer >;
+using Ptr = TAO_Notify_Refcountable_Guard_T<TAO_Notify_Consumer>;
 
-  /// Constructor
-  TAO_Notify_Consumer (TAO_Notify_ProxySupplier* proxy);
+  explicit TAO_Notify_Consumer (TAO_Notify_ProxySupplier* proxy);
 
-  /// Destructor
-  virtual ~TAO_Notify_Consumer ();
+  TAO_Notify_Consumer (TAO_Notify_Consumer const &) = delete;
+  TAO_Notify_Consumer (TAO_Notify_Consumer &&) = delete;
+  TAO_Notify_Consumer &operator= (TAO_Notify_Consumer const &) = delete;
+  TAO_Notify_Consumer &operator= (TAO_Notify_Consumer &&) = delete;
+
+  ~TAO_Notify_Consumer () override;
 
   /// This method sigantures deliberately match the RefCounting methods required for ESF Proxy
   CORBA::ULong _incr_refcnt ();
@@ -67,22 +72,22 @@ using Ptr = TAO_Notify_Refcountable_Guard_T< TAO_Notify_Consumer >;
   TAO_Notify_ProxySupplier* proxy_supplier ();
 
   /// Access Base Proxy.
-  virtual TAO_Notify_Proxy* proxy ();
+  TAO_Notify_Proxy* proxy () override;
 
   /// Dispatch Event to consumer
   void deliver (TAO_Notify_Method_Request_Event * request);
 
   /// Push @a event to this consumer.
-  virtual void push (const CORBA::Any& event) = 0;
+  virtual void push (CORBA::Any const& event) = 0;
 
   /// Push @a event to this consumer.
-  virtual void push (const CosNotification::StructuredEvent& event) = 0;
+  virtual void push (CosNotification::StructuredEvent const& event) = 0;
 
   /// Push a batch of events to this consumer.
-  virtual void push (const CosNotification::EventBatch& event) = 0;
+  virtual void push (CosNotification::EventBatch const& event) = 0;
 
   /// Dispatch the batch of events to the attached consumer
-  DispatchStatus dispatch_batch (const CosNotification::EventBatch& batch);
+  DispatchStatus dispatch_batch (CosNotification::EventBatch const& batch);
 
   /// Dispatch the pending events
   void dispatch_pending ();
@@ -97,14 +102,14 @@ using Ptr = TAO_Notify_Refcountable_Guard_T< TAO_Notify_Consumer >;
   void resume ();
 
   /// Shutdown the consumer
-  virtual void shutdown ();
+  void shutdown () override;
 
   /// On reconnect we need to move events from the old consumer
   /// to the new one
   virtual void reconnect_from_consumer (TAO_Notify_Consumer* old_consumer) = 0;
 
   /// Override, Peer::qos_changed
-  virtual void qos_changed (const TAO_Notify_QoSProperties& qos_properties);
+  void qos_changed (TAO_Notify_QoSProperties const &qos_properties) override;
 
   /// Take the pending queue from the rhs, cancel it's timer and
   /// schedule our timer.  The caller should have locked the proxy lock
@@ -154,16 +159,15 @@ protected:
     TAO_Notify_Method_Request_Event * request);
 
   // Dispatch updates
-  virtual void dispatch_updates_i (const CosNotification::EventTypeSeq& added,
-                                   const CosNotification::EventTypeSeq& removed);
+  void dispatch_updates_i (CosNotification::EventTypeSeq const& added,
+                           CosNotification::EventTypeSeq const& removed) override;
 
   /// Get the shared Proxy Lock
   TAO_SYNCH_MUTEX* proxy_lock ();
 
 protected:
-  virtual int handle_timeout (const ACE_Time_Value& current_time,
-                              const void* act = nullptr);
-
+  int handle_timeout (ACE_Time_Value const &current_time,
+                      void const *act = nullptr) override;
 
   /// Schedule timer
   void schedule_timer (bool is_error = false);
@@ -171,22 +175,23 @@ protected:
   /// Cancel timer
   void cancel_timer ();
 
-  ///= Protected Data Members
 protected:
   Request_Queue& pending_events();
 
+  /// @name Protected data members
+  /// @{
   /// The Proxy that we associate with.
   TAO_Notify_ProxySupplier* proxy_;
 
   /// Suspended Flag.
-  CORBA::Boolean is_suspended_;
+  CORBA::Boolean is_suspended_ {};
 
   /// Interface that accepts offer_changes
   CosNotifyComm::NotifyPublish_var publish_;
-  bool have_not_yet_verified_publish_;
+  bool have_not_yet_verified_publish_ = true;
 
   /// The Pacing Interval
-  const TAO_Notify_Property_Time & pacing_;
+  TAO_Notify_Property_Time const & pacing_;
 
   /// Max. batch size.
   TAO_Notify_Property_Long max_batch_size_;
@@ -200,6 +205,7 @@ protected:
   /// Last time either push an event or validate connection
   /// via _non_exist call.
   ACE_Atomic_Op<TAO_SYNCH_MUTEX, ACE_Time_Value> last_ping_;
+  /// @}
 
 private:
   /// Events pending to be delivered.

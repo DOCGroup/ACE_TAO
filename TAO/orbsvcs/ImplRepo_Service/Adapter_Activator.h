@@ -1,5 +1,3 @@
-// -*- C++ -*-
-//=============================================================================
 /**
  *  @file   Adapter_Activator.h
  *
@@ -7,7 +5,6 @@
  *
  *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef IMR_ADAPTER_ACTIVATOR_H
 #define IMR_ADAPTER_ACTIVATOR_H

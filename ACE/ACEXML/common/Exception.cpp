@@ -1,28 +1,23 @@
-// -*- C++ -*-
-
 #include "ACEXML/common/Exception.h"
 #include "ace/Log_Msg.h"
 #include "ace/ACE.h"
 #include "ace/OS_NS_string.h"
 
-const ACEXML_Char *ACEXML_Exception::exception_name_ = ACE_TEXT ("ACEXML_Exception");
+ACEXML_Char const *ACEXML_Exception::exception_name_ = ACE_TEXT ("ACEXML_Exception");
 
-const ACEXML_Char *ACEXML_Exception::null_ = ACE_TEXT ("");
+ACEXML_Char const *ACEXML_Exception::null_ = ACE_TEXT ("");
 
 #if !defined (__ACEXML_INLINE__)
 # include "ACEXML/common/Exception.inl"
 #endif /* __ACEXML_INLINE__ */
 
 ACEXML_Exception::ACEXML_Exception()
-{
-}
+= default;
 
-ACEXML_Exception::~ACEXML_Exception()
-{
-}
+ACEXML_Exception::~ACEXML_Exception() = default;
 
-int
-ACEXML_Exception::is_a (const ACEXML_Char *name)
+bool
+ACEXML_Exception::is_a (ACEXML_Char const *name)
 {
   return ACE_OS::strcmp (ACEXML_Exception::exception_name_, name) == 0;
 }

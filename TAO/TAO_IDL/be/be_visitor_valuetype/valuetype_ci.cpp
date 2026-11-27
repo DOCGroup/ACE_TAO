@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    valuetype_ci.cpp
  *
@@ -7,7 +5,6 @@
  *
  *  @author Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de> based on code from Aniruddha Gokhale
  */
-//=============================================================================
 
 #include "valuetype.h"
 

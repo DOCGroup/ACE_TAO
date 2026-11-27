@@ -4,6 +4,7 @@
 #include "ace/High_Res_Timer.h"
 #include "ace/Log_Msg.h"
 
+#include <memory>
 
 #if defined (ACE_HAS_ATM)
 // ACE_ATM Server
@@ -17,10 +18,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   //int selector_specified = 0;
 
   if (argc > 2)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Usage: %s [selector]\n",
-                       argv[0]),
-                      1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Usage: %s [selector]\n",
+                         argv[0]),
+                        1);
+    }
 
   // Create a server address.
   ACE_ATM_Addr addr;
@@ -28,7 +31,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   unsigned char selector = ( argc == 2 ) ? ACE_OS::atoi( argv[ 1 ]) : ACE_ATM_Addr::DEFAULT_SELECTOR;
   addr.set_selector( selector );
   ACE_OS::printf( "ATM_Server: selector changed to %d\n", addr.get_selector());
-
 
   // Create a server, reuse the addr.
   ACE_ATM_Acceptor  peer_acceptor;
@@ -39,10 +41,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   ACE_HANDLE ret = peer_acceptor.open (addr, 5, params);
   if ( ret == ACE_INVALID_HANDLE )
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "open"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "open"),
+                        -1);
+    }
 
   ACE_ATM_Stream new_stream;
   ACE_ATM_Addr local_addr;
@@ -63,85 +67,89 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   double actual_rate;
 
   for (;;)
-  {
-    // Create a new ACE_ATM_Stream endpoint (note automatic restart
-    // if errno == EINTR).
-    ACE_OS::printf( "ATM_Server: expecting clients\n" );
-
-    if (peer_acceptor.accept (new_stream,
-                              &addr,
-                              &timeout) == -1)
     {
-      ACE_ERROR ((LM_ERROR,
-                  "%p\n",
-                  "accept"));
-      continue;
-    }
+      // Create a new ACE_ATM_Stream endpoint (note automatic restart
+      // if errno == EINTR).
+      ACE_OS::printf( "ATM_Server: expecting clients\n" );
 
-    ACE_OS::printf( "ATM_Server: got a connection\n" );
-
-    ACE_UINT16 vpi, vci;
-    vpi = vci = 0;
-    // This has problem on PMP connections on NT
-    //new_stream.get_vpi_vci(vpi, vci);
-    ACE_DEBUG ((LM_DEBUG,
-                "connected to VPI %d VCI %d\n",
-                vpi, vci));
-
-    ACE_OS::printf( "ATM_Server: connection accepted\n" );
-
-    ACE_DEBUG ((LM_DEBUG,
-                "client %s connected\n",
-                addr.addr_to_string ()));
-    ACE_DEBUG ((LM_DEBUG,
-                "client %s connected to host\n",
-                new_stream.get_peer_name ()));
-
-    // Read data from client (terminate on error).
-
-    int recvd = 0;
-
-    for ( ;; )
-    {
-      total = 0;
-      timer.start_incr();
-
-      for (int r_bytes;
-           (r_bytes = new_stream.recv (buf, sizeof buf, 0)) > 0; )
+      if (peer_acceptor.accept (new_stream,
+                                &addr,
+                                std::addressof (timeout)) == -1)
         {
-//        ACE_OS::printf( "ATM_Server: received %dB\n", r_bytes );
-
-//        if (ACE_OS::write (ACE_STDOUT,
-//                           buf,
-//                           r_bytes) != r_bytes)
-//          ACE_ERROR ((LM_ERROR,
-//                      "%p\n",
-//                      "ACE::send_n"));
-          total += r_bytes;
-
-          if ( total > 10000000 )
-            break;
+          ACE_ERROR ((LM_ERROR,
+                      "%p\n",
+                      "accept"));
+          continue;
         }
 
-      timer.stop_incr();
-      timer.elapsed_time_incr( tv );
-      real_time = tv.sec() * ACE_ONE_SECOND_IN_USECS + tv.usec();
-      recvd += total;
-      actual_rate = ( double )recvd * ( double )8 / real_time;
+      ACE_OS::printf( "ATM_Server: got a connection\n" );
+
+      ACE_UINT16 vpi, vci;
+      vpi = vci = 0;
+      // This has problem on PMP connections on NT
+      //new_stream.get_vpi_vci(vpi, vci);
+      ACE_DEBUG ((LM_DEBUG,
+                  "connected to VPI %d VCI %d\n",
+                  vpi, vci));
+
+      ACE_OS::printf( "ATM_Server: connection accepted\n" );
 
       ACE_DEBUG ((LM_DEBUG,
-                 ACE_TEXT ("(%t) bytes = %d, usec = %f, rate = %0.00f Mbps\n"),
-                 recvd,
-                 real_time,
-                 actual_rate < 0 ? 0 : actual_rate ));
-    }
+                  "client %s connected\n",
+                  addr.addr_to_string ()));
+      ACE_DEBUG ((LM_DEBUG,
+                  "client %s connected to host\n",
+                  new_stream.get_peer_name ()));
 
-    // Close new endpoint (listening endpoint stays open).
-    if (new_stream.close () == -1)
-      ACE_ERROR ((LM_ERROR,
-                  "%p\n",
-                  "close"));
-  }
+      // Read data from client (terminate on error).
+
+      int recvd = 0;
+
+      for ( ;; )
+        {
+          total = 0;
+          timer.start_incr();
+
+          for (int r_bytes;
+               (r_bytes = new_stream.recv (buf, sizeof buf, 0)) > 0; )
+            {
+//            ACE_OS::printf( "ATM_Server: received %dB\n", r_bytes );
+
+//            if (ACE_OS::write (ACE_STDOUT,
+//                               buf,
+//                               r_bytes) != r_bytes)
+//              ACE_ERROR ((LM_ERROR,
+//                          "%p\n",
+//                          "ACE::send_n"));
+              total += r_bytes;
+
+              if ( total > 10000000 )
+                {
+                  break;
+                }
+            }
+
+          timer.stop_incr();
+          timer.elapsed_time_incr( tv );
+          real_time = tv.sec() * ACE_ONE_SECOND_IN_USECS + tv.usec();
+          recvd += total;
+          actual_rate = ( double )recvd * ( double )8 / real_time;
+
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%t) bytes = %d, usec = %f, rate = %0.00f Mbps\n"),
+                      recvd,
+                      real_time,
+                      actual_rate < 0 ? 0 : actual_rate ));
+        }
+
+      // Close new endpoint (listening endpoint stays open).
+      if (new_stream.close () == -1)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "%p\n",
+                      "close"));
+        }
+    }
 
   /* NOTREACHED */
   return 0;

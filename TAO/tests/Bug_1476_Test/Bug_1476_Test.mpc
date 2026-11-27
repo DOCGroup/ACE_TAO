@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*Client): taoidldefaults, taoclient, messaging {
   idlflags += -Sa -St
 

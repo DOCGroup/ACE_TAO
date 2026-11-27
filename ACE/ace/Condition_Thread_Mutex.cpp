@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  * @file Condition_Thread_Mutex.cpp
  *
@@ -14,6 +13,8 @@
 #endif /* __ACE_INLINE__ */
 
 #include "ace/Log_Category.h"
+
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -37,34 +38,36 @@ ACE_Condition<ACE_Thread_Mutex>::dump () const
 }
 
 ACE_Condition<ACE_Thread_Mutex>::ACE_Condition (ACE_Thread_Mutex &m,
-                                                const ACE_TCHAR *name,
+                                                ACE_TCHAR const *name,
                                                 void *arg)
-  : mutex_ (m),
-    removed_ (false)
+  : mutex_ (m)
 {
 // ACE_TRACE ("ACE_Condition<ACE_Thread_Mutex>::ACE_Condition<ACE_Thread_Mutex>");
-  if (ACE_OS::cond_init (&this->cond_,
+  if (ACE_OS::cond_init (std::addressof (this->cond_),
                          (short) USYNC_THREAD,
                          name,
                          arg) != 0)
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACE_Condition<ACE_Thread_Mutex>::ACE_Condition<ACE_Thread_Mutex>")));
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("%p\n"),
+                     ACE_TEXT ("ACE_Condition<ACE_Thread_Mutex>::ACE_Condition<ACE_Thread_Mutex>")));
+    }
 }
 
 ACE_Condition<ACE_Thread_Mutex>::ACE_Condition (ACE_Thread_Mutex &m,
-                                                const ACE_Condition_Attributes &attributes,
-                                                const ACE_TCHAR *name,
+                                                ACE_Condition_Attributes const &attributes,
+                                                ACE_TCHAR const *name,
                                                 void *arg)
-  : mutex_ (m),
-    removed_ (false)
+  : mutex_ (m)
 {
 // ACE_TRACE ("ACE_Condition<ACE_Thread_Mutex>::ACE_Condition<ACE_Thread_Mutex>");
-  if (ACE_OS::cond_init (&this->cond_,
+  if (ACE_OS::cond_init (std::addressof (this->cond_),
                          const_cast<ACE_condattr_t &> (attributes.attributes ()),
                          name, arg) != 0)
-    ACELIB_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACE_Condition<ACE_Thread_Mutex>::ACE_Condition<ACE_Thread_Mutex>")));
+    {
+      ACELIB_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"),
+                     ACE_TEXT ("ACE_Condition<ACE_Thread_Mutex>::ACE_Condition<ACE_Thread_Mutex>")));
+    }
 }
 
 ACE_Condition<ACE_Thread_Mutex>::~ACE_Condition ()
@@ -81,21 +84,21 @@ int
 ACE_Condition<ACE_Thread_Mutex>::wait ()
 {
 // ACE_TRACE ("ACE_Condition<ACE_Thread_Mutex>::wait");
-  return ACE_OS::cond_wait (&this->cond_, &this->mutex_.lock ());
+  return ACE_OS::cond_wait (std::addressof (this->cond_), std::addressof (this->mutex_.lock ()));
 }
 
 int
 ACE_Condition<ACE_Thread_Mutex>::wait (ACE_Thread_Mutex &mutex,
-                                  const ACE_Time_Value *abstime)
+                                  ACE_Time_Value const *abstime)
 {
 // ACE_TRACE ("ACE_Condition<ACE_Thread_Mutex>::wait");
-  return ACE_OS::cond_timedwait (&this->cond_,
-                                 &mutex.lock (),
+  return ACE_OS::cond_timedwait (std::addressof (this->cond_),
+                                 std::addressof (mutex.lock ()),
                                  const_cast <ACE_Time_Value *> (abstime));
 }
 
 int
-ACE_Condition<ACE_Thread_Mutex>::wait (const ACE_Time_Value *abstime)
+ACE_Condition<ACE_Thread_Mutex>::wait (ACE_Time_Value const *abstime)
 {
 // ACE_TRACE ("ACE_Condition<ACE_Thread_Mutex>::wait");
   return this->wait (this->mutex_, abstime);
@@ -105,14 +108,14 @@ int
 ACE_Condition<ACE_Thread_Mutex>::signal ()
 {
 // ACE_TRACE ("ACE_Condition<ACE_Thread_Mutex>::signal");
-  return ACE_OS::cond_signal (&this->cond_);
+  return ACE_OS::cond_signal (std::addressof (this->cond_));
 }
 
 int
 ACE_Condition<ACE_Thread_Mutex>::broadcast ()
 {
 // ACE_TRACE ("ACE_Condition<ACE_Thread_Mutex>::broadcast");
-  return ACE_OS::cond_broadcast (&this->cond_);
+  return ACE_OS::cond_broadcast (std::addressof (this->cond_));
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

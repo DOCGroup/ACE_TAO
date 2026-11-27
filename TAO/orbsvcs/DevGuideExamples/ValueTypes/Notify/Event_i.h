@@ -3,7 +3,6 @@
 
 #include "EventS.h"
 
-#include <iostream>
 #include "tao/Valuetype/ValueFactory.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -15,21 +14,23 @@ class MyEvent_i
   , public virtual CORBA::DefaultValueRefCountBase
 {
 public:
-  MyEvent_i (char const * n, CORBA::Long k)
+  MyEvent_i (char const *name, CORBA::Long kind)
   {
-    name(n);
-    kind(k);
+    this->name (name);
+    this->kind (kind);
   }
+
+  MyEvent_i (MyEvent_i const &) = delete;
+  MyEvent_i (MyEvent_i &&) = delete;
+  MyEvent_i &operator= (MyEvent_i const &) = delete;
+  MyEvent_i &operator= (MyEvent_i &&) = delete;
 
   ::CORBA::ValueBase * _copy_value () override
   {
-    ::CORBA::ValueBase * ret_val = nullptr;
+    ::CORBA::ValueBase *ret_val {};
     ACE_NEW_THROW_EX (
       ret_val,
-      MyEvent_i (
-        name (),
-        kind ()
-      ),
+      MyEvent_i (this->name (), this->kind ()),
       ::CORBA::NO_MEMORY ()
     );
     return ret_val;
@@ -37,25 +38,23 @@ public:
 
   void dump () override
   {
-    CORBA::LongSeq& pl = payload();
-    ACE_DEBUG((LM_DEBUG, "\nPayload contents.\n"));
-    for (CORBA::ULong i = 0; i < pl.length(); ++i)
-    {
-      ACE_DEBUG((LM_DEBUG, "%d = %d\n", i, pl[i]));
-    }
-    ACE_DEBUG((LM_DEBUG, "\n"));
+    CORBA::LongSeq &pl = this->payload ();
+    ACE_DEBUG ((LM_DEBUG, "\nPayload contents.\n"));
+    for (CORBA::ULong i {}; i < pl.length (); ++i)
+      ACE_DEBUG ((LM_DEBUG, "%d = %d\n", i, pl[i]));
+    ACE_DEBUG ((LM_DEBUG, "\n"));
   }
 
   CORBA::Long size () override
   {
-    return payload().length();
+    return this->payload ().length ();
   }
 
   void add_long (CORBA::Long n) override
   {
-    CORBA::LongSeq& pl = payload();
-    CORBA::ULong idx = pl.length();
-    pl.length(idx + 1);
+    CORBA::LongSeq &pl = this->payload ();
+    CORBA::ULong const idx = pl.length ();
+    pl.length (idx + 1);
     pl[idx] = n;
   }
 };
@@ -64,11 +63,18 @@ class MyEventFactory
   : public virtual CORBA::ValueFactoryBase
 {
 public:
+  MyEventFactory () = default;
+
+  MyEventFactory (MyEventFactory const &) = delete;
+  MyEventFactory (MyEventFactory &&) = delete;
+  MyEventFactory &operator= (MyEventFactory const &) = delete;
+  MyEventFactory &operator= (MyEventFactory &&) = delete;
+
   CORBA::ValueBase * create_for_unmarshal () override
   {
     // It doesn't matter what values we construct it with
     // because they will be overwritten with the demarshaled values.
-    return new MyEvent_i("", -1);
+    return new MyEvent_i ("", -1);
   }
 };
 

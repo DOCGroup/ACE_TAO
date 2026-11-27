@@ -1,13 +1,9 @@
-// -*- C++ -*-
-
-// ===================================================================
 /**
  *  @file   SCIOP_Transport.h
  *
  *  @author  Jason Cohen, Lockheed Martin ATL  <jcohen@atl.lmco.com>
  *  @author  Keith O'Hara, Lockheed Martin ATL
  */
-// ===================================================================
 
 #ifndef TAO_SCIOP_TRANSPORT_H
 #define TAO_SCIOP_TRANSPORT_H
@@ -28,7 +24,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// Forward decls.
 class TAO_SCIOP_Connection_Handler;
 class TAO_ORB_Core;
 class TAO_Operation_Details;
@@ -46,24 +41,22 @@ class TAO_Acceptor;
 class TAO_Strategies_Export TAO_SCIOP_Transport : public TAO_Transport
 {
 public:
-  /// Constructor.
   TAO_SCIOP_Transport (TAO_SCIOP_Connection_Handler *handler,
                        TAO_ORB_Core *orb_core);
 
 protected:
-  /// Destructor
   /**
    * Protected destructor to enforce proper memory management through
    * the reference counting mechanism.
    */
-  ~TAO_SCIOP_Transport () override;
+  ~TAO_SCIOP_Transport () override = default;
 
   /** @name Overridden Template Methods
    *
    * Please check the documentation in "tao/Transport.h" for more
    * details.
    */
-  //@{
+  /// @{
   ACE_Event_Handler *event_handler_i () override;
 
   ssize_t send (iovec *iov, int iovcnt,
@@ -73,7 +66,6 @@ protected:
   ssize_t recv (char *buf,
                 size_t len,
                 ACE_Time_Value const *s = nullptr) override;
-
 
 public:
   /// @todo These methods IMHO should have more meaningful
@@ -97,9 +89,10 @@ public:
 
   TAO_Connection_Handler *connection_handler_i () override;
 
-  //@}
+  /// @}
 
 private:
+  TAO_SCIOP_Transport () = delete;
   TAO_SCIOP_Transport (TAO_SCIOP_Transport const &) = delete;
   TAO_SCIOP_Transport &operator= (TAO_SCIOP_Transport const &) = delete;
   TAO_SCIOP_Transport (TAO_SCIOP_Transport &&) = delete;
@@ -108,9 +101,9 @@ private:
   /// Set the Bidirectional context info in the service context list
   void set_bidir_context_info (TAO_Operation_Details &opdetails);
 
-  /// Add the listen points in <acceptor> to the <listen_point_list>
+  /// Add the listen points in @c acceptor to the @c listen_point_list
   /// if this connection is in the same interface as that of the
-  /// endpoints in the <acceptor>
+  /// endpoints in the @c acceptor
   int get_listen_point (IIOP::ListenPointList &listen_point_list,
                         TAO_Acceptor *acceptor);
 private:

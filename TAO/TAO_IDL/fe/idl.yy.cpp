@@ -1,4 +1,3 @@
-
 #line 2 "<stdout>"
 
 #define  YY_INT_ALIGNED short int
@@ -4400,7 +4399,7 @@ idl_wchar_escape_reader (char *str)
 
   int i;
   // get the hex digits
-  for (i = 2; str[i] != '\0' && isxdigit (str[i]); i++)
+  for (i = 2; str[i] != '\0' && isxdigit (str[i]); ++i)
     {
       continue;
     }

@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Sig_Adapter.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef ACE_SIG_ADAPTER_H
 #define ACE_SIG_ADAPTER_H
@@ -71,7 +67,7 @@ private:
   ACE_Event_Handler *eh_ {};
 
   /// This is a normal C function.
-  ACE_Sig_Handler_Ex sig_func_;
+  ACE_Sig_Handler_Ex sig_func_ {};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

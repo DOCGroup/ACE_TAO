@@ -1,15 +1,11 @@
-
-//=============================================================================
 /**
  *  @file    Auto_Event_Test.cpp
  *
- *  This test verifies the functionality of the <ACE_Auto_Event>
+ *  This test verifies the functionality of the @c ACE_Auto_Event
  *  implementation.
  *
  *  @author Martin Corino <mcorino@remedy.nl>
  */
-//=============================================================================
-
 
 #include "test_config.h"
 #include "ace/Auto_Event.h"
@@ -20,6 +16,8 @@
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/Atomic_Op.h"
+
+#include <memory>
 
 // msec that times are allowed to differ before test fails.
 #if defined (ACE_HAS_HI_RES_TIMER) || \
@@ -46,7 +44,7 @@ static int n_iterations = 10;
 static size_t n_workers = 10;
 
 // Number of timeouts.
-static ACE_Atomic_Op<ACE_SYNCH_MUTEX, size_t> timeouts = 0;
+static ACE_Atomic_Op<ACE_SYNCH_MUTEX, size_t> timeouts {0};
 
 // Number of times to call test_timeout ().
 static size_t test_timeout_count = 3;
@@ -67,7 +65,7 @@ test_timeout ()
 
   ACE_Time_Value wait = ACE_OS::gettimeofday ();
 
-  ACE_Time_Value begin = wait;
+  ACE_Time_Value const begin = wait;
 
   wait.sec (wait.sec () + wait_secs);
 
@@ -81,7 +79,7 @@ test_timeout ()
           status = -1;
         }
     }
-  ACE_Time_Value wait_diff = ACE_OS::gettimeofday () - begin;
+  ACE_Time_Value const wait_diff = ACE_OS::gettimeofday () - begin;
 
   msecs_waited = wait_diff.msec ();
   msecs_expected = wait_secs * 1000;
@@ -120,37 +118,39 @@ parse_args (int argc, ACE_TCHAR *argv[])
   int c;
 
   while ((c = get_opt ()) != -1)
-    switch (c)
     {
-    case 'w':
-      n_workers = ACE_OS::atoi (get_opt.opt_arg ());
-      break;
-    case 'n':
-      n_iterations = ACE_OS::atoi (get_opt.opt_arg ());
-      break;
-    default:
-      print_usage_and_die ();
-      break;
-  }
+      switch (c)
+        {
+        case 'w':
+          n_workers = ACE_OS::atoi (get_opt.opt_arg ());
+          break;
+        case 'n':
+          n_iterations = ACE_OS::atoi (get_opt.opt_arg ());
+          break;
+        default:
+          print_usage_and_die ();
+          break;
+        }
+    }
 }
 
 // Worker tries to acquire the semaphore, hold it for a while, and
 // then releases it.
 
-static void *
+static ACE_THR_FUNC_RETURN
 worker (void *)
 {
   for (int iterations = 1;
        iterations <= n_iterations;
-       iterations++)
+       ++iterations)
     {
       //FUZZ: disable check_for_lack_ACE_OS
-      ACE_Time_Value wait (0,
-                           iterations * 1000 * 100);  // Wait 'iter' msec
+      ACE_Time_Value const wait (0,
+                                 iterations * 1000 * 100);  // Wait 'iter' msec
       //FUZZ: enable check_for_lack_ACE_OS
 
       ACE_Time_Value tv = ACE_OS::gettimeofday () + wait;
-      if (evt.wait (&tv) == -1)
+      if (evt.wait (std::addressof (tv)) == -1)
       {
           // verify that we have ETIME
           if (ACE_OS::last_error() != ETIME)
@@ -160,10 +160,12 @@ worker (void *)
                           ACE_TEXT ("Worker should be ETIME but is")));
             }
           else
+          {
             ++timeouts;
+          }
           ACE_Time_Value diff = ACE_OS::gettimeofday ();
           diff = diff - tv;       // tv should have been reset to time acquired
-          long diff_msec = diff.msec ();
+          long const diff_msec = diff.msec ();
 
           if (diff_msec > ACE_ALLOWED_SLACK)
             {
@@ -185,7 +187,7 @@ worker (void *)
       ACE_Thread::yield ();
     }
 
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 #endif /* ACE_HAS_THREADS */
@@ -201,33 +203,41 @@ int run_main (int argc, ACE_TCHAR *argv[])
   ACE_OS::srand ((u_int) ACE_OS::time (nullptr));
 
   //Test timed waits.
-  for (size_t i = 0; i < test_timeout_count; i++)
-    if (test_timeout () != 0)
-      test_result = 1;
+  for (size_t i = 0; i < test_timeout_count; ++i)
+    {
+      if (test_timeout () != 0)
+        {
+          test_result = 1;
+        }
+    }
 
   if (ACE_Thread_Manager::instance ()->spawn_n
       (static_cast<size_t> (n_workers),
-       ACE_THR_FUNC (worker),
+       worker,
        nullptr,
        THR_NEW_LWP) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("spawn_n")),
-                      1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("spawn_n")),
+                        1);
+    }
 
   // Release the first worker.
   evt.signal ();
 
   ACE_Thread_Manager::instance ()->wait ();
 
-  size_t percent = (timeouts.value () * 100) / (n_workers * n_iterations);
+  size_t const percent = (timeouts.value () * 100) / (n_workers * n_iterations);
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Worker threads timed out %B percent of the time\n"),
               percent));
 
   if (test_result == 0)
+  {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Auto_Event Test successful\n")));
+  }
 #else
   ACE_UNUSED_ARG (argc);
   ACE_UNUSED_ARG (argv);

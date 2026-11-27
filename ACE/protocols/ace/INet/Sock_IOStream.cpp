@@ -3,6 +3,7 @@
 
 #include "ace/INet/Sock_IOStream.h"
 #include "ace/INet/IOS_util.h"
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -12,7 +13,7 @@ namespace ACE
   {
     template <ACE_SYNCH_DECL>
     Sock_StreamBufferBase<ACE_SYNCH_USE>::Sock_StreamBufferBase (stream_type* stream)
-      : BidirStreamBuffer<StreamHandler<ACE_SOCK_STREAM, ACE_SYNCH_USE> > (
+      : BidirStreamBuffer<StreamHandler<ACE_SOCK_STREAM, ACE_SYNCH_USE>> (
             stream,
             BUFFER_SIZE,
             std::ios::in | std::ios::out)
@@ -20,15 +21,13 @@ namespace ACE
       }
 
     template <ACE_SYNCH_DECL>
-    Sock_StreamBufferBase<ACE_SYNCH_USE>::~Sock_StreamBufferBase ()
-      {
-      }
+    Sock_StreamBufferBase<ACE_SYNCH_USE>::~Sock_StreamBufferBase () = default;
 
     template <ACE_SYNCH_DECL>
     Sock_IOSBase<ACE_SYNCH_USE>::Sock_IOSBase (stream_type* stream)
       : streambuf_ (stream)
       {
-        ace_ios_init (&this->streambuf_);
+        ace_ios_init (std::addressof (this->streambuf_));
       }
 
     template <ACE_SYNCH_DECL>
@@ -47,7 +46,7 @@ namespace ACE
     typename Sock_IOSBase<ACE_SYNCH_USE>::buffer_type*
     Sock_IOSBase<ACE_SYNCH_USE>::rdbuf ()
       {
-        return &this->streambuf_;
+        return std::addressof (this->streambuf_);
       }
 
     template <ACE_SYNCH_DECL>
@@ -58,12 +57,18 @@ namespace ACE
       }
 
     template <ACE_SYNCH_DECL>
-    const typename Sock_IOSBase<ACE_SYNCH_USE>::stream_type&
-    Sock_IOSBase<ACE_SYNCH_USE>::stream () const
+    typename Sock_IOSBase<ACE_SYNCH_USE>::stream_type&
+    Sock_IOSBase<ACE_SYNCH_USE>::stream ()
       {
         return this->streambuf_.stream ();
       }
 
+    template <ACE_SYNCH_DECL>
+    typename Sock_IOSBase<ACE_SYNCH_USE>::stream_type const&
+    Sock_IOSBase<ACE_SYNCH_USE>::stream () const
+      {
+        return this->streambuf_.stream ();
+      }
 
     template <ACE_SYNCH_DECL>
     Sock_OStreamBase<ACE_SYNCH_USE>::Sock_OStreamBase(stream_type* stream)
@@ -72,9 +77,7 @@ namespace ACE
       }
 
     template <ACE_SYNCH_DECL>
-    Sock_OStreamBase<ACE_SYNCH_USE>::~Sock_OStreamBase()
-      {
-      }
+    Sock_OStreamBase<ACE_SYNCH_USE>::~Sock_OStreamBase() = default;
 
     template <ACE_SYNCH_DECL>
     void Sock_OStreamBase<ACE_SYNCH_USE>::set_interceptor (
@@ -90,9 +93,7 @@ namespace ACE
       }
 
     template <ACE_SYNCH_DECL>
-    Sock_IStreamBase<ACE_SYNCH_USE>::~Sock_IStreamBase ()
-      {
-      }
+    Sock_IStreamBase<ACE_SYNCH_USE>::~Sock_IStreamBase () = default;
 
     template <ACE_SYNCH_DECL>
     void Sock_IStreamBase<ACE_SYNCH_USE>::set_interceptor (
@@ -108,9 +109,7 @@ namespace ACE
       }
 
     template <ACE_SYNCH_DECL>
-    Sock_IOStreamBase<ACE_SYNCH_USE>::~Sock_IOStreamBase ()
-      {
-      }
+    Sock_IOStreamBase<ACE_SYNCH_USE>::~Sock_IOStreamBase () = default;
 
     template <ACE_SYNCH_DECL>
     void Sock_IOStreamBase<ACE_SYNCH_USE>::set_interceptor (

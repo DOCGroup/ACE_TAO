@@ -1,12 +1,8 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
  *  @file    Service_Object.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef ACE_SERVICE_OBJECT_H
 #define ACE_SERVICE_OBJECT_H
@@ -23,6 +19,8 @@
 #include "ace/DLL.h"
 
 #include "ace/Service_Gestalt.h"
+
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -44,11 +42,14 @@ class ACE_Export ACE_Service_Object
     public ACE_Shared_Object
 {
 public:
-  /// Constructor.
-  ACE_Service_Object (ACE_Reactor * = 0);
+  ACE_Service_Object (ACE_Reactor * = nullptr);
 
-  /// Destructor.
   ~ACE_Service_Object () override;
+
+  ACE_Service_Object (ACE_Service_Object const &) = delete;
+  ACE_Service_Object (ACE_Service_Object &&) = delete;
+  ACE_Service_Object &operator= (ACE_Service_Object const &) = delete;
+  ACE_Service_Object &operator= (ACE_Service_Object &&) = delete;
 
   /// Temporarily disable a service without removing it completely.
   virtual int suspend ();
@@ -91,21 +92,26 @@ public:
       INVALID_TYPE = -1
     };
 
-  ACE_Service_Type (const ACE_TCHAR *n,
+  ACE_Service_Type (ACE_TCHAR const *n,
                     ACE_Service_Type_Impl *o,
-                    const ACE_DLL &dll,
+                    ACE_DLL const &dll,
                     bool active);
-  ACE_Service_Type (const ACE_TCHAR *n,
+  ACE_Service_Type (ACE_TCHAR const *n,
                     ACE_Service_Type_Impl *o,
                     ACE_SHLIB_HANDLE handle,
                     bool active);
   ~ACE_Service_Type ();
 
-  const ACE_TCHAR *name () const;
-  void name (const ACE_TCHAR *);
+  ACE_Service_Type (ACE_Service_Type const &) = delete;
+  ACE_Service_Type (ACE_Service_Type &&) = delete;
+  ACE_Service_Type &operator= (ACE_Service_Type const &) = delete;
+  ACE_Service_Type &operator= (ACE_Service_Type &&) = delete;
 
-  const ACE_Service_Type_Impl *type () const;
-  void type (const ACE_Service_Type_Impl *, bool active = true);
+  ACE_TCHAR const *name () const;
+  void name (ACE_TCHAR const *);
+
+  ACE_Service_Type_Impl const *type () const;
+  void type (ACE_Service_Type_Impl const *, bool active = true);
 
   /// Is this just a stub for the real thing?
   bool is_forward_declaration () const;
@@ -125,30 +131,35 @@ public:
   void dump () const;
 
   /// Get to the DLL's implentation
-  const ACE_DLL & dll () const;
+  ACE_DLL const & dll () const;
 
   /// Sets the DLL
-  void dll (const ACE_DLL&);
+  void dll (ACE_DLL const&);
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
+  struct Name_Deleter
+  {
+    void operator() (ACE_TCHAR *name) const;
+  };
+
   /// Humanly readible name of svc.
-  const ACE_TCHAR *name_;
+  std::unique_ptr<ACE_TCHAR[], Name_Deleter> name_ {};
 
   /// Pointer to C++ object that implements the svc.
-  const ACE_Service_Type_Impl *type_;
+  ACE_Service_Type_Impl const *type_;
 
   /// ACE_DLL representing the shared object file (non-zero if
   /// dynamically linked).
   mutable ACE_DLL dll_;
 
   /// true if svc is currently active, otherwise false.
-  bool active_;
+  mutable bool active_;
 
   /// true if @c fini on @c type_ has already been called, otherwise false.
-  bool fini_already_called_;
+  bool fini_already_called_ {};
 };
 
 /**
@@ -159,25 +170,41 @@ private:
  * which point the object's fini() hook is called and the
  * service_object_ gets deleted.
  *
- * This class is similar to the Standard C++ Library class
- * auto_ptr. It is used in conjunction with statically linked
- * ACE_Service_Objects, as shown in the ./netsvcs/server/main.cpp example.
+ * This scoped owner calls fini() and deletes the service object on
+ * destruction. Ownership cannot be copied or moved.
  */
 class ACE_Export ACE_Service_Object_Ptr
 {
 public:
   /// Acquire ownership of the @a so.
-  ACE_Service_Object_Ptr (ACE_Service_Object *so);
+  explicit ACE_Service_Object_Ptr (ACE_Service_Object *so);
 
   /// Release the held ACE_Service_Object by calling its fini() hook.
-  ~ACE_Service_Object_Ptr ();
+  ~ACE_Service_Object_Ptr () = default;
+
+  ACE_Service_Object_Ptr (ACE_Service_Object_Ptr const &) = delete;
+  ACE_Service_Object_Ptr &operator= (ACE_Service_Object_Ptr const &) = delete;
+  ACE_Service_Object_Ptr (ACE_Service_Object_Ptr &&) = delete;
+  ACE_Service_Object_Ptr &operator= (ACE_Service_Object_Ptr &&) = delete;
 
   /// Smart pointer to access the underlying ACE_Service_Object.
-  ACE_Service_Object *operator-> ();
+  ACE_Service_Object *operator-> () const;
 
 private:
-  /// Holds the service object until we're done.
-  ACE_Service_Object *service_object_;
+  struct Deleter
+  {
+    void operator() (ACE_Service_Object *service_object) const
+    {
+      if (service_object != nullptr)
+        {
+          service_object->fini ();
+          delete service_object;
+        }
+    }
+  };
+
+  /// Owns the service object until the scope ends.
+  std::unique_ptr<ACE_Service_Object, Deleter> service_object_ {};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

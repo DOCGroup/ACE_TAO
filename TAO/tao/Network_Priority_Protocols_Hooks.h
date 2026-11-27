@@ -1,13 +1,9 @@
-// -*- C++ -*-
-
-// ===================================================================
 /**
  *  @file   Network_Priority_Protocols_Hooks.h
  *
  *  @author Jaiganesh Balasubramanian <jai@dre.vanderbilt.edu>
  *          Johnny Willemsen <jwillemsen@remedy.nl>
  */
-// ===================================================================
 
 #ifndef TAO_NETWORK_PRIORITY_PROTOCOLS_HOOKS_H
 #define TAO_NETWORK_PRIORITY_PROTOCOLS_HOOKS_H
@@ -40,7 +36,6 @@ class TAO_Export TAO_Network_Priority_Protocols_Hooks
       : public ACE_Service_Object
 {
 public:
-  /// destructor
   ~TAO_Network_Priority_Protocols_Hooks () override;
 
   virtual void init_hooks (TAO_ORB_Core *orb_core) = 0;

@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  * @file Monitor_Control_Types.h
  *
  * @author Jeff Parsons <j.parsons@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef MONITOR_CONTROL_TYPES_H
 #define MONITOR_CONTROL_TYPES_H
@@ -52,20 +48,20 @@ namespace ACE
        */
       struct ACE_Export Data
       {
-        Data (Monitor_Control_Types::Information_Type type);
+        explicit Data (Monitor_Control_Types::Information_Type type);
         ACE_Time_Value timestamp_;
-        double value_;
+        double value_ {};
         ACE_Array_Base<char *> list_;
 
         Information_Type type_;
 
-        size_t index_;
-        bool minimum_set_;
-        double minimum_;
-        double maximum_;
-        double sum_;
-        double sum_of_squares_;
-        double last_;
+        size_t index_ {};
+        bool minimum_set_ {};
+        double minimum_ {};
+        double maximum_ {};
+        double sum_ {};
+        double sum_of_squares_ {};
+        double last_ {};
       };
 
       /**
@@ -79,8 +75,8 @@ namespace ACE
 
         /// Implemented explicitly so reference counting of control
         /// actions can be managed.
-        Constraint (const Constraint& rhs);
-        Constraint& operator= (const Constraint& rhs);
+        Constraint (Constraint const& rhs);
+        Constraint& operator= (Constraint const& rhs);
 
         ACE_CString expr;
         Control_Action* control_action {};
@@ -101,7 +97,9 @@ namespace ACE
        * @brief Holder for a monitor point's constraints.
        */
 #if defined (ACE_HAS_ALLOC_HOOKS)
-      typedef ACE_Array_Map<long, Constraint, std::equal_to<long>, ACE_Allocator_Std_Adapter<std::pair<long, Constraint> > > ConstraintList;
+      using ConstraintList =
+        ACE_Array_Map<long, Constraint, std::equal_to<long>,
+                      ACE_Allocator_Std_Adapter<std::pair<long, Constraint>>>;
 #else
       using ConstraintList = ACE_Array_Map<long, Constraint>;
 #endif /* ACE_HAS_ALLOC_HOOKS */

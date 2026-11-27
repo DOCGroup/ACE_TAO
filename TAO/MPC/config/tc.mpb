@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project: taolib_with_idl, interceptors, pi {
   requires += transport_current
   after    += TC

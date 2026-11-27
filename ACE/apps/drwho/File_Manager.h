@@ -1,13 +1,8 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
  *  @file    File_Manager.h
  *
  *  @author Douglas C. Schmidt
  */
-//=============================================================================
-
 
 #ifndef _FILE_MANAGER_H
 #define _FILE_MANAGER_H
@@ -30,21 +25,20 @@
 class File_Manager
 {
 public:
-  /// Constructor.
   File_Manager ();
 
-  int open_file (const char *filename);
-  void get_login_and_real_name (const char *&login_name,
-                                const char *&real_name);
+  int open_file (char const *filename);
+  void get_login_and_real_name (char const *&login_name,
+                                char const *&real_name);
 private:
-  int number_of_friends;
-  int max_key_length;
+  int number_of_friends {};
+  int max_key_length {};
 
-  char *buffer_ptr;
-  char *current_ptr;
-  int buffer_size;
+  char *buffer_ptr {};
+  char *current_ptr {};
+  int buffer_size {};
 
-  int open_friends_file (const char *filename);
+  int open_friends_file (char const *filename);
   int open_passwd_file ();
 
   ACE_Mem_Map mmap_;

@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 #include "orbsvcs/IFRService/ComponentRepository_i.h"
 #include "orbsvcs/IFRService/ModuleDef_i.h"
 #include "orbsvcs/IFRService/ComponentDef_i.h"
@@ -30,8 +29,7 @@ TAO_ComponentRepository_i::TAO_ComponentRepository_i (
 TAO_ComponentRepository_i::~TAO_ComponentRepository_i () = default;
 
 int
-TAO_ComponentRepository_i::create_servants_and_poas (
-  )
+TAO_ComponentRepository_i::create_servants_and_poas ()
 {
   int status =
     this->TAO_Repository_i::create_servants_and_poas (

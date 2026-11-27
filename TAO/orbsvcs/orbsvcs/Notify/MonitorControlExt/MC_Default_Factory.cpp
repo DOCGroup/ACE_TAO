@@ -13,7 +13,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
 TAO_MC_Default_Factory::create (TAO_Notify_EventChannelFactory*& factory,
-                                const char* name)
+                                char const *name)
 {
   ACE_NEW_THROW_EX (factory,
                     TAO_MonitorEventChannelFactory (name),
@@ -22,7 +22,7 @@ TAO_MC_Default_Factory::create (TAO_Notify_EventChannelFactory*& factory,
 
 void
 TAO_MC_Default_Factory::create (TAO_Notify_EventChannel*& ec,
-                                const char* name)
+                                char const *name)
 {
   ACE_NEW_THROW_EX (ec,
                     TAO_MonitorEventChannel (name),

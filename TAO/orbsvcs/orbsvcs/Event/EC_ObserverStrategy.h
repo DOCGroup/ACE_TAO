@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 /**
  *  @file   EC_ObserverStrategy.h
  *
@@ -27,6 +25,7 @@
 #include "ace/Null_Mutex.h"
 #include "ace/RB_Tree.h"
 #include "ace/Map_Manager.h"
+#include <memory>
 
 #include "orbsvcs/RtecEventChannelAdminC.h"
 
@@ -57,8 +56,7 @@ class TAO_EC_ProxyPushSupplier;
 class TAO_RTEvent_Serv_Export TAO_EC_ObserverStrategy
 {
 public:
-  /// Destructor
-  virtual ~TAO_EC_ObserverStrategy ();
+  virtual ~TAO_EC_ObserverStrategy () = default;
 
   /// The basic methods to support the EC strategies.
   virtual RtecEventChannelAdmin::Observer_Handle
@@ -90,18 +88,19 @@ public:
 class TAO_RTEvent_Serv_Export TAO_EC_Null_ObserverStrategy : public TAO_EC_ObserverStrategy
 {
 public:
-  /// Constructor
   TAO_EC_Null_ObserverStrategy ();
 
-  // = The TAO_EC_ObserverStrategy methods.
-  virtual RtecEventChannelAdmin::Observer_Handle
+  /// @name The TAO_EC_ObserverStrategy methods
+  /// @{
+  RtecEventChannelAdmin::Observer_Handle
       append_observer (RtecEventChannelAdmin::Observer_ptr) override;
-  virtual void remove_observer (
+  void remove_observer (
                         RtecEventChannelAdmin::Observer_Handle) override;
-  virtual void connected (TAO_EC_ProxyPushConsumer*) override;
-  virtual void disconnected (TAO_EC_ProxyPushConsumer*) override;
-  virtual void connected (TAO_EC_ProxyPushSupplier*) override;
-  virtual void disconnected (TAO_EC_ProxyPushSupplier*) override;
+  void connected (TAO_EC_ProxyPushConsumer*) override;
+  void disconnected (TAO_EC_ProxyPushConsumer*) override;
+  void connected (TAO_EC_ProxyPushSupplier*) override;
+  void disconnected (TAO_EC_ProxyPushSupplier*) override;
+  /// @}
 };
 
 // ****************************************************************
@@ -125,22 +124,21 @@ class TAO_RTEvent_Serv_Export TAO_EC_Basic_ObserverStrategy :
   public TAO_EC_ObserverStrategy
 {
 public:
-  /// Constructor
   TAO_EC_Basic_ObserverStrategy (TAO_EC_Event_Channel_Base* ec,
                                  ACE_Lock* lock);
 
-  /// Destructor
-  virtual ~TAO_EC_Basic_ObserverStrategy () override;
+  ~TAO_EC_Basic_ObserverStrategy () override;
 
-  // = The TAO_EC_ObserverStrategy methods.
-  virtual RtecEventChannelAdmin::Observer_Handle
+  /// @name The TAO_EC_ObserverStrategy methods
+  /// @{
+  RtecEventChannelAdmin::Observer_Handle
       append_observer (RtecEventChannelAdmin::Observer_ptr) override;
-  virtual void remove_observer (
+  void remove_observer (
                         RtecEventChannelAdmin::Observer_Handle) override;
-  virtual void connected (TAO_EC_ProxyPushConsumer*) override;
-  virtual void disconnected (TAO_EC_ProxyPushConsumer*) override;
-  virtual void connected (TAO_EC_ProxyPushSupplier*) override;
-  virtual void disconnected (TAO_EC_ProxyPushSupplier*) override;
+  void connected (TAO_EC_ProxyPushConsumer*) override;
+  void disconnected (TAO_EC_ProxyPushConsumer*) override;
+  void connected (TAO_EC_ProxyPushSupplier*) override;
+  void disconnected (TAO_EC_ProxyPushSupplier*) override;
 
   /**
    * @struct Observer_Entry
@@ -165,12 +163,13 @@ public:
 
     /// The observer
     RtecEventChannelAdmin::Observer_var observer;
+  /// @}
   };
 
   struct Header_Compare
   {
-    int operator () (const RtecEventComm::EventHeader& lhs,
-                     const RtecEventComm::EventHeader& rhs) const;
+    int operator () (RtecEventComm::EventHeader const & lhs,
+                     RtecEventComm::EventHeader const & rhs) const;
   };
 
   using Observer_Map =
@@ -178,14 +177,13 @@ public:
   using Observer_Map_Iterator =
     ACE_Map_Iterator<RtecEventChannelAdmin::Observer_Handle, Observer_Entry, ACE_Null_Mutex>;
 
-
   using Headers = ACE_RB_Tree<RtecEventComm::EventHeader, int, Header_Compare, ACE_Null_Mutex>;
   using HeadersIterator =
     ACE_RB_Tree_Iterator<RtecEventComm::EventHeader, int, Header_Compare, ACE_Null_Mutex>;
 
 protected:
   /// Helpers.
-  //@{
+  /// @{
   /// Recompute EC consumer subscriptions and send them out to all observers.
   virtual void consumer_qos_update (TAO_EC_ProxyPushSupplier *supplier);
 
@@ -200,14 +198,14 @@ protected:
   /// Copies all current observers into an array and passes it
   /// back to the caller through @a lst.  Returns the size of the array.
   int create_observer_list (RtecEventChannelAdmin::Observer_var *&lst);
-  //@}
+  /// @}
 
 protected:
   /// The event channel.
   TAO_EC_Event_Channel_Base* event_channel_;
 
   /// The lock
-  ACE_Lock* lock_;
+  std::unique_ptr<ACE_Lock> lock_;
 
   /// The handles are generated in sequential order, but are opaque to
   /// the client.
@@ -232,28 +230,26 @@ protected:
  * the observer list.
  *
  * <H2>Memory Management</H2>
- * It assumes ownership of the <lock>, but not of the
+ * It assumes ownership of the @c lock, but not of the
  * Event_Channel.
  */
 class TAO_RTEvent_Serv_Export TAO_EC_Reactive_ObserverStrategy :
   public TAO_EC_Basic_ObserverStrategy
 {
 public:
-  /// Constructor
   TAO_EC_Reactive_ObserverStrategy (TAO_EC_Event_Channel_Base* ec,
                                     ACE_Lock* lock);
 
-  /// Destructor
-  virtual ~TAO_EC_Reactive_ObserverStrategy () override;
+  ~TAO_EC_Reactive_ObserverStrategy () override = default;
 
 protected:
   /// Helpers.
-  //@{
+  /// @{
   /// Recompute EC consumer subscriptions and send them out to all observers.
-  virtual void consumer_qos_update (TAO_EC_ProxyPushSupplier *supplier) override;
+  void consumer_qos_update (TAO_EC_ProxyPushSupplier *supplier) override;
 
   /// Recompute EC supplier publications and send them out to all observers.
-  virtual void supplier_qos_update (TAO_EC_ProxyPushConsumer *consumer) override;
+  void supplier_qos_update (TAO_EC_ProxyPushConsumer *consumer) override;
 
   /**
    * Copies all current observers into a map and passes it
@@ -264,7 +260,7 @@ protected:
 
   /// The observer doesn't exist anymore
   void observer_not_exists (Observer_Entry& observer);
-  //@}
+  /// @}
 };
 
 // ****************************************************************
@@ -273,10 +269,10 @@ class TAO_EC_Accumulate_Supplier_Headers :
   public TAO_ESF_Worker<TAO_EC_ProxyPushSupplier>
 {
 public:
-  /// Constructor
-  TAO_EC_Accumulate_Supplier_Headers (TAO_EC_Basic_ObserverStrategy::Headers &headers);
+  explicit TAO_EC_Accumulate_Supplier_Headers (
+    TAO_EC_Basic_ObserverStrategy::Headers &headers);
 
-  virtual void work (TAO_EC_ProxyPushSupplier *supplier) override;
+  void work (TAO_EC_ProxyPushSupplier *supplier) override;
 
 private:
   TAO_EC_Basic_ObserverStrategy::Headers &headers_;
@@ -288,10 +284,10 @@ class TAO_EC_Accumulate_Consumer_Headers :
   public TAO_ESF_Worker<TAO_EC_ProxyPushConsumer>
 {
 public:
-  /// Constructor
-  TAO_EC_Accumulate_Consumer_Headers (TAO_EC_Basic_ObserverStrategy::Headers &headers);
+  explicit TAO_EC_Accumulate_Consumer_Headers (
+    TAO_EC_Basic_ObserverStrategy::Headers &headers);
 
-  virtual void work (TAO_EC_ProxyPushConsumer *consumer) override;
+  void work (TAO_EC_ProxyPushConsumer *consumer) override;
 
 private:
   TAO_EC_Basic_ObserverStrategy::Headers &headers_;

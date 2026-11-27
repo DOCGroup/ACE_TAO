@@ -1,6 +1,3 @@
-/* -*- c++ -*- */
-
-//=============================================================================
 /**
  *  @file    map_cs.h
  *
@@ -10,7 +7,6 @@
  *
  *  @author Tyler Mayoff
  */
-//=============================================================================
 
 #ifndef _BE_VISITOR_MAP_MAP_CS_H_
 #define _BE_VISITOR_MAP_MAP_CS_H_
@@ -31,9 +27,9 @@ public:
 
   ~be_visitor_map_cs () override = default;
 
-  be_visitor_map_cs (const be_visitor_map_cs &) = delete;
+  be_visitor_map_cs (be_visitor_map_cs const &) = delete;
   be_visitor_map_cs (be_visitor_map_cs &&) = delete;
-  be_visitor_map_cs &operator= (const be_visitor_map_cs &) = delete;
+  be_visitor_map_cs &operator= (be_visitor_map_cs const &) = delete;
   be_visitor_map_cs &operator= (be_visitor_map_cs &&) = delete;
 
   /// visit map node

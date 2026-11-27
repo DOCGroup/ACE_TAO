@@ -45,8 +45,13 @@ pid_t PID;
 
     va_start(args, format);
     VPRINTF(stderr, format, args);
-    debug && VPRINTF(debugfile, format, args);
     va_end(args);
+    if (debug)
+    {
+        va_start(args, format);
+        VPRINTF(debugfile, format, args);
+        va_end(args);
+    }
     fflush(stderr);
     exit(1);
 }
@@ -66,8 +71,13 @@ pid_t PID;
 
     va_start(args, format);
     VPRINTF(stderr, format, args);
-    debug && VPRINTF(debugfile, format, args);
     va_end(args);
+    if (debug)
+    {
+        va_start(args, format);
+        VPRINTF(debugfile, format, args);
+        va_end(args);
+    }
     fflush(stderr);
     debug && fflush(debugfile);
     return(-1);

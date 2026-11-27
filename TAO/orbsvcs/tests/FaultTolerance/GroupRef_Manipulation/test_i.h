@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  * @file test_i.h
  *
  * @author Balachandran Natarajan <bala@dre.vanderbilt.edu>
  */
-//=============================================================================
 #ifndef TEST_I_H
 #define TEST_I_H
 
@@ -22,25 +18,25 @@
 class test_i : public virtual POA_ForwardRequestTest::test
 {
 public:
-  /// Constructor.
   test_i (CORBA::Short num,
           CORBA::ORB_ptr orb);
-
-  /// Destructor.
-  ~test_i ();
+  test_i (test_i const &) = delete;
+  test_i (test_i &&) = delete;
+  test_i &operator= (test_i const &) = delete;
+  test_i &operator= (test_i &&) = delete;
 
   /// Return the number assigned to this object.
-  virtual CORBA::Short number ();
+  CORBA::Short number () override;
 
   /// Shutdown the ORB.
-  virtual void shutdown ();
+  void shutdown () override;
 
 private:
   /// The number assigned to this object.
-  CORBA::Short number_;
+  CORBA::Short const number_;
 
   /// Pseudo-reference to the ORB.
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var const orb_;
 };
 
 #endif  /* TEST_I_H */

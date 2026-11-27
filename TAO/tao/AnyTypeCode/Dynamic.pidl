@@ -1,11 +1,5 @@
-// -*- IDL -*-
-
-/**
- *  @file   Dynamic.pidl
- */
-
-// File: Dynamic.idl
-// Used primarily for Interceptors
+/// @file Dynamic.pidl
+/// @brief Used primarily for Interceptors.
 
 #include "tao/AnyTypeCode/Dynamic_Parameter.pidl"
 #include "tao/Typecode_types.pidl"

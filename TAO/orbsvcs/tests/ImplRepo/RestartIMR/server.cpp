@@ -3,14 +3,13 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_unistd.h"
 
-const ACE_TCHAR * pid_file = ACE_TEXT ("server.pid");
+ACE_TCHAR const *pid_file = ACE_TEXT ("server.pid");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("p:"));
   int c;
-
 
   while ((c = get_opts ()) != -1)
     {
@@ -102,20 +101,22 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
     FILE *output_file = ACE_OS::fopen (pid_file, ACE_TEXT ("w"));
     if (output_file == 0)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("Cannot open output file for writing IOR: %s\n"),
-                         pid_file),
-                        1);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("Cannot open output file for writing IOR: %s\n"),
+                           pid_file),
+                          1);
+      }
     int pid = static_cast<int> (ACE_OS::getpid ());
     ACE_OS::fprintf (output_file, "%d\n", pid);
     ACE_OS::fclose (output_file);
 
     orb->run ();
 
-    rootPOA->destroy (1, 1);
+    rootPOA->destroy (true, true);
     orb->destroy ();
   }
-  catch (const CORBA::Exception &ex)
+  catch (CORBA::Exception const &ex)
   {
     ex._tao_print_exception (ACE_TEXT ("server:"));
     return 1;
@@ -123,5 +124,4 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   return 0;
 }
-
 

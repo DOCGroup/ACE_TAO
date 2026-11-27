@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    SOCK_SEQPACK_Connector.h
  *
@@ -9,7 +6,6 @@
  *  @author  based on SOCK_STREAM_Connector
  *            by Douglas C. Schmidt <schmidt@dre.vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef ACE_SOCK_SEQPACK_CONNECTOR_H
 #define ACE_SOCK_SEQPACK_CONNECTOR_H
@@ -48,7 +44,6 @@ class ACE_Time_Value;
 class ACE_Export ACE_SOCK_SEQPACK_Connector
 {
 public:
-  /// Default constructor.
   ACE_SOCK_SEQPACK_Connector ();
 
   /**
@@ -69,14 +64,14 @@ public:
    *                    *timeout == {0, 0} then the connection is done
    *                    using nonblocking mode.  In this case, if the
    *                    connection can't be made immediately, this method
-   *                    returns -1 and errno == EWOULDBLOCK.
+   *                    the attempt fails with errno == EWOULDBLOCK.
    *                    If *timeout > {0, 0} then this is the maximum amount
    *                    of time to wait before timing out; if the specified
    *                    amount of time passes before the connection is made,
-   *                    this method returns -1 and errno == ETIME. Note
+   *                    the attempt fails with errno == ETIME. Note
    *                    the difference between this case and when a blocking
-   *                    connect is attempted that TCP times out - in the latter
-   *                    case, errno will be ETIMEDOUT.
+   *                    connect is attempted that TCP times out - the latter
+   *                    case sets errno to ETIMEDOUT.
    * @param local_sap   (optional) The local address to bind to.  If it's
    *                    the default value of @c ACE_Addr::sap_any then the
    *                    OS will choose an unused port.
@@ -88,14 +83,11 @@ public:
    * @param protocol    (optional) If value is 0, default SOCK_STREAM
    *                    protocol is selected by kernel (typically TCP).
    *
-   * @return            Returns 0 if the connection succeeds. If it fails,
-   *                    -1 is returned and errno contains a specific error
-   *                    code.
    */
   ACE_SOCK_SEQPACK_Connector (ACE_SOCK_SEQPACK_Association &new_association,
-                      const ACE_Addr &remote_sap,
-                      const ACE_Time_Value *timeout = nullptr,
-                      const ACE_Addr &local_sap = ACE_Addr::sap_any,
+                      ACE_Addr const &remote_sap,
+                      ACE_Time_Value const *timeout = nullptr,
+                      ACE_Addr const &local_sap = ACE_Addr::sap_any,
                       int reuse_addr = 0,
                       int flags = 0,
                       int perms = 0,
@@ -119,14 +111,14 @@ public:
    *                    *timeout == {0, 0} then the connection is done
    *                    using nonblocking mode.  In this case, if the
    *                    connection can't be made immediately, this method
-   *                    returns -1 and errno == EWOULDBLOCK.
+   *                    the attempt fails with errno == EWOULDBLOCK.
    *                    If *timeout > {0, 0} then this is the maximum amount
    *                    of time to wait before timing out; if the specified
    *                    amount of time passes before the connection is made,
-   *                    this method returns -1 and errno == ETIME. Note
+   *                    the attempt fails with errno == ETIME. Note
    *                    the difference between this case and when a blocking
-   *                    connect is attempted that TCP times out - in the latter
-   *                    case, errno will be ETIMEDOUT.
+   *                    connect is attempted that TCP times out - the latter
+   *                    case sets errno to ETIMEDOUT.
    * @param local_sap   (optional) The set of local addresses for SCTP to
    *                    bind to.
    * @param reuse_addr  (optional) If the value is 1, the local address
@@ -137,14 +129,11 @@ public:
    * @param protocol    (optional) If value is 0, default SOCK_STREAM
    *                    protocol is selected by kernel (typically TCP).
    *
-   * @return            Returns 0 if the connection succeeds. If it fails,
-   *                    -1 is returned and errno contains a specific error
-   *                    code.
    */
   ACE_SOCK_SEQPACK_Connector (ACE_SOCK_SEQPACK_Association &new_association,
-                      const ACE_Addr &remote_sap,
-                      const ACE_Time_Value *timeout,
-                      const ACE_Multihomed_INET_Addr &local_sap,
+                      ACE_Addr const &remote_sap,
+                      ACE_Time_Value const *timeout,
+                      ACE_Multihomed_INET_Addr const &local_sap,
                       int reuse_addr = 0,
                       int flags = 0,
                       int perms = 0,
@@ -192,9 +181,9 @@ public:
    *                    code.
    */
   int connect (ACE_SOCK_SEQPACK_Association &new_association,
-               const ACE_Addr &remote_sap,
-               const ACE_Time_Value *timeout = nullptr,
-               const ACE_Addr &local_sap = ACE_Addr::sap_any,
+               ACE_Addr const &remote_sap,
+               ACE_Time_Value const *timeout = nullptr,
+               ACE_Addr const &local_sap = ACE_Addr::sap_any,
                int reuse_addr = 0,
                int flags = 0,
                int perms = 0,
@@ -242,18 +231,18 @@ public:
    */
 
   int connect (ACE_SOCK_SEQPACK_Association &new_association,
-               const ACE_Addr &remote_sap,
-               const ACE_Time_Value *timeout,
-               const ACE_Multihomed_INET_Addr &local_sap,
+               ACE_Addr const &remote_sap,
+               ACE_Time_Value const *timeout,
+               ACE_Multihomed_INET_Addr const &local_sap,
                int reuse_addr = 0,
                int flags = 0,
                int perms = 0,
                int protocol = 132);
 
-  /// Default dtor.
   ~ACE_SOCK_SEQPACK_Connector ();
 
-  // = Completion routine.
+  /// @name Nonblocking connection completion
+  /// @{
   /**
    * Try to complete a nonblocking connection that was begun by a
    * previous call to connect with a {0, 0} ACE_Time_Value timeout.
@@ -268,14 +257,17 @@ public:
    */
   int complete (ACE_SOCK_SEQPACK_Association &new_association,
                 ACE_Addr *remote_sap = nullptr,
-                const ACE_Time_Value *timeout = nullptr);
+                ACE_Time_Value const *timeout = nullptr);
 
   /// Resets any event associations on this handle
   bool reset_new_handle (ACE_HANDLE handle);
+  /// @}
 
-  // = Meta-type info
+  /// @name Peer types
+  /// @{
   using PEER_ADDR = ACE_Multihomed_INET_Addr;
   using PEER_STREAM = ACE_SOCK_SEQPACK_Association;
+  /// @}
 
   /// Dump the state of an object.
   void dump () const;
@@ -301,18 +293,18 @@ protected:
                    u_long flags,
                    int reuse_addr);
 
-  /// Perform operations that must be called before <ACE_OS::connect>.
+  /// Perform operations that must be called before @c ACE_OS::connect.
   int shared_connect_start (ACE_SOCK_SEQPACK_Association &new_association,
-                            const ACE_Time_Value *timeout,
-                            const ACE_Addr &local_sap);
+                            ACE_Time_Value const *timeout,
+                            ACE_Addr const &local_sap);
 
   int shared_connect_start (ACE_SOCK_SEQPACK_Association &new_association,
-                            const ACE_Time_Value *timeout,
-                            const ACE_Multihomed_INET_Addr &local_sap);
+                            ACE_Time_Value const *timeout,
+                            ACE_Multihomed_INET_Addr const &local_sap);
 
-  /// Perform operations that must be called after <ACE_OS::connect>.
+  /// Perform operations that must be called after @c ACE_OS::connect.
   int shared_connect_finish (ACE_SOCK_SEQPACK_Association &new_association,
-                             const ACE_Time_Value *timeout,
+                             ACE_Time_Value const *timeout,
                              int result);
 };
 

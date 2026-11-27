@@ -7,16 +7,13 @@
  * parties.
  */
 
-
 /* ------------------------------------------------------------------------ */
-
 
 /*
  * file.h: system specific functions for reading/writing files
  *
  * Rob McCool
  */
-
 
 #ifndef FILE_H
 #define FILE_H
@@ -25,10 +22,8 @@
 #include <nt/ntfile.h>
 #else
 
-
 #include "netsite.h"
 #include "systems.h"
-
 
 /*
  * I cheat: These are set up such that system_read can be a macro for read
@@ -38,7 +33,6 @@
 #define IO_OKAY 1
 #define IO_ERROR -1
 #define IO_EOF 0
-
 
 #ifdef FILE_STDIO
 #include <stdio.h>
@@ -50,13 +44,10 @@
 #include <unistd.h>
 #endif
 
-
 /* -------------------------- File related defs --------------------------- */
-
 
 /* The disk page size on this machine. */
 #define FILE_BUFFERSIZE 4096
-
 
 /*
  * The fd data type for this system.
@@ -82,7 +73,6 @@ typedef int SYS_FILE;
 
 #define system_chdir chdir
 #endif
-
 
 /*
  * system_fread reads sz bytes from fd into to buf, return number of bytes
@@ -116,7 +106,6 @@ int system_fread(SYS_FILE fd, char *buf, int sz);
 
 #endif
 
-
 /*
  * system_fclose closes the file fd
  */
@@ -133,7 +122,6 @@ int system_fread(SYS_FILE fd, char *buf, int sz);
  */
 
 int system_nocoredumps();
-
 
 #if defined(FILE_STDIO)
 #define system_lseek fseek
@@ -171,7 +159,6 @@ extern char *sys_errlist[];
 #define system_errmsg(fd) (sys_errlist[errno])
 #endif
 
-
 /*
  * flock locks a file against interference from other processes
  * ulock unlocks it.
@@ -190,7 +177,6 @@ extern char *sys_errlist[];
 
 #endif
 
-
 /*
  * unix2local converts a unix-style pathname to a local one
  */
@@ -200,7 +186,6 @@ extern char *sys_errlist[];
 #endif
 
 /* -------------------------- Dir related defs ---------------------------- */
-
 
 #ifdef XP_UNIX
 #include <dirent.h>

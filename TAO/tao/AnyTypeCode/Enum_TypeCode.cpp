@@ -9,6 +9,9 @@
 
 #include "ace/Dynamic_Service.h"
 #include <cstring>
+#include <memory>
+
+#include <vector>
 
 #ifndef __ACE_INLINE__
 # include "tao/AnyTypeCode/Enum_TypeCode.inl"
@@ -38,9 +41,11 @@ TAO::TypeCode::Enum<StringType,
     && (enc << this->nenumerators_);
 
   if (!success)
-    return false;
+    {
+      return false;
+    }
 
-  StringType const * const begin = &this->enumerators_[0];
+  StringType const * const begin = std::addressof (this->enumerators_[0]);
   StringType const * const end   = begin + this->nenumerators_;
 
   for (StringType const * i = begin; i != end; ++i)
@@ -49,7 +54,9 @@ TAO::TypeCode::Enum<StringType,
 
       if (!(enc << TAO_OutputCDR::from_string (
               Traits<StringType>::get_string (enumerator), 0)))
-        return false;
+        {
+          return false;
+        }
     }
 
   return
@@ -89,9 +96,11 @@ TAO::TypeCode::Enum<StringType,
     tc->member_count ();
 
   if (tc_nenumerators != this->nenumerators_)
-    return false;
+    {
+      return false;
+    }
 
-  for (CORBA::ULong i = 0; i < this->nenumerators_; ++i)
+  for (CORBA::ULong i {}; i < this->nenumerators_; ++i)
     {
       StringType const & lhs_enumerator = this->enumerators_[i];
 
@@ -100,7 +109,9 @@ TAO::TypeCode::Enum<StringType,
       char const * const rhs_name = tc->member_name (i);
 
       if (std::strcmp (lhs_name, rhs_name) != 0)
-        return false;
+        {
+          return false;
+        }
     }
 
   return true;
@@ -119,7 +130,9 @@ TAO::TypeCode::Enum<StringType,
     tc->member_count ();
 
   if (tc_nenumerators != this->nenumerators_)
-    return false;
+    {
+      return false;
+    }
 
   return true;
 }
@@ -130,14 +143,14 @@ TAO::TypeCode::Enum<StringType,
                     EnumeratorArrayType,
                     RefCountPolicy>::get_compact_typecode_i () const
 {
-  ACE_Array_Base<CORBA::String_var> tc_enumerators (this->nenumerators_);
+  std::vector<CORBA::String_var> tc_enumerators (this->nenumerators_);
 
   // Dynamically construct a new array of enumerators stripped of
   // member names.
 
   static char const empty_name[] = "";
 
-  for (CORBA::ULong i = 0; i < this->nenumerators_; ++i)
+  for (CORBA::ULong i {}; i < this->nenumerators_; ++i)
     {
       // Member names will be stripped, i.e. not embedded within
       // the compact TypeCode.
@@ -145,7 +158,7 @@ TAO::TypeCode::Enum<StringType,
       tc_enumerators[i] = empty_name;
     }
 
-  TAO_TypeCodeFactory_Adapter * adapter =
+  TAO_TypeCodeFactory_Adapter * const adapter =
     ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
       TAO_ORB_Core::typecodefactory_adapter_name ());
 
@@ -197,7 +210,9 @@ TAO::TypeCode::Enum<StringType,
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.
   if (index >= this->nenumerators_)
-    throw ::CORBA::TypeCode::Bounds ();
+    {
+      throw ::CORBA::TypeCode::Bounds ();
+    }
 
   return Traits<StringType>::get_string (this->enumerators_[index]);
 }

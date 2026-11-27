@@ -1,7 +1,3 @@
-// -*- C++ -*-
-
-
-//=============================================================================
 /**
  *  @file    Options.h
  *
@@ -10,8 +6,6 @@
  *
  *  @author Jeff Parsons
  */
-//=============================================================================
-
 
 #ifndef OPTIONS_H
 #define OPTIONS_H
@@ -31,17 +25,16 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * @brief Maintains the global options.
  *
  * This class is converted into a Singleton by the
- * <ACE_Singleton> template.
+ * @c ACE_Singleton template.
  */
 class TAO_IFRService_Export Options
 {
 public:
   Options ();
 
-  /// dtor
   ~Options();
 
-  /// Parse the command-line arguments and initialize the options.
+/// Parse the command-line arguments and initialize the options.
   int parse_args (int argc,
                   ACE_TCHAR *argv[]);
 

@@ -1,15 +1,11 @@
-
-//=============================================================================
 /**
  *  @file    Config_Test.h
  *
- *    This is a test that makes sure the <import_config_as_strings> of
- *    <ACE_Configuration_Heap> class works correctly.
+ *    This is a test that makes sure the @a import_config_as_strings of
+ *    @c ACE_Configuration_Heap class works correctly.
  *
  *  @author Michael Searles <msearles@base16.com> and Jerry D. Odenwelder Jr. <jerry.o@mindspring.com>
  */
-//=============================================================================
-
 
 #ifndef __CONFIG_TEST_H
 #define __CONFIG_TEST_H
@@ -21,8 +17,8 @@ const int TEST_MAX_STRING = 256;
 class Config_Test
 {
 public:
-  Config_Test () : equality_tested_ (0) { }
-  ~Config_Test () { }
+  Config_Test () = default;
+  ~Config_Test () = default;
 
   // Used to test the equality and inequality operations.
   int testEquality ();
@@ -40,31 +36,31 @@ public:
   //  8. Clean-up
   int testRegFormat ();
 
-
 private:
   // change a value for value change test
   int change_one (ACE_Configuration &l, u_int a = 101);
 
   void get_section_string (ACE_Configuration&             config,
                            ACE_Configuration_Section_Key& SectionKey,
-                           const ACE_TCHAR*               pszName,
+                           ACE_TCHAR const *               pszName,
                            ACE_TCHAR*                     pszVariable,
                            int                            nMaxLength);
 
   void get_section_integer (ACE_Configuration&             config,
                             ACE_Configuration_Section_Key& SectionKey,
-                            const ACE_TCHAR*               pszName,
+                            ACE_TCHAR const *               pszName,
                             int*                           nVariable,
                             int                            nMinValue,
                             int                            nMaxValue);
 
   void get_section_boolean (ACE_Configuration&             config,
                             ACE_Configuration_Section_Key& SectionKey,
-                            const ACE_TCHAR*               pszName,
+                            ACE_TCHAR const *               pszName,
                             int*                           pVariable);
 
 private:
-  int equality_tested_; // make sure the equality operator works before proceeding.
+  /// Make sure the equality operator works before proceeding.
+  int equality_tested_ {};
 };
 
 #endif /* __CONFIG_TEST_H */

@@ -1,18 +1,13 @@
-
-//=============================================================================
 /**
  *  @file    TSS_Obj.h
  *
  *   This program tests various features of ACE_Thread and the
- *   thread-specific storage variant of <ACE_SingletonEx>.
+ *   thread-specific storage variant of @c ACE_SingletonEx.
  *
  *  @author Prashant Jain and Doug Schmidt
  */
-//=============================================================================
 
-
-#include "ace/Atomic_Op.h"
-#include "ace/Synch_Traits.h"
+#include <atomic>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -29,7 +24,12 @@ public:
   TSS_Obj ();
   ~TSS_Obj ();
 
+  TSS_Obj (TSS_Obj const &) = delete;
+  TSS_Obj (TSS_Obj &&) = delete;
+  TSS_Obj &operator= (TSS_Obj const &) = delete;
+  TSS_Obj &operator= (TSS_Obj &&) = delete;
+
 private:
- static ACE_Atomic_Op<ACE_SYNCH_MUTEX, int> count_;
+  static std::atomic<int> count_;
 };
 

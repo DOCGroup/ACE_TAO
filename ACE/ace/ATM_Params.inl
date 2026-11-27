@@ -1,4 +1,3 @@
-// -*- C++ -*-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE void
@@ -11,7 +10,7 @@ ACE_ATM_Params::dump () const
 
 ACE_INLINE
 ACE_ATM_Params::ACE_ATM_Params (int rw_flag,
-                                const char device[],
+                                char const device[],
                                 Param_Info *info,
                                 Param_Udata *udata,
                                 int oflag,
@@ -38,7 +37,6 @@ ACE_ATM_Params::ACE_ATM_Params (int rw_flag,
   ACE_TRACE ("ACE_ATM_Params::ACE_ATM_Params");
 }
 
-// Default dtor.
 ACE_INLINE
 ACE_ATM_Params::~ACE_ATM_Params ()
 {
@@ -158,7 +156,7 @@ ACE_ATM_Params::set_reuse_addr (int reuse_addr)
 }
 
 ACE_INLINE
-const char*
+char const*
 ACE_ATM_Params::get_device () const
 {
   ACE_TRACE ("ACE_ATM_Params::get_device");

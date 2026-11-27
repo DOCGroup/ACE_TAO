@@ -1,4 +1,5 @@
-// -*- C++ -*-
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
@@ -17,11 +18,11 @@ TAO_Tagged_Components::get_orb_type (CORBA::ULong& orb_type) const
 
 ACE_INLINE int
 TAO_Tagged_Components::get_code_sets (
-  const CONV_FRAME::CodeSetComponentInfo* &ci) const
+  CONV_FRAME::CodeSetComponentInfo const * &ci) const
 {
   if (this->code_sets_set_ == 1)
     {
-      ci = &this->code_sets_;
+      ci = std::addressof (this->code_sets_);
     }
 
   return this->code_sets_set_;
@@ -45,7 +46,6 @@ TAO_Tagged_Components::known_tag (IOP::ComponentId tag) const
   return (tag == IOP::TAG_ORB_TYPE
           || tag == IOP::TAG_CODE_SETS);
 }
-
 
 ACE_INLINE bool
 TAO_Tagged_Components::unique_tag (IOP::ComponentId tag) const

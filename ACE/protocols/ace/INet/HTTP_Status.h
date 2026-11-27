@@ -84,32 +84,29 @@ namespace ACE
               Status();
 
               /// Constructor; sets corresponding reason
-              Status(Code status);
+              explicit Status(Code status);
 
-              /// Constructor
-              Status(Code status, const ACE_CString& reason);
+              Status(Code status, ACE_CString const& reason);
 
-              /// Copy constructor
-              Status(const Status& status);
+              Status(Status const& status);
 
-              /// Copy assignment
-              Status& operator =(const Status& status);
+              Status& operator =(Status const& status);
 
               /// Set the status code.
               void set_status(Code status);
 
               /// Set the status code.
               /// String must contain valid numeric code.
-              void set_status(const ACE_CString& status);
+              void set_status(ACE_CString const& status);
 
               /// Return the status code.
               Code get_status() const;
 
               /// Set the reason phrase.
-              void set_reason(const ACE_CString& reason);
+              void set_reason(ACE_CString const& reason);
 
               /// Return the reason phrase.
-              const ACE_CString& get_reason() const;
+              ACE_CString const& get_reason() const;
 
               /// Set the status code and corresponding reason phrase.
               void set_status_and_reason(Code status);
@@ -127,49 +124,49 @@ namespace ACE
               bool operator !() const;
 
               /// Returns an appropriate reason phrase
-              static const ACE_CString& get_reason(Code status);
+              static ACE_CString const& get_reason(Code status);
 
-              static const ACE_CString HTTP_REASON_CONTINUE;
-              static const ACE_CString HTTP_REASON_SWITCHING_PROTOCOLS;
-              static const ACE_CString HTTP_REASON_OK;
-              static const ACE_CString HTTP_REASON_CREATED;
-              static const ACE_CString HTTP_REASON_ACCEPTED;
-              static const ACE_CString HTTP_REASON_NONAUTHORITATIVE;
-              static const ACE_CString HTTP_REASON_NO_CONTENT;
-              static const ACE_CString HTTP_REASON_RESET_CONTENT;
-              static const ACE_CString HTTP_REASON_PARTIAL_CONTENT;
-              static const ACE_CString HTTP_REASON_MULTIPLE_CHOICES;
-              static const ACE_CString HTTP_REASON_MOVED_PERMANENTLY;
-              static const ACE_CString HTTP_REASON_FOUND;
-              static const ACE_CString HTTP_REASON_SEE_OTHER;
-              static const ACE_CString HTTP_REASON_NOT_MODIFIED;
-              static const ACE_CString HTTP_REASON_USEPROXY;
-              static const ACE_CString HTTP_REASON_TEMPORARY_REDIRECT;
-              static const ACE_CString HTTP_REASON_BAD_REQUEST;
-              static const ACE_CString HTTP_REASON_UNAUTHORIZED;
-              static const ACE_CString HTTP_REASON_PAYMENT_REQUIRED;
-              static const ACE_CString HTTP_REASON_FORBIDDEN;
-              static const ACE_CString HTTP_REASON_NOT_FOUND;
-              static const ACE_CString HTTP_REASON_METHOD_NOT_ALLOWED;
-              static const ACE_CString HTTP_REASON_NOT_ACCEPTABLE;
-              static const ACE_CString HTTP_REASON_PROXY_AUTHENTICATION_REQUIRED;
-              static const ACE_CString HTTP_REASON_REQUEST_TIMEOUT;
-              static const ACE_CString HTTP_REASON_CONFLICT;
-              static const ACE_CString HTTP_REASON_GONE;
-              static const ACE_CString HTTP_REASON_LENGTH_REQUIRED;
-              static const ACE_CString HTTP_REASON_PRECONDITION_FAILED;
-              static const ACE_CString HTTP_REASON_REQUESTENTITYTOOLARGE;
-              static const ACE_CString HTTP_REASON_REQUESTURITOOLONG;
-              static const ACE_CString HTTP_REASON_UNSUPPORTEDMEDIATYPE;
-              static const ACE_CString HTTP_REASON_REQUESTED_RANGE_NOT_SATISFIABLE;
-              static const ACE_CString HTTP_REASON_EXPECTATION_FAILED;
-              static const ACE_CString HTTP_REASON_INTERNAL_SERVER_ERROR;
-              static const ACE_CString HTTP_REASON_NOT_IMPLEMENTED;
-              static const ACE_CString HTTP_REASON_BAD_GATEWAY;
-              static const ACE_CString HTTP_REASON_SERVICE_UNAVAILABLE;
-              static const ACE_CString HTTP_REASON_GATEWAY_TIMEOUT;
-              static const ACE_CString HTTP_REASON_VERSION_NOT_SUPPORTED;
-              static const ACE_CString HTTP_REASON_UNKNOWN;
+              static ACE_CString const HTTP_REASON_CONTINUE;
+              static ACE_CString const HTTP_REASON_SWITCHING_PROTOCOLS;
+              static ACE_CString const HTTP_REASON_OK;
+              static ACE_CString const HTTP_REASON_CREATED;
+              static ACE_CString const HTTP_REASON_ACCEPTED;
+              static ACE_CString const HTTP_REASON_NONAUTHORITATIVE;
+              static ACE_CString const HTTP_REASON_NO_CONTENT;
+              static ACE_CString const HTTP_REASON_RESET_CONTENT;
+              static ACE_CString const HTTP_REASON_PARTIAL_CONTENT;
+              static ACE_CString const HTTP_REASON_MULTIPLE_CHOICES;
+              static ACE_CString const HTTP_REASON_MOVED_PERMANENTLY;
+              static ACE_CString const HTTP_REASON_FOUND;
+              static ACE_CString const HTTP_REASON_SEE_OTHER;
+              static ACE_CString const HTTP_REASON_NOT_MODIFIED;
+              static ACE_CString const HTTP_REASON_USEPROXY;
+              static ACE_CString const HTTP_REASON_TEMPORARY_REDIRECT;
+              static ACE_CString const HTTP_REASON_BAD_REQUEST;
+              static ACE_CString const HTTP_REASON_UNAUTHORIZED;
+              static ACE_CString const HTTP_REASON_PAYMENT_REQUIRED;
+              static ACE_CString const HTTP_REASON_FORBIDDEN;
+              static ACE_CString const HTTP_REASON_NOT_FOUND;
+              static ACE_CString const HTTP_REASON_METHOD_NOT_ALLOWED;
+              static ACE_CString const HTTP_REASON_NOT_ACCEPTABLE;
+              static ACE_CString const HTTP_REASON_PROXY_AUTHENTICATION_REQUIRED;
+              static ACE_CString const HTTP_REASON_REQUEST_TIMEOUT;
+              static ACE_CString const HTTP_REASON_CONFLICT;
+              static ACE_CString const HTTP_REASON_GONE;
+              static ACE_CString const HTTP_REASON_LENGTH_REQUIRED;
+              static ACE_CString const HTTP_REASON_PRECONDITION_FAILED;
+              static ACE_CString const HTTP_REASON_REQUESTENTITYTOOLARGE;
+              static ACE_CString const HTTP_REASON_REQUESTURITOOLONG;
+              static ACE_CString const HTTP_REASON_UNSUPPORTEDMEDIATYPE;
+              static ACE_CString const HTTP_REASON_REQUESTED_RANGE_NOT_SATISFIABLE;
+              static ACE_CString const HTTP_REASON_EXPECTATION_FAILED;
+              static ACE_CString const HTTP_REASON_INTERNAL_SERVER_ERROR;
+              static ACE_CString const HTTP_REASON_NOT_IMPLEMENTED;
+              static ACE_CString const HTTP_REASON_BAD_GATEWAY;
+              static ACE_CString const HTTP_REASON_SERVICE_UNAVAILABLE;
+              static ACE_CString const HTTP_REASON_GATEWAY_TIMEOUT;
+              static ACE_CString const HTTP_REASON_VERSION_NOT_SUPPORTED;
+              static ACE_CString const HTTP_REASON_UNKNOWN;
 
             private:
               Code  code_;

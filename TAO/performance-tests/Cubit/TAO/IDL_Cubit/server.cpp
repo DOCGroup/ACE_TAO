@@ -37,8 +37,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                       "test runs in time-shared class\n"));
         }
       else
-        ACE_ERROR ((LM_ERROR,
-                    "server (%P|%t): sched_params failed\n"));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      "server (%P|%t): sched_params failed\n"));
+        }
     }
 
   Cubit_Server cubit_server;
@@ -48,7 +50,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   try
     {
       if (cubit_server.init (argc, argv)== -1)
+      {
         return -1;
+      }
 
       cubit_server.run ();
 

@@ -14,10 +14,9 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Note: this object requires static construction and destruction.
 /* static */
-const ACE_Addr ACE_Addr::sap_any (AF_ANY, -1);
+ACE_Addr const ACE_Addr::sap_any (AF_ANY, -1);
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Addr)
-
 
 // Initializes instance variables.  Note that 0 is an unspecified
 // protocol family type...
@@ -35,7 +34,7 @@ ACE_Addr::get_addr () const
 }
 
 void
-ACE_Addr::set_addr (const void *, int)
+ACE_Addr::set_addr (void const *, int)
 {
 }
 

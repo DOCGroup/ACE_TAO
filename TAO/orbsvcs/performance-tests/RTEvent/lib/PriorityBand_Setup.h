@@ -24,11 +24,9 @@ class RTCORBA_Setup;
 class TAO_RTEC_Perf_Export PriorityBand_Setup
 {
 public:
-  /// Constructor
   PriorityBand_Setup (CORBA::ORB_ptr orb,
                       const RTCORBA_Setup &rtcorba_setup);
 
-  /// Destructor
   /**
    * It is a no-op, but it shuts up g++
    */

@@ -1,12 +1,8 @@
-/* -*- C++ -*- */
-
-//==========================================================================
 /**
  *  @file    Event_Handler.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//==========================================================================
 
 #ifndef ACE_EVENT_HANDLER_H
 #define ACE_EVENT_HANDLER_H
@@ -21,6 +17,8 @@
 #include "ace/os_include/os_signal.h"
 #include "ace/OS_NS_Thread.h"
 #include <atomic>
+#include <type_traits>
+#include <utility>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -91,7 +89,8 @@ public:
   /// Set the I/O handle.
   virtual void set_handle (ACE_HANDLE);
 
-  // = Get/set priority
+  /// @name Priority accessors.
+  /// @{
 
   /// Get the priority of the Event_Handler.
   /// @note Priorities run from MIN_PRIORITY (which is the "lowest priority")
@@ -100,6 +99,7 @@ public:
 
   /// Set the priority of the Event_Handler.
   virtual void priority (int priority);
+  /// @}
 
   /// Called when input events occur (e.g., connection or data).
   virtual int handle_input (ACE_HANDLE fd = ACE_INVALID_HANDLE);
@@ -115,10 +115,10 @@ public:
    * Called when timer expires.  @a current_time represents the current
    * time that the Event_Handler was selected for timeout
    * dispatching and @a act is the asynchronous completion token that
-   * was passed in when <schedule_timer> was invoked.
+   * was passed in when @c schedule_timer was invoked.
    */
-  virtual int handle_timeout (const ACE_Time_Value &current_time,
-                              const void *act = nullptr);
+  virtual int handle_timeout (ACE_Time_Value const &current_time,
+                              void const *act = nullptr);
 
   /// Called when a process exits.
   virtual int handle_exit (ACE_Process *);
@@ -132,7 +132,7 @@ public:
 
   /// Called when object is signaled by OS (either via UNIX signals or
   /// when a Win32 object becomes signaled).
-  virtual int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0);
+  virtual int handle_signal (int signum, siginfo_t * = nullptr, ucontext_t * = nullptr);
 
   enum
     {
@@ -153,7 +153,7 @@ public:
    * return a value more than zero and decide to resume the handler
    * themselves.
    *
-   * @note This method has an affect only when used with the
+   * @note This method has an effect only when used with the
    * ACE_Dev_Poll_Reactor (and then, only on Linux) or the ACE_TP_Reactor.
    */
   virtual int resume_handler ();
@@ -161,7 +161,9 @@ public:
   virtual int handle_qos (ACE_HANDLE = ACE_INVALID_HANDLE);
   virtual int handle_group_qos (ACE_HANDLE = ACE_INVALID_HANDLE);
 
-  // = Accessors to set/get the various event demultiplexors.
+  /// @name Reactor accessors.
+  /// @{
+
   /// Set the event demultiplexors.
   virtual void reactor (ACE_Reactor *reactor);
 
@@ -170,13 +172,16 @@ public:
 
   /// Get only the reactor's timer related interface.
   virtual ACE_Reactor_Timer_Interface *reactor_timer_interface () const;
+  /// @}
 
   /**
    * Used to read from non-socket ACE_HANDLEs in our own thread to
-   * work around Win32 limitations that don't allow us to <select> on
+   * work around Win32 limitations that don't allow @c select() on
    * non-sockets (such as ACE_STDIN).  This is commonly used in
    * situations where the Reactor is used to demultiplex read events
-   * on ACE_STDIN on UNIX.  Note that @a event_handler must be a
+   * on ACE_STDIN on UNIX.
+   *
+   * @note @a event_handler must be a
    * subclass of ACE_Event_Handler.  If the get_handle() method of
    * this event handler returns ACE_INVALID_HANDLE we default to
    * reading from ACE_STDIN.
@@ -185,7 +190,7 @@ public:
 
   /**
    * Abstracts away from the differences between Win32 and ACE with
-   * respect to reading from ACE_STDIN, which is non-<select>'able on
+   * respect to reading from ACE_STDIN, which cannot be passed to @c select() on
    * Win32.
    */
   static int register_stdin_handler (ACE_Event_Handler *eh,
@@ -229,7 +234,6 @@ public:
   class ACE_Export Policy
   {
   public:
-    /// Virtual destructor.
     virtual ~Policy ();
   };
 
@@ -268,7 +272,7 @@ public:
 
   private:
     /// Private constructor.
-    Reference_Counting_Policy (Value value);
+    explicit Reference_Counting_Policy (Value value);
 
     /// The value of the policy.
     Value value_;
@@ -286,7 +290,7 @@ protected:
   using Atomic_Reference_Count = std::atomic<Reference_Count>;
 
   /// Reference count.
-  Atomic_Reference_Count reference_count_;
+  Atomic_Reference_Count reference_count_ {1};
 
 private:
   /// Priority of this Event_Handler.
@@ -310,23 +314,20 @@ private:
 class ACE_Export ACE_Event_Handler_var
 {
 public:
-  /// Default constructor.
   ACE_Event_Handler_var ();
 
   /// Construct with a handler.
   ACE_Event_Handler_var (ACE_Event_Handler *p);
 
-  /// Copy constructor.
-  ACE_Event_Handler_var (const ACE_Event_Handler_var &b);
+  ACE_Event_Handler_var (ACE_Event_Handler_var const &b);
 
-  /// Destructor.
   ~ACE_Event_Handler_var ();
 
   /// Assignment to a handler.
   ACE_Event_Handler_var &operator= (ACE_Event_Handler *p);
 
   /// Assignment to a ACE_Event_Handler_var.
-  ACE_Event_Handler_var &operator= (const ACE_Event_Handler_var &b);
+  ACE_Event_Handler_var &operator= (ACE_Event_Handler_var const &b);
 
   /// Overloaded "->".
   ACE_Event_Handler *operator-> () const;
@@ -349,7 +350,7 @@ public:
 
 private:
   /// Handler.
-  ACE_Event_Handler *ptr_;
+  ACE_Event_Handler *ptr_ {};
 };
 
 /// Define that we can use in user code to check if this
@@ -366,11 +367,12 @@ namespace ACE
   /// it to a ACE_Event_Handler_var
   /// As user this now makes it for example possible to implement
   /// the following when Simple_Handler is derived from ACE_Event_Handler
+  /// @code
   /// ACE_Event_Handler_var v =
   ///   ACE::make_event_handler<Simple_Handler> (reactor.get());
+  /// @endcode
   template<class T,
-           typename = typename
-             std::enable_if<std::is_base_of<ACE_Event_Handler, T>::value>::type,
+           typename = std::enable_if_t<std::is_base_of_v<ACE_Event_Handler, T>>,
            typename ...Args> inline
   ACE_Event_Handler_var make_event_handler (Args&& ...args)
   {
@@ -391,12 +393,11 @@ public:
 
   ACE_Notification_Buffer (ACE_Event_Handler *eh, ACE_Reactor_Mask mask);
 
-  /// Default destructor.
   ~ACE_Notification_Buffer () = default;
 
   /// Pointer to the Event_Handler that will be dispatched
   /// by the main event loop.
-  ACE_Event_Handler *eh_;
+  ACE_Event_Handler *eh_ {};
 
   /// Mask that indicates which method to call.
   ACE_Reactor_Mask mask_;

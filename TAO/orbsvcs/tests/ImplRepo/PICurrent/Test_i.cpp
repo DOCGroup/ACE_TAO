@@ -10,21 +10,17 @@
 
 #include <iostream>
 
-// Implementation skeleton constructor
 Test_i::Test_i (Terminator &terminator)
   : message_count_ (0)
   , terminator_ (terminator)
 {
 }
 
-// Implementation skeleton destructor
-Test_i::~Test_i ()
-{
-}
+Test_i::~Test_i () = default;
 
 CORBA::Boolean
-Test_i::send_message (const char * user_name,
-                      const char * subject,
+Test_i::send_message (char const *user_name,
+                      char const *subject,
                       char *& message)
 {
   std::cout << "Message count: " << message_count_++ << std::endl;
@@ -33,10 +29,10 @@ Test_i::send_message (const char * user_name,
        << "Message:      " << message << std::endl;
   if (message_count_ == 4)
     {
-      ACE_Message_Block *mb = 0;
+      ACE_Message_Block *mb {};
       ACE_NEW_RETURN(mb, ACE_Message_Block(2), 0);
       ACE_OS::sprintf(mb->wr_ptr (), "0");
       terminator_.putq(mb);
     }
-  return 1;
+  return true;
 }

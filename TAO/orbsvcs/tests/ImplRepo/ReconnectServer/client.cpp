@@ -4,7 +4,9 @@
 #include <ace/Task.h>
 #include "ace/OS_NS_unistd.h"
 
-const ACE_TCHAR *ior_input_file = ACE_TEXT ("file://serverA.ior");
+#include <memory>
+
+ACE_TCHAR const *ior_input_file = ACE_TEXT ("file://serverA.ior");
 int test_duration_sec = 15;
 bool expect_object_not_exist = false;
 
@@ -18,11 +20,11 @@ class Client_Task : public ACE_Task_Base
       caught_object_not_exist_ (false)
     {}
 
-    virtual int svc ()
+    int svc () override
     {
       ACE_Time_Value start = ACE_OS::gettimeofday ();
       ACE_Time_Value elapsed;
-      for (int i = 0; elapsed < ACE_Time_Value (test_duration_sec); i++)
+      for (int i = 0; elapsed < ACE_Time_Value (test_duration_sec); ++i)
       {
         try
         {
@@ -35,12 +37,12 @@ class Client_Task : public ACE_Task_Base
             reconnected_ = true;
           }
         }
-        catch (const CORBA::OBJECT_NOT_EXIST &)
+        catch (CORBA::OBJECT_NOT_EXIST const &)
         {
           ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t)caught OBJECT_NOT_EXIST exception for request %d\n"), i ));
           caught_object_not_exist_ = true;
         }
-        catch (const CORBA::Exception & /*ex*/)
+        catch (CORBA::Exception const & /*ex*/)
         {
           communication_failed_ = true;
         }
@@ -75,13 +77,11 @@ private:
   bool caught_object_not_exist_;
 };
 
-
 int
 parse_args (int argc, ACE_TCHAR* argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, "i:t:e:");
   int c;
-
 
   while ((c = get_opts ()) != -1)
     switch (c)
@@ -135,10 +135,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     }
 
     Client_Task task (test.in ());
-    task.activate (THR_NEW_LWP | THR_JOINABLE, 1, 1);
+    task.activate (THR_NEW_LWP | THR_JOINABLE, 1, true);
 
     ACE_Time_Value tv(test_duration_sec);
-    orb->run (&tv);
+    orb->run (std::addressof (tv));
 
     task.wait ();
 
@@ -153,7 +153,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%P|%t) Client test failed.\n")), 1);
     }
   }
-  catch (const CORBA::Exception &ex)
+  catch (CORBA::Exception const &ex)
   {
     ex._tao_print_exception ("Exception caught by client:");
     return 1;
@@ -161,5 +161,4 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   return 0;
 }
-
 

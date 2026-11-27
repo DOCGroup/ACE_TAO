@@ -4,7 +4,7 @@
 #include "ace/SString.h"
 #include "ace/Get_Opt.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://messenger.ior");
+ACE_TCHAR const *ior = ACE_TEXT("file://messenger.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -39,7 +39,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) != 0)
+      {
         return 1;
+      }
 
       CORBA::Object_var obj = orb->string_to_object (ior);
       Messenger_var messenger = Messenger::_narrow (obj.in ());
@@ -61,7 +63,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                     ACE_TEXT("Client got reply: %C\n"),
                           message.in()));
             }
-          catch (const CORBA::Exception &ex)
+          catch (CORBA::Exception const &ex)
             {
               ACE_CString str = ex._info ();
               ACE_ERROR_RETURN ((LM_ERROR,
@@ -74,7 +76,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       return 0;
     }
-  catch (const CORBA::Exception &ex)
+  catch (CORBA::Exception const &ex)
     {
       ACE_CString str = ex._info ();
       ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Client main() caught: %C\n"),

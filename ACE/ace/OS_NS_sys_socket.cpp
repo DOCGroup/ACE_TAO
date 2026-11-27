@@ -16,13 +16,13 @@ ACE_HANDLE
 ACE_OS::accept (ACE_HANDLE handle,
                 struct sockaddr *addr,
                 int *addrlen,
-                const ACE_Accept_QoS_Params &qos_params)
+                ACE_Accept_QoS_Params const &qos_params)
 {
 # if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
-  ACE_SOCKCALL_RETURN (::WSAAccept ((ACE_SOCKET) handle,
+  ACE_SOCKCALL_RETURN (::WSAAccept (reinterpret_cast<ACE_SOCKET> (handle),
                                     addr,
-                                    (ACE_SOCKET_LEN *) addrlen,
-                                    (LPCONDITIONPROC) qos_params.qos_condition_callback (),
+                                    addrlen,
+                                    reinterpret_cast<LPCONDITIONPROC> (qos_params.qos_condition_callback ()),
                                     qos_params.callback_data ()),
                        ACE_HANDLE,
                        ACE_INVALID_HANDLE);
@@ -38,17 +38,17 @@ int
 ACE_OS::connect (ACE_HANDLE handle,
                  const sockaddr *addr,
                  int addrlen,
-                 const ACE_QoS_Params &qos_params)
+                 ACE_QoS_Params const &qos_params)
 {
   ACE_OS_TRACE ("ACE_OS::connect");
 # if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
-  ACE_SOCKCALL_RETURN (::WSAConnect ((ACE_SOCKET) handle,
-                                     (const sockaddr *) addr,
-                                     (ACE_SOCKET_LEN) addrlen,
-                                     (WSABUF *) qos_params.caller_data (),
-                                     (WSABUF *) qos_params.callee_data (),
-                                     (QOS *) qos_params.socket_qos (),
-                                     (QOS *) qos_params.group_socket_qos ()),
+  ACE_SOCKCALL_RETURN (::WSAConnect (reinterpret_cast<ACE_SOCKET> (handle),
+                                     addr,
+                                     static_cast<ACE_SOCKET_LEN> (addrlen),
+                                     reinterpret_cast<WSABUF *> (qos_params.caller_data ()),
+                                     reinterpret_cast<WSABUF *> (qos_params.callee_data ()),
+                                     qos_params.socket_qos (),
+                                     qos_params.group_socket_qos ()),
                        int, -1);
 # else
   ACE_UNUSED_ARG (qos_params);
@@ -62,7 +62,7 @@ ACE_HANDLE
 ACE_OS::join_leaf (ACE_HANDLE socket,
                    const sockaddr *name,
                    int namelen,
-                   const ACE_QoS_Params &qos_params)
+                   ACE_QoS_Params const &qos_params)
 {
 # if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
 
@@ -73,13 +73,13 @@ ACE_OS::join_leaf (ACE_HANDLE socket,
   qos.ReceivingFlowspec = *(qos_params.socket_qos ()->receiving_flowspec ());
   qos.ProviderSpecific = (WSABUF) qos_params.socket_qos ()->provider_specific ();
 
-  ACE_SOCKCALL_RETURN (::WSAJoinLeaf ((ACE_SOCKET) socket,
+  ACE_SOCKCALL_RETURN (::WSAJoinLeaf (reinterpret_cast<ACE_SOCKET> (socket),
                                       name,
                                       namelen,
-                                      (WSABUF *) qos_params.caller_data (),
-                                      (WSABUF *) qos_params.callee_data (),
+                                      reinterpret_cast<WSABUF *> (qos_params.caller_data ()),
+                                      reinterpret_cast<WSABUF *> (qos_params.callee_data ()),
                                       &qos,
-                                      (QOS *) qos_params.group_socket_qos (),
+                                      qos_params.group_socket_qos (),
                                       qos_params.flags ()),
                        ACE_HANDLE,
                        ACE_INVALID_HANDLE);
@@ -149,7 +149,6 @@ ACE_OS::sendv_partial_i (ACE_HANDLE handle,
   // with send_partial_i
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
   DWORD bytes_sent = 0;
-  int result = 1;
   int simulated_n = n;
   ACE_UINT64 buffer_size = 0;
   ACE_Array<iovec> iovec_array(simulated_n);
@@ -181,15 +180,17 @@ ACE_OS::sendv_partial_i (ACE_HANDLE handle,
 
       simulated_n = i + 1;
 
-      result = ::WSASend ((SOCKET) handle,
-                          (WSABUF *) &(iovec_array[0]),
-                          simulated_n,
-                          &bytes_sent,
-                          0,
-                          0,
-                          0);
+      int const result = ::WSASend ((SOCKET) handle,
+                                    (WSABUF *) &(iovec_array[0]),
+                                    simulated_n,
+                                    &bytes_sent,
+                                    0,
+                                    0,
+                                    0);
       if (result != SOCKET_ERROR)
-        break;
+        {
+          break;
+        }
 
       ACE_OS::set_errno_to_wsa_last_error ();
       // if ENOBUFS is received, we apply a divide and
@@ -213,14 +214,13 @@ ACE_OS::sendv_partial_i (ACE_HANDLE handle,
 
 ssize_t
 ACE_OS::send_partial_i (ACE_HANDLE handle,
-                        const char *buf,
+                        char const *buf,
                         size_t len,
                         int flags)
 {
   // the divide and conquer logic should remain consistent
   // with sendv_partial_i
 #if !defined (ACE_LACKS_SEND) && defined (ACE_WIN32)
-  DWORD bytes_sent = 0;
   ssize_t result = 1;
   // keep dividing the current buffer_size in half and then
   // attempt to send the modified buffer until some data is
@@ -234,14 +234,13 @@ ACE_OS::send_partial_i (ACE_HANDLE handle,
                                  static_cast<int> (len),
                                  flags);
       if (result != SOCKET_ERROR)
-        break;
+        {
+          break;
+        }
 
       ACE_OS::set_errno_to_wsa_last_error ();
-      // if ENOBUFS is received, we apply a divide and
-      // conquer strategy, but if bytes are sent we
-      // cannot guarantee this is the same behavior
-      if ((errno != ENOBUFS) ||
-          (bytes_sent != 0))
+      // If ENOBUFS is received, retry with a smaller buffer.
+      if (errno != ENOBUFS)
         {
           return -1;
         }
@@ -277,7 +276,9 @@ int ACE_OS::recvmsg_win32_i (ACE_HANDLE handle,
     }
 
   if (!wsaRcvMsg)
-    ACE_NOTSUP_RETURN (-1);
+    {
+      ACE_NOTSUP_RETURN (-1);
+    }
 
   WSAMSG wsaMsg =
   {

@@ -29,21 +29,27 @@ ACE_OS::readv_emulation (ACE_HANDLE handle,
 
   // In case there's a single element, skip the memcpy.
   if (1 == n)
-    return ACE_OS::read (handle, iov[0].iov_base, iov[0].iov_len);
+    {
+      return ACE_OS::read (handle, iov[0].iov_base, iov[0].iov_len);
+    }
 
   ssize_t length = 0;
   int i;
 
   for (i = 0; i < n; ++i)
     if (static_cast<int> (iov[i].iov_len) < 0)
-      return -1;
+      {
+        return -1;
+      }
     else
-      length += iov[i].iov_len;
+      {
+        length += iov[i].iov_len;
+      }
 
   char *buf;
 # ifdef ACE_HAS_ALLOC_HOOKS
   ACE_ALLOCATOR_RETURN (buf,
-                        (char *) ACE_Allocator::instance ()->malloc (length),
+                        static_cast<char *> (ACE_Allocator::instance ()->malloc (length)),
                         -1);
 # else
   ACE_NEW_RETURN (buf,
@@ -95,7 +101,9 @@ ACE_OS::writev_emulation (ACE_HANDLE handle, const iovec *iov, int n)
   // must not be divided into multiple smaller writes.
 
   if (n == 1)
-    return ACE_OS::write (handle, iov[0].iov_base, iov[0].iov_len);
+    {
+      return ACE_OS::write (handle, iov[0].iov_base, iov[0].iov_len);
+    }
 
   ssize_t length = 0;
   for (int i = 0; i < n; ++i)
@@ -104,7 +112,7 @@ ACE_OS::writev_emulation (ACE_HANDLE handle, const iovec *iov, int n)
   char *buf;
 # ifdef ACE_HAS_ALLOC_HOOKS
   ACE_ALLOCATOR_RETURN (buf,
-                        (char *) ACE_Allocator::instance ()->malloc (length),
+                        static_cast<char *> (ACE_Allocator::instance ()->malloc (length)),
                         -1);
 # else
   ACE_NEW_RETURN (buf, char[length], -1);
@@ -114,7 +122,7 @@ ACE_OS::writev_emulation (ACE_HANDLE handle, const iovec *iov, int n)
   for (int i = 0; i < n; iter += iov[i++].iov_len)
     ACE_OS::memcpy (iter, iov[i].iov_base, iov[i].iov_len);
 
-  const ssize_t result = ACE_OS::write (handle, buf, length);
+  ssize_t const result = ACE_OS::write (handle, buf, length);
 
 # ifdef ACE_HAS_ALLOC_HOOKS
   ACE_Allocator::instance ()->free (buf);

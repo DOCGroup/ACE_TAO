@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    SOCK_Dgram.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef ACE_SOCK_DGRAM_H
 #define ACE_SOCK_DGRAM_H
@@ -37,12 +33,11 @@ class ACE_Time_Value;
 class ACE_Export ACE_SOCK_Dgram : public ACE_SOCK
 {
 public:
-  /// Default constructor.
   ACE_SOCK_Dgram ();
 
   /// This is a BSD-style method (i.e., no QoS) for initiating a socket
   /// dgram that will accept datagrams at the @a local address.
-  ACE_SOCK_Dgram (const ACE_Addr &local,
+  ACE_SOCK_Dgram (ACE_Addr const &local,
                   int protocol_family = ACE_PROTOCOL_FAMILY_INET,
                   int protocol = 0,
                   int reuse_addr = 0,
@@ -51,9 +46,9 @@ public:
   /**
    * This is a QoS-enabed method for initiating a socket dgram that
    * will accept datagrams at the @a local address.  The @a qos_params
-   * are passed to <ACE_OS::join_leaf>.
+   * are passed to @c ACE_OS::join_leaf.
    */
-  ACE_SOCK_Dgram (const ACE_Addr &local,
+  ACE_SOCK_Dgram (ACE_Addr const &local,
                   int protocol_family,
                   int protocol,
                   ACE_Protocol_Info *protocolinfo,
@@ -64,7 +59,7 @@ public:
 
   /// This is a BSD-style method (i.e., no QoS) for initiating a socket
   /// dgram that will accept datagrams at the @a local address.
-  int open (const ACE_Addr &local,
+  int open (ACE_Addr const &local,
             int protocol_family = ACE_PROTOCOL_FAMILY_INET,
             int protocol = 0,
             int reuse_addr = 0,
@@ -73,9 +68,9 @@ public:
   /**
    * This is a QoS-enabed method for initiating a socket dgram that
    * will accept datagrams at the @a local address.  The @a qos_params
-   * are passed to <ACE_OS::join_leaf>.
+   * are passed to @c ACE_OS::join_leaf.
    */
-  int open (const ACE_Addr &local,
+  int open (ACE_Addr const &local,
             int protocol_family,
             int protocol,
             ACE_Protocol_Info *protocolinfo,
@@ -84,18 +79,18 @@ public:
             int reuse_addr = 0,
             int ipv6_only = 0);
 
-  /// Default dtor.
   ~ACE_SOCK_Dgram ();
 
-  // = Data transfer routines.
-  /// Send an @a n byte @a buf to the datagram socket (uses <sendto(3)>).
-  ssize_t send (const void *buf,
+  /// @name Data transfer
+  /// @{
+  /// Send an @a n byte @a buf to the datagram socket (uses @c sendto()).
+  ssize_t send (void const *buf,
                 size_t n,
-                const ACE_Addr &addr,
+                ACE_Addr const &addr,
                 int flags = 0) const;
 
   /// Receive an @a n byte @a buf from the datagram socket (uses
-  /// <recvfrom(3)>).
+  /// @c recvfrom()).
   ssize_t recv (void *buf,
                 size_t n,
                 ACE_Addr &addr,
@@ -106,24 +101,24 @@ public:
    * buffer to read.  This method determines how much data is in the
    * socket, allocates a buffer of this size, reads in the data, and
    * returns the number of bytes read.  The caller is responsible for
-   * deleting the member in the <iov_base> field of <io_vec> using the
+   * deleting the member in the @c iov_base field of @c io_vec using the
    * ``delete []'' syntax.
    */
   ssize_t recv (iovec *io_vec,
                 ACE_Addr &addr,
                 int flags = 0,
-                const ACE_Time_Value *timeout = nullptr) const;
+                ACE_Time_Value const *timeout = nullptr) const;
 
-  /// Send an <iovec> of size @a n to the datagram socket (uses
-  /// <sendmsg(3)>).
+  /// Send an @c iovec of size @a n to the datagram socket (uses
+  /// @c sendmsg()).
   ssize_t send (const iovec iov[],
                 int n,
-                const ACE_Addr &addr,
+                ACE_Addr const &addr,
                 int flags = 0) const;
 
-  /// Recv an <iovec> of size @a n to the datagram socket (uses
-  /// <recvmsg(3)>).  The IP destination address will be placed in @a
-  /// *to_addr if it is not null and set_option has been called with
+  /// Recv an @c iovec of size @a n to the datagram socket (uses
+  /// @c recvmsg()). The IP destination address will be placed in the object
+  /// pointed to by @a to_addr if it is not null and set_option has been called with
   /// 1) level IPPROTO_IP, option ACE_RECVPKTINFO, and value 1 for
   /// IPV4 addresses or 2) IPPROTO_IPV6, option ACE_RECVPKTINFO6, and
   /// value 1 for IPV6 addresses.
@@ -138,7 +133,7 @@ public:
    * @a buf.  The ACE_Time_Value indicates how long to blocking
    * trying to receive.  If @a timeout == 0, the caller will block
    * until action is possible, else will wait until the relative time
-   * specified in *@a timeout elapses).  If <recv> times out a -1 is
+   * specified in *@a timeout elapses).  If @c recv times out a -1 is
    * returned with @c errno == ETIME.  If it succeeds the number of
    * bytes received is returned.
    */
@@ -146,35 +141,35 @@ public:
                 size_t n,
                 ACE_Addr &addr,
                 int flags,
-                const ACE_Time_Value *timeout) const;
+                ACE_Time_Value const *timeout) const;
 
   /**
    * Wait up to @a timeout amount of time to send a datagram to
    * @a buf.  The ACE_Time_Value indicates how long to blocking
    * trying to receive.  If @a timeout == 0, the caller will block
    * until action is possible, else will wait until the relative time
-   * specified in *@a timeout elapses).  If <send> times out a -1 is
+   * specified in *@a timeout elapses).  If @c send times out a -1 is
    * returned with @c errno == ETIME.  If it succeeds the number of
    * bytes sent is returned.
    */
-  ssize_t send (const void *buf,
+  ssize_t send (void const *buf,
                 size_t n,
-                const ACE_Addr &addr,
+                ACE_Addr const &addr,
                 int flags,
-                const ACE_Time_Value *timeout) const;
+                ACE_Time_Value const *timeout) const;
 
-  /// Send <buffer_count> worth of @a buffers to @a addr using overlapped
-  /// I/O (uses <WSASendTo>).  Returns 0 on success.
+  /// Send @c buffer_count worth of @a buffers to @a addr using overlapped
+  /// I/O (uses @c WSASendTo).  Returns 0 on success.
   ssize_t send (const iovec buffers[],
                 int buffer_count,
                 size_t &number_of_bytes_sent,
                 int flags,
-                const ACE_Addr &addr,
+                ACE_Addr const &addr,
                 ACE_OVERLAPPED *overlapped,
                 ACE_OVERLAPPED_COMPLETION_FUNC func) const;
 
-  /// Recv <buffer_count> worth of @a buffers from @a addr using
-  /// overlapped I/O (uses <WSARecvFrom>).  Returns 0 on success.
+  /// Recv @c buffer_count worth of @a buffers from @a addr using
+  /// overlapped I/O (uses @c WSARecvFrom).  Returns 0 on success.
   ssize_t recv (iovec buffers[],
                 int buffer_count,
                 size_t &number_of_bytes_recvd,
@@ -183,54 +178,55 @@ public:
                 ACE_OVERLAPPED *overlapped,
                 ACE_OVERLAPPED_COMPLETION_FUNC func) const;
 
-  /// Send an @a n byte @a buf to the datagram socket (uses <WSASendTo>).
-  ssize_t send (const void *buf,
+  /// Send an @a n byte @a buf to the datagram socket (uses @c WSASendTo).
+  ssize_t send (void const *buf,
                 size_t n,
-                const ACE_Addr &addr,
+                ACE_Addr const &addr,
                 int flags,
                 ACE_OVERLAPPED *overlapped,
                 ACE_OVERLAPPED_COMPLETION_FUNC func) const;
 
   /// Receive an @a n byte @a buf from the datagram socket (uses
-  /// <WSARecvFrom>).
+  /// @c WSARecvFrom).
   ssize_t recv (void *buf,
                 size_t n,
                 ACE_Addr &addr,
                 int flags,
                 ACE_OVERLAPPED *overlapped,
                 ACE_OVERLAPPED_COMPLETION_FUNC func) const;
+  /// @}
 
-  // = Meta-type info.
+  /// Peer address type.
   using PEER_ADDR = ACE_INET_Addr;
 
   /// Dump the state of an object.
   void dump () const;
 
   /// Set NIC to use as multicast interface.
-  int set_nic (const ACE_TCHAR *net_if,
+  int set_nic (ACE_TCHAR const *net_if,
                int addr_family = AF_UNSPEC);
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-  /// Open is shared by this and by <LSOCK_Dgram>.
-  int shared_open (const ACE_Addr &local,
+  /// Open is shared by this and by @c LSOCK_Dgram.
+  int shared_open (ACE_Addr const &local,
                    int protocol_family,
                    int ipv6_only = 0);
 
   /// Create a multicast addr/if pair, in format useful for system calls.
   /// If mreq param is nullptr, just verify the passed addr/interface specs.
   int make_multicast_ifaddr (ip_mreq *mreq,     // Put result here, if != nullptr.
-                             const ACE_INET_Addr &mcast_addr,
-                             const ACE_TCHAR *net_if);
+                             ACE_INET_Addr const &mcast_addr,
+                             ACE_TCHAR const *net_if);
 
 #if defined (ACE_HAS_IPV6)
   /// Create a multicast addr/if pair, in format useful for system calls.
   /// If mreq param is nullptr, just verify the passed addr/interface specs.
   int make_multicast_ifaddr6 (ipv6_mreq *mreq,   // Put result here, if != nullptr.
-                              const ACE_INET_Addr &mcast_addr,
-                              const ACE_TCHAR *net_if);
+                              ACE_INET_Addr const &mcast_addr,
+                              ACE_TCHAR const *net_if);
 
 #endif /* ACE_HAS_IPV6 */
 

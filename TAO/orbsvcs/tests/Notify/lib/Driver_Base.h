@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file Driver_Base.h
  *

@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(CosNaming_Serv) : cosnaming_serv_persistence, orbsvcslib, orbsvcs_output, install, naming_skel, messaging_optional, svc_utils, iortable {
   sharedname   = TAO_CosNaming_Serv
   dynamicflags += TAO_NAMING_SERV_BUILD_DLL

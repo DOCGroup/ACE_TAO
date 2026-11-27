@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   Tagged_Profile.h
  *
  *  @author Bala Natarajan <bala@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_TAGGED_PROFILE_H
 #define TAO_TAGGED_PROFILE_H
@@ -47,8 +43,8 @@ public:
   /// clone the TAO_Tagged_Profile data member in TAO_ServerRequest.
   friend class TAO::CSD::FW_Server_Request_Wrapper;
 
-  /// Ctor
-  TAO_Tagged_Profile (TAO_ORB_Core *orb_core);
+  TAO_Tagged_Profile () = delete;
+  explicit TAO_Tagged_Profile (TAO_ORB_Core *orb_core);
 
   /// Unmarshal the GIOP 1.2 target address field.
   CORBA::Boolean unmarshall_target_address (TAO_InputCDR &cdr);
@@ -63,10 +59,10 @@ public:
   void object_key (TAO::ObjectKey &object_key);
 
   /// Return a const object key
-  const TAO::ObjectKey &object_key () const;
+  TAO::ObjectKey const &object_key () const;
 
   /// Get the tagged_profile
-  const IOP::TaggedProfile &tagged_profile () const;
+  IOP::TaggedProfile const &tagged_profile () const;
 
   /// Get the profile index, that needs to be used in the
   /// sequnce of TaggedProfiles contained  IOP::IOR that is
@@ -75,13 +71,13 @@ public:
 
   /// Accessor to the type_id contained in the IOP::IOR received from
   /// the client.
-  const char* type_id () const;
+  char const *type_id () const;
 
   CORBA::Short discriminator () const;
 
 private:
   /// Extract the object key from the TaggedProfile and store it in
-  /// <object_key_>
+  /// @c object_key_.
   CORBA::Boolean extract_object_key (IOP::TaggedProfile &profile);
 
   /// Unmarshals the received object key
@@ -93,15 +89,15 @@ private:
   /// Unmarshalls the GIOP::IORAddressingInfo
   CORBA::Boolean unmarshall_ref_addr_i (TAO_InputCDR &cdr);
 
-private:
   /// Our ORB Core
-  TAO_ORB_Core *orb_core_;
+  /// Borrowed ORB core pointer, also copied directly by the CSD wrapper.
+  TAO_ORB_Core *orb_core_ {};
 
   /// Keep track of which kind of target profile that was extracted.
-  CORBA::Short discriminator_;
+  CORBA::Short discriminator_ {};
 
   /// Flag to denote whether the object key has been extracted yet.
-  CORBA::Boolean object_key_extracted_;
+  CORBA::Boolean object_key_extracted_ {};
 
   /// The object key
   TAO::ObjectKey object_key_;
@@ -133,11 +129,18 @@ private:
 
   /// The profile index incase we receive a GIOP::IORAddressingInfo
   /// information
-  CORBA::ULong profile_index_;
+  CORBA::ULong profile_index_ {};
 
   /// The type_id in the IOP::IOR in case we receive the
   /// GIOP::IORAddressingInfo information.
-  const char* type_id_;
+  /// This aliases the input CDR buffer; the CSD clone duplicates and owns its copy.
+  char const *type_id_ {};
+
+private:
+  TAO_Tagged_Profile (TAO_Tagged_Profile const &) = delete;
+  TAO_Tagged_Profile &operator= (TAO_Tagged_Profile const &) = delete;
+  TAO_Tagged_Profile (TAO_Tagged_Profile &&) = delete;
+  TAO_Tagged_Profile &operator= (TAO_Tagged_Profile &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

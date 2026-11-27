@@ -1,13 +1,8 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
  *  @file    FIFO_Send_Msg.h
  *
  *  @author Doug Schmidt
  */
-//=============================================================================
-
 
 #ifndef ACE_FIFO_SEND_MSG_H
 #define ACE_FIFO_SEND_MSG_H
@@ -37,37 +32,36 @@ class ACE_Str_Buf;
 class ACE_Export ACE_FIFO_Send_Msg : public ACE_FIFO_Send
 {
 public:
-  /// Default constructor.
   ACE_FIFO_Send_Msg ();
 
   /// Open up a record-oriented named pipe for writing.
-  ACE_FIFO_Send_Msg (const ACE_TCHAR *rendezvous,
+  ACE_FIFO_Send_Msg (ACE_TCHAR const *rendezvous,
                      int flags = O_WRONLY,
                      mode_t perms = ACE_DEFAULT_FILE_PERMS,
                      LPSECURITY_ATTRIBUTES sa = 0);
 
   /// Open up a record-oriented named pipe for writing.
-  int open (const ACE_TCHAR *rendezvous,
+  int open (ACE_TCHAR const *rendezvous,
             int flags = O_WRONLY,
             mode_t perms = ACE_DEFAULT_FILE_PERMS,
             LPSECURITY_ATTRIBUTES sa = 0);
 
   /// Send @a buf of up to @a len bytes.
-  ssize_t send (const ACE_Str_Buf &msg);
+  ssize_t send (ACE_Str_Buf const &msg);
 
   /// Send @a buf of exactly @a len bytes (block until done).
-  ssize_t send (const void *buf, size_t len);
+  ssize_t send (void const *buf, size_t len);
 
 #if defined (ACE_HAS_STREAM_PIPES)
   /// Send @a data and @a cntl message via Stream pipes.
-  ssize_t send (const ACE_Str_Buf *data,
-                const ACE_Str_Buf *cntl = nullptr,
+  ssize_t send (ACE_Str_Buf const *data,
+                ACE_Str_Buf const *cntl = nullptr,
                 int flags = 0);
 
   /// Send @a data and @a cntl message via Stream pipes in "band" mode.
   ssize_t send (int band,
-                const ACE_Str_Buf *data,
-                const ACE_Str_Buf *cntl = nullptr,
+                ACE_Str_Buf const *data,
+                ACE_Str_Buf const *cntl = nullptr,
                 int flags = MSG_BAND);
 #endif /* ACE_HAS_STREAM_PIPES */
 

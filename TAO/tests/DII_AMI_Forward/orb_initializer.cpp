@@ -1,17 +1,11 @@
-// -*- C++ -*-
-
 #include "orb_initializer.h"
 #include "server_interceptor.h"
-
-Server_ORBInitializer::Server_ORBInitializer ()
-{
-}
 
 void
 Server_ORBInitializer::pre_init (
     PortableInterceptor::ORBInitInfo_ptr)
 {
-        // No Op
+  // No operation.
 }
 
 void

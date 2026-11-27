@@ -1,18 +1,15 @@
-// -*- C++ -*-
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
-ACE_PI_Control_Block::ACE_Name_Node::~ACE_Name_Node ()
-{
-}
+ACE_PI_Control_Block::ACE_Name_Node::~ACE_Name_Node () = default;
 
 ACE_INLINE void
 ACE_PI_Control_Block::ACE_Malloc_Header::init_ptr
   (MALLOC_HEADER_PTR *ptr, ACE_Malloc_Header *init, void *base_addr)
 {
-  new ((void *) ptr) MALLOC_HEADER_PTR (base_addr, 0);
+  new (static_cast<void *> (ptr)) MALLOC_HEADER_PTR (base_addr, 0);
   *ptr = init;
 }
 
@@ -20,7 +17,7 @@ ACE_INLINE void
 ACE_PI_Control_Block::ACE_Name_Node::init_ptr
   (NAME_NODE_PTR *ptr, ACE_Name_Node *init, void *base_addr)
 {
-  new ((void *) ptr) NAME_NODE_PTR (base_addr, 0);
+  new (static_cast<void *> (ptr)) NAME_NODE_PTR (base_addr, 0);
   *ptr = init;
 }
 

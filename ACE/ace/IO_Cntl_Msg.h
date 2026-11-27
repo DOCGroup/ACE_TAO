@@ -1,13 +1,8 @@
-// -*- C++ -*-
-
-//==========================================================================
 /**
  *  @file    IO_Cntl_Msg.h
  *
  *  @author Doug Schmidt
  */
-//==========================================================================
-
 
 #ifndef ACE_IO_CNTL_MSG_H
 #define ACE_IO_CNTL_MSG_H
@@ -50,9 +45,10 @@ public:
   using ACE_IO_Cntl_Cmds = unsigned short;
 
   /// Initialize the control message.
-  ACE_IO_Cntl_Msg (ACE_IO_Cntl_Cmds c);
+  explicit ACE_IO_Cntl_Msg (ACE_IO_Cntl_Cmds c);
 
-  // = Get/set methods
+  /// @name Get and set methods
+  /// @{
 
   /// Get command.
   ACE_IO_Cntl_Cmds cmd ();
@@ -77,6 +73,7 @@ public:
 
   /// Set return value.
   void rval (int r);
+  /// @}
 
   /// Dump the state of an object.
   void dump () const;
@@ -89,13 +86,13 @@ private:
   ACE_IO_Cntl_Cmds cmd_;
 
   /// Count.
-  size_t count_;
+  size_t count_ {};
 
   /// Error.
-  int error_;
+  int error_ {};
 
   /// Return value
-  int rval_;
+  int rval_ {};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

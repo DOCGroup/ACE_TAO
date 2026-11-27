@@ -1,11 +1,10 @@
-// -*- C++ -*-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 CORBA::ULong
 CORBA::ExceptionList::count ()
 {
-  return (CORBA::ULong) this->tc_list_.size ();
+  return static_cast<CORBA::ULong> (this->tc_list_.size ());
 }
 
 ACE_INLINE

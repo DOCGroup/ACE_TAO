@@ -1,20 +1,15 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
  *  @file    FlowSpec_Dbase.h
  *
  *  @author Vishal Kachroo <vishal@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef FLOWSPEC_DBASE_H
 #define FLOWSPEC_DBASE_H
 
-// This file contains the different FlowSpecs that the QoS enabled
-// application uses. Its a good idea to list them all here so the
-// application code is clean.
+/// This file contains the different FlowSpecs that the QoS enabled
+/// application uses. Its a good idea to list them all here so the
+/// application code is clean.
 
 ACE_Flow_Spec notraffic (ACE_QOS_NOT_SPECIFIED,
                          ACE_QOS_NOT_SPECIFIED,

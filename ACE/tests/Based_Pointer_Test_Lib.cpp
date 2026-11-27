@@ -1,14 +1,10 @@
-
-//=============================================================================
 /**
  *  @file    Based_Pointer_Test_Lib.cpp
  *
  *  This test confirms the function of the Based_Pointer_Repository
  *
- *  @author Steve Williams  <steve@telxio>
+ *  @author Steve Williams (steve at telxio)
  */
-//=============================================================================
-
 
 #include "ace/ACE.h"
 #include "ace/svc_export.h"

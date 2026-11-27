@@ -1,14 +1,9 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file     ORB_Table.h
  *
  *  @author Ossama Othman
  *  @author Carlos O'Ryan
  */
-//=============================================================================
-
 
 #ifndef TAO_ORB_TABLE_H
 #define TAO_ORB_TABLE_H
@@ -26,7 +21,6 @@
 
 #include "ace/Array_Map.h"
 #include "ace/Thread_Mutex.h"
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -61,7 +55,6 @@ namespace TAO
   class TAO_Export ORB_Table
   {
   public:
-    /// Constructor
     /**
      * @note See the note in the class description for an explanation
      *       of why this constructor is not protected.
@@ -80,10 +73,10 @@ namespace TAO
     /**
      * @name The canonical ACE_Map methods.
      */
-    //@{
+    /// @{
     iterator begin ();
     iterator end ();
-    int bind (const char *orb_id, ::TAO_ORB_Core *orb_core);
+    int bind (char const *orb_id, ::TAO_ORB_Core *orb_core);
 
     /// Return @c TAO_ORB_Core corresponding to ORB with given @a
     /// orb_id.
@@ -91,10 +84,10 @@ namespace TAO
      * @note The caller must decrease the reference count on the
      *       returned ORB_Core, i.e. the callers "owns" it.
      */
-    ::TAO_ORB_Core* find (const char *orb_id);
+    ::TAO_ORB_Core *find (char const *orb_id);
 
-    int unbind (const char *orb_id);
-    //@}
+    int unbind (char const *orb_id);
+    /// @}
 
     /// Obtain the first ORB for the @c ORB_Core_instance()
     /// implementation.
@@ -143,7 +136,6 @@ namespace TAO
     ::TAO_ORB_Core * first_orb_ {};
   };
 
-  // -----------------------------------------------
 
   /**
    * @class ORB_Table_Ref_Counter
@@ -155,26 +147,21 @@ namespace TAO
   class ORB_Core_Ref_Counter
   {
   public:
-    /// Constructor.
-    ORB_Core_Ref_Counter ();
+    ORB_Core_Ref_Counter () = default;
 
-    /// Constructor.
-    ORB_Core_Ref_Counter (::TAO_ORB_Core * core);
+    explicit ORB_Core_Ref_Counter (::TAO_ORB_Core *core);
 
-    /// Destructor.
     ~ORB_Core_Ref_Counter ();
 
-    /// Copy constructor.
     ORB_Core_Ref_Counter (ORB_Core_Ref_Counter const & rhs);
 
-    /// Assignment operator.
-    void operator= (ORB_Core_Ref_Counter const & rhs);
+    ORB_Core_Ref_Counter &operator= (ORB_Core_Ref_Counter const &rhs);
 
     /// ORB_Core pointer accessor.
     ::TAO_ORB_Core * core () const { return this->core_; }
 
   private:
-    ::TAO_ORB_Core * core_;
+    ::TAO_ORB_Core *core_ {};
   };
 }
 

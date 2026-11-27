@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-// ===================================================================
 /**
  *  @file   RequestInfo_Util.h
  *
  *  @author Ossama Othman <ossama@uci.edu>
  */
-// ===================================================================
 
 #ifndef TAO_REQUEST_INFO_UTIL_H
 #define TAO_REQUEST_INFO_UTIL_H
@@ -51,6 +47,8 @@ namespace Dynamic
 class TAO_PI_Export TAO_RequestInfo_Util
 {
 public:
+  TAO_RequestInfo_Util () = delete;
+
   /**
    * @name Factory Methods
    *
@@ -59,7 +57,7 @@ public:
    * each subclass, we factor the common code in to this utility
    * class.
    */
-  //@{
+  /// @{
   static Dynamic::ParameterList * make_parameter_list ();
 
   static Dynamic::ExceptionList * make_exception_list ();
@@ -69,7 +67,7 @@ public:
   static Dynamic::RequestContext * make_request_context ();
 
   static CORBA::Any * make_any (CORBA::Boolean tk_void_any);
-  //@}
+  /// @}
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

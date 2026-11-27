@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    Pipe_Test.cpp
  *
@@ -7,8 +5,6 @@
  *
  *  @author Irfan Pyarali <irfan@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #include "test_config.h"
 #include "ace/Pipe.h"
@@ -48,21 +44,23 @@ parse_args (int argc, ACE_TCHAR *argv[])
   int c;
 
   while ((c = get_opt ()) != -1)
-    switch (c)
     {
-    case 'd':
-      close_pipe = 0;
-      break;
-    case 'c':
-      child_process = 1;
-      break;
-    case 'i':
-      iterations = ACE_OS::atoi (get_opt.opt_arg ());
-      break;
-    default:
-      print_usage_and_die ();
-      break;
-  }
+      switch (c)
+        {
+        case 'd':
+          close_pipe = 0;
+          break;
+        case 'c':
+          child_process = 1;
+          break;
+        case 'i':
+          iterations = ACE_OS::atoi (get_opt.opt_arg ());
+          break;
+        default:
+          print_usage_and_die ();
+          break;
+        }
+    }
 }
 
 // Consolidate the ACE_Pipe initializations.
@@ -70,7 +68,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 #ifdef ACE_HAS_PROCESS_SPAWN
 static void
 open_pipe (ACE_Pipe &pipe,
-      const char *name)
+      char const *name)
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("opening %C\n"), name));
   int result = pipe.open ();
@@ -81,7 +79,9 @@ open_pipe (ACE_Pipe &pipe,
   ACE_TEST_ASSERT (result == 1);
 
   if (close_pipe)
+  {
     pipe.close ();
+  }
 }
 #endif
 
@@ -125,7 +125,7 @@ run_main (int argc, ACE_TCHAR *argv[])
 
       ACE_exitcode status = 0;
 
-      for (int i = 0; i < ::iterations; i++)
+      for (int i = 0; i < ::iterations; ++i)
         {
           ACE_Process server;
 

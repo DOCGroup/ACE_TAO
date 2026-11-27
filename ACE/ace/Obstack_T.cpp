@@ -3,7 +3,8 @@
 
 #include "ace/Obstack_T.h"
 #include "ace/Malloc_Base.h"
-#include "ace/OS_NS_string.h"
+
+#include <cstring>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -24,9 +25,9 @@ ACE_Obstack_T<ACE_CHAR_T>::dump () const
   ACE_TRACE ("ACE_Obstack_T<ACE_CHAR_T>::dump");
 
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("size_ = %d\n"), this->size_));
-  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("head_ = %x\n"), this->head_));
-  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("curr_ = %x\n"), this->curr_));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("size_ = %B\n"), this->size_));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("head_ = %@\n"), this->head_));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("curr_ = %@\n"), this->curr_));
   ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
@@ -41,12 +42,14 @@ ACE_Obstack_T<ACE_CHAR_T>::request (size_t len)
 
   // Check to see if there's room for the requested length, including
   // any part of an existing string, if any.
-  size_t resulting_len = (this->curr_->cur_ - this->curr_->block_) + len;
+  size_t const resulting_len = (this->curr_->cur_ - this->curr_->block_) + len;
 
   // Increase the length of the underlying chunks if the request made is
   // for bigger sized chunks.
   if (this->size_ < resulting_len)
-    this->size_ = this->size_ << 1;
+    {
+      this->size_ = this->size_ << 1;
+    }
 
   // We now know the request will fit; see if it can fit in the current
   // chunk or will need a new one.
@@ -55,12 +58,14 @@ ACE_Obstack_T<ACE_CHAR_T>::request (size_t len)
       // Need a new chunk. Save the current one so the current string
       // can be copied to the new chunk.
       ACE_Obchunk *temp = this->curr_;
-      if (this->curr_->next_ == 0)
+      if (this->curr_->next_ == nullptr)
         {
           // We must allocate new memory.
           ACE_Obchunk* tmp = this->new_chunk();
           if (!tmp)
-            return -1;
+            {
+              return -1;
+            }
           this->curr_->next_ = tmp;
           this->curr_ = this->curr_->next_;
         }
@@ -74,10 +79,8 @@ ACE_Obstack_T<ACE_CHAR_T>::request (size_t len)
       // Copy any initial characters to the new chunk.
       if (temp->cur_ != temp->block_)
         {
-          size_t datasize = temp->cur_ - temp->block_;
-          ACE_OS::memcpy (this->curr_->block_,
-                          temp->block_,
-                          datasize);
+          size_t const datasize = temp->cur_ - temp->block_;
+          std::memcpy (this->curr_->block_, temp->block_, datasize);
           this->curr_->cur_ = this->curr_->block_ + datasize;
           // Reset the old chunk.
           temp->cur_ = temp->block_;
@@ -100,7 +103,9 @@ ACE_Obstack_T<ACE_CHAR_T>::grow (ACE_CHAR_T c)
       return retv;
     }
   else
-    return 0;
+    {
+      return nullptr;
+    }
 }
 
 template <class ACE_CHAR_T> ACE_Obchunk *
@@ -108,7 +113,7 @@ ACE_Obstack_T<ACE_CHAR_T>::new_chunk ()
 {
   ACE_TRACE ("ACE_Obstack_T<ACE_CHAR_T>::new_chunk");
 
-  ACE_Obchunk *temp = nullptr;
+  ACE_Obchunk *temp {};
 
   ACE_NEW_MALLOC_RETURN (temp,
                          static_cast<ACE_Obchunk *> (this->allocator_strategy_->malloc
@@ -122,15 +127,15 @@ template <class ACE_CHAR_T>
 ACE_Obstack_T<ACE_CHAR_T>::ACE_Obstack_T (size_t size,
                                           ACE_Allocator *allocator_strategy)
   : allocator_strategy_ (allocator_strategy),
-    size_ (size),
-    head_ (nullptr),
-    curr_ (nullptr)
+    size_ (size)
 {
   ACE_TRACE ("ACE_Obstack_T<ACE_CHAR_T>::ACE_Obstack");
 
-  if (this->allocator_strategy_ == 0)
-    ACE_ALLOCATOR (this->allocator_strategy_,
-                   ACE_Allocator::instance ());
+  if (this->allocator_strategy_ == nullptr)
+    {
+      ACE_ALLOCATOR (this->allocator_strategy_,
+                     ACE_Allocator::instance ());
+    }
 
   this->head_ = this->new_chunk ();
   this->curr_ = this->head_;
@@ -153,16 +158,18 @@ ACE_Obstack_T<ACE_CHAR_T>::~ACE_Obstack_T ()
 }
 
 template <class ACE_CHAR_T> ACE_CHAR_T *
-ACE_Obstack_T<ACE_CHAR_T>::copy (const ACE_CHAR_T *s,
+ACE_Obstack_T<ACE_CHAR_T>::copy (ACE_CHAR_T const *s,
                                  size_t len)
 {
   ACE_TRACE ("ACE_Obstack_T<ACE_CHAR_T>::copy");
 
   if (this->request (len) != 0)
-    return 0;
+    {
+      return 0;
+    }
 
-  size_t tsize = len * sizeof (ACE_CHAR_T);
-  ACE_OS::memcpy (this->curr_->cur_, s, tsize);
+  size_t const tsize = len * sizeof (ACE_CHAR_T);
+  std::memcpy (this->curr_->cur_, s, tsize);
   this->curr_->cur_ += tsize ;
   return this->freeze ();
 }
@@ -171,9 +178,13 @@ template <class ACE_CHAR_T> void
 ACE_Obstack_T<ACE_CHAR_T>::unwind (void* obj)
 {
   if (obj >= this->curr_->contents_ && obj < this->curr_->end_)
-    this->curr_->block_ = this->curr_->cur_ = reinterpret_cast<char*> (obj);
+    {
+      this->curr_->block_ = this->curr_->cur_ = reinterpret_cast<char*> (obj);
+    }
   else
-    this->unwind_i (obj);
+    {
+      this->unwind_i (obj);
+    }
 }
 
 template <class ACE_CHAR_T> void
@@ -181,15 +192,19 @@ ACE_Obstack_T<ACE_CHAR_T>::unwind_i (void* obj)
 {
   ACE_Obchunk* curr = this->head_;
   while (curr != nullptr && (curr->contents_ > obj || curr->end_ < obj))
+    {
       curr = curr->next_;
+    }
   if (curr)
     {
       this->curr_ = curr;
       this->curr_->block_ = this->curr_->cur_ = reinterpret_cast<char*> (obj);
     }
   else if (obj != nullptr)
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("Deletion of non-existent object.\n%a")));
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("Deletion of non-existent object.\n%a")));
+    }
 }
 
 template <class ACE_CHAR_T> void

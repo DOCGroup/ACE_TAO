@@ -1,11 +1,8 @@
-
-//=============================================================================
 /**
  *  @file    Compiler_Features_20_DLL.h
  *
  *  Test DLL export with default constructor
  */
-//=============================================================================
 
 #ifndef ACE_TESTS_COMPILER_FEATURES_20_DLL_H
 #define ACE_TESTS_COMPILER_FEATURES_20_DLL_H

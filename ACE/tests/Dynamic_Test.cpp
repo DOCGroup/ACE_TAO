@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    Dynamic_Test.cpp
  *
@@ -7,14 +5,11 @@
  *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-//=============================================================================
-
 
 #include "test_config.h"
 #include "ace/OS_NS_string.h"
 #include "ace/Dynamic.h"
 #include "ace/OS_Memory.h"
-
 
 class A
 {
@@ -23,8 +18,8 @@ public:
 
   void *operator new (size_t n);
 
-  void *operator new (size_t n, const std::nothrow_t&) noexcept;
-  void operator delete (void *p, const std::nothrow_t&) noexcept;
+  void *operator new (size_t n, std::nothrow_t const &) noexcept;
+  void operator delete (void *p, std::nothrow_t const &) noexcept;
   void * operator new (size_t n, void *p);
 
   void operator delete (void *);
@@ -60,7 +55,7 @@ A::operator new (size_t n)
 }
 
 void*
-A::operator new (size_t n, const std::nothrow_t&) noexcept
+A::operator new (size_t n, std::nothrow_t const &) noexcept
 {
   ACE_Dynamic *const dynamic_instance = ACE_Dynamic::instance ();
 
@@ -84,7 +79,7 @@ A::operator new (size_t n, const std::nothrow_t&) noexcept
 }
 
 void
-A::operator delete (void *p, const std::nothrow_t&) noexcept
+A::operator delete (void *p, std::nothrow_t const &) noexcept
 {
   ::delete [] static_cast <char *> (p);
 }
@@ -100,8 +95,10 @@ A::A()
   this->dynamic_ = ACE_Dynamic::instance ()->is_dynamic ();
 
   if (this->dynamic_)
-    // Make sure to reset the flag.
-    ACE_Dynamic::instance ()->reset ();
+    {
+      // Make sure to reset the flag.
+      ACE_Dynamic::instance ()->reset ();
+    }
 }
 
 int
@@ -109,7 +106,7 @@ run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Dynamic_Test"));
   A from_stack;
-  A* heap = nullptr;
+  A* heap {};
   ACE_NEW_RETURN (heap, A, 1);
   if (from_stack.dynamic_)
     {

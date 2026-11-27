@@ -1,13 +1,9 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Based_Pointer_Repository.h
  *
  *  @author Dietrich Quehl <Dietrich.Quehl@med.siemens.de>
  *  @author Douglas C. Schmidt <schmidt@.cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef ACE_BASED_POINTER_REPOSITORY_H
 #define ACE_BASED_POINTER_REPOSITORY_H
@@ -24,6 +20,7 @@
 #include "ace/Synch_Traits.h"
 #include "ace/os_include/os_stddef.h"
 
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -39,12 +36,18 @@ class ACE_Based_Pointer_Repository_Rep;
 class ACE_Export ACE_Based_Pointer_Repository
 {
 public:
-  // = Use ACE_Null_Mutex to allow locking while iterating.
+  /// Uses ACE_Null_Mutex so the repository can be locked while iterating.
 
   ACE_Based_Pointer_Repository ();
   ~ACE_Based_Pointer_Repository ();
 
-  // = Search structure methods.
+  ACE_Based_Pointer_Repository (ACE_Based_Pointer_Repository const &) = delete;
+  ACE_Based_Pointer_Repository (ACE_Based_Pointer_Repository &&) = delete;
+  ACE_Based_Pointer_Repository &operator= (ACE_Based_Pointer_Repository const &) = delete;
+  ACE_Based_Pointer_Repository &operator= (ACE_Based_Pointer_Repository &&) = delete;
+
+  /// @name Search structure operations
+  /// @{
   /**
    * Return the appropriate @a base_addr region that contains @a addr.
    * Returns 1 on success and 0 if the @a addr isn't contained in any
@@ -58,21 +61,17 @@ public:
   int bind (void *addr,
             size_t size);
 
-  /// Unbind from the repository the <base_addr> that @a addr is
+  /// Unbind from the repository the @c base_addr that @a addr is
   /// contained within.
   int unbind (void *addr);
+  /// @}
 
 private:
   /// Use the "Cheshire-Cat" technique to hide the implementation in
-  /// order to avoid circular #include dependencies.
-  ACE_Based_Pointer_Repository_Rep *rep_;
-
-private:
-  void operator= (const ACE_Based_Pointer_Repository &) = delete;
-  ACE_Based_Pointer_Repository (const ACE_Based_Pointer_Repository &) = delete;
+  /// order to avoid circular header inclusion dependencies.
+  std::unique_ptr<ACE_Based_Pointer_Repository_Rep> rep_;
 };
 
-// ----------------------------------
 
 /// Declare a process wide singleton
 ACE_SINGLETON_DECLARE (ACE_Singleton, ACE_Based_Pointer_Repository, ACE_SYNCH_RW_MUTEX)

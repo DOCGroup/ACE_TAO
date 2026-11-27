@@ -1,19 +1,16 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
  *  @file    Message_Block_T.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  *  @author Carlos O'Ryan <coryan@atdesk.com>
  */
-//=============================================================================
 
 #ifndef ACE_MESSAGE_BLOCK_T_H
 #define ACE_MESSAGE_BLOCK_T_H
 #include /**/ "ace/pre.h"
 
 #include "ace/Message_Block.h"
+#include <memory>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -36,13 +33,18 @@ template <class ACE_LOCK>
 class ACE_Locked_Data_Block : public ACE_Data_Block
 {
 public:
+  ACE_Locked_Data_Block (ACE_Locked_Data_Block const &) = delete;
+  ACE_Locked_Data_Block (ACE_Locked_Data_Block &&) = delete;
+  ACE_Locked_Data_Block &operator= (ACE_Locked_Data_Block const &) = delete;
+  ACE_Locked_Data_Block &operator= (ACE_Locked_Data_Block &&) = delete;
+
   /// Default "do-nothing" constructor.
   ACE_Locked_Data_Block ();
 
   /// Initialize.
   ACE_Locked_Data_Block (size_t size,
                          ACE_Message_Block::ACE_Message_Type msg_type,
-                         const char *msg_data,
+                         char const *msg_data,
                          ACE_Allocator *allocator_strategy,
                          ACE_Message_Block::Message_Flags flags,
                          ACE_Allocator *data_block_allocator);
@@ -61,10 +63,6 @@ public:
 private:
   /// The lock
   ACE_LOCK lock_;
-
-  // = Disallow these operations.
-  ACE_Locked_Data_Block<ACE_LOCK> &operator= (const ACE_Locked_Data_Block<ACE_LOCK> &) = delete;
-  ACE_Locked_Data_Block (const ACE_Locked_Data_Block<ACE_LOCK> &) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

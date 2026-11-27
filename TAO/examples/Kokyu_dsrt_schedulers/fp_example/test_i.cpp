@@ -4,6 +4,8 @@
 #include "ace/ACE.h"
 #include "tao/debug.h"
 #include "ace/Countdown_Time.h"
+#include <cstring>
+#include <memory>
 
 #if !defined(__ACE_INLINE__)
 #include "test_i.inl"
@@ -14,16 +16,19 @@ Simple_Server_i::test_method (CORBA::Long exec_duration)
 {
   ACE_hthread_t thr_handle;
   ACE_Thread::self (thr_handle);
-  int prio;
-  int guid;
+  int prio {};
+  size_t guid {};
   RTScheduling::Current::IdType_var id = this->current_->id ();
 
-  ACE_OS::memcpy (&guid,
-                  id->get_buffer (),
-                  sizeof (id->length ()));
+  size_t const length = id->length () < sizeof (guid)
+    ? id->length () : sizeof (guid);
+  if (length != 0)
+    {
+      std::memcpy (&guid, id->get_buffer (), length);
+    }
 
   ACE_High_Res_Timer timer;
-  ACE_Time_Value elapsed_time;
+  ACE_Time_Value elapsed_time {};
 
   ACE_DEBUG ((LM_DEBUG, "Request in thread %t\n"));
 
@@ -49,17 +54,17 @@ Simple_Server_i::test_method (CORBA::Long exec_duration)
   static CORBA::ULong prime_number = 9619899;
 
   ACE_Time_Value compute_count_down_time (exec_duration, 0);
-  ACE_Countdown_Time compute_count_down (&compute_count_down_time);
+  ACE_Countdown_Time compute_count_down (std::addressof (compute_count_down_time));
 
   //Applicable only for CV based implementations
   //yield every 1 sec
   ACE_Time_Value yield_interval (1,0);
 
   ACE_Time_Value yield_count_down_time (yield_interval);
-  ACE_Countdown_Time yield_count_down (&yield_count_down_time);
+  ACE_Countdown_Time yield_count_down (std::addressof (yield_count_down_time));
 
   timer.start ();
-  int j=0;
+  int j {};
   while (compute_count_down_time > ACE_Time_Value::zero)
     {
       ACE::is_prime (prime_number,
@@ -69,13 +74,13 @@ Simple_Server_i::test_method (CORBA::Long exec_duration)
       ++j;
 
 #ifdef KOKYU_DSRT_LOGGING
-      if (j%1000 == 0)
+      if (j % 1000 == 0)
         {
           ACE_DEBUG ((LM_DEBUG,
             "(%t|%T) loop # = %d, load = %usec\n", j, exec_duration));
         }
 #endif
-      if (j%1000 == 0)
+      if (j % 1000 == 0)
         {
           ACE_Time_Value run_time = ACE_OS::gettimeofday ();
           task_stats_.sample (ACE_UINT32 (run_time.msec ()), guid);
@@ -91,10 +96,8 @@ Simple_Server_i::test_method (CORBA::Long exec_duration)
               CORBA::Policy_var sched_param_policy =
                 current_->scheduling_parameter();
 
-              const char * name = 0;
-
-              CORBA::Policy_ptr implicit_sched_param = 0;
-              current_->update_scheduling_segment (name,
+              CORBA::Policy_ptr implicit_sched_param {};
+              current_->update_scheduling_segment (nullptr,
                                                    sched_param_policy.in (),
                                                    implicit_sched_param);
               yield_count_down_time = yield_interval;
@@ -108,7 +111,7 @@ Simple_Server_i::test_method (CORBA::Long exec_duration)
 
   ACE_DEBUG ((LM_DEBUG,
               "Request processing in thread %t done, "
-              "prio = %d, load = %d, elapsed time = %umsec\n",
+              "prio = %d, load = %d, elapsed time = %Lumsec\n",
               prio, exec_duration, elapsed_time.msec () ));
 
   return exec_duration;

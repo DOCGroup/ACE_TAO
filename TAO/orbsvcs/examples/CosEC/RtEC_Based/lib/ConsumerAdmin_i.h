@@ -1,6 +1,3 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
  *  @file   ConsumerAdmin_i.h
  *
@@ -9,8 +6,6 @@
  * This has the implementation of the
  * CosEventChannelAdmin::ConsumerAdmin interface.
  */
-//=============================================================================
-
 
 #ifndef CONSUMERADMIN_I_H
 #define CONSUMERADMIN_I_H
@@ -20,32 +15,30 @@
 #include "orbsvcs/CosEventChannelAdminS.h"
 #include "ProxyPushSupplier_i.h"
 
+/**
+ * @brief Implements the Cos ConsumerAdmin interface using the Rtec
+ * ConsumerAdmin.
+ */
 class TAO_RTEC_COSEC_Export TAO_CosEC_ConsumerAdmin_i :
   public virtual POA_CosEventChannelAdmin::ConsumerAdmin
 {
-  // = TITLE
-  //   class TAO_CosEC_ConsumerAdmin_i implements the ConsumerAdmin interface.
-  //
-  // = DESCRIPTION
-  //   This implementation of the ConsumerAdmin uses the
-  //   RtecEventChannelAdmin::ConsumerAdmin.
 public:
-  /// Constructor.
   TAO_CosEC_ConsumerAdmin_i ();
 
-  /// Destructor.
-  ~TAO_CosEC_ConsumerAdmin_i () = default;
+  ~TAO_CosEC_ConsumerAdmin_i () override = default;
+  TAO_CosEC_ConsumerAdmin_i (TAO_CosEC_ConsumerAdmin_i const &) = delete;
+  TAO_CosEC_ConsumerAdmin_i (TAO_CosEC_ConsumerAdmin_i &&) = delete;
+  TAO_CosEC_ConsumerAdmin_i &operator= (TAO_CosEC_ConsumerAdmin_i const &) = delete;
+  TAO_CosEC_ConsumerAdmin_i &operator= (TAO_CosEC_ConsumerAdmin_i &&) = delete;
 
-  int init (const RtecEventChannelAdmin::ConsumerQOS &consumerqos,
+  int init (RtecEventChannelAdmin::ConsumerQOS const &consumerqos,
             RtecEventChannelAdmin::ConsumerAdmin_ptr rtec_consumeradmin);
 
   /// Returns a new ProxyPushSupplier_ptr.
-  virtual CosEventChannelAdmin::ProxyPushSupplier_ptr
-    obtain_push_supplier();
+  CosEventChannelAdmin::ProxyPushSupplier_ptr obtain_push_supplier () override;
 
   /// Returns a new ProxyPullSupplier_ptr.
-  virtual CosEventChannelAdmin::ProxyPullSupplier_ptr
-    obtain_pull_supplier();
+  CosEventChannelAdmin::ProxyPullSupplier_ptr obtain_pull_supplier () override;
 
 private:
   /// The ConsumerQOS specified by the user of this class.

@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=========================================================================
 /**
  * @file Encoding_Converter_Factory.h
  *
@@ -8,7 +5,6 @@
  *
  * @author Chad Elliott <elliott_c@ociweb.com>
  */
-//=========================================================================
 
 #ifndef ACE_ENCODING_CONVERTER_FACTORY_H
 #define ACE_ENCODING_CONVERTER_FACTORY_H
@@ -39,7 +35,7 @@ public:
   /// Create an encoding converter based on the source.  If a hint is
   /// given, it just creates the specified type of converter without looking
   /// at the source.
-  static ACE_Encoding_Converter* create (const ACE_Byte* source,
+  static ACE_Encoding_Converter* create (ACE_Byte const * source,
                                          size_t source_size,
                                          Encoding_Hint hint = ACE_NONE);
 };

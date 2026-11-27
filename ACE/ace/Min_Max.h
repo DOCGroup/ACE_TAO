@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   Min_Max.h
  *
@@ -8,7 +5,6 @@
  *
  *  @author Derek Dominish <Derek.Dominish@Australia.Boeing.com>
  */
-//=============================================================================
 
 #ifndef ACE_MIN_MAX_H
 #define ACE_MIN_MAX_H
@@ -23,36 +19,36 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class T>
-inline const T &
-ace_min (const T &t1, const T &t2)
+inline T const &
+ace_min (T const &t1, T const &t2)
 {
   return t2 > t1 ? t1 : t2;
 }
 
 template <class T>
-inline const T &
-ace_max (const T &t1, const T &t2)
+inline T const &
+ace_max (T const &t1, T const &t2)
 {
   return t1 > t2 ? t1 : t2;
 }
 
 template <class T>
-inline const T &
-ace_min (const T &t1, const T &t2, const T &t3)
+inline T const &
+ace_min (T const &t1, T const &t2, T const &t3)
 {
   return ace_min (ace_min (t1, t2), t3);
 }
 
 template <class T>
-inline const T &
-ace_max (const T &t1, const T &t2, const T &t3)
+inline T const &
+ace_max (T const &t1, T const &t2, T const &t3)
 {
   return ace_max (ace_max (t1, t2), t3);
 }
 
 template <class T>
-inline const T &
-ace_range (const T &min, const T &max, const T &val)
+inline T const &
+ace_range (T const &min, T const &max, T const &val)
 {
   return ace_min (ace_max (min, val), max);
 }

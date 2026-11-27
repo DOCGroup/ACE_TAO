@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Sequence_TypeCode_Static.h
  *
@@ -9,7 +6,6 @@
  *
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef TAO_SEQUENCE_TYPECODE_STATIC_H
 #define TAO_SEQUENCE_TYPECODE_STATIC_H
@@ -48,7 +44,6 @@ namespace TAO
       , private TAO::Null_RefCount_Policy
     {
     public:
-      /// Constructor.
       Sequence (CORBA::TCKind kind,
                 CORBA::TypeCode_ptr const * content_type,
                 CORBA::ULong length);
@@ -61,12 +56,12 @@ namespace TAO
        *
        * @see @c CORBA::TypeCode
        */
-      //@{
+      /// @{
       bool tao_marshal (TAO_OutputCDR & cdr,
                         CORBA::ULong offset) const override;
       void tao_duplicate () override;
       void tao_release () override;
-      //@}
+      /// @}
 
     protected:
       /**
@@ -77,7 +72,7 @@ namespace TAO
        *
        * @see @c CORBA::TypeCode
        */
-      //@{
+      /// @{
       CORBA::Boolean equal_i (CORBA::TypeCode_ptr tc) const override;
       CORBA::Boolean equivalent_i (CORBA::TypeCode_ptr tc) const override;
       CORBA::TypeCode_ptr get_compact_typecode_i () const override;

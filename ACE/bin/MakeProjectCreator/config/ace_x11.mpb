@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project {
   specific(prop:microsoft) {
   } else {

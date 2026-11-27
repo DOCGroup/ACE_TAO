@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    icp.h
  *
@@ -7,33 +6,26 @@
  *  @author Reading
  *  @author MA.Modified for TAO by Mike Moran <mm4@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef _ICP_H
 #define _ICP_H
 
+#include <cstddef>
+
 extern "C" {
-    int ICP_online(unsigned long id);   // Add device
-    int ICP_offline(unsigned long id);  // Remove device
+    /// Adds a device.
+    int ICP_online(unsigned long id);
+    /// Removes a device.
+    int ICP_offline(unsigned long id);
     int ICP_get(                        // Get attribute
             unsigned long   id,
-            const char *    attr,
+            char const *    attr,
             void *          value,
-            size_t          len
-        );
+            size_t     len);
     int ICP_set(                        // Set attribute
             unsigned long   id,
-            const char *    attr,
-            const void *    value
-        );
+            char const *    attr,
+            void const *    value);
 }
 
 #endif /* _ICP_H */
-
-
-
-
-
-
-

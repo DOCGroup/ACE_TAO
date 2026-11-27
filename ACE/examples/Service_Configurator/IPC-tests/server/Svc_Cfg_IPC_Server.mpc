@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*Lib) : acelib, avoids_ace_for_tao {
   sharedname = IPC_Tests_Server
   dynamicflags += ACE_BUILD_SVC_DLL
@@ -10,6 +9,7 @@ project(*Lib) : acelib, avoids_ace_for_tao {
     Handle_L_Pipe.cpp
     Handle_L_SPIPE.cpp
     Handle_L_Stream.cpp
+    Handle_R_Dgram.cpp
     Handle_R_Stream.cpp
     Handle_Thr_Stream.cpp
     Handle_Timeout.cpp
@@ -22,5 +22,14 @@ project(*test) : aceexe, avoids_ace_for_tao {
   libs   += IPC_Tests_Server
   Source_Files {
     server_test.cpp
+  }
+}
+
+project(*Service_Test) : aceexe, avoids_ace_for_tao {
+  exename = ipc_service_test
+  after += Svc_Cfg_IPC_Server_Lib
+  libs += IPC_Tests_Server
+  Source_Files {
+    IPC_Service_Test.cpp
   }
 }

@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 /**
  *  @file RT_POA_Helper.h
  *
@@ -29,25 +27,24 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_RT_Notify_Export TAO_Notify_RT_POA_Helper : public TAO_Notify_POA_Helper
 {
 public:
-  /// Destructor
   ~TAO_Notify_RT_POA_Helper ();
 
   /// Create a new PortableServer::POA.
   /// The UNIQUE_ID, USER_ID , CLIENT_PROPAGATED and thread pool policy is applied to the new POA.
-  void init (PortableServer::POA_ptr parent_poa, const char* poa_name, const NotifyExt::ThreadPoolParams& tp_params);
+  void init (PortableServer::POA_ptr parent_poa, char const *poa_name, NotifyExt::ThreadPoolParams const& tp_params);
 
   /// Create a new PortableServer::POA. The name is chosen at random.
   /// The UNIQUE_ID, USER_ID , CLIENT_PROPAGATED and thread pool policy is applied to the new POA.
-  void init (PortableServer::POA_ptr parent_poa, const NotifyExt::ThreadPoolParams& tp_params);
+  void init (PortableServer::POA_ptr parent_poa, NotifyExt::ThreadPoolParams const& tp_params);
 
   /// Create a new PortableServer::POA.
   /// The UNIQUE_ID, USER_ID , CLIENT_PROPAGATED and thread lane policy is applied to the new POA.
-  void init (PortableServer::POA_ptr parent_poa, const char* poa_name,
-             const NotifyExt::ThreadPoolLanesParams& tpl_params);
+  void init (PortableServer::POA_ptr parent_poa, char const *poa_name,
+             NotifyExt::ThreadPoolLanesParams const& tpl_params);
 
   /// Create a new PortableServer::POA. The name is chosen at random.
   /// The UNIQUE_ID, USER_ID , CLIENT_PROPAGATED and thread lane policy is applied to the new POA.
-  void init (PortableServer::POA_ptr parent_poa, const NotifyExt::ThreadPoolLanesParams& tpl_params);
+  void init (PortableServer::POA_ptr parent_poa, NotifyExt::ThreadPoolLanesParams const& tpl_params);
 
   /// Create a new PortableServer::POA. The name is chosen at random.
   /// The CLIENT_PROPAGATED policy is applied to the new POA.

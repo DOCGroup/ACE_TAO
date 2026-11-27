@@ -23,7 +23,6 @@ TAO_EC_ProxyPushSupplier::TAO_EC_ProxyPushSupplier (TAO_EC_Event_Channel_Base* e
   : event_channel_ (ec),
     refcount_ (1),
     suspended_ (false),
-    child_ (nullptr),
     consumer_validate_connection_(validate_connection)
 {
   this->lock_ =
@@ -96,19 +95,23 @@ TAO_EC_ProxyPushSupplier::shutdown ()
     consumer = this->consumer_._retn ();
 
     if (connected)
+    {
       this->cleanup_i ();
+    }
   }
 
   this->deactivate ();
 
   if (CORBA::is_nil (consumer.in ()))
+  {
     return;
+  }
 
   try
     {
       consumer->disconnect_push_consumer ();
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const&)
     {
       // Ignore exceptions, we must isolate other clients from
       // problems on this one.
@@ -123,8 +126,7 @@ TAO_EC_ProxyPushSupplier::cleanup_i ()
 
   // @@ Why don't we have a destroy() method in the
   // filter_builder?
-  delete this->child_;
-  this->child_ = nullptr;
+  this->child_.reset ();
 }
 
 void
@@ -135,7 +137,7 @@ TAO_EC_ProxyPushSupplier::deactivate () noexcept
       PortableServer::ObjectId id = this->object_id ();
       this->default_POA_->deactivate_object (id);
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const&)
     {
       // Exceptions here should not be propagated.  They usually
       // indicate that an object is being disconnected twice, or some
@@ -165,7 +167,9 @@ TAO_EC_ProxyPushSupplier::_decr_refcnt ()
     ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->lock_, 0);
     --this->refcount_;
     if (this->refcount_ != 0)
+    {
       return this->refcount_;
+    }
   }
 
   this->refcount_zero_hook ();
@@ -176,14 +180,14 @@ using Destroy_Guard = TAO_ESF_Proxy_RefCount_Guard<TAO_EC_Event_Channel_Base,
                                                    TAO_EC_ProxyPushSupplier>;
 
 int
-TAO_EC_ProxyPushSupplier::filter (const RtecEventComm::EventSet& event,
+TAO_EC_ProxyPushSupplier::filter (RtecEventComm::EventSet const & event,
                                   TAO_EC_QOS_Info& qos_info)
 {
   Destroy_Guard auto_destroy (this->refcount_,
                               this->event_channel_,
                               this);
 
-  int result = 0;
+  int result {};
   {
     ACE_GUARD_THROW_EX (
             ACE_Lock, ace_mon, *this->lock_,
@@ -205,7 +209,7 @@ TAO_EC_ProxyPushSupplier::filter_nocopy (RtecEventComm::EventSet& event,
                               this->event_channel_,
                               this);
 
-  int result = 0;
+  int result {};
   {
     ACE_GUARD_THROW_EX (
             ACE_Lock, ace_mon, *this->lock_,
@@ -220,16 +224,20 @@ TAO_EC_ProxyPushSupplier::filter_nocopy (RtecEventComm::EventSet& event,
 }
 
 void
-TAO_EC_ProxyPushSupplier::push (const RtecEventComm::EventSet& event,
+TAO_EC_ProxyPushSupplier::push (RtecEventComm::EventSet const & event,
                                 TAO_EC_QOS_Info& qos_info)
 {
   // The mutex is already held by the caller (usually the filter()
   // method)
   if (!this->is_connected_i ())
+  {
     return; // TAO_THROW (RtecEventComm::Disconnected ());????
+  }
 
   if (this->suspended_)
+  {
     return;
+  }
 
   TAO_ESF_RefCount_Guard<CORBA::ULong> ace_mon (this->refcount_);
   // The guard will decrement the reference count, notice that the
@@ -261,7 +269,9 @@ TAO_EC_ProxyPushSupplier::push (const RtecEventComm::EventSet& event,
   }
 
   if (this->child_ != nullptr)
+  {
     this->child_->clear ();
+  }
 }
 
 void
@@ -276,10 +286,14 @@ TAO_EC_ProxyPushSupplier::push_nocopy (RtecEventComm::EventSet& event,
   // The mutex is already held by the caller (usually the filter()
   // method)
   if (!this->is_connected_i ())
+  {
     return; // TAO_THROW (RtecEventComm::Disconnected ());????
+  }
 
   if (this->suspended_)
+  {
     return;
+  }
 
   TAO_ESF_RefCount_Guard<CORBA::ULong> ace_mon (this->refcount_);
   // The guard will decrement the reference count, notice that the
@@ -310,13 +324,15 @@ TAO_EC_ProxyPushSupplier::push_nocopy (RtecEventComm::EventSet& event,
   }
 
   if (this->child_ != nullptr)
+  {
     this->child_->clear ();
+  }
 }
 
 void
 TAO_EC_ProxyPushSupplier::push_to_consumer (
     RtecEventComm::PushConsumer_ptr consumer,
-    const RtecEventComm::EventSet& event)
+    RtecEventComm::EventSet const & event)
 {
   {
     ACE_GUARD_THROW_EX (
@@ -324,17 +340,21 @@ TAO_EC_ProxyPushSupplier::push_to_consumer (
             RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
 
     if (!this->is_connected_i ())
+    {
       return; // ACE_THROW (RtecEventComm::Disconnected ());????
+    }
 
     if (this->suspended_)
+    {
       return;
+    }
   }
 
   try
     {
       consumer->push (event);
     }
-  catch (const CORBA::OBJECT_NOT_EXIST&)
+  catch (CORBA::OBJECT_NOT_EXIST const&)
     {
       // Do not report errors for old consumers
       // NOTE: The comparison below is not completely correct, it
@@ -368,7 +388,7 @@ TAO_EC_ProxyPushSupplier::push_to_consumer (
           control->system_exception (this, sysex);
         }
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const&)
     {
       // Shouldn't happen, but does not hurt
     }
@@ -377,13 +397,13 @@ TAO_EC_ProxyPushSupplier::push_to_consumer (
 void
 TAO_EC_ProxyPushSupplier::reactive_push_to_consumer (
     RtecEventComm::PushConsumer_ptr consumer,
-    const RtecEventComm::EventSet& event)
+    RtecEventComm::EventSet const & event)
 {
   try
     {
       consumer->push (event);
     }
-  catch (const CORBA::OBJECT_NOT_EXIST&)
+  catch (CORBA::OBJECT_NOT_EXIST const&)
     {
       TAO_EC_ConsumerControl *control =
         this->event_channel_->consumer_control ();
@@ -397,7 +417,7 @@ TAO_EC_ProxyPushSupplier::reactive_push_to_consumer (
 
       control->system_exception (this, sysex);
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const&)
     {
       // Shouldn't happen
     }
@@ -448,20 +468,22 @@ TAO_EC_ProxyPushSupplier::max_event_size () const
 
 int
 TAO_EC_ProxyPushSupplier::can_match (
-      const RtecEventComm::EventHeader &header) const
+      RtecEventComm::EventHeader const &header) const
 {
   ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->lock_, 0);
 
   if (!this->is_connected_i ())
+  {
     return 0;
+  }
 
   return this->child_->can_match (header);
 }
 
 int
 TAO_EC_ProxyPushSupplier::add_dependencies (
-      const RtecEventComm::EventHeader &header,
-      const TAO_EC_QOS_Info &qos_info)
+      RtecEventComm::EventHeader const &header,
+      TAO_EC_QOS_Info const &qos_info)
 {
   ACE_GUARD_THROW_EX (
           ACE_Lock, ace_mon, *this->lock_,

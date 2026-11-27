@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Singleton.h
  *
@@ -12,7 +9,6 @@
  *  @author Rich Christy
  *  @author David Levine <levine@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef ACE_SINGLETON_H
 #define ACE_SINGLETON_H
@@ -37,18 +33,18 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  * This implementation is a slight variation on the GoF
  * Singleton pattern.  In particular, a single
- * <ACE_Singleton<TYPE, ACE_LOCK> > instance is allocated here,
- * not a <TYPE> instance.  The reason for this is to allow
+ * <ACE_Singleton<TYPE, ACE_LOCK>> instance is allocated here,
+ * not a @c TYPE instance.  The reason for this is to allow
  * registration with the ACE_Object_Manager, so that the
  * Singleton can be cleaned up when the process exits.  For this
  * scheme to work, a (static) cleanup() function must be
  * provided.  ACE_Singleton provides one so that TYPE doesn't
  * need to.
  * If you want to make sure that only the singleton instance of
- * <T> is created, and that users cannot create their own
- * instances of <T>, do the following to class <T>:
- * (a) Make the constructor of <T> private (or protected)
- * (b) Make Singleton a friend of <T>
+ * @c T is created, and that users cannot create their own
+ * instances of @c T, do the following to class @c T:
+ * (a) Make the constructor of @c T private (or protected)
+ * (b) Make Singleton a friend of @c T
  * Here is an example:
  * @verbatim
  * class foo
@@ -94,8 +90,12 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-  /// Default constructor.
   ACE_Singleton ();
+
+  ACE_Singleton (ACE_Singleton const &) = delete;
+  ACE_Singleton (ACE_Singleton &&) = delete;
+  ACE_Singleton &operator= (ACE_Singleton const &) = delete;
+  ACE_Singleton &operator= (ACE_Singleton &&) = delete;
 
   /// Contained instance.
   TYPE instance_;
@@ -141,8 +141,12 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-  /// Default constructor.
   ACE_Unmanaged_Singleton ();
+
+  ACE_Unmanaged_Singleton (ACE_Unmanaged_Singleton const &) = delete;
+  ACE_Unmanaged_Singleton (ACE_Unmanaged_Singleton &&) = delete;
+  ACE_Unmanaged_Singleton &operator= (ACE_Unmanaged_Singleton const &) = delete;
+  ACE_Unmanaged_Singleton &operator= (ACE_Unmanaged_Singleton &&) = delete;
 
   /// Pointer to the Singleton (ACE_Cleanup) instance.
   static ACE_Unmanaged_Singleton<TYPE, ACE_LOCK> *singleton_;
@@ -160,8 +164,8 @@ protected:
  *
  * This implementation is another variation on the GoF Singleton
  * pattern.  In this case, a single <ACE_TSS_Singleton<TYPE,
- * LOCK> > instance is allocated here, not a <TYPE> instance.
- * Each call to the <instance> static method returns a Singleton
+ * LOCK>> instance is allocated here, not a @c TYPE instance.
+ * Each call to the @c instance static method returns a Singleton
  * whose pointer resides in thread-specific storage.  As with
  * ACE_Singleton, we use the ACE_Object_Manager so that the
  * Singleton can be cleaned up when the process exits.  For this
@@ -176,7 +180,7 @@ public:
   /// Global access point to the singleton.
   static TYPE *instance ();
 
-  /// Cleanup method, used by <ace_cleanup_destroyer> to destroy the
+  /// Cleanup method, used by @c ace_cleanup_destroyer to destroy the
   /// singleton.
   void cleanup (void *param = nullptr) override;
 
@@ -187,14 +191,15 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-  /// Default constructor.
   ACE_TSS_Singleton ();
 
   /// Contained instance.
   ACE_TSS_TYPE (TYPE) instance_;
 
-  void operator= (const ACE_TSS_Singleton<TYPE,ACE_LOCK> &) = delete;
-  ACE_TSS_Singleton (const ACE_TSS_Singleton<TYPE,ACE_LOCK> &) = delete;
+  ACE_TSS_Singleton (ACE_TSS_Singleton const &) = delete;
+  ACE_TSS_Singleton (ACE_TSS_Singleton &&) = delete;
+  ACE_TSS_Singleton &operator= (ACE_TSS_Singleton const &) = delete;
+  ACE_TSS_Singleton &operator= (ACE_TSS_Singleton &&) = delete;
 
   /// Pointer to the Singleton (ACE_Cleanup) instance.
   static ACE_TSS_Singleton<TYPE, ACE_LOCK> *singleton_;
@@ -233,8 +238,12 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-  /// Default constructor.
   ACE_Unmanaged_TSS_Singleton ();
+
+  ACE_Unmanaged_TSS_Singleton (ACE_Unmanaged_TSS_Singleton const &) = delete;
+  ACE_Unmanaged_TSS_Singleton (ACE_Unmanaged_TSS_Singleton &&) = delete;
+  ACE_Unmanaged_TSS_Singleton &operator= (ACE_Unmanaged_TSS_Singleton const &) = delete;
+  ACE_Unmanaged_TSS_Singleton &operator= (ACE_Unmanaged_TSS_Singleton &&) = delete;
 
   /// Pointer to the Singleton (ACE_Cleanup) instance.
   static ACE_Unmanaged_TSS_Singleton<TYPE, ACE_LOCK> *singleton_;
@@ -284,18 +293,21 @@ public:
   /// Dump the state of the object.
   static void dump ();
 
-  const ACE_TCHAR *dll_name ();
+  ACE_TCHAR const *dll_name ();
 
-  const ACE_TCHAR *name ();
+  ACE_TCHAR const *name ();
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-  /// Default constructor.
   ACE_DLL_Singleton_T ();
 
-  /// Destructor.
+  ACE_DLL_Singleton_T (ACE_DLL_Singleton_T const &) = delete;
+  ACE_DLL_Singleton_T (ACE_DLL_Singleton_T &&) = delete;
+  ACE_DLL_Singleton_T &operator= (ACE_DLL_Singleton_T const &) = delete;
+  ACE_DLL_Singleton_T &operator= (ACE_DLL_Singleton_T &&) = delete;
+
   ~ACE_DLL_Singleton_T ();
 
   /// Contained instance.
@@ -312,7 +324,7 @@ template <class TYPE>
 class ACE_DLL_Singleton_Adapter_T : public TYPE
 {
 public:
-  const ACE_TCHAR *dll_name ();
+  ACE_TCHAR const *dll_name ();
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

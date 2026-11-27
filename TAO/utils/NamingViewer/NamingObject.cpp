@@ -23,9 +23,7 @@ CNamingObject::CNamingObject(CosNaming::Name &Name,
 {
 }
 
-CNamingObject::~CNamingObject ()
-{
-}
+CNamingObject::~CNamingObject () = default;
 
 CosNaming::NamingContext_ptr CNamingObject::NamingContext ()
 {

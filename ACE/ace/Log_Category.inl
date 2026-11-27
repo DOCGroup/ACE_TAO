@@ -1,4 +1,3 @@
-// -*- C++ -*-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE unsigned int
@@ -7,7 +6,7 @@ ACE_Log_Category::id() const
   return id_;
 }
 
-ACE_INLINE const char*
+ACE_INLINE char const *
 ACE_Log_Category::name () const
 {
   return name_;
@@ -19,7 +18,7 @@ ACE_Log_Category_TSS::id() const
   return category_->id_;
 }
 
-ACE_INLINE const char*
+ACE_INLINE char const *
 ACE_Log_Category_TSS::name () const
 {
   return category_->name_;
@@ -56,7 +55,7 @@ ACE_Log_Category_TSS::log_priority_enabled (ACE_Log_Priority log_priority)
 }
 
 ACE_INLINE void
-ACE_Log_Category_TSS::set (const char *file,
+ACE_Log_Category_TSS::set (char const *file,
                            int line,
                            int op_status,
                            int errnum)
@@ -67,7 +66,7 @@ ACE_Log_Category_TSS::set (const char *file,
 /// These values are only actually set if the requested priority is
 /// enabled.
 ACE_INLINE
-void ACE_Log_Category_TSS::conditional_set (const char *file,
+void ACE_Log_Category_TSS::conditional_set (char const *file,
                                             int line,
                                             int op_status,
                                             int errnum)
@@ -77,7 +76,7 @@ void ACE_Log_Category_TSS::conditional_set (const char *file,
 
 #if !defined (ACE_LACKS_VA_FUNCTIONS)
 ACE_INLINE ssize_t
-ACE_Log_Category_TSS::log (ACE_Log_Priority priority, const ACE_TCHAR *format_str, ...)
+ACE_Log_Category_TSS::log (ACE_Log_Priority priority, ACE_TCHAR const *format_str, ...)
 {
   // Start of variable args section.
   va_list argp;
@@ -94,7 +93,7 @@ ACE_Log_Category_TSS::log (ACE_Log_Priority priority, const ACE_TCHAR *format_st
 
 #if defined (ACE_HAS_WCHAR)
 ACE_INLINE ssize_t
-ACE_Log_Category_TSS::log (ACE_Log_Priority priority, const ACE_ANTI_TCHAR *format_str, ...)
+ACE_Log_Category_TSS::log (ACE_Log_Priority priority, ACE_ANTI_TCHAR const *format_str, ...)
 {
   // Start of variable args section.
   va_list argp;
@@ -112,10 +111,12 @@ ACE_Log_Category_TSS::log (ACE_Log_Priority priority, const ACE_ANTI_TCHAR *form
 #else /* ACE_LACKS_VA_FUNCTIONS */
 
 ACE_INLINE ssize_t
-ACE_Log_Category_TSS::log (const ACE_Log_Formatter &formatter)
+ACE_Log_Category_TSS::log (ACE_Log_Formatter const &formatter)
 {
   if (this->log_priority_enabled (formatter.priority ()))
-    return logger_->log (formatter);
+    {
+      return logger_->log (formatter);
+    }
 
   return 0;
 }
@@ -129,12 +130,14 @@ ACE_Log_Category_TSS::log (const ACE_Log_Formatter &formatter)
  */
 
 ACE_INLINE ssize_t
-ACE_Log_Category_TSS::log (const ACE_TCHAR *format,
+ACE_Log_Category_TSS::log (ACE_TCHAR const *format,
                            ACE_Log_Priority priority,
                            va_list argp)
 {
   if (this->log_priority_enabled (priority) == 0)
-    return 0;
+    {
+      return 0;
+    }
   return logger_->log(format, priority, argp, this);
 }
 
@@ -147,12 +150,14 @@ ACE_Log_Category_TSS::log (ACE_Log_Record &log_record,
 
 ACE_INLINE int
 ACE_Log_Category_TSS::log_hexdump (ACE_Log_Priority priority,
-                                   const char *buffer,
+                                   char const *buffer,
                                    size_t size,
-                                   const ACE_TCHAR *text)
+                                   ACE_TCHAR const *text)
 {
   if (this->log_priority_enabled (priority) == 0)
-    return 0;
+    {
+      return 0;
+    }
   return logger_->log_hexdump(priority, buffer, size, text, this);
 }
 

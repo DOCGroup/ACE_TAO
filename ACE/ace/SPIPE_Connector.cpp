@@ -19,9 +19,9 @@ ACE_ALLOC_HOOK_DEFINE(ACE_SPIPE_Connector)
 // Creates a Local ACE_SPIPE.
 
 ACE_SPIPE_Connector::ACE_SPIPE_Connector (ACE_SPIPE_Stream &new_io,
-                                          const ACE_SPIPE_Addr &remote_sap,
+                                          ACE_SPIPE_Addr const &remote_sap,
                                           ACE_Time_Value *timeout,
-                                          const ACE_Addr & local_sap,
+                                          ACE_Addr const & local_sap,
                                           int reuse_addr,
                                           int flags,
                                           int perms,
@@ -32,8 +32,10 @@ ACE_SPIPE_Connector::ACE_SPIPE_Connector (ACE_SPIPE_Stream &new_io,
   if (this->connect (new_io, remote_sap, timeout, local_sap,
                      reuse_addr, flags, perms, sa, pipe_mode) == -1
       && timeout != nullptr && !(errno == EWOULDBLOCK || errno == ETIME))
-    ACELIB_ERROR ((LM_ERROR, ACE_TEXT ("address %s, %p\n"),
-               remote_sap.get_path_name (), ACE_TEXT ("ACE_SPIPE_Connector")));
+    {
+      ACELIB_ERROR ((LM_ERROR, ACE_TEXT ("address %s, %p\n"),
+                     remote_sap.get_path_name (), ACE_TEXT ("ACE_SPIPE_Connector")));
+    }
 }
 
 void
@@ -51,9 +53,9 @@ ACE_SPIPE_Connector::ACE_SPIPE_Connector ()
 
 int
 ACE_SPIPE_Connector::connect (ACE_SPIPE_Stream &new_io,
-                              const ACE_SPIPE_Addr &remote_sap,
+                              ACE_SPIPE_Addr const &remote_sap,
                               ACE_Time_Value *timeout,
-                              const ACE_Addr & /* local_sap */,
+                              ACE_Addr const & /* local_sap */,
                               int /* reuse_addr */,
                               int flags,
                               int perms,
@@ -72,20 +74,26 @@ ACE_SPIPE_Connector::connect (ACE_SPIPE_Stream &new_io,
   // calculate the absolute time at which we give up.
   ACE_Time_Value absolute_time;
   if (timeout != 0)
-    absolute_time = ACE_OS::gettimeofday () + *timeout;
+    {
+      absolute_time = ACE_OS::gettimeofday () + *timeout;
+    }
 
   // Loop until success or failure.
   for (;;)
     {
       handle = ACE_OS::open (remote_sap.get_path_name(), flags, static_cast<mode_t> (perms), sa);
       if (handle != ACE_INVALID_HANDLE)
-        // Success!
-        break;
+        {
+          // Success!
+          break;
+        }
 
       // Check if we have a busy pipe condition.
       if (::GetLastError() != ERROR_PIPE_BUSY)
-        // Nope, this is a failure condition.
-        break;
+        {
+          // Nope, this is a failure condition.
+          break;
+        }
 
       // This will hold the time out value used in the ::WaitNamedPipe
       // call.
@@ -93,8 +101,10 @@ ACE_SPIPE_Connector::connect (ACE_SPIPE_Stream &new_io,
 
       // Check if we are to block until we connect.
       if (timeout == 0)
-        // Wait for as long as it takes.
-        time_out_value = NMPWAIT_WAIT_FOREVER;
+        {
+          // Wait for as long as it takes.
+          time_out_value = NMPWAIT_WAIT_FOREVER;
+        }
       else
         {
           // Calculate the amount of time left to wait.
@@ -105,9 +115,13 @@ ACE_SPIPE_Connector::connect (ACE_SPIPE_Stream &new_io,
               // Mimick the errno value returned by
               // ACE::handle_timed_open.
               if (*timeout == ACE_Time_Value::zero)
-                errno = EWOULDBLOCK;
+                {
+                  errno = EWOULDBLOCK;
+                }
               else
-                errno = ETIMEDOUT;
+                {
+                  errno = ETIMEDOUT;
+                }
               // Exit the connect loop with the failure.
               break;
             }

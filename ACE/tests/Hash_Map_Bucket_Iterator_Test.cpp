@@ -1,14 +1,10 @@
-
-//=============================================================================
 /**
  *  @file    Hash_Map_Bucket_Iterator_Test.cpp
  *
- *   This is a simple test of the <Hash_Map_Bucket_Iterator>.
+ *   This is a simple test of the @c Hash_Map_Bucket_Iterator.
  *
  *  @author Irfan Pyarali <irfan@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #include "test_config.h"
 #include "ace/OS_NS_stdlib.h"
@@ -29,24 +25,26 @@ parse_args (int argc, ACE_TCHAR *argv[])
   int cc;
 
   while ((cc = get_opt ()) != -1)
-    switch (cc)
-      {
-      case 't':
-        table_size = ACE_OS::atoi (get_opt.opt_arg ());
-        break;
-      case 'i':
-        iterations = ACE_OS::atoi (get_opt.opt_arg ());
-        break;
-      case '?':
-      case 'h':
-      default:
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("usage: %s ")
-                    ACE_TEXT ("[-i (iterations)] ")
-                    ACE_TEXT ("[-t (table size)] "),
-                    ACE_TEXT ("Hash_Map_Bucket_Iterator_Test")));
-        return -1;
-      }
+    {
+      switch (cc)
+        {
+        case 't':
+          table_size = ACE_OS::atoi (get_opt.opt_arg ());
+          break;
+        case 'i':
+          iterations = ACE_OS::atoi (get_opt.opt_arg ());
+          break;
+        case '?':
+        case 'h':
+        default:
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("usage: %s ")
+                      ACE_TEXT ("[-i (iterations)] ")
+                      ACE_TEXT ("[-t (table size)] "),
+                      ACE_TEXT ("Hash_Map_Bucket_Iterator_Test")));
+          return -1;
+        }
+    }
 
   return 0;
 }
@@ -59,9 +57,11 @@ int
 run_main (int argc, ACE_TCHAR *argv[])
 {
   // Validate options.
-  int result = parse_args (argc, argv);
+  int const result = parse_args (argc, argv);
   if (result != 0)
+  {
     return result;
+  }
 
   // Start the test only if options are valid.
   ACE_START_TEST (ACE_TEXT ("Hash_Map_Bucket_Iterator_Test"));
@@ -72,7 +72,7 @@ run_main (int argc, ACE_TCHAR *argv[])
 
   for (i = 0; i < iterations; ++i)
     {
-      int result = map.bind (i, i);
+      int const result = map.bind (i, i);
       ACE_TEST_ASSERT (result == 0);
     }
 
@@ -81,7 +81,7 @@ run_main (int argc, ACE_TCHAR *argv[])
       HASH_MAP_BUCKET_ITERATOR iterator (map,
                                          i);
 
-      HASH_MAP_BUCKET_ITERATOR end (map,
+      HASH_MAP_BUCKET_ITERATOR const end (map,
                                     i,
                                     1);
 
@@ -90,7 +90,7 @@ run_main (int argc, ACE_TCHAR *argv[])
            ++iterator)
         {
           ACE_DEBUG ((LM_DEBUG, "%d ", (*iterator).int_id_));
-          ACE_UINT32 key = (*iterator).ext_id_;
+          ACE_UINT32 const key = (*iterator).ext_id_;
           ACE_TEST_ASSERT (((key - i) % table_size) == 0);
         }
 

@@ -1,19 +1,20 @@
 #include "connection.h"
+#include <string>
 
 #ifndef _D_URL
 #define _D_URL
 class URL {
 public:
-  URL(char *buffer);
+  explicit URL (char const *buffer);
 
-  char *get_protocol();
-  char *get_hostname();
-  char *get_filename();
+  std::string const &get_protocol () const;
+  std::string const &get_hostname () const;
+  std::string const &get_filename () const;
 
 private:
-  char *protocol_;
-  char *hostname_;
-  char *filename_;
+  std::string protocol_;
+  std::string hostname_;
+  std::string filename_;
 };
 
 void cleanup();
@@ -24,6 +25,4 @@ int copier(connection in);
 #define INCOMING_FILE_NAME "/tmp/sumedh.web.inc"
 #define TEMPORARY_FILE_NAME "/tmp/sumedh.web.tmp"
 #endif
-
-
 

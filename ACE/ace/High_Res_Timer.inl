@@ -1,4 +1,3 @@
-// -*- C++ -*- */
 #include "ace/Global_Macros.h"
 
 #if defined (ACE_WIN32)
@@ -12,7 +11,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 /// calculations not floating point.
 ACE_INLINE void
 ACE_High_Res_Timer::hrtime_to_tv (ACE_Time_Value &tv,
-                                  const ACE_hrtime_t hrt)
+                                  ACE_hrtime_t const hrt)
 {
 #if !defined (ACE_WIN32)
     // The following are based on the units of global_scale_factor_
@@ -43,18 +42,21 @@ ACE_High_Res_Timer::hrtime_to_tv (ACE_Time_Value &tv,
 #endif
 }
 
-
 ACE_INLINE ACE_Time_Value
-ACE_High_Res_Timer::gettimeofday (const ACE_OS::ACE_HRTimer_Op op)
+ACE_High_Res_Timer::gettimeofday (ACE_OS::ACE_HRTimer_Op const op)
 {
 #if defined (ACE_WIN32)
   // Get the global scale factor if there isn't one yet.
   if (ACE_High_Res_Timer::global_scale_factor_status_ == 0)
-    ACE_High_Res_Timer::global_scale_factor ();
+    {
+      ACE_High_Res_Timer::global_scale_factor ();
+    }
 
   // If there isn't a high-res timer, use gettimeofday ();
   if (ACE_High_Res_Timer::global_scale_factor_status_ == -1)
-    return ACE_OS::gettimeofday ();
+    {
+      return ACE_OS::gettimeofday ();
+    }
 #endif /* ACE_WIN32 */
 
   ACE_Time_Value tv;
@@ -74,14 +76,15 @@ ACE_High_Res_Timer::gettimeofday_hr ()
   return ACE_High_Res_Timer::gettimeofday ();
 }
 
-
 ACE_INLINE ACE_hrtime_t
-ACE_High_Res_Timer::gettime (const ACE_OS::ACE_HRTimer_Op op)
+ACE_High_Res_Timer::gettime (ACE_OS::ACE_HRTimer_Op const op)
 {
 #if defined (ACE_WIN32)
   // Get the global scale factor if there isn't one yet.
   if (ACE_High_Res_Timer::global_scale_factor_status_ == 0)
-    ACE_High_Res_Timer::global_scale_factor ();
+    {
+      ACE_High_Res_Timer::global_scale_factor ();
+    }
 
   // If there isn't a high-res timer, use gettimeofday ();
   if (ACE_High_Res_Timer::global_scale_factor_status_ == -1)
@@ -97,42 +100,42 @@ ACE_High_Res_Timer::gettime (const ACE_OS::ACE_HRTimer_Op op)
 }
 
 ACE_INLINE ACE_hrtime_t
-ACE_High_Res_Timer::elapsed_hrtime (const ACE_hrtime_t end,
-                                    const ACE_hrtime_t start)
+ACE_High_Res_Timer::elapsed_hrtime (ACE_hrtime_t const end,
+                                    ACE_hrtime_t const start)
 {
   if (end > start)
-    return end - start;
+    {
+      return end - start;
+    }
   return (~start + 1 + end);     // Wrapped-around counter diff
 }
 
 ACE_INLINE
-ACE_High_Res_Timer::~ACE_High_Res_Timer ()
-{
-}
+ACE_High_Res_Timer::~ACE_High_Res_Timer () = default;
 
 ACE_INLINE void
-ACE_High_Res_Timer::start (const ACE_OS::ACE_HRTimer_Op op)
+ACE_High_Res_Timer::start (ACE_OS::ACE_HRTimer_Op const op)
 {
   ACE_TRACE ("ACE_High_Res_Timer::start");
   this->start_ = ACE_High_Res_Timer::gettime (op);
 }
 
 ACE_INLINE void
-ACE_High_Res_Timer::stop (const ACE_OS::ACE_HRTimer_Op op)
+ACE_High_Res_Timer::stop (ACE_OS::ACE_HRTimer_Op const op)
 {
   ACE_TRACE ("ACE_High_Res_Timer::stop");
   this->end_ = ACE_High_Res_Timer::gettime (op);
 }
 
 ACE_INLINE void
-ACE_High_Res_Timer::start_incr (const ACE_OS::ACE_HRTimer_Op op)
+ACE_High_Res_Timer::start_incr (ACE_OS::ACE_HRTimer_Op const op)
 {
   ACE_TRACE ("ACE_High_Res_Timer::start_incr");
   this->start_incr_ = ACE_High_Res_Timer::gettime (op);
 }
 
 ACE_INLINE void
-ACE_High_Res_Timer::stop_incr (const ACE_OS::ACE_HRTimer_Op op)
+ACE_High_Res_Timer::stop_incr (ACE_OS::ACE_HRTimer_Op const op)
 {
   ACE_TRACE ("ACE_High_Res_Timer::stop_incr");
   this->total_ +=

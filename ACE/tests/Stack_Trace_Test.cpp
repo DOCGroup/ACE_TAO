@@ -1,20 +1,12 @@
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = DESCRIPTION
-//    This program exercises the ACE_Stack_Trace class.
-//
-// = AUTHOR
-//    Chris Cleeland <cleeland @ ociweb . com>
-//
-// ============================================================================
+/// @file Stack_Trace_Test.cpp
+/// This program exercises the ACE_Stack_Trace class.
+///
+/// @author Chris Cleeland <cleeland @ ociweb . com>
 
 #include "ace/Stack_Trace.h"
-#include "ace/OS_NS_string.h"
 #include "test_config.h"
 
+#include <cstring>
 
 /*
  * Ultra-basic test of stack trace.
@@ -26,15 +18,14 @@
  * - capture traces with different numbers of skipped frames
  */
 
-
 struct SomeException
 {
   static const ssize_t SKIP = 1; //@TODO: #ifdef this for MACOSX which needs 2
   SomeException () : where_(SKIP), explanation_ ("") { }
-  SomeException (const char *explanation)
+  SomeException (char const *explanation)
     : where_(SKIP), explanation_(explanation) { }
   ACE_Stack_Trace where_;
-  const char *explanation_;
+  char const *explanation_;
 };
 
 void
@@ -53,14 +44,14 @@ run_main (int, ACE_TCHAR *[])
 
   ACE_Stack_Trace t2(t1);
   ACE_DEBUG ((LM_DEBUG, "t2 (copied) trace is %C\n",
-        (ACE_OS::strcmp (t1.c_str(), t2.c_str()) == 0) ? "same" : "different"));
+        (std::strcmp (t1.c_str(), t2.c_str()) == 0) ? "same" : "different"));
 
   ACE_Stack_Trace t3;
   ACE_DEBUG ((LM_DEBUG, "t3 trace before assignment is %C\n",
-        (ACE_OS::strcmp (t1.c_str(), t3.c_str()) == 0) ? "same" : "different"));
+        (std::strcmp (t1.c_str(), t3.c_str()) == 0) ? "same" : "different"));
   t3 = t1;
   ACE_DEBUG ((LM_DEBUG, "t3 trace after assignment is %C\n",
-        (ACE_OS::strcmp (t1.c_str(), t3.c_str()) == 0) ? "same" : "different"));
+        (std::strcmp (t1.c_str(), t3.c_str()) == 0) ? "same" : "different"));
 
   try {
     func();

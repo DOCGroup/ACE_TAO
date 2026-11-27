@@ -1,15 +1,8 @@
-// -*- C++ -*-
-
-
-//=============================================================================
 /**
  *  @file    IORTable.h
  *
  *  @author Carlos O'Ryan <coryan@uci.edu>
  */
-//=============================================================================
-
-
 #ifndef TAO_IORTABLE_H
 #define TAO_IORTABLE_H
 
@@ -28,6 +21,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_IORTable_Export TAO_IORTable_Initializer
 {
 public:
+  TAO_IORTable_Initializer () = delete;
+
   /// Used to force the initialization of the ORB code.
   static int init ();
 };

@@ -12,6 +12,7 @@
 #include "tao/Basic_Types.h"
 
 #include <algorithm>
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -44,7 +45,7 @@ private:
 public:
   string_sequence_element(
       value_type & e, CORBA::Boolean release)
-    : element_(&e)
+    : element_(std::addressof (e))
     , release_(release)
   {
   }
@@ -93,7 +94,7 @@ public:
     return *this->element_;
   }
 
-  inline const character_type *in () const {
+  inline character_type const *in () const {
     return *this->element_;
   }
 

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "ace/OS_NS_sys_time.h"
 #include "ace/High_Res_Timer.h"
 
@@ -14,9 +13,13 @@ ACE_Monotonic_Time_Policy::operator()() const
   struct timespec ts;
 
   if (ACE_OS::clock_gettime (CLOCK_MONOTONIC, &ts) == 0)
-    return ACE_Time_Value_T<ACE_Monotonic_Time_Policy>(ts);
+    {
+      return ACE_Time_Value_T<ACE_Monotonic_Time_Policy>(ts);
+    }
   else
-    return ACE_Time_Value_T<ACE_Monotonic_Time_Policy> (ACE_Time_Value::zero);
+    {
+      return ACE_Time_Value_T<ACE_Monotonic_Time_Policy> (ACE_Time_Value::zero);
+    }
 #  else
 #    error "ACE_HAS_MONOTONIC_TIME_POLICY is defined, but no implementation is valid"
 #  endif /* ACE_WIN32 */

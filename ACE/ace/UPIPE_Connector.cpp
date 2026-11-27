@@ -5,6 +5,7 @@
 #include "ace/Handle_Ops.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_stropts.h"
+#include <memory>
 
 #if !defined (__ACE_INLINE__)
 #include "ace/UPIPE_Connector.inl"
@@ -29,9 +30,9 @@ ACE_UPIPE_Connector::ACE_UPIPE_Connector ()
 
 int
 ACE_UPIPE_Connector::connect (ACE_UPIPE_Stream &new_stream,
-                              const ACE_UPIPE_Addr &addr,
+                              ACE_UPIPE_Addr const &addr,
                               ACE_Time_Value *timeout,
-                              const ACE_Addr & /* local_sap */,
+                              ACE_Addr const & /* local_sap */,
                               int /* reuse_addr */,
                               int flags,
                               int perms)
@@ -39,39 +40,45 @@ ACE_UPIPE_Connector::connect (ACE_UPIPE_Stream &new_stream,
   ACE_TRACE ("ACE_UPIPE_Connector::connect");
   ACE_ASSERT (new_stream.get_handle () == ACE_INVALID_HANDLE);
 
-  ACE_HANDLE handle = ACE::handle_timed_open (timeout,
+  ACE_HANDLE const handle = ACE::handle_timed_open (timeout,
                                               addr.get_path_name (),
                                               flags, perms);
 
   if (handle == ACE_INVALID_HANDLE)
-    return -1;
+    {
+      return -1;
+    }
 #if !defined (ACE_WIN32)
   else if (ACE_OS::isastream (handle) != 1)
-    return -1;
+    {
+      return -1;
+    }
 #endif
   else // We're connected!
     {
       ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, new_stream.lock_, -1));
 
-      ACE_UPIPE_Stream *ustream = &new_stream;
+      ACE_UPIPE_Stream *ustream = std::addressof (new_stream);
 
       new_stream.set_handle (handle);
       new_stream.remote_addr_ = addr; // class copy.
-      new_stream.reference_count_++;
+      ++new_stream.reference_count_;
 
       // Now send the address of our ACE_UPIPE_Stream over this pipe
       // to our corresponding ACE_UPIPE_Acceptor, so he may link the
       // two streams.
       ssize_t result = ACE_OS::write (handle,
-                                      (const char *) &ustream,
+                                      (char const *) &ustream,
                                       sizeof ustream);
       if (result == -1)
-        ACELIB_ERROR ((LM_ERROR,
-                    ACE_TEXT ("ACE_UPIPE_Connector %p\n"),
-                    ACE_TEXT ("write to pipe failed")));
+        {
+          ACELIB_ERROR ((LM_ERROR,
+                         ACE_TEXT ("ACE_UPIPE_Connector %p\n"),
+                         ACE_TEXT ("write to pipe failed")));
+        }
 
       // Wait for confirmation of stream linking.
-      ACE_Message_Block *mb_p = nullptr;
+      ACE_Message_Block *mb_p {};
 
       // Our part is done, wait for server to confirm connection.
       result = new_stream.recv (mb_p, nullptr);
@@ -79,15 +86,19 @@ ACE_UPIPE_Connector::connect (ACE_UPIPE_Stream &new_stream,
       // Do *not* coalesce the following two checks for result == -1.
       // They perform different checks and cannot be merged.
       if (result == -1)
+        {
           ACELIB_ERROR ((LM_ERROR,
-                      ACE_TEXT ("ACE_UPIPE_Connector %p\n"),
-                      ACE_TEXT ("no confirmation from server")));
+                         ACE_TEXT ("ACE_UPIPE_Connector %p\n"),
+                         ACE_TEXT ("no confirmation from server")));
+        }
       else
-        // Close down the new_stream at this point in order to
-        // conserve handles.  Note that we don't need the SPIPE
-        // connection anymore since we're linked via the Message_Queue
-        // now.
-        new_stream.ACE_SPIPE::close ();
+        {
+          // Close down the new_stream at this point in order to
+          // conserve handles.  Note that we don't need the SPIPE
+          // connection anymore since we're linked via the Message_Queue
+          // now.
+          new_stream.ACE_SPIPE::close ();
+        }
       return static_cast<int> (result);
     }
 }

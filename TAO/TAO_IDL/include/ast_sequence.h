@@ -75,6 +75,7 @@ class AST_Type;
 class TAO_IDL_FE_Export AST_Sequence : public virtual AST_ConcreteType
 {
 public:
+  AST_Sequence () = delete;
   AST_Sequence (AST_Expression *max_size,
                 AST_Type *bt,
                 UTL_ScopedName *n,
@@ -87,8 +88,8 @@ public:
   AST_Sequence &operator= (AST_Sequence const &) = delete;
   AST_Sequence &operator= (AST_Sequence &&) = delete;
 
+  /// Check whether this type or a type in the list is involved in recursion.
   bool in_recursion (std::vector<AST_Type *> &list) override;
-  // Are we or the node represented by node involved in recursion.
 
   // Data Accessors.
   AST_Expression *max_size () const;
@@ -97,20 +98,19 @@ public:
 
   /**
    * Returns the fully dealiased base type if it's a typedef. If it's not a
-   * typedef, the it returns the same value as as base_type().
+   * typedef, it returns the same value as base_type().
    */
   AST_Type *primitive_base_type () const;
 
+  /// Whether this sequence is unbounded.
   virtual bool unbounded () const;
-  // Is this sequence bounded or not.
 
-  // Recursively called on valuetype to check for legal use as
-  // a primary key. Overridden for valuetype, struct, sequence,
-  // union, array, typedef, and interface.
+  /// Recursively checks whether the type is legal as a primary key.
+  /// Overridden for valuetypes, structs, sequences, unions, arrays,
+  /// typedefs and interfaces.
   bool legal_for_primary_key () const override;
 
-  // Is the element type a forward declared struct or union
-  // that hasn't yet been fully defined?
+  /// Whether the element type is fully defined.
   bool is_defined () override;
 
   // Cleanup method.
@@ -124,30 +124,26 @@ public:
 
   static AST_Decl::NodeType const NT;
 
-  /**
-   * Get and Set Annotations on the base type
-   */
-  ///{
+  /// @name Base type annotations
+  /// @{
   AST_Annotation_Appls &base_type_annotations ();
   void base_type_annotations (AST_Annotation_Appls const &annotations);
-  ///}
+  /// @}
 
 private:
   // Data.
+  /// Maximum sequence size.
   std::unique_ptr<AST_Expression> pd_max_size;
-  // Maximum sequence size.
 
+  /// Sequence base type.
   AST_Type *pd_base_type;
-  // Sequence base type.
 
+  /// Whether the sequence is unbounded.
   bool unbounded_ {true};
-  // Whether we are bounded or unbounded.
 
   std::unique_ptr<AST_Type> owned_base_type_;
 
-  /**
-   * Annotations on the base type
-   */
+  /// Annotations on the base type.
   AST_Annotation_Appls base_type_annotations_;
 };
 

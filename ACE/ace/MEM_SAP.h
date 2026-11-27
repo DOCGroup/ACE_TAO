@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    MEM_SAP.h
  *
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef ACE_MEM_SAP_H
 #define ACE_MEM_SAP_H
@@ -27,6 +23,8 @@
 #include "ace/MMAP_Memory_Pool.h"
 #include "ace/Process_Mutex.h"
 
+#include <memory>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class ACE_MEM_SAP;
@@ -42,8 +40,10 @@ class ACE_MEM_SAP_Node
 public:
   using ACE_MEM_SAP_NODE_PTR = ACE_Based_Pointer<ACE_MEM_SAP_Node>;
 
+  ACE_MEM_SAP_Node () = delete;
+
   /// Initialize the node with its capacity.
-  ACE_MEM_SAP_Node (size_t cap);
+  explicit ACE_MEM_SAP_Node (size_t cap);
 
   /// Get the size of the data we hold.
   size_t size () const;
@@ -58,7 +58,7 @@ public:
   size_t capacity_;
 
   /// The actualy size used.
-  size_t size_;
+  size_t size_ {};
 
   ACE_MEM_SAP_NODE_PTR next_;
 };
@@ -75,44 +75,48 @@ public:
   using MALLOC_TYPE = ACE_Malloc_T<ACE_MMAP_Memory_Pool, ACE_Process_Mutex, ACE_PI_Control_Block>;
   using MALLOC_OPTIONS = ACE_MMAP_Memory_Pool_Options;
 
-  /// Destructor.
   virtual ~ACE_MEM_SAP ();
+
+  ACE_MEM_SAP (ACE_MEM_SAP const &) = delete;
+  ACE_MEM_SAP (ACE_MEM_SAP &&) = delete;
+  ACE_MEM_SAP &operator= (ACE_MEM_SAP const &) = delete;
+  ACE_MEM_SAP &operator= (ACE_MEM_SAP &&) = delete;
 
   /**
    * Initialize the MEM_SAP object.
    */
   virtual int init (ACE_HANDLE handle,
-                    const ACE_TCHAR *name,
+                    ACE_TCHAR const *name,
                     MALLOC_OPTIONS *options) = 0;
 
   /**
    * Finalizing the MEM_SAP object.  This method doesn't invoke
-   * the <remove> method.
+   * the @c remove method.
    */
   virtual int fini ();
 
   /**
-   * Fetch location of next available data into <recv_buffer_>.
+   * Fetch location of next available data into @c recv_buffer_.
    * As this operation read the address of the data off the socket
    * using ACE::recv, @a timeout only applies to ACE::recv.
    */
   virtual ssize_t recv_buf (ACE_MEM_SAP_Node *&buf,
                             int flags,
-                            const ACE_Time_Value *timeout) = 0;
+                            ACE_Time_Value const *timeout) = 0;
 
   /**
-   * Wait to to @a timeout amount of time to send @a buf.  If <send>
+   * Wait to to @a timeout amount of time to send @a buf.  If @c send
    * times out a -1 is returned with @c errno == ETIME.  If it succeeds
    * the number of bytes sent is returned.  */
   virtual ssize_t send_buf (ACE_MEM_SAP_Node *buf,
                             int flags,
-                            const ACE_Time_Value *timeout) = 0;
+                            ACE_Time_Value const *timeout) = 0;
 
-  /// request a buffer of size @a size.  Return 0 if the <shm_malloc_> is
+  /// request a buffer of size @a size.  Return 0 if the @c shm_malloc_ is
   /// not initialized.
-  ACE_MEM_SAP_Node *acquire_buffer (const ssize_t size);
+  ACE_MEM_SAP_Node *acquire_buffer (ssize_t const size);
 
-  /// release a buffer pointed by @a buf.  Return -1 if the <shm_malloc_>
+  /// release a buffer pointed by @a buf.  Return -1 if the @c shm_malloc_
   /// is not initialized.
   int release_buffer (ACE_MEM_SAP_Node *buf);
 
@@ -123,7 +127,8 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-  // = Class initializing methods to create/connect to a shared memory pool.
+  /// @name Shared memory pool initialization
+  /// @{
 
   /**
    * Create a new shm_malloc object.  Return 0 if succeed and -1
@@ -131,17 +136,18 @@ protected:
    * class that wants to create a new memory pool for inter process
    * communication.
    */
-  int create_shm_malloc (const ACE_TCHAR *name,
+  int create_shm_malloc (ACE_TCHAR const *name,
                          MALLOC_OPTIONS *options);
 
   /// Close down the share memory pool.  Clean up the
   /// mmap file if we are the last one using it.
   int close_shm_malloc ();
+  /// @}
 
   ACE_HANDLE handle_;
 
-  /// Data exchange channel.
-  MALLOC_TYPE *shm_malloc_;
+  /// Owns the shared-memory allocator backing the data exchange channel.
+  std::unique_ptr<MALLOC_TYPE> shm_malloc_;
 
   /// Constructor.  Prevent this class from being instantiated.
   ACE_MEM_SAP ();

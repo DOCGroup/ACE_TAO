@@ -1,4 +1,3 @@
-
 #ifndef SESSION_H
 #define SESSION_H
 #include /**/ "ace/pre.h"
@@ -10,16 +9,19 @@ class Session
   : public virtual POA_Test::Session
 {
 public:
-  /// Constructor
   Session (Test::Callback_ptr cb,
            PortableServer::POA_ptr poa);
+  Session (Session const &) = delete;
+  Session (Session &&) = delete;
+  Session &operator= (Session const &) = delete;
+  Session &operator= (Session &&) = delete;
 
-  // = The skeleton methods
-  virtual void sample (Test::Timestamp the_timestamp);
+  /// The skeleton methods
+  void sample (Test::Timestamp the_timestamp) override;
 
-  virtual void shutdown ();
+  void shutdown () override;
 
-  virtual PortableServer::POA_ptr _default_POA ();
+  PortableServer::POA_ptr _default_POA () override;
 
 private:
   Test::Callback_var cb_;

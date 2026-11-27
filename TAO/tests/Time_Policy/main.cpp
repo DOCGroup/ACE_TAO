@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    main.cpp
  *
@@ -7,7 +6,6 @@
  *  @author Alexander Babu Arulanthu <alex@cs.wustl.edu>
  *  @author Michael Kircher <Michael.Kircher@mchp.siemens.de>
  */
-//=============================================================================
 
 #include "tao/ORB.h"
 #include "tao/ORB_Core.h"
@@ -26,36 +24,39 @@
      ((defined (__GNUG__) || defined (__INTEL_COMPILER)) && !defined(ACE_VXWORKS) && defined (ACE_HAS_PENTIUM)) || \
      (defined (ACE_HAS_POWERPC_TIMER) && (defined (ghs) || defined (__GNUG__))) || \
      (defined (ACE_HAS_CLOCK_GETTIME) && defined (ACE_HAS_CLOCK_GETTIME_MONOTONIC)))
-
 #if defined(TAO_USE_HR_TIME_POLICY_STRATEGY)
-bool uses_hr_time = true;
+  bool uses_hr_time = true;
 #else
-bool uses_hr_time = false;
+  bool uses_hr_time = false;
 #endif
 
 class TestHandler
   : public ACE_Event_Handler
 {
 public:
-  TestHandler (CORBA::ORB_ptr orb)
-    : orb_ (CORBA::ORB::_duplicate (orb)),
-      timeout_triggered_ (false)
+  explicit TestHandler (CORBA::ORB_ptr orb)
+    : orb_ (CORBA::ORB::_duplicate (orb))
   {}
 
-  virtual int handle_timeout (const ACE_Time_Value &tv,
-                              const void *arg);
+  int handle_timeout (ACE_Time_Value const &tv,
+                      void const *arg) override;
 
-  bool trigger_in(const ACE_Time_Value &delay);
+  bool trigger_in (ACE_Time_Value const &delay);
 
-  bool timeout_triggered () { return this->timeout_triggered_; }
+  bool timeout_triggered () const { return this->timeout_triggered_; }
+
+  TestHandler (TestHandler const &) = delete;
+  TestHandler &operator= (TestHandler const &) = delete;
+  TestHandler (TestHandler &&) = delete;
+  TestHandler &operator= (TestHandler &&) = delete;
 
 private:
   CORBA::ORB_var orb_;
-  bool timeout_triggered_;
+  bool timeout_triggered_ {};
 };
 
-int TestHandler::handle_timeout (const ACE_Time_Value &,
-                                 const void *)
+int TestHandler::handle_timeout (ACE_Time_Value const &,
+                                 void const *)
 {
   ACE_DEBUG ((LM_DEBUG, "TestHandler::handle_timeout - timeout triggered\n"));
   this->timeout_triggered_ = true;
@@ -63,9 +64,10 @@ int TestHandler::handle_timeout (const ACE_Time_Value &,
   return 0;
 }
 
-bool TestHandler::trigger_in(const ACE_Time_Value &delay)
+bool TestHandler::trigger_in (ACE_Time_Value const &delay)
 {
-  return -1 != this->orb_->orb_core ()->reactor ()->schedule_timer (this, 0, delay, ACE_Time_Value (0));
+  return -1 != this->orb_->orb_core ()->reactor ()->schedule_timer (
+    this, nullptr, delay, ACE_Time_Value::zero);
 }
 
 int
@@ -108,9 +110,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         orb->resolve_initial_references("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Unable to initialize the POA.\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Unable to initialize the POA.\n"),
+                            1);
+        }
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
@@ -119,7 +123,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         root_poa->the_POAManager ();
 
       if (parse_args (argc, argv) != 0)
+      {
         return 1;
+      }
 
       poa_manager->activate ();
 
@@ -127,12 +133,14 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // trigger in 2 seconds
       if (!test_handler.trigger_in (ACE_Time_Value (2, 0)))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Unable to schedule trigger.\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Unable to schedule trigger.\n"),
+                            1);
+        }
 
       // reset system clock 4 seconds backwards
-      timespec_t curts;
+      timespec_t curts {};
       ACE_Time_Value curtime = ACE_OS::gettimeofday ();
       curtime -= ACE_Time_Value (4, 0);
       curts = curtime;
@@ -178,7 +186,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
             }
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return 1;

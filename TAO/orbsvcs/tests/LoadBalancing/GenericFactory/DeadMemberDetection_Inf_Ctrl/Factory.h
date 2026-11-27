@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #ifndef FACTORY_H
 #define FACTORY_H
 
@@ -15,8 +14,12 @@ class Factory
   : public virtual POA_PortableGroup::GenericFactory
 {
 public:
-  /// Constructor
-  Factory (int id);
+  explicit Factory (int id, int pong_delay = 0);
+
+  Factory (Factory const &) = delete;
+  Factory &operator= (Factory const &) = delete;
+  Factory (Factory &&) = delete;
+  Factory &operator= (Factory &&) = delete;
   /// creates a Test::Simple servant reference.
   /// This reference is then passed as a FactoryInfos property
   /// when the LoadManager creates the object group.
@@ -37,13 +40,11 @@ public:
       PortableGroup::GenericFactory::FactoryCreationId const&
         factory_creation_id) override;
 
-  CORBA::Object_ptr get_object () const;
-
 private:
   /// The factory creation id.
-  CORBA::ULong fcid_;
+  CORBA::ULong fcid_ {};
 
-  /// Table that maps FactoryCreationId to Factory_Node
+  /// Tracks the FactoryCreationIds managed by this factory.
   Factory_Map factory_map_;
 
   /// The object id of the servant we are creating.
@@ -52,10 +53,10 @@ private:
   /// The POA with which we register the servant.
   PortableServer::POA_var poa_;
 
-  /// Lock used to synchronize access to the factory creation id
   TAO_SYNCH_MUTEX lock_;
 
-  int id_;
+  int const id_;
+  int const pong_delay_;
 
   CORBA::Object_var obj_;
 };

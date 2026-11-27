@@ -1,22 +1,18 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   GroupInfoPublisher.h
  *
  *  @author Huang-Ming Huang <hh1@cse.wustl.edu>
  */
-//=============================================================================
 
 #ifndef GROUPINFOPUBLISHER_H
 #define GROUPINFOPUBLISHER_H
 #include "ftrtec_export.h"
 #include "orbsvcs/FtRtecEventChannelAdminC.h"
 #include "tao/PortableServer/PortableServer.h"
-#include "ace/Vector_T.h"
 #include "ace/Singleton.h"
 #include "ace/Synch.h"
 #include <memory>
+#include <vector>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -32,7 +28,7 @@ public:
   using BackupList = FtRtecEventChannelAdmin::EventChannelList;
 
   struct Info {
-    bool primary;
+    bool primary {};
     CORBA::Object_var iogr;
     FtRtecEventChannelAdmin::EventChannel_var successor;
     BackupList backups;
@@ -47,29 +43,29 @@ public:
 
   FtRtecEventChannelAdmin::EventChannel_var successor() const;
 
-  const BackupList& backups() const;
+  BackupList const& backups() const;
 
-  Info* setup_info(const FTRT::ManagerInfoList & info_list,
+  Info* setup_info(FTRT::ManagerInfoList const & info_list,
               int my_position,
               CORBA::ULong object_group_ref_version);
 
   void update_info(Info_ptr& info);
 
-  const PortableServer::ObjectId& object_id() const;
-  const CosNaming::Name& name() const;
+  PortableServer::ObjectId const& object_id() const;
+  CosNaming::Name const& name() const;
 
-  void object_id(const char* oid);
-  void name(const char* nam);
+  void object_id(char const *oid);
+  void name(char const *nam);
   GroupInfoPublisherBase();
 
-private:
   GroupInfoPublisherBase(GroupInfoPublisherBase const&) = delete;
   GroupInfoPublisherBase(GroupInfoPublisherBase&&) = delete;
   GroupInfoPublisherBase& operator=(GroupInfoPublisherBase const&) = delete;
   GroupInfoPublisherBase& operator=(GroupInfoPublisherBase&&) = delete;
 
+private:
   CosNaming::NamingContext_var naming_context_;
-  using Subscribers = ACE_Vector<TAO_FTEC_Become_Primary_Listener*, 2>;
+  using Subscribers = std::vector<TAO_FTEC_Become_Primary_Listener*>;
   Subscribers subscribers_;
   PortableServer::ObjectId object_id_;
   CosNaming::Name name_;

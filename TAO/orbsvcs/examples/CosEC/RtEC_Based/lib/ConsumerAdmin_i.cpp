@@ -1,14 +1,10 @@
 #include "ConsumerAdmin_i.h"
 #include <memory>
 
-TAO_CosEC_ConsumerAdmin_i::TAO_CosEC_ConsumerAdmin_i ()
-  : qos_ (),
-    rtec_consumeradmin_ (RtecEventChannelAdmin::ConsumerAdmin::_nil ())
-{
-}
+TAO_CosEC_ConsumerAdmin_i::TAO_CosEC_ConsumerAdmin_i () = default;
 
 int
-TAO_CosEC_ConsumerAdmin_i::init (const RtecEventChannelAdmin::ConsumerQOS &consumerqos,
+TAO_CosEC_ConsumerAdmin_i::init (RtecEventChannelAdmin::ConsumerQOS const &consumerqos,
                                  RtecEventChannelAdmin::ConsumerAdmin_ptr rtec_consumeradmin)
 {
   this->qos_ = consumerqos;
@@ -20,13 +16,13 @@ TAO_CosEC_ConsumerAdmin_i::init (const RtecEventChannelAdmin::ConsumerQOS &consu
 CosEventChannelAdmin::ProxyPushSupplier_ptr
 TAO_CosEC_ConsumerAdmin_i::obtain_push_supplier ()
 {
-  CosEventChannelAdmin::ProxyPushSupplier_ptr proxysupplier_nil =
+  CosEventChannelAdmin::ProxyPushSupplier_ptr const proxysupplier_nil =
     CosEventChannelAdmin::ProxyPushSupplier::_nil ();
 
-  RtecEventChannelAdmin::ProxyPushSupplier_var rtecproxypushsupplier =
+  RtecEventChannelAdmin::ProxyPushSupplier_var const rtecproxypushsupplier =
     this->rtec_consumeradmin_->obtain_push_supplier ();
 
-  TAO_CosEC_ProxyPushSupplier_i *proxypushsupplier;
+  TAO_CosEC_ProxyPushSupplier_i *proxypushsupplier {};
 
   ACE_NEW_RETURN (proxypushsupplier,
                   TAO_CosEC_ProxyPushSupplier_i (this->qos_,
@@ -35,7 +31,8 @@ TAO_CosEC_ConsumerAdmin_i::obtain_push_supplier ()
 
   std::unique_ptr<TAO_CosEC_ProxyPushSupplier_i> auto_proxysupplier (proxypushsupplier);
 
-  CosEventChannelAdmin::ProxyPushSupplier_ptr proxy_obj = auto_proxysupplier.get ()->_this ();
+  CosEventChannelAdmin::ProxyPushSupplier_ptr const proxy_obj =
+    auto_proxysupplier.get ()->_this ();
 
    // give the ownership to the POA.
   auto_proxysupplier.get ()->_remove_ref ();

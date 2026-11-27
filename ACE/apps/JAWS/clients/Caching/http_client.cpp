@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    http_client.cpp
  *
@@ -8,13 +6,12 @@
  *
  *  @author James Hu
  */
-//=============================================================================
-
 
 #include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_string.h"
 #include "ace/OS_NS_ctype.h"
 #include "http_handler.h"
+#include <cstdio>
+#include <cstring>
 
 int
 ACE_TMAIN (int, ACE_TCHAR *[])
@@ -26,41 +23,51 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   //     Report status.
   // * Accept shell escape character.
 
-  char buf[BUFSIZ];
+  char buf[BUFSIZ] {};
 
   ACE_DEBUG ((LM_DEBUG, "* "));
 
-  while (ACE_OS::fgets (buf, sizeof (buf), stdin) != 0)
+  while (ACE_OS::fgets (buf, sizeof (buf), stdin) != nullptr)
     {
       char *s = buf;
 
       // get rid of trailing '\n'
-      int len = ACE_OS::strlen (s);
+      size_t const len = std::strlen (s);
 
       if (len > 0 && s[len - 1] == '\n')
-        s[len - 1] = 0;
+        {
+          s[len - 1] = 0;
+        }
 
       while (ACE_OS::ace_isspace (*s))
-        s++;
+        {
+          ++s;
+        }
 
       if (*s == '!')
         {
           do
-          s++;
+            {
+              ++s;
+            }
           while (ACE_OS::ace_isspace (*s));
 
           // Shell command.
           if (ACE_OS::system (ACE_TEXT_CHAR_TO_TCHAR (s)) == -1)
-            ACE_ERROR ((LM_ERROR, ACE_TEXT (" ! Error executing: %C\n"), s));
+            {
+              ACE_ERROR ((LM_ERROR, ACE_TEXT (" ! Error executing: %C\n"), s));
+            }
         }
-      else if (ACE_OS::strncmp (s, "http://", 7) == 0)
+      else if (std::strncmp (s, "http://", 7) == 0)
         {
           // URL
           HTTP_Connector connector;
           connector.connect (s);
         }
       else
-        ACE_ERROR ((LM_ERROR, ACE_TEXT (" ? I don't understand: %C\n"), s));
+        {
+          ACE_ERROR ((LM_ERROR, ACE_TEXT (" ? I don't understand: %C\n"), s));
+        }
 
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("* ")));
     }

@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project : orbsvcsexe, utils, install, naming, trading_serv {
   exename  = tao_costrading
 

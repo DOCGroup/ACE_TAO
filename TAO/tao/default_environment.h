@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   default_environment.h
  *
  * @author Balachandran Natarajan <bala@dre.vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef TAO_DEFAULT_ENVIRONMENT_H
 #define TAO_DEFAULT_ENVIRONMENT_H

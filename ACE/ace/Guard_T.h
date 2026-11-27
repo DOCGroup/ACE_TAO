@@ -1,18 +1,15 @@
-// -*- C++ -*-
-
-//==========================================================================
 /**
  *  @file    Guard_T.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//==========================================================================
 
 #ifndef ACE_GUARD_T_H
 #define ACE_GUARD_T_H
 #include /**/ "ace/pre.h"
 
 #include "ace/Lock.h"
+#include <memory>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -63,7 +60,8 @@ template <class ACE_LOCK>
 class ACE_Guard
 {
 public:
-  ACE_Guard (ACE_LOCK &l);
+  ACE_Guard () = delete;
+  explicit ACE_Guard (ACE_LOCK &l);
 
   /// Implicitly and automatically acquire (or try to acquire) the
   /// lock.  If @a block is non-0 then acquire() the ACE_LOCK, else
@@ -74,13 +72,13 @@ public:
   /// @a become_owner parameter indicates whether the guard should release
   /// the lock implicitly on destruction. The @a block parameter is
   /// ignored and is used here to disambiguate with the preceding
-  /// constructor.
   ACE_Guard (ACE_LOCK &l, bool block, int become_owner);
 
   /// Implicitly release the lock.
   ~ACE_Guard ();
 
-  // = Lock accessors.
+  /// @name Lock operations
+  /// @{
 
   /// Explicitly acquire the lock.
   int acquire ();
@@ -95,7 +93,11 @@ public:
   /// implicitly in the destructor.
   void disown ();
 
-  // = Utility methods.
+  /// @}
+
+  /// @name Utility operations
+  /// @{
+
   /// true if locked, false if couldn't acquire the lock
   /// (errno will contain the reason for this).
   bool locked () const;
@@ -107,6 +109,7 @@ public:
   void dump () const;
 
   // ACE_ALLOC_HOOK_DECLARE;
+  /// @}
   // Declare the dynamic allocation hooks.
 
 protected:
@@ -120,8 +123,10 @@ protected:
   int owner_;
 
 private:
-  void operator= (const ACE_Guard<ACE_LOCK> &) = delete;
-  ACE_Guard (const ACE_Guard<ACE_LOCK> &) = delete;
+  ACE_Guard (ACE_Guard const &) = delete;
+  ACE_Guard (ACE_Guard &&) = delete;
+  ACE_Guard &operator= (ACE_Guard const &) = delete;
+  ACE_Guard &operator= (ACE_Guard &&) = delete;
 };
 
 /**
@@ -129,7 +134,7 @@ private:
  *
  * @brief This class is similar to class ACE_Guard, though it
  * acquires/releases a write lock automatically (naturally, the
- * <ACE_LOCK> it is instantiated with must support the appropriate
+ * @c ACE_LOCK it is instantiated with must support the appropriate
  * API).
  *
  * @warning See important "WARNING" in comments at top of ACE_Guard.
@@ -138,14 +143,16 @@ template <class ACE_LOCK>
 class ACE_Write_Guard : public ACE_Guard<ACE_LOCK>
 {
 public:
+  ACE_Write_Guard () = delete;
   /// Implicitly and automatically acquire a write lock.
-  ACE_Write_Guard (ACE_LOCK &m);
+  explicit ACE_Write_Guard (ACE_LOCK &m);
 
   /// Implicitly and automatically acquire (or try to acquire) a write
   /// lock.
   ACE_Write_Guard (ACE_LOCK &m, bool block);
 
-  // = Lock accessors.
+  /// @name Lock operations
+  /// @{
 
   /// Explicitly acquire the write lock.
   int acquire_write ();
@@ -159,12 +166,16 @@ public:
   /// Conditionally acquire the write lock (i.e., won't block).
   int tryacquire ();
 
-  // = Utility methods.
+  /// @}
+
+  /// @name Utility operations
+  /// @{
 
   /// Dump the state of an object.
   void dump () const;
 
   // ACE_ALLOC_HOOK_DECLARE;
+  /// @}
   // Declare the dynamic allocation hooks.
 };
 
@@ -173,7 +184,7 @@ public:
  *
  * @brief This class is similar to class ACE_Guard, though it
  * acquires/releases a read lock automatically (naturally, the
- * <ACE_LOCK> it is instantiated with must support the appropriate
+ * @c ACE_LOCK it is instantiated with must support the appropriate
  * API).
  *
  * @warning See important "WARNING" in comments at top of ACE_Guard.
@@ -182,14 +193,16 @@ template <class ACE_LOCK>
 class ACE_Read_Guard : public ACE_Guard<ACE_LOCK>
 {
 public:
+  ACE_Read_Guard () = delete;
   /// Implicitly and automatically acquire a read lock.
-  ACE_Read_Guard (ACE_LOCK& m);
+  explicit ACE_Read_Guard (ACE_LOCK& m);
 
   /// Implicitly and automatically acquire (or try to acquire) a read
   /// lock.
   ACE_Read_Guard (ACE_LOCK &m, bool block);
 
-  // = Lock accessors.
+  /// @name Lock operations
+  /// @{
 
   /// Explicitly acquire the read lock.
   int acquire_read ();
@@ -203,12 +216,16 @@ public:
   /// Conditionally acquire the read lock (i.e., won't block).
   int tryacquire ();
 
-  // = Utility methods.
+  /// @}
+
+  /// @name Utility operations
+  /// @{
 
   /// Dump the state of an object.
   void dump () const;
 
   // ACE_ALLOC_HOOK_DECLARE;
+  /// @}
   // Declare the dynamic allocation hooks.
 };
 
@@ -228,19 +245,20 @@ public:
  * @brief This data structure is meant to be used within a method or
  * function...  It performs automatic aquisition and release of
  * a synchronization object.  Moreover, it ensures that the lock
- * is released even if a thread exits via <thr_exit>!
+ * is released even if a thread exits via @c thr_exit!
  */
 template <class ACE_LOCK>
 class ACE_TSS_Guard
 {
 public:
   /// Implicitly and automatically acquire the thread-specific lock.
-  ACE_TSS_Guard (ACE_LOCK &lock, bool block = true);
+  explicit ACE_TSS_Guard (ACE_LOCK &lock, bool block = true);
 
   /// Implicitly release the thread-specific lock.
   ~ACE_TSS_Guard ();
 
-  // = Lock accessors.
+  /// @name Lock operations
+  /// @{
 
   /// Explicitly acquire the thread-specific lock.
   int acquire ();
@@ -252,7 +270,11 @@ public:
   /// Explicitly release the thread-specific lock.
   int release ();
 
-  // = Utility methods.
+  /// @}
+
+  /// @name Utility operations
+  /// @{
+
   /// Explicitly release the thread-specific lock.
   int remove ();
 
@@ -261,6 +283,7 @@ public:
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
+  /// @}
 
 protected:
   /// Helper, meant for subclass only.
@@ -280,8 +303,10 @@ private:
   using Guard_Type = ACE_Guard<ACE_LOCK>;
   // FUZZ: enable check_for_ACE_Guard
 
-  void operator= (const ACE_TSS_Guard<ACE_LOCK> &) = delete;
-  ACE_TSS_Guard (const ACE_TSS_Guard<ACE_LOCK> &) = delete;
+  ACE_TSS_Guard (ACE_TSS_Guard const &) = delete;
+  ACE_TSS_Guard (ACE_TSS_Guard &&) = delete;
+  ACE_TSS_Guard &operator= (ACE_TSS_Guard const &) = delete;
+  ACE_TSS_Guard &operator= (ACE_TSS_Guard &&) = delete;
 };
 
 /**
@@ -296,10 +321,12 @@ template <class ACE_LOCK>
 class ACE_TSS_Write_Guard : public ACE_TSS_Guard<ACE_LOCK>
 {
 public:
+  ACE_TSS_Write_Guard () = delete;
   /// Implicitly and automatically acquire the thread-specific write lock.
-  ACE_TSS_Write_Guard (ACE_LOCK &lock, bool block = true);
+  explicit ACE_TSS_Write_Guard (ACE_LOCK &lock, bool block = true);
 
-  // = Lock accessors.
+  /// @name Lock operations
+  /// @{
 
   /// Explicitly acquire the thread-specific write lock.
   int acquire_write ();
@@ -313,12 +340,16 @@ public:
   /// Conditionally acquire the thread-specific write lock (i.e., won't block).
   int tryacquire ();
 
-  // = Utility methods.
+  /// @}
+
+  /// @name Utility operations
+  /// @{
 
   /// Dump the state of an object.
   void dump () const;
 
   // ACE_ALLOC_HOOK_DECLARE;
+  /// @}
   // Declare the dynamic allocation hooks.
 private:
   // FUZZ: disable check_for_ACE_Guard
@@ -330,19 +361,22 @@ private:
 /**
  * @class ACE_TSS_Read_Guard
  *
- * @brief This class is similar to class <ACE_TSS_Guard>, though it
+ * @brief This class is similar to class @c ACE_TSS_Guard, though it
  * acquires/releases a read lock automatically (naturally, the
- * <ACE_LOCK> it is instantiated with must support the
+ * @c ACE_LOCK it is instantiated with must support the
  * appropriate API).
  */
 template <class ACE_LOCK>
 class ACE_TSS_Read_Guard : public ACE_TSS_Guard<ACE_LOCK>
 {
 public:
+  ACE_TSS_Read_Guard () = delete;
   /// Implicitly and automatically acquire the thread-specific read lock.
-  ACE_TSS_Read_Guard (ACE_LOCK &lock, bool block = true);
+  explicit ACE_TSS_Read_Guard (ACE_LOCK &lock, bool block = true);
 
-  // = Lock accessors.
+  /// @name Lock operations
+  /// @{
+
   /// Explicitly acquire the thread-specific read lock.
   int acquire_read ();
 
@@ -357,11 +391,16 @@ public:
   /// block).
   int tryacquire ();
 
-  // = Utility methods.
+  /// @}
+
+  /// @name Utility operations
+  /// @{
+
   /// Dump the state of an object.
   void dump () const;
 
   // ACE_ALLOC_HOOK_DECLARE;
+  /// @}
   // Declare the dynamic allocation hooks.
 private:
   // FUZZ: disable check_for_ACE_Guard

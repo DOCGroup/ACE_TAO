@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-// ===================================================================
 /**
  *  @file   Codeset_Translator_Base.h
  *
  *  @author   Phil Mesnier <mesnier_p@ociweb.com>
  */
-// ===================================================================
 
 #ifndef TAO_CODESET_TRANSLATOR_BASE_H
 #define TAO_CODESET_TRANSLATOR_BASE_H

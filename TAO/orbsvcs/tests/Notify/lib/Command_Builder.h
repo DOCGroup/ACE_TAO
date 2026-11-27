@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file Command_Builder.h
  *
@@ -23,6 +22,9 @@
 #include "ace/Hash_Map_Manager.h"
 #include "tao/ORB.h"
 
+#include <memory>
+#include <vector>
+
 class TAO_Notify_Tests_Command_Factory;
 class TAO_Notify_Tests_Command;
 
@@ -34,28 +36,36 @@ class TAO_Notify_Tests_Command;
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Command_Builder : public ACE_Service_Object
 {
 public:
-  /// Constructor
   TAO_Notify_Tests_Command_Builder ();
 
-  /// Destructor
+  TAO_Notify_Tests_Command_Builder (TAO_Notify_Tests_Command_Builder const &) = delete;
+  TAO_Notify_Tests_Command_Builder &operator=(TAO_Notify_Tests_Command_Builder const &) = delete;
+  TAO_Notify_Tests_Command_Builder (TAO_Notify_Tests_Command_Builder &&) = delete;
+  TAO_Notify_Tests_Command_Builder &operator=(TAO_Notify_Tests_Command_Builder &&) = delete;
+
   ~TAO_Notify_Tests_Command_Builder ();
 
-  /// = Service_Object virtual method overloads.
-  virtual int init (int argc, ACE_TCHAR *argv[]);
-  virtual int fini ();
+  /// @name Service_Object virtual method overloads
+  /// @{
+  int init (int argc, ACE_TCHAR *argv[]) override;
+  int fini () override;
+  /// @}
 
   /// Register the factory against the name of the factory.
   void _register (ACE_CString command_factory_name, TAO_Notify_Tests_Command_Factory* command_factory);
 
-  /// Execute the <start_command_>.
+  /// Execute @c start_command_.
   void execute ();
 
 protected:
-  /// The starting command. each command executes the next one when done.
-  TAO_Notify_Tests_Command* start_command_;
+  /// Non-owning pointer to the first command in the builder-owned chain.
+  TAO_Notify_Tests_Command* start_command_ {};
 
-  /// Last command initialized.
-  TAO_Notify_Tests_Command* last_command_;
+  /// Non-owning pointer to the last command in the builder-owned chain.
+  TAO_Notify_Tests_Command* last_command_ {};
+
+  /// Own the commands linked through start_command_ and last_command_.
+  std::vector<std::unique_ptr<TAO_Notify_Tests_Command>> commands_;
 
   /// The factory map.
   ACE_Hash_Map_Manager <ACE_CString, TAO_Notify_Tests_Command_Factory*, TAO_SYNCH_MUTEX> factory_map_;

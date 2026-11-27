@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "ace/Thread.h"
 #include "ace/Log_Category.h"
 
@@ -44,7 +43,7 @@ template <class TYPE> ACE_INLINE ACE_TSS_Adapter *
 ACE_TSS<TYPE>::ts_value () const
 {
   // Get the tss adapter from thread-specific storage
-  void *temp = nullptr;
+  void *temp {};
   if (ACE_Thread::getspecific (this->key_, &temp) == -1)
     {
       return 0; // This should not happen!
@@ -55,10 +54,10 @@ ACE_TSS<TYPE>::ts_value () const
 template <class TYPE> ACE_INLINE TYPE *
 ACE_TSS<TYPE>::ts_value () const
 {
-  void *temp = nullptr;
+  void *temp {};
   if (ACE_Thread::getspecific (this->key_, &temp) == -1)
     {
-      return 0; // This should not happen!
+      return nullptr; // This should not happen!
     }
   return static_cast <TYPE *> (temp);
 }

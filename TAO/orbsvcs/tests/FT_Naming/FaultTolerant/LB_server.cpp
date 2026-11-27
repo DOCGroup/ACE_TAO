@@ -4,6 +4,8 @@
 #include "TestC.h"
 #include "ace/OS_NS_stdio.h"
 
+#include <memory>
+
 LB_server::LB_server (int argc, ACE_TCHAR **argv)
   : argc_ (argc)
   , argv_ (argv)
@@ -18,11 +20,11 @@ LB_server::destroy ()
     {
       this->naming_manager_->delete_object_group ("BasicGroup");
 
-      this->root_poa_->destroy (1, 1);
+      this->root_poa_->destroy (true, true);
 
       this->orb_->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception (
         ACE_TEXT ("Exception caught while destroying LB_server\n"));
@@ -50,8 +52,8 @@ LB_server::naming_manager ()
 }
 
 int
-LB_server::write_ior_to_file (const ACE_TCHAR *file_name,
-                              const char *ior)
+LB_server::write_ior_to_file (ACE_TCHAR const *file_name,
+                              char const *ior)
 {
   FILE *output_file =
     ACE_OS::fopen (file_name, "w");
@@ -75,20 +77,22 @@ LB_server::parse_args (int argc, ACE_TCHAR *argv[])
   int c;
 
   while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'o':
-        this->ior_output_file_ = get_opts.opt_arg ();
-        break;
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("usage:  %s ")
-                           ACE_TEXT ("-o <iorfile>")
-                           ACE_TEXT ("\n"),
-                           argv [0]),
-                          -1);
-      }
+    {
+      switch (c)
+        {
+        case 'o':
+          this->ior_output_file_ = get_opts.opt_arg ();
+          break;
+        case '?':
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("usage:  %s ")
+                             ACE_TEXT ("-o <iorfile>")
+                             ACE_TEXT ("\n"),
+                             argv [0]),
+                            -1);
+        }
+    }
   // Indicates successful parsing of the command line
   return 0;
 }
@@ -105,10 +109,12 @@ LB_server::start_orb_and_poa ()
         this->orb_->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT (" (%P|%t) Unable to initialize ")
-                           ACE_TEXT ("the POA.\n")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT (" (%P|%t) Unable to initialize ")
+                             ACE_TEXT ("the POA.\n")),
+                            -1);
+        }
 
       this->root_poa_ = PortableServer::POA::_narrow (poa_object.in ());
 
@@ -118,11 +124,13 @@ LB_server::start_orb_and_poa ()
       poa_manager->activate ();
 
       ACE_Time_Value timeout (10); // Wait up to 10 seconds for the naming service
-      if (name_svc_.init (this->orb_.in (), &timeout) != 0)
-        ACE_ERROR_RETURN ((LM_DEBUG,
-                           ACE_TEXT (" (%P|%t) LB_server: Could not connect ")
-                           ACE_TEXT ("to naming service.\n")),
-                           -1);
+      if (name_svc_.init (this->orb_.in (), std::addressof (timeout)) != 0)
+        {
+          ACE_ERROR_RETURN ((LM_DEBUG,
+                             ACE_TEXT (" (%P|%t) LB_server: Could not connect ")
+                             ACE_TEXT ("to naming service.\n")),
+                             -1);
+        }
 
       CORBA::Object_var obj = this->orb_->resolve_initial_references (
         "NamingManager");
@@ -131,12 +139,14 @@ LB_server::start_orb_and_poa ()
         FT_Naming::NamingManager::_narrow (obj.in ());
 
       if (CORBA::is_nil (this->naming_manager_.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT (" (%P|%t) Unable to get Naming Manager ")
-                           ACE_TEXT ("Reference.\n")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT (" (%P|%t) Unable to get Naming Manager ")
+                             ACE_TEXT ("Reference.\n")),
+                            -1);
+        }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception (
         ACE_TEXT ("Exception raised initialising ORB or POA"));
@@ -147,12 +157,14 @@ LB_server::start_orb_and_poa ()
 }
 
 int
-LB_server::create_object_group (const char *group_name)
+LB_server::create_object_group (char const *group_name)
 {
   try
     {
       if (this->parse_args (argc_, argv_) != 0)
+      {
         return -1;
+      }
 
       PortableGroup::Criteria criteria (2);
       criteria.length (1);
@@ -181,7 +193,7 @@ LB_server::create_object_group (const char *group_name)
 
       this->write_ior_to_file (this->ior_output_file_, ior.in ());
     }
-  catch (const PortableGroup::ObjectNotCreated&)
+  catch (PortableGroup::ObjectNotCreated const &)
     {
       this->object_group_ =
         this->naming_manager_->get_object_group_ref_from_name (group_name);
@@ -189,7 +201,7 @@ LB_server::create_object_group (const char *group_name)
                   "(%P|%t) LB_server - object group already exists\n"));
       return 1;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception (
         ACE_TEXT ("Exception raised while creating object group"));
@@ -200,7 +212,7 @@ LB_server::create_object_group (const char *group_name)
 }
 
 int
-LB_server::register_servant (Basic *servant, const char *loc)
+LB_server::register_servant (Basic *servant, char const *loc)
 {
   try
     {
@@ -225,12 +237,12 @@ LB_server::register_servant (Basic *servant, const char *loc)
                                            location,
                                            basic.in ());
     }
-  catch (const PortableGroup::ObjectNotAdded& )
+  catch (PortableGroup::ObjectNotAdded const & )
     {
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) Member was already added previously.\n"));
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception (
         ACE_TEXT ("Exception raised while registering servant"));
@@ -241,7 +253,7 @@ LB_server::register_servant (Basic *servant, const char *loc)
 }
 
 int
-LB_server::remove_servant (const char *loc)
+LB_server::remove_servant (char const *loc)
 {
   PortableGroup::Location location (1);
   location.length (1);
@@ -253,7 +265,7 @@ LB_server::remove_servant (const char *loc)
       this->naming_manager_->remove_member (this->object_group_.in (),
                                             location);
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception (
         ACE_TEXT ("Exception raised while removing servant"));

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/Messaging/Asynch_Invocation.h"
 #include "tao/Messaging/Asynch_Reply_Dispatcher.h"
 
@@ -42,7 +41,9 @@ namespace TAO
     s = this->send_request_interception ();
 
     if (s != TAO_INVOKE_SUCCESS)
-      return s;
+      {
+        return s;
+      }
 
     // We have started the interception flow. We need to call the
     // ending interception flow if things go wrong. The purpose of the
@@ -127,14 +128,18 @@ namespace TAO
 
         // We got an error during the interception.
         if (s == TAO_INVOKE_SUCCESS && tmp != TAO_INVOKE_SUCCESS)
-          s = tmp;
+          {
+            s = tmp;
+          }
 #endif /* TAO_HAS_INTERCEPTORS */
 
         // If an error occurred just return. At this point all the
         // endpoint interception would have been invoked. The callee
         // would take care of the rest.
         if (s != TAO_INVOKE_SUCCESS)
-          return s;
+          {
+            return s;
+          }
 
         // transport strategy takes care of idling transport or not
         transport->idle_after_send ();
@@ -152,10 +157,14 @@ namespace TAO
 
         if (status == PortableInterceptor::LOCATION_FORWARD ||
             status == PortableInterceptor::TRANSPORT_RETRY)
-          s = TAO_INVOKE_RESTART;
+          {
+            s = TAO_INVOKE_RESTART;
+          }
         else if (status == PortableInterceptor::SYSTEM_EXCEPTION
             || status == PortableInterceptor::USER_EXCEPTION)
-          throw;
+          {
+            throw;
+          }
       }
     catch (...)
       {
@@ -167,9 +176,13 @@ namespace TAO
 
          if (st == PortableInterceptor::LOCATION_FORWARD ||
              st == PortableInterceptor::TRANSPORT_RETRY)
-           s = TAO_INVOKE_RESTART;
+           {
+             s = TAO_INVOKE_RESTART;
+           }
          else
-           throw;
+           {
+             throw;
+           }
       }
 #endif /* TAO_HAS_INTERCEPTORS */
 

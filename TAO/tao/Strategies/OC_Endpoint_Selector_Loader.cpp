@@ -1,10 +1,8 @@
-// =================================================================
 /**
  * @file OC_Endpoint_Selector_Loader.cpp
  *
  * @author Phil Mesnier <mesnier_p@ociweb.com>
  */
-// =================================================================
 
 #include "tao/Strategies/OC_Endpoint_Selector_Loader.h"
 #include "tao/Strategies/OC_Endpoint_Selector_Factory.h"

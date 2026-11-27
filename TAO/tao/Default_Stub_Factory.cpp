@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/Default_Stub_Factory.h"
 #include "tao/Stub.h"
 #include "tao/ORB_Constants.h"
@@ -9,11 +8,11 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Stub *
-TAO_Default_Stub_Factory::create_stub (const char *repository_id,
-                                       const TAO_MProfile &profiles,
+TAO_Default_Stub_Factory::create_stub (char const *repository_id,
+                                       TAO_MProfile const &profiles,
                                        TAO_ORB_Core *orb_core)
 {
-  TAO_Stub *retval = nullptr;
+  TAO_Stub *retval {};
 
   ACE_NEW_THROW_EX (retval,
                     TAO_Stub (repository_id, profiles, orb_core),

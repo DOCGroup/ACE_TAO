@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 #ifndef COMMAND_TASK_H
 #define COMMAND_TASK_H
 
@@ -15,23 +14,22 @@ public:
 
   virtual ~CommandTask () = default;
 
-  virtual int open (void * = 0 );
+  int open (void * = nullptr) override;
 
   int put (ACE_Message_Block *message,
-           ACE_Time_Value *timeout);
+           ACE_Time_Value *timeout) override;
 
-  virtual int svc ();
+  int svc () override;
 
-  virtual int close (u_long flags);
+  int close (u_long flags) override;
 
 protected:
-  CommandTask (int command);
+  explicit CommandTask (int command);
 
   virtual int process (Command *message);
 
   int command_;
 };
 // Listing 01
-
 
 #endif /* COMMAND_TASK_H */

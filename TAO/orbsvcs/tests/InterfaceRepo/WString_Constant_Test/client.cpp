@@ -16,9 +16,15 @@ check_wstring_constant (CORBA::Repository_ptr repository,
     }
 
   CORBA::ConstantDef_var const constant = CORBA::ConstantDef::_narrow (contained.in ());
+  if (CORBA::is_nil (constant.in ()))
+    {
+      std::fprintf (stderr, "%s is not a constant definition\n", id);
+      return false;
+    }
+
   CORBA::Any_var const value = constant->value ();
   CORBA::WChar const *wstring {};
-  if (!(value.in () >>= wstring))
+  if (!(value.in () >>= wstring) || wstring == nullptr)
     {
       std::fprintf (stderr, "constant %s is not a wide string\n", id);
       return false;
@@ -27,18 +33,26 @@ check_wstring_constant (CORBA::Repository_ptr repository,
   // A leading byte-order mark may be preserved by the active WChar translator.
   size_t const start = wstring[0] == static_cast<CORBA::WChar> (0xfeff) ? 1 : 0;
   for (size_t i = 0; i < expected_length; ++i)
-    if (wstring[start + i] != expected[i])
-      {
-        std::fprintf (stderr,
-                      "wrong wide string value for %s at index %zu: got %u, expected %u\n",
-                      id,
-                      i,
-                      static_cast<unsigned int> (wstring[start + i]),
-                      static_cast<unsigned int> (expected[i]));
-        return false;
-      }
+    {
+      if (wstring[start + i] != expected[i])
+        {
+          std::fprintf (stderr,
+                        "wrong wide string value for %s at index %zu: got %u, expected %u\n",
+                        id,
+                        i,
+                        static_cast<unsigned int> (wstring[start + i]),
+                        static_cast<unsigned int> (expected[i]));
+          return false;
+        }
+    }
 
-  return wstring[start + expected_length] == 0;
+  if (wstring[start + expected_length] != 0)
+    {
+      std::fprintf (stderr, "wide string constant %s has unexpected trailing characters\n", id);
+      return false;
+    }
+
+  return true;
 }
 
 int
@@ -50,6 +64,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::Object_var const object =
         orb->resolve_initial_references ("InterfaceRepository");
       CORBA::Repository_var const repository = CORBA::Repository::_narrow (object.in ());
+      if (CORBA::is_nil (repository.in ()))
+        {
+          std::fprintf (stderr, "InterfaceRepository is not a repository\n");
+          return 1;
+        }
+
       CORBA::WChar const unicode_value[] = {static_cast<CORBA::WChar> (0x00e9), 0};
       CORBA::WChar const concatenated_value[] = {
         static_cast<CORBA::WChar> (0x00e9),
@@ -71,7 +91,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             "IDL:WString_Constant_Test/concatenated_value:1.0",
             concatenated_value,
             2))
-        return 1;
+        {
+          return 1;
+        }
 
       orb->destroy ();
     }

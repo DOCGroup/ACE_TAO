@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//==========================================================================
 /**
  *  @file    Null_Condition.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//==========================================================================
 
 #ifndef ACE_NULL_CONDITION_H
 #define ACE_NULL_CONDITION_H
@@ -36,15 +32,16 @@ template <>
 class ACE_Condition<ACE_Null_Mutex>
 {
 public:
-  ACE_Condition (const ACE_Null_Mutex &m,
-                 const ACE_TCHAR * = 0,
-                 void * = 0)
+  ACE_Condition () = delete;
+  ACE_Condition (ACE_Null_Mutex const &m,
+                 ACE_TCHAR const * = nullptr,
+                 void * = nullptr)
     : mutex_ (const_cast<ACE_Null_Mutex &> (m)) {}
 
-  ACE_Condition (const ACE_Null_Mutex &m,
-                 const ACE_Condition_Attributes &,
-                 const ACE_TCHAR * = 0,
-                 void * = 0)
+  ACE_Condition (ACE_Null_Mutex const &m,
+                 ACE_Condition_Attributes const &,
+                 ACE_TCHAR const * = nullptr,
+                 void * = nullptr)
   : mutex_ (const_cast<ACE_Null_Mutex &> (m)) {}
 
   ~ACE_Condition () = default;
@@ -53,11 +50,11 @@ public:
   int remove () {return 0;}
 
   /// Returns -1 with @c errno == @c ETIME.
-  int wait (const ACE_Time_Value * = 0) {errno = ETIME; return -1;}
+  int wait (ACE_Time_Value const * = nullptr) {errno = ETIME; return -1;}
 
   /// Returns -1 with @c errno == @c ETIME.
   int wait (ACE_Null_Mutex &,
-            const ACE_Time_Value * = 0) {errno = ETIME; return -1;}
+            ACE_Time_Value const * = nullptr) {errno = ETIME; return -1;}
 
   /// Returns 0.
   int signal () {return 0;}
@@ -69,15 +66,15 @@ public:
   /// Dump the state of an object.
   void dump () const {}
 
-  // ACE_ALLOC_HOOK_DECLARE;
-  // Declare the dynamic allocation hooks.
-
 protected:
-  ACE_Null_Mutex &mutex_; // Reference to mutex lock.
+  /// Reference to the mutex lock.
+  ACE_Null_Mutex &mutex_;
 
 private:
-  void operator= (const ACE_Condition<ACE_Null_Mutex> &) = delete;
-  ACE_Condition (const ACE_Condition<ACE_Null_Mutex> &) = delete;
+  ACE_Condition (ACE_Condition const &) = delete;
+  ACE_Condition (ACE_Condition &&) = delete;
+  ACE_Condition &operator= (ACE_Condition const &) = delete;
+  ACE_Condition &operator= (ACE_Condition &&) = delete;
 };
 
 using ACE_Null_Condition = ACE_Condition<ACE_Null_Mutex>;

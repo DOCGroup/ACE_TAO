@@ -5,7 +5,6 @@ Visual_i::Visual_i (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
-  // ctor
 
 void
 Visual_i::normal (CORBA::Long)
@@ -14,8 +13,7 @@ Visual_i::normal (CORBA::Long)
 }
 
 CORBA::Long
-Visual_i::calculate (CORBA::Long one,
-                     CORBA::Long two)
+Visual_i::calculate (CORBA::Long one, CORBA::Long two)
 {
   // ACE_DEBUG ((LM_DEBUG, "Visual::calculate\n"));
   return (one + two);

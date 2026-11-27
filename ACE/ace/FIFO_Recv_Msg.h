@@ -1,13 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    FIFO_Recv_Msg.h
  *
  *  @author Doug Schmidt
  */
-//=============================================================================
-
 
 #ifndef ACE_FIFO_RECV_MSG_H
 #define ACE_FIFO_RECV_MSG_H
@@ -43,18 +38,17 @@ class ACE_Str_Buf;
 class ACE_Export ACE_FIFO_Recv_Msg : public ACE_FIFO_Recv
 {
 public:
-  /// Default constructor.
   ACE_FIFO_Recv_Msg ();
 
   /// Open up a record-oriented named pipe for reading.
-  ACE_FIFO_Recv_Msg (const ACE_TCHAR *rendezvous,
+  ACE_FIFO_Recv_Msg (ACE_TCHAR const *rendezvous,
                      int flags = O_CREAT | O_RDONLY,
                      mode_t perms = ACE_DEFAULT_FILE_PERMS,
                      int persistent = 1,
                      LPSECURITY_ATTRIBUTES sa = 0);
 
   /// Open up a record-oriented named pipe for reading.
-  int open (const ACE_TCHAR *rendezvous,
+  int open (ACE_TCHAR const *rendezvous,
             int flags = O_CREAT | O_RDONLY,
             mode_t perms = ACE_DEFAULT_FILE_PERMS,
             int persistent = 1,

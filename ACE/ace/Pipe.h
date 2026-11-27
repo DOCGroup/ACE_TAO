@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//==========================================================================
 /**
  *  @file    Pipe.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//==========================================================================
 
 #ifndef ACE_PIPE_H
 #define ACE_PIPE_H
@@ -65,61 +61,64 @@ public:
   int close_read ();
   int close_write ();
 
-  // = Accessors.
+  /// @name Pipe accessors
+  /// @{
 
   /**
-   * This is the "read" side of the pipe.  Note, however, that
-   * processes can also write to this handle as well since pipes are
+   * This is the "read" side of the pipe.
+   * @note Processes can also write to this handle since pipes are
    * bi-directional.
    */
   ACE_HANDLE read_handle () const;
 
   /**
-   * This is the "write" side of the pipe.  Note, however, that
-   * processes can also read to this handle as well since pipes are
+   * This is the "write" side of the pipe.
+   * @note Processes can also read from this handle since pipes are
    * bi-directional.
    */
   ACE_HANDLE write_handle () const;
+  /// @}
 
   /// Dump the state of the object.
   void dump () const;
 
   /// send upto @a n bytes in @a buf.
-  ssize_t send (const void *buf, size_t n) const;
+  ssize_t send (void const *buf, size_t n) const;
 
   /// Recv upto @a n bytes in @a buf.
   ssize_t recv (void *buf, size_t n) const;
 
   /// Send n bytes, keep trying until n are sent.
-  ssize_t send_n (const void *buf, size_t n) const;
+  ssize_t send_n (void const *buf, size_t n) const;
 
-  /// Send all the @a message_blocks chained through their <next> and
-  /// <cont> pointers.  This call uses the underlying OS gather-write
+  /// Send all the @a message_blocks chained through their @c next and
+  /// @c cont pointers.  This call uses the underlying OS gather-write
   /// operation to reduce the domain-crossing penalty.
-  ssize_t send_n (const ACE_Message_Block *message_block,
-                  const ACE_Time_Value *timeout = nullptr,
+  ssize_t send_n (ACE_Message_Block const *message_block,
+                  ACE_Time_Value const *timeout = nullptr,
                   size_t *bytes_transferred = nullptr);
 
   /// Recv n bytes, keep trying until n are received.
   ssize_t recv_n (void *buf, size_t n) const;
 
-  /// Send iovecs via <::writev>.
+  /// Send iovecs via @c writev().
   ssize_t send (const iovec iov[], int n) const;
 
-  /// Recv iovecs via <::readv>.
+  /// Recv iovecs via @c readv().
   ssize_t recv (iovec iov[], int n) const;
 
 #if !defined (ACE_LACKS_VA_FUNCTIONS)
   /**
-   * Send N char *ptrs and int lengths.  Note that the char *'s
-   * precede the ints (basically, an varargs version of writev).  The
-   * count N is the *total* number of trailing arguments, *not* a
+   * Send N char *ptrs and int lengths (a varargs version of @c writev()).
+   * The count N is the *total* number of trailing arguments, *not* a
    * couple of the number of tuple pairs!
+   *
+   * @note The char pointers precede the ints.
    */
   ssize_t send (size_t n, ...) const;
 
   /**
-   * This is an interface to ::readv, that doesn't use the struct
+   * This is an interface to @c readv(), that doesn't use the struct
    * iovec explicitly.  The ... can be passed as an arbitrary number
    * of (char *ptr, int len) tuples.  However, the count N is the
    * *total* number of trailing arguments, *not* a count of the
@@ -129,7 +128,7 @@ public:
 #endif /* !ACE_LACKS_VA_FUNCTIONS */
 
   /// Send @a n bytes via Win32 WriteFile using overlapped I/O.
-  ssize_t send (const void *buf,
+  ssize_t send (void const *buf,
                 size_t n,
                 ACE_OVERLAPPED *overlapped) const;
 
@@ -138,7 +137,7 @@ public:
                 size_t n,
                 ACE_OVERLAPPED *overlapped) const;
 
-  /// Send an <iovec> of size @a n to the file.
+  /// Send an @c iovec of size @a n to the file.
   ssize_t sendv (const iovec iov[],
                  int n) const;
 

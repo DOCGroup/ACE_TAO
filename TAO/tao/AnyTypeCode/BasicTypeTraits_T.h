@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    BasicTypeTraits_T.h
  *
@@ -8,7 +5,6 @@
  *
  *  @author Jeff Parsons <j.parsons@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef BASIC_TYPE_TRAITS_T_H
 #define BASIC_TYPE_TRAITS_T_H
@@ -25,9 +21,9 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-  // Forward declaration forces specialization for each type used,
-  // necessary since each instantiated struct has values that cannot
-  // be set generically, so they must be set explicitly and exported.
+  /// Forward declaration forces specialization for each type used,
+  /// necessary since each instantiated struct has values that cannot
+  /// be set generically, so they must be set explicitly and exported.
   template<typename T>
   struct BasicTypeTraits;
 }

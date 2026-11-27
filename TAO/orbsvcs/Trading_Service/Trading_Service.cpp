@@ -7,15 +7,19 @@ Trading_Shutdown::Trading_Shutdown (Trading_Service &trader)
 {
   if (this->shutdown_.register_handler (SIGINT,
                                         this) == -1)
-    ORBSVCS_ERROR ((LM_ERROR,
-                ACE_TEXT("%p\n"),
-                ACE_TEXT("register_handler")));
+    {
+      ORBSVCS_ERROR ((LM_ERROR,
+                      ACE_TEXT("%p\n"),
+                      ACE_TEXT("register_handler")));
+    }
 
   if (this->shutdown_.register_handler (SIGTERM,
                                         this) == -1)
-    ORBSVCS_ERROR ((LM_ERROR,
-                ACE_TEXT("%p\n"),
-                ACE_TEXT("register_handler")));
+    {
+      ORBSVCS_ERROR ((LM_ERROR,
+                      ACE_TEXT("%p\n"),
+                      ACE_TEXT("register_handler")));
+    }
 }
 
 int
@@ -23,7 +27,7 @@ Trading_Shutdown::handle_signal (int,
                                  siginfo_t *,
                                  ucontext_t *)
 {
-  this->trader_.~Trading_Service ();
+  this->trader_.shutdown ();
   ACE_OS::exit (0);
   return 0;
 }
@@ -39,7 +43,9 @@ Trading_Service::init (int argc, ACE_TCHAR * argv[])
   int const result_trader = this->trading_loader_.init (argc, argv);
 
   if (result_trader == -1)
+  {
     return -1;
+  }
 
   return 0;
 }
@@ -59,7 +65,9 @@ Trading_Service::shutdown ()
   int const shutdown_result = this->trading_loader_.fini ();
 
   if (shutdown_result == -1)
+  {
     return -1;
+  }
 
   return 0;
 }

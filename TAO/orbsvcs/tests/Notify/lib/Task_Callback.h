@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file Task_Callback.h
  *

@@ -1,13 +1,13 @@
 #ifndef TAO_IDL_AST_FINDER_H
 #define TAO_IDL_AST_FINDER_H
 
-// Representation of component home finder construct declaration.
-
+/// Represents a component home finder declaration.
 #include "ast_factory.h"
 
 class TAO_IDL_FE_Export AST_Finder : public virtual AST_Factory
 {
 public:
+  AST_Finder () = delete;
   explicit AST_Finder (UTL_ScopedName *n);
 
   ~AST_Finder () override;

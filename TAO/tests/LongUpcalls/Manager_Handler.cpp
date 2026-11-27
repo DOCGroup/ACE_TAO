@@ -1,4 +1,3 @@
-
 #include "Manager_Handler.h"
 
 Manager_Handler::Manager_Handler (Test::Manager_ptr manager,
@@ -13,11 +12,11 @@ Manager_Handler::start_workers ()
 {
   try
     {
-      this->manager_->start_workers (CORBA::Short(10),
-                                     CORBA::Long(1000),
+      this->manager_->start_workers (CORBA::Short (10),
+                                     CORBA::Long (1000),
                                      this->controller_.in ());
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception raised in nested start workers: ");
     }
@@ -30,7 +29,7 @@ Manager_Handler::start_workers_excep (::Messaging::ExceptionHolder * holder)
     {
       holder->raise_exception ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception raised in asynch start workers: ");
     }

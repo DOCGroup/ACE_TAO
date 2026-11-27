@@ -43,9 +43,11 @@ TAO_Linear_Search_OpTable::find (char const *opname,
 
   TAO_operation_db_entry const * const entry = lookup (opname);
   if (entry == nullptr)
-    TAOLIB_ERROR_RETURN ((LM_ERROR,
+    {
+      TAOLIB_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("TAO_Linear_Search_Table:find failed\n")),
                       -1);
+    }
 
   // Valid entry. Figure out the skel_ptr.
   skelfunc = entry->skel_ptr;
@@ -63,9 +65,11 @@ TAO_Linear_Search_OpTable::find (char const *opname,
 
   TAO_operation_db_entry const * const entry = lookup (opname);
   if (entry == nullptr)
-    TAOLIB_ERROR_RETURN ((LM_ERROR,
+    {
+      TAOLIB_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("TAO_Linear_Search_Table:find failed\n")),
                       -1);
+    }
 
   switch (st)
     {

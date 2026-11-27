@@ -1,22 +1,17 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Sched_Params.inl
  *
  *  @author David Levine
  */
-//=============================================================================
-
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 ACE_Sched_Params::ACE_Sched_Params (
-      const Policy policy,
-      const ACE_Sched_Priority priority,
+      Policy const policy,
+      ACE_Sched_Priority const priority,
       const int scope,
-      const ACE_Time_Value &quantum)
+      ACE_Time_Value const &quantum)
   : policy_ (policy),
     priority_ (priority),
     scope_ (scope),
@@ -24,9 +19,7 @@ ACE_Sched_Params::ACE_Sched_Params (
 {
 }
 
-ACE_INLINE ACE_Sched_Params::~ACE_Sched_Params ()
-{
-}
+ACE_INLINE ACE_Sched_Params::~ACE_Sched_Params () = default;
 
 ACE_INLINE ACE_Sched_Params::Policy
 ACE_Sched_Params::policy () const
@@ -35,7 +28,7 @@ ACE_Sched_Params::policy () const
 }
 
 ACE_INLINE void
-ACE_Sched_Params::policy (const ACE_Sched_Params::Policy policy)
+ACE_Sched_Params::policy (ACE_Sched_Params::Policy const policy)
 {
   this->policy_ = policy;
 }
@@ -47,7 +40,7 @@ ACE_Sched_Params::priority () const
 }
 
 ACE_INLINE void
-ACE_Sched_Params::priority (const ACE_Sched_Priority priority)
+ACE_Sched_Params::priority (ACE_Sched_Priority const priority)
 {
   this->priority_ = priority;
 }
@@ -64,19 +57,19 @@ ACE_Sched_Params::scope (const int scope)
   this->scope_ = scope;
 }
 
-ACE_INLINE const ACE_Time_Value &
+ACE_INLINE ACE_Time_Value const &
 ACE_Sched_Params::quantum () const
 {
   return this->quantum_;
 }
 
 ACE_INLINE void
-ACE_Sched_Params::quantum (const ACE_Time_Value &quant)
+ACE_Sched_Params::quantum (ACE_Time_Value const &quant)
 {
   this->quantum_ = quant;
 }
 
-ACE_INLINE const ACE_Sched_Params::Policy &
+ACE_INLINE ACE_Sched_Params::Policy const &
 ACE_Sched_Priority_Iterator::policy () const
 {
   return this->policy_;
@@ -89,7 +82,7 @@ ACE_Sched_Priority_Iterator::scope () const
 }
 
 ACE_INLINE
-ACE_Sched_Priority_Iterator::ACE_Sched_Priority_Iterator (const ACE_Sched_Params::Policy &policy,
+ACE_Sched_Priority_Iterator::ACE_Sched_Priority_Iterator (ACE_Sched_Params::Policy const &policy,
                                                           int scope)
  : policy_ (policy),
    scope_ (scope),
@@ -100,9 +93,7 @@ ACE_Sched_Priority_Iterator::ACE_Sched_Priority_Iterator (const ACE_Sched_Params
 }
 
 ACE_INLINE
-ACE_Sched_Priority_Iterator::~ACE_Sched_Priority_Iterator ()
-{
-}
+ACE_Sched_Priority_Iterator::~ACE_Sched_Priority_Iterator () = default;
 
 ACE_INLINE int
 ACE_Sched_Priority_Iterator::more () const
@@ -120,7 +111,9 @@ ACE_INLINE void
 ACE_Sched_Priority_Iterator::next ()
 {
   if (this->done_)
-    return;
+    {
+      return;
+    }
 
   int old_priority = this->priority_;
   priority_ = ACE_Sched_Params::next_priority (this->policy (),

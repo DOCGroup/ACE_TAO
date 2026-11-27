@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/Transport_Acceptor.h"
 #include "ace/Reactor.h"
 #include "tao/debug.h"
@@ -23,20 +22,26 @@ TAO_Acceptor::handle_accept_error (ACE_Event_Handler* base_acceptor)
   if (errno == EMFILE || errno == ENFILE)
     {
       if (TAO_debug_level > 0)
-        TAOLIB_DEBUG ((LM_DEBUG, "TAO (%P|%t) - "
-                              "TAO_Acceptor::handle_accept_error - "
-                              "Too many files open\n"));
+        {
+          TAOLIB_DEBUG ((LM_DEBUG, "TAO (%P|%t) - "
+                                  "TAO_Acceptor::handle_accept_error - "
+                                  "Too many files open\n"));
+        }
 
       // If the user has decided to stop accepting when the file handles
       // run out, just return -1;
       if (this->error_retry_delay_ == 0)
-        return -1;
+        {
+          return -1;
+        }
 
       // Get the reactor.  If there isn't one, which isn't very likely,
       // then just return -1.
       ACE_Reactor* reactor = base_acceptor->reactor ();
       if (reactor == nullptr)
-        return -1;
+        {
+          return -1;
+        }
 
       // So that the reactor doesn't completely remove this handler from
       // the reactor, register it with the except mask.  It should be
@@ -52,7 +57,7 @@ TAO_Acceptor::handle_accept_error (ACE_Event_Handler* base_acceptor)
 
       // Schedule a timer so that we can resume the handler in hopes
       // that some file handles have freed up.
-      ACE_Time_Value timeout (this->error_retry_delay_);
+      ACE_Time_Value const timeout (this->error_retry_delay_);
       reactor->schedule_timer (base_acceptor, nullptr, timeout);
     }
 
@@ -67,12 +72,16 @@ TAO_Acceptor::handle_expiration (ACE_Event_Handler* base_acceptor)
   // just return -1;
   ACE_Reactor* reactor = base_acceptor->reactor ();
   if (reactor == nullptr)
-    return -1;
+    {
+      return -1;
+    }
 
   if (TAO_debug_level > 0)
-    TAOLIB_DEBUG ((LM_DEBUG, "TAO (%P|%t) - "
-                          "TAO_Acceptor::handle_expiration - "
-                          "Re-registering the acceptor\n"));
+    {
+      TAOLIB_DEBUG ((LM_DEBUG, "TAO (%P|%t) - "
+                              "TAO_Acceptor::handle_expiration - "
+                              "Re-registering the acceptor\n"));
+    }
 
   // Try again to allow incoming connections
   reactor->register_handler (base_acceptor, ACE_Event_Handler::ACCEPT_MASK);

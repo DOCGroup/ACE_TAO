@@ -5,15 +5,7 @@
 #include "ace/Null_Mutex.h"
 
 Globals::Globals ()
-  : thr_create_flags (0),
-    default_priority (0),
-    ior_file (0),
-    num_of_objs (2),
-    thread_per_rate (0),
-    use_multiple_priority (0),
-    ready_ (0),
-    ready_cnd_ (ready_mtx_),
-    barrier_ (0)
+  : ready_cnd_ (ready_mtx_)
 {
   const ACE_TCHAR default_endpoint[] = ACE_TEXT("iiop://");
   // Default to iiop
@@ -38,12 +30,16 @@ Globals::parse_args (int argc, ACE_TCHAR *argv[])
         thread_per_rate = 1;
         break;
       case 'f':
-        ACE_NEW_RETURN (ior_file,
-                        ACE_TCHAR[BUFSIZ],
-                        -1);
-        ACE_OS::strcpy (ior_file,
-                        opts.opt_arg ());
-        break;
+        {
+          ACE_TCHAR *file_name {};
+          ACE_NEW_RETURN (file_name,
+                          ACE_TCHAR[BUFSIZ],
+                          -1);
+          ior_file.reset (file_name);
+          ACE_OS::strcpy (ior_file.get (),
+                          opts.opt_arg ());
+          break;
+        }
       case 'e':
         ACE_OS::strcpy (endpoint,
                         opts.opt_arg ());
@@ -66,7 +62,9 @@ Globals::parse_args (int argc, ACE_TCHAR *argv[])
     }
 
   if (thread_per_rate == 1)
+  {
     num_of_objs = THREAD_PER_RATE_OBJS;
+  }
 
   // Indicates successful parsing of the command-line.
   return 0;
@@ -97,9 +95,11 @@ Globals::sched_fifo_init ()
           return 1;
         }
       else
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "%n: ACE_OS::sched_params failed\n%a"),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "%n: ACE_OS::sched_params failed\n%a"),
+                            -1);
+        }
     }
 
   ACE_SET_BITS (GLOBALS::instance ()->thr_create_flags, THR_BOUND);
@@ -113,16 +113,6 @@ Globals::sched_fifo_init ()
                      "Test will not run.  This platform doesn't seem to have threads.\n"),
                     -1);
 #endif /* ACE_HAS_THREADS */
-}
-
-MT_Priority::MT_Priority ()
-  : num_priorities_ (0),
-    grain_ (0)
-{
-}
-
-MT_Priority::~MT_Priority ()
-{
 }
 
 ACE_Sched_Priority
@@ -172,16 +162,18 @@ MT_Priority::get_low_priority (u_int num_low_priority,
              (policy, ACE_SCOPE_THREAD);
            priority_iterator.more ();
            priority_iterator.next ())
-        this->num_priorities_++;
+    {
+          ++this->num_priorities_;
+    }
 
       // 1 priority is exclusive for the high priority client.
-      this->num_priorities_--;
+      --this->num_priorities_;
 
       // Drop the priority, so that the priority of clients will
       // increase with increasing client number.
       for (u_int j = 0;
            j < num_low_priority;
-           j++)
+           ++j)
         {
           low_priority =
             ACE_Sched_Params::previous_priority (policy,
@@ -196,13 +188,17 @@ MT_Priority::get_low_priority (u_int num_low_priority,
       this->grain_ = num_low_priority / this->num_priorities_;
 
       if (this->grain_ <= 0)
+      {
         this->grain_ = 1;
+      }
     }
   else
-    low_priority =
-      ACE_Sched_Params::previous_priority (policy,
-                                           prev_priority,
-                                           ACE_SCOPE_THREAD);
+    {
+      low_priority =
+        ACE_Sched_Params::previous_priority (policy,
+                                             prev_priority,
+                                             ACE_SCOPE_THREAD);
+    }
   return low_priority;
 #endif /* ACE_HAS_THREADS */
 }
@@ -218,6 +214,5 @@ MT_Priority::grain ()
 {
   return this->grain_;
 }
-
 
 ACE_SINGLETON_TEMPLATE_INSTANTIATE(ACE_Singleton, Globals,  ACE_Null_Mutex);

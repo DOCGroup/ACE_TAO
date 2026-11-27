@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 #ifndef TAO_TWO_OBJECTS_FIRST_I_H
 #define TAO_TWO_OBJECTS_FIRST_I_H
 
@@ -14,16 +12,17 @@ class First_i
   : public virtual POA_Two_Objects_Test::First
 {
 public:
-  // Ctor..
-  First_i (CORBA::ORB_ptr orb, ACE_Auto_Event &two_way_done);
+  explicit First_i (ACE_Auto_Event &two_way_done);
 
   /// Interface methods..
-  void oneway_method ();
+  void oneway_method () override;
+
+  First_i (First_i const &) = delete;
+  First_i (First_i &&) = delete;
+  First_i & operator= (First_i const &) = delete;
+  First_i & operator= (First_i &&) = delete;
 
 private:
-  /// Use an ORB reference to convert strings to objects and shutdown
-  /// the application.
-  CORBA::ORB_var orb_;
   ACE_Auto_Event &two_way_done_;
 };
 

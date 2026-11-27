@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*Cons) : orbsvcsexe, event, event_skel, rtevent, rtsched, rtevent_serv {
   after    += CosEC_RtEC_Based_lib
   exename   = Consumer

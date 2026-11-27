@@ -1,4 +1,3 @@
-// -*- C++ -*-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE CORBA::Boolean
@@ -8,7 +7,7 @@ TAO_Notify_Proxy::updates_off ()
 }
 
 ACE_INLINE CORBA::Boolean
-TAO_Notify_Proxy::check_filters (const TAO_Notify_Event* event
+TAO_Notify_Proxy::check_filters (TAO_Notify_Event const* event
                              , TAO_Notify_FilterAdmin& parent_filter_admin
                              , CosNotifyChannelAdmin::InterFilterGroupOperator filter_operator)
 {
@@ -16,7 +15,7 @@ TAO_Notify_Proxy::check_filters (const TAO_Notify_Event* event
   CORBA::Boolean const parent_val =
     parent_filter_admin.match (event);
 
-  CORBA::Boolean val = false;
+  CORBA::Boolean val {};
 
   if (filter_operator == CosNotifyChannelAdmin::AND_OP)
     {

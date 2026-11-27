@@ -1,6 +1,8 @@
 #include "tao/Base_Transport_Property.h"
 #include "ace/OS_Memory.h"
 
+#include <memory>
+
 #if !defined (__ACE_INLINE__)
 # include "tao/Base_Transport_Property.inl"
 #endif /* __ACE_INLINE__ */
@@ -11,30 +13,35 @@ TAO_Transport_Descriptor_Interface *
 TAO_Base_Transport_Property::duplicate ()
 {
   // Get a copy of the underlying endpoint
-  TAO_Endpoint *const endpt = this->endpoint_->duplicate ();
+  std::unique_ptr<TAO_Endpoint> endpt (this->endpoint_->duplicate ());
   if (endpt == nullptr)
+  {
     return nullptr;
+  }
 
   // Construct a copy of our class
-  TAO_Base_Transport_Property *prop = nullptr;
-  ACE_NEW_RETURN (prop, TAO_Base_Transport_Property (endpt, true), nullptr);
+  TAO_Base_Transport_Property *prop {};
+  ACE_NEW_RETURN (prop,
+                  TAO_Base_Transport_Property (endpt.get (), true),
+                  nullptr);
+  endpt.release ();
   return prop;
 }
 
-
 CORBA::Boolean
 TAO_Base_Transport_Property::is_equivalent
-  (const TAO_Transport_Descriptor_Interface *rhs)
+  (TAO_Transport_Descriptor_Interface const *rhs)
 {
   TAO_Base_Transport_Property const *other_desc =
     dynamic_cast<TAO_Base_Transport_Property const *> (rhs);
 
   if (other_desc == nullptr)
+  {
     return false;
+  }
 
   return this->endpoint_->is_equivalent (other_desc->endpoint_);
 }
-
 
 u_long
 TAO_Base_Transport_Property::hash () const

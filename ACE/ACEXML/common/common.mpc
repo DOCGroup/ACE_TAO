@@ -1,4 +1,3 @@
-//  -*- MPC -*-
 project(ACEXML): acelib, ace_output, codecs, install, zzip, zlib {
   avoids       += ace_for_tao
   sharedname    = ACEXML

@@ -1,7 +1,7 @@
 #include "tao/Strategies/UIOP_Endpoint.h"
 #include "tao/Strategies/UIOP_Connection_Handler.h"
 #include "tao/ORB_Constants.h"
-#include "ace/OS_NS_string.h"
+#include <cstring>
 
 #if TAO_HAS_UIOP == 1
 
@@ -11,7 +11,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_UIOP_Endpoint::TAO_UIOP_Endpoint (const ACE_UNIX_Addr &addr,
+TAO_UIOP_Endpoint::TAO_UIOP_Endpoint (ACE_UNIX_Addr const &addr,
                                       CORBA::Short priority)
   : TAO_Endpoint (TAO_TAG_UIOP_PROFILE, priority)
     , object_addr_ (addr)
@@ -27,10 +27,14 @@ TAO_UIOP_Endpoint::TAO_UIOP_Endpoint ()
 int
 TAO_UIOP_Endpoint::addr_to_string (char *buffer, size_t length)
 {
-  if (length < (ACE_OS::strlen (this->rendezvous_point ()) + 1))
-    return -1;
+  char const * const rendezvous_point = this->rendezvous_point ();
+  size_t const actual_len = std::strlen (rendezvous_point);
+  if (length <= actual_len)
+    {
+      return -1;
+    }
 
-  ACE_OS::strcpy (buffer, this->rendezvous_point ());
+  std::memcpy (buffer, rendezvous_point, actual_len + 1);
 
   return 0;
 }
@@ -44,34 +48,37 @@ TAO_UIOP_Endpoint::next ()
 TAO_Endpoint *
 TAO_UIOP_Endpoint::duplicate ()
 {
-  TAO_UIOP_Endpoint *endpoint = nullptr;
+  TAO_UIOP_Endpoint *endpoint {};
   ACE_NEW_RETURN (endpoint,
                   TAO_UIOP_Endpoint (this->object_addr_,
                                      this->priority ()),
-                  0);
+                  nullptr);
 
   return endpoint;
 }
 
 CORBA::Boolean
-TAO_UIOP_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
+TAO_UIOP_Endpoint::is_equivalent (TAO_Endpoint const *other_endpoint)
 {
-  TAO_Endpoint *endpt = const_cast<TAO_Endpoint *> (other_endpoint);
-
-  TAO_UIOP_Endpoint *endpoint = dynamic_cast<TAO_UIOP_Endpoint *> (endpt);
+  TAO_UIOP_Endpoint const * const endpoint =
+    dynamic_cast<TAO_UIOP_Endpoint const *> (other_endpoint);
 
   if (endpoint == nullptr)
-    return 0;
+    {
+      return false;
+    }
 
-  return ACE_OS::strcmp (this->rendezvous_point (),
-                         endpoint->rendezvous_point ()) == 0;
+  return std::strcmp (this->rendezvous_point (),
+                      endpoint->rendezvous_point ()) == 0;
 }
 
 CORBA::ULong
 TAO_UIOP_Endpoint::hash ()
 {
   if (this->hash_val_ != 0)
-    return this->hash_val_;
+    {
+      return this->hash_val_;
+    }
 
   {
     ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
@@ -80,7 +87,9 @@ TAO_UIOP_Endpoint::hash ()
                       this->hash_val_);
     // .. DCL
     if (this->hash_val_ != 0)
-      return this->hash_val_;
+      {
+        return this->hash_val_;
+      }
 
     this->hash_val_ =
       ACE::hash_pjw (this->rendezvous_point ());

@@ -1,5 +1,3 @@
-/* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file    FT_ReplicationManager_Main.cpp
  *
@@ -9,7 +7,6 @@
  *
  *  @author Curt Hibbs <hibbs_c@ociweb.com>
  */
-//=============================================================================
 
 #include "FT_ReplicationManager.h"
 #include "tao/Utils/Server_Main.h"

@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   DLL_Parser.h
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  */
-//=============================================================================
 
 #ifndef TAO_DLL_PARSER_H
 #define TAO_DLL_PARSER_H
@@ -53,6 +49,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  * Such an application could be written as follows:
  *
+ * @code{.cpp}
  * int main (int argc, char* argv)
  * {
  *   CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
@@ -61,6 +58,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  *     orb->resolve_initial_references("EventService");
  *   // Use <object> here...
  * }
+ * @endcode
  *
  * if the application is invoked using:
  *
@@ -80,10 +78,8 @@ public:
   TAO_DLL_Parser () = default;
   ~TAO_DLL_Parser () override = default;
 
-  // = The IOR_Parser methods, please read the documentation in
-  //   IOR_Parser.h
-  bool match_prefix (const char *ior_string) const override;
-  CORBA::Object_ptr parse_string (const char *ior,
+  bool match_prefix (char const *ior_string) const override;
+  CORBA::Object_ptr parse_string (char const *ior,
                                   CORBA::ORB_ptr orb) override;
 };
 

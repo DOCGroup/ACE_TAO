@@ -1,4 +1,3 @@
-// -*- C++ -*-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
@@ -30,11 +29,10 @@ TAO_DTP_Thread_Pool::use_timeouts () const
 }
 
 ACE_INLINE
-const ACE_Time_Value&
+ACE_Time_Value const &
 TAO_DTP_Thread_Pool::dynamic_thread_time () const
 {
   return this->definition_.timeout_;
 }
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL

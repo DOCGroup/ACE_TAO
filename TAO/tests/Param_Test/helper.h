@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    helper.h
  *
@@ -8,8 +6,6 @@
  *
  *  @author Aniruddha Gokhale
  */
-//=============================================================================
-
 
 #ifndef HELPER_H
 #define HELPER_H
@@ -21,11 +17,9 @@
 class Generator
 {
 public:
-  /// constructor
   Generator ();
 
-  /// destructor
-  ~Generator ();
+  ~Generator () = default;
 
   CORBA::Short gen_short ();
   CORBA::Long gen_long ();
@@ -40,6 +34,6 @@ public:
   Param_Test::Step step_;
 };
 
-typedef ACE_Singleton<Generator, TAO_SYNCH_RECURSIVE_MUTEX> GENERATOR;
+using GENERATOR = ACE_Singleton<Generator, TAO_SYNCH_RECURSIVE_MUTEX>;
 
 #endif /* HELPER_H */

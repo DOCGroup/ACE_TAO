@@ -1,11 +1,8 @@
-// -*- C++ -*-
-//=============================================================================
 /**
  *  @file   Locator_XMLHandler.h
  *
  *  @author Justin Michel <michel_j@ociweb.com>
  */
-//=============================================================================
 
 #ifndef Locator_XMLHandler_H
 #define Locator_XMLHandler_H
@@ -15,6 +12,7 @@
 #include "Server_Info.h"
 #include "Activator_Info.h"
 
+#include <memory>
 #include <vector>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -28,59 +26,60 @@ class XML_Backing_Store;
 class Locator_XMLHandler : public ACEXML_DefaultHandler
 {
 public:
-  typedef std::pair<ACE_CString, ACE_CString> NameValue;
-  typedef std::vector<NameValue> NameValues;
+  using NameValue = std::pair<ACE_CString, ACE_CString>;
+  using NameValues = std::vector<NameValue>;
   // XML ELEMENT names
-  static const ACE_TCHAR* ROOT_TAG;
-  static const ACE_TCHAR* SERVER_INFO_TAG;
-  static const ACE_TCHAR* ENVIRONMENT_TAG;
-  static const ACE_TCHAR* ACTIVATOR_INFO_TAG;
+  static ACE_TCHAR const *ROOT_TAG;
+  static ACE_TCHAR const *SERVER_INFO_TAG;
+  static ACE_TCHAR const *ENVIRONMENT_TAG;
+  static ACE_TCHAR const *ACTIVATOR_INFO_TAG;
 
-  static const ACE_TCHAR* SERVER_TAG;
-  static const ACE_TCHAR* POANAME_TAG;
-  static const ACE_TCHAR* JACORB_TAG;
-  static const ACE_TCHAR* ACTNAME_TAG;
-  static const ACE_TCHAR* CMDLINE_TAG;
-  static const ACE_TCHAR* DIR_TAG;
-  static const ACE_TCHAR* MODE_TAG;
-  static const ACE_TCHAR* LIMIT_TAG;
-  static const ACE_TCHAR* PARTIOR_TAG;
-  static const ACE_TCHAR* IOR_TAG;
-  static const ACE_TCHAR* STARTED_TAG;
-  static const ACE_TCHAR* PEER_TAG;
-  static const ACE_TCHAR* PID_TAG;
-  static const ACE_TCHAR* KEYNAME_TAG;
-  static const ACE_TCHAR* ALTKEY_TAG;
+  static ACE_TCHAR const *SERVER_TAG;
+  static ACE_TCHAR const *POANAME_TAG;
+  static ACE_TCHAR const *JACORB_TAG;
+  static ACE_TCHAR const *ACTNAME_TAG;
+  static ACE_TCHAR const *CMDLINE_TAG;
+  static ACE_TCHAR const *DIR_TAG;
+  static ACE_TCHAR const *MODE_TAG;
+  static ACE_TCHAR const *LIMIT_TAG;
+  static ACE_TCHAR const *PARTIOR_TAG;
+  static ACE_TCHAR const *IOR_TAG;
+  static ACE_TCHAR const *STARTED_TAG;
+  static ACE_TCHAR const *PEER_TAG;
+  static ACE_TCHAR const *PID_TAG;
+  static ACE_TCHAR const *KEYNAME_TAG;
+  static ACE_TCHAR const *ALTKEY_TAG;
 
   struct EnvVar {
     ACE_TString name;
     ACE_TString value;
-    bool operator==(const EnvVar&) const; // To allow Vector explicit instantiation
-    bool operator!=(const EnvVar&) const; // To allow Vector explicit instantiation
+    /// Supports explicit instantiation of @c std::vector<EnvVar>.
+    bool operator==(const EnvVar&) const;
+    /// Supports explicit instantiation of @c std::vector<EnvVar>.
+    bool operator!=(const EnvVar&) const;
   };
 
-  typedef std::vector<EnvVar> EnvList;
-  typedef std::vector<ACE_CString> PeerList;
+  using EnvList = std::vector<EnvVar>;
+  using PeerList = std::vector<ACE_CString>;
 
-  /// constructor
   /// @param repo the repo to update based on XML
   Locator_XMLHandler (XML_Backing_Store& repo);
 
   /// provide implementation for handling a new XML element
-  virtual void startElement (const ACEXML_Char* namespaceURI,
-                             const ACEXML_Char* localName,
-                             const ACEXML_Char* qName,
-                             ACEXML_Attributes* atts);
+  void startElement (const ACEXML_Char* namespaceURI,
+                     const ACEXML_Char* localName,
+                     const ACEXML_Char* qName,
+                     ACEXML_Attributes* atts) override;
 
   /// provide implementation for handling terminating an XML element
-  virtual void endElement (const ACEXML_Char* namespaceURI,
-                           const ACEXML_Char* localName,
-                           const ACEXML_Char* qName);
+  void endElement (const ACEXML_Char* namespaceURI,
+                   const ACEXML_Char* localName,
+                   const ACEXML_Char* qName) override;
 
  private:
   /// the repository
   XML_Backing_Store& repo_;
-  Server_Info *si_;
+  std::unique_ptr<Server_Info> si_;
   bool server_started_;
   NameValues extra_params_;
   EnvList env_vars_;

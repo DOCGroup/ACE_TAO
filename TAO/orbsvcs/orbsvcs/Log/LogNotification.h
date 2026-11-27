@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   LogNotification.h
  *
@@ -8,8 +5,6 @@
  *
  *  @author D A Hanvey <d.hanvey@qub.ac.uk>
  */
-//=============================================================================
-
 
 #ifndef TAO_TLS_LOG_NOTIFICATION_H
 #define TAO_TLS_LOG_NOTIFICATION_H
@@ -38,10 +33,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Log_Serv_Export TAO_LogNotification
 {
 public:
-  /// Constructor.
   TAO_LogNotification ();
 
-  /// Destructor.
   virtual ~TAO_LogNotification ();
 
   /// Event generated when a new log is created.

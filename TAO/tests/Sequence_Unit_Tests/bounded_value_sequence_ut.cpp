@@ -33,7 +33,7 @@ struct Tester
   int test_move_borrowed_buffer ()
   {
     value_type const initial[] {1, 4, 9, 16};
-    value_type buffer[8] {1, 4, 9, 16};
+    value_type buffer[MAXIMUM] {1, 4, 9, 16};
     tested_sequence source;
     source.replace (4, buffer, false);
 
@@ -52,7 +52,7 @@ struct Tester
     buffer[0] = 25;
     CHECK_EQUAL (initial[0], destination[0]);
 
-    value_type assignment_buffer[8] {1, 4, 9, 16};
+    value_type assignment_buffer[MAXIMUM] {1, 4, 9, 16};
     tested_sequence assignment_source;
     assignment_source.replace (4, assignment_buffer, false);
     tested_sequence assignment_destination;
@@ -302,7 +302,7 @@ struct Tester
   {
     value_type * buffer = alloc_and_init_buffer();
     tested_sequence a(4, buffer, false);
-    CHECK(0 == a.get_buffer(true));
+    CHECK(nullptr == a.get_buffer(true));
     tested_sequence::freebuf(buffer);
     return 0;
   }
@@ -319,7 +319,7 @@ struct Tester
       tested_sequence const & b = a;
       CHECK_EQUAL(MAXIMUM, b.maximum());
       CHECK_EQUAL(0UL, b.length());
-      CHECK(0 != b.get_buffer());
+      CHECK(nullptr != b.get_buffer());
       CHECK_EQUAL(true, b.release());
 
       FAIL_RETURN_IF_NOT(c.expect(1), c);

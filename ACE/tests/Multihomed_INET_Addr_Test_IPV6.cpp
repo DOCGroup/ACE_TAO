@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    Multihomed_INET_Addr_Test_IPV6.cpp
  *
@@ -8,8 +7,6 @@
  *
  *  @author Edward Mulholland (emulholl@atl.lmco.com) Brian Buesker (bbuesker@qualcomm.com) - Added testing of                                         ACE_Multihomed_INET_Addr class                                         using IPv6 addresses based on                                         Multihomed_INET_Addr_Test.
  */
-//=============================================================================
-
 
 #include "test_config.h"
 #include "ace/OS_NS_string.h"
@@ -31,9 +28,9 @@ int run_main (int argc, ACE_TCHAR *argv[])
   size_t i, j;
   sockaddr_in6 *pointer6;
 
-  const ACE_TCHAR *primary_ipv6 = ACE_TEXT("3ffe::123:4567:89ab:cdef");
+  ACE_TCHAR const *primary_ipv6 = ACE_TEXT("3ffe::123:4567:89ab:cdef");
 
-  const ACE_TCHAR *secondary_ipv6[] = {
+  ACE_TCHAR const *secondary_ipv6[] = {
     ACE_IPV6_LOCALHOST,
     ACE_TEXT("fe80::0123:4567:89ab:cdef"),
     ACE_TEXT("fec0::0123:4567:89ab:cdef"),
@@ -42,10 +39,10 @@ int run_main (int argc, ACE_TCHAR *argv[])
   };
 
   // The port will always be this
-  u_short port = 80;
+  u_short const port = 80;
 
   // ... and as you can see, there are 5 of them
-  const size_t num_secondaries = 5;
+  size_t const num_secondaries = 5;
 
   // Test subject
   ACE_Multihomed_INET_Addr addr;
@@ -59,12 +56,11 @@ int run_main (int argc, ACE_TCHAR *argv[])
 
   // Array of sockaddrs that will repeatedly be passed into the
   // get_addresses accessor of Multihomed_INET_Addr
-  const size_t num_sockaddrs = 6;
+  size_t const num_sockaddrs = 6;
   sockaddr_in6 in_out_sockaddr6[num_sockaddrs];
 
   for (i = 0; i <= num_secondaries; ++i) {
     /**** Test set (u_short, const char[], int, int, const char *([]), size_t) ****/
-
 
     addr.set(port,
              primary_ipv6,
@@ -88,7 +84,7 @@ int run_main (int argc, ACE_TCHAR *argv[])
       {
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("%s failed get_host_addr() check\n")
-                    ACE_TEXT ("%s != %s\n"),
+                    ACE_TEXT ("%C != %s\n"),
                     primary_ipv6,
                     addr.get_host_addr (),
                     primary_ipv6));
@@ -97,7 +93,7 @@ int run_main (int argc, ACE_TCHAR *argv[])
 
     // Check that the test subject reports the correct number of
     // secondary addresses.
-    size_t returned_num_secondaries = addr.get_num_secondary_addresses();
+    size_t const returned_num_secondaries = addr.get_num_secondary_addresses();
     if (returned_num_secondaries == i) {
       // Initialize the stay_out array with the secondary addresses
       for (j = 0; j < i; ++j) {
@@ -157,7 +153,7 @@ int run_main (int argc, ACE_TCHAR *argv[])
     } else {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("Failed get_num_secondary_addresses check\n")
-                  ACE_TEXT ("%d != %d\n"),
+                  ACE_TEXT ("%B != %B\n"),
                   returned_num_secondaries,
                   i));
       status = 1;

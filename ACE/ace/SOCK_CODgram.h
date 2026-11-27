@@ -1,13 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    SOCK_CODgram.h
  *
  *  @author Doug Schmidt
  */
-//=============================================================================
-
 
 #ifndef ACE_SOCK_CODGRAM_H
 #define ACE_SOCK_CODGRAM_H
@@ -34,7 +29,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_SOCK_CODgram : public ACE_SOCK_IO
 {
 public:
-  /// Default constructor.
   ACE_SOCK_CODgram ();
 
   /**
@@ -71,13 +65,12 @@ public:
    * @li <b>remote_addr != ACE_Addr::sap_any && local_addr != ACE_Addr::sap_any:</b>
    *     Bind to the local address and connect to the remote address.
    */
-  ACE_SOCK_CODgram (const ACE_Addr &remote_sap,
-                    const ACE_Addr &local_sap = ACE_Addr::sap_any,
+  ACE_SOCK_CODgram (ACE_Addr const &remote_sap,
+                    ACE_Addr const &local_sap = ACE_Addr::sap_any,
                     int protocol_family = ACE_PROTOCOL_FAMILY_INET,
                     int protocol = 0,
                     int reuse_addr = 0);
 
-  /// Default dtor.
   ~ACE_SOCK_CODgram ();
 
   // Initiate a connected dgram.
@@ -115,13 +108,13 @@ public:
    * @li <b>remote_addr != ACE_Addr::sap_any && local_addr != ACE_Addr::sap_any:</b>
    *     Bind to the local address and connect to the remote address.
    */
-  int open (const ACE_Addr &remote_sap,
-            const ACE_Addr &local_sap = ACE_Addr::sap_any,
+  int open (ACE_Addr const &remote_sap,
+            ACE_Addr const &local_sap = ACE_Addr::sap_any,
             int protocol_family = ACE_PROTOCOL_FAMILY_INET,
             int protocol = 0,
             int reuse_addr = 0);
 
-  // = Meta-type info.
+  /// Peer address type.
   using PEER_ADDR = ACE_INET_Addr;
 
   /// Dump the state of an object.

@@ -1,13 +1,9 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    UB_String_Argument_T.h
  *
  *  @author Jeff Parsons
  *  @author Carlos O'Ryan
  */
-//=============================================================================
 
 #ifndef TAO_UB_STRING_ARGUMENT_T_H
 #define TAO_UB_STRING_ARGUMENT_T_H
@@ -16,6 +12,8 @@
 
 #include "tao/Argument.h"
 #include "tao/CORBA_String.h"
+
+#include <memory>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -61,12 +59,22 @@ namespace TAO
   {
   public:
     In_UB_String_Clonable_Argument_T (typename S_var::s_traits::char_type const * x);
-    ~In_UB_String_Clonable_Argument_T () override;
+    ~In_UB_String_Clonable_Argument_T () override = default;
 
     Argument* clone () override;
 
   private:
-    bool is_clone_ {};
+    using char_type = typename S_var::s_traits::char_type;
+
+    struct String_Deleter
+    {
+      void operator() (char_type *str) const
+      {
+        S_var::s_traits::release (str);
+      }
+    };
+
+    std::unique_ptr<char_type[], String_Deleter> clone_buffer_;
   };
 
   /**

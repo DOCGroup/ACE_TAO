@@ -6,7 +6,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 Fault_Detector::ReactorTask::ReactorTask()
-  : reactor_(new ACE_Select_Reactor, 1)
+  : reactor_(new ACE_Select_Reactor, true)
 {
 }
 
@@ -18,18 +18,13 @@ Fault_Detector::ReactorTask::svc ()
   return 0;
 }
 
-
-Fault_Detector::~Fault_Detector()
-{
-}
-
-const FTRT::Location& Fault_Detector::my_location() const
+FTRT::Location const& Fault_Detector::my_location() const
 {
   return location_;
 }
 
 namespace {
-  Fault_Detector* detector;
+  Fault_Detector* detector {};
 }
 
 Fault_Detector* Fault_Detector::instance()
@@ -45,8 +40,10 @@ int Fault_Detector::init(int argc, ACE_TCHAR** argv)
   {
     if (!reactor_task_.thr_count() &&
       reactor_task_.activate (THR_NEW_LWP | THR_JOINABLE, 1) != 0)
-      ORBSVCS_ERROR_RETURN ((LM_ERROR,"Cannot activate reactor thread\n"),
-      -1);
+      {
+        ORBSVCS_ERROR_RETURN ((LM_ERROR,"Cannot activate reactor thread\n"),
+                              -1);
+      }
     return 0;
   }
   return -1;

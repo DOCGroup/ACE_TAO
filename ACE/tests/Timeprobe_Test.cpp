@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    Timeprobe_Test.cpp
  *
@@ -7,8 +5,6 @@
  *
  *  @author Irfan Pyarali <irfan@cs.wustl.edu>
  */
-//=============================================================================
-
 
 //#define ACE_ENABLE_TIMEPROBES
 //#define ACE_MT_TIMEPROBES
@@ -22,10 +18,9 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/Timeprobe.h"
 
-
 #if defined (ACE_ENABLE_TIMEPROBES)
 
-static const char *events_descriptions_0[] =
+static char const *events_descriptions_0[] =
 {
   "Event Zero",
   "Event One",
@@ -53,7 +48,7 @@ enum
   EVENT_NINE
 };
 
-static const char *events_descriptions_1[] =
+static char const *events_descriptions_1[] =
 {
   "Work start",
   "Work end"
@@ -100,7 +95,7 @@ run_main (int, ACE_TCHAR *[])
 
   ACE_TIMEPROBE ("Starting Test");
 
-  for (int i = 0; i < 3; i++)
+  for (int i = 0; i < 3; ++i)
     {
       work (i);
       ACE_TIMEPROBE (EVENT_ZERO + i);

@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 #ifndef ACE_CONFIG_INTEGRITYSCA_H
 #define ACE_CONFIG_INTEGRITYSCA_H
 
@@ -38,7 +36,6 @@
 #define ACE_LACKS_SENDMSG
 
 /***** End Stack Defines *****/
-
 
 /* SCA STUFF */
 #if defined(INTEGRITY_VERSION) && (INTEGRITY_VERSION >= 40108)

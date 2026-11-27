@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file Peer.h
  *
@@ -28,10 +27,8 @@
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Peer
 {
 public:
-  /// Constructor
   TAO_Notify_Tests_Peer ();
 
-  /// Destructor
   virtual ~TAO_Notify_Tests_Peer ();
 
   /// Init
@@ -43,9 +40,9 @@ public:
   /// Set POA
   void set_poa (PortableServer::POA_ptr poa);
 
-  // Accessor to set/get our name.
-  void set_name (ACE_CString& name);
-  const ACE_CString& get_name ();
+  /// Accessor to set/get our name.
+  void set_name (ACE_CString const & name);
+  ACE_CString const & get_name ();
 
 protected:
   /// My name.

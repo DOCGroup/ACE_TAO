@@ -10,25 +10,22 @@
 #include "ace/INet/INet_Log.h"
 #include "ace/INet/String_IOStream.h"
 
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE
 {
   namespace FTP
   {
-    const int Response::eof_ = std::char_traits<char>::eof ();
+    int const Response::eof_ = std::char_traits<char>::eof ();
 
     Response::Response()
       : status_ (NORESPONSE)
       {
       }
 
-    Response::~Response()
-      {
-      }
+    Response::~Response() = default;
 
-    void Response::write(ostream& str) const
+    void Response::write(std::ostream& str) const
       {
         ACE_Array<ACE_CString>::size_type n = 0;
         str << this->status_;
@@ -51,7 +48,7 @@ namespace ACE
           }
       }
 
-    bool Response::read(istream& str)
+    bool Response::read(std::istream& str)
       {
         int ch;
         str >> this->status_;
@@ -61,7 +58,7 @@ namespace ACE
             return false; // invalid status
           }
 
-        bool multi_line = (ch == '-');
+        bool const multi_line = (ch == '-');
 
         ACE_Array<ACE_CString>::size_type n =
             this->response_.size ();
@@ -71,7 +68,10 @@ namespace ACE
         sos << this->status_;
         sos.put (ch);
         ch = this->read_line (str, sos);
-        if (ch == '\r') ch = str.get ();
+        if (ch == '\r')
+          {
+            ch = str.get ();
+          }
         sos.close (); // close the stream before resizing the array invalidates the string reference
 
         INET_DEBUG (6, (LM_DEBUG, DLINFO

@@ -4,7 +4,7 @@
 #include "tao/IORTable/IORTable.h"
 #include "orbsvcs/CosNamingC.h"
 
-const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
+ACE_TCHAR const *ior_output_file = ACE_TEXT("test.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -42,7 +42,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv);
 
-      //------ Get Root POA & POA Manager references
+      // Get the Root POA and POA Manager references.
 
       CORBA::Object_var obj =
         orb->resolve_initial_references("RootPOA");
@@ -51,14 +51,16 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         PortableServer::POA::_narrow (obj.in ());
 
       if (CORBA::is_nil (root_poa.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Panic: nil RootPOA\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Panic: nil RootPOA\n"),
+                            1);
+        }
 
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
 
-      //------- Get IOR Table reference to support CORBALOC URLs
+      // Get the IOR Table reference to support CORBALOC URLs.
 
       obj =
         orb->resolve_initial_references("IORTable");
@@ -66,8 +68,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       IORTable::Table_var ior_table =
         IORTable::Table::_narrow(obj.in());
 
-
-      //------- Get NameService Root Context
+      // Get the NameService root context.
 
       obj =
         orb->resolve_initial_references("NameService");
@@ -75,10 +76,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CosNaming::NamingContextExt_var root_nc =
         CosNaming::NamingContextExt::_narrow(obj.in());
 
-      //-------- Prepare Servant
+      // Prepare the servant.
 
       if (parse_args (argc, argv) != 0)
+      {
         return 1;
+      }
 
       Hello *hello_impl;
       ACE_NEW_RETURN (hello_impl,
@@ -92,7 +95,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::String_var ior =
         orb->object_to_string (hello.in ());
 
-      //--------- Publish IOR using various means
+      // Publish the IOR using available mechanisms.
 
       if (!CORBA::is_nil(root_nc.in()))
         {
@@ -105,15 +108,19 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
 
       if (!CORBA::is_nil(ior_table.in()))
+      {
         ior_table->bind("HelloObj", ior.in());
+      }
 
       // Output the IOR to the <ior_output_file>
       FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
       if (output_file == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot open output file for writing IOR: %s",
-                           ior_output_file),
-                              1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Cannot open output file for writing IOR: %s",
+                             ior_output_file),
+                                1);
+        }
       ACE_OS::fprintf (output_file, "%s", ior.in ());
       ACE_OS::fclose (output_file);
 
@@ -131,7 +138,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - orb destroyed\n"));
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;

@@ -1,13 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file FT_Round_Robin.h
  *
  *  @author Kevin Stanley <stanleyk@ociweb.com>
  */
-//=============================================================================
-
 
 #ifndef FT_ROUND_ROBIN_H
 #define FT_ROUND_ROBIN_H
@@ -31,7 +26,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_FT_Naming_Manager;
 
 /**
- * @class TAO_LB_RoundRobin_Strategy
+ * @class TAO_FT_Round_Robin
  *
  * @brief "Round Robin" load balancing strategy used by the
  * TAO_FT_Naming_Service.
@@ -44,7 +39,6 @@ class TAO_FT_Naming_Manager;
 class TAO_FtNaming_Export TAO_FT_Round_Robin
 {
 public:
-  /// Constructor.
   TAO_FT_Round_Robin ();
 
   /// This function obtains the next object's location as it is bound
@@ -61,15 +55,14 @@ public:
       TAO_FT_Naming_Manager *naming_manager,
       PortableGroup::Location& location);
 
-  /// Destructor
   virtual ~TAO_FT_Round_Robin () = default;
 
-private:
   TAO_FT_Round_Robin (TAO_FT_Round_Robin const &) = delete;
   TAO_FT_Round_Robin (TAO_FT_Round_Robin &&) = delete;
   TAO_FT_Round_Robin &operator= (TAO_FT_Round_Robin const &) = delete;
   TAO_FT_Round_Robin &operator= (TAO_FT_Round_Robin &&) = delete;
 
+private:
   /// Lock used to ensure atomic access to state retained by this
   /// class.
   TAO_SYNCH_MUTEX lock_;

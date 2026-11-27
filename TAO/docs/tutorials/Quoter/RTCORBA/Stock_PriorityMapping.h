@@ -29,11 +29,9 @@ namespace Stock
     public TAO_Linear_Priority_Mapping
   {
   public:
-    /// Default constructor.
     Priority_Mapping ();
 
-    /// Default destructor.
-    virtual ~Priority_Mapping ();
+    ~Priority_Mapping () override;
 
     /// Stock priorities.
     enum Priority

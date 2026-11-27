@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "ace/OS_NS_sys_shm.h"
 #include "ace/Global_Macros.h"
 #include "ace/OS_NS_errno.h"
@@ -12,8 +11,8 @@ ACE_SV_Shared_Memory::round_up (size_t len)
   return (len + ACE_SV_Shared_Memory::ALIGN_WORDB - 1) & ~(ACE_SV_Shared_Memory::ALIGN_WORDB - 1);
 }
 
-// Creates a shared memory segment of SIZE bytes. Does *not* attach
-// this memory segment...
+/// Creates a shared memory segment of SIZE bytes. Does *not* attach
+/// this memory segment...
 
 ACE_INLINE int
 ACE_SV_Shared_Memory::open (key_t external_id, size_t sz, int create, int perms)
@@ -35,7 +34,7 @@ ACE_SV_Shared_Memory::open (key_t external_id, size_t sz, int create, int perms)
 #endif /* ACE_WIN32 */
 }
 
-// Attachs to the shared memory segment.
+/// Attachs to the shared memory segment.
 
 ACE_INLINE int
 ACE_SV_Shared_Memory::attach (void *virtual_addr, int flags)
@@ -51,7 +50,7 @@ ACE_SV_Shared_Memory::attach (void *virtual_addr, int flags)
 #endif /* ACE_WIN32 */
 }
 
-// Interface to the underlying shared memory control function.
+/// Interface to the underlying shared memory control function.
 
 ACE_INLINE int
 ACE_SV_Shared_Memory::control (int cmd, void *buf)
@@ -62,11 +61,13 @@ ACE_SV_Shared_Memory::control (int cmd, void *buf)
   ACE_UNUSED_ARG(buf);
   ACE_NOTSUP_RETURN (-1);
 #else
-  return ACE_OS::shmctl (this->internal_id_, cmd, (struct shmid_ds *) buf);
+  return ACE_OS::shmctl (this->internal_id_,
+                         cmd,
+                         static_cast<struct shmid_ds *> (buf));
 #endif /* ACE_WIN32 */
 }
 
-// The overall size of the segment.
+/// The overall size of the segment.
 
 ACE_INLINE size_t
 ACE_SV_Shared_Memory::get_segment_size () const
@@ -75,7 +76,7 @@ ACE_SV_Shared_Memory::get_segment_size () const
   return this->size_;
 }
 
-// Removes the shared memory segment.
+/// Removes the shared memory segment.
 
 ACE_INLINE int
 ACE_SV_Shared_Memory::remove ()
@@ -88,8 +89,8 @@ ACE_SV_Shared_Memory::remove ()
 #endif /* ACE_WIN32 */
 }
 
-// Detach the current binding between this->segment_ptr and the shared
-// memory segment.
+/// Detach the current binding between this->segment_ptr and the shared
+/// memory segment.
 
 ACE_INLINE int
 ACE_SV_Shared_Memory::detach ()

@@ -16,6 +16,8 @@
 #include "tests/RTCORBA/check_supported_priorities.cpp"
 #include "ace/Event.h"
 
+#include <memory>
+
 enum Priority_Setting
 {
   AT_THREAD_CREATION = 0,
@@ -253,23 +255,29 @@ start_synchronization (test_ptr test,
     if (synchronizers.workers_ready_ == 0)
       {
         if (TAO_debug_level > 0)
-          ACE_DEBUG ((LM_DEBUG,
-                      "\n"));
+          {
+            ACE_DEBUG ((LM_DEBUG,
+                        "\n"));
+          }
       }
 
     ++synchronizers.workers_ready_;
 
     if (TAO_debug_level > 0)
-      ACE_DEBUG ((LM_DEBUG,
-                  "%d worker ready\n",
-                  synchronizers.workers_ready_));
+      {
+        ACE_DEBUG ((LM_DEBUG,
+                    "%d worker ready\n",
+                    synchronizers.workers_ready_));
+      }
 
     if (synchronizers.workers_ready_ ==
         synchronizers.number_of_workers_)
       {
         if (TAO_debug_level > 0)
-          ACE_DEBUG ((LM_DEBUG,
-                      "\n"));
+          {
+            ACE_DEBUG ((LM_DEBUG,
+                        "\n"));
+          }
 
         test_start =
           ACE_OS::gethrtime ();
@@ -298,24 +306,30 @@ end_synchronization (Synchronizers &synchronizers)
         synchronizers.number_of_workers_)
       {
         if (TAO_debug_level > 0)
-          ACE_DEBUG ((LM_DEBUG,
-                      "\n"));
+          {
+            ACE_DEBUG ((LM_DEBUG,
+                        "\n"));
+          }
 
         synchronizers.workers_.reset ();
       }
 
     if (TAO_debug_level > 0)
-      ACE_DEBUG ((LM_DEBUG,
-                  "%d worker completed\n",
-                  synchronizers.workers_ready_));
+      {
+        ACE_DEBUG ((LM_DEBUG,
+                    "%d worker completed\n",
+                    synchronizers.workers_ready_));
+      }
 
     --synchronizers.workers_ready_;
 
     if (synchronizers.workers_ready_ == 0)
       {
         if (TAO_debug_level > 0)
-          ACE_DEBUG ((LM_DEBUG,
-                      "\n"));
+          {
+            ACE_DEBUG ((LM_DEBUG,
+                        "\n"));
+          }
 
         synchronizers.workers_.signal ();
 
@@ -347,10 +361,12 @@ max_throughput (test_ptr test,
         priority_mapping.to_native (CORBA_priority,
                                     native_priority);
       if (!result)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Error in converting CORBA priority %d to native priority\n",
-                           CORBA_priority),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Error in converting CORBA priority %d to native priority\n",
+                             CORBA_priority),
+                            -1);
+        }
 
       ACE_hrtime_t start =
         ACE_OS::gethrtime ();
@@ -365,7 +381,9 @@ max_throughput (test_ptr test,
             ACE_OS::gethrtime ();
 
           if (now > end)
+          {
             break;
+          }
 
           test->method (work,
                         prime_number);
@@ -440,7 +458,7 @@ Paced_Worker::Paced_Worker (ACE_Thread_Manager &thread_manager,
                             RTCORBA::Current_ptr current,
                             RTCORBA::PriorityMapping &priority_mapping,
                             Synchronizers &synchronizers)
-  : ACE_Task_Base (&thread_manager),
+  : ACE_Task_Base (std::addressof (thread_manager)),
     test_ (test::_duplicate (test)),
     rate_ (rate),
     history_ (iterations),
@@ -476,14 +494,14 @@ Paced_Worker::reset_priority ()
 ACE_hrtime_t
 Paced_Worker::deadline_for_current_call (CORBA::ULong i)
 {
-  ACE_hrtime_t deadline_for_current_call =
+  ACE_hrtime_t deadline =
     this->interval_between_calls_;
 
-  deadline_for_current_call *= i;
+  deadline *= i;
 
-  deadline_for_current_call += test_start;
+  deadline += test_start;
 
-  return deadline_for_current_call;
+  return deadline;
 }
 
 void
@@ -510,22 +528,25 @@ Paced_Worker::print_stats (ACE_hrtime_t test_end)
               this->history_.max_samples ()));
 
   if (count_missed_end_deadlines)
-    ACE_DEBUG ((LM_DEBUG,
-                "Deadlines made/missed[start,end]/%% = %d/%d[%d,%d]/%.2f%%; Effective Rate = %.2f\n",
-                made_total_deadlines,
-                missed_total_deadlines,
-                this->missed_start_deadlines_,
-                this->missed_end_deadlines_,
-                made_total_deadlines * 100 / (double) this->history_.max_samples (),
-                made_total_deadlines / to_seconds (test_end - test_start, gsf)));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Deadlines made/missed[start,end]/%% = %d/%d[%d,%d]/%.2f%%; Effective Rate = %.2f\n",
+                  made_total_deadlines,
+                  missed_total_deadlines,
+                  this->missed_start_deadlines_,
+                  this->missed_end_deadlines_,
+                  made_total_deadlines * 100 / (double) this->history_.max_samples (),
+                  made_total_deadlines / to_seconds (test_end - test_start, gsf)));
+    }
   else
-    ACE_DEBUG ((LM_DEBUG,
-                "Deadlines made/missed/%% = %d/%d/%.2f%%; Effective Rate = %.2f\n",
-                made_total_deadlines,
-                missed_total_deadlines,
-                made_total_deadlines * 100 / (double) this->history_.max_samples (),
-                made_total_deadlines / to_seconds (test_end - test_start, gsf)));
-
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "Deadlines made/missed/%% = %d/%d/%.2f%%; Effective Rate = %.2f\n",
+                  made_total_deadlines,
+                  missed_total_deadlines,
+                  made_total_deadlines * 100 / (double) this->history_.max_samples (),
+                  made_total_deadlines / to_seconds (test_end - test_start, gsf)));
+    }
 
   if (do_dump_history)
     {
@@ -588,10 +609,12 @@ Paced_Worker::setup ()
     this->priority_mapping_.to_native (this->CORBA_priority_,
                                        this->native_priority_);
   if (!result)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Error in converting CORBA priority %d to native priority\n",
-                       this->CORBA_priority_),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Error in converting CORBA priority %d to native priority\n",
+                         this->CORBA_priority_),
+                        -1);
+    }
 
   return
     start_synchronization (this->test_.in (),
@@ -609,8 +632,10 @@ void
 Paced_Worker::missed_end_deadline (CORBA::ULong invocation)
 {
   if (count_missed_end_deadlines)
-    this->missed_end_invocations_[this->missed_end_deadlines_++] =
-      invocation;
+    {
+      this->missed_end_invocations_[this->missed_end_deadlines_++] =
+        invocation;
+    }
 }
 
 int
@@ -622,19 +647,21 @@ Paced_Worker::svc ()
         this->setup ();
 
       if (result != 0)
+      {
         return result;
+      }
 
       for (CORBA::ULong i = 0;
            i != this->history_.max_samples ();
            ++i)
         {
-          ACE_hrtime_t deadline_for_current_call =
+          ACE_hrtime_t call_deadline =
             this->deadline_for_current_call (i);
 
           ACE_hrtime_t time_before_call =
             ACE_OS::gethrtime ();
 
-          if (time_before_call > deadline_for_current_call)
+          if (time_before_call > call_deadline)
             {
               this->missed_start_deadline (i + 1);
               continue;
@@ -647,14 +674,14 @@ Paced_Worker::svc ()
             ACE_OS::gethrtime ();
           this->history_.sample (time_after_call - time_before_call);
 
-          if (time_after_call > deadline_for_current_call)
+          if (time_after_call > call_deadline)
             {
               this->missed_end_deadline (i + 1);
               continue;
             }
 
           ACE_hrtime_t sleep_time =
-            deadline_for_current_call - time_after_call;
+            call_deadline - time_after_call;
 
           ACE_OS::sleep (ACE_Time_Value (0,
                                          long (to_seconds (sleep_time, gsf) *
@@ -712,7 +739,7 @@ Continuous_Worker::Continuous_Worker (ACE_Thread_Manager &thread_manager,
                                       RTCORBA::Current_ptr current,
                                       RTCORBA::PriorityMapping &priority_mapping,
                                       Synchronizers &synchronizers)
-  : ACE_Task_Base (&thread_manager),
+  : ACE_Task_Base (std::addressof (thread_manager)),
     test_ (test::_duplicate (test)),
     iterations_ (iterations),
     current_ (RTCORBA::Current::_duplicate (current)),
@@ -760,7 +787,9 @@ Continuous_Worker::print_stats (ACE_Sample_History &history,
   ACE_hrtime_t elapsed_time_for_current_thread =
     test_end - test_start;
   if (elapsed_time_for_current_thread > this->time_for_test_)
+  {
     this->time_for_test_ = elapsed_time_for_current_thread;
+  }
 }
 
 void
@@ -808,10 +837,12 @@ Continuous_Worker::setup ()
     this->priority_mapping_.to_native (this->CORBA_priority_,
                                        this->native_priority_);
   if (!result)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "Error in converting CORBA priority %d to native priority\n",
-                       this->CORBA_priority_),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Error in converting CORBA priority %d to native priority\n",
+                         this->CORBA_priority_),
+                        -1);
+    }
 
   return
     start_synchronization (this->test_.in (),
@@ -829,7 +860,9 @@ Continuous_Worker::svc ()
         this->setup ();
 
       if (result != 0)
+      {
         return result;
+      }
 
       for (CORBA::ULong i = 0;
            i != history.max_samples () && !done;
@@ -873,7 +906,7 @@ public:
 
 Task::Task (ACE_Thread_Manager &thread_manager,
             CORBA::ORB_ptr orb)
-  : ACE_Task_Base (&thread_manager),
+  : ACE_Task_Base (std::addressof (thread_manager)),
     orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
@@ -916,7 +949,9 @@ Task::svc ()
                     rates,
                     1);
       if (result != 0)
+      {
         return result;
+      }
 
       ULong_Array invocation_priorities;
       result =
@@ -926,15 +961,19 @@ Task::svc ()
                     invocation_priorities,
                     1);
       if (result != 0)
+      {
         return result;
+      }
 
       if (invocation_priorities.size () != 0 &&
           invocation_priorities.size () != rates.size ())
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Number of invocation priorities (%d) != Number of rates (%d)\n",
-                           invocation_priorities.size (),
-                           rates.size ()),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Number of invocation priorities (%B) != Number of rates (%B)\n",
+                             invocation_priorities.size (),
+                             rates.size ()),
+                            -1);
+        }
 
       synchronizers.number_of_workers_ =
         rates.size () + continuous_workers;
@@ -946,7 +985,9 @@ Task::svc ()
                         priority_mapping,
                         max_rate);
       if (result != 0)
+      {
         return result;
+      }
 
       CORBA::Short priority_range =
         RTCORBA::maxPriority - RTCORBA::minPriority;
@@ -964,13 +1005,17 @@ Task::svc ()
           CORBA::Short priority = 0;
 
           if (invocation_priorities.size () == 0)
-            priority =
-              CORBA::Short ((priority_range /
-                             double (rates.size ())) *
-                            (i + 1));
+            {
+              priority =
+                CORBA::Short ((priority_range /
+                               double (rates.size ())) *
+                              (i + 1));
+            }
           else
-            priority =
-              invocation_priorities[i];
+            {
+              priority =
+                invocation_priorities[i];
+            }
 
           paced_workers[i] =
             new Paced_Worker (paced_workers_manager,
@@ -1002,10 +1047,12 @@ Task::svc ()
         priority_mapping.to_native (CORBA_priority,
                                     native_priority);
       if (!convert_result)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Error in converting CORBA priority %d to native priority\n",
-                           CORBA_priority),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Error in converting CORBA priority %d to native priority\n",
+                             CORBA_priority),
+                            -1);
+        }
 
       int force_active = 0;
 
@@ -1017,9 +1064,11 @@ Task::svc ()
                                         force_active,
                                         native_priority);
           if (result != 0)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "Continuous_Worker::activate failed\n"),
-                              result);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "Continuous_Worker::activate failed\n"),
+                                result);
+            }
         }
       else
         {
@@ -1027,9 +1076,11 @@ Task::svc ()
             continuous_worker.activate (flags,
                                         continuous_workers);
           if (result != 0)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "Continuous_Worker::activate failed\n"),
-                              result);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "Continuous_Worker::activate failed\n"),
+                                result);
+            }
         }
 
       flags =
@@ -1052,10 +1103,12 @@ Task::svc ()
                     priority_mapping.to_native (CORBA_priority,
                                                 native_priority);
                   if (!convert_result)
-                    ACE_ERROR_RETURN ((LM_ERROR,
-                                       "Error in converting CORBA priority %d to native priority\n",
-                                       CORBA_priority),
-                                      -1);
+                    {
+                      ACE_ERROR_RETURN ((LM_ERROR,
+                                         "Error in converting CORBA priority %d to native priority\n",
+                                         CORBA_priority),
+                                        -1);
+                    }
                 }
 
               result =
@@ -1064,18 +1117,22 @@ Task::svc ()
                                             force_active,
                                             native_priority);
               if (result != 0)
-                ACE_ERROR_RETURN ((LM_ERROR,
-                                   "Paced_Worker::activate failed\n"),
-                                  result);
+                {
+                  ACE_ERROR_RETURN ((LM_ERROR,
+                                     "Paced_Worker::activate failed\n"),
+                                    result);
+                }
             }
           else
             {
               result =
                 paced_workers[i]->activate (flags);
               if (result != 0)
-                ACE_ERROR_RETURN ((LM_ERROR,
-                                   "Paced_Worker::activate failed\n"),
-                                  result);
+                {
+                  ACE_ERROR_RETURN ((LM_ERROR,
+                                     "Paced_Worker::activate failed\n"),
+                                    result);
+                }
             }
         }
 
@@ -1121,7 +1178,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       int result =
         parse_args (argc, argv);
       if (result != 0)
+      {
         return result;
+      }
 
       // Make sure we can support multiple priorities that are required
       // for this test.

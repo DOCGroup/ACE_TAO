@@ -2,7 +2,6 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
      & eval 'exec perl -S $0 $argv:q'
      if 0;
 
-# -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::TestTarget;
@@ -25,7 +24,6 @@ my $client_iorfile = $client->LocalFile ($iorbase);
 $server->DeleteFile($iorbase);
 $client->DeleteFile($iorbase);
 
-# -*- perl -*-
 $server_arg = "-ORBdebuglevel $debug_level -o $server_iorfile -ORBUseSharedProfile 0 ";
 $client_arg = "-k file://$client_iorfile ";
 

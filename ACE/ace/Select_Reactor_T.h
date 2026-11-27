@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Select_Reactor_T.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef ACE_SELECT_REACTOR_T_H
 #define ACE_SELECT_REACTOR_T_H
@@ -47,6 +43,11 @@ template <class ACE_SELECT_REACTOR_TOKEN>
 class ACE_Select_Reactor_T : public ACE_Select_Reactor_Impl
 {
 public:
+  ACE_Select_Reactor_T (ACE_Select_Reactor_T const &) = delete;
+  ACE_Select_Reactor_T (ACE_Select_Reactor_T &&) = delete;
+  ACE_Select_Reactor_T &operator= (ACE_Select_Reactor_T const &) = delete;
+  ACE_Select_Reactor_T &operator= (ACE_Select_Reactor_T &&) = delete;
+
   /// If @a disable_notify_pipe is non-0 then the reactor will
   /// not create a notification pipe, which will save two I/O handles
   /// but will elide the notify() feature.  If @a mask_signals is
@@ -128,16 +129,16 @@ public:
   /// Close down the select_reactor and release all of its resources.
   ~ACE_Select_Reactor_T () override;
 
-  // = Event loop drivers.
+  /// @name Event loop drivers
+  /// @{
 
   /**
    * Returns non-zero if there are I/O events "ready" for dispatching,
    * but does not actually dispatch the event handlers.  By default,
    * don't block while checking this, i.e., "poll".
    */
-  int work_pending (const ACE_Time_Value &max_wait_time = ACE_Time_Value::zero) override;
+  int work_pending (ACE_Time_Value const &max_wait_time = ACE_Time_Value::zero) override;
 
-  //@{
   /**
    * This event loop driver that blocks for @a max_wait_time before
    * returning.  It will return earlier if timer events, I/O events,
@@ -160,27 +161,27 @@ public:
    */
   int handle_events (ACE_Time_Value *max_wait_time = nullptr) override;
   int alertable_handle_events (ACE_Time_Value *max_wait_time = nullptr) override;
-  //@}
 
-  //@{
   /**
    * This method is just like the one above, except the
    * @a max_wait_time value is a reference and can therefore never be
    * NULL.
    *
-   * Current <alertable_handle_events> is identical to
-   * <handle_events>.
+   * Current @c alertable_handle_events is identical to
+   * @c handle_events.
    */
   int handle_events (ACE_Time_Value &max_wait_time) override;
   int alertable_handle_events (ACE_Time_Value &max_wait_time) override;
-  //@}
 
-  // = Event handling control.
+  /// @}
+
+  /// @name Event handling control
+  /// @{
 
   /**
    * Return the status of Reactor.  If this function returns 0, the reactor is
-   * actively handling events.  If it returns non-zero, <handling_events> and
-   * <handle_alertable_events> return -1 immediately.
+   * actively handling events.  If it returns non-zero, @c handling_events and
+   * @c handle_alertable_events return -1 immediately.
    */
   int deactivated () override;
 
@@ -191,10 +192,14 @@ public:
    */
   void deactivate (int do_stop) override;
 
-  // = Register and remove ACE_Event_Handlers.
+  /// @}
+
+  /// @name Register and remove handlers
+  /// @{
+
   /**
    * Register a @a eh with a particular @a mask.  Note that the
-   * <Select_Reactor> will call ACE_Event_Handler::get_handle() to
+   * @c ACE_Select_Reactor will call ACE_Event_Handler::get_handle() to
    * extract the underlying I/O handle.
    */
   int register_handler (ACE_Event_Handler *eh,
@@ -229,8 +234,8 @@ public:
                                 ACE_Event_Handler *event_handler,
                                 ACE_Reactor_Mask mask) override;
 
-  /// Register @a eh with all the @a handles in the <Handle_Set>.
-  int register_handler (const ACE_Handle_Set &handles,
+  /// Register @a eh with all the @a handles in the @c Handle_Set.
+  int register_handler (ACE_Handle_Set const &handles,
                                 ACE_Event_Handler *eh,
                                 ACE_Reactor_Mask mask) override;
 
@@ -247,7 +252,7 @@ public:
 
   /// Registers @a new_sh to handle a set of signals @a sigset using the
   /// @a new_disp.
-  int register_handler (const ACE_Sig_Set &sigset,
+  int register_handler (ACE_Sig_Set const &sigset,
                                 ACE_Event_Handler *new_sh,
                                 ACE_Sig_Action *new_disp = nullptr) override;
 
@@ -255,7 +260,7 @@ public:
    * Removes the @a mask binding of @a eh from the Select_Reactor.  If
    * there are no more bindings for this @a eh then it is removed from
    * the Select_Reactor.  Note that the Select_Reactor will call
-   * <ACE_Event_Handler::get_handle> to extract the underlying I/O
+   * @c ACE_Event_Handler::get_handle to extract the underlying I/O
    * handle.
    */
   int remove_handler (ACE_Event_Handler *eh,
@@ -274,7 +279,7 @@ public:
    * bind of Event_Handler.  If there are no more bindings for any
    * of these handlers then they are removed from the Select_Reactor.
    */
-  int remove_handler (const ACE_Handle_Set &handle_set,
+  int remove_handler (ACE_Handle_Set const &handle_set,
                               ACE_Reactor_Mask) override;
 
   /**
@@ -289,21 +294,24 @@ public:
                               ACE_Sig_Action *old_disp = nullptr,
                               int sigkey = -1) override;
 
-  /// Calls <remove_handler> for every signal in @a sigset.
-  int remove_handler (const ACE_Sig_Set &sigset) override;
+  /// Calls @c remove_handler for every signal in @a sigset.
+  int remove_handler (ACE_Sig_Set const &sigset) override;
 
-  // = Suspend and resume Handlers.
+  /// @}
 
-  /// Temporarily suspend the <Event_Handler> associated with @a eh.
+  /// @name Suspend and resume handlers
+  /// @{
+
+  /// Temporarily suspend the @c ACE_Event_Handler associated with @a eh.
   int suspend_handler (ACE_Event_Handler *eh) override;
 
   /// Temporarily suspend the Event_Handler associated with @a handle.
   int suspend_handler (ACE_HANDLE handle) override;
 
   /// Suspend all @a handles in handle set temporarily.
-  int suspend_handler (const ACE_Handle_Set &handles) override;
+  int suspend_handler (ACE_Handle_Set const &handles) override;
 
-  /// Suspend all the <Event_Handlers> in the Select_Reactor.
+  /// Suspend all event handlers in the Select_Reactor.
   int suspend_handlers () override;
 
   /// Resume a temporarily suspend Event_Handler associated with
@@ -315,10 +323,12 @@ public:
   int resume_handler (ACE_HANDLE handle) override;
 
   /// Resume all @a handles in handle set.
-  int resume_handler (const ACE_Handle_Set &handles) override;
+  int resume_handler (ACE_Handle_Set const &handles) override;
 
-  /// Resume all the <Event_Handlers> in the Select_Reactor.
+  /// Resume all event handlers in the Select_Reactor.
   int resume_handlers () override;
+
+  /// @}
 
   /**
    * Return true if we any event associations were made by the reactor
@@ -328,7 +338,9 @@ public:
    */
   bool uses_event_associations () override;
 
-  // = Timer management.
+  /// @name Timer management
+  /// @{
+
   /**
    * Schedule an ACE_Event_Handler that will expire after an amount
    * of time.  The return value of this method, a timer_id value,
@@ -348,24 +360,24 @@ public:
    * @return -1 on failure, a timer_id value on success
    */
   long schedule_timer (ACE_Event_Handler * event_handler,
-                               const void *arg,
-                               const ACE_Time_Value &delay,
-                               const ACE_Time_Value &interval = ACE_Time_Value::zero) override;
+                               void const *arg,
+                               ACE_Time_Value const &delay,
+                               ACE_Time_Value const &interval = ACE_Time_Value::zero) override;
 
   /**
    * Resets the interval of the timer represented by @a timer_id to
    * @a interval, which is specified in relative time to the current
-   * <gettimeofday>.  If @a interval is equal to
+   * @c gettimeofday.  If @a interval is equal to
    * ACE_Time_Value::zero, the timer will become a non-rescheduling
    * timer.  Returns 0 if successful, -1 if not.
    */
   int reset_timer_interval (long timer_id,
-                                    const ACE_Time_Value &interval) override;
+                                    ACE_Time_Value const &interval) override;
 
   /**
-   * Cancel all <event_handlers> that match the address of
+   * Cancel all @c event_handlers that match the address of
    * @a event_handler.  If @a dont_call_handle_close is 0 then the
-   * <handle_close> method of @a event_handler will be invoked.
+   * @c handle_close method of @a event_handler will be invoked.
    * Returns number of handler's cancelled.
    */
   int cancel_timer (ACE_Event_Handler *event_handler,
@@ -373,19 +385,22 @@ public:
 
   /**
    * Cancel the single ACE_Event_Handler that matches the @a timer_id
-   * value (which was returned from the <schedule> method).  If arg is
+   * value (which was returned from the @c schedule method).  If arg is
    * non-NULL then it will be set to point to the ``magic cookie''
    * argument passed in when the Event_Handler was registered.  This
    * makes it possible to free up the memory and avoid memory leaks.
-   * If @a dont_call_handle_close is 0 then the <handle_close> method
-   * of <event_handler> will be invoked.  Returns 1 if cancellation
+   * If @a dont_call_handle_close is 0 then the @c handle_close method
+   * of @c event_handler will be invoked.  Returns 1 if cancellation
    * succeeded and 0 if the @a timer_id wasn't found.
    */
   int cancel_timer (long timer_id,
-                            const void **arg = nullptr,
+                            void const **arg = nullptr,
                             int dont_call_handle_close = 1) override;
 
-  // = High-level Event_Handler scheduling operations
+  /// @}
+
+  /// @name High-level event handler scheduling operations
+  /// @{
 
   /// ADD the dispatch MASK "bit" bound with the @a eh and the @a mask.
   int schedule_wakeup (ACE_Event_Handler *eh,
@@ -403,15 +418,19 @@ public:
   int cancel_wakeup (ACE_HANDLE handle,
                              ACE_Reactor_Mask mask) override;
 
-  // = Notification methods.
+  /// @}
+
+  /// @name Notification methods
+  /// @{
+
   /**
    * Called by a thread when it wants to unblock the Select_Reactor.
-   * This wakeups the <ACE_Select_Reactor> if currently blocked in
-   * <select>/<poll>.  Pass over both the Event_Handler *and* the
-   * @a mask to allow the caller to dictate which <Event_Handler>
-   * method the <Select_Reactor> will invoke.  The ACE_Time_Value
+   * This wakeups the @c ACE_Select_Reactor if currently blocked in
+   * @c select() or @c poll(). Pass over both the event handler and the
+   * @a mask to allow the caller to dictate which @c ACE_Event_Handler
+   * method the @c ACE_Select_Reactor will invoke. The ACE_Time_Value
    * indicates how long to blocking trying to notify the
-   * <Select_Reactor>.  If @a timeout == 0, the caller will block until
+   * @c ACE_Select_Reactor.  If @a timeout == 0, the caller will block until
    * action is possible, else will wait until the relative time
    * specified in *@a timeout elapses).
    */
@@ -446,14 +465,18 @@ public:
   bool restart (bool r) override;
 
   /// Set position that the main ACE_Select_Reactor thread is requeued in the
-  /// list of waiters during a <notify> callback.
+  /// list of waiters during a @c notify callback.
   void requeue_position (int) override;
 
   /// Get position that the main ACE_Select_Reactor thread is requeued in the
-  /// list of waiters during a <notify> callback.
+  /// list of waiters during a @c notify callback.
   int requeue_position () override;
 
-  // = Low-level wait_set mask manipulation methods.
+  /// @}
+
+  /// @name Low-level wait_set mask manipulation methods
+  /// @{
+
   /// GET/SET/ADD/CLR the dispatch mask "bit" bound with the @a eh and
   /// @a mask.
   int mask_ops (ACE_Event_Handler *eh,
@@ -466,7 +489,11 @@ public:
                         ACE_Reactor_Mask mask,
                         int ops) override;
 
-  // = Low-level ready_set mask manipulation methods.
+  /// @}
+
+  /// @name Low-level ready_set mask manipulation methods
+  /// @{
+
   /// GET/SET/ADD/CLR the ready "bit" bound with the @a eh and @a mask.
   int ready_ops (ACE_Event_Handler *eh,
                          ACE_Reactor_Mask mask,
@@ -477,10 +504,14 @@ public:
                          ACE_Reactor_Mask,
                          int ops) override;
 
+  /// @}
+
   /// Wake up all threads in waiting in the event loop
   void wakeup_all_threads () override;
 
-  // = Only the owner thread can perform a <handle_events>.
+  /// @name Thread ownership
+  /// @brief Only the owner thread can perform handle_events().
+  /// @{
 
   /// Set the new owner of the thread and return the old owner.
   int owner (ACE_thread_t n_id, ACE_thread_t *o_id = nullptr) override;
@@ -488,7 +519,10 @@ public:
   /// Return the current owner of the thread.
   int owner (ACE_thread_t *) override;
 
-  // = Miscellaneous Handler operations.
+  /// @}
+
+  /// @name Miscellaneous handler operations
+  /// @{
 
   /**
    * Return the Event_Handler associated with @a handle.  Return 0 if
@@ -535,8 +569,11 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
+  /// @}
+
 protected:
-  // = Internal methods that do the actual work.
+  /// @name Internal methods
+  /// @{
 
   // All of these methods assume that the token
   // lock is held by the public methods that call down to them.
@@ -548,7 +585,7 @@ protected:
                                   ACE_Reactor_Mask mask);
 
   /// Register a set of @a handles.
-  virtual int register_handler_i (const ACE_Handle_Set &handles,
+  virtual int register_handler_i (ACE_Handle_Set const &handles,
                                   ACE_Event_Handler *handler,
                                   ACE_Reactor_Mask mask);
 
@@ -558,17 +595,17 @@ protected:
                                 ACE_Reactor_Mask);
 
   /// Remove a set of @a handles.
-  virtual int remove_handler_i (const ACE_Handle_Set &handles,
+  virtual int remove_handler_i (ACE_Handle_Set const &handles,
                                 ACE_Reactor_Mask);
 
-  /// Suspend the <Event_Handler> associated with @a handle
+  /// Suspend the @c ACE_Event_Handler associated with @a handle
   virtual int suspend_i (ACE_HANDLE handle);
 
-  /// Check to see if the <Event_Handler> associated with @a handle is
+  /// Check to see if the @c ACE_Event_Handler associated with @a handle is
   /// suspended. Returns 0 if not, 1 if so.
-  int is_suspended_i (ACE_HANDLE handle) override;
+  bool is_suspended_i (ACE_HANDLE handle) override;
 
-  /// Resume the <Event_Handler> associated with @a handle
+  /// Resume the @c ACE_Event_Handler associated with @a handle
   virtual int resume_i (ACE_HANDLE handle);
 
   /// Implement the public handler method.
@@ -583,13 +620,13 @@ protected:
   virtual int handler_i (int signum, ACE_Event_Handler ** = nullptr);
 
   /**
-   * Check if there are any HANDLEs enabled in the <ready_set_>, and
+   * Check if there are any HANDLEs enabled in the @c ready_set_, and
    * if so, update the @a handle_set and return the number ready.  If
    * there aren't any HANDLEs enabled return 0.
    */
   virtual int any_ready (ACE_Select_Reactor_Handle_Set &handle_set);
 
-  /// Implement the <any_ready> method, assuming that the Sig_Guard is
+  /// Implement the @c any_ready() method, assuming that the Sig_Guard is
   /// being held
   virtual int any_ready_i (ACE_Select_Reactor_Handle_Set &handle_set);
 
@@ -603,7 +640,10 @@ protected:
   virtual int wait_for_multiple_events (ACE_Select_Reactor_Handle_Set &,
                                         ACE_Time_Value *);
 
-  // = Dispatching methods.
+  /// @}
+
+  /// @name Dispatching methods
+  /// @{
 
   /**
    * Template Method that dispatches ACE_Event_Handlers for time
@@ -616,15 +656,15 @@ protected:
 
   /**
    * Dispatch all timer handlers that have expired.  Returns -1 if the
-   * state of the <wait_set_> has changed, else 0.
-   * <number_dispatched> is set to the number of timer handlers
+   * state of the @c wait_set_ has changed, else 0.
+   * @a number_dispatched is set to the number of timer handlers
    * dispatched.
    */
   virtual int dispatch_timer_handlers (int &number_dispatched);
 
   /**
    * Dispatch any notification handlers.  Returns -1 if the state of
-   * the <wait_set_> has changed, else returns number of handlers
+   * the @c wait_set_ has changed, else returns number of handlers
    * notified.
    */
   virtual int dispatch_notification_handlers (ACE_Select_Reactor_Handle_Set &dispatch_set,
@@ -635,7 +675,7 @@ protected:
    * Dispatch all the input/output/except handlers that are enabled in
    * the @a dispatch_set.  Updates @a number_of_active_handles and
    * @a number_of_handlers_dispatched according to the behavior of the
-   * number Returns -1 if the state of the <wait_set_> has changed,
+   * Returns -1 if the state of the @c wait_set_ has changed,
    * else 0.
    */
   virtual int dispatch_io_handlers (ACE_Select_Reactor_Handle_Set &dispatch_set,
@@ -646,8 +686,8 @@ protected:
    * Factors the dispatching of an io handle set (each WRITE, EXCEPT
    * or READ set of handles).  It updates the
    * @a number_of_handlers_dispatched and invokes this->notify_handle
-   * for all the handles in <dispatch_set> using the @a mask,
-   * <ready_set> and @a callback parameters.  Must return -1 if
+   * for all the handles in @c dispatch_set using the @a mask,
+   * @c ready_set and @a callback parameters.  Must return -1 if
    * this->state_changed otherwise it must return 0.
    */
   virtual int dispatch_io_set (int number_of_active_handles,
@@ -665,8 +705,10 @@ protected:
                               ACE_Event_Handler *eh,
                               ACE_EH_PTMF callback);
 
+  /// @}
+
   /// Enqueue ourselves into the list of waiting threads at the
-  /// appropriate point specified by <requeue_position_>.
+  /// appropriate point specified by @c requeue_position_.
   void renew () override;
 
   /// Synchronization token for the MT_SAFE ACE_Select_Reactor.
@@ -683,11 +725,7 @@ protected:
 
   /// This flag is used to keep track of whether we are actively handling
   /// events or not.
-  sig_atomic_t deactivated_;
-
-private:
-  ACE_Select_Reactor_T (const ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN> &) = delete;
-  ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN> &operator=  (const ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN> &) = delete;
+  sig_atomic_t deactivated_ {};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

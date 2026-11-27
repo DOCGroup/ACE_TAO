@@ -6,8 +6,7 @@
 
 void
 Server_IORInterceptor_ORBInitializer::pre_init (
-    PortableInterceptor::ORBInitInfo_ptr /* info */
-    )
+    PortableInterceptor::ORBInitInfo_ptr /* info */)
 {
 }
 
@@ -24,9 +23,11 @@ Server_IORInterceptor_ORBInitializer::post_init (
 
   /// Check for nil reference
   if (CORBA::is_nil (gateway_object_factory.in ()))
-    ACE_ERROR ((LM_ERROR,
-                "Unable to obtain reference to Gateway::Object_Factory "
-                "object.\n"));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "Unable to obtain reference to Gateway::Object_Factory "
+                  "object.\n"));
+    }
 
   PortableInterceptor::IORInterceptor_ptr gateway;
   ACE_NEW_THROW_EX (gateway,

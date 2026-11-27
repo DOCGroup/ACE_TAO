@@ -17,16 +17,10 @@
 
 #include "tao/ORB_Core.h"
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EC_Null_Factory::TAO_EC_Null_Factory ()
-{
-}
-
-TAO_EC_Null_Factory::~TAO_EC_Null_Factory ()
-{
-}
+= default;
 
 TAO_EC_Dispatching*
 TAO_EC_Null_Factory::create_dispatching (TAO_EC_Event_Channel_Base *)
@@ -115,9 +109,9 @@ TAO_EC_Null_Factory::destroy_proxy_push_consumer (TAO_EC_ProxyPushConsumer *x)
 TAO_EC_Timeout_Generator*
 TAO_EC_Null_Factory::create_timeout_generator (TAO_EC_Event_Channel_Base *)
 {
-  int argc = 0;
-  ACE_TCHAR **argv = nullptr;
-  CORBA::ORB_var orb =
+  int argc {};
+  ACE_TCHAR **argv {};
+  CORBA::ORB_var const orb =
     CORBA::ORB_init (argc, argv);
   ACE_Reactor *reactor = orb->orb_core ()->reactor ();
   return new TAO_EC_Reactive_Timeout_Generator (reactor);

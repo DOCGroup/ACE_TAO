@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    Handle_Set_Test.cpp
  *
@@ -9,13 +7,14 @@
  *
  *  @author Prashant Jain <pjain@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "ace/OS_NS_stdlib.h"
 #include "ace/Profile_Timer.h"
 #include "ace/Handle_Set.h"
 #include "ace/Containers.h"
+
+#include <utility>
 
 static void
 test_duplicates (size_t count)
@@ -31,14 +30,16 @@ test_duplicates (size_t count)
 
   u_int seed = (u_int) ACE_OS::time (nullptr);
 
-  for (size_t i = 0; i < count; i++)
+  for (size_t i = 0; i < count; ++i)
     {
       size_t const handle = static_cast<size_t> (ACE_OS::rand_r (&seed) % ACE_Handle_Set::MAXSIZE);
 
       if (ACE_ODD (handle))
         {
           if (handle_set.is_set ((ACE_HANDLE) handle))
+          {
             ++duplicates;
+          }
 
           handle_set.set_bit ((ACE_HANDLE) handle);
           ++sets;
@@ -46,7 +47,9 @@ test_duplicates (size_t count)
       else
         {
           if (handle_set.is_set ((ACE_HANDLE) handle))
+          {
             --duplicates;
+          }
 
           handle_set.clr_bit ((ACE_HANDLE) handle);
           ++clears;
@@ -59,10 +62,10 @@ test_duplicates (size_t count)
   ACE_Handle_Set copy_set (handle_set);
   ACE_TEST_ASSERT (copy_set.num_set () + duplicates == sets);
 
-  ACE_Handle_Set move_set (std::move(handle_set));
+  ACE_Handle_Set const move_set (std::move (handle_set));
   ACE_TEST_ASSERT (move_set.num_set () + duplicates == sets);
 
-  ACE_Handle_Set move_assign = std::move(copy_set);
+  ACE_Handle_Set const move_assign = std::move (copy_set);
   ACE_TEST_ASSERT (move_assign.num_set () + duplicates == sets);
 }
 
@@ -129,7 +132,7 @@ test_boundaries ()
 #endif /* ACE_WIN64 */
   for (int i = 0;
        handle_vector[i] != ACE_INVALID_HANDLE;
-       i++)
+       ++i)
     {
       if (handle_vector[i] < (ACE_HANDLE) ACE_DEFAULT_SELECT_REACTOR_SIZE)
         {
@@ -148,11 +151,11 @@ test_boundaries ()
        )
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("obtained handle %d\n"),
+                  ACE_TEXT ("obtained handle %H\n"),
                   handle));
       int const done = set.remove (handle);
       ACE_TEST_ASSERT (done == 0);
-      count++;
+      ++count;
     }
 
   ACE_TEST_ASSERT (count == handle_set.num_set ());
@@ -165,21 +168,25 @@ test_performance (size_t max_handles,
   ACE_Handle_Set handle_set;
   size_t i;
 
-  for (i = 0; i < max_handles; i++)
-    handle_set.set_bit ((ACE_HANDLE) i);
+  for (i = 0; i < max_handles; ++i)
+    {
+      handle_set.set_bit ((ACE_HANDLE) i);
+    }
 
   ACE_Profile_Timer timer;
   size_t count = 0;
 
   timer.start ();
 
-  for (i = 0; i < max_iterations; i++)
+  for (i = 0; i < max_iterations; ++i)
     {
       ACE_Handle_Set_Iterator iter (handle_set);
 
       // Only iterate up to <handle_set.max_set ()>.
       while (iter () != ACE_INVALID_HANDLE)
-        count++;
+        {
+          ++count;
+        }
     }
 
   timer.stop ();
@@ -198,7 +205,7 @@ test_performance (size_t max_handles,
               et.system_time));
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("time per each of the %d calls = %f usecs\n"),
+              ACE_TEXT ("time per each of the %B calls = %f usecs\n"),
               count,
               et.real_time / double (count) * 1000000));
 }
@@ -208,14 +215,14 @@ run_main (int argc, ACE_TCHAR *argv[])
 {
   ACE_START_TEST (ACE_TEXT ("Handle_Set_Test"));
 
-  int count = argc > 1
+  const int count = argc > 1
     ? ACE_OS::atoi (argv[1])
     : ACE_Handle_Set::MAXSIZE;
-  size_t max_handles =
+  size_t const max_handles =
     argc > 2
     ? ACE_OS::atoi (argv[2])
     : ACE_Handle_Set::MAXSIZE;
-  size_t max_iterations =
+  size_t const max_iterations =
     argc > 3
     ? ACE_OS::atoi (argv[3])
     : ACE_MAX_ITERATIONS;

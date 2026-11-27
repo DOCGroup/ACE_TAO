@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file Factory.h
  *
@@ -89,11 +88,11 @@ public:
 
   /// Create EventChannelFactory
   virtual void create (TAO_Notify_EventChannelFactory*& channel_factory,
-                       const char* factory_name) = 0;
+                       char const *factory_name) = 0;
 
   /// Create EventChannel
   virtual void create (TAO_Notify_EventChannel*& channel,
-                       const char* ec_name) = 0;
+                       char const *ec_name) = 0;
 
   /// Create SupplierAdmin
   virtual void create (TAO_Notify_SupplierAdmin*& admin) = 0;

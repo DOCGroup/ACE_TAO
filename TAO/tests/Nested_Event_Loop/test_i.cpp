@@ -1,5 +1,6 @@
 #include "test_i.h"
-#include "ace/OS_NS_string.h"
+
+#include <cstring>
 
 server_i::server_i (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
@@ -36,26 +37,22 @@ server_i::run_no_ops (client_ptr remote_partner,
   while (iterations != 0)
     {
       CORBA::ULong *pointer_to_iterations = &iterations;
-      size_t sizeof_pointer_to_iterations = sizeof (pointer_to_iterations);
+      size_t const sizeof_pointer_to_iterations = sizeof (pointer_to_iterations);
 
       act act_for_iterations (sizeof_pointer_to_iterations);
       act_for_iterations.length (sizeof_pointer_to_iterations);
 
-      ACE_OS::memcpy (act_for_iterations.get_buffer (),
-                      &pointer_to_iterations,
-                      sizeof_pointer_to_iterations);
+      std::memcpy (act_for_iterations.get_buffer (), &pointer_to_iterations, sizeof_pointer_to_iterations);
 
-      CORBA::ULong got_reply = 0;
+      CORBA::ULong got_reply {};
 
       CORBA::ULong *pointer_to_flag = &got_reply;
-      size_t sizeof_pointer_to_flag = sizeof (pointer_to_flag);
+      size_t const sizeof_pointer_to_flag = sizeof (pointer_to_flag);
 
       act act_for_flag (sizeof_pointer_to_flag);
       act_for_flag.length (sizeof_pointer_to_flag);
 
-      ACE_OS::memcpy (act_for_flag.get_buffer (),
-                      &pointer_to_flag,
-                      sizeof_pointer_to_flag);
+      std::memcpy (act_for_flag.get_buffer (), &pointer_to_flag, sizeof_pointer_to_flag);
 
       remote_partner->oneway_no_op (act_for_iterations,
                                     act_for_flag);
@@ -69,20 +66,16 @@ server_i::run_no_ops (client_ptr remote_partner,
 
 void
 server_i::no_op (client_ptr remote_partner,
-                 const act &act_for_iterations,
-                 const act &act_for_flag)
+                 act const &act_for_iterations,
+                 act const &act_for_flag)
 {
-  CORBA::ULong *pointer_to_iterations = 0;
+  CORBA::ULong *pointer_to_iterations {};
 
-  ACE_OS::memcpy (&pointer_to_iterations,
-                  act_for_iterations.get_buffer (),
-                  act_for_iterations.length ());
+  std::memcpy (&pointer_to_iterations, act_for_iterations.get_buffer (), act_for_iterations.length ());
 
-  CORBA::ULong *pointer_to_flag = 0;
+  CORBA::ULong *pointer_to_flag {};
 
-  ACE_OS::memcpy (&pointer_to_flag,
-                  act_for_flag.get_buffer (),
-                  act_for_flag.length ());
+  std::memcpy (&pointer_to_flag, act_for_flag.get_buffer (), act_for_flag.length ());
 
   ACE_DEBUG ((LM_DEBUG,
               "server_i::no_op: iterations = %d\n",
@@ -123,22 +116,21 @@ client_i::loop (CORBA::ULong event_loop_depth,
               event_loop_depth,
               event_loop_iterations));
 
-
   try
     {
       this->remote_partner_->loop (self_.in (),
                                    event_loop_depth,
                                    event_loop_iterations);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught in client_i::loop:");
     }
 }
 
 void
-client_i::oneway_no_op (const act &act_for_iterations,
-                        const act &act_for_flag)
+client_i::oneway_no_op (act const &act_for_iterations,
+                        act const &act_for_flag)
 {
   try
     {
@@ -146,7 +138,7 @@ client_i::oneway_no_op (const act &act_for_iterations,
                                     act_for_iterations,
                                     act_for_flag);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught in client_i::oneway_no_op:");
     }

@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 /**
  * @file ServerRequestInfo.h
  *
@@ -184,7 +182,8 @@ namespace TAO
     /**
      * @name Helper methods specific to TAO.
      */
-    //@{
+    /// @{
+
     /// Extract the forward object reference from the
     /// @c PortableInterceptor::ForwardRequest exception, and set the
     /// reply status flag accordingly.
@@ -199,7 +198,7 @@ namespace TAO
      */
     void forward_reference (CORBA::Object_ptr obj);
 
-    //@}
+    /// @}
 
     /// Return a reference to the underlying @c TAO_ServerRequest
     /// object.
@@ -213,6 +212,7 @@ namespace TAO
         IOP::ServiceId id);
 
   protected:
+    ServerRequestInfo () = delete;
     ServerRequestInfo (ServerRequestInfo const &) = delete;
     ServerRequestInfo &operator= (ServerRequestInfo const &) = delete;
     ServerRequestInfo (ServerRequestInfo &&) = delete;

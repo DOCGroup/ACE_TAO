@@ -1,14 +1,10 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
- *  \file    Event_Persistence_Factory.h
+ *  @file    Standard_Event_Persistence.h
  *
  *  The standard implementation of Event_Persistence_Factory.
  *
- *  \author Jonathan Pollack <pollack_j@ociweb.com>
+ *  @author Jonathan Pollack <pollack_j@ociweb.com>
  */
-//=============================================================================
 
 #ifndef STANDARD_EVENT_PERSISTENCE_H
 #define STANDARD_EVENT_PERSISTENCE_H
@@ -25,37 +21,41 @@
 #include "orbsvcs/Notify/Routing_Slip_Persistence_Manager.h"
 #include <ace/SString.h>
 
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Notify
 {
-  static const ACE_UINT32 ROUTING_SLIP_ROOT_BLOCK_NUMBER = 0;
-  static const ACE_UINT64 ROUTING_SLIP_ROOT_SERIAL_NUMBER = 1;
+  constexpr ACE_UINT32 ROUTING_SLIP_ROOT_BLOCK_NUMBER = 0;
+  constexpr ACE_UINT64 ROUTING_SLIP_ROOT_SERIAL_NUMBER = 1;
 
   /// \brief Standard (i.e. default) implementation of Event_Persistence_Factory interface
   class TAO_Notify_Serv_Export Standard_Event_Persistence_Factory :
     public Event_Persistence_Factory
   {
   public:
-    /// Constructor
     Standard_Event_Persistence_Factory ();
-    /// Destructor
-    virtual ~Standard_Event_Persistence_Factory();
+    ~Standard_Event_Persistence_Factory() override;
+
+    Standard_Event_Persistence_Factory (Standard_Event_Persistence_Factory const &) = delete;
+    Standard_Event_Persistence_Factory (Standard_Event_Persistence_Factory &&) = delete;
+    Standard_Event_Persistence_Factory &operator= (Standard_Event_Persistence_Factory const &) = delete;
+    Standard_Event_Persistence_Factory &operator= (Standard_Event_Persistence_Factory &&) = delete;
 
     /// Open persistence file and initialize.
     /// /param filename the fully qualified path/name of the file to contain
     ///        persistent information.
     /// /param block_size the size of a physical block on the device containing
     ///        the file.
-    bool open (const ACE_TCHAR* filename, ACE_UINT32 block_size = 512);
+    bool open (ACE_TCHAR const *filename, ACE_UINT32 block_size = 512);
 
     //////////////////////////////////////////////////////
     // Implement Event_Persistence_Factory virtual methods.
-    virtual Routing_Slip_Persistence_Manager*
-      create_routing_slip_persistence_manager(Persistent_Callback* callback);
+    Routing_Slip_Persistence_Manager*
+      create_routing_slip_persistence_manager(Persistent_Callback* callback) override;
 
-    virtual Routing_Slip_Persistence_Manager * first_reload_manager();
+    Routing_Slip_Persistence_Manager * first_reload_manager() override;
 
     /// reloading process complete.  Where should the chain continue?
     void done_reloading(
@@ -70,7 +70,7 @@ namespace TAO_Notify
       ACE_UINT64& next_serial_number,
       ACE_UINT32& next_block_number);
 
-    // return block pointer info for the
+    /// Allocate the next record and return its serial and block numbers.
     void get_preallocated_pointer(
       ACE_UINT64& next_serial_number,
       ACE_UINT32& next_block_number);
@@ -89,9 +89,9 @@ namespace TAO_Notify
   private:
     Persistent_File_Allocator allocator_;
     Routing_Slip_Persistence_Manager root_;
-    Persistent_Storage_Block* psb_;
-    ACE_UINT64 serial_number_;
-    bool is_reloading_;
+    Persistent_Storage_Block* psb_ {};
+    ACE_UINT64 serial_number_ {ROUTING_SLIP_ROOT_SERIAL_NUMBER + 1};
+    bool is_reloading_ {};
   };
 
   /// \brief The standard implementation of the
@@ -100,27 +100,32 @@ namespace TAO_Notify
     public Event_Persistence_Strategy
   {
   public :
-    /// Constructor.
     Standard_Event_Persistence ();
-    /// Destructor.
-    virtual ~Standard_Event_Persistence ();
-    /////////////////////////////////////////////
-    // Override Event_Persistent_Strategy methods
-    // Parse arguments and initialize.
-    virtual int init(int argc, ACE_TCHAR *argv[]);
-    // Prepare for shutdown
-    virtual int fini ();
+    ~Standard_Event_Persistence () override;
 
-    // get the current factory, creating it if necessary
-    virtual Event_Persistence_Factory * get_factory ();
+    Standard_Event_Persistence (Standard_Event_Persistence const &) = delete;
+    Standard_Event_Persistence (Standard_Event_Persistence &&) = delete;
+    Standard_Event_Persistence &operator= (Standard_Event_Persistence const &) = delete;
+    Standard_Event_Persistence &operator= (Standard_Event_Persistence &&) = delete;
+    /////////////////////////////////////////////
+    /// Override Event_Persistent_Strategy methods
+    /// Parse arguments and initialize.
+    int init(int argc, ACE_TCHAR *argv[]) override;
+    /// Prepare for shutdown.
+    int fini () override;
+
+    /// Get the current factory, creating it if necessary.
+    Event_Persistence_Factory * get_factory () override;
 
   private:
-    // release the current factory so a new one can be created
-    virtual void reset ();
+    /// Release the current factory so a new one can be created.
+    void reset () override;
 
-    ACE_TString filename_;  // set via -file_path
-    ACE_UINT32 block_size_; // set via -block_size
-    Standard_Event_Persistence_Factory * factory_;
+    /// File path specified by -file_path.
+    ACE_TString filename_;
+    /// Block size specified by -block_size.
+    ACE_UINT32 block_size_ {512};
+    std::unique_ptr<Standard_Event_Persistence_Factory> factory_;
   };
 }
 

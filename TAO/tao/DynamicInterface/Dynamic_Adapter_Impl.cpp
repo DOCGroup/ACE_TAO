@@ -6,8 +6,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Dynamic_Adapter_Impl::~TAO_Dynamic_Adapter_Impl () = default;
-
 void
 TAO_Dynamic_Adapter_Impl::create_request (
     CORBA::Object_ptr obj,
@@ -42,7 +40,7 @@ TAO_Dynamic_Adapter_Impl::request (CORBA::Object_ptr obj,
                                    CORBA::ORB_ptr orb,
                                    char const* operation)
 {
-  CORBA::Request_ptr req = CORBA::Request::_nil ();
+  CORBA::Request_ptr req {};
   ACE_NEW_THROW_EX (req,
                     CORBA::Request (obj,
                                     orb,

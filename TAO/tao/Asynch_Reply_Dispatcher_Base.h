@@ -1,13 +1,9 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file Asynch_Reply_Dispatcher_Base.h
  *
  *  @author Alexander Babu Arulanthu <alex@cs.wustl.edu>
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_ASYNCH_REPLY_DISPATCHER_BASE_H
 #define TAO_ASYNCH_REPLY_DISPATCHER_BASE_H
@@ -16,6 +12,9 @@
 
 #include "tao/Reply_Dispatcher.h"
 #include "tao/CDR.h"
+#include "tao/Transport.h"
+
+#include <memory>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -33,7 +32,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Pluggable_Reply_Params;
 class TAO_ORB_Core;
-class TAO_Transport;
 /**
  * @class TAO_Asynch_Reply_Dispatcher_Base
  *
@@ -44,7 +42,6 @@ class TAO_Export TAO_Asynch_Reply_Dispatcher_Base
   : public TAO_Reply_Dispatcher
 {
 public:
-  /// Default constructor.
   TAO_Asynch_Reply_Dispatcher_Base (TAO_ORB_Core *orb_core,
                                     ACE_Allocator *allocator = nullptr);
 
@@ -52,8 +49,7 @@ public:
   void transport (TAO_Transport *t);
 
   /// Install the timeout handler
-  virtual long schedule_timer (CORBA::ULong , const ACE_Time_Value &) = 0;
-
+  virtual long schedule_timer (CORBA::ULong , ACE_Time_Value const &) = 0;
 
   /// A helper method that can be used by the subclasses
   /**
@@ -73,10 +69,10 @@ public:
   bool try_dispatch_reply ();
 
 protected:
-  /// Destructor.
   ~TAO_Asynch_Reply_Dispatcher_Base () override;
 
 private:
+  TAO_Asynch_Reply_Dispatcher_Base () = delete;
   TAO_Asynch_Reply_Dispatcher_Base (TAO_Asynch_Reply_Dispatcher_Base const &) = delete;
   TAO_Asynch_Reply_Dispatcher_Base &operator= (
       TAO_Asynch_Reply_Dispatcher_Base const &) = delete;
@@ -87,7 +83,7 @@ private:
 protected:
   /// The service context list.
   /**
-   * Note, that this is not a reference as in
+   * @note This is not a reference as in
    * the synchronous case. We own the reply_service_info
    * because our TAO_Asynch_Invocation or TAO_DII_Deferred_Invocation
    * will go out of scope before we are done.
@@ -106,14 +102,14 @@ protected:
   TAO_InputCDR reply_cdr_;
 
   /// This invocation is using this transport, may change...
-  TAO_Transport *transport_;
+  TAO_Transport_Auto_Ptr transport_ {};
 
 private:
   /// Lock to protect @c is_reply_dispatched_ flag.
-  ACE_Lock *lock_;
+  std::unique_ptr<ACE_Lock> lock_ {};
 
   /// Has the reply been dispatched?
-  bool is_reply_dispatched_;
+  bool is_reply_dispatched_ {};
 };
 
 namespace TAO

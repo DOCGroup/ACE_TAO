@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    TSS_Static_Test.cpp
  *
@@ -11,14 +9,11 @@
  *
  *  @author Chad Elliott <elliott_c@ociweb.com>
  */
-//=============================================================================
-
 
 #include "test_config.h"
 #include "ace/ACE.h"
 #include "ace/Init_ACE.h"
 #include "ace/Thread.h"
-
 
 #if defined (ACE_HAS_TSS_EMULATION)
 
@@ -44,12 +39,10 @@ Some_Object::Some_Object ()
     }
 }
 
-
 Some_Object::~Some_Object ()
 {
   ACE::fini ();
 }
-
 
 static Some_Object sobject;
 
@@ -62,23 +55,23 @@ run_main (int, ACE_TCHAR *[])
   ACE_thread_key_t key;
   if (ACE_Thread::keycreate (&key, 0) == 0)
     {
-      void* specific = 0;
+      void *specific {};
       if (ACE_Thread::getspecific (key, &specific) == 0)
         {
           if (specific == 0)
             {
-              ACE_DEBUG ((LM_DEBUG, "Got back pointer: %x from key: %d. "
+              ACE_DEBUG ((LM_DEBUG, "Got back pointer: %@ from key: %d. "
                                     "Good!\n",
-                                    (size_t)specific, key));
+                                    specific, key));
             }
           else
             {
               ++status;
-              ACE_ERROR ((LM_ERROR, "Something (%x) was found in tss "
+              ACE_ERROR ((LM_ERROR, "Something (%@) was found in tss "
                                     "slot %d.\n"
                                     "Nothing should be stored in our "
                                     "TSS slot!\n",
-                                    (size_t)specific, key));
+                                    specific, key));
             }
         }
       else

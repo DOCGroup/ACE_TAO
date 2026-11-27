@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    be_global.cpp
  *
@@ -7,7 +5,6 @@
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "be_global.h"
 #include "be_codegen.h"
@@ -1890,7 +1887,7 @@ BE_GlobalData::ccmobject ()
 {
   if (nullptr == this->ccmobject_)
     {
-      FE_Utils::Scoped_Name_Owner scoped_name_owner =
+      FE_Utils::Scoped_Name_Owner const scoped_name_owner =
         FE_Utils::string_to_scoped_name_owner ("Components::CCMObject");
 
       if (scoped_name_owner == nullptr)
@@ -1993,9 +1990,9 @@ BE_GlobalData::messaging_exceptionholder ()
                                     AST_Type_List {},
                                     0,
                                     nullptr,
-                                    0,
-                                    0,
-                                    0),
+                                    false,
+                                    false,
+                                    false),
                       nullptr);
       this->messaging_exceptionholder_.reset (exceptionholder);
 
@@ -2459,7 +2456,6 @@ BE_GlobalData::parse_args (long &i, char **av)
 {
   switch (av[i][1])
     {
-      // = Various 'h'eader_file_name_endings.
       case 'h':
 
         // <-hc Client's header file name ending>
@@ -2527,7 +2523,6 @@ BE_GlobalData::parse_args (long &i, char **av)
             idl_global->parse_args_exit (1);
           }
         break;
-      // = Various 'c'lient side stub file_name_endings.
       case 'c':
         // <-cs Client stub's file name ending>
         //      Default is "C.cpp".
@@ -2557,7 +2552,6 @@ BE_GlobalData::parse_args (long &i, char **av)
             idl_global->parse_args_exit (1);
           }
         break;
-      // = Various 's'erver side skeleton file name endings.
       case 's':
         // <-ss Server's skeleton file name ending>
         //      Default is "S.cpp".

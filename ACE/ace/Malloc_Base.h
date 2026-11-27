@@ -1,13 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Malloc_Base.h
  *
  *  @author Doug Schmidt and Irfan Pyarali
  */
-//=============================================================================
-
 
 #ifndef ACE_MALLOC_BASE_H
 #define ACE_MALLOC_BASE_H
@@ -42,7 +37,8 @@ public:
   /// Unsigned integer type used for specifying memory block lengths.
   using size_type = size_t;
 
-  // = Memory Management
+  /// @name Memory management
+  /// @{
 
   /// Get pointer to a default ACE_Allocator.
   static ACE_Allocator *instance ();
@@ -57,7 +53,6 @@ public:
   /// "No-op" constructor (needed to make certain compilers happy).
   ACE_Allocator ();
 
-  /// Virtual destructor
   virtual ~ACE_Allocator ();
 
   /// Allocate @a nbytes, but don't give them any initial value.
@@ -77,8 +72,10 @@ public:
 
   /// Remove any resources associated with this memory manager.
   virtual int remove () = 0;
+  /// @}
 
-  // = Map manager like functions
+  /// @name Map operations
+  /// @{
 
   /**
    * Associate @a name with @a pointer.  If @a duplicates == 0 then do
@@ -89,7 +86,7 @@ public:
    * bind a previously bound @a name and @a duplicates == 0, else
    * returns -1 if a resource failure occurs.
    */
-  virtual int bind (const char *name, void *pointer, int duplicates = 0) = 0;
+  virtual int bind (char const *name, void *pointer, int duplicates = 0) = 0;
 
   /**
    * Associate @a name with @a pointer.  Does not allow duplicate
@@ -101,25 +98,28 @@ public:
    * to use @a pointer (e.g., to free it) a copy must be maintained by
    * the caller.
    */
-  virtual int trybind (const char *name, void *&pointer) = 0;
+  virtual int trybind (char const *name, void *&pointer) = 0;
 
   /// Locate @a name and pass out parameter via pointer.  If found,
   /// return 0, returns -1 if failure occurs.
-  virtual int find (const char *name, void *&pointer) = 0;
+  virtual int find (char const *name, void *&pointer) = 0;
 
   /// Returns 0 if the name is in the mapping. -1, otherwise.
-  virtual int find (const char *name) = 0;
+  virtual int find (char const *name) = 0;
 
   /// Unbind (remove) the name from the map.  Don't return the pointer
   /// to the caller
-  virtual int unbind (const char *name) = 0;
+  virtual int unbind (char const *name) = 0;
 
   /// Break any association of name.  Returns the value of pointer in
   /// case the caller needs to deallocate memory.
-  virtual int unbind (const char *name, void *&pointer) = 0;
+  virtual int unbind (char const *name, void *&pointer) = 0;
+  /// @}
 
-  // = Protection and "sync" (i.e., flushing memory to persistent
-  // backing store).
+  /** @name Memory protection and synchronization
+   * Synchronization flushes memory to persistent backing storage.
+   */
+  /// @{
 
   /**
    * Sync @a len bytes of the memory region to the backing store
@@ -142,6 +142,7 @@ public:
   /// Change the protection of the pages of the mapped region to @a prot
   /// starting at @a addr up to @a len bytes.
   virtual int protect (void *addr, size_type len, int prot = PROT_RDWR) = 0;
+  /// @}
 
 #if defined (ACE_HAS_MALLOC_STATS)
   /// Dump statistics of how malloc is behaving.
@@ -158,6 +159,23 @@ private:
   static ACE_Allocator *allocator_;
 };
 
+/// Deallocates array storage allocated through ACE's allocation macros.
+template <typename T>
+struct ACE_Array_Deleter
+{
+  void operator() (T *ptr) const
+  {
+    if (ptr != nullptr)
+      {
+#if defined (ACE_HAS_ALLOC_HOOKS)
+        ACE_Allocator::instance ()->free (ptr);
+#else
+        delete [] ptr;
+#endif /* ACE_HAS_ALLOC_HOOKS */
+      }
+  }
+};
+
 /**
  * @class ACE_Allocator_Std_Adapter
  *
@@ -171,33 +189,36 @@ class ACE_Export ACE_Allocator_Std_Adapter
 public:
   using value_type = T;
   using pointer = T *;
-  using const_pointer = const T *;
+  using const_pointer = T const *;
   using reference = T &;
-  using const_reference = const T &;
-  using size_type = std::size_t;
+  using const_reference = T const &;
+  using size_type = size_t;
   using difference_type = std::ptrdiff_t;
   template <typename U> struct rebind { using other = ACE_Allocator_Std_Adapter<U>; };
 
   ACE_Allocator_Std_Adapter() = default;
 
   template <typename U>
-  ACE_Allocator_Std_Adapter(const ACE_Allocator_Std_Adapter<U>&) {}
+  ACE_Allocator_Std_Adapter(ACE_Allocator_Std_Adapter<U> const &) {}
 
-  static T* allocate(std::size_t n)
+  static T* allocate(size_t n)
   {
     void* raw_mem = ACE_Allocator::instance()->malloc(n * sizeof(T));
 #if !defined (ACE_INTEGRITY) || _HAS_EXCEPTIONS
-    if (!raw_mem) throw std::bad_alloc();
+    if (!raw_mem)
+      {
+        throw std::bad_alloc();
+      }
 #endif
     return static_cast<T*>(raw_mem);
   }
 
-  static void deallocate(T* ptr, std::size_t)
+  static void deallocate(T* ptr, size_t)
   {
     ACE_Allocator::instance()->free(ptr);
   }
 
-  static void construct(T* ptr, const T& value)
+  static void construct(T* ptr, T const & value)
   {
     new (static_cast<void*>(ptr)) T(value);
   }
@@ -214,13 +235,13 @@ public:
 };
 
 template <typename T, typename U>
-bool operator==(const ACE_Allocator_Std_Adapter<T>&, const ACE_Allocator_Std_Adapter<U>&)
+bool operator==(ACE_Allocator_Std_Adapter<T> const &, ACE_Allocator_Std_Adapter<U> const &)
 {
   return true;
 }
 
 template <typename T, typename U>
-bool operator!=(const ACE_Allocator_Std_Adapter<T>&, const ACE_Allocator_Std_Adapter<U>&)
+bool operator!=(ACE_Allocator_Std_Adapter<T> const &, ACE_Allocator_Std_Adapter<U> const &)
 {
   return false;
 }

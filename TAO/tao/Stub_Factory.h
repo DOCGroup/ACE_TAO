@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Stub_Factory.h
  *
@@ -10,7 +7,6 @@
  *
  *  @author  Angelo Corsaro <corsaro@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_STUB_FACTORY_H_
 #define TAO_STUB_FACTORY_H_
@@ -47,12 +43,11 @@ class TAO_Stub;
 class TAO_Export TAO_Stub_Factory : public ACE_Service_Object
 {
 public:
-  /// Destructor.
   ~TAO_Stub_Factory () override;
 
   /// Creates a Stub Object.
-  virtual TAO_Stub *create_stub (const char *repository_id,
-                                 const TAO_MProfile &profiles,
+  virtual TAO_Stub *create_stub (char const *repository_id,
+                                 TAO_MProfile const &profiles,
                                  TAO_ORB_Core *orb_core) = 0;
 };
 

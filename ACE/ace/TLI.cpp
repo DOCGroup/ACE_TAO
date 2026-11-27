@@ -36,8 +36,10 @@ ACE_TLI::open (const char device[], int oflag, struct t_info *info)
 {
   ACE_TRACE ("ACE_TLI::open");
   if (oflag == 0)
-    oflag = O_RDWR;
-  this->set_handle (ACE_OS::t_open ((char *) device, oflag, info));
+    {
+      oflag = O_RDWR;
+    }
+  this->set_handle (ACE_OS::t_open (const_cast<char *> (device), oflag, info));
 
   return this->get_handle ();
 }
@@ -51,9 +53,11 @@ ACE_TLI::ACE_TLI (const char device[], int oflag, struct t_info *info)
 {
   ACE_TRACE ("ACE_TLI::ACE_TLI");
   if (this->open (device, oflag, info) == ACE_INVALID_HANDLE)
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("ACE_TLI::ACE_TLI")));
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("%p\n"),
+                     ACE_TEXT ("ACE_TLI::ACE_TLI")));
+    }
 }
 
 int
@@ -63,12 +67,16 @@ ACE_TLI::get_local_addr (ACE_Addr &sa) const
   struct netbuf name;
 
   name.maxlen = sa.get_size ();
-  name.buf    = (char *) sa.get_addr ();
+  name.buf    = static_cast<char *> (sa.get_addr ());
 
   if (ACE_OS::t_getname (this->get_handle (), &name, LOCALNAME) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 
 int
@@ -116,7 +124,7 @@ ACE_TLI::set_option (int level, int option, void *optval, int optlen)
   opthdr->level = level;
   opthdr->name  = option;
   opthdr->len   = req.opt.len;   // We only request one option at a time.
-  ACE_OS::memcpy (&opthdr[1], optval, optlen);
+  ACE_OS::memcpy (opthdr + 1, optval, optlen);
   return ACE_OS::t_optmgmt (this->get_handle (), &req, &ret);
 #else
   ACE_UNUSED_ARG (level);
@@ -156,7 +164,9 @@ ACE_TLI::get_option (int level, int option, void *optval, int &optlen)
   opthdr->name  = option;
   opthdr->len   = sizeof (*opthdr);    // Just the header on the request
   if (ACE_OS::t_optmgmt (this->get_handle (), &req, &ret) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
     {
       opthdr = reinterpret_cast<struct t_opthdr *> (ret.opt.buf);
@@ -167,7 +177,7 @@ ACE_TLI::get_option (int level, int option, void *optval, int &optlen)
         }
       else
         {
-          ACE_OS::memcpy (optval, &opthdr[1], optlen);
+          ACE_OS::memcpy (optval, opthdr + 1, optlen);
           return 0;
         }
     }

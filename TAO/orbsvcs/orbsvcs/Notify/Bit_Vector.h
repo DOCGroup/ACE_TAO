@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Bit_Vector.h
  *
@@ -8,7 +5,6 @@
  *
  *  @author Jonathan Pollack <pollack_j@ociweb.com>
  */
-//=============================================================================
 
 #ifndef BIT_VECTOR_H
 #define BIT_VECTOR_H
@@ -22,8 +18,9 @@
 
 #include "tao/Versioned_Namespace.h"
 
-#include "ace/Vector_T.h"
 #include "ace/Basic_Types.h"
+
+#include <vector>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -36,37 +33,33 @@ namespace TAO_Notify
 class TAO_Notify_Serv_Export Bit_Vector
 {
   using BASIC_UINT_TYPE = ACE_UINT32;
-  using VECTOR_TYPE = ACE_Vector<BASIC_UINT_TYPE>;
-  enum {
-    BITS_PER_WORD = 32,
-    BPW_LOG_2 = 5
-  };
+  using VECTOR_TYPE = std::vector<BASIC_UINT_TYPE>;
+  static constexpr int BITS_PER_WORD = 32;
+  static constexpr int BPW_LOG_2 = 5;
 public:
-  /// The constructor.
   Bit_Vector();
-  /// The destructor.
-  ~Bit_Vector();
+  ~Bit_Vector() = default;
 
   /// \brief Determine if a bit at location is set.
-  bool is_set(const size_t location) const;
+  bool is_set(size_t const location) const;
   /// \brief Set or unset a bit at location, growing the vector as needed.
-  void set_bit(const size_t location, bool set);
+  void set_bit(size_t const location, bool set);
 
   /// \brief Find the first bit that is either set or unset in an O(1).
   size_t find_first_bit(bool set) const;
 
 private:
   /// Update our first set and unset bits.
-  void evaluate_firsts(const size_t location, bool set);
+  void evaluate_firsts(size_t const location, bool set);
   /// Iterate from location to the end, finding the first bit that
   /// matches the requested set or unset value.
-  size_t find_first_bit_of(const size_t location, bool set);
+  size_t find_first_bit_of(size_t const location, bool set);
 
 private:
   VECTOR_TYPE bitvec_;
-  size_t size_;
-  size_t first_set_bit_;
-  size_t first_cleared_bit_;
+  size_t size_ {};
+  size_t first_set_bit_ {};
+  size_t first_cleared_bit_ {};
 };
 }
 

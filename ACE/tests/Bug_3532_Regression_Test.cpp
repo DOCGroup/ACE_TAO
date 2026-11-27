@@ -27,7 +27,7 @@ run_main (int, ACE_TCHAR *[])
     // Reopen the file and read the byte
     Buffer[0] = '-';
     pFile = ACE_OS::fopen(ACE_TEXT("OneByteFile"), ACE_TEXT("rb"));
-    size_t BytesRead = ACE_OS::fread(&Buffer, 1, 1, pFile);
+    size_t const BytesRead = ACE_OS::fread(&Buffer, 1, 1, pFile);
     if(BytesRead == 1)
     {
         if(Buffer[0] != 'T')

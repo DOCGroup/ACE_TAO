@@ -3,11 +3,11 @@
 #include "orbsvcs/CosNotifyCommC.h"
 #include "orbsvcs/CosNamingC.h"
 #include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_string.h"
 
+#include <cstdio>
 
-const char*
-Any_String (const CORBA::Any& any)
+char const *
+Any_String (CORBA::Any const & any)
 {
   static char out[256] = "";
   CORBA::Short s;
@@ -15,7 +15,7 @@ Any_String (const CORBA::Any& any)
   CORBA::Long l;
   CORBA::ULong ul;
   CORBA::ULongLong ull;
-  const char* str;
+  char const *str {};
 
   if (any >>= s)
     {
@@ -35,7 +35,7 @@ Any_String (const CORBA::Any& any)
     }
   else if (any >>= str)
     {
-      ACE_OS::strcpy (out, str);
+      std::snprintf (out, sizeof out, "%s", str == nullptr ? "" : str);
     }
   else if (any >>= ull)
     {
@@ -43,7 +43,7 @@ Any_String (const CORBA::Any& any)
     }
   else
     {
-      ACE_OS::strcpy (out, "Unsupported Any Type");
+      std::snprintf (out, sizeof out, "%s", "Unsupported Any Type");
     }
 
   return out;

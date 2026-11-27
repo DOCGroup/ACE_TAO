@@ -1,8 +1,8 @@
-// -*- C++ -*-
 #ifndef REPLICATION_MANAGER_FAULT_CONSUMER_ADAPTER_H
 #define REPLICATION_MANAGER_FAULT_CONSUMER_ADAPTER_H
 #include /**/ <ace/pre.h>
 #include <ace/ACE.h>
+#include <vector>
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -10,7 +10,6 @@
 #include <orbsvcs/FT_ReplicationManager/FT_FaultConsumer.h>
 #include <orbsvcs/FT_NotifierC.h>
 #include <orbsvcs/FT_FaultDetectorFactoryC.h>
-#include <ace/Vector_T.h>
 #include <ace/SString.h>
 
 /////////////////////
@@ -23,14 +22,8 @@
 class ReplicationManagerFaultConsumerAdapter
 {
 public:
-  /**
-   * Default constructor.
-   */
   ReplicationManagerFaultConsumerAdapter ();
 
-  /**
-   * virtual destructor.
-   */
   virtual ~ReplicationManagerFaultConsumerAdapter ();
 
   /**
@@ -46,7 +39,7 @@ public:
   /**
    * Return a string to identify this object for logging/console message purposes.
    */
-  const char * identity () const;
+  char const *identity () const;
 
   /**
    * idle time activity.
@@ -60,26 +53,19 @@ public:
    */
   int fini ();
 
-
   size_t notifications() const;
 
-  /////////////////
-  // Implementation
-private:
-  ////////////////////
-  // Forbidden methods
+  /// @name Disabled operations
+  /// @{
 private:
   ReplicationManagerFaultConsumerAdapter (
-    const ReplicationManagerFaultConsumerAdapter & rhs);
+    ReplicationManagerFaultConsumerAdapter const & rhs);
   ReplicationManagerFaultConsumerAdapter & operator =
-    (const ReplicationManagerFaultConsumerAdapter & rhs);
+    (ReplicationManagerFaultConsumerAdapter const & rhs);
+  /// @}
 
-  /////////////////////////
-  // Implementation methods
-private:
-  ///////////////
-  // Data Members
-private:
+  /// @name Data members
+  /// @{
   /**
    * The orb
    */
@@ -98,12 +84,12 @@ private:
   /**
    * a file to write to to signal "ready"
    */
-  const ACE_TCHAR * readyFile_;
+  ACE_TCHAR const *readyFile_;
 
   /**
    * Detector's IOR
    */
-  const ACE_TCHAR * detector_ior_;
+  ACE_TCHAR const *detector_ior_;
 
   /**
    * The FaultDetectorFactory object reference.
@@ -113,17 +99,17 @@ private:
   /**
    * A collection of replica IORs
    */
-  ACE_Vector < const char * > replica_iors_;
+  std::vector<char const *> replica_iors_;
 
   /**
    * A collection of replica references.
    */
-  ACE_Vector < FT::PullMonitorable_var > replicas_;
+  std::vector<FT::PullMonitorable_var> replicas_;
 
   /**
    * A file from which the notifier's IOR should be read.
    */
-  const ACE_TCHAR * notifier_ior_;
+  ACE_TCHAR const *notifier_ior_;
 
   /**
    * the fault notifier
@@ -140,6 +126,7 @@ private:
    */
   TAO::FT_FaultConsumer* p_fault_consumer_;
   PortableServer::ServantBase_var consumer_servant_;
+  /// @}
 };
 #include /**/ <ace/post.h>
 

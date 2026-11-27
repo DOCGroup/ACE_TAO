@@ -1,5 +1,3 @@
-/* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file    FT_FaultConsumer.cpp
  *
@@ -12,7 +10,6 @@
  *
  *  @author Steve Totten <totten_s@ociweb.com>
  */
-//=============================================================================
 
 #include "orbsvcs/Log_Macros.h"
 #include "FT_FaultConsumer.h"
@@ -22,23 +19,18 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-/// Default constructor.
 TAO::FT_FaultConsumer::FT_FaultConsumer ()
   : poa_ (PortableServer::POA::_nil ())
   , fault_notifier_ (FT::FaultNotifier::_nil ())
-  , fault_analyzer_ (nullptr)
-  , consumer_id_ (0)
   , consumer_ref_ (CosNotifyComm::StructuredPushConsumer::_nil ())
-  , notifications_ (0)
 {
 }
 
-/// Destructor.
 TAO::FT_FaultConsumer::~FT_FaultConsumer () = default;
 
 /**
 * Connect to the FT::FaultNotifier.
-* Note: We make the following assumptions about what the
+* @note We make the following assumptions about what the
 * application will do:
 * - Create an instance of this consumer class.
 * - Obtain the object reference of the FaultNotifier to which this
@@ -150,7 +142,7 @@ int TAO::FT_FaultConsumer::fini ()
         this->object_id_.in());
     }
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
   {
     ex._tao_print_exception (
       ACE_TEXT ("TAO::FT_FaultConsumer::fini: ")
@@ -190,7 +182,6 @@ size_t TAO::FT_FaultConsumer::notifications () const
   return this->notifications_;
 }
 
-
 ///////////////////
 // CORBA operations
 
@@ -199,8 +190,7 @@ size_t TAO::FT_FaultConsumer::notifications () const
 // handle.  Then, we analyze it.  If it is not an event we can handle,
 // we simply log the error and drop the event.
 void TAO::FT_FaultConsumer::push_structured_event (
-  CosNotification::StructuredEvent const &event
-  )
+  CosNotification::StructuredEvent const &event)
 {
   // Debugging support.
   this->notifications_ += 1;
@@ -213,7 +203,7 @@ void TAO::FT_FaultConsumer::push_structured_event (
     ));
   }
 
-  int result = 0;
+  int result {};
 
   // Make sure it is an event type we can handle.
   if (result == 0)
@@ -246,8 +236,7 @@ void TAO::FT_FaultConsumer::push_structured_event (
 
 void TAO::FT_FaultConsumer::offer_change (
     CosNotification::EventTypeSeq const & added,
-    CosNotification::EventTypeSeq const & removed
-  )
+    CosNotification::EventTypeSeq const & removed)
 {
   ACE_UNUSED_ARG (added);
   ACE_UNUSED_ARG (removed);
@@ -256,8 +245,7 @@ void TAO::FT_FaultConsumer::offer_change (
   ));
 }
 
-void TAO::FT_FaultConsumer::disconnect_structured_push_consumer (
-  )
+void TAO::FT_FaultConsumer::disconnect_structured_push_consumer ()
 {
   //TODO: For now, we are just ignoring the disconnect callback.
   ORBSVCS_DEBUG ((LM_DEBUG,

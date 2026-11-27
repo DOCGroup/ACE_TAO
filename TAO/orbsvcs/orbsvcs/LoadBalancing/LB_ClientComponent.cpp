@@ -37,7 +37,7 @@ TAO_LB_ClientComponent::register_orb_initializer ()
 
       PortableInterceptor::register_orb_initializer (initializer.in ());
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception (
         "Unable to register LB_ClientComponent ORB ""initializer.");

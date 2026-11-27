@@ -3,7 +3,7 @@
 #include "UpdateableServerInfo.h"
 
 UpdateableServerInfo::UpdateableServerInfo (const Repository_Ptr& repo,
-                                            const ACE_CString& name,
+                                            ACE_CString const& name,
                                             int pid)
 : repo_(repo),
   si_(repo->get_active_server (name,pid)),
@@ -55,7 +55,9 @@ void
 UpdateableServerInfo::update_repo ()
 {
   if (!needs_update_)
+  {
     return;
+  }
 
   needs_update_ = false;
   int err = repo_->update_server (si_);
@@ -81,7 +83,6 @@ UpdateableServerInfo::operator* () const
 {
   return *(si_.get());
 }
-
 
 const Server_Info_Ptr&
 UpdateableServerInfo::edit (bool active)

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /**
  *  @file   EC_Gateway_Sched.h
  *
@@ -31,7 +30,7 @@ class TAO_RTSchedEvent_Export TAO_EC_Gateway_Sched : public TAO_EC_Gateway_IIOP
 {
 public:
   TAO_EC_Gateway_Sched ();
-  ~TAO_EC_Gateway_Sched ();
+  ~TAO_EC_Gateway_Sched () = default;
 
   /**
    * To do its job this class requires to know the local and remote
@@ -44,8 +43,8 @@ public:
              RtecEventChannelAdmin::EventChannel_ptr consumer_ec,
              RtecScheduler::Scheduler_ptr supplier_sched,
              RtecScheduler::Scheduler_ptr consumer_sched,
-             const char* consumer_name,
-             const char* supplier_name);
+             char const *consumer_name,
+             char const *supplier_name);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

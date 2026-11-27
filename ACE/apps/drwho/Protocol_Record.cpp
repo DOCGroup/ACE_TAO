@@ -9,11 +9,13 @@ Drwho_Node Protocol_Record::drwho_node_;
 Protocol_Record::~Protocol_Record ()
 {
   if (Options::get_opt (Options::DEBUGGING))
-    ACE_DEBUG ((LM_DEBUG,
-                "disposing Protocol_Record\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "disposing Protocol_Record\n"));
+    }
 
   for (Drwho_Node *np = this->get_drwho_list ();
-       np != 0; )
+       np != nullptr; )
     {
       Drwho_Node *t = np;
       np = np->next_;
@@ -21,68 +23,54 @@ Protocol_Record::~Protocol_Record ()
     }
 }
 
-Protocol_Record::Protocol_Record ()
-  : key_name1_ (0),
-    key_name2_ (0),
-    drwho_list_ (0),
-    next_ (0),
-    is_active_ (0)
-{
-}
+Protocol_Record::Protocol_Record () = default;
 
 Protocol_Record::Protocol_Record (int)
-  : key_name1_ (0),
-    key_name2_ (0),
-    drwho_list_ (&Protocol_Record::drwho_node_),
-    next_ (0),
-    is_active_ (0)
+  : drwho_list_ (&Protocol_Record::drwho_node_)
 {
 }
 
-Protocol_Record::Protocol_Record (const char *kn1,
+Protocol_Record::Protocol_Record (char const *kn1,
                                   Protocol_Record *next)
   : key_name1_ (kn1),
-    key_name2_ (0),
-    drwho_list_ (0),
-    next_ (next),
-    is_active_ (0)
+    next_ (next)
 {
 }
 
-const char *
+char const *
 Protocol_Record::get_login ()
 {
   return this->key_name1_;
 }
 
-const char *
-Protocol_Record::set_login (const char *str)
+char const *
+Protocol_Record::set_login (char const *str)
 {
   this->key_name1_ = str;
   return str;
 }
 
-const char *
+char const *
 Protocol_Record::get_real ()
 {
   return this->key_name2_;
 }
 
-const char *
+char const *
 Protocol_Record::get_host ()
 {
   return this->key_name1_;
 }
 
-const char *
-Protocol_Record::set_host (const char *str)
+char const *
+Protocol_Record::set_host (char const *str)
 {
   this->key_name1_ = str;
   return str;
 }
 
-const char *
-Protocol_Record::set_real (const char *str)
+char const *
+Protocol_Record::set_real (char const *str)
 {
   this->key_name2_ = str;
   return str;

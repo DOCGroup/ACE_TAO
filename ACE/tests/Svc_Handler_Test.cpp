@@ -1,24 +1,25 @@
-
-//=============================================================================
 /**
  *  @file    Svc_Handler_Test.cpp
  *
  *  This tests illustrates the "buffering" strategy of the
- *  <ACE_Buffered_Svc_Handler>.  This test also illustrates how the
- *  <ACE_FILE_IO> classes work.
+ *  @c ACE_Buffered_Svc_Handler.  This test also illustrates how the
+ *  @c ACE_FILE_IO classes work.
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
-
 
 #include "test_config.h"
 #include "ace/OS_NS_string.h"
+#include "ace/OS_NS_unistd.h"
 #include "ace/FILE_Connector.h"
 #include "ace/Null_Condition.h"
 #include "ace/Null_Mutex.h"
 #include "ace/Svc_Handler.h"
 #include "ace/Synch_Traits.h"
+#include <memory>
+#if defined (ACE_HAS_ALLOC_HOOKS)
+# include "ace/Malloc_Base.h"
+#endif
 
 using SVC_HANDLER = ACE_Buffered_Svc_Handler<ACE_FILE_IO, ACE_NULL_SYNCH>;
 
@@ -28,17 +29,17 @@ run_test (SVC_HANDLER &svc_handler,
 {
   // Create a whole slew of message blocks and pass them to the
   // <svc_handler>.
-  for (size_t i = 0; i < iterations; i++)
+  for (size_t i = 0; i < iterations; ++i)
     {
-      ACE_Message_Block *mb = nullptr;
+      ACE_Message_Block *mb {};
       ACE_NEW (mb,
                ACE_Message_Block (sizeof (ACE_TEXT("hello "))));
 
-      ACE_Message_Block *cb1 = nullptr;
+      ACE_Message_Block *cb1 {};
       ACE_NEW (cb1,
                ACE_Message_Block (sizeof (ACE_TEXT("there\n"))));
 
-      ACE_Message_Block *cb2 = nullptr;
+      ACE_Message_Block *cb2 {};
       ACE_NEW (cb2,
                ACE_Message_Block (sizeof (ACE_TEXT("there\n"))));
 
@@ -53,9 +54,11 @@ run_test (SVC_HANDLER &svc_handler,
 
       // Note that this is a buffered call!
       if (svc_handler.put (mb) == -1)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("%p\n"),
-                    ACE_TEXT ("put")));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("%p\n"),
+                      ACE_TEXT ("put")));
+        }
     }
 
   ACE_DEBUG ((LM_DEBUG,
@@ -63,9 +66,11 @@ run_test (SVC_HANDLER &svc_handler,
 
   // Make sure to flush everything out before we exit.
   if (svc_handler.flush () == -1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("%p\n"),
-                ACE_TEXT ("flush")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("%p\n"),
+                  ACE_TEXT ("flush")));
+    }
 }
 
 int
@@ -77,9 +82,13 @@ run_main (int argc, ACE_TCHAR *argv[])
     size_t iterations = 10;
 
     if (argc > 1)
+    {
       max_buffer_size = ACE_OS::atoi (argv[1]);
+    }
     if (argc > 2)
+    {
       iterations = ACE_OS::atoi (argv[2]);
+    }
 
     ACE_FILE_Connector connector;
     ACE_FILE_IO file_io;
@@ -87,17 +96,21 @@ run_main (int argc, ACE_TCHAR *argv[])
 
     // Open up a temp file.
     if (connector.connect (file_io, ACE_sap_any_cast (ACE_FILE_Addr &)) == -1)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("%p\n"),
-                         ACE_TEXT ("connect")),
-                        1);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("%p\n"),
+                           ACE_TEXT ("connect")),
+                          1);
+      }
     // Find the name of the temp file
     ACE_FILE_Addr file;
     if (file_io.get_local_addr (file) == -1)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("%p\n"),
-                         ACE_TEXT ("get_local_addr")),
-                        1);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("%p\n"),
+                           ACE_TEXT ("get_local_addr")),
+                          1);
+      }
 
     // Create the service handler and assign it <file_io> as its data
     // sink.
@@ -115,16 +128,19 @@ run_main (int argc, ACE_TCHAR *argv[])
 
     // Open up the temp file.
     if (connector.connect (file_io, file) == -1)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("connect failed for %p\n"),
-                         file.get_path_name ()),
-                        1);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("connect failed for %p\n"),
+                           file.get_path_name ()),
+                          1);
+      }
     char buf[ACE_MAXLOGMSGLEN + 1];
     ACE_LOG_MSG->clr_flags (ACE_Log_Msg::VERBOSE_LITE);
 
     ACE_FILE_Info info;
     file_io.get_info (info);
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT("file size = %d\n"), info.size_));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT("file size = %q\n"),
+                static_cast<ACE_INT64> (info.size_)));
 
     for (ssize_t n_bytes; (n_bytes = file_io.recv (buf, ACE_MAXLOGMSGLEN)) > 0; )
       {
@@ -134,13 +150,75 @@ run_main (int argc, ACE_TCHAR *argv[])
 
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT("\n")));
 
+    if (info.size_ > 0)
+      {
+        if (ACE_OS::lseek (file_io.get_handle (), 0, SEEK_SET) == -1)
+          {
+            ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Could not rewind file\n")), 1);
+          }
+        iovec result {};
+        ssize_t const received = file_io.recvv (std::addressof (result));
+        bool const valid = received == info.size_
+          && result.iov_len == static_cast<size_t> (received)
+          && result.iov_base != nullptr
+          && (received < 6 || ACE_OS::memcmp (result.iov_base, "hello ", 6) == 0);
+#if defined (ACE_HAS_ALLOC_HOOKS)
+        ACE_Allocator::instance ()->free (result.iov_base);
+#else
+        delete [] static_cast<char *> (result.iov_base);
+#endif
+        if (!valid)
+          {
+            ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Reading file into allocated buffer failed\n")), 1);
+          }
+        if (info.size_ > 6)
+          {
+            if (ACE_OS::lseek (file_io.get_handle (), 3, SEEK_SET) == -1)
+              {
+                ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Could not seek in file\n")), 1);
+              }
+            iovec remaining {};
+            ssize_t const read_remaining = file_io.recvv (std::addressof (remaining));
+            bool const remaining_valid = read_remaining == info.size_ - 3
+              && remaining.iov_len == static_cast<size_t> (read_remaining)
+              && remaining.iov_base != nullptr
+              && ACE_OS::memcmp (remaining.iov_base, "lo ", 3) == 0;
+#if defined (ACE_HAS_ALLOC_HOOKS)
+            ACE_Allocator::instance ()->free (remaining.iov_base);
+#else
+            delete [] static_cast<char *> (remaining.iov_base);
+#endif
+            if (!remaining_valid)
+              {
+                ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Reading remaining file data failed\n")), 1);
+              }
+          }
+      }
+
     file_io.close ();
 
+    if (info.size_ > 0)
+      {
+        if (connector.connect (file_io, file, nullptr, ACE_Addr::sap_any, 0, O_WRONLY) == -1)
+          {
+            ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Could not reopen file for writing\n")), 1);
+          }
+        iovec result {};
+        ssize_t const received = file_io.recvv (std::addressof (result));
+        file_io.close ();
+        if (received != -1 || result.iov_base != nullptr || result.iov_len != 0)
+          {
+            ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Reading a write-only file unexpectedly succeeded\n")), 1);
+          }
+      }
+
     if (file_io.unlink () == -1)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("unlink failed for %p\n"),
-                         file.get_path_name ()),
-                        1);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("unlink failed for %p\n"),
+                           file.get_path_name ()),
+                          1);
+      }
   }
 
   ACE_END_TEST;

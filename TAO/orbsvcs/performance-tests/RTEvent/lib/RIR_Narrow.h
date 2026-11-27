@@ -20,11 +20,11 @@ template<class Interface>
 class RIR_Narrow
 {
 public:
-  typedef typename Interface::_ptr_type Interface_ptr;
-  typedef typename Interface::_var_type Interface_var;
+  using Interface_ptr = typename Interface::_ptr_type;
+  using Interface_var = typename Interface::_var_type;
 
   static Interface_ptr resolve (CORBA::ORB_ptr orb,
-                                const char *object_id);
+                                char const *object_id);
 };
 
 #include "RIR_Narrow.cpp"

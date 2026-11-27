@@ -1,5 +1,3 @@
-/* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file    FTAPP_Notifier_Main.cpp
  *
@@ -9,7 +7,6 @@
  *
  *  @author Dale Wilson <wilson_d@ociweb.com>
  */
-//=============================================================================
 
 #include "StubFaultNotifier.h"
 #include "tao/Utils/Server_Main.h"

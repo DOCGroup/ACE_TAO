@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 /**
  *  @file   ECG_UDP_Receiver.h
  *
@@ -76,10 +74,10 @@ public:
               RtecEventChannelAdmin::ProxyPushConsumer_ptr proxy);
 
   TAO_ECG_UDP_Receiver_Disconnect_Command (
-              const TAO_ECG_UDP_Receiver_Disconnect_Command & rhs);
+              TAO_ECG_UDP_Receiver_Disconnect_Command const & rhs);
 
   TAO_ECG_UDP_Receiver_Disconnect_Command &
-   operator= (const TAO_ECG_UDP_Receiver_Disconnect_Command & rhs);
+   operator= (TAO_ECG_UDP_Receiver_Disconnect_Command const & rhs);
 
   void execute ();
 
@@ -104,11 +102,11 @@ class TAO_RTEvent_Serv_Export TAO_ECG_UDP_Receiver :
 {
 public:
   /// Initialization and termination methods.
-  //@{
+  /// @{
   /// Create a new TAO_ECG_UDP_Receiver object.
   /// (Constructor access is restricted to insure that all
   /// TAO_ECG_UDP_Receiver objects are heap-allocated.)
-  static PortableServer::Servant_var<TAO_ECG_UDP_Receiver> create (CORBA::Boolean perform_crc = 0);
+  static PortableServer::Servant_var<TAO_ECG_UDP_Receiver> create (CORBA::Boolean perform_crc = false);
 
   ~TAO_ECG_UDP_Receiver () override;
 
@@ -139,7 +137,7 @@ public:
    * necessary, the EC must have reconnects enabled in order for this
    * method to succeed.
    */
-  void connect (const RtecEventChannelAdmin::SupplierQOS& pub);
+  void connect (RtecEventChannelAdmin::SupplierQOS const &pub);
 
   /// Set the handler we must notify when shutdown occurs.  (This is
   /// the handler that alerts us when data is available on udp/mcast socket.)
@@ -155,23 +153,23 @@ public:
    * deactivation) and deletion of the object.
    */
   void shutdown ();
-  //@}
+  /// @}
 
   /// Accessor.
   /// Call the RtecUDPAdmin::AddrServer::get_addr.  Throws exception
   /// if nil Address Server was specified in init ().
-  void get_addr (const RtecEventComm::EventHeader& header,
-                 RtecUDPAdmin::UDP_Addr_out addr);
+  void get_addr (RtecEventComm::EventHeader const &header,
+                 RtecUDPAdmin::UDP_Addr_out addr) override;
 
   /// Call the RtecUDPAdmin::AddrServer::get_address.  Throws exception
   /// if nil Address Server was specified in init ().
-  void get_address (const RtecEventComm::EventHeader& header,
-                    RtecUDPAdmin::UDP_Address_out addr);
+  void get_address (RtecEventComm::EventHeader const &header,
+                    RtecUDPAdmin::UDP_Address_out addr) override;
 
   /// The PushSupplier idl method.
   /// Invokes shutdown (), which may result in the object being deleted, if
   /// refcounting is used to manage its lifetime.
-  virtual void disconnect_push_supplier () override;
+  void disconnect_push_supplier () override;
 
   /// TAO_ECG_Dgram_Handler method.
   /**
@@ -180,22 +178,22 @@ public:
    * Data is read from the socket, and, if complete message is
    * received, the event is pushed to the local Event Channel.
    */
-  virtual int handle_input (ACE_SOCK_Dgram& dgram) override;
+  int handle_input (ACE_SOCK_Dgram& dgram) override;
 
 protected:
   /// Constructor (protected).  Clients can create new
   /// TAO_ECG_UDP_Receiver objects using the static create() method.
-  TAO_ECG_UDP_Receiver (CORBA::Boolean perform_crc = false);
+  explicit TAO_ECG_UDP_Receiver (CORBA::Boolean perform_crc = false);
 
 private:
   /// Helpers for the connect() method.
-  //@{
-  // Establishes connection to the Event Channel for the first time.
-  void new_connect (const RtecEventChannelAdmin::SupplierQOS& pub);
+  /// @{
+  /// Establishes connection to the Event Channel for the first time.
+  void new_connect (RtecEventChannelAdmin::SupplierQOS const &pub);
 
-  // Updates existing connection to the Event Channel.
-  void reconnect (const RtecEventChannelAdmin::SupplierQOS& pub);
-  //@}
+  /// Updates existing connection to the Event Channel.
+  void reconnect (RtecEventChannelAdmin::SupplierQOS const &pub);
+  /// @}
 
   /// Event Channel to which we act as a supplier.
   RtecEventChannelAdmin::EventChannel_var lcl_ec_;

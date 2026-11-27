@@ -1,13 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Registry.h
  *
  *  @author Irfan Pyarali (irfan@cs.wustl.edu)
  */
-//=============================================================================
-
 
 #ifndef ACE_REGISTRY_H
 #define ACE_REGISTRY_H
@@ -45,26 +40,25 @@ public:
   struct ACE_Export Name_Component
   {
     ACE_TString id_;
+    /// The id_ field is used, but the kind_ field is currently ignored.
     ACE_TString kind_;
 
+    /// Comparison operators.
     bool operator== (const Name_Component &rhs) const;
     bool operator!= (const Name_Component &rhs) const;
-    // Comparison
   };
-  // The <id_> field is used,
-  // but the <kind_> field is currently ignored
 
   /// A Name is an ordered collections of components (ids)
   using Name = ACE_Unbounded_Set<Name_Component>;
 
   /// Separator for components in a name
-  static const ACE_TCHAR STRING_SEPARATOR[];
+  static ACE_TCHAR const STRING_SEPARATOR[];
 
   /// Convert a @a name to a @c string
   static ACE_TString make_string (const Name &name);
 
   /// Convert a @a string to a @c name
-  static Name make_name (const ACE_TString &string);
+  static Name make_name (ACE_TString const &string);
 
   /// There are two types of bindings
   enum Binding_Type {INVALID, OBJECT, CONTEXT};
@@ -74,19 +68,17 @@ public:
     /// Empty (default) constructor
     Binding ();
 
-    /// Constructor
     /// (Name version)
     Binding (const Name &binding_name,
              Binding_Type binding_type);
 
-    /// Constructor
     /// (String version)
-    Binding (const ACE_TString &binding_name,
+    Binding (ACE_TString const &binding_name,
              Binding_Type binding_type);
 
+    /// Comparison operators.
     bool operator== (const Binding &rhs) const;
     bool operator!= (const Binding &rhs) const;
-    // Comparison
 
     /// Name accessor
     /// (Name version)
@@ -129,7 +121,6 @@ public:
   class ACE_Export Object
   {
   public:
-    /// Default constructor
     Object (void *data = nullptr,
             u_long size = 0,
             u_long type = REG_NONE);
@@ -188,12 +179,13 @@ public:
     Naming_Context ();
 
     /// Constructor: key_ will be set to @a key
-    Naming_Context (const HKEY &key);
+    explicit Naming_Context (HKEY const &key);
 
-    /// Destructor will call <Naming_Context::close>.
+    /// Destructor will call @c Naming_Context::close.
     ~Naming_Context ();
 
-    // The following interfaces are for objects
+    /// @name Object operations
+    /// @{
 
     /**
      * Insert @a object with @a name into @c this context.
@@ -208,7 +200,7 @@ public:
      * This will fail if @a name already exists
      * (String version)
      */
-    int bind_new (const ACE_TString &name,
+    int bind_new (ACE_TString const &name,
                   const Object &object);
 
     /**
@@ -220,29 +212,29 @@ public:
               const Object &object);
 
     /**
-     * Insert or update <object> with @a name into @c this context
+     * Insert or update @c object with @a name into @c this context
      * This will not fail if @a name already exists
      * (String version)
      */
-    int bind (const ACE_TString &name,
+    int bind (ACE_TString const &name,
               const Object &object);
 
-    /// Update <object> with @a name in @c this context
+    /// Update @c object with @a name in @c this context
     /// (Name version)
     int rebind (const Name &name,
                 const Object &object);
 
-    /// Update <object> with @a name in @c this context
-    int rebind (const ACE_TString &name,
+    /// Update @c object with @a name in @c this context
+    int rebind (ACE_TString const &name,
                 const Object &object);
 
-    /// Find <object> with @a name in @c this context
+    /// Find @c object with @a name in @c this context
     /// (Name version)
     int resolve (const Name &name,
                  Object &object);
 
-    /// Find <object> with @a name in @c this context
-    int resolve (const ACE_TString &name,
+    /// Find @c object with @a name in @c this context
+    int resolve (ACE_TString const &name,
                  Object &object);
 
     /// Delete object with @a name in @c this context
@@ -250,16 +242,17 @@ public:
     int unbind (const Name &name);
 
     /// Delete object with @a name in @c this context
-    int unbind (const ACE_TString &name);
+    int unbind (ACE_TString const &name);
 
-
-    // The following interfaces are for Naming Context
+    /// @}
+    /// @name Naming context operations
+    /// @{
 
     /// Create new @c naming_context
     int new_context (Naming_Context &naming_context);
 
     /**
-     * Insert <naming_context> with @a name relative to @c this context
+     * Insert @c naming_context with @a name relative to @c this context
      * This will fail if @a name already exists
      * (Name version)
      */
@@ -269,16 +262,16 @@ public:
                           u_long security_access = KEY_ALL_ACCESS,
                           LPSECURITY_ATTRIBUTES security_attributes = 0);
 
-    /// Insert <naming_context> with @a name relative to @c this context
+    /// Insert @c naming_context with @a name relative to @c this context
     /// This will fail if @a name already exists
-    int bind_new_context (const ACE_TString &name,
+    int bind_new_context (ACE_TString const &name,
                           Naming_Context &naming_context,
                           u_long persistence = REG_OPTION_NON_VOLATILE,
                           u_long security_access = KEY_ALL_ACCESS,
                           LPSECURITY_ATTRIBUTES security_attributes = 0);
 
     /**
-     * Insert or update <naming_context> with @a name relative to @c this context
+     * Insert or update @c naming_context with @a name relative to @c this context
      * This will not fail if @a name already exists
      * (Name version)
      */
@@ -288,31 +281,31 @@ public:
                       u_long security_access = KEY_ALL_ACCESS,
                       LPSECURITY_ATTRIBUTES security_attributes = 0);
 
-    /// Insert or update <naming_context> with @a name relative to @c this context
+    /// Insert or update @c naming_context with @a name relative to @c this context
     /// This will not fail if @a name already exists
-    int bind_context (const ACE_TString &name,
+    int bind_context (ACE_TString const &name,
                       /* const */ Naming_Context &naming_context,
                       u_long persistence = REG_OPTION_NON_VOLATILE,
                       u_long security_access = KEY_ALL_ACCESS,
                       LPSECURITY_ATTRIBUTES security_attributes = 0);
 
-    /// Rename <naming_context> to @a name
+    /// Rename @c naming_context to @a name
     /// (Name version)
     int rebind_context (const Name &name,
                         /* const */ Naming_Context &naming_context);
 
-    /// Rename <naming_context> to @a name
-    int rebind_context (const ACE_TString &name,
+    /// Rename @c naming_context to @a name
+    int rebind_context (ACE_TString const &name,
                         /* const */ Naming_Context &naming_context);
 
-    /// Find <naming_context> with @a name in @c this context
+    /// Find @c naming_context with @a name in @c this context
     /// (Name version)
     int resolve_context (const Name &name,
                          Naming_Context &naming_context,
                          u_long security_access = KEY_ALL_ACCESS);
 
-    /// Find <naming_context> with @a name in @c this context
-    int resolve_context (const ACE_TString &name,
+    /// Find @c naming_context with @a name in @c this context
+    int resolve_context (ACE_TString const &name,
                          Naming_Context &naming_context,
                          u_long security_access = KEY_ALL_ACCESS);
 
@@ -321,9 +314,9 @@ public:
     int unbind_context (const Name &name);
 
     /// Remove naming_context with @a name from @c this context
-    int unbind_context (const ACE_TString &name);
+    int unbind_context (ACE_TString const &name);
 
-    /// Same as <unbind_context> with @c this as naming_context
+    /// Same as @c unbind_context with @c this as naming_context
     int destroy ();
 
     /**
@@ -340,17 +333,20 @@ public:
     /// This gives back a listing of all entries in @c this context.
     int list (Binding_List &list);
 
-    // Some other necessary functions which are
-    // not part of the CORBA interface
+    /// @}
+    /// @name Context management
+    /// @{
 
     /// Sync content of context to disk
     int flush ();
 
     /// Close the handle of the context
-    /// @note <close> does not call <flush>
+    /// @note @c close does not call @c flush
     int close ();
+    /// @}
 
-    // Accessors
+    /// @name Accessors
+    /// @{
 
     /// Get key
     HKEY key ();
@@ -368,6 +364,7 @@ public:
 
     /// Get name (String version)
     ACE_TString name ();
+    /// @}
 
   protected:
     /// Set key
@@ -382,7 +379,7 @@ public:
 
     /// Set name
     /// (String version)
-    void name (const ACE_TString &name);
+    void name (ACE_TString const &name);
 
   private:
     /// Disallow copy constructors
@@ -414,13 +411,12 @@ public:
     /// Friend factory
     friend class Naming_Context;
 
-    /// Default constructor
     Binding_Iterator ();
 
     /// Next entry
     int next_one (Binding &binding);
 
-    /// Next <how_many> entries
+    /// Next @c how_many entries
     int next_n (u_long how_many,
                 Binding_List &list);
 
@@ -452,16 +448,14 @@ public:
     class ACE_Export Iteration_State
       {
       public:
-        /// Constructor
         Iteration_State ();
 
-        /// Destructor
         virtual ~Iteration_State ();
 
         /// Set the iterator reference.
         void iterator (Binding_Iterator *iterator);
 
-        /// Next <how_many> entries
+        /// Next @c how_many entries
         virtual int next_n (u_long how_many,
                             Binding_List &list) = 0;
 
@@ -470,15 +464,15 @@ public:
 
       protected:
         /// Pointer to parent iterator
-        Binding_Iterator *parent_;
+        Binding_Iterator *parent_ {};
 
-        u_long index_;
+        u_long index_ {};
       };
 
   private:
     class ACE_Export Object_Iteration : public Iteration_State
       {
-        /// Next <how_many> entries
+        /// Next @c how_many entries
         int next_n (u_long how_many,
                     Binding_List &list);
       };
@@ -541,11 +535,11 @@ public:
    */
   static int connect (ACE_Registry::Naming_Context &naming_context,
                       HKEY predefined = HKEY_LOCAL_MACHINE,
-                      const ACE_TCHAR *machine_name = nullptr);
+                      ACE_TCHAR const *machine_name = nullptr);
 
 private:
   /// Check if @a machine_name is the local host
-  static int is_local_host (const ACE_TCHAR *machine_name);
+  static bool is_local_host (ACE_TCHAR const *machine_name);
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

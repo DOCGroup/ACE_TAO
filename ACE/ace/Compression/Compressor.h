@@ -1,12 +1,9 @@
-// -*- C++ -*-
-//=============================================================================
 /**
  *  @file   Compressor.h
  *
  *  @author ACE version by
  *  @author Derek Dominish <derek.dominish@dsto.defence.gov.au>
  */
-//=============================================================================
 
 #ifndef ACE_COMPRESSOR_H
 #define ACE_COMPRESSOR_H
@@ -19,7 +16,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Guard_T.h"
 #include "ace/Thread_Mutex.h"
 #include "ace/Synch_Traits.h"
 
@@ -47,9 +43,14 @@ enum ACE_CompressorId
 class ACE_Compression_Export ACE_Compressor
 {
 public:
-  ACE_CompressorId get_compressor_id() const;
+  ACE_CompressorId get_compressor_id () const;
 
-  ACE_UINT32 get_compression_level() const;
+  ACE_UINT32 get_compression_level () const;
+
+  ACE_Compressor (ACE_Compressor const &) = delete;
+  ACE_Compressor (ACE_Compressor &&) = delete;
+  ACE_Compressor &operator= (ACE_Compressor const &) = delete;
+  ACE_Compressor &operator= (ACE_Compressor &&) = delete;
 
   /**
     * Compress the @a in_ptr buffer for @a in_len into the
@@ -59,12 +60,12 @@ public:
     * otherwise the return value will indicate the resultant
     * @a out_ptr compressed buffer length.
     *
-    * NOTE: it is advisable that the @max_out_len be slightly
+    * @note It is advisable that @a max_out_len be slightly
     * larger of the input @a in_len (i.e. x 1.1F) to cater
     * for the possibility that a reduced compressed length
     * is not possible.
     */
-  virtual ACE_UINT64 compress(const void *in_ptr,
+  virtual ACE_UINT64 compress (void const *in_ptr,
                               ACE_UINT64 in_len,
                               void *out_ptr,
                               ACE_UINT64 max_out_len) = 0;
@@ -77,7 +78,7 @@ public:
     * otherwise the return value will indicate the resultant
     * @a out_ptr decompressed buffer length.
     */
-  virtual ACE_UINT64 decompress(const void *in_ptr,
+  virtual ACE_UINT64 decompress (void const *in_ptr,
                                 ACE_UINT64 in_len,
                                 void *out_ptr,
                                 ACE_UINT64 max_out_len) = 0;
@@ -85,44 +86,42 @@ public:
   /**
     *  Return the current compressed bytes statistics counter.
     */
-  virtual ACE_UINT64 compressed_bytes() const;
+  virtual ACE_UINT64 compressed_bytes () const;
 
   /**
     *  Return the current uncompressed bytes statistics counter.
     */
-  virtual ACE_UINT64 uncompressed_bytes() const;
+  virtual ACE_UINT64 uncompressed_bytes () const;
 
   /**
     *  Return the current compression ratio statistics.
     */
-  virtual float compression_ratio() const;
+  virtual float compression_ratio () const;
 
   /**
     *  Reset the statistics to zero.
     */
-  virtual void reset_stats();
+  virtual void reset_stats ();
 
   virtual ~ACE_Compressor () = default;
 
 protected:
-  ACE_Compressor(ACE_CompressorId compressor_id,
-                 ACE_UINT32 compression_level = 0); // Must be inherited.
+  /// Must be inherited.
+  explicit ACE_Compressor (ACE_CompressorId compressor_id,
+                           ACE_UINT32 compression_level = 0);
 
-  virtual void update_stats(ACE_UINT64 uncompressed_bytes,
+  virtual void update_stats (ACE_UINT64 uncompressed_bytes,
                             ACE_UINT64 compressed_bytes);
 
 private:
-  ACE_CompressorId    compressor_id_;
-  ACE_UINT32          compression_level_;
+  ACE_CompressorId const compressor_id_;
+  ACE_UINT32 const compression_level_;
 
   // Ensure we can lock with immutability (i.e. const)
   mutable ACE_SYNCH_MUTEX mutex_;
 
-  ACE_UINT64          compressed_bytes_;
-  ACE_UINT64          uncompressed_bytes_;
-
-  ACE_Compressor (const ACE_Compressor&) = delete;
-  ACE_Compressor& operator= (const ACE_Compressor&) = delete;
+  ACE_UINT64 compressed_bytes_ {};
+  ACE_UINT64 uncompressed_bytes_ {};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

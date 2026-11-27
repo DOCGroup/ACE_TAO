@@ -1,19 +1,11 @@
 #include "LookupManager.h"
-#include "ace/OS_NS_string.h"
-
-
 #include "Name.h"
 
-TAO_Notify_Tests_LookupManager::TAO_Notify_Tests_LookupManager ()
-  : app_ (0)
-    , activation_manager_ (0)
-    , priority_mapping_ (0)
-{
-}
+#include <cstring>
 
-TAO_Notify_Tests_LookupManager::~TAO_Notify_Tests_LookupManager ()
-{
-}
+TAO_Notify_Tests_LookupManager::TAO_Notify_Tests_LookupManager () = default;
+
+TAO_Notify_Tests_LookupManager::~TAO_Notify_Tests_LookupManager () = default;
 
 void
 TAO_Notify_Tests_LookupManager::init (CORBA::ORB_ptr orb)
@@ -26,7 +18,7 @@ TAO_Notify_Tests_LookupManager::init (CORBA::ORB_ptr orb)
 }
 
 void
-TAO_Notify_Tests_LookupManager::_register (CORBA::Object_ptr obj, const char* obj_name)
+TAO_Notify_Tests_LookupManager::_register (CORBA::Object_ptr obj, char const *obj_name)
 {
   CosNaming::Name_var name =
     this->naming_->to_name (obj_name);
@@ -92,9 +84,9 @@ TAO_Notify_Tests_LookupManager::resolve (CosNaming::NamingContextExt_var& naming
 }
 
 void
-TAO_Notify_Tests_LookupManager::resolve (PortableServer::POA_var& poa, const char *poa_name)
+TAO_Notify_Tests_LookupManager::resolve (PortableServer::POA_var& poa, char const *poa_name)
 {
-  if (ACE_OS::strcmp (poa_name, TAO_Notify_Tests_Name::root_poa) == 0)
+  if (std::strcmp (poa_name, TAO_Notify_Tests_Name::root_poa) == 0)
     {
       CORBA::Object_ptr poa_object  =
                 this->orb_->resolve_initial_references(TAO_Notify_Tests_Name::root_poa);
@@ -112,19 +104,21 @@ TAO_Notify_Tests_LookupManager::resolve (PortableServer::POA_var& poa, const cha
     }
   else
     {
-      poa = root_poa_->find_POA (poa_name, 0);
+      poa = root_poa_->find_POA (poa_name, false);
     }
 }
 
 void
-TAO_Notify_Tests_LookupManager::resolve (CosNaming::NamingContextExt_var& naming, const char *naming_name)
+TAO_Notify_Tests_LookupManager::resolve (CosNaming::NamingContextExt_var& naming, char const *naming_name)
 {
   CORBA::Object_var naming_obj =
     this->orb_->resolve_initial_references (naming_name);
 
   // Need to check return value for errors.
   if (CORBA::is_nil (naming_obj.in ()))
+  {
     throw CORBA::UNKNOWN ();
+  }
 
   this->naming_ = CosNaming::NamingContextExt::_narrow (naming_obj.in ());
 
@@ -134,7 +128,7 @@ TAO_Notify_Tests_LookupManager::resolve (CosNaming::NamingContextExt_var& naming
 }
 
 CORBA::Object_ptr
-TAO_Notify_Tests_LookupManager::resolve_object (const char* obj_name)
+TAO_Notify_Tests_LookupManager::resolve_object (char const *obj_name)
 {
   CosNaming::Name name (1);
   name.length (1);
@@ -147,7 +141,7 @@ TAO_Notify_Tests_LookupManager::resolve_object (const char* obj_name)
 }
 
 void
-TAO_Notify_Tests_LookupManager::resolve (CosNotifyChannelAdmin::EventChannelFactory_var& ecf, const char * factory_name)
+TAO_Notify_Tests_LookupManager::resolve (CosNotifyChannelAdmin::EventChannelFactory_var& ecf, char const *factory_name)
 {
   CORBA::Object_var object = this->resolve_object (factory_name);
 
@@ -155,7 +149,7 @@ TAO_Notify_Tests_LookupManager::resolve (CosNotifyChannelAdmin::EventChannelFact
 }
 
 void
-TAO_Notify_Tests_LookupManager::resolve (CosNotifyChannelAdmin::EventChannel_var& ec, const char * channel_name)
+TAO_Notify_Tests_LookupManager::resolve (CosNotifyChannelAdmin::EventChannel_var& ec, char const *channel_name)
 {
   CORBA::Object_var object = this->resolve_object (channel_name);
 
@@ -163,7 +157,7 @@ TAO_Notify_Tests_LookupManager::resolve (CosNotifyChannelAdmin::EventChannel_var
 }
 
 void
-TAO_Notify_Tests_LookupManager::resolve (CosNotifyChannelAdmin::SupplierAdmin_var& sa, const char * admin_name)
+TAO_Notify_Tests_LookupManager::resolve (CosNotifyChannelAdmin::SupplierAdmin_var& sa, char const *admin_name)
 {
   CORBA::Object_var object = this->resolve_object (admin_name);
 
@@ -171,7 +165,7 @@ TAO_Notify_Tests_LookupManager::resolve (CosNotifyChannelAdmin::SupplierAdmin_va
 }
 
 void
-TAO_Notify_Tests_LookupManager::resolve (CosNotifyChannelAdmin::ConsumerAdmin_var& ca , const char * admin_name)
+TAO_Notify_Tests_LookupManager::resolve (CosNotifyChannelAdmin::ConsumerAdmin_var& ca , char const *admin_name)
 {
   CORBA::Object_var object = this->resolve_object (admin_name);
 
@@ -179,7 +173,7 @@ TAO_Notify_Tests_LookupManager::resolve (CosNotifyChannelAdmin::ConsumerAdmin_va
 }
 
 void
-TAO_Notify_Tests_LookupManager::resolve (CosNotifyComm::StructuredPushSupplier_var& supplier, const char *supplier_name)
+TAO_Notify_Tests_LookupManager::resolve (CosNotifyComm::StructuredPushSupplier_var& supplier, char const *supplier_name)
 {
   CORBA::Object_var object = this->resolve_object (supplier_name);
 
@@ -187,7 +181,7 @@ TAO_Notify_Tests_LookupManager::resolve (CosNotifyComm::StructuredPushSupplier_v
 }
 
 void
-TAO_Notify_Tests_LookupManager::resolve (CosNotifyComm::StructuredPushConsumer_var& consumer, const char * consumer_name)
+TAO_Notify_Tests_LookupManager::resolve (CosNotifyComm::StructuredPushConsumer_var& consumer, char const *consumer_name)
 {
   CORBA::Object_var object = this->resolve_object (consumer_name);
 
@@ -195,7 +189,7 @@ TAO_Notify_Tests_LookupManager::resolve (CosNotifyComm::StructuredPushConsumer_v
 }
 
 void
-TAO_Notify_Tests_LookupManager::resolve (CosNotifyFilter::FilterFactory_var& ff, const char *filter_factory_name)
+TAO_Notify_Tests_LookupManager::resolve (CosNotifyFilter::FilterFactory_var& ff, char const *filter_factory_name)
 {
   CORBA::Object_var object = this->resolve_object (filter_factory_name);
 
@@ -203,7 +197,7 @@ TAO_Notify_Tests_LookupManager::resolve (CosNotifyFilter::FilterFactory_var& ff,
 }
 
 void
-TAO_Notify_Tests_LookupManager::resolve (CosNotifyFilter::Filter_var& filter, const char *filter_name)
+TAO_Notify_Tests_LookupManager::resolve (CosNotifyFilter::Filter_var& filter, char const *filter_name)
 {
   CORBA::Object_var object = this->resolve_object (filter_name);
 
@@ -211,7 +205,7 @@ TAO_Notify_Tests_LookupManager::resolve (CosNotifyFilter::Filter_var& filter, co
 }
 
 void
-TAO_Notify_Tests_LookupManager::resolve (CosNotifyFilter::FilterAdmin_var& filter_admin, const char *filter_admin_name)
+TAO_Notify_Tests_LookupManager::resolve (CosNotifyFilter::FilterAdmin_var& filter_admin, char const *filter_admin_name)
 {
   CORBA::Object_var object = this->resolve_object (filter_admin_name);
 

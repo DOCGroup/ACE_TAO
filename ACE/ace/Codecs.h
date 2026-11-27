@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   Codecs.h
  *
@@ -11,7 +8,6 @@
  *  specified by RFC 2045, Multipurpose Internet Mail Extensions (MIME) Part
  *  One: Format of Internet Message Bodies.
  */
-//=============================================================================
 
 #ifndef ACE_CODECS_H
 #define ACE_CODECS_H
@@ -27,6 +23,9 @@
 #include "ace/Basic_Types.h"
 #include "ace/Global_Macros.h"
 
+#include <array>
+#include <memory>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
@@ -41,7 +40,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Base64
 {
 public:
-  //@{
+  /// @{
   /**
    * Encodes a stream of bytes to Base64 data
    *
@@ -49,23 +48,36 @@ public:
    * @param input_len Length of the byte stream.
    * @param output_len Length of the encoded Base64 byte stream.
    * @param is_chunked If true, terminate 72 character blocks with newline
-   * @return Encoded Base64 data in byte stream or NULL if input data cannot
-   *         be encoded.
+   * @return Encoded Base64 data in byte stream or nullptr if input data cannot
+   *         be encoded. Release the result with free() or Buffer.
    */
-  static ACE_Byte* encode (const ACE_Byte* input,
-                           const size_t input_len,
-                           size_t* output_len,
+  static ACE_Byte *encode (ACE_Byte const *input,
+                           size_t const input_len,
+                           size_t *output_len,
                            bool is_chunked = true);
   /**
    * Decodes a stream of Base64 to bytes data
    *
    * @param input Encoded Base64 data in byte stream.
    * @param output_len Length of the binary byte stream.
-   * @return Binary data in byte stream or NULL if input data cannot
-   *         be encoded.
+   * @return Binary data in byte stream or nullptr if input data cannot
+   *         be decoded. Release the result with free() or Buffer.
    */
-  static ACE_Byte* decode (const ACE_Byte* input,
-                           size_t* output_len);
+  static ACE_Byte *decode (ACE_Byte const *input,
+                           size_t *output_len);
+
+  /// Release a buffer returned by encode() or decode().
+  static void free (ACE_Byte *buffer);
+
+  struct Deleter
+  {
+    void operator() (ACE_Byte *buffer) const
+    {
+      ACE_Base64::free (buffer);
+    }
+  };
+
+  using Buffer = std::unique_ptr<ACE_Byte[], Deleter>;
 
   /**
    * Return the length of the encoded input data
@@ -74,31 +86,24 @@ public:
    * @return Length of the encoded Base64 data.
    *
    */
-  static size_t length (const ACE_Byte* input);
+  static size_t length (ACE_Byte const *input);
 
-  //@}
+  /// @}
 
 protected:
-  // Prevent default construction.
+  /// Prevent default construction.
   ACE_Base64 () = default;
 
 private:
   ACE_Base64 (ACE_Base64 const &) = delete;
   ACE_Base64 & operator= (ACE_Base64 const &) = delete;
 
-  /// Initialize the tables for encoding/decoding.
-  static void init ();
-
-private:
   /// Alphabet used for decoding i.e decoder_[alphabet_[i = 0..63]] = i
-  static ACE_Byte decoder_[];
+  static std::array<ACE_Byte, 256> const decoder_;
 
   /// Alphabet used to check valid range of encoded input i.e
   /// member_[alphabet_[0..63]] = 1
-  static ACE_Byte member_[];
-
-  /// Boolean to denote whether initialization is complete
-  static bool init_;
+  static std::array<ACE_Byte, 256> const member_;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

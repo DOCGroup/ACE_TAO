@@ -1,11 +1,12 @@
-// -*- C++ -*-
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<typename S,
          template <typename> class Insert_Policy>
 ACE_INLINE
 TAO::In_Var_Size_Argument_T<S,Insert_Policy>::In_Var_Size_Argument_T (S const & x)
-  : x_ (&x)
+  : x_ (std::addressof (x))
 {
 }
 
@@ -25,13 +26,11 @@ TAO::In_Var_Size_Clonable_Argument_T<S,Insert_Policy>::In_Var_Size_Clonable_Argu
   : In_Var_Size_Argument_T<S,Insert_Policy> (x)
 {}
 
-// ==========================================================================
-
 template<typename S,
          template <typename> class Insert_Policy>
 ACE_INLINE
 TAO::Inout_Var_Size_Argument_T<S,Insert_Policy>::Inout_Var_Size_Argument_T (S & x)
-  : x_ (&x)
+  : x_ (std::addressof (x))
 {
 }
 
@@ -43,8 +42,6 @@ TAO::Inout_Var_Size_Argument_T<S,Insert_Policy>::arg ()
 {
   return *this->x_;
 }
-
-// ==========================================================================
 
 template<typename S,
          template <typename> class Insert_Policy>
@@ -63,8 +60,6 @@ TAO::Out_Var_Size_Argument_T<S,Insert_Policy>::arg ()
 {
   return this->x_;
 }
-
-// ==========================================================================
 
 template<typename S,
          template <typename> class Insert_Policy>

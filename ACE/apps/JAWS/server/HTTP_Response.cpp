@@ -10,20 +10,34 @@
 #include "HTTP_Helpers.h"
 #include "HTTP_Config.h"
 #include "JAWS_IO.h"
+#include <cstdio>
+#include <cstring>
+#include <memory>
+#include <string>
 
 #if defined (ACE_JAWS_BASELINE)
-static char * const EMPTY_HEADER = "";
+static char EMPTY_HEADER[] = "";
 #else
-static const char * const EMPTY_HEADER = "";
+static char const * const EMPTY_HEADER = "";
 #endif /* ACE_JAWS_BASELINE */
 
 HTTP_Response::HTTP_Response (JAWS_IO &io, HTTP_Request &request)
-  : io_(io), request_(request)
+  : io_ (io),
+    request_ (request),
+    HTTP_HEADER (nullptr),
+    HTTP_TRAILER (nullptr),
+    HTTP_HEADER_LENGTH (0),
+    HTTP_TRAILER_LENGTH (0)
 {
 }
 
 HTTP_Response::HTTP_Response (HTTP_Request &request, JAWS_IO &io)
-  : io_(io), request_(request)
+  : io_ (io),
+    request_ (request),
+    HTTP_HEADER (nullptr),
+    HTTP_TRAILER (nullptr),
+    HTTP_HEADER_LENGTH (0),
+    HTTP_TRAILER_LENGTH (0)
 {
 }
 
@@ -31,7 +45,9 @@ HTTP_Response::~HTTP_Response ()
 {
 #if defined (ACE_JAWS_BASELINE)
   if (this->HTTP_HEADER != EMPTY_HEADER)
-    delete [] this->HTTP_HEADER;
+    {
+      delete [] this->HTTP_HEADER;
+    }
   // The [] is important.  Without it, there was a huge memory leak!
 #endif /* ACE_JAWS_BASELINE */
 }
@@ -70,7 +86,7 @@ HTTP_Response::process_request ()
 }
 
 void
-HTTP_Response::error_response (int status_code, const char *log_message)
+HTTP_Response::error_response (int status_code, char const *log_message)
 {
   ACE_DEBUG ((LM_DEBUG, "(%t) [%s %s %s] %s\n",
               this->request_.method () ? this->request_.method () : "-",
@@ -107,33 +123,55 @@ HTTP_Response::error_response (int status_code, const char *log_message)
     "</html>\n"
     ;
 
-
-  char *buf = 0;
+  char *buf {};
   char buf1[4 * BUFSIZ];
   char buf2[BUFSIZ];
 
-  int length;
-  const char *error_header = error_header1;
+  int length = std::snprintf (buf2,
+                              sizeof buf2,
+                              error_message,
+                              status_code,
+                              HTTP_Status_Code::instance ()[status_code],
+                              log_message == nullptr ? "" : log_message);
+  char const *error_header = error_header1;
+
+  if (length < 0)
+  {
+    return;
+  }
+  if (length >= static_cast<int> (sizeof buf2))
+  {
+    length = sizeof buf2 - 1;
+  }
 
   if (status_code == HTTP_Status_Code::STATUS_UNAUTHORIZED)
+  {
     error_header = error_header2;
+  }
 
-  length =
-    ACE_OS::sprintf (buf2, error_message,
-                     status_code, HTTP_Status_Code::instance ()[status_code],
-                     log_message);
-
-  if (this->request_.version () == 0
-      || ACE_OS::strcmp ("HTTP/0.9", this->request_.version ()) == 0)
-    buf = buf2;
+  if (this->request_.version () == nullptr
+      || std::strcmp ("HTTP/0.9", this->request_.version ()) == 0)
+    {
+      buf = buf2;
+    }
   else
     {
-      length =
-        ACE_OS::sprintf (buf1, error_header,
-                         this->request_.version(), status_code,
-                         HTTP_Status_Code::instance ()[status_code],
-                         length,
-                         buf2);
+      length = std::snprintf (buf1,
+                              sizeof buf1,
+                              error_header,
+                              this->request_.version (),
+                              status_code,
+                              HTTP_Status_Code::instance ()[status_code],
+                              length,
+                              buf2);
+      if (length < 0)
+      {
+        return;
+      }
+      if (length >= static_cast<int> (sizeof buf1))
+      {
+        length = sizeof buf1 - 1;
+      }
       buf = buf1;
     }
 
@@ -143,7 +181,7 @@ HTTP_Response::error_response (int status_code, const char *log_message)
 void
 HTTP_Response::normal_response ()
 {
-  const char *hv = 0;;
+  char const *hv {};
 
   ACE_DEBUG ((LM_DEBUG, " (%t) %s request for %s [%s], version %s\n",
               request_.method (), request_.uri (), request_.path (),
@@ -183,33 +221,42 @@ HTTP_Response::normal_response ()
       // if there is no Authentication: header on the incoming request,
       // deny it
       hv = this->request_.headers ()["Authorization"].value ();
-      if (hv == 0 || *hv == '\0')
-        this->error_response (HTTP_Status_Code::STATUS_UNAUTHORIZED,
-                              "Unauthorized to use PUT method");
-      else if (ACE_OS::strncmp (hv, "Basic ", 6) != 0)
-        // ``6'' is the length of the string "Basic "
-        this->error_response (HTTP_Status_Code::STATUS_UNAUTHORIZED,
-                              "Unknown authorization method");
+      if (hv == nullptr || *hv == '\0')
+        {
+          this->error_response (HTTP_Status_Code::STATUS_UNAUTHORIZED,
+                                "Unauthorized to use PUT method");
+        }
+      else if (std::strncmp (hv, "Basic ", 6) != 0)
+        {
+          // ``6'' is the length of the string "Basic "
+          this->error_response (HTTP_Status_Code::STATUS_UNAUTHORIZED,
+                                "Unknown authorization method");
+        }
       else
         {
           ACE_Mem_Map mmapfile;
-          const char *hvv = hv + 6;
+          char const *hvv = hv + 6;
           // Skip past the string "Basic "
-          char *buf = new char [ACE_OS::strlen (hv)];
-          char *auth
-            = HTTP_Helper::HTTP_decode_base64 (ACE_OS::strcpy (buf, hvv));
+          std::unique_ptr<char[]> buf =
+            std::make_unique<char[]> (std::strlen (hvv) + 1);
+          char *auth = HTTP_Helper::HTTP_decode_base64 (
+            std::strcpy (buf.get (), hvv));
 
           if (mmapfile.map (ACE_TEXT ("jaws.auth")) != -1
-              && auth != 0
-              && ACE_OS::strstr((const char *) mmapfile.addr (), auth) != 0)
-            this->io_.receive_file (this->request_.path (),
-                                    this->request_.data (),
-                                    this->request_.data_length (),
-                                    this->request_.content_length ());
+              && auth != nullptr
+              && std::strstr (static_cast<char const *> (mmapfile.addr ()), auth)
+                != nullptr)
+            {
+              this->io_.receive_file (this->request_.path (),
+                                      this->request_.data (),
+                                      this->request_.data_length (),
+                                      this->request_.content_length ());
+            }
           else
-            this->error_response (HTTP_Status_Code::STATUS_UNAUTHORIZED,
-                                  "Invalid authorization attempt");
-          delete [] buf;
+            {
+              this->error_response (HTTP_Status_Code::STATUS_UNAUTHORIZED,
+                                    "Invalid authorization attempt");
+            }
         }
       break;
 
@@ -219,18 +266,21 @@ HTTP_Response::normal_response ()
     }
 }
 
-
 void
 HTTP_Response::cgi_response ()
 {
   ACE_Process_Options cgi_options;
 
   if (this->request_.cgi_args ())
-    cgi_options.command_line ("%s %s",
-                              this->request_.path (),
-                              this->request_.cgi_args ());
+    {
+      cgi_options.command_line ("%s %s",
+                                this->request_.path (),
+                                this->request_.cgi_args ());
+    }
   else
+  {
     cgi_options.command_line ("%s", this->request_.path ());
+  }
 
   // Build environment variables
   cgi_options.setenv (ACE_TEXT ("SERVER_SOFTWARE"), ACE_TEXT ("%s"), ACE_TEXT ("JAWS/1.0"));
@@ -260,39 +310,55 @@ HTTP_Response::cgi_response ()
                       this->request_.uri ());
 
   if (this->request_.query_string ())
-    cgi_options.setenv (ACE_TEXT ("QUERY_STRING"),
-                        ACE_TEXT ("%s"),
-                        this->request_.query_string ());
+    {
+      cgi_options.setenv (ACE_TEXT ("QUERY_STRING"),
+                          ACE_TEXT ("%s"),
+                          this->request_.query_string ());
+    }
 
   if (this->request_.cgi_env ())
-    for (size_t i = 0; this->request_.cgi_env ()[i]; i += 2)
-      cgi_options.setenv (ACE_TEXT_CHAR_TO_TCHAR (this->request_.cgi_env ()[i]),
-                          ACE_TEXT ("%s"),
-                          ACE_TEXT_CHAR_TO_TCHAR (this->request_.cgi_env ()[i+1]));
+    {
+      for (size_t i = 0; this->request_.cgi_env ()[i] != nullptr; i += 2)
+        {
+          cgi_options.setenv (ACE_TEXT_CHAR_TO_TCHAR (this->request_.cgi_env ()[i]),
+                              ACE_TEXT ("%s"),
+                              ACE_TEXT_CHAR_TO_TCHAR (this->request_.cgi_env ()[i+1]));
+        }
+    }
 
   ACE_TCHAR buf[BUFSIZ];
-  ACE_TCHAR *p = 0, *q = 0;
+  ACE_TCHAR *p {}, *q {};
   ACE_OS::strcpy (buf, ACE_TEXT ("HTTP_"));
   p = q = buf + ACE_OS::strlen (buf);
 
-  for (size_t i = 0; i < HTTP_Request::NUM_HEADER_STRINGS; i++)
+  for (size_t i = 0; i < HTTP_Request::NUM_HEADER_STRINGS; ++i)
     {
       int j = 0;
 
       for (char c; (c = this->request_.header_strings (i)[j++]) != '\0'; )
-        if (ACE_OS::ace_isalpha (c))
-          *q++ = ACE_OS::ace_toupper (c);
-        else if (c == '-')
-          *q++ = '_';
-        else
-          *q++ = c;
+        {
+          if (ACE_OS::ace_isalpha (c))
+            {
+              *q++ = ACE_OS::ace_toupper (c);
+            }
+          else if (c == '-')
+            {
+              *q++ = '_';
+            }
+          else
+            {
+              *q++ = c;
+            }
+        }
 
       *q = '\0';
 
-      const char *hv = this->request_.header_values (i);
+      char const *hv = this->request_.header_values (i);
 
       if (hv && *hv)
+      {
         cgi_options.setenv (buf, "%s", hv);
+      }
       q = p;
     }
 
@@ -321,8 +387,8 @@ HTTP_Response::build_headers ()
   // Let's assume this is HTML for now.  Unless the request is CGI,
   // then do not include content-* headers.
 
-  if (this->request_.version () == 0
-      || ACE_OS::strcmp ("HTTP/0.9", this->request_.version ()) == 0)
+  if (this->request_.version () == nullptr
+      || std::strcmp ("HTTP/0.9", this->request_.version ()) == 0)
     {
       HTTP_HEADER = EMPTY_HEADER;
       HTTP_HEADER_LENGTH = 0;
@@ -330,51 +396,56 @@ HTTP_Response::build_headers ()
   else
     {
 #if defined (ACE_JAWS_BASELINE)
-      HTTP_HEADER = new char[BUFSIZ * 4];
-
-      // We assume that at this point everything is OK
-      HTTP_HEADER_LENGTH =
-        ACE_OS::sprintf (HTTP_HEADER, "%s", "HTTP/1.0 200 OK\r\n");
+      std::string header = "HTTP/1.0 200 OK\r\n";
 
       char date_ptr [40];
       // 40 bytes is the maximum length needed to store the date
 
-      if (HTTP_Helper::HTTP_date (date_ptr) != 0)
-        HTTP_HEADER_LENGTH +=
-          ACE_OS::sprintf (HTTP_HEADER+HTTP_HEADER_LENGTH,
-                           "Date: %s\r\n", date_ptr);
-
-      if (! this->request_.cgi ()) {
-        HTTP_HEADER_LENGTH +=
-          ACE_OS::sprintf (HTTP_HEADER+HTTP_HEADER_LENGTH,
-                           "Content-type: %s\r\n",
-                           "text/html");
-
-        struct stat file_stat;
-        // If possible, add the Content-length field to the header.
-        // @@ Note that using 'ACE_OS::stat' is a hack.  Normally, a
-        // web browser will have a 'virtual' file system. In a VFS,
-        // 'stat' might not reference the correct location.
-        if ((this->request_.type () == HTTP_Request::GET) &&
-            (ACE_OS::stat (this->request_.path (), &file_stat) == 0))
+      if (HTTP_Helper::HTTP_date (date_ptr) != nullptr)
         {
-          HTTP_HEADER_LENGTH +=
-            ACE_OS::sprintf (HTTP_HEADER+HTTP_HEADER_LENGTH,
-                             "Content-length: %u\r\n", file_stat.st_size);
+          header += "Date: ";
+          header += date_ptr;
+          header += "\r\n";
         }
 
-        // Complete header with empty line and adjust header length.
-        HTTP_HEADER[HTTP_HEADER_LENGTH++] = '\r';
-        HTTP_HEADER[HTTP_HEADER_LENGTH++] = '\n';
-      }
+      if (! this->request_.cgi ())
+        {
+          header += "Content-type: text/html\r\n";
+
+          struct stat file_stat;
+          // If possible, add the Content-length field to the header.
+          // @@ Note that using 'ACE_OS::stat' is a hack.  Normally, a
+          // web browser will have a 'virtual' file system. In a VFS,
+          // 'stat' might not reference the correct location.
+          char const *const path = this->request_.path ();
+          if (this->request_.type () == HTTP_Request::GET
+              && path != nullptr
+              && ACE_OS::stat (path, &file_stat) == 0)
+            {
+              header += "Content-length: ";
+              header += std::to_string (file_stat.st_size);
+              header += "\r\n";
+            }
+
+          // Complete header with empty line.
+          header += "\r\n";
+        }
+
+      HTTP_HEADER_LENGTH = static_cast<int> (header.size ());
+      HTTP_HEADER = new char[header.size () + 1];
+      std::memcpy (HTTP_HEADER, header.c_str (), header.size () + 1);
 #else
       if (! this->request_.cgi ())
-        HTTP_HEADER = "HTTP/1.0 200 OK\r\n"
-          "Content-type: text/html\r\n\r\n";
+        {
+          HTTP_HEADER = "HTTP/1.0 200 OK\r\n"
+            "Content-type: text/html\r\n\r\n";
+        }
       else
+      {
         HTTP_HEADER = "HTTP/1.0 200 OK\r\n";
+      }
 
-      HTTP_HEADER_LENGTH = ACE_OS::strlen (HTTP_HEADER);
+      HTTP_HEADER_LENGTH = std::strlen (HTTP_HEADER);
 
 #endif /* ACE_JAWS_BASELINE */
     }

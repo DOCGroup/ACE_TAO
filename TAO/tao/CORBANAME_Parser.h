@@ -1,13 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   CORBANAME_Parser.h
  *
  *  @author Priyanka Gontla (pgontla@uci.edu)
  */
-//=============================================================================
-
 
 #ifndef TAO_CORBANAME_PARSER_H
 #define TAO_CORBANAME_PARSER_H
@@ -42,10 +37,8 @@ public:
   TAO_CORBANAME_Parser () = default;
   ~TAO_CORBANAME_Parser () override = default;
 
-  // = The IOR_Parser methods, please read the documentation in
-  //   IOR_Parser.h
-  bool match_prefix (const char *ior_string) const override;
-  CORBA::Object_ptr parse_string (const char *ior,
+  bool match_prefix (char const *ior_string) const override;
+  CORBA::Object_ptr parse_string (char const *ior,
                                   CORBA::ORB_ptr orb) override;
 
  private:
@@ -58,7 +51,6 @@ ACE_STATIC_SVC_DECLARE_EXPORT (TAO, TAO_CORBANAME_Parser)
 ACE_FACTORY_DECLARE (TAO, TAO_CORBANAME_Parser)
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-
 
 #endif /* TAO_HAS_CORBANAME_PARSER == 1 */
 

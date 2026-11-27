@@ -6,12 +6,15 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_stropts.h"
 
-
 class FIFO_Recv_Handler : public ACE_Event_Handler
 {
 public:
   FIFO_Recv_Handler ();
   ~FIFO_Recv_Handler () override;
+  FIFO_Recv_Handler (FIFO_Recv_Handler const &) = delete;
+  FIFO_Recv_Handler (FIFO_Recv_Handler &&) = delete;
+  FIFO_Recv_Handler &operator= (FIFO_Recv_Handler const &) = delete;
+  FIFO_Recv_Handler &operator= (FIFO_Recv_Handler &&) = delete;
 
   ACE_HANDLE get_handle () const override;
   int handle_input (ACE_HANDLE fd) override;
@@ -27,12 +30,16 @@ FIFO_Recv_Handler::FIFO_Recv_Handler ()
   // Make sure to open the FIFO with the "persistent" flag enabled
   // (which is the default).
   if (this->fifo_reader_.open (ACE_DEFAULT_RENDEZVOUS) == -1)
+  {
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("open")));
+  }
 
   // Register with the Reactor.
   if (ACE_Reactor::instance ()->register_handler
       (this, ACE_Event_Handler::READ_MASK) == -1)
+  {
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("register_handler")));
+  }
 }
 
 ACE_HANDLE
@@ -56,13 +63,15 @@ FIFO_Recv_Handler::handle_input (ACE_HANDLE)
 
   ACE_Str_Buf msg (buf, 0, sizeof buf);
 
-  ssize_t n = this->fifo_reader_.recv (msg);
+  ssize_t const n = this->fifo_reader_.recv (msg);
 
   if (n < 0)
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("recv")), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("recv")), -1);
+    }
   else
     {
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("msg.len = %d, n = %d\n"), msg.len, n));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("msg.len = %d, n = %b\n"), msg.len, n));
 
       if (msg.len > 0)
         {
@@ -76,9 +85,9 @@ FIFO_Recv_Handler::handle_input (ACE_HANDLE)
 int
 ACE_TMAIN (int, ACE_TCHAR *argv[])
 {
-  ACE_Service_Config daemon (argv[0]);
+  ACE_Service_Config const daemon (argv[0]);
 
-  FIFO_Recv_Handler fr_handler;
+  FIFO_Recv_Handler const fr_handler;
 
   ACE_Reactor::instance ()->run_reactor_event_loop ();
 

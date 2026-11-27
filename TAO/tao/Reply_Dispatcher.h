@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file     Reply_Dispatcher.h
  *
@@ -8,7 +5,6 @@
  *
  *  @author  Alexander Babu Arulanthu <alex@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_REPLY_DISPATCHER_H
 #define TAO_REPLY_DISPATCHER_H
@@ -30,7 +26,6 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Allocator;
 ACE_END_VERSIONED_NAMESPACE_DECL
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -55,10 +50,8 @@ class TAO_Pluggable_Reply_Params;
 class TAO_Export TAO_Reply_Dispatcher
 {
 public:
-  /// Constructor.
-  TAO_Reply_Dispatcher (ACE_Allocator *allocator = nullptr);
+  explicit TAO_Reply_Dispatcher (ACE_Allocator *allocator = nullptr);
 
-  /// Destructor.
   virtual ~TAO_Reply_Dispatcher ();
 
   /**
@@ -97,7 +90,7 @@ protected:
   /// LocateReply status.
   GIOP::LocateStatusType locate_reply_status_;
 
-  // RequestReply status
+  /// RequestReply status.
   GIOP::ReplyStatusType reply_status_;
 
 private:

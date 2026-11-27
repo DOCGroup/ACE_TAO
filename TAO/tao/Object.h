@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Object.h
  *
@@ -11,7 +8,6 @@
  *  @author  Portions Copyright 1994-1995 by Sun Microsystems Inc.
  *  @author  Portions Copyright 1997-2002 by Washington University
  */
-//=============================================================================
 
 #ifndef TAO_CORBA_OBJECT_H
 #define TAO_CORBA_OBJECT_H
@@ -91,7 +87,6 @@ namespace CORBA
   class TAO_Export Object
   {
   public:
-    /// Destructor.
     virtual ~Object ();
 
     /**
@@ -100,7 +95,8 @@ namespace CORBA
      * These methods are defined here since they are required by the
      * CORBA spec in a form specified by the C++ mapping.
      */
-    //@{
+    /// @{
+
     /// Increment the ref count.
     static CORBA::Object_ptr _duplicate (CORBA::Object_ptr obj);
 
@@ -117,11 +113,11 @@ namespace CORBA
     // appropriate.
 
     /// Determine if we are of the type specified by the "logical_type_id"
-    virtual CORBA::Boolean _is_a (const char *logical_type_id);
+    virtual CORBA::Boolean _is_a (char const *logical_type_id);
 
     /// The repository ID for the most derived class, this is an
     /// implementation method and does no remote invocations!
-    virtual const char* _interface_repository_id () const;
+    virtual char const *_interface_repository_id () const;
 
     /**
      * Return a (potentially non-unique) hash value for this object.
@@ -156,35 +152,32 @@ namespace CORBA
     virtual char * _repository_id ();
 
 #if ! defined (CORBA_E_COMPACT) && ! defined (CORBA_E_MICRO)
-    // DII operations to create a request.
-    //
-    // The mapping for create_request is split into two forms,
-    // corresponding to the two usage styles described in CORBA
-    // section 6.2.1.
-
+    /// @name DII operations to create a request
+    /// The mapping has two forms, corresponding to the two usage styles
+    /// described in CORBA section 6.2.1.
+    /// @{
     virtual void _create_request (CORBA::Context_ptr ctx,
-                                  const char *operation,
+                                  char const *operation,
                                   CORBA::NVList_ptr arg_list,
                                   CORBA::NamedValue_ptr result,
                                   CORBA::Request_ptr &request,
                                   CORBA::Flags req_flags);
 
     virtual void _create_request (CORBA::Context_ptr ctx,
-                                  const char *operation,
+                                  char const *operation,
                                   CORBA::NVList_ptr arg_list,
                                   CORBA::NamedValue_ptr result,
                                   CORBA::ExceptionList_ptr exclist,
                                   CORBA::ContextList_ptr ctxtlist,
                                   CORBA::Request_ptr &request,
                                   CORBA::Flags req_flags);
+    /// @}
 
-    // The default implementation of this method uses the same simple,
-    // multi-protocol remote invocation interface as is assumed by the
-    // calls above ... that's how it can have a default
-    // implementation.
+    /// The default implementation uses the same simple, multi-protocol
+    /// remote invocation interface as the calls above.
 
     /// DII operation to create a request.
-    virtual CORBA::Request_ptr _request (const char *operation);
+    virtual CORBA::Request_ptr _request (char const *operation);
 #endif
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
@@ -196,11 +189,11 @@ namespace CORBA
     CORBA::Policy_ptr _get_cached_policy (TAO_Cached_Policy_Type type);
 
     CORBA::Object_ptr _set_policy_overrides (
-      const CORBA::PolicyList & policies,
+      CORBA::PolicyList const &policies,
       CORBA::SetOverrideType set_add);
 
     CORBA::PolicyList * _get_policy_overrides (
-      const CORBA::PolicyTypeSeq & types);
+      CORBA::PolicyTypeSeq const &types);
 
     CORBA::Boolean _validate_connection (
       CORBA::PolicyList_out inconsistent_policies);
@@ -215,7 +208,8 @@ namespace CORBA
      * These are the standard CORBA object reference count manipulations
      * methods.
      */
-    //@{
+    /// @{
+
     /// Increment the reference count.
     virtual void _add_ref ();
 
@@ -224,19 +218,19 @@ namespace CORBA
 
     /// Get the refcount
     virtual CORBA::ULong _refcount_value () const;
-    //@}
+    /// @}
 
     // Useful for template programming.
     using _ptr_type = Object_ptr;
     using _var_type = Object_var;
     using _out_type = Object_out;
 
-    //@} End of CORBA specific methods
+    /// @} End of CORBA specific methods
 
   public:
     /// Marshalling operator used by the stub code. A long story why
     /// the stub code uses this, let us keep it short here.
-    static CORBA::Boolean marshal (const Object_ptr x,
+    static CORBA::Boolean marshal (Object_ptr x,
                                    TAO_OutputCDR &cdr);
 
     /// Accessor for the cached servant reference held on the stub
@@ -244,7 +238,7 @@ namespace CORBA
     virtual TAO_Abstract_ServantBase *_servant () const;
 
     /// Is this object collocated with the servant?
-    /// Note this does not return this->is_collocated_ but will instead
+    /// @note This does not return this->is_collocated_ but will instead
     /// query the underlying stub for its collocation status
     virtual CORBA::Boolean _is_collocated () const;
 
@@ -264,7 +258,6 @@ namespace CORBA
     /// return value when finished with it.
     virtual TAO::ObjectKey *_key ();
 
-    /// Constructor
     Object (TAO_Stub *p,
             CORBA::Boolean collocated = false,
             TAO_Abstract_ServantBase *servant = nullptr,
@@ -288,7 +281,7 @@ namespace CORBA
     /// Used by optionally generated ostream operators for interface
     /// to output the actual repo id for debugging.
     static std::ostream& _tao_stream (std::ostream &strm,
-                                      const Object_ptr _tao_objref);
+                                      Object_ptr _tao_objref);
     virtual std::ostream& _tao_stream_v (std::ostream &strm) const;
 
 #endif /* GEN_OSTREAM_OPS */
@@ -307,9 +300,7 @@ namespace CORBA
      */
     IOP::IOR *steal_ior ();
 
-    const IOP::IOR &ior () const;
-
-    //@} End of TAO-specific methods..
+    IOP::IOR const &ior () const;
 
     /// Can this object be stringified?
     virtual bool can_convert_to_ior () const;
@@ -318,14 +309,14 @@ namespace CORBA
     /// @note This method is intended to be used by classes that
     /// implement Smart Proxies and no others.
     virtual char* convert_to_ior (bool use_omg_ior_format,
-                                  const char* ior_prefix) const;
+                                  char const *ior_prefix) const;
 
     /// Wrapper for _remove_ref(), naming convention for templatizing.
     void _decr_refcount ();
 
   protected:
     /// Initializing a local object.
-    Object (int dummy = 0);
+    explicit Object (int dummy = 0);
 
     /// Convenience accessor for the object proxy broker of the
     /// underlying stub.
@@ -336,8 +327,10 @@ namespace CORBA
     std::atomic<uint32_t> refcount_;
 
   private:
-    Object (const Object &) = delete;
-    Object &operator = (const Object &) = delete;
+    Object (Object const &) = delete;
+    Object &operator= (Object const &) = delete;
+    Object (Object &&) = delete;
+    Object &operator= (Object &&) = delete;
 
   private:
     /// Specify whether this is a local object or not.
@@ -421,7 +414,7 @@ extern
   (*_TAO_Object_Proxy_Broker_Factory_function_pointer) ();
 
 TAO_Export CORBA::Boolean
-operator<< (TAO_OutputCDR&, const CORBA::Object*);
+operator<< (TAO_OutputCDR&, CORBA::Object const *);
 
 TAO_Export CORBA::Boolean
 operator>> (TAO_InputCDR&, CORBA::Object *&);

@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    Bug_3539_Regression_Test.cpp
  *
@@ -8,8 +6,6 @@
  *
  *  @author Vladimir Zykov <vz@prismtech.com>
  */
-//=============================================================================
-
 
 #include "test_config.h"
 #include "TSS_Test_Errno.h"
@@ -32,7 +28,7 @@ public:
 int Errno::flags_;
 int Errno::created_;
 int Errno::deleted_;
-ACE_Thread_Mutex *Errno::lock_ = nullptr;
+ACE_Thread_Mutex *Errno::lock_ {};
 
 ACE_THR_FUNC_RETURN
 check_tss (ObjectWithTSS *o)
@@ -83,18 +79,20 @@ run_main (int, ACE_TCHAR *[])
   const u_int threads = ACE_MAX_THREADS;
 
   {
-    ObjectWithTSS *o = nullptr;
+    ObjectWithTSS *o {};
     ACE_NEW_RETURN (o, ObjectWithTSS, 1);
-    std::unique_ptr<ObjectWithTSS> owner (o);
+    std::unique_ptr<ObjectWithTSS> const owner (o);
 
     if (ACE_Thread_Manager::instance ()->spawn_n
         (threads,
-         ACE_THR_FUNC (worker),
+         worker,
          o,
          THR_BOUND) == -1)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("%p\n"), ACE_TEXT ("spawn_n")),
-                        1);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("%p\n"), ACE_TEXT ("spawn_n")),
+                          1);
+      }
 
     check_tss (o);
 

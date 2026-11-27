@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "ace/OS_NS_string.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -43,7 +42,9 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ref_counter ()
 {
   ACE_GUARD_RETURN (ACE_LOCK, ace_mon, *this->lock_, -1);
   if (this->cb_ptr_ != 0)
-    return this->cb_ptr_->ref_counter_;
+    {
+      return this->cb_ptr_->ref_counter_;
+    }
 
   return -1;
 }
@@ -130,29 +131,29 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::base_addr ()
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK> ACE_INLINE
-ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::ACE_Malloc (const ACE_TCHAR *pool_name)
+ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::ACE_Malloc (ACE_TCHAR const *pool_name)
   : ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_Control_Block> (pool_name)
 {
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK> ACE_INLINE
-ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::ACE_Malloc (const ACE_TCHAR *pool_name,
-                                                  const ACE_TCHAR *lock_name,
-                                                  const ACE_MEM_POOL_OPTIONS *options)
+ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::ACE_Malloc (ACE_TCHAR const *pool_name,
+                                                  ACE_TCHAR const *lock_name,
+                                                  ACE_MEM_POOL_OPTIONS const *options)
   : ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_Control_Block> (pool_name, lock_name, options)
 {
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK> ACE_INLINE
 ACE_Malloc_LIFO_Iterator<ACE_MEM_POOL_2, ACE_LOCK>::ACE_Malloc_LIFO_Iterator (ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK> &malloc,
-                                                                              const char *name)
+                                                                              char const *name)
   : ACE_Malloc_LIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_Control_Block> (malloc, name)
 {
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK> ACE_INLINE
 ACE_Malloc_FIFO_Iterator<ACE_MEM_POOL_2, ACE_LOCK>::ACE_Malloc_FIFO_Iterator (ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK> &malloc,
-                                                                              const char *name)
+                                                                              char const *name)
   : ACE_Malloc_FIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_Control_Block> (malloc, name)
 {
 }

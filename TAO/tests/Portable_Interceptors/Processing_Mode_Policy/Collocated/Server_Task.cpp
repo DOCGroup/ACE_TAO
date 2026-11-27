@@ -3,67 +3,74 @@
 #include "interceptors.h"
 
 #include "ace/Manual_Event.h"
+#include "ace/OS_NS_stdio.h"
 
-Server_Task::Server_Task (const ACE_TCHAR *output,
+#include <memory>
+
+Server_Task::Server_Task (ACE_TCHAR const *output,
                           CORBA::ORB_ptr sorb,
                           ACE_Manual_Event &me,
                           ACE_Thread_Manager *thr_mgr)
   : ACE_Task_Base (thr_mgr)
-    , output_ (output)
-    , me_ (me)
-    , sorb_ (CORBA::ORB::_duplicate (sorb))
+  , output_ (output)
+  , me_ (me)
+  , sorb_ (CORBA::ORB::_duplicate (sorb))
 {
 }
 
 int
 Server_Task::svc ()
 {
- try
-   {
-      CORBA::Object_var poa_object =
+  try
+    {
+      CORBA::Object_var const poa_object =
         sorb_->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize the POA.\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Unable to initialize the POA.\n"),
+                            1);
+        }
 
-      PortableServer::POA_var root_poa =
+      PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
 
-      PortableServer::POAManager_var poa_manager =
+      PortableServer::POAManager_var const poa_manager =
         root_poa->the_POAManager ();
 
       poa_manager->activate ();
 
-      Visual_i * server_impl = 0;
+      Visual_i *server_impl {};
       ACE_NEW_RETURN (server_impl, Visual_i (sorb_.in ()), 1);
 
-      PortableServer::ObjectId_var id =
+      PortableServer::ObjectId_var const id =
         root_poa->activate_object (server_impl);
 
-      CORBA::Object_var test_obj =
+      CORBA::Object_var const test_obj =
         root_poa->id_to_reference (id.in ());
 
-      Test_Interceptors::Visual_var server =
+      Test_Interceptors::Visual_var const server =
         Test_Interceptors::Visual::_narrow (test_obj.in ());
 
-      CORBA::String_var ior =
+      CORBA::String_var const ior =
         this->sorb_->object_to_string (server.in ());
 
       ACE_DEBUG ((LM_DEBUG, "Test_Interceptors::Visual: <%C>\n", ior.in ()));
 
       // If the ior_output_file exists, output the ior to it
-      if (output_ != 0)
+      if (!this->output_.empty ())
         {
-          FILE *output_file= ACE_OS::fopen (this->output_, "w");
-          if (output_file == 0)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               "Cannot open output file for writing IOR: %s",
-                               this->output_),
-                              1);
-          ACE_OS::fprintf (output_file, "%s", ior.in ());
-          ACE_OS::fclose (output_file);
+          std::unique_ptr<FILE, int (*) (FILE *)> const output_file (
+            ACE_OS::fopen (this->output_.c_str (), "w"), ACE_OS::fclose);
+          if (!output_file)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "Cannot open output file for writing IOR: %s",
+                                 this->output_.c_str ()),
+                                1);
+            }
+          ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
         }
 
       // Signal the main thread before we call orb->run ();
@@ -74,12 +81,12 @@ Server_Task::svc ()
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
 
       root_poa->destroy (true, true);
-   }
- catch (const CORBA::Exception& ex)
-   {
-     ex._tao_print_exception ("Exception caught in server task:");
-     return 1;
-   }
+    }
+  catch (CORBA::Exception const &ex)
+    {
+      ex._tao_print_exception ("Exception caught in server task:");
+      return 1;
+    }
 
- return 0;
+  return 0;
 }

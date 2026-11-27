@@ -7,7 +7,7 @@
 
 #define MAX_MIOP_OCTET_SEQUENCE  (ACE_MAX_DGRAM_SIZE - 272 /* MIOP_MAX_HEADER_SIZE */)
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
+ACE_TCHAR const *ior = ACE_TEXT("file://test.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -51,9 +51,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           compression_manager_obj.in ()));
 
       if (CORBA::is_nil(compression_manager.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Panic: nil compression manager\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Panic: nil compression manager\n"),
+                            1);
+        }
 
       //register Zlib compressor
       ::Compression::CompressorFactory_ptr compressor_factory;
@@ -82,7 +84,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // Parse our own client arguments
       if (parse_args (argc, argv) != 0)
+      {
         return 1;
+      }
 
       // Obtain the servant reference with our active ZIOP policies.
       CORBA::Object_var tmp (orb->string_to_object(ior));
@@ -168,7 +172,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Exception caught:");
       exit_status = 1;

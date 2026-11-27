@@ -1,13 +1,9 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   QtResource_Loader.h
  *
  *  @author Marek Brudka <mbrudka@aster.pl>
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_QTRESOURCE_LOADER_H
 #define TAO_QTRESOURCE_LOADER_H
@@ -51,10 +47,10 @@ namespace TAO
   class TAO_QtResource_Export QtResource_Loader
   {
   public:
-    QtResource_Loader (QApplication *qapp);
+    explicit QtResource_Loader (QApplication *qapp);
     virtual ~QtResource_Loader ();
 
-  private:
+    QtResource_Loader () = delete;
     QtResource_Loader (QtResource_Loader const &) = delete;
     QtResource_Loader &operator= (QtResource_Loader const &) = delete;
     QtResource_Loader (QtResource_Loader &&) = delete;

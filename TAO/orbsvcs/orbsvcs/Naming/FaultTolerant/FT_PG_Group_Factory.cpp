@@ -1,13 +1,9 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  * @file  FT_PG_Group_Factory.cpp
  *
  *
  * @author Byron Harris <harrisb@ociweb.com>
  */
-//=============================================================================
 
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Naming/FaultTolerant/FT_PG_Group_Factory.h"
@@ -26,7 +22,7 @@ TAO::FT_PG_Group_Factory::set_replicator (TAO_FT_Naming_Replication_Manager *rep
 
 void
 TAO::FT_PG_Group_Factory::set_object_group_stale (
-  const FT_Naming::ObjectGroupUpdate & group_info)
+  FT_Naming::ObjectGroupUpdate const & group_info)
 {
   if (this->use_persistence_)
     {
@@ -45,15 +41,15 @@ TAO::FT_PG_Group_Factory::set_object_group_stale (
                 }
               ORBSVCS_DEBUG ((LM_DEBUG,
                               ACE_TEXT ("TAO (%P|%t) - FT_PG_Group_Factory: ")
-                              ACE_TEXT ("Setting list store as stale "),
-                              ACE_TEXT ("because of group with ID %lld "),
+                              ACE_TEXT ("Setting list store as stale ")
+                              ACE_TEXT ("because of group with ID %Q ")
                               ACE_TEXT ("was %C\n"),
                               group_id, change_type_str.c_str ()));
             }
           this->list_store_->stale(true);
         }
 
-      PG_Object_Group * group = nullptr;
+      PG_Object_Group * group {};
       if (!find_group (group_id, group))
         {
           throw PortableGroup::ObjectNotFound ();
@@ -74,7 +70,7 @@ TAO::FT_PG_Group_Factory::set_object_group_stale (
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - ")
-                      ACE_TEXT ("Setting object group with ID %lld as stale\n"),
+                      ACE_TEXT ("Setting object group with ID %Q as stale\n"),
                       group_id
                       ));
         }
@@ -92,13 +88,13 @@ TAO::FT_PG_Group_Factory::create_persistent_group (
       PortableGroup::FactoryRegistry_ptr factory_registry,
       TAO::PG_Object_Group_Manipulator & manipulator,
       CORBA::Object_ptr empty_group,
-      const PortableGroup::TagGroupTaggedComponent & tagged_component,
-      const char * type_id,
-      const PortableGroup::Criteria & the_criteria,
-      const TAO::PG_Property_Set_var & type_properties,
+      PortableGroup::TagGroupTaggedComponent const & tagged_component,
+      char const * type_id,
+      PortableGroup::Criteria const & the_criteria,
+      TAO::PG_Property_Set_var const & type_properties,
       TAO::Storable_Factory & storable_factory)
 {
-  TAO::PG_Object_Group_Storable * objectGroup = nullptr;
+  TAO::PG_Object_Group_Storable * objectGroup {};
   ACE_NEW_THROW_EX (
   objectGroup,
   TAO::FT_PG_Object_Group_Storable (
@@ -125,7 +121,7 @@ TAO::FT_PG_Group_Factory::restore_persistent_group (
       TAO::PG_Object_Group_Manipulator & manipulator,
       TAO::Storable_Factory & storable_factory)
 {
-  TAO::PG_Object_Group_Storable * objectGroup = nullptr;
+  TAO::PG_Object_Group_Storable * objectGroup {};
   ACE_NEW_THROW_EX (
     objectGroup,
     TAO::FT_PG_Object_Group_Storable (

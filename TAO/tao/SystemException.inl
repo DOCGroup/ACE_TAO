@@ -1,4 +1,3 @@
-// -*- C++ -*-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE CORBA::ULong
@@ -31,12 +30,11 @@ CORBA::SystemException::_downcast (CORBA::Exception* exception)
   return dynamic_cast<CORBA::SystemException *> (exception);
 }
 
-ACE_INLINE const CORBA::SystemException*
-CORBA::SystemException::_downcast (const CORBA::Exception *exception)
+ACE_INLINE CORBA::SystemException const*
+CORBA::SystemException::_downcast (CORBA::Exception const *exception)
 {
-  return dynamic_cast<const CORBA::SystemException *> (exception);
+  return dynamic_cast<CORBA::SystemException const *> (exception);
 }
-
 
 #define TAO_STANDARD_SYSTEM_EXCEPTION_LIST \
     TAO_SYSTEM_EXCEPTION (UNKNOWN) \

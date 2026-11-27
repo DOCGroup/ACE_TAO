@@ -9,9 +9,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO::CSD::TP_Task::~TP_Task () = default;
-
-
 bool
 TAO::CSD::TP_Task::add_request(TP_Request* request)
 {
@@ -39,12 +36,10 @@ TAO::CSD::TP_Task::add_request(TP_Request* request)
   return true;
 }
 
-
 int
 TAO::CSD::TP_Task::open(void* args)
 {
-  Thread_Counter num = 1;
-  Thread_Counter* tmp = static_cast<Thread_Counter*> (args);
+  Thread_Counter const * const tmp = static_cast<Thread_Counter*> (args);
 
   if (tmp == nullptr)
     {
@@ -56,7 +51,7 @@ TAO::CSD::TP_Task::open(void* args)
       //FUZZ: enable check_for_lack_ACE_OS
     }
 
-  num = *tmp;
+  Thread_Counter const num {*tmp};
 
   // We can't activate 0 threads.  Make sure this isn't the case.
   if (num < 1)
@@ -105,7 +100,6 @@ TAO::CSD::TP_Task::open(void* args)
   return 0;
 }
 
-
 int
 TAO::CSD::TP_Task::svc()
 {
@@ -115,7 +109,7 @@ TAO::CSD::TP_Task::svc()
     ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->lock_, false);
     // Put the thread id into a collection which is used to check whether
     // the orb shutdown is called by one of the threads in the pool.
-    ACE_thread_t thr_id = ACE_OS::thr_self ();
+    ACE_thread_t const thr_id = ACE_OS::thr_self ();
     this->activated_threads_.push_back(thr_id);
     ++this->num_threads_;
     this->active_workers_.signal();
@@ -126,7 +120,7 @@ TAO::CSD::TP_Task::svc()
   TP_Dispatchable_Visitor dispatchable_visitor;
 
   // Start the "GetWork-And-PerformWork" loop for the current worker thread.
-  while (1)
+  while (true)
     {
       TP_Request_Handle request;
 
@@ -162,7 +156,7 @@ TAO::CSD::TP_Task::svc()
 
               // If a dispatchable request is located, it is extracted
               // from the queue and saved in a handle data member in the
-              // visitor object.  Let's get a "copy" (or a NULL pointer
+              // visitor object.  Let's get a "copy" (or a null pointer
               // if the visitor didn't locate/extract one).
               request = dispatchable_visitor.request();
             }
@@ -208,7 +202,6 @@ TAO::CSD::TP_Task::svc()
     }
 }
 
-
 int
 TAO::CSD::TP_Task::close(u_long flag)
 {
@@ -239,17 +232,15 @@ TAO::CSD::TP_Task::close(u_long flag)
       // Signal all worker threads waiting on the work_available_ condition.
       this->work_available_.broadcast();
 
-      bool calling_thread_in_tp = false;
+      bool calling_thread_in_tp {};
 
-      ACE_thread_t my_thr_id = ACE_OS::thr_self ();
+      ACE_thread_t const my_thr_id = ACE_OS::thr_self ();
 
       // Check whether the calling thread(calling orb shutdown) is one of the
       // threads in the pool. If it is then it should not wait itself.
-      size_t const size = this->activated_threads_.size ();
-
-      for (size_t i = 0; i < size; i ++)
+      for (ACE_thread_t const thread_id : this->activated_threads_)
         {
-          if (this->activated_threads_[i] == my_thr_id)
+          if (thread_id == my_thr_id)
             {
               calling_thread_in_tp = true;
               this->deferred_shutdown_initiated_ = true;
@@ -258,7 +249,7 @@ TAO::CSD::TP_Task::close(u_long flag)
         }
 
       // Wait until all worker threads have shutdown.
-      size_t target_num_threads = calling_thread_in_tp ? 1 : 0;
+      size_t const target_num_threads = calling_thread_in_tp ? 1 : 0;
       while (this->num_threads_ != target_num_threads)
         {
           this->active_workers_.wait();
@@ -274,7 +265,6 @@ TAO::CSD::TP_Task::close(u_long flag)
 
   return 0;
 }
-
 
 void
 TAO::CSD::TP_Task::cancel_servant (PortableServer::Servant servant)

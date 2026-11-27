@@ -28,6 +28,8 @@
 #include "ace/INet/FTP_IOStream.h"
 #include "ace/INet/Sock_IOStream.h"
 
+#include <memory>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE
@@ -49,7 +51,7 @@ namespace ACE
           {
             public:
               ClientRequestHandler (bool passive_mode = true);
-              virtual ~ClientRequestHandler ();
+              ~ClientRequestHandler () override;
 
               bool uses_passive_mode () const;
 
@@ -59,64 +61,64 @@ namespace ACE
 
               u_short uses_active_port () const;
 
-              virtual Request& request ();
+              Request& request () override;
 
-              virtual const Request& request () const;
+              Request const& request () const override;
 
-              virtual Response& response ();
+              Response& response () override;
 
-              virtual const Response& response () const;
+              Response const& response () const override;
 
               std::ostream& request_stream ();
 
-              virtual std::istream& response_stream ();
+              std::istream& response_stream () override;
 
-              virtual bool is_response_ok () const;
+              bool is_response_ok () const override;
 
-              virtual std::istream& handle_open_request (const ACE::INet::URL_Base& url);
+              std::istream& handle_open_request (ACE::INet::URL_Base const& url) override;
 
-              virtual std::istream& handle_get_request (const URL& url, bool binary=true);
+              virtual std::istream& handle_get_request (URL const& url, bool binary=true);
 /*
-              virtual std::ostream& start_put_request (const URL& url, bool binary=true);
+              virtual std::ostream& start_put_request (URL const& url, bool binary=true);
 
               virtual bool finish_put_request ();
 */
               void quit_connection ();
 
-              static const ACE_CString anonymous_user_;
+              static ACE_CString const anonymous_user_;
 
             protected:
-              static const ACE_CString empty_;
+              static ACE_CString const empty_;
 
               using connection_type = typename Session_T<ACE_SYNCH>::connection_type;
               using stream_type = ACE::IOS::Sock_IOStreamBase<ACE_SYNCH>;
 
-              virtual void on_eof ();
+              void on_eof () override;
 
               class Authentication
                 : public ACE::INet::AuthenticationBase
                 {
                   public:
-                    Authentication (const ACE_CString& realm,
+                    Authentication (ACE_CString const& realm,
                                     ACE_CString& user,
                                     ACE_CString& pw);
 
-                    virtual ~Authentication ();
+                    ~Authentication () override;
 
-                    virtual const ACE_CString& scheme () const;
+                    ACE_CString const& scheme () const override;
 
-                    virtual const ACE_CString& realm () const;
+                    ACE_CString const& realm () const override;
 
-                    virtual const ACE_CString& user () const;
+                    ACE_CString const& user () const override;
 
-                    virtual void user (const ACE_CString& usr);
+                    void user (ACE_CString const& usr) override;
 
-                    virtual const ACE_CString& password () const;
+                    ACE_CString const& password () const override;
 
-                    virtual void password (const ACE_CString& pw);
+                    void password (ACE_CString const& pw) override;
 
                   private:
-                    const ACE_CString& realm_;
+                    ACE_CString const& realm_;
                     ACE_CString& user_;
                     ACE_CString& password_;
                 };
@@ -128,7 +130,7 @@ namespace ACE
                     using session_type = Session_T<ACE_SYNCH>;
 
                     SessionHolder ();
-                    virtual ~SessionHolder();
+                    ~SessionHolder () override;
 
                     session_type& operator *();
                     session_type* operator ->();
@@ -142,26 +144,26 @@ namespace ACE
                 {
                   public:
                     SessionFactory ();
-                    virtual ~SessionFactory ();
+                    ~SessionFactory () override;
 
-                    virtual ACE::INet::ConnectionHolder* create_connection (
-                        const ACE::INet::ConnectionKey& key) const;
+                    ACE::INet::ConnectionHolder* create_connection (
+                        ACE::INet::ConnectionKey const& key) const override;
                 };
 
               SessionHolder& session ();
 
               void session (SessionHolder* session);
 
-              virtual bool initialize_connection (const ACE_CString& host,
+              virtual bool initialize_connection (ACE_CString const& host,
                                                   u_short port);
 
-              virtual bool handle_credentials (const URL& url,
+              virtual bool handle_credentials (URL const& url,
                                                ACE_CString& user,
                                                ACE_CString& password);
 
-              virtual void handle_request_error (const URL& url);
+              virtual void handle_request_error (URL const& url);
 
-              virtual void handle_connection_error (const URL& url);
+              virtual void handle_connection_error (URL const& url);
 
               void release_connection ();
 
@@ -171,39 +173,39 @@ namespace ACE
                * FTP protocol helpers
                */
 
-              bool login (const ACE_CString& user, const ACE_CString& password);
+              bool login (ACE_CString const& user, ACE_CString const& password);
 
               bool logout ();
 
-              bool is_valid_path (const ACE_CString& path);
+              bool is_valid_path (ACE_CString const& path);
 
-              bool is_file (const ACE_CString& path);
+              bool is_file (ACE_CString const& path);
 
-              bool is_dir (const ACE_CString& path);
+              bool is_dir (ACE_CString const& path);
 
               bool set_filetype (bool binary);
 
-              stream_type* start_download (const ACE_CString& path, bool binary);
+              stream_type* start_download (ACE_CString const& path, bool binary);
 
-              stream_type* start_upload (const ACE_CString& path, bool binary);
+              stream_type* start_upload (ACE_CString const& path, bool binary);
 
               bool finish_transfer ();
 
               bool abort_transfer ();
 
-              Response::StatusType process_command (const ACE_CString& cmd,
-                                                    const ACE_CString& arg = empty_);
+              Response::StatusType process_command (ACE_CString const& cmd,
+                                                    ACE_CString const& arg = empty_);
 
-              stream_type* open_data_connection (const ACE_CString& cmd,
-                                                 const ACE_CString& arg);
+              stream_type* open_data_connection (ACE_CString const& cmd,
+                                                 ACE_CString const& arg);
 
               bool get_passive_address (ACE_INET_Addr& addr);
 
-              bool parse_address (const ACE_CString& str, ACE_INET_Addr& addr);
+              bool parse_address (ACE_CString const& str, ACE_INET_Addr& addr);
 
-              bool parse_ext_address (const ACE_CString& str, ACE_INET_Addr& addr);
+              bool parse_ext_address (ACE_CString const& str, ACE_INET_Addr& addr);
 
-              bool send_active_address (const ACE_INET_Addr& addr);
+              bool send_active_address (ACE_INET_Addr const& addr);
 
             private:
               Request request_;

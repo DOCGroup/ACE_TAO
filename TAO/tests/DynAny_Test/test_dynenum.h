@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    test_dynenum.h
  *
@@ -6,8 +5,6 @@
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #if !defined (TEST_DYNENUM_H)
 #define TEST_DYNENUM_H
@@ -17,18 +14,21 @@
 class Test_DynEnum
 {
 public:
-  Test_DynEnum (CORBA::ORB_var orb, int debug);
-  ~Test_DynEnum ();
+  Test_DynEnum (CORBA::ORB_var orb, bool debug);
+  ~Test_DynEnum () = default;
+  Test_DynEnum (Test_DynEnum const&) = delete;
+  Test_DynEnum (Test_DynEnum&&) = delete;
+  Test_DynEnum& operator= (Test_DynEnum const&) = delete;
+  Test_DynEnum& operator= (Test_DynEnum&&) = delete;
 
-  const char* test_name () const;
+  char const* test_name () const;
 
   int run_test ();
 
 private:
   CORBA::ORB_var orb_;
-  char* test_name_;
-  CORBA::ULong error_count_;
-  int debug_;
+  CORBA::ULong error_count_ {};
+  bool debug_ {};
 };
 
 #endif /* TEST_DYNENUM_H */

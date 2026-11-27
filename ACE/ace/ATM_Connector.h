@@ -1,12 +1,8 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
  *  @file    ATM_Connector.h
  *
  *  @author Joe Hoffert <joeh@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef ACE_ATM_CONNECTOR_H
 #define ACE_ATM_CONNECTOR_H
@@ -49,13 +45,12 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_ATM_Connector
 {
 public:
-  /// Default constructor.
   ACE_ATM_Connector ();
 
   /**
    * Actively connect and produce a @a new_stream if things go well.
    * The @a remote_sap is the address that we are trying to connect
-   * with.  The <params> are the parameters needed for either socket
+   * with.  The @c params are the parameters needed for either socket
    * or XTI/ATM connections.  The @a timeout is the amount of time to
    * wait to connect. If it's 0 then we block indefinitely.  If
    * *timeout == {0, 0} then the connection is done using non-blocking
@@ -64,16 +59,16 @@ public:
    * *timeout > {0, 0} then this is the maximum amount of time to wait before
    * timing out.  If the time expires before the connection is made
    * @c errno == ETIME.  The @a local_sap is the value of local address
-   * to bind to.  If it's the default value of <ACE_ATM_Addr::sap_any> then
+   * to bind to.  If it's the default value of @c ACE_ATM_Addr::sap_any then
    * the user is letting the OS do the binding.  If @a reuse_addr == 1
-   * then the <local_addr> is reused, even if it hasn't been cleanedup yet.
+   * then the @c local_addr is reused, even if it hasn't been cleanedup yet.
    */
   ACE_ATM_Connector (ACE_ATM_Stream &new_stream,
-                     const ACE_ATM_Addr &remote_sap,
+                     ACE_ATM_Addr const &remote_sap,
                      ACE_ATM_Params params = ACE_ATM_Params(),
                      ACE_ATM_QoS options = ACE_ATM_QoS(),
                      ACE_Time_Value *timeout = nullptr,
-                     const ACE_ATM_Addr &local_sap = ACE_ATM_Addr( "", 0 ),
+                     ACE_ATM_Addr const &local_sap = ACE_ATM_Addr( "", 0 ),
                      int reuse_addr = 0,
 #if defined (ACE_WIN32)
                      int flags = 0,
@@ -85,7 +80,7 @@ public:
   /**
    * Actively connect and produce a @a new_stream if things go well.
    * The @a remote_sap is the address that we are trying to connect
-   * with.  The <params> are the parameters needed for either socket
+   * with.  The @c params are the parameters needed for either socket
    * or XTI/ATM connections.  The @a timeout is the amount of time to
    * wait to connect. If it's 0 then we block indefinitely.  If
    * *timeout == {0, 0} then the connection is done using non-blocking
@@ -94,16 +89,16 @@ public:
    * *timeout > {0, 0} then this is the maximum amount of time to wait before
    * timing out.  If the time expires before the connection is made
    * @c errno == ETIME.  The @a local_sap is the value of local address
-   * to bind to.  If it's the default value of <ACE_ATM_Addr::sap_any> then
+   * to bind to.  If it's the default value of @c ACE_ATM_Addr::sap_any then
    * the user is letting the OS do the binding.  If @a reuse_addr == 1
-   * then the <local_addr> is reused, even if it hasn't been cleanedup yet.
+   * then the @c local_addr is reused, even if it hasn't been cleanedup yet.
    */
   int connect (ACE_ATM_Stream &new_stream,
-               const ACE_ATM_Addr &remote_sap,
+               ACE_ATM_Addr const &remote_sap,
                ACE_ATM_Params params = ACE_ATM_Params(),
                ACE_ATM_QoS options = ACE_ATM_QoS(),
                ACE_Time_Value *timeout = nullptr,
-               const ACE_ATM_Addr &local_sap = ACE_ATM_Addr( "",
+               ACE_ATM_Addr const &local_sap = ACE_ATM_Addr( "",
                                                              0 ),
                int reuse_addr = 0,
 #if defined (ACE_WIN32)
@@ -129,15 +124,17 @@ public:
    * are trying to add.
    */
   int add_leaf (ACE_ATM_Stream &current_stream,
-                const ACE_Addr &remote_sap,
+                ACE_Addr const &remote_sap,
                 ACE_ATM_QoS &qos);
 
   /// Resets any event associations on this handle
   bool reset_new_handle (ACE_HANDLE handle);
 
-  // = Meta-type info
+  /// @name Peer types
+  /// @{
   using PEER_ADDR = ACE_ATM_Addr;
   using PEER_STREAM = ACE_ATM_Stream;
+  /// @}
 
   /// Dump the state of an object.
   void dump () const;

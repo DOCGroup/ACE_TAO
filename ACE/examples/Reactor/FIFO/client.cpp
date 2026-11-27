@@ -2,7 +2,6 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_stropts.h"
 
-
 int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {
@@ -14,7 +13,11 @@ ACE_TMAIN (int, ACE_TCHAR *[])
                                  ACE_DEFAULT_FILE_PERMS);
 
   if (fifo_sender.send (msg) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "send error for fifo"), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "send error for fifo"), -1);
+    }
   else
+  {
     return 0;
+  }
 }

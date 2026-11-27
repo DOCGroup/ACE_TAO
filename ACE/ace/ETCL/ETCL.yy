@@ -1,18 +1,9 @@
 %{
-// ========================================================================
-//
-// = LIBRARY
-//   orbsvcs / Extended Trader Constraint Language parser.
-//
-// = FILENAME
-//   ETCL.yy
-//
-// = AUTHOR
-//   Carlos O'Ryan <coryan@uci.edu> based on previous work by
-//   Seth Widoff <sbw1@cs.wustl.edu>
-//   Jeff Parsons <j.parsons@vanderbilt.edu>
-//
-// ========================================================================
+/// @file ETCL.yy
+/// @brief Extended Trader Constraint Language parser.
+/// @author Carlos O'Ryan <coryan@uci.edu> based on previous work by
+/// Seth Widoff <sbw1@cs.wustl.edu>
+/// Jeff Parsons <j.parsons@vanderbilt.edu>
 
 #include "ace/ETCL/ETCL_y.h"
 #include "ace/ETCL/ETCL_constraint.h"
@@ -201,7 +192,7 @@ factor:		ETCL_LPAREN bool_or ETCL_RPAREN
 	;
 
 component:	/* empty */
-	{ $$ = 0; }
+	{ $$ = nullptr; }
 	| ETCL_DOT component_dot
 	{ $$ = new ETCL_DOT_CLASS ($2); }
 
@@ -213,7 +204,7 @@ component:	/* empty */
 	;
 
 component_ext:	/* empty */
-	{ $$ = 0; }
+	{ $$ = nullptr; }
 	| ETCL_DOT component_dot
 	{ $$ = new ETCL_Dot ($2); }
 
@@ -252,7 +243,7 @@ union_pos:  ETCL_LPAREN union_val ETCL_RPAREN component_ext
 	;
 
 union_val:  /* empty */
-	{ $$ = 0; }
+	{ $$ = nullptr; }
 	| ETCL_INTEGER
 	{ $$ = new ETCL_UNION_VALUE_CLASS (+1, $1); }
 	| ETCL_PLUS ETCL_INTEGER

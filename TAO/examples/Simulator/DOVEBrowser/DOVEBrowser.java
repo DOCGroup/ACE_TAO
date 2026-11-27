@@ -1,15 +1,8 @@
-//
-// = FILENAME
-//   DOVEBrowser.java
-//
-// = AUTHOR
-//   Michael Kircher (mk1@cs.wustl.edu)
-//
-// = DESCRIPTION
-//   Entry point for the demo.
-//
-// ============================================================================
-
+/**
+ * @file DOVEBrowser.java
+ * @author Michael Kircher (mk1@cs.wustl.edu)
+ * @brief Entry point for the demo.
+ */
 
 import java.awt.*;
 
@@ -81,6 +74,4 @@ public class DOVEBrowser {
     doveBrowser.init (nameServiceIOR, nameServicePort, args, use_queueing);
   }
 }
-
-
 

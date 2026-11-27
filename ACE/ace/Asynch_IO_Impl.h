@@ -1,6 +1,3 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
  *  @file    Asynch_IO_Impl.h
  *
@@ -14,7 +11,6 @@
  *  @author Roger Tragin <r.tragin@computer.org>
  *  @author Alexander Libman <alibman@ihug.com.au>
  */
-//=============================================================================
 
 #ifndef ACE_ASYNCH_IO_IMPL_H
 #define ACE_ASYNCH_IO_IMPL_H
@@ -52,14 +48,14 @@ public:
   virtual size_t bytes_transferred () const = 0;
 
   /// ACT associated with the operation.
-  virtual const void *act () const = 0;
+  virtual void const *act () const = 0;
 
   /// Did the operation succeed?
-  virtual int success () const = 0;
+  virtual bool success () const = 0;
 
   /// This ACT is not the same as the ACT associated with the
   /// asynchronous operation.
-  virtual const void *completion_key () const = 0;
+  virtual void const *completion_key () const = 0;
 
   /// Error value if the operation fail.
   virtual u_long error () const = 0;
@@ -77,7 +73,7 @@ public:
   /**
    * POSIX4 real-time signal number to be used for the
    * operation. signal_number ranges from SIGRTMIN to SIGRTMAX. By
-   * default, SIGRTMIN is used to issue <aio_> calls. This is a no-op
+   * default, SIGRTMIN is used to issue @c aio_ calls. This is a no-op
    * on non-POSIX4 systems and returns 0.
    */
   virtual int signal_number () const = 0;
@@ -89,7 +85,7 @@ public:
   /// This is called when the asynchronous operation completes.
   virtual void complete (size_t bytes_transferred,
                          int success,
-                         const void *completion_key,
+                         void const *completion_key,
                          u_long error = 0) = 0;
 
   /// Post @c this to the Proactor's completion port.
@@ -117,9 +113,9 @@ public:
    * ACE_Handler::handle() will be called on the proxied handler to get the
    * correct handle.
    */
-  virtual int open (const ACE_Handler::Proxy_Ptr &handler_proxy,
+  virtual int open (ACE_Handler::Proxy_Ptr const &handler_proxy,
                     ACE_HANDLE handle,
-                    const void *completion_key,
+                    void const *completion_key,
                     ACE_Proactor *proactor) = 0;
 
   /**
@@ -129,10 +125,12 @@ public:
    */
   virtual int cancel () = 0;
 
-  // = Access methods.
+  /// @name Access methods
+  /// @{
 
   /// Return the underlying proactor.
   virtual ACE_Proactor* proactor () const = 0;
+  /// @}
 
 protected:
   ACE_Asynch_Operation_Impl () = default;
@@ -154,7 +152,7 @@ public:
   /// be read and stored in the @a message_block.
   virtual int read (ACE_Message_Block &message_block,
                     size_t bytes_to_read,
-                    const void *act,
+                    void const *act,
                     int priority,
                     int signal_number) = 0;
 
@@ -165,7 +163,7 @@ public:
   */
   virtual int readv (ACE_Message_Block &message_block,
                      size_t bytes_to_read,
-                     const void *act,
+                     void const *act,
                      int priority,
                      int signal_number) = 0;
 #endif /* defined (ACE_WIN32) */
@@ -216,7 +214,7 @@ public:
   /// will be written from the @a message_block.
   virtual int write (ACE_Message_Block &message_block,
                      size_t bytes_to_write,
-                     const void *act,
+                     void const *act,
                      int priority,
                      int signal_number) = 0;
 
@@ -227,7 +225,7 @@ public:
   */
   virtual int writev (ACE_Message_Block &message_block,
                       size_t bytes_to_write,
-                      const void *act,
+                      void const *act,
                       int priority,
                       int signal_number) = 0;
 #endif /* defined (ACE_WIN32) */
@@ -283,7 +281,7 @@ public:
                     size_t bytes_to_read,
                     u_long offset,
                     u_long offset_high,
-                    const void *act,
+                    void const *act,
                     int priority,
                     int signal_number) = 0;
 
@@ -298,7 +296,7 @@ public:
                      size_t bytes_to_read,
                      u_long offset,
                      u_long offset_high,
-                     const void *act,
+                     void const *act,
                      int priority,
                      int signal_number) = 0;
 #endif /* defined (ACE_WIN32) */
@@ -307,7 +305,7 @@ public:
   /// be read and stored in the @a message_block.
   int read (ACE_Message_Block &message_block,
             size_t bytes_to_read,
-            const void *act,
+            void const *act,
             int priority,
             int signal_number) override = 0;
 
@@ -318,7 +316,7 @@ public:
   */
   int readv (ACE_Message_Block &message_block,
              size_t bytes_to_read,
-             const void *act,
+             void const *act,
              int priority,
              int signal_number) override = 0;
 #endif /* defined (ACE_WIN32) */
@@ -336,7 +334,6 @@ protected:
 class ACE_Asynch_Read_File_Result_Impl : public virtual ACE_Asynch_Read_Stream_Result_Impl
 {
 public:
-  /// Destructor.
   ~ACE_Asynch_Read_File_Result_Impl () override = default;
 
 protected:
@@ -364,7 +361,7 @@ public:
                      size_t bytes_to_write,
                      u_long offset,
                      u_long offset_high,
-                     const void *act,
+                     void const *act,
                      int priority,
                      int signal_number) = 0;
 
@@ -379,7 +376,7 @@ public:
                       size_t bytes_to_write,
                       u_long offset,
                       u_long offset_high,
-                      const void *act,
+                      void const *act,
                       int priority,
                       int signal_number) = 0;
 #endif /* defined (ACE_WIN32) */
@@ -388,7 +385,7 @@ public:
   /// will be written from the @a message_block.
   int write (ACE_Message_Block &message_block,
              size_t bytes_to_write,
-             const void *act,
+             void const *act,
              int priority,
              int signal_number) override = 0;
 
@@ -399,7 +396,7 @@ public:
   */
   int writev (ACE_Message_Block &message_block,
               size_t bytes_to_write,
-              const void *act,
+              void const *act,
               int priority,
               int signal_number) override = 0;
 #endif /* defined (ACE_WIN32) */
@@ -439,9 +436,9 @@ public:
   /**
    * This starts off an asynchronous accept.  The asynchronous accept
    * call also allows any initial data to be returned to the
-   * <handler>.  Upto @a bytes_to_read will be read and stored in the
+   * @c handler.  Upto @a bytes_to_read will be read and stored in the
    * @a message_block.  The @a accept_handle will be used for the
-   * <accept> call.  If (@a accept_handle == INVALID_HANDLE), a new
+   * @c accept call.  If (@a accept_handle == INVALID_HANDLE), a new
    * handle will be created.
    *
    * @a message_block must be specified. This is because the address of
@@ -450,7 +447,7 @@ public:
   virtual int accept (ACE_Message_Block &message_block,
                       size_t bytes_to_read,
                       ACE_HANDLE accept_handle,
-                      const void *act,
+                      void const *act,
                       int priority,
                       int signal_number,
                       int addr_family) = 0;
@@ -488,7 +485,6 @@ protected:
   ACE_Asynch_Accept_Result_Impl () = default;
 };
 
-
 /**
  * @class ACE_Asynch_Connect_Impl
  *
@@ -505,10 +501,10 @@ public:
    * This starts off an asynchronous connect
    */
   virtual int connect (ACE_HANDLE connect_handle,
-                       const ACE_Addr & remote_sap,
-                       const ACE_Addr & local_sap,
+                       ACE_Addr const & remote_sap,
+                       ACE_Addr const & local_sap,
                        int   reuse_addr,
-                       const void *act,
+                       void const *act,
                        int   priority,
                        int   signal_number) = 0;
 
@@ -535,7 +531,6 @@ protected:
   ACE_Asynch_Connect_Result_Impl () = default;
 };
 
-
 /**
  * @class ACE_Asynch_Transmit_File_Impl
  *
@@ -556,7 +551,7 @@ public:
                              u_long offset_high,
                              size_t bytes_per_send,
                              u_long flags,
-                             const void *act,
+                             void const *act,
                              int priority,
                              int signal_number) = 0;
 
@@ -600,7 +595,6 @@ protected:
   ACE_Asynch_Transmit_File_Result_Impl () = default;
 };
 
-
 /**
  * @class ACE_Asynch_Read_Dgram_Impl
  *
@@ -615,23 +609,23 @@ public:
 
   /** This starts off an asynchronous read.  Upto
    * <message_block->total_size()> will be read and stored in the
-   * @a message_block.  @a message_block's <wr_ptr> will be updated to reflect
+   * @a message_block.  @a message_block's @c wr_ptr will be updated to reflect
    * the added bytes if the read operation is successful completed.
-   * Return code of 1 means immediate success and <number_of_bytes_recvd>
-   * will contain number of bytes read.  The <ACE_Handler::handle_read_dgram>
+   * Return code of 1 means immediate success and @c number_of_bytes_recvd
+   * will contain number of bytes read.  The @c ACE_Handler::handle_read_dgram
    * method will still be called.  Return code of 0 means the IO will
    * complete proactively.  Return code of -1 means there was an error, use
    * errno to get the error code.
    *
    * Scatter/gather is supported on WIN32 by using the <message_block->cont()>
    * method.  Up to ACE_IOV_MAX @a message_block's are supported.  Upto
-   * <message_block->size()> bytes will be read into each <message block> for
+   * <message_block->size()> bytes will be read into each @c message_block for
    * a total of <message_block->total_size()> bytes.  All @a message_block's
-   * <wr_ptr>'s will be updated to reflect the added bytes for each
+   * @c wr_ptr's will be updated to reflect the added bytes for each
    * @a message_block
    *
    * Priority of the operation is specified by @a priority. On POSIX4-Unix,
-   * this is supported. Works like <nice> in Unix. Negative values are not
+   * this is supported. Works like @c nice in Unix. Negative values are not
    * allowed. 0 means priority of the operation same as the process
    * priority. 1 means priority of the operation is one less than
    * process. And so forth. On Win32, @a priority is a no-op.
@@ -643,7 +637,7 @@ public:
                         size_t &number_of_bytes_recvd,
                         int flags,
                         int protocol_family,
-                        const void *act,
+                        void const *act,
                         int priority,
                         int signal_number) = 0;
 
@@ -697,23 +691,23 @@ public:
 
   /** This starts off an asynchronous send.  Upto
    * <message_block->total_length()> will be sent.  @a message_block's
-   * <rd_ptr> will be updated to reflect the sent bytes if the send operation
+   * @c rd_ptr will be updated to reflect the sent bytes if the send operation
    * is successful completed.
-   * Return code of 1 means immediate success and <number_of_bytes_sent>
-   * is updated to number of bytes sent.  The <ACE_Handler::handle_write_dgram>
+   * Return code of 1 means immediate success and @c number_of_bytes_sent
+   * is updated to number of bytes sent.  The @c ACE_Handler::handle_write_dgram
    * method will still be called.  Return code of 0 means the IO will
    * complete proactively.  Return code of -1 means there was an error, use
    * errno to get the error code.
    *
    * Scatter/gather is supported on WIN32 by using the <message_block->cont()>
    * method.  Up to ACE_IOV_MAX @a message_block's are supported.  Upto
-   * <message_block->length()> bytes will be sent from each <message block>
+   * <message_block->length()> bytes will be sent from each @c message_block
    * for a total of <message_block->total_length()> bytes.  All
-   * @a message_block's <rd_ptr>'s will be updated to reflect the bytes sent
+   * @a message_block's @c rd_ptr's will be updated to reflect the bytes sent
    * from each @a message_block.
    *
    * Priority of the operation is specified by @a priority. On POSIX4-Unix,
-   * this is supported. Works like <nice> in Unix. Negative values are not
+   * this is supported. Works like @c nice in Unix. Negative values are not
    * allowed. 0 means priority of the operation same as the process
    * priority. 1 means priority of the operation is one less than
    * process. And so forth. On Win32, this argument is a no-op.
@@ -724,8 +718,8 @@ public:
   virtual ssize_t send (ACE_Message_Block *message_block,
                         size_t &number_of_bytes_sent,
                         int flags,
-                        const ACE_Addr &addr,
-                        const void *act,
+                        ACE_Addr const &addr,
+                        void const *act,
                         int priority,
                         int signal_number) = 0;
 

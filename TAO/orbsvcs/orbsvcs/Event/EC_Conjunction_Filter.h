@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 /**
  *  @file   EC_Conjunction_Filter.h
  *
@@ -17,6 +15,8 @@
 
 #include "orbsvcs/Event/EC_Filter.h"
 #include /**/ "orbsvcs/Event/event_serv_export.h"
+
+#include <memory>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -44,30 +44,30 @@ public:
   TAO_EC_Conjunction_Filter (TAO_EC_Filter* children[],
                              size_t n);
 
-  /// Destructor
-  virtual ~TAO_EC_Conjunction_Filter () override;
+  ~TAO_EC_Conjunction_Filter () override;
 
-  // = The TAO_EC_Filter methods, please check the documentation in
-  // TAO_EC_Filter.
-  virtual ChildrenIterator begin () const override;
-  virtual ChildrenIterator end () const override;
-  virtual int size () const override;
-  virtual int filter (const RtecEventComm::EventSet& event,
-                      TAO_EC_QOS_Info& qos_info) override;
-  virtual int filter_nocopy (RtecEventComm::EventSet& event,
-                             TAO_EC_QOS_Info& qos_info) override;
-  virtual void push (const RtecEventComm::EventSet& event,
+  /// @name The TAO_EC_Filter methods
+  /// @{
+  ChildrenIterator begin () const override;
+  ChildrenIterator end () const override;
+  int size () const override;
+  int filter (RtecEventComm::EventSet const &event,
+              TAO_EC_QOS_Info& qos_info) override;
+  int filter_nocopy (RtecEventComm::EventSet& event,
                      TAO_EC_QOS_Info& qos_info) override;
-  virtual void push_nocopy (RtecEventComm::EventSet& event,
-                            TAO_EC_QOS_Info& qos_info) override;
-  virtual void clear () override;
-  virtual CORBA::ULong max_event_size () const override;
-  virtual int can_match (const RtecEventComm::EventHeader& header) const override;
-  virtual int add_dependencies (const RtecEventComm::EventHeader& header,
-                                const TAO_EC_QOS_Info &qos_info) override;
+  void push (RtecEventComm::EventSet const &event,
+             TAO_EC_QOS_Info& qos_info) override;
+  void push_nocopy (RtecEventComm::EventSet& event,
+                    TAO_EC_QOS_Info& qos_info) override;
+  void clear () override;
+  CORBA::ULong max_event_size () const override;
+  int can_match (RtecEventComm::EventHeader const &header) const override;
+  int add_dependencies (RtecEventComm::EventHeader const &header,
+                        TAO_EC_QOS_Info const &qos_info) override;
 
   using Word = unsigned int;
 
+  /// @}
 private:
   TAO_EC_Conjunction_Filter (TAO_EC_Conjunction_Filter const &) = delete;
   TAO_EC_Conjunction_Filter (TAO_EC_Conjunction_Filter &&) = delete;
@@ -79,7 +79,7 @@ private:
 
 private:
   /// The children
-  TAO_EC_Filter** children_;
+  std::unique_ptr<TAO_EC_Filter*[]> children_;
 
   /// The number of children.
   size_t n_;
@@ -96,7 +96,7 @@ private:
    * The bit vector to keep track of the children that have received
    * their events.
    */
-  Word* bitvec_;
+  std::unique_ptr<Word[]> bitvec_;
 
   /// The current child in the iteration, used in the push() method...
   ChildrenIterator current_child_;

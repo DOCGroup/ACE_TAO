@@ -4,7 +4,6 @@
 #include "PushSupplier.inl"
 #endif /* __ACE_INLINE__ */
 
-
 TAO_Notify_Tests_PushSupplier_Traits::TAO_Notify_Tests_PushSupplier_Traits ()
   :type_ (CosNotifyChannelAdmin::ANY_EVENT)
 {
@@ -12,16 +11,12 @@ TAO_Notify_Tests_PushSupplier_Traits::TAO_Notify_Tests_PushSupplier_Traits ()
 
 /*******************************************************************/
 
-TAO_Notify_Tests_PushSupplier::TAO_Notify_Tests_PushSupplier ()
-{
-}
+TAO_Notify_Tests_PushSupplier::TAO_Notify_Tests_PushSupplier () = default;
 
-TAO_Notify_Tests_PushSupplier::~TAO_Notify_Tests_PushSupplier ()
-{
-}
+TAO_Notify_Tests_PushSupplier::~TAO_Notify_Tests_PushSupplier () = default;
 
 void
-TAO_Notify_Tests_PushSupplier::send_event (const CORBA::Any& any)
+TAO_Notify_Tests_PushSupplier::send_event (CORBA::Any const & any)
 {
   ACE_ASSERT (!CORBA::is_nil (this->proxy_.in ()));
 

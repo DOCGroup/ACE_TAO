@@ -1,18 +1,15 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   FTEC_Group_Manager.h
  *
  *  @author Huang-Ming Huang <hh1@cse.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_FTEC_GROUP_MANAGER_H
 #define TAO_FTEC_GROUP_MANAGER_H
 
 #include "orbsvcs/FtRtecEventChannelAdminC.h"
 #include "orbsvcs/FtRtEvent/EventChannel/FTEC_Fault_Listener.h"
+#include <memory>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -28,10 +25,10 @@ public:
   TAO_FTEC_Group_Manager();
   ~TAO_FTEC_Group_Manager() override;
 
-  TAO_FTEC_Group_Manager(TAO_FTEC_Group_Manager const&) = delete;
-  TAO_FTEC_Group_Manager(TAO_FTEC_Group_Manager&&) = delete;
-  TAO_FTEC_Group_Manager& operator=(TAO_FTEC_Group_Manager const&) = delete;
-  TAO_FTEC_Group_Manager& operator=(TAO_FTEC_Group_Manager&&) = delete;
+  TAO_FTEC_Group_Manager (TAO_FTEC_Group_Manager const &) = delete;
+  TAO_FTEC_Group_Manager (TAO_FTEC_Group_Manager &&) = delete;
+  TAO_FTEC_Group_Manager & operator= (TAO_FTEC_Group_Manager const &) = delete;
+  TAO_FTEC_Group_Manager & operator= (TAO_FTEC_Group_Manager &&) = delete;
 
   bool init(CORBA::ORB_ptr orb);
 
@@ -40,20 +37,20 @@ public:
         FTRT::Location_out cur);
 
   void create_group (
-    const FTRT::ManagerInfoList & info_list,
+    FTRT::ManagerInfoList const & info_list,
     CORBA::ULong object_group_ref_version);
 
-  void join_group (const FTRT::ManagerInfo & info);
+  void join_group (FTRT::ManagerInfo const & info);
 
   void add_member (
-    const FTRT::ManagerInfo & info,
+    FTRT::ManagerInfo const & info,
     CORBA::ULong object_group_ref_version);
 
   void remove_member (
-    const FTRT::Location & crashed_location,
+    FTRT::Location const & crashed_location,
     CORBA::ULong object_group_ref_version);
 
-  void replica_crashed (const FTRT::Location & location);
+  void replica_crashed (FTRT::Location const & location);
 
 private:
   virtual void get_state (FtRtecEventChannelAdmin::EventChannelState & s)=0;
@@ -62,7 +59,7 @@ private:
 
 protected:
   FTRT::FaultListener_var listener_;
-  TAO_FTEC_Group_Manager_Impl* impl_;
+  std::unique_ptr<TAO_FTEC_Group_Manager_Impl> impl_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

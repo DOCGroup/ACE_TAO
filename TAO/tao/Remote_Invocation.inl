@@ -1,4 +1,3 @@
-// -*- C++ -*-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
@@ -22,7 +21,7 @@ namespace TAO
   Remote_Invocation::marshal_data (TAO_OutputCDR &out_stream)
   {
     // Marshal application data
-    if (this->details_.marshal_args (out_stream) == false)
+    if (!this->details_.marshal_args (out_stream))
       {
         throw ::CORBA::MARSHAL ();
       }

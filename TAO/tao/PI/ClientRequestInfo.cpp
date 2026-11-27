@@ -21,11 +21,12 @@
 
 #include "ace/CORBA_macros.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_ClientRequestInfo::TAO_ClientRequestInfo (TAO::Invocation_Base *inv)
-  : invocation_ (inv),
-    rs_pi_current_ ()
+  : invocation_ (inv)
 {
   this->setup_picurrent ();
 }
@@ -95,7 +96,7 @@ TAO_ClientRequestInfo::effective_profile ()
 {
   this->check_validity ();
 
-  IOP::TaggedProfile *tagged_profile = nullptr;
+  IOP::TaggedProfile *tagged_profile {};
   ACE_NEW_THROW_EX (tagged_profile,
                     IOP::TaggedProfile,
                     CORBA::NO_MEMORY (
@@ -141,7 +142,7 @@ TAO_ClientRequestInfo::received_exception ()
   // The spec says that if it is a user exception which can't be
   // inserted then the UNKNOWN exception needs to be thrown with minor
   // code 1.
-  CORBA::Any * temp = nullptr;
+  CORBA::Any * temp {};
 
   ACE_NEW_THROW_EX (temp,
                     CORBA::Any,
@@ -157,7 +158,9 @@ TAO_ClientRequestInfo::received_exception ()
     invocation_->caught_exception ();
 
   if (caught_exception != nullptr)
+  {
     *temp <<= *(caught_exception);
+  }
 
   return caught_exception_var._retn ();
 }
@@ -186,14 +189,14 @@ TAO_ClientRequestInfo::get_effective_component (IOP::ComponentId id)
 
   TAO_Tagged_Components &ecs = stub->profile_in_use ()->tagged_components ();
 
-  IOP::MultipleComponentProfile &components = ecs.components ();
+  IOP::MultipleComponentProfile const &components = ecs.components ();
 
   CORBA::ULong const len = components.length ();
-  for (CORBA::ULong i = 0; i < len; ++i)
+  for (CORBA::ULong i {}; i < len; ++i)
     {
       if (components[i].tag == id)
         {
-          IOP::TaggedComponent *tagged_component = nullptr;
+          IOP::TaggedComponent *tagged_component {};
 
           // Only allocate a sequence if we have a tagged component
           // that matches the given IOP::ComponentId.
@@ -224,17 +227,17 @@ TAO_ClientRequestInfo::get_effective_components (IOP::ComponentId id)
 {
   this->check_validity ();
 
-  TAO_Stub *stub = this->invocation_->target ()->_stubobj ();
+  TAO_Stub * const stub = this->invocation_->target ()->_stubobj ();
 
   TAO_Tagged_Components &ecs = stub->profile_in_use ()->tagged_components ();
 
-  IOP::MultipleComponentProfile &components = ecs.components ();
+  IOP::MultipleComponentProfile const &components = ecs.components ();
 
-  IOP::TaggedComponentSeq *tagged_components = nullptr;
+  IOP::TaggedComponentSeq *tagged_components {};
   IOP::TaggedComponentSeq_var safe_tagged_components;
 
-  const CORBA::ULong len = components.length ();
-  for (CORBA::ULong i = 0; i < len; ++i)
+  CORBA::ULong const len = components.length ();
+  for (CORBA::ULong i {}; i < len; ++i)
     {
       if (components[i].tag == id)
         {
@@ -253,7 +256,7 @@ TAO_ClientRequestInfo::get_effective_components (IOP::ComponentId id)
               safe_tagged_components = tagged_components;
             }
 
-          const CORBA::ULong old_len = safe_tagged_components->length ();
+          CORBA::ULong const old_len = safe_tagged_components->length ();
           safe_tagged_components->length (old_len + 1);
 
           safe_tagged_components[old_len] = components[i];  // Deep copy
@@ -293,7 +296,7 @@ TAO_ClientRequestInfo::get_request_policy (CORBA::PolicyType type)
 
 void
 TAO_ClientRequestInfo::add_request_service_context (
-    const IOP::ServiceContext & service_context,
+    IOP::ServiceContext const &service_context,
     CORBA::Boolean replace)
 {
   this->check_validity ();
@@ -335,7 +338,7 @@ TAO_ClientRequestInfo::request_id ()
   // dropping the lower 8 bits of the this Invocation object's 64 bit
   // address (i.e. 256 bytes) is not a problem.
 
-  CORBA::ULong id = 0;
+  CORBA::ULong id {};
 
   // Note that we reinterpret_cast to an "unsigned long" instead of
   // CORBA::ULong since we need to first cast to an integer large
@@ -344,9 +347,11 @@ TAO_ClientRequestInfo::request_id ()
 
   // 32 bit address
   if (sizeof (this) == 4)
-    id =
-      static_cast<CORBA::ULong> (
-        reinterpret_cast<ptrdiff_t> (this->invocation_));
+    {
+      id =
+        static_cast<CORBA::ULong> (
+          reinterpret_cast<ptrdiff_t> (this->invocation_));
+    }
 
   // 64 bit address -- bits 8 through 39  (see notes above!)
   // In this case, we make sure this object is large enough to safely
@@ -354,15 +359,19 @@ TAO_ClientRequestInfo::request_id ()
   // buffer that makes this object is configurable.
   else if (sizeof (this) == 8
            && sizeof (*(this->invocation_)) > 256 /* 2 << 8 */)
-    id =
-      (static_cast<CORBA::ULong> (
-         reinterpret_cast<ptrdiff_t> (this->invocation_)) >> 8) & 0xFFFFFFFFu;
+    {
+      id =
+        (static_cast<CORBA::ULong> (
+           reinterpret_cast<ptrdiff_t> (this->invocation_)) >> 8) & 0xFFFFFFFFu;
+    }
 
   // 64 bit address -- lower 32 bits
   else if (sizeof (this) == 8)
-    id =
-      static_cast<CORBA::ULong> (
-        reinterpret_cast<ptrdiff_t> (this->invocation_)) & 0xFFFFFFFFu;
+    {
+      id =
+        static_cast<CORBA::ULong> (
+          reinterpret_cast<ptrdiff_t> (this->invocation_)) & 0xFFFFFFFFu;
+    }
 
   // @@ The following request ID generator prevents the
   //    PortableInterceptor::ClientRequestInterceptor::send_request()
@@ -381,10 +390,12 @@ TAO_ClientRequestInfo::request_id ()
   else
     {
       if (TAO_debug_level > 0)
-        TAOLIB_ERROR ((LM_ERROR,
+        {
+          TAOLIB_ERROR ((LM_ERROR,
                     "(%P|%t) ClientRequestInfo::request_id() failed\n"
                     "(%P|%t) since its request ID generator is not\n"
                     "(%P|%t) supported on this platform.\n"));
+        }
 
       throw ::CORBA::INTERNAL ();
     }
@@ -411,8 +422,10 @@ TAO_ClientRequestInfo::arguments ()
 
   Dynamic::ParameterList_var safe_parameter_list = parameter_list;
 
-  if (this->parameter_list (*parameter_list) == false)
+  if (!this->parameter_list (*parameter_list))
+  {
     throw ::CORBA::MARSHAL ();
+  }
 
   return safe_parameter_list._retn ();
 }
@@ -435,7 +448,7 @@ TAO_ClientRequestInfo::parameter_list (Dynamic::ParameterList &param_list)
           (this->invocation_->invoke_status () == TAO::TAO_INVOKE_START &&
            argument->mode () != CORBA::PARAM_OUT))
         {
-          argument->interceptor_value (&p.argument);
+          argument->interceptor_value (std::addressof (p.argument));
         }
     }
 
@@ -452,8 +465,10 @@ TAO_ClientRequestInfo::exceptions ()
 
   Dynamic::ExceptionList_var safe_exception_list = exception_list;
 
-  if (this->exception_list (*exception_list) == false)
+  if (!this->exception_list (*exception_list))
+  {
     throw ::CORBA::MARSHAL ();
+  }
 
   return safe_exception_list._retn ();
 }
@@ -465,7 +480,7 @@ TAO_ClientRequestInfo::exception_list (Dynamic::ExceptionList &exception_list)
     {
       exception_list.length (this->invocation_->operation_details ().ex_count ());
 
-      for (CORBA::ULong i = 0;
+      for (CORBA::ULong i {};
            i != this->invocation_->operation_details ().ex_count ();
            ++i)
         {
@@ -502,14 +517,16 @@ TAO_ClientRequestInfo::result ()
   this->check_validity ();
 
   // Generate the result on demand.
-  static constexpr CORBA::Boolean tk_void_any = false;
+  static constexpr CORBA::Boolean tk_void_any {};
   CORBA::Any *result_any =
     TAO_RequestInfo_Util::make_any (tk_void_any);
 
   CORBA::Any_var safe_result_any = result_any;
 
-  if (this->result (result_any) == false)
+  if (!this->result (result_any))
+  {
     throw ::CORBA::MARSHAL ();
+  }
 
   return safe_result_any._retn ();
 }
@@ -609,7 +626,9 @@ void
 TAO_ClientRequestInfo::check_validity ()
 {
   if (this->invocation_ == nullptr)
+  {
     throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
+  }
 }
 
 void

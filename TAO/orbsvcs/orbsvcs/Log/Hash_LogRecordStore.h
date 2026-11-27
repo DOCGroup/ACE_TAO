@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   Hash_LogRecordStore.h
  *
@@ -8,7 +5,6 @@
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  *  @author David A. Hanvey <d.hanvey@qub.ac.uk>
  */
-//=============================================================================
 
 #ifndef TAO_HASH_LOG_RECORD_STORE_H
 #define TAO_HASH_LOG_RECORD_STORE_H
@@ -60,14 +56,12 @@ class TAO_Log_Serv_Export TAO_Hash_LogRecordStore
   : public TAO_LogRecordStore
 {
 public:
-  /// Constructor.
   TAO_Hash_LogRecordStore (TAO_LogMgr_i * logmgr,
                            DsLogAdmin::LogId id,
                            DsLogAdmin::LogFullActionType log_full_action,
                            CORBA::ULongLong max_size,
                            DsLogAdmin::CapacityAlarmThresholdList const * thresholds);
 
-  /// Destructor.
   ~TAO_Hash_LogRecordStore () override;
 
   /// Initialization.
@@ -76,9 +70,8 @@ public:
   /// Close the record store.
   int close () override;
 
-
-  // = Log Parameters
-
+  /// @name Log parameters
+  /// @{
   /// Gets the administrative state of the log
   DsLogAdmin::AdministrativeState get_administrative_state () const override;
 
@@ -132,27 +125,29 @@ public:
 
   /// Set the weekly scheduling parameters.
   void set_week_mask (DsLogAdmin::WeekMask const & masks) override;
+  /// @}
 
-  // = LogRecordStore status methods
-
+  /// @name LogRecordStore status methods
+  /// @{
   /// Gets the current size of the log data.
   CORBA::ULongLong get_current_size () override;
 
   /// Get the number of records in the log right now.
   CORBA::ULongLong get_n_records () override;
+  /// @}
 
-
-  // = LogRecordStore gauge
-
+  /// @name LogRecordStore gauge
+  /// @{
   /// Gets the current value of the "gauge" that measures the total
   /// size of the records written to the log.
   CORBA::ULongLong get_gauge () override;
 
   /// Resets the "gauge" to 0
   void reset_gauge () override;
+  /// @}
 
-  // = Record logging, retrieval, update and removal methods.
-
+  /// @name Record logging, retrieval, update and removal methods
+  /// @{
   /// Insert rec into storage. Returns 0 on success -1 on failure and 1
   /// if the log is full.
   int log (DsLogAdmin::LogRecord const & rec) override;
@@ -170,7 +165,7 @@ public:
                                       char const * c,
                                       DsLogAdmin::NVList const & attr_list) override;
 
-  /// Get the attributes of the record with id <id>. Raises
+  /// Get the attributes of the record with ID @a id. Raises
   /// DsLogAdmin::InvalidRecordId
   DsLogAdmin::NVList *get_record_attribute (DsLogAdmin::RecordId id) override;
 
@@ -179,30 +174,31 @@ public:
   int flush () override;
 
   /// Returns all records in the log that match the given constraint
-  /// <c>.
+  /// @a c.
   DsLogAdmin::RecordList *query (char const * grammar,
                                  char const * c,
                                  DsLogAdmin::Iterator_out i) override;
 
-  /// Retrieve <how_many> records from time <from_time> using iterator
-  /// <i>.
+  /// Retrieve @a how_many records from time @a from_time using iterator
+  /// @a i.
   DsLogAdmin::RecordList *retrieve (DsLogAdmin::TimeT from_time,
                                     CORBA::Long how_many,
                                     DsLogAdmin::Iterator_out i) override;
 
-  /// Returns the number of records matching constraint <c>.
+  /// Returns the number of records matching constraint @a c.
   CORBA::ULong match (char const * grammar, char const * c) override;
 
-  /// Delete records matching constraint <c>.
+  /// Delete records matching constraint @a c.
   CORBA::ULong delete_records (char const * grammar, char const * c) override;
 
-  /// Delete records matching ids in <ids>
+  /// Delete records matching IDs in @a ids.
   CORBA::ULong delete_records_by_id (DsLogAdmin::RecordIdList const & ids) override;
 
   CORBA::ULong remove_old_records () override;
 
   /// Read-Write Lock
   ACE_SYNCH_RW_MUTEX &lock () override;
+  /// @}
 
 private:
   TAO_Hash_LogRecordStore (TAO_Hash_LogRecordStore const &) = delete;
@@ -230,23 +226,22 @@ protected:
   /// Update into storage. Returns 0 on success -1 on failure.
   int update_i (DsLogAdmin::LogRecord &rec);
 
-  /// Remove the record with id <id> from the LogRecordStore.
+  /// Remove the record with ID @a id from the LogRecordStore.
   /// Returns 0 on success, -1 on failure.
   int remove_i (DsLogAdmin::RecordId id);
 
   /// Remove the record from the LogRecordStore.
   void remove_i (LOG_RECORD_STORE_ITER iter);
 
-  DsLogAdmin::RecordList* query_i (const char *constraint,
+  DsLogAdmin::RecordList *query_i (char const *constraint,
                                    DsLogAdmin::Iterator_out &iter_out,
                                    CORBA::ULong how_many);
 
   /// Throws DsLogAdmin::InvalidGrammar if we don't support this grammar.
-  void check_grammar (const char* grammar);
-
+  void check_grammar (char const *grammar);
 
   /// The size of a LogRecord
-  size_t log_record_size(const DsLogAdmin::LogRecord &rec);
+  size_t log_record_size (DsLogAdmin::LogRecord const &rec);
 
   TAO_LogMgr_i*   logmgr_i_;
 
@@ -277,7 +272,6 @@ protected:
   /// The map of RecordId's to LogRecord's
   LOG_RECORD_STORE      rec_map_;
 
-
   /// The administrative state of the log
   DsLogAdmin::AdministrativeState       admin_state_;
 
@@ -301,7 +295,6 @@ protected:
 
   /// The days of the week that the log should be operational
   DsLogAdmin::WeekMask      weekmask_;
-
 
   ACE_Reactor*                          reactor_;
 

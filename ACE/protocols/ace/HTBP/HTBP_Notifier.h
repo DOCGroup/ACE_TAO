@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   HTBP_Notifier.h
  *
  *  @author Phil Mesnier, Priyanka Gontla
  */
-//=============================================================================
 
 #ifndef ACE_HTBP_NOTIFIER_H
 #define ACE_HTBP_NOTIFIER_H
@@ -33,12 +29,12 @@ namespace ACE
     {
     public:
       Notifier (Channel *ch);
-      int handle_input(ACE_HANDLE );
-      int handle_output(ACE_HANDLE );
+      int handle_input (ACE_HANDLE) override;
+      int handle_output (ACE_HANDLE) override;
 
       void unregister ();
 
-      ACE_HANDLE get_handle () const;
+      ACE_HANDLE get_handle () const override;
 
     private:
       Channel *channel_;

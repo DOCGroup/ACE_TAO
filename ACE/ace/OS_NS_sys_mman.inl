@@ -1,9 +1,10 @@
-// -*- C++ -*-
 #include "ace/OS_NS_fcntl.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_macros.h"
 #include "ace/OS_NS_errno.h"
+
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -37,7 +38,7 @@ ACE_OS::mmap (void *addr,
               ACE_OFF_T off,
               ACE_HANDLE *file_mapping,
               LPSECURITY_ATTRIBUTES sa,
-              const ACE_TCHAR *file_mapping_name)
+              ACE_TCHAR const *file_mapping_name)
 {
   ACE_OS_TRACE ("ACE_OS::mmap");
 #if !defined (ACE_WIN32)
@@ -46,19 +47,23 @@ ACE_OS::mmap (void *addr,
 
 #if defined (ACE_WIN32)
   if (!ACE_BIT_ENABLED (flags, MAP_FIXED))
-    addr = 0;
+    {
+      addr = 0;
+    }
   else if (addr == 0)   // can not map to address 0
-  {
-    errno = EINVAL;
-    return MAP_FAILED;
-  }
+    {
+      errno = EINVAL;
+      return MAP_FAILED;
+    }
 
   int nt_flags = 0;
   ACE_HANDLE local_handle = ACE_INVALID_HANDLE;
 
   // Ensure that file_mapping is non-zero.
   if (file_mapping == 0)
-    file_mapping = &local_handle;
+    {
+      file_mapping = &local_handle;
+    }
 
   if (ACE_BIT_ENABLED (flags, MAP_PRIVATE))
     {
@@ -68,9 +73,13 @@ ACE_OS::mmap (void *addr,
   else if (ACE_BIT_ENABLED (flags, MAP_SHARED))
     {
       if (ACE_BIT_ENABLED (prot, PAGE_READONLY))
-        nt_flags = FILE_MAP_READ;
+        {
+          nt_flags = FILE_MAP_READ;
+        }
       if (ACE_BIT_ENABLED (prot, PAGE_READWRITE))
-        nt_flags = FILE_MAP_WRITE;
+        {
+          nt_flags = FILE_MAP_WRITE;
+        }
     }
 
   // Only create a new handle if we didn't have a valid one passed in.
@@ -84,10 +93,10 @@ ACE_OS::mmap (void *addr,
                                                      &sd_buffer);
 
 #  ifdef ACE_WIN64
-      const DWORD len_low = static_cast<DWORD>(len),
+      DWORD const len_low = static_cast<DWORD>(len),
         len_high = static_cast<DWORD>(len >> 32);
 #  else
-      const DWORD len_low = static_cast<DWORD>(len), len_high = 0;
+      DWORD const len_low = static_cast<DWORD>(len), len_high = 0;
 #  endif
 
       *file_mapping = ACE_TEXT_CreateFileMapping (file_handle,
@@ -99,7 +108,9 @@ ACE_OS::mmap (void *addr,
     }
 
   if (*file_mapping == 0)
-    ACE_FAIL_RETURN (MAP_FAILED);
+    {
+      ACE_FAIL_RETURN (MAP_FAILED);
+    }
 
 #  if defined (ACE_OS_EXTRA_MMAP_FLAGS)
   nt_flags |= ACE_OS_EXTRA_MMAP_FLAGS;
@@ -116,13 +127,19 @@ ACE_OS::mmap (void *addr,
                                           addr);
 
   // Only close this down if we used the temporary.
-  if (file_mapping == &local_handle)
-    ::CloseHandle (*file_mapping);
+  if (file_mapping == std::addressof (local_handle))
+    {
+      ::CloseHandle (*file_mapping);
+    }
 
   if (addr_mapping == 0)
-    ACE_FAIL_RETURN (MAP_FAILED);
+    {
+      ACE_FAIL_RETURN (MAP_FAILED);
+    }
   else
-    return addr_mapping;
+    {
+      return addr_mapping;
+    }
 #elif !defined (ACE_LACKS_MMAP)
   ACE_UNUSED_ARG (sa);
 
@@ -209,7 +226,7 @@ ACE_OS::munmap (void *addr, size_t len)
 }
 
 ACE_INLINE ACE_HANDLE
-ACE_OS::shm_open (const ACE_TCHAR *filename,
+ACE_OS::shm_open (ACE_TCHAR const *filename,
                   int mode,
                   mode_t perms,
                   LPSECURITY_ATTRIBUTES sa)
@@ -224,7 +241,7 @@ ACE_OS::shm_open (const ACE_TCHAR *filename,
   ACE_OS::sprintf (buf,
                    ACE_TEXT ("%s"),
                    filename);
-  for (size_t i = 1; i < MAXPATHLEN + 1; i++)
+  for (size_t i = 1; i < MAXPATHLEN + 1; ++i)
     {
       if (buf[i] == '/')
         {
@@ -241,7 +258,7 @@ ACE_OS::shm_open (const ACE_TCHAR *filename,
 }
 
 ACE_INLINE int
-ACE_OS::shm_unlink (const ACE_TCHAR *path)
+ACE_OS::shm_unlink (ACE_TCHAR const *path)
 {
   ACE_OS_TRACE ("ACE_OS::shm_unlink");
 #if defined (ACE_HAS_SHM_OPEN)
@@ -252,7 +269,7 @@ ACE_OS::shm_unlink (const ACE_TCHAR *path)
   ACE_OS::sprintf (buf,
                    ACE_TEXT ("%s"),
                    path);
-  for (size_t i = 1; i < MAXPATHLEN + 1; i++)
+  for (size_t i = 1; i < MAXPATHLEN + 1; ++i)
     {
       if (buf[i] == '/')
         {

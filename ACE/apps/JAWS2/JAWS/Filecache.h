@@ -1,4 +1,3 @@
-/* -*- c++ -*- */
 #ifndef JAWS_FILECACHE_H
 #define JAWS_FILECACHE_H
 
@@ -12,14 +11,14 @@ class JAWS_Export JAWS_Referenced_Filecache_Factory
   : public JAWS_Referenced_Cache_Object_Factory
 {
 public:
-  virtual void destroy (JAWS_Cache_Object *);
+  void destroy (JAWS_Cache_Object *) override;
 };
 
 class JAWS_Export JAWS_Counted_Filecache_Factory
   : public JAWS_Counted_Cache_Object_Factory
 {
 public:
-  virtual void destroy (JAWS_Cache_Object *);
+  void destroy (JAWS_Cache_Object *) override;
 };
 
 using JAWS_Referenced_Filecache_Manager =
@@ -32,19 +31,23 @@ using JAWS_Counted_Filecache_Manager =
 
 using JAWS_Filecache_Manager = JAWS_Counted_Filecache_Manager;
 
-using JAWS_Filecache_Proxy = JAWS_Cache_Proxy<const char *, JAWS_FILE, JAWS_Filecache_Manager>;
+using JAWS_Filecache_Proxy = JAWS_Cache_Proxy<char const *, JAWS_FILE, JAWS_Filecache_Manager>;
 
 class JAWS_Export JAWS_Cached_FILE : private JAWS_Filecache_Proxy
 {
 public:
-  JAWS_Cached_FILE (const char *const &filename,
-                    JAWS_Filecache_Proxy::Cache_Manager *cm = 0);
-  JAWS_Cached_FILE (const char *const &filename,
+  explicit JAWS_Cached_FILE (char const *const &filename,
+                    JAWS_Filecache_Proxy::Cache_Manager *cm = nullptr);
+  JAWS_Cached_FILE (char const *const &filename,
                     JAWS_FILE *&file,
                     size_t size,
-                    JAWS_Filecache_Proxy::Cache_Manager *cm = 0);
+                    JAWS_Filecache_Proxy::Cache_Manager *cm = nullptr);
 
   ~JAWS_Cached_FILE ();
+  JAWS_Cached_FILE (JAWS_Cached_FILE const &) = delete;
+  JAWS_Cached_FILE (JAWS_Cached_FILE &&) = delete;
+  JAWS_Cached_FILE &operator= (JAWS_Cached_FILE const &) = delete;
+  JAWS_Cached_FILE &operator= (JAWS_Cached_FILE &&) = delete;
 
   ACE_FILE_IO * file ();
   ACE_Mem_Map * mmap ();
@@ -52,6 +55,5 @@ public:
 private:
   ACE_FILE_IO file_;
 };
-
 
 #endif /* JAWS_FILECACHE_H */

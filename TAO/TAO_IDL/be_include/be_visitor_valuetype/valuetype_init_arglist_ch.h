@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    valuetype_init_arglist_ch.h
  *
@@ -8,7 +6,6 @@
  *
  *  @author Boris Kolpackov <bosk@ipmce.ru>
  */
-//=============================================================================
 
 #ifndef _BE_VISITOR_VALUETYPE_INIT_ARGLIST_CH_H_
 #define _BE_VISITOR_VALUETYPE_INIT_ARGLIST_CH_H_

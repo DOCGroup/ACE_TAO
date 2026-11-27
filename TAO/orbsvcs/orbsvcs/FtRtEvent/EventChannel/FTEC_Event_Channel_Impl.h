@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   FTEC_Event_Channel_Impl.h
  *
  *  @author Huang-Ming Huang <hh1@cse.wustl.edu>
  */
-//=============================================================================
 #ifndef TAO_FTEC_EVENT_CHANNEL_H
 #define TAO_FTEC_EVENT_CHANNEL_H
 
@@ -32,9 +28,9 @@ class TAO_FTEC_Event_Channel_Impl : public TAO_EC_Event_Channel_Base
                              , public TAO_FTEC_Group_Manager
 {
 public:
-  TAO_FTEC_Event_Channel_Impl(const TAO_EC_Event_Channel_Attributes& attributes);
+  explicit TAO_FTEC_Event_Channel_Impl(TAO_EC_Event_Channel_Attributes const &attributes);
 
-  ~TAO_FTEC_Event_Channel_Impl() override;
+  ~TAO_FTEC_Event_Channel_Impl() override = default;
 
   TAO_FTEC_Event_Channel_Impl(TAO_FTEC_Event_Channel_Impl const&) = delete;
   TAO_FTEC_Event_Channel_Impl(TAO_FTEC_Event_Channel_Impl&&) = delete;
@@ -45,57 +41,49 @@ public:
   /// After this call the EC can be used.
   virtual void activate_object (
     CORBA::ORB_var orb,
-    const FtRtecEventComm::ObjectId& supplier_admin_oid,
-    const FtRtecEventComm::ObjectId& consumer_admin_oid);
+    FtRtecEventComm::ObjectId const& supplier_admin_oid,
+    FtRtecEventComm::ObjectId const& consumer_admin_oid);
 
-
-  // = The RtecEventChannelAdmin::EventChannel methods...
-  virtual RtecEventChannelAdmin::ConsumerAdmin_ptr
+  /// @name RtecEventChannelAdmin::EventChannel methods
+  /// @{
+  RtecEventChannelAdmin::ConsumerAdmin_ptr
       for_consumers () override;
 
-
-  virtual RtecEventChannelAdmin::SupplierAdmin_ptr
+  RtecEventChannelAdmin::SupplierAdmin_ptr
       for_suppliers () override;
 
-  void get_state (FtRtecEventChannelAdmin::EventChannelState & s);
+  void get_state (FtRtecEventChannelAdmin::EventChannelState &s) override;
+  /// @}
 
-  void set_state (const FTRT::State & stat);
+  void set_state (FTRT::State const & stat);
 
-  void set_update (const FTRT::State & s);
+  void set_update (FTRT::State const & s);
 
   /// EventChannelFacade Interface
 
    virtual ::FtRtecEventChannelAdmin::ObjectId * connect_push_consumer (
         RtecEventComm::PushConsumer_ptr push_consumer,
-        const RtecEventChannelAdmin::ConsumerQOS & qos
-      );
-
+        RtecEventChannelAdmin::ConsumerQOS const & qos);
 
     virtual ::FtRtecEventChannelAdmin::ObjectId * connect_push_supplier (
         RtecEventComm::PushSupplier_ptr push_supplier,
-        const RtecEventChannelAdmin::SupplierQOS & qos
-      );
+        RtecEventChannelAdmin::SupplierQOS const & qos);
 
     virtual void disconnect_push_supplier (
-        const FtRtecEventChannelAdmin::ObjectId & oid
-      );
+        FtRtecEventChannelAdmin::ObjectId const & oid);
 
     virtual void disconnect_push_consumer (
-        const FtRtecEventChannelAdmin::ObjectId & oid
-      );
+        FtRtecEventChannelAdmin::ObjectId const & oid);
 
     virtual void suspend_push_supplier (
-        const FtRtecEventChannelAdmin::ObjectId & oid
-      );
+        FtRtecEventChannelAdmin::ObjectId const & oid);
 
     virtual void resume_push_supplier (
-        const FtRtecEventChannelAdmin::ObjectId & oid
-      );
+        FtRtecEventChannelAdmin::ObjectId const & oid);
 
     virtual void push (
-        const FtRtecEventChannelAdmin::ObjectId & oid,
-        const RtecEventComm::EventSet & data
-      );
+        FtRtecEventChannelAdmin::ObjectId const & oid,
+        RtecEventComm::EventSet const & data);
 
   ////////////////////////////////////////////
 
@@ -107,9 +95,8 @@ public:
   /// the activation...
   TAO_FTEC_SupplierAdmin* supplier_admin () const;
 
-  TAO_FTEC_ProxyPushSupplier* find_proxy_push_supplier(const FtRtecEventChannelAdmin::ObjectId& id);
-  TAO_FTEC_ProxyPushConsumer* find_proxy_push_consumer(const FtRtecEventChannelAdmin::ObjectId& id);
-
+  TAO_FTEC_ProxyPushSupplier* find_proxy_push_supplier(FtRtecEventChannelAdmin::ObjectId const& id);
+  TAO_FTEC_ProxyPushConsumer* find_proxy_push_consumer(FtRtecEventChannelAdmin::ObjectId const& id);
 
   CORBA::Object_var make_iogr(CORBA::Object_ptr obj);
 

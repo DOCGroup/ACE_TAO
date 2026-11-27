@@ -1,12 +1,8 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
  *  @file    Map_T.h
  *
  *  @author Irfan Pyarali <irfan@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef ACE_MAP_T_H
 #define ACE_MAP_T_H
@@ -46,21 +42,20 @@ public:
  * - Constructor that accepts 0 in the constructor.
  * - Prefix increment.
  * - Assignment.
- * Note that a primitive types such as u_long, int, etc., are
+ * @note Primitive types such as u_long, int, etc., are
  * suitable for this class.
  */
 template <class T>
 class ACE_Incremental_Key_Generator
 {
 public:
-  /// Constructor.
   ACE_Incremental_Key_Generator () = default;
 
   /// Functor method: generates a new key.
   int operator () (T &t);
 
   /// Returns the current value.
-  const T& current_value () const;
+  T const & current_value () const;
 
 protected:
   /// Current value.
@@ -78,14 +73,13 @@ template <class T>
 class ACE_Iterator_Impl
 {
 public:
-  /// Destructor.
   virtual ~ACE_Iterator_Impl () = default;
 
   /// Clone.
   virtual ACE_Iterator_Impl<T> *clone () const = 0;
 
   /// Comparison.
-  virtual int compare (const ACE_Iterator_Impl<T> &rhs) const = 0;
+  virtual int compare (ACE_Iterator_Impl<T> const &rhs) const = 0;
 
   /// Dereference.
   virtual T dereference () const = 0;
@@ -108,14 +102,13 @@ template <class T>
 class ACE_Reverse_Iterator_Impl
 {
 public:
-  /// Destructor.
   virtual ~ACE_Reverse_Iterator_Impl () = default;
 
   /// Clone.
   virtual ACE_Reverse_Iterator_Impl<T> *clone () const = 0;
 
   /// Comparison.
-  virtual int compare (const ACE_Reverse_Iterator_Impl<T> &rhs) const = 0;
+  virtual int compare (ACE_Reverse_Iterator_Impl<T> const &rhs) const = 0;
 
   /// Dereference.
   virtual T dereference () const = 0;
@@ -138,25 +131,21 @@ template <class T>
 class ACE_Iterator
 {
 public:
-  // = Traits.
+  /// Type aliases.
   using value_type = T;
   using implementation = ACE_Iterator_Impl<T>;
 
-  /// Constructor.
   ACE_Iterator (ACE_Iterator_Impl<T> *impl);
 
-  /// Copy constructor.
-  ACE_Iterator (const ACE_Iterator<T> &rhs);
+  ACE_Iterator (ACE_Iterator<T> const &rhs);
 
-  /// Destructor.
   ~ACE_Iterator ();
 
-  /// Assignment operator.
-  ACE_Iterator<T> &operator= (const ACE_Iterator<T> &rhs);
+  ACE_Iterator<T> &operator= (ACE_Iterator<T> const &rhs);
 
   /// Comparison operators.
-  bool operator== (const ACE_Iterator<T> &rhs) const;
-  bool operator!= (const ACE_Iterator<T> &rhs) const;
+  bool operator== (ACE_Iterator<T> const &rhs) const;
+  bool operator!= (ACE_Iterator<T> const &rhs) const;
 
   /// Dereference operator.
   T operator *() const;
@@ -192,31 +181,27 @@ template <class T>
 class ACE_Reverse_Iterator
 {
 public:
-  // = Traits.
+  /// Type aliases.
   using value_type = T;
   using implementation = ACE_Reverse_Iterator_Impl<T>;
 
-  /// Constructor.
   ACE_Reverse_Iterator (ACE_Reverse_Iterator_Impl<T> *impl);
 
-  /// Copy constructor.
-  ACE_Reverse_Iterator (const ACE_Reverse_Iterator<T> &rhs);
+  ACE_Reverse_Iterator (ACE_Reverse_Iterator<T> const &rhs);
 
-  /// Destructor.
   ~ACE_Reverse_Iterator ();
 
-  /// Assignment operator.
-  ACE_Reverse_Iterator<T> &operator= (const ACE_Reverse_Iterator<T> &rhs);
+  ACE_Reverse_Iterator<T> &operator= (ACE_Reverse_Iterator<T> const &rhs);
 
   /**
    * @name Comparison Operators
    *
    * The usual equality operators.
    */
-  //@{
-  bool operator== (const ACE_Reverse_Iterator<T> &rhs) const;
-  bool operator!= (const ACE_Reverse_Iterator<T> &rhs) const;
-  //@}
+  /// @{
+  bool operator== (ACE_Reverse_Iterator<T> const &rhs) const;
+  bool operator!= (ACE_Reverse_Iterator<T> const &rhs) const;
+  /// @}
 
   /// Dereference operator.
   T operator *() const;
@@ -252,10 +237,15 @@ template <class KEY, class VALUE>
 class ACE_Map
 {
 public:
-  // = Traits.
+  ACE_Map (ACE_Map const &) = delete;
+  ACE_Map (ACE_Map &&) = delete;
+  ACE_Map &operator= (ACE_Map const &) = delete;
+  ACE_Map &operator= (ACE_Map &&) = delete;
+
+  /// Type aliases.
   using key_type = KEY;
   using mapped_type = VALUE;
-  using value_type = ACE_Reference_Pair<const KEY, VALUE>;
+  using value_type = ACE_Reference_Pair<KEY const, VALUE>;
   using iterator = ACE_Iterator<value_type>;
   using reverse_iterator = ACE_Reverse_Iterator<value_type>;
   using iterator_implementation = ACE_Iterator_Impl<value_type>;
@@ -268,7 +258,7 @@ public:
   virtual int open (size_t length = ACE_DEFAULT_MAP_SIZE,
                     ACE_Allocator *alloc = nullptr) = 0;
 
-  /// Close down a <Map> and release dynamically allocated resources.
+  /// Close down a @c Map and release dynamically allocated resources.
   virtual int close () = 0;
 
   /**
@@ -277,16 +267,16 @@ public:
    * successful addition.  This function fails for maps that do not
    * allow user specified keys. @a key is an "in" parameter.
    */
-  virtual int bind (const KEY &key,
-                    const VALUE &value) = 0;
+  virtual int bind (KEY const &key,
+                    VALUE const &value) = 0;
 
   /**
    * Add @a key / @a value pair to the map.  @a key is an "inout" parameter
    * and maybe modified/extended by the map to add additional
-   * information.  To recover original key, call the <recover_key>
+   * information.  To recover original key, call the @c recover_key
    * method.
    */
-  virtual int bind_modify_key (const VALUE &value,
+  virtual int bind_modify_key (VALUE const &value,
                                KEY &key) = 0;
 
   /**
@@ -308,7 +298,7 @@ public:
    * scheme by using user specified keys with keys produced by the key
    * generator.
    */
-  virtual int bind_create_key (const VALUE &value,
+  virtual int bind_create_key (VALUE const &value,
                                KEY &key) = 0;
 
   /**
@@ -320,11 +310,11 @@ public:
    * using user specified keys with keys produced by the key
    * generator.
    */
-  virtual int bind_create_key (const VALUE &value) = 0;
+  virtual int bind_create_key (VALUE const &value) = 0;
 
   /// Recovers the original key potentially modified by the map during
-  /// <bind_modify_key>.
-  virtual int recover_key (const KEY &modified_key,
+  /// @c bind_modify_key.
+  virtual int recover_key (KEY const &modified_key,
                            KEY &original_key) = 0;
 
   /**
@@ -333,8 +323,8 @@ public:
    * However, for maps that allow user specified keys, if the key is
    * not in the map, a new @a key / @a value association is created.
    */
-  virtual int rebind (const KEY &key,
-                      const VALUE &value) = 0;
+  virtual int rebind (KEY const &key,
+                      VALUE const &value) = 0;
 
   /**
    * Reassociate @a key with @a value, storing the old value into the
@@ -343,8 +333,8 @@ public:
    * However, for maps that allow user specified keys, if the key is
    * not in the map, a new @a key / @a value association is created.
    */
-  virtual int rebind (const KEY &key,
-                      const VALUE &value,
+  virtual int rebind (KEY const &key,
+                      VALUE const &value,
                       VALUE &old_value) = 0;
 
   /**
@@ -355,8 +345,8 @@ public:
    * specified keys, if the key is not in the map, a new @a key / @a value
    * association is created.
    */
-  virtual int rebind (const KEY &key,
-                      const VALUE &value,
+  virtual int rebind (KEY const &key,
+                      VALUE const &value,
                       KEY &old_key,
                       VALUE &old_value) = 0;
 
@@ -368,22 +358,22 @@ public:
    * attempt is made to bind an existing entry.  This function fails
    * for maps that do not allow user specified keys.
    */
-  virtual int trybind (const KEY &key,
+  virtual int trybind (KEY const &key,
                        VALUE &value) = 0;
 
   /// Locate @a value associated with @a key.
-  virtual int find (const KEY &key,
+  virtual int find (KEY const &key,
                     VALUE &value) = 0;
 
   /// Is @a key in the map?
-  virtual int find (const KEY &key) = 0;
+  virtual int find (KEY const &key) = 0;
 
   /// Remove @a key from the map.
-  virtual int unbind (const KEY &key) = 0;
+  virtual int unbind (KEY const &key) = 0;
 
   /// Remove @a key from the map, and return the @a value associated with
   /// @a key.
-  virtual int unbind (const KEY &key,
+  virtual int unbind (KEY const &key,
                       VALUE &value) = 0;
 
   /// Return the current size of the map.
@@ -395,7 +385,8 @@ public:
   /// Dump the state of an object.
   virtual void dump () const = 0;
 
-  // = STL styled iterator factory functions.
+  /// @name Iterator factories
+  /// @{
 
   /// Return forward iterator.
   iterator begin ();
@@ -404,23 +395,18 @@ public:
   /// Return reverse iterator.
   reverse_iterator rbegin ();
   reverse_iterator rend ();
+  /// @}
 
 protected:
-  // = Protected no-op constructor.
   ACE_Map () = default;
 
   /// Return forward iterator.
-  virtual ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *begin_impl () = 0;
-  virtual ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *end_impl () = 0;
+  virtual ACE_Iterator_Impl<ACE_Reference_Pair<KEY const, VALUE>> *begin_impl () = 0;
+  virtual ACE_Iterator_Impl<ACE_Reference_Pair<KEY const, VALUE>> *end_impl () = 0;
 
   /// Return reverse iterator.
-  virtual ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *rbegin_impl () = 0;
-  virtual ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *rend_impl () = 0;
-
-private:
-  // = Disallow these operations.
-  void operator= (const ACE_Map<KEY, VALUE> &) = delete;
-  ACE_Map (const ACE_Map<KEY, VALUE> &) = delete;
+  virtual ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<KEY const, VALUE>> *rbegin_impl () = 0;
+  virtual ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<KEY const, VALUE>> *rend_impl () = 0;
 };
 
 /**
@@ -428,35 +414,33 @@ private:
  *
  * @brief Defines a iterator implementation for the Map_Impl class.
  *
- * Implementation to be provided by <IMPLEMENTATION>.
+ * Implementation to be provided by @c IMPLEMENTATION.
  */
 template <class T, class IMPLEMENTATION, class ENTRY>
 class ACE_Map_Impl_Iterator_Adapter : public ACE_Iterator_Impl<T>
 {
 public:
-  // = Traits.
+  /// Type aliases.
   using implementation = IMPLEMENTATION;
 
-  /// Constructor.
-  ACE_Map_Impl_Iterator_Adapter (const IMPLEMENTATION &impl);
+  ACE_Map_Impl_Iterator_Adapter (IMPLEMENTATION const &impl);
 
-  /// Destructor.
   virtual ~ACE_Map_Impl_Iterator_Adapter () = default;
 
   /// Clone.
-  virtual ACE_Iterator_Impl<T> *clone () const;
+  ACE_Iterator_Impl<T> *clone () const override;
 
   /// Comparison.
-  virtual int compare (const ACE_Iterator_Impl<T> &rhs) const;
+  int compare (ACE_Iterator_Impl<T> const &rhs) const override;
 
   /// Dereference.
-  virtual T dereference () const;
+  T dereference () const override;
 
   /// Advance.
-  virtual void plus_plus ();
+  void plus_plus () override;
 
   /// Reverse.
-  virtual void minus_minus ();
+  void minus_minus () override;
 
   /// Accessor to implementation object.
   IMPLEMENTATION &impl ();
@@ -477,29 +461,27 @@ template <class T, class IMPLEMENTATION, class ENTRY>
 class ACE_Map_Impl_Reverse_Iterator_Adapter : public ACE_Reverse_Iterator_Impl<T>
 {
 public:
-  // = Traits.
+  /// Type aliases.
   using implementation = IMPLEMENTATION;
 
-  /// Constructor.
-  ACE_Map_Impl_Reverse_Iterator_Adapter (const IMPLEMENTATION &impl);
+  ACE_Map_Impl_Reverse_Iterator_Adapter (IMPLEMENTATION const &impl);
 
-  /// Destructor.
   virtual ~ACE_Map_Impl_Reverse_Iterator_Adapter ();
 
   /// Clone.
-  virtual ACE_Reverse_Iterator_Impl<T> *clone () const;
+  ACE_Reverse_Iterator_Impl<T> *clone () const override;
 
   /// Comparison.
-  virtual int compare (const ACE_Reverse_Iterator_Impl<T> &rhs) const;
+  int compare (ACE_Reverse_Iterator_Impl<T> const &rhs) const override;
 
   /// Dereference.
-  virtual T dereference () const;
+  T dereference () const override;
 
   /// Advance.
-  virtual void plus_plus ();
+  void plus_plus () override;
 
   /// Reverse.
-  virtual void minus_minus ();
+  void minus_minus () override;
 
   /// Accessor to implementation object.
   IMPLEMENTATION &impl ();
@@ -514,13 +496,18 @@ protected:
  *
  * @brief Defines a map implementation.
  *
- * Implementation to be provided by <IMPLEMENTATION>.
+ * Implementation to be provided by @c IMPLEMENTATION.
  */
 template <class KEY, class VALUE, class IMPLEMENTATION, class ITERATOR, class REVERSE_ITERATOR, class ENTRY>
 class ACE_Map_Impl : public ACE_Map<KEY, VALUE>
 {
 public:
-  // = Traits.
+  ACE_Map_Impl (ACE_Map_Impl const &) = delete;
+  ACE_Map_Impl (ACE_Map_Impl &&) = delete;
+  ACE_Map_Impl &operator= (ACE_Map_Impl const &) = delete;
+  ACE_Map_Impl &operator= (ACE_Map_Impl &&) = delete;
+
+  /// Type aliases.
   using iterator_impl = ACE_Map_Impl_Iterator_Adapter<typename ACE_Map<KEY, VALUE>::value_type, ITERATOR, ENTRY>;
   using reverse_iterator_impl = ACE_Map_Impl_Reverse_Iterator_Adapter<typename ACE_Map<KEY, VALUE>::value_type, REVERSE_ITERATOR, ENTRY>;
 
@@ -537,12 +524,12 @@ public:
   /// Close down and release dynamically allocated resources.
   virtual ~ACE_Map_Impl ();
 
-  /// Initialize a <Map> with size @a length.
-  virtual int open (size_t length = ACE_DEFAULT_MAP_SIZE,
-                    ACE_Allocator *alloc = nullptr);
+  /// Initialize a @c Map with size @a length.
+  int open (size_t length = ACE_DEFAULT_MAP_SIZE,
+            ACE_Allocator *alloc = nullptr) override;
 
-  /// Close down a <Map> and release dynamically allocated resources.
-  virtual int close ();
+  /// Close down a @c Map and release dynamically allocated resources.
+  int close () override;
 
   /**
    * Add @a key / @a value pair to the map.  If @a key is already in the
@@ -550,17 +537,17 @@ public:
    * successful addition.  This function fails for maps that do not
    * allow user specified keys. @a key is an "in" parameter.
    */
-  virtual int bind (const KEY &key,
-                    const VALUE &value);
+  int bind (KEY const &key,
+            VALUE const &value) override;
 
   /**
    * Add @a key / @a value pair to the map.  @a key is an "inout" parameter
    * and maybe modified/extended by the map to add additional
-   * information.  To recover original key, call the <recover_key>
+   * information.  To recover original key, call the @c recover_key
    * method.
    */
-  virtual int bind_modify_key (const VALUE &value,
-                               KEY &key);
+  int bind_modify_key (VALUE const &value,
+                       KEY &key) override;
 
   /**
    * Produce a key and return it through @a key which is an "out"
@@ -570,7 +557,7 @@ public:
    * production scheme by using user specified keys with keys produced
    * by the key generator.
    */
-  virtual int create_key (KEY &key);
+  int create_key (KEY &key) override;
 
   /**
    * Add @a value to the map, and the corresponding key produced by the
@@ -581,8 +568,8 @@ public:
    * scheme by using user specified keys with keys produced by the key
    * generator.
    */
-  virtual int bind_create_key (const VALUE &value,
-                               KEY &key);
+  int bind_create_key (VALUE const &value,
+                       KEY &key) override;
 
   /**
    * Add @a value to the map.  The user does not care about the
@@ -593,12 +580,12 @@ public:
    * using user specified keys with keys produced by the key
    * generator.
    */
-  virtual int bind_create_key (const VALUE &value);
+  int bind_create_key (VALUE const &value) override;
 
   /// Recovers the original key potentially modified by the map during
-  /// <bind_modify_key>.
-  virtual int recover_key (const KEY &modified_key,
-                           KEY &original_key);
+  /// @c bind_modify_key.
+  int recover_key (KEY const &modified_key,
+                   KEY &original_key) override;
 
   /**
    * Reassociate @a key with @a value. The function fails if @a key is
@@ -606,8 +593,8 @@ public:
    * However, for maps that allow user specified keys, if the key is
    * not in the map, a new @a key / @a value association is created.
    */
-  virtual int rebind (const KEY &key,
-                      const VALUE &value);
+  int rebind (KEY const &key,
+              VALUE const &value) override;
 
   /**
    * Reassociate @a key with @a value, storing the old value into the
@@ -616,9 +603,9 @@ public:
    * However, for maps that allow user specified keys, if the key is
    * not in the map, a new @a key / @a value association is created.
    */
-  virtual int rebind (const KEY &key,
-                      const VALUE &value,
-                      VALUE &old_value);
+  int rebind (KEY const &key,
+              VALUE const &value,
+              VALUE &old_value) override;
 
   /**
    * Reassociate @a key with @a value, storing the old key and value
@@ -628,10 +615,10 @@ public:
    * specified keys, if the key is not in the map, a new @a key / @a value
    * association is created.
    */
-  virtual int rebind (const KEY &key,
-                      const VALUE &value,
-                      KEY &old_key,
-                      VALUE &old_value);
+  int rebind (KEY const &key,
+              VALUE const &value,
+              KEY &old_key,
+              VALUE &old_value) override;
 
   /**
    * Associate @a key with @a value if and only if @a key is not in the
@@ -641,32 +628,32 @@ public:
    * attempt is made to bind an existing entry.  This function fails
    * for maps that do not allow user specified keys.
    */
-  virtual int trybind (const KEY &key,
-                       VALUE &value);
+  int trybind (KEY const &key,
+               VALUE &value) override;
 
   /// Locate @a value associated with @a key.
-  virtual int find (const KEY &key,
-                    VALUE &value);
+  int find (KEY const &key,
+            VALUE &value) override;
 
   /// Is @a key in the map?
-  virtual int find (const KEY &key);
+  int find (KEY const &key) override;
 
   /// Remove @a key from the map.
-  virtual int unbind (const KEY &key);
+  int unbind (KEY const &key) override;
 
   /// Remove @a key from the map, and return the @a value associated with
   /// @a key.
-  virtual int unbind (const KEY &key,
-                      VALUE &value);
+  int unbind (KEY const &key,
+              VALUE &value) override;
 
   /// Return the current size of the map.
-  virtual size_t current_size () const;
+  size_t current_size () const override;
 
   /// Return the total size of the map.
-  virtual size_t total_size () const;
+  size_t total_size () const override;
 
   /// Dump the state of an object.
-  virtual void dump () const;
+  void dump () const override;
 
   /// Accessor to implementation object.
   IMPLEMENTATION &impl ();
@@ -675,20 +662,17 @@ protected:
   /// All implementation details are forwarded to this class.
   IMPLEMENTATION implementation_;
 
-  // = STL styled iterator factory functions.
+  /// @name Iterator factories
+  /// @{
 
   /// Return forward iterator.
-  virtual ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *begin_impl ();
-  virtual ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *end_impl ();
+  ACE_Iterator_Impl<ACE_Reference_Pair<KEY const, VALUE>> *begin_impl () override;
+  ACE_Iterator_Impl<ACE_Reference_Pair<KEY const, VALUE>> *end_impl () override;
 
   /// Return reverse iterator.
-  virtual ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *rbegin_impl ();
-  virtual ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *rend_impl ();
-
-private:
-  // = Disallow these operations.
-  void operator= (const ACE_Map_Impl<KEY, VALUE, IMPLEMENTATION, ITERATOR, REVERSE_ITERATOR, ENTRY> &) = delete;
-  ACE_Map_Impl (const ACE_Map_Impl<KEY, VALUE, IMPLEMENTATION, ITERATOR, REVERSE_ITERATOR, ENTRY> &) = delete;
+  ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<KEY const, VALUE>> *rbegin_impl () override;
+  ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<KEY const, VALUE>> *rend_impl () override;
+  /// @}
 };
 
 /**
@@ -702,29 +686,27 @@ template <class T, class VALUE>
 class ACE_Active_Map_Manager_Iterator_Adapter : public ACE_Iterator_Impl<T>
 {
 public:
-  // = Traits.
+  /// Type aliases.
   using implementation = typename ACE_Active_Map_Manager<VALUE>::iterator;
 
-  /// Constructor.
-  ACE_Active_Map_Manager_Iterator_Adapter (const ACE_Map_Iterator<ACE_Active_Map_Manager_Key, VALUE, ACE_Null_Mutex> &impl);
+  ACE_Active_Map_Manager_Iterator_Adapter (ACE_Map_Iterator<ACE_Active_Map_Manager_Key, VALUE, ACE_Null_Mutex> const &impl);
 
-  /// Destructor.
   virtual ~ACE_Active_Map_Manager_Iterator_Adapter () = default;
 
   /// Clone.
-  virtual ACE_Iterator_Impl<T> *clone () const;
+  ACE_Iterator_Impl<T> *clone () const override;
 
   /// Comparison.
-  virtual int compare (const ACE_Iterator_Impl<T> &rhs) const;
+  int compare (ACE_Iterator_Impl<T> const &rhs) const override;
 
   /// Dereference.
-  virtual T dereference () const;
+  T dereference () const override;
 
   /// Advance.
-  virtual void plus_plus ();
+  void plus_plus () override;
 
   /// Reverse.
-  virtual void minus_minus ();
+  void minus_minus () override;
 
   /// Accessor to implementation object.
   ACE_Map_Iterator<ACE_Active_Map_Manager_Key, VALUE, ACE_Null_Mutex> &impl ();
@@ -745,29 +727,27 @@ template <class T, class VALUE>
 class ACE_Active_Map_Manager_Reverse_Iterator_Adapter : public ACE_Reverse_Iterator_Impl<T>
 {
 public:
-  // = Traits.
+  /// Type aliases.
   using implementation = typename ACE_Active_Map_Manager<VALUE>::reverse_iterator;
 
-  /// Constructor.
-  ACE_Active_Map_Manager_Reverse_Iterator_Adapter (const ACE_Map_Reverse_Iterator<ACE_Active_Map_Manager_Key, VALUE, ACE_Null_Mutex> &impl);
+  ACE_Active_Map_Manager_Reverse_Iterator_Adapter (ACE_Map_Reverse_Iterator<ACE_Active_Map_Manager_Key, VALUE, ACE_Null_Mutex> const &impl);
 
-  /// Destructor.
   virtual ~ACE_Active_Map_Manager_Reverse_Iterator_Adapter ();
 
   /// Clone.
-  virtual ACE_Reverse_Iterator_Impl<T> *clone () const;
+  ACE_Reverse_Iterator_Impl<T> *clone () const override;
 
   /// Comparison.
-  virtual int compare (const ACE_Reverse_Iterator_Impl<T> &rhs) const;
+  int compare (ACE_Reverse_Iterator_Impl<T> const &rhs) const override;
 
   /// Dereference.
-  virtual T dereference () const;
+  T dereference () const override;
 
   /// Advance.
-  virtual void plus_plus ();
+  void plus_plus () override;
 
   /// Reverse.
-  virtual void minus_minus ();
+  void minus_minus () override;
 
   /// Accessor to implementation object.
   ACE_Map_Reverse_Iterator<ACE_Active_Map_Manager_Key, VALUE, ACE_Null_Mutex> &impl ();
@@ -782,16 +762,21 @@ protected:
  *
  * @brief Defines a map implementation.
  *
- * Implementation to be provided by <ACE_Active_Map_Manager>.
+ * Implementation to be provided by @c ACE_Active_Map_Manager.
  */
 template <class KEY, class VALUE, class KEY_ADAPTER>
 class ACE_Active_Map_Manager_Adapter : public ACE_Map<KEY, VALUE>
 {
 public:
-  // = Traits.
+  ACE_Active_Map_Manager_Adapter (ACE_Active_Map_Manager_Adapter const &) = delete;
+  ACE_Active_Map_Manager_Adapter (ACE_Active_Map_Manager_Adapter &&) = delete;
+  ACE_Active_Map_Manager_Adapter &operator= (ACE_Active_Map_Manager_Adapter const &) = delete;
+  ACE_Active_Map_Manager_Adapter &operator= (ACE_Active_Map_Manager_Adapter &&) = delete;
+
+  /// Type aliases.
   using expanded_value = std::pair<KEY, VALUE>;
-  using iterator_impl = ACE_Active_Map_Manager_Iterator_Adapter<ACE_Reference_Pair<const KEY, VALUE>, expanded_value>;
-  using reverse_iterator_impl = ACE_Active_Map_Manager_Reverse_Iterator_Adapter<ACE_Reference_Pair<const KEY, VALUE>, expanded_value>;
+  using iterator_impl = ACE_Active_Map_Manager_Iterator_Adapter<ACE_Reference_Pair<KEY const, VALUE>, expanded_value>;
+  using reverse_iterator_impl = ACE_Active_Map_Manager_Reverse_Iterator_Adapter<ACE_Reference_Pair<KEY const, VALUE>, expanded_value>;
   using implementation = ACE_Active_Map_Manager<expanded_value>;
 
   /// Initialize with the ACE_DEFAULT_MAP_SIZE.
@@ -803,14 +788,14 @@ public:
                                   ACE_Allocator *alloc = nullptr);
 
   /// Close down and release dynamically allocated resources.
-  virtual ~ACE_Active_Map_Manager_Adapter ();
+  ~ACE_Active_Map_Manager_Adapter () override;
 
   /// Initialize a Map with size @a length.
-  virtual int open (size_t length = ACE_DEFAULT_MAP_SIZE,
-                    ACE_Allocator *alloc = nullptr);
+  int open (size_t length = ACE_DEFAULT_MAP_SIZE,
+            ACE_Allocator *alloc = nullptr) override;
 
   /// Close down a Map and release dynamically allocated resources.
-  virtual int close ();
+  int close () override;
 
   /**
    * Add @a key / @a value pair to the map.  If @a key is already in the
@@ -818,8 +803,8 @@ public:
    * successful addition.  This function fails for maps that do not
    * allow user specified keys. @a key is an "in" parameter.
    */
-  virtual int bind (const KEY &key,
-                    const VALUE &value);
+  int bind (KEY const &key,
+            VALUE const &value) override;
 
   /**
    * Add @a key / @a value pair to the map.  @a key is an "inout" parameter
@@ -827,7 +812,7 @@ public:
    * information.  To recover original key, call the recover_key()
    * method.
    */
-  virtual int bind_modify_key (const VALUE &value, KEY &key);
+  int bind_modify_key (VALUE const &value, KEY &key) override;
 
   /**
    * Produce a key and return it through @a key which is an "out"
@@ -837,7 +822,7 @@ public:
    * production scheme by using user specified keys with keys produced
    * by the key generator.
    */
-  virtual int create_key (KEY &key);
+  int create_key (KEY &key) override;
 
   /**
    * Add @a value to the map, and the corresponding key produced by the
@@ -848,8 +833,8 @@ public:
    * scheme by using user specified keys with keys produced by the key
    * generator.
    */
-  virtual int bind_create_key (const VALUE &value,
-                               KEY &key);
+  int bind_create_key (VALUE const &value,
+                       KEY &key) override;
 
   /**
    * Add @a value to the map.  The user does not care about the
@@ -860,12 +845,12 @@ public:
    * using user specified keys with keys produced by the key
    * generator.
    */
-  virtual int bind_create_key (const VALUE &value);
+  int bind_create_key (VALUE const &value) override;
 
   /// Recovers the original key potentially modified by the map during
   /// bind_modify_key().
-  virtual int recover_key (const KEY &modified_key,
-                           KEY &original_key);
+  int recover_key (KEY const &modified_key,
+                   KEY &original_key) override;
 
   /**
    * Reassociate @a key with @a value. The function fails if @a key is
@@ -873,8 +858,8 @@ public:
    * However, for maps that allow user specified keys, if the key is
    * not in the map, a new @a key / @a value association is created.
    */
-  virtual int rebind (const KEY &key,
-                      const VALUE &value);
+  int rebind (KEY const &key,
+              VALUE const &value) override;
 
   /**
    * Reassociate @a key with @a value, storing the old value into the
@@ -883,9 +868,9 @@ public:
    * However, for maps that allow user specified keys, if the key is
    * not in the map, a new @a key / @a value association is created.
    */
-  virtual int rebind (const KEY &key,
-                      const VALUE &value,
-                      VALUE &old_value);
+  int rebind (KEY const &key,
+              VALUE const &value,
+              VALUE &old_value) override;
 
   /**
    * Reassociate @a key with @a value, storing the old key and value
@@ -895,10 +880,10 @@ public:
    * specified keys, if the key is not in the map, a new @a key / @a value
    * association is created.
    */
-  virtual int rebind (const KEY &key,
-                      const VALUE &value,
-                      KEY &old_key,
-                      VALUE &old_value);
+  int rebind (KEY const &key,
+              VALUE const &value,
+              KEY &old_key,
+              VALUE &old_value) override;
 
   /**
    * Associate @a key with @a value if and only if @a key is not in the
@@ -908,68 +893,65 @@ public:
    * attempt is made to bind an existing entry.  This function fails
    * for maps that do not allow user specified keys.
    */
-  virtual int trybind (const KEY &key,
-                       VALUE &value);
+  int trybind (KEY const &key,
+               VALUE &value) override;
 
   /// Locate @a value associated with @a key.
-  virtual int find (const KEY &key,
-                    VALUE &value);
+  int find (KEY const &key,
+            VALUE &value) override;
 
   /// Is @a key in the map?
-  virtual int find (const KEY &key);
+  int find (KEY const &key) override;
 
   /// Remove @a key from the map.
-  virtual int unbind (const KEY &key);
+  int unbind (KEY const &key) override;
 
   /// Remove @a key from the map, and return the @a value associated with
   /// @a key.
-  virtual int unbind (const KEY &key,
-                      VALUE &value);
+  int unbind (KEY const &key,
+              VALUE &value) override;
 
   /// Return the current size of the map.
-  virtual size_t current_size () const;
+  size_t current_size () const override;
 
   /// Return the total size of the map.
-  virtual size_t total_size () const;
+  size_t total_size () const override;
 
   /// Dump the state of an object.
-  virtual void dump () const;
+  void dump () const override;
 
   /// Accessor to implementation object.
-  ACE_Active_Map_Manager<std::pair<KEY, VALUE> > &impl ();
+  ACE_Active_Map_Manager<std::pair<KEY, VALUE>> &impl ();
 
   /// Accessor to key adapter.
   KEY_ADAPTER &key_adapter ();
 
 protected:
   /// Find helper.
-  virtual int find (const KEY &key,
+  virtual int find (KEY const &key,
                     expanded_value *&internal_value);
 
   /// Unbind helper.
-  virtual int unbind (const KEY &key,
+  virtual int unbind (KEY const &key,
                       expanded_value *&internal_value);
 
   /// All implementation details are forwarded to this class.
-  ACE_Active_Map_Manager<std::pair<KEY, VALUE> > implementation_;
+  ACE_Active_Map_Manager<std::pair<KEY, VALUE>> implementation_;
 
   /// Adapts between the user key and the Active_Map_Manager_Key.
   KEY_ADAPTER key_adapter_;
 
-  // = STL styled iterator factory functions.
+  /// @name Iterator factories
+  /// @{
 
   /// Return forward iterator.
-  virtual ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *begin_impl ();
-  virtual ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *end_impl ();
+  ACE_Iterator_Impl<ACE_Reference_Pair<KEY const, VALUE>> *begin_impl () override;
+  ACE_Iterator_Impl<ACE_Reference_Pair<KEY const, VALUE>> *end_impl () override;
 
   /// Return reverse iterator.
-  virtual ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *rbegin_impl ();
-  virtual ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *rend_impl ();
-
-private:
-  // = Disallow these operations.
-  void operator= (const ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER> &) = delete;
-  ACE_Active_Map_Manager_Adapter (const ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER> &) = delete;
+  ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<KEY const, VALUE>> *rbegin_impl () override;
+  ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<KEY const, VALUE>> *rend_impl () override;
+  /// @}
 };
 
 /**
@@ -983,29 +965,27 @@ template <class T, class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS>
 class ACE_Hash_Map_Manager_Ex_Iterator_Adapter : public ACE_Iterator_Impl<T>
 {
 public:
-  // = Traits.
+  /// Type aliases.
   using implementation = typename ACE_Hash_Map_Manager_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex>::iterator;
 
-  /// Constructor.
-  ACE_Hash_Map_Manager_Ex_Iterator_Adapter (const ACE_Hash_Map_Iterator_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex> &impl);
+  ACE_Hash_Map_Manager_Ex_Iterator_Adapter (ACE_Hash_Map_Iterator_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex> const &impl);
 
-  /// Destructor.
   virtual ~ACE_Hash_Map_Manager_Ex_Iterator_Adapter ();
 
   /// Clone.
-  virtual ACE_Iterator_Impl<T> *clone () const;
+  ACE_Iterator_Impl<T> *clone () const override;
 
   /// Comparison.
-  virtual int compare (const ACE_Iterator_Impl<T> &rhs) const;
+  int compare (ACE_Iterator_Impl<T> const &rhs) const override;
 
   /// Dereference.
-  virtual T dereference () const;
+  T dereference () const override;
 
   /// Advance.
-  virtual void plus_plus ();
+  void plus_plus () override;
 
   /// Reverse.
-  virtual void minus_minus ();
+  void minus_minus () override;
 
   /// Accessor to implementation object.
   ACE_Hash_Map_Iterator_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex> &impl ();
@@ -1026,29 +1006,27 @@ template <class T, class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS>
 class ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter : public ACE_Reverse_Iterator_Impl<T>
 {
 public:
-  // = Traits.
+  /// Type aliases.
   using implementation = typename ACE_Hash_Map_Manager_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex>::reverse_iterator;
 
-  /// Constructor.
-  ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter (const ACE_Hash_Map_Reverse_Iterator_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex> &impl);
+  ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter (ACE_Hash_Map_Reverse_Iterator_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex> const &impl);
 
-  /// Destructor.
   virtual ~ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter ();
 
   /// Clone.
-  virtual ACE_Reverse_Iterator_Impl<T> *clone () const;
+  ACE_Reverse_Iterator_Impl<T> *clone () const override;
 
   /// Comparison.
-  virtual int compare (const ACE_Reverse_Iterator_Impl<T> &rhs) const;
+  int compare (ACE_Reverse_Iterator_Impl<T> const &rhs) const override;
 
   /// Dereference.
-  virtual T dereference () const;
+  T dereference () const override;
 
   /// Advance.
-  virtual void plus_plus ();
+  void plus_plus () override;
 
   /// Reverse.
-  virtual void minus_minus ();
+  void minus_minus () override;
 
   /// Accessor to implementation object.
   ACE_Hash_Map_Reverse_Iterator_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex> &impl ();
@@ -1069,9 +1047,14 @@ template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class KEY_
 class ACE_Hash_Map_Manager_Ex_Adapter : public ACE_Map<KEY, VALUE>
 {
 public:
-  // = Traits.
-  using iterator_impl = ACE_Hash_Map_Manager_Ex_Iterator_Adapter<ACE_Reference_Pair<const KEY, VALUE>, KEY, VALUE, HASH_KEY, COMPARE_KEYS>;
-  using reverse_iterator_impl = ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter<ACE_Reference_Pair<const KEY, VALUE>, KEY, VALUE, HASH_KEY, COMPARE_KEYS>;
+  ACE_Hash_Map_Manager_Ex_Adapter (ACE_Hash_Map_Manager_Ex_Adapter const &) = delete;
+  ACE_Hash_Map_Manager_Ex_Adapter (ACE_Hash_Map_Manager_Ex_Adapter &&) = delete;
+  ACE_Hash_Map_Manager_Ex_Adapter &operator= (ACE_Hash_Map_Manager_Ex_Adapter const &) = delete;
+  ACE_Hash_Map_Manager_Ex_Adapter &operator= (ACE_Hash_Map_Manager_Ex_Adapter &&) = delete;
+
+  /// Type aliases.
+  using iterator_impl = ACE_Hash_Map_Manager_Ex_Iterator_Adapter<ACE_Reference_Pair<KEY const, VALUE>, KEY, VALUE, HASH_KEY, COMPARE_KEYS>;
+  using reverse_iterator_impl = ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter<ACE_Reference_Pair<KEY const, VALUE>, KEY, VALUE, HASH_KEY, COMPARE_KEYS>;
   using implementation = ACE_Hash_Map_Manager_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex>;
 
   /// Initialize with the ACE_DEFAULT_MAP_SIZE.
@@ -1086,11 +1069,11 @@ public:
   virtual ~ACE_Hash_Map_Manager_Ex_Adapter ();
 
   /// Initialize a Map with size @a length.
-  virtual int open (size_t length = ACE_DEFAULT_MAP_SIZE,
-                    ACE_Allocator *alloc = nullptr);
+  int open (size_t length = ACE_DEFAULT_MAP_SIZE,
+            ACE_Allocator *alloc = nullptr) override;
 
   /// Close down a Map and release dynamically allocated resources.
-  virtual int close ();
+  int close () override;
 
   /**
    * Add @a key / @a value pair to the map.  If @a key is already in the
@@ -1098,17 +1081,17 @@ public:
    * successful addition.  This function fails for maps that do not
    * allow user specified keys. @a key is an "in" parameter.
    */
-  virtual int bind (const KEY &key,
-                    const VALUE &value);
+  int bind (KEY const &key,
+            VALUE const &value) override;
 
   /**
    * Add @a key / @a value pair to the map.  @a key is an "inout" parameter
    * and maybe modified/extended by the map to add additional
-   * information.  To recover original key, call the <recover_key>
+   * information.  To recover original key, call the @c recover_key
    * method.
    */
-  virtual int bind_modify_key (const VALUE &value,
-                               KEY &key);
+  int bind_modify_key (VALUE const &value,
+                       KEY &key) override;
 
   /**
    * Produce a key and return it through @a key which is an "out"
@@ -1118,7 +1101,7 @@ public:
    * production scheme by using user specified keys with keys produced
    * by the key generator.
    */
-  virtual int create_key (KEY &key);
+  int create_key (KEY &key) override;
 
   /**
    * Add @a value to the map, and the corresponding key produced by the
@@ -1129,8 +1112,8 @@ public:
    * scheme by using user specified keys with keys produced by the key
    * generator.
    */
-  virtual int bind_create_key (const VALUE &value,
-                               KEY &key);
+  int bind_create_key (VALUE const &value,
+                       KEY &key) override;
 
   /**
    * Add @a value to the map.  The user does not care about the
@@ -1141,12 +1124,12 @@ public:
    * using user specified keys with keys produced by the key
    * generator.
    */
-  virtual int bind_create_key (const VALUE &value);
+  int bind_create_key (VALUE const &value) override;
 
   /// Recovers the original key potentially modified by the map during
   /// bind_modify_key().
-  virtual int recover_key (const KEY &modified_key,
-                           KEY &original_key);
+  int recover_key (KEY const &modified_key,
+                   KEY &original_key) override;
 
   /**
    * Reassociate @a key with @a value. The function fails if @a key is
@@ -1154,8 +1137,8 @@ public:
    * However, for maps that allow user specified keys, if the key is
    * not in the map, a new @a key / @a value association is created.
    */
-  virtual int rebind (const KEY &key,
-                      const VALUE &value);
+  int rebind (KEY const &key,
+              VALUE const &value) override;
 
   /**
    * Reassociate @a key with @a value, storing the old value into the
@@ -1164,9 +1147,9 @@ public:
    * However, for maps that allow user specified keys, if the key is
    * not in the map, a new @a key / @a value association is created.
    */
-  virtual int rebind (const KEY &key,
-                      const VALUE &value,
-                      VALUE &old_value);
+  int rebind (KEY const &key,
+              VALUE const &value,
+              VALUE &old_value) override;
 
   /**
    * Reassociate @a key with @a value, storing the old key and value
@@ -1176,10 +1159,10 @@ public:
    * specified keys, if the key is not in the map, a new @a key / @a value
    * association is created.
    */
-  virtual int rebind (const KEY &key,
-                      const VALUE &value,
-                      KEY &old_key,
-                      VALUE &old_value);
+  int rebind (KEY const &key,
+              VALUE const &value,
+              KEY &old_key,
+              VALUE &old_value) override;
 
   /**
    * Associate @a key with @a value if and only if @a key is not in the
@@ -1189,32 +1172,32 @@ public:
    * attempt is made to bind an existing entry.  This function fails
    * for maps that do not allow user specified keys.
    */
-  virtual int trybind (const KEY &key,
-                       VALUE &value);
+  int trybind (KEY const &key,
+               VALUE &value) override;
 
   /// Locate @a value associated with @a key.
-  virtual int find (const KEY &key,
-                    VALUE &value);
+  int find (KEY const &key,
+            VALUE &value) override;
 
   /// Is @a key in the map?
-  virtual int find (const KEY &key);
+  int find (KEY const &key) override;
 
   /// Remove @a key from the map.
-  virtual int unbind (const KEY &key);
+  int unbind (KEY const &key) override;
 
   /// Remove @a key from the map, and return the @a value associated with
   /// @a key.
-  virtual int unbind (const KEY &key,
-                      VALUE &value);
+  int unbind (KEY const &key,
+              VALUE &value) override;
 
   /// Return the current size of the map.
-  virtual size_t current_size () const;
+  size_t current_size () const override;
 
   /// Return the total size of the map.
-  virtual size_t total_size () const;
+  size_t total_size () const override;
 
   /// Dump the state of an object.
-  virtual void dump () const;
+  void dump () const override;
 
   /// Accessor to implementation object.
   ACE_Hash_Map_Manager_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex> &impl ();
@@ -1229,20 +1212,17 @@ protected:
   /// Functor class used for generating key.
   KEY_GENERATOR key_generator_;
 
-  // = STL styled iterator factory functions.
+  /// @name Iterator factories
+  /// @{
 
   /// Return forward iterator.
-  virtual ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *begin_impl ();
-  virtual ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *end_impl ();
+  ACE_Iterator_Impl<ACE_Reference_Pair<KEY const, VALUE>> *begin_impl () override;
+  ACE_Iterator_Impl<ACE_Reference_Pair<KEY const, VALUE>> *end_impl () override;
 
   /// Return reverse iterator.
-  virtual ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *rbegin_impl ();
-  virtual ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *rend_impl ();
-
-private:
-  // = Disallow these operations.
-  void operator= (const ACE_Hash_Map_Manager_Ex_Adapter<KEY, VALUE, HASH_KEY, COMPARE_KEYS, KEY_GENERATOR> &) = delete;
-  ACE_Hash_Map_Manager_Ex_Adapter (const ACE_Hash_Map_Manager_Ex_Adapter<KEY, VALUE, HASH_KEY, COMPARE_KEYS, KEY_GENERATOR> &) = delete;
+  ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<KEY const, VALUE>> *rbegin_impl () override;
+  ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<KEY const, VALUE>> *rend_impl () override;
+  /// @}
 };
 
 /**
@@ -1256,29 +1236,27 @@ template <class T, class KEY, class VALUE>
 class ACE_Map_Manager_Iterator_Adapter : public ACE_Iterator_Impl<T>
 {
 public:
-  // = Traits.
+  /// Type aliases.
   using implementation = typename ACE_Map_Manager<KEY, VALUE, ACE_Null_Mutex>::iterator;
 
-  /// Constructor.
-  ACE_Map_Manager_Iterator_Adapter (const ACE_Map_Iterator<KEY, VALUE, ACE_Null_Mutex> &impl);
+  ACE_Map_Manager_Iterator_Adapter (ACE_Map_Iterator<KEY, VALUE, ACE_Null_Mutex> const &impl);
 
-  /// Destructor.
   virtual ~ACE_Map_Manager_Iterator_Adapter ();
 
   /// Clone.
-  virtual ACE_Iterator_Impl<T> *clone () const;
+  ACE_Iterator_Impl<T> *clone () const override;
 
   /// Comparison.
-  virtual int compare (const ACE_Iterator_Impl<T> &rhs) const;
+  int compare (ACE_Iterator_Impl<T> const &rhs) const override;
 
   /// Dereference.
-  virtual T dereference () const;
+  T dereference () const override;
 
   /// Advance.
-  virtual void plus_plus ();
+  void plus_plus () override;
 
   /// Reverse.
-  virtual void minus_minus ();
+  void minus_minus () override;
 
   /// Accessor to implementation object.
   ACE_Map_Iterator<KEY, VALUE, ACE_Null_Mutex> &impl ();
@@ -1299,29 +1277,27 @@ template <class T, class KEY, class VALUE>
 class ACE_Map_Manager_Reverse_Iterator_Adapter : public ACE_Reverse_Iterator_Impl<T>
 {
 public:
-  // = Traits.
+  /// Type aliases.
   using implementation = typename ACE_Map_Manager<KEY, VALUE, ACE_Null_Mutex>::reverse_iterator;
 
-  /// Constructor.
-  ACE_Map_Manager_Reverse_Iterator_Adapter (const ACE_Map_Reverse_Iterator<KEY, VALUE, ACE_Null_Mutex> &impl);
+  ACE_Map_Manager_Reverse_Iterator_Adapter (ACE_Map_Reverse_Iterator<KEY, VALUE, ACE_Null_Mutex> const &impl);
 
-  /// Destructor.
   virtual ~ACE_Map_Manager_Reverse_Iterator_Adapter ();
 
   /// Clone.
-  virtual ACE_Reverse_Iterator_Impl<T> *clone () const;
+  ACE_Reverse_Iterator_Impl<T> *clone () const override;
 
   /// Comparison.
-  virtual int compare (const ACE_Reverse_Iterator_Impl<T> &rhs) const;
+  int compare (ACE_Reverse_Iterator_Impl<T> const &rhs) const override;
 
   /// Dereference.
-  virtual T dereference () const;
+  T dereference () const override;
 
   /// Advance.
-  virtual void plus_plus ();
+  void plus_plus () override;
 
   /// Reverse.
-  virtual void minus_minus ();
+  void minus_minus () override;
 
   /// Accessor to implementation object.
   ACE_Map_Reverse_Iterator<KEY, VALUE, ACE_Null_Mutex> &impl ();
@@ -1342,9 +1318,14 @@ template <class KEY, class VALUE, class KEY_GENERATOR>
 class ACE_Map_Manager_Adapter : public ACE_Map<KEY, VALUE>
 {
 public:
-  // = Traits.
-  using iterator_impl = ACE_Map_Manager_Iterator_Adapter<ACE_Reference_Pair<const KEY, VALUE>, KEY, VALUE>;
-  using reverse_iterator_impl = ACE_Map_Manager_Reverse_Iterator_Adapter<ACE_Reference_Pair<const KEY, VALUE>, KEY, VALUE>;
+  ACE_Map_Manager_Adapter (ACE_Map_Manager_Adapter const &) = delete;
+  ACE_Map_Manager_Adapter (ACE_Map_Manager_Adapter &&) = delete;
+  ACE_Map_Manager_Adapter &operator= (ACE_Map_Manager_Adapter const &) = delete;
+  ACE_Map_Manager_Adapter &operator= (ACE_Map_Manager_Adapter &&) = delete;
+
+  /// Type aliases.
+  using iterator_impl = ACE_Map_Manager_Iterator_Adapter<ACE_Reference_Pair<KEY const, VALUE>, KEY, VALUE>;
+  using reverse_iterator_impl = ACE_Map_Manager_Reverse_Iterator_Adapter<ACE_Reference_Pair<KEY const, VALUE>, KEY, VALUE>;
   using implementation = ACE_Map_Manager<KEY, VALUE, ACE_Null_Mutex>;
 
   /// Initialize with the ACE_DEFAULT_MAP_SIZE.
@@ -1358,12 +1339,12 @@ public:
   /// Close down and release dynamically allocated resources.
   virtual ~ACE_Map_Manager_Adapter ();
 
-  /// Initialize a <Map> with size @a length.
-  virtual int open (size_t length = ACE_DEFAULT_MAP_SIZE,
-                    ACE_Allocator *alloc = nullptr);
+  /// Initialize a @c Map with size @a length.
+  int open (size_t length = ACE_DEFAULT_MAP_SIZE,
+            ACE_Allocator *alloc = nullptr) override;
 
-  /// Close down a <Map> and release dynamically allocated resources.
-  virtual int close ();
+  /// Close down a @c Map and release dynamically allocated resources.
+  int close () override;
 
   /**
    * Add @a key / @a value pair to the map.  If @a key is already in the
@@ -1371,17 +1352,17 @@ public:
    * successful addition.  This function fails for maps that do not
    * allow user specified keys. @a key is an "in" parameter.
    */
-  virtual int bind (const KEY &key,
-                    const VALUE &value);
+  int bind (KEY const &key,
+            VALUE const &value) override;
 
   /**
    * Add @a key / @a value pair to the map.  @a key is an "inout" parameter
    * and maybe modified/extended by the map to add additional
-   * information.  To recover original key, call the <recover_key>
+   * information.  To recover original key, call the @c recover_key
    * method.
    */
-  virtual int bind_modify_key (const VALUE &value,
-                               KEY &key);
+  int bind_modify_key (VALUE const &value,
+                       KEY &key) override;
 
   /**
    * Produce a key and return it through @a key which is an "out"
@@ -1391,7 +1372,7 @@ public:
    * production scheme by using user specified keys with keys produced
    * by the key generator.
    */
-  virtual int create_key (KEY &key);
+  int create_key (KEY &key) override;
 
   /**
    * Add @a value to the map, and the corresponding key produced by the
@@ -1402,8 +1383,8 @@ public:
    * scheme by using user specified keys with keys produced by the key
    * generator.
    */
-  virtual int bind_create_key (const VALUE &value,
-                               KEY &key);
+  int bind_create_key (VALUE const &value,
+                       KEY &key) override;
 
   /**
    * Add @a value to the map.  The user does not care about the
@@ -1414,12 +1395,12 @@ public:
    * using user specified keys with keys produced by the key
    * generator.
    */
-  virtual int bind_create_key (const VALUE &value);
+  int bind_create_key (VALUE const &value) override;
 
   /// Recovers the original key potentially modified by the map during
-  /// <bind_modify_key>.
-  virtual int recover_key (const KEY &modified_key,
-                           KEY &original_key);
+  /// @c bind_modify_key.
+  int recover_key (KEY const &modified_key,
+                   KEY &original_key) override;
 
   /**
    * Reassociate @a key with @a value. The function fails if @a key is
@@ -1427,8 +1408,8 @@ public:
    * However, for maps that allow user specified keys, if the key is
    * not in the map, a new @a key / @a value association is created.
    */
-  virtual int rebind (const KEY &key,
-                      const VALUE &value);
+  int rebind (KEY const &key,
+              VALUE const &value) override;
 
   /**
    * Reassociate @a key with @a value, storing the old value into the
@@ -1437,9 +1418,9 @@ public:
    * However, for maps that allow user specified keys, if the key is
    * not in the map, a new @a key / @a value association is created.
    */
-  virtual int rebind (const KEY &key,
-                      const VALUE &value,
-                      VALUE &old_value);
+  int rebind (KEY const &key,
+              VALUE const &value,
+              VALUE &old_value) override;
 
   /**
    * Reassociate @a key with @a value, storing the old key and value
@@ -1449,10 +1430,10 @@ public:
    * specified keys, if the key is not in the map, a new @a key / @a value
    * association is created.
    */
-  virtual int rebind (const KEY &key,
-                      const VALUE &value,
-                      KEY &old_key,
-                      VALUE &old_value);
+  int rebind (KEY const &key,
+              VALUE const &value,
+              KEY &old_key,
+              VALUE &old_value) override;
 
   /**
    * Associate @a key with @a value if and only if @a key is not in the
@@ -1462,32 +1443,32 @@ public:
    * attempt is made to bind an existing entry.  This function fails
    * for maps that do not allow user specified keys.
    */
-  virtual int trybind (const KEY &key,
-                       VALUE &value);
+  int trybind (KEY const &key,
+               VALUE &value) override;
 
   /// Locate @a value associated with @a key.
-  virtual int find (const KEY &key,
-                    VALUE &value);
+  int find (KEY const &key,
+            VALUE &value) override;
 
   /// Is @a key in the map?
-  virtual int find (const KEY &key);
+  int find (KEY const &key) override;
 
   /// Remove @a key from the map.
-  virtual int unbind (const KEY &key);
+  int unbind (KEY const &key) override;
 
   /// Remove @a key from the map, and return the @a value associated with
   /// @a key.
-  virtual int unbind (const KEY &key,
-                      VALUE &value);
+  int unbind (KEY const &key,
+              VALUE &value) override;
 
   /// Return the current size of the map.
-  virtual size_t current_size () const;
+  size_t current_size () const override;
 
   /// Return the total size of the map.
-  virtual size_t total_size () const;
+  size_t total_size () const override;
 
   /// Dump the state of an object.
-  virtual void dump () const;
+  void dump () const override;
 
   /// Accessor to implementation object.
   ACE_Map_Manager<KEY, VALUE, ACE_Null_Mutex> &impl ();
@@ -1502,20 +1483,17 @@ protected:
   /// Functor class used for generating key.
   KEY_GENERATOR key_generator_;
 
-  // = STL styled iterator factory functions.
+  /// @name Iterator factories
+  /// @{
 
   /// Return forward iterator.
-  virtual ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *begin_impl ();
-  virtual ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *end_impl ();
+  ACE_Iterator_Impl<ACE_Reference_Pair<KEY const, VALUE>> *begin_impl () override;
+  ACE_Iterator_Impl<ACE_Reference_Pair<KEY const, VALUE>> *end_impl () override;
 
   /// Return reverse iterator.
-  virtual ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *rbegin_impl ();
-  virtual ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *rend_impl ();
-
-private:
-  // = Disallow these operations.
-  void operator= (const ACE_Map_Manager_Adapter<KEY, VALUE, KEY_GENERATOR> &) = delete;
-  ACE_Map_Manager_Adapter (const ACE_Map_Manager_Adapter<KEY, VALUE, KEY_GENERATOR> &) = delete;
+  ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<KEY const, VALUE>> *rbegin_impl () override;
+  ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<KEY const, VALUE>> *rend_impl () override;
+  /// @}
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

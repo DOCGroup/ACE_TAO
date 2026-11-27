@@ -7,6 +7,8 @@
 #include "RecordingDevice_Text.h"
 #include "Util.h"
 
+#include <memory>
+
 TextListenerAcceptor::TextListenerAcceptor ()
   : ACE_Event_Handler(), RecordingDevice()
 { }
@@ -16,10 +18,12 @@ TextListenerAcceptor::TextListenerAcceptor ()
 int TextListenerAcceptor::open (ACE_INET_Addr &addr)
 {
   if (this->acceptor_.open (addr, 1) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("acceptor open")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("acceptor open")),
+                        -1);
+    }
   return 0;
 }
 
@@ -50,10 +54,12 @@ int TextListenerAcceptor::init (int argc, ACE_TCHAR *argv[])
   ACE_INET_Addr addr (argv[1]);
 
   if (this->open (addr) < 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("TextListener - open")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("TextListener - open")),
+                        -1);
+    }
   return 0;
 }
 
@@ -90,7 +96,6 @@ MessageType *TextListenerAcceptor::record_message (ACE_FILE_Addr &addr)
   return nullptr;
 }
 
-
 // Listing 01 code/ch18
 TextListener::TextListener (TextListenerAcceptor *acceptor)
   : acceptor_(acceptor)
@@ -102,7 +107,7 @@ TextListener::TextListener (TextListenerAcceptor *acceptor)
 }
 // Listing 01
 
-const ACE_TCHAR *TextListener::get_name () const
+ACE_TCHAR const *TextListener::get_name () const
 {
   return ACE_TEXT ("TextListener");
 }
@@ -147,8 +152,8 @@ CallerId *TextListener::retrieve_callerId ()
 // Listing 04 code/ch18
 int TextListener::play_message (ACE_FILE_Addr &addr)
 {
-  MessageType *type = Util::identify_message (addr);
-  if (type->is_text ())
+  MessageType const type = Util::identify_message (addr);
+  if (type.is_text ())
     {
       Command *c = new Command ();
       c->command_ = Command::CMD_PLAY_MESSAGE;
@@ -158,16 +163,26 @@ int TextListener::play_message (ACE_FILE_Addr &addr)
     }
 
   ACE_FILE_Addr temp (ACE_TEXT ("/tmp/outgoing_message.text"));
-  ACE_FILE_IO *file;
-  if (type->is_audio ())
-    file = Util::audio_to_text (addr, temp);
-  else if (type->is_video ())
-    file = Util::video_to_text (addr, temp);
+  std::unique_ptr<ACE_FILE_IO> file;
+  if (type.is_audio ())
+    {
+      file = Util::audio_to_text (addr, temp);
+    }
+  else if (type.is_video ())
+    {
+      file = Util::video_to_text (addr, temp);
+    }
   else
-    ACE_ERROR_RETURN
-      ((LM_ERROR, ACE_TEXT ("Invalid message type %d\n"),
-        type->get_codec ()), -1);
-  int rval = this->play_message (temp);
+    {
+      ACE_ERROR_RETURN
+        ((LM_ERROR, ACE_TEXT ("Invalid message type %d\n"),
+          type.get_codec ()), -1);
+    }
+  if (!file)
+  {
+    return -1;
+  }
+  int const rval = this->play_message (temp);
   file->remove ();
   return rval;
 }
@@ -181,7 +196,9 @@ MessageType *TextListener::record_message (ACE_FILE_Addr &addr)
   c->extra_data_ = &addr;
   c = this->command_stream_->execute (c);
   if (c->numeric_result_ == -1)
+  {
     return nullptr;
+  }
 
   return new MessageType (MessageType::RAWTEXT, addr);
 }

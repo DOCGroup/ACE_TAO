@@ -21,7 +21,7 @@ ServerObject_i::shutdown ()
 {
   // Note : We want our child POAs to be able to unregister themselves from
   // the ImR, so we must destroy them before shutting down the orb.
-  poa_->destroy(1, 0);
+  poa_->destroy (true, false);
   this->orb_->shutdown (false);
 }
 
@@ -30,6 +30,5 @@ ServerObject_i::_default_POA ()
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/CORBANAME_Parser.h"
 
 #if (TAO_HAS_CORBANAME_PARSER == 1)
@@ -12,18 +11,18 @@
 
 #include "ace/Log_Msg.h"
 #include "ace/SString.h"
-#include "ace/OS_NS_string.h"
+#include <cstring>
 
 static const char corbaname_prefix[] = "corbaname:";
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 bool
-TAO_CORBANAME_Parser::match_prefix (const char *ior_string) const
+TAO_CORBANAME_Parser::match_prefix (char const *ior_string) const
 {
-  return (ACE_OS::strncmp (ior_string,
-                           corbaname_prefix,
-                           sizeof corbaname_prefix - 1) == 0);
+  return (std::strncmp (ior_string,
+                        corbaname_prefix,
+                        sizeof corbaname_prefix - 1) == 0);
 }
 
 CORBA::Object_ptr
@@ -53,11 +52,11 @@ parse_string_dynamic_request_helper (CORBA::Object_ptr naming_context,
 }
 
 CORBA::Object_ptr
-TAO_CORBANAME_Parser::parse_string (const char *ior, CORBA::ORB_ptr orb)
+TAO_CORBANAME_Parser::parse_string (char const *ior, CORBA::ORB_ptr orb)
 {
   // Skip the prefix, we know it is there because this method in only
   // called if <match_prefix> returns 1.
-  const char *corbaname =
+  char const *corbaname =
     ior + sizeof corbaname_prefix - 1;
 
   CORBA::Object_ptr obj = CORBA::Object::_nil ();
@@ -66,9 +65,9 @@ TAO_CORBANAME_Parser::parse_string (const char *ior, CORBA::ORB_ptr orb)
     {
       // The position of the seperator between the obj_addr and key
       // string
-      ACE_CString::size_type pos_seperator = 0;
+      ACE_CString::size_type pos_seperator {};
 
-      ACE_CString corbaname_str (corbaname, nullptr, 1);
+      ACE_CString const corbaname_str (corbaname, nullptr, true);
 
       pos_seperator = corbaname_str.find ("#", 0);
 
@@ -85,7 +84,7 @@ TAO_CORBANAME_Parser::parse_string (const char *ior, CORBA::ORB_ptr orb)
       // CORBALOC assumes "NameService" for the object key if none
       // is provided, so just pass everything between "corbaname:"
       // and "#" as the address
-      ACE_CString corbaloc_addr ("corbaloc:", nullptr, 1);
+      ACE_CString corbaloc_addr ("corbaloc:", nullptr, true);
       corbaloc_addr += corbaname_str.substring (0, pos_seperator);
 
       // Obtain a reference to the naming context
@@ -94,11 +93,13 @@ TAO_CORBANAME_Parser::parse_string (const char *ior, CORBA::ORB_ptr orb)
 
       // Check if the Object reference is nil.
       if (CORBA::is_nil (name_context.in ()))
-        TAOLIB_ERROR_RETURN ((LM_ERROR,
-                           "Cannot resolve Naming Service: CORBANAME_Parser\n"),
-                          0);
+        {
+          TAOLIB_ERROR_RETURN ((LM_ERROR,
+                                "Cannot resolve Naming Service: CORBANAME_Parser\n"),
+                               0);
+        }
 
-      CORBA::Boolean is_a =
+      CORBA::Boolean const is_a =
         name_context->_is_a ("IDL:omg.org/CosNaming/NamingContextExt:1.0");
 
       if (!is_a)
@@ -131,7 +132,6 @@ TAO_CORBANAME_Parser::parse_string (const char *ior, CORBA::ORB_ptr orb)
 
   return obj;
 }
-
 
 ACE_STATIC_SVC_DEFINE (TAO_CORBANAME_Parser,
                        ACE_TEXT ("CORBANAME_Parser"),

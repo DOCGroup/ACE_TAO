@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "ace/config-macros.h"
 #include "ace/ace_wchar.h"
 

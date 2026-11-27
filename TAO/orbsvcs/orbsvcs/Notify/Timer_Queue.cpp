@@ -2,13 +2,9 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Notify_Timer_Queue::TAO_Notify_Timer_Queue ()
-{
-}
+TAO_Notify_Timer_Queue::TAO_Notify_Timer_Queue () = default;
 
-TAO_Notify_Timer_Queue::~TAO_Notify_Timer_Queue ()
-{
-}
+TAO_Notify_Timer_Queue::~TAO_Notify_Timer_Queue () = default;
 
 void
 TAO_Notify_Timer_Queue::release ()
@@ -19,8 +15,8 @@ TAO_Notify_Timer_Queue::release ()
 
 long
 TAO_Notify_Timer_Queue::schedule_timer (ACE_Event_Handler *handler,
-                                    const ACE_Time_Value &delay_time,
-                                    const ACE_Time_Value &interval)
+                                    ACE_Time_Value const &delay_time,
+                                    ACE_Time_Value const &interval)
 {
   return
     this->timer_queue_.schedule (handler,

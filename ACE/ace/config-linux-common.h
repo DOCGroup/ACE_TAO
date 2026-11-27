@@ -21,13 +21,13 @@
 
 #ifndef ACE_DEFAULT_BASE_ADDR
 #  if defined (__powerpc__) || defined (__x86_64__)
-#    define ACE_DEFAULT_BASE_ADDR (reinterpret_cast< char* >(0x40000000))
+#    define ACE_DEFAULT_BASE_ADDR (reinterpret_cast<char*>(0x40000000))
 #  elif defined (__ia64)
 // Zero base address should work fine for Linux of IA-64: it just lets
 // the kernel to choose the right value.
-#    define ACE_DEFAULT_BASE_ADDR (reinterpret_cast< char*>(0x0000000000000000))
+#    define ACE_DEFAULT_BASE_ADDR (reinterpret_cast<char*>(0x0000000000000000))
 #  else
-#    define ACE_DEFAULT_BASE_ADDR (reinterpret_cast< char* >(0x80000000))
+#    define ACE_DEFAULT_BASE_ADDR (reinterpret_cast<char*>(0x80000000))
 #  endif
 #endif /* ! ACE_DEFAULT_BASE_ADDR */
 

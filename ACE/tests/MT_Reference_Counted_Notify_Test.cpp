@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    MT_Reference_Counted_Notify_Test.cpp
  *
@@ -9,8 +7,6 @@
  *
  *  @author Irfan Pyarali <irfan@oomworks.com>
  */
-//=============================================================================
-
 
 #include "test_config.h"
 #include "ace/OS_NS_unistd.h"
@@ -21,6 +17,8 @@
 #include "ace/Dev_Poll_Reactor.h"
 #include "ace/Task.h"
 #include "ace/Get_Opt.h"
+
+#include <memory>
 
 #if defined (ACE_HAS_THREADS)
 
@@ -54,46 +52,56 @@ Reference_Counted_Event_Handler::Reference_Counted_Event_Handler ()
     (ACE_Event_Handler::Reference_Counting_Policy::ENABLED);
 
   if (debug)
-    ACE_DEBUG
-      ((LM_DEBUG,
-        ACE_TEXT ("Reference count in Reference_Counted_Event_Handler() ")
-        ACE_TEXT ("is %d\n"),
-        this->reference_count_.load ()));
+    {
+      ACE_DEBUG
+        ((LM_DEBUG,
+          ACE_TEXT ("Reference count in Reference_Counted_Event_Handler() ")
+          ACE_TEXT ("is %Ld\n"),
+          this->reference_count_.load ()));
+    }
 }
 
 Reference_Counted_Event_Handler::~Reference_Counted_Event_Handler ()
 {
   if (debug)
-    ACE_DEBUG
-      ((LM_DEBUG,
-        ACE_TEXT ("Reference count in ~Reference_Counted_Event_Handler() ")
-        ACE_TEXT ("is %d\n"),
-        this->reference_count_.load ()));
+    {
+      ACE_DEBUG
+        ((LM_DEBUG,
+          ACE_TEXT ("Reference count in ~Reference_Counted_Event_Handler() ")
+          ACE_TEXT ("is %Ld\n"),
+          this->reference_count_.load ()));
+    }
 
   if (0 != this->reference_count_.load ())
-    ACE_ERROR
-      ((LM_ERROR,
-        ACE_TEXT ("Reference count in ~Reference_Counted_Event_Handler() ")
-        ACE_TEXT ("should be 0 but is %d\n"),
-        this->reference_count_.load ()));
+    {
+      ACE_ERROR
+        ((LM_ERROR,
+          ACE_TEXT ("Reference count in ~Reference_Counted_Event_Handler() ")
+          ACE_TEXT ("should be 0 but is %Ld\n"),
+          this->reference_count_.load ()));
+    }
 }
 
 int
 Reference_Counted_Event_Handler::handle_input (ACE_HANDLE)
 {
   if (debug)
-    ACE_DEBUG
-      ((LM_DEBUG,
-        ACE_TEXT ("Reference count in Reference_Counted_Event_Handler::")
-        ACE_TEXT ("handle_input() is %d\n"),
-        this->reference_count_.load ()));
+    {
+      ACE_DEBUG
+        ((LM_DEBUG,
+          ACE_TEXT ("Reference count in Reference_Counted_Event_Handler::")
+          ACE_TEXT ("handle_input() is %Ld\n"),
+          this->reference_count_.load ()));
+    }
 
   if (2 != this->reference_count_.load ())
-    ACE_ERROR
-      ((LM_ERROR,
-        ACE_TEXT ("Reference count in Reference_Counted_Event_Handler::")
-        ACE_TEXT ("handle_input() should be 2 but is %d\n"),
-        this->reference_count_.load ()));
+    {
+      ACE_ERROR
+        ((LM_ERROR,
+          ACE_TEXT ("Reference count in Reference_Counted_Event_Handler::")
+          ACE_TEXT ("handle_input() should be 2 but is %Ld\n"),
+          this->reference_count_.load ()));
+    }
 
   return 0;
 }
@@ -105,9 +113,11 @@ Reference_Counted_Event_Handler::add_reference ()
     this->ACE_Event_Handler::add_reference ();
 
   if (debug)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("Reference count after add_reference() is %d\n"),
-                this->reference_count_.load ()));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("Reference count after add_reference() is %Ld\n"),
+                  this->reference_count_.load ()));
+    }
 
   return reference_count;
 }
@@ -119,9 +129,11 @@ Reference_Counted_Event_Handler::remove_reference ()
     this->ACE_Event_Handler::remove_reference ();
 
   if (debug)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("Reference count after remove_reference() is %d\n"),
-                reference_count));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("Reference count after remove_reference() is %Ld\n"),
+                  reference_count));
+    }
 
   return reference_count;
 }
@@ -142,26 +154,34 @@ Simple_Event_Handler::Simple_Event_Handler (int notifies)
   : notifies_ (notifies)
 {
   if (debug)
+  {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Simple_Event_Handler()\n")));
+  }
 }
 
 Simple_Event_Handler::~Simple_Event_Handler ()
 {
   if (debug)
+  {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("~Simple_Event_Handler()\n")));
+  }
 }
 
 int
 Simple_Event_Handler::handle_input (ACE_HANDLE)
 {
   if (debug)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("Simple_Event_Handler::handle_input()\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("Simple_Event_Handler::handle_input()\n")));
+    }
 
-  this->notifies_--;
+  --this->notifies_;
 
   if (this->notifies_ == 0)
+  {
     delete this;
+  }
 
   return 0;
 }
@@ -183,7 +203,7 @@ public:
 Event_Loop_Thread::Event_Loop_Thread (ACE_Thread_Manager &thread_manager,
                                       ACE_Reactor &reactor,
                                       int extra_iterations_needed)
-  : ACE_Task_Base (&thread_manager),
+  : ACE_Task_Base (std::addressof (thread_manager)),
     reactor_ (reactor),
     extra_iterations_needed_ (extra_iterations_needed)
 {
@@ -199,18 +219,22 @@ Event_Loop_Thread::svc ()
 
   while (true)
     {
-      counter++;
+      ++counter;
 
       if (debug)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("Event Loop iteration %d....\n"),
-                    counter));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("Event Loop iteration %d....\n"),
+                      counter));
+        }
 
       this->reactor_.handle_events ();
 
       if (counter ==
           iterations + this->extra_iterations_needed_)
+      {
         break;
+      }
     }
 
   return 0;
@@ -262,20 +286,19 @@ test<REACTOR_IMPLEMENTATION>::test (int extra_iterations_needed)
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n\nTesting empty notifies...\n\n")));
 
       REACTOR_IMPLEMENTATION impl;
-      ACE_Reactor reactor (&impl, 0);
+      ACE_Reactor reactor (std::addressof (impl), 0);
 
       notify (reactor,
               nullptr,
               extra_iterations_needed);
     }
 
-
   if (test_simple_notify)
     {
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n\nTesting simple notifies...\n\n")));
 
       REACTOR_IMPLEMENTATION impl;
-      ACE_Reactor reactor (&impl, 0);
+      ACE_Reactor reactor (std::addressof (impl), 0);
 
       Simple_Event_Handler *simple_event_handler =
         new Simple_Event_Handler (iterations);
@@ -291,7 +314,7 @@ test<REACTOR_IMPLEMENTATION>::test (int extra_iterations_needed)
                   ACE_TEXT ("\n\nTesting reference counted notifies...\n\n")));
 
       REACTOR_IMPLEMENTATION impl;
-      ACE_Reactor reactor (&impl, 0);
+      ACE_Reactor reactor (std::addressof (impl), 0);
 
       Reference_Counted_Event_Handler *reference_counted_event_handler =
         new Reference_Counted_Event_Handler;
@@ -372,13 +395,15 @@ run_main (int argc, ACE_TCHAR *argv[])
   ACE_START_TEST (ACE_TEXT ("MT_Reference_Counted_Notify_Test"));
 
   // Validate options.
-  int result =
+  int const result =
     parse_args (argc, argv);
   if (result != 0)
+  {
     return result;
+  }
 
-  int extra_iterations_needed = 1;
-  int extra_iterations_not_needed = 0;
+  int const extra_iterations_needed = 1;
+  int const extra_iterations_not_needed = 0;
 
   if (test_select_reactor)
     {

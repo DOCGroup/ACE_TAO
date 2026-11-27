@@ -1,11 +1,10 @@
-// -*- C++ -*-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 int
 ACE_Object_Manager::at_exit (ACE_Cleanup *object,
                              void *param,
-                             const char* name)
+                             char const * name)
 {
   return ACE_Object_Manager::instance ()->at_exit_i (
     object,
@@ -19,7 +18,7 @@ int
 ACE_Object_Manager::at_exit (void *object,
                              ACE_CLEANUP_FUNC cleanup_hook,
                              void *param,
-                             const char* name)
+                             char const * name)
 {
   return ACE_Object_Manager::instance ()->at_exit_i (
     object,

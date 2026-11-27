@@ -3,15 +3,12 @@
 #include "JAWS/Waiter.h"
 #include "JAWS/IO_Handler.h"
 
-
 JAWS_Waiter::JAWS_Waiter ()
   : iter_ (*this)
 {
 }
 
-JAWS_Waiter::~JAWS_Waiter ()
-{
-}
+JAWS_Waiter::~JAWS_Waiter () = default;
 
 JAWS_Waiter_Base_Iterator &
 JAWS_Waiter::iter ()
@@ -30,7 +27,7 @@ JAWS_Waiter::index ()
   ACE_thread_t thr_name;
   thr_name = ACE_OS::thr_self ();
 
-  JAWS_Thread_ID tid (thr_name);
+  JAWS_Thread_ID const tid (thr_name);
 #endif /* 0 */
 
   return JAWS_Waiter_Base::index (tid);
@@ -39,20 +36,25 @@ JAWS_Waiter::index ()
 JAWS_IO_Handler *
 JAWS_Waiter::wait_for_completion (int i)
 {
-  JAWS_IO_Handler *ioh;
-  JAWS_IO_Handler **iohptr;
+  JAWS_IO_Handler ** const iohptr =
+    (i >= 0) ? this->find_by_index (i) : this->find_by_index (this->index ());
 
-  iohptr = (i >= 0) ? this->find_by_index (i) : this->find_by_index (this->index ());
+  if (iohptr == nullptr)
+    {
+      return nullptr;
+    }
 
-  while (*iohptr == 0)
-    if (ACE_Proactor::instance ()->handle_events () == -1)
-      {
-        ACE_ERROR ((LM_ERROR, "%p\n", "JAWS_Waiter::wait_for_completion"));
-        return 0;
-      }
+  while (*iohptr == nullptr)
+    {
+      if (ACE_Proactor::instance ()->handle_events () == -1)
+        {
+          ACE_ERROR ((LM_ERROR, "%p\n", "JAWS_Waiter::wait_for_completion"));
+          return nullptr;
+        }
+    }
 
-  ioh = *iohptr;
-  *iohptr = 0;
+  JAWS_IO_Handler * const ioh = *iohptr;
+  *iohptr = nullptr;
 
   ioh->lock ();
   ioh->release ();

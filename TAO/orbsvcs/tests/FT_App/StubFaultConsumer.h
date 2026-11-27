@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #ifndef STUBFAULTCONSUMER_H
 #define STUBFAULTCONSUMER_H
 #include /**/ <ace/pre.h>
@@ -13,7 +12,6 @@
 
 #include "ace/SString.h"
 
-
 //////////////////////
 // Forward references
 
@@ -27,18 +25,11 @@ class StubFaultConsumer
   : public virtual POA_CosNotifyComm::StructuredPushConsumer
 {
 public:
-  /**
-   * Default constructor.
-   */
   StubFaultConsumer ();
 
-  /**
-   * virtual destructor.
-   */
   virtual ~StubFaultConsumer ();
 
-
-  ::PortableServer::POA_ptr _default_POA ();
+  ::PortableServer::POA_ptr _default_POA () override;
   ::PortableServer::ObjectId objectId()const;
 
   /**
@@ -54,7 +45,7 @@ public:
   /**
    * Return a string to identify this object for logging/console message purposes.
    */
-  const char * identity () const;
+  char const *identity () const;
 
   /**
    * idle time activity.
@@ -68,33 +59,29 @@ public:
    */
   int fini ();
 
-
   size_t notifications() const;
 
 public:
     ////////////////
-    // CORBA methods
-    virtual void push_structured_event(
-      const CosNotification::StructuredEvent &notification);
+  // CORBA methods
+  void push_structured_event (
+    CosNotification::StructuredEvent const &notification) override;
 
-   virtual void offer_change (
-        const CosNotification::EventTypeSeq & added,
-        const CosNotification::EventTypeSeq & removed);
+  void offer_change (
+    CosNotification::EventTypeSeq const &added,
+    CosNotification::EventTypeSeq const &removed) override;
 
-   virtual void disconnect_structured_push_consumer();
+  void disconnect_structured_push_consumer () override;
 
-  ////////////////////
-  // Forbidden methods
+  /// @name Disabled operations
+  /// @{
 private:
-  StubFaultConsumer (const StubFaultConsumer & rhs);
-  StubFaultConsumer & operator = (const StubFaultConsumer & rhs);
+  StubFaultConsumer (StubFaultConsumer const & rhs);
+  StubFaultConsumer & operator = (StubFaultConsumer const & rhs);
+  /// @}
 
-  /////////////////////////
-  // Implementation methods
-private:
-  ///////////////
-  // Data Members
-private:
+  /// @name Data members
+  /// @{
   /**
    * The orb
    */
@@ -109,7 +96,6 @@ private:
    * The CORBA object id assigned to this object.
    */
   PortableServer::ObjectId_var object_id_;
-
 
   /**
    * A human-readable string to distinguish this from other FaultConsumers.
@@ -132,6 +118,7 @@ private:
   ::FT::FaultNotifier::ConsumerId consumer_id_;
 
   size_t notifications_;
+  /// @}
 };
 
 #include /**/ <ace/post.h>

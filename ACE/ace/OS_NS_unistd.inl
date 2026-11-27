@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "ace/OS_NS_sys_utsname.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_errno.h"
@@ -7,6 +6,8 @@
 #include "ace/Default_Constants.h"
 #include "ace/OS_Memory.h"
 #include "ace/Truncate.h"
+
+#include <memory>
 
 #if defined (ACE_HAS_CLOCK_GETTIME)
 # include "ace/os_include/os_time.h"
@@ -31,7 +32,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE int
-ACE_OS::access (const char *path, int amode)
+ACE_OS::access (char const *path, int amode)
 {
   ACE_OS_TRACE ("ACE_OS::access");
 #if defined (ACE_LACKS_ACCESS)
@@ -49,7 +50,6 @@ ACE_OS::access (const char *path, int amode)
   return ::access (path, amode);
 #endif /* ACE_LACKS_ACCESS */
 }
-
 
 #if defined (ACE_HAS_WCHAR)
 ACE_INLINE int
@@ -106,7 +106,7 @@ ACE_OS::allocation_granularity ()
 }
 
 ACE_INLINE int
-ACE_OS::chdir (const char *path)
+ACE_OS::chdir (char const *path)
 {
   ACE_OS_TRACE ("ACE_OS::chdir");
 #if defined (ACE_LACKS_CHDIR)
@@ -132,7 +132,7 @@ ACE_OS::chdir (const wchar_t *path)
 #endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE int
-ACE_OS::rmdir (const char *path)
+ACE_OS::rmdir (char const *path)
 {
 #if defined (ACE_LACKS_RMDIR)
   ACE_UNUSED_ARG (path);
@@ -193,9 +193,13 @@ ACE_OS::dup (ACE_HANDLE handle)
                         0,
                         TRUE,
                         DUPLICATE_SAME_ACCESS))
-    return new_fd;
+    {
+      return new_fd;
+    }
   else
-    ACE_FAIL_RETURN (ACE_INVALID_HANDLE);
+    {
+      ACE_FAIL_RETURN (ACE_INVALID_HANDLE);
+    }
   /* NOTREACHED */
 #else
   return ::dup (handle);
@@ -227,7 +231,9 @@ ACE_OS::dup(ACE_HANDLE handle, pid_t pid)
       return new_fd;
     }
   else
-    ACE_FAIL_RETURN (ACE_INVALID_HANDLE);
+    {
+      ACE_FAIL_RETURN (ACE_INVALID_HANDLE);
+    }
   /*NOTREACHED*/
 #else
   ACE_UNUSED_ARG (pid);
@@ -250,7 +256,7 @@ ACE_OS::dup2 (ACE_HANDLE oldhandle, ACE_HANDLE newhandle)
 }
 
 ACE_INLINE int
-ACE_OS::execv (const char *path,
+ACE_OS::execv (char const *path,
                char *const argv[])
 {
   ACE_OS_TRACE ("ACE_OS::execv");
@@ -269,7 +275,7 @@ ACE_OS::execv (const char *path,
   // Windows defines this as returning an intptr_t rather than a simple int,
   // and the conversion triggers compile warnings. So just return -1 if
   // the call returns.
-  ::_execv (path, (const char *const *) argv);
+  ::_execv (path, (char const *const *) argv);
   return -1;
 # endif /* __BORLANDC__ */
 #else
@@ -278,7 +284,7 @@ ACE_OS::execv (const char *path,
 }
 
 ACE_INLINE int
-ACE_OS::execve (const char *path,
+ACE_OS::execve (char const *path,
                 char *const argv[],
                 char *const envp[])
 {
@@ -299,7 +305,7 @@ ACE_OS::execve (const char *path,
   // Windows defines this as returning an intptr_t rather than a simple int,
   // and the conversion triggers compile warnings. So just return -1 if
   // the call returns.
-  ::_execve (path, (const char *const *) argv, (const char *const *) envp);
+  ::_execve (path, (char const *const *) argv, (char const *const *) envp);
   return -1;
 # endif /* __BORLANDC__ */
 #else
@@ -308,7 +314,7 @@ ACE_OS::execve (const char *path,
 }
 
 ACE_INLINE int
-ACE_OS::execvp (const char *file,
+ACE_OS::execvp (char const *file,
                 char *const argv[])
 {
   ACE_OS_TRACE ("ACE_OS::execvp");
@@ -327,7 +333,7 @@ ACE_OS::execvp (const char *file,
   // Windows defines this as returning an intptr_t rather than a simple int,
   // and the conversion triggers compile warnings. So just return -1 if
   // the call returns.
-  ::_execvp (file, (const char *const *) argv);
+  ::_execvp (file, (char const *const *) argv);
   return -1;
 # endif /* __BORLANDC__ */
 #else
@@ -368,9 +374,13 @@ ACE_OS::ftruncate (ACE_HANDLE handle, ACE_OFF_T offset)
   LARGE_INTEGER loff;
   loff.QuadPart = offset;
   if (::SetFilePointerEx (handle, loff, 0, FILE_BEGIN))
-    ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::SetEndOfFile (handle), ace_result_), int, -1);
+    {
+      ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::SetEndOfFile (handle), ace_result_), int, -1);
+    }
   else
-    ACE_FAIL_RETURN (-1);
+    {
+      ACE_FAIL_RETURN (-1);
+    }
 #elif defined (ACE_LACKS_FTRUNCATE)
   ACE_UNUSED_ARG (handle);
   ACE_UNUSED_ARG (offset);
@@ -404,14 +414,15 @@ ACE_OS::getcwd (wchar_t *buf, size_t size)
 #  if defined (ACE_WIN32)
   return ::_wgetcwd (buf, static_cast<int> (size));
 #  else
-  char *narrow_buf = new char[size];
-  char *result = nullptr;
-  result = ACE_OS::getcwd (narrow_buf, size);
+  std::unique_ptr<char[]> narrow_buf = std::make_unique<char[]> (size);
+  char *result {ACE_OS::getcwd (narrow_buf.get (), size)};
+  if (result == nullptr)
+    {
+      return nullptr;
+    }
   ACE_Ascii_To_Wide wide_buf (result);
-  delete [] narrow_buf;
-  if (result != 0)
-    ACE_OS::strsncpy (buf, wide_buf.wchar_rep (), size);
-  return result == 0 ? 0 : buf;
+  ACE_OS::strsncpy (buf, wide_buf.wchar_rep (), size);
+  return buf;
 #  endif /* ACE_WIN32 */
 }
 #endif /* ACE_HAS_WCHAR */
@@ -439,7 +450,7 @@ ACE_OS::getegid ()
 }
 
 ACE_INLINE int
-ACE_OS::getopt (int argc, char *const *argv, const char *optstring)
+ACE_OS::getopt (int argc, char *const *argv, char const *optstring)
 {
   ACE_OS_TRACE ("ACE_OS::getopt");
 #if defined (ACE_LACKS_GETOPT)
@@ -548,7 +559,9 @@ ACE_OS::hostname (char name[], size_t maxnamelen)
   ACE_utsname host_info;
 
   if (ACE_OS::uname (&host_info) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
     {
       ACE_OS::strsncpy (name, host_info.nodename, maxnamelen);
@@ -567,7 +580,7 @@ ACE_OS::hostname (wchar_t name[], size_t maxnamelen)
                                           ace_result_), int, -1);
 #else /* ACE_WIN32 */
   // Emulate using the char version
-  char *char_name = nullptr;
+  char *char_name {};
 
   ACE_NEW_RETURN (char_name, char[maxnamelen], -1);
 
@@ -643,9 +656,13 @@ ACE_OS::lseek (ACE_HANDLE handle, ACE_OFF_T offset, int whence)
   DWORD const result =
     ::SetFilePointer (handle, low_offset, &high_offset, whence);
   if (result == INVALID_SET_FILE_POINTER && GetLastError() != NO_ERROR)
-    ACE_FAIL_RETURN (static_cast<ACE_OFF_T> (-1));
+    {
+      ACE_FAIL_RETURN (static_cast<ACE_OFF_T> (-1));
+    }
   else
-    return result;
+    {
+      return result;
+    }
 #elif defined (ACE_MQX)
   switch (whence)
     {
@@ -710,9 +727,13 @@ ACE_OS::read (ACE_HANDLE handle, void *buf, size_t len)
 #if defined (ACE_WIN32)
   DWORD ok_len;
   if (::ReadFile (handle, buf, static_cast<DWORD> (len), &ok_len, 0))
-    return (ssize_t) ok_len;
+    {
+      return (ssize_t) ok_len;
+    }
   else
-    ACE_FAIL_RETURN (-1);
+    {
+      ACE_FAIL_RETURN (-1);
+    }
 
 #elif defined (ACE_LACKS_READ)
   ACE_UNUSED_ARG (handle);
@@ -761,9 +782,13 @@ ACE_OS::read (ACE_HANDLE handle, void *buf, size_t len,
   DWORD ok_len;
   DWORD short_len = static_cast<DWORD> (len);
   if (::ReadFile (handle, buf, short_len, &ok_len, overlapped))
-    return (ssize_t) ok_len;
+    {
+      return (ssize_t) ok_len;
+    }
   else
-    ACE_FAIL_RETURN (-1);
+    {
+      ACE_FAIL_RETURN (-1);
+    }
 #else
   ACE_UNUSED_ARG (overlapped);
   return ACE_OS::read (handle, buf, len);
@@ -771,7 +796,7 @@ ACE_OS::read (ACE_HANDLE handle, void *buf, size_t len,
 }
 
 ACE_INLINE ssize_t
-ACE_OS::readlink (const char *path, char *buf, size_t bufsiz)
+ACE_OS::readlink (char const *path, char *buf, size_t bufsiz)
 {
   ACE_OS_TRACE ("ACE_OS::readlink");
 # if defined (ACE_LACKS_READLINK)
@@ -795,7 +820,7 @@ ACE_OS::pipe (ACE_HANDLE fds[])
   ACE_NOTSUP_RETURN (-1);
 # elif defined (ACE_WIN32)
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL
-                        (::CreatePipe (&fds[0], &fds[1], 0, 0),
+                        (::CreatePipe (fds, fds + 1, 0, 0),
                          ace_result_), int, -1);
 # else
   return ::pipe (fds);
@@ -921,7 +946,7 @@ ACE_OS::sleep (u_int seconds)
   rqtp.tv_sec = seconds;
   rqtp.tv_nsec = 0L;
   //FUZZ: disable check_for_lack_ACE_OS
-  return ::nanosleep (&rqtp, 0);
+  return ::nanosleep (&rqtp, nullptr);
   //FUZZ: enable check_for_lack_ACE_OS
 #elif defined (ACE_LACKS_SLEEP)
   ACE_UNUSED_ARG (seconds);
@@ -938,7 +963,7 @@ ACE_OS::sleep (u_int seconds)
 }
 
 ACE_INLINE int
-ACE_OS::sleep (const ACE_Time_Value &tv)
+ACE_OS::sleep (ACE_Time_Value const &tv)
 {
   ACE_OS_TRACE ("ACE_OS::sleep");
 #if defined (ACE_WIN32)
@@ -950,7 +975,7 @@ ACE_OS::sleep (const ACE_Time_Value &tv)
 #elif defined (ACE_HAS_CLOCK_GETTIME)
   timespec_t rqtp = tv;
   //FUZZ: disable check_for_lack_ACE_OS
-  return ::nanosleep (&rqtp, 0);
+  return ::nanosleep (&rqtp, nullptr);
   //FUZZ: enable check_for_lack_ACE_OS
 #else
 # if !defined (ACE_LACKS_SELECT)
@@ -975,15 +1000,13 @@ ACE_OS::sleep (const ACE_Time_Value &tv)
 }
 
 ACE_INLINE void
-ACE_OS::swab (const void *src,
+ACE_OS::swab (void const *src,
               void *dest,
               ssize_t length)
 {
 #if defined (ACE_LACKS_SWAB)
-  // ------------------------------------------------------------
   // The following copyright notice applies to the swab()
   // implementation within this "ACE_LACKS_SWAB" block of code.
-  // ------------------------------------------------------------
   /*
     Copyright (c) 1994-2006  Red Hat, Inc. All rights reserved.
 
@@ -1000,7 +1023,7 @@ ACE_OS::swab (const void *src,
     the express permission of Red Hat, Inc.
   */
 
-  const char *from = static_cast<const char*> (src);
+  char const *from = static_cast<char const*> (src);
   char *to = static_cast<char *> (dest);
   ssize_t ptr = 0;
   for (ptr = 1; ptr < length; ptr += 2)
@@ -1011,9 +1034,11 @@ ACE_OS::swab (const void *src,
       to[ptr  ] = q;
     }
   if (ptr == length) /* I.e., if length is odd, */
-    to[ptr-1] = 0;   /* then pad with a NUL. */
+    {
+      to[ptr-1] = 0;   /* then pad with a NUL. */
+    }
 #elif defined (ACE_HAS_NONCONST_SWAB)
-  const char *tmp = static_cast<const char*> (src);
+  char const *tmp = static_cast<char const*> (src);
   char *from = const_cast<char *> (tmp);
   char *to = static_cast<char *> (dest);
 #  if defined (ACE_HAS_INT_SWAB)
@@ -1037,7 +1062,10 @@ ACE_OS::sysconf (int name)
 {
   ACE_OS_TRACE ("ACE_OS::sysconf");
 #if defined (ACE_INTEGRITY)
-  if (name == _SC_PAGESIZE) return ACE_PAGE_SIZE;
+  if (name == _SC_PAGESIZE)
+    {
+      return ACE_PAGE_SIZE;
+    }
   ACE_NOTSUP_RETURN (-1);
 #elif defined (ACE_LACKS_SYSCONF)
   ACE_UNUSED_ARG (name);
@@ -1055,7 +1083,7 @@ ACE_OS::sysinfo (int /*cmd*/, char * /*buf*/, long /*count*/)
 }
 
 ACE_INLINE int
-ACE_OS::truncate (const ACE_TCHAR *filename,
+ACE_OS::truncate (ACE_TCHAR const *filename,
                   ACE_OFF_T offset)
 {
   ACE_OS_TRACE ("ACE_OS::truncate");
@@ -1112,8 +1140,8 @@ ACE_OS::ualarm (useconds_t usecs, useconds_t interval)
 }
 
 ACE_INLINE useconds_t
-ACE_OS::ualarm (const ACE_Time_Value &tv,
-                const ACE_Time_Value &tv_interval)
+ACE_OS::ualarm (ACE_Time_Value const &tv,
+                ACE_Time_Value const &tv_interval)
 {
   ACE_OS_TRACE ("ACE_OS::ualarm");
 
@@ -1137,7 +1165,7 @@ ACE_OS::ualarm (const ACE_Time_Value &tv,
 }
 
 ACE_INLINE int
-ACE_OS::unlink (const char *path)
+ACE_OS::unlink (char const *path)
 {
   ACE_OS_TRACE ("ACE_OS::unlink");
 #if defined (ACE_LACKS_UNLINK)
@@ -1165,7 +1193,7 @@ ACE_OS::unlink (const wchar_t *path)
 #endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE ssize_t
-ACE_OS::write (ACE_HANDLE handle, const void *buf, size_t nbyte)
+ACE_OS::write (ACE_HANDLE handle, void const *buf, size_t nbyte)
 {
   ACE_OS_TRACE ("ACE_OS::write");
 #if defined (ACE_WIN32)
@@ -1175,9 +1203,13 @@ ACE_OS::write (ACE_HANDLE handle, const void *buf, size_t nbyte)
   // than a DWORD length can hold.
   DWORD short_nbyte = static_cast<DWORD> (nbyte);
   if (::WriteFile (handle, buf, short_nbyte, &bytes_written, 0))
-    return (ssize_t) bytes_written;
+    {
+      return (ssize_t) bytes_written;
+    }
   else
-    ACE_FAIL_RETURN (-1);
+    {
+      ACE_FAIL_RETURN (-1);
+    }
 #elif defined (ACE_MQX)
   return MQX_Filesystem::inst ().write (handle, reinterpret_cast<const unsigned char *> (buf), nbyte);
 #elif defined (ACE_LACKS_WRITE)
@@ -1196,7 +1228,7 @@ ACE_OS::write (ACE_HANDLE handle, const void *buf, size_t nbyte)
 
 ACE_INLINE ssize_t
 ACE_OS::write (ACE_HANDLE handle,
-               const void *buf,
+               void const *buf,
                size_t nbyte,
                ACE_OVERLAPPED *overlapped)
 {
@@ -1206,9 +1238,13 @@ ACE_OS::write (ACE_HANDLE handle,
 
   DWORD short_nbyte = static_cast<DWORD> (nbyte);
   if (::WriteFile (handle, buf, short_nbyte, &bytes_written, overlapped))
-    return (ssize_t) bytes_written;
+    {
+      return (ssize_t) bytes_written;
+    }
   else
-    ACE_FAIL_RETURN (-1);
+    {
+      ACE_FAIL_RETURN (-1);
+    }
 #else
   ACE_UNUSED_ARG (overlapped);
   return ACE_OS::write (handle, buf, nbyte);

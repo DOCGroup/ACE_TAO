@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "ace/Time_Value.h"
 #include "ace/OS_NS_errno.h"
 
@@ -7,11 +6,11 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_INLINE int
 ACE_OS::poll (struct pollfd *pollfds,
               unsigned long len,
-              const ACE_Time_Value *timeout)
+              ACE_Time_Value const *timeout)
 {
   ACE_OS_TRACE ("ACE_OS::poll");
 #if defined (ACE_HAS_POLL)
-  int to = timeout == 0 ? -1 : int (timeout->msec ());
+  int to = timeout == nullptr ? -1 : int (timeout->msec ());
   return ::poll (pollfds, len, to);
 #else
   ACE_UNUSED_ARG (timeout);
@@ -25,7 +24,7 @@ ACE_OS::poll (struct pollfd *pollfds,
 ACE_INLINE int
 ACE_OS::poll (struct pollfd *pollfds,
               unsigned long len,
-              const ACE_Time_Value &timeout)
+              ACE_Time_Value const &timeout)
 {
   ACE_OS_TRACE ("ACE_OS::poll");
 #if defined (ACE_HAS_POLL)

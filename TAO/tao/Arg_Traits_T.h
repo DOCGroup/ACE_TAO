@@ -1,17 +1,15 @@
-//=============================================================================
 /**
  *  @file    Arg_Traits_T.h
  *
  *  @authors Jeff Parsons and Carlos O'Ryan
  */
-//=============================================================================
 
 #ifndef TAO_ARG_TRAITS_T_H
 #define TAO_ARG_TRAITS_T_H
 
 #include /**/ "ace/pre.h"
 
-#include /**/ "tao/Versioned_Namespace.h"
+#include "tao/orbconf.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

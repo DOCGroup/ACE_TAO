@@ -27,6 +27,8 @@
 #include "ace/INet/HTTP_URL.h"
 #include "ace/INet/HTTP_Session.h"
 
+#include <memory>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE
@@ -44,7 +46,7 @@ namespace ACE
           {
             protected:
               SessionHolder ();
-              virtual ~SessionHolder();
+              ~SessionHolder () override;
 
               virtual SessionBase& session () = 0;
 
@@ -63,8 +65,8 @@ namespace ACE
           : public ACE::INet::ConnectionFactory
           {
             protected:
-              SessionFactory () {}
-              virtual ~SessionFactory () {}
+              SessionFactory () = default;
+              ~SessionFactory () override = default;
           };
 
         /**
@@ -78,7 +80,7 @@ namespace ACE
           {
             private:
               SessionFactory_Impl ();
-              virtual ~SessionFactory_Impl ();
+              ~SessionFactory_Impl () override;
 
               friend class ACE_Singleton<SessionFactory_Impl, ACE_SYNCH::NULL_MUTEX>;
 
@@ -88,18 +90,18 @@ namespace ACE
                 {
                   public:
                     SessionHolder_Impl ();
-                    virtual ~SessionHolder_Impl();
+                    ~SessionHolder_Impl () override;
 
                   protected:
-                    virtual SessionBase& session ();
+                    SessionBase& session () override;
 
                   private:
                     Session_T<ACE_SYNCH> session_;
                 };
 
             public:
-              virtual ACE::INet::ConnectionHolder* create_connection (
-                  const ACE::INet::ConnectionKey& key) const;
+              ACE::INet::ConnectionHolder* create_connection (
+                  ACE::INet::ConnectionKey const& key) const override;
           };
 
         /**
@@ -117,17 +119,15 @@ namespace ACE
               friend class ACE_Singleton<SessionFactoryRegistry, ACE_SYNCH::MUTEX>;
 
             public:
-              void register_session_factory (const ACE_CString& scheme,
+              void register_session_factory (ACE_CString const& scheme,
                                              SessionFactory* factory);
 
-              SessionFactory* find_session_factory (const ACE_CString& scheme);
+              SessionFactory* find_session_factory (ACE_CString const& scheme);
 
               static SessionFactoryRegistry& instance ();
 
             private:
-              typedef ACE_Map_Manager<ACE_CString,
-                                      SessionFactory*,
-                                      ACE_SYNCH::MUTEX> TSessionFactoryMap;
+              using TSessionFactoryMap = ACE_Map_Manager<ACE_CString, SessionFactory*, ACE_SYNCH::MUTEX>;
 
               TSessionFactoryMap factory_map_;
           };
@@ -146,57 +146,57 @@ namespace ACE
           {
             public:
               ClientRequestHandler ();
-              virtual ~ClientRequestHandler ();
+              ~ClientRequestHandler () override;
 
-              virtual Request& request ();
+              Request& request () override;
 
-              virtual const Request& request () const;
+              Request const& request () const override;
 
-              virtual Response& response ();
+              Response& response () override;
 
-              virtual const Response& response () const;
+              Response const& response () const override;
 
               std::ostream& request_stream ();
 
-              virtual std::istream& response_stream ();
+              std::istream& response_stream () override;
 
-              virtual bool is_response_ok () const;
+              bool is_response_ok () const override;
 
-              virtual std::istream& handle_open_request (const ACE::INet::URL_Base& url);
+              std::istream& handle_open_request (ACE::INet::URL_Base const& url) override;
 
-              virtual std::istream& handle_get_request (const URL& url);
+              virtual std::istream& handle_get_request (URL const& url);
 /*
-              virtual std::istream& handle_post_request (const URL& url,
-                                                         const PostData& post_data);
+              virtual std::istream& handle_post_request (URL const& url,
+                                                         PostData const& post_data);
 
-              virtual std::istream& handle_put_request (const URL& url,
-                                                        std::istream* put_data = 0);
+              virtual std::istream& handle_put_request (URL const& url,
+                                                        std::istream* put_data = nullptr);
 */
 
               class ACE_INET_Export HttpConnectionKey
                 : public INetConnectionKey
                 {
                   public:
-                    HttpConnectionKey (const ACE_CString& host,
+                    HttpConnectionKey (ACE_CString const& host,
                                        u_short port);
-                    HttpConnectionKey (const ACE_CString& proxy_host,
+                    HttpConnectionKey (ACE_CString const& proxy_host,
                                        u_short proxy_port,
-                                       const ACE_CString& target_host,
+                                       ACE_CString const& target_host,
                                        u_short target_port);
-                    virtual ~HttpConnectionKey();
+                    ~HttpConnectionKey () override;
 
-                    virtual u_long hash () const;
+                    u_long hash () const override;
 
-                    virtual ACE::INet::ConnectionKey* duplicate () const;
+                    ACE::INet::ConnectionKey* duplicate () const override;
 
                     bool is_proxy_connection () const;
 
-                    const ACE_CString& proxy_target_host () const;
+                    ACE_CString const& proxy_target_host () const;
 
                     u_short proxy_target_port () const;
 
                   protected:
-                    virtual bool equal (const ACE::INet::ConnectionKey& key) const;
+                    bool equal (ACE::INet::ConnectionKey const& key) const override;
 
                   private:
                     bool proxy_connection_;
@@ -205,24 +205,24 @@ namespace ACE
                 };
 
             protected:
-              virtual void on_eof ();
+              void on_eof () override;
 
               SessionHolder& session ();
 
               void session (SessionHolder* session);
 
-              virtual bool initialize_connection (const ACE_CString& scheme,
-                                                  const ACE_CString& host,
+              virtual bool initialize_connection (ACE_CString const& scheme,
+                                                  ACE_CString const& host,
                                                   u_short port,
                                                   bool proxy_conn = false,
-                                                  const ACE_CString& proxy_host = Request::EMPTY,
+                                                  ACE_CString const& proxy_host = Request::EMPTY,
                                                   u_short proxy_port = 0);
 
-              virtual void initialize_request (const URL& url, Request& request);
+              virtual void initialize_request (URL const& url, Request& request);
 
-              virtual void handle_request_error (const URL& url);
+              virtual void handle_request_error (URL const& url);
 
-              virtual void handle_connection_error (const URL& url);
+              virtual void handle_connection_error (URL const& url);
 
               void release_connection ();
 

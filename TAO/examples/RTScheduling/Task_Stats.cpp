@@ -1,8 +1,12 @@
 #include "Task_Stats.h"
 #include "ace/Log_Msg.h"
 
+#include <new>
+#include <utility>
+
 #if !defined (__ACE_INLINE__)
 #include "Task_Stats.inl"
+#include <memory>
 #endif /* __ACE_INLINE__ */
 
 Base_Time::Base_Time ()
@@ -15,8 +19,8 @@ Task_Stats::Task_Stats ()
     end_time_ (0),
     max_samples_ (0),
     samples_count_ (0),
-    thr_run_time_ (0),
-    thr_count_ (0),
+    thr_run_time_ {},
+    thr_count_ {},
     exec_time_min_ (0),
     exec_time_min_at_ (0),
     exec_time_max_ (0),
@@ -26,18 +30,29 @@ Task_Stats::Task_Stats ()
 {
 }
 
-Task_Stats::~Task_Stats ()
-{
-  delete[] this->thr_run_time_;
-  delete[] this->thr_count_;
-}
+Task_Stats::~Task_Stats () = default;
 
 int
 Task_Stats::init (size_t max_samples)
 {
-  max_samples_ = max_samples;
-  ACE_NEW_RETURN (this->thr_run_time_, time_t[this->max_samples_], -1);
-  ACE_NEW_RETURN (this->thr_count_, int[this->max_samples_], -1);
+  std::unique_ptr<time_t[]> thr_run_time (new (std::nothrow) time_t[max_samples]);
+  if (!thr_run_time)
+    {
+      errno = ENOMEM;
+      return -1;
+    }
+
+  std::unique_ptr<size_t[]> thr_count (new (std::nothrow) size_t[max_samples]);
+  if (!thr_count)
+    {
+      errno = ENOMEM;
+      return -1;
+    }
+
+  this->thr_run_time_ = std::move (thr_run_time);
+  this->thr_count_ = std::move (thr_count);
+  this->max_samples_ = max_samples;
+  this->samples_count_ = 0;
   return 0;
 }
 
@@ -54,11 +69,13 @@ Task_Stats::end_time (ACE_hrtime_t time)
 }
 
 void
-Task_Stats::dump_samples (const ACE_TCHAR *file_name, const ACE_TCHAR *msg)
+Task_Stats::dump_samples (ACE_TCHAR const *file_name, ACE_TCHAR const *msg)
 {
   // There's nothing to dump if this object was never initialized
-  if (this->thr_run_time_ == 0 || this->thr_count_ == 0)
+  if (!this->thr_run_time_ || !this->thr_count_)
+  {
     return;
+  }
 
   FILE* output_file = ACE_OS::fopen (file_name, "w");
 
@@ -67,6 +84,7 @@ Task_Stats::dump_samples (const ACE_TCHAR *file_name, const ACE_TCHAR *msg)
       ACE_ERROR ((LM_ERROR,
                   "%s cannot be opened\n",
                   file_name));
+      return;
     }
 
   // first dump what the caller has to say.
@@ -74,13 +92,20 @@ Task_Stats::dump_samples (const ACE_TCHAR *file_name, const ACE_TCHAR *msg)
 
   // next, compose and dump what we want to say.
   ACE_UINT32 val_1;
-  int val_2;
+  size_t val_2;
   ACE_UINT64 x;
+
+  if (this->samples_count_ == 0)
+    {
+      ACE_OS::fclose (output_file);
+      return;
+    }
 
   x = this->thr_run_time_[0];// scale_factor;
   val_1 = ACE_CU64_TO_CU32 (x);
 
-  ACE_OS::fprintf (output_file, "%u \t %d\n",val_1,thr_count_[0]);
+  ACE_OS::fprintf (output_file, ACE_UINT32_FORMAT_SPECIFIER_ASCII " \t " ACE_SIZE_T_FORMAT_SPECIFIER_ASCII "\n",
+                   val_1, thr_count_[0]);
 
   // dump the samples recorded.
   for (size_t i = 1; i != this->samples_count_; ++i)
@@ -88,7 +113,8 @@ Task_Stats::dump_samples (const ACE_TCHAR *file_name, const ACE_TCHAR *msg)
       x = this->thr_run_time_[i];
       val_1 = ACE_CU64_TO_CU32 (x);
       val_2  = this->thr_count_[i];
-      ACE_OS::fprintf (output_file, "%u \t %d\n",val_1,val_2);
+      ACE_OS::fprintf (output_file, ACE_UINT32_FORMAT_SPECIFIER_ASCII " \t " ACE_SIZE_T_FORMAT_SPECIFIER_ASCII "\n",
+                       val_1, val_2);
     }
 
   ACE_OS::fclose (output_file);

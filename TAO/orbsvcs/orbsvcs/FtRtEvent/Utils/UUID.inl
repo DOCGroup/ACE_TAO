@@ -1,4 +1,5 @@
-// -*- C++ -*-
+#include <cstring>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace TAO_FtRt
 {
@@ -16,42 +17,41 @@ UUID::UUID(int)
 
 /// construct an UUID from the binary representation
 ACE_INLINE
-UUID::UUID(const unsigned char* id)
+UUID::UUID(unsigned char const *id)
 {
-  ACE_OS::memcpy(rep_.uuid, id, 16);
+  std::memcpy (rep_.uuid, id, 16);
 }
 
 ACE_INLINE
-bool UUID::operator == (const UUID& other) const
+bool UUID::operator == (UUID const &other) const
 {
-  return ACE_OS::memcmp(this->rep_.uuid, other.rep_.uuid, BINARY_LENGTH) == 0;
+  return std::memcmp (this->rep_.uuid, other.rep_.uuid, BINARY_LENGTH) == 0;
 }
 
 ACE_INLINE
-bool UUID::operator != (const UUID& other) const
+bool UUID::operator != (UUID const &other) const
 {
   return !(*this == other);
 }
 
-
 ACE_INLINE
 bool UUID::is_valid() const
 {
-  return !this->rep_.timestamp.hi;
+  return this->rep_.timestamp.hi != 0;
 }
 
-
 ACE_INLINE
-void UUID::to_binary(unsigned char* binary_rep) const
+void UUID::to_binary(unsigned char *binary_rep) const
 {
-  ACE_OS::memcpy(binary_rep, rep_.uuid, 16);
+  std::memcpy (binary_rep, rep_.uuid, 16);
 }
 
 ACE_INLINE
 void UUID::to_string(ACE_CString& string) const
 {
-  string.resize(STRING_LENGTH-1);
-  this->to_string(&string[0]);
+  char buffer[STRING_LENGTH] {};
+  this->to_string (buffer);
+  string = buffer;
 }
 }
 TAO_END_VERSIONED_NAMESPACE_DECL

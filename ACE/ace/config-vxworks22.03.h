@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 // The following configuration file is designed to work for VxWorks
 // 22.03 platforms using one of these compilers:
 // 1) The llvm compiler that is shipped with VxWorks 22.03

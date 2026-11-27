@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Token_Invariants.h
  *
@@ -10,7 +7,6 @@
  *   satisfied.  Can test mutexes and readers/writer locks.  Does
  *   not test recursive acquisition.
  */
-//=============================================================================
 
 #ifndef ACE_TOKEN_INVARIANTS_H
 #define ACE_TOKEN_INVARIANTS_H
@@ -34,7 +30,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * @class ACE_Mutex_Invariants
  *
  * @brief Mutex Invariants
- * = INVARIANTS
+ * @par Invariants
  * 1. Only one owner at a time.
  */
 class ACE_Export ACE_Mutex_Invariants
@@ -50,13 +46,14 @@ public:
   /// Updates internal database.
   void releasing ();
 
-  // = Map_Manager operations.
-
+  /// @name Copy operations
+  /// @{
   /// Copy construction.
-  ACE_Mutex_Invariants (const ACE_Mutex_Invariants &rhs) = default;
+  ACE_Mutex_Invariants (ACE_Mutex_Invariants const &rhs) = default;
 
   /// Copy.
-  void operator= (const ACE_Mutex_Invariants &rhs) = default;
+  ACE_Mutex_Invariants &operator= (ACE_Mutex_Invariants const &rhs) = default;
+  /// @}
 
   /// Dump the state of the class.
   void dump () const;
@@ -92,13 +89,14 @@ public:
   /// Updates internal database.
   void releasing ();
 
-  // = Map_Manager operations.
-
+  /// @name Copy operations
+  /// @{
   /// Copy construction.
-  ACE_RWLock_Invariants (const ACE_RWLock_Invariants &rhs) = default;
+  ACE_RWLock_Invariants (ACE_RWLock_Invariants const &rhs) = default;
 
   /// Copy.
-  void operator= (const ACE_RWLock_Invariants &rhs) = default;
+  ACE_RWLock_Invariants &operator= (ACE_RWLock_Invariants const &rhs) = default;
+  /// @}
 
   /// Dump the state of the class.
   void dump () const;
@@ -120,7 +118,7 @@ private:
  * invariants are always satisfied.  Currently, Token_Invariants
  * can test mutexes and readers/writer locks.  Does not test
  * recursive acquisition.
- * Note that this class does not ever clean its database.  Until
+ * @note This class does not ever clean its database.  Until
  * destroyed, it's size will forever increase.
  */
 class ACE_Export ACE_Token_Invariant_Manager : public ACE_Cleanup
@@ -129,55 +127,56 @@ public:
   /// Singleton access point.
   static ACE_Token_Invariant_Manager *instance ();
 
-  // = Polymorphic methods.  Just pass in the proxy and the method
-  // figures out the type of the token.
-
+  /// @name Proxy-based operations
+  /// Just pass in the proxy; the operation determines the token type.
+  /// @{
   /// Returns 1 on success, 0 when an invariant has been violated and
   /// -1 on error.
-  int acquired (const ACE_Token_Proxy *proxy);
+  int acquired (ACE_Token_Proxy const *proxy);
 
   /// Updates internal database.
-  void releasing (const ACE_Token_Proxy *proxy);
+  void releasing (ACE_Token_Proxy const *proxy);
+  /// @}
 
-  // = Explicit methods.  These to not require actual proxies in order
-  // to test a scenario.
-
+  /// @name Explicit operations
+  /// These operations do not require proxies and allow testing a scenario.
+  /// @{
   /// Returns 1 on success, 0 when an invariant has been violated and
   /// -1 on error.
-  int mutex_acquired (const ACE_TCHAR *token_name);
+  int mutex_acquired (ACE_TCHAR const *token_name);
 
   /// Updates internal database.
-  void mutex_releasing (const ACE_TCHAR *token_name);
+  void mutex_releasing (ACE_TCHAR const *token_name);
 
   /// Returns 1 on success, 0 when an invariant has been violated and
   /// -1 on error.
-  int reader_acquired (const ACE_TCHAR *token_name);
+  int reader_acquired (ACE_TCHAR const *token_name);
 
   /// Returns 1 on success, 0 when an invariant has been violated and
   /// -1 on error.
-  int writer_acquired (const ACE_TCHAR *token_name);
+  int writer_acquired (ACE_TCHAR const *token_name);
 
   /// Updates internal database.
-  void rwlock_releasing (const ACE_TCHAR *token_name);
+  void rwlock_releasing (ACE_TCHAR const *token_name);
+  /// @}
 
   /// Dump the state of the class.
   void dump () const;
 
-  // = The following two method should be in the protected part of the
-  //   class.  Bugs with certain compilers preclude this.
+  /// These members are public because of bugs in certain compilers, although
+  /// they should be protected.
   /// Prevent non-singleton construction.
   ACE_Token_Invariant_Manager ();
 
-  /// Destruction.
   virtual ~ACE_Token_Invariant_Manager ();
 
 protected:
   /// Return or create.
-  int get_mutex (const ACE_TCHAR *token_name,
+  int get_mutex (ACE_TCHAR const *token_name,
                  ACE_Mutex_Invariants *&inv);
 
   /// Return or create.
-  int get_rwlock (const ACE_TCHAR *token_name,
+  int get_rwlock (ACE_TCHAR const *token_name,
                   ACE_RWLock_Invariants *&inv);
 
   /// ACE_Mutex_Token used to lock internal data structures.

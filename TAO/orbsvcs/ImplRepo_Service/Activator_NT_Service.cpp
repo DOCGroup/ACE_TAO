@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file   Activator_NT_Service.cpp
  *
@@ -7,7 +6,6 @@
  *  @author John Tucker <jtucker@infoglide.com>
  *  @author Mike Vitalo <mvitalo@infoglide.com>
  */
-//=============================================================================
 
 #include "Activator_NT_Service.h"
 
@@ -20,11 +18,11 @@
 
 #include "ace/Reactor.h"
 
-const ACE_TCHAR * IMR_ACTIVATOR_SERVICE_NAME =
+ACE_TCHAR const *IMR_ACTIVATOR_SERVICE_NAME =
   ACE_TEXT("TAOImRActivator");
-const ACE_TCHAR * IMR_ACTIVATOR_DISPLAY_NAME =
+ACE_TCHAR const *IMR_ACTIVATOR_DISPLAY_NAME =
   ACE_TEXT("TAO Implementation Repository Activator");
-const ACE_TCHAR * IMR_ACTIVATOR_DESCRIPTION =
+ACE_TCHAR const *IMR_ACTIVATOR_DESCRIPTION =
   ACE_TEXT("Implementation Repository Activator service for TAO");
 
 /**
@@ -40,7 +38,7 @@ Activator_NT_Service::handle_control (DWORD control_code)
     {
       report_status (SERVICE_STOP_PENDING);
       TAO_ORB_Core_instance ()->reactor ()->end_reactor_event_loop ();
-      TAO_ORB_Core_instance ()->orb ()->shutdown (1);
+      TAO_ORB_Core_instance ()->orb ()->shutdown (true);
     }
   else
     {
@@ -48,13 +46,11 @@ Activator_NT_Service::handle_control (DWORD control_code)
     }
 }
 
-
 int
 Activator_NT_Service::handle_exception (ACE_HANDLE)
 {
   return 0;
 }
-
 
 /**
  * We do almost the same thing as we do in run_standalone () except that
@@ -91,17 +87,19 @@ Activator_NT_Service::svc ()
           report_status (SERVICE_STOPPED);
         }
         if (status != -1)
+          {
             return 0;
+          }
     }
-  catch (const CORBA::SystemException& sysex)
+  catch (CORBA::SystemException const& sysex)
     {
       sysex._tao_print_exception (IMR_ACTIVATOR_DISPLAY_NAME);
     }
-  catch (const CORBA::UserException& userex)
+  catch (CORBA::UserException const& userex)
     {
       userex._tao_print_exception (IMR_ACTIVATOR_DISPLAY_NAME);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception (IMR_ACTIVATOR_DISPLAY_NAME);
     }

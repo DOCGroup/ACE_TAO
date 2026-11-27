@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    client.cpp
  *
@@ -8,8 +6,6 @@
  *
  *  @author  Priyanka Gontla <pgontla@ece.uci.edu>
  */
-//=============================================================================
-
 
 #include "ior_corbaname_client_i.h"
 
@@ -17,18 +13,17 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      IOR_corbaname_Client_i client;
+      IOR_corbaname_Client_i client {};
 
       if (client.init (argc, argv) == -1)
+      {
         return 1;
-      else
-        {
-          return client.run ();
-        }
+      }
+      return client.run ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
-      ex._tao_print_exception ("client");
+      ex._tao_print_exception (ACE_TEXT ("client"));
     }
   return 1;
 }

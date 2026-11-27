@@ -1,18 +1,13 @@
-
-//=============================================================================
 /**
  *  @file    test_udp_proactor.cpp
  *
- *  This program illustrates how the <ACE_Proactor> can be used to
+ *  This program illustrates how the @c ACE_Proactor can be used to
  *  implement an application that does asynchronous operations using
  *  datagrams.
  *
  *  @author Irfan Pyarali <irfan@cs.wustl.edu> and Roger Tragin <r.tragin@computer.org>
  */
-//=============================================================================
 
-
-#include "ace/OS_NS_string.h"
 #include "ace/OS_main.h"
 #include "ace/Proactor.h"
 #include "ace/Asynch_IO.h"
@@ -21,13 +16,13 @@
 #include "ace/Message_Block.h"
 #include "ace/Get_Opt.h"
 #include "ace/Log_Msg.h"
-
+#include <cstring>
 
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
   // This only works on asynch I/O-capable platforms.
 
 // Host that we're connecting to.
-static ACE_TCHAR *host = nullptr;
+static ACE_TCHAR *host {};
 
 // Port that we're receiving connections on.
 static u_short port = ACE_DEFAULT_SERVER_PORT;
@@ -47,22 +42,22 @@ public:
   Receiver ();
   ~Receiver () override;
 
-  int open_addr (const ACE_INET_Addr &localAddr);
+  int open_addr (ACE_INET_Addr const &localAddr);
 
 protected:
   // These methods are called by the framework
 
   /// This method will be called when an asynchronous read completes on
   /// a UDP socket.
-  void handle_read_dgram (const ACE_Asynch_Read_Dgram::Result &result) override;
+  void handle_read_dgram (ACE_Asynch_Read_Dgram::Result const &result) override;
 
 private:
   ACE_SOCK_Dgram sock_dgram_;
 
   /// rd (read dgram): for reading from a UDP socket.
   ACE_Asynch_Read_Dgram rd_;
-  const char* completion_key_;
-  const char* act_;
+  char const * completion_key_;
+  char const * act_;
 };
 
 Receiver::Receiver ()
@@ -77,31 +72,35 @@ Receiver::~Receiver ()
 }
 
 int
-Receiver::open_addr (const ACE_INET_Addr &localAddr)
+Receiver::open_addr (ACE_INET_Addr const &localAddr)
 {
   ACE_DEBUG ((LM_DEBUG,
               "%N:%l:Receiver::open_addr called\n"));
 
   // Create a local UDP socket to receive datagrams.
   if (this->sock_dgram_.open (localAddr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "ACE_SOCK_Dgram::open"), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "ACE_SOCK_Dgram::open"), -1);
+    }
 
   // Initialize the asynchronous read.
   if (this->rd_.open (*this,
                       this->sock_dgram_.get_handle (),
                       this->completion_key_,
                       ACE_Proactor::instance ()) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "ACE_Asynch_Read_Dgram::open"), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "ACE_Asynch_Read_Dgram::open"), -1);
+    }
 
   // Create a buffer to read into.  We are using scatter/gather to
   // read the message header and message body into 2 buffers
 
   // create a message block to read the message header
-  ACE_Message_Block* msg = nullptr;
+  ACE_Message_Block *msg {};
   ACE_NEW_RETURN (msg, ACE_Message_Block (1024), -1);
 
   // the next line sets the size of the header, even though we
@@ -111,7 +110,7 @@ Receiver::open_addr (const ACE_INET_Addr &localAddr)
   msg->size (20); // size of header to read is 20 bytes
 
   // create a message block to read the message body
-  ACE_Message_Block* body = nullptr;
+  ACE_Message_Block *body {};
   ACE_NEW_RETURN (body, ACE_Message_Block (1024), -1);
   // The message body will not exceed 1024 bytes, at least not in this test.
 
@@ -140,7 +139,7 @@ Receiver::open_addr (const ACE_INET_Addr &localAddr)
       // actually read something, we will handle it in the handler callback
       ACE_DEBUG ((LM_DEBUG, "********************\n"));
       ACE_DEBUG ((LM_DEBUG,
-                  "%s = %d\n",
+                  "%s = %B\n",
                   "bytes received immediately",
                   number_of_bytes_recvd));
       ACE_DEBUG ((LM_DEBUG, "********************\n"));
@@ -167,35 +166,37 @@ Receiver::open_addr (const ACE_INET_Addr &localAddr)
 }
 
 void
-Receiver::handle_read_dgram (const ACE_Asynch_Read_Dgram::Result &result)
+Receiver::handle_read_dgram (ACE_Asynch_Read_Dgram::Result const &result)
 {
   ACE_DEBUG ((LM_DEBUG,
               "handle_read_dgram called\n"));
 
   ACE_DEBUG ((LM_DEBUG, "********************\n"));
-  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "bytes_to_read", result.bytes_to_read ()));
-  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "handle", result.handle ()));
-  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "bytes_transfered", result.bytes_transferred ()));
+  ACE_DEBUG ((LM_DEBUG, "%s = %B\n", "bytes_to_read", result.bytes_to_read ()));
+  ACE_DEBUG ((LM_DEBUG, "%s = %H\n", "handle", result.handle ()));
+  ACE_DEBUG ((LM_DEBUG, "%s = %B\n", "bytes_transfered", result.bytes_transferred ()));
   ACE_INET_Addr peerAddr;
   result.remote_address (peerAddr);
-  ACE_DEBUG ((LM_DEBUG, "%s = %s:%d\n", "peer_address", peerAddr.get_host_addr (), peerAddr.get_port_number ()));
+  ACE_DEBUG ((LM_DEBUG, "%C = %C:%d\n", "peer_address", peerAddr.get_host_addr (), peerAddr.get_port_number ()));
   ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "flags", result.flags ()));
-  ACE_DEBUG ((LM_DEBUG, "%s = %s\n", "act", result.act ()));
+  ACE_DEBUG ((LM_DEBUG, "%s = %@\n", "act", const_cast<void *> (result.act ())));
   ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "success", result.success ()));
-  ACE_DEBUG ((LM_DEBUG, "%s = %s\n", "completion_key", result.completion_key ()));
+  ACE_DEBUG ((LM_DEBUG, "%s = %@\n", "completion_key", const_cast<void *> (result.completion_key ())));
   ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "error", result.error ()));
   ACE_DEBUG ((LM_DEBUG, "********************\n"));
 
   if (result.success () && result.bytes_transferred () != 0)
     {
       // loop through our message block and print out the contents
-      for (const ACE_Message_Block* msg = result.message_block (); msg != nullptr; msg = msg->cont ())
+      for (ACE_Message_Block const *msg = result.message_block (); msg != nullptr; msg = msg->cont ())
         { // use msg->length () to get the number of bytes written to the message
           // block.
-          ACE_DEBUG ((LM_DEBUG, "Buf=[size=<%d>", msg->length ()));
+          ACE_DEBUG ((LM_DEBUG, "Buf=[size=<%B>", msg->length ()));
           for (u_long i = 0; i < msg->length (); ++i)
-            ACE_DEBUG ((LM_DEBUG,
-                        "%c", (msg->rd_ptr ())[i]));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "%c", (msg->rd_ptr ())[i]));
+            }
           ACE_DEBUG ((LM_DEBUG, "]\n"));
         }
     }
@@ -207,13 +208,13 @@ Receiver::handle_read_dgram (const ACE_Asynch_Read_Dgram::Result &result)
   result.message_block ()->release ();
 
   // Note that we are done with the test.
-  done++;
+  ++done;
 }
 
 /**
  * @class Sender
  *
- * @brief The class will be created by <main>.
+ * @brief The class will be created by @c main().
  */
 class Sender : public ACE_Handler
 {
@@ -223,14 +224,14 @@ public:
 
   //FUZZ: disable check_for_lack_ACE_OS
   ///FUZZ: enable check_for_lack_ACE_OS
-  int open (const ACE_TCHAR *host, u_short port);
+  int open (ACE_TCHAR const *host, u_short port);
 
 protected:
   // These methods are called by the framework
 
   /// This is called when asynchronous writes from the dgram socket
   /// complete
-  void handle_write_dgram (const ACE_Asynch_Write_Dgram::Result &result) override;
+  void handle_write_dgram (ACE_Asynch_Write_Dgram::Result const &result) override;
 
 private:
   /// Network I/O handle
@@ -239,8 +240,8 @@ private:
   /// wd (write dgram): for writing to the socket
   ACE_Asynch_Write_Dgram wd_;
 
-  const char* completion_key_;
-  const char* act_;
+  char const * completion_key_;
+  char const * act_;
 };
 
 Sender::Sender ()
@@ -255,39 +256,43 @@ Sender::~Sender ()
 }
 
 int
-Sender::open (const ACE_TCHAR *host,
+Sender::open (ACE_TCHAR const *host,
               u_short port)
 {
   // Initialize stuff
 
   if (this->sock_dgram_.open (ACE_INET_Addr::sap_any) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "ACE_SOCK_Dgram::open"), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "ACE_SOCK_Dgram::open"), -1);
+    }
 
   // Initialize the asynchronous read.
   if (this->wd_.open (*this,
                       this->sock_dgram_.get_handle (),
                       this->completion_key_,
                       ACE_Proactor::instance ()) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "ACE_Asynch_Write_Dgram::open"), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "ACE_Asynch_Write_Dgram::open"), -1);
+    }
 
   // We are using scatter/gather to send the message header and
   // message body using 2 buffers
 
   // create a message block for the message header
-  ACE_Message_Block* msg = nullptr;
+  ACE_Message_Block *msg {};
   ACE_NEW_RETURN (msg, ACE_Message_Block (100), -1);
-  const char raw_msg [] = "To be or not to be.";
+  char const raw_msg [] = "To be or not to be.";
   // Copy buf into the Message_Block and update the wr_ptr ().
-  msg->copy (raw_msg, ACE_OS::strlen (raw_msg) + 1);
+  msg->copy (raw_msg, std::strlen (raw_msg) + 1);
 
   // create a message block for the message body
-  ACE_Message_Block* body = nullptr;
+  ACE_Message_Block *body {};
   ACE_NEW_RETURN (body, ACE_Message_Block (100), -1);
-  ACE_OS::memset (body->wr_ptr (), 'X', 100);
+  std::memset (body->wr_ptr (), 'X', 100);
   body->wr_ptr (100); // always remember to update the wr_ptr ()
 
   // set body as the cont of msg.  This associates the 2 message blocks so
@@ -298,7 +303,7 @@ Sender::open (const ACE_TCHAR *host,
 
   // do the asynch send
   size_t number_of_bytes_sent = 0;
-  ACE_INET_Addr serverAddr (port, host);
+  ACE_INET_Addr const serverAddr (port, host);
   int res = this->wd_.send (msg, number_of_bytes_sent, 0, serverAddr, this->act_);
 
   switch (res)
@@ -311,7 +316,7 @@ Sender::open (const ACE_TCHAR *host,
       // actually sent something, we will handle it in the handler callback
       ACE_DEBUG ((LM_DEBUG, "********************\n"));
       ACE_DEBUG ((LM_DEBUG,
-                  "%s = %d\n",
+                  "%s = %B\n",
                   "bytes sent immediately",
                   number_of_bytes_sent));
       ACE_DEBUG ((LM_DEBUG, "********************\n"));
@@ -337,22 +342,21 @@ Sender::open (const ACE_TCHAR *host,
 }
 
 void
-Sender::handle_write_dgram (const ACE_Asynch_Write_Dgram::Result &result)
+Sender::handle_write_dgram (ACE_Asynch_Write_Dgram::Result const &result)
 {
   ACE_DEBUG ((LM_DEBUG,
               "handle_write_dgram called\n"));
 
   ACE_DEBUG ((LM_DEBUG, "********************\n"));
-  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "bytes_to_write", result.bytes_to_write ()));
-  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "handle", result.handle ()));
-  ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "bytes_transfered", result.bytes_transferred ()));
+  ACE_DEBUG ((LM_DEBUG, "%s = %B\n", "bytes_to_write", result.bytes_to_write ()));
+  ACE_DEBUG ((LM_DEBUG, "%s = %H\n", "handle", result.handle ()));
+  ACE_DEBUG ((LM_DEBUG, "%s = %B\n", "bytes_transfered", result.bytes_transferred ()));
   ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "flags", result.flags ()));
-  ACE_DEBUG ((LM_DEBUG, "%s = %s\n", "act", result.act ()));
+  ACE_DEBUG ((LM_DEBUG, "%s = %@\n", "act", const_cast<void *> (result.act ())));
   ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "success", result.success ()));
-  ACE_DEBUG ((LM_DEBUG, "%s = %s\n", "completion_key", result.completion_key ()));
+  ACE_DEBUG ((LM_DEBUG, "%s = %@\n", "completion_key", const_cast<void *> (result.completion_key ())));
   ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "error", result.error ()));
   ACE_DEBUG ((LM_DEBUG, "********************\n"));
-
 
   ACE_DEBUG ((LM_DEBUG,
               "Sender completed\n"));
@@ -361,7 +365,7 @@ Sender::handle_write_dgram (const ACE_Asynch_Write_Dgram::Result &result)
   result.message_block ()->release ();
 
   // Note that we are done with the test.
-  done++;
+  ++done;
 }
 
 static int
@@ -371,19 +375,21 @@ parse_args (int argc, ACE_TCHAR *argv[])
   int c;
 
   while ((c = get_opt ()) != EOF)
-    switch (c)
-      {
-      case 'h':
-        host = get_opt.opt_arg ();
-        break;
-      case 'p':
-        port = ACE_OS::atoi (get_opt.opt_arg ());
-        break;
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR, "%p.\n",
-                           "usage :\n"
-                           "-h <host>\n"), -1);
-      }
+    {
+      switch (c)
+        {
+        case 'h':
+          host = get_opt.opt_arg ();
+          break;
+        case 'p':
+          port = ACE_OS::atoi (get_opt.opt_arg ());
+          break;
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR, "%p.\n",
+                             "usage :\n"
+                             "-h <host>\n"), -1);
+        }
+    }
 
   return 0;
 }
@@ -392,7 +398,9 @@ int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   if (parse_args (argc, argv) == -1)
+  {
     return -1;
+  }
 
   Sender sender;
 
@@ -402,17 +410,23 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   if (host == nullptr)
     {
       if (receiver.open_addr (ACE_INET_Addr (port)) == -1)
+      {
         return -1;
+      }
     }
   // If active side
   else if (sender.open (host, port) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   for (int success = 1;
        success > 0  && !done;
        )
-    // Dispatch events via Proactor singleton.
-    success = ACE_Proactor::instance ()->handle_events ();
+    {
+      // Dispatch events via Proactor singleton.
+      success = ACE_Proactor::instance ()->handle_events ();
+    }
 
   return 0;
 }

@@ -1,10 +1,9 @@
-// -*- C++ -*-
 #include "ace/Global_Macros.h"
 #include "ace/OS_NS_sys_msg.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// Open a message queue using the <external_id>.
+/// Open a message queue using the @c external_id.
 
 ACE_INLINE int
 ACE_SV_Message_Queue::open (key_t external_id, int create, int perms)
@@ -61,17 +60,17 @@ ACE_SV_Message_Queue::recv (ACE_SV_Message &mb,
                             int mflags)
 {
   ACE_TRACE ("ACE_SV_Message_Queue::recv");
-  return ACE_OS::msgrcv (this->internal_id_, (void *) &mb,
+  return ACE_OS::msgrcv (this->internal_id_, &mb,
                          length, type, mflags);
 }
 
 ACE_INLINE int
-ACE_SV_Message_Queue::send (const ACE_SV_Message &mb,
+ACE_SV_Message_Queue::send (ACE_SV_Message const &mb,
                             int length,
                             int mflags)
 {
   ACE_TRACE ("ACE_SV_Message_Queue::send");
-  return ACE_OS::msgsnd (this->internal_id_, (void *) &mb,
+  return ACE_OS::msgsnd (this->internal_id_, &mb,
                          length, mflags);
 }
 

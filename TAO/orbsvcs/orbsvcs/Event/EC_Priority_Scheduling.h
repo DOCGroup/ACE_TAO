@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 /**
  *  @file   EC_Priority_Scheduling.h
  *
@@ -37,16 +35,14 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_RTSchedEvent_Export TAO_EC_Priority_Scheduling : public TAO_EC_Scheduling_Strategy
 {
 public:
-  /// Constructor.
-  TAO_EC_Priority_Scheduling (RtecScheduler::Scheduler_ptr scheduler);
+  explicit TAO_EC_Priority_Scheduling (RtecScheduler::Scheduler_ptr scheduler);
 
-  /// Destructor
-  virtual ~TAO_EC_Priority_Scheduling () override;
+  ~TAO_EC_Priority_Scheduling () override = default;
 
-  virtual void add_proxy_supplier_dependencies (
+  void add_proxy_supplier_dependencies (
       TAO_EC_ProxyPushSupplier *supplier,
       TAO_EC_ProxyPushConsumer *consumer) override;
-  virtual void schedule_event (const RtecEventComm::EventSet &event,
+  void schedule_event (RtecEventComm::EventSet const &event,
                                TAO_EC_ProxyPushConsumer *consumer,
                                TAO_EC_Supplier_Filter *filter) override;
 

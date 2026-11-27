@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-// ============================================================================
 /**
  *  @file Test_Output.cpp
  *
@@ -12,7 +9,6 @@
  *  @author David Levine <levine@cs.wustl.edu>
  *  @author Don Hinton <dhinton@dresystems.com>
  */
-// ============================================================================
 
 #include "test_config.h"
 #include "ace/OS_NS_stdio.h"
@@ -21,19 +17,22 @@
 #include "ace/Guard_T.h"
 #include "ace/Object_Manager.h"
 
+#include <memory>
+
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
 
 #include "ace/Framework_Component.h"
 #include "ace/Log_Msg.h"
 #include "ace/ACE.h"
+#include "ace/SString.h"
 
 #if defined (VXWORKS)
 # include "ace/OS_NS_unistd.h"
 # include "ace/OS_NS_fcntl.h"
 #endif /* VXWORKS */
 
-ACE_Test_Output *ACE_Test_Output::instance_ = nullptr;
+ACE_Test_Output *ACE_Test_Output::instance_ {};
 
 ACE_Test_Output::ACE_Test_Output ()
   : output_file_ (nullptr)
@@ -46,7 +45,7 @@ ACE_Test_Output::ACE_Test_Output ()
 ACE_Test_Output::~ACE_Test_Output ()
 {
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
-  ACE_LOG_MSG->msg_ostream (&cerr, false);
+  ACE_LOG_MSG->msg_ostream (std::addressof (cerr), false);
 #endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 
   ACE_LOG_MSG->clr_flags (ACE_Log_Msg::OSTREAM);
@@ -71,53 +70,53 @@ ACE_Test_Output::output_file ()
 }
 
 int
-ACE_Test_Output::set_output (const ACE_TCHAR *filename, int append)
+ACE_Test_Output::set_output (ACE_TCHAR const *filename, int append)
 {
-  ACE_TCHAR temp[MAXPATHLEN + 1] = { 0 };
+  ACE_TString test_dir;
+  bool test_dir_set {};
   // Ignore the error value since the directory may already exist.
-  const ACE_TCHAR *test_dir = nullptr;
 
 #if defined (ACE_WIN32) || !defined (ACE_USES_WCHAR)
-  test_dir = ACE_OS::getenv (ACE_TEXT ("ACE_TEST_DIR"));
-#else
-  ACE_TCHAR tempenv[MAXPATHLEN + 1] = { 0 };
-  char const * const test_dir_n = ACE_OS::getenv ("ACE_TEST_DIR");
-  if (test_dir_n == 0)
+  ACE_TCHAR const * const test_dir_env =
+    ACE_OS::getenv (ACE_TEXT ("ACE_TEST_DIR"));
+  if (test_dir_env != nullptr)
     {
-      test_dir = 0;
+      test_dir = test_dir_env;
+      test_dir_set = true;
     }
-  else
+#else
+  char const * const test_dir_n = ACE_OS::getenv ("ACE_TEST_DIR");
+  if (test_dir_n != nullptr)
     {
-      ACE_OS::strncpy (tempenv,
-                       ACE_TEXT_CHAR_TO_TCHAR (test_dir_n),
-                       MAXPATHLEN);
-      test_dir = tempenv;
+      test_dir = ACE_TEXT_CHAR_TO_TCHAR (test_dir_n);
+      test_dir_set = true;
     }
 
 #endif /* ACE_WIN32 */
-  if (test_dir == nullptr)
+  if (!test_dir_set)
+  {
     test_dir = ACE_DEFAULT_TEST_DIR;
+  }
 
   // This could be done with ACE_OS::sprintf() but it requires different
   // format strings for wide-char POSIX vs. narrow-char POSIX and Windows.
   // Easier to keep straight like this.
-  ACE_OS::strncpy (temp, test_dir, MAXPATHLEN);
-  ACE_OS::strcat (temp, ACE_LOG_DIRECTORY);
-  ACE_OS::strcat (temp,
-                  ACE::basename (filename, ACE_DIRECTORY_SEPARATOR_CHAR));
-  ACE_OS::strcat (temp, ACE_LOG_FILE_EXT_NAME);
+  ACE_TString temp (test_dir);
+  temp += ACE_LOG_DIRECTORY;
+  temp += ACE::basename (filename, ACE_DIRECTORY_SEPARATOR_CHAR);
+  temp += ACE_LOG_FILE_EXT_NAME;
 
 #if defined (ACE_VXWORKS)
   // This is the only way I could figure out to avoid a console
   // warning about opening an existing file (w/o O_CREAT), or
   // attempting to unlink a non-existent one.
-  ACE_HANDLE fd = ACE_OS::open (temp,
+  ACE_HANDLE fd = ACE_OS::open (temp.c_str (),
                                 O_WRONLY|O_CREAT,
                                 S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH);
   if (fd != ERROR)
     {
       ACE_OS::close (fd);
-      ACE_OS::unlink (temp);
+      ACE_OS::unlink (temp.c_str ());
     }
 #else /* ! ACE_VXWORKS */
   // This doesn't seem to work on VxWorks if the directory doesn't
@@ -129,17 +128,23 @@ ACE_Test_Output::set_output (const ACE_TCHAR *filename, int append)
 #endif /* ACE_VXWORKS */
 
 # if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
-  this->output_file_->open (ACE_TEXT_ALWAYS_CHAR (temp),
+  this->output_file_->open (ACE_TEXT_ALWAYS_CHAR (temp.c_str ()),
                             ios::out | (append ? ios::app : ios::trunc));
   if (!this->output_file_->good ())
+  {
     return -1;
+  }
 #else /* when ACE_LACKS_IOSTREAM_TOTALLY */
-  const ACE_TCHAR *fmode = 0;
+  ACE_TCHAR const *fmode {};
   if (append)
-    fmode = ACE_TEXT ("a");
+    {
+      fmode = ACE_TEXT ("a");
+    }
   else
-    fmode = ACE_TEXT ("w");
-  this->output_file_ = ACE_OS::fopen (temp, fmode);
+    {
+      fmode = ACE_TEXT ("w");
+    }
+  this->output_file_ = ACE_OS::fopen (temp.c_str (), fmode);
 # endif /* ACE_LACKS_IOSTREAM_TOTALLY */
 
   ACE_LOG_MSG->msg_ostream (this->output_file_, false);
@@ -188,13 +193,13 @@ ACE_Test_Output::instance ()
   return ACE_Test_Output::instance_;
 }
 
-const ACE_TCHAR *
+ACE_TCHAR const *
 ACE_Test_Output::dll_name ()
 {
   return ACE_TEXT ("Test_Output");
 }
 
-const ACE_TCHAR *
+ACE_TCHAR const *
 ACE_Test_Output::name ()
 {
   return ACE_TEXT ("ACE_Test_Output");

@@ -49,10 +49,10 @@ namespace ACE
               void status (int status);
 
               /// retrieves the current response line(s)
-              const ACE_Array<ACE_CString>& response () const;
+              ACE_Array<ACE_CString> const& response () const;
 
               /// adds a response line
-              Response& operator <<(const ACE_CString& line);
+              Response& operator <<(ACE_CString const& line);
 
               /// Writes the FTP response to the given stream
               void write(std::ostream& str) const;
@@ -109,7 +109,7 @@ namespace ACE
               static StatusType status_type (int status);
 
             private:
-              static const int eof_;
+              static int const eof_;
 
               int read_line (std::istream& is, std::ostream& os);
 

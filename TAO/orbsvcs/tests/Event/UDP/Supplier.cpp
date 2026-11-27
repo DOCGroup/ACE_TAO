@@ -2,7 +2,8 @@
 #include "orbsvcs/RtecEventChannelAdminS.h"
 #include "orbsvcs/Event_Service_Constants.h"
 
-Supplier::Supplier (bool valuetype) : valuetype_ (valuetype), event_count_ (0)
+Supplier::Supplier (bool valuetype)
+  : valuetype_ (valuetype)
 {
 }
 
@@ -18,10 +19,10 @@ Supplier::connect (RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin)
   // Simple publication, but usually the helper classes in
   // $TAO_ROOT/orbsvcs/Event_Utils.h are a better way to do this.
   RtecEventChannelAdmin::SupplierQOS qos;
-  qos.is_gateway = 0;
+  qos.is_gateway = false;
 
   qos.publications.length (1);
-  RtecEventComm::EventHeader& h0 =
+  RtecEventComm::EventHeader &h0 =
     qos.publications[0].event.header;
   h0.type   = ACE_ES_EVENT_UNDEFINED; // first free event type
   h0.source = 1;                      // first free event source
@@ -37,7 +38,7 @@ Supplier::disconnect ()
     {
       this->proxy_->disconnect_push_consumer ();
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
     }
 
@@ -49,7 +50,7 @@ Supplier::disconnect ()
 }
 
 void
-Supplier::insert_into_any (CORBA::Any& any, Components::EventBase* vb)
+Supplier::insert_into_any (CORBA::Any &any, Components::EventBase *vb)
 {
   any <<= vb;
 }
@@ -71,7 +72,7 @@ Supplier::perform_push ()
 
       if (this->valuetype_)
         {
-          OBV_Hello::ValueTypeData * test_data = 0;
+          OBV_Hello::ValueTypeData * test_data {};
           ACE_NEW (test_data, OBV_Hello::ValueTypeData ());
           test_data->data ("ACE/TAO/CIAO");
           insert_into_any (event[0].data.any_value, test_data);
@@ -83,7 +84,7 @@ Supplier::perform_push ()
 
       this->proxy_->push (event);
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
     }
 }

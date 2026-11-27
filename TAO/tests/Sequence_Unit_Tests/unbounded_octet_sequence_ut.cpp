@@ -29,7 +29,7 @@ typedef tested_sequence::element_traits tested_element_traits;
 typedef tested_sequence::allocation_traits tested_allocation_traits;
 typedef details::range_checking<CORBA::Octet,true> range;
 
-static_assert (!std::is_nothrow_move_constructible<tested_sequence>::value);
+static_assert (!std::is_nothrow_move_constructible_v<tested_sequence>);
 
 struct Tester
 {
@@ -427,7 +427,7 @@ struct Tester
   {
     value_type * buffer = alloc_and_init_buffer();
     tested_sequence a(8, 4, buffer, false);
-    CHECK(0 == a.get_buffer(true));
+    CHECK(nullptr == a.get_buffer(true));
     tested_sequence::freebuf(buffer);
     return 0;
   }
@@ -444,7 +444,7 @@ struct Tester
       tested_sequence const & b = a;
       CHECK_EQUAL(0UL, b.maximum());
       CHECK_EQUAL(0UL, b.length());
-      CHECK(0 != b.get_buffer());
+      CHECK(nullptr != b.get_buffer());
       CHECK_EQUAL(true, b.release());
 
       FAIL_RETURN_IF_NOT(c.expect(1), c);

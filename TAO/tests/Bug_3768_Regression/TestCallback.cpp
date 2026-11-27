@@ -1,7 +1,7 @@
 #include "TestCallback.h"
 #include "ace/OS_NS_unistd.h"
 
-TestCallback::TestCallback (CORBA::ORB_ptr orb)
+TestCallback::TestCallback (CORBA::ORB_ptr const orb)
   : work_ (orb)
 {
 }

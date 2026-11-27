@@ -1,12 +1,11 @@
-
 #ifndef _HELLOS_IMPL_H_
 #define _HELLOS_IMPL_H_
 
 #include "ace/Hash_Map_Manager_T.h"
 #include "HelloS.h"
-#include "ace/Atomic_Op_T.h"
+#include <atomic>
 
-extern ACE_Atomic_Op<TAO_SYNCH_MUTEX, u_long> Number_of_Problems;
+extern std::atomic<u_long> Number_of_Problems;
 
 class UIPMC_Object_Impl : public virtual POA_Test::UIPMC_Object
 {
@@ -15,8 +14,10 @@ public:
 
   ~UIPMC_Object_Impl ();
 
-  // The skeleton methods
+  /// @name Skeleton operations
+  /// @{
   void process (Test::Octets const& payload) override;
+  /// @}
 
 private:
   CORBA::ULong payload_;
@@ -31,17 +32,17 @@ private:
   Client_Count_Map received_;
 };
 
-
 class Hello_Impl : public virtual POA_Test::Hello
 {
 public:
-  // Constructor
   Hello_Impl (CORBA::ORB_ptr orb, Test::UIPMC_Object_ptr obj);
 
-  // The skeleton methods
+  /// @name Skeleton operations
+  /// @{
   Test::UIPMC_Object_ptr get_object () override;
 
   void shutdown () override;
+  /// @}
 
 private:
   CORBA::ORB_var orb_;

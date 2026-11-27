@@ -1,4 +1,5 @@
 // author    : Boris Kolpackov <boris@kolpackov.net>
+#include <cstring>
 #include "Reassemble.h"
 #include "ace/OS_NS_stdlib.h"
 
@@ -12,13 +13,15 @@ namespace ACE_RMCast
 
   void Reassemble::recv (Message_ptr m)
   {
-    Map::ENTRY* e = 0;
+    Map::ENTRY* e {};
     Address from (
       static_cast<From const*> (m->find (From::id))->address ());
 
-    if (Data const* data = static_cast<Data const*> (m->find (Data::id)))
+    Data const *data = static_cast<Data const *> (m->find (Data::id));
+    if (data != nullptr)
     {
-      if (Part const* part = static_cast<Part const*> (m->find (Part::id)))
+      Part const *part = static_cast<Part const *> (m->find (Part::id));
+      if (part != nullptr)
       {
         if (map_.find (from, e) == -1)
         {
@@ -46,16 +49,13 @@ namespace ACE_RMCast
           //
 
           if (part->num () == 1)
+          {
             ACE_OS::abort ();
-
-
-          Data const* data = static_cast<Data const*> (m->find (Data::id));
+          }
 
           Data_ptr& new_data = e->int_id_;
 
-          ACE_OS::memcpy (new_data->buf () + new_data->size (),
-                          data->buf (),
-                          data->size ());
+          std::memcpy (new_data->buf () + new_data->size (), data->buf (), data->size ());
 
           //std::cerr << "data->size (): " << data->size () << endl
           //          << "new_data->size (): " << new_data->size () << endl
@@ -63,13 +63,14 @@ namespace ACE_RMCast
 
           new_data->size (new_data->size () + data->size ());
 
-
           if (part->num () == part->of ())
           {
             // Reassembly is complete.
             //
             if (part->total_size () != new_data->size ())
+            {
               ACE_OS::abort ();
+            }
 
             Message_ptr new_msg (new Message ());
 
@@ -106,12 +107,14 @@ namespace ACE_RMCast
         // and forward it up.
         //
         if (map_.find (from, e) != -1)
+        {
           ACE_OS::abort ();
+        }
 
         in_->recv (m);
       }
     }
-    else if (m->find (NoData::id) != 0)
+    else if (m->find (NoData::id) != nullptr)
     {
       if (map_.find (from, e) != -1)
       {

@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Log_Priority.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef ACE_LOG_PRIORITY_H
 #define ACE_LOG_PRIORITY_H
@@ -30,7 +26,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  */
 enum ACE_Log_Priority
 {
-  // = Note, this first argument *must* start at 1!
+  /// The first enumerator must start at 1.
 
   /// Shutdown the logger (decimal 1).
   LM_SHUTDOWN = 01,

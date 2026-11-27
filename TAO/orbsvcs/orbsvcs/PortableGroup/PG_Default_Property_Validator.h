@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  * @file PG_Default_Property_Validator.h
  *
  * @author Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
 
 #ifndef TAO_PG_DEFAULT_PROPERTY_VALIDATOR_H
 #define TAO_PG_DEFAULT_PROPERTY_VALIDATOR_H
@@ -34,36 +30,36 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_PortableGroup_Export TAO_PG_Default_Property_Validator
 {
 public:
-  /// Constructor.
   TAO_PG_Default_Property_Validator ();
 
-  /// Destructor
   virtual ~TAO_PG_Default_Property_Validator () = default;
 
   /// Validate the given properties.  Throw an exception when the
   /// first invalid property is encountered.  The remaining properties
   /// will not be validated.
-  virtual void validate_property (const PortableGroup::Properties & props);
+  virtual void validate_property (PortableGroup::Properties const & props);
 
   /// Validate the given properties/criteria.  All criteria
   /// will be validated regardless of whether or not an invalid
   /// property was encountered.
-  virtual void validate_criteria (const PortableGroup::Properties & criteria);
+  virtual void validate_criteria (PortableGroup::Properties const & criteria);
 
 private:
   /**
    * @name Pre-initialize property Names.
    *
    * These properties are pre-initialized once to reduce property
-   * validation overhead.  Note that the InitialNumberReplicas and
-   * MinimumNumberReplicas properties are not validated since there are
+   * validation overhead.
+   *
+   * @note The InitialNumberReplicas and MinimumNumberReplicas properties
+   * are not validated since there are
    * no restrictions imposed by TAO's PortableGroup implementation
    * regarding the number of such members.
    */
-  //@{
+  /// @{
   PortableGroup::Name membership_;
   PortableGroup::Name factories_;
-  //@}
+  /// @}
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

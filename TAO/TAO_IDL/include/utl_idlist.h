@@ -65,12 +65,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _UTL_IDLIST_UTL_IDLIST_HH
 #define _UTL_IDLIST_UTL_IDLIST_HH
 
-// NOTE: This list class only works correctly because we use single public
-//       inheritance, as opposed to multiple inheritance or public virtual.
-//       It relies on a type-unsafe cast from UTL_List to subclasses, which
-//       will cease to operate correctly if you use either multiple or
-//       public virtual inheritance.
-
 #include "utl_list.h"
 #include "ace/iosfwd.h"
 
@@ -82,6 +76,7 @@ class Identifier;
 class TAO_IDL_FE_Export UTL_IdList : public UTL_List
 {
 public:
+  UTL_IdList () = delete;
   explicit UTL_IdList (Identifier *car, UTL_IdList *cdr = nullptr);
 
   ~UTL_IdList () override = default;
@@ -129,9 +124,10 @@ class TAO_IDL_FE_Export UTL_IdListActiveIterator
   : public UTL_ListActiveIterator
 {
 public:
+  UTL_IdListActiveIterator () = delete;
   explicit UTL_IdListActiveIterator (UTL_IdList *s);
 
-  /// Retrieves the next item.
+  /// Retrieves the current item.
   Identifier *item () const;
 };
 

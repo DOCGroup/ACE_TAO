@@ -10,11 +10,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::UserException &
-CORBA::UserException::operator= (CORBA::UserException const & rhs)
-{
-  this->Exception::operator= (rhs);
-  return *this;
-}
+CORBA::UserException::operator= (CORBA::UserException const &rhs) = default;
 
 // Virtual.  Do not inline.
 CORBA::TypeCode_ptr

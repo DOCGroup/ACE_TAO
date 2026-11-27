@@ -1,13 +1,9 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Any_Unknown_IDL_Type.h
  *
  *  @author Carlos O'Ryan
  *  @author Jeff Parsons
  */
-//=============================================================================
 
 #ifndef TAO_ANY_UNKNOWN_IDL_TYPE_H
 #define TAO_ANY_UNKNOWN_IDL_TYPE_H
@@ -38,6 +34,12 @@ namespace TAO
   class TAO_AnyTypeCode_Export Unknown_IDL_Type : public Any_Impl
   {
   public:
+    Unknown_IDL_Type () = delete;
+    Unknown_IDL_Type (Unknown_IDL_Type const &) = delete;
+    Unknown_IDL_Type (Unknown_IDL_Type &&) = delete;
+    Unknown_IDL_Type &operator= (Unknown_IDL_Type const &) = delete;
+    Unknown_IDL_Type &operator= (Unknown_IDL_Type &&) = delete;
+
     Unknown_IDL_Type (CORBA::TypeCode_ptr,
                       TAO_InputCDR &cdr);
 
@@ -46,7 +48,7 @@ namespace TAO
     ~Unknown_IDL_Type () override;
 
     CORBA::Boolean marshal_value (TAO_OutputCDR &) override;
-    const void *value () const;
+    void const *value () const;
     void free_value () override;
 
     TAO_InputCDR &_tao_get_cdr ();
@@ -59,25 +61,12 @@ namespace TAO
     CORBA::Boolean to_abstract_base (CORBA::AbstractBase_ptr &) const override;
 
   private:
-    // We make the lock global, so that it won't be deleted when shared.
-    // For instance, see Any_Basic_Impl::extract() which copies the insides
-    // from an Unknown_IDL_Type to an Any_Basic_Impl.
-
-    // [Iliyan] However, having a global static makes this a subject
-    // to the whim of the specific compiler implentation. It is the
-    // one deciding the order in which our instance is initialized and
-    // destroyed and that is boundto be a problem
-    // somewhere. Typically, it becomes a problem when a code that
-    // depends on that instance finds that the runtime has already
-    // destroyed it. The scenario plays almost always in the process
-    // shutdown code, after main() exits, having to debug which is a
-    // lot of fun :) ...  Bottom line, use a static function, which
-    // encapsulates a local static initializer, guaranteed to be
-    // initialized at the first invocation. Using ACE_Refcounted_Auto_Ptr
-    // ensures that the ref count will not drop to zero until the library
-    // is unloaded *and* all Unknown_IDL_Type instances have been destroyed.
+    /// A shared lock protects copies of the CDR state held by Any values.
+    /// The function-local static avoids initialization-order problems, and
+    /// the reference-counted pointer keeps the lock alive while instances
+    /// use it.
     using LOCK = ACE_Refcounted_Auto_Ptr<ACE_Lock,
-                                         ACE_Lock_Adapter<TAO_SYNCH_MUTEX> >;
+                                         ACE_Lock_Adapter<TAO_SYNCH_MUTEX>>;
     static LOCK const lock_i ();
     LOCK const lock_;
     mutable TAO_InputCDR cdr_;

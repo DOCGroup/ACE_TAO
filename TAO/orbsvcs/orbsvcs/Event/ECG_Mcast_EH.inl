@@ -1,4 +1,3 @@
-// -*- C++ -*-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
@@ -22,7 +21,7 @@ Observer_Disconnect_Command::Observer_Disconnect_Command (
 ACE_INLINE
 TAO_ECG_Mcast_EH::
 Observer_Disconnect_Command::Observer_Disconnect_Command (
-                          const Observer_Disconnect_Command & rhs)
+                          Observer_Disconnect_Command const &rhs)
   : handle_ (rhs.handle_)
   , ec_ (RtecEventChannelAdmin::EventChannel::_duplicate (rhs.ec_.in()))
 {
@@ -32,7 +31,7 @@ ACE_INLINE
 TAO_ECG_Mcast_EH::Observer_Disconnect_Command &
 TAO_ECG_Mcast_EH::
 Observer_Disconnect_Command::operator= (
-                         const Observer_Disconnect_Command & rhs)
+                         Observer_Disconnect_Command const &rhs)
 {
   this->handle_ = rhs.handle_;
   this->ec_ = RtecEventChannelAdmin::EventChannel::_duplicate (rhs.ec_.in());
@@ -45,8 +44,10 @@ TAO_ECG_Mcast_EH::
 Observer_Disconnect_Command::execute ()
 {
   if (CORBA::is_nil (this->ec_.in ()))
-    // We are not connected.
-    return;
+    {
+      // We are not connected.
+      return;
+    }
 
   RtecEventChannelAdmin::EventChannel_var release_ec =
     this->ec_._retn ();

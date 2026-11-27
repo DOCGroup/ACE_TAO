@@ -21,7 +21,7 @@ int
 HTML_Body_Iterator::next (ACE_CString &url)
 {
   size_t len = BUFSIZ;
-  const char *buf;
+  char const *buf {};
   ACE_CString buffer;
   int href_index = 0;
 
@@ -29,12 +29,14 @@ HTML_Body_Iterator::next (ACE_CString &url)
        buf != nullptr;
        buf = this->url_.stream ().recv (len))
     {
-      buffer.set (buf, BUFSIZ, 1);
+      buffer.set (buf, BUFSIZ, true);
 
       href_index = ACE_Utils::truncate_cast<int> (buffer.find ("HREF"));
 
       if (href_index < 0)
+      {
         href_index = ACE_Utils::truncate_cast<int> (buffer.find ("href"));
+      }
 
       // Grep fpr " and grab the string until end-"
       if ( href_index > 0)
@@ -48,7 +50,9 @@ HTML_Body_Iterator::next (ACE_CString &url)
               buffer.find ('\"', href_index));
 
           if (start_index <= 0)
+          {
             break;
+          }
 
           start_index += href_index;
 
@@ -57,15 +61,17 @@ HTML_Body_Iterator::next (ACE_CString &url)
               buffer.find ('\"', start_index + 1));
 
           if (end_index <= 0)
+          {
             break;
+          }
 
           end_index += start_index + 1;
 
-          ssize_t url_len = end_index - (start_index + 1);
+          ssize_t const url_len = end_index - (start_index + 1);
 
           ACE_CString temp = buffer.substring (start_index + 1,
                                                url_len);
-          url.set (temp.c_str (), len, 1);
+          url.set (temp.c_str (), len, true);
 
           this->url_.stream ().seek (end_index + 1);
 
@@ -77,7 +83,7 @@ HTML_Body_Iterator::next (ACE_CString &url)
 
 HTTP_Header_Iterator::HTTP_Header_Iterator (URL &url)
   : url_ (url),
-    end_of_header_ (0)
+    end_of_header_ (false)
 {
 }
 
@@ -85,7 +91,9 @@ int
 HTTP_Header_Iterator::next (ACE_CString &line)
 {
   if (this->end_of_header_)
-    return 0;
+    {
+      return 0;
+    }
   else
     {
       for (char c;
@@ -97,19 +105,21 @@ HTTP_Header_Iterator::next (ACE_CString &line)
             {
               line.set (this->url_.stream ().recv (),
                         this->url_.stream ().recv_len () - 1,
-                        1);
+                        true);
 
               // Check to see if we're at the end of the header.
               if (this->url_.stream ().peek_char (1) == '\r'
                   && this->url_.stream ().peek_char (2) == '\n')
                 {
-                  this->end_of_header_ = 1;
+                  this->end_of_header_ = true;
                   // We're at the end of the header section.
                   this->url_.stream ().seek (3);
                 }
               else
-                // We're at the end of the line.
-                this->url_.stream ().seek (1);
+                {
+                  // We're at the end of the line.
+                  this->url_.stream ().seek (1);
+                }
 
               return 1;
             }
@@ -119,14 +129,14 @@ HTTP_Header_Iterator::next (ACE_CString &line)
             {
               line.set (this->url_.stream ().recv (),
                         (this->url_.stream ().recv_len ()),
-                        1);
+                        true);
 
               // Check to see if we're at the end of the header.
               if (this->url_.stream ().peek_char (0) == '\n')
                 {
                   // We're at the end of the header section.
                   this->url_.stream ().seek (1);
-                  this->end_of_header_ = 1;
+                  this->end_of_header_ = true;
                 }
 
               return 1;
@@ -147,14 +157,15 @@ URL_Download_Iterator::next (ACE_CString &buffer)
 {
   size_t len = BUFSIZ;
 
-  const char *buf = this->url_.stream ().recv (len);
-
+  char const *buf = this->url_.stream ().recv (len);
 
   if (buf == nullptr)
-    return 0;
+    {
+      return 0;
+    }
   else
     {
-      buffer.set (buf, len, 1);
+      buffer.set (buf, len, true);
       return 1;
     }
 }

@@ -4,71 +4,77 @@
 #include "tao/RTCORBA/RTCORBA.h"
 #include "ace/Get_Opt.h"
 
-const ACE_TCHAR *ior_file = ACE_TEXT ("file://Messenger.ior");
+ACE_TCHAR const *ior_file = ACE_TEXT ("file://Messenger.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
-  int c;
+  int c = 0;
 
   while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'k':
-        ior_file = get_opts.opt_arg ();
-        break;
+    {
+      switch (c)
+        {
+        case 'k':
+          ior_file = get_opts.opt_arg ();
+          break;
 
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-k <ior> "
-                           "\n",
-                           argv [0]),
-                          -1);
-      }
+        case '?':
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "usage:  %s "
+                             "-k <ior> "
+                             "\n",
+                             argv [0]),
+                            -1);
+        }
+    }
   // Indicates successful parsing of the command line
   return 0;
 }
-
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try {
     // Initialize orb
-    CORBA::ORB_var orb = CORBA::ORB_init( argc, argv );
+    CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
 
     if (parse_args (argc, argv) != 0)
-        return 1;
+    {
+      return 1;
+    }
 
     // Get the RTORB
-    CORBA::Object_var obj = orb->resolve_initial_references("RTORB");
-    RTCORBA::RTORB_var rt_orb = RTCORBA::RTORB::_narrow (obj.in());
+    CORBA::Object_var obj = orb->resolve_initial_references ("RTORB");
+    RTCORBA::RTORB_var rt_orb = RTCORBA::RTORB::_narrow (obj.in ());
 
     // PolicyCurrent.
-    obj = orb->resolve_initial_references("PolicyCurrent");
+    obj = orb->resolve_initial_references ("PolicyCurrent");
     CORBA::PolicyCurrent_var policy_current =
-              CORBA::PolicyCurrent::_narrow(obj.in());
-    if (CORBA::is_nil(policy_current.in())) {
-      std::cerr << "Unable to narrow the PolicyCurrent" << std::endl;
-      return 1;
-    }
+              CORBA::PolicyCurrent::_narrow (obj.in ());
+    if (CORBA::is_nil (policy_current.in ()))
+      {
+        std::cerr << "Unable to narrow the PolicyCurrent" << std::endl;
+        return 1;
+      }
 
     // Destringify ior
-    obj = orb->string_to_object(ior_file);
-    if( CORBA::is_nil( obj.in() ) ) {
-      std::cerr << "Nil Messenger reference" << std::endl;
-      return 1;
-    }
+    obj = orb->string_to_object (ior_file);
+    if (CORBA::is_nil (obj.in ()))
+      {
+        std::cerr << "Nil Messenger reference" << std::endl;
+        return 1;
+      }
 
     // Narrow
-    Messenger_var messenger = Messenger::_narrow( obj.in() );
-    if( CORBA::is_nil( messenger.in() ) ) {
-      std::cerr << "Argument is not a Messenger reference" << std::endl;
-      return 1;
-    }
+    Messenger_var messenger = Messenger::_narrow (obj.in ());
+    if (CORBA::is_nil (messenger.in ()))
+      {
+        std::cerr << "Argument is not a Messenger reference" << std::endl;
+        return 1;
+      }
 
     // Set the Private Connection Policy
     CORBA::PolicyList policy_list(1);
@@ -89,27 +95,32 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     CORBA::PolicyList_var inconsistent_policies;
     CORBA::Boolean status =
          messenger->_validate_connection(inconsistent_policies.out());
-    if (!status) {
-      std::cerr << "Unable to explicitly bind to the server" << std::endl;
-      return 1;
-    }
+    if (!status)
+      {
+        std::cerr << "Unable to explicitly bind to the server" << std::endl;
+        return 1;
+      }
 
-    static const CORBA::Short increment = get_increment();
-    for(CORBA::ULong i = 0; i < get_total_lanes(); i++) {
+    CORBA::Short const increment = get_increment ();
+    CORBA::ULong const total_lanes = get_total_lanes ();
+    for (CORBA::ULong i = 0; i < total_lanes; ++i)
+    {
       // Set the priority to one that matches one of the lanes
-      CORBA::Short priority = i * increment;
-      current->the_priority(priority);
+      CORBA::Short const priority = static_cast<CORBA::Short> (i * increment);
+      current->the_priority (priority);
 
       // Send the message
-      CORBA::String_var message = CORBA::string_dup( "Hello!" );
-      messenger->send_message( "TAO User", "TAO Test", message.inout() );
+      CORBA::String_var message = CORBA::string_dup ("Hello!");
+      messenger->send_message ("TAO User", "TAO Test", message.inout ());
     }
   }
-  catch(const CORBA::Exception& ex) {
+  catch (CORBA::Exception const &ex)
+  {
     std::cerr << "MessengerClient caught CORBA exception: " << ex << std::endl;
     return 1;
   }
-  catch(...) {
+  catch (...)
+  {
     std::cerr << "MessengerClient exception" << std::endl;
     return 1;
   }

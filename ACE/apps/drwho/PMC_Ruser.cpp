@@ -4,11 +4,11 @@
 #include "PMC_Ruser.h"
 #include "ace/ACE.h"
 #include "ace/Log_Msg.h"
-#include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
-#include "ace/OS_NS_stdlib.h"
 #include "ace/OS_Memory.h"
 #include "ace/os_include/os_netdb.h"
+#include <cstdlib>
+#include <cstring>
 
 // This function is pretty much a no-op that just sets up the
 // appropriate lookup function to use.
@@ -16,19 +16,21 @@
 int
 PMC_Ruser::encode (char *packet, int &packet_length)
 {
-  if (Options::get_opt (Options::DEBUGGING) != 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "in PMC_Ruser::encode\n"));
+  if (Options::get_opt (Options::DEBUGGING))
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "in PMC_Ruser::encode\n"));
+    }
 
-  ACE_NEW_RETURN (this->ss,
-                  HT_Client,
-                  -1);
+  Search_Struct *lookup {};
+  ACE_NEW_RETURN (lookup, HT_Client, -1);
+  this->ss.reset (lookup);
 
-  SET_PACKET_TYPE (packet, Options::PROTO_RUSER);
+  drwho_set_packet_type (packet, Options::PROTO_RUSER);
 
-  char *buf_ptr = SKIP_PACKET_TYPE (packet);
+  char *buf_ptr = drwho_skip_packet_type (packet);
 
-  *buf_ptr++ = char (Options::get_opt (Options::PRINT_LOGIN_NAME));
+  *buf_ptr++ = static_cast<char> (Options::get_opt (Options::PRINT_LOGIN_NAME));
 
   packet_length = buf_ptr - packet;
   return 1;
@@ -41,7 +43,7 @@ PMC_Ruser::encode (char *packet, int &packet_length)
 int
 PMC_Ruser::decode (char *packet, int &packet_length)
 {
-  if (Options::get_opt (Options::DEBUGGING) != 0)
+  if (Options::get_opt (Options::DEBUGGING))
     {
       ACE_DEBUG ((LM_DEBUG,
                   "in PMC_Ruser::decode, packet_length = %d\n",
@@ -59,15 +61,16 @@ PMC_Ruser::decode (char *packet, int &packet_length)
 
   this->increment_total_users (remote_users);
 
-  for (cp = (char *) ACE::strend (cp);
+  for (cp = const_cast<char *> (ACE::strend (cp));
        *cp != '\n';
-       cp++)
+       ++cp)
     {
       char *host_name = cp;
 
-      for (cp = (char *) ACE::strend (cp);
+      for (cp = const_cast<char *> (ACE::strend (cp));
            *(cp = this->handle_protocol_entries (cp, host_name)) != '\t'; )
-        continue;
+        {
+        }
     }
 
   return 1;
@@ -82,34 +85,40 @@ PMC_Ruser::insert_protocol_info (Protocol_Record &protocol_record)
   Drwho_Node *np = this->get_drwho_node (ACE::strnnew (current_node->get_login_name (),
                                                        MAXUSERIDNAMELEN),
                                          prp->drwho_list_);
-  int length = ACE_OS::strlen (prp->get_host ());
+  int const length = std::strlen (prp->get_host ());
 
   np->set_real_name (ACE::strnew (current_node->get_real_name ()));
 
   if (np->get_active_count () < current_node->get_active_count ())
+  {
     np->set_active_count (current_node->get_active_count ());
+  }
   if (np->get_inactive_count () < current_node->get_inactive_count())
+  {
     np->set_inactive_count (current_node->get_inactive_count ());
+  }
 
   if (length > this->max_key_length)
+  {
     this->max_key_length = length;
+  }
 
   return prp;
 }
 
 char *
-PMC_Ruser::handle_protocol_entries (const char *cp,
-                                    const char *host_name,
-                                    const char *)
+PMC_Ruser::handle_protocol_entries (char const *cp,
+                                    char const *host_name,
+                                    char const *)
 {
   static Protocol_Record protocol_record (1);
   Drwho_Node *current_node = protocol_record.get_drwho_list ();
 
   protocol_record.set_host (host_name);
-  current_node->set_inactive_count (ACE_OS::atoi (cp));
-  current_node->set_active_count (ACE_OS::atoi (cp = ACE_OS::strchr (cp, ' ') + 1));
-  current_node->set_login_name (cp = ACE_OS::strchr (cp, ' ') + 1);
-  current_node->set_real_name (cp = ACE_OS::strchr (cp, '\0') + 1);
+  current_node->set_inactive_count (std::atoi (cp));
+  current_node->set_active_count (std::atoi (cp = std::strchr (cp, ' ') + 1));
+  current_node->set_login_name (cp = std::strchr (cp, ' ') + 1);
+  current_node->set_real_name (cp = std::strchr (cp, '\0') + 1);
 
   this->insert_protocol_info (protocol_record);
 
@@ -119,15 +128,19 @@ PMC_Ruser::handle_protocol_entries (const char *cp,
 void
 PMC_Ruser::process ()
 {
-  const char *(Drwho_Node::*get_name)();
+  char const *(Drwho_Node::*get_name)();
 
   if (Options::get_opt (Options::PRINT_LOGIN_NAME))
-    get_name = &Drwho_Node::get_login_name;
+    {
+      get_name = &Drwho_Node::get_login_name;
+    }
   else
+  {
     get_name = &Drwho_Node::get_real_name;
+  }
 
   for (Protocol_Record *prp;
-       (prp = this->Protocol_Manager::get_each_friend ()) != 0;
+       (prp = this->Protocol_Manager::get_each_friend ()) != nullptr;
        )
     {
       ACE_DEBUG ((LM_DEBUG,
@@ -144,27 +157,39 @@ PMC_Ruser::process ()
           if (np->get_inactive_count () != 0)
             {
               if (np->get_active_count () != 0)
-                ACE_DEBUG ((LM_DEBUG,
-                            "*(%d)",
-                            np->get_active_count ()));
+                {
+                  ACE_DEBUG ((LM_DEBUG,
+                              "*(%d)",
+                              np->get_active_count ()));
+                }
             }
           else if (np->get_active_count () > 1)
-            ACE_DEBUG ((LM_DEBUG,
-                        "*(%d)",
-                        np->get_active_count ()));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "*(%d)",
+                          np->get_active_count ()));
+            }
           else if (np->get_active_count () == 1)
-            ACE_DEBUG ((LM_DEBUG,
-                        "*"));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "*"));
+            }
 
           np = np->next_;
-          if (np == 0)
-            break;
+          if (np == nullptr)
+            {
+              break;
+            }
           else if (Options::get_opt (Options::PRINT_LOGIN_NAME))
-            ACE_DEBUG ((LM_DEBUG,
-                        " "));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          " "));
+            }
           else
-            ACE_DEBUG ((LM_DEBUG,
-                        ", "));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ", "));
+            }
         }
 
       ACE_DEBUG ((LM_DEBUG,
@@ -172,6 +197,4 @@ PMC_Ruser::process ()
     }
 }
 
-PMC_Ruser::PMC_Ruser ()
-{
-}
+PMC_Ruser::PMC_Ruser () = default;

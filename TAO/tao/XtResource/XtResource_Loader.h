@@ -1,13 +1,9 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   XtResource_Loader.h
  *
  *  @author Marek Brudka <mbrudka@aster.pl>
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_XTRESOURCE_LOADER_H
 #define TAO_XTRESOURCE_LOADER_H
@@ -42,11 +38,11 @@ namespace TAO
   class TAO_XtResource_Export XtResource_Loader
   {
   public:
-    XtResource_Loader  (XtAppContext context);
+    explicit XtResource_Loader (XtAppContext context);
 
     virtual ~XtResource_Loader ();
 
-  private:
+    XtResource_Loader () = delete;
     XtResource_Loader (XtResource_Loader const &) = delete;
     XtResource_Loader &operator= (XtResource_Loader const &) = delete;
     XtResource_Loader (XtResource_Loader &&) = delete;

@@ -1,6 +1,3 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
  *  @file    Logging_Test_i.h
  *
@@ -9,8 +6,6 @@
  *
  *  @author   Sergio Flores-Gaitan <sergio@cs.wustl.edu>   Matt Braun <mjb2@cec.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef _LOG_CLIENT_H
 #define _LOG_CLIENT_H
@@ -34,17 +29,20 @@
  *
  * This class declares an interface to run the example client for
  * Logger CORBA server.  All the complexity for initializing the
- * server is hidden in the class.  Just the <run> interface is
+ * server is hidden in the class.  Just the @c run interface is
  * needed.
  */
 class Logger_Client
 {
 public:
-  /// Constructor.
-  Logger_Client ();
+  Logger_Client (Logger_Client const&) = delete;
+  Logger_Client (Logger_Client&&) = delete;
+  Logger_Client& operator= (Logger_Client const&) = delete;
+  Logger_Client& operator= (Logger_Client&&) = delete;
 
-  /// Destructor.
-  ~Logger_Client ();
+  Logger_Client () = default;
+
+  ~Logger_Client () = default;
 
   /// Initialize the client communication endpoint with server.
   int init (int argc, ACE_TCHAR **argv);
@@ -56,10 +54,10 @@ private:
   /// Parses the arguments passed on the command line.
   int parse_args ();
 
-  /// Prepares the <Log_Record> for logging.
+  /// Prepares the @c Log_Record for logging.
   void init_record (Logger::Log_Record &newrec,
                     Logger::Log_Priority lp,
-                    const char *msg);
+                    char const *msg);
 
   /// Initialises the name server and resolves the logger_factory
   int init_naming_service ();
@@ -68,7 +66,7 @@ private:
   int init_loggers ();
 
   /// Shows contents of the record (for debugging purposes).
-  void show_record (Logger::Log_Record &newrec);
+  void show_record (Logger::Log_Record const &newrec) const;
 
   /// Keep a pointer to the ORB for easy access
   CORBA::ORB_var orb_;
@@ -78,10 +76,10 @@ private:
   TAO_Naming_Client my_name_client_;
 
   /// # of arguments on the command line.
-  int argc_;
+  int argc_ {};
 
   /// arguments from command line.
-  ACE_TCHAR **argv_;
+  ACE_TCHAR **argv_ {};
 
   /// A pointer to the Logger_Factory; used in init_loggers
   Logger_Factory_var factory_;

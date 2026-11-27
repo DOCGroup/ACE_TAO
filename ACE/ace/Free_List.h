@@ -1,12 +1,8 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
  *  @file    Free_List.h
  *
  *  @author Darrell Brunsch (brunsch@cs.wustl.edu)
  */
-//=============================================================================
 
 #ifndef ACE_FREE_LIST_H
 #define ACE_FREE_LIST_H
@@ -43,7 +39,7 @@ public:
   virtual void add (T *element) = 0;
 
   /// Takes a element off the freelist and returns it.  It creates
-  /// <inc> new elements if the size is at or below the low water mark.
+  /// @c inc new elements if the size is at or below the low water mark.
   virtual T *remove () = 0;
 
   /// Returns the current size of the free list.
@@ -82,21 +78,21 @@ public:
                         size_t inc = ACE_DEFAULT_FREE_LIST_INC);
 
   /// Destructor - removes all the elements from the free_list.
-  virtual ~ACE_Locked_Free_List ();
+  ~ACE_Locked_Free_List () override;
 
   /// Inserts an element onto the free list (if it isn't past the high
   /// water mark).
-  virtual void add (T *element);
+  void add (T *element) override;
 
   /// Takes a element off the freelist and returns it.  It creates
-  /// <inc> new elements if the size is at or below the low water mark.
-  virtual T *remove ();
+  /// @c inc new elements if the size is at or below the low water mark.
+  T *remove () override;
 
   /// Returns the current size of the free list.
-  virtual size_t size ();
+  size_t size () override;
 
   /// Resizes the free list to @a newsize.
-  virtual void resize (size_t newsize);
+  void resize (size_t newsize) override;
 
   ACE_ALLOC_HOOK_DECLARE;
 
@@ -112,7 +108,7 @@ protected:
   int mode_;
 
   /// Pointer to the first node in the freelist.
-  T *free_list_;
+  T *free_list_ {};
 
   /// Low water mark.
   size_t lwm_;
@@ -124,15 +120,21 @@ protected:
   size_t inc_;
 
   /// Keeps track of the size of the list.
-  size_t size_;
+  size_t size_ {};
 
   /// Synchronization variable for ACE_Timer_Queue.
   ACE_LOCK mutex_;
 
 private:
-  // = Don't allow these operations for now.
-  ACE_Locked_Free_List (const ACE_Locked_Free_List<T, ACE_LOCK> &) = delete;
-  void operator= (const ACE_Locked_Free_List<T, ACE_LOCK> &) = delete;
+#if defined (__GNUC__)
+  __attribute__ ((noinline))
+#endif
+  static void delete_element (T *element);
+
+  ACE_Locked_Free_List (ACE_Locked_Free_List const &) = delete;
+  ACE_Locked_Free_List (ACE_Locked_Free_List &&) = delete;
+  ACE_Locked_Free_List &operator= (ACE_Locked_Free_List const &) = delete;
+  ACE_Locked_Free_List &operator= (ACE_Locked_Free_List &&) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

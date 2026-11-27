@@ -1,4 +1,3 @@
-/* -*- c++ -*- */
 #ifndef JAWS_HEADERS_H
 #define JAWS_HEADERS_H
 
@@ -9,37 +8,35 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-// Use scenario --
-
-// Parse_Headers will parse out a header name and then will want to
-// update "last header data" in Header_Info.  At this point, only the
-// header name is strdup'd.
-
-// Parse_Headers will then append additional data to the header value
-// until the header value of "last header data" is done.
-
-// Parse_Headers will notify Header_Info that "last header data" is
-// done and is ready to be inserted into the Headers data structure.
-// At this point, the header value is strdup'd.
-
+/**
+ * Owns a parsed HTTP header's name and value.
+ *
+ * Parse_Headers builds the name and value in Header_Info, then inserts the
+ * completed header into the header table.
+ */
 class JAWS_Export JAWS_Header_Data
 {
 public:
-  JAWS_Header_Data (const char *name, const char *value = 0, int type = 0);
-  JAWS_Header_Data (const char *name, int type, const char *value = 0);
+  JAWS_Header_Data (char const *name, char const *value = nullptr, int type = 0);
+  JAWS_Header_Data (char const *name, int type, char const *value = nullptr);
   ~JAWS_Header_Data ();
+  JAWS_Header_Data (JAWS_Header_Data const &) = delete;
+  JAWS_Header_Data (JAWS_Header_Data &&) = delete;
+  JAWS_Header_Data &operator= (JAWS_Header_Data const &) = delete;
+  JAWS_Header_Data &operator= (JAWS_Header_Data &&) = delete;
 
-  const char * header_name () const;
-  const char * header_value () const;
+  char const * header_name () const;
+  char const * header_value () const;
   int header_type () const;
 
-  void header_name (const char *name);
-  void header_value (const char *value);
+  void header_name (char const *name);
+  void header_value (char const *value);
   void header_type (int type);
 
 private:
-  const char * header_name_;
-  const char * header_value_;
+  /// Owns the buffers returned by ACE_OS::strdup.
+  char *header_name_;
+  char *header_value_;
   int header_type_;
 };
 
@@ -52,22 +49,21 @@ public:
   JAWS_Headers ();
   ~JAWS_Headers ();
 
+  /// Insert the new data; return 0 on success and -1 on failure.
   int insert (JAWS_Header_Data *new_data);
-  // insert the new data 0 -> success, -1 -> failure
 
-  JAWS_Header_Data * find (const char *const &header_name);
-  // find always begins from the beginning of the list
-  // result is NULL if not found
+  /// Find a header from the beginning of the list; return nullptr if absent.
+  JAWS_Header_Data * find (char const *const &header_name);
 
-  JAWS_Header_Data * find_next (const char *const &header_name);
-  // behaves like find, but from where that last find left off
-  // result is NULL if not found
+  /// Continue searching from the previous find position; return nullptr if
+  /// absent.
+  JAWS_Header_Data * find_next (char const *const &header_name);
 
-  void remove_all (const char *const &header_name);
-  // remove all headers from list that match header_name
+  /// Remove all headers matching header_name.
+  void remove_all (char const *const &header_name);
 
+  /// Return an iterator over the header table.
   JAWS_Header_Table_Iterator &iter ();
-  // returns an iterator to the headers container
 
 private:
   JAWS_Header_Table_Iterator iter_;

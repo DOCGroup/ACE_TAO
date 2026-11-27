@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    SSLIOP_Accept_Strategy.h
  *
@@ -8,8 +5,6 @@
  *
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_SSLIOP_ACCEPT_STRATEGY_H
 #define TAO_SSLIOP_ACCEPT_STRATEGY_H
@@ -64,9 +59,8 @@ namespace TAO
                                    ACE_SSL_SOCK_Acceptor>
     {
     public:
-      /// Constructor.
       Accept_Strategy (TAO_ORB_Core * orb_core,
-                       const ACE_Time_Value & timeout,
+                       ACE_Time_Value const & timeout,
                        bool check_host);
 
       /// Overridden method that forces a passive connection timeout value
@@ -80,7 +74,7 @@ namespace TAO
        * handshake.  This includes both the TCP handshake and the SSL
        * handshake.
        */
-      const ACE_Time_Value timeout_;
+      ACE_Time_Value const timeout_;
       bool const check_host_;
     };
   }  // End SSLIOP namespace

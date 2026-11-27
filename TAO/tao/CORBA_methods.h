@@ -1,5 +1,3 @@
-// -*- C++ -*-
-//=============================================================================
 /**
  *  @file    CORBA_methods.h
  *
@@ -7,7 +5,6 @@
  *
  *  @author Jeff Parsons
  */
-//=============================================================================
 
 #ifndef TAO_CORBA_METHODS_H
 #define TAO_CORBA_METHODS_H
@@ -35,7 +32,7 @@ namespace CORBA
    */
   extern TAO_Export ORB_ptr ORB_init (int & argc,
                                       char * argv[],
-                                      const char * orb_name = nullptr);
+                                      char const *orb_name = nullptr);
 #if defined (ACE_USES_WCHAR)
   extern TAO_Export ORB_ptr ORB_init (int & argc,
                                       wchar_t * argv[],
@@ -43,7 +40,7 @@ namespace CORBA
 
   extern TAO_Export ORB_ptr ORB_init (int & argc,
                                       wchar_t * argv[],
-                                      const wchar_t * orb_name);
+                                      wchar_t const *orb_name);
 #endif
 
   template<typename T> inline Boolean is_nil (T x)

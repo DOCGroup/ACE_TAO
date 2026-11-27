@@ -2,7 +2,6 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     & eval 'exec perl -S $0 $argv:q'
     if 0;
 
-# -*- perl -*-
 #
 # 1. Register server as MANUAL start
 # 2. Start server via tao_imr, it writes IOR and exits

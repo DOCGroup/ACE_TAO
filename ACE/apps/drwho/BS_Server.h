@@ -1,6 +1,3 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
  *  @file    BS_Server.h
  *
@@ -8,8 +5,6 @@
  *
  *  @author Douglas C. Schmidt
  */
-//=============================================================================
-
 
 #ifndef _BS_SERVER_H
 #define _BS_SERVER_H
@@ -24,16 +19,20 @@
 class BS_Server : public Binary_Search
 {
 public:
-  // = Initialization.
-  BS_Server (const char *packet);
+  explicit BS_Server (char const *packet);
+
+  BS_Server (BS_Server const &) = delete;
+  BS_Server &operator= (BS_Server const &) = delete;
+  BS_Server (BS_Server &&) = delete;
+  BS_Server &operator= (BS_Server &&) = delete;
 
   /**
-   * This function is used to merge the <key_name> from server
-   * <host_name> into the sorted list of userids kept on the client's
+   * This function is used to merge the @c key_name from server
+   * @c host_name into the sorted list of userids kept on the client's
    * side.
    */
-  virtual Protocol_Record *insert (const char *key_name,
-                                   int max_len = MAXUSERIDNAMELEN);
+  Protocol_Record *insert (char const *key_name,
+                                   int max_len = MAXUSERIDNAMELEN) override;
 
   /**
    * An iterator, similar to Binary_Search::get_next_friend, though in
@@ -42,7 +41,7 @@ public:
    * we skip over entries that don't have any hosts associated with
    * them.
    */
-  virtual Protocol_Record *get_next_entry ();
+  Protocol_Record *get_next_entry () override;
 };
 
 #endif /* _BS_SERVER_H */

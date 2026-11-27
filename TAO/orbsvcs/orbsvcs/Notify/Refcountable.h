@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 /**
  *  @file Refcountable.h
  *
@@ -22,7 +20,8 @@
 #include "tao/Basic_Types.h"
 #include "ace/Synch_Traits.h"
 #include "ace/Thread_Mutex.h"
-#include "ace/Atomic_Op.h"
+
+#include <atomic>
 
 // Debugging macros
 #ifndef TAO_NOTIFY_REFCOUNT_DIAGNOSTICS
@@ -34,7 +33,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 /**
  * @class TAO_Notify_Refcountable
  *
- * @brief Thread-safe refounting, calls the <release> method when refcount falls to 0.
+ * @brief Thread-safe refounting, calls the @c release method when refcount falls to 0.
  *
  *        The refcount is initialized to 0. When an instance of a
  *        derived class becomes owned by a managed pointer
@@ -60,10 +59,8 @@ class TAO_Notify_Serv_Export TAO_Notify_Refcountable
 public:
   using Ptr = TAO_Notify_Refcountable_Guard_T<TAO_Notify_Refcountable>;
 
-  /// Constructor
   TAO_Notify_Refcountable ();
 
-  /// Destructor
   /// public for stack allocated instances
   virtual ~TAO_Notify_Refcountable ();
 
@@ -73,7 +70,7 @@ public:
   CORBA::ULong _decr_refcnt ();
 
 #if (TAO_NOTIFY_REFCOUNT_DIAGNOSTICS != 0)
-  static void diagnostic_dump( const char* title = nullptr );
+  static void diagnostic_dump (char const *title = nullptr);
 #endif
 
 private:
@@ -82,7 +79,7 @@ private:
 
   /// Use a signed counter so that we can more easily detect
   /// boundary conditions such as too many _decr_refcnt() calls.
-  ACE_Atomic_Op<TAO_SYNCH_MUTEX, CORBA::Long> refcount_;
+  std::atomic<CORBA::Long> refcount_ {};
 
 #if (TAO_NOTIFY_REFCOUNT_DIAGNOSTICS != 0)
   friend class TAO_Notify_Tracker;

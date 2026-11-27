@@ -17,7 +17,7 @@ namespace ACE
     int
     Auto_Update_Starter::svc ()
     {
-      MC_ADMINMANAGER* mgr =
+      MC_ADMINMANAGER * const mgr =
         ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");
 
       /// We want the thread in which the event loop is started to

@@ -10,12 +10,12 @@
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
 
-#include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_string.h"
-#include "ace/OS_NS_ctype.h"
+#include <cctype>
 #include <cstring>
+#include <cstdio>
+#include <memory>
 
-static const char prefix_[] = "uiop";
+static char const prefix_[] = "uiop";
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -25,9 +25,9 @@ TAO_UIOP_Profile::object_key_delimiter () const
   return TAO_UIOP_Profile::object_key_delimiter_;
 }
 
-TAO_UIOP_Profile::TAO_UIOP_Profile (const ACE_UNIX_Addr &addr,
-                                    const TAO::ObjectKey &object_key,
-                                    const TAO_GIOP_Message_Version &version,
+TAO_UIOP_Profile::TAO_UIOP_Profile (ACE_UNIX_Addr const &addr,
+                                    TAO::ObjectKey const &object_key,
+                                    TAO_GIOP_Message_Version const &version,
                                     TAO_ORB_Core *orb_core)
   : TAO_Profile (TAO_TAG_UIOP_PROFILE,
                  orb_core,
@@ -37,10 +37,10 @@ TAO_UIOP_Profile::TAO_UIOP_Profile (const ACE_UNIX_Addr &addr,
 {
 }
 
-TAO_UIOP_Profile::TAO_UIOP_Profile (const char *,
-                                    const TAO::ObjectKey &object_key,
-                                    const ACE_UNIX_Addr &addr,
-                                    const TAO_GIOP_Message_Version &version,
+TAO_UIOP_Profile::TAO_UIOP_Profile (char const *,
+                                    TAO::ObjectKey const &object_key,
+                                    ACE_UNIX_Addr const &addr,
+                                    TAO_GIOP_Message_Version const &version,
                                     TAO_ORB_Core *orb_core)
   : TAO_Profile (TAO_TAG_UIOP_PROFILE,
                  orb_core,
@@ -63,7 +63,7 @@ TAO_UIOP_Profile::~TAO_UIOP_Profile ()
 {
   // Clean up the list of endpoints since we own it.
   // Skip the head, since it is not dynamically allocated.
-  TAO_Endpoint *tmp = nullptr;
+  TAO_Endpoint *tmp {};
 
   for (TAO_Endpoint *next = this->endpoint ()->next ();
        next != nullptr;
@@ -77,7 +77,7 @@ TAO_UIOP_Profile::~TAO_UIOP_Profile ()
 TAO_Endpoint*
 TAO_UIOP_Profile::endpoint ()
 {
-  return &this->endpoint_;
+  return std::addressof (this->endpoint_);
 }
 
 CORBA::ULong
@@ -87,7 +87,7 @@ TAO_UIOP_Profile::endpoint_count () const
 }
 
 void
-TAO_UIOP_Profile::parse_string_i (const char *string)
+TAO_UIOP_Profile::parse_string_i (char const *string)
 {
   if (!string || !*string)
     {
@@ -102,9 +102,9 @@ TAO_UIOP_Profile::parse_string_i (const char *string)
   // version is one that we accept.
 
   // Check for version
-  if (ACE_OS::ace_isdigit (string [0]) &&
+  if (std::isdigit (static_cast<unsigned char> (string [0])) &&
       string[1] == '.' &&
-      ACE_OS::ace_isdigit (string [2]) &&
+      std::isdigit (static_cast<unsigned char> (string [2])) &&
       string[3] == '@')
     {
       // @@ This may fail for non-ascii character sets [but take that
@@ -125,7 +125,6 @@ TAO_UIOP_Profile::parse_string_i (const char *string)
                    CORBA::COMPLETED_NO);
     }
 
-
   // Pull off the "rendezvous point" part of the objref
   // Copy the string because we are going to modify it...
   CORBA::String_var copy (string);
@@ -143,11 +142,11 @@ TAO_UIOP_Profile::parse_string_i (const char *string)
       // No rendezvous point specified
     }
 
-  CORBA::ULong length = cp - start;
+  CORBA::ULong const length = cp - start;
 
   CORBA::String_var rendezvous = CORBA::string_alloc (length);
 
-  ACE_OS::strncpy (rendezvous.inout (), start, length);
+  std::memcpy (rendezvous.inout (), start, length);
   rendezvous[length] = '\0';
 
   if (this->endpoint_.object_addr_.set (rendezvous.in ()) != 0)
@@ -170,24 +169,30 @@ TAO_UIOP_Profile::parse_string_i (const char *string)
 }
 
 CORBA::Boolean
-TAO_UIOP_Profile::do_is_equivalent (const TAO_Profile *other_profile)
+TAO_UIOP_Profile::do_is_equivalent (TAO_Profile const *other_profile)
 {
-  const TAO_UIOP_Profile *op =
-    dynamic_cast <const TAO_UIOP_Profile *> (other_profile);
+  TAO_UIOP_Profile const *op =
+    dynamic_cast <TAO_UIOP_Profile const *> (other_profile);
 
   if (op == nullptr)
+  {
     return false;
+  }
 
   // Check endpoints equivalence.
-  const TAO_UIOP_Endpoint *other_endp = &op->endpoint_;
-  for (TAO_UIOP_Endpoint *endp = &this->endpoint_;
+  TAO_UIOP_Endpoint const *other_endp = std::addressof (op->endpoint_);
+  for (TAO_UIOP_Endpoint *endp = std::addressof (this->endpoint_);
        endp != nullptr;
        endp = endp->next_)
     {
       if (endp->is_equivalent (other_endp))
-        other_endp = other_endp->next_;
+        {
+          other_endp = other_endp->next_;
+        }
       else
+      {
         return false;
+      }
     }
 
   return true;
@@ -197,8 +202,8 @@ CORBA::ULong
 TAO_UIOP_Profile::hash (CORBA::ULong max)
 {
   // Get the hashvalue for all endpoints.
-  CORBA::ULong hashval = 0;
-  for (TAO_UIOP_Endpoint *endp = &this->endpoint_;
+  CORBA::ULong hashval {};
+  for (TAO_UIOP_Endpoint *endp = std::addressof (this->endpoint_);
        endp != nullptr;
        endp = endp->next_)
     {
@@ -208,7 +213,7 @@ TAO_UIOP_Profile::hash (CORBA::ULong max)
   hashval += this->version_.minor;
   hashval += this->tag ();
 
-  const TAO::ObjectKey &ok =
+  TAO::ObjectKey const &ok =
     this->ref_object_key_->object_key ();
 
   if (ok.length () >= 4)
@@ -228,9 +233,8 @@ TAO_UIOP_Profile::add_endpoint (TAO_UIOP_Endpoint *endp)
   endp->next_ = this->endpoint_.next_;
   this->endpoint_.next_ = endp;
 
-  this->count_++;
+  ++this->count_;
 }
-
 
 char *
 TAO_UIOP_Profile::to_string () const
@@ -239,23 +243,23 @@ TAO_UIOP_Profile::to_string () const
   TAO::ObjectKey::encode_sequence_to_string (key.inout(),
                                             this->ref_object_key_->object_key ());
 
-  u_int buflen = (8 /* "corbaloc" */ +
+  u_int const buflen = (8 /* "corbaloc" */ +
                   1 /* colon separator */ +
-                  ACE_OS::strlen (::prefix_) +
+                  std::strlen (::prefix_) +
                   1 /* colon separator */ +
                   1 /* major version */ +
                   1 /* decimal point */ +
                   1 /* minor version */ +
                   1 /* `@' character */ +
-                  ACE_OS::strlen (this->endpoint_.rendezvous_point ()) +
+                  std::strlen (this->endpoint_.rendezvous_point ()) +
                   1 /* object key separator */ +
-                  ACE_OS::strlen (key.in ()));
+                  std::strlen (key.in ()));
 
   char * buf = CORBA::string_alloc (buflen);
 
-  static const char digits [] = "0123456789";
+  static char const digits [] = "0123456789";
 
-  ACE_OS::sprintf (buf,
+  std::sprintf (buf,
                    "corbaloc:%s:%c.%c@%s%c%s",
                    ::prefix_,
                    digits [this->version_.major],
@@ -266,7 +270,7 @@ TAO_UIOP_Profile::to_string () const
   return buf;
 }
 
-const char *
+char const *
 TAO_UIOP_Profile::prefix ()
 {
   return ::prefix_;
@@ -275,10 +279,12 @@ TAO_UIOP_Profile::prefix ()
 int
 TAO_UIOP_Profile::decode_profile (TAO_InputCDR& cdr)
 {
-  char *rendezvous = nullptr;
+  char *rendezvous {};
 
   // Get rendezvous_point
-  if (cdr.read_string (rendezvous) == 0)
+  int const read_result = cdr.read_string (rendezvous);
+  std::unique_ptr<char[]> const rendezvous_owner (rendezvous);
+  if (read_result == 0)
     {
       TAOLIB_DEBUG ((LM_DEBUG, "error decoding UIOP rendezvous_point"));
       return -1;
@@ -300,9 +306,6 @@ TAO_UIOP_Profile::decode_profile (TAO_InputCDR& cdr)
         }
     }
 
-  // Clean up
-  delete [] rendezvous;
-
   return 1;
 }
 
@@ -321,7 +324,9 @@ TAO_UIOP_Profile::create_profile_body (TAO_OutputCDR &encap) const
 
   // OCTET SEQUENCE for object key
   if (this->ref_object_key_)
-    encap << this->ref_object_key_->object_key ();
+    {
+      encap << this->ref_object_key_->object_key ();
+    }
   else
     {
       TAOLIB_ERROR ((LM_ERROR,
@@ -331,7 +336,9 @@ TAO_UIOP_Profile::create_profile_body (TAO_OutputCDR &encap) const
 
   if (this->version_.major > 1
       || this->version_.minor > 0)
+  {
     this->tagged_components ().encode (encap);
+  }
 }
 
 int
@@ -346,8 +353,8 @@ TAO_UIOP_Profile::encode_endpoints ()
   TAO_UIOPEndpointSequence endpoints;
   endpoints.length (this->count_);
 
-  TAO_UIOP_Endpoint *endpoint = &this->endpoint_;
-  for (size_t i = 0;
+  TAO_UIOP_Endpoint *endpoint = std::addressof (this->endpoint_);
+  for (size_t i {};
        i < this->count_;
        ++i)
     {
@@ -361,7 +368,9 @@ TAO_UIOP_Profile::encode_endpoints ()
   TAO_OutputCDR out_cdr;
   if ((out_cdr << ACE_OutputCDR::from_boolean (TAO_ENCAP_BYTE_ORDER)) == 0
       || (out_cdr << endpoints) == 0)
+  {
     return -1;
+  }
 
   this->set_tagged_components (out_cdr);
 
@@ -376,23 +385,27 @@ TAO_UIOP_Profile::decode_endpoints ()
 
   if (this->tagged_components_.get_component (tagged_component))
     {
-      const CORBA::Octet *buf =
+      CORBA::Octet const *buf =
         tagged_component.component_data.get_buffer ();
 
-      TAO_InputCDR in_cdr (reinterpret_cast <const char*>(buf),
+      TAO_InputCDR in_cdr (reinterpret_cast <char const *>(buf),
                            tagged_component.component_data.length ());
 
       // Extract the Byte Order.
       CORBA::Boolean byte_order;
       if ((in_cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
+      {
         return -1;
+      }
       in_cdr.reset_byte_order (static_cast<int>(byte_order));
 
       // Extract endpoints sequence.
       TAO_UIOPEndpointSequence endpoints;
 
       if ((in_cdr >> endpoints) == 0)
+      {
         return -1;
+      }
 
       // Get the priority of the first endpoint (head of the list.
       // It's other data is extracted as part of the standard profile
@@ -409,7 +422,7 @@ TAO_UIOP_Profile::decode_endpoints ()
            i > 0;
            --i)
         {
-          TAO_UIOP_Endpoint *endpoint = nullptr;
+          TAO_UIOP_Endpoint *endpoint {};
           ACE_NEW_RETURN (endpoint,
                           TAO_UIOP_Endpoint,
                           -1);

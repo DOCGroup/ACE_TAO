@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file Admin.h
  *
@@ -20,6 +19,7 @@
 #include "orbsvcs/Notify/EventTypeSeq.h"
 #include "orbsvcs/Notify/Topology_Object.h"
 #include "orbsvcs/Notify/EventChannel.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -39,16 +39,19 @@ public:
   using SEQ = CosNotifyChannelAdmin::AdminIDSeq;
   using SEQ_VAR = CosNotifyChannelAdmin::AdminIDSeq_var;
 
-  /// Constructor
   TAO_Notify_Admin ();
 
-  /// Destructor
-  virtual ~TAO_Notify_Admin ();
+  ~TAO_Notify_Admin () override;
+
+  TAO_Notify_Admin (TAO_Notify_Admin const &) = delete;
+  TAO_Notify_Admin (TAO_Notify_Admin &&) = delete;
+  TAO_Notify_Admin &operator= (TAO_Notify_Admin const &) = delete;
+  TAO_Notify_Admin &operator= (TAO_Notify_Admin &&) = delete;
 
   /// Init
   void init (TAO_Notify::Topology_Parent * parent);
 
-  /// Insert the proxy in the <proxy_container_>.
+  /// Insert the proxy in the @c proxy_container_.
   void insert (TAO_Notify_Proxy* proxy);
 
   /// Remove type from container_ and cleanup any EC resources.
@@ -72,30 +75,31 @@ public:
   TAO_Notify_EventChannel * event_channel () const;
 
   /// Shutdown
-  virtual int shutdown ();
+  int shutdown () override;
 
-  virtual void save_persistent (TAO_Notify::Topology_Saver& saver);
-  virtual TAO_Notify::Topology_Object* load_child (const ACE_CString &type,
-    CORBA::Long id, const TAO_Notify::NVPList& attrs);
-  virtual void reconnect ();
+  void save_persistent (TAO_Notify::Topology_Saver& saver) override;
+  TAO_Notify::Topology_Object* load_child (ACE_CString const &type,
+    CORBA::Long id, TAO_Notify::NVPList const &attrs) override;
+  void reconnect () override;
 
   virtual void validate ();
 
   void set_default (bool is_default);
   bool is_default () const;
-  virtual void load_attrs(const TAO_Notify::NVPList& attrs);
+  void load_attrs(TAO_Notify::NVPList const &attrs) override;
 
 protected:
-  void save_attrs (TAO_Notify::NVPList& attrs);
-  virtual const char * get_admin_type_name () const = 0;
+  void save_attrs (TAO_Notify::NVPList& attrs) override;
+  virtual char const * get_admin_type_name () const = 0;
 
   using TAO_Notify_Proxy_Container = TAO_Notify_Container_T<TAO_Notify_Proxy>;
 
   TAO_Notify_Proxy_Container& proxy_container();
-  /// = Data Members
 
+  /// @name Data members
+  /// @{
   /// The EventChannel.
-  TAO_Notify_EventChannel::Ptr ec_;
+  TAO_Notify_EventChannel::Ptr ec_ {};
 
   /// The types that we've subscribed our proxy objects with the event manager.
   TAO_Notify_EventTypeSeq subscribed_types_;
@@ -104,15 +108,18 @@ protected:
   TAO_Notify_FilterAdmin filter_admin_;
 
   /// Filter operator
-  CosNotifyChannelAdmin::InterFilterGroupOperator filter_operator_;
+  CosNotifyChannelAdmin::InterFilterGroupOperator filter_operator_ {
+    CosNotifyChannelAdmin::OR_OP
+  };
 
-  bool is_default_;
+  bool is_default_ {};
+  /// @}
 private:
   /// Remove type from container_
   void remove (TAO_Notify_Proxy *proxy);
 
   /// The Proxy Container.
-  std::unique_ptr< TAO_Notify_Proxy_Container > proxy_container_;
+  std::unique_ptr<TAO_Notify_Proxy_Container> proxy_container_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

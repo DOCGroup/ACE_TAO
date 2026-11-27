@@ -5,12 +5,13 @@
 #include "tao/CodecFactory/CodecFactory.h"
 #include "tao/RTScheduling/Request_Interceptor.h"
 
-FP_Segment_Sched_Param_Policy::FP_Segment_Sched_Param_Policy ()
-{
-}
+#include <cstring>
+#include <utility>
+
+FP_Segment_Sched_Param_Policy::FP_Segment_Sched_Param_Policy () = default;
 
 FP_Segment_Sched_Param_Policy::FP_Segment_Sched_Param_Policy (
-    const FP_Segment_Sched_Param_Policy &rhs)
+    FP_Segment_Sched_Param_Policy const &rhs)
   : CORBA::Object (),
   CORBA::Policy (),
   FP_Scheduling::SegmentSchedulingParameterPolicy (),
@@ -27,7 +28,7 @@ FP_Segment_Sched_Param_Policy::value ()
 
 void
 FP_Segment_Sched_Param_Policy::value (
-        const FP_Scheduling::SegmentSchedulingParameter & value)
+        FP_Scheduling::SegmentSchedulingParameter const & value)
 {
   this->value_ = value;
 }
@@ -35,7 +36,7 @@ FP_Segment_Sched_Param_Policy::value (
 CORBA::Policy_ptr
 FP_Segment_Sched_Param_Policy::copy ()
 {
-  FP_Segment_Sched_Param_Policy* tmp = 0;
+  FP_Segment_Sched_Param_Policy *tmp {};
   ACE_NEW_THROW_EX (tmp, FP_Segment_Sched_Param_Policy (*this),
                     CORBA::NO_MEMORY (TAO::VMCID,
                                       CORBA::COMPLETED_NO));
@@ -73,7 +74,7 @@ Fixed_Priority_Scheduler::Fixed_Priority_Scheduler (
   Kokyu::DSRT_Dispatcher_Factory<FP_Scheduler_Traits>::DSRT_Dispatcher_Auto_Ptr
     tmp( Kokyu::DSRT_Dispatcher_Factory<FP_Scheduler_Traits>::
          create_DSRT_dispatcher (config) );
-  kokyu_dispatcher_ = std::move(tmp);
+  kokyu_dispatcher_ = std::move (tmp);
 
   CORBA::Object_var object =
     orb->resolve_initial_references ("RTScheduler_Current");
@@ -116,8 +117,7 @@ Fixed_Priority_Scheduler::shutdown ()
 
 FP_Scheduling::SegmentSchedulingParameterPolicy_ptr
 Fixed_Priority_Scheduler::create_segment_scheduling_parameter (
-        const FP_Scheduling::SegmentSchedulingParameter & value
-      )
+        FP_Scheduling::SegmentSchedulingParameter const & value)
 {
   FP_Scheduling::SegmentSchedulingParameterPolicy_ptr
     segment_sched_param_policy;
@@ -134,10 +134,9 @@ Fixed_Priority_Scheduler::create_segment_scheduling_parameter (
   return segment_sched_param_policy;
 }
 
-
 void
-Fixed_Priority_Scheduler::begin_new_scheduling_segment (const RTScheduling::Current::IdType& guid,
-                                             const char *,
+Fixed_Priority_Scheduler::begin_new_scheduling_segment (RTScheduling::Current::IdType const & guid,
+                                             char const *,
                                              CORBA::Policy_ptr sched_policy,
                                              CORBA::Policy_ptr)
 {
@@ -147,11 +146,8 @@ Fixed_Priority_Scheduler::begin_new_scheduling_segment (const RTScheduling::Curr
 #endif
 
 #ifdef KOKYU_DSRT_LOGGING
-  int int_guid;
-  ACE_OS::memcpy (&int_guid,
-                  guid.get_buffer (),
-                  guid.length ());
-  ACE_DEBUG ((LM_DEBUG, "(%t|%T): guid is %d\n", int_guid));
+  size_t const guid_value = guid_to_size_t (guid);
+  ACE_DEBUG ((LM_DEBUG, "(%t|%T): guid is %B\n", guid_value));
 #endif
 
   FP_Scheduler_Traits::QoSDescriptor_t qos;
@@ -170,8 +166,8 @@ Fixed_Priority_Scheduler::begin_new_scheduling_segment (const RTScheduling::Curr
 }
 
 void
-Fixed_Priority_Scheduler::begin_nested_scheduling_segment (const RTScheduling::Current::IdType &guid,
-                                                           const char *name,
+Fixed_Priority_Scheduler::begin_nested_scheduling_segment (RTScheduling::Current::IdType const &guid,
+                                                           char const *name,
                                                            CORBA::Policy_ptr sched_param,
                                                            CORBA::Policy_ptr implicit_sched_param)
 {
@@ -182,8 +178,8 @@ Fixed_Priority_Scheduler::begin_nested_scheduling_segment (const RTScheduling::C
 }
 
 void
-Fixed_Priority_Scheduler::update_scheduling_segment (const RTScheduling::Current::IdType &guid,
-                                          const char* name,
+Fixed_Priority_Scheduler::update_scheduling_segment (RTScheduling::Current::IdType const &guid,
+                                          char const *name,
                                           CORBA::Policy_ptr sched_policy,
                                           CORBA::Policy_ptr implicit_sched_param)
 {
@@ -191,11 +187,8 @@ Fixed_Priority_Scheduler::update_scheduling_segment (const RTScheduling::Current
   ACE_UNUSED_ARG ((implicit_sched_param));
 
 #ifdef KOKYU_DSRT_LOGGING
-  int int_guid ;
-  ACE_OS::memcpy (&int_guid,
-                  guid.get_buffer (),
-                  guid.length ());
-  ACE_DEBUG ((LM_DEBUG, "(%t|%T): update_sched_seg::guid is %d\n", int_guid));
+  size_t const guid_value = guid_to_size_t (guid);
+  ACE_DEBUG ((LM_DEBUG, "(%t|%T): update_sched_seg::guid is %B\n", guid_value));
 #endif
 
   FP_Scheduling::SegmentSchedulingParameterPolicy_var sched_param_policy =
@@ -213,27 +206,23 @@ Fixed_Priority_Scheduler::update_scheduling_segment (const RTScheduling::Current
 }
 
 void
-Fixed_Priority_Scheduler::end_scheduling_segment (const RTScheduling::Current::IdType &guid,
-                                       const char *)
+Fixed_Priority_Scheduler::end_scheduling_segment (RTScheduling::Current::IdType const &guid,
+                                       char const *)
 {
 #ifdef KOKYU_DSRT_LOGGING
-  int int_guid;
-  ACE_OS::memcpy (&int_guid,
-                  guid.get_buffer (),
-                  guid.length ());
-  ACE_DEBUG ((LM_DEBUG, "(%t|%T) call to end_sched_segment for guid %d\n", int_guid));
+  size_t const guid_value = guid_to_size_t (guid);
+  ACE_DEBUG ((LM_DEBUG, "(%t|%T) call to end_sched_segment for guid %B\n", guid_value));
 #endif
 
   kokyu_dispatcher_->cancel_schedule (guid);
 }
 
 void
-Fixed_Priority_Scheduler::end_nested_scheduling_segment (const RTScheduling::Current::IdType &,
-                                                         const char *,
+Fixed_Priority_Scheduler::end_nested_scheduling_segment (RTScheduling::Current::IdType const &,
+                                                         char const *,
                                                          CORBA::Policy_ptr)
 {
 }
-
 
 void
 Fixed_Priority_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr ri)
@@ -245,7 +234,7 @@ Fixed_Priority_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_p
 #ifdef KOKYU_DSRT_LOGGING
   ACE_DEBUG ((LM_DEBUG,
               "(%t|%T): send_request "
-              "from \"%s\"\n",
+              "from \"%C\"\n",
               operation.in ()));
 #endif
   // Make the context to send the context to the target
@@ -277,13 +266,10 @@ Fixed_Priority_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_p
       desired_priority = sched_param.base_priority;
 
 #ifdef KOKYU_DSRT_LOGGING
-      int int_guid;
-      ACE_OS::memcpy (&int_guid,
-                      guid->get_buffer (),
-                      guid->length ());
+      size_t const guid_value = guid_to_size_t (guid.in ());
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%t): send_request desired_priority from current = %d, guid = %d\n"),
-                  desired_priority, int_guid));
+                  ACE_TEXT ("(%t): send_request desired_priority from current = %d, guid = %B\n"),
+                  desired_priority, guid_value));
 #endif
 
       //Fill the guid in the SC Qos struct
@@ -294,7 +280,7 @@ Fixed_Priority_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_p
       sc_qos_as_any <<= sc_qos;
 
       CORBA::OctetSeq_var cdtmp = codec_->encode (sc_qos_as_any);
-      sc.context_data = cdtmp.in ();
+      sc.context_data = std::move (*cdtmp.ptr ());
 
 #ifdef KOKYU_DSRT_LOGGING
       ACE_DEBUG ((LM_DEBUG,
@@ -302,9 +288,8 @@ Fixed_Priority_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_p
 #endif
 
       // Add this context to the service context list.
-      ri->add_request_service_context (sc, 0);
+      ri->add_request_service_context (sc, false);
     }
-
 
 #ifdef KOKYU_DSRT_LOGGING
   ACE_DEBUG ((LM_DEBUG,
@@ -328,28 +313,31 @@ Fixed_Priority_Scheduler::receive_request (PortableInterceptor::ServerRequestInf
                                 CORBA::Policy_out sched_param_out,
                                 CORBA::Policy_out /*implicit_sched_param_out*/)
 {
-  const Kokyu::Svc_Ctxt_DSRT_QoS* sc_qos_ptr = 0;
+  Kokyu::Svc_Ctxt_DSRT_QoS const *sc_qos_ptr {};
 
 #ifdef KOKYU_DSRT_LOGGING
   ACE_DEBUG ((LM_DEBUG, "(%t|%T):entered FP_Scheduler::receive_request\n"));
 #endif
 
   RTScheduling::Current::IdType guid;
+  RTScheduling::Current::IdType const *schedule_guid = &guid;
 
   CORBA::String_var operation = ri->operation ();
 
 #ifdef KOKYU_DSRT_LOGGING
   ACE_DEBUG ((LM_DEBUG,
               "(%t|%T): receive_request from "
-              "\"%s\"\n",
+              "\"%C\"\n",
               operation.in ()));
 #endif
 
   // Ignore the "_is_a" operation since it may have been invoked
   // locally on the server side as a side effect of another call,
   // meaning that the client hasn't added the service context yet.
-  if (ACE_OS::strcmp ("_is_a", operation.in ()) == 0)
+  if (std::strcmp ("_is_a", operation.in ()) == 0)
+  {
     return;
+  }
 
   IOP::ServiceContext_var sc =
     ri->get_request_service_context (Server_Interceptor::SchedulingInfo);
@@ -362,12 +350,8 @@ Fixed_Priority_Scheduler::receive_request (PortableInterceptor::ServerRequestInf
     }
   else
     {
-      CORBA::OctetSeq oc_seq = CORBA::OctetSeq (sc->context_data.length (),
-                                                 sc->context_data.length (),
-                                                 sc->context_data.get_buffer (),
-                                                 0);
       CORBA::Any sc_qos_as_any;
-      CORBA::Any_var scqostmp = codec_->decode (oc_seq);
+      CORBA::Any_var scqostmp = codec_->decode (sc->context_data);
       sc_qos_as_any = scqostmp.in ();
       //Don't store in a _var, since >>= returns a pointer to an
       //internal buffer and we are not supposed to free it.
@@ -379,19 +363,16 @@ Fixed_Priority_Scheduler::receive_request (PortableInterceptor::ServerRequestInf
 
       ACE_NEW (guid_out.ptr (),
                RTScheduling::Current::IdType);
-      guid_out.ptr ()->length (guid.length ());
-      *(guid_out.ptr ()) = guid;
 
 #ifdef KOKYU_DSRT_LOGGING
-      int int_guid;
-      ACE_OS::memcpy (&int_guid,
-                      guid.get_buffer (),
-                      guid.length ());
+      size_t const guid_value = guid_to_size_t (guid);
       ACE_DEBUG ((LM_DEBUG,
-                  "(%t|%T): Desired_Priority = %d, guid = %d in recvd service context\n",
+                  "(%t|%T): Desired_Priority = %d, guid = %B in recvd service context\n",
                   desired_priority,
-                  int_guid));
+                  guid_value));
 #endif
+      *(guid_out.ptr ()) = std::move (guid);
+      schedule_guid = guid_out.ptr ();
 
       FP_Scheduling::SegmentSchedulingParameter sched_param;
       sched_param.base_priority = desired_priority;
@@ -400,7 +381,7 @@ Fixed_Priority_Scheduler::receive_request (PortableInterceptor::ServerRequestInf
 
   FP_Scheduler_Traits::QoSDescriptor_t qos;
   qos.priority_ = desired_priority;
-  this->kokyu_dispatcher_->schedule (guid, qos);
+  this->kokyu_dispatcher_->schedule (*schedule_guid, qos);
 
 #ifdef KOKYU_DSRT_LOGGING
   ACE_DEBUG ((LM_DEBUG, "(%t|%T): receive_request interceptor done\n"));
@@ -423,7 +404,7 @@ Fixed_Priority_Scheduler::send_reply (PortableInterceptor::ServerRequestInfo_ptr
 
 #ifdef KOKYU_DSRT_LOGGING
   ACE_DEBUG ((LM_DEBUG,
-              "(%t|%T): send_reply from \"%s\"\n",
+              "(%t|%T): send_reply from \"%C\"\n",
               ri->operation ()));
 #endif
 
@@ -462,10 +443,10 @@ Fixed_Priority_Scheduler::send_reply (PortableInterceptor::ServerRequestInfo_ptr
       sc_qos_as_any <<= sc_qos;
 
       CORBA::OctetSeq_var cdtmp = codec_->encode (sc_qos_as_any);
-      sc.context_data = cdtmp.in ();
+      sc.context_data = std::move (*cdtmp.ptr ());
 
       // Add this context to the service context list.
-      ri->add_reply_service_context (sc, 1);
+      ri->add_reply_service_context (sc, true);
 
 #ifdef KOKYU_DSRT_LOGGING
       ACE_DEBUG ((LM_DEBUG, "(%t|%T):reply sc added\n"));
@@ -506,7 +487,7 @@ Fixed_Priority_Scheduler::receive_reply (PortableInterceptor::ClientRequestInfo_
 #ifdef KOKYU_DSRT_LOGGING
   ACE_DEBUG ((LM_DEBUG,
               "(%t|%T):receive_reply from "
-              "\"%s\"\n",
+              "\"%C\"\n",
               opname.c_str ()));
 #endif
 
@@ -521,16 +502,12 @@ Fixed_Priority_Scheduler::receive_reply (PortableInterceptor::ClientRequestInfo_
     }
   else
     {
-      CORBA::OctetSeq oc_seq = CORBA::OctetSeq (sc->context_data.length (),
-                                                sc->context_data.length (),
-                                                sc->context_data.get_buffer (),
-                                                0);
 
       //Don't store in a _var, since >>= returns a pointer to an internal buffer
       //and we are not supposed to free it.
-      const Kokyu::Svc_Ctxt_DSRT_QoS* sc_qos_ptr = 0;
+      Kokyu::Svc_Ctxt_DSRT_QoS const *sc_qos_ptr {};
       CORBA::Any sc_qos_as_any;
-      CORBA::Any_var scqostmp = codec_->decode (oc_seq);
+      CORBA::Any_var scqostmp = codec_->decode (sc->context_data);
       sc_qos_as_any = scqostmp.in ();
       sc_qos_as_any >>= sc_qos_ptr;
 
@@ -563,7 +540,7 @@ Fixed_Priority_Scheduler::receive_other (PortableInterceptor::ClientRequestInfo_
 }
 
 void
-Fixed_Priority_Scheduler::cancel (const RTScheduling::Current::IdType &)
+Fixed_Priority_Scheduler::cancel (RTScheduling::Current::IdType const &)
 {
   throw CORBA::NO_IMPLEMENT ();
 }
@@ -575,7 +552,7 @@ Fixed_Priority_Scheduler::scheduling_policies ()
 }
 
 void
-Fixed_Priority_Scheduler::scheduling_policies (const CORBA::PolicyList &)
+Fixed_Priority_Scheduler::scheduling_policies (CORBA::PolicyList const &)
 {
   throw CORBA::NO_IMPLEMENT ();
 }
@@ -593,7 +570,7 @@ Fixed_Priority_Scheduler::scheduling_discipline_name ()
 }
 
 RTScheduling::ResourceManager_ptr
-Fixed_Priority_Scheduler::create_resource_manager (const char *,
+Fixed_Priority_Scheduler::create_resource_manager (char const *,
                                         CORBA::Policy_ptr)
 {
   throw CORBA::NO_IMPLEMENT ();
@@ -601,7 +578,7 @@ Fixed_Priority_Scheduler::create_resource_manager (const char *,
 
 void
 Fixed_Priority_Scheduler::set_scheduling_parameter (PortableServer::Servant &,
-                                         const char *,
+                                         char const *,
                                          CORBA::Policy_ptr)
 {
   throw CORBA::NO_IMPLEMENT ();

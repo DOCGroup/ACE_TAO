@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  * @file ORT_Adapter_Impl.h
  *
@@ -8,7 +5,6 @@
  *
  * @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-//=============================================================================
 
 #ifndef TAO_ORT_ADAPTER_IMPL_H
 #define TAO_ORT_ADAPTER_IMPL_H
@@ -40,8 +36,8 @@ namespace TAO
     ORT_Adapter_Impl () = default;
 
     /// Activate this adapter
-    int activate (const char *server_id,
-                  const char *orb_id,
+    int activate (char const *server_id,
+                  char const *orb_id,
                   PortableInterceptor::AdapterName *adapter_name,
                   PortableServer::POA_ptr poa) override;
 
@@ -64,13 +60,13 @@ namespace TAO
      * @name Adapter methods for PortableInterceptor::ObjectReferenceTemplate
      * Methods
      */
-    //@{
+    /// @{
     virtual char * tao_server_id ();
 
     virtual char * tao_orb_id ();
 
     virtual PortableInterceptor::AdapterName * tao_adapter_name ();
-    //@}
+    /// @}
 
     /**
      * @name PortableInterceptor::ObjectReferenceFactory Methods
@@ -78,13 +74,12 @@ namespace TAO
      * Methods required by the
      * PortableInterceptor::ObjectReferenceFactory ValueType.
      */
-    //@{
+    /// @{
     CORBA::Object_ptr make_object (
-        const char *repository_id,
+        char const *repository_id,
         PortableInterceptor::ObjectId const &id) override;
-    //@}
+    /// @}
 
-  private:
     ORT_Adapter_Impl (ORT_Adapter_Impl const &) = delete;
     ORT_Adapter_Impl &operator= (ORT_Adapter_Impl const &) = delete;
     ORT_Adapter_Impl (ORT_Adapter_Impl &&) = delete;

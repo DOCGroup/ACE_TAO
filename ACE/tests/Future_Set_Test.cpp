@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    Future_Set_Test.cpp
  *
@@ -13,7 +11,6 @@
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  *  @author Per Andersson <pera@ipso.se> and Johnny Tucker <jtucker@infoglide.com>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "ace/OS_NS_string.h"
@@ -50,8 +47,7 @@ class Prime_Scheduler : public ACE_Task_Base
   friend class Method_Request_name;
   friend class Method_Request_end;
 public:
-  /// Constructor.
-  Prime_Scheduler (const ACE_TCHAR *,
+  Prime_Scheduler (ACE_TCHAR const *,
                    Prime_Scheduler * = nullptr);
 
   //FUZZ: disable check_for_lack_ACE_OS
@@ -62,34 +58,39 @@ public:
   //FUZZ: enable check_for_lack_ACE_OS
   virtual int shutdown ();
 
-  /// Destructor.
   ~Prime_Scheduler () override;
 
-  // = These methods are part of the Active Object Proxy interface.
+  /// @name Active Object proxy methods
+  /// @{
   ACE_Future<u_long> work (u_long param, int count = 1);
-  ACE_Future<const ACE_TCHAR*> name ();
+  ACE_Future<ACE_TCHAR const *> name ();
   void end ();
+  /// @}
 
 protected:
   /// Runs the Prime_Scheduler's event loop, which dequeues
-  /// <Method_Requests> and dispatches them.
+  /// method requests and dispatches them.
   int svc () override;
 
-  // = These are the Servant methods that do the actual work.
+  /// @name Servant methods
+  /// @{
   u_long work_i (u_long, int);
-  const ACE_TCHAR *name_i ();
+  ACE_TCHAR const *name_i ();
+  /// @}
 
 private:
-  // = These are the <Prime_Scheduler> implementation details.
+  /// @name Prime_Scheduler implementation details
+  /// @{
   ACE_TCHAR *name_;
   ACE_Activation_Queue activation_queue_;
   Prime_Scheduler *scheduler_;
+  /// @}
 };
 
 /**
  * @class Method_Request_work
  *
- * @brief Reification of the <work> method.
+ * @brief Reification of the @c work() method.
  */
 class Method_Request_work : public ACE_Method_Request
 {
@@ -149,13 +150,13 @@ Method_Request_work::call ()
 /**
  * @class Method_Request_name
  *
- * @brief Reification of the <name> method.
+ * @brief Reification of the @c name() method.
  */
 class Method_Request_name : public ACE_Method_Request
 {
 public:
   Method_Request_name (Prime_Scheduler *,
-                       ACE_Future<const ACE_TCHAR*> &);
+                       ACE_Future<ACE_TCHAR const *> &);
   ~Method_Request_name () override;
 
   /// This is the entry point into the Active Object method.
@@ -163,11 +164,11 @@ public:
 
 private:
   Prime_Scheduler *scheduler_;
-  ACE_Future<const ACE_TCHAR*> future_result_;
+  ACE_Future<ACE_TCHAR const *> future_result_;
 };
 
 Method_Request_name::Method_Request_name (Prime_Scheduler *new_scheduler,
-                                          ACE_Future<const ACE_TCHAR*> &new_result)
+                                          ACE_Future<ACE_TCHAR const *> &new_result)
   : scheduler_ (new_scheduler),
     future_result_ (new_result)
 {
@@ -192,7 +193,7 @@ Method_Request_name::call ()
 /**
  * @class Method_Request_end
  *
- * @brief Reification of the <end> method.
+ * @brief Reification of the @c end() method.
  */
 class Method_Request_end : public ACE_Method_Request
 {
@@ -210,9 +211,7 @@ Method_Request_end::Method_Request_end (Prime_Scheduler *scheduler)
 {
 }
 
-Method_Request_end::~Method_Request_end ()
-{
-}
+Method_Request_end::~Method_Request_end () = default;
 
 int
 Method_Request_end::call ()
@@ -222,21 +221,18 @@ Method_Request_end::call ()
   return -1;
 }
 
-// Constructor
-Prime_Scheduler::Prime_Scheduler (const ACE_TCHAR *newname,
+Prime_Scheduler::Prime_Scheduler (ACE_TCHAR const *newname,
                                   Prime_Scheduler *new_scheduler)
   : scheduler_ (new_scheduler)
 {
   ACE_NEW (this->name_,
            ACE_TCHAR[ACE_OS::strlen (newname) + 1]);
-  ACE_OS::strcpy ((ACE_TCHAR *) this->name_,
+  ACE_OS::strcpy (this->name_,
                   newname);
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Prime_Scheduler %s created\n"),
               this->name_));
 }
-
-// Destructor
 
 Prime_Scheduler::~Prime_Scheduler ()
 {
@@ -251,7 +247,7 @@ Prime_Scheduler::~Prime_Scheduler ()
 int
 Prime_Scheduler::open (void *)
 {
-  task_count++;
+  ++task_count;
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Prime_Scheduler %s open\n"),
               this->name_));
@@ -267,7 +263,7 @@ Prime_Scheduler::shutdown ()
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Prime_Scheduler %s shutdown\n"),
               this->name_));
-  task_count--;
+  --task_count;
   return 0;
 }
 
@@ -280,13 +276,15 @@ Prime_Scheduler::svc ()
     {
       // Dequeue the next method request (we use an unique pointer in
       // case an exception is thrown in the <call>).
-      std::unique_ptr<ACE_Method_Request> mo (this->activation_queue_.dequeue ());
+      std::unique_ptr<ACE_Method_Request> const mo (this->activation_queue_.dequeue ());
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%t) calling method request\n")));
       // Call it.
       if (mo->call () == -1)
+      {
         break;
+      }
       // Destructor automatically deletes it.
     }
 
@@ -312,21 +310,23 @@ Prime_Scheduler::work_i (u_long param,
   return ACE::is_prime (param, 2, param / 2);
 }
 
-const ACE_TCHAR *
+ACE_TCHAR const *
 Prime_Scheduler::name_i ()
 {
   return this->name_;
 }
 
-ACE_Future<const ACE_TCHAR *>
+ACE_Future<ACE_TCHAR const *>
 Prime_Scheduler::name ()
 {
   if (this->scheduler_)
-    // Delegate to the Prime_Scheduler.
-    return this->scheduler_->name ();
+    {
+      // Delegate to the Prime_Scheduler.
+      return this->scheduler_->name ();
+    }
   else
     {
-      ACE_Future<const ACE_TCHAR*> new_future;
+      ACE_Future<ACE_TCHAR const *> new_future;
 
       // @@ What happens if new fails here?
       this->activation_queue_.enqueue
@@ -363,8 +363,8 @@ static int n_loops = 100;
 using u_long_key = ACE_Future_Rep<u_long> *;
 using u_long_value = ACE_Future_Holder<u_long> *;
 
-using char_star_key = ACE_Future_Rep<const ACE_TCHAR *> *;
-using char_star_value = ACE_Future_Holder<const ACE_TCHAR *> *;
+using char_star_key = ACE_Future_Rep<ACE_TCHAR const *> *;
+using char_star_value = ACE_Future_Holder<ACE_TCHAR const *> *;
 
 #endif /* ACE_HAS_THREADS */
 
@@ -406,18 +406,18 @@ run_main (int, ACE_TCHAR *[])
   ACE_Future<u_long> fresultb;
   ACE_Future<u_long> fresultc;
   ACE_Future<u_long> fresultd;
-  ACE_Future<const ACE_TCHAR *> fname;
+  ACE_Future<ACE_TCHAR const *> fname;
 
   ACE_Future_Set<u_long> fseta;
   ACE_Future_Set<u_long> fsetb;
   ACE_Future_Set<u_long> fsetc;
   ACE_Future_Set<u_long> fsetd;
-  ACE_Future_Set<const ACE_TCHAR *> fsetname;
+  ACE_Future_Set<ACE_TCHAR const *> fsetname;
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) initializing future sets with non-blocking call\n")));
 
-  for (int i = 0; i < n_loops; i++)
+  for (int i = 0; i < n_loops; ++i)
     {
       // Spawn off the methods, which run in a separate thread as
       // active object invocations.
@@ -439,28 +439,37 @@ run_main (int, ACE_TCHAR *[])
       fsetname.insert (fname);
     }
 
-
   // See if the result is available...
 
   if (!fseta.is_empty ())
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%t) wow.. set a is not empty.....\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%t) wow.. set a is not empty.....\n")));
+    }
 
   if (!fsetb.is_empty ())
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%t) wow.. set b is not empty.....\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%t) wow.. set b is not empty.....\n")));
+    }
 
   if (!fsetc.is_empty ())
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%t) wow.. set c is not empty.....\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%t) wow.. set c is not empty.....\n")));
+    }
 
   if (!fsetd.is_empty ())
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%t) wow.. set d is not empty.....\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%t) wow.. set d is not empty.....\n")));
+    }
 
   if (!fsetname.is_empty ())
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%t) wow.. set name is not empty.....\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%t) wow.. set name is not empty.....\n")));
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) non-blocking calls done... now blocking...\n")));
@@ -516,37 +525,47 @@ run_main (int, ACE_TCHAR *[])
                   (u_int) resultd));
     }
 
-  const ACE_TCHAR *name = nullptr;
+  ACE_TCHAR const *result_name {};
   count = 0;
   while (fsetname.next_readable (fname))
     {
-      fname.get (name);
+      fname.get (result_name);
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%t) result(%u) name %s\n"),
                   count,
-                  name));
+                  result_name));
     }
 
   if (fseta.is_empty ())
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%t) wow.. set a is empty.....\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%t) wow.. set a is empty.....\n")));
+    }
 
   if (fsetb.is_empty ())
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%t) wow.. set b is empty.....\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%t) wow.. set b is empty.....\n")));
+    }
 
   if (fsetc.is_empty ())
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%t) wow.. set c is empty.....\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%t) wow.. set c is empty.....\n")));
+    }
 
   if (fsetd.is_empty ())
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%t) wow.. set d is empty.....\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%t) wow.. set d is empty.....\n")));
+    }
 
   if (fsetname.is_empty ())
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%t) wow.. set name is empty.....\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%t) wow.. set name is empty.....\n")));
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) task_count %d\n"),

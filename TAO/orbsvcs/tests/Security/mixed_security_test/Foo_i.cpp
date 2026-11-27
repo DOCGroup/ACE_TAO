@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "Foo_i.h"
 #include "ace/OS_NS_string.h"
 
@@ -12,7 +11,7 @@ Foo_i::Foo_i (CORBA::ORB_ptr orb,
 void
 Foo_i::baz ()
 {
-  if (this->current_.in() == 0)
+  if (CORBA::is_nil (this->current_.in ()))
     {
       ACE_DEBUG ((LM_DEBUG, "FOO (%P|%t) No ClientCredentials available\n"));
       return;
@@ -26,10 +25,10 @@ Foo_i::baz ()
       CORBA::String_var id = credentials->creds_id ();
 
       ACE_DEBUG ((LM_DEBUG,
-                  "FOO (%P|%t) ClientCredentials ID: %s\n", id.in ()));
+                  "FOO (%P|%t) ClientCredentials ID: %C\n", id.in ()));
       return;
     }
-  catch (const CORBA::BAD_INV_ORDER &ex)
+  catch (CORBA::BAD_INV_ORDER const &ex)
     {
       ACE_DEBUG ((LM_INFO,
                   "FOO (%P|%t) Caught BAD_INV_ORDER exception trying to obtain "
@@ -40,7 +39,7 @@ Foo_i::baz ()
       // we go into this method, not whether the method itself operates
       // properly.
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ACE_DEBUG ((LM_ERROR, "FOO (%P|%t) Caught exception, trying to obtain ClientCredentials"));
       ex._tao_print_exception ("Exception");

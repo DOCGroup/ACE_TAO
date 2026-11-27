@@ -1,5 +1,3 @@
-/* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file   ConnectDisconnect.h
  *
@@ -7,8 +5,6 @@
  *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef NOTIFY_CONNECT_DISCONNECT_H
 #define NOTIFY_CONNECT_DISCONNECT_H
@@ -20,6 +16,8 @@
 #include "Notify_PushSupplier.h"
 #include "Notify_SequencePushConsumer.h"
 #include "Notify_SequencePushSupplier.h"
+
+#include <atomic>
 
 #if defined(_MSC_VER)
 #pragma warning(push)
@@ -62,19 +60,21 @@ CD_DECLARE_ENTITY(SequencePushSupplier)
 class ConnectDisconnect : public Notify_Test_Client
 {
 public:
-  // Initialization and termination code.
+  /// @name Initialization and termination
+  /// @{
   ConnectDisconnect ();
-  virtual ~ConnectDisconnect ();
+  ~ConnectDisconnect () override;
+  /// @}
 
   /// Keeps track of how many objects were destroyed.
   void on_entity_destroyed ();
 
   int parse_args (int argc,
-                  ACE_TCHAR *argv[]);
+                  ACE_TCHAR *argv[]) override;
 
   /// initialization.
   int init (int argc,
-            ACE_TCHAR *argv []);
+            ACE_TCHAR *argv []) override;
 
   /// Run the test.
   void run_test ();
@@ -108,14 +108,15 @@ protected:
   TAO_Notify_Tests_StructuredPushSupplier** structured_supplier_;
   TAO_Notify_Tests_SequencePushSupplier** sequence_supplier_;
 
-  /// Count of clients destroyed. for c consumers, s suppliers and for t times.
-  /// this should be (s+c)*t.
-  ACE_Atomic_Op <TAO_SYNCH_MUTEX, int> result_count_;
+  /// Count of clients destroyed for c consumers, s suppliers, and t iterations.
+  /// This should be (s + c) * t.
+  std::atomic<int> result_count_ {0};
 
-  int expected_count_; // (s+c)*t
+  /// Expected count, (s + c) * t.
+  int expected_count_ {};
 
-  // = command line params
-
+  /// @name Command-line parameters
+  /// @{
   /// The number of iterations to connect disconnect.
   int count_;
 
@@ -124,6 +125,7 @@ protected:
 
   /// The number of suppliers to create.
   int suppliers_;
+  /// @}
 };
 
 /***************************************************************************/

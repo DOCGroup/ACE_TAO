@@ -1,15 +1,19 @@
 #include "AMH_Servant.h"
 #include "Base_Server.h"
 
+#include "ace/OS_NS_stdlib.h"
+
+#include <memory>
+
 void
-usage (const char *message)
+usage (char const *message)
 {
   // @@ Mayur, what use is there in placing a space before a newline
   //    character?
   //
   // Mayur: It makes the newline stand out
 
-  static const char * usage =
+  static constexpr char usage[] =
     "invoke as: st_server -o <ior_output_file>\n"
     "-s <sleep_time (in microseconds)>\n";
 
@@ -17,10 +21,10 @@ usage (const char *message)
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   Base_Server amh_server (argc, argv);
-  amh_server.try_RT_scheduling();
+  amh_server.try_RT_scheduling ();
   amh_server.start_orb_and_poa ();
 
   if (amh_server.parse_args () != 1)
@@ -37,7 +41,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_OS::exit (1);
     }
 
-  amh_server.register_servant (&servant);
+  amh_server.register_servant (std::addressof (servant));
   amh_server.run_event_loop ();
   amh_server.shutdown_orb_and_poa ();
 

@@ -3,6 +3,10 @@
 #include "ace/OS_Memory.h"
 #include "ace/OS_NS_ctype.h"
 
+#include <array>
+#include <cerrno>
+#include <limits>
+
 #if defined (ACE_HAS_ALLOC_HOOKS)
 # include "ace/Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
@@ -15,54 +19,84 @@ namespace
 #undef max_columns
 
   // Symbols which form the Base64 alphabet (Defined as per RFC 2045)
-  ACE_Byte const alphabet[] =
+  constexpr ACE_Byte alphabet[] =
      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
   // The padding character used in the encoding
-  ACE_Byte const pad = '=';
+  constexpr ACE_Byte pad = '=';
 
   // Number of columns per line of encoded output (Can have a maximum
   // value of 76).
-  int const max_columns = 72;
+  constexpr int max_columns = 72;
 }
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-bool ACE_Base64::init_ = false;
+std::array<ACE_Byte, 256> const ACE_Base64::decoder_ = [] () constexpr
+{
+  std::array<ACE_Byte, 256> result {};
+  for (size_t i {}; i < sizeof (alphabet); ++i)
+    {
+      result[alphabet[i]] = static_cast<ACE_Byte> (i);
+    }
+  return result;
+} ();
 
-ACE_Byte ACE_Base64::decoder_[256];
+std::array<ACE_Byte, 256> const ACE_Base64::member_ = [] () constexpr
+{
+  std::array<ACE_Byte, 256> result {};
+  for (size_t i {}; i < sizeof (alphabet); ++i)
+    {
+      result[alphabet[i]] = 1;
+    }
+  return result;
+} ();
 
-ACE_Byte ACE_Base64::member_[256];
-
-ACE_Byte*
-ACE_Base64::encode (const ACE_Byte* input,
-                    const size_t input_len,
-                    size_t* output_len,
+ACE_Byte *
+ACE_Base64::encode (ACE_Byte const *input,
+                    size_t const input_len,
+                    size_t *output_len,
                     bool is_chunked)
 {
-  if (!ACE_Base64::init_)
-    ACE_Base64::init();
-
-  if (!input)
+  if (input == nullptr)
+  {
     return nullptr;
+  }
 
-  ACE_Byte* result = nullptr;
+  ACE_Byte *result {};
 
-  size_t length = ((input_len + 2) / 3) * 4;
-  size_t num_lines = length / max_columns + 1;
+  size_t const max_size = (std::numeric_limits<size_t>::max) ();
+  size_t const groups = input_len / 3 + (input_len % 3 != 0);
+  if (groups > max_size / 4)
+    {
+      errno = ENOMEM;
+      return nullptr;
+    }
+
+  size_t length = groups * 4;
+  size_t const num_lines = length / max_columns + 1;
+  if (length > max_size - num_lines - 1)
+    {
+      errno = ENOMEM;
+      return nullptr;
+    }
   length += num_lines + 1;
 #if defined (ACE_HAS_ALLOC_HOOKS)
-  ACE_ALLOCATOR_RETURN (result, static_cast<ACE_Byte*> (ACE_Allocator::instance()->malloc(sizeof (ACE_Byte) * length)), 0);
+  ACE_ALLOCATOR_RETURN (
+    result,
+    static_cast<ACE_Byte *> (
+      ACE_Allocator::instance ()->malloc (sizeof (ACE_Byte) * length)),
+    nullptr);
 #else
   ACE_NEW_RETURN (result, ACE_Byte[length], nullptr);
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
-  int char_count = 0;
-  int bits = 0;
-  size_t pos = 0;
-  int cols = 0;
+  int char_count {};
+  int bits {};
+  size_t pos {};
+  int cols {};
 
-  for (size_t i = 0; i < input_len; ++i)
+  for (size_t i {}; i < input_len; ++i)
     {
       bits += input[i];
       ++char_count;
@@ -74,11 +108,14 @@ ACE_Base64::encode (const ACE_Byte* input,
           result[pos++] = alphabet[(bits >> 6) & 0x3f];
           result[pos++] = alphabet[bits & 0x3f];
           cols += 4;
-          if (cols == max_columns) {
-            if (is_chunked)
-              result[pos++] = '\n';
-            cols = 0;
-          }
+          if (cols == max_columns)
+            {
+              if (is_chunked)
+              {
+                result[pos++] = '\n';
+              }
+              cols = 0;
+            }
           bits = 0;
           char_count = 0;
         }
@@ -109,7 +146,9 @@ ACE_Base64::encode (const ACE_Byte* input,
     }
 
   if (cols > 0 && is_chunked)
+  {
     result[pos++] = '\n';
+  }
 
   result[pos] = 0;
   *output_len = pos;
@@ -117,57 +156,65 @@ ACE_Base64::encode (const ACE_Byte* input,
 }
 
 size_t
-ACE_Base64::length (const ACE_Byte* input)
+ACE_Base64::length (ACE_Byte const *input)
 {
-  if (!ACE_Base64::init_)
-    ACE_Base64::init();
-
-  ACE_Byte* ptr = const_cast<ACE_Byte*> (input);
+  ACE_Byte const *ptr = input;
   while (*ptr != 0 &&
-         (member_[*(ptr)] == 1 || *ptr == pad
+         (member_[*ptr] == 1 || *ptr == pad
           || ACE_OS::ace_isspace (*ptr)))
-    ++ptr;
-  size_t len = ptr - input;
+    {
+      ++ptr;
+    }
+  size_t len = static_cast<size_t> (ptr - input);
   len = ((len + 3) / 4) * 3 + 1 ;
   return len;
 }
 
-ACE_Byte*
-ACE_Base64::decode (const ACE_Byte* input, size_t* output_len)
+ACE_Byte *
+ACE_Base64::decode (ACE_Byte const *input, size_t *output_len)
 {
-  if (!ACE_Base64::init_)
-    ACE_Base64::init();
-
-  if (!input)
+  if (input == nullptr)
+  {
     return nullptr;
+  }
 
-  size_t result_len = ACE_Base64::length (input);
-  ACE_Byte* result = nullptr;
+  size_t const result_len = ACE_Base64::length (input);
+  ACE_Byte *result {};
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
-  ACE_ALLOCATOR_RETURN (result, static_cast<ACE_Byte*> (ACE_Allocator::instance()->malloc(sizeof (ACE_Byte) * result_len)), 0);
+  ACE_ALLOCATOR_RETURN (
+    result,
+    static_cast<ACE_Byte *> (
+      ACE_Allocator::instance ()->malloc (sizeof (ACE_Byte) * result_len)),
+    nullptr);
 #else
   ACE_NEW_RETURN (result, ACE_Byte[result_len], nullptr);
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
-  ACE_Byte* ptr = const_cast<ACE_Byte*> (input);
+  ACE_Byte const *ptr = input;
   while (*ptr != 0 &&
-         (member_[*(ptr)] == 1 || *ptr == pad
+         (member_[*ptr] == 1 || *ptr == pad
           || ACE_OS::ace_isspace (*ptr)))
-    ++ptr;
-  size_t input_len = ptr - input;
+    {
+      ++ptr;
+    }
+  size_t const input_len = static_cast<size_t> (ptr - input);
 
-  int char_count = 0;
-  int bits = 0;
-  size_t pos = 0;
+  int char_count {};
+  int bits {};
+  size_t pos {};
 
-  size_t i = 0;
+  size_t i {};
   for (; i < input_len; ++i)
     {
       if (input[i] == pad)
+      {
         break;
+      }
       if (!ACE_Base64::member_[input[i]])
+      {
         continue;
+      }
       bits += decoder_[input[i]];
       ++char_count;
 
@@ -185,7 +232,7 @@ ACE_Base64::decode (const ACE_Byte* input, size_t* output_len)
         }
     }
 
-  int errors = 0;
+  bool has_error {};
   if ( i == input_len)
     {
       if (char_count)
@@ -193,7 +240,7 @@ ACE_Base64::decode (const ACE_Byte* input, size_t* output_len)
           ACELIB_ERROR ((LM_ERROR,
                       ACE_TEXT ("Decoding incomplete: atleast %d bits truncated\n"),
                       (4 - char_count) * 6));
-          ++errors;
+          has_error = true;
         }
     }
   else
@@ -203,7 +250,7 @@ ACE_Base64::decode (const ACE_Byte* input, size_t* output_len)
         case 1:
           ACELIB_ERROR ((LM_ERROR,
                       ACE_TEXT ("Decoding incomplete: atleast 2 bits missing\n")));
-          ++errors;
+          has_error = true;
           break;
         case 2:
           result[pos++] = static_cast<ACE_Byte> (bits >> 10);
@@ -215,13 +262,9 @@ ACE_Base64::decode (const ACE_Byte* input, size_t* output_len)
         }
     }
 
-  if (errors)
+  if (has_error)
     {
-#if defined (ACE_HAS_ALLOC_HOOKS)
-      ACE_Allocator::instance()->free(result);
-#else
-      delete[] result;
-#endif /* ACE_HAS_ALLOC_HOOKS */
+      ACE_Base64::free (result);
       return nullptr;
     }
   result[pos] = 0;
@@ -230,18 +273,13 @@ ACE_Base64::decode (const ACE_Byte* input, size_t* output_len)
 }
 
 void
-ACE_Base64::init ()
+ACE_Base64::free (ACE_Byte *buffer)
 {
-  if (!ACE_Base64::init_)
-    {
-      for (ACE_Byte i = 0; i < sizeof (alphabet); ++i)
-        {
-          ACE_Base64::decoder_[alphabet[i]] = i;
-          ACE_Base64::member_ [alphabet[i]] = 1;
-        }
-      ACE_Base64::init_ = true;
-    }
-  return;
+#if defined (ACE_HAS_ALLOC_HOOKS)
+  ACE_Allocator::instance ()->free (buffer);
+#else
+  delete[] buffer;
+#endif /* ACE_HAS_ALLOC_HOOKS */
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

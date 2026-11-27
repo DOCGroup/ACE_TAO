@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/CSD_Framework/CSD_Strategy_Base.h"
 #include "tao/CSD_Framework/CSD_POA.h"
 #include "tao/CSD_Framework/CSD_Strategy_Proxy.h"
@@ -21,31 +20,37 @@ TAO::CSD::Strategy_Base::apply_to (PortableServer::POA_ptr poa)
   if (CORBA::is_nil(poa))
     {
       if (TAO_debug_level > 0)
-        TAOLIB_ERROR((LM_ERROR,
+        {
+          TAOLIB_ERROR((LM_ERROR,
                    ACE_TEXT("(%P|%t) CSD Strategy cannot ")
                    ACE_TEXT("be applied to a nil POA.\n")));
+        }
       return false;
     }
 
   if (!CORBA::is_nil(this->poa_.in()))
     {
       if (TAO_debug_level > 0)
-        TAOLIB_ERROR((LM_ERROR,
+        {
+          TAOLIB_ERROR((LM_ERROR,
                    ACE_TEXT("(%P|%t) CSD Strategy already ")
                    ACE_TEXT("applied to a POA.\n")));
+        }
       return false;
     }
 
   // The POA is a local interface (IDL terminology), and thus we know that
   // we can downcast the POA_ptr to its (TAO) implementation type.
-  TAO_CSD_POA *poa_impl = dynamic_cast<TAO_CSD_POA*> (poa);
+  TAO_CSD_POA * const poa_impl = dynamic_cast<TAO_CSD_POA*> (poa);
 
   if (poa_impl == nullptr)
     {
       if (TAO_debug_level > 0)
-        TAOLIB_ERROR((LM_ERROR,
+        {
+          TAOLIB_ERROR((LM_ERROR,
                    ACE_TEXT("(%P|%t) CSD Strategy cannot ")
                    ACE_TEXT("be applied to a non CSD POA.\n")));
+        }
       return false;
     }
 
@@ -69,13 +74,13 @@ TAO::CSD::Strategy_Base::apply_to (PortableServer::POA_ptr poa)
     }
 
   // Set the CSD Strategy_Base on the strategy proxy object owned by the POA.
-  bool strategy_set = false;
+  bool strategy_set {};
   try
     {
       poa_impl->set_csd_strategy (this);
       strategy_set = true;
     }
-  catch (const ::CORBA::Exception&)
+  catch (::CORBA::Exception const &)
     {
     }
 
@@ -98,20 +103,18 @@ TAO::CSD::Strategy_Base::apply_to (PortableServer::POA_ptr poa)
   return true;
 }
 
-
 void
 TAO::CSD::Strategy_Base::servant_activated_event_i
                                 (PortableServer::Servant ,
-                                 const PortableServer::ObjectId&)
+                                 PortableServer::ObjectId const &)
 {
   // do nothing.
 }
 
-
 void
 TAO::CSD::Strategy_Base::servant_deactivated_event_i
                                 (PortableServer::Servant,
-                                 const PortableServer::ObjectId&)
+                                 PortableServer::ObjectId const &)
 {
   // do nothing.
 }

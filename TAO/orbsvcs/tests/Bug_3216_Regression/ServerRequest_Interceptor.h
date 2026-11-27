@@ -1,8 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
-//=============================================================================
-
 #ifndef TAO249_SERVER_REQUEST_INTERCEPTOR_H
 #define TAO249_SERVER_REQUEST_INTERCEPTOR_H
 
@@ -22,16 +17,14 @@ class TAO249_ServerRequest_Interceptor
   public virtual ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
-  TAO249_ServerRequest_Interceptor ();
+  TAO249_ServerRequest_Interceptor () = default;
 
   TAO249_ServerRequest_Interceptor (TAO249_ServerRequest_Interceptor const &) = delete;
   TAO249_ServerRequest_Interceptor (TAO249_ServerRequest_Interceptor &&) = delete;
   TAO249_ServerRequest_Interceptor &operator= (TAO249_ServerRequest_Interceptor const &) = delete;
   TAO249_ServerRequest_Interceptor &operator= (TAO249_ServerRequest_Interceptor &&) = delete;
 
-  /// Destructor.
-  ~TAO249_ServerRequest_Interceptor () override;
+  ~TAO249_ServerRequest_Interceptor () override = default;
 
   /**
    * @name Methods Required by the Server Request Interceptor
@@ -41,7 +34,7 @@ public:
    * virtual in the abstract base class.  They are the canonical
    * methods required for all server request interceptors.
    */
-  //@{
+  /// @{
   /// Return the name of this ServerRequestinterceptor.
   char * name () override;
 
@@ -61,11 +54,7 @@ public:
 
   void send_other (
     PortableInterceptor::ServerRequestInfo_ptr ri) override;
-  //@}
-private:
-  CORBA::ORB_var orb_;
-
-  CORBA::Long client_id_;
+  /// @}
 };
 
 #endif  /* TAO249_SERVER_REQUEST_INTERCEPTOR_H */

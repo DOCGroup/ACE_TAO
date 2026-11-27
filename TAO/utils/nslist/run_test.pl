@@ -2,7 +2,6 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     & eval 'exec perl -S $0 $argv:q'
     if 0;
 
-# -*- perl -*-
 
 # This is a Perl script that runs some Naming Service tests.
 # It runs all the tests that will run with min CORBA.
@@ -76,27 +75,27 @@ sub name_server
 
     if ($server1->GetFile ($naming_ior) == -1) {
         print STDERR "ERROR: cannot retrieve file <$server1_naming_ior>\n";
-        $SV->Kill (); $SV->TimedWait (1);
+        $NS->Kill (); $NS->TimedWait (1);
         exit 1;
     }
     if ($server2->PutFile ($naming_ior) == -1) {
         print STDERR "ERROR: cannot set file <$server2_naming_ior>\n";
-        $SV->Kill (); $SV->TimedWait (1);
+        $NS->Kill (); $NS->TimedWait (1);
         exit 1;
     }
     if ($server3->PutFile ($naming_ior) == -1) {
         print STDERR "ERROR: cannot set file <$server3_naming_ior>\n";
-        $SV->Kill (); $SV->TimedWait (1);
+        $NS->Kill (); $NS->TimedWait (1);
         exit 1;
     }
     if ($server4->PutFile ($naming_ior) == -1) {
         print STDERR "ERROR: cannot set file <$server4_naming_ior>\n";
-        $SV->Kill (); $SV->TimedWait (1);
+        $NS->Kill (); $NS->TimedWait (1);
         exit 1;
     }
     if ($client->PutFile ($naming_ior) == -1) {
         print STDERR "ERROR: cannot set file <$client_naming_ior>\n";
-        $SV->Kill (); $SV->TimedWait (1);
+        $NS->Kill (); $NS->TimedWait (1);
         exit 1;
     }
 }

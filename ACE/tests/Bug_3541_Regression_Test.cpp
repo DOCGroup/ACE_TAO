@@ -26,7 +26,7 @@ run_main (int, ACE_TCHAR *[])
 
   // ACE_OS::event_init()
 
-  const ACE_TCHAR *eventName = ACE_TEXT ("Bug3541_Event");
+  ACE_TCHAR const *eventName = ACE_TEXT ("Bug3541_Event");
 
   ACE_Event event0(0,             // int manual_reset = 0
                    0,             // int initial_state = 0
@@ -43,7 +43,7 @@ run_main (int, ACE_TCHAR *[])
     ret = -1;
 
     ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("ACE_Event(%s) failed - handle %d lastError %d\n"),
+                ACE_TEXT ("ACE_Event(%s) failed - handle %H lastError %d\n"),
                 eventName, eventHandle, lastError));
   }
   else
@@ -63,14 +63,14 @@ run_main (int, ACE_TCHAR *[])
       ret = -1;
 
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("ACE_Event(%s) failed - handle %d lastError %d\n"),
+                  ACE_TEXT ("ACE_Event(%s) failed - handle %H lastError %d\n"),
                   eventName, eventHandle, lastError));
     }
   }
 
   // ACE_OS::sema_init
 
-  const ACE_TCHAR *semaphoreName = ACE_TEXT ("Bug3541_Semaphore");
+  ACE_TCHAR const *semaphoreName = ACE_TEXT ("Bug3541_Semaphore");
 
   ACE_Semaphore semaphore0(1,               // int count = 1
                            USYNC_PROCESS,   // int type = USYNC_THREAD
@@ -78,15 +78,15 @@ run_main (int, ACE_TCHAR *[])
 
   lastError = ACE_OS::last_error();
 
-  const ACE_sema_t &semaphoreLock = semaphore0.lock();
+  ACE_sema_t const &semaphoreLock = semaphore0.lock();
   if ((semaphoreLock == ACE_INVALID_HANDLE) ||
       (lastError != 0))
   {
     ret = -1;
 
     ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("ACE_Semaphore(%s) failed - lock %d lastError %d\n"),
-                semaphoreName, semaphoreLock, lastError));
+                ACE_TEXT ("ACE_Semaphore(%s) failed - lock %@ lastError %d\n"),
+                semaphoreName, reinterpret_cast<void *> (semaphoreLock), lastError));
   }
   else
   {
@@ -96,29 +96,29 @@ run_main (int, ACE_TCHAR *[])
 
     lastError = ACE_OS::last_error();
 
-    const ACE_sema_t &semaphoreLock = semaphore1.lock();
+    ACE_sema_t const &semaphore1Lock = semaphore1.lock();
 
-    if ((semaphoreLock == ACE_INVALID_HANDLE) ||
+    if ((semaphore1Lock == ACE_INVALID_HANDLE) ||
         (lastError != ERROR_ALREADY_EXISTS))
     {
       ret = -1;
 
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("ACE_Semaphore(%s) failed - lock %d lastError %d\n"),
-                  semaphoreName, semaphoreLock, lastError));
+                  ACE_TEXT ("ACE_Semaphore(%s) failed - lock %@ lastError %d\n"),
+                  semaphoreName, reinterpret_cast<void *> (semaphore1Lock), lastError));
     }
   }
 
   // ACE_OS::mutex_init()
 
-  const ACE_TCHAR *mutexName = ACE_TEXT ("Bug3541_Mutex");
+  ACE_TCHAR const *mutexName = ACE_TEXT ("Bug3541_Mutex");
 
   ACE_Mutex mutex0(USYNC_PROCESS,  // int type = USYNC_THREAD
                    mutexName);     // const ACE_TCHAR *name = 0
 
   lastError = ACE_OS::last_error();
 
-  const ACE_mutex_t &mutexLock = mutex0.lock();
+  ACE_mutex_t const &mutexLock = mutex0.lock();
 
   if ((mutexLock.proc_mutex_ == ACE_INVALID_HANDLE) ||
       (lastError != 0))
@@ -126,8 +126,8 @@ run_main (int, ACE_TCHAR *[])
     ret = -1;
 
     ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("ACE_Mutex(%s) failed - lock %d lastError %d\n"),
-                mutexName, mutexLock, lastError));
+                ACE_TEXT ("ACE_Mutex(%s) failed - lock %@ lastError %d\n"),
+                mutexName, reinterpret_cast<void *> (mutexLock.proc_mutex_), lastError));
   }
   else
   {
@@ -136,16 +136,16 @@ run_main (int, ACE_TCHAR *[])
 
     lastError = ACE_OS::last_error();
 
-    const ACE_mutex_t &mutexLock = mutex1.lock();
+    ACE_mutex_t const &mutex1Lock = mutex1.lock();
 
-    if ((mutexLock.proc_mutex_ == ACE_INVALID_HANDLE) ||
+    if ((mutex1Lock.proc_mutex_ == ACE_INVALID_HANDLE) ||
         (lastError != ERROR_ALREADY_EXISTS))
     {
       ret = -1;
 
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("ACE_Mutex(%s) failed - lock %d lastError %d\n"),
-                  mutexName, mutexLock, lastError));
+                  ACE_TEXT ("ACE_Mutex(%s) failed - lock %@ lastError %d\n"),
+                  mutexName, reinterpret_cast<void *> (mutex1Lock.proc_mutex_), lastError));
     }
   }
 

@@ -1,4 +1,3 @@
-// ============================================================================
 /**
  * @file Max_Default_Port_Test_IPV6.cpp
  *
@@ -19,7 +18,6 @@
  * @author Chanaka Liyanaarachchi <chanaka@ociweb.com>
  *         Brian Buesker <bbuesker@qualcomm.com>
  */
-// ============================================================================
 
 #include "test_config.h"
 #include "ace/Reactor.h"
@@ -28,11 +26,15 @@
 
 #include "Max_Default_Port_Test.h"
 
+#include <memory>
+
 My_Accept_Handler::My_Accept_Handler (ACE_INET_Addr &addr)
   : addr_ (addr)
 {
   if (addr.get_port_number() != 0)
+  {
     this->open (addr);
+  }
 }
 
 My_Accept_Handler::~My_Accept_Handler ()
@@ -89,12 +91,12 @@ My_Accept_Handler::port ()
 long max_connected_port = 0;
 
 #if defined (ACE_HAS_IPV6)
-static void *
+static ACE_THR_FUNC_RETURN
 client (void *arg)
 {
   ACE_INET_Addr *remote_addr = reinterpret_cast<ACE_INET_Addr *> (arg);
 
-  ACE_INET_Addr server_addr (remote_addr->get_port_number (),
+  ACE_INET_Addr const server_addr (remote_addr->get_port_number (),
                              "::1");
 
   ACE_SOCK_Stream cli_stream;
@@ -109,25 +111,27 @@ client (void *arg)
   // Initiate connection with server; don't wait forever
   if (con.connect (cli_stream,
                    server_addr,
-                   &timeout) == -1)
+                   std::addressof (timeout)) == -1)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("(%P|%t) %p\n"),
                   ACE_TEXT ("connection failed")));
 
-      return nullptr;
+      return ACE_THR_FUNC_RETURN_NULL;
     }
 
   // if connect succesful, what is the max port number we connected
   // up to now.
-  int connected_port = server_addr.get_port_number ();
+  int const connected_port = server_addr.get_port_number ();
 
   if (connected_port > max_connected_port)
-    max_connected_port = connected_port;
+    {
+      max_connected_port = connected_port;
+    }
 
   cli_stream.close ();
 
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 #endif /*ACE_HAS_IPV6*/
 
@@ -149,7 +153,6 @@ run_main (int argc, ACE_TCHAR *argv[])
 
       My_Accept_Handler *eh = new My_Accept_Handler (addr);
 
-
       if ( ACE_Reactor::instance()->register_handler (
                                          eh,
                                          ACE_Event_Handler::ACCEPT_MASK) == -1)
@@ -168,14 +171,15 @@ run_main (int argc, ACE_TCHAR *argv[])
 
       if (ACE_Thread_Manager::instance ()->spawn_n
           (1,
-           ACE_THR_FUNC (client),
+           client,
            reinterpret_cast<void *> (&addr),
            THR_NEW_LWP | THR_DETACHED) == -1)
-
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("(%P|%t) %p\n"),
-                           ACE_TEXT ("thread create failed")),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("(%P|%t) %p\n"),
+                             ACE_TEXT ("thread create failed")),
+                            1);
+        }
 
       ACE_Thread_Manager::instance ()->wait ();
 
@@ -197,7 +201,9 @@ run_main (int argc, ACE_TCHAR *argv[])
       if (eh->port () == idx)
         {
           if (idx > max_listened_port)
-            max_listened_port = idx;
+            {
+              max_listened_port = idx;
+            }
         }
       else
         {

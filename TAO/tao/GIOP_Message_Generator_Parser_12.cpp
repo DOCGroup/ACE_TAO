@@ -1,5 +1,6 @@
-// -*- C++ -*-
 #include "tao/GIOP_Message_Generator_Parser_12.h"
+
+#include <memory>
 #include "tao/GIOPC.h"
 #include "tao/GIOP_Utils.h"
 #include "tao/GIOP_Message_Locate_Header.h"
@@ -22,13 +23,15 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 bool
 TAO_GIOP_Message_Generator_Parser_12::write_request_header (
-    const TAO_Operation_Details &opdetails,
+    TAO_Operation_Details const &opdetails,
     TAO_Target_Specification &spec,
     TAO_OutputCDR &msg)
 {
   // First the request id
   if (!(msg << opdetails.request_id ()))
-    return false;
+    {
+      return false;
+    }
 
   CORBA::Octet const response_flags = opdetails.response_flags ();
 
@@ -44,33 +47,45 @@ TAO_GIOP_Message_Generator_Parser_12::write_request_header (
   //
   // We have not implemented the policy INV_NO_RESPONSE for DII.
   if (response_flags == TAO_TWOWAY_RESPONSE_FLAG)
-    msg << ACE_OutputCDR::from_octet (3);
+    {
+      msg << ACE_OutputCDR::from_octet (3);
+    }
   // Second the response flags
   // Sync scope - ignored by server if request is not oneway.
   else if (response_flags == CORBA::Octet (Messaging::SYNC_NONE)
            || response_flags == CORBA::Octet (Messaging::SYNC_WITH_TRANSPORT)
            || response_flags == CORBA::Octet (TAO::SYNC_DELAYED_BUFFERING))
-    // No response required.
-    msg << ACE_OutputCDR::from_octet (0);
+    {
+      // No response required.
+      msg << ACE_OutputCDR::from_octet (0);
+    }
 
   else if (response_flags == CORBA::Octet (Messaging::SYNC_WITH_SERVER))
-    // Return before dispatching to the servant
-    msg << ACE_OutputCDR::from_octet (1);
+    {
+      // Return before dispatching to the servant
+      msg << ACE_OutputCDR::from_octet (1);
+    }
 
   else if (response_flags == CORBA::Octet (Messaging::SYNC_WITH_TARGET))
-    // Return after dispatching servant.
-    msg << ACE_OutputCDR::from_octet (3);
+    {
+      // Return after dispatching servant.
+      msg << ACE_OutputCDR::from_octet (3);
+    }
   else
-    // Until more flags are defined by the OMG.
-    return false;
+    {
+      // Until more flags are defined by the OMG.
+      return false;
+    }
 
   // The reserved field
-  CORBA::Octet reserved[3] = {0, 0, 0};
+  CORBA::Octet reserved[3] {};
 
   msg.write_octet_array (reserved, 3);
 
   if (!this->marshall_target_spec (spec, msg))
-    return false;
+    {
+      return false;
+    }
 
   // Write the operation name
   msg.write_string (opdetails.opname_len (),
@@ -78,7 +93,9 @@ TAO_GIOP_Message_Generator_Parser_12::write_request_header (
 
   // Write the service context list
   if (!(msg << opdetails.request_service_info ()))
-    return false;
+    {
+      return false;
+    }
 
   // We align the pointer only if the operation has arguments.
   if (opdetails.in_argument_flag ()
@@ -98,11 +115,15 @@ TAO_GIOP_Message_Generator_Parser_12::write_locate_request_header (
 {
   // Write the request id
   if (!(msg << request_id))
-    return false;
+    {
+      return false;
+    }
 
   // Write the target address
   if (!(this->marshall_target_spec (spec, msg)))
-    return false;
+    {
+      return false;
+    }
 
   // I dont think we need to align the pointer to an 8 byte boundary
   // here.
@@ -121,14 +142,20 @@ TAO_GIOP_Message_Generator_Parser_12::write_reply_header (
 {
   // Write the request ID
   if (!(output.write_ulong (reply.request_id_)))
-    return false;
+    {
+      return false;
+    }
 
   // Write the reply status
   if (!(output.write_ulong (reply.reply_status ())))
-    return false;
+    {
+      return false;
+    }
 
   if (!(output << reply.service_context_notowned ()))
-    return false;
+    {
+      return false;
+    }
 
   if (reply.argument_flag_)
     {
@@ -149,11 +176,15 @@ TAO_GIOP_Message_Generator_Parser_12::write_locate_reply_mesg (
     TAO_GIOP_Locate_Status_Msg &status_info)
 {
   if (!(output.write_ulong (request_id)))
-    return false;
+    {
+      return false;
+    }
 
   // Make the header for the locate request
   if (!(output.write_ulong (status_info.status)))
-    return false;
+    {
+      return false;
+    }
 
   // Note: We dont align the pointer to an 8 byte boundary for a
   // locate reply body. This is due to an urgent issue raised by Michi
@@ -227,13 +258,13 @@ TAO_GIOP_Message_Generator_Parser_12::parse_request_header (
 
   CORBA::Boolean hdr_status = input.good_bit ();
 
-  CORBA::ULong req_id = 0;
+  CORBA::ULong req_id {};
   // Get the rest of the request header ...
   hdr_status = hdr_status && input.read_ulong (req_id);
 
   request.request_id (req_id);
 
-  CORBA::Octet response_flags = CORBA::Octet();
+  CORBA::Octet response_flags {};
   hdr_status = hdr_status && input.read_octet (response_flags);
 
   request.response_expected ((response_flags > 0));
@@ -249,7 +280,7 @@ TAO_GIOP_Message_Generator_Parser_12::parse_request_header (
   hdr_status =
     hdr_status && request.profile ().unmarshall_target_address(input);
 
-  CORBA::ULong length = 0;
+  CORBA::ULong length {};
   hdr_status = hdr_status && input.read_ulong (length);
 
   if (hdr_status)
@@ -262,7 +293,7 @@ TAO_GIOP_Message_Generator_Parser_12::parse_request_header (
       // here!
       request.operation (input.rd_ptr (),
                          length - 1,
-                         0 /* TAO_ServerRequest does NOT own string */);
+                         false /* TAO_ServerRequest does NOT own string */);
       hdr_status = input.skip_bytes (length);
     }
 
@@ -291,7 +322,7 @@ TAO_GIOP_Message_Generator_Parser_12::parse_request_header (
   if (req_service_info.length() > 0)
     {
       request.orb_core ()->service_context_registry ().
-        process_service_contexts (req_service_info, *(request.transport ()), &request);
+        process_service_contexts (req_service_info, *(request.transport ()), std::addressof (request));
     }
 
   if (input.length () > 0)
@@ -303,7 +334,6 @@ TAO_GIOP_Message_Generator_Parser_12::parse_request_header (
   return hdr_status ? 0 : -1;
 }
 
-
 int
 TAO_GIOP_Message_Generator_Parser_12::parse_locate_header (
     TAO_GIOP_Locate_Request_Header &request)
@@ -312,7 +342,7 @@ TAO_GIOP_Message_Generator_Parser_12::parse_locate_header (
   TAO_InputCDR &msg = request.incoming_stream ();
 
   // Get the request id.
-  CORBA::ULong req_id = 0;
+  CORBA::ULong req_id {};
   CORBA::Boolean hdr_status = msg.read_ulong (req_id);
 
   // Store it in the Locate request classes
@@ -334,7 +364,9 @@ TAO_GIOP_Message_Generator_Parser_12::parse_reply (
     TAO_Pluggable_Reply_Params &params)
 {
   if (TAO_GIOP_Message_Generator_Parser::parse_reply (cdr, params) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   if (!(cdr >> params.svc_ctx_))
     {
@@ -363,7 +395,9 @@ TAO_GIOP_Message_Generator_Parser_12::parse_locate_reply (
     TAO_Pluggable_Reply_Params &params)
 {
   if (TAO_GIOP_Message_Generator_Parser::parse_locate_reply (cdr, params) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   // Note: We dont align the pointer to an 8 byte boundary for a
   // locate reply body. This is due to an urgent issue raised by Michi
@@ -378,13 +412,11 @@ TAO_GIOP_Message_Generator_Parser_12::parse_locate_reply (
   return 0;
 }
 
-
 CORBA::Octet
 TAO_GIOP_Message_Generator_Parser_12::major_version () const
 {
   return static_cast<CORBA::Octet> (1);
 }
-
 
 CORBA::Octet
 TAO_GIOP_Message_Generator_Parser_12::minor_version () const
@@ -410,16 +442,20 @@ TAO_GIOP_Message_Generator_Parser_12::marshall_target_spec (
       {
         // As this is a union send in the discriminant first
         if (!(msg << GIOP::KeyAddr))
-          return false;
+          {
+            return false;
+          }
 
         // Get the object key
-        const TAO::ObjectKey *key = spec.object_key ();
+        TAO::ObjectKey const *key = spec.object_key ();
 
         if (key)
           {
             // Marshall in the object key
             if (!(msg << *key))
-              return false;
+              {
+                return false;
+              }
           }
         else
           {
@@ -436,16 +472,20 @@ TAO_GIOP_Message_Generator_Parser_12::marshall_target_spec (
       {
         // As this is a union send in the discriminant first
         if (!(msg << GIOP::ProfileAddr))
-          return false;
+          {
+            return false;
+          }
 
         // Get the profile
-        const IOP::TaggedProfile *pfile = spec.profile ();
+        IOP::TaggedProfile const *pfile = spec.profile ();
 
         if (pfile)
           {
             // Marshall in the object key
             if (!(msg << *pfile))
-              return false;
+              {
+                return false;
+              }
           }
         else
           {
@@ -462,10 +502,12 @@ TAO_GIOP_Message_Generator_Parser_12::marshall_target_spec (
       {
         // As this is a union send in the discriminant first
         if (!(msg << GIOP::ReferenceAddr))
-          return false;
+          {
+            return false;
+          }
 
         // Get the IOR
-        IOP::IOR *ior = nullptr;
+        IOP::IOR *ior {};
         CORBA::ULong const index = spec.iop_ior (ior);
 
         if (ior)
@@ -474,9 +516,13 @@ TAO_GIOP_Message_Generator_Parser_12::marshall_target_spec (
             // member of the struct one after another in the order
             // defined.
             if (!(msg << index))
-              return false;
+              {
+                return false;
+              }
             if (!(msg << *ior))
-              return false;
+              {
+                return false;
+              }
           }
         else
           {

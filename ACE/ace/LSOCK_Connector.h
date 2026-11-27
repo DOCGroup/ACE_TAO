@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    LSOCK_Connector.h
  *
  *  @author Doug Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef ACE_LOCAL_SOCK_CONNECTOR_H
 #define ACE_LOCAL_SOCK_CONNECTOR_H
@@ -35,7 +31,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_LSOCK_Connector : public ACE_SOCK_Connector
 {
 public:
-  /// Default constructor.
   ACE_LSOCK_Connector ();
 
   /**
@@ -45,9 +40,9 @@ public:
    * @see ACE_SOCK_Connector().
    */
   ACE_LSOCK_Connector (ACE_LSOCK_Stream &new_stream,
-                       const ACE_UNIX_Addr &remote_sap,
+                       ACE_UNIX_Addr const &remote_sap,
                        ACE_Time_Value *timeout = nullptr,
-                       const ACE_Addr &local_sap = ACE_Addr::sap_any,
+                       ACE_Addr const &local_sap = ACE_Addr::sap_any,
                        int reuse_addr = 0,
                        int flags = 0,
                        int perms = 0);
@@ -59,16 +54,18 @@ public:
    * @see ACE_SOCK_Connector::connect().
    */
   int connect (ACE_LSOCK_Stream &new_stream,
-               const ACE_UNIX_Addr &remote_sap,
+               ACE_UNIX_Addr const &remote_sap,
                ACE_Time_Value *timeout = nullptr,
-               const ACE_Addr &local_sap = ACE_Addr::sap_any,
+               ACE_Addr const &local_sap = ACE_Addr::sap_any,
                int reuse_addr = 0,
                int flags = 0,
                int perms = 0);
 
-  // = Meta-type info
+  /// @name Meta-type traits
+  /// @{
   using PEER_ADDR = ACE_UNIX_Addr;
   using PEER_STREAM = ACE_LSOCK_Stream;
+  /// @}
 
   /// Dump the state of an object.
   void dump () const;

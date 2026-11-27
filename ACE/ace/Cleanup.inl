@@ -1,10 +1,7 @@
-// -*- C++ -*-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
-ACE_Cleanup::ACE_Cleanup ()
-{
-}
+ACE_Cleanup::ACE_Cleanup () = default;
 
 ACE_INLINE void*
 ACE_Cleanup_Info_Node::object()

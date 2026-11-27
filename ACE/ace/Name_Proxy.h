@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Name_Proxy.h
  *
@@ -11,8 +8,6 @@
  *  @author Douglas C. Schmidt
  *  @author Prashant Jain
  */
-//=============================================================================
-
 
 #ifndef ACE_NAME_PROXY_H
 #define ACE_NAME_PROXY_H
@@ -45,17 +40,23 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Name_Proxy : public ACE_Event_Handler
 {
 public:
-  /// Default constructor.
+  ACE_Name_Proxy (ACE_Name_Proxy const &) = delete;
+  ACE_Name_Proxy (ACE_Name_Proxy &&) = delete;
+  ACE_Name_Proxy &operator= (ACE_Name_Proxy const &) = delete;
+  ACE_Name_Proxy &operator= (ACE_Name_Proxy &&) = delete;
+
   ACE_Name_Proxy ();
 
-  // = Establish a binding with the ACE_Name Server.
-  ACE_Name_Proxy (const ACE_INET_Addr &remote_addr, // Address of ACE_Name Server.
+  /// @name Establishing a binding with the ACE_Name Server
+  /// @{
+  ACE_Name_Proxy (ACE_INET_Addr const &remote_addr, // Address of ACE_Name Server.
                   ACE_Synch_Options& options =
                   ACE_Synch_Options::defaults);
 
-  int open (const ACE_INET_Addr &remote_addr,  // Address of ACE_Name Server.
+  int open (ACE_INET_Addr const &remote_addr,  // Address of ACE_Name Server.
             ACE_Synch_Options& options =
             ACE_Synch_Options::defaults);
+  /// @}
 
   /// Perform the request and wait for the reply.
   int request_reply (ACE_Name_Request &request);
@@ -81,10 +82,6 @@ private:
 
   /// Connection to ACE_Name Server peer.
   ACE_SOCK_Stream peer_;
-
-private:
-  ACE_Name_Proxy (const ACE_Name_Proxy &) = delete;
-  ACE_Name_Proxy &operator= (const ACE_Name_Proxy &) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

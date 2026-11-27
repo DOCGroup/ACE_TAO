@@ -6,7 +6,7 @@
 #endif
 
 #include "ace/Truncate.h"
-
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -21,9 +21,7 @@ namespace ACE
       {
       }
 
-    StreamBuffer::~StreamBuffer ()
-      {
-      }
+    StreamBuffer::~StreamBuffer () = default;
 
     std::iostream* StreamBuffer::set_stream (std::iostream * stream)
       {
@@ -35,30 +33,41 @@ namespace ACE
 
     int StreamBuffer::read_from_stream (char* buffer, std::streamsize length)
       {
-        if (this->stream_ == 0) return -1;
+        if (this->stream_ == nullptr)
+        {
+          return -1;
+        }
         this->stream_->read (buffer, length);
         return ACE_Utils::truncate_cast<int> (this->stream_->gcount ());
       }
 
-    int StreamBuffer::write_to_stream (const char* buffer, std::streamsize length)
+    int StreamBuffer::write_to_stream (char const * buffer, std::streamsize length)
       {
-        if (this->stream_ == 0) return -1;
+        if (this->stream_ == nullptr)
+        {
+          return -1;
+        }
         this->stream_->write (buffer, length);
         return this->stream_->good () ? ACE_Utils::truncate_cast<int> (length) : -1;
       }
 
     int StreamBuffer::sync ()
       {
-        if (this->stream_ == 0) return -1;
-        if (ACE::IOS::BufferedStreamBuffer::sync () == -1)
+        if (this->stream_ == nullptr)
+        {
           return -1;
+        }
+        if (ACE::IOS::BufferedStreamBuffer::sync () == -1)
+        {
+          return -1;
+        }
         return this->stream_->sync ();
       }
 
     IOS::IOS (std::iostream * stream)
       : streambuf_ (stream)
       {
-        ace_ios_init (&this->streambuf_);
+        ace_ios_init (std::addressof (this->streambuf_));
       }
 
     IOS::~IOS ()
@@ -80,22 +89,18 @@ namespace ACE
       }
 
     OStream::OStream(std::iostream * stream)
-      : IOS (stream), std::ostream (&streambuf_)
+      : IOS (stream), std::ostream (std::addressof (streambuf_))
       {
       }
 
-    OStream::~OStream()
-      {
-      }
+    OStream::~OStream() = default;
 
     IStream::IStream(std::iostream * stream)
-      : IOS (stream), std::istream (&streambuf_)
+      : IOS (stream), std::istream (std::addressof (streambuf_))
       {
       }
 
-    IStream::~IStream()
-      {
-      }
+    IStream::~IStream() = default;
 
   }
 }

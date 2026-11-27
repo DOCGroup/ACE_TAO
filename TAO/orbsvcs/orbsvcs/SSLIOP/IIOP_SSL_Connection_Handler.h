@@ -1,13 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   IIOP_SSL_Connection_Handler.h
  *
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_IIOP_SSL_CONNECTION_HANDLER_H
 #define TAO_IIOP_SSL_CONNECTION_HANDLER_H
@@ -46,12 +41,10 @@ namespace TAO
   class IIOP_SSL_Connection_Handler : public TAO_IIOP_Connection_Handler
   {
   public:
-    /// Constructor.
-    IIOP_SSL_Connection_Handler (ACE_Thread_Manager* t = nullptr);
-    IIOP_SSL_Connection_Handler (TAO_ORB_Core *orb_core);
+    explicit IIOP_SSL_Connection_Handler (ACE_Thread_Manager* t = nullptr);
+    explicit IIOP_SSL_Connection_Handler (TAO_ORB_Core *orb_core);
 
-    /// Destructor.
-    ~IIOP_SSL_Connection_Handler () override;
+    ~IIOP_SSL_Connection_Handler () override = default;
   };
 
   // ****************************************************************
@@ -101,7 +94,7 @@ namespace TAO
 
     /// Flag that specifies whether or not setup of the SSLIOP::Current
     /// object completed for the current thread and invocation.
-    bool setup_done_;
+    bool setup_done_ {};
   };
 } // End TAO namespace.
 
@@ -110,7 +103,6 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #if defined (__ACE_INLINE__)
 #include "orbsvcs/SSLIOP/IIOP_SSL_Connection_Handler.inl"
 #endif /* __ACE_INLINE__ */
-
 
 #include /**/ "ace/post.h"
 

@@ -1,14 +1,10 @@
-
-//=============================================================================
 /**
  *  @file    DLList_Test.cpp
  *
- *    This test illustrates the use of <ACE_DLList>.
+ *    This test illustrates the use of @c ACE_DLList.
  *
  *  @author James Hu <jxh@cs.wustl.edu> and Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
-
 
 #include "test_config.h"
 #include "ace/Containers.h"
@@ -42,11 +38,11 @@ run_iterate (STRLIST &list)
 
   for (STRLIST_ITERATOR iter (list);
        (entry = iter.next ()) != nullptr;
-       iter.advance (), i++)
+       iter.advance (), ++i)
     {
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("iterating (%d): [%s]\n"),
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("iterating (%B): [%s]\n"),
                   i,
-                  (ACE_TCHAR *) *entry));
+                  *entry));
     }
 }
 
@@ -58,11 +54,11 @@ run_reverse_iterate (STRLIST &list)
 
   for (STRLIST_REVERSE_ITERATOR iter (list);
        iter.next (entry) != 0;
-       iter.advance (), i++)
+       iter.advance (), ++i)
     {
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("iterating (%d): [%s]\n"),
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("iterating (%B): [%s]\n"),
                   i,
-                  (ACE_TCHAR *) *entry));
+                  *entry));
     }
 }
 
@@ -73,21 +69,25 @@ run_test ()
 
   size_t i;
 
-  for (i = 0; string_table[i] != nullptr; i++)
+  for (i = 0; string_table[i] != nullptr; ++i)
     {
       if (ACE_EVEN (i)
-          && list.insert_tail ((ACE_STRING *) &string_table[i]) == nullptr)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p failed for %s\n"),
-                           ACE_TEXT ("insert"),
-                           string_table[i]),
-                          -1);
-      else if (list.insert_head ((ACE_STRING *) &string_table[i]) == nullptr)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p failed for %s\n"),
-                           ACE_TEXT ("insert"),
-                           string_table[i]),
-                          -1);
+          && list.insert_tail (&string_table[i]) == nullptr)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("%p failed for %s\n"),
+                             ACE_TEXT ("insert"),
+                             string_table[i]),
+                            -1);
+        }
+      else if (list.insert_head (&string_table[i]) == nullptr)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("%p failed for %s\n"),
+                             ACE_TEXT ("insert"),
+                             string_table[i]),
+                            -1);
+        }
       run_iterate (list);
       run_reverse_iterate (list);
     }

@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  * @file Memory_Usage_Monitor.h
  *
  * @author Jeff Parsons <j.parsons@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef MEMORY_USAGE_MONITOR_H
 #define MEMORY_USAGE_MONITOR_H
@@ -47,20 +43,17 @@ namespace ACE
 #endif
     {
     public:
-      Memory_Usage_Monitor (const char* name);
+      explicit Memory_Usage_Monitor (char const* name);
 
       /// Implementation of the pure virtual method.
-      virtual void update ();
+      void update () override;
 
       /// Stores the default name, used if none is supplied by the user.
-      static const char* default_name ();
+      static char const* default_name ();
 
     private:
       /// Overridden reset, calls platform-specific reset.
-      virtual void clear_i ();
-
-    private:
-      static const char* default_name_;
+      void clear_i () override;
 
 #if defined (ACE_HAS_LINUX_SYSINFO)
       struct sysinfo sysinfo_;

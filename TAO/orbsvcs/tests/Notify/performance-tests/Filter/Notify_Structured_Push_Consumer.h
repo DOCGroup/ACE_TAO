@@ -1,5 +1,3 @@
-/* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file   Notify_Structured_Push_Consumer.h
  *
@@ -7,7 +5,6 @@
  *
  *  @author Chad Elliott <elliott_c@ociweb.com>
  */
-//=============================================================================
 
 #ifndef TAO_NOTIFY_STRUCTURED_PUSH_CONSUMER_H
 #define TAO_NOTIFY_STRUCTURED_PUSH_CONSUMER_H
@@ -20,21 +17,26 @@ class Notify_Structured_Push_Consumer : public TAO_Notify_Tests_StructuredPushCo
 {
 public:
   Notify_Structured_Push_Consumer (
-                        const char* name,
-                        unsigned int expected,
-                        Notify_Test_Client& client);
-  ~Notify_Structured_Push_Consumer ();
+    char const* name,
+    unsigned int expected,
+    Notify_Test_Client& client);
+  ~Notify_Structured_Push_Consumer () override = default;
+
+  Notify_Structured_Push_Consumer (Notify_Structured_Push_Consumer const&) = delete;
+  Notify_Structured_Push_Consumer (Notify_Structured_Push_Consumer&&) = delete;
+  Notify_Structured_Push_Consumer& operator= (Notify_Structured_Push_Consumer const&) = delete;
+  Notify_Structured_Push_Consumer& operator= (Notify_Structured_Push_Consumer&&) = delete;
 
   void _connect (CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin);
 
 private:
-  void push_structured_event(const CosNotification::StructuredEvent&);
+  void push_structured_event (CosNotification::StructuredEvent const& event) override;
 
   ACE_CString name_;
-  unsigned int expected_;
-  unsigned int count_;
+  unsigned int expected_ {};
+  unsigned int count_ {};
   Notify_Test_Client& client_;
-  ACE_Time_Value first_;
+  ACE_Time_Value first_ {};
 };
 
 #endif /* TAO_NOTIFY_STRUCTURED_PUSH_CONSUMER_H */

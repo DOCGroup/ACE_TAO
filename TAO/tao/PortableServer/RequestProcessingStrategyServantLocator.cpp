@@ -21,7 +21,7 @@ namespace TAO
     RequestProcessingStrategyServantLocator::strategy_cleanup()
     {
       {
-        Non_Servant_Upcall non_servant_upcall (*this->poa_);
+        Non_Servant_Upcall const non_servant_upcall (*this->poa_);
         ACE_UNUSED_ARG (non_servant_upcall);
 
         this->servant_locator_ = PortableServer::ServantLocator::_nil ();
@@ -58,7 +58,7 @@ namespace TAO
 
     TAO_Servant_Location
     RequestProcessingStrategyServantLocator::locate_servant (
-      const PortableServer::ObjectId &system_id,
+      PortableServer::ObjectId const &system_id,
       PortableServer::Servant &servant)
     {
       TAO_Servant_Location  location = this->poa_->servant_present (system_id, servant);
@@ -76,8 +76,8 @@ namespace TAO
 
     PortableServer::Servant
     RequestProcessingStrategyServantLocator::locate_servant (
-      const char *operation,
-      const PortableServer::ObjectId &system_id,
+      char const *operation,
+      PortableServer::ObjectId const &system_id,
       TAO::Portable_Server::Servant_Upcall &servant_upcall,
       TAO::Portable_Server::POA_Current_Impl &poa_current_impl,
       bool &/*wait_occurred_restart_call*/)
@@ -132,7 +132,7 @@ namespace TAO
       // for later use.
       servant_upcall.state (TAO::Portable_Server::Servant_Upcall::OBJECT_ADAPTER_LOCK_RELEASED);
 
-      PortableServer::ServantLocator::Cookie cookie = nullptr;
+      PortableServer::ServantLocator::Cookie cookie {};
       servant =
         this->servant_locator_->preinvoke (poa_current_impl.object_id (),
                                            this->poa_,
@@ -157,12 +157,12 @@ namespace TAO
     void
     RequestProcessingStrategyServantLocator::cleanup_servant (
       PortableServer::Servant servant,
-      const PortableServer::ObjectId &user_id)
+      PortableServer::ObjectId const &user_id)
     {
       if (servant)
         {
           // ATTENTION: Trick locking here, see class header for details
-          Non_Servant_Upcall non_servant_upcall (*this->poa_);
+          Non_Servant_Upcall const non_servant_upcall (*this->poa_);
           ACE_UNUSED_ARG (non_servant_upcall);
 
           try
@@ -192,8 +192,8 @@ namespace TAO
 
     void
     RequestProcessingStrategyServantLocator::post_invoke_servant_cleanup(
-      const PortableServer::ObjectId &system_id,
-      const TAO::Portable_Server::Servant_Upcall &servant_upcall)
+      PortableServer::ObjectId const &system_id,
+      TAO::Portable_Server::Servant_Upcall const &servant_upcall)
     {
       // @todo This method seems to misbehave according to the corba spec, see
       // section 11.3.7.2. It says that when postinvoke raises an system

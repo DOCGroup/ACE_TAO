@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file     PortableGroup_Loader.h
  *
@@ -8,7 +5,6 @@
  *
  *  @author Frank Hunleth <fhunleth@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_PORTABLEGROUP_LOADER_H
 #define TAO_PORTABLEGROUP_LOADER_H
@@ -26,13 +22,12 @@
 #include "ace/Service_Config.h"
 #include "ace/Service_Object.h"
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
- * @class TAO_PortableGroup_Adapter
+ * @class TAO_PortableGroup_Loader
  *
- * @brief TAO_PortableGroup_Adapter.
+ * @brief PortableGroup library loader.
  *
  * This class acts as a facade for the PortableGroup library to the
  * ORB.
@@ -41,8 +36,12 @@ class TAO_PortableGroup_Export TAO_PortableGroup_Loader
   : public ACE_Service_Object
 {
 public:
-  /// Constructor.
-  TAO_PortableGroup_Loader ();
+  TAO_PortableGroup_Loader () = default;
+
+  TAO_PortableGroup_Loader (TAO_PortableGroup_Loader const &) = delete;
+  TAO_PortableGroup_Loader (TAO_PortableGroup_Loader &&) = delete;
+  TAO_PortableGroup_Loader & operator= (TAO_PortableGroup_Loader const &) = delete;
+  TAO_PortableGroup_Loader & operator= (TAO_PortableGroup_Loader &&) = delete;
 
   /// Initialize the PortableGroup loader hooks.
   int init (int argc, ACE_TCHAR *[]) override;

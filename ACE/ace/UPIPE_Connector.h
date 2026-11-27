@@ -1,13 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    UPIPE_Connector.h
  *
  *  @author Gerhard Lenzer and Douglas C. Schmidt
  */
-//=============================================================================
-
 
 #ifndef ACE_UPIPE_CONNECTOR_H
 #define ACE_UPIPE_CONNECTOR_H
@@ -32,7 +27,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_UPIPE_Connector
 {
 public:
-  /// Default constructor.
   ACE_UPIPE_Connector ();
 
   /**
@@ -53,9 +47,9 @@ public:
    * method.
    */
   ACE_UPIPE_Connector (ACE_UPIPE_Stream &new_stream,
-                       const ACE_UPIPE_Addr &addr,
+                       ACE_UPIPE_Addr const &addr,
                        ACE_Time_Value *timeout = nullptr,
-                       const ACE_Addr &local_sap = ACE_Addr::sap_any,
+                       ACE_Addr const &local_sap = ACE_Addr::sap_any,
                        int reuse_addr = 0,
                        int flags = O_RDWR,
                        int perms = 0);
@@ -78,9 +72,9 @@ public:
    * method.
    */
   int connect (ACE_UPIPE_Stream &new_stream,
-               const ACE_UPIPE_Addr &addr,
+               ACE_UPIPE_Addr const &addr,
                ACE_Time_Value *timeout = nullptr,
-               const ACE_Addr &local_sap = ACE_Addr::sap_any,
+               ACE_Addr const &local_sap = ACE_Addr::sap_any,
                int reuse_addr = 0,
                int flags = O_RDWR,
                int perms = 0);
@@ -88,7 +82,6 @@ public:
   /// Resets any event associations on this handle
   bool reset_new_handle (ACE_HANDLE handle);
 
-  // = Meta-type info
   using PEER_ADDR = ACE_UPIPE_Addr;
   using PEER_STREAM = ACE_UPIPE_Stream;
 

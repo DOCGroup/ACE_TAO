@@ -1,16 +1,8 @@
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = DESCRIPTION
-//    This simple test exercises and illustrates use of ACE value-added
-//    functions.
-//
-// = AUTHOR
-//    Steve Huston <shuston@riverace.com>
-//
-// ============================================================================
+/// @file ACE_Test.cpp
+/// This simple test exercises and illustrates use of ACE value-added
+/// functions.
+///
+/// @author Steve Huston <shuston@riverace.com>
 
 #include "test_config.h"
 
@@ -20,18 +12,21 @@
 int
 log2_test ()
 {
-  u_long values[] = {1, 2, 4, 8, 1048576};
-  u_long results[] = {0, 1, 2, 3, 20};
+  u_long const values[] = {1, 2, 4, 8, 1048576};
+  u_long const results[] = {0, 1, 2, 3, 20};
   u_long result = 0;
   int error_count = 0;
 
-  for (size_t i = 0 ; i < sizeof (values) / sizeof (u_long) ; i++)
+  for (size_t i = 0 ; i < sizeof (values) / sizeof (u_long) ; ++i)
     {
       result = ACE::log2(values [i]);
       if (result != results [i])
         {
-          ACE_ERROR ((LM_ERROR, ACE_TEXT ("Log2 error: input %d, output %d, expected %d\n"), values [i], result, results [i]));
-          error_count++;
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("Log2 error: input %Lu, output %Lu, expected %Lu\n"),
+                      values[i],
+                      result,
+                      results[i]));
+          ++error_count;
         }
     }
 
@@ -41,20 +36,24 @@ log2_test ()
 int
 ace_debug_test ()
 {
-  int test_status = 0;
+  int const test_status = 0;
 
   // Check if ACE::debug() is by default false when no ACE_DEBUG environment variable
   // is there
-  const char* debug = ACE_OS::getenv ("ACE_DEBUG");
+  char const * debug = ACE_OS::getenv ("ACE_DEBUG");
   if (debug == nullptr)
     {
       if (ACE::debug())
+      {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("ACE::debug() returns true.\n")));
+      }
     }
   else
     {
       if (!ACE::debug())
+      {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("ACE::debug() returns false.\n")));
+      }
     }
 
   return test_status;
@@ -68,10 +67,10 @@ execname_test ()
 
   // This test is only interesting on Win32
 #if defined (ACE_WIN32)
-  const ACE_TCHAR *newname;
-  const ACE_TCHAR *prog1 = ACE_TEXT ("myprog.exe");
-  const ACE_TCHAR *prog2 = ACE_TEXT ("myprog.EXE");
-  const ACE_TCHAR *prog3 = ACE_TEXT ("myprog");
+  ACE_TCHAR const *newname;
+  ACE_TCHAR const *prog1 = ACE_TEXT ("myprog.exe");
+  ACE_TCHAR const *prog2 = ACE_TEXT ("myprog.EXE");
+  ACE_TCHAR const *prog3 = ACE_TEXT ("myprog");
 
   newname = ACE::execname (prog1);
   if (newname != prog1)   // Didn't find .exe correctly
@@ -97,12 +96,13 @@ execname_test ()
       ++error_count;
     }
   else
-    delete [] const_cast<ACE_TCHAR *> (newname);
+    {
+      delete [] const_cast<ACE_TCHAR *> (newname);
+    }
 #endif /* ACE_WIN32 */
 
   return error_count;
 }
-
 
 int
 run_main (int, ACE_TCHAR *[])
@@ -113,13 +113,19 @@ run_main (int, ACE_TCHAR *[])
   int result;
 
   if ((result = execname_test ()) != 0)
+  {
     status = result;
+  }
 
   if ((result = log2_test ()) != 0)
+  {
     status = result;
+  }
 
   if ((result = ace_debug_test ()) != 0)
-      status = result;
+  {
+    status = result;
+  }
 
   ACE_END_TEST;
   return status;

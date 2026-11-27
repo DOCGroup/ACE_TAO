@@ -1,6 +1,3 @@
-/* -*- c++ -*- */
-
-//=============================================================================
 /**
  *  @file    root_svth.h
  *
@@ -10,7 +7,6 @@
  *
  *  @author Marcel Smit
  */
-//=============================================================================
 
 #ifndef _BE_VISITOR_ROOT_ROOT_SVTH_H_
 #define _BE_VISITOR_ROOT_ROOT_SVTH_H_
@@ -30,9 +26,9 @@ public:
 
   ~be_visitor_root_svth () override;
 
-  be_visitor_root_svth (const be_visitor_root_svth &) = delete;
+  be_visitor_root_svth (be_visitor_root_svth const &) = delete;
   be_visitor_root_svth (be_visitor_root_svth &&) = delete;
-  be_visitor_root_svth &operator= (const be_visitor_root_svth &) = delete;
+  be_visitor_root_svth &operator= (be_visitor_root_svth const &) = delete;
   be_visitor_root_svth &operator= (be_visitor_root_svth &&) = delete;
 
   int visit_root (be_root *node) override;

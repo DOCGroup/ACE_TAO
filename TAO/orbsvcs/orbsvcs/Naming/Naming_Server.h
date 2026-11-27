@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Naming_Server.h
  *
@@ -10,7 +7,6 @@
  *  @author Matt Braun <mjb2@cs.wustl.edu>
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>.
  */
-//=============================================================================
 
 #ifndef TAO_NAMING_SERVER_H
 #define TAO_NAMING_SERVER_H
@@ -21,6 +17,8 @@
 #include "orbsvcs/IOR_Multicast.h"
 #include "orbsvcs/Naming/Naming_Context_Interface.h"
 #include "orbsvcs/Naming/nsconf.h"
+
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -40,16 +38,16 @@ class TAO_Persistent_Naming_Context_Factory;
  * @brief Defines a wrapper class that holds the root Naming Context.
  *
  * This class either finds an existing Naming Service (if the
- * <resolve_for_existing_naming_service> flag is set) or creates
+ * @c resolve_for_existing_naming_service flag is set) or creates
  * one (if @a resolve_for_existing_naming_service flag isn't set or
  * Naming Service was not found).  This class also defines the
- * operator-> so that  <NamingContext> functions like <bind>,
- * <unbind> .. can be called directly on a <TAO_Naming_Server>
+ * operator-> so that  @c NamingContext functions like @c bind,
+ * @c unbind .. can be called directly on a @c TAO_Naming_Server
  * object, and be forwareded to the root Naming Context.
  * This class is intended to simplify
  * programs that want to play the role of a Naming Service
  * server.  To simplify programs that want to play the role of
- * Naming Service clients, use <TAO_Naming_Client>.
+ * Naming Service clients, use @c TAO_Naming_Client.
  * If a Naming Service is created locally, a TAO_IOR_Multicast
  * event handler is created and installed on the ORB's reactor.
  * This event handler allows other clients on the network to
@@ -59,12 +57,11 @@ class TAO_Persistent_Naming_Context_Factory;
  * of the root Naming Context.  For more information on how this
  * bootstraping through a multicast process works, check out
  * orbsvcs/orbsvcs/TAO_IOR_Multicast.*, implementation of
- * <resolve_initial_references>, and orbsvcs/Naming/README.
+ * @c resolve_initial_references, and orbsvcs/Naming/README.
  */
 class TAO_Naming_Serv_Export TAO_Naming_Server
 {
 public:
-  /// Default constructor.
   TAO_Naming_Server (size_t bsize = 1);
 
   /**
@@ -73,20 +70,20 @@ public:
    * false, or no Naming Service was found during a @a timeout period,
    * create the Naming Service in this process.  If creating the
    * Naming Service locally, make the root context of size
-   * <context_size>, register it under the <poa>, and make the Naming
-   * Service persistent if <persistence_location> is not 0.
-   * (<persistence_location> specifies name of the file to use for
-   * persistent storage, <base_addr> specifies the address used for
-   * memory mapping <persistent_location> file).
-   * If <enable_multicast> is not zero then the service will respond
+   * @c context_size, register it under the @c poa, and make the Naming
+   * Service persistent if @c persistence_location is not 0.
+   * (@c persistence_location specifies name of the file to use for
+   * persistent storage, @c base_addr specifies the address used for
+   * memory mapping @c persistent_location file).
+   * If @c enable_multicast is not zero then the service will respond
    * to multicast location queries.
    */
   TAO_Naming_Server (CORBA::ORB_ptr orb,
                      PortableServer::POA_ptr poa,
                      size_t context_size = ACE_DEFAULT_MAP_SIZE,
-                     ACE_Time_Value *timeout = 0,
+                     ACE_Time_Value *timeout = nullptr,
                      bool resolve_for_existing_naming_service = true,
-                     const ACE_TCHAR *persistence_location = 0,
+                     ACE_TCHAR const *persistence_location = nullptr,
                      void *base_addr = TAO_NAMING_BASE_ADDR,
                      int enable_multicast = 1,
                      int use_storable_context = 0,
@@ -97,23 +94,23 @@ public:
   /**
    * Initializer.  Attempts to find an existing Naming Service if
    * @a resolve_for_existing_naming_service is set to true.  If it is
-   * false, or no Naming Service was found during a <timeout> period,
+   * false, or no Naming Service was found during a @c timeout period,
    * create the Naming Service in this process.  If creating the
    * Naming Service locally, make the root context of size
-   * <context_size>, register it under the <poa>, and make the Naming
-   * Service persistent if <persistence_location> is not 0.
-   * (<persistence_location> specifies name of the file to use for
-   * persistent storage, <base_addr> specifies the address used for
-   * memory mapping <persistent_location> file).
-   * If <enable_multicast> is not zero then the service will respond
+   * @c context_size, register it under the @c poa, and make the Naming
+   * Service persistent if @c persistence_location is not 0.
+   * (@c persistence_location specifies name of the file to use for
+   * persistent storage, @c base_addr specifies the address used for
+   * memory mapping @c persistent_location file).
+   * If @c enable_multicast is not zero then the service will respond
    * to multicast location queries.
    */
   int init (CORBA::ORB_ptr orb,
             PortableServer::POA_ptr poa,
             size_t context_size = ACE_DEFAULT_MAP_SIZE,
-            ACE_Time_Value *timeout = 0,
+            ACE_Time_Value *timeout = nullptr,
             bool resolve_for_existing_naming_service = true,
-            const ACE_TCHAR *persistence_location = 0,
+            ACE_TCHAR const *persistence_location = nullptr,
             void *base_addr = TAO_NAMING_BASE_ADDR,
             int enable_multicast = 1,
             int use_storable_context = 0,
@@ -127,13 +124,17 @@ public:
   /// Destroy the child POA created in @c init_with_orb
   virtual int fini ();
 
-  /// Destructor.
   virtual ~TAO_Naming_Server ();
+
+  TAO_Naming_Server (TAO_Naming_Server const &) = delete;
+  TAO_Naming_Server (TAO_Naming_Server &&) = delete;
+  TAO_Naming_Server &operator= (TAO_Naming_Server const &) = delete;
+  TAO_Naming_Server &operator= (TAO_Naming_Server &&) = delete;
 
   /// Returns the IOR of the naming service.
   char * naming_service_ior ();
 
-  /// Returns a <NamingContext_ptr> for the root Naming Context.
+  /// Returns a @c NamingContext_ptr for the root Naming Context.
   CosNaming::NamingContext_ptr operator-> () const;
 
 protected:
@@ -155,15 +156,15 @@ protected:
    * refine how Naming Service components are created and initialized
    * Make the root context of size
    * @a context_size, register it under the @a root_poa, and make the Naming
-   * Service persistent if <persistence_location> is not 0.
-   * (<persistence_location> specifies name of the file to use for
+   * Service persistent if @c persistence_location is not 0.
+   * (@c persistence_location specifies name of the file to use for
    * persistent storage).
-   * If <enable_multicast> is not zero then the service will respond
+   * If @c enable_multicast is not zero then the service will respond
    * to multicast location queries.
    */
   virtual int init_new_naming (CORBA::ORB_ptr orb,
                        PortableServer::POA_ptr root_poa,
-                       const ACE_TCHAR *persistence_location,
+                       ACE_TCHAR const *persistence_location,
                        void *base_addr,
                        size_t context_size,
                        int enable_multicast,
@@ -175,8 +176,8 @@ protected:
   virtual int parse_args (int argc, ACE_TCHAR *argv[]);
 
   /// Write the provided ior_string to the file. Return 0 if success.
-  int write_ior_to_file (const char* ior_string,
-                         const char* file_name);
+  int write_ior_to_file (char const *ior_string,
+                         char const *file_name);
 
   /* Factory method to create a naming context factory for use with
    * the -u and -r options.
@@ -191,7 +192,7 @@ protected:
     persistent_naming_context_factory ();
 
   /// The ior_multicast event handler.
-  TAO_IOR_Multicast *ior_multicast_;
+  TAO_IOR_Multicast *ior_multicast_ {};
 
   /// The ORB
   CORBA::ORB_var orb_;
@@ -203,26 +204,26 @@ protected:
   PortableServer::POA_var ns_poa_;
 
   /// File to output the process id.
-  const ACE_TCHAR *pid_file_name_;
+  ACE_TCHAR const *pid_file_name_ {};
 
   /// Although this class only manages the root context info
   /// the FT class adds primary/backup IORs for the root context
   /// as well as IORs for LB groups as well.
-  IOR_Bundle *iors_;
+  std::unique_ptr<IOR_Bundle[]> iors_;
   size_t bundle_size_;
   IOR_Bundle *bundle_at (size_t ndx);
-  const IOR_Bundle *bundle_at (size_t ndx) const;
+  IOR_Bundle const *bundle_at (size_t ndx) const;
 
   /**
    * Size of the hash_table allocated upon the creation of the Naming
-   * Service context (if one is created).  Note: all the contexts
-   * created under the given context will use the same size for their
-   * initial hash table allocations.
+   * Service context (if one is created).
+   * @note All contexts created under the given context use the same size
+   * for their initial hash table allocations.
    */
-  size_t context_size_;
+  size_t context_size_ {ACE_DEFAULT_MAP_SIZE};
 
   /// If not zero multicast is enabled.
-  int multicast_;
+  int multicast_ {};
 
 #if !defined (CORBA_E_MICRO)
   /**
@@ -230,39 +231,39 @@ protected:
    * the Naming Service when local persistent Naming Service is
    * desired.
    */
-  TAO_Persistent_Context_Index *context_index_;
+  std::unique_ptr<TAO_Persistent_Context_Index> context_index_;
 
   /// Path to the file to be used to store/read in Naming Service
   /// persistent state.
-  const ACE_TCHAR *persistence_dir_;
+  ACE_TCHAR const *persistence_dir_ {};
 
   /// Address to be used for memory mapping Naming Service state file,
-  /// identified by the <persistence_file_name_>.
-  void *base_address_;
+  /// identified by the @c persistence_file_name_.
+  void *base_address_ {TAO_NAMING_BASE_ADDR};
 
   /// If not zero use flat file persistence
-  int use_storable_context_;
+  bool use_storable_context_ {};
 
   /**
    * If not zero use servant activator that uses flat file persistence.
    */
-  int use_servant_activator_;
+  bool use_servant_activator_ {};
 
   /**
    * Need to retain the servant activator between calls to
    * init_with_orb() and init_new_naming().
    */
-  TAO_Storable_Naming_Context_Activator *servant_activator_;
+  TAO_Storable_Naming_Context_Activator *servant_activator_ {};
 #endif /* !CORBA_E_MICRO */
 
   /**
    * If not zero support redundant naming servers.
    */
-  int use_redundancy_;
+  bool use_redundancy_ {};
 
   /// If not zero use round trip timeout policy set to value specified
-  int round_trip_timeout_;
-  int use_round_trip_timeout_;
+  int round_trip_timeout_ {};
+  bool use_round_trip_timeout_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

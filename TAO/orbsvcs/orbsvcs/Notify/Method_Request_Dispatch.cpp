@@ -9,7 +9,8 @@
 #include "tao/debug.h"
 #include "tao/CDR.h"
 
-#include "ace/OS_NS_stdio.h"
+#include <memory>
+#include <string>
 
 #ifndef DEBUG_LEVEL
 # define DEBUG_LEVEL TAO_debug_level
@@ -19,7 +20,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Constuct from event
 TAO_Notify_Method_Request_Dispatch::TAO_Notify_Method_Request_Dispatch (
-      const TAO_Notify_Event * event,
+      TAO_Notify_Event const * event,
       TAO_Notify_ProxySupplier* proxy_supplier,
       bool filtering)
   : TAO_Notify_Method_Request_Event (event)
@@ -30,7 +31,7 @@ TAO_Notify_Method_Request_Dispatch::TAO_Notify_Method_Request_Dispatch (
 
 // Construct from a delivery rquest
 TAO_Notify_Method_Request_Dispatch::TAO_Notify_Method_Request_Dispatch (
-      const TAO_Notify::Delivery_Request_Ptr & delivery,
+      TAO_Notify::Delivery_Request_Ptr const & delivery,
       TAO_Notify_ProxySupplier* proxy_supplier,
       bool filtering)
   : TAO_Notify_Method_Request_Event (delivery)
@@ -43,8 +44,8 @@ TAO_Notify_Method_Request_Dispatch::TAO_Notify_Method_Request_Dispatch (
 // event is passed separately because we may be using a copy
 // of the one in the previous method request
 TAO_Notify_Method_Request_Dispatch::TAO_Notify_Method_Request_Dispatch (
-      const TAO_Notify_Method_Request_Event & request,
-      const TAO_Notify_Event * event,
+      TAO_Notify_Method_Request_Event const & request,
+      TAO_Notify_Event const * event,
       TAO_Notify_ProxySupplier* proxy_supplier,
       bool filtering)
   : TAO_Notify_Method_Request_Event (request, event)
@@ -53,16 +54,16 @@ TAO_Notify_Method_Request_Dispatch::TAO_Notify_Method_Request_Dispatch (
 {
 }
 
-TAO_Notify_Method_Request_Dispatch::~TAO_Notify_Method_Request_Dispatch ()
-{
-}
+TAO_Notify_Method_Request_Dispatch::~TAO_Notify_Method_Request_Dispatch () = default;
 
 int TAO_Notify_Method_Request_Dispatch::execute_i ()
 {
   if (this->proxy_supplier_->has_shutdown ())
+  {
     return 0; // If we were shutdown while waiting in the queue, return with no action.
+  }
 
-  if (this->filtering_ == 1)
+  if (this->filtering_)
     {
       TAO_Notify_Admin& parent = this->proxy_supplier_->consumer_admin ();
       CORBA::Boolean const val = this->proxy_supplier_->check_filters (this->event_,
@@ -70,14 +71,18 @@ int TAO_Notify_Method_Request_Dispatch::execute_i ()
                                                                   parent.filter_operator ());
 
       if (TAO_debug_level > 1)
-        ORBSVCS_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("Notify (%P|%t) Proxysupplier %x filter ")
-                    ACE_TEXT ("eval result = %d\n"),
-          &this->proxy_supplier_ , val));
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("Notify (%P|%t) Proxysupplier %@ filter ")
+                          ACE_TEXT ("eval result = %d\n"),
+                          std::addressof (this->proxy_supplier_), val));
+        }
 
       // Filter failed - do nothing.
       if (!val)
+      {
         return 0;
+      }
     }
 
   try
@@ -89,12 +94,14 @@ int TAO_Notify_Method_Request_Dispatch::execute_i ()
           consumer->deliver (this);
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       if (TAO_debug_level > 0)
-        ex._tao_print_exception (
-          ACE_TEXT (
-            "TAO_Notify_Method_Request_Dispatch::: error sending event.\n"));
+        {
+          ex._tao_print_exception (
+            ACE_TEXT (
+              "TAO_Notify_Method_Request_Dispatch::: error sending event.\n"));
+        }
     }
 
   return 0;
@@ -108,21 +115,21 @@ TAO_Notify_Method_Request_Dispatch::unmarshal (
     TAO_InputCDR & cdr)
 {
   bool ok = true;
-  TAO_Notify_Method_Request_Dispatch_Queueable * result = nullptr;
-  ACE_CString textpath;
+  TAO_Notify_Method_Request_Dispatch_Queueable * result {};
+  std::string textpath;
   CORBA::ULong count;
   if (cdr.read_ulong (count))
   {
-    TAO_Notify::IdVec id_path (count);
-    for (size_t nid = 0; ok && nid < count; ++nid)
+    TAO_Notify::IdVec id_path;
+    id_path.reserve (count);
+    for (size_t nid {}; ok && nid < count; ++nid)
     {
-      TAO_Notify_Object::ID id = 0;
+      TAO_Notify_Object::ID id {};
       if ( cdr.read_long (id))
       {
         id_path.push_back (id);
-        char idbuf[20];
-        ACE_OS::snprintf (idbuf, sizeof(idbuf), "/%d", static_cast<int> (id));
-        textpath += idbuf;
+        textpath += '/';
+        textpath += std::to_string (id);
       }
       else
       {
@@ -137,10 +144,12 @@ TAO_Notify_Method_Request_Dispatch::unmarshal (
       if (proxy_supplier != nullptr)
       {
         if (DEBUG_LEVEL > 6)
-          ORBSVCS_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) TAO_Notify_Method_Request_Dispatch")
-                      ACE_TEXT (" reload event for %C\n"),
-                      textpath.c_str()));
+          {
+            ORBSVCS_DEBUG ((LM_DEBUG,
+                            ACE_TEXT ("(%P|%t) TAO_Notify_Method_Request_Dispatch")
+                            ACE_TEXT (" reload event for %C\n"),
+                            textpath.c_str()));
+          }
         ACE_NEW_NORETURN (result,
           TAO_Notify_Method_Request_Dispatch_Queueable (delivery_request, proxy_supplier, true));
       }
@@ -175,14 +184,13 @@ TAO_Notify_Method_Request_Dispatch::unmarshal (
 
 ///////////////////////////////////////////////////////////////////////////////
 
-
 /*******************************************************************/
 
 // Constuct construct from another method request+event
 // event is passed separately because we may be using a copy
 // of the one in the previous method request
 TAO_Notify_Method_Request_Dispatch_Queueable::TAO_Notify_Method_Request_Dispatch_Queueable (
-      const TAO_Notify_Method_Request_Event & request,
+      TAO_Notify_Method_Request_Event const & request,
       TAO_Notify_Event::Ptr & event,
       TAO_Notify_ProxySupplier* proxy_supplier,
       bool filtering)
@@ -195,17 +203,15 @@ TAO_Notify_Method_Request_Dispatch_Queueable::TAO_Notify_Method_Request_Dispatch
   /// Constuct construct from Delivery Request
   /// should ONLY be used by unmarshall
 TAO_Notify_Method_Request_Dispatch_Queueable::TAO_Notify_Method_Request_Dispatch_Queueable (
-        const TAO_Notify::Delivery_Request_Ptr & request,
+        TAO_Notify::Delivery_Request_Ptr const & request,
         TAO_Notify_ProxySupplier* proxy_supplier,
         bool filtering)
-  : TAO_Notify_Method_Request_Dispatch (request, request->event ().get (), proxy_supplier, filtering)
+  : TAO_Notify_Method_Request_Dispatch (
+      TAO_Notify_Method_Request_Event (request),
+      request->event ().get (), proxy_supplier, filtering)
   , TAO_Notify_Method_Request_Queueable (request->event ().get ())
   , event_var_( request->event () )
 
-{
-}
-
-TAO_Notify_Method_Request_Dispatch_Queueable::~TAO_Notify_Method_Request_Dispatch_Queueable ()
 {
 }
 
@@ -219,14 +225,10 @@ TAO_Notify_Method_Request_Dispatch_Queueable::execute ()
 
   /// Constuct construct from another method request
 TAO_Notify_Method_Request_Dispatch_No_Copy::TAO_Notify_Method_Request_Dispatch_No_Copy (
-      const TAO_Notify_Method_Request_Event & request,
+      TAO_Notify_Method_Request_Event const & request,
       TAO_Notify_ProxySupplier* proxy_supplier,
       bool filtering)
   : TAO_Notify_Method_Request_Dispatch (request, request.event (), proxy_supplier, filtering)
-{
-}
-
-TAO_Notify_Method_Request_Dispatch_No_Copy:: ~TAO_Notify_Method_Request_Dispatch_No_Copy ()
 {
 }
 
@@ -239,7 +241,7 @@ TAO_Notify_Method_Request_Dispatch_No_Copy::execute ()
 TAO_Notify_Method_Request_Queueable*
 TAO_Notify_Method_Request_Dispatch_No_Copy::copy ()
 {
-  TAO_Notify_Method_Request_Queueable* request = nullptr;
+  TAO_Notify_Method_Request_Queueable* request {};
 
   TAO_Notify_Event::Ptr event_var (
     this->event_->queueable_copy () );

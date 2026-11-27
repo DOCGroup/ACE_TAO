@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  * @file    test_i.h
  *
@@ -9,7 +6,6 @@
  *
  * @author  Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
 
 #ifndef TEST_I_H
 #define TEST_I_H
@@ -29,34 +25,36 @@
 class test_i : public virtual POA_PICurrentTest::test
 {
 public:
-  /// Constructor.
   test_i (PortableInterceptor::Current_ptr current,
           PortableInterceptor::SlotId id,
           CORBA::ORB_ptr orb);
+  test_i (test_i const &) = delete;
+  test_i (test_i &&) = delete;
+  test_i &operator= (test_i const &) = delete;
+  test_i &operator= (test_i &&) = delete;
 
-  /// Destructor.
-  ~test_i ();
+  ~test_i () override = default;
 
   /// Main servant test method.
-  virtual void invoke_me ();
+  void invoke_me () override;
 
   /// No-op method used so that a client request interceptor will be
   /// invoked when invoking this method from the above invoke_me()
   /// method.  Say that 10 times fast. :-)
-  virtual void invoke_you ();
+  void invoke_you () override;
 
   /// Test just a set slot
-  virtual void invoke_we ();
+  void invoke_we () override;
 
   /// Shutdown the ORB.
-  virtual void shutdown ();
+  void shutdown () override;
 
 private:
   /// Reference to the PICurrent object.
   PortableInterceptor::Current_var current_;
 
   /// SlotId in the PICurrent object assigned to this test.
-  PortableInterceptor::SlotId slot_id_;
+  PortableInterceptor::SlotId const slot_id_;
 
   /// Pseudo-reference to the ORB.
   CORBA::ORB_var orb_;

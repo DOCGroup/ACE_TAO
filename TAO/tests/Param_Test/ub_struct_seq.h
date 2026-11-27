@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    ub_struct_seq.h
  *
@@ -7,32 +5,26 @@
  *
  *  @author   Aniruddha Gokhale
  */
-//=============================================================================
-
 
 #ifndef PARAM_TEST_UNBOUNED_STRUCT_SEQUENCE_H
 #define PARAM_TEST_UNBOUNED_STRUCT_SEQUENCE_H
 
 #include "param_testC.h"
 
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-//           test sequence of structs
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+/// test sequence of structs
 
 class Test_Struct_Sequence
 {
 public:
-  /// ctor
   Test_Struct_Sequence ();
 
-  /// dtor
-  ~Test_Struct_Sequence ();
+  ~Test_Struct_Sequence () = default;
 
   /// run the SII test
   int run_sii_test (Param_Test_ptr objref);
 
   /// return operation name
-  const char *opname () const;
+  char const *opname () const;
 
   /// set values for parameters
   int init_parameters (Param_Test_ptr objref);
@@ -62,7 +54,7 @@ protected:
 
 private:
   /// operation name
- char *opname_;
+ char const *opname_;
 
   /// in parameter
   Param_Test::StructSeq in_;
@@ -78,21 +70,18 @@ private:
   Param_Test::StructSeq_var ret_;
 };
 
-
 class Test_Unbounded_Struct_Sequence
 {
 public:
-  /// ctor
   Test_Unbounded_Struct_Sequence ();
 
-  /// dtor
-  ~Test_Unbounded_Struct_Sequence ();
+  ~Test_Unbounded_Struct_Sequence () = default;
 
   /// run the SII test
   int run_sii_test (Param_Test_ptr objref);
 
   /// return operation name
-  const char *opname () const;
+  char const *opname () const;
 
   /// set values for parameters
   int init_parameters (Param_Test_ptr objref);
@@ -122,7 +111,7 @@ protected:
 
 private:
   /// operation name
- char *opname_;
+ char const *opname_;
 
   /// in parameter
   Param_Test::PathSpec in_;
@@ -137,6 +126,5 @@ private:
   /// return value
   Param_Test::PathSpec_var ret_;
 };
-
 
 #endif /* PARAM_TEST_UNBOUNED_STRUCT_SEQUENCE_H */

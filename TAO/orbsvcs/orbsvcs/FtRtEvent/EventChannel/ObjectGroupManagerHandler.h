@@ -1,17 +1,15 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   ObjectGroupManagerHandler.h
  *
  *  @author Huang-Ming Huang <hh1@cse.wustl.edu>
  */
-//=============================================================================
 #ifndef OBJECTGROUPMANAGERHANDLER_H
 #define OBJECTGROUPMANAGERHANDLER_H
 
 #include "orbsvcs/FTRT_GroupManagerS.h"
 #include "ace/Auto_Event.h"
+
+#include <atomic>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -28,7 +26,7 @@ public:
   ObjectGroupManagerHandler& operator=(ObjectGroupManagerHandler&&) = delete;
 
   void start (CORBA::Boolean ami_return_val,
-              const FTRT::Location & the_location) override;
+              FTRT::Location const & the_location) override;
 
   void start_excep (::Messaging::ExceptionHolder * excep_holder) override;
 
@@ -45,7 +43,7 @@ public:
   void set_state_excep (::Messaging::ExceptionHolder * excep_holder) override;
 private:
   ACE_Auto_Event& evt_;
-  ACE_Atomic_Op<TAO_SYNCH_MUTEX, int> num_backups_;
+  std::atomic<int> num_backups_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

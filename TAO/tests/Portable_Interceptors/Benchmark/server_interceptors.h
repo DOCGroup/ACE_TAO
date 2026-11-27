@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #ifndef TAO_SERVER_INTERCEPTOR_H
 #define TAO_SERVER_INTERCEPTOR_H
 
@@ -17,128 +16,132 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+/// Server-side Vault interceptor.  For checking interceptor visually only.
 class Vault_Server_Request_Interceptor
   : public virtual PortableInterceptor::ServerRequestInterceptor,
     public virtual ::CORBA::LocalObject
 {
-  // = Server-side Vault interceptor.  For checking interceptor visually only.
 public:
-  Vault_Server_Request_Interceptor ();
-  // cotr.
-  ~Vault_Server_Request_Interceptor ();
-  // dotr.
+  Vault_Server_Request_Interceptor () = default;
+  ~Vault_Server_Request_Interceptor () override = default;
+  Vault_Server_Request_Interceptor (Vault_Server_Request_Interceptor const &) = delete;
+  Vault_Server_Request_Interceptor (Vault_Server_Request_Interceptor &&) = delete;
+  Vault_Server_Request_Interceptor &operator= (Vault_Server_Request_Interceptor const &) = delete;
+  Vault_Server_Request_Interceptor &operator= (Vault_Server_Request_Interceptor &&) = delete;
 
-  virtual char * name ();
-  // Canonical name of the interceptor.
+  /// Canonical name of the interceptor.
+  char * name () override;
 
-  virtual void destroy ();
+  void destroy () override;
 
-  virtual void receive_request (PortableInterceptor::ServerRequestInfo_ptr ri);
+  void receive_request (PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void receive_request_service_contexts (
-        PortableInterceptor::ServerRequestInfo_ptr);
+  void receive_request_service_contexts (PortableInterceptor::ServerRequestInfo_ptr) override;
 
-  virtual void send_reply (PortableInterceptor::ServerRequestInfo_ptr ri);
+  void send_reply (PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void send_exception (PortableInterceptor::ServerRequestInfo_ptr ri);
+  void send_exception (PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void send_other (PortableInterceptor::ServerRequestInfo_ptr);
+  void send_other (PortableInterceptor::ServerRequestInfo_ptr) override;
 
 private:
-  const char *myname_;
+  char const *const myname_ { "Vault_Server_Interceptor" };
 };
 
+/// Server-side Vault interceptor.  For checking interceptor visually only.
 class Vault_Server_Request_Context_Interceptor
   : public virtual PortableInterceptor::ServerRequestInterceptor,
     public virtual ::CORBA::LocalObject
 {
-  // = Server-side Vault interceptor.  For checking interceptor visually only.
 public:
-  Vault_Server_Request_Context_Interceptor ();
-  // cotr.
-  ~Vault_Server_Request_Context_Interceptor ();
-  // dotr.
+  Vault_Server_Request_Context_Interceptor () = default;
+  ~Vault_Server_Request_Context_Interceptor () override = default;
+  Vault_Server_Request_Context_Interceptor (Vault_Server_Request_Context_Interceptor const &) = delete;
+  Vault_Server_Request_Context_Interceptor (Vault_Server_Request_Context_Interceptor &&) = delete;
+  Vault_Server_Request_Context_Interceptor &operator= (Vault_Server_Request_Context_Interceptor const &) = delete;
+  Vault_Server_Request_Context_Interceptor &operator= (Vault_Server_Request_Context_Interceptor &&) = delete;
 
-  virtual char * name ();
-  // Canonical name of the interceptor.
+  /// Canonical name of the interceptor.
+  char * name () override;
 
-  virtual void destroy ();
+  void destroy () override;
 
-  virtual void receive_request (PortableInterceptor::ServerRequestInfo_ptr ri);
+  void receive_request (PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void receive_request_service_contexts (
-        PortableInterceptor::ServerRequestInfo_ptr);
+  void receive_request_service_contexts (PortableInterceptor::ServerRequestInfo_ptr) override;
 
-  virtual void send_reply (PortableInterceptor::ServerRequestInfo_ptr ri);
+  void send_reply (PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void send_exception (PortableInterceptor::ServerRequestInfo_ptr ri);
+  void send_exception (PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void send_other (PortableInterceptor::ServerRequestInfo_ptr);
+  void send_other (PortableInterceptor::ServerRequestInfo_ptr) override;
 
 private:
-  const char *myname_;
+  char const *const myname_ { "Vault_Server_Context_Interceptor" };
 };
 
+/// Server-side Vault interceptor.  For checking interceptor visually only.
 class Vault_Server_Request_Dynamic_Interceptor
   : public virtual PortableInterceptor::ServerRequestInterceptor,
     public virtual ::CORBA::LocalObject
 {
-  // = Server-side Vault interceptor.  For checking interceptor visually only.
 public:
-  Vault_Server_Request_Dynamic_Interceptor ();
-  // cotr.
-  ~Vault_Server_Request_Dynamic_Interceptor ();
-  // dotr.
+  Vault_Server_Request_Dynamic_Interceptor () = default;
+  ~Vault_Server_Request_Dynamic_Interceptor () override = default;
+  Vault_Server_Request_Dynamic_Interceptor (Vault_Server_Request_Dynamic_Interceptor const &) = delete;
+  Vault_Server_Request_Dynamic_Interceptor (Vault_Server_Request_Dynamic_Interceptor &&) = delete;
+  Vault_Server_Request_Dynamic_Interceptor &operator= (Vault_Server_Request_Dynamic_Interceptor const &) = delete;
+  Vault_Server_Request_Dynamic_Interceptor &operator= (Vault_Server_Request_Dynamic_Interceptor &&) = delete;
 
-  virtual char * name ();
-  // Canonical name of the interceptor.
+  /// Canonical name of the interceptor.
+  char * name () override;
 
-  virtual void destroy ();
+  void destroy () override;
 
-  virtual void receive_request (PortableInterceptor::ServerRequestInfo_ptr ri);
+  void receive_request (PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void receive_request_service_contexts (
-        PortableInterceptor::ServerRequestInfo_ptr);
+  void receive_request_service_contexts (PortableInterceptor::ServerRequestInfo_ptr) override;
 
-  virtual void send_reply (PortableInterceptor::ServerRequestInfo_ptr ri);
+  void send_reply (PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void send_exception (PortableInterceptor::ServerRequestInfo_ptr ri);
+  void send_exception (PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void send_other (PortableInterceptor::ServerRequestInfo_ptr);
+  void send_other (PortableInterceptor::ServerRequestInfo_ptr) override;
 
 private:
-  const char *myname_;
+  char const *const myname_ { "Vault_Server_Dynamic_Interceptor" };
 };
 
+/// Server-side Vault interceptor.  For checking interceptor visually only.
 class Vault_Server_Request_NOOP_Interceptor
   : public virtual PortableInterceptor::ServerRequestInterceptor,
     public virtual ::CORBA::LocalObject
 {
-  // = Server-side Vault interceptor.  For checking interceptor visually only.
 public:
-  Vault_Server_Request_NOOP_Interceptor ();
-  // cotr.
-  ~Vault_Server_Request_NOOP_Interceptor ();
-  // dotr.
+  Vault_Server_Request_NOOP_Interceptor () = default;
+  ~Vault_Server_Request_NOOP_Interceptor () override = default;
+  Vault_Server_Request_NOOP_Interceptor (Vault_Server_Request_NOOP_Interceptor const &) = delete;
+  Vault_Server_Request_NOOP_Interceptor (Vault_Server_Request_NOOP_Interceptor &&) = delete;
+  Vault_Server_Request_NOOP_Interceptor &operator= (Vault_Server_Request_NOOP_Interceptor const &) = delete;
+  Vault_Server_Request_NOOP_Interceptor &operator= (Vault_Server_Request_NOOP_Interceptor &&) = delete;
 
-  virtual char * name ();
-  // Canonical name of the interceptor.
+  /// Canonical name of the interceptor.
+  char * name () override;
 
-  virtual void destroy ();
+  void destroy () override;
 
-  virtual void receive_request (PortableInterceptor::ServerRequestInfo_ptr ri);
+  void receive_request (PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void receive_request_service_contexts (
-        PortableInterceptor::ServerRequestInfo_ptr);
+  void receive_request_service_contexts (PortableInterceptor::ServerRequestInfo_ptr) override;
 
-  virtual void send_reply (PortableInterceptor::ServerRequestInfo_ptr ri);
+  void send_reply (PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void send_exception (PortableInterceptor::ServerRequestInfo_ptr ri);
+  void send_exception (PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void send_other (PortableInterceptor::ServerRequestInfo_ptr);
+  void send_other (PortableInterceptor::ServerRequestInfo_ptr) override;
 
 private:
-  const char *myname_;
+  char const *const myname_ { "Vault_Server_NOOP_Interceptor" };
 };
 
 #if defined(_MSC_VER)

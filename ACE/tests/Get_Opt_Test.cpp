@@ -1,24 +1,15 @@
-// ============================================================================
-//
-// = LIBRARY
-//    tests
-//
-// = DESCRIPTION
-//    This program tests both the short and long option support in
-//    <ACE_Get_Opt>, and demonstrates how to use it.
-//
-// = AUTHOR
-//    Don Hinton <dhinton@dresystems.com>
-//
-// ============================================================================
+/// @file Get_Opt_Test.cpp
+/// This program tests both the short and long option support in
+/// @c ACE_Get_Opt, and demonstrates how to use it.
+///
+/// @author Don Hinton <dhinton@dresystems.com>
 
-#include "test_config.h"
 #include "ace/Get_Opt.h"
+#include "test_config.h"
 #include "ace/ARGV.h"
 #include "ace/SString.h"
-#include "ace/OS_NS_stdlib.h"
-#include "test_config.h"
 
+#include <string>
 
 /*
  * This is the heart of the test. It sets up the optstring, instantiates
@@ -34,10 +25,10 @@ static const ACE_TString empty_string (ACE_TEXT (""));
 static int
 parse_args (int test_number,
             int ordering,
-            const ACE_TCHAR *test_args,
+            ACE_TCHAR const *test_args,
             int skip_argv = 1,
             int report_errors = 1,
-            const ACE_TString &opt_prefix = empty_string)
+            ACE_TString const &opt_prefix = empty_string)
 {
   ACE_TString test;
   ACE_TString optstring (opt_prefix);
@@ -46,8 +37,8 @@ parse_args (int test_number,
   if (skip_argv > 0)
     {
       test = ACE_TEXT ("Test_");
-      ACE_TCHAR s[20];
-      test += ACE_OS::itoa (test_number, s, 10);
+      std::string const test_number_string = std::to_string (test_number);
+      test += ACE_TEXT_CHAR_TO_TCHAR (test_number_string.c_str ());
       test += ACE_TEXT (" ");
     }
 
@@ -73,38 +64,50 @@ parse_args (int test_number,
   if (get_opt.long_option (ACE_TEXT ("flag"),
                            'f',
                            ACE_Get_Opt::NO_ARG) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("  Unable to add long option 'f'\n")), 1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("  Unable to add long option 'f'\n")), 1);
+    }
 
   if (get_opt.long_option (ACE_TEXT ("requires_arg"),
                            'r',
                            ACE_Get_Opt::ARG_REQUIRED) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("  Unable to add long option 'r'\n")), 1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("  Unable to add long option 'r'\n")), 1);
+    }
 
   if (get_opt.long_option (ACE_TEXT ("optional_arg"),
                            'o',
                            ACE_Get_Opt::ARG_OPTIONAL) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("  Unable to add long option 'o'\n")), 1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("  Unable to add long option 'o'\n")), 1);
+    }
 
   if (get_opt.long_option (ACE_TEXT ("long_option"),
                            'l',
                            ACE_Get_Opt::ARG_OPTIONAL) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("  Unable to add long option 'l'\n")), 1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("  Unable to add long option 'l'\n")), 1);
+    }
 
   if (get_opt.long_option (ACE_TEXT ("long_only"),
                            -11,
                            ACE_Get_Opt::ARG_REQUIRED) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("  Unable to add long option ")
-                       ACE_TEXT ("\"long_only\"\n")), 1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("  Unable to add long option ")
+                         ACE_TEXT ("\"long_only\"\n")), 1);
+    }
 
   if (get_opt.long_option (ACE_TEXT ("long_no_arg")) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("  Unable to add long option ")
-                       ACE_TEXT ("\"long_no_arg\"\n")), 1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("  Unable to add long option ")
+                         ACE_TEXT ("\"long_no_arg\"\n")), 1);
+    }
 
   // This is the special case of providing a non-alpha numeric corresponding
   // short option.  This lets you use the corresponding short option in a
@@ -113,9 +116,11 @@ parse_args (int test_number,
   if (get_opt.long_option (ACE_TEXT ("non_alpha-num_short"),
                            -10,
                            ACE_Get_Opt::ARG_OPTIONAL) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("  Unable to add long option ")
-                       ACE_TEXT ("\"non_alpha_short\"\n")), 1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("  Unable to add long option ")
+                         ACE_TEXT ("\"non_alpha_short\"\n")), 1);
+    }
 
   // We print out the optstring here because adding long_options that
   // have corresponding short options that aren't yet present, are added.
@@ -132,7 +137,9 @@ parse_args (int test_number,
         case 0:
           // Long Option.
           if (!get_opt.long_option ())
+          {
             ACE_ERROR_RETURN ((LM_ERROR, "  Long option doesn't exist.\n"), 1);
+          }
 
           ACE_DEBUG ((LM_INFO, "   Found long option \"%s\" %s %s\n",
                       get_opt.long_option (),
@@ -209,14 +216,18 @@ parse_args (int test_number,
 
   // Print out the rest of the arguments left in the command line (if any).
   int index = 0;
-  for (index = get_opt.opt_ind (); index < args.argc (); index++)
-    ACE_DEBUG ((LM_INFO, "   Found non-option argument \"%s\"\n",
-                args.argv ()[index]));
+  for (index = get_opt.opt_ind (); index < args.argc (); ++index)
+    {
+      ACE_DEBUG ((LM_INFO, "   Found non-option argument \"%s\"\n",
+                  args.argv ()[index]));
+    }
 
   // Now print them all so we can examine the permuted cmd line.
-  for (index = 0; index < args.argc (); index++)
-    ACE_DEBUG ((LM_INFO, "   argv[%u] \"%s\"\n",
-                index, args.argv ()[index]));
+  for (index = 0; index < args.argc (); ++index)
+    {
+      ACE_DEBUG ((LM_INFO, "   argv[%d] \"%s\"\n",
+                  index, args.argv ()[index]));
+    }
   return 0;
 }
 
@@ -297,7 +308,7 @@ run_test (int& test_number, int ordering)
 
   // Now, let's test some error conditions (we turn off report_errors since they are
   // intentional, we don't want to break the test script)
-  int report_errors = 0;
+  int const report_errors = 0;
 
   // Bad short option.
   retval += parse_args (test_number++, ordering, ACE_TEXT ("-X"), 1, report_errors);

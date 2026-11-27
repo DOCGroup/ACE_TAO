@@ -17,9 +17,9 @@
 
 #include "ace/SString.h"
 #include "ace/Containers_T.h"
-#include "ace/Containers_T.h"
 #include "ace/OS_NS_ctype.h"
 #include "ace/INet/INet_Export.h"
+#include <cstdlib>
 #include <iostream>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -38,21 +38,21 @@ namespace ACE
           {
             public:
               NVPair ();
-              NVPair (const ACE_CString& first);
-              NVPair (const ACE_CString& first, const ACE_CString& second);
-              NVPair (const NVPair& pair);
+              NVPair (ACE_CString const& first);
+              NVPair (ACE_CString const& first, ACE_CString const& second);
+              NVPair (NVPair const& pair);
               virtual ~NVPair ();
-              NVPair& operator =(const NVPair& pair);
-              bool operator ==(const NVPair& pair) const;
-              bool operator <(const NVPair& pair) const;
+              NVPair& operator =(NVPair const& pair);
+              bool operator ==(NVPair const& pair) const;
+              bool operator <(NVPair const& pair) const;
 
-              const ACE_CString& first () const;
+              ACE_CString const& first () const;
 
-              void first (const ACE_CString& t1);
+              void first (ACE_CString const& t1);
 
-              const ACE_CString& second () const;
+              ACE_CString const& second () const;
 
-              void second (const ACE_CString& t2);
+              void second (ACE_CString const& t2);
 
             private:
               ACE_CString first_;
@@ -60,7 +60,6 @@ namespace ACE
           };
 
         using TNVMap = ACE_Ordered_MultiSet<NVPair>;
-
 
         /**
         * @class ACE_INet_HeaderBase
@@ -71,10 +70,8 @@ namespace ACE
         class ACE_INET_Export HeaderBase
           {
             public:
-              /// Constructor
               HeaderBase();
 
-              /// Destructor
               virtual ~HeaderBase();
 
               /// Sets the Content-Length header.
@@ -90,7 +87,7 @@ namespace ACE
               /// Sets the content type for this message.
               /// Removes the Content-Type header if
               /// UNKNOWN_CONTENT_TYPE is specified.
-              virtual void set_content_type(const ACE_CString& mime_type);
+              virtual void set_content_type(ACE_CString const& mime_type);
 
               /// Returns the content type for this message.
               /// Returns UNKNOWN_CONTENT_TYPE if
@@ -106,37 +103,37 @@ namespace ACE
               /// given stream.
               virtual bool read(std::istream& str);
 
-              static const int         UNKNOWN_CONTENT_LENGTH;
-              static const ACE_CString UNKNOWN_CONTENT_TYPE;
+              static int const         UNKNOWN_CONTENT_LENGTH;
+              static ACE_CString const UNKNOWN_CONTENT_TYPE;
 
-              static const ACE_CString CONTENT_LENGTH;
-              static const ACE_CString CONTENT_TYPE;
+              static ACE_CString const CONTENT_LENGTH;
+              static ACE_CString const CONTENT_TYPE;
 
-              static const ACE_CString EMPTY;
+              static ACE_CString const EMPTY;
 
               /// Sets header @a name to @a value. Overwrites existing vaues.
-              void    set (const ACE_CString& name, const ACE_CString& value);
+              void    set (ACE_CString const& name, ACE_CString const& value);
 
               /// Adds header @a name with @a value. Allows duplicates.
-              void    add (const ACE_CString& name, const ACE_CString& value);
+              void    add (ACE_CString const& name, ACE_CString const& value);
 
               /// Removes header @a name (first found).
-              void    remove (const ACE_CString& name);
+              void    remove (ACE_CString const& name);
 
               /// Retrieves value for header @a name into @a value (first found).
-              bool    get (const ACE_CString& name, ACE_CString& value) const;
+              bool    get (ACE_CString const& name, ACE_CString& value) const;
 
               /// Returns true if a header @a name exists (1 or more), false otherwise.
-              bool    has (const ACE_CString& name) const;
+              bool    has (ACE_CString const& name) const;
 
               /// Retrieves values for all headers @a name into @a values.
-              void    get_values (const ACE_CString& name, ACE_Array<ACE_CString>& values) const;
+              void    get_values (ACE_CString const& name, ACE_Array<ACE_CString>& values) const;
 
             protected:
               int     read_field (std::istream& str, ACE_CString& var, size_t maxlen, char delim);
               int     read_ws_field (std::istream& str, ACE_CString& var, size_t maxlen);
 
-              static const int eof_;
+              static int const eof_;
 
             private:
               /// Limits for reading a header

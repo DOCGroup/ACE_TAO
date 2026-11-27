@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    timeout_client.cpp
  *
@@ -6,7 +5,6 @@
  *
  *  @author Michael Kircher <Michael.Kircher@mchp.siemens.de>
  */
-//=============================================================================
 
 #include "timeout_client.h"
 #include "tao/Messaging/Messaging.h"
@@ -17,20 +15,13 @@
 TimeoutClient::TimeoutClient (CORBA::ORB_ptr orb,
                               TimeoutObj_ptr timeoutObject,
                               AMI_TimeoutObjHandler_ptr replyHandlerObject,
-                              TimeoutHandler_i *timeoutHandler_i,
+                              TimeoutHandler_i &timeoutHandler_i,
                               unsigned long timeToWait)
-: orb_ (CORBA::ORB::_duplicate (orb))
-  , timeoutObject_ (TimeoutObj::_duplicate (timeoutObject))
-  , replyHandlerObject_ (AMI_TimeoutObjHandler::_duplicate (replyHandlerObject))
-  , timeoutHandler_i_ (timeoutHandler_i)
-  , local_reply_excep_counter_ (0)
-  , INVOKE_SYNCH (0)
-  , INVOKE_ASYNCH (1)
-  , timeToWait_ (timeToWait)
-{
-}
-
-TimeoutClient::~TimeoutClient ()
+  : orb_ (CORBA::ORB::_duplicate (orb)),
+    timeoutObject_ (TimeoutObj::_duplicate (timeoutObject)),
+    replyHandlerObject_ (AMI_TimeoutObjHandler::_duplicate (replyHandlerObject)),
+    timeoutHandler_i_ (timeoutHandler_i),
+    timeToWait_ (timeToWait)
 {
 }
 
@@ -62,7 +53,7 @@ TimeoutClient::svc ()
       // shut down local ORB
       orb_->shutdown (false);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return 1;
@@ -85,7 +76,7 @@ TimeoutClient::initialize ()
       policy_manager_ =
         CORBA::PolicyManager::_narrow (object.in ());
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return 1;
@@ -94,23 +85,26 @@ TimeoutClient::initialize ()
   return 0;
 }
 
-
 void
-TimeoutClient::send (CORBA::Boolean async,
+TimeoutClient::send (bool async,
                      unsigned long local_timeout,
                      unsigned long remote_sleep)
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) Invoking "));
   if (async)
-    ACE_DEBUG ((LM_DEBUG,
-                "asynch "));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "asynch "));
+    }
   else
-    ACE_DEBUG ((LM_DEBUG,
-                "synch "));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "synch "));
+    }
 
   ACE_DEBUG ((LM_DEBUG,
-              "local: %dms remote: %dms  ... ",
+              "local: %Lums remote: %Lums  ... ",
               local_timeout,
               remote_sleep));
 
@@ -120,7 +114,7 @@ TimeoutClient::send (CORBA::Boolean async,
     {
       if (local_timeout != 0)
         {
-          TimeBase::TimeT timeout = 10000 * local_timeout;
+          TimeBase::TimeT const timeout = 10000 * local_timeout;
 
           CORBA::Any any_orb;
           any_orb <<= timeout;
@@ -140,9 +134,8 @@ TimeoutClient::send (CORBA::Boolean async,
                                                  CORBA::SET_OVERRIDE);
         }
 
-
       // Start time measurement at the reply handler
-      timeoutHandler_i_->start ();
+      timeoutHandler_i_.start ();
 
       if (async)
         {
@@ -154,9 +147,9 @@ TimeoutClient::send (CORBA::Boolean async,
           timeoutObject_->sendTimeToWait (remote_sleep);
         }
     }
-  catch (const CORBA::TIMEOUT& )
+  catch (CORBA::TIMEOUT const &)
     {
-      local_reply_excep_counter_++;
+      ++local_reply_excep_counter_;
 
       // Trap this exception and continue...
       ACE_DEBUG ((LM_DEBUG,
@@ -171,7 +164,7 @@ TimeoutClient::send (CORBA::Boolean async,
           policy_list[0]->destroy ();
         }
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Error: Unexpected exception\n\n"));
@@ -181,46 +174,49 @@ TimeoutClient::send (CORBA::Boolean async,
   ACE_Time_Value tv (0, (local_timeout + remote_sleep)*2000 + 4000);
   ACE_OS::sleep (tv);
 
-  ACE_Time_Value &elapsed_time = timeoutHandler_i_->elapsed_time ();
+  ACE_Time_Value elapsed_time = timeoutHandler_i_.elapsed_time ();
 
   if (async)
-    ACE_DEBUG ((LM_DEBUG,
-                " .. needed %dms\n",
-                elapsed_time.msec()));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  " .. needed %Lums\n",
+                  elapsed_time.msec ()));
+    }
   else
-    ACE_DEBUG ((LM_DEBUG,
-                " .. done\n"));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  " .. done\n"));
+    }
 }
-
 
 int
 TimeoutClient::synch_test ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "TimeoutClient::synch_test - Begin\n"));
-  timeoutHandler_i_->reset_reply_counter ();
-  timeoutHandler_i_->reset_reply_excep_counter ();
+  timeoutHandler_i_.reset_reply_counter ();
+  timeoutHandler_i_.reset_reply_excep_counter ();
   local_reply_excep_counter_ = 0;
 
-  this->send (INVOKE_SYNCH,
+  this->send (false,
               0,    // local
               0);   // remote
 
-  this->send (INVOKE_SYNCH,
+  this->send (false,
               timeToWait_,    // local
               timeToWait_*2); // remote
 
-  this->send (INVOKE_SYNCH,
+  this->send (false,
               0,    // local
               0);   // remote
 
-  if (timeoutHandler_i_->reply_counter () != 0
-   || timeoutHandler_i_->reply_excep_counter () != 0
+  if (timeoutHandler_i_.reply_counter () != 0
+   || timeoutHandler_i_.reply_excep_counter () != 0
    || local_reply_excep_counter_ != 1)
     ACE_DEBUG ((LM_DEBUG,
                 "**** Error in replies %d %d %d.\n\n",
-                timeoutHandler_i_->reply_counter (),
-                timeoutHandler_i_->reply_excep_counter (),
+                timeoutHandler_i_.reply_counter (),
+                timeoutHandler_i_.reply_excep_counter (),
                 local_reply_excep_counter_));
 
   ACE_DEBUG ((LM_DEBUG,
@@ -235,25 +231,25 @@ TimeoutClient::accuracy_test ()
   ACE_DEBUG ((LM_DEBUG,
               "TimeoutClient::accuracy_test - Begin\n\n"));
 
-  timeoutHandler_i_->reset_reply_counter ();
-  timeoutHandler_i_->reset_reply_excep_counter ();
+  timeoutHandler_i_.reset_reply_counter ();
+  timeoutHandler_i_.reset_reply_excep_counter ();
   local_reply_excep_counter_ = 0;
 
-  this->send (INVOKE_ASYNCH,
+  this->send (true,
               timeToWait_,
               (unsigned long)(timeToWait_*1.5));
 
-  this->send (INVOKE_ASYNCH,
+  this->send (true,
               timeToWait_,
               (unsigned long)(timeToWait_*0.5));
 
-  if (timeoutHandler_i_->reply_counter () != 1
-   || timeoutHandler_i_->reply_excep_counter () != 1
+  if (timeoutHandler_i_.reply_counter () != 1
+   || timeoutHandler_i_.reply_excep_counter () != 1
    || local_reply_excep_counter_ != 0)
     ACE_DEBUG ((LM_DEBUG,
                 "**** Error in replies %d %d %d.\n\n",
-                timeoutHandler_i_->reply_counter (),
-                timeoutHandler_i_->reply_excep_counter (),
+                timeoutHandler_i_.reply_counter (),
+                timeoutHandler_i_.reply_excep_counter (),
                 local_reply_excep_counter_));
 
   ACE_DEBUG ((LM_DEBUG,
@@ -268,29 +264,29 @@ TimeoutClient::none_test ()
   ACE_DEBUG ((LM_DEBUG,
               "TimeoutClient::none_test - Begin\n\n"));
 
-  timeoutHandler_i_->reset_reply_counter ();
-  timeoutHandler_i_->reset_reply_excep_counter ();
+  timeoutHandler_i_.reset_reply_counter ();
+  timeoutHandler_i_.reset_reply_excep_counter ();
   local_reply_excep_counter_ = 0;
 
-  this->send (INVOKE_ASYNCH,
+  this->send (true,
               0,
               0);
 
-  this->send (INVOKE_ASYNCH,
+  this->send (true,
               timeToWait_,
               timeToWait_+10);  // trigger a timeout
 
-  this->send (INVOKE_ASYNCH,
+  this->send (true,
               timeToWait_,
               0);
 
-  if (timeoutHandler_i_->reply_counter () != 2
-   || timeoutHandler_i_->reply_excep_counter () != 1
+  if (timeoutHandler_i_.reply_counter () != 2
+   || timeoutHandler_i_.reply_excep_counter () != 1
    || local_reply_excep_counter_ != 0)
     ACE_DEBUG ((LM_DEBUG,
                 "**** Error in replies %d %d %d.\n\n",
-                timeoutHandler_i_->reply_counter (),
-                timeoutHandler_i_->reply_excep_counter (),
+                timeoutHandler_i_.reply_counter (),
+                timeoutHandler_i_.reply_excep_counter (),
                 local_reply_excep_counter_));
 
   ACE_DEBUG ((LM_DEBUG,

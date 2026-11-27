@@ -3,6 +3,7 @@
 
 #include "ace/IOStream_T.h"
 #include "ace/OS_Memory.h"
+#include "ace/OS_NS_ctype.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -70,7 +71,9 @@ ACE_Streambuf_T<STREAM>::recv (char *buf,
   errno = ESUCCESS;
   ssize_t rval = peer_->recv (buf, len, flags, tv);
   if (errno == ETIME)
-    this->timeout_ = 1;
+    {
+      this->timeout_ = 1;
+    }
   return rval;
 }
 
@@ -84,7 +87,9 @@ ACE_Streambuf_T<STREAM>::recv_n (char *buf,
   errno = ESUCCESS;
   ssize_t rval = peer_->recv_n (buf, len, flags, tv);
   if (errno == ETIME)
-    this->timeout_ = 1;
+    {
+      this->timeout_ = 1;
+    }
   return rval;
 }
 
@@ -101,32 +106,33 @@ ACE_Streambuf_T<STREAM>::get_handle ()
 template <class STREAM>
 ACE_IOStream<STREAM>::ACE_IOStream (STREAM &stream,
                                     u_int streambuf_size)
-  : iostream (0),
+  : iostream (nullptr),
     STREAM (stream)
 {
-  ACE_NEW (streambuf_,
-           ACE_Streambuf_T<STREAM> ((STREAM *) this,
-                                    streambuf_size));
-  iostream::init (this->streambuf_);
+  this->streambuf_.reset (
+    new (ACE_nothrow) ACE_Streambuf_T<STREAM> (static_cast<STREAM *> (this),
+                                               streambuf_size));
+  if (this->streambuf_ == nullptr)
+    {
+      errno = ENOMEM;
+      return;
+    }
+  iostream::init (this->streambuf_.get ());
 }
 
 template <class STREAM>
 ACE_IOStream<STREAM>::ACE_IOStream (u_int streambuf_size)
-  : iostream (0)
+  : iostream (nullptr)
 {
-  ACE_NEW (this->streambuf_,
-           ACE_Streambuf_T<STREAM> ((STREAM *) this,
-                                    streambuf_size));
-  iostream::init (this->streambuf_);
-}
-
-// We have to get rid of the streambuf_ ourselves since we gave it to
-// iostream ()
-
-template <class STREAM>
-ACE_IOStream<STREAM>::~ACE_IOStream ()
-{
-  delete this->streambuf_;
+  this->streambuf_.reset (
+    new (ACE_nothrow) ACE_Streambuf_T<STREAM> (static_cast<STREAM *> (this),
+                                               streambuf_size));
+  if (this->streambuf_ == nullptr)
+    {
+      errno = ENOMEM;
+      return;
+    }
+  iostream::init (this->streambuf_.get ());
 }
 
 // The only ambituity in the multiple inheritance is the close ()
@@ -146,8 +152,8 @@ ACE_IOStream<STREAM>::operator>> (ACE_Time_Value *&tv)
   return *this;
 }
 
-/// A simple string operator.  The base iostream has 'em for char* but
-/// that isn't always the best thing for a String.  If we don't provide
+/// A simple string operator. The base @c iostream has 'em for char* but
+/// that isn't always the best thing for @c String. If we don't provide
 /// our own here, we may not get what we want.
 template <class STREAM> ACE_IOStream<STREAM> &
 ACE_IOStream<STREAM>::operator>> (ACE_IOStream_String &v)
@@ -158,7 +164,7 @@ ACE_IOStream<STREAM>::operator>> (ACE_IOStream_String &v)
       this->get (c);
 
       for (v = c;
-           this->get (c) && !isspace (c);
+           this->get (c) && !ACE_OS::ace_isspace (c);
            v += c)
         continue;
     }
@@ -196,23 +202,35 @@ operator>> (STREAM &stream,
   char c;
 
   if (!(stream >> c)) // eat space up to the first char
-    // stream.set (ios::eofbit|ios::failbit);
-    return stream;
+    {
+      // stream.set (ios::eofbit|ios::failbit);
+      return stream;
+    }
 
   str = "";     // Initialize the string
 
   // if we don't have a quote, append until we see space
   if (c != '"')
-    for (str = c; stream.get (c) && !isspace (c); str += c)
-      continue;
-  else
-    for (; stream.get (c) && c != '"'; str += c)
-      if (c == '\\')
+    {
+      for (str = c; stream.get (c) && !ACE_OS::ace_isspace (c); str += c)
         {
-          stream.get (c);
-          if (c != '"')
-            str += '\\';
+          continue;
         }
+    }
+  else
+    {
+      for (; stream.get (c) && c != '"'; str += c)
+        {
+          if (c == '\\')
+            {
+              stream.get (c);
+              if (c != '"')
+                {
+                  str += '\\';
+                }
+            }
+        }
+    }
 
   return stream;
 }
@@ -226,7 +244,9 @@ operator<< (STREAM &stream,
   for (u_int i = 0; i < str.length (); ++i)
     {
       if (str[i] == '"')
-        stream.put ('\\');
+        {
+          stream.put ('\\');
+        }
       stream.put (str[i]);
     }
 

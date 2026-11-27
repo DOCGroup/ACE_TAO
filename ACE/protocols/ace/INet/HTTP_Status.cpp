@@ -1,11 +1,10 @@
 #include "ace/INet/HTTP_Status.h"
 #include "ace/INet/HeaderBase.h"
-#include "ace/OS_NS_stdlib.h"
+#include <cstdlib>
 
 #if !defined (__ACE_INLINE__)
 #include "ace/INet/HTTP_Status.inl"
 #endif
-
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -13,47 +12,47 @@ namespace ACE
 {
   namespace HTTP
   {
-    const ACE_CString Status::HTTP_REASON_CONTINUE                        = "Continue";
-    const ACE_CString Status::HTTP_REASON_SWITCHING_PROTOCOLS             = "Switching Protocols";
-    const ACE_CString Status::HTTP_REASON_OK                              = "OK";
-    const ACE_CString Status::HTTP_REASON_CREATED                         = "Created";
-    const ACE_CString Status::HTTP_REASON_ACCEPTED                        = "Accepted";
-    const ACE_CString Status::HTTP_REASON_NONAUTHORITATIVE                = "Non-Authoritative Information";
-    const ACE_CString Status::HTTP_REASON_NO_CONTENT                      = "No Content";
-    const ACE_CString Status::HTTP_REASON_RESET_CONTENT                   = "Reset Content";
-    const ACE_CString Status::HTTP_REASON_PARTIAL_CONTENT                 = "Partial Content";
-    const ACE_CString Status::HTTP_REASON_MULTIPLE_CHOICES                = "Multiple Choices";
-    const ACE_CString Status::HTTP_REASON_MOVED_PERMANENTLY               = "Moved Permanently";
-    const ACE_CString Status::HTTP_REASON_FOUND                           = "Found";
-    const ACE_CString Status::HTTP_REASON_SEE_OTHER                       = "See Other";
-    const ACE_CString Status::HTTP_REASON_NOT_MODIFIED                    = "Not Modified";
-    const ACE_CString Status::HTTP_REASON_USEPROXY                        = "Use Proxy";
-    const ACE_CString Status::HTTP_REASON_TEMPORARY_REDIRECT              = "Temporary Redirect";
-    const ACE_CString Status::HTTP_REASON_BAD_REQUEST                     = "Bad Request";
-    const ACE_CString Status::HTTP_REASON_UNAUTHORIZED                    = "Unauthorized";
-    const ACE_CString Status::HTTP_REASON_PAYMENT_REQUIRED                = "Payment Required";
-    const ACE_CString Status::HTTP_REASON_FORBIDDEN                       = "Forbidden";
-    const ACE_CString Status::HTTP_REASON_NOT_FOUND                       = "Not Found";
-    const ACE_CString Status::HTTP_REASON_METHOD_NOT_ALLOWED              = "Method Not Allowed";
-    const ACE_CString Status::HTTP_REASON_NOT_ACCEPTABLE                  = "Not Acceptable";
-    const ACE_CString Status::HTTP_REASON_PROXY_AUTHENTICATION_REQUIRED   = "Proxy Authentication Required";
-    const ACE_CString Status::HTTP_REASON_REQUEST_TIMEOUT                 = "Request Time-out";
-    const ACE_CString Status::HTTP_REASON_CONFLICT                        = "Conflict";
-    const ACE_CString Status::HTTP_REASON_GONE                            = "Gone";
-    const ACE_CString Status::HTTP_REASON_LENGTH_REQUIRED                 = "Length Required";
-    const ACE_CString Status::HTTP_REASON_PRECONDITION_FAILED             = "Precondition Failed";
-    const ACE_CString Status::HTTP_REASON_REQUESTENTITYTOOLARGE           = "Request Entity Too Large";
-    const ACE_CString Status::HTTP_REASON_REQUESTURITOOLONG               = "Request-URI Too Large";
-    const ACE_CString Status::HTTP_REASON_UNSUPPORTEDMEDIATYPE            = "Unsupported Media Type";
-    const ACE_CString Status::HTTP_REASON_REQUESTED_RANGE_NOT_SATISFIABLE = "Requested Range Not Satisfiable";
-    const ACE_CString Status::HTTP_REASON_EXPECTATION_FAILED              = "Expectation Failed";
-    const ACE_CString Status::HTTP_REASON_INTERNAL_SERVER_ERROR           = "Internal Server Error";
-    const ACE_CString Status::HTTP_REASON_NOT_IMPLEMENTED                 = "Not Implemented";
-    const ACE_CString Status::HTTP_REASON_BAD_GATEWAY                     = "Bad Gateway";
-    const ACE_CString Status::HTTP_REASON_SERVICE_UNAVAILABLE             = "Service Unavailable";
-    const ACE_CString Status::HTTP_REASON_GATEWAY_TIMEOUT                 = "Gateway Time-out";
-    const ACE_CString Status::HTTP_REASON_VERSION_NOT_SUPPORTED           = "HTTP Version not supported";
-    const ACE_CString Status::HTTP_REASON_UNKNOWN                         = "???";
+    ACE_CString const Status::HTTP_REASON_CONTINUE                        = "Continue";
+    ACE_CString const Status::HTTP_REASON_SWITCHING_PROTOCOLS             = "Switching Protocols";
+    ACE_CString const Status::HTTP_REASON_OK                              = "OK";
+    ACE_CString const Status::HTTP_REASON_CREATED                         = "Created";
+    ACE_CString const Status::HTTP_REASON_ACCEPTED                        = "Accepted";
+    ACE_CString const Status::HTTP_REASON_NONAUTHORITATIVE                = "Non-Authoritative Information";
+    ACE_CString const Status::HTTP_REASON_NO_CONTENT                      = "No Content";
+    ACE_CString const Status::HTTP_REASON_RESET_CONTENT                   = "Reset Content";
+    ACE_CString const Status::HTTP_REASON_PARTIAL_CONTENT                 = "Partial Content";
+    ACE_CString const Status::HTTP_REASON_MULTIPLE_CHOICES                = "Multiple Choices";
+    ACE_CString const Status::HTTP_REASON_MOVED_PERMANENTLY               = "Moved Permanently";
+    ACE_CString const Status::HTTP_REASON_FOUND                           = "Found";
+    ACE_CString const Status::HTTP_REASON_SEE_OTHER                       = "See Other";
+    ACE_CString const Status::HTTP_REASON_NOT_MODIFIED                    = "Not Modified";
+    ACE_CString const Status::HTTP_REASON_USEPROXY                        = "Use Proxy";
+    ACE_CString const Status::HTTP_REASON_TEMPORARY_REDIRECT              = "Temporary Redirect";
+    ACE_CString const Status::HTTP_REASON_BAD_REQUEST                     = "Bad Request";
+    ACE_CString const Status::HTTP_REASON_UNAUTHORIZED                    = "Unauthorized";
+    ACE_CString const Status::HTTP_REASON_PAYMENT_REQUIRED                = "Payment Required";
+    ACE_CString const Status::HTTP_REASON_FORBIDDEN                       = "Forbidden";
+    ACE_CString const Status::HTTP_REASON_NOT_FOUND                       = "Not Found";
+    ACE_CString const Status::HTTP_REASON_METHOD_NOT_ALLOWED              = "Method Not Allowed";
+    ACE_CString const Status::HTTP_REASON_NOT_ACCEPTABLE                  = "Not Acceptable";
+    ACE_CString const Status::HTTP_REASON_PROXY_AUTHENTICATION_REQUIRED   = "Proxy Authentication Required";
+    ACE_CString const Status::HTTP_REASON_REQUEST_TIMEOUT                 = "Request Time-out";
+    ACE_CString const Status::HTTP_REASON_CONFLICT                        = "Conflict";
+    ACE_CString const Status::HTTP_REASON_GONE                            = "Gone";
+    ACE_CString const Status::HTTP_REASON_LENGTH_REQUIRED                 = "Length Required";
+    ACE_CString const Status::HTTP_REASON_PRECONDITION_FAILED             = "Precondition Failed";
+    ACE_CString const Status::HTTP_REASON_REQUESTENTITYTOOLARGE           = "Request Entity Too Large";
+    ACE_CString const Status::HTTP_REASON_REQUESTURITOOLONG               = "Request-URI Too Large";
+    ACE_CString const Status::HTTP_REASON_UNSUPPORTEDMEDIATYPE            = "Unsupported Media Type";
+    ACE_CString const Status::HTTP_REASON_REQUESTED_RANGE_NOT_SATISFIABLE = "Requested Range Not Satisfiable";
+    ACE_CString const Status::HTTP_REASON_EXPECTATION_FAILED              = "Expectation Failed";
+    ACE_CString const Status::HTTP_REASON_INTERNAL_SERVER_ERROR           = "Internal Server Error";
+    ACE_CString const Status::HTTP_REASON_NOT_IMPLEMENTED                 = "Not Implemented";
+    ACE_CString const Status::HTTP_REASON_BAD_GATEWAY                     = "Bad Gateway";
+    ACE_CString const Status::HTTP_REASON_SERVICE_UNAVAILABLE             = "Service Unavailable";
+    ACE_CString const Status::HTTP_REASON_GATEWAY_TIMEOUT                 = "Gateway Time-out";
+    ACE_CString const Status::HTTP_REASON_VERSION_NOT_SUPPORTED           = "HTTP Version not supported";
+    ACE_CString const Status::HTTP_REASON_UNKNOWN                         = "???";
 
     Status::Status()
       : code_ (HTTP_NONE)
@@ -66,26 +65,26 @@ namespace ACE
         reason_ = get_reason(this->code_);
       }
 
-    Status::Status(Code status, const ACE_CString& reason)
+    Status::Status(Code status, ACE_CString const& reason)
       : code_ (status), reason_ (reason)
       {
       }
 
-    Status::Status(const Status& status)
+    Status::Status(Status const& status)
       {
         *this = status;
       }
 
-    Status& Status::operator =(const Status& status)
+    Status& Status::operator =(Status const& status)
       {
         this->code_ = status.get_status ();
         this->reason_ = status.get_reason ();
         return *this;
       }
 
-    void Status::set_status(const ACE_CString& status)
+    void Status::set_status(ACE_CString const& status)
       {
-        Code istat = (Code)ACE_OS::atoi (status.c_str ());
+        Code const istat = static_cast<Code> (std::atoi (status.c_str ()));
         if (istat == HTTP_NONE || get_reason (istat) == HTTP_REASON_UNKNOWN)
           {
             this->code_ = INVALID;
@@ -96,7 +95,7 @@ namespace ACE
           }
       }
 
-    const ACE_CString& Status::get_reason(Code status)
+    ACE_CString const& Status::get_reason(Code status)
       {
         switch (status)
         {

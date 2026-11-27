@@ -17,6 +17,8 @@
 #include "ace/SOCK_Connector.h"
 #include "ace/Thread_Semaphore.h"
 
+#include <memory>
+
 #if defined (ACE_HAS_THREADS) && !defined ACE_LACKS_ACCEPT
 
 # define TEST_TRACE(X) ACE_Trace ____ (ACE_TEXT (X), __LINE__, ACE_TEXT (__FILE__))
@@ -77,7 +79,7 @@ struct My_Task : public ACE_Task_Base
      TEST_TRACE ("My_Task::svc");
      ACE_Reactor *r = ACE_Reactor::instance ();
      r->owner (ACE_OS::thr_self ());
-     int rv = r->run_reactor_event_loop ();
+     int const rv = r->run_reactor_event_loop ();
      if (rv < 0)
        {
          ACE_ERROR ((LM_ERROR,
@@ -91,7 +93,7 @@ struct My_Task : public ACE_Task_Base
 // event handler used to signal when the reactor started
 struct Timer_Handler : public ACE_Event_Handler
 {
-   int handle_timeout (const ACE_Time_Value&, const void*) override
+   int handle_timeout (ACE_Time_Value const &, void const *) override
    {
      g_semaphore.release (); // signal reactor started
      return 0;
@@ -112,30 +114,32 @@ run_main (int, ACE_TCHAR *[])
 #if defined (ACE_HAS_THREADS) && !defined ACE_LACKS_ACCEPT
 
   My_Acceptor acceptor;
-  if (-1 == acceptor.open (ACE_sap_any_cast (const ACE_INET_Addr &)))
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("acceptor open")),
-                      1);
+  if (-1 == acceptor.open (ACE_sap_any_cast (ACE_INET_Addr const &)))
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("acceptor open")),
+                        1);
+    }
   ACE_INET_Addr listen_addr;
   acceptor.acceptor ().get_local_addr (listen_addr);
 #if defined (ACE_HAS_IPV6)
-  const ACE_TCHAR *me =
+  ACE_TCHAR const *me =
     listen_addr.get_type () == PF_INET ? ACE_LOCALHOST : ACE_IPV6_LOCALHOST;
 #else
-  const ACE_TCHAR *me = ACE_LOCALHOST;
+  ACE_TCHAR const *me = ACE_LOCALHOST;
 #endif /* ACE_HAS_IPV6 */
   ACE_INET_Addr connect_addr (listen_addr.get_port_number (),
                               me,
                               listen_addr.get_type ());
 
   Timer_Handler timer_handler;
-  ACE_Reactor::instance()->schedule_timer (&timer_handler,
+  ACE_Reactor::instance()->schedule_timer (std::addressof (timer_handler),
                                            nullptr,
                                            ACE_Time_Value(0));
 
   My_Task task;
-  int activated = task.activate ();
+  int const activated = task.activate ();
   if (activated < 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,

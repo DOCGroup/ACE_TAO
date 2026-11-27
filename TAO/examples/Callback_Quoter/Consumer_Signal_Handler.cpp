@@ -1,6 +1,3 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
  *  @file    Consumer_Signal_Handler.cpp
  *
@@ -8,7 +5,6 @@
  *
  *  @author Kirthika Parameswaran <kirthika@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "Consumer_Signal_Handler.h"
 
@@ -20,8 +16,8 @@ Consumer_Signal_Handler::Consumer_Signal_Handler (Consumer_Handler *consumer_han
 // Method to handle the ^C signal.
 int
 Consumer_Signal_Handler::handle_signal (int /* signum */,
-                                        siginfo_t*,
-                                        ucontext_t*)
+                                        siginfo_t *,
+                                        ucontext_t *)
 {
   ACE_DEBUG ((LM_DEBUG, " Exiting on receiving ^C\n"));
 
@@ -47,8 +43,7 @@ Consumer_Signal_Handler::quit_on_signal ()
   // necessary to unregister and then shutdown.
   try
     {
-      if (consumer_handler_->unregistered_ != 1
-          && consumer_handler_->registered_ == 1)
+      if (!consumer_handler_->unregistered_ && consumer_handler_->registered_)
         {
           this->consumer_handler_->server_->unregister_callback
             (this->consumer_handler_->consumer_var_.in ());
@@ -57,7 +52,7 @@ Consumer_Signal_Handler::quit_on_signal ()
         }
       this->consumer_handler_->consumer_servant_->shutdown ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         "Consumer_Input_Handler::quit_consumer_process()");

@@ -1,6 +1,3 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
  *  @file   FlReactor_Test.cpp
  *
@@ -13,12 +10,8 @@
  *
  *  @author Carlos O'Ryan <coryan@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #include "test_config.h"
-
-
 
 #include "ace/FlReactor/FlReactor.h"
 #include "ace/Event_Handler.h"
@@ -28,6 +21,8 @@
 #include "ace/SOCK_Connector.h"
 #include "ace/Service_Config.h"
 #include "ace/Thread_Manager.h"
+
+#include <memory>
 
 #include /**/ <FL/Fl.H>
 #include /**/ <FL/Fl_Window.H>
@@ -40,7 +35,6 @@
 class Test_Window : public Fl_Gl_Window
 {
 public:
-  /// Constructor
   Test_Window (int x, int y, int w, int h,
                const char * l = nullptr);
 
@@ -50,7 +44,7 @@ public:
 
 private:
   /// from the Fl_Gl_Window...
-  virtual void draw ();
+  void draw () override;
 
   int sides_;
 };
@@ -79,9 +73,11 @@ Test_Window::sides (int s)
 void
 Test_Window::incr_sides ()
 {
-  this->sides_++;
+  ++this->sides_;
   if (this->sides_ > 10)
-    this->sides_ = 3;
+    {
+      this->sides_ = 3;
+    }
   this->redraw ();
 }
 
@@ -126,14 +122,14 @@ void sides_cb (Fl_Widget *o, void *p)
 class Connection_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 {
 public:
-  Connection_Handler (Test_Window *w = nullptr,
+  Connection_Handler (Test_Window *w {},
                       Fl_Box* box = nullptr);
 
   //FUZZ: disable check_for_lack_ACE_OS
-  virtual int open (void *);
+  int open (void *) override;
   //FUZZ: enble check_for_lack_ACE_OS
 
-  virtual int handle_input (ACE_HANDLE);
+  int handle_input (ACE_HANDLE) override;
 
 private:
   Test_Window *w_;
@@ -143,10 +139,10 @@ private:
 class Acceptor : public ACE_Acceptor<Connection_Handler,ACE_SOCK_ACCEPTOR>
 {
 public:
-  Acceptor (Test_Window *w = nullptr,
+  Acceptor (Test_Window *w {},
             Fl_Box *box = nullptr);
 
-  virtual int make_svc_handler (Connection_Handler *&sh);
+  int make_svc_handler (Connection_Handler *&sh) override;
 
 private:
   Test_Window* w_;
@@ -194,7 +190,9 @@ Connection_Handler::handle_input (ACE_HANDLE)
 {
   char buf[BUFSIZ];
   if (this->peer ().recv (buf, BUFSIZ) <= 0)
-    return -1;
+    {
+      return -1;
+    }
   return 0;
 }
 
@@ -232,7 +230,7 @@ int run_main (int argc, ACE_TCHAR *argv[])
   slider.bounds (3, 10);
 
   ACE_FlReactor reactor;
-  ACE_Reactor r (&reactor);
+  ACE_Reactor r (std::addressof (reactor));
 
   Fl_Box *box = new Fl_Box (FL_UP_BOX, 10, 40,
                             window.w () - 20, 30,
@@ -243,11 +241,13 @@ int run_main (int argc, ACE_TCHAR *argv[])
 
   ACE_INET_Addr address;
 
-  if (acceptor.open (address, &r) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "open acceptor"),
-                      -1);
+  if (acceptor.open (address, std::addressof (r)) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         ACE_TEXT ("open acceptor")),
+                        -1);
+    }
 
   acceptor.acceptor ().get_local_addr (address);
 

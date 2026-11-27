@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 /**
  *  @file    ServerRequestInterceptor_Factory_Impl.h
  *

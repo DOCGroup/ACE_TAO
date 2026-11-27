@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Shared_Memory_SV.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef ACE_SHARED_MALLOC_SV_H
 #define ACE_SHARED_MALLOC_SV_H
@@ -61,11 +57,12 @@ public:
   /// Remove the underlying shared memory segment.
   int remove () override;
 
-  // = Allocation and deallocation methods.
+  /// @name Allocation and deallocation
+  /// @{
   /// Create a new chuck of memory containing @a size bytes.
   void *malloc (size_t = 0) override;
 
-  /// Free a chuck of memory allocated by <ACE_Shared_Memory_SV::malloc>.
+  /// Free a chuck of memory allocated by @c ACE_Shared_Memory_SV::malloc.
   int free (void *p) override;
 
   /// Return the size of the shared memory segment.
@@ -74,6 +71,7 @@ public:
   /// Return the ID of the shared memory segment (i.e., a System V
   /// shared memory internal id).
   ACE_HANDLE get_id () const override;
+  /// @}
 
   /// Dump the state of an object.
   void dump () const;

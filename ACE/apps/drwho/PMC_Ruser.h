@@ -1,13 +1,8 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
  *  @file    PMC_Ruser.h
  *
  *  @author Douglas C. Schmidt
  */
-//=============================================================================
-
 
 #ifndef _PMC_RUSER_H
 #define _PMC_RUSER_H
@@ -23,15 +18,15 @@ class PMC_Ruser : public PM_Client
 {
 public:
   PMC_Ruser ();
-  virtual void process ();
+  void process () override;
 
 protected:
-  char *handle_protocol_entries (const char *cp,
-                                 const char *host_name,
-                                 const char * = 0);
-  Protocol_Record *insert_protocol_info (Protocol_Record &protocol_record);
-  virtual int encode (char *packet, int &total_bytes);
-  virtual int decode (char *packet, int &total_bytes);
+  char *handle_protocol_entries (char const *cp,
+                                 char const *host_name,
+                                 char const * = nullptr) override;
+  Protocol_Record *insert_protocol_info (Protocol_Record &protocol_record) override;
+  int encode (char *packet, int &total_bytes) override;
+  int decode (char *packet, int &total_bytes) override;
 };
 
 #endif /* _PMC_RUSER_H */

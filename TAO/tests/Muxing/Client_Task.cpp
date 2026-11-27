@@ -1,4 +1,3 @@
-
 #include "Client_Task.h"
 
 Client_Task::Client_Task (Test::Receiver_ptr receiver,
@@ -20,16 +19,16 @@ Client_Task::svc ()
   payload.length (this->event_size_);
 
   for (CORBA::ULong j = 0; j != payload.length (); ++j)
-    payload[j] = (j % 256);
+    payload[j] = static_cast<CORBA::Octet> (j % 256);
 
   try
     {
-      for (int i = 0; i != this->event_count_; ++i)
+      for (CORBA::Long i {}; i != this->event_count_; ++i)
         {
           this->receiver_->receive_data (payload);
         }
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       return -1;
     }

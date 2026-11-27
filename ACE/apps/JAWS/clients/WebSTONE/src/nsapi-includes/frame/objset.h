@@ -7,9 +7,7 @@
  * parties.
  */
 
-
 /* ------------------------------------------------------------------------ */
-
 
 /*
  * objset.h: Handles object sets
@@ -23,7 +21,6 @@
  * Rob McCool
  */
 
-
 #ifndef OBJSET_H
 #define OBJSET_H
 
@@ -31,15 +28,12 @@
 #include <nt/ntobjset.h>
 #else
 
-
 #include "netsite.h"
 #include "base/pblock.h"
 #include "base/buffer.h"
 #include "frame/object.h"
 
-
 /* ------------------------------ Constants ------------------------------- */
-
 
 /*
  * The default number of objects to leave room for in an object set,
@@ -64,9 +58,7 @@
 
 #define PARAMETER_HASH_SIZE 3
 
-
 /* ------------------------------ Structures ------------------------------ */
-
 
 /*
  * httpd_objset is a container for a bunch of objects. obj is a
@@ -80,9 +72,7 @@ typedef struct {
     httpd_object **obj;
 } httpd_objset;
 
-
 /* ------------------------------ Prototypes ------------------------------ */
-
 
 /*
  * objset_scan_buffer will scan through buffer, looking for object
@@ -149,7 +139,6 @@ httpd_object *objset_findbyname(char *name, httpd_objset *ign,
 
 httpd_object *objset_findbyppath(char *ppath, httpd_objset *ign,
                                  httpd_objset *os);
-
 
 #endif
 #endif

@@ -1,7 +1,6 @@
-// -*- C++ -*-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_INLINE const ACE_thread_mutex_t &
+ACE_INLINE ACE_thread_mutex_t const &
 ACE_Thread_Mutex::lock () const
 {
 // ACE_TRACE ("ACE_Thread_Mutex::lock");

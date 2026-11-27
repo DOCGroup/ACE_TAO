@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   OS_NS_wchar.h
  *
@@ -8,7 +5,6 @@
  *  @author Jesper S. M|ller<stophph@diku.dk>
  *  @author and a cast of thousands...
  */
-//=============================================================================
 
 #ifndef ACE_OS_NS_WCHAR_H
 # define ACE_OS_NS_WCHAR_H
@@ -60,7 +56,7 @@ namespace ACE_OS
 #if !defined (ACE_HAS_WCHAR) || defined (ACE_LACKS_WCSCMP)
   /// Emulated wcscmp - Compares strings.
   extern ACE_Export
-  int wcscmp_emulation (const ACE_WCHAR_T *string1, const ACE_WCHAR_T *string2);
+  int wcscmp_emulation (ACE_WCHAR_T const *string1, ACE_WCHAR_T const *string2);
 #endif /* !ACE_HAS_WCHAR || ACE_LACKS_WCSCMP */
 
 #if defined (ACE_HAS_WCHAR) && defined (ACE_LACKS_WCSCPY)
@@ -87,22 +83,22 @@ namespace ACE_OS
 #if !defined (ACE_HAS_WCHAR) || defined (ACE_LACKS_WCSLEN)
   /// Emulated wcslen - Returns the length of a string.
   extern ACE_Export
-  size_t wcslen_emulation (const ACE_WCHAR_T *string);
+  size_t wcslen_emulation (ACE_WCHAR_T const *string);
 #endif /* !ACE_HAS_WCHAR || ACE_LACKS_WCSLEN */
 
 #if !defined (ACE_HAS_WCHAR) || defined (ACE_LACKS_WCSNCAT)
   /// Emulated wcscat - Appends a string.
   extern ACE_Export
   ACE_WCHAR_T *wcsncat_emulation (ACE_WCHAR_T *destination,
-                                  const ACE_WCHAR_T *source,
+                                  ACE_WCHAR_T const *source,
                                   size_t count);
 #endif /* !ACE_HAS_WCHAR || ACE_LACKS_WCSCAT */
 
 #if !defined (ACE_HAS_WCHAR) || defined (ACE_LACKS_WCSNCMP)
   /// Emulated wcsncmp - Compares two arrays.
   extern ACE_Export
-  int wcsncmp_emulation (const ACE_WCHAR_T *string1,
-                         const ACE_WCHAR_T *string2,
+  int wcsncmp_emulation (ACE_WCHAR_T const *string1,
+                         ACE_WCHAR_T const *string2,
                          size_t len);
 #endif /* !ACE_HAS_WCHAR || ACE_LACKS_WCSNCMP */
 
@@ -110,7 +106,7 @@ namespace ACE_OS
   /// Emulated wcsncpy - Copies an array.
   extern ACE_Export
   ACE_WCHAR_T *wcsncpy_emulation (ACE_WCHAR_T *destination,
-                                  const ACE_WCHAR_T *source,
+                                  ACE_WCHAR_T const *source,
                                   size_t len);
 #endif /* !ACE_HAS_WCHAR || ACE_LACKS_WCSNCPY */
 
@@ -156,7 +152,7 @@ namespace ACE_OS
                              const wchar_t *charset);
 #endif /* ACE_HAS_WCHAR && ACE_LACKS_WCSSTR */
 
-  // these are named wrong.  should be wcslen, etc... dhinton
+  /// These are named wrong; they should be wcslen, etc. (dhinton).
   ACE_NAMESPACE_INLINE_FUNCTION
   u_int wslen (const WChar *);
 

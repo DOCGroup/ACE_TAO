@@ -1,12 +1,8 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
  *  @file    Shared_Memory_MM.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef ACE_SHARED_MALLOC_MM_H
 #define ACE_SHARED_MALLOC_MM_H
@@ -34,10 +30,8 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Shared_Memory_MM : public ACE_Shared_Memory
 {
 public:
-  /// Default constructor.
   ACE_Shared_Memory_MM ();
 
-  /// Constructor.
   ACE_Shared_Memory_MM (ACE_HANDLE handle,
                         size_t length = static_cast<size_t> (-1),
                         int prot = PROT_RDWR,
@@ -45,8 +39,7 @@ public:
                         char *addr = nullptr,
                         ACE_OFF_T pos = 0);
 
-  /// Constructor.
-  ACE_Shared_Memory_MM (const ACE_TCHAR *file_name,
+  ACE_Shared_Memory_MM (ACE_TCHAR const *file_name,
                         size_t length = static_cast<size_t> (-1),
                         int flags = O_RDWR | O_CREAT,
                         int mode = ACE_DEFAULT_FILE_PERMS,
@@ -63,7 +56,7 @@ public:
             ACE_OFF_T pos = 0);
 
   /// Open method.
-  int open (const ACE_TCHAR *file_name,
+  int open (ACE_TCHAR const *file_name,
             size_t length = static_cast<size_t> (-1),
             int flags = O_RDWR | O_CREAT,
             int mode = ACE_DEFAULT_FILE_PERMS,
@@ -73,7 +66,7 @@ public:
             ACE_OFF_T pos = 0);
 
   /// Return the name of file that is mapped (if any).
-  const ACE_TCHAR *filename () const;
+  ACE_TCHAR const *filename () const;
 
   /// Close down the shared memory segment.
   int close () override;
@@ -81,7 +74,8 @@ public:
   /// Remove the shared memory segment and the underlying file.
   int remove () override;
 
-  // = Allocation and deallocation methods.
+  /// @name Allocation and deallocation
+  /// @{
   /// Create a new chuck of memory containing @a size bytes.
   void *malloc (size_t size = 0) override;
 
@@ -94,6 +88,7 @@ public:
 
   /// Return the ID of the shared memory segment (i.e., an ACE_HANDLE).
   ACE_HANDLE get_id () const override;
+  /// @}
 
   /// Dump the state of an object.
   void dump () const;

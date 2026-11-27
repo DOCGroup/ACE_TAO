@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file Periodic_Consumer_Command.h
  *
@@ -29,24 +28,23 @@ class TAO_Notify_Tests_Periodic_Consumer;
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Periodic_Consumer_Command : public TAO_Notify_Tests_Command
 {
 public:
-  /// Constructor
   TAO_Notify_Tests_Periodic_Consumer_Command ();
 
-  /// Destructor
   ~TAO_Notify_Tests_Periodic_Consumer_Command ();
 
   /// Parse args and populate options.
-  virtual void init (ACE_Arg_Shifter& arg_shifter);
+  void init (ACE_Arg_Shifter& arg_shifter) override;
 
   /// Execute the command.
-  virtual void execute_i ();
+  void execute_i () override;
 
   /// Name of object
-  virtual const char* get_name ();
-  static const char* name ();
+  char const *get_name () override;
+  static char const *name ();
 
 protected:
-  ///= Data Members
+  /// @name Data members
+  /// @{
   enum COMMAND
   {
     CREATE,
@@ -65,21 +63,26 @@ protected:
   /// QoS
   CosNotification::QoSProperties qos_;
 
-  // Subscription change
+  /// Subscription change.
   CosNotification::EventTypeSeq added_;
   CosNotification::EventTypeSeq removed_;
+  /// @}
 
-  ///= Methods
-  // Retreive the consumer.
+  /// @name Methods
+  /// @{
+  /// Retrieve the consumer.
   TAO_Notify_Tests_Periodic_Consumer* consumer ();
+  /// @}
 
-  ///= Handlers
+  /// @name Handlers
+  /// @{
   void handle_create ();
   void handle_subscriptions ();
   void handle_disconnect ();
   void handle_deactivate ();
   void handle_status ();
   void handle_set_qos ();
+  /// @}
 };
 
 #include /**/ "ace/post.h"

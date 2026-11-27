@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 /**
  *  @file   EC_Timeout_Generator.h
  *
@@ -45,8 +43,7 @@ class TAO_EC_QOS_Info;
 class TAO_RTEvent_Serv_Export TAO_EC_Timeout_Generator
 {
 public:
-  /// destructor
-  virtual ~TAO_EC_Timeout_Generator ();
+  virtual ~TAO_EC_Timeout_Generator () = default;
 
   /// Activate any internal threads.
   virtual void activate () = 0;
@@ -57,11 +54,11 @@ public:
 
   /// Add a timer at the given priority, returns the timer ID.
   virtual int schedule_timer (TAO_EC_Timeout_Filter* filter,
-                              const ACE_Time_Value& delta,
-                              const ACE_Time_Value& interval) = 0;
+                              ACE_Time_Value const & delta,
+                              ACE_Time_Value const & interval) = 0;
 
   /// Cancel a timer at the given priority.
-  virtual int cancel_timer (const TAO_EC_QOS_Info& info,
+  virtual int cancel_timer (TAO_EC_QOS_Info const & info,
                             int id) = 0;
 };
 
@@ -80,19 +77,15 @@ class TAO_RTEvent_Serv_Export TAO_EC_Timeout_Adapter : public ACE_Event_Handler
 {
 public:
   /// Default construction.
-  TAO_EC_Timeout_Adapter ();
+  TAO_EC_Timeout_Adapter () = default;
 
 private:
   /// Casts @a act to EC_Filter and dispatches an event to it.
-  virtual int handle_timeout (const ACE_Time_Value &tv,
-                              const void *act);
+  int handle_timeout (ACE_Time_Value const &tv,
+                              void const *act) override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-
-#if defined (__ACE_INLINE__)
-#include "orbsvcs/Event/EC_Timeout_Generator.inl"
-#endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
 

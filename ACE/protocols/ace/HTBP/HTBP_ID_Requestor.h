@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #ifndef HTID_REQUESTOR_H
 #define HTID_REQUESTOR_H
 #include /**/ "ace/pre.h"
@@ -31,8 +30,7 @@ namespace ACE
     class HTBP_Export ID_Requestor
     {
     public:
-      /// Constructor.
-      ID_Requestor (Environment * = 0);
+      explicit ID_Requestor (Environment* = nullptr);
 
       /// Accessor to HTID
       ACE_TCHAR *get_HTID ();

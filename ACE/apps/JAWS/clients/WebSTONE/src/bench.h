@@ -29,7 +29,6 @@
 #define MAXTOTALPROCS       MAXCLIENTS          /* overall max # of procs */
 #define MAXPROCSPERNODE     MAXCLIENTS          /* max # of procs/node */
 
-
 #define CONTENT_LENGTH_STRING   "CONTENT-LENGTH:"
 #define OKSTR               "OK"
 #define OKSTRLEN            ((int)strlen(OKSTR))
@@ -39,7 +38,6 @@
 #define READYSTRLEN         ((int)strlen(READYSTR))
 #define ABORTSTR            "ABORT"
 #define ABORTSTRLEN         ((int)strlen(ABORTSTR))
-
 
 #define MAXNUMOFFILES 1     /* max # of files per page */
 #define URL_SIZE            1024
@@ -207,7 +205,6 @@ typedef struct page_list {
     int                 port_number[MAXNUMOFFILES];
 }page_list_t;
 
-
 /* shared variables */
 extern THREAD FILE *debugfile;
 extern int debug;
@@ -226,7 +223,13 @@ extern void rqstat_times(rqst_stats_t *rs, rqst_timer_t *rt);
 
 /* routines in errexit.c */
 
+#if defined (_MSC_VER)
+__declspec (noreturn) void errexit(const char *, ...);
+#elif defined (__GNUC__) || defined (__clang__)
+void errexit(const char *, ...) __attribute__ ((__noreturn__));
+#else
 void errexit(const char *, ...);
+#endif
 extern int returnerr(const char *, ...);
 extern int d_printf(const char *, ...);
 extern char *neterrstr();
@@ -254,7 +257,7 @@ extern double   timevaldouble(struct timeval *);
 extern void     doubletimeval(const double, struct timeval *);
 
 extern void     addtime(struct timeval *, struct timeval *);
-extern void     compdifftime(struct timeval *, struct timeval *, struct timeval *);
+extern void     compdifftime(const struct timeval *, const struct timeval *, struct timeval *);
 extern void     mintime(struct timeval *, struct timeval *);
 extern void     maxtime(struct timeval *, struct timeval *);
 extern void     avgtime(struct timeval *, int, struct timeval *);

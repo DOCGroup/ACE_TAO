@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    FT_PG_Object_Group_Storable.h
  *
@@ -9,7 +6,6 @@
  *
  *  @author Byron Harris <harrisb@ociweb.com>
  */
-//=============================================================================
 
 #ifndef FT_TAO_PG_OBJECT_GROUP_STORABLE_H_
 #define FT_TAO_PG_OBJECT_GROUP_STORABLE_H_
@@ -20,7 +16,6 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
 
 /////////////////////////////////
 // Includes needed by this header
@@ -51,10 +46,10 @@ namespace TAO
       PortableGroup::FactoryRegistry_ptr factory_registry,
       TAO::PG_Object_Group_Manipulator & manipulator,
       CORBA::Object_ptr empty_group,
-      const PortableGroup::TagGroupTaggedComponent & tagged_component,
-      const char * type_id,
-      const PortableGroup::Criteria & the_criteria,
-      const TAO::PG_Property_Set_var & type_properties,
+      PortableGroup::TagGroupTaggedComponent const & tagged_component,
+      char const * type_id,
+      PortableGroup::Criteria const & the_criteria,
+      TAO::PG_Property_Set_var const & type_properties,
       TAO::Storable_Factory & storable_factory,
       TAO_FT_Naming_Replication_Manager *replicator);
 
@@ -70,10 +65,14 @@ namespace TAO
       TAO::Storable_Factory & storable_factory,
       TAO_FT_Naming_Replication_Manager *replicator);
 
-    /// Destructor
     ~FT_PG_Object_Group_Storable () override = default;
 
-  public:
+    FT_PG_Object_Group_Storable () = delete;
+    FT_PG_Object_Group_Storable (FT_PG_Object_Group_Storable const &) = delete;
+    FT_PG_Object_Group_Storable (FT_PG_Object_Group_Storable &&) = delete;
+    FT_PG_Object_Group_Storable &operator= (FT_PG_Object_Group_Storable const &) = delete;
+    FT_PG_Object_Group_Storable &operator= (FT_PG_Object_Group_Storable &&) = delete;
+
     void stale (bool is_stale) override;
     bool stale () override;
 
@@ -87,12 +86,6 @@ namespace TAO
     PortableGroup::ObjectGroup_ptr add_member_to_iogr (CORBA::Object_ptr member) override;
 
   private:
-    FT_PG_Object_Group_Storable () = delete;
-    FT_PG_Object_Group_Storable (FT_PG_Object_Group_Storable const &) = delete;
-    FT_PG_Object_Group_Storable (FT_PG_Object_Group_Storable &&) = delete;
-    FT_PG_Object_Group_Storable &operator= (FT_PG_Object_Group_Storable const &) = delete;
-    FT_PG_Object_Group_Storable &operator= (FT_PG_Object_Group_Storable &&) = delete;
-
     /// Replication persistence support
     bool stale_;
 
@@ -100,6 +93,7 @@ namespace TAO
     /// so can know if we should propagate a change type of NEW.
     bool file_created_;
 
+    /// Borrowed from the Naming server.
     TAO_FT_Naming_Replication_Manager *replicator_;
     /**
      * Although it is assumed for replication that services

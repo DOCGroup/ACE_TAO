@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   OS_NS_stdlib.h
  *
@@ -8,7 +5,6 @@
  *  @author Jesper S. M|ller<stophph@diku.dk>
  *  @author and a cast of thousands...
  */
-//=============================================================================
 
 #ifndef ACE_OS_NS_STDLIB_H
 # define ACE_OS_NS_STDLIB_H
@@ -37,11 +33,11 @@
 // if building with another calling convention, such as __stdcall.
 #if defined (ACE_WIN32) && defined (_MSC_VER)
 extern "C" {
-  typedef int (__cdecl *ACE_COMPARE_FUNC)(const void *, const void *);
+  typedef int (__cdecl *ACE_COMPARE_FUNC)(void const *, void const *);
 }
 #else
 extern "C" {
-  using ACE_COMPARE_FUNC = int (*)(const void *, const void *);
+  using ACE_COMPARE_FUNC = int (*)(void const *, void const *);
 }
 #endif /* ACE_WIN32 && _MSC_VER */
 
@@ -53,7 +49,7 @@ extern "C" {
  */
 
 #if !defined (ACE_LACKS_STRTOLL) && !defined (ACE_STRTOLL_EQUIVALENT)
-inline ACE_INT64 ace_strtoll_helper (const char *s, char **ptr, int base)
+inline ACE_INT64 ace_strtoll_helper (char const *s, char **ptr, int base)
 {
 # if defined (strtoll)
   return strtoll (s, ptr, base);
@@ -65,7 +61,7 @@ inline ACE_INT64 ace_strtoll_helper (const char *s, char **ptr, int base)
 #endif /* !ACE_LACKS_STRTOLL && !ACE_STRTOLL_EQUIVALENT */
 
 #if !defined (ACE_LACKS_STRTOULL) && !defined (ACE_STRTOULL_EQUIVALENT)
-inline ACE_UINT64 ace_strtoull_helper (const char *s, char **ptr, int base)
+inline ACE_UINT64 ace_strtoull_helper (char const *s, char **ptr, int base)
 {
 # if defined (strtoull)
   return strtoull (s, ptr, base);
@@ -96,7 +92,7 @@ namespace ACE_OS {
    *  These functions aren't in the standard.
    *
    */
-  //@{
+  /// @{
   ACE_NAMESPACE_INLINE_FUNCTION
   void _exit [[noreturn]] (int status = 0);
 
@@ -108,13 +104,13 @@ namespace ACE_OS {
    * problems
    */
   ACE_NAMESPACE_INLINE_FUNCTION
-  int atexit (ACE_EXIT_HOOK func, const char* name = nullptr);
+  int atexit (ACE_EXIT_HOOK func, char const* name = nullptr);
 
   /*
    * Convert string to integer
    */
   ACE_NAMESPACE_INLINE_FUNCTION
-  int atoi (const char *s);
+  int atoi (char const *s);
 
 # if defined (ACE_HAS_WCHAR)
   /*
@@ -128,7 +124,7 @@ namespace ACE_OS {
    * Convert string to long
    */
   ACE_NAMESPACE_INLINE_FUNCTION
-  long atol (const char *s);
+  long atol (char const *s);
 
   /*
    * Convert string to long
@@ -142,7 +138,7 @@ namespace ACE_OS {
    * Convert string to double
    */
   ACE_NAMESPACE_INLINE_FUNCTION
-  double atof (const char *s);
+  double atof (char const *s);
 
   /*
    * Convert string to double
@@ -157,7 +153,7 @@ namespace ACE_OS {
    * Convert string to pointer
    */
   ACE_NAMESPACE_INLINE_FUNCTION
-  void *atop (const char *s);
+  void *atop (char const *s);
 
 # if defined (ACE_HAS_WCHAR)
   /*
@@ -168,8 +164,8 @@ namespace ACE_OS {
 # endif /* ACE_HAS_WCHAR */
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  void *bsearch (const void *key,
-                 const void *base,
+  void *bsearch (void const *key,
+                 void const *base,
                  size_t nel,
                  size_t size,
                  ACE_COMPARE_FUNC);
@@ -184,7 +180,7 @@ namespace ACE_OS {
   void free (void *);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  char *getenv (const char *symbol);
+  char *getenv (char const *symbol);
 
 #   if defined (ACE_HAS_WCHAR) && defined (ACE_WIN32)
   ACE_NAMESPACE_INLINE_FUNCTION
@@ -250,13 +246,13 @@ namespace ACE_OS {
 #endif /* !ACE_DISABLE_MKTEMP */
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int putenv (const char *string);
+  int putenv (char const *string);
 
 #if defined (ACE_HAS_WCHAR) && defined (ACE_WIN32)
-  // Windows is the only platform that supports a wchar_t environment.
-  // Since other platforms make @a string part of the environment, it's
-  // a certain memory leak to copy and transform wchar_t to char for
-  // emulating this, so it's not attempted.
+  /// Windows is the only platform that supports a wchar_t environment.
+  /// Since other platforms make @a string part of the environment, it's
+  /// a certain memory leak to copy and transform wchar_t to char for
+  /// emulating this, so it's not attempted.
   ACE_NAMESPACE_INLINE_FUNCTION
   int putenv (const wchar_t *string);
 #endif /* ACE_HAS_WCHAR && ACE_WIN32 */
@@ -268,10 +264,10 @@ namespace ACE_OS {
               ACE_COMPARE_FUNC);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int setenv(const char *envname, const char *envval, int overwrite);
+  int setenv(char const *envname, char const *envval, int overwrite);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int unsetenv(const char *name);
+  int unsetenv(char const *name);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int rand ();
@@ -287,7 +283,7 @@ namespace ACE_OS {
 #  else
   extern ACE_Export
 #  endif /* !ACE_LACKS_REALPATH */
-  char *realpath (const char *file_name, char *resolved_name);
+  char *realpath (char const *file_name, char *resolved_name);
 
 #  if defined (ACE_HAS_WCHAR)
   ACE_NAMESPACE_INLINE_FUNCTION
@@ -295,7 +291,7 @@ namespace ACE_OS {
 #  endif /* ACE_HAS_WCHAR */
 
   // exit_hook and set_exit_hook not in spec
-  /// Function that is called by <ACE_OS::exit>, if non-null.
+  /// Function that is called by @c ACE_OS::exit, if non-null.
   extern ACE_Export ACE_EXIT_HOOK exit_hook_;
 
   /// For use by ACE_Object_Manager only, to register its exit hook..
@@ -307,11 +303,11 @@ namespace ACE_OS {
 
   // not in spec
   extern ACE_Export
-  ACE_TCHAR *strenvdup (const ACE_TCHAR *str);
+  ACE_TCHAR *strenvdup (ACE_TCHAR const *str);
 
   /// Converts a string to a double value (char version).
   ACE_NAMESPACE_INLINE_FUNCTION
-  double strtod (const char *s, char **endptr);
+  double strtod (char const *s, char **endptr);
 
 #if defined (ACE_HAS_WCHAR) && !defined (ACE_LACKS_WCSTOD)
   /// Converts a string to a double value (wchar_t version).
@@ -321,11 +317,11 @@ namespace ACE_OS {
 
   /// Converts a string to a long value (char version).
   ACE_NAMESPACE_INLINE_FUNCTION
-  long strtol (const char *s, char **ptr, int base);
+  long strtol (char const *s, char **ptr, int base);
 
 #if defined (ACE_LACKS_STRTOL)
   extern ACE_Export
-  long strtol_emulation (const char *nptr, char **endptr, int base);
+  long strtol_emulation (char const *nptr, char **endptr, int base);
 #endif /* ACE_LACKS_STRTOL */
 
 #if defined (ACE_HAS_WCHAR)
@@ -342,11 +338,11 @@ namespace ACE_OS {
 
   /// Converts a string to an unsigned long value (char version).
   ACE_NAMESPACE_INLINE_FUNCTION
-  unsigned long strtoul (const char *s, char **ptr, int base);
+  unsigned long strtoul (char const *s, char **ptr, int base);
 
 #if defined (ACE_LACKS_STRTOUL)
   extern ACE_Export
-  unsigned long strtoul_emulation (const char *nptr,
+  unsigned long strtoul_emulation (char const *nptr,
                                    char **endptr,
                                    int base);
 #endif /* ACE_LACKS_STRTOUL */
@@ -367,11 +363,11 @@ namespace ACE_OS {
 
   /// Converts a string to a signed 64 bit int value (char version).
   ACE_NAMESPACE_INLINE_FUNCTION
-  ACE_INT64 strtoll (const char *s, char **ptr, int base);
+  ACE_INT64 strtoll (char const *s, char **ptr, int base);
 
 #if defined (ACE_LACKS_STRTOLL)
   extern ACE_Export
-  ACE_INT64 strtoll_emulation (const char *nptr,
+  ACE_INT64 strtoll_emulation (char const *nptr,
              char **endptr,
              int base);
 #endif /* ACE_LACKS_STRTOLL */
@@ -392,11 +388,11 @@ namespace ACE_OS {
 
   /// Converts a string to a unsigned 64 bit int value (char version).
   ACE_NAMESPACE_INLINE_FUNCTION
-  ACE_UINT64 strtoull (const char *s, char **ptr, int base);
+  ACE_UINT64 strtoull (char const *s, char **ptr, int base);
 
 #if defined (ACE_LACKS_STRTOULL)
   extern ACE_Export
-  ACE_UINT64 strtoull_emulation (const char *nptr,
+  ACE_UINT64 strtoull_emulation (char const *nptr,
                                  char **endptr,
                                  int base);
 #endif /* ACE_LACKS_STRTOULL */
@@ -416,28 +412,28 @@ namespace ACE_OS {
 #endif /* ACE_HAS_WCHAR */
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int system (const ACE_TCHAR *s);
+  int system (ACE_TCHAR const *s);
 
   /// Get the name of the current program
   ///
   /// Originally from NetBSD, now found in *BSD, Cygwin, Darwin, etc.
   ACE_NAMESPACE_INLINE_FUNCTION
-  const char *getprogname ();
+  char const *getprogname ();
 
 #if !defined (ACE_HAS_GETPROGNAME)
   extern ACE_Export
-  const char *getprogname_emulation ();
+  char const *getprogname_emulation ();
 #endif /* !ACE_HAS_GETPROGNAME */
 
   /// Set the name of the current program
   ///
   /// Originally from NetBSD, now found in *BSD, Cygwin, Darwin, etc.
   ACE_NAMESPACE_INLINE_FUNCTION
-  void setprogname (const char* name);
+  void setprogname (char const* name);
 
 #if !defined (ACE_HAS_SETPROGNAME)
   extern ACE_Export
-  void setprogname_emulation (const char* name);
+  void setprogname_emulation (char const* name);
 #endif /* !ACE_HAS_SETPROGNAME */
 
 } /* namespace ACE_OS */

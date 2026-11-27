@@ -1,4 +1,3 @@
-
 interface Callback
 {
   /// Shuts down the client cleanly or simulates a catastrophic failure.

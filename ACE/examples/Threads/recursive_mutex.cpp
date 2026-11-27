@@ -6,7 +6,6 @@
 #include "ace/Thread_Manager.h"
 #include "ace/Get_Opt.h"
 
-
 #if defined (ACE_HAS_THREADS)
 
 #include "ace/Guard_T.h"
@@ -35,18 +34,20 @@ parse_args (int argc, ACE_TCHAR *argv[])
   int c;
 
   while ((c = get_opt ()) != -1)
-    switch (c)
-      {
-      case 'n':
-        n_iterations = ACE_OS::atoi (get_opt.opt_arg ());
-        break;
-      case 't':
-        n_threads = ACE_OS::atoi (get_opt.opt_arg ());
-        break;
-      default:
-        print_usage_and_die ();
-        break;
-      }
+    {
+      switch (c)
+        {
+        case 'n':
+          n_iterations = ACE_OS::atoi (get_opt.opt_arg ());
+          break;
+        case 't':
+          n_threads = ACE_OS::atoi (get_opt.opt_arg ());
+          break;
+        default:
+          print_usage_and_die ();
+          break;
+        }
+    }
 }
 
 static void
@@ -74,27 +75,27 @@ recursive_worker (size_t nesting_level,
     }
 }
 
-static void *
+static ACE_THR_FUNC_RETURN
 worker (void *arg)
 {
-  ACE_Recursive_Thread_Mutex *rm
-    = (ACE_Recursive_Thread_Mutex *) arg;
+  ACE_Recursive_Thread_Mutex * const rm =
+    static_cast<ACE_Recursive_Thread_Mutex *> (arg);
 
   recursive_worker (0, rm);
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Service_Config daemon (argv[0]);
+  ACE_Service_Config const daemon (argv[0]);
 
   parse_args (argc, argv);
   ACE_Recursive_Thread_Mutex rm;
 
   ACE_Thread_Manager::instance ()->spawn_n (n_threads,
-                                            ACE_THR_FUNC (worker),
-                                            (void *) &rm);
+                                            worker,
+                                            &rm);
 
   ACE_Thread_Manager::instance ()->wait ();
   return 0;

@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*IDL): orbsvcsexe, portablegroup, diffservpolicy {
   IDL_Files {
     Hello.idl
@@ -20,7 +19,7 @@ project(*Server) : orbsvcsexe, portablegroup, diffservpolicy {
   }
 }
 
-project(*Client) : orbsvcsexe, portablegroup, diffservpolicy {
+project(*Client) : orbsvcsexe, portablegroup, diffservpolicy, utils {
   after += *IDL
   exename = client
 

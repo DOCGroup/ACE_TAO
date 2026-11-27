@@ -20,15 +20,10 @@ TAO_FTEC_Event_Channel::TAO_FTEC_Event_Channel(CORBA::ORB_var orb,
                                                PortableServer::POA_var poa)
   : orb_(orb)
   , poa_(poa)
-  , ec_impl_(nullptr)
 {
 }
 
-TAO_FTEC_Event_Channel::~TAO_FTEC_Event_Channel()
-{
-    delete ec_impl_;
-}
-
+TAO_FTEC_Event_Channel::~TAO_FTEC_Event_Channel() = default;
 
 void setup_object_group(TAO_FTEC_Event_Channel* es,
                        CosNaming::NamingContext_ptr naming_context,
@@ -42,20 +37,22 @@ void setup_object_group(TAO_FTEC_Event_Channel* es,
       member_list[0].ior = FTRT::ObjectGroupManager::_duplicate(ec);
 
       if (membership == TAO_FTEC_Event_Channel::PRIMARY)
-        es->create_group(member_list, 0);
+        {
+          es->create_group(member_list, 0);
+        }
 
-      else { // BACKUP
-        FtRtecEventChannelAdmin::EventChannel_var primary =
-          resolve<FtRtecEventChannelAdmin::EventChannel>(naming_context,
-            FTRTEC::Identification_Service::instance()->name());
+      else // BACKUP
+        {
+          FtRtecEventChannelAdmin::EventChannel_var primary =
+            resolve<FtRtecEventChannelAdmin::EventChannel>(naming_context,
+              FTRTEC::Identification_Service::instance()->name());
 
-        ORBSVCS_DEBUG((LM_DEBUG, "Got Primary address from Naming Service\n"));
+          ORBSVCS_DEBUG((LM_DEBUG, "Got Primary address from Naming Service\n"));
 
-        primary->join_group(member_list[0]);
-      }
+          primary->join_group(member_list[0]);
+        }
     }
 }
-
 
 FtRtecEventChannelAdmin::EventChannel_ptr
 TAO_FTEC_Event_Channel::activate(TAO_FTEC_Event_Channel::MEMBERSHIP membership)
@@ -66,7 +63,9 @@ TAO_FTEC_Event_Channel::activate(TAO_FTEC_Event_Channel::MEMBERSHIP membership)
     detector_loader->init(0, nullptr);
 
     if (FTRTEC::Identification_Service::instance() == nullptr)
+    {
       ORBSVCS_ERROR_RETURN((LM_ERROR, "No Identification\n"), 0);
+    }
 
     // initialize naming_contex
     CosNaming::NamingContext_var naming_context
@@ -75,7 +74,9 @@ TAO_FTEC_Event_Channel::activate(TAO_FTEC_Event_Channel::MEMBERSHIP membership)
     GroupInfoPublisher::instance()->set_naming_context(naming_context);
 
     if (FTRTEC::Replication_Service::instance()->init(0, nullptr) == -1)
-      return 0;
+    {
+      return nullptr;
+    }
 
     GroupInfoPublisher::instance()->subscribe(FTRTEC::Replication_Service::instance());
 
@@ -94,22 +95,21 @@ TAO_FTEC_Event_Channel::activate(TAO_FTEC_Event_Channel::MEMBERSHIP membership)
     TAO_EC_Event_Channel_Attributes attr (persistent_poa_.in (),
       persistent_poa_.in ());
 
-
-    TAO_FTEC_Event_Channel_Impl* ec = nullptr;
+    TAO_FTEC_Event_Channel_Impl* ec {};
     ACE_NEW_THROW_EX (ec,
       TAO_FTEC_Event_Channel_Impl (attr),
       CORBA::NO_MEMORY());
 
-    this->ec_impl_ = ec;
+    this->ec_impl_.reset (ec);
 
-    const FtRtecEventComm::ObjectId& object_id
+    FtRtecEventComm::ObjectId const& object_id
       = FTRTEC::Identification_Service::instance()->object_id();
 
     FtRtecEventComm::ObjectId consumer_admin_object_id(object_id);
-    consumer_admin_object_id[9]++;
+    ++consumer_admin_object_id[9];
 
     FtRtecEventComm::ObjectId supplier_admin_object_id(consumer_admin_object_id);
-    supplier_admin_object_id[9]++;
+    ++supplier_admin_object_id[9];
 
     ec->activate_object(orb_,
                         supplier_admin_object_id,
@@ -118,7 +118,6 @@ TAO_FTEC_Event_Channel::activate(TAO_FTEC_Event_Channel::MEMBERSHIP membership)
     FtRtecEventChannelAdmin::EventChannel_var result;
     activate_object_with_id(result.out(), persistent_poa_.in(), this, object_id);
 
-
     setup_object_group(this,
                        naming_context.in(),
                        membership,
@@ -126,26 +125,22 @@ TAO_FTEC_Event_Channel::activate(TAO_FTEC_Event_Channel::MEMBERSHIP membership)
   return result._retn();
 }
 
-
 void TAO_FTEC_Event_Channel::set_listener(TAO_FTEC_Become_Primary_Listener* listener)
 {
   GroupInfoPublisher::instance()->subscribe(listener);
 }
 
 void TAO_FTEC_Event_Channel::set_update (
-        const FTRT::State & s
-      )
+        FTRT::State const & s)
 {
     ec_impl_->set_update(s);
 }
 
 void TAO_FTEC_Event_Channel::oneway_set_update (
-        const FTRT::State & s
-      )
+        FTRT::State const & s)
 {
     ec_impl_->set_update(s);
 }
-
 
 RtecEventChannelAdmin::ConsumerAdmin_ptr
 TAO_FTEC_Event_Channel::for_consumers ()
@@ -159,9 +154,8 @@ TAO_FTEC_Event_Channel::for_suppliers ()
     return ec_impl_->for_suppliers();
 }
 
-
 void
-TAO_FTEC_Event_Channel::set_state (const FTRT::State & s)
+TAO_FTEC_Event_Channel::set_state (FTRT::State const & s)
 {
   ORBSVCS_DEBUG((LM_DEBUG, "TAO_FTEC_Event_Channel::set_state\n"));
   ec_impl_->set_state(s);
@@ -171,7 +165,9 @@ void
 TAO_FTEC_Event_Channel::destroy ()
 {
   if (Fault_Detector::instance())
+  {
     Fault_Detector::instance()->stop();
+  }
 
   ec_impl_->destroy ();
   this->orb_->shutdown ();
@@ -197,45 +193,40 @@ TAO_FTEC_Event_Channel::remove_observer (RtecEventChannelAdmin::Observer_Handle)
   //ec_impl_->remove_observer (handle);
 }
 
-
 CORBA::Boolean
 TAO_FTEC_Event_Channel::start (
         FTRT::FaultListener_ptr listener,
-        FTRT::Location_out location
-      )
+        FTRT::Location_out location)
 {
   return ec_impl_->start(listener, location);
 }
 
 void
 TAO_FTEC_Event_Channel::create_group (
-        const FTRT::ManagerInfoList & info_list,
-        CORBA::ULong object_group_ref_version
-      )
+        FTRT::ManagerInfoList const & info_list,
+        CORBA::ULong object_group_ref_version)
 {
   ec_impl_->create_group(info_list, object_group_ref_version);
 }
 
 void
 TAO_FTEC_Event_Channel::join_group (
-        const FTRT::ManagerInfo & info
-      )
+        FTRT::ManagerInfo const & info)
 {
   ec_impl_->join_group(info);
 }
 
 void
 TAO_FTEC_Event_Channel::add_member (
-        const FTRT::ManagerInfo & info,
-        CORBA::ULong object_group_ref_version
-      )
+        FTRT::ManagerInfo const & info,
+        CORBA::ULong object_group_ref_version)
 {
   ec_impl_->add_member(info, object_group_ref_version);
 }
 
 void
 TAO_FTEC_Event_Channel::remove_member (
-        const FTRT::Location & crashed_location,
+        FTRT::Location const & crashed_location,
         CORBA::ULong object_group_ref_version)
 {
   ec_impl_->remove_member(crashed_location,
@@ -244,71 +235,61 @@ TAO_FTEC_Event_Channel::remove_member (
 
 void
 TAO_FTEC_Event_Channel::replica_crashed (
-        const FTRT::Location & location
-      )
+        FTRT::Location const & location)
 {
   ec_impl_->replica_crashed(location);
 }
-
 
   /// EventChannelFacade Interface
 
 ::FtRtecEventChannelAdmin::ObjectId *
 TAO_FTEC_Event_Channel::connect_push_consumer (
         RtecEventComm::PushConsumer_ptr push_consumer,
-        const RtecEventChannelAdmin::ConsumerQOS & qos
-      )
+        RtecEventChannelAdmin::ConsumerQOS const & qos)
 {
   return ec_impl_->connect_push_consumer(push_consumer, qos);
 }
 
-
 ::FtRtecEventChannelAdmin::ObjectId *
 TAO_FTEC_Event_Channel::connect_push_supplier (
         RtecEventComm::PushSupplier_ptr push_supplier,
-        const RtecEventChannelAdmin::SupplierQOS & qos
-      )
+        RtecEventChannelAdmin::SupplierQOS const & qos)
 {
   return ec_impl_->connect_push_supplier(push_supplier, qos);
 }
 
 void
 TAO_FTEC_Event_Channel::disconnect_push_supplier (
-        const FtRtecEventChannelAdmin::ObjectId & oid
-      )
+        FtRtecEventChannelAdmin::ObjectId const & oid)
 {
   ec_impl_->disconnect_push_supplier(oid);
 }
 
 void
 TAO_FTEC_Event_Channel::disconnect_push_consumer (
-        const FtRtecEventChannelAdmin::ObjectId & oid
-      )
+        FtRtecEventChannelAdmin::ObjectId const & oid)
 {
   ec_impl_->disconnect_push_consumer(oid);
 }
 
 void
 TAO_FTEC_Event_Channel::suspend_push_supplier (
-        const FtRtecEventChannelAdmin::ObjectId & oid
-      )
+        FtRtecEventChannelAdmin::ObjectId const & oid)
 {
   ec_impl_->suspend_push_supplier(oid);
 }
 
 void
 TAO_FTEC_Event_Channel::resume_push_supplier (
-        const FtRtecEventChannelAdmin::ObjectId & oid
-      )
+        FtRtecEventChannelAdmin::ObjectId const & oid)
 {
   ec_impl_->resume_push_supplier(oid);
 }
 
 void
 TAO_FTEC_Event_Channel::push (
-        const FtRtecEventChannelAdmin::ObjectId & oid,
-        const RtecEventComm::EventSet & data
-      )
+        FtRtecEventChannelAdmin::ObjectId const & oid,
+        RtecEventComm::EventSet const & data)
 {
   ec_impl_->push(oid,
                  data);

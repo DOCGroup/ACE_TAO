@@ -1,14 +1,8 @@
-/* -*- C++ -*- */
-
-
-//=============================================================================
 /**
  *  @file    URL_Locator.h
  *
  *  @author Nanbor Wang
  */
-//=============================================================================
-
 
 #ifndef ACE_URL_LOCATOR_H
 #define ACE_URL_LOCATOR_H
@@ -30,7 +24,7 @@
 class ACE_Svc_Export ACE_URL_Locator
 {
 public:
-  // Request type
+  /// Request operation codes.
   enum ACE_URL_Locator_Op_Type
   {
     QUERY = 0,
@@ -42,9 +36,9 @@ public:
   };
 
   /// Human Readable operation name.
-  static const char * const opname[];
+  static char const * const opname[];
 
-  // = Specify how to select offers.
+  /// Specifies how offers are selected.
   enum ACE_Selection_Criteria
   {
     NONE = 0,                   // URL that contains none of the properties.
@@ -53,9 +47,9 @@ public:
     INVALID_SELECTION           // Invalid.
   };
 
-  static const char * const selection_name[];
+  static char const * const selection_name[];
 
-    /// errno will set to one of these value.
+  /// Error codes reported through errno.
   enum ACE_URL_Locator_Error
   {
     OK,                         // Everything is fine.
@@ -67,23 +61,20 @@ public:
     UNKNOWN,                    // Unknown error.
     MAX_URL_ERROR
   };
-  // Possible error code of URL_Locator.
-
   /// Human readable error status.
-  static const char * const err_name[];
+  static char const * const err_name[];
 
-  /// Default destructor.
   virtual ~ACE_URL_Locator () = 0;
 
   /**
    * Query the locator for HTTP with designate properties (none, some,
    * or all).  The locator being queried will return a sequence of
-   * offers with <how_many> offers in it.  This interface allocates
-   * <offer> so users must deallocate it after use.
+   * offers with @c how_many offers in it.  This interface allocates
+   * @c offer so users must deallocate it after use.
    */
   virtual int url_query (const ACE_Selection_Criteria how,
-                         const ACE_URL_Property_Seq *pseq,
-                         const size_t how_many,
+                         ACE_URL_Property_Seq const *pseq,
+                         size_t const how_many,
                          size_t &num_query,
                          ACE_URL_Offer_Seq *offer) = 0;
 
@@ -92,20 +83,20 @@ public:
                             ACE_WString &offer_id) = 0;
 
   /// Withdraw an offer.  return 0 if succeed, -1 otherwise.
-  virtual int withdraw_offer (const ACE_WString &offer_id) = 0;
+  virtual int withdraw_offer (ACE_WString const &offer_id) = 0;
 
   /// Query a specific offer.
-  virtual int describe_offer (const ACE_WString &offer_id,
+  virtual int describe_offer (ACE_WString const &offer_id,
                               ACE_URL_Offer *offer) = 0;
 
   /// Modify a previously registered offer.
-  virtual int modify_offer (const ACE_WString &offer_id,
-                            const ACE_WString *url = 0,
-                            const ACE_URL_Property_Seq *del = 0,
-                            const ACE_URL_Property_Seq *modify = 0) = 0;
+  virtual int modify_offer (ACE_WString const &offer_id,
+                            ACE_WString const *url = nullptr,
+                            ACE_URL_Property_Seq const *del = nullptr,
+                            ACE_URL_Property_Seq const *modify = nullptr) = 0;
 
   /// Provide a human readable error status.
-  virtual const char *error_status ();
+  virtual char const *error_status ();
 };
 
 #endif /* ACE_WEB_LOCATOR_H */

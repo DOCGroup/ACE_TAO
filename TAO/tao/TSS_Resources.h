@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-// ===================================================================
 /**
  *  @file   TSS_Resources.h
  *
@@ -8,7 +5,6 @@
  *  @author DOC Center - Washington University at St. Louis
  *  @author DOC Laboratory - University of California at Irvine
  */
-// ===================================================================
 
 #ifndef TAO_TAO_TSS_RESOURCES_H
 #define TAO_TAO_TSS_RESOURCES_H
@@ -24,6 +20,8 @@
 #include "tao/Environment.h"
 
 #include "tao/Policy_Current_Impl.h"
+
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -45,37 +43,35 @@ namespace TAO
 class TAO_Export TAO_TSS_Resources
 {
 public:
-  /// Constructor
   TAO_TSS_Resources ();
 
-  /// Destructor
   ~TAO_TSS_Resources ();
+
+  TAO_TSS_Resources (TAO_TSS_Resources const &) = delete;
+  TAO_TSS_Resources (TAO_TSS_Resources &&) = delete;
+  TAO_TSS_Resources &operator= (TAO_TSS_Resources const &) = delete;
+  TAO_TSS_Resources &operator= (TAO_TSS_Resources &&) = delete;
 
   /// Return a singleton instance of this class.
   static TAO_TSS_Resources * instance ();
 
-private:
-  /// Do not copy TSS resources
-  //@{
-  TAO_TSS_Resources (const TAO_TSS_Resources&);
-  void operator= (const TAO_TSS_Resources&);
-  //@}
-
 public:
   /**
    * Points to structure containing state for the current upcall
-   * context in this thread.  Note that it does not come from the
+   * context in this thread.
+   *
+   * @note It does not come from the
    * resource factory because it must always be held in
    * thread-specific storage.  For now, since TAO_ORB_Core instances
    * are TSS singletons, we simply ride along and don't allocate
    * occupy another TSS slot since there are some platforms where
    * those are precious commodities (e.g., NT).
    */
-  void * poa_current_impl_;
+  void * poa_current_impl_ {};
 
-  void * rtscheduler_current_impl_;
+  void * rtscheduler_current_impl_ {};
 
-  void * rtscheduler_previous_current_impl_;
+  void * rtscheduler_previous_current_impl_ {};
 
   /// The CORBA priority of the thread if set via RTCORBA::Current.
   /// RTCORBA::minPriority - 1 otherwise.
@@ -104,7 +100,7 @@ public:
    * @c GUIResource_Factory has to be stored in TSS, as GUIReactors
    * are operational only in within the context of GUI event loops.
    */
-  TAO::GUIResource_Factory * gui_resource_factory_;
+  std::unique_ptr<TAO::GUIResource_Factory> gui_resource_factory_;
 
 #if TAO_HAS_TRANSPORT_CURRENT == 1
 
@@ -113,7 +109,7 @@ public:
   /// been selected for use by the current thread, in the context of
   /// an upcall or client-side interceptor.
 
-  TAO::Transport_Selection_Guard* tsg_;
+  TAO::Transport_Selection_Guard* tsg_ {};
 
 #endif  /* TAO_HAS_TRANSPORT_CURRENT == 1 */
 };

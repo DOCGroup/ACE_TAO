@@ -1,14 +1,9 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Method_Request.h
  *
  *  @author Andres Kruse <Andres.Kruse@cern.ch>
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
-
 
 #ifndef ACE_METHOD_REQUEST_H
 #define ACE_METHOD_REQUEST_H
@@ -43,13 +38,17 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Method_Request
 {
 public:
-  /// Constructor.
   ACE_Method_Request (unsigned long priority = 0);
 
-  /// Destructor.
   virtual ~ACE_Method_Request () = default;
 
-  // = Accessors.
+  ACE_Method_Request (ACE_Method_Request const &) = delete;
+  ACE_Method_Request &operator= (ACE_Method_Request const &) = delete;
+  ACE_Method_Request (ACE_Method_Request &&) = delete;
+  ACE_Method_Request &operator= (ACE_Method_Request &&) = delete;
+
+  /// @name Accessors
+  /// @{
   /// Get priority.
   unsigned long priority () const;
 
@@ -60,13 +59,15 @@ public:
    * method to order the method requests in the queue by priority.
    * 0 is the lowest priority.
    *
-   * @param prio   unsigned long, the new priority value for this object.
+   * The @a prio is the new priority value for this object.
    *
    * @sa ACE_Activation_Queue::enqueue
    */
   void priority (unsigned long prio);
+  /// @}
 
-  // = Invocation method (must be overridden by subclasses).
+  /// @name Invocation method (implemented by subclasses)
+  /// @{
   /// Invoked by the scheduler to execute the request.
   /**
    * This method must be implemented by the subclass to perform the
@@ -77,12 +78,7 @@ public:
    *         if needed.
    */
   virtual int call () = 0;
-
-private:
-  ACE_Method_Request (const ACE_Method_Request &) = delete;
-  void operator= (const ACE_Method_Request &) = delete;
-  ACE_Method_Request (ACE_Method_Request &&) = delete;
-  void operator= (ACE_Method_Request &&) = delete;
+  /// @}
 
 protected:
   /// The priority of the request.
@@ -90,7 +86,6 @@ protected:
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
-
 
 #include /**/ "ace/post.h"
 #endif /* ACE_METHOD_REQUEST_H */

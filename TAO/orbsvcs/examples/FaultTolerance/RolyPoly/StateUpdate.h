@@ -8,18 +8,22 @@
 class Checkpointable
 {
 public:
-  virtual
-  ~Checkpointable ();
+  Checkpointable () = default;
+  Checkpointable (Checkpointable const &) = delete;
+  Checkpointable (Checkpointable &&) = delete;
+  Checkpointable &operator= (Checkpointable const &) = delete;
+  Checkpointable &operator= (Checkpointable &&) = delete;
+
+  virtual ~Checkpointable () = default;
 
   virtual CORBA::Any*
   get_state ();
 
   static void
-  associate_state (CORBA::ORB_ptr orb, CORBA::Any const& state);
+  associate_state (CORBA::ORB_ptr orb, CORBA::Any const &state);
 
   virtual void
-  set_state (CORBA::Any const& state) = 0;
+  set_state (CORBA::Any const &state) = 0;
 };
-
 
 #endif // STATE_UPDATE_H

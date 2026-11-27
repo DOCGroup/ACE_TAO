@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Stream_Modules.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 // This needs to go outside of the #if !defined() block.  Don't ask...
 #include "ace/Task.h"
@@ -49,22 +45,29 @@ template <ACE_SYNCH_DECL, class TIME_POLICY = ACE_System_Time_Policy>
 class ACE_Stream_Head : public ACE_Task<ACE_SYNCH_USE, TIME_POLICY>
 {
 public:
-  /// Construction
   ACE_Stream_Head ();
 
-  /// Destruction
-  virtual ~ACE_Stream_Head ();
+  ACE_Stream_Head (ACE_Stream_Head const &) = delete;
+  ACE_Stream_Head (ACE_Stream_Head &&) = delete;
+  ACE_Stream_Head &operator= (ACE_Stream_Head const &) = delete;
+  ACE_Stream_Head &operator= (ACE_Stream_Head &&) = delete;
 
-  // = ACE_Task hooks
-  virtual int open (void *a = nullptr);
-  virtual int close (u_long flags = 0);
-  virtual int put (ACE_Message_Block *msg, ACE_Time_Value * = 0);
-  virtual int svc ();
+  ~ACE_Stream_Head () override;
 
-  // = Dynamic linking hooks
-  virtual int init (int argc, ACE_TCHAR *argv[]);
-  virtual int info (ACE_TCHAR **info_string, size_t length) const;
-  virtual int fini ();
+  /// @name Task hooks
+  /// @{
+  int open (void *a = nullptr) override;
+  int close (u_long flags = 0) override;
+  int put (ACE_Message_Block *msg, ACE_Time_Value * = nullptr) override;
+  int svc () override;
+  /// @}
+
+  /// @name Dynamic linking hooks
+  /// @{
+  int init (int argc, ACE_TCHAR *argv[]) override;
+  int info (ACE_TCHAR **info_string, size_t length) const override;
+  int fini () override;
+  /// @}
 
   /// Dump the state of an object.
   void dump () const;
@@ -87,22 +90,29 @@ template <ACE_SYNCH_DECL, class TIME_POLICY = ACE_System_Time_Policy>
 class ACE_Stream_Tail : public ACE_Task<ACE_SYNCH_USE, TIME_POLICY>
 {
 public:
-  /// Construction
   ACE_Stream_Tail ();
 
-  /// Destruction
-  virtual ~ACE_Stream_Tail ();
+  ACE_Stream_Tail (ACE_Stream_Tail const &) = delete;
+  ACE_Stream_Tail (ACE_Stream_Tail &&) = delete;
+  ACE_Stream_Tail &operator= (ACE_Stream_Tail const &) = delete;
+  ACE_Stream_Tail &operator= (ACE_Stream_Tail &&) = delete;
 
-  // = ACE_Task hooks
-  virtual int open (void *a = nullptr);
-  virtual int close (u_long flags = 0);
-  virtual int put (ACE_Message_Block *msg, ACE_Time_Value * = nullptr);
-  virtual int svc ();
+  ~ACE_Stream_Tail () override;
 
-  // = Dynamic linking hooks
-  virtual int init (int argc, ACE_TCHAR *argv[]);
-  virtual int info (ACE_TCHAR **info_string, size_t length) const;
-  virtual int fini ();
+  /// @name Task hooks
+  /// @{
+  int open (void *a = nullptr) override;
+  int close (u_long flags = 0) override;
+  int put (ACE_Message_Block *msg, ACE_Time_Value * = nullptr) override;
+  int svc () override;
+  /// @}
+
+  /// @name Dynamic linking hooks
+  /// @{
+  int init (int argc, ACE_TCHAR *argv[]) override;
+  int info (ACE_TCHAR **info_string, size_t length) const override;
+  int fini () override;
+  /// @}
 
   /// Dump the state of an object.
   void dump () const;
@@ -126,22 +136,29 @@ template <ACE_SYNCH_DECL, class TIME_POLICY = ACE_System_Time_Policy>
 class ACE_Thru_Task : public ACE_Task<ACE_SYNCH_USE, TIME_POLICY>
 {
 public:
-  /// Construction
   ACE_Thru_Task ();
 
-  /// Destruction
-  virtual ~ACE_Thru_Task ();
+  ACE_Thru_Task (ACE_Thru_Task const &) = delete;
+  ACE_Thru_Task (ACE_Thru_Task &&) = delete;
+  ACE_Thru_Task &operator= (ACE_Thru_Task const &) = delete;
+  ACE_Thru_Task &operator= (ACE_Thru_Task &&) = delete;
 
-  // = ACE_Task hooks
-  virtual int open (void *a = nullptr);
-  virtual int close (u_long flags = 0);
-  virtual int put (ACE_Message_Block *msg, ACE_Time_Value * = nullptr);
-  virtual int svc ();
+  ~ACE_Thru_Task () override;
 
-  // = Dynamic linking hooks
-  virtual int init (int argc, ACE_TCHAR *argv[]);
-  virtual int info (ACE_TCHAR **info_string, size_t length) const;
-  virtual int fini ();
+  /// @name Task hooks
+  /// @{
+  int open (void *a = nullptr) override;
+  int close (u_long flags = 0) override;
+  int put (ACE_Message_Block *msg, ACE_Time_Value * = nullptr) override;
+  int svc () override;
+  /// @}
+
+  /// @name Dynamic linking hooks
+  /// @{
+  int init (int argc, ACE_TCHAR *argv[]) override;
+  int info (ACE_TCHAR **info_string, size_t length) const override;
+  int fini () override;
+  /// @}
 
   /// Dump the state of an object.
   void dump () const;

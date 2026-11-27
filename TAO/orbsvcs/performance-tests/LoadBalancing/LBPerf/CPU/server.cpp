@@ -8,14 +8,15 @@
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_stdlib.h"
 
+#include "tao/ORBInitializer_Registry.h"
 #include "tao/Strategies/advanced_resource.h"
 
-const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
+ACE_TCHAR const *ior_output_file = ACE_TEXT("test.ior");
 
 CORBA::Float reject_threshold = 0;
 CORBA::Float critical_threshold = 0;
 CORBA::Float dampening = 0;
-const char * strategy = "Random";
+ACE_TCHAR const *strategy = ACE_TEXT ("Random");
 int num_threads = 1;
 
 int
@@ -94,7 +95,7 @@ join_object_group (CORBA::ORB_ptr orb,
   catch (const CosNaming::NamingContext::NotFound& )
     {
       // Object group not created.  Create one.
-      const char repository_id[] = "IDL:Test/Roundtrip:1.0";
+      char const repository_id[] = "IDL:Test/Roundtrip:1.0";
 
       PortableGroup::Criteria criteria (1);
       criteria.length (1);
@@ -128,52 +129,52 @@ join_object_group (CORBA::ORB_ptr orb,
 
           CosLoadBalancing::StrategyInfo strategy_info;
 
-          strategy_info.name = CORBA::string_dup (strategy);
+          strategy_info.name = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (strategy));
 
-          if (ACE_OS::strcasecmp (strategy, "LeastLoaded") == 0
+          if (ACE_OS::strcasecmp (strategy, ACE_TEXT ("LeastLoaded")) == 0
               && (reject_threshold != 0
                   || critical_threshold != 0
                   || dampening != 0))
             {
               CORBA::ULong len = 1;
 
-              PortableGroup::Properties & props =
+              PortableGroup::Properties & strategy_props =
                 strategy_info.props;
 
               if (reject_threshold != 0)
                 {
-                  const CORBA::ULong i = len - 1;
+                  CORBA::ULong const i = len - 1;
 
-                  props.length (len++);
+                  strategy_props.length (len++);
 
-                  props[i].nam.length (1);
-                  props[i].nam[0].id =
+                  strategy_props[i].nam.length (1);
+                  strategy_props[i].nam[0].id =
                     CORBA::string_dup ("org.omg.CosLoadBalancing.Strategy.LeastLoaded.RejectThreshold");
-                  props[i].val <<= reject_threshold;
+                  strategy_props[i].val <<= reject_threshold;
                 }
 
               if (critical_threshold != 0)
                 {
-                  const CORBA::ULong i = len - 1;
+                  CORBA::ULong const i = len - 1;
 
-                  props.length (len++);
+                  strategy_props.length (len++);
 
-                  props[i].nam.length (1);
-                  props[i].nam[0].id =
+                  strategy_props[i].nam.length (1);
+                  strategy_props[i].nam[0].id =
                     CORBA::string_dup ("org.omg.CosLoadBalancing.Strategy.LeastLoaded.CriticalThreshold");
-                  props[i].val <<= critical_threshold;
+                  strategy_props[i].val <<= critical_threshold;
                 }
 
               if (dampening != 0)
                 {
-                  const CORBA::ULong i = len - 1;
+                  CORBA::ULong const i = len - 1;
 
-                  props.length (len++);
+                  strategy_props.length (len++);
 
-                  props[i].nam.length (1);
-                  props[i].nam[0].id =
+                  strategy_props[i].nam.length (1);
+                  strategy_props[i].nam[0].id =
                     CORBA::string_dup ("org.omg.CosLoadBalancing.Strategy.LeastLoaded.Dampening");
-                  props[i].val <<= dampening;
+                  strategy_props[i].val <<= dampening;
                 }
 
             }
@@ -233,10 +234,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                     "server (%P|%t): sched_params failed\n"));
     }
 
-
   try
     {
-      ORBInitializer *initializer = 0;
+      ORBInitializer *initializer {};
       ACE_NEW_RETURN (initializer,
                       ORBInitializer,
                       -1);  // No exceptions yet!
@@ -247,7 +247,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv);
-
 
       CORBA::Object_var poa_object =
         orb->resolve_initial_references ("RootPOA");
@@ -264,7 +263,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         root_poa->the_POAManager ();
 
       if (parse_args (argc, argv) != 0)
-        return 1;
+        {
+          return 1;
+        }
 
       poa_manager->activate ();
 
@@ -324,7 +325,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;

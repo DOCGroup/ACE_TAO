@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file   Locator_NT_Service.cpp
  *
@@ -7,7 +6,6 @@
  *  @author John Tucker <jtucker@infoglide.com>
  *  @author Mike Vitalo <mvitalo@infoglide.com>
  */
-//=============================================================================
 
 #include "Locator_NT_Service.h"
 
@@ -20,9 +18,9 @@
 #include "tao/corba.h"
 #include "ace/Reactor.h"
 
-const ACE_TCHAR* IMR_LOCATOR_SERVICE_NAME = ACE_TEXT("TAOImR");
-const ACE_TCHAR* IMR_LOCATOR_DISPLAY_NAME = ACE_TEXT("TAO Implementation Repository");
-const ACE_TCHAR* IMR_LOCATOR_DESCRIPTION = ACE_TEXT("Implementation Repository Locator service for TAO");
+ACE_TCHAR const *IMR_LOCATOR_SERVICE_NAME = ACE_TEXT("TAOImR");
+ACE_TCHAR const *IMR_LOCATOR_DISPLAY_NAME = ACE_TEXT("TAO Implementation Repository");
+ACE_TCHAR const *IMR_LOCATOR_DESCRIPTION = ACE_TEXT("Implementation Repository Locator service for TAO");
 
 /**
  * Handles the SERVICE_CONTROL_SHUTDOWN and SERVICE_CONTROL_STOP commands
@@ -37,7 +35,7 @@ Locator_NT_Service::handle_control (DWORD control_code)
     {
       report_status (SERVICE_STOP_PENDING);
       TAO_ORB_Core_instance ()->reactor ()->end_reactor_event_loop ();
-      TAO_ORB_Core_instance ()->orb ()->shutdown (1);
+      TAO_ORB_Core_instance ()->orb ()->shutdown (true);
     }
   else
     {
@@ -45,13 +43,11 @@ Locator_NT_Service::handle_control (DWORD control_code)
     }
 }
 
-
 int
 Locator_NT_Service::handle_exception (ACE_HANDLE)
 {
   return 0;
 }
-
 
 /**
  * We do almost the same thing as we do in run_standalone ()
@@ -87,17 +83,19 @@ Locator_NT_Service::svc ()
           report_status (SERVICE_STOPPED);
         }
         if (status != -1)
+          {
             return 0;
+          }
     }
-  catch (const CORBA::SystemException& sysex)
+  catch (CORBA::SystemException const& sysex)
     {
       sysex._tao_print_exception (IMR_LOCATOR_DISPLAY_NAME);
     }
-  catch (const CORBA::UserException& userex)
+  catch (CORBA::UserException const& userex)
     {
       userex._tao_print_exception (IMR_LOCATOR_DISPLAY_NAME);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception (IMR_LOCATOR_DISPLAY_NAME);
     }

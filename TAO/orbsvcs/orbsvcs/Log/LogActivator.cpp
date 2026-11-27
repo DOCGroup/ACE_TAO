@@ -22,11 +22,12 @@ TAO_LogActivator::incarnate (PortableServer::ObjectId const & oid,
   DsLogAdmin::LogId const id = ACE_OS::strtoul (poa_id.in (), nullptr, 0);
 
   if (!logmgr_i_.exists(id))
+  {
     throw CORBA::OBJECT_NOT_EXIST ();
+  }
 
   return logmgr_i_.create_log_servant (id);
 }
-
 
 void
 TAO_LogActivator::etherealize (PortableServer::ObjectId const &,

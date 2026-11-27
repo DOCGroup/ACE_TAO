@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    DynAnyUtils_T.h
  *
@@ -8,8 +5,6 @@
  *
  *  @author Jeff Parsons <j.parsons@vanderbilt.edu>
  */
-//=============================================================================
-
 #ifndef TAO_DYNANYUTILS_T_H
 #define TAO_DYNANYUTILS_T_H
 
@@ -35,7 +30,7 @@ namespace TAO
   struct DynAnyBasicTypeUtils
   {
     static void
-    insert_value (const T &val,
+    insert_value (T const &val,
                   TAO_DynCommon *the_dynany);
 
     static typename BasicTypeTraits<T>::return_type

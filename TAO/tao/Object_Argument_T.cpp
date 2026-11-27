@@ -3,6 +3,8 @@
 
 #include "tao/Object_Argument_T.h"
 
+#include <memory>
+
 #if !defined (__ACE_INLINE__)
 #include "tao/Object_Argument_T.inl"
 #endif /* __ACE_INLINE__ */
@@ -51,28 +53,15 @@ TAO::In_Object_Argument_Cloner_T<S_ptr>::release (S_ptr objref)
 
 template<typename S_ptr,
          template <typename> class Insert_Policy>
-TAO::In_Object_Clonable_Argument_T<S_ptr,Insert_Policy>::~In_Object_Clonable_Argument_T ()
-{
-  if (this->is_clone_)
-    {
-      In_Object_Argument_Cloner_T<S_ptr>::release (this->x_);
-    }
-}
-
-template<typename S_ptr,
-         template <typename> class Insert_Policy>
 TAO::Argument*
 TAO::In_Object_Clonable_Argument_T<S_ptr,Insert_Policy>::clone ()
 {
+  std::unique_ptr<In_Object_Clonable_Argument_T<S_ptr,Insert_Policy>> clone_arg =
+    std::make_unique<In_Object_Clonable_Argument_T<S_ptr,Insert_Policy>> (this->x_);
   In_Object_Argument_Cloner_T<S_ptr>::duplicate (this->x_);
-
-  In_Object_Clonable_Argument_T<S_ptr,Insert_Policy>* clone_arg
-    = new In_Object_Clonable_Argument_T<S_ptr,Insert_Policy> (this->x_);
-  clone_arg->is_clone_ = true;
-  return clone_arg;
+  clone_arg->cloned_reference_.reset (this->x_);
+  return clone_arg.release ();
 }
-
-// ===========================================================
 
 template<typename S_ptr,
          typename S_traits,
@@ -107,8 +96,6 @@ TAO::Inout_Object_Argument_T<S_ptr,S_traits,Insert_Policy>::interceptor_value (
 
 #endif /* TAO_HAS_INTERCEPTORS */
 
-// ==============================================================
-
 template<typename S_ptr,
          typename S_out,
          template <typename> class Insert_Policy>
@@ -131,8 +118,6 @@ TAO::Out_Object_Argument_T<S_ptr,S_out,Insert_Policy>::interceptor_value (
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
-
-// ============================================================
 
 template<typename S_ptr,
          typename S_var,

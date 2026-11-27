@@ -48,13 +48,13 @@ TAO_ValueDef_i::destroy_i ()
   // destroy the attribute's anonymous type, if any.
 
   TAO_IFR_Generic_Utils<TAO_AttributeDef_i>::destroy_special (
-      "attrs",
+      ACE_TEXT ("attrs"),
       this->repo_,
       this->section_key_
     );
 
   TAO_IFR_Generic_Utils<TAO_OperationDef_i>::destroy_special (
-      "ops",
+      ACE_TEXT ("ops"),
       this->repo_,
       this->section_key_
     );
@@ -135,8 +135,8 @@ TAO_ValueDef_i::supported_interfaces_i ()
   ACE_Configuration_Section_Key supported_key;
   int status =
     this->repo_->config ()->open_section (this->section_key_,
-                                          "supported",
-                                          0,
+                                          ACE_TEXT ("supported"),
+                                          false,
                                           supported_key);
 
   if (status != 0)
@@ -147,7 +147,7 @@ TAO_ValueDef_i::supported_interfaces_i ()
 
   CORBA::ULong count = 0;
   this->repo_->config ()->get_integer_value (supported_key,
-                                             "count",
+                                             ACE_TEXT ("count"),
                                              count);
   seq->length (count);
   ACE_TString holder;
@@ -155,7 +155,7 @@ TAO_ValueDef_i::supported_interfaces_i ()
 
   for (CORBA::ULong i {}; i < count; ++i)
     {
-      char * const stringified = TAO_IFR_Service_Utils::int_to_string (i);
+      ACE_TCHAR * const stringified = TAO_IFR_Service_Utils::int_to_string (i);
       this->repo_->config ()->get_string_value (supported_key,
                                                 stringified,
                                                 holder);
@@ -173,8 +173,7 @@ TAO_ValueDef_i::supported_interfaces_i ()
 
 void
 TAO_ValueDef_i::supported_interfaces (
-    CORBA::InterfaceDefSeq const &supported_interfaces
-  )
+    CORBA::InterfaceDefSeq const &supported_interfaces)
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -185,22 +184,20 @@ TAO_ValueDef_i::supported_interfaces (
 
 void
 TAO_ValueDef_i::supported_interfaces_i (
-    CORBA::InterfaceDefSeq const &supported_interfaces
-  )
+    CORBA::InterfaceDefSeq const &supported_interfaces)
 {
   this->repo_->config ()->remove_section (this->section_key_,
-                                          "supported",
-                                          0);
+                                          ACE_TEXT ("supported"),
+                                          false);
   ACE_Configuration_Section_Key supported_key;
   this->repo_->config ()->open_section (this->section_key_,
-                                        "supported",
-                                        1,
+                                        ACE_TEXT ("supported"),
+                                        true,
                                         supported_key);
   CORBA::ULong count = supported_interfaces.length ();
   this->repo_->config ()->set_integer_value (supported_key,
-                                             "count",
+                                             ACE_TEXT ("count"),
                                              count);
-  char *stringified {};
   CORBA::ULong kind = 0;
   bool concrete_seen = false;
   CORBA::DefinitionKind def_kind;
@@ -216,12 +213,12 @@ TAO_ValueDef_i::supported_interfaces_i (
       // the name clash checker for base interfaces is static, and has
       // no other way to know about a specific key.
       this->repo_->config ()->expand_path (this->repo_->root_key (),
-                                           supported_path,
+                                           ACE_TEXT_CHAR_TO_TCHAR (supported_path),
                                            TAO_IFR_Service_Utils::tmp_key_,
-                                           0);
+                                           false);
       this->repo_->config ()->get_integer_value (
                                   TAO_IFR_Service_Utils::tmp_key_,
-                                  "def_kind",
+                                  ACE_TEXT ("def_kind"),
                                   kind
                                 );
       def_kind = static_cast<CORBA::DefinitionKind> (kind);
@@ -246,12 +243,12 @@ TAO_ValueDef_i::supported_interfaces_i (
                                           this->repo_,
                                           CORBA::dk_Value);
 
-      stringified = TAO_IFR_Service_Utils::int_to_string (i);
+      ACE_TCHAR * const stringified = TAO_IFR_Service_Utils::int_to_string (i);
       char const * const supported_id =
         supported_interfaces[i]->_interface_repository_id ();
       this->repo_->config ()->set_string_value (supported_key,
                                                 stringified,
-                                                supported_id);
+                                                ACE_TEXT_CHAR_TO_TCHAR (supported_id));
     }
 }
 
@@ -277,8 +274,8 @@ TAO_ValueDef_i::initializers_i ()
   ACE_Configuration_Section_Key initializers_key;
   int status =
     this->repo_->config ()->open_section (this->section_key_,
-                                          "initializers",
-                                          0,
+                                          ACE_TEXT ("initializers"),
+                                          false,
                                           initializers_key);
 
   if (status != 0)
@@ -289,10 +286,10 @@ TAO_ValueDef_i::initializers_i ()
 
   CORBA::ULong count = 0;
   this->repo_->config ()->get_integer_value (initializers_key,
-                                             "count",
+                                             ACE_TEXT ("count"),
                                              count);
   iseq->length (count);
-  char *stringified {};
+  ACE_TCHAR *stringified {};
   ACE_Configuration_Section_Key initializer_key, params_key, arg_key;
   ACE_TString holder;
   CORBA::ULong arg_count = 0;
@@ -302,16 +299,16 @@ TAO_ValueDef_i::initializers_i ()
       stringified = TAO_IFR_Service_Utils::int_to_string (i);
       this->repo_->config ()->open_section (initializers_key,
                                             stringified,
-                                            0,
+                                            false,
                                             initializer_key);
       this->repo_->config ()->get_string_value (initializer_key,
-                                                "name",
+                                                ACE_TEXT ("name"),
                                                 holder);
-      retval[i].name = holder.fast_rep ();
+      retval[i].name = static_cast<char const *> (ACE_TEXT_ALWAYS_CHAR (holder.fast_rep ()));
       status =
         this->repo_->config ()->open_section (initializer_key,
-                                              "params",
-                                              0,
+                                              ACE_TEXT ("params"),
+                                              false,
                                               params_key);
 
       if (status != 0)
@@ -321,7 +318,7 @@ TAO_ValueDef_i::initializers_i ()
         }
 
       this->repo_->config ()->get_integer_value (params_key,
-                                                 "count",
+                                                 ACE_TEXT ("count"),
                                                  arg_count);
       retval[i].members.length (arg_count);
       CORBA::Object_var obj;
@@ -331,14 +328,14 @@ TAO_ValueDef_i::initializers_i ()
           stringified = TAO_IFR_Service_Utils::int_to_string (j);
           this->repo_->config ()->open_section (params_key,
                                                 stringified,
-                                                0,
+                                                false,
                                                 arg_key);
           this->repo_->config ()->get_string_value (arg_key,
-                                                    "arg_name",
+                                                    ACE_TEXT ("arg_name"),
                                                     holder);
-          retval[i].members[j].name = holder.fast_rep ();
+          retval[i].members[j].name = static_cast<char const *> (ACE_TEXT_ALWAYS_CHAR (holder.fast_rep ()));
           this->repo_->config ()->get_string_value (arg_key,
-                                                    "arg_path",
+                                                    ACE_TEXT ("arg_path"),
                                                     holder);
           TAO_IDLType_i *impl =
             TAO_IFR_Service_Utils::path_to_idltype (holder,
@@ -372,8 +369,8 @@ void
 TAO_ValueDef_i::initializers_i (CORBA::InitializerSeq const &initializers)
 {
   this->repo_->config ()->remove_section (this->section_key_,
-                                          "initializers",
-                                          1);
+                                          ACE_TEXT ("initializers"),
+                                          true);
   TAO_IFR_Generic_Utils<CORBA::InitializerSeq>::set_initializers (
       initializers,
       this->repo_->config (),
@@ -397,7 +394,7 @@ TAO_ValueDef_i::base_value_i ()
   ACE_TString base_path;
   int status =
     this->repo_->config ()->get_string_value (this->section_key_,
-                                              "base_value",
+                                              ACE_TEXT ("base_value"),
                                               base_path);
 
   if (status != 0)
@@ -428,7 +425,7 @@ TAO_ValueDef_i::base_value_i (CORBA::ValueDef_ptr base_value)
   if (CORBA::is_nil (base_value))
     {
       this->repo_->config ()->remove_value (this->section_key_,
-                                            "base_value");
+                                            ACE_TEXT ("base_value"));
       return;
     }
 
@@ -440,9 +437,9 @@ TAO_ValueDef_i::base_value_i (CORBA::ValueDef_ptr base_value)
   // no other way to know about a specific key.
   this->repo_->config ()->expand_path (
                               this->repo_->root_key (),
-                              base_path,
+                              ACE_TEXT_CHAR_TO_TCHAR (base_path),
                               TAO_IFR_Service_Utils::tmp_key_,
-                              0
+                              false
                             );
   TAO_IFR_Service_Utils::name_exists (&TAO_ValueDef_i::name_clash,
                                       this->section_key_,
@@ -451,8 +448,8 @@ TAO_ValueDef_i::base_value_i (CORBA::ValueDef_ptr base_value)
 
   this->repo_->config ()->set_string_value (
                               this->section_key_,
-                              "base_value",
-                              base_path
+                              ACE_TEXT ("base_value"),
+                              ACE_TEXT_CHAR_TO_TCHAR (base_path)
                             );
 }
 
@@ -478,8 +475,8 @@ TAO_ValueDef_i::abstract_base_values_i ()
   ACE_Configuration_Section_Key bases_key;
   int status =
     this->repo_->config ()->open_section (this->section_key_,
-                                          "abstract_bases",
-                                          0,
+                                          ACE_TEXT ("abstract_bases"),
+                                          false,
                                           bases_key);
 
   if (status != 0)
@@ -490,10 +487,10 @@ TAO_ValueDef_i::abstract_base_values_i ()
 
   CORBA::ULong count = 0;
   this->repo_->config ()->get_integer_value (bases_key,
-                                             "count",
+                                             ACE_TEXT ("count"),
                                              count);
   vd_seq->length (count);
-  char *stringified {};
+  ACE_TCHAR *stringified {};
   ACE_TString holder;
   CORBA::Object_var obj;
 
@@ -517,8 +514,7 @@ TAO_ValueDef_i::abstract_base_values_i ()
 
 void
 TAO_ValueDef_i::abstract_base_values (
-    CORBA::ValueDefSeq const &abstract_base_values
-  )
+    CORBA::ValueDefSeq const &abstract_base_values)
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -529,12 +525,11 @@ TAO_ValueDef_i::abstract_base_values (
 
 void
 TAO_ValueDef_i::abstract_base_values_i (
-    CORBA::ValueDefSeq const &abstract_base_values
-  )
+    CORBA::ValueDefSeq const &abstract_base_values)
 {
   this->repo_->config ()->remove_section (this->section_key_,
-                                          "abstract_bases",
-                                          0);
+                                          ACE_TEXT ("abstract_bases"),
+                                          false);
   CORBA::ULong count = abstract_base_values.length ();
 
   if (count == 0)
@@ -544,14 +539,12 @@ TAO_ValueDef_i::abstract_base_values_i (
 
   ACE_Configuration_Section_Key bases_key;
   this->repo_->config ()->open_section (this->section_key_,
-                                        "abstract_bases",
-                                        0,
+                                        ACE_TEXT ("abstract_bases"),
+                                        false,
                                         bases_key);
   this->repo_->config ()->set_integer_value (bases_key,
-                                             "count",
+                                             ACE_TEXT ("count"),
                                              count);
-  char *stringified {};
-
   for (CORBA::ULong i {}; i < count; ++i)
     {
       char const * const base_path =
@@ -564,9 +557,9 @@ TAO_ValueDef_i::abstract_base_values_i (
       // no other way to know about a specific key.
       this->repo_->config ()->expand_path (
                                   this->repo_->root_key (),
-                                  base_path,
+                                  ACE_TEXT_CHAR_TO_TCHAR (base_path),
                                   TAO_IFR_Service_Utils::tmp_key_,
-                                  0
+                                  false
                                 );
       TAO_IFR_Service_Utils::name_exists (&TAO_ValueDef_i::name_clash,
                                           this->section_key_,
@@ -575,10 +568,10 @@ TAO_ValueDef_i::abstract_base_values_i (
 
       char const * const base_id =
         abstract_base_values[i]->_interface_repository_id ();
-      stringified = TAO_IFR_Service_Utils::int_to_string (i);
+      ACE_TCHAR * const stringified = TAO_IFR_Service_Utils::int_to_string (i);
       this->repo_->config ()->set_string_value (bases_key,
                                                 stringified,
-                                                base_id);
+                                                ACE_TEXT_CHAR_TO_TCHAR (base_id));
     }
 }
 
@@ -597,7 +590,7 @@ TAO_ValueDef_i::is_abstract_i ()
 {
   CORBA::ULong is_it = 0;
   this->repo_->config ()->get_integer_value (this->section_key_,
-                                             "is_abstract",
+                                             ACE_TEXT ("is_abstract"),
                                              is_it);
   return static_cast<CORBA::Boolean> (is_it);
 }
@@ -617,7 +610,7 @@ TAO_ValueDef_i::is_abstract_i (CORBA::Boolean is_abstract)
 {
   this->repo_->config ()->set_integer_value (
                               this->section_key_,
-                              "is_abstract",
+                              ACE_TEXT ("is_abstract"),
                               static_cast<CORBA::ULong> (is_abstract));
 }
 
@@ -636,7 +629,7 @@ TAO_ValueDef_i::is_custom_i ()
 {
   CORBA::ULong is_it = 0;
   this->repo_->config ()->get_integer_value (this->section_key_,
-                                             "is_custom",
+                                             ACE_TEXT ("is_custom"),
                                              is_it);
   return static_cast<CORBA::Boolean> (is_it);
 }
@@ -656,7 +649,7 @@ TAO_ValueDef_i::is_custom_i (CORBA::Boolean is_custom)
 {
   this->repo_->config ()->set_integer_value (
                               this->section_key_,
-                              "is_custom",
+                              ACE_TEXT ("is_custom"),
                               static_cast<CORBA::ULong> (is_custom));
 }
 
@@ -675,7 +668,7 @@ TAO_ValueDef_i::is_truncatable_i ()
 {
   CORBA::ULong is_it = 0;
   this->repo_->config ()->get_integer_value (this->section_key_,
-                                             "is_truncatable",
+                                             ACE_TEXT ("is_truncatable"),
                                              is_it);
   return static_cast<CORBA::Boolean> (is_it);
 }
@@ -695,7 +688,7 @@ TAO_ValueDef_i::is_truncatable_i (CORBA::Boolean is_truncatable)
 {
   this->repo_->config ()->set_integer_value (
                               this->section_key_,
-                              "is_truncatable",
+                              ACE_TEXT ("is_truncatable"),
                               static_cast<CORBA::ULong> (is_truncatable));
 }
 
@@ -719,18 +712,18 @@ TAO_ValueDef_i::is_a_i (char const *id)
 
   ACE_TString holder;
   this->repo_->config ()->get_string_value (this->section_key_,
-                                            "id",
+                                            ACE_TEXT ("id"),
                                             holder);
 
   // Is it our type?
-  if (std::strcmp (holder.fast_rep (), id) == 0)
+  if (std::strcmp (ACE_TEXT_ALWAYS_CHAR (holder.fast_rep ()), id) == 0)
     {
       return true;
     }
 
   int status =
     this->repo_->config ()->get_string_value (this->section_key_,
-                                              "base_value",
+                                              ACE_TEXT ("base_value"),
                                               holder);
 
   if (status == 0)
@@ -739,13 +732,13 @@ TAO_ValueDef_i::is_a_i (char const *id)
       this->repo_->config ()->expand_path (this->repo_->root_key (),
                                            holder,
                                            base_key,
-                                           0);
+                                           false);
       this->repo_->config ()->get_string_value (base_key,
-                                                "id",
+                                                ACE_TEXT ("id"),
                                             holder);
 
       // Is it our concrete base type?
-      if (std::strcmp (holder.fast_rep (), id) == 0)
+      if (std::strcmp (ACE_TEXT_ALWAYS_CHAR (holder.fast_rep ()), id) == 0)
         {
           return true;
         }
@@ -754,8 +747,8 @@ TAO_ValueDef_i::is_a_i (char const *id)
   ACE_Configuration_Section_Key bases_key;
   status =
     this->repo_->config ()->open_section (this->section_key_,
-                                          "abstract_bases",
-                                          0,
+                                          ACE_TEXT ("abstract_bases"),
+                                          false,
                                           bases_key);
 
   if (status != 0)
@@ -765,9 +758,9 @@ TAO_ValueDef_i::is_a_i (char const *id)
 
   CORBA::ULong count = 0;
   this->repo_->config ()->get_integer_value (bases_key,
-                                             "count",
+                                             ACE_TEXT ("count"),
                                              count);
-  char *stringified {};
+  ACE_TCHAR *stringified {};
   ACE_Configuration_Section_Key base_key;
   bool success = false;
 
@@ -783,7 +776,7 @@ TAO_ValueDef_i::is_a_i (char const *id)
       this->repo_->config ()->expand_path (this->repo_->root_key (),
                                            holder,
                                            base_key,
-                                           0);
+                                           false);
       TAO_ValueDef_i impl (this->repo_);
       impl.section_key (base_key);
       success = impl.is_a_i (id);
@@ -818,32 +811,32 @@ TAO_ValueDef_i::describe_value_i ()
 
   ACE_TString holder;
   this->repo_->config ()->get_string_value (this->section_key_,
-                                            "name",
+                                            ACE_TEXT ("name"),
                                             holder);
-  fv_desc->name = holder.fast_rep ();
+  fv_desc->name = static_cast<char const *> (ACE_TEXT_ALWAYS_CHAR (holder.fast_rep ()));
   this->repo_->config ()->get_string_value  (this->section_key_,
-                                             "id",
+                                             ACE_TEXT ("id"),
                                              holder);
-  fv_desc->id = holder.fast_rep ();
+  fv_desc->id = static_cast<char const *> (ACE_TEXT_ALWAYS_CHAR (holder.fast_rep ()));
 
   CORBA::ULong val = 0;
 
   this->repo_->config ()->get_integer_value (this->section_key_,
-                                             "is_abstract",
+                                             ACE_TEXT ("is_abstract"),
                                              val);
   fv_desc->is_abstract = static_cast<CORBA::Boolean> (val);
   this->repo_->config ()->get_integer_value (this->section_key_,
-                                             "is_custom",
+                                             ACE_TEXT ("is_custom"),
                                              val);
   fv_desc->is_custom = static_cast<CORBA::Boolean> (val);
   this->repo_->config ()->get_string_value (this->section_key_,
-                                            "container_id",
+                                            ACE_TEXT ("container_id"),
                                             holder);
-  fv_desc->defined_in = holder.fast_rep ();
+  fv_desc->defined_in = static_cast<char const *> (ACE_TEXT_ALWAYS_CHAR (holder.fast_rep ()));
   this->repo_->config ()->get_string_value (this->section_key_,
-                                            "version",
+                                            ACE_TEXT ("version"),
                                             holder);
-  fv_desc->version = holder.fast_rep ();
+  fv_desc->version = static_cast<char const *> (ACE_TEXT_ALWAYS_CHAR (holder.fast_rep ()));
 
   // Operations.
 
@@ -852,12 +845,12 @@ TAO_ValueDef_i::describe_value_i ()
   ACE_Configuration_Section_Key ops_key;
   int status =
     this->repo_->config ()->open_section (this->section_key_,
-                                          "ops",
-                                          0,
+                                          ACE_TEXT ("ops"),
+                                          false,
                                           ops_key);
   CORBA::ULong count = 0;
   CORBA::ULong param_count = 0;
-  char *stringified {};
+  ACE_TCHAR *stringified {};
   CORBA::ULong i = 0;
   CORBA::ULong j = 0;
   TAO_IDLType_i *idl_type {};
@@ -866,7 +859,7 @@ TAO_ValueDef_i::describe_value_i ()
   if (status == 0)
     {
       this->repo_->config ()->get_integer_value (ops_key,
-                                                 "count",
+                                                 ACE_TEXT ("count"),
                                                  count);
       fv_desc->operations.length (count);
       ACE_Configuration_Section_Key op_key, result_key, contexts_key;
@@ -877,22 +870,22 @@ TAO_ValueDef_i::describe_value_i ()
           stringified = TAO_IFR_Service_Utils::int_to_string (i);
           this->repo_->config ()->open_section (ops_key,
                                                 stringified,
-                                                0,
+                                                false,
                                                 op_key);
           this->repo_->config ()->get_string_value (op_key,
-                                                    "name",
+                                                    ACE_TEXT ("name"),
                                                     holder);
-          fv_desc->operations[i].name = holder.fast_rep ();
+          fv_desc->operations[i].name = static_cast<char const *> (ACE_TEXT_ALWAYS_CHAR (holder.fast_rep ()));
           this->repo_->config ()->get_string_value (op_key,
-                                                    "id",
+                                                    ACE_TEXT ("id"),
                                                     holder);
-          fv_desc->operations[i].id = holder.fast_rep ();
+          fv_desc->operations[i].id = static_cast<char const *> (ACE_TEXT_ALWAYS_CHAR (holder.fast_rep ()));
           this->repo_->config ()->get_string_value (this->section_key_,
-                                                    "id",
+                                                    ACE_TEXT ("id"),
                                                     holder);
-          fv_desc->operations[i].defined_in = holder.fast_rep ();
+          fv_desc->operations[i].defined_in = static_cast<char const *> (ACE_TEXT_ALWAYS_CHAR (holder.fast_rep ()));
           this->repo_->config ()->get_string_value (op_key,
-                                                    "result",
+                                                    ACE_TEXT ("result"),
                                                     holder);
           idl_type =
             TAO_IFR_Service_Utils::path_to_idltype (holder,
@@ -901,7 +894,7 @@ TAO_ValueDef_i::describe_value_i ()
             idl_type->type_i ();
 
           this->repo_->config ()->get_integer_value (op_key,
-                                                     "mode",
+                                                     ACE_TEXT ("mode"),
                                                      val);
           fv_desc->operations[i].mode = static_cast<CORBA::OperationMode> (val);
           CORBA::TCKind kind =
@@ -929,14 +922,14 @@ TAO_ValueDef_i::describe_value_i ()
           fv_desc->operations[i].parameters.length (0);
           status =
             this->repo_->config ()->open_section (op_key,
-                                                  "params",
-                                                  0,
+                                                  ACE_TEXT ("params"),
+                                                  false,
                                                   params_key);
           if (status == 0)
             {
               ACE_Configuration_Section_Key param_key;
               this->repo_->config ()->get_integer_value (params_key,
-                                                        "count",
+                                                        ACE_TEXT ("count"),
                                                         param_count);
               fv_desc->operations[i].parameters.length (param_count);
 
@@ -945,15 +938,14 @@ TAO_ValueDef_i::describe_value_i ()
                   stringified = TAO_IFR_Service_Utils::int_to_string (j);
                   this->repo_->config ()->open_section (params_key,
                                                         stringified,
-                                                        0,
+                                                        false,
                                                         param_key);
                   this->repo_->config ()->get_string_value (param_key,
-                                                            "name",
+                                                            ACE_TEXT ("name"),
                                                             holder);
-                  fv_desc->operations[i].parameters[j].name =
-                    holder.fast_rep ();
+                  fv_desc->operations[i].parameters[j].name = static_cast<char const *> (ACE_TEXT_ALWAYS_CHAR (holder.fast_rep ()));
                   this->repo_->config ()->get_string_value (param_key,
-                                                            "type_path",
+                                                            ACE_TEXT ("type_path"),
                                                             holder);
                   idl_type =
                     TAO_IFR_Service_Utils::path_to_idltype (holder,
@@ -971,7 +963,7 @@ TAO_ValueDef_i::describe_value_i ()
                     CORBA::IDLType::_narrow (obj.in ());
 
                   this->repo_->config ()->get_integer_value (param_key,
-                                                             "mode",
+                                                             ACE_TEXT ("mode"),
                                                              val);
                   fv_desc->operations[i].parameters[j].mode =
                     static_cast<CORBA::ParameterMode> (val);
@@ -982,15 +974,15 @@ TAO_ValueDef_i::describe_value_i ()
 
           status =
             this->repo_->config ()->open_section (op_key,
-                                                  "excepts",
-                                                  0,
+                                                  ACE_TEXT ("excepts"),
+                                                  false,
                                                   excepts_key);
           fv_desc->operations[i].exceptions.length (0);
 
           if (status == 0)
             {
               this->repo_->config ()->get_integer_value (excepts_key,
-                                                         "count",
+                                                         ACE_TEXT ("count"),
                                                          count);
               fv_desc->operations[i].exceptions.length (count);
               ACE_Configuration_Section_Key except_def_key;
@@ -1010,28 +1002,24 @@ TAO_ValueDef_i::describe_value_i ()
                                               this->repo_->root_key (),
                                               holder,
                                               except_def_key,
-                                              0
+                                              false
                                             );
                   this->repo_->config ()->get_string_value (except_def_key,
-                                                            "name",
+                                                            ACE_TEXT ("name"),
                                                             holder);
-                  fv_desc->operations[i].exceptions[j].name =
-                    holder.fast_rep ();
+                  fv_desc->operations[i].exceptions[j].name = static_cast<char const *> (ACE_TEXT_ALWAYS_CHAR (holder.fast_rep ()));
                   this->repo_->config ()->get_string_value (except_def_key,
-                                                            "id",
+                                                            ACE_TEXT ("id"),
                                                             holder);
-                  fv_desc->operations[i].exceptions[j].id =
-                    holder.fast_rep ();
+                  fv_desc->operations[i].exceptions[j].id = static_cast<char const *> (ACE_TEXT_ALWAYS_CHAR (holder.fast_rep ()));
                   this->repo_->config ()->get_string_value (except_def_key,
-                                                            "container_id",
+                                                            ACE_TEXT ("container_id"),
                                                             holder);
-                  fv_desc->operations[i].exceptions[j].defined_in =
-                    holder.fast_rep ();
+                  fv_desc->operations[i].exceptions[j].defined_in = static_cast<char const *> (ACE_TEXT_ALWAYS_CHAR (holder.fast_rep ()));
                   this->repo_->config ()->get_string_value (except_def_key,
-                                                            "version",
+                                                            ACE_TEXT ("version"),
                                                             holder);
-                  fv_desc->operations[i].exceptions[j].version =
-                    holder.fast_rep ();
+                  fv_desc->operations[i].exceptions[j].version = static_cast<char const *> (ACE_TEXT_ALWAYS_CHAR (holder.fast_rep ()));
 
                   // Use the TAO_IDLType_i fetched above.
                   fv_desc->operations[i].exceptions[j].type =
@@ -1048,13 +1036,13 @@ TAO_ValueDef_i::describe_value_i ()
   ACE_Configuration_Section_Key attrs_key;
   status =
     this->repo_->config ()->open_section (this->section_key_,
-                                          "attrs",
-                                          0,
+                                          ACE_TEXT ("attrs"),
+                                          false,
                                           attrs_key);
   if (status == 0)
     {
       this->repo_->config ()->get_integer_value (attrs_key,
-                                                 "count",
+                                                 ACE_TEXT ("count"),
                                                  count);
       fv_desc->attributes.length (count);
       ACE_Configuration_Section_Key attr_key, attr_def_key;
@@ -1064,27 +1052,27 @@ TAO_ValueDef_i::describe_value_i ()
           stringified = TAO_IFR_Service_Utils::int_to_string (i);
           this->repo_->config ()->open_section (attrs_key,
                                                 stringified,
-                                                0,
+                                                false,
                                                 attr_key);
           this->repo_->config ()->get_string_value (attr_key,
-                                                    "name",
+                                                    ACE_TEXT ("name"),
                                                     holder);
-          fv_desc->attributes[i].name = holder.fast_rep ();
+          fv_desc->attributes[i].name = static_cast<char const *> (ACE_TEXT_ALWAYS_CHAR (holder.fast_rep ()));
           this->repo_->config ()->get_string_value (attr_key,
-                                                    "id",
+                                                    ACE_TEXT ("id"),
                                                     holder);
-          fv_desc->attributes[i].id = holder.fast_rep ();
+          fv_desc->attributes[i].id = static_cast<char const *> (ACE_TEXT_ALWAYS_CHAR (holder.fast_rep ()));
           this->repo_->config ()->get_string_value (attr_key,
-                                                    "version",
+                                                    ACE_TEXT ("version"),
                                                     holder);
-          fv_desc->attributes[i].version = holder.fast_rep ();
+          fv_desc->attributes[i].version = static_cast<char const *> (ACE_TEXT_ALWAYS_CHAR (holder.fast_rep ()));
           this->repo_->config ()->get_integer_value (attr_key,
-                                                     "mode",
+                                                     ACE_TEXT ("mode"),
                                                      val);
           fv_desc->attributes[i].mode =
             static_cast<CORBA::AttributeMode> (val);
           this->repo_->config ()->get_string_value (attr_key,
-                                                    "type_path",
+                                                    ACE_TEXT ("type_path"),
                                                     holder);
 
           // Use the type path for 'defined_in' and 'type'.
@@ -1098,11 +1086,11 @@ TAO_ValueDef_i::describe_value_i ()
           this->repo_->config ()->expand_path (this->repo_->root_key (),
                                                holder,
                                                attr_def_key,
-                                               0);
+                                               false);
           this->repo_->config ()->get_string_value (attr_def_key,
-                                                    "container_id",
+                                                    ACE_TEXT ("container_id"),
                                                     holder);
-          fv_desc->attributes[i].defined_in = holder.fast_rep ();
+          fv_desc->attributes[i].defined_in = static_cast<char const *> (ACE_TEXT_ALWAYS_CHAR (holder.fast_rep ()));
         }
     }
 
@@ -1113,13 +1101,13 @@ TAO_ValueDef_i::describe_value_i ()
   ACE_Configuration_Section_Key members_key;
   status =
     this->repo_->config ()->open_section (this->section_key_,
-                                          "members",
-                                          0,
+                                          ACE_TEXT ("members"),
+                                          false,
                                           members_key);
   if (status == 0)
     {
       this->repo_->config ()->get_integer_value (members_key,
-                                                 "count",
+                                                 ACE_TEXT ("count"),
                                                  count);
       fv_desc->members.length (count);
       ACE_Configuration_Section_Key member_key, member_def_key;
@@ -1129,27 +1117,27 @@ TAO_ValueDef_i::describe_value_i ()
           stringified = TAO_IFR_Service_Utils::int_to_string (i);
           this->repo_->config ()->open_section (members_key,
                                                 stringified,
-                                                0,
+                                                false,
                                                 member_key);
           this->repo_->config ()->get_string_value (member_key,
-                                                    "name",
+                                                    ACE_TEXT ("name"),
                                                     holder);
-          fv_desc->members[i].name = holder.fast_rep ();
+          fv_desc->members[i].name = static_cast<char const *> (ACE_TEXT_ALWAYS_CHAR (holder.fast_rep ()));
           this->repo_->config ()->get_string_value (member_key,
-                                                    "id",
+                                                    ACE_TEXT ("id"),
                                                     holder);
-          fv_desc->members[i].id = holder.fast_rep ();
+          fv_desc->members[i].id = static_cast<char const *> (ACE_TEXT_ALWAYS_CHAR (holder.fast_rep ()));
           this->repo_->config ()->get_string_value (member_key,
-                                                    "container_id",
+                                                    ACE_TEXT ("container_id"),
                                                     holder);
-          fv_desc->members[i].defined_in = holder.fast_rep ();
+          fv_desc->members[i].defined_in = static_cast<char const *> (ACE_TEXT_ALWAYS_CHAR (holder.fast_rep ()));
           this->repo_->config ()->get_string_value (member_key,
-                                                    "version",
+                                                    ACE_TEXT ("version"),
                                                     holder);
-          fv_desc->members[i].version = holder.fast_rep ();
+          fv_desc->members[i].version = static_cast<char const *> (ACE_TEXT_ALWAYS_CHAR (holder.fast_rep ()));
 
           this->repo_->config ()->get_integer_value (member_key,
-                                                     "access",
+                                                     ACE_TEXT ("access"),
                                                      val);
           fv_desc->members[i].access =
             static_cast<CORBA::Visibility> (val);
@@ -1157,7 +1145,7 @@ TAO_ValueDef_i::describe_value_i ()
           // Use type path for 'type' and 'type_def',
 
           this->repo_->config ()->get_string_value (member_key,
-                                                    "type_path",
+                                                    ACE_TEXT ("type_path"),
                                                     holder);
           idl_type =
             TAO_IFR_Service_Utils::path_to_idltype (holder,
@@ -1181,14 +1169,14 @@ TAO_ValueDef_i::describe_value_i ()
   ACE_Configuration_Section_Key initializers_key;
   status =
     this->repo_->config ()->open_section (this->section_key_,
-                                          "initializers",
-                                          0,
+                                          ACE_TEXT ("initializers"),
+                                          false,
                                           initializers_key);
 
   if (status == 0)
     {
       this->repo_->config ()->get_integer_value (initializers_key,
-                                                 "count",
+                                                 ACE_TEXT ("count"),
                                                  count);
       fv_desc->initializers.length (count);
       ACE_Configuration_Section_Key initializer_key, params_key, arg_key;
@@ -1198,24 +1186,24 @@ TAO_ValueDef_i::describe_value_i ()
           stringified = TAO_IFR_Service_Utils::int_to_string (i);
           this->repo_->config ()->open_section (initializers_key,
                                                 stringified,
-                                                0,
+                                                false,
                                                 initializer_key);
           this->repo_->config ()->get_string_value (initializer_key,
-                                                    "name",
+                                                    ACE_TEXT ("name"),
                                                     holder);
-          fv_desc->initializers[i].name = holder.fast_rep ();
+          fv_desc->initializers[i].name = static_cast<char const *> (ACE_TEXT_ALWAYS_CHAR (holder.fast_rep ()));
 
           fv_desc->initializers[i].members.length (0);
           status =
             this->repo_->config ()->open_section (initializer_key,
                                                   stringified,
-                                                  0,
+                                                  false,
                                                   params_key);
 
           if (status == 0)
             {
               this->repo_->config ()->get_integer_value (params_key,
-                                                         "count",
+                                                         ACE_TEXT ("count"),
                                                          param_count);
               fv_desc->initializers[i].members.length (param_count);
 
@@ -1224,15 +1212,14 @@ TAO_ValueDef_i::describe_value_i ()
                   stringified = TAO_IFR_Service_Utils::int_to_string (j);
                   this->repo_->config ()->open_section (params_key,
                                                         stringified,
-                                                        0,
+                                                        false,
                                                         arg_key);
                   this->repo_->config ()->get_string_value (arg_key,
-                                                            "arg_name",
+                                                            ACE_TEXT ("arg_name"),
                                                             holder);
-                  fv_desc->initializers[i].members[j].name =
-                    holder.fast_rep ();
+                  fv_desc->initializers[i].members[j].name = static_cast<char const *> (ACE_TEXT_ALWAYS_CHAR (holder.fast_rep ()));
                   this->repo_->config ()->get_string_value (arg_key,
-                                                            "arg_path",
+                                                            ACE_TEXT ("arg_path"),
                                                             holder);
                   obj =
                     TAO_IFR_Service_Utils::path_to_ir_object (
@@ -1261,11 +1248,11 @@ TAO_ValueDef_i::describe_value_i ()
     );
 
   this->repo_->config ()->get_integer_value (this->section_key_,
-                                             "is_truncatable",
+                                             ACE_TEXT ("is_truncatable"),
                                              val);
   fv_desc->is_truncatable = static_cast<CORBA::Boolean> (val);
   status = this->repo_->config ()->get_string_value (this->section_key_,
-                                                     "base_value",
+                                                     ACE_TEXT ("base_value"),
                                                      holder);
 
   if (status == 0)
@@ -1274,14 +1261,14 @@ TAO_ValueDef_i::describe_value_i ()
       this->repo_->config ()->expand_path (this->repo_->root_key (),
                                            holder,
                                            base_key,
-                                           0);
+                                           false);
       this->repo_->config ()->get_string_value (base_key,
-                                                "id",
+                                                ACE_TEXT ("id"),
                                             holder);
     }
 
   // If status isn't 0, then holder will contain empty string anyway.
-  fv_desc->base_value = holder.fast_rep ();
+  fv_desc->base_value = static_cast<char const *> (ACE_TEXT_ALWAYS_CHAR (holder.fast_rep ()));
   fv_desc->type = this->type_i ();
 
   return retval._retn ();
@@ -1332,18 +1319,18 @@ TAO_ValueDef_i::create_value_member_i (char const *id,
   char *type_path = TAO_IFR_Service_Utils::reference_to_path (type);
 
   this->repo_->config ()->set_string_value (new_key,
-                                            "type_path",
-                                            type_path);
+                                            ACE_TEXT ("type_path"),
+                                            ACE_TEXT_CHAR_TO_TCHAR (type_path));
 
   // Store the attribute's mode.
   this->repo_->config ()->set_integer_value (new_key,
-                                             "access",
+                                             ACE_TEXT ("access"),
                                              access);
 
   // Create the object reference.
   CORBA::Object_var obj =
     TAO_IFR_Service_Utils::create_objref (CORBA::dk_ValueMember,
-                                          path.c_str (),
+                                          ACE_TEXT_ALWAYS_CHAR (path.c_str ()),
                                           this->repo_);
 
   CORBA::ValueMemberDef_var retval =
@@ -1358,8 +1345,7 @@ TAO_ValueDef_i::create_attribute (
     char const *name,
     char const *version,
     CORBA::IDLType_ptr type,
-    CORBA::AttributeMode mode
-  )
+    CORBA::AttributeMode mode)
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::AttributeDef::_nil ());
 
@@ -1378,8 +1364,7 @@ TAO_ValueDef_i::create_attribute_i (
     char const *name,
     char const *version,
     CORBA::IDLType_ptr type,
-    CORBA::AttributeMode mode
-  )
+    CORBA::AttributeMode mode)
 {
   TAO_Container_i::tmp_name_holder_ = name;
   ACE_Configuration_Section_Key new_key;
@@ -1401,18 +1386,18 @@ TAO_ValueDef_i::create_attribute_i (
   char *type_path = TAO_IFR_Service_Utils::reference_to_path (type);
 
   this->repo_->config ()->set_string_value (new_key,
-                                            "type_path",
-                                            type_path);
+                                            ACE_TEXT ("type_path"),
+                                            ACE_TEXT_CHAR_TO_TCHAR (type_path));
 
   // Store the attribute's mode.
   this->repo_->config ()->set_integer_value (new_key,
-                                             "mode",
+                                             ACE_TEXT ("mode"),
                                              mode);
 
   // Create the object reference.
   CORBA::Object_var obj =
     TAO_IFR_Service_Utils::create_objref (CORBA::dk_Attribute,
-                                          path.c_str (),
+                                          ACE_TEXT_ALWAYS_CHAR (path.c_str ()),
                                           this->repo_);
 
   CORBA::AttributeDef_var retval =
@@ -1430,8 +1415,7 @@ TAO_ValueDef_i::create_operation (
     CORBA::OperationMode mode,
     CORBA::ParDescriptionSeq const &params,
     CORBA::ExceptionDefSeq const &exceptions,
-    CORBA::ContextIdSeq const &contexts
-  )
+    CORBA::ContextIdSeq const &contexts)
 {
   TAO_IFR_WRITE_GUARD_RETURN (CORBA::OperationDef::_nil ());
 
@@ -1456,8 +1440,7 @@ TAO_ValueDef_i::create_operation_i (
     CORBA::OperationMode mode,
     CORBA::ParDescriptionSeq const &params,
     CORBA::ExceptionDefSeq const &exceptions,
-    CORBA::ContextIdSeq const &contexts
-  )
+    CORBA::ContextIdSeq const &contexts)
 {
   TAO_Container_i::tmp_name_holder_ = name;
   ACE_Configuration_Section_Key new_key;
@@ -1476,7 +1459,7 @@ TAO_ValueDef_i::create_operation_i (
                                           "ops");
 
   // Get the TypeCode for the return type.
-  ACE_TString result_path (TAO_IFR_Service_Utils::reference_to_path (result));
+  ACE_TString result_path (ACE_TEXT_CHAR_TO_TCHAR (TAO_IFR_Service_Utils::reference_to_path (result)));
   TAO_IDLType_i *result_impl =
     TAO_IFR_Service_Utils::path_to_idltype (result_path,
                                             this->repo_);
@@ -1493,12 +1476,12 @@ TAO_ValueDef_i::create_operation_i (
     }
 
   this->repo_->config ()->set_string_value (new_key,
-                                            "result",
+                                            ACE_TEXT ("result"),
                                             result_path);
 
   // Store the operation mode.
   this->repo_->config ()->set_integer_value (new_key,
-                                             "mode",
+                                             ACE_TEXT ("mode"),
                                              mode);
 
   CORBA::ULong i = 0;
@@ -1510,15 +1493,13 @@ TAO_ValueDef_i::create_operation_i (
     {
       ACE_Configuration_Section_Key params_key;
       this->repo_->config ()->open_section (new_key,
-                                            "params",
-                                            1,
+                                            ACE_TEXT ("params"),
+                                            true,
                                             params_key);
 
       this->repo_->config ()->set_integer_value (params_key,
-                                                 "count",
+                                                 ACE_TEXT ("count"),
                                                  length);
-      char *type_path {};
-
       for (i = 0; i < length; ++i)
         {
           // Oneway operations cannot have INOUT or OUT parameters.
@@ -1530,26 +1511,26 @@ TAO_ValueDef_i::create_operation_i (
             }
 
           ACE_Configuration_Section_Key param_key;
-          char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
+          ACE_TCHAR *stringified = TAO_IFR_Service_Utils::int_to_string (i);
           this->repo_->config ()->open_section (params_key,
                                                 stringified,
-                                                1,
+                                                true,
                                                 param_key);
 
           this->repo_->config ()->set_string_value (param_key,
-                                                    "name",
-                                                    params[i].name.in ());
-          type_path =
+                                                    ACE_TEXT ("name"),
+                                                    ACE_TEXT_CHAR_TO_TCHAR (params[i].name.in ()));
+          char * const type_path =
             TAO_IFR_Service_Utils::reference_to_path (
                 params[i].type_def.in ()
               );
 
           this->repo_->config ()->set_string_value (param_key,
-                                                    "type_path",
-                                                    type_path);
+                                                    ACE_TEXT ("type_path"),
+                                                    ACE_TEXT_CHAR_TO_TCHAR (type_path));
 
           this->repo_->config ()->set_integer_value (param_key,
-                                                     "mode",
+                                                     ACE_TEXT ("mode"),
                                                      params[i].mode);
        }
     }
@@ -1568,12 +1549,12 @@ TAO_ValueDef_i::create_operation_i (
       ACE_Configuration_Section_Key excepts_key;
 
       this->repo_->config ()->open_section (new_key,
-                                            "excepts",
-                                            1,
+                                            ACE_TEXT ("excepts"),
+                                            true,
                                             excepts_key);
 
       this->repo_->config ()->set_integer_value (excepts_key,
-                                                 "count",
+                                                 ACE_TEXT ("count"),
                                                  length);
       char *type_path {};
 
@@ -1582,10 +1563,10 @@ TAO_ValueDef_i::create_operation_i (
           type_path =
             TAO_IFR_Service_Utils::reference_to_path (exceptions[i]);
 
-          char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
+          ACE_TCHAR *stringified = TAO_IFR_Service_Utils::int_to_string (i);
           this->repo_->config ()->set_string_value (excepts_key,
                                                     stringified,
-                                                    type_path);
+                                                    ACE_TEXT_CHAR_TO_TCHAR (type_path));
         }
     }
 
@@ -1597,23 +1578,23 @@ TAO_ValueDef_i::create_operation_i (
       ACE_Configuration_Section_Key contexts_key;
 
       this->repo_->config ()->open_section (new_key,
-                                            "contexts",
-                                            1,
+                                            ACE_TEXT ("contexts"),
+                                            true,
                                             contexts_key);
 
       for (i = 0; i < length; ++i)
         {
-          char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
+          ACE_TCHAR *stringified = TAO_IFR_Service_Utils::int_to_string (i);
           this->repo_->config ()->set_string_value (contexts_key,
                                                     stringified,
-                                                    contexts[i].in ());
+                                                    ACE_TEXT_CHAR_TO_TCHAR (contexts[i].in ()));
         }
     }
 
   // Create the object reference.
   CORBA::Object_var obj =
     TAO_IFR_Service_Utils::create_objref (CORBA::dk_Operation,
-                                          path.c_str (),
+                                          ACE_TEXT_ALWAYS_CHAR (path.c_str ()),
                                           this->repo_);
 
   CORBA::OperationDef_var retval =
@@ -1656,9 +1637,9 @@ TAO_ValueDef_i::fill_value_description (CORBA::ValueDescription &desc)
 
   ACE_TString holder;
   this->repo_->config ()->get_string_value (this->section_key_,
-                                            "container_id",
+                                            ACE_TEXT ("container_id"),
                                             holder);
-  desc.defined_in = holder.fast_rep ();
+  desc.defined_in = static_cast<char const *> (ACE_TEXT_ALWAYS_CHAR (holder.fast_rep ()));
 
   desc.version = this->version_i ();
 
@@ -1681,7 +1662,7 @@ TAO_ValueDef_i::fill_value_description (CORBA::ValueDescription &desc)
 
   int status =
     this->repo_->config ()->get_string_value (this->section_key_,
-                                              "base_value",
+                                              ACE_TEXT ("base_value"),
                                               holder);
 
   if (status == 0)
@@ -1690,14 +1671,14 @@ TAO_ValueDef_i::fill_value_description (CORBA::ValueDescription &desc)
       this->repo_->config ()->expand_path (this->repo_->root_key (),
                                            holder,
                                            base_key,
-                                           0);
+                                           false);
       this->repo_->config ()->get_string_value (base_key,
-                                                "id",
+                                                ACE_TEXT ("id"),
                                                 holder);
     }
 
   // If status isn't 0, then holder will be empty anyway.
-  desc.base_value = holder.fast_rep ();
+  desc.base_value = static_cast<char const *> (ACE_TEXT_ALWAYS_CHAR (holder.fast_rep ()));
 }
 
 void
@@ -1705,12 +1686,11 @@ TAO_ValueDef_i::value_contents (
     std::deque<CORBA::DefinitionKind> &kind_queue,
     std::deque<ACE_TString> &path_queue,
     CORBA::DefinitionKind limit_type,
-    CORBA::Boolean exclude_inherited
-  )
+    CORBA::Boolean exclude_inherited)
 {
   ACE_TString id;
   this->repo_->config ()->get_string_value (this->section_key_,
-                                            "id",
+                                            ACE_TEXT ("id"),
                                             id);
 
   ACE_TString path;
@@ -1729,8 +1709,8 @@ TAO_ValueDef_i::value_contents (
       ACE_Configuration_Section_Key members_key;
       status =
         this->repo_->config ()->open_section (this->section_key_,
-                                              "members",
-                                              0,
+                                              ACE_TEXT ("members"),
+                                              false,
                                               members_key);
 
       // Only if we have any.
@@ -1744,7 +1724,7 @@ TAO_ValueDef_i::value_contents (
               kind_queue.push_back (CORBA::dk_ValueMember);
 
               path_queue.push_back (
-                  path + "\\members\\" + section_name.c_str ()
+                  path + ACE_TEXT ("\\members\\") + section_name.c_str ()
                 );
             }
         }
@@ -1756,8 +1736,8 @@ TAO_ValueDef_i::value_contents (
       ACE_Configuration_Section_Key base_key;
       status =
         this->repo_->config ()->open_section (this->section_key_,
-                                              "base",
-                                              0,
+                                              ACE_TEXT ("base"),
+                                              false,
                                               base_key);
 
       if (status == 0)
@@ -1780,7 +1760,7 @@ TAO_ValueDef_i::value_contents (
               this->repo_->config ()->expand_path (this->repo_->root_key (),
                                                    base_path,
                                                    base_key,
-                                                   0);
+                                                   false);
 
               TAO_ValueDef_i base_value (this->repo_);
               base_value.section_key (base_key);

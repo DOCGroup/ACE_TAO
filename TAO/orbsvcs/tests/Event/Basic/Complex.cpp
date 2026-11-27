@@ -6,7 +6,7 @@
 #include "orbsvcs/Event/EC_Default_Factory.h"
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   TAO_EC_Default_Factory::init_svcs ();
 
@@ -35,7 +35,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       RtecEventChannelAdmin::EventChannel_var event_channel =
         ec_impl._this ();
 
-
       // ****************************************************************
 
       // Obtain the consumer admin..
@@ -48,9 +47,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // ****************************************************************
 
-      const int event_type = 20;
-      const int event_source = 10;
-      const int milliseconds = 50;
+      constexpr int event_type = 20;
+      constexpr int event_source = 10;
+      constexpr int milliseconds = 50;
 
       EC_Counting_Supplier supplier_00;
 
@@ -104,7 +103,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // Create a consumer, intialize its RT_Info structures, and
       // connnect to the event channel....
 
-
       {
         ACE_ConsumerQOS_Factory consumer_qos;
         consumer_qos.start_logical_and_group (2);
@@ -121,7 +119,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       EC_Counting_Consumer consumer_01 ("Consumer/01");
       // Create a consumer, intialize its RT_Info structures, and
       // connnect to the event channel....
-
 
       {
         ACE_ConsumerQOS_Factory consumer_qos;
@@ -179,7 +176,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         + supplier_11.event_count;
       consumer_01.dump_results (expected, 5);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Service");
       return 1;

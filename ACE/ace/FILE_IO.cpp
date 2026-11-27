@@ -1,9 +1,11 @@
 #include "ace/FILE_IO.h"
 
+#include "ace/ACE.h"
 #include "ace/Log_Category.h"
 #include "ace/OS_NS_sys_stat.h"
 #include "ace/OS_Memory.h"
 #include "ace/Truncate.h"
+#include <memory>
 #if defined (ACE_HAS_ALLOC_HOOKS)
 # include "ace/Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
@@ -49,15 +51,15 @@ ACE_FILE_IO::send (size_t n, ...) const
   ACE_NOTSUP_RETURN (-1);
 #else
   va_list argp;
-  int total_tuples = ACE_Utils::truncate_cast<int> (n / 2);
-  iovec *iovp = nullptr;
+  int const total_tuples = ACE_Utils::truncate_cast<int> (n / 2);
+  iovec *iovp {};
 #if defined (ACE_HAS_ALLOCA)
-  iovp = (iovec *) alloca (total_tuples * sizeof (iovec));
+  iovp = static_cast<iovec *> (alloca (total_tuples * sizeof (iovec)));
 #else
 # ifdef ACE_HAS_ALLOC_HOOKS
-  ACE_ALLOCATOR_RETURN (iovp, (iovec *)
+  ACE_ALLOCATOR_RETURN (iovp, static_cast<iovec *> (
                         ACE_Allocator::instance ()->malloc (total_tuples *
-                                                            sizeof (iovec)),
+                                                            sizeof (iovec))),
                         -1);
 # else
   ACE_NEW_RETURN (iovp,
@@ -68,13 +70,13 @@ ACE_FILE_IO::send (size_t n, ...) const
 
   va_start (argp, n);
 
-  for (int i = 0; i < total_tuples; i++)
+  for (int i = 0; i < total_tuples; ++i)
     {
       iovp[i].iov_base = va_arg (argp, char *);
       iovp[i].iov_len  = va_arg (argp, int);
     }
 
-  ssize_t result = ACE_OS::writev (this->get_handle (),
+  ssize_t const result = ACE_OS::writev (this->get_handle (),
                                    iovp,
                                    total_tuples);
 #if !defined (ACE_HAS_ALLOCA)
@@ -104,15 +106,15 @@ ACE_FILE_IO::recv (size_t n, ...) const
   ACE_NOTSUP_RETURN (-1);
 #else
   va_list argp;
-  int total_tuples = ACE_Utils::truncate_cast<int> (n / 2);
-  iovec *iovp = nullptr;
+  int const total_tuples = ACE_Utils::truncate_cast<int> (n / 2);
+  iovec *iovp {};
 #if defined (ACE_HAS_ALLOCA)
-  iovp = (iovec *) alloca (total_tuples * sizeof (iovec));
+  iovp = static_cast<iovec *> (alloca (total_tuples * sizeof (iovec)));
 #else
 # ifdef ACE_HAS_ALLOC_HOOKS
-  ACE_ALLOCATOR_RETURN (iovp, (iovec *)
+  ACE_ALLOCATOR_RETURN (iovp, static_cast<iovec *> (
                         ACE_Allocator::instance ()->malloc (total_tuples *
-                                                            sizeof (iovec)),
+                                                            sizeof (iovec))),
                         -1);
 # else
   ACE_NEW_RETURN (iovp,
@@ -123,7 +125,7 @@ ACE_FILE_IO::recv (size_t n, ...) const
 
   va_start (argp, n);
 
-  for (int i = 0; i < total_tuples; i++)
+  for (int i = 0; i < total_tuples; ++i)
     {
       iovp[i].iov_base = va_arg (argp, char *);
       iovp[i].iov_len  = va_arg (argp, int);
@@ -155,12 +157,13 @@ ACE_FILE_IO::recvv (iovec *io_vec)
   ACE_TRACE ("ACE_FILE_IO::recvv");
 
   io_vec->iov_base = nullptr;
+  io_vec->iov_len = 0;
   ACE_OFF_T const length = ACE_OS::filesize (this->get_handle ());
 
   if (length > 0)
     {
       // Restrict to max size we can record in iov_len.
-      size_t len = ACE_Utils::truncate_cast<u_long> (length);
+      size_t const len = ACE_Utils::truncate_cast<u_long> (length);
 #if defined (ACE_HAS_ALLOC_HOOKS)
       ACE_ALLOCATOR_RETURN (io_vec->iov_base,
                             static_cast<char*>(ACE_Allocator::instance()->malloc(sizeof(char) * len)),
@@ -170,9 +173,23 @@ ACE_FILE_IO::recvv (iovec *io_vec)
                       char[len],
                       -1);
 #endif /* ACE_HAS_ALLOC_HOOKS */
-      io_vec->iov_len = static_cast<u_long> (this->recv_n (io_vec->iov_base,
-                                                           len));
-      return io_vec->iov_len;
+      size_t transferred {};
+      ssize_t const received = ACE::read_n (this->get_handle (), io_vec->iov_base,
+                                            len, std::addressof (transferred));
+      if (received < 0)
+        {
+          int const saved_errno = errno;
+#if defined (ACE_HAS_ALLOC_HOOKS)
+          ACE_Allocator::instance ()->free (io_vec->iov_base);
+#else
+          delete [] static_cast<char *> (io_vec->iov_base);
+#endif
+          io_vec->iov_base = nullptr;
+          errno = saved_errno;
+          return received;
+        }
+      io_vec->iov_len = static_cast<u_long> (transferred);
+      return ACE_Utils::truncate_cast<ssize_t> (transferred);
     }
   else
     {

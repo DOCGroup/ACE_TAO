@@ -1,13 +1,8 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
  *  @file    Conn_Test.h
  *
  *  @author Irfan Pyarali  <irfan@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #include "ace/Service_Config.h"
 
@@ -22,20 +17,20 @@
 /**
  * @class Svc_Handler
  *
- * @brief This class is the product created by both <ACE_Connector>
- * and <ACE_Acceptor> objects.
+ * @brief This class is the product created by both @c ACE_Connector
+ * and @c ACE_Acceptor objects.
  */
 class Svc_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 {
 public:
   /// Do-nothing constructor.
-  Svc_Handler (ACE_Thread_Manager * = 0);
+  Svc_Handler (ACE_Thread_Manager * = nullptr);
 
   /// Initialization hook.
-  virtual int open (void *);
+  int open (void *) override;
 
   /// Prepare for recycling.
-  virtual int recycle (void * = 0);
+  int recycle (void * = nullptr) override;
 
   /// Send data to server.
   void send_data ();
@@ -43,9 +38,9 @@ public:
   /// Recv data from client.
   void recv_data ();
 
-  /// Shutdown the <Svc_Handler>.
-  int close (u_long = 0);
+  /// Shutdown the @c Svc_Handler.
+  int close (u_long = 0) override;
 
-  /// Set <this> to idle.
-  int idle (u_long flags);
+  /// Set @c this to idle.
+  int idle (u_long flags) override;
 };

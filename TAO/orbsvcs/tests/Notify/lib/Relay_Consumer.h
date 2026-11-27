@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file Relay_Consumer.h
  *
@@ -25,16 +24,14 @@
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_Relay_Consumer : public TAO_Notify_Tests_Direct_Consumer
 {
 public:
-  /// Constructor
-  TAO_Notify_Tests_Relay_Consumer (ACE_CString& destination);
+  explicit TAO_Notify_Tests_Relay_Consumer (ACE_CString& destination);
 
-  /// Destructor
   ~TAO_Notify_Tests_Relay_Consumer ();
 
   /// Connect using options parsed and set initial QoS.
-  virtual void connect ();
+  void connect () override;
 
-  void push_structured_event (const CosNotification::StructuredEvent &/*notification*/);
+  void push_structured_event (CosNotification::StructuredEvent const &/*notification*/) override;
 
 protected:
   /// Destination object.

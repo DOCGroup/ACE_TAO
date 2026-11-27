@@ -1,13 +1,9 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   Svc_Handler.h
  *
  *  @author Douglas Schmidt <d.schmidt@vanderbilt.edu>
  *  @author Irfan Pyarali <irfan@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef ACE_SVC_HANDLER_H
 #define ACE_SVC_HANDLER_H
@@ -69,7 +65,7 @@ template <typename PEER_STREAM, typename SYNCH_TRAITS>
 class ACE_Svc_Handler : public ACE_Task<SYNCH_TRAITS>
 {
 public:
-  // Useful STL-style traits.
+  /// Useful STL-style traits.
   using addr_type = typename PEER_STREAM::PEER_ADDR;
   using stream_type = PEER_STREAM;
 
@@ -82,14 +78,13 @@ public:
                    ACE_Message_Queue<SYNCH_TRAITS> *mq = nullptr,
                    ACE_Reactor *reactor = ACE_Reactor::instance ());
 
-  /// Destructor.
-  virtual ~ACE_Svc_Handler ();
+  ~ACE_Svc_Handler () override;
 
   /// Activate the client handler.  This is typically called by the
   /// ACE_Acceptor or ACE_Connector, which passes "this" in as the
   /// parameter to open.  If this method returns -1 the Svc_Handler's
   /// close() method is automatically called.
-  virtual int open (void *acceptor_or_connector = nullptr);
+  int open (void *acceptor_or_connector = nullptr) override;
 
   /**
    * Object termination hook -- application-specific cleanup code goes
@@ -100,7 +95,7 @@ public:
    * ACE_Task::close() for further details. The default action of this
    * function is to call handle_close() with the default arguments.
    */
-  virtual int close (u_long flags = 0);
+  int close (u_long flags = 0) override;
 
   /**
    * Call this method if you want to recycling the @c Svc_Handler
@@ -125,65 +120,69 @@ public:
    */
   virtual void cleanup_hint (void **act_holder = nullptr);
 
-  // = Dynamic linking hooks.
+  /// @name Dynamic linking hooks
+  /// @{
   /// Default version does no work and returns -1.  Must be overloaded
   /// by application developer to do anything meaningful.
-  virtual int init (int argc, ACE_TCHAR *argv[]);
+  int init (int argc, ACE_TCHAR *argv[]) override;
 
   /// Default version does no work and returns -1.  Must be overloaded
   /// by application developer to do anything meaningful.
-  virtual int fini ();
+  int fini () override;
 
   /// Default version does no work and returns -1.  Must be overloaded
   /// by application developer to do anything meaningful.
-  virtual int info (ACE_TCHAR **info_string, size_t length) const;
+  int info (ACE_TCHAR **info_string, size_t length) const override;
+  /// @}
 
-  // = Demultiplexing hooks.
+  /// @name Demultiplexing hooks
+  /// @{
 
   /**
    * Perform termination activities on the SVC_HANDLER.  The default
-   * behavior is to close down the <peer_> (to avoid descriptor leaks)
-   * and to <destroy> this object (to avoid memory leaks)!  If you
+   * behavior is to close down the @c peer_ (to avoid descriptor leaks)
+   * and to @c destroy this object (to avoid memory leaks)!  If you
    * don't want this behavior make sure you override this method...
    */
-  virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
-                            ACE_Reactor_Mask = ACE_Event_Handler::ALL_EVENTS_MASK);
+  int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
+                    ACE_Reactor_Mask = ACE_Event_Handler::ALL_EVENTS_MASK) override;
 
   /// Default behavior when timeouts occur is to close down the
-  /// <Svc_Handler> by calling <handle_close>.
-  virtual int handle_timeout (const ACE_Time_Value &time,
-                              const void *);
+  /// @c Svc_Handler by calling @c handle_close.
+  int handle_timeout (ACE_Time_Value const &time,
+                      void const *) override;
 
-  /// Get the underlying handle associated with the <peer_>.
-  virtual ACE_HANDLE get_handle () const;
+  /// Get the underlying handle associated with the @c peer_.
+  ACE_HANDLE get_handle () const override;
 
-  /// Set the underlying handle associated with the <peer_>.
-  virtual void set_handle (ACE_HANDLE);
+  /// Set the underlying handle associated with the @c peer_.
+  void set_handle (ACE_HANDLE) override;
+  /// @}
 
   /// Returns the underlying PEER_STREAM.  Used by
-  /// <ACE_Acceptor::accept> and <ACE_Connector::connect> factories.
+  /// @c ACE_Acceptor::accept and @c ACE_Connector::connect factories.
   PEER_STREAM &peer () const;
 
   /// Overloaded new operator.  This method unobtrusively records if a
-  /// <Svc_Handler> is allocated dynamically, which allows it to clean
+  /// @c Svc_Handler is allocated dynamically, which allows it to clean
   /// itself up correctly whether or not it's allocated statically or
   /// dynamically.
   void *operator new (size_t n);
 
   /// Overloaded new operator, nothrow_t variant. Unobtrusively records if a
-  /// <Svc_Handler> is allocated dynamically, which allows it to clean
+  /// @c Svc_Handler is allocated dynamically, which allows it to clean
   /// itself up correctly whether or not it's allocated statically or
   /// dynamically.
-  void *operator new (size_t n, const std::nothrow_t&) noexcept;
-  void operator delete (void *p, const std::nothrow_t&) noexcept;
+  void *operator new (size_t n, std::nothrow_t const&) noexcept;
+  void operator delete (void *p, std::nothrow_t const&) noexcept;
 
   /// This operator permits "placement new" on a per-object basis.
   void * operator new (size_t n, void *p);
 
   /**
-   * Call this to free up dynamically allocated <Svc_Handlers>
+   * Call this to free up dynamically allocated @c Svc_Handlers
    * (otherwise you will get memory leaks).  In general, you should
-   * call this method rather than <delete> since this method knows
+   * call this method rather than @c delete since this method knows
    * whether or not the object was allocated dynamically, and can act
    * accordingly (i.e., deleting it if it was allocated dynamically).
    */
@@ -191,9 +190,9 @@ public:
 
   /**
    * This really should be private so that users are forced to call
-   * <destroy>.  Unfortunately, the C++ standard doesn't allow there
+   * @c destroy.  Unfortunately, the C++ standard doesn't allow there
    * to be a public new and a private delete.  It is a bad idea to
-   * call this method directly, so use <destroy> instead, unless you
+   * call this method directly, so use @c destroy instead, unless you
    * know for sure that you've allocated the object dynamically.
    */
   void operator delete (void *);
@@ -212,23 +211,20 @@ public:
   void dump () const;
 
 public:
-  // = The following methods are not suppose to be public.
-
-  // Because friendship is *not* inherited in C++, these methods have
-  // to be public.
-
-  // = Accessors to set/get the connection recycler.
+  /// These methods remain public because friendship is not inherited in C++.
+  /// @name Connection recycler accessors
+  /// @{
 
   /// Set the recycler and the @a recycling_act that is used during
   /// purging and caching.
   virtual void recycler (ACE_Connection_Recycling_Strategy *recycler,
-                         const void *recycling_act);
+                         void const *recycling_act);
 
   /// Get the recycler.
   virtual ACE_Connection_Recycling_Strategy *recycler () const;
 
   /// Get the recycling act.
-  virtual const void *recycling_act () const;
+  virtual void const *recycling_act () const;
 
   /**
    * Upcall made by the recycler when it is about to recycle the
@@ -237,6 +233,7 @@ public:
    * failures.
    */
   virtual int recycle (void * = nullptr);
+  /// @}
 
 protected:
   /// Maintain connection with client.
@@ -246,15 +243,15 @@ protected:
   bool dynamic_;
 
   /// Keeps track of whether we are in the process of closing (required
-  /// to avoid circular calls to <handle_close>).
-  bool closing_;
+  /// to avoid circular calls to @c handle_close).
+  bool closing_ {};
 
   /// Pointer to the connection recycler.
-  ACE_Connection_Recycling_Strategy *recycler_;
+  ACE_Connection_Recycling_Strategy *recycler_ {};
 
   /// Asynchronous Completion Token (ACT) to be used to when talking to
   /// the recycler.
-  const void *recycling_act_;
+  void const *recycling_act_ {};
 };
 
 /**
@@ -266,12 +263,14 @@ protected:
  * The buffering feature makes it possible to queue up
  * ACE_Message_Blocks in an ACE_Message_Queue until (1) the
  * queue is "full" or (2) a period of time elapses, at which
- * point the queue is "flushed" via <sendv_n> to the peer.
+ * point the queue is "flushed" via @c sendv_n to the peer.
  */
 template <typename PEER_STREAM, typename SYNCH_TRAITS>
 class ACE_Buffered_Svc_Handler : public ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>
 {
 public:
+  using ACE_Task<SYNCH_TRAITS>::flush;
+
   /**
    * Constructor initializes the @a thr_mgr and @a mq by passing them
    * down to the ACE_Task base class.  The @a reactor is passed to
@@ -279,7 +278,7 @@ public:
    * @a relative_timeout are used to determine at what point to flush
    * the @a mq.  By default, there's no buffering at all.  The
    * @a relative_timeout value is interpreted to be in a unit that's
-   * relative to the current time returned by <ACE_OS::gettimeofday>.
+   * relative to the current time returned by @c ACE_OS::gettimeofday.
    */
   ACE_Buffered_Svc_Handler (ACE_Thread_Manager *thr_mgr = nullptr,
                             ACE_Message_Queue<SYNCH_TRAITS> *mq = nullptr,
@@ -287,43 +286,45 @@ public:
                             size_t max_buffer_size = 0,
                             ACE_Time_Value *relative_timeout = nullptr);
 
-  /// Destructor, which calls <flush>.
+  /// Destructor, which calls @c flush.
   virtual ~ACE_Buffered_Svc_Handler ();
 
   /**
    * Insert the ACE_Message_Block chain rooted at @a message_block
    * into the ACE_Message_Queue with the designated @a timeout.  The
-   * <flush> method will be called if this <put> causes the number of
+   * @c flush method will be called if this @c put causes the number of
    * bytes to exceed the maximum buffer size or if the timeout period
    * has elapsed.
    */
-  virtual int put (ACE_Message_Block *message_block,
-                   ACE_Time_Value *timeout = nullptr);
+  int put (ACE_Message_Block *message_block,
+           ACE_Time_Value *timeout = nullptr) override;
 
   /// Flush the ACE_Message_Queue, which writes all the queued
-  /// ACE_Message_Blocks to the <PEER_STREAM>.
+  /// ACE_Message_Blocks to the @c PEER_STREAM.
   virtual int flush ();
 
+  int flush (u_long flag) override;
+
   /// This method is not currently implemented -- this is where the
-  /// integration with the <Reactor> would occur.
-  virtual int handle_timeout (const ACE_Time_Value &time,
-                              const void *);
+  /// integration with the @c Reactor would occur.
+  int handle_timeout (ACE_Time_Value const &time,
+                      void const *) override;
 
   /// Dump the state of an object.
   void dump () const;
 
 protected:
   /// Implement the flush operation on the ACE_Message_Queue, which
-  /// writes all the queued ACE_Message_Blocks to the <PEER_STREAM>.
+  /// writes all the queued ACE_Message_Blocks to the @c PEER_STREAM.
   /// Assumes that the caller holds the lock.
   virtual int flush_i ();
 
-  /// Maximum size the <Message_Queue> can be before we have to flush
+  /// Maximum size the @c Message_Queue can be before we have to flush
   /// the buffer.
   size_t maximum_buffer_size_;
 
-  /// Current size in bytes of the <Message_Queue> contents.
-  size_t current_buffer_size_;
+  /// Current size in bytes of the @c Message_Queue contents.
+  size_t current_buffer_size_ {};
 
   /// Timeout value used to control when the buffer is flushed.
   ACE_Time_Value next_timeout_;

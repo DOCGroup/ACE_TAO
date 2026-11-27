@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Client_i.h
  *
@@ -8,8 +5,6 @@
  *
  *  @author  Bala Natarajan <bala@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef TEST_FT_IOGR_CLIENT_I_H
 #define TEST_FT_IOGR_CLIENT_I_H
@@ -25,13 +20,17 @@ class Client_i
 {
 public:
   /// Our constructor
-  Client_i (CORBA::ORB_ptr orb);
+  explicit Client_i (CORBA::ORB_ptr orb);
+  Client_i (Client_i const&) = delete;
+  Client_i (Client_i&&) = delete;
+  Client_i& operator= (Client_i const&) = delete;
+  Client_i& operator= (Client_i&&) = delete;
 
   /// Initialize the ORB etc.
-  void init ();
+  int init (ACE_TCHAR const* ior_file);
 
 private:
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var orb_ {};
 };
 
 #include /**/ "ace/post.h"

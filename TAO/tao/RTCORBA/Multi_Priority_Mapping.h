@@ -1,7 +1,3 @@
-// -*- C++ -*-
-
-
-//=============================================================================
 /**
  *  @file   Multi_Priority_Mapping.h
  *
@@ -9,8 +5,6 @@
  *
  *  @author Brian Mendel (brian.r.mendel@boeing.com)
  */
-//=============================================================================
-
 
 #ifndef TAO_MULTI_PRIORITY_MAPPING_H
 #define TAO_MULTI_PRIORITY_MAPPING_H
@@ -42,7 +36,6 @@ class TAO_RTCORBA_Export TAO_Multi_Priority_Mapping
 : public TAO_Priority_Mapping
 {
 public:
-  /// Default constructor
   /**
    * @param base_native_priority The native priority to use for the highest
    * priority endpoint.
@@ -55,10 +48,9 @@ public:
   TAO_Multi_Priority_Mapping (int base_native_priority,
                               int base_corba_priority,
                               int priority_spacing = 1,
-                              int priorities_contiguous = 1,
+                              bool priorities_contiguous = true,
                               int policy = ACE_SCHED_FIFO);
 
-  /// The destructor
   ~TAO_Multi_Priority_Mapping () override = default;
 
   CORBA::Boolean
@@ -73,8 +65,8 @@ private:
   int base_native_priority_;
   int base_corba_priority_;
 
-  const int priority_spacing_;
-  const int priorities_contiguous_;
+  int const priority_spacing_;
+  bool const priorities_contiguous_;
 
   /// The scheduling policy
   int policy_;

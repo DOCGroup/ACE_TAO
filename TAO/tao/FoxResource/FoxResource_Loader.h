@@ -1,13 +1,9 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   FoxResource_Loader.h
  *
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  *  @author Marek Brudka <mbrudka@aster.pl>
  */
-//=============================================================================
 
 #ifndef TAO_TOXRESOURCE_LOADER_H
 #define TAO_TOXRESOURCE_LOADER_H
@@ -45,11 +41,11 @@ namespace TAO
   class TAO_FoxResource_Export FoxResource_Loader
   {
   public:
-    FoxResource_Loader (FXApp *app);
+    explicit FoxResource_Loader (FXApp *app);
 
     virtual ~FoxResource_Loader ();
 
-  private:
+    FoxResource_Loader () = delete;
     FoxResource_Loader (FoxResource_Loader const &) = delete;
     FoxResource_Loader &operator= (FoxResource_Loader const &) = delete;
     FoxResource_Loader (FoxResource_Loader &&) = delete;

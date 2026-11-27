@@ -2,7 +2,6 @@
 #include "AppHelper.h"
 #include "ace/Log_Msg.h"
 
-
 Foo_C_ClientEngine::Foo_C_ClientEngine(Foo_C_ptr obj,
                                        unsigned  client_id)
   : obj_(Foo_C::_duplicate(obj)),
@@ -10,11 +9,7 @@ Foo_C_ClientEngine::Foo_C_ClientEngine(Foo_C_ptr obj,
 {
 }
 
-
-Foo_C_ClientEngine::~Foo_C_ClientEngine()
-{
-}
-
+Foo_C_ClientEngine::~Foo_C_ClientEngine() = default;
 
 bool
 Foo_C_ClientEngine::execute()
@@ -24,27 +19,27 @@ Foo_C_ClientEngine::execute()
 
   // Make sure the connection is established before making
   // remote invocations.
-  if (AppHelper::validate_connection (this->obj_.in ()) == false)
+  if (!AppHelper::validate_connection (this->obj_.in ()))
     {
       ACE_ERROR((LM_ERROR, "(%P|%t)Foo_A_ClientEngine::execute  " \
                           "client %d connect failed.\n", this->client_id_));
       return false;
     }
 
-  CORBA::Long i = this->client_id_;
+  CORBA::Long const i = this->client_id_;
 
   this->obj_->op1();
 
   this->obj_->op2(i);
 
-  CORBA::Long value = this->obj_->op3(i);
+  CORBA::Long const value = this->obj_->op3(i);
 
   if (value != i)
     {
       check_validity = false;
     }
 
-  for (CORBA::Long j = 1; j <= 5; j++)
+  for (CORBA::Long j = 1; j <= 5; ++j)
     {
       this->obj_->op4(495 + (i * 5) + j);
     }
@@ -55,7 +50,7 @@ Foo_C_ClientEngine::execute()
   {
     this->obj_->op5();
   }
-  catch (const FooException& )
+  catch (FooException const & )
   {
     // Expected
     caught_exception = true;
@@ -70,7 +65,6 @@ Foo_C_ClientEngine::execute()
 
   return check_validity;
 }
-
 
 void
 Foo_C_ClientEngine::expected_results(Foo_C_Statistics& stats)

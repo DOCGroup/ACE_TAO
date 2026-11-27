@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    RefCount_Policy_Traits.h
  *
@@ -9,7 +6,6 @@
  *
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef TAO_REFCOUNT_POLICY_TRAITS_H
 #define TAO_REFCOUNT_POLICY_TRAITS_H
@@ -21,7 +17,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/AnyTypeCode/AnyTypeCode_methods.h"
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -40,7 +35,7 @@ namespace TAO
    * operations, etc at compile-time based on the reference counting
    * policy and type being operated on.
    *
-   * @note This merely a forward declaration since we really only care
+   * @note This is merely a forward declaration since we only care
    *       about the partial specializations below.
    */
   template<class RefCountPolicy, typename TypePtr>

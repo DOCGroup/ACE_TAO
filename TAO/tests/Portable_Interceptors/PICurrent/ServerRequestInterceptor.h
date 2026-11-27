@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  * @file    ServerRequestInterceptor.h
  *
@@ -9,7 +6,6 @@
  *
  * @author  Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
 
 #ifndef SERVER_REQUEST_INTERCEPTOR_H
 #define SERVER_REQUEST_INTERCEPTOR_H
@@ -42,9 +38,12 @@ class ServerRequestInterceptor
     public virtual ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
   ServerRequestInterceptor (PortableInterceptor::SlotId id,
                             PortableInterceptor::Current_ptr pi_current);
+  ServerRequestInterceptor (ServerRequestInterceptor const &) = delete;
+  ServerRequestInterceptor (ServerRequestInterceptor &&) = delete;
+  ServerRequestInterceptor &operator= (ServerRequestInterceptor const &) = delete;
+  ServerRequestInterceptor &operator= (ServerRequestInterceptor &&) = delete;
 
   /**
    * @name Methods Required by the Server Request Interceptor
@@ -54,32 +53,32 @@ public:
    * virtual in the abstract base class.  They are the canonical
    * methods required for all server request interceptors.
    */
-  //@{
+  /// @{
   /// Return the name of this ServerRequestinterceptor.
-  virtual char * name ();
+  char * name () override;
 
-  virtual void destroy ();
+  void destroy () override;
 
-  virtual void receive_request_service_contexts (
-      PortableInterceptor::ServerRequestInfo_ptr ri);
+  void receive_request_service_contexts (
+      PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void receive_request (
-      PortableInterceptor::ServerRequestInfo_ptr ri);
+  void receive_request (
+      PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void send_reply (
-      PortableInterceptor::ServerRequestInfo_ptr ri);
+  void send_reply (
+      PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void send_exception (
-      PortableInterceptor::ServerRequestInfo_ptr ri);
+  void send_exception (
+      PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void send_other (
-      PortableInterceptor::ServerRequestInfo_ptr ri);
-  //@}
+  void send_other (
+      PortableInterceptor::ServerRequestInfo_ptr ri) override;
+  /// @}
 
 private:
   /// The PICurrent slot ID allocated to this application during ORB
   /// initialization.
-  PortableInterceptor::SlotId slot_id_;
+  PortableInterceptor::SlotId const slot_id_;
 
   /// Reference to the PICurrent object.
   PortableInterceptor::Current_var pi_current_;

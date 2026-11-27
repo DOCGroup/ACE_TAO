@@ -39,7 +39,7 @@ public:
   ~ACE_Log_Msg_Android_Logcat () override;
 
   /// Initialize the event logging facility. NOP in this class.
-  int open (const ACE_TCHAR *) override;
+  int open (ACE_TCHAR const *) override;
 
   /// Reset the backend. NOP in this class.
   int reset () override;

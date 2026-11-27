@@ -1,13 +1,10 @@
-
-//=============================================================================
 /**
  *  @file    DLL_Test_Impl.cpp
  *
- *  This test illustrates the use of <ACE_DLL> wrapper class.
+ *  This test illustrates the use of @c ACE_DLL wrapper class.
  *
  *  @author Kirthika Parameswaran  <kirthika@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "DLL_Test_Impl.h"
 #include "ace/ACE.h"
@@ -50,29 +47,33 @@ void *
 Hello_Impl::operator new (size_t bytes)
 {
   ACE_DEBUG ((LM_INFO, "Hello_Impl::new\n"));
-  return ::new char[bytes];
+  return ::operator new (bytes);
 }
 
 /// Overloaded new operator, nothrow_t variant.
+// Keep GCC from treating the forwarding allocator as a mismatched allocation.
+#if defined (__GNUC__)
+__attribute__ ((noinline))
+#endif
 void *
-Hello_Impl::operator new (size_t bytes, const std::nothrow_t &nt)
+Hello_Impl::operator new (size_t bytes, std::nothrow_t const &nt) noexcept
 {
   ACE_DEBUG ((LM_INFO, "Hello_Impl::new\n"));
-  return ::new (nt) char[bytes];
+  return ::operator new (bytes, nt);
 }
 
 void
-Hello_Impl::operator delete (void *ptr, const std::nothrow_t&) noexcept
+Hello_Impl::operator delete (void *ptr, std::nothrow_t const &) noexcept
 {
   ACE_DEBUG ((LM_INFO, "Hello_Impl::delete\n"));
-  ::delete [] static_cast<char *> (ptr);
+  ::operator delete (ptr);
 }
 
 void
 Hello_Impl::operator delete (void *ptr)
 {
   ACE_DEBUG ((LM_INFO, "Hello_Impl::delete\n"));
-  ::delete [] static_cast<char *> (ptr);
+  ::operator delete (ptr);
 }
 
 extern "C" ACE_Svc_Export Hello *
@@ -104,15 +105,11 @@ public:
 
 static Static_Constructor_Test the_instance;
 
-// --------------------------------------------------------
-
 Child::Child ()
 {
 }
 
-Child::~Child ()
-{
-}
+Child::~Child () = default;
 
 void
 Child::test ()
@@ -123,39 +120,39 @@ Child::test ()
   Data f(d);
   Data g;
   g = d;
-  g = std::move(d);
+  g = std::move (d);
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("testing base exception\n")));
 
-  std::unique_ptr<Base> base_excep (new Base ());
+  std::unique_ptr<Base> base_excep = std::make_unique<Base> ();
   try
   {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("throwing base exception\n")));
     base_excep->_raise();
   }
-  catch (const Base&)
+  catch (Base const &)
   {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("caught base\n")));
   }
 
-  std::unique_ptr<Derived> derived_excep (new Derived ());
+  std::unique_ptr<Derived> derived_excep = std::make_unique<Derived> ();
   try
   {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("throwing derived exception\n")));
     derived_excep->_raise();
   }
-  catch (const Derived&)
+  catch (Derived const &)
   {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("caught derived\n")));
   }
 
-  std::unique_ptr<Derived> derived_excep_base (new Derived ());
+  std::unique_ptr<Derived> derived_excep_base = std::make_unique<Derived> ();
   try
   {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("throwing derived exception\n")));
     derived_excep_base->_raise();
   }
-  catch (const Base&)
+  catch (Base const &)
   {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("caught derived as base\n")));
   }
@@ -166,15 +163,13 @@ Child::test ()
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("throwing derived exception allocated with _alloc\n")));
     derived_excep_base->_raise();
   }
-  catch (const Derived&)
+  catch (Derived const &)
   {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("caught derived exception\n")));
   }
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("testing exceptions finished\n")));
 }
-
-// --------------------------------------------------------
 
 // Test dynamic cast
 extern "C" ACE_Svc_Export int
@@ -183,6 +178,6 @@ dynamic_cast_test (Parent *target)
   Child *c {};
   c = dynamic_cast<Child*> (target);
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("dynamic_cast_test: parent %@; child %@\n"),
-              target, c));
+              static_cast<void *> (target), static_cast<void *> (c)));
   return target == c ? 0 : -1;
 }

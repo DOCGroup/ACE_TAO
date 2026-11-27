@@ -1,4 +1,3 @@
-
 interface Test
 {
   /// Print out a message.

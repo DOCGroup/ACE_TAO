@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Log_Msg_IPC.h
  *
  *  @author Carlos O'Ryan <coryan@uci.edu>
  */
-//=============================================================================
 
 #ifndef ACE_LOG_MSG_LOGGER_H
 #define ACE_LOG_MSG_LOGGER_H
@@ -49,14 +45,12 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Log_Msg_IPC : public ACE_Log_Msg_Backend
 {
 public:
-  /// Constructor
   ACE_Log_Msg_IPC () = default;
 
-  /// Destructor
   ~ACE_Log_Msg_IPC () override;
 
   /// Open a new connection
-  int open (const ACE_TCHAR *logger_key) override;
+  int open (ACE_TCHAR const *logger_key) override;
 
   /**
    * Reset the backend.  When changing the logging destination the

@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*IDL): taoidldefaults, anytypecode {
   idlflags += -SS
   IDL_Files {

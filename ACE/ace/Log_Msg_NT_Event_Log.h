@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Log_Msg_NT_Event_Log.h
  *
  *  @author Christopher Kohlhoff <chris@kohlhoff.com>
  */
-//=============================================================================
 
 #ifndef ACE_LOG_MSG_NT_EVENT_LOG_H
 #define ACE_LOG_MSG_NT_EVENT_LOG_H
@@ -33,10 +29,8 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Log_Msg_NT_Event_Log : public ACE_Log_Msg_Backend
 {
 public:
-  /// Constructor
   ACE_Log_Msg_NT_Event_Log () = default;
 
-  /// Destructor
   ~ACE_Log_Msg_NT_Event_Log () override;
 
   /// Open a new event log.
@@ -47,7 +41,7 @@ public:
    *                   it is 0 (no name), the application name as
    *                   returned from ACE_Log_Msg::program_name() is used.
    */
-  int open (const ACE_TCHAR *logger_key) override;
+  int open (ACE_TCHAR const *logger_key) override;
 
   /// Reset the backend.
   int reset () override;

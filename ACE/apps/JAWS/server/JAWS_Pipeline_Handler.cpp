@@ -4,9 +4,7 @@
 #include "JAWS_Pipeline_Handler.h"
 
 template <class TYPE>
-JAWS_Pipeline_Handler<TYPE>::JAWS_Pipeline_Handler ()
-{
-}
+JAWS_Pipeline_Handler<TYPE>::JAWS_Pipeline_Handler () = default;
 
 template <class TYPE> int
 JAWS_Pipeline_Handler<TYPE>::put (ACE_Message_Block *mb, ACE_Time_Value *tv)

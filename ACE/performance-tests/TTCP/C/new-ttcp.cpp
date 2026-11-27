@@ -182,17 +182,17 @@ double cput, realt;         /* user, real time (seconds) */
 
 void err (char *s);
 void mes (char *s);
-void pattern (register char *cp, register int cnt);
+void pattern (char *cp, int cnt);
 char *outfmt (double b);
-static void getrusage (int ignored, register struct rusage *ru);
+static void getrusage (int ignored, struct rusage *ru);
 void prep_timer ();
 double read_timer (char *str, int len);
-static void prusage (register struct rusage *r0, struct rusage *r1, struct timeval *e, struct timeval *b, char *outp);
+static void prusage (struct rusage *r0, struct rusage *r1, struct timeval *e, struct timeval *b, char *outp);
 static void tvadd (struct timeval *tsum, struct timeval *t0, struct timeval *t1);
 static void tvsub (struct timeval *tdiff, struct timeval *t1, struct timeval *t0);
-static void psecs (long l, register char *cp);
+static void psecs (long l, char *cp);
 void delay (int us);
-int mread (int fd, register char *bufp, unsigned n);
+int mread (int fd, char *bufp, unsigned n);
 int Nread (ACE_SOCK_Stream &s, void *buf, int count);
 int Nwrite (ACE_SOCK_Stream &s, void *buf, int count);
 
@@ -210,18 +210,19 @@ sigpipe ()
 {
 }
 
-char *title = 0;
+char *title {};
 int new_line = 0;
 
 int
 main (int argc, char *argv[])
 {
   ACE_SOCK_Stream connection_stream;
-  unsigned long addr_tmp;
   int c;
 
   if (argc < 2)
-    goto usage;
+    {
+      goto usage;
+    }
 
   while ((c = getopt (argc, argv, "drstU:uvBDTb:f:l:n:p:A:O:L:xh:")) != -1)
     {
@@ -309,7 +310,9 @@ main (int argc, char *argv[])
   if (trans)
     {
       if (address.set (port, host) == -1)
-        perror ("address.set"), exit (1);
+        {
+          perror ("address.set"), exit (1);
+        }
     }
 
   /* else, receiver create address to listen on */
@@ -321,9 +324,11 @@ main (int argc, char *argv[])
   total_msg_len = sizeof (long) + data_buf_len;
 
   // allocate the buffer
-  message_buf = (Data_Control_Message *) malloc (total_msg_len);
-  if (message_buf == 0)
-    err ("malloc");
+  message_buf = static_cast<Data_Control_Message *> (malloc (total_msg_len));
+  if (message_buf == nullptr)
+    {
+      err ("malloc");
+    }
 
   //  if (bufalign != 0)
   //    message_buf += (bufalign - ((int) message_buf % bufalign) + bufoffset) % bufalign;
@@ -344,7 +349,9 @@ main (int argc, char *argv[])
                "ttcp-t: data_buf_len=%d, nbuf=%d, align=%d/%d, port=%d",
                data_buf_len, nbuf, bufalign, bufoffset, port);
       if (sockbufsize)
-        fprintf (stdout, ", sockbufsize=%d", sockbufsize);
+        {
+          fprintf (stdout, ", sockbufsize=%d", sockbufsize);
+        }
       fprintf (stdout, "  %s  -> %s\n",
                domain == PF_INET ? (udp ? "udp" : "tcp") : "unix",
         host == 0 ? domainname : host);
@@ -355,7 +362,9 @@ main (int argc, char *argv[])
               "ttcp-r: data_buf_len=%d, nbuf=%d, align=%d/%d, port=%d",
               data_buf_len, nbuf, bufalign, bufoffset, port);
       if (sockbufsize)
-        fprintf (stdout, ", sockbufsize=%d", sockbufsize);
+        {
+          fprintf (stdout, ", sockbufsize=%d", sockbufsize);
+        }
       fprintf (stdout, "  %s\n", domain == PF_INET ? (udp ? "udp" : "tcp") : "unix");
     }
 
@@ -373,7 +382,9 @@ main (int argc, char *argv[])
       if (trans)
         {
           if (connector_factory.connect (connection_stream, address) == -1)
-            perror ("connection failed"), exit (1);
+            {
+              perror ("connection failed"), exit (1);
+            }
           fprintf (stdout,
                   "ttcp-t: data_buf_len=%d, nbuf=%d, align=%d/%d, port=%d",
                   data_buf_len, nbuf, bufalign, bufoffset, port);
@@ -385,7 +396,7 @@ main (int argc, char *argv[])
 
               if (p && connection_stream.set_option (p->p_proto,
                                                     TCP_NODELAY,
-                                                    (char *)& one,
+                                                    &one,
                                                     sizeof (one)))
                 err ("setsockopt: nodelay");
               mes ("nodelay");
@@ -394,7 +405,7 @@ main (int argc, char *argv[])
             {
               if (connection_stream.set_option (SOL_SOCKET,
                                                 SO_SNDBUF,
-                                                (char *) &sockbufsize,
+                                                &sockbufsize,
                                                 sizeof sockbufsize) == -1)
                 err ("acceptor_factory.set_option");
               mes ("sndbuf");
@@ -405,20 +416,24 @@ main (int argc, char *argv[])
       else
         {
           if (acceptor_factory.open (address, 1) == -1)
-            perror ("acceptor open"), exit (1);
+            {
+              perror ("acceptor open"), exit (1);
+            }
 
           ACE_INET_Addr remote_address;
 
           if (acceptor_factory.accept (connection_stream,
-                                      (ACE_Addr *) &remote_address) == -1)
-            perror ("acceptor accept"), exit (1);
+                                      &remote_address) == -1)
+            {
+              perror ("acceptor accept"), exit (1);
+            }
 
           // set the window size
           if (sockbufsize)
             {
               if (connection_stream.set_option (SOL_SOCKET,
                                                 SO_RCVBUF,
-                                                (char *) &sockbufsize,
+                                                &sockbufsize,
                                                 sizeof sockbufsize) == -1)
                 err ("acceptor_factory.set_option");
               mes ("rcvbuf");
@@ -447,7 +462,7 @@ main (int argc, char *argv[])
       ACE_DEBUG ((LM_DEBUG, "Sending session control message"
                   " nbuf %d, size %d\n", session_control_buf.nbuf_,
                   session_control_buf.size_));
-      if (send_n ((char *) &session_control_buf,
+      if (send_n (&session_control_buf,
                   sizeof (Session_Control_Message))
           != sizeof (Session_Control_Message))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -456,33 +471,33 @@ main (int argc, char *argv[])
                           -1);
 
       long ack;
-      int send_result;
       while (nbuf--)
         {
-          send_result = send_n ((char *) message_buf, total_msg_len);
+          int const send_result = send_n (message_buf, total_msg_len);
           if (send_result != total_msg_len)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "%p only sent %d of %d bytes on call %d\n",
                                "ttcp", send_result, total_msg_len, numCalls + 1),
                               -1);
-          numCalls++;
+          ++numCalls;
           nbytes += data_buf_len;
 
-          if (recv_n ((char *) &ack, sizeof ack) != sizeof ack)
+          if (recv_n (&ack, sizeof ack) != sizeof ack)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "%p recv of ack failed\n",
                                "ttcp"),
                               -1);
 
           if (ack != data_buf_len)
-            ACE_DEBUG ((LM_DEBUG, "received ack for only %d bytes\n", ack));
+            ACE_DEBUG ((LM_DEBUG, "received ack for only %q bytes\n",
+                        static_cast<ACE_INT64> (ack)));
         }
     }
   else
     {
       prep_timer ();
 
-      if (recv_n ((char *) &session_control_buf,
+      if (recv_n (&session_control_buf,
                   sizeof (Session_Control_Message))
           != sizeof (Session_Control_Message))
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -501,7 +516,7 @@ main (int argc, char *argv[])
 
       while (nbuf--)
         {
-          if (recv_n ((char *) message_buf, sizeof (long)) != sizeof (long))
+          if (recv_n (message_buf, sizeof (long)) != sizeof (long))
             ACE_ERROR_RETURN ((LM_ERROR,
                                "%p recv data control failed\n",
                                "ttcp"),
@@ -509,12 +524,14 @@ main (int argc, char *argv[])
 
           cnt = recv_n (& (message_buf->data_), message_buf->size_);
           if (cnt != message_buf->size_)
-            ACE_ERROR_RETURN ((LM_ERROR, "recv data failed\n"), -1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR, "recv data failed\n"), -1);
+            }
 
-          numCalls++;
+          ++numCalls;
           nbytes += cnt;
 
-          if (send_n ((char *) &cnt, sizeof cnt) != sizeof cnt)
+          if (send_n (&cnt, sizeof cnt) != sizeof cnt)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "%p send ack failed\n",
                                "ttcp"),
@@ -523,7 +540,9 @@ main (int argc, char *argv[])
     }
 
   if (errno)
-    err ("IO");
+    {
+      err ("IO");
+    }
 
   //
   // stop the timer
@@ -538,39 +557,45 @@ main (int argc, char *argv[])
       (void) Nwrite (connection_stream, message_buf, 4); /* rcvr end */
     }
   if (cput <= 0.0)
-    cput = 0.001;
+    {
+      cput = 0.001;
+    }
   if (realt <= 0.0)
-    realt = 0.001;
+    {
+      realt = 0.001;
+    }
 
 #if defined (LM_RESULTS)
-  if (trans && (title != 0))
+  if (trans && (title != nullptr))
     {
       double tmp;
-      FILE *fd;
+      FILE *results_file;
       char filename[BUFSIZ];
       ACE_OS::sprintf (filename, "%s.results", title);
-      fd = fopen(filename, "a+");
+      results_file = fopen(filename, "a+");
       if (new_line)
-        fprintf(fd, "\n  -l %ldk \t", data_buf_len/1024);
+        {
+          fprintf(results_file, "\n  -l %dk \t", data_buf_len/1024);
+        }
       tmp = ((double) nbytes) / realt;
-      fprintf(fd, "%.2f ", tmp * 8.0 / 1024.0 / 1024.0);
-      fclose(fd);
+      fprintf(results_file, "%.2f ", tmp * 8.0 / 1024.0 / 1024.0);
+      fclose(results_file);
     }
 #endif
 
   fprintf (stdout,
-           "ttcp%s: %ld bytes in %.2f real seconds = %s/sec +++\n",
+           "ttcp%s: %lu bytes in %.2f real seconds = %s/sec +++\n",
            trans ? "-t" : "-r",
            nbytes, realt, outfmt (((double) nbytes) / realt));
   if (verbose)
     {
       fprintf (stdout,
-               "ttcp%s: %ld bytes in %.2f CPU seconds = %s/cpu sec\n",
+               "ttcp%s: %lu bytes in %.2f CPU seconds = %s/cpu sec\n",
                trans ? "-t" : "-r",
                nbytes, cput, outfmt (((double) nbytes) / cput));
     }
   fprintf (stdout,
-           "ttcp%s: %d I/O calls, msec/call = %.2f, calls/sec = %.2f\n",
+           "ttcp%s: %lu I/O calls, msec/call = %.2f, calls/sec = %.2f\n",
            trans ? "-t" : "-r",
            numCalls,
            1024.0 * realt / ((double) numCalls),
@@ -579,9 +604,9 @@ main (int argc, char *argv[])
   if (verbose)
     {
       fprintf (stdout,
-        "ttcp%s: buffer address %#x\n",
+        "ttcp%s: buffer address %p\n",
         trans ? "-t" : "-r",
-        message_buf);
+        static_cast<void *> (message_buf));
     }
   exit (0);
 
@@ -597,9 +622,15 @@ send_n (const void *buf, int len)
   int n;
 
   for (bytes_written = 0; bytes_written < len; bytes_written += n)
-    if ((n = write (connection_descriptor, (const char *) buf + bytes_written,
-         len - bytes_written)) == -1)
-      return -1;
+    {
+      n = write (connection_descriptor,
+                 static_cast<char const *> (buf) + bytes_written,
+                 len - bytes_written);
+      if (n == -1)
+        {
+          return -1;
+        }
+    }
 
   return bytes_written;
 }
@@ -611,11 +642,19 @@ recv_n (void *buf, int len)
   int n;
 
   for (bytes_read = 0; bytes_read < len; bytes_read += n)
-    if ((n = read (connection_descriptor, (char *) buf + bytes_read,
-         len - bytes_read)) == -1)
-      return -1;
-    else if (n == 0)
-      break;
+    {
+      n = read (connection_descriptor,
+                static_cast<char *> (buf) + bytes_read,
+                len - bytes_read);
+      if (n == -1)
+        {
+          return -1;
+        }
+      else if (n == 0)
+        {
+          break;
+        }
+    }
 
   return bytes_read;
 }
@@ -636,14 +675,14 @@ mes (char *s)
 }
 
 void
-pattern (register char *cp, register int cnt)
+pattern (char *cp, int cnt)
 {
-  register char c;
+  char c;
   c = 0;
   while (cnt-- > 0)
   {
     while (!isprint ((c & 0x7F)))
-      c++;
+      ++c;
     *cp++ = (c++ & 0x7F);
   }
 }
@@ -683,7 +722,7 @@ static struct rusage ru0;       /* Resource utilization at the start */
 #if defined(SYSV)
 /*ARGSUSED */
 static void
-getrusage (int ignored, register struct rusage *ru)
+getrusage (int ignored, struct rusage *ru)
 {
   struct tms buf;
 
@@ -707,7 +746,6 @@ prep_timer ()
   itime0.it_interval.tv_usec = 0;
   itime0.it_value.tv_sec = LONG_MAX / 22; /* greatest possible value , itimer() count backwards */
   itime0.it_value.tv_usec = 0;
-
 
   getrusage (RUSAGE_SELF, &ru0);
 
@@ -753,18 +791,22 @@ read_timer (char *str, int len)
   tvsub (&td, &tend, &tstart);
   cput = td.tv_sec + ((double) td.tv_usec) / 1000000;
   if (cput < 0.00001)
-    cput = 0.00001;
+    {
+      cput = 0.00001;
+    }
   return (cput);
 }
 
 static void
-prusage (register struct rusage *r0, struct rusage *r1,
+prusage (struct rusage *r0, struct rusage *r1,
          struct timeval *e, struct timeval *b, char *outp)
 {
   struct timeval tdiff;
-  register time_t t;
-  register char *cp;
-  register int i;
+  time_t t;
+  char *cp;
+#if !defined (SYSV)
+  int i;
+#endif /* !SYSV */
   int ms;
 
   t = (r1->ru_utime.tv_sec - r0->ru_utime.tv_sec) * 100 +
@@ -773,16 +815,18 @@ prusage (register struct rusage *r0, struct rusage *r1,
       (r1->ru_stime.tv_usec - r0->ru_stime.tv_usec) / 10000;
   ms = (e->tv_sec - b->tv_sec) * 100 + (e->tv_usec - b->tv_usec) / 10000;
 
-#define END(x)  {while(*x) x++;}
+#define END(x)  {while(*x) ++x;}
 #if defined(SYSV)
   cp = "%Uuser %Ssys %Ereal %P";
 #else
   cp = "%Uuser %Ssys %Ereal %P %Xi+%Dd %Mmaxrss %F+%Rpf %Ccsw";
 #endif
-  for (; *cp; cp++)
+  for (; *cp; ++cp)
     {
       if (*cp != '%')
-        *outp++ = *cp;
+        {
+          *outp++ = *cp;
+        }
       else if (cp[1])
         switch (*++cp)
           {
@@ -874,7 +918,9 @@ tvadd (struct timeval *tsum, struct timeval *t0, struct timeval *t1)
   tsum->tv_sec = t0->tv_sec + t1->tv_sec;
   tsum->tv_usec = t0->tv_usec + t1->tv_usec;
   if (tsum->tv_usec > 1000000)
-    tsum->tv_sec++, tsum->tv_usec -= 1000000;
+    {
+      tsum->tv_sec++, tsum->tv_usec -= 1000000;
+    }
 }
 
 static void
@@ -883,13 +929,15 @@ tvsub (struct timeval *tdiff, struct timeval *t1, struct timeval *t0)
   tdiff->tv_sec = t1->tv_sec - t0->tv_sec;
   tdiff->tv_usec = t1->tv_usec - t0->tv_usec;
   if (tdiff->tv_usec < 0)
-    tdiff->tv_sec--, tdiff->tv_usec += 1000000;
+    {
+      tdiff->tv_sec--, tdiff->tv_usec += 1000000;
+    }
 }
 
 static void
-psecs (long l, register char *cp)
+psecs (long l, char *cp)
 {
-  register int i;
+  int i;
 
   i = l / 3600;
   if (i)
@@ -917,7 +965,7 @@ psecs (long l, register char *cp)
 int
 Nread (ACE_SOCK_Stream &s, void *buf, int count)
 {
-  numCalls++;
+  ++numCalls;
   return (s.recv (buf, count));
 }
 
@@ -927,7 +975,7 @@ Nread (ACE_SOCK_Stream &s, void *buf, int count)
 int
 Nwrite (ACE_SOCK_Stream &s, void *buf, int count)
 {
-  numCalls++;
+  ++numCalls;
   return s.send (buf, count);
 }
 
@@ -938,7 +986,7 @@ delay (int us)
 
   tv.tv_sec = 0;
   tv.tv_usec = us;
-  (void) select (1, (fd_set *) 0, (fd_set *) 0, (fd_set *) 0, &tv);
+  (void) select (1, nullptr, nullptr, nullptr, &tv);
 }
 
 /*
@@ -951,22 +999,23 @@ delay (int us)
  * grouping as it is written with.  Written by Robert S. Miles, BRL.
  */
 int
-mread (int fd, register char *bufp, unsigned n)
+mread (int fd, char *bufp, unsigned n)
 {
-  register unsigned count = 0;
-  register int nread;
+  unsigned count = 0;
 
   do
     {
-      nread = read (fd, bufp, n - count);
-      numCalls++;
+      int const nread = read (fd, bufp, n - count);
+      ++numCalls;
       if (nread < 0)
       {
         perror ("ttcp_mread");
         return (-1);
       }
       if (nread == 0)
-        return ((int) count);
+        {
+          return ((int) count);
+        }
       count += (unsigned) nread;
       bufp += nread;
     }

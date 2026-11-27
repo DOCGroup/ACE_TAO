@@ -3,16 +3,17 @@
 #include "ace/Get_Opt.h"
 #include "ace/ARGV.h"
 #include "ace/OS_NS_strings.h"
+#include <memory>
 
-void replace (ACE_TCHAR** a, ACE_TCHAR** b)
-  {
-    ACE_TCHAR* tmp = *a;
+void replace (ACE_TCHAR **a, ACE_TCHAR **b)
+{
+    ACE_TCHAR *tmp = *a;
 
     *a = *b;
     *b = tmp;
   }
 
-Server::Server (int , ACE_TCHAR* argv[])
+Server::Server (int, ACE_TCHAR *argv[])
   : init_ (false), shutdown_ (false)
 {
   try {
@@ -20,16 +21,16 @@ Server::Server (int , ACE_TCHAR* argv[])
     ACE_ARGV args_2 (argv);
 
     /*
-      for (int my_count = 0; my_count < args_1.argc(); my_count++) {
+      for (int my_count = 0; my_count < args_1.argc(); ++my_count) {
       ACE_DEBUG ((LM_DEBUG, "<%d, %s> ", my_count, (args_1.argv())[my_count]));
       }
       ACE_DEBUG ((LM_DEBUG, "\n"));
     */
 
-    ACE_TCHAR** my_argv = args_1.argv ();
+    ACE_TCHAR **my_argv = args_1.argv ();
     int my_argc = args_1.argc ();
     int count = 0;
-    for (count = my_argc-1; count > -1; count--) {
+    for (count = my_argc-1; count > -1; --count) {
       if (ACE_OS::strcasecmp (ACE_TEXT("-ORBEndpoint"), my_argv[count]) == 0) {
         break;
       }
@@ -41,7 +42,7 @@ Server::Server (int , ACE_TCHAR* argv[])
     replace (&(my_argv[count]), &(my_argv[my_argc-2]));
     replace (&(my_argv[count+1]), &(my_argv[my_argc-1]));
 
-    my_argc--; my_argc--;
+    --my_argc; --my_argc;
     orb_ = CORBA::ORB_init (my_argc, my_argv, "Server");
     if (CORBA::is_nil (orb_.in())) {
       ACE_ERROR ((LM_ERROR, "Server::Server> ORB initialization failed.\n"));
@@ -50,7 +51,7 @@ Server::Server (int , ACE_TCHAR* argv[])
 
     my_argv = args_2.argv();
     my_argc = args_2.argc();
-    for (count = 0; count < my_argc; count++) {
+    for (count = 0; count < my_argc; ++count) {
       if (ACE_OS::strcasecmp (ACE_TEXT("-ORBEndpoint"), my_argv[count]) == 0) {
         break;
       }
@@ -63,7 +64,7 @@ Server::Server (int , ACE_TCHAR* argv[])
     replace (&(my_argv[count+1]), &(my_argv[my_argc-1]));
 
     // initialize management ORB
-    my_argc--; my_argc--;
+    --my_argc; --my_argc;
     management_orb_ = CORBA::ORB_init (my_argc, my_argv, "Management");
     if (CORBA::is_nil (orb_.in())) {
       ACE_ERROR ((LM_ERROR, "Server::Server> Mgmt ORB initialization failed.\n"));
@@ -71,14 +72,16 @@ Server::Server (int , ACE_TCHAR* argv[])
     }
 
     if (!this->parse_args (my_argc, my_argv))
+    {
       return;
+    }
 
     CORBA::Object_var obj = orb_->resolve_initial_references ("RootPOA");
     PortableServer::POA_var root_poa =
       PortableServer::POA::_narrow (obj.in ());
     PortableServer::POAManager_var poa_manager = root_poa->the_POAManager ();
 
-    test_i_.reset (new Test_i (orb_.in()));
+    test_i_ = std::make_unique<Test_i> (orb_.in ());
     PortableServer::ObjectId_var oid =
       root_poa->activate_object (test_i_.get());
     obj = root_poa->id_to_reference (oid.in());
@@ -110,8 +113,8 @@ Server::Server (int , ACE_TCHAR* argv[])
 
     management_poa_manager->activate ();
   }
-  catch( CORBA::Exception& ex) {
-    ACE_ERROR ((LM_ERROR, "(%P|%t) Server> Caught CORBA::Exception %s"
+  catch (CORBA::Exception const &ex) {
+    ACE_ERROR ((LM_ERROR, "(%P|%t) Server> Caught CORBA::Exception %C"
                 , ex._info().c_str()));
     return;
   }
@@ -125,7 +128,7 @@ Server::~Server ()
 }
 
 bool
-Server::parse_args (int , ACE_TCHAR* [])
+Server::parse_args (int, ACE_TCHAR *[])
 {
   /*
     ACE_Get_Opt get_opts (argc, argv, ACE_TEXT(""));
@@ -154,8 +157,8 @@ Server::run (bool management)
       orb_->run ();
     }
   }
-  catch( CORBA::Exception& ex) {
-    ACE_ERROR ((LM_ERROR, "(%P|%t) Server::run> Caught CORBA::Exception %s in worker ORB\n"
+  catch (CORBA::Exception const &ex) {
+    ACE_ERROR ((LM_ERROR, "(%P|%t) Server::run> Caught CORBA::Exception %C in worker ORB\n"
                 , ex._info().c_str()));
     status = false;
   }
@@ -165,8 +168,8 @@ Server::run (bool management)
       management_orb_->run();
     }
   }
-  catch( CORBA::Exception& ex) {
-    ACE_ERROR ((LM_ERROR, "(%P|%t) Server::run> Caught CORBA::Exception %s in management ORB\n"
+  catch (CORBA::Exception const &ex) {
+    ACE_ERROR ((LM_ERROR, "(%P|%t) Server::run> Caught CORBA::Exception %C in management ORB\n"
                 , ex._info().c_str()));
     status = false;
   }
@@ -187,7 +190,7 @@ Server::shutdown ()
     management_orb_->shutdown (true);
       ACE_OS::sleep (1); // Let management thread clear out
     }
-    test_i_.reset ((Test_i*)0);
+    test_i_.reset ();
 
     if (!CORBA::is_nil (orb_.in())) {
     orb_->destroy ();
@@ -198,8 +201,8 @@ Server::shutdown ()
     }
     management_orb_ = CORBA::ORB::_nil();
   }
-  catch( CORBA::Exception& ex) {
-    ACE_ERROR ((LM_ERROR, "(%P|%t) Server::run> Caught CORBA::Exception %s"
+  catch (CORBA::Exception const &ex) {
+    ACE_ERROR ((LM_ERROR, "(%P|%t) Server::run> Caught CORBA::Exception %C"
                 , ex._info().c_str()));
   }
 

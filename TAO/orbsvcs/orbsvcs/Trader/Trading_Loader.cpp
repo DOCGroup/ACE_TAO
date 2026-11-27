@@ -1,18 +1,11 @@
-//===========================================================================
+/**
+ * @file Trading_Loader.cpp
+ *
+ * @brief Loads the Trading Service dynamically.
+ *
+ * @author Priyanka Gontla <pgontla@ece.uci.edu>
+ */
 
-// LIBRARY
-//   libTAO_CosTrading.so
-//
-// DESCRIPTION
-//   This class allows for dynamically loading
-//   the Trading Service.
-//
-// AUTHORS
-//   Priyanka Gontla <pgontla@ece.uci.edu>
-
-//===========================================================================
-
-#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Trader/Trading_Loader.h"
 
@@ -28,48 +21,52 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/os_include/os_netdb.h"
 
+#include <array>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
+#include <memory>
+#include <string>
+#include <utility>
+
 TAO_Trading_Loader::TAO_Trading_Loader ()
-  : federate_ (false),
-    ior_output_file_ (nullptr),
-    bootstrapper_ (false)
 {
-  char *trader_name = CORBA::string_alloc (MAXHOSTNAMELEN + 10);
-
-  if (trader_name != nullptr)
+  // The trader name is the concatenation of the local host name
+  // and the server's process id.
+  std::array<char, MAXHOSTNAMELEN + 1> host_name {};
+  ACE_INET_Addr localhost {};
+  if (localhost.get_host_name (host_name.data (), host_name.size ()) != 0)
     {
-      // The trader name is the concatenation of the local host name
-      // and the server's process id.
-      char host_name[MAXHOSTNAMELEN + 1];
-      ACE_INET_Addr localhost ((u_short) 0);
-      if (localhost.get_host_name (host_name, sizeof (host_name)) != 0)
+      char const * const host_address = localhost.get_host_addr ();
+      if (host_address == nullptr)
         {
-          char const* tmp = localhost.get_host_addr ();
-          if (tmp == nullptr)
-            ORBSVCS_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("\n\nTAO Trading Service (%P|%t) ")
-                        ACE_TEXT ("TAO_Trading_Loader ")
-                        ACE_TEXT ("- %p\n\n"),
-                        ACE_TEXT ("cannot determine hostname")));
-          else
-            ACE_OS::strcpy (host_name, tmp);
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("\n\nTAO Trading Service (%P|%t) ")
+                          ACE_TEXT ("TAO_Trading_Loader ")
+                          ACE_TEXT ("- %p\n\n"),
+                          ACE_TEXT ("cannot determine hostname")));
         }
-
-      ACE_OS::sprintf (trader_name,
-                       "%s_%ld",
-                       host_name,
-                       static_cast<long> (ACE_OS::getpid ()));
-
-      for (char* dot = nullptr;
-           (dot = ACE_OS::strchr (trader_name, '.')) != nullptr;
-           *dot = '_')
-        continue;
-
-      ORBSVCS_DEBUG ((LM_DEBUG,
-                  "*** Trading Service %C initializing.\n",
-                  trader_name));
-
-      this->name_ = trader_name;
+      else
+        {
+          std::snprintf (host_name.data (), host_name.size (), "%s", host_address);
+        }
     }
+
+  std::string trader_name (host_name.data ());
+  for (char &character : trader_name)
+    if (character == '.')
+    {
+      character = '_';
+    }
+
+  trader_name += '_';
+  trader_name += std::to_string (static_cast<long> (ACE_OS::getpid ()));
+
+  ORBSVCS_DEBUG ((LM_DEBUG,
+                  "*** Trading Service %C initializing.\n",
+                  trader_name.c_str ()));
+
+  this->name_ = CORBA::string_dup (trader_name.c_str ());
 }
 
 int
@@ -95,7 +92,7 @@ TAO_Trading_Loader::init (int argc, ACE_TCHAR *argv[])
       CORBA::Object_var object =
         this->create_object (orb.in (), command_line.get_argc(), command_line.get_TCHAR_argv());
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const&)
     {
       //    @@ Should we log this???
       return -1;
@@ -108,7 +105,7 @@ TAO_Trading_Loader::fini ()
 {
   try
     {
-      if (this->trader_.get () != nullptr)
+      if (this->trader_)
         {
           TAO_Trading_Components_i& trd_comp
             = this->trader_->trading_components ();
@@ -121,7 +118,7 @@ TAO_Trading_Loader::fini ()
           ORBSVCS_DEBUG ((LM_DEBUG,
                       "*** Unlinking from federated traders.\n"));
 
-          for (CORBA::ULong j = 0;
+          for (CORBA::ULong j {};
                j != link_name_seq->length ();
                ++j)
             {
@@ -135,7 +132,7 @@ TAO_Trading_Loader::fini ()
 
               ORBSVCS_DEBUG ((LM_DEBUG,
                           "*** Removing link to %C.\n",
-                          static_cast<const char *> (link_name_seq[i])));
+                          static_cast<char const *> (link_name_seq[i])));
               our_link->remove_link (link_name_seq[i]);
 
               CosTrading::Lookup_ptr remote_lookup;
@@ -161,7 +158,7 @@ TAO_Trading_Loader::fini ()
             }
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Trading Service shutting down");
     }
@@ -192,7 +189,7 @@ TAO_Trading_Loader::create_object (CORBA::ORB_ptr orb_ptr,
   // Create a Trader Object and set its Service Type Repository.
   std::unique_ptr<TAO_Trader_Factory::TAO_TRADER> auto_trader (TAO_Trader_Factory::create_trader (argc, argv));
 
-  this->trader_ = std::move(auto_trader);
+  this->trader_ = std::move (auto_trader);
 
   TAO_Support_Attributes_i &sup_attr =
     this->trader_->support_attributes ();
@@ -212,15 +209,23 @@ TAO_Trading_Loader::create_object (CORBA::ORB_ptr orb_ptr,
 
   // Parse the args
   if (this->parse_args (argc, argv) == -1)
+  {
     return CORBA::Object::_nil ();
+  }
 
   // Dump the ior to a file.
   if (this->ior_output_file_ != nullptr)
     {
-      ACE_OS::fprintf (this->ior_output_file_,
-                       "%s",
-                       this->ior_.in ());
-      ACE_OS::fclose (this->ior_output_file_);
+      int const write_result = ACE_OS::fprintf (this->ior_output_file_.get (),
+                                                "%s",
+                                                this->ior_.in ());
+      FILE * const output = this->ior_output_file_.release ();
+      int const close_result = this->ior_output_file_.get_deleter () (output);
+      if (write_result < 0 || close_result != 0)
+        {
+          ORBSVCS_ERROR ((LM_ERROR, ACE_TEXT ("Could not write Trading Service IOR\n")));
+          return CORBA::Object::_nil ();
+        }
     }
 
   CORBA::Object_var table_object =
@@ -249,10 +254,14 @@ TAO_Trading_Loader::create_object (CORBA::ORB_ptr orb_ptr,
       int rc = this->bootstrap_to_federation ();
 
       if (rc == -1)
+      {
         this->init_multicast_server ();
+      }
     }
   else
+  {
     this->init_multicast_server ();
+  }
 
   return CORBA::Object::_nil ();
 }
@@ -271,10 +280,12 @@ TAO_Trading_Loader::bootstrap_to_federation ()
     orb->resolve_initial_references ("TradingService");
 
   if (CORBA::is_nil (trading_obj.in ()))
-    ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                       "We're all alone. "
-                       "Unable to link to other traders.\n"),
-                      -1);
+    {
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                             "We're all alone. "
+                             "Unable to link to other traders.\n"),
+                            -1);
+    }
 
   ORBSVCS_DEBUG ((LM_DEBUG,
               "*** Narrowing the lookup interface.\n"));
@@ -316,15 +327,15 @@ TAO_Trading_Loader::bootstrap_to_federation ()
               "*** Linking self to all linked traders.\n"));
   for (CORBA::ULong i = link_name_seq->length () - 1;
        i > 0;
-       i--)
+       --i)
     {
       // Avoid linking to ourselves.
-      if (ACE_OS::strcmp (static_cast<const char *> (link_name_seq[i]),
+      if (std::strcmp (static_cast<char const *> (link_name_seq[i]),
                           this->name_.in ()) != 0)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
                       "*** Getting info for link %s.\n",
-                      static_cast<const char *> (link_name_seq[i])));
+                      static_cast<char const *> (link_name_seq[i])));
           CosTrading::Link::LinkInfo_var link_info =
             link_if->describe_link (link_name_seq[i]);
 
@@ -373,13 +384,17 @@ TAO_Trading_Loader::init_multicast_server ()
 
   if (port == 0)
     {
-      const char *port_number =
+      char const *port_number =
         ACE_OS::getenv ("TradingServicePort");
 
-      if (port_number != 0)
-        port = static_cast<u_short> (ACE_OS::atoi (port_number));
+      if (port_number != nullptr)
+        {
+          port = static_cast<u_short> (std::atoi (port_number));
+        }
       else
-        port = TAO_DEFAULT_TRADING_SERVER_REQUEST_PORT;
+        {
+          port = TAO_DEFAULT_TRADING_SERVER_REQUEST_PORT;
+        }
     }
 
   // Instantiate a server that will receive requests for an ior
@@ -388,7 +403,9 @@ TAO_Trading_Loader::init_multicast_server ()
       if (this->ior_multicast_.init ((char *) this->ior_.in (),
                                      mde.c_str (),
                                      TAO_SERVICEID_TRADINGSERVICE) == -1)
+      {
         return -1;
+      }
     }
   else
     {
@@ -396,27 +413,32 @@ TAO_Trading_Loader::init_multicast_server ()
                                      port,
                                      ACE_DEFAULT_MULTICAST_ADDR,
                                      TAO_SERVICEID_TRADINGSERVICE) == -1)
-        ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                           "Failed to init IOR multicast.\n"),
-                          -1);
+        {
+          ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                                 "Failed to init IOR multicast.\n"),
+                                -1);
+        }
     }
 
   // Register event handler for the ior multicast.
-  if (reactor->register_handler (&this->ior_multicast_,
+  if (reactor->register_handler (std::addressof (this->ior_multicast_),
                                  ACE_Event_Handler::READ_MASK) == -1)
-    ORBSVCS_DEBUG ((LM_DEBUG,
-                "cannot register Event handler\n"));
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG,
+                      "cannot register Event handler\n"));
+    }
   else
-    ORBSVCS_DEBUG ((LM_DEBUG,
-                "The multicast server setup is done.\n"));
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG,
+                      "The multicast server setup is done.\n"));
+    }
 
   // Other trader instances will bootstrap to us.
-  this->bootstrapper_ = 1;
+  this->bootstrapper_ = true;
 
 #endif /* ACE_HAS_IP_MULTICAST */
   return 0;
 }
-
 
 int
 TAO_Trading_Loader::parse_args (int &argc, ACE_TCHAR *argv [])
@@ -425,13 +447,13 @@ TAO_Trading_Loader::parse_args (int &argc, ACE_TCHAR *argv [])
 
   while (arg_shifter.is_anything_left ())
     {
-      const ACE_TCHAR *current_arg = arg_shifter.get_current ();
+      ACE_TCHAR const *current_arg = arg_shifter.get_current ();
 
       if (ACE_OS::strcmp (current_arg,
                           ACE_TEXT("-TSfederate")) == 0)
         {
           arg_shifter.consume_arg ();
-          this->federate_ = 1;
+          this->federate_ = true;
         }
       if (ACE_OS::strcmp (current_arg,
                           ACE_TEXT("-TSdumpior")) == 0)
@@ -439,25 +461,33 @@ TAO_Trading_Loader::parse_args (int &argc, ACE_TCHAR *argv [])
           arg_shifter.consume_arg ();
           if (arg_shifter.is_parameter_next ())
             {
-              const ACE_TCHAR *file_name =
+              ACE_TCHAR const *file_name =
                 arg_shifter.get_current ();
-              this->ior_output_file_ =
-                ACE_OS::fopen (file_name, ACE_TEXT("w"));
+              this->ior_output_file_.reset ();
+              this->ior_output_file_.get_deleter () = ACE_OS::fclose;
+              this->ior_output_file_.reset (
+                ACE_OS::fopen (file_name, ACE_TEXT("w")));
 
               if (this->ior_output_file_ == nullptr)
-                ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                                   "Unable to open %s for writing: %p\n",
-                                   file_name), -1);
+                {
+                  ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                                        ACE_TEXT ("Unable to open %s for writing: %p\n"),
+                                        file_name, ACE_TEXT ("fopen")), -1);
+                }
               arg_shifter.consume_arg ();
             }
           else
-            this->ior_output_file_ =
-              ACE_OS::fdopen (ACE_STDOUT,
-                              ACE_TEXT("w"));
+            {
+              this->ior_output_file_.reset ();
+              this->ior_output_file_.get_deleter () = ACE_OS::fflush;
+              this->ior_output_file_.reset (stdout);
+            }
         }
 
       else
+      {
         arg_shifter.ignore_arg ();
+      }
     }
 
   return 0;

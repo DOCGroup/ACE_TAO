@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 #ifndef TEST_PROTOCOLS_HOOKS_H
 #define TEST_PROTOCOLS_HOOKS_H
 
@@ -16,10 +14,8 @@
 class Test_Protocols_Hooks : public TAO_Protocols_Hooks
 {
 public:
-  /// Constructor
   Test_Protocols_Hooks () = default;
 
-  /// Destructor
   ~Test_Protocols_Hooks () override = default;
   Test_Protocols_Hooks (Test_Protocols_Hooks const &) = delete;
   Test_Protocols_Hooks (Test_Protocols_Hooks &&) = delete;
@@ -68,8 +64,7 @@ public:
   CORBA::Long get_dscp_codepoint () override;
 
   void get_selector_hook (CORBA::Policy *model_policy,
-                          CORBA::Boolean
-                          &is_client_propagated,
+                          CORBA::Boolean &is_client_propagated,
                           CORBA::Short &server_priority) override;
 
   void get_selector_bands_policy_hook (CORBA::Policy *bands_policy,
@@ -83,7 +78,7 @@ public:
    * implement the RTCORBA::Current interface, but it is faster for
    * some critical components.
    */
-  //@{
+  /// @{
   int get_thread_CORBA_priority (CORBA::Short &priority) override;
 
   int get_thread_native_priority (CORBA::Short &) override;
@@ -97,7 +92,7 @@ public:
   int restore_thread_CORBA_and_native_priority (CORBA::Short,
                                                 CORBA::Short) override;
 
-  //@}
+  /// @}
 
 private:
   CORBA::ULong failure_count_ {};

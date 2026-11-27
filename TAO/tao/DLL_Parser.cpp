@@ -10,27 +10,27 @@
 
 #include "ace/Dynamic_Service.h"
 #include "ace/Log_Msg.h"
-#include "ace/OS_NS_string.h"
+#include <cstring>
 
 static const char dll_prefix[] = "DLL:";
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 bool
-TAO_DLL_Parser::match_prefix (const char *ior_string) const
+TAO_DLL_Parser::match_prefix (char const *ior_string) const
 {
-  return (ACE_OS::strncmp (ior_string,
-                           ::dll_prefix,
-                           sizeof (::dll_prefix) - 1) == 0);
+  return (std::strncmp (ior_string,
+                        ::dll_prefix,
+                        sizeof (::dll_prefix) - 1) == 0);
 }
 
 CORBA::Object_ptr
-TAO_DLL_Parser::parse_string (const char *ior,
+TAO_DLL_Parser::parse_string (char const *ior,
                               CORBA::ORB_ptr orb)
 {
   // Skip the prefix, we know it is there because this method in only
   // called if <match_prefix> returns 1.
-  const char *name =
+  char const *name =
     ior + sizeof (::dll_prefix) - 1;
 
   TAO_ORB_Core *oc = orb->orb_core ();
@@ -51,7 +51,6 @@ TAO_DLL_Parser::parse_string (const char *ior,
 
   return loader->create_object (orb, 0, nullptr);
 }
-
 
 ACE_STATIC_SVC_DEFINE (TAO_DLL_Parser,
                        ACE_TEXT ("DLL_Parser"),

@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Locator.h
  *
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef _ACEXML_LOCATOR_H_
 #define _ACEXML_LOCATOR_H_
@@ -27,7 +23,7 @@
  * obtain the location of any other content handler event in the XML
  * source document.
  *
- * Note that the results returned by the object will be valid only
+ * @note The results returned by the object will be valid only
  * during the scope of each content handler method: the application
  * will receive unpredictable results if it attempts to use the
  * locator at any other time.
@@ -44,27 +40,18 @@ class ACEXML_Export ACEXML_Locator
 public:
   virtual ~ACEXML_Locator ();
 
-  /*
-   * Return the column number where the current document event ends.
-   */
+  /// Return the column number where the current document event ends.
   virtual int getColumnNumber () const = 0;
 
-  /*
-   * Return the line number where the current document event ends.
-   */
+  /// Return the line number where the current document event ends.
   virtual int getLineNumber () const = 0;
 
-  /*
-   * Return the public identifier for the current document event.
-   */
-  virtual const ACEXML_Char *getPublicId () const = 0;
+  /// Return the public identifier for the current document event.
+  virtual ACEXML_Char const *getPublicId () const = 0;
 
-  /*
-   * Return the system identifier for the current document event.
-   */
-  virtual const ACEXML_Char *getSystemId () const = 0;
+  /// Return the system identifier for the current document event.
+  virtual ACEXML_Char const *getSystemId () const = 0;
 };
-
 
 #include /**/ "ace/post.h"
 

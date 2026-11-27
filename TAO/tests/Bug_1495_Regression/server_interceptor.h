@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #ifndef TAO_SERVER_INTERCEPTOR_H
 #define TAO_SERVER_INTERCEPTOR_H
 
@@ -16,19 +15,17 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+/// Server-side echo interceptor used for visual interceptor checks.
 class Echo_Server_Request_Interceptor
   : public virtual PortableInterceptor::ServerRequestInterceptor,
     public virtual ::CORBA::LocalObject
 {
-  // = Server-side echo interceptor.  For checking interceptor visually only.
 public:
-  Echo_Server_Request_Interceptor ();
-  // cotr.
+  Echo_Server_Request_Interceptor () = default;
 
-  Echo_Server_Request_Interceptor (CORBA::Object_ptr forward_location);
+  explicit Echo_Server_Request_Interceptor (CORBA::Object_ptr forward_location);
 
   ~Echo_Server_Request_Interceptor () override = default;
-  // dotr.
 
   Echo_Server_Request_Interceptor (Echo_Server_Request_Interceptor const &) = delete;
   Echo_Server_Request_Interceptor &operator= (Echo_Server_Request_Interceptor const &) = delete;
@@ -37,8 +34,8 @@ public:
 
   void forward_reference (CORBA::Object_ptr forward_location);
 
+  /// Returns the canonical interceptor name.
   char *name () override;
-  // Canonical name of the interceptor.
 
   void destroy () override;
 
@@ -54,10 +51,11 @@ public:
   void send_other (PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
   bool forward_location_done () const;
+
 private:
-  char const *myname_;
+  char const * const myname_ {"Echo_Server_Interceptor"};
   CORBA::Object_var forward_location_;
-  bool forward_location_done_;
+  bool forward_location_done_ {};
 };
 
 #if defined(_MSC_VER)

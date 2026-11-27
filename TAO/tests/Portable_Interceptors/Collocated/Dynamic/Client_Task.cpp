@@ -2,13 +2,12 @@
 #include "testC.h"
 #include "interceptors.h"
 
-Client_Task::Client_Task (const ACE_TCHAR *ior,
+Client_Task::Client_Task (ACE_TString const &ior,
                           CORBA::ORB_ptr corb,
                           ACE_Thread_Manager *thr_mgr)
   : ACE_Task_Base (thr_mgr)
     , input_ (ior)
     , corb_ (CORBA::ORB::_duplicate (corb))
-
 {
 }
 
@@ -17,17 +16,17 @@ Client_Task::svc ()
 {
   try
     {
-      CORBA::Object_var object =
-        corb_->string_to_object (input_);
+      CORBA::Object_var const object =
+        corb_->string_to_object (input_.c_str ());
 
-      Test_Interceptors::Visual_var server =
+      Test_Interceptors::Visual_var const server =
         Test_Interceptors::Visual::_narrow (object.in ());
 
       if (CORBA::is_nil (server.in ()))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Object reference <%s> is nil\n",
-                             this->input_),
+                             ACE_TEXT ("Object reference <%s> is nil\n"),
+                             this->input_.c_str ()),
                             1);
         }
 
@@ -35,7 +34,7 @@ Client_Task::svc ()
 
       server->shutdown ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught in client task:");
       return 1;
@@ -43,14 +42,13 @@ Client_Task::svc ()
 
   return 0;
 }
-
-
 void
 Client_Task::run_test (Test_Interceptors::Visual_ptr server)
 {
   server->normal (10);
 
-  CORBA::Long one = 1, two = 1;
+  CORBA::Long const one { 1 };
+  CORBA::Long const two { 1 };
   (void) server->calculate (one,
                             two);
 
@@ -58,7 +56,7 @@ Client_Task::run_test (Test_Interceptors::Visual_ptr server)
     {
       (void) server->user ();
     }
-  catch (const Test_Interceptors::Silly&)
+  catch (Test_Interceptors::Silly const &)
     {
       ACE_DEBUG ((LM_DEBUG, "Caught Silly\n"));
     }
@@ -67,7 +65,7 @@ Client_Task::run_test (Test_Interceptors::Visual_ptr server)
     {
       server->system ();
     }
-  catch (const CORBA::INV_OBJREF&)
+  catch (CORBA::INV_OBJREF const &)
     {
       ACE_DEBUG ((LM_DEBUG, "Caught CORBA::INV_OBJREF\n"));
     }

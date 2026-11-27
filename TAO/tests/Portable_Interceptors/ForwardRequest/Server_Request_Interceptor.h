@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  * @file Server_Request_Interceptor.h
  *
@@ -9,7 +6,6 @@
  *
  * @author Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
 
 #ifndef SERVER_REQUEST_INTERCEPTOR_H
 #define SERVER_REQUEST_INTERCEPTOR_H
@@ -57,12 +53,16 @@ class Server_Request_Interceptor
     public virtual ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
-  Server_Request_Interceptor ();
+  Server_Request_Interceptor () = default;
 
   /// Set the references to which requests will be forwarded.
-  virtual void forward_references (CORBA::Object_ptr obj1,
-                                   CORBA::Object_ptr obj2);
+  void forward_references (CORBA::Object_ptr obj1,
+                           CORBA::Object_ptr obj2) override;
+
+  Server_Request_Interceptor (Server_Request_Interceptor const &) = delete;
+  Server_Request_Interceptor (Server_Request_Interceptor &&) = delete;
+  Server_Request_Interceptor & operator = (Server_Request_Interceptor const &) = delete;
+  Server_Request_Interceptor & operator = (Server_Request_Interceptor &&) = delete;
 
   /**
    * @name Methods Required by the Server Request Interceptor
@@ -72,38 +72,33 @@ public:
    * virtual in the abstract base class.  They are the canonical
    * methods required for all server request interceptors.
    */
-  //@{
+  /// @{
   /// Return the name of this ServerRequestinterceptor.
-  virtual char * name ();
+  char * name () override;
 
-  virtual void destroy ();
+  void destroy () override;
 
-  virtual void receive_request_service_contexts (
-      PortableInterceptor::ServerRequestInfo_ptr ri);
+  void receive_request_service_contexts (
+      PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void receive_request (
-      PortableInterceptor::ServerRequestInfo_ptr ri);
+  void receive_request (PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void send_reply (
-      PortableInterceptor::ServerRequestInfo_ptr ri);
+  void send_reply (PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void send_exception (
-      PortableInterceptor::ServerRequestInfo_ptr ri);
+  void send_exception (PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void send_other (
-      PortableInterceptor::ServerRequestInfo_ptr ri);
-  //@}
+  void send_other (PortableInterceptor::ServerRequestInfo_ptr ri) override;
+  /// @}
 
 protected:
-  /// Destructor.
-  ~Server_Request_Interceptor ();
+  ~Server_Request_Interceptor () override = default;
 
 private:
   /// The number of requests intercepted by this interceptor.
-  CORBA::ULong request_count_;
+  CORBA::ULong request_count_ {};
 
   /// References to the two objects used in this test.
-  CORBA::Object_ptr obj_[2];
+  CORBA::Object_var obj_[2];
 };
 
 #if defined(_MSC_VER)

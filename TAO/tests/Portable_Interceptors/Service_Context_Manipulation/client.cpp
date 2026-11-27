@@ -1,10 +1,11 @@
 #include "ace/Get_Opt.h"
 #include "testC.h"
 #include "Client_ORBInitializer.h"
+#include "../context_match.h"
 
 #include "tao/ORBInitializer_Registry.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
+ACE_TCHAR const *ior = ACE_TEXT("file://test.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -56,7 +57,7 @@ run_test (Test_Interceptors::Visual_ptr server)
     {
       server->system ();
     }
-  catch (const CORBA::INV_OBJREF&)
+  catch (CORBA::INV_OBJREF const&)
     {
       ACE_DEBUG ((LM_DEBUG, "Caught CORBA::INV_OBJREF\n"));
     }
@@ -65,6 +66,30 @@ run_test (Test_Interceptors::Visual_ptr server)
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
+  CORBA::OctetSeq context;
+  char const expected[] = "test";
+  if (context_matches (context, expected))
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "Empty service context matched\n"), 1);
+    }
+  context.length (sizeof (expected) - 1);
+  std::memcpy (context.get_buffer (), expected, context.length ());
+  if (context_matches (context, expected))
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "Truncated service context matched\n"), 1);
+    }
+  context.length (sizeof (expected));
+  std::memcpy (context.get_buffer (), expected, sizeof (expected));
+  if (!context_matches (context, expected))
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "Valid service context did not match\n"), 1);
+    }
+  context.length (sizeof (expected) + 1);
+  if (context_matches (context, expected))
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "Service context with trailing data matched\n"), 1);
+    }
+
   try
     {
       PortableInterceptor::ORBInitializer_ptr temp_initializer;
@@ -81,7 +106,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) != 0)
+      {
         return 1;
+      }
 
       CORBA::Object_var object =
         orb->string_to_object (ior);
@@ -103,7 +130,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Caught exception in client:");
       return 1;

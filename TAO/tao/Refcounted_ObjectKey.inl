@@ -1,4 +1,3 @@
-// -*- C++ -*-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE void
@@ -27,6 +26,5 @@ TAO::Refcounted_ObjectKey::decr_refcount ()
 
   return 0;
 }
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL

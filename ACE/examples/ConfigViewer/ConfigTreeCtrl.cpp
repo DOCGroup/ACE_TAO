@@ -6,7 +6,6 @@
 
 enum {CFGNEWKEY=100, CFGNEWSTRING, CFGNEWUINT, CFGNEWBINARY, CFGNEWSUBMENU, CFGFIND, CFGDELETE, CFGRENAME, CFGCOPYKEYNAME};
 
-
 BEGIN_EVENT_TABLE(ConfigTreeCtrl, wxTreeCtrl)
   EVT_RIGHT_DOWN(ConfigTreeCtrl::OnRightDown)
   EVT_RIGHT_UP(ConfigTreeCtrl::OnRightUp)
@@ -19,7 +18,6 @@ BEGIN_EVENT_TABLE(ConfigTreeCtrl, wxTreeCtrl)
   EVT_TREE_SEL_CHANGED(FRAME_TREE, ConfigTreeCtrl::OnSelChanged)
 END_EVENT_TABLE()
 
-
 ConfigTreeCtrl::ConfigTreeCtrl(wxWindow* parent, wxWindowID id, const wxPoint& pos, const wxSize& size, long style, const wxValidator& validator, const wxString& name)
 : wxTreeCtrl(parent, id, pos, size, style, validator, name)
 {
@@ -27,9 +25,7 @@ ConfigTreeCtrl::ConfigTreeCtrl(wxWindow* parent, wxWindowID id, const wxPoint& p
   LoadTree();
 }
 
-ConfigTreeCtrl::~ConfigTreeCtrl()
-{
-}
+ConfigTreeCtrl::~ConfigTreeCtrl() = default;
 
 void ConfigTreeCtrl::LoadTree()
 {
@@ -47,7 +43,7 @@ void ConfigTreeCtrl::LoadSection(wxTreeItemId& ParentItem, const ACE_Configurati
   {
     wxTreeItemId Item = AppendItem(ParentItem, Name.fast_rep());
     ACE_Configuration_Section_Key Child;
-    m_pConfig->open_section(Key, Name.fast_rep(), 0, Child);
+    m_pConfig->open_section(Key, Name.fast_rep(), false, Child);
     LoadSection( Item, Child);
     ++Index;
   }
@@ -102,14 +98,13 @@ void ConfigTreeCtrl::ResolveKey(wxTreeItemId Item, ACE_Configuration_Section_Key
   }
   if(Path.length())
   {
-    m_pConfig->expand_path(m_pConfig->root_section(), Path, Key, 0);
+    m_pConfig->expand_path(m_pConfig->root_section(), Path, Key, false);
   }
   else
   {
     Key = m_pConfig->root_section();
   }
 }
-
 
 void ConfigTreeCtrl::OnNewKey(wxCommandEvent& event)
 {
@@ -125,7 +120,7 @@ void ConfigTreeCtrl::OnNewKey(wxCommandEvent& event)
   wxTreeItemId ItemID = GetSelection();
   ACE_Configuration_Section_Key Key, NewKey;
   ResolveKey(ItemID, Key);
-  m_pConfig->open_section(Key, Value, 1, NewKey);
+  m_pConfig->open_section(Key, Value, true, NewKey);
   wxTreeItemId NewItemID = AppendItem(ItemID, Value);
   EnsureVisible(NewItemID);
 }
@@ -214,7 +209,7 @@ void ConfigTreeCtrl::OnDelete(wxCommandEvent& event)
     return;
   }
   wxString Text = GetItemText(ItemID);
-  m_pConfig->remove_section(Key, Text, 1);
+  m_pConfig->remove_section(Key, Text, true);
   // Reload parent
   Delete(ItemID);
 }

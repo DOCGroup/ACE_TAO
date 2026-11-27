@@ -36,9 +36,7 @@ CServerView::CServerView()
   // TODO: add construction code here
 }
 
-CServerView::~CServerView()
-{
-}
+CServerView::~CServerView() = default;
 
 BOOL CServerView::PreCreateWindow(CREATESTRUCT& cs)
 {

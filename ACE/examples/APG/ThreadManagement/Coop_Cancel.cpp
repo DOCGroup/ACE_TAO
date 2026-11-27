@@ -6,27 +6,39 @@
 #include "ace/Task.h"
 #include "ace/Log_Msg.h"
 
+#include <memory>
+
 // Listing 1 code/ch13
 class CanceledTask : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
+  CanceledTask () = default;
+  CanceledTask (CanceledTask const &) = delete;
+  CanceledTask (CanceledTask &&) = delete;
+  CanceledTask &operator= (CanceledTask const &) = delete;
+  CanceledTask &operator= (CanceledTask &&) = delete;
+
   int svc () override
   {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) starting up\n")));
 
     // Cache our ACE_Thread_Manager pointer.
-    ACE_Thread_Manager *mgr = this->thr_mgr ();
-    while (1)
+    ACE_Thread_Manager *const mgr = this->thr_mgr ();
+    while (true)
       {
         if (mgr->testcancel (mgr->thr_self ()))
+        {
           return 0;
+        }
 
-        ACE_Message_Block *mb = nullptr;
-        ACE_Time_Value tv (0, 1000);
+        ACE_Message_Block *mb {};
+        ACE_Time_Value tv {0, 1000};
         tv += ACE_OS::time (nullptr);
-        int result = this->getq (mb, &tv);
+        int const result = this->getq (mb, std::addressof (tv));
         if (result == -1 && errno == EWOULDBLOCK)
-          continue;
+          {
+            continue;
+          }
         else
           {
             // Do real work.
@@ -46,7 +58,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
 
   ACE_OS::sleep (1);
 
-  ACE_Thread_Manager::instance ()->cancel_task (&task);
+  ACE_Thread_Manager::instance ()->cancel_task (std::addressof (task));
   task.wait ();
   return 0;
 }

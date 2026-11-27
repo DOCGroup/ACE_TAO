@@ -1,6 +1,3 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
  *  @file    Map_Test.h
  *
@@ -9,8 +6,6 @@
  *
  *  @author Irfan Pyarali <irfan@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef ACE_TESTS_MAP_TEST_H
 #define ACE_TESTS_MAP_TEST_H
@@ -23,6 +18,8 @@
 
 #include "ace/Active_Map_Manager.h"
 #include "ace/Containers.h"
+
+#include <memory>
 
 // Key data type.
 using KEY = ACE_Array<char>;
@@ -45,18 +42,16 @@ public:
   int operator() (KEY &key)
     {
       // Keep original information in the key intact.
-      size_t original_size = key.size ();
+      size_t const original_size = key.size ();
 
       // Size of this counter key.
-      const size_t counter_key_size = sizeof this->counter_;
+      size_t const counter_key_size = sizeof this->counter_;
 
       // Resize to accommodate both the original data and the new key.
       key.size (counter_key_size + original_size);
 
       // Add new key data.
-      ACE_OS::memcpy (&key[original_size],
-                      &++this->counter_,
-                      counter_key_size);
+      ACE_OS::memcpy (std::addressof (key[original_size]), &++this->counter_, counter_key_size);
 
       // Success.
       return 0;
@@ -69,16 +64,14 @@ private:
 class Hash_Key
 {
 public:
-  u_long operator () (const KEY &key) const
+  u_long operator () (KEY const &key) const
     {
       // Recover system generated part of key.
       u_long value;
       size_t counter_key_size = sizeof (u_long);
 
       // Copy system key from user key.
-      ACE_OS::memcpy (&value,
-                      &key[key.size () - counter_key_size],
-                      sizeof value);
+      ACE_OS::memcpy (&value, std::addressof (key[key.size () - counter_key_size]), sizeof value);
 
       // Return the system key value as the hash value.
       return value;
@@ -88,42 +81,42 @@ public:
 class Key_Adapter
 {
 public:
-  int encode (const KEY &original_key,
-              const ACE_Active_Map_Manager_Key &active_key,
+  int encode (KEY const &original_key,
+              ACE_Active_Map_Manager_Key const &active_key,
               KEY &modified_key)
     {
       // Keep original information in the key intact.
       modified_key = original_key;
-      size_t original_size = modified_key.size ();
+      size_t const original_size = modified_key.size ();
 
       // Size of active key.
-      size_t active_key_size = active_key.size ();
+      size_t const active_key_size = active_key.size ();
 
       // Resize to accommodate both the original data and the new active key.
       modified_key.size (active_key_size + original_size);
 
       // Copy active key data into user key.
-      active_key.encode (&modified_key[original_size]);
+      active_key.encode (std::addressof (modified_key[original_size]));
 
       // Success.
       return 0;
     }
 
-  int decode (const KEY &modified_key,
+  int decode (KEY const &modified_key,
               ACE_Active_Map_Manager_Key &active_key)
     {
       // Read the active key data from the back of the key.
-      size_t active_key_size = active_key.size ();
-      size_t original_size = modified_key.size () - active_key_size;
+      size_t const active_key_size = active_key.size ();
+      size_t const original_size = modified_key.size () - active_key_size;
 
       // Read off value of index and generation.
-      active_key.decode (&modified_key[original_size]);
+      active_key.decode (std::addressof (modified_key[original_size]));
 
       // Success.
       return 0;
     }
 
-  int decode (const KEY &modified_key,
+  int decode (KEY const &modified_key,
               KEY &original_key)
     {
       // Read the original user key data from the front of the

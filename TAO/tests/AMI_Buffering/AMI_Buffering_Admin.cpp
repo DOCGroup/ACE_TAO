@@ -2,8 +2,6 @@
 
 AMI_Buffering_Admin::AMI_Buffering_Admin (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
-  , request_count_ (0)
-  , bytes_received_count_ (0)
 {
 }
 
@@ -22,7 +20,7 @@ AMI_Buffering_Admin::bytes_received_count ()
 void
 AMI_Buffering_Admin::request_received (CORBA::ULong payload_length)
 {
-  this->request_count_++;
+  ++this->request_count_;
   this->bytes_received_count_ += payload_length;
 }
 

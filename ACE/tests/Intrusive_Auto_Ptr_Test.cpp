@@ -1,15 +1,11 @@
-
-//=============================================================================
 /**
  *  @file    Intrusive_Auto_Ptr_Test.cpp
  *
- *  This test verifies the functionality of the <ACE_Intrusive_Auto_Ptr>
+ *  This test verifies the functionality of the @c ACE_Intrusive_Auto_Ptr
  *  implementation.
  *
  *  @author Iliyan Jeliazkov <iliyan@ociweb.com>
  */
-//=============================================================================
-
 
 #include "test_config.h"
 #include "ace/Intrusive_Auto_Ptr.h"
@@ -49,20 +45,21 @@ bool One::released = true;
 
 void
 One::intrusive_add_ref (One *one) {
-  one->ref++;
+  ++one->ref;
 }
 
 void
 One::intrusive_remove_ref (One *one) {
-  one->ref--;
+  --one->ref;
   if (one->ref == 0)
+  {
     delete one;
+  }
 }
 
 int run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Intrusive_Auto_Ptr_Test"));
-
 
   One *theone (new One(0));
 
@@ -76,7 +73,7 @@ int run_main (int, ACE_TCHAR *[])
       ACE_TEST_ASSERT (theone->has_refs (1));
       ACE_TEST_ASSERT (!One::was_released ());
 
-      ACE_Intrusive_Auto_Ptr<One> ip2(theone);
+      ACE_Intrusive_Auto_Ptr<One> nested_ptr(theone);
       ACE_TEST_ASSERT (theone->has_refs (2));
       ACE_TEST_ASSERT (!One::was_released ());
     }
@@ -86,6 +83,21 @@ int run_main (int, ACE_TCHAR *[])
   }
 
   ACE_TEST_ASSERT (One::was_released());
+
+  theone = new One (0);
+  {
+    ACE_Intrusive_Auto_Ptr<One> source (theone);
+    ACE_Intrusive_Auto_Ptr<One> copied (source);
+    ACE_Intrusive_Auto_Ptr<One> assigned (new One (0));
+    assigned = source;
+    ACE_TEST_ASSERT (theone->has_refs (3));
+    ACE_TEST_ASSERT (source.get () == theone);
+    ACE_Intrusive_Auto_Ptr<One> empty;
+    empty = source;
+    ACE_TEST_ASSERT (theone->has_refs (4));
+    ACE_TEST_ASSERT (empty.get () == theone);
+  }
+  ACE_TEST_ASSERT (One::was_released ());
 
   // Test assigning zero.
   theone = new One(0);

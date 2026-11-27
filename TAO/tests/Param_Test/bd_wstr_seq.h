@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    bd_wstr_seq.h
  *
@@ -7,32 +5,26 @@
  *
  *  @author   Jeff Parsons
  */
-//=============================================================================
-
 
 #ifndef PARAM_TEST_BOUNDED_WSTRING_SEQUENCE_H
 #define PARAM_TEST_BOUNDED_WSTRING_SEQUENCE_H
 
 #include "param_testC.h"
 
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-//           test typedefed sequences (in our case, sequences of wstrings)
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+/// test typedefed sequences (in our case, sequences of wstrings)
 
 class Test_Bounded_WString_Sequence
 {
 public:
-  /// ctor
   Test_Bounded_WString_Sequence ();
 
-  /// dtor
-  ~Test_Bounded_WString_Sequence ();
+  ~Test_Bounded_WString_Sequence () = default;
 
   /// run the SII test
   int run_sii_test (Param_Test_ptr objref);
 
   /// return operation name
-  const char *opname () const;
+  char const *opname () const;
 
   /// set values for parameters
   int init_parameters (Param_Test_ptr objref);
@@ -54,7 +46,7 @@ public:
 
 private:
   /// operation name
-  char *opname_;
+  char const *opname_;
 
   /// in parameter
   Param_Test::Bounded_WStrSeq_var in_;

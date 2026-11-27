@@ -30,7 +30,7 @@ ACE_Based_Pointer_Basic<CONCRETE>::dump () const
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\ntarget_ = %d\n"), this->target_));
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("base_offset_ = %d\n"), this->base_offset_));
-  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("computed pointer = %x\n"), ACE_Based_Pointer_Basic::based (this)));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("computed pointer = %@\n"), ACE_Based_Pointer_Basic::based (this)));
   ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
@@ -43,7 +43,7 @@ ACE_Based_Pointer<CONCRETE>::ACE_Based_Pointer (CONCRETE *initial)
 }
 
 template <class CONCRETE>
-ACE_Based_Pointer<CONCRETE>::ACE_Based_Pointer (const void *base_addr, int)
+ACE_Based_Pointer<CONCRETE>::ACE_Based_Pointer (void const *base_addr, int)
   : ACE_Based_Pointer_Basic<CONCRETE> (base_addr, 0)
 {
   ACE_TRACE ("ACE_Based_Pointer_Basic<CONCRETE>::ACE_Based_Pointer_Basic");
@@ -51,42 +51,40 @@ ACE_Based_Pointer<CONCRETE>::ACE_Based_Pointer (const void *base_addr, int)
 
 template <class CONCRETE>
 ACE_Based_Pointer_Basic<CONCRETE>::ACE_Based_Pointer_Basic ()
-  : target_ (0),
-    base_offset_ (0)
 {
   ACE_TRACE ("ACE_Based_Pointer_Basic<CONCRETE>::ACE_Based_Pointer_Basic");
-  void *base_addr = nullptr;
+  void *base_addr {};
 
   // Find the base address associated with our <this> pointer.  Note
   // that it's ok for <find> to return 0, which simply indicates that
   // the address is not in memory-mapped virtual address space.
   ACE_BASED_POINTER_REPOSITORY::instance ()->find (this,
                                                    base_addr);
-  this->base_offset_ = (char *) this - (char *) base_addr;
+  this->base_offset_ = static_cast<char *> (static_cast<void *> (this))
+    - static_cast<char *> (base_addr);
 }
 
 template <class CONCRETE>
-ACE_Based_Pointer_Basic<CONCRETE>::ACE_Based_Pointer_Basic (const void *base_addr, int)
-  : target_ (0),
-    base_offset_ (0)
+ACE_Based_Pointer_Basic<CONCRETE>::ACE_Based_Pointer_Basic (void const *base_addr, int)
 {
   ACE_TRACE ("ACE_Based_Pointer_Basic<CONCRETE>::ACE_Based_Pointer_Basic");
-  this->base_offset_ = (const char *) this - (const char *) base_addr;
+  this->base_offset_ = reinterpret_cast<char const *> (this)
+    - static_cast<char const *> (base_addr);
 }
 
 template <class CONCRETE>
 ACE_Based_Pointer_Basic<CONCRETE>::ACE_Based_Pointer_Basic (CONCRETE *rhs)
-  : target_ (0),
-    base_offset_ (0)
 {
   ACE_TRACE ("ACE_Based_Pointer_Basic<CONCRETE>::ACE_Based_Pointer_Basic");
 
-  if (rhs == 0)
-    // Store a value of <target_> that indicate "NULL" pointer.
-    this->target_ = -1;
+  if (rhs == nullptr)
+    {
+      // Store a value of <target_> that indicate "NULL" pointer.
+      this->target_ = -1;
+    }
   else
     {
-      void *base_addr = nullptr;
+      void *base_addr {};
 
       // Find the base address associated with the <addr> pointer.
       // Note that it's ok for <find> to return 0, which simply
@@ -94,8 +92,10 @@ ACE_Based_Pointer_Basic<CONCRETE>::ACE_Based_Pointer_Basic (CONCRETE *rhs)
       // address space.
       ACE_BASED_POINTER_REPOSITORY::instance ()->find (this,
                                                        base_addr);
-      this->base_offset_ = (char *) this - (char *) base_addr;
-      this->target_ = ((char *) rhs - (char *) base_addr);
+      this->base_offset_ = static_cast<char *> (static_cast<void *> (this))
+        - static_cast<char *> (base_addr);
+      this->target_ = static_cast<char *> (static_cast<void *> (rhs))
+        - static_cast<char *> (base_addr);
     }
 }
 

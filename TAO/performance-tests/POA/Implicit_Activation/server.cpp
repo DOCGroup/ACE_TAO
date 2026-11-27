@@ -3,20 +3,25 @@
 #include "ace/Sched_Params.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_errno.h"
+#include <memory>
 
-const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
+struct Server_Options
+{
+  ACE_TCHAR const *ior_output_file {ACE_TEXT("test.ior")};
+};
 
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Server_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:"));
   int c;
 
   while ((c = get_opts ()) != -1)
+  {
     switch (c)
       {
       case 'o':
-        ior_output_file = get_opts.opt_arg ();
+        options.ior_output_file = get_opts.opt_arg ();
         break;
 
       case '?':
@@ -28,6 +33,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
+  }
   // Indicates successful parsing of the command line
   return 0;
 }
@@ -53,8 +59,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                       "test runs in time-shared class\n"));
         }
       else
+      {
         ACE_ERROR ((LM_ERROR,
                     "server (%P|%t): sched_params failed\n"));
+      }
     }
 
   try
@@ -62,13 +70,17 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv);
 
+      Server_Options options;
+
       CORBA::Object_var poa_object =
-        orb->resolve_initial_references("RootPOA");
+        orb->resolve_initial_references ("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
+      {
         ACE_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to initialize the POA.\n"),
                           1);
+      }
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
@@ -76,14 +88,16 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
 
-      if (parse_args (argc, argv) != 0)
+      if (parse_args (argc, argv, options) != 0)
+      {
         return 1;
+      }
 
-      Factory *factory_impl;
+      Factory *factory_impl {};
       ACE_NEW_RETURN (factory_impl,
                       Factory (orb.in ()),
                       1);
-      PortableServer::ServantBase_var owner_transfer(factory_impl);
+      PortableServer::ServantBase_var owner_transfer (factory_impl);
 
       Test::Factory_var factory =
         factory_impl->_this ();
@@ -92,14 +106,18 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         orb->object_to_string (factory.in ());
 
       // If the ior_output_file exists, output the ior to it
-      FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
-      if (output_file == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot open output file for writing IOR: %s",
-                           ior_output_file),
-                          1);
-      ACE_OS::fprintf (output_file, "%s", ior.in ());
-      ACE_OS::fclose (output_file);
+      {
+        using Output_File = std::unique_ptr<FILE, int (*) (FILE *)>;
+        Output_File output_file (ACE_OS::fopen (options.ior_output_file, "w"), ACE_OS::fclose);
+        if (!output_file)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Cannot open output file for writing IOR: %s",
+                             options.ior_output_file),
+                            1);
+        }
+        ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
+      }
 
       poa_manager->activate ();
 

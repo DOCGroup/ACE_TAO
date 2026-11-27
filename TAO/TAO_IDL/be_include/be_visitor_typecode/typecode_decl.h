@@ -1,6 +1,3 @@
-/* -*- c++ -*- */
-
-//=============================================================================
 /**
  *  @file    typecode_decl.h
  *
@@ -9,7 +6,6 @@
  *
  *  @author Aniruddha Gokhale
  */
-//=============================================================================
 
 #ifndef _BE_VISITOR_TYPECODE_TYPECODE_DECL_H_
 #define _BE_VISITOR_TYPECODE_TYPECODE_DECL_H_

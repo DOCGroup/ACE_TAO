@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  * @file FT_Property_Validator.h
  *
  * @author Curt Hibbs <hibbs_c@ociweb.com>
  */
-//=============================================================================
 
 #ifndef FT_PROPERTY_VALIDATOR_H
 #define FT_PROPERTY_VALIDATOR_H
@@ -35,10 +31,8 @@ namespace TAO
   class FT_Property_Validator : public TAO_PG_Default_Property_Validator
   {
   public:
-    /// Constructor.
     FT_Property_Validator ();
 
-    /// Destructor.
     ~FT_Property_Validator () override;
 
     /// Validate the given properties.  Throw an exception when the
@@ -68,14 +62,14 @@ namespace TAO
     *   FaultMonitoringInterval
     *   CheckpointInterval
     */
-    //@{
+    /// @{
     PortableGroup::Name replication_style_;
     PortableGroup::Name membership_style_;
     PortableGroup::Name consistency_style_;
     PortableGroup::Name fault_monitoring_style_;
     PortableGroup::Name fault_monitoring_granularity_;
     PortableGroup::Name factories_;
-    //@}
+    /// @}
 
   };
 } // namespace TAO

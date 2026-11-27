@@ -8,23 +8,25 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Notify_Property_Boolean::TAO_Notify_Property_Boolean (const char* name)
-  : name_ (name), valid_(0)
+TAO_Notify_Property_Boolean::TAO_Notify_Property_Boolean (char const *name)
+  : name_ (name)
 {
 }
 
-TAO_Notify_Property_Boolean::TAO_Notify_Property_Boolean (const char* name, CORBA::Boolean initial)
-  :name_ (name), value_ (initial), valid_ (1)
+TAO_Notify_Property_Boolean::TAO_Notify_Property_Boolean (char const *name, CORBA::Boolean initial)
+  :name_ (name), value_ (initial), valid_ (true)
 {
 }
 
 int
-TAO_Notify_Property_Boolean::set (const TAO_Notify_PropertySeq& property_seq)
+TAO_Notify_Property_Boolean::set (TAO_Notify_PropertySeq const& property_seq)
 {
   CosNotification::PropertyValue value;
 
   if (property_seq.find (this->name_, value) == -1)
+  {
     return -1;
+  }
 
   value >>= CORBA::Any::to_boolean (this->value_);
 

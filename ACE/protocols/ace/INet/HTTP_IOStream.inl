@@ -1,4 +1,5 @@
-// -*- C++ -*-
+#include <memory>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE
@@ -9,7 +10,7 @@ namespace ACE
     ACE_INLINE
     StreamBuffer* IOS::rdbuf ()
       {
-        return &this->streambuf_;
+        return std::addressof (this->streambuf_);
       }
 
     ACE_INLINE

@@ -4,7 +4,6 @@
 #include "StructuredPushConsumer.inl"
 #endif /* __ACE_INLINE__ */
 
-
 TAO_Notify_Tests_StructuredPushConsumer_Traits::TAO_Notify_Tests_StructuredPushConsumer_Traits ()
   :type_ (CosNotifyChannelAdmin::STRUCTURED_EVENT)
 {
@@ -12,13 +11,9 @@ TAO_Notify_Tests_StructuredPushConsumer_Traits::TAO_Notify_Tests_StructuredPushC
 
 /*******************************************************************/
 
-TAO_Notify_Tests_StructuredPushConsumer::TAO_Notify_Tests_StructuredPushConsumer ()
-{
-}
+TAO_Notify_Tests_StructuredPushConsumer::TAO_Notify_Tests_StructuredPushConsumer () = default;
 
-TAO_Notify_Tests_StructuredPushConsumer::~TAO_Notify_Tests_StructuredPushConsumer ()
-{
-}
+TAO_Notify_Tests_StructuredPushConsumer::~TAO_Notify_Tests_StructuredPushConsumer () = default;
 
 void
 TAO_Notify_Tests_StructuredPushConsumer::connect_to_peer (Proxy_Traits::PTR proxy_ptr, Peer_Traits::PTR peer_ptr)
@@ -43,8 +38,7 @@ TAO_Notify_Tests_StructuredPushConsumer::disconnect_structured_push_consumer ()
 
 void
 TAO_Notify_Tests_StructuredPushConsumer::push_structured_event
-   (const CosNotification::StructuredEvent &/*notification*/
-    )
+   (CosNotification::StructuredEvent const &/*notification*/)
 {
   // NOP
 }

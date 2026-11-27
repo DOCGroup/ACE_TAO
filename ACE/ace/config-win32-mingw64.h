@@ -1,5 +1,3 @@
-// -*- C++ -*-
-//
 // The following configuration file is designed to work for win32 and win64
 // platforms using gcc/g++ with mingw64 (http://http://mingw-w64.sourceforge.net/).
 //
@@ -122,7 +120,6 @@
 #if defined(_UCRT)
 # define ACE_HAS_3_PARAM_WCSTOK
 #endif
-
 
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_WIN32_MINGW64_H */

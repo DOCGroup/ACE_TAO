@@ -2,6 +2,8 @@
 #include "orbsvcs/Event_Utilities.h"
 #include "ace/OS_NS_unistd.h"
 
+#include <memory>
+
 EC_Counting_Supplier::EC_Counting_Supplier ()
   :  event_count (0),
      disconnect_count (0),
@@ -45,7 +47,7 @@ EC_Counting_Supplier::deactivate ()
   PortableServer::POA_var consumer_poa =
     this->consumer_adapter_._default_POA ();
   PortableServer::ObjectId_var consumer_id =
-    consumer_poa->servant_to_id (&this->consumer_adapter_);
+    consumer_poa->servant_to_id (std::addressof (this->consumer_adapter_));
   consumer_poa->deactivate_object (consumer_id.in ());
 }
 
@@ -71,7 +73,7 @@ EC_Counting_Supplier::connect (
 void
 EC_Counting_Supplier::connect (
     RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin,
-    const RtecEventChannelAdmin::SupplierQOS &qos)
+    RtecEventChannelAdmin::SupplierQOS const &qos)
 {
   RtecEventComm::PushSupplier_var supplier =
     this->_this ();
@@ -105,10 +107,12 @@ EC_Counting_Supplier::disconnect ()
 }
 
 void
-EC_Counting_Supplier::push (const RtecEventComm::EventSet&)
+EC_Counting_Supplier::push (RtecEventComm::EventSet const &)
 {
   if (CORBA::is_nil (this->consumer_proxy_.in ()))
+  {
     return;
+  }
 
   RtecEventComm::EventSet event (1);
   event.length (1);
@@ -117,7 +121,7 @@ EC_Counting_Supplier::push (const RtecEventComm::EventSet&)
   event[0].header.ttl = 1;
 
   this->consumer_proxy_->push (event);
-  this->event_count++;
+  ++this->event_count;
 }
 
 void
@@ -128,7 +132,7 @@ EC_Counting_Supplier::disconnect_push_consumer ()
 void
 EC_Counting_Supplier::disconnect_push_supplier ()
 {
-  this->disconnect_count++;
+  ++this->disconnect_count;
   this->consumer_proxy_ =
     RtecEventChannelAdmin::ProxyPushConsumer::_nil ();
 }
@@ -150,7 +154,7 @@ EC_Counting_Supplier_Task::svc ()
     {
       this->run ();
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       return -1;
     }
@@ -175,7 +179,7 @@ EC_Counting_Supplier_Task::run ()
 {
   this->event_.length (1);
 
-  int stop = 0;
+  int stop_requested = 0;
   do {
     this->supplier_->push (this->event_);
 
@@ -184,8 +188,8 @@ EC_Counting_Supplier_Task::run ()
 
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
-    this->push_count_++;
+    ++this->push_count_;
 
-    stop = this->stop_flag_;
-  } while (stop == 0);
+    stop_requested = this->stop_flag_;
+  } while (stop_requested == 0);
 }

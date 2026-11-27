@@ -1,5 +1,3 @@
-/* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file   IdAssignment.h
  *
@@ -7,8 +5,6 @@
  *
  *  @author Chanaka Liyanaarachchi <chanaka@ociweb.com> and Pradeep Gore <pradeep@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef IDASSIGNMENT_H
 #define IDASSIGNMENT_H
@@ -44,8 +40,8 @@ private:
   bool default_consumer_admin_test (CosNotifyChannelAdmin::ChannelID channel_id);
   bool default_supplier_admin_test (CosNotifyChannelAdmin::ChannelID channel_id);
 
-
-  // = Data members.
+  /// @name Data members
+  /// @{
   CosNotifyChannelAdmin::EventChannelFactory_var notify_factory_;
 
   /// Number of iterations for the test.
@@ -59,6 +55,7 @@ private:
 
   /// Number of consumer admins to create per ec.
   int supplier_admin_count_;
+  /// @}
 };
 
 #endif /* IDASSIGNMENT_H */

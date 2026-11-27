@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 /**
  *  @file   EC_Basic_Filter_Builder.h
  *
@@ -41,16 +39,16 @@ class TAO_EC_Event_Channel_Base;
 class TAO_RTEvent_Serv_Export TAO_EC_Basic_Filter_Builder : public TAO_EC_Filter_Builder
 {
 public:
-  /// constructor.
-  TAO_EC_Basic_Filter_Builder (TAO_EC_Event_Channel_Base* ec);
+  explicit TAO_EC_Basic_Filter_Builder (TAO_EC_Event_Channel_Base* ec);
 
-  /// destructor...
-  virtual ~TAO_EC_Basic_Filter_Builder () override;
+  ~TAO_EC_Basic_Filter_Builder () override = default;
 
-  // = The TAO_EC_Filter_Builder methods...
+  /// @name The TAO_EC_Filter_Builder methods
+  /// @{
   TAO_EC_Filter* build (TAO_EC_ProxyPushSupplier *supplier,
                         RtecEventChannelAdmin::ConsumerQOS& qos) const override;
 
+  /// @}
 private:
   /// Recursively build the filter tree.
   TAO_EC_Filter* recursive_build (TAO_EC_ProxyPushSupplier *supplier,

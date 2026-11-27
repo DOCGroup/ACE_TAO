@@ -1,3 +1,5 @@
+#include <atomic>
+
 #include "Hello.h"
 
 Hello::Hello (CORBA::ORB_ptr orb)
@@ -8,11 +10,10 @@ Hello::Hello (CORBA::ORB_ptr orb)
 char *
 Hello::get_string ()
 {
-  static int our_count = 0;
+  static std::atomic<int> our_count {};
 
-  if (our_count == 0)
+  if (our_count.fetch_add (1) == 0)
     {
-      ++our_count;
       throw ::CORBA::TRANSIENT (0,
               CORBA::COMPLETED_MAYBE);
     }

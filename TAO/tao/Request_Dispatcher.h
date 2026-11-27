@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Request_Dispatcher.h
  *
@@ -8,8 +5,6 @@
  *
  *  @author  Frank Hunleth <fhunleth@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_REQUEST_DISPATCHER_H
 #define TAO_REQUEST_DISPATCHER_H
@@ -45,7 +40,6 @@ namespace CORBA
 class TAO_Export TAO_Request_Dispatcher
 {
 public:
-  /// Destructor.
   virtual ~TAO_Request_Dispatcher ();
 
   /**

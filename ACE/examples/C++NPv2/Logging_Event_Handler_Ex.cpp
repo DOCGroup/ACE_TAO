@@ -14,7 +14,7 @@ int Logging_Event_Handler_Ex::handle_input (ACE_HANDLE h) {
 int Logging_Event_Handler_Ex::open () {
   int result = PARENT::open ();
   if (result != -1) {
-    ACE_Time_Value reschedule (max_client_timeout_.sec () / 4);
+    ACE_Time_Value const reschedule (max_client_timeout_.sec () / 4);
     result =
       reactor ()->schedule_timer
         (this,
@@ -26,9 +26,11 @@ int Logging_Event_Handler_Ex::open () {
 }
 
 int Logging_Event_Handler_Ex::handle_timeout
-  (const ACE_Time_Value &now, const void *) {
+  (ACE_Time_Value const &now, void const *) {
   if (now - time_of_last_log_record_ >= max_client_timeout_)
+  {
     reactor ()->remove_handler (this, ACE_Event_Handler::READ_MASK);
+  }
   return 0;
 }
 

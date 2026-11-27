@@ -1,4 +1,3 @@
-
 #ifndef BLOCKING_SYNC_NONE_H
 #define BLOCKING_SYNC_NONE_H
 #include /**/ "ace/pre.h"
@@ -10,18 +9,23 @@ class Blocking_Sync_None
   : public virtual POA_Test::Blocking_Sync_None
 {
 public:
-  /// Constructor
-  Blocking_Sync_None (CORBA::ORB_ptr orb);
+  explicit Blocking_Sync_None (CORBA::ORB_ptr orb);
+  Blocking_Sync_None (Blocking_Sync_None const &) = delete;
+  Blocking_Sync_None (Blocking_Sync_None &&) = delete;
+  Blocking_Sync_None &operator= (Blocking_Sync_None const &) = delete;
+  Blocking_Sync_None &operator= (Blocking_Sync_None &&) = delete;
 
-  // = The skeleton methods
-  virtual void slow_operation (const Test::Payload &the_payload,
-                               CORBA::ULong sleep_microseconds);
+  /// @name Skeleton methods
+  /// @{
+  void slow_operation (Test::Payload const &the_payload,
+                       CORBA::ULong sleep_microseconds) override;
 
-  virtual void shutdown ();
+  void shutdown () override;
+  /// @}
 
 private:
   /// Use an ORB reference to shutdown the application.
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var const orb_;
 };
 
 #include /**/ "ace/post.h"

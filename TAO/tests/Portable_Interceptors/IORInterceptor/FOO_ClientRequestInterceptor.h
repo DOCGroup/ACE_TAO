@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  * @file FOO_ClientRequestInterceptor.h
  *
@@ -9,7 +6,6 @@
  *
  * @author Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
 
 #ifndef FOO_CLIENT_REQUEST_INTERCEPTOR_H
 #define FOO_CLIENT_REQUEST_INTERCEPTOR_H
@@ -44,8 +40,11 @@ class FOO_ClientRequestInterceptor
     public virtual ::CORBA::LocalObject
 {
 public:
-  /// Constructor
-  FOO_ClientRequestInterceptor (IOP::Codec_ptr codec);
+  explicit FOO_ClientRequestInterceptor (IOP::Codec_ptr codec);
+  FOO_ClientRequestInterceptor (FOO_ClientRequestInterceptor const &) = delete;
+  FOO_ClientRequestInterceptor (FOO_ClientRequestInterceptor &&) = delete;
+  FOO_ClientRequestInterceptor &operator= (FOO_ClientRequestInterceptor const &) = delete;
+  FOO_ClientRequestInterceptor &operator= (FOO_ClientRequestInterceptor &&) = delete;
 
   /**
    * @name Methods Required by the Client Request Interceptor
@@ -55,27 +54,22 @@ public:
    * virtual in the abstract base class.  They are the canonical
    * methods required for all client request interceptors.
    */
-  //@{
+  /// @{
   /// Return the name of this ClientRequestInterceptor.
-  virtual char * name ();
+  char * name () override;
 
-  virtual void destroy ();
+  void destroy () override;
 
-  virtual void send_request (
-      PortableInterceptor::ClientRequestInfo_ptr ri);
+  void send_request (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
-  virtual void send_poll (
-      PortableInterceptor::ClientRequestInfo_ptr ri);
+  void send_poll (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
-  virtual void receive_reply (
-      PortableInterceptor::ClientRequestInfo_ptr ri);
+  void receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
-  virtual void receive_exception (
-      PortableInterceptor::ClientRequestInfo_ptr ri);
+  void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
-  virtual void receive_other (
-      PortableInterceptor::ClientRequestInfo_ptr ri);
-  //@}
+  void receive_other (PortableInterceptor::ClientRequestInfo_ptr ri) override;
+  /// @}
 
 private:
   /// The CDR encapsulation coder/decoder used to retrieve data

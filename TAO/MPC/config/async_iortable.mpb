@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project : taolib, iortable, messaging, dynamicinterface {
   after   += Async_IORTable
   libs    += TAO_Async_IORTable

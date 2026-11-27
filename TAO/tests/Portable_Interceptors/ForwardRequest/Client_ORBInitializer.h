@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  * @file Client_ORBInitializer.h
  *
@@ -9,7 +6,6 @@
  *
  * @author Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
 
 #ifndef TAO_CLIENT_ORB_INITIALIZER_H
 #define TAO_CLIENT_ORB_INITIALIZER_H
@@ -39,9 +35,15 @@ class Client_ORBInitializer :
   public virtual ::CORBA::LocalObject
 {
 public:
-  virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info);
+  Client_ORBInitializer () = default;
 
-  virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info);
+  Client_ORBInitializer (Client_ORBInitializer const &) = delete;
+  Client_ORBInitializer (Client_ORBInitializer &&) = delete;
+  Client_ORBInitializer & operator = (Client_ORBInitializer const &) = delete;
+  Client_ORBInitializer & operator = (Client_ORBInitializer &&) = delete;
+
+  void pre_init (PortableInterceptor::ORBInitInfo_ptr info) override;
+  void post_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 };
 
 #if defined(_MSC_VER)

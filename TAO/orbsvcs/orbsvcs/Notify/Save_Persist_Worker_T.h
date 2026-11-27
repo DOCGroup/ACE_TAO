@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
 *  \file    Save_Persist_Worker_T.h
 *
-*  \author Jonathan Pollack <pollack_j@ociweb.com>
+*  @author Jonathan Pollack <pollack_j@ociweb.com>
 */
-//=============================================================================
 
 #ifndef SAVE_PERSIST_WORKER_H
 #define SAVE_PERSIST_WORKER_H
@@ -17,7 +13,6 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -40,7 +35,7 @@ namespace TAO_Notify
     Save_Persist_Worker(Topology_Saver& saver, bool want_all_children);
 
     // override virtual ESF_Worker method
-    virtual void work (TOPOOBJ* o);
+    void work (TOPOOBJ* o) override;
 
   private:
     Topology_Saver& saver_;

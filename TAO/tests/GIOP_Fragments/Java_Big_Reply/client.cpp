@@ -1,7 +1,7 @@
 #include "Client_Task.h"
 #include "ace/Get_Opt.h"
 
-static const ACE_TCHAR *ior = ACE_TEXT("file://server.ior");
+static ACE_TCHAR const *ior = ACE_TEXT("file://server.ior");
 static size_t nthreads = 1;
 
 int
@@ -42,7 +42,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) != 0)
-        return 1;
+        {
+          return 1;
+        }
 
       CORBA::Object_var tmp =
         orb->string_to_object(ior);
@@ -57,7 +59,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                              ior),
                             1);
         }
-
 
       Client_Task client_task (reply_gen.in (),
                                10,
@@ -74,7 +75,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;

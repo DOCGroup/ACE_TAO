@@ -11,6 +11,10 @@
 #include <ace/Time_Value.h>
 #include <ace/Log_Msg.h>
 
+ReadHandler::ReadHandler() : ACE_Event_Handler(), mStream() {
+    ACE_TRACE("ReadHandler::ReadHandler()");
+}
+
 /**
  * This macro is used to increase the invocation counter by one when entering
  * handle_input(). It also checks wether the counter is greater than zero
@@ -20,7 +24,7 @@
   do { \
      if (mInvocationCounter > 0) \
        ACE_ERROR((LM_ERROR, ACE_TEXT("Multiple invocations detected.\n"))); \
-     mInvocationCounter++; } \
+     ++mInvocationCounter; } \
   while (0)
 
 /**
@@ -29,22 +33,17 @@
  * here for convenience to decrease the invocation counter also when returning
  * due to errors.
  */
-#define INVOCATION_RETURN(retval) do { mInvocationCounter--; \
+#define INVOCATION_RETURN(retval) do { --mInvocationCounter; \
                                     return retval; } while(0)
-
-ReadHandler::ReadHandler() : ACE_Event_Handler(), mStream(), mDataSize(0),
-        mData(nullptr), mCallCounter(0), mInvocationCounter(0) {
-    ACE_TRACE("ReadHandler::ReadHandler()");
-}
 
 ReadHandler::~ReadHandler() {
     ACE_TRACE("ReadHandler::~ReadHandler()");
 
     if (mStream.close() == -1)
-      ACE_ERROR((LM_ERROR, ACE_TEXT("%N:%l: Failed to close socket. ")
-                 ACE_TEXT ("(errno = %i: %m)\n"), ACE_ERRNO_GET));
-
-    delete[] mData;
+      {
+        ACE_ERROR((LM_ERROR, ACE_TEXT("%N:%l: Failed to close socket. ")
+                   ACE_TEXT ("(errno = %i: %m)\n"), ACE_ERRNO_GET));
+      }
 }
 
 ACE_SOCK_Stream &ReadHandler::getStream() {
@@ -71,7 +70,7 @@ int ReadHandler::handle_input(ACE_HANDLE) {
          */
 
         // increase the call counter so the next client request goes to else-if
-        mCallCounter++;
+        ++mCallCounter;
 
         // get the desired size from the client
         // Note: only use the sizeof and pointer to int on compatible
@@ -90,12 +89,16 @@ int ReadHandler::handle_input(ACE_HANDLE) {
 
         // check mDataSize for plausability then allocate memory
         if (mDataSize > 0) {
-            mData = new (std::nothrow) char[mDataSize];
+            mData.reset (new (std::nothrow) char[mDataSize]);
             if (mData == nullptr)
-              ACE_DEBUG((LM_DEBUG, ACE_TEXT("%N:%l: Failed to allocate ")
-                         ACE_TEXT ("data buffer.\n")));
+              {
+                ACE_DEBUG((LM_DEBUG, ACE_TEXT("%N:%l: Failed to allocate ")
+                           ACE_TEXT ("data buffer.\n")));
+              }
             else
-                response = 'K';
+            {
+              response = 'K';
+            }
         }
 
         // send the response to the client (which is still 0, if the
@@ -107,9 +110,13 @@ int ReadHandler::handle_input(ACE_HANDLE) {
         }
 
         if (response == 'K')
+          {
             INVOCATION_RETURN(0); // get another request from the same client
+          }
         else
-            INVOCATION_RETURN(-1); // the client will not send data if response != 'K'
+        {
+          INVOCATION_RETURN(-1); // the client will not send data if response != 'K'
+        }
 
     } else if (mCallCounter == 1) {
         /*
@@ -118,10 +125,10 @@ int ReadHandler::handle_input(ACE_HANDLE) {
 
         // increase the call counter, this read handler should not be called
         // again
-        mCallCounter++;
+        ++mCallCounter;
 
         // receive the data from the client
-        if (mStream.recv_n(mData, mDataSize, &connTimeout) != mDataSize) {
+        if (mStream.recv_n(mData.get (), mDataSize, &connTimeout) != mDataSize) {
           ACE_ERROR((LM_ERROR, ACE_TEXT("%N:%l: Failed to receive data.")
                      ACE_TEXT ("(errno = %i: %m)\n"), ACE_ERRNO_GET));
             INVOCATION_RETURN(-1);
@@ -146,6 +153,7 @@ int ReadHandler::handle_input(ACE_HANDLE) {
 int ReadHandler::handle_close(ACE_HANDLE, ACE_Reactor_Mask) {
   ACE_TRACE("ReadHandler::handle_close(ACE_HANDLE, ACE_Reactor_Mask)");
 
+    // The reactor close callback deletes this self-owned handler.
     delete this;
     return 0;
 }

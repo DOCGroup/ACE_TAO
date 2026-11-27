@@ -1,13 +1,8 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
  *  @file    Options.h
  *
  *  @author Douglas C. Schmidt
  */
-//=============================================================================
-
 
 #ifndef _OPTIONS_H
 #define _OPTIONS_H
@@ -48,13 +43,13 @@ public:
 
   static void set_options (int argc, char *argv[]);
   static void set_opt (Option_Types opt);
-  static int get_opt (Option_Types opt);
+  static bool get_opt (Option_Types opt);
 
   static short port_number;
   static Protocol_Types protocol_type;
   static int max_server_timeout;
   static char *program_name;
-  static const char *friend_file;
+  static char const *friend_file;
   static char *user_name;
 
   static void print_usage_and_die [[noreturn]] (int long_msg);

@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    SPIPE_Test.cpp
  *
@@ -12,8 +10,6 @@
  *
  *  @author Prashant Jain <pjain@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #include "test_config.h"
 #include "ace/Thread.h"
@@ -24,7 +20,6 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
 
-
 #if defined (ACE_HAS_STREAM_PIPES) || defined (ACE_HAS_WIN32_NAMED_PIPES)
 # define TEST_HAS_STREAM_PIPES
 #endif
@@ -34,26 +29,32 @@
 static const char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
 
 // pipe name to use
-static const ACE_TCHAR *PIPE_NAME = ACE_TEXT ("ace_pipe_name");
+static ACE_TCHAR const *PIPE_NAME = ACE_TEXT ("ace_pipe_name");
 
-static void *
+static ACE_THR_FUNC_RETURN
 client (void *)
 {
-  const ACE_TCHAR *rendezvous = PIPE_NAME;
+  ACE_TCHAR const *rendezvous = PIPE_NAME;
   ACE_SPIPE_Stream cli_stream;
   ACE_SPIPE_Connector con;
 
   ACE_OS::sleep (5);
 
   if (con.connect (cli_stream, ACE_SPIPE_Addr (rendezvous)) == -1)
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n%a"), rendezvous, 1));
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n%a"), rendezvous, 1));
+    }
 
-  for (const char *c = ACE_ALPHABET; *c != '\0'; c++)
+  for (char const *c = ACE_ALPHABET; *c != '\0'; ++c)
     if (cli_stream.send (c, 1) == -1)
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("send")));
+      {
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("send")));
+      }
 
   if (cli_stream.close () == -1)
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("close")));
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("close")));
+    }
 
 #if defined (ACE_HAS_WIN32_NAMED_PIPES)
 
@@ -72,54 +73,63 @@ client (void *)
                    PIPE_READMODE_BYTE) == -1)
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n%a"), rendezvous, 1));
 
-
   // Write out the alphabet all at once.
   if (cli_stream.send_n (ACE_ALPHABET,
                          ACE_OS::strlen (ACE_ALPHABET)) != (ssize_t) ACE_OS::strlen (ACE_ALPHABET))
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("send_n")));
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("send_n")));
+    }
 
   // Write out the alphabet one byte at a time
-  for (const char *d = ACE_ALPHABET; *d != '\0'; d++)
+  for (char const *d = ACE_ALPHABET; *d != '\0'; ++d)
     if (cli_stream.send (d, 1) == -1)
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("send")));
+      {
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("send")));
+      }
 
   if (cli_stream.close () == -1)
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("close")));
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("close")));
+    }
 #endif
 
 #if !defined (ACE_WIN32)
   ACE_OS::exit (0);
 #endif
-  return 0;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
-static void *
+static ACE_THR_FUNC_RETURN
 server (void *)
 {
   ACE_SPIPE_Acceptor acceptor;
   ACE_SPIPE_Stream new_stream;
   char buf[BUFSIZ];
-  const char *t = ACE_ALPHABET;
+  char const *t = ACE_ALPHABET;
 
-  const ACE_TCHAR *rendezvous = PIPE_NAME;
+  ACE_TCHAR const *rendezvous = PIPE_NAME;
 
   // Initialize named pipe listener.
 
   if (acceptor.open (ACE_SPIPE_Addr (rendezvous)) == -1)
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n%a"), ACE_TEXT ("open"), 1));
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n%a"), ACE_TEXT ("open"), 1));
+    }
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("waiting for connection\n")));
 
   // Accept a client connection
   if (acceptor.accept (new_stream, 0) == -1)
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n%a"), ACE_TEXT ("accept"), 1));
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n%a"), ACE_TEXT ("accept"), 1));
+    }
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Accepted connection\n")));
 
   while (new_stream.recv (buf, 1) > 0)
     {
       ACE_TEST_ASSERT (*t == buf[0]);
-      t++;
+      ++t;
     }
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("End of connection. Closing handle\n")));
   new_stream.close ();
@@ -132,19 +142,23 @@ server (void *)
                      0,
                      0,
                      PIPE_TYPE_BYTE | PIPE_READMODE_BYTE) == -1)
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n%a"), ACE_TEXT ("open"), 1));
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n%a"), ACE_TEXT ("open"), 1));
+    }
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("waiting for connection\n")));
 
   // Accept a client connection
   if (acceptor.accept (new_stream, 0) == -1)
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n%a"), ACE_TEXT ("accept"), 1));
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n%a"), ACE_TEXT ("accept"), 1));
+    }
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Accepted connection\n")));
 
   // The client will write the entire buffer at once, verify that we
   // can stream it in one byte at a time.
-  for (t = ACE_ALPHABET; *t; t++)
+  for (t = ACE_ALPHABET; *t; ++t)
     {
       if (new_stream.recv (buf, 1) <= 0)
         {
@@ -161,16 +175,20 @@ server (void *)
   // Verify that we can read the stream of individual bytes all at
   // once.
   if (new_stream.recv (buf, sizeof(buf)) != (ssize_t) ACE_OS::strlen (ACE_ALPHABET))
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n%a"), ACE_TEXT ("recv"), 1));
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n%a"), ACE_TEXT ("recv"), 1));
+    }
   else
-    ACE_TEST_ASSERT(ACE_OS::memcmp(ACE_ALPHABET, buf, ACE_OS::strlen (ACE_ALPHABET)) == 0);
+    {
+      ACE_TEST_ASSERT(ACE_OS::memcmp(ACE_ALPHABET, buf, ACE_OS::strlen (ACE_ALPHABET)) == 0);
+    }
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("End of connection. Closing handle\n")));
   new_stream.close ();
   acceptor.close ();
 #endif /* defined (ACE_HAS_WIN32NAMED_PIPES) */
 
-  return 0;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 #endif /* TEST_HAS_STREAM_PIPES */
 
@@ -187,18 +205,18 @@ run_main (int, ACE_TCHAR *[])
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n%a"), ACE_TEXT ("fork failed")));
       ACE_OS::exit (-1);
     case 0:
-      client (0);
+      client (nullptr);
     default:
-      server (0);
+      server (nullptr);
     }
 #elif defined (ACE_HAS_THREADS)
-  if (ACE_Thread_Manager::instance ()->spawn (ACE_THR_FUNC (client),
-                                              (void *) 0,
+  if (ACE_Thread_Manager::instance ()->spawn (client,
+                                              nullptr,
                                               THR_NEW_LWP | THR_DETACHED) == -1)
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n%a"), ACE_TEXT ("thread create failed")));
 
-  if (ACE_Thread_Manager::instance ()->spawn (ACE_THR_FUNC (server),
-                                              (void *) 0,
+  if (ACE_Thread_Manager::instance ()->spawn (server,
+                                              nullptr,
                                               THR_NEW_LWP | THR_DETACHED) == -1)
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n%a"), ACE_TEXT ("thread create failed")));
 

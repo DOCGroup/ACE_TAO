@@ -18,7 +18,7 @@ TAO_DistributableThread::state ()
 RTScheduling::DistributableThread_ptr
 TAO_DistributableThread_Factory::create_DT ()
 {
-  TAO_DistributableThread* DT = nullptr;
+  TAO_DistributableThread* DT {};
 
   ACE_NEW_THROW_EX (DT,
                     TAO_DistributableThread,

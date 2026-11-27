@@ -1,5 +1,3 @@
-// -*- C++ -*-
-//=============================================================================
 /**
  *  @file   Iterator.h
  *
@@ -7,7 +5,6 @@
  *
  *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef IMR_ITERATOR_H
 #define IMR_ITERATOR_H
@@ -20,7 +17,6 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
 
 class ImR_AsyncIterator
   : public POA_ImplementationRepository::AMH_ServerInformationIterator

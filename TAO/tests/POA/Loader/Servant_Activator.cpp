@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file     Servant_Activator.cpp
  *
@@ -8,11 +6,8 @@
  *
  *  @author  Kirthika Parameswaran <kirthika@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #include "Servant_Activator.h"
-#include "ace/OS_NS_string.h"
 
 // Initialization.The dllname is used by the Loactor to load it into
 // memory. The factory function is the point of entry into the dll and
@@ -20,16 +15,18 @@
 // is used to kill the servant.
 
 ServantActivator::ServantActivator (CORBA::ORB_ptr orb,
-                                    const ACE_TCHAR *dllname,
-                                    const ACE_TCHAR *factory_function,
-                                    const ACE_TCHAR *garbage_collection_function)
+                                    ACE_TCHAR const *dllname,
+                                    ACE_TCHAR const *factory_function,
+                                    ACE_TCHAR const *garbage_collection_function)
   : orb_ (CORBA::ORB::_duplicate (orb))
 {
   // The dll is opened using the dllname passed.
   if (this->dll_.open (dllname) == -1)
-    ACE_ERROR ((LM_ERROR,
-                "%p\n",
-                this->dll_.error ()));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "%p\n",
+                  this->dll_.error ()));
+    }
 
   // Obtain the symbol for the function that will get the servant
   // object.
@@ -53,25 +50,29 @@ ServantActivator::ServantActivator (CORBA::ORB_ptr orb,
 // This method associates an servant with the ObjectID.
 
 PortableServer::Servant
-ServantActivator::incarnate (const PortableServer::ObjectId &oid,
+ServantActivator::incarnate (PortableServer::ObjectId const &oid,
                              PortableServer::POA_ptr poa)
 {
   // Obtain the servant else exception.
-  PortableServer::Servant servant =
+  PortableServer::Servant const servant =
     (*servant_supplier_) (oid,
                           poa,
                           this->orb_.in ());
-  if (servant != 0)
-    return servant;
+  if (servant != nullptr)
+    {
+      return servant;
+    }
   else
+  {
     throw CORBA::OBJECT_NOT_EXIST ();
+  }
 }
 
 // This is the method invoked when the object is deactivated or the
 // entire POA is is deactivated or destroyed.
 
 void
-ServantActivator::etherealize (const PortableServer::ObjectId &oid,
+ServantActivator::etherealize (PortableServer::ObjectId const &oid,
                                PortableServer::POA_ptr poa,
                                PortableServer::Servant servant,
                                CORBA::Boolean,
@@ -82,8 +83,10 @@ ServantActivator::etherealize (const PortableServer::ObjectId &oid,
   // garbage_collection_function.  Etheralization happens on
   // POA::destroy() and/or Object::deactivate().
 
-  if (remaining_activations == 0)
-    (*servant_garbage_collector_) (oid,
-                                   poa,
-                                   servant);
+  if (!remaining_activations)
+    {
+      (*servant_garbage_collector_) (oid,
+                                     poa,
+                                     servant);
+    }
 }

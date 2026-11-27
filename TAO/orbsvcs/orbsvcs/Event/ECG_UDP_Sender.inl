@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "ace/Null_Mutex.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -60,7 +59,7 @@ TAO_ECG_UDP_Sender_Disconnect_Command (
 ACE_INLINE
 TAO_ECG_UDP_Sender_Disconnect_Command::
 TAO_ECG_UDP_Sender_Disconnect_Command (
-                              const TAO_ECG_UDP_Sender_Disconnect_Command & rhs)
+                              TAO_ECG_UDP_Sender_Disconnect_Command const & rhs)
   : proxy_ (RtecEventChannelAdmin::ProxyPushSupplier::_duplicate
             (rhs.proxy_.in ()))
 {
@@ -68,7 +67,7 @@ TAO_ECG_UDP_Sender_Disconnect_Command (
 
 ACE_INLINE TAO_ECG_UDP_Sender_Disconnect_Command &
 TAO_ECG_UDP_Sender_Disconnect_Command::operator= (
-                             const TAO_ECG_UDP_Sender_Disconnect_Command & rhs)
+                             TAO_ECG_UDP_Sender_Disconnect_Command const & rhs)
 {
   this->proxy_ =
     RtecEventChannelAdmin::ProxyPushSupplier::_duplicate (rhs.proxy_.in ());
@@ -80,8 +79,10 @@ ACE_INLINE void
 TAO_ECG_UDP_Sender_Disconnect_Command::execute ()
 {
   if (CORBA::is_nil (this->proxy_.in ()))
-    // We are not connected.
-    return;
+    {
+      // We are not connected.
+      return;
+    }
 
   RtecEventChannelAdmin::ProxyPushSupplier_var release_proxy =
     this->proxy_._retn ();

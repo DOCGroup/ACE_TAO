@@ -1,23 +1,20 @@
-// -*- C++ -*-
 #ifndef TAO_SERVER_INTERCEPTOR_H
 #define TAO_SERVER_INTERCEPTOR_H
 
 #include <omg/PortableInterceptor.hh>
 
+/// Server-side echo interceptor.  For checking interceptor visually only.
 class Echo_Server_Request_Interceptor
   : public virtual PortableInterceptor::ServerRequestInterceptor,
     public virtual ::CORBA::LocalObject
 {
-  // = Server-side echo interceptor.  For checking interceptor visually only.
 public:
   Echo_Server_Request_Interceptor ();
-  // cotr.
 
   ~Echo_Server_Request_Interceptor ();
-  // dotr.
 
+  /// Canonical name of the interceptor.
   virtual char * name ();
-  // Canonical name of the interceptor.
 
   virtual void destroy ();
 

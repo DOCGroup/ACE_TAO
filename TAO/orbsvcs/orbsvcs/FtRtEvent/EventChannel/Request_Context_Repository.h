@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   Request_Context_Repository.h
  *
  *  @author Huang-Ming Huang <hh1@cse.wustl.edu>
  */
-//=============================================================================
 
 #ifndef REQUEST_CONTEXT_REPOSITORY_H
 #define REQUEST_CONTEXT_REPOSITORY_H
@@ -53,15 +49,14 @@ public:
    */
   void allocate_slots(PortableInterceptor::ORBInitInfo_ptr info);
 
-
   void generate_object_id(FtRtecEventChannelAdmin::ObjectId& object_id);
-  void set_object_id(const FtRtecEventChannelAdmin::ObjectId& object_id);
+  void set_object_id(FtRtecEventChannelAdmin::ObjectId const& object_id);
   FtRtecEventChannelAdmin::ObjectId_var get_object_id();
   FtRtecEventChannelAdmin::ObjectId_var
     get_object_id(PortableInterceptor::ServerRequestInfo_ptr ri);
 
   void set_cached_result(PortableInterceptor::ServerRequestInfo_ptr ri,
-                         const CORBA::Any& result);
+                         CORBA::Any const& result);
 
   CORBA::Any_ptr get_cached_result();
   bool is_executed_request();

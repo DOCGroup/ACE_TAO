@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    Counter_i.h
  *
@@ -7,8 +5,6 @@
  *
  *  @author  Angelo Corsaro <corsaro@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef COUNTER_I_H_
 #define COUNTER_I_H_
@@ -17,27 +13,31 @@
 #include "CounterS.h"
 #include "Policy_Tester.h"
 
-
 class Counter_Servant : public POA_Counter
 {
 public:
-  // = Ctor-Dtor Declaration
-  Counter_Servant (Policy_Tester *policy_tester);
-  virtual ~Counter_Servant () = default;
+  explicit Counter_Servant (Policy_Tester *policy_tester);
+  ~Counter_Servant () override = default;
+  Counter_Servant (Counter_Servant const &) = delete;
+  Counter_Servant (Counter_Servant &&) = delete;
+  Counter_Servant &operator= (Counter_Servant const &) = delete;
+  Counter_Servant &operator= (Counter_Servant &&) = delete;
 
-  // = Counter Interface Methods Overloading.
+  /// @name Counter interface operations
+  /// @{
+  void increment () override;
 
-  virtual void increment ();
+  CORBA::Long get_count () override;
 
-  virtual CORBA::Long get_count ();
+  void reset () override;
 
-  virtual void reset ();
-
-  virtual void shutdown ();
+  void shutdown () override;
+  /// @}
 
 protected:
-  CORBA::Long count_;
-  Policy_Tester *policy_tester_;
+  CORBA::Long count_ {};
+  /// Borrowed; Policy_Tester outlives the servant.
+  Policy_Tester *const policy_tester_;
 };
 
 #endif /*COUNTER_I_H_*/

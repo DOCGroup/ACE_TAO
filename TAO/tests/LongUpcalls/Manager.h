@@ -1,4 +1,3 @@
-
 #ifndef LONGUPCALLS_MANAGER_H
 #define LONGUPCALLS_MANAGER_H
 
@@ -6,24 +5,28 @@
 #include "ace/Task.h"
 
 class Manager
-  :  public virtual POA_Test::Manager
+  : public virtual POA_Test::Manager
 {
 public:
-  Manager (CORBA::ORB_ptr orb);
-  // Constructor
+  explicit Manager (CORBA::ORB_ptr orb);
 
-  // = The skeleton methods
-  virtual void start_workers (CORBA::Short worker_count,
-                              CORBA::Long milliseconds,
-                              Test::Controller_ptr controller);
-  virtual void shutdown ();
+  /// @name Skeleton methods
+  /// @{
+  void start_workers (CORBA::Short worker_count,
+                      CORBA::Long milliseconds,
+                      Test::Controller_ptr controller) override;
+  void shutdown () override;
+  /// @}
+
+  Manager (Manager const &) = delete;
+  Manager (Manager &&) = delete;
+  Manager &operator= (Manager const &) = delete;
+  Manager &operator= (Manager &&) = delete;
 
 private:
+  /// The ORB used to shut down the application.
   CORBA::ORB_var orb_;
-  // The ORB, to shutdown
 };
-
-// ****************************************************************
 
 class Worker : public ACE_Task_Base
 {
@@ -32,15 +35,20 @@ public:
           Test::Controller_ptr controller,
           CORBA::Long milliseconds);
 
-  virtual int svc ();
-  // The service method
+  /// Run the worker thread.
+  int svc () override;
+
+  Worker (Worker const &) = delete;
+  Worker (Worker &&) = delete;
+  Worker &operator= (Worker const &) = delete;
+  Worker &operator= (Worker &&) = delete;
 
 private:
+  /// Controller to report worker progress.
   Test::Controller_var controller_;
-  // The controller pointer
 
+  /// Number of milliseconds to run.
   CORBA::Long milliseconds_;
-  // The number of milliseconds.
 };
 
 #endif /* LONGUPCALLS_MANAGER_H */

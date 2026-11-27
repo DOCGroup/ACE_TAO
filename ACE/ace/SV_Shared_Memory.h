@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//==========================================================================
 /**
  *  @file    SV_Shared_Memory.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//==========================================================================
 
 #ifndef ACE_SV_SHARED_MEMORY_H
 #define ACE_SV_SHARED_MEMORY_H
@@ -71,15 +67,17 @@ public:
   /// Remove this shared memory segment.
   int remove ();
 
-  /// Forward to underlying System V <shmctl>.
+  /// Forward to underlying System V @c shmctl.
   int control (int cmd, void *buf);
 
-  // = Segment-related info.
+  /// @name Segment information
+  /// @{
   void *get_segment_ptr () const;
   size_t get_segment_size () const;
 
   /// Return the ID of the shared memory segment (i.e., an ACE_HANDLE).
   ACE_HANDLE get_id () const;
+  /// @}
 
   /// Dump the state of an object.
   void dump () const;
@@ -92,13 +90,13 @@ protected:
   static constexpr int ALIGN_WORDB = 8;
 
   /// Internal identifier.
-  ACE_HANDLE internal_id_;
+  ACE_HANDLE internal_id_ {};
 
   /// Size of the mapped segment.
-  size_t size_;
+  size_t size_ {};
 
   /// Pointer to the beginning of the segment.
-  void *segment_ptr_;
+  void *segment_ptr_ {};
 
   /// Round up to an appropriate page size.
   size_t round_up (size_t len);

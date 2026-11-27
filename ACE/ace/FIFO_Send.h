@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//==========================================================================
 /**
  *  @file    FIFO_Send.h
  *
  *  @author Doug Schmidt
  */
-//==========================================================================
 
 #ifndef ACE_FIFO_SEND_H
 #define ACE_FIFO_SEND_H
@@ -34,31 +30,30 @@ class ACE_Export ACE_FIFO_Send : public ACE_FIFO
 public:
   /// @name Initialization methods.
   ///
-  /// Note that @c O_WRONLY will be added to any @a flags value passed.
+  /// @note @c O_WRONLY will be added to any @a flags value passed.
   /// Default behavior is to block until a receiver also opens the fifo.
   /// To use non-blocking behavior include ACE_NONBLOCK in @a flags.
-  //@{
-  /// Default constructor.
+  /// @{
   ACE_FIFO_Send ();
 
   /// Open up a bytestream named pipe for writing.
-  ACE_FIFO_Send (const ACE_TCHAR *rendezvous,
+  ACE_FIFO_Send (ACE_TCHAR const *rendezvous,
                  int flags = O_WRONLY,
                  mode_t perms = ACE_DEFAULT_FILE_PERMS,
                  LPSECURITY_ATTRIBUTES sa = 0);
 
   /// Open up a bytestream named pipe for writing.
-  int open (const ACE_TCHAR *rendezvous,
+  int open (ACE_TCHAR const *rendezvous,
             int flags = O_WRONLY,
             mode_t perms = ACE_DEFAULT_FILE_PERMS,
             LPSECURITY_ATTRIBUTES sa = 0);
-  //@}
+  /// @}
 
   /// Send @a buf of up to @a len bytes.
-  ssize_t send (const void *buf, size_t len);
+  ssize_t send (void const *buf, size_t len);
 
   /// Send @a buf of exactly @a len bytes (block until done).
-  ssize_t send_n (const void *buf, size_t len);
+  ssize_t send_n (void const *buf, size_t len);
 
   /// Dump the state of an object.
   void dump () const;

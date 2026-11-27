@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   OS_NS_sys_socket.h
  *
@@ -8,7 +5,6 @@
  *  @author Jesper S. M|ller<stophph@diku.dk>
  *  @author and a cast of thousands...
  */
-//=============================================================================
 
 #ifndef ACE_OS_NS_SYS_SOCKET_H
 # define ACE_OS_NS_SYS_SOCKET_H
@@ -80,7 +76,8 @@ namespace ACE_OS
   extern ACE_Export int socket_initialized_;
 # endif /* ACE_WIN32 */
 
-  //@{ @name A set of wrappers for sockets.
+  /// @name A set of wrappers for sockets.
+  /// @{
   /// BSD-style @c accept (no QoS).
   ACE_NAMESPACE_INLINE_FUNCTION
   ACE_HANDLE accept (ACE_HANDLE handle,
@@ -96,7 +93,7 @@ namespace ACE_OS
   ACE_HANDLE accept (ACE_HANDLE handle,
                      struct sockaddr *addr,
                      int *addrlen,
-                     const ACE_Accept_QoS_Params &qos_params);
+                     ACE_Accept_QoS_Params const &qos_params);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int bind (ACE_HANDLE s,
@@ -122,7 +119,7 @@ namespace ACE_OS
   int connect (ACE_HANDLE handle,
                const sockaddr *addr,
                int addrlen,
-               const ACE_QoS_Params &qos_params);
+               ACE_QoS_Params const &qos_params);
 
   /// Retrieve information about available transport protocols
   /// installed on the local machine. Windows specific...
@@ -152,7 +149,7 @@ namespace ACE_OS
   ACE_HANDLE join_leaf (ACE_HANDLE socket,
                         const sockaddr *name,
                         int namelen,
-                        const ACE_QoS_Params &qos_params);
+                        ACE_QoS_Params const &qos_params);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int listen (ACE_HANDLE handle,
@@ -203,7 +200,7 @@ namespace ACE_OS
 
   ACE_NAMESPACE_INLINE_FUNCTION
   ssize_t send (ACE_HANDLE handle,
-                const char *buf,
+                char const *buf,
                 size_t len,
                 int flags = 0);
 
@@ -211,7 +208,7 @@ namespace ACE_OS
   /// requires a buffer to do a partial send
   extern ACE_Export
   ssize_t send_partial_i (ACE_HANDLE handle,
-                          const char *buf,
+                          char const *buf,
                           size_t len,
                           int flags);
 
@@ -230,7 +227,7 @@ namespace ACE_OS
 
   ACE_NAMESPACE_INLINE_FUNCTION
   ssize_t sendto (ACE_HANDLE handle,
-                  const char *buf,
+                  char const *buf,
                   size_t len,
                   int flags,
                   const struct sockaddr *addr,
@@ -264,7 +261,7 @@ namespace ACE_OS
   int setsockopt (ACE_HANDLE handle,
                   int level,
                   int optname,
-                  const char *optval,
+                  char const *optval,
                   int optlen);
 
   ACE_NAMESPACE_INLINE_FUNCTION
@@ -272,7 +269,7 @@ namespace ACE_OS
                 int how);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  unsigned int if_nametoindex (const char *ifname);
+  unsigned int if_nametoindex (char const *ifname);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   char *if_indextoname (unsigned int ifindex, char *ifname);
@@ -300,7 +297,7 @@ namespace ACE_OS
                      int proto);
 
   /// Create a QoS-enabled socket.  If the OS platform doesn't support
-  /// QoS-enabled <socket> then the BSD-style <socket> is called.
+  /// QoS-enabled @c socket then the BSD-style @c socket is called.
   ACE_NAMESPACE_INLINE_FUNCTION
   ACE_HANDLE socket (int protocol_family,
                      int type,

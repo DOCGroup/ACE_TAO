@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//==============================================================
 /**
  *  @file DII_Reply_Handler.h
  *
  *  @brief Handler of DII twoway asynch replies type.
  */
-// =============================================================
 
 #ifndef TAO_DII_REPLY_HANDLER_H
 #define TAO_DII_REPLY_HANDLER_H
@@ -72,7 +68,7 @@ class TAO_DynamicInterface_Export TAO_DII_Reply_Handler
 {
 public:
   TAO_DII_Reply_Handler () = default;
-  virtual ~TAO_DII_Reply_Handler ();
+  ~TAO_DII_Reply_Handler () override = default;
 
   /// Callback method for asynchronous requests.
   virtual void handle_response (TAO_InputCDR &incoming) = 0;

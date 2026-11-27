@@ -11,6 +11,7 @@
 
 #include <openssl/x509.h>
 #include <openssl/crypto.h>
+#include <memory>
 #include "ace/INet/INet_SSL_Export.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -30,17 +31,17 @@ namespace ACE
           {
             public:
               SSL_X509Cert ();
-              SSL_X509Cert (::X509* ssl_cert);
-              SSL_X509Cert (const SSL_X509Cert& cert);
+              explicit SSL_X509Cert (::X509* ssl_cert);
+              SSL_X509Cert (SSL_X509Cert const& cert);
               ~SSL_X509Cert ();
 
               SSL_X509Cert& operator= (::X509* ssl_cert);
-              SSL_X509Cert& operator= (const SSL_X509Cert& ssl_cert);
+              SSL_X509Cert& operator= (SSL_X509Cert const& ssl_cert);
 
               ::X509* operator & ();
 
             private:
-              ::X509* ssl_cert_;
+              ::X509* ssl_cert_ {};
           };
       }
   }

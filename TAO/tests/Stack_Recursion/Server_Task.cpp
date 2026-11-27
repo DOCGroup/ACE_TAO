@@ -1,9 +1,8 @@
-
 #include "Server_Task.h"
 #include "Sender.h"
 
 Server_Task::Server_Task (CORBA::ORB_ptr orb,
-                          const Sender *sender,
+                          Sender const *sender,
                           ACE_Thread_Manager *thr_mgr)
   : ACE_Task_Base (thr_mgr)
   , orb_ (CORBA::ORB::_duplicate (orb))
@@ -25,7 +24,7 @@ Server_Task::svc ()
         }
 
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       return -1;
     }

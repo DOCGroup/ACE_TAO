@@ -12,8 +12,8 @@
 
 // This should be less than or equal to the value of num_events in
 // Supplier.cpp
-static const int max_events = 70;
-static const TimeBase::TimeT PACING = 1000;
+constexpr int max_events { 70 };
+constexpr TimeBase::TimeT PACING { 1000 };
 
 // ******************************************************************
 // Subroutine Section
@@ -21,12 +21,10 @@ static const TimeBase::TimeT PACING = 1000;
 
 Notify_Sequence_Push_Consumer::Notify_Sequence_Push_Consumer (
   Notify_Test_Client& client)
-  : count_ (0),
-    client_ (client)
+  : client_ (client)
 {
   this->client_.consumer_start (this);
 }
-
 
 void
 Notify_Sequence_Push_Consumer::_connect (
@@ -56,10 +54,9 @@ Notify_Sequence_Push_Consumer::_connect (
   this->_remove_ref ();
 }
 
-
 void
 Notify_Sequence_Push_Consumer::push_structured_events (
-  const CosNotification::EventBatch& events)
+  CosNotification::EventBatch const& events)
 {
   this->count_ += events.length ();
   if (this->count_ >= max_events)

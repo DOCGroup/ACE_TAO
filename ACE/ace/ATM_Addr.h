@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//==========================================================================
 /**
  *  @file    ATM_Addr.h
  *
  *  @author Joe Hoffert <joeh@cs.wustl.edu>
  */
-//==========================================================================
 
 #ifndef ACE_ATM_ADDR_H
 #define ACE_ATM_ADDR_H
@@ -57,17 +53,15 @@ using ATM_Addr = int;
 class ACE_Export ACE_ATM_Addr : public ACE_Addr
 {
 public:
-  // Constants used for ATM options
+  /// Constants used for ATM options.
   static const long LINE_RATE;
   static const int OPT_FLAGS_CPID;
   static const int OPT_FLAGS_PMP;
   static const int DEFAULT_SELECTOR;
 
-  /// Default constructor.
   ACE_ATM_Addr (u_char selector = DEFAULT_SELECTOR);
 
-  /// Copy constructor.
-  ACE_ATM_Addr (const ACE_ATM_Addr &,
+  ACE_ATM_Addr (ACE_ATM_Addr const &,
                 u_char selector = DEFAULT_SELECTOR);
 
   /**
@@ -79,15 +73,14 @@ public:
                 u_char selector = DEFAULT_SELECTOR);
 
   /**
-   * Initializes an ACE_ATM_Addr from the <sap> which can be
+   * Initializes an ACE_ATM_Addr from the @c sap which can be
    * "atm-address" (e.g.,
    * "47.0005.80.ffe100.0000.f20f.2200.0020480694f9.00") or "hostname"
    * (e.g., "frisbee.cs.wustl.edu").
    */
-  ACE_ATM_Addr (const ACE_TCHAR sap[],
+  ACE_ATM_Addr (ACE_TCHAR const sap[],
                 u_char selector = DEFAULT_SELECTOR);
 
-  /// Default dtor.
   ~ACE_ATM_Addr () = default;
 
   /// Default initialization for non-address values (e.g.,
@@ -95,7 +88,7 @@ public:
   void init (u_char selector = DEFAULT_SELECTOR);
 
   /// Initializes from another ACE_ATM_Addr.
-  int set (const ACE_ATM_Addr &,
+  int set (ACE_ATM_Addr const &,
            u_char selector = DEFAULT_SELECTOR);
 
   /**
@@ -107,27 +100,27 @@ public:
            u_char selector = DEFAULT_SELECTOR);
 
   /**
-   * Initializes an ACE_ATM_Addr from the <sap> which can be
+   * Initializes an ACE_ATM_Addr from the @c sap which can be
    * "atm-address" (e.g.,
    * "47.0005.80.ffe100.0000.f20f.2200.0020480694f9.00") or "hostname"
    * (e.g., "frisbee.cs.wustl.edu").
    */
-  int set (const ACE_TCHAR sap[],
+  int set (ACE_TCHAR const sap[],
            u_char selector = DEFAULT_SELECTOR);
 
   /**
-   * Initializes an ACE_ATM_Addr from the <sap> which can be
+   * Initializes an ACE_ATM_Addr from the @c sap which can be
    * "atm-address" (e.g.,
    * "47.0005.80.ffe100.0000.f20f.2200.0020480694f9.00") or "hostname"
    * (e.g., "frisbee.cs.wustl.edu").
    */
-  virtual int string_to_addr (const ACE_TCHAR sap[]);
+  virtual int string_to_addr (ACE_TCHAR const sap[]);
 
   /**
    * Return the character representation of the ATM address (e.g.,
    * "47.0005.80.ffe100.0000.f20f.2200.0020480694f9.00") storing it in
-   * the @a addr (which is assumed to be <addrlen> bytes long). This
-   * version is reentrant.  Returns -1 if the <addrlen> of the @a addr
+   * the @a addr (which is assumed to be @c addrlen bytes long). This
+   * version is reentrant.  Returns -1 if the @c addrlen of the @a addr
    * is too small, else 0.
    */
   virtual int addr_to_string (ACE_TCHAR addr[],
@@ -136,17 +129,17 @@ public:
   /**
    * Return the character representation of the ATM address (e.g.,
    * "47.0005.80.ffe100.0000.f20f.2200.0020480694f9.00"). Returns -1
-   * if the <size> of the <buffer> is too small, else 0.(This version
+   * if the @c size of the @c buffer is too small, else 0.(This version
    * is non-reentrant since it returns a pointer to a static data
    * area.)
    */
-  const ACE_TCHAR *addr_to_string () const;
+  ACE_TCHAR const *addr_to_string () const;
 
   /// Return a pointer to the underlying network address.
   virtual void *get_addr () const;
 
   /// Set a pointer to the address.
-  virtual void set_addr (const void *, int);
+  virtual void set_addr (void const *, int);
 
   /// Return the selector for network address.
   u_char get_selector () const;
@@ -159,10 +152,10 @@ public:
    * equal if they contain the same ATM address.  Q: Is there any
    * other check for equality needed for ATM?
    */
-  bool operator == (const ACE_ATM_Addr &SAP) const;
+  bool operator == (ACE_ATM_Addr const &SAP) const;
 
   /// Compare two addresses for inequality.
-  bool operator != (const ACE_ATM_Addr &SAP) const;
+  bool operator != (ACE_ATM_Addr const &SAP) const;
 
   /// Dump the state of an object.
   void dump () const;
@@ -182,7 +175,6 @@ private:
 
 // Close versioned namespace, if enabled by the user.
 ACE_END_VERSIONED_NAMESPACE_DECL
-
 
 #if defined (__ACE_INLINE__)
 #include "ace/ATM_Addr.inl"

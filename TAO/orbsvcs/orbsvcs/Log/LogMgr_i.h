@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   LogMgr_i.h
  *
@@ -10,7 +7,6 @@
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  *  @author David A. Hanvey <d.hanvey@qub.ac.uk>
  */
-//=============================================================================
 
 #ifndef TAO_TLS_LOGMGR_I_H
 #define TAO_TLS_LOGMGR_I_H
@@ -25,6 +21,7 @@
 #include "orbsvcs/Log/Log_i.h"
 #include "orbsvcs/Log/Log_Persistence_Strategy.h"
 #include "orbsvcs/Log/log_serv_export.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -39,10 +36,8 @@ class TAO_Log_Serv_Export TAO_LogMgr_i
   : public virtual POA_DsLogAdmin::LogMgr
 {
 public:
-  /// Constructor.
   TAO_LogMgr_i ();
 
-  /// Destructor.
   ~TAO_LogMgr_i () override;
 
   /// Lists all log object references.
@@ -171,7 +166,7 @@ private:
   TAO_LogMgr_i &operator= (TAO_LogMgr_i const &) = delete;
   TAO_LogMgr_i &operator= (TAO_LogMgr_i &&) = delete;
 
-  TAO_LogStore * logstore_;
+  std::unique_ptr<TAO_LogStore> logstore_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

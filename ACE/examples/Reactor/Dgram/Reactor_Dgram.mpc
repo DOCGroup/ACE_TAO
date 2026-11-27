@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*CO) : aceexe, avoids_ace_for_tao {
   exename = codgram
   Source_Files {

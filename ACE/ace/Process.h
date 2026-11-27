@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Process.h
  *
  *  @author Tim Harrison <harrison@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef ACE_PROCESS_H
 #define ACE_PROCESS_H
@@ -33,13 +29,13 @@ class ACE_Time_Value;
  *
  * @brief Process Options
  *
- * This class controls the options passed to <CreateProcess> (or <fork>
- * and <exec>).
- * Notice that on UNIX platforms, if the <setenv> is used, the
- * <spawn> is using the <execve> system call. It means that the
- * <command_line> should include a full path to the program file
- * (<execve> does not search the PATH).  If <setenv> is not used
- * then, the <spawn> is using the <execvp> which searches for the
+ * This class controls the options passed to @c CreateProcess (or @c fork
+ * and @c exec).
+ * Notice that on UNIX platforms, if the @c setenv is used, the
+ * @c spawn is using the @c execve system call. It means that the
+ * @c command_line should include a full path to the program file
+ * (@c execve does not search the PATH).  If @c setenv is not used
+ * then, the @c spawn is using the @c execvp which searches for the
  * program file in the PATH variable.
  */
 class ACE_Export ACE_Process_Options
@@ -47,7 +43,7 @@ class ACE_Export ACE_Process_Options
 public:
   static constexpr int DEFAULT_COMMAND_LINE_BUF_LEN = 1024;
 
-  // UNIX process creation flags.
+  /// UNIX process creation flags.
   enum
   {
 #if defined (ACE_WIN32)
@@ -58,13 +54,16 @@ public:
   };
 
 protected:
-  // = Default settings not part of public Interface.
-  //
+  /// @name Internal default settings
+  /// These settings are not part of the public interface.
+  /// @{
   /// @todo These sizes should be taken from the appropriate
   /// POSIX/system header files and/or defined dynamically.
   static constexpr int MAX_COMMAND_LINE_OPTIONS = 128;
-  static constexpr int ENVIRONMENT_BUFFER = 16 * 1024; // 16K
+  /// Default environment buffer size (16K).
+  static constexpr int ENVIRONMENT_BUFFER = 16 * 1024;
   static constexpr int MAX_ENVIRONMENT_ARGS = 512;
+  /// @}
 
 public:
   /**
@@ -78,10 +77,14 @@ public:
                        size_t max_env_args = MAX_ENVIRONMENT_ARGS,
                        size_t max_cmdline_args = MAX_COMMAND_LINE_OPTIONS);
 
-  /// Destructor.
   ~ACE_Process_Options ();
+  ACE_Process_Options (ACE_Process_Options const &) = delete;
+  ACE_Process_Options (ACE_Process_Options &&) = delete;
+  ACE_Process_Options &operator= (ACE_Process_Options const &) = delete;
+  ACE_Process_Options &operator= (ACE_Process_Options &&) = delete;
 
-  // = Methods to set process creation options portably.
+  /// @name Portable process creation options
+  /// @{
 
   /**
    * Set the standard handles of the new process to the respective
@@ -98,7 +101,7 @@ public:
    *       on Windows. Socket handles require an alternate mechanism to pass;
    *       see http://msdn.microsoft.com/en-us/library/ms741565(v=VS.85).aspx
    *
-   * @return 0 on success, -1 on failure.
+   * Returns 0 on success and -1 on failure.
    */
   int set_handles (ACE_HANDLE std_in,
                    ACE_HANDLE std_out = ACE_INVALID_HANDLE,
@@ -110,7 +113,7 @@ public:
 #ifndef ACE_LACKS_VA_FUNCTIONS
   /// @param format must be of the form "VARIABLE=VALUE".  There can not be
   /// any spaces between VARIABLE and the equal sign.
-  int setenv (const ACE_TCHAR *format,
+  int setenv (ACE_TCHAR const *format,
               ...)
 #if !defined (ACE_USES_WCHAR)
     ACE_GCC_FORMAT_ATTRIBUTE (printf, 2, 3)
@@ -125,8 +128,8 @@ public:
    * ("FOO","one + two = %s", "three") will result in "FOO=one + two =
    * three".
    */
-  int setenv (const ACE_TCHAR *variable_name,
-              const ACE_TCHAR *format,
+  int setenv (ACE_TCHAR const *variable_name,
+              ACE_TCHAR const *format,
               ...)
 #if !defined (ACE_USES_WCHAR)
     ACE_GCC_FORMAT_ATTRIBUTE (printf, 3, 4)
@@ -139,7 +142,7 @@ public:
 
   /// Set the working directory for the process.  strlen of @a wd must
   /// be <= MAXPATHLEN.
-  void working_directory (const char *wd);
+  void working_directory (char const *wd);
 
 #if defined (ACE_HAS_WCHAR)
   /// wchar_t version of working_directory
@@ -156,7 +159,7 @@ public:
    * path to run a process, this method *must* be called!  Returns 0
    * on success, -1 on failure.
    */
-  int command_line (const ACE_TCHAR *format, ...)
+  int command_line (ACE_TCHAR const *format, ...)
 #if !defined (ACE_USES_WCHAR)
     ACE_GCC_FORMAT_ATTRIBUTE (printf, 2, 3)
 #endif /* !ACE_USES_WCHAR */
@@ -164,12 +167,12 @@ public:
 
 #if defined (ACE_HAS_WCHAR)
   /// Anti-TChar version of command_line ()
-  int command_line (const ACE_ANTI_TCHAR *format, ...);
+  int command_line (ACE_ANTI_TCHAR const *format, ...);
 #endif /* ACE_HAS_WCHAR */
 #endif // ACE_LACKS_VA_FUNCTIONS
 
   /// Same as above in argv format.  @a argv must be null terminated.
-  int command_line (const ACE_TCHAR * const argv[]);
+  int command_line (ACE_TCHAR const *const argv[]);
 
   /**
    * Specify the full path or relative path, or just the executable
@@ -178,11 +181,11 @@ public:
    * line. This is here so that you can supply something other than
    * executable name as argv[0].
    */
-  void process_name (const ACE_TCHAR *name);
+  void process_name (ACE_TCHAR const *name);
 
-  /// Return the process_name.  If the <process_name(name)> set
+  /// Return the process name. If the @c process_name(name) set
   /// method is not called, this method will return argv[0].
-  const ACE_TCHAR *process_name ();
+  ACE_TCHAR const *process_name ();
 
   /// Get the creation flags.
   u_long creation_flags () const;
@@ -208,16 +211,17 @@ public:
   /// command_line_argv(), this is a single string of space separated
   /// arguments independent of which form of command_line() was used to
   /// create it.  After a call to command_line_argv(), this is a list of
-  /// strings each terminated by '\0'.  [Note: spawn() will call
-  /// command_line_argv().]  The total length of all these strings is the
+  /// strings each terminated by '\0'.
+  /// The total length of all these strings is the
   /// same as the single string in the prior case and can be obtained by
   /// providing max_len. @arg max_len, if non-zero, provides a location
   /// into which the total length of the command line buffer is returned.
+  /// @note The spawn() method calls command_line_argv().
   ACE_TCHAR *command_line_buf (size_t *max_len = nullptr);
 
   /**
    * argv-style command-line options.  Parses and modifies the string
-   * created from <command_line_>.  All spaces not in quotes ("" or
+   * created from @c command_line_.  All spaces not in quotes ("" or
    * '') are replaced with null (\0) bytes.  An argv array is built
    * and returned with each entry pointing to the start of
    * null-terminated string.  Returns { 0 } if nothing has been set.
@@ -296,8 +300,12 @@ public:
   /// Return the unicode environment status
   bool use_unicode_environment () const;
 
+  /// @}
+
 #if defined (ACE_WIN32)
-  // = Non-portable accessors for when you "just have to use them."
+
+  /// @name Windows-specific process accessors
+  /// @{
 
   /// Used for setting and getting.
   ACE_TEXT_STARTUPINFO *startup_info ();
@@ -322,22 +330,26 @@ public:
   HANDLE get_user_token () const;
 
   /// Set user token for creating process as user.
-  /// @param token the user token is passed to \c ::CreateProcessAsUser.
+  /// @param token the user token is passed to @c CreateProcessAsUser().
   /// @param close_token whether to close the user token when destructing.
   void set_user_token (HANDLE token, bool close_token = false);
+  /// @}
 
 #else /* All things not WIN32 */
 
   /// argv-style array of environment settings.
   ACE_TCHAR *const *env_argv ();
 
-  // = Accessors for the standard handles.
+  /// @name Standard handle accessors
+  /// @{
   ACE_HANDLE get_stdin () const;
   ACE_HANDLE get_stdout () const;
   ACE_HANDLE get_stderr () const;
+  /// @}
 
-  // = Set/get real & effective user & group id associated with user.
-  int setreugid (const ACE_TCHAR* user);
+  /// @name Real and effective user/group ID accessors
+  /// @{
+  int setreugid (ACE_TCHAR const *user);
   void setruid (uid_t id);
   void seteuid (uid_t id);
   void setrgid (gid_t id);
@@ -346,6 +358,7 @@ public:
   uid_t geteuid () const;
   gid_t getrgid () const;
   gid_t getegid () const;
+  /// @}
 
   /**
    * Get the inherit_environment flag.
@@ -366,11 +379,10 @@ protected:
   /// environment.
   bool inherit_environment_;
 
-  /// Default 0.
-  u_long creation_flags_;
+  u_long creation_flags_ {};
 
   /// Avoid zombies for spawned processes.
-  int avoid_zombies_;
+  int avoid_zombies_ {};
 
 #if defined (ACE_WIN32)
   /// Helper function to grab win32 environment and stick it in
@@ -378,15 +390,15 @@ protected:
   void inherit_environment ();
 
   /// Ensures once only call to inherit environment.
-  int environment_inherited_;
+  bool environment_inherited_ {};
 
   ACE_TEXT_STARTUPINFO startup_info_;
 
   /// Pointer to security_buf1_.
-  LPSECURITY_ATTRIBUTES process_attributes_;
+  LPSECURITY_ATTRIBUTES process_attributes_ {};
 
   /// Pointer to security_buf2_.
-  LPSECURITY_ATTRIBUTES thread_attributes_;
+  LPSECURITY_ATTRIBUTES thread_attributes_ {};
 
   /// Data for process_attributes_.
   SECURITY_ATTRIBUTES security_buf1_;
@@ -395,44 +407,44 @@ protected:
   SECURITY_ATTRIBUTES security_buf2_;
 
   /// User token for \a CreateProcessAsUser
-  HANDLE user_token_;
+  HANDLE user_token_ {ACE_INVALID_HANDLE};
 
   /// Keeps track of whether we need to close user token.
-  bool close_user_token_;
+  bool close_user_token_ {};
 #else /* !ACE_WIN32 */
-  ACE_HANDLE stdin_;
-  ACE_HANDLE stdout_;
-  ACE_HANDLE stderr_;
+  ACE_HANDLE stdin_ {ACE_INVALID_HANDLE};
+  ACE_HANDLE stdout_ {ACE_INVALID_HANDLE};
+  ACE_HANDLE stderr_ {ACE_INVALID_HANDLE};
 
-  // = Real & effective user & group id's.
-  //   These should be set to -1 to leave unchanged (default).
-  uid_t ruid_;
-  uid_t euid_;
-  gid_t rgid_;
-  gid_t egid_;
+  /// @name Real and effective user/group IDs
+  /// A value of -1 leaves the ID unchanged by default.
+  /// @{
+  uid_t ruid_ {static_cast<uid_t> (-1)};
+  uid_t euid_ {static_cast<uid_t> (-1)};
+  gid_t rgid_ {static_cast<gid_t> (-1)};
+  gid_t egid_ {static_cast<gid_t> (-1)};
+  /// @}
 #endif /* ACE_WIN32 */
 
-  /// Default true.
-  bool handle_inheritance_;
+  bool handle_inheritance_ {true};
 
-  /// Is 1 if stdhandles was called.
-  int set_handles_called_;
+  bool set_handles_called_ {};
 
   /// Pointer into environment_buf_.  This should point to the next
   /// free spot.
-  size_t environment_buf_index_;
+  size_t environment_buf_index_ {};
 
   /// Pointer to environment_argv_.
-  size_t environment_argv_index_;
+  size_t environment_argv_index_ {};
 
   /// Pointer to buffer of the environment settings.
-  ACE_TCHAR *environment_buf_;
+  ACE_TCHAR *environment_buf_ {};
 
   /// Size of the environment buffer. Configurable
   size_t environment_buf_len_;
 
   /// Pointers into environment_buf_.
-  ACE_TCHAR **environment_argv_;
+  ACE_TCHAR **environment_argv_ {};
 
   /// Maximum number of environment variables. Configurable
   size_t max_environment_args_;
@@ -444,14 +456,14 @@ protected:
   ACE_TCHAR working_directory_[MAXPATHLEN + 1];
 
   /// Ensures command_line_argv is only calculated once.
-  bool command_line_argv_calculated_;
+  bool command_line_argv_calculated_ {};
 
   /// Pointer to buffer of command-line arguments.  E.g., "-f foo -b bar".
-  ACE_TCHAR *command_line_buf_;
+  ACE_TCHAR *command_line_buf_ {};
 
   /// Pointer to copy of command-line arguments, which is needed when
   /// converting a command-line string into a command-line argv.
-  ACE_TCHAR *command_line_copy_;
+  ACE_TCHAR *command_line_copy_ {};
 
   /// Max length of command_line_buf_
   size_t command_line_buf_len_;
@@ -460,10 +472,10 @@ protected:
   size_t max_command_line_args_;
 
   /// Argv-style command-line arguments.
-  ACE_TCHAR **command_line_argv_;
+  ACE_TCHAR **command_line_argv_ {};
 
   /// Process-group on Unix; unused on Win32.
-  pid_t process_group_;
+  pid_t process_group_ {ACE_INVALID_PID};
 
   /// Set of handles that were passed in pass_handle ().
   ACE_Handle_Set handles_passed_;
@@ -476,7 +488,7 @@ protected:
   ACE_TCHAR process_name_[MAXPATHLEN + 1];
 
   /// Indicate if a Unicode environment should be used
-  bool use_unicode_environment_;
+  bool use_unicode_environment_ {};
 };
 
 //class ACE_Process_Manager;
@@ -507,8 +519,11 @@ public:
   /// Default construction.  Use ACE_Process::spawn() to start a process.
   ACE_Process ();
 
-  /// Destructor.
   virtual ~ACE_Process ();
+  ACE_Process (ACE_Process const &) = delete;
+  ACE_Process (ACE_Process &&) = delete;
+  ACE_Process &operator= (ACE_Process const &) = delete;
+  ACE_Process &operator= (ACE_Process &&) = delete;
 
   /**
    * Called back from spawn() just before spawning the child.  If this
@@ -584,7 +599,7 @@ public:
    * ACE_Process_Manager in the same process that's expecting
    * @c SIGCHLD to kick off process reaping.
    */
-  pid_t wait (const ACE_Time_Value &tv,
+  pid_t wait (ACE_Time_Value const &tv,
               ACE_exitcode *status = nullptr);
 
   /// Send the process a signal.  This only has an effect on operating
@@ -629,12 +644,6 @@ public:
   PROCESS_INFORMATION process_info ();
 #endif /* ACE_WIN32 */
 
-private:
-  ACE_Process (const ACE_Process &) = delete;
-  void operator= (const ACE_Process &) = delete;
-  ACE_Process (ACE_Process &&) = delete;
-  void operator= (ACE_Process &&) = delete;
-
 protected:
   /// Set this process's exit code.  ACE_Process_Manager uses this
   /// method to set the exit code after successfully waiting for
@@ -645,9 +654,9 @@ protected:
   PROCESS_INFORMATION process_info_;
 #else /* ACE_WIN32 */
   /// Process id of the child.
-  pid_t child_id_;
+  pid_t child_id_ {ACE_INVALID_PID};
 #endif /* ACE_WIN32 */
-  ACE_exitcode exit_code_;
+  ACE_exitcode exit_code_ {};
 
   /// Set of handles that were passed to the child process.
   ACE_Handle_Set handles_passed_;
@@ -657,7 +666,7 @@ protected:
 
 private:
 #if defined (ACE_WIN32) && defined (ACE_HAS_WCHAR) && !defined (ACE_USES_WCHAR)
-  wchar_t* convert_env_buffer (const char* env) const;
+  wchar_t* convert_env_buffer (char const *env) const;
 #endif
 };
 

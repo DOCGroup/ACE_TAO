@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file     FT_ORBInitializer.h
  *
  *  @author  Balachandran Natarajan <bala@cs.wustl.edu>
  */
-//=============================================================================
 #ifndef TAO_FT_ORB_INITIALIZER_H
 #define TAO_FT_ORB_INITIALIZER_H
 

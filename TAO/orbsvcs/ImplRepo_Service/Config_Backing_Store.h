@@ -1,6 +1,3 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
 *  @file Config_Backing_Store.h
 *
@@ -9,7 +6,6 @@
 *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
 *  @author Priyanka Gontla <gontla_p@ociweb.com>
 */
-//=============================================================================
 
 #ifndef CONFIG_BACKING_STORE_H
 #define CONFIG_BACKING_STORE_H
@@ -43,19 +39,19 @@ public:
 protected:
   /// perform config backing store specific initialization
   /// (loads servers and activators from the backing store)
-  virtual int init_repo(PortableServer::POA_ptr imr_poa);
+  int init_repo(PortableServer::POA_ptr imr_poa) override;
 
   /// perform server persistent update
-  virtual int persistent_update(const Server_Info_Ptr& info, bool add);
+  int persistent_update(const Server_Info_Ptr& info, bool add) override;
 
   /// perform activator persistent update
-  virtual int persistent_update(const Activator_Info_Ptr& info, bool add);
+  int persistent_update(const Activator_Info_Ptr& info, bool add) override;
 
   /// perform persistent remove
-  virtual int persistent_remove(const ACE_CString& name, bool activator);
+  int persistent_remove(ACE_CString const& name, bool activator) override;
 
   /// remove the section with the given name from the key section
-  int remove(const ACE_CString& name, const ACE_TCHAR* key);
+  int remove(ACE_CString const& name, ACE_TCHAR const *key);
 
   /// the ACE_Configuration backing store
   ACE_Configuration& config_;
@@ -84,11 +80,11 @@ public:
   virtual ~Heap_Backing_Store();
 
   /// indicate the Heap filename as the persistence mode for the repository
-  virtual const ACE_TCHAR* repo_mode() const;
+  ACE_TCHAR const *repo_mode() const override;
 
 private:
   /// the Heap filename
-  const ACE_TString filename_;
+  ACE_TString const filename_;
   /// the Heap used for the actual backing store
   ACE_Configuration_Heap heap_;
 };
@@ -109,7 +105,7 @@ public:
   virtual ~Registry_Backing_Store();
 
   /// indicate Registry as the persistence mode for the repository
-  virtual const ACE_TCHAR* repo_mode() const;
+  ACE_TCHAR const *repo_mode() const override;
 
 private:
 #if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_REGISTRY)
@@ -120,6 +116,5 @@ private:
   ACE_Configuration_Heap invalid_config_;
 #endif
 };
-
 
 #endif /* CONFIG_BACKING_STORE_H */

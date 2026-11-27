@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/DynamicInterface/Dynamic_Implementation.h"
 #include "tao/DynamicInterface/Server_Request.h"
 #include "tao/ORB_Core.h"
@@ -8,18 +7,21 @@
 #include "tao/PortableServer/POA_Current_Impl.h"
 #include "tao/PortableServer/Collocated_Arguments_Converter.h"
 #include "tao/operation_details.h"
+#include "tao/Stub.h"
 
 #include "ace/Dynamic_Service.h"
-#include "ace/OS_NS_string.h"
+
+#include <cstring>
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::Boolean
 TAO_DynamicImplementation::_is_a (char const *logical_type_id)
 {
-  CORBA::RepositoryId_var id = this->get_id_from_primary_interface ();
+  CORBA::RepositoryId_var const id = this->get_id_from_primary_interface ();
 
-  return ACE_OS::strcmp (logical_type_id, id.in ()) == 0;
+  return std::strcmp (logical_type_id, id.in ()) == 0;
 }
 
 CORBA::Object_ptr
@@ -29,15 +31,16 @@ TAO_DynamicImplementation::_this ()
   // object. Unlike _this() for static skeletons, its return type is
   // not interface-specific because a DSI servant may very well
   // incarnate multiple CORBA objects of different types.
-  TAO_Stub *stub = this->_create_stub ();
+  TAO_Stub_Auto_Ptr stub (this->_create_stub ());
 
   // Create a object.
-  CORBA::Object_ptr retval = CORBA::Object_ptr ();
+  CORBA::Object_ptr retval {};
   ACE_NEW_RETURN (retval,
-                  CORBA::Object (stub,
-                                 1,
+                  CORBA::Object (stub.get (),
+                                 true,
                                  this),
                   CORBA::Object::_nil ());
+  stub.release ();
 
   return retval;
 }
@@ -54,7 +57,7 @@ TAO_DynamicImplementation::_get_interface ()
       throw ::CORBA::INTF_REPOS ();
     }
 
-  CORBA::RepositoryId_var id = this->get_id_from_primary_interface ();
+  CORBA::RepositoryId_var const id = this->get_id_from_primary_interface ();
 
   // This doesn't take multiple ORBs into account, but it's being
   // used only to resolve the IFR, so we should be ok.
@@ -92,14 +95,14 @@ TAO_DynamicImplementation::_create_stub ()
       throw PortableServer::POA::WrongPolicy ();
     }
 
-  PortableServer::POA_var poa =
+  PortableServer::POA_var const poa =
     poa_current_impl->get_POA ();
 
-  CORBA::PolicyList_var client_exposed_policies =
+  CORBA::PolicyList_var const client_exposed_policies =
     poa_current_impl->poa ()->client_exposed_policies (
         poa_current_impl->priority ());
 
-  CORBA::RepositoryId_var pinterface =
+  CORBA::RepositoryId_var const pinterface =
     this->_primary_interface (poa_current_impl->object_id (), poa.in ());
 
   return
@@ -135,14 +138,15 @@ TAO_DynamicImplementation::_dispatch (
     }
 
   // Create DSI request object.
-  CORBA::ServerRequest *dsi_request = nullptr;
-  ACE_NEW (dsi_request,
+  CORBA::ServerRequest *dsi_request_ptr {};
+  ACE_NEW (dsi_request_ptr,
            CORBA::ServerRequest (request));
+  CORBA::ServerRequest_var const dsi_request (dsi_request_ptr);
 
   try
     {
       // Delegate to user.
-      this->invoke (dsi_request);
+      this->invoke (dsi_request.in ());
 
       // Only if the client is waiting.
       if (request.response_expected () && !request.sync_with_server ())
@@ -156,20 +160,20 @@ TAO_DynamicImplementation::_dispatch (
       if (request.response_expected () && !request.sync_with_server ())
         {
           if (request.collocated ()
-               && request.operation_details ()->cac () != 0)
+               && request.operation_details ()->cac () != nullptr)
             {
               // If we have a cac it will handle the exception and no
               // need to do any further processing
               request.operation_details ()->cac ()->handle_corba_exception (
-                request, &ex);
+                request, std::addressof (ex));
               return;
             }
           else
+          {
             request.tao_send_reply_exception (ex);
+          }
         }
     }
-
-  ::CORBA::release (dsi_request);
 }
 
 CORBA::RepositoryId
@@ -189,7 +193,7 @@ TAO_DynamicImplementation::get_id_from_primary_interface ()
       throw PortableServer::POA::WrongPolicy ();
     }
 
-  PortableServer::POA_var poa = poa_current_impl->get_POA ();
+  PortableServer::POA_var const poa = poa_current_impl->get_POA ();
 
   return this->_primary_interface (poa_current_impl->object_id (), poa.in ());
 }

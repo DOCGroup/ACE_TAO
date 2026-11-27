@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/Messaging/Messaging.h"
 #include "tao/Messaging/Messaging_Loader.h"
 

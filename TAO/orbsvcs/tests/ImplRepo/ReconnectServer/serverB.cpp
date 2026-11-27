@@ -5,7 +5,7 @@
 #include <ace/Get_Opt.h>
 #include "ace/OS_NS_unistd.h"
 
-const ACE_TCHAR * ior_output_file = ACE_TEXT ("serverB.ior");
+ACE_TCHAR const *ior_output_file = ACE_TEXT ("serverB.ior");
 // server_notify_delay between resolving RootPOA init ref and create_POA.
 int server_notify_delay = 0;
 
@@ -15,10 +15,10 @@ parse_args (int argc, ACE_TCHAR *argv[])
   ACE_Get_Opt get_opts (argc, argv, "o:l:");
   int c;
 
-
   while ((c = get_opts ()) != -1)
-    switch (c)
-      {
+    {
+      switch (c)
+        {
         case 'o':
           ior_output_file = get_opts.opt_arg ();
           break;
@@ -26,14 +26,15 @@ parse_args (int argc, ACE_TCHAR *argv[])
           server_notify_delay = ACE_OS::atoi (get_opts.opt_arg ());
           break;
         case '?':
-          default:
+        default:
           ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-o <iorfile> -l <server_notify_delay>"
-                           "\n",
-                           argv [0]),
-                          -1);
-      }
+                             "usage:  %s "
+                             "-o <iorfile> -l <server_notify_delay>"
+                             "\n",
+                             argv [0]),
+                            -1);
+        }
+    }
 
   return 0;
 }
@@ -117,19 +118,21 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     // Output the IOR to the <ior_output_file>
     FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
     if (output_file == 0)
-      ACE_ERROR_RETURN ((LM_ERROR,
-      "Cannot open output file for writing IOR: %s",
-      ior_output_file),
-      1);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "Cannot open output file for writing IOR: %s",
+                           ior_output_file),
+                          1);
+      }
     ACE_OS::fprintf (output_file, "%s", ior.in ());
     ACE_OS::fclose (output_file);
 
     worker.wait ();
 
-    rootPOA->destroy (1, 1);
+    rootPOA->destroy (true, true);
     orb->destroy ();
   }
-  catch (const CORBA::Exception &ex)
+  catch (CORBA::Exception const &ex)
   {
     ex._tao_print_exception ("Exception caught by serverB:");
     return 1;
@@ -137,5 +140,4 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   return 0;
 }
-
 

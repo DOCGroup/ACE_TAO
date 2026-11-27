@@ -1,8 +1,7 @@
 #include "Hello_i.h"
 #include "ace/OS_NS_unistd.h"
 
-// Implementation skeleton constructor
-Demo_HelloWorld_i::Demo_HelloWorld_i (CORBA::ORB_ptr orb)
+Demo_HelloWorld_i::Demo_HelloWorld_i (CORBA::ORB_ptr const orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
@@ -21,5 +20,4 @@ Demo_HelloWorld_i::shutdown ()
   ACE_DEBUG ((LM_DEBUG, "(%P|%t)Demo_HelloWorld_i::shutdown \n"));
   this->orb_->shutdown (false);
 }
-
 

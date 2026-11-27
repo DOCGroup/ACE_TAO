@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    ami_test_i.cpp
  *
@@ -8,12 +6,9 @@
  *  @author Alexander Babu Arulanthu <alex@cs.wustl.edu>
  *  @author Michael Kircher <Michael.Kircher@mchp.siemens.de>
  */
-//=============================================================================
-
 
 #include "ami_test_i.h"
 #include "tao/debug.h"
-
 
 AMI_Test_i::AMI_Test_i (CORBA::ORB_ptr orb)
   :  orb_ (CORBA::ORB::_duplicate (orb)),
@@ -25,7 +20,7 @@ AMI_Test_i::AMI_Test_i (CORBA::ORB_ptr orb)
 CORBA::Long
 AMI_Test_i::foo (CORBA::Long_out out_l,
                  CORBA::Long in_l,
-                 const char* in_str)
+                 char const *in_str)
 {
   out_l = 931233;
 
@@ -45,13 +40,11 @@ AMI_Test_i::foo (CORBA::Long_out out_l,
   return 931234;
 }
 
-
 void
 AMI_Test_i::shutdown ()
 {
   this->orb_->shutdown (false);
 }
-
 
 CORBA::Long
 AMI_Test_i::yadda ()
@@ -60,7 +53,6 @@ AMI_Test_i::yadda ()
               "%N:%l:(%P:%t):AMI_Test_i::(get_)yadda\n"));
   return yadda_;
 }
-
 
 void
 AMI_Test_i::yadda (CORBA::Long yadda)

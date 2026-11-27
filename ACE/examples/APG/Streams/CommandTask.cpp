@@ -67,10 +67,12 @@ int CommandTask::svc ()
                   this->module ()->name ()));
 
       if (this->getq (message) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("getq")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("%p\n"),
+                             ACE_TEXT ("getq")),
+                            -1);
+        }
 
       if (message->msg_type () == ACE_Message_Block::MB_HANGUP)
         {
@@ -104,7 +106,7 @@ int CommandTask::svc ()
       // Listing 063 code/ch18
       else
         {
-          int result = this->process (command);
+          int const result = this->process (command);
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("CommandTask::svc() - ")
                       ACE_TEXT ("%s work request %d result is %d\n"),

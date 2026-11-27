@@ -21,11 +21,10 @@ ServerApp::ServerApp()
 {
 }
 
-
 int
 ServerApp::run_i(int argc, ACE_TCHAR* argv[])
 {
-  int result = this->init(argc, argv);
+  const int result = this->init(argc, argv);
   if (result != 0)
     {
       return result;
@@ -49,7 +48,6 @@ ServerApp::run_i(int argc, ACE_TCHAR* argv[])
   return this->check_validity () ? 0 : -1;
 }
 
-
 int
 ServerApp::init(int argc, ACE_TCHAR* argv[])
 {
@@ -59,14 +57,14 @@ ServerApp::init(int argc, ACE_TCHAR* argv[])
   // * Raises -1 if problems are encountered.
   // * Returns 1 if the usage statement was explicitly requested.
   // * Returns 0 otherwise.
-  int result = this->parse_args(argc, argv);
+  const int result = this->parse_args(argc, argv);
 
   if (result != 0)
     {
       return result;
     }
 
-  unsigned num_clients = this->num_remote_clients_ +
+  const unsigned num_clients = this->num_remote_clients_ +
                          this->num_collocated_clients_;
 
   TheAppShutdown->init (this->orb_.in (), num_clients);
@@ -74,14 +72,12 @@ ServerApp::init(int argc, ACE_TCHAR* argv[])
   return 0;
 }
 
-
 void
 ServerApp::poa_setup()
 {
   this->poa_ = this->create_poa(this->orb_.in(),
                                 "ChildPoa");
 }
-
 
 void
 ServerApp::csd_setup()
@@ -96,7 +92,6 @@ ServerApp::csd_setup()
     }
 }
 
-
 void
 ServerApp::servant_setup()
 {
@@ -106,22 +101,20 @@ ServerApp::servant_setup()
                                       this->ior_filename_prefix_.c_str());
 }
 
-
 void
 ServerApp::collocated_setup()
 {
   int client_id_start = this->num_remote_clients_;
-  for (unsigned i = 0; i < this->num_collocated_clients_; i++)
+  for (unsigned i = 0; i < this->num_collocated_clients_; ++i)
     {
       // Dole out the servant object references in a round-robin fashion.
-      unsigned servant_index = i % this->num_servants_;
+      const unsigned servant_index = i % this->num_servants_;
 
       ServantListType::T_stub_var obj = this->servants_.objref(servant_index);
       ClientEngine_Handle engine = new Foo_A_ClientEngine(obj.in(), ++client_id_start);
       this->collocated_client_task_.add_engine(engine.in());
     }
 }
-
 
 void
 ServerApp::poa_activate()
@@ -131,7 +124,6 @@ ServerApp::poa_activate()
 
   poa_manager->activate();
 }
-
 
 void
 ServerApp::run_collocated_clients()
@@ -145,7 +137,6 @@ ServerApp::run_collocated_clients()
     }
 }
 
-
 void
 ServerApp::run_orb_event_loop()
 {
@@ -154,12 +145,10 @@ ServerApp::run_orb_event_loop()
   TheAppShutdown->wait ();
 }
 
-
 void
 ServerApp::cleanup()
 {
 }
-
 
 int
 ServerApp::parse_args(int argc, ACE_TCHAR* argv[])
@@ -259,7 +248,6 @@ ServerApp::usage_statement()
              this->exe_name_.c_str()));
 }
 
-
 int
 ServerApp::arg_dependency_checks()
 {
@@ -267,15 +255,14 @@ ServerApp::arg_dependency_checks()
          + this->num_collocated_clients_) > 0 ? 0 : -1;
 }
 
-
 int
 ServerApp::set_arg(unsigned&   value,
-                   const ACE_TCHAR* arg,
+                   ACE_TCHAR const *arg,
                    char        opt,
-                   const char* name,
+                   char const *name,
                    int         min)
 {
-  int tmp = ACE_OS::atoi(arg);
+  const int tmp = ACE_OS::atoi(arg);
 
   if (tmp < min)
     {
@@ -290,10 +277,9 @@ ServerApp::set_arg(unsigned&   value,
   return 0;
 }
 
-
 PortableServer::POA_ptr
 ServerApp::create_poa(CORBA::ORB_ptr orb,
-                      const char* poa_name)
+                      char const *poa_name)
 {
   // Get the Root POA.
   PortableServer::POA_var root_poa
@@ -318,7 +304,6 @@ ServerApp::create_poa(CORBA::ORB_ptr orb,
   return poa._retn();
 }
 
-
 bool
 ServerApp::check_validity ()
 {
@@ -329,14 +314,14 @@ ServerApp::check_validity ()
       return false;
     }
 
-  unsigned num_clients = this->num_remote_clients_ +
+  const unsigned num_clients = this->num_remote_clients_ +
                          this->num_collocated_clients_;
 
   Foo_A_Statistics stats (num_clients);
 
   Foo_A_ClientEngine::expected_results (stats);
 
-  for (unsigned i = 0; i < this->num_servants_; i++)
+  for (unsigned i = 0; i < this->num_servants_; ++i)
     {
       this->servants_.servant(i)->gather_stats(stats);
     }

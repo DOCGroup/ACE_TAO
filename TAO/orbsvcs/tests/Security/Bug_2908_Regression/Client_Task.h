@@ -14,15 +14,19 @@
 class Client_Task : public ACE_Task_Base
 {
 public:
-  /// Constructor
   Client_Task (CORBA::ORB_ptr corb,
                Messenger_ptr messenger,
                ACE_Thread_Manager *thr_mgr);
 
-  /// Thread entry point
-  int svc ();
+  Client_Task (Client_Task const &) = delete;
+  Client_Task (Client_Task &&) = delete;
+  Client_Task &operator= (Client_Task const &) = delete;
+  Client_Task &operator= (Client_Task &&) = delete;
 
-  int result_;
+  /// Thread entry point
+  int svc () override;
+
+  int result_ {};
 private:
   CORBA::ORB_var corb_;
 

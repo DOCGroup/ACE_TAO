@@ -1,10 +1,6 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   Current.h
  */
-//=============================================================================
 
 #ifndef TAO_RTSCHEDULER_CURRENT_H
 #define TAO_RTSCHEDULER_CURRENT_H
@@ -22,6 +18,7 @@
 #include "ace/Hash_Map_Manager_T.h"
 #include "ace/Task.h"
 #include "ace/Atomic_Op.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -42,7 +39,7 @@ class TAO_RTScheduler_Export TAO_DTId_Hash
 {
 public:
   /// Returns hash value.
-  u_long operator () (const IdType &id) const;
+  u_long operator () (IdType const &id) const;
 };
 
 using DT_Hash_Map = ACE_Hash_Map_Manager_Ex<IdType,
@@ -74,6 +71,11 @@ class TAO_RTScheduler_Export TAO_RTScheduler_Current
   TAO_RTScheduler_Current () = default;
   ~TAO_RTScheduler_Current () override;
 
+  TAO_RTScheduler_Current (TAO_RTScheduler_Current const &) = delete;
+  TAO_RTScheduler_Current &operator= (TAO_RTScheduler_Current const &) = delete;
+  TAO_RTScheduler_Current (TAO_RTScheduler_Current &&) = delete;
+  TAO_RTScheduler_Current &operator= (TAO_RTScheduler_Current &&) = delete;
+
   void init (TAO_ORB_Core* orb);
 
   RTCORBA::Priority the_priority () override;
@@ -83,27 +85,26 @@ class TAO_RTScheduler_Export TAO_RTScheduler_Current
   void rt_current (RTCORBA::Current_ptr rt_current);
 
   void begin_scheduling_segment
-    (const char * name,
+    (char const *name,
      CORBA::Policy_ptr sched_param,
      CORBA::Policy_ptr implicit_sched_param) override;
 
   void update_scheduling_segment
-    (const char * name,
+    (char const *name,
      CORBA::Policy_ptr sched_param,
      CORBA::Policy_ptr implicit_sched_param) override;
 
-  void end_scheduling_segment (const char * name) override;
+  void end_scheduling_segment (char const *name) override;
 
   RTScheduling::DistributableThread_ptr
-    lookup(const RTScheduling::Current::IdType & id) override;
+    lookup(RTScheduling::Current::IdType const & id) override;
 
-  // returns a null reference if
-  // the distributable thread is
-  // not known to the local scheduler
+  /// Returns a null reference if the distributable thread is not known to the
+  /// local scheduler.
   RTScheduling::DistributableThread_ptr
     spawn (RTScheduling::ThreadAction_ptr start,
            CORBA::VoidData data,
-           const char* name,
+           char const *name,
            CORBA::Policy_ptr sched_param,
            CORBA::Policy_ptr implicit_sched_param,
            CORBA::ULong stack_size,
@@ -129,7 +130,7 @@ class TAO_RTScheduler_Export TAO_RTScheduler_Current
   /**
    * @name Reference Related Methods
    */
-  //@{
+  /// @{
   using _ptr_type = TAO_RTScheduler_Current_ptr;
   using _var_type = TAO_RTScheduler_Current_var;
 
@@ -142,16 +143,12 @@ class TAO_RTScheduler_Export TAO_RTScheduler_Current
       return nullptr;
     }
 
-  const char* _interface_repository_id () const override;
-  //@}
+  char const *_interface_repository_id () const override;
+  /// @}
 
 private:
-  TAO_RTScheduler_Current (TAO_RTScheduler_Current const &) = delete;
-  TAO_RTScheduler_Current &operator= (TAO_RTScheduler_Current const &) = delete;
-  TAO_RTScheduler_Current (TAO_RTScheduler_Current &&) = delete;
-  TAO_RTScheduler_Current &operator= (TAO_RTScheduler_Current &&) = delete;
-
   RTCORBA::Current_var rt_current_;
+  /// Borrowed from the ORB; the ORB owns the core.
   TAO_ORB_Core* orb_ {};
   DT_Hash_Map dt_hash_;
 };
@@ -163,26 +160,25 @@ class TAO_RTScheduler_Export TAO_RTScheduler_Current_var
   : private TAO_Base_var
 {
 public:
-  TAO_RTScheduler_Current_var (); // default constructor
+  TAO_RTScheduler_Current_var ();
   TAO_RTScheduler_Current_var (TAO_RTScheduler_Current_ptr p) : ptr_ (p) {}
-  TAO_RTScheduler_Current_var (const TAO_RTScheduler_Current_var &); // copy constructor
-  ~TAO_RTScheduler_Current_var (); // destructor
+  TAO_RTScheduler_Current_var (TAO_RTScheduler_Current_var const &);
+  ~TAO_RTScheduler_Current_var ();
 
   TAO_RTScheduler_Current_var &operator= (TAO_RTScheduler_Current_ptr);
-  TAO_RTScheduler_Current_var &operator= (const TAO_RTScheduler_Current_var &);
+  TAO_RTScheduler_Current_var &operator= (TAO_RTScheduler_Current_var const &);
   TAO_RTScheduler_Current_ptr operator-> () const;
 
-  operator const TAO_RTScheduler_Current_ptr &() const;
+  operator TAO_RTScheduler_Current_ptr const &() const;
   operator TAO_RTScheduler_Current_ptr &();
-  // in, inout, out, _retn
   TAO_RTScheduler_Current_ptr in () const;
   TAO_RTScheduler_Current_ptr &inout ();
   TAO_RTScheduler_Current_ptr &out ();
   TAO_RTScheduler_Current_ptr _retn ();
   TAO_RTScheduler_Current_ptr ptr () const;
 
-  // Hooks used by template sequence and object manager classes
-  // for non-defined forward declared interfaces.
+  /// Hooks used by template sequence and object manager classes
+  /// for non-defined forward declared interfaces.
   static TAO_RTScheduler_Current_ptr duplicate (TAO_RTScheduler_Current_ptr);
   static void release (TAO_RTScheduler_Current_ptr);
   static TAO_RTScheduler_Current_ptr nil ();
@@ -191,8 +187,8 @@ public:
 
 private:
   TAO_RTScheduler_Current_ptr ptr_ {};
-  TAO_RTScheduler_Current_var (const TAO_Base_var &rhs) = delete;
-  TAO_RTScheduler_Current_var &operator= (const TAO_Base_var &rhs) = delete;
+  TAO_RTScheduler_Current_var (TAO_Base_var const &rhs) = delete;
+  TAO_RTScheduler_Current_var &operator= (TAO_Base_var const &rhs) = delete;
 };
 
 class TAO_RTScheduler_Export TAO_RTScheduler_Current_i
@@ -204,37 +200,42 @@ public:
   TAO_RTScheduler_Current_i (TAO_ORB_Core* orb,
                              DT_Hash_Map* dt_hash,
                              RTScheduling::Current::IdType guid,
-                             const char * name,
+                             char const *name,
                              CORBA::Policy_ptr sched_param,
                              CORBA::Policy_ptr implicit_sched_param,
                              RTScheduling::DistributableThread_ptr dt,
                              TAO_RTScheduler_Current_i* prev_current);
+
+  TAO_RTScheduler_Current_i () = delete;
+  TAO_RTScheduler_Current_i (TAO_RTScheduler_Current_i const &) = delete;
+  TAO_RTScheduler_Current_i &operator= (TAO_RTScheduler_Current_i const &) = delete;
+  TAO_RTScheduler_Current_i (TAO_RTScheduler_Current_i &&) = delete;
+  TAO_RTScheduler_Current_i &operator= (TAO_RTScheduler_Current_i &&) = delete;
 
   virtual ~TAO_RTScheduler_Current_i ();
 
   virtual RTScheduling::DistributableThread_ptr
     spawn (RTScheduling::ThreadAction_ptr start,
            CORBA::VoidData data,
-           const char* name,
+           char const *name,
            CORBA::Policy_ptr sched_param,
            CORBA::Policy_ptr implicit_sched_param,
            CORBA::ULong stack_size,
            RTCORBA::Priority base_priority);
 
   virtual void begin_scheduling_segment
-    (const char * name,
+    (char const *name,
      CORBA::Policy_ptr sched_param,
      CORBA::Policy_ptr implicit_sched_param);
 
   virtual void update_scheduling_segment
-    (const char * name,
+    (char const *name,
      CORBA::Policy_ptr sched_param,
      CORBA::Policy_ptr implicit_sched_param);
 
-  virtual void end_scheduling_segment (const char * name);
+  virtual void end_scheduling_segment (char const *name);
 
   virtual RTScheduling::Current::IdType *id ();
-
 
   void id (RTScheduling::Current::IdType guid);
 
@@ -257,8 +258,8 @@ public:
 
   void delete_all_currents ();
 
-  const char* name ();
-  void name (const char *);
+  char const *name ();
+  void name (char const *);
 
   TAO_ORB_Core* orb ();
 
@@ -270,36 +271,40 @@ public:
   void DT (RTScheduling::DistributableThread_ptr);
 
 private:
-  TAO_RTScheduler_Current_i (TAO_RTScheduler_Current_i const &) = delete;
-  TAO_RTScheduler_Current_i &operator= (TAO_RTScheduler_Current_i const &) = delete;
-  TAO_RTScheduler_Current_i (TAO_RTScheduler_Current_i &&) = delete;
-  TAO_RTScheduler_Current_i &operator= (TAO_RTScheduler_Current_i &&) = delete;
-
   RTScheduling::Scheduler_var scheduler_;
+  /// Borrowed from the ORB; the ORB owns the core.
   TAO_ORB_Core* orb_ {};
   RTScheduling::Current::IdType guid_ {};
   CORBA::String_var name_;
   CORBA::Policy_var sched_param_;
   CORBA::Policy_var implicit_sched_param_;
   RTScheduling::DistributableThread_var dt_;
+  /// Links this context to the prior TSS context; cleanup_current manages the
+  /// allocated contexts in this chain.
   TAO_RTScheduler_Current_i* previous_current_ {};
+  /// Borrowed from the enclosing TAO_RTScheduler_Current.
   DT_Hash_Map* dt_hash_ {};
 };
 
-// This class provides an entry point for the// new DT.
 class DTTask : public ACE_Task <ACE_SYNCH>
 {
 public:
   DTTask (TAO_ORB_Core* orb,
           DT_Hash_Map* ,
-          TAO_RTScheduler_Current_i*,
+          std::unique_ptr<TAO_RTScheduler_Current_i> current,
           RTScheduling::ThreadAction_ptr start,
           CORBA::VoidData data,
-          const char* name,
+          char const *name,
           CORBA::Policy_ptr sched_param,
           CORBA::Policy_ptr implicit_sched_param);
 
   ~DTTask () override;
+
+  DTTask () = delete;
+  DTTask (DTTask const &) = delete;
+  DTTask &operator= (DTTask const &) = delete;
+  DTTask (DTTask &&) = delete;
+  DTTask &operator= (DTTask &&) = delete;
 
   int activate_task (RTCORBA::Priority base_priority,
                      CORBA::ULong stack_size);
@@ -307,13 +312,10 @@ public:
   int svc () override;
 
 private:
-  DTTask (DTTask const &) = delete;
-  DTTask &operator= (DTTask const &) = delete;
-  DTTask (DTTask &&) = delete;
-  DTTask &operator= (DTTask &&) = delete;
-
+  /// The ORB outlives a spawned scheduling task.
   TAO_ORB_Core* orb_ {};
-  TAO_RTScheduler_Current_i* current_ {};
+  /// Ownership transfers to the worker's TSS current, which self-deletes.
+  std::unique_ptr<TAO_RTScheduler_Current_i> current_;
   RTScheduling::ThreadAction_var start_;
   CORBA::VoidData data_ {};
   RTScheduling::Current::IdType guid_ {};

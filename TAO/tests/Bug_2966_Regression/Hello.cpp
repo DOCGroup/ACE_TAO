@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "Hello.h"
 
 Hello::Hello (CORBA::ORB_ptr orb)

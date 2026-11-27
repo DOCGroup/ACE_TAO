@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    Process_Test.cpp
  *
@@ -7,7 +5,6 @@
  *
  *  @author Christian Fromme <kaner@strace.org>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "ace/Process.h"
@@ -22,7 +19,7 @@
 
 // This will only work on Linux. Even UNIX-ish with /proc filesys lacks the
 // 'self' level and link to the opened file name.
-static const char *proc_self_fd = "/proc/self/fd/";
+static char const *proc_self_fd = "/proc/self/fd/";
 
 int
 test_setenv ()
@@ -31,8 +28,10 @@ test_setenv ()
   ACE_Process_Options opts;
   ACE_TCHAR bigval[5010] = ACE_TEXT ("");
   for (int i = 0; i < 100; ++i)
-    ACE_OS::strcat (bigval,
-                    ACE_TEXT ("01234567890123456789012345678901234567890123456789"));
+    {
+      ACE_OS::strcat (bigval,
+                      ACE_TEXT ("01234567890123456789012345678901234567890123456789"));
+    }
 #ifndef ACE_LACKS_VA_FUNCTIONS
   if (0 != opts.setenv (ACE_TEXT ("A"), ACE_TEXT ("%") ACE_TEXT_PRIs, bigval))
     {
@@ -41,7 +40,7 @@ test_setenv ()
     }
   else
     {
-      size_t env_len = ACE_OS::strlen (opts.env_buf ());
+      size_t const env_len = ACE_OS::strlen (opts.env_buf ());
       if (env_len != 5002)
         {
           status = 1;
@@ -54,11 +53,10 @@ test_setenv ()
   return status;
 }
 
-
 int
-check_temp_file (const ACE_TString &tmpfilename)
+check_temp_file (ACE_TString const &tmpfilename)
 {
-  ACE_DIRENT *dir = nullptr;
+  ACE_DIRENT *dir {};
   ACE_Dirent entr;
   ACE_stat stat;
   char filename[MAXPATHLEN + 1];
@@ -68,10 +66,12 @@ check_temp_file (const ACE_TString &tmpfilename)
 
   // Loop through /proc/self/fs/
   if (entr.open (ACE_TEXT_CHAR_TO_TCHAR(proc_self_fd)) == -1)
+    {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("Could not open dir %C\n"),
                          proc_self_fd),
-                         -1);
+                        -1);
+    }
 
   while ((dir = entr.read ()))
     {
@@ -83,10 +83,12 @@ check_temp_file (const ACE_TString &tmpfilename)
 #endif
 
       if ((ACE_OS::lstat (fullp.c_str (), &stat)) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Stat failed for %C\n"),
-                           fullp.c_str ()),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Stat failed for %C\n"),
+                             fullp.c_str ()),
+                            -1);
+        }
 
       if (S_ISLNK (stat.st_mode))
         {
@@ -94,13 +96,17 @@ check_temp_file (const ACE_TString &tmpfilename)
           if ((size= ACE_OS::readlink (fullp.c_str (),
                                        filename,
                                        MAXPATHLEN + 1)) == -1)
-            ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("Readlink failed for %C\n"),
-                               fullp.c_str ()),
-                              -1);
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("Readlink failed for %C\n"),
+                                 fullp.c_str ()),
+                                -1);
+            }
           filename[size] = '\0';
           if (tmpfilename == ACE_TString (ACE_TEXT_CHAR_TO_TCHAR (filename)))
+          {
             return 1;
+          }
         }
     }
 
@@ -118,11 +124,13 @@ run_parent (bool inherit_files)
   ACE_TCHAR tempfile[MAXPATHLEN + 1];
 
   if (ACE::get_temp_dir (tempfile, MAXPATHLEN - sizeof (t)) == -1)
+  {
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("Could not get temp dir\n")));
+  }
 
   ACE_OS::strcat (tempfile, t);
 
-  ACE_HANDLE file_handle = ACE_OS::mkstemp (tempfile);
+  ACE_HANDLE const file_handle = ACE_OS::mkstemp (tempfile);
   if (file_handle == ACE_INVALID_HANDLE)
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("Could not get temp filename\n")));
@@ -131,7 +139,7 @@ run_parent (bool inherit_files)
 
   // Build child options
   ACE_TString exe_sub_dir;
-  const char *subdir_env = ACE_OS::getenv ("ACE_EXE_SUB_DIR");
+  char const *subdir_env = ACE_OS::getenv ("ACE_EXE_SUB_DIR");
   if (subdir_env)
     {
       exe_sub_dir = ACE_TEXT_CHAR_TO_TCHAR (subdir_env);
@@ -161,9 +169,11 @@ run_parent (bool inherit_files)
                   ACE_TEXT ("Parent could NOT spawn child process\n")));
     }
   else
-    ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Parent spawned child process with pid = %d.\n"),
-              child.getpid ()));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("Parent spawned child process with pid = %d.\n"),
+                  child.getpid ()));
+    }
 
   ACE_exitcode child_status;
   result = child.wait (&child_status);
@@ -173,9 +183,11 @@ run_parent (bool inherit_files)
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("Could NOT wait on child process\n")));
     }
   else if (child_status == 0)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("Child %d finished ok\n"),
-                child.getpid ()));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("Child %d finished ok\n"),
+                  child.getpid ()));
+    }
   else
     {
       status = child_status;
@@ -198,6 +210,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   ACE_Get_Opt getopt (argc, argv, ACE_TEXT ("ch:f:"));
 
   while ((c = getopt ()) != -1)
+    {
       switch ((char) c)
         {
         case 'c':
@@ -216,6 +229,7 @@ run_main (int argc, ACE_TCHAR *argv[])
                             -1);
           break;
         }
+    }
 
   if (ischild)
     {
@@ -228,15 +242,21 @@ run_main (int argc, ACE_TCHAR *argv[])
       int result = check_temp_file (temp_file_name);
       // Check descriptor inheritance
       if (result == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Could not retrieve open files\n")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Could not retrieve open files\n")),
+                            -1);
+        }
       else if (result == handle_inherit)
-        result = 0;
+        {
+          result = 0;
+        }
       else
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("Handle inheritance test failed with ")
-                    ACE_TEXT ("%d, expected %d\n"), result, handle_inherit));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("Handle inheritance test failed with ")
+                      ACE_TEXT ("%d, expected %d\n"), result, handle_inherit));
+        }
       ACE_END_LOG;
       return result;
     }
@@ -259,11 +279,15 @@ run_main (int argc, ACE_TCHAR *argv[])
 #else
       // Test handle inheritance set to true
       if (!status)
+      {
         status = run_parent (true);
+      }
 
       // ... and set to false
       if (!status)
+      {
         run_parent (false);
+      }
 #endif /* ! ACE_LACKS_FORK */
 
       ACE_END_TEST;

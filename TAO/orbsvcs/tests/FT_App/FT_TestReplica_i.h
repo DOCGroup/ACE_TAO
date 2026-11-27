@@ -1,5 +1,3 @@
-/* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file    FT_TestReplica_i.h
  *
@@ -7,7 +5,6 @@
  *
  *  @author Dale Wilson <wilson_d@ociweb.com>
  */
-//=============================================================================
 //
 #ifndef FT_TESTREPLICA_I_H_
 #define FT_TESTREPLICA_I_H_
@@ -35,7 +32,7 @@ class FT_ReplicaFactory_i;
 class FT_TestReplica_i : public virtual POA_FT_TEST::TestReplica
 {
 public:
-  FT_TestReplica_i (FT_ReplicaFactory_i * factory, const char * name, unsigned long factory_id);
+  FT_TestReplica_i (FT_ReplicaFactory_i * factory, char const *name, unsigned long factory_id);
   virtual ~FT_TestReplica_i ();
 
   /**
@@ -53,14 +50,14 @@ public:
    *  usage: [program] &lt;usageMessage()&gt; [other usage]
    * @returns c-style string containing "bare" usage options.
    */
-  const char * usage_options();
+  char const *usage_options();
 
   /**
    * Initialize this object.
-   * @param orbManager our ORB -- we keep var to it.
+   * @param orb The ORB.
    * @return zero for success; nonzero is process return code for failure.
    */
-  int init (CORBA::ORB_var & orb, const ACE_TCHAR*);
+  int init (CORBA::ORB_var & orb, ACE_TCHAR const *);
 
   /**
    * Prepare to exit.
@@ -79,7 +76,7 @@ public:
 
   unsigned long factory_id()const;
 
-  static const char * repository_id();
+  static char const *repository_id();
 
   ::FT_TEST::TestReplica_ptr object_reference();
 
@@ -87,50 +84,50 @@ public:
 
   //////////////////////////////////////////
   // Override CORBA servant virtual methods
-  virtual PortableServer::POA_ptr _default_POA ();
+  PortableServer::POA_ptr _default_POA () override;
 
-  virtual void _remove_ref ();
+  void _remove_ref () override;
 
 private:
   ///////////////////////////
   // override Replica methods
-  virtual void set (CORBA::Long value);
+  void set (CORBA::Long value) override;
 
-  virtual CORBA::Long increment (CORBA::Long delta);
+  CORBA::Long increment (CORBA::Long delta) override;
 
-  virtual CORBA::Long get ();
+  CORBA::Long get () override;
 
-  virtual CORBA::Long counter ();
+  CORBA::Long counter () override;
 
-  virtual void counter (CORBA::Long counter);
+  void counter (CORBA::Long counter) override;
 
-  virtual void die (FT_TEST::TestReplica::Bane when);
+  void die (FT_TEST::TestReplica::Bane when) override;
 
-  virtual void shutdown ();
+  void shutdown () override;
 
   ///////////////////////////
   // override PullMonitorable
 
-  virtual CORBA::Boolean is_alive ();
+  CORBA::Boolean is_alive () override;
 
   ///////////////////////////
   // override Updatable
 
-  virtual ::FT::State * get_update ();
+  ::FT::State * get_update () override;
 
-  virtual void set_update (const FT::State & s);
+  void set_update (FT::State const &s) override;
 
-  virtual ::FT::State * get_state ();
+  ::FT::State * get_state () override;
 
-  virtual void set_state (const FT::State & s);
+  void set_state (FT::State const &s) override;
 
   ////////////////
   // Implement TAO_UpdateObjectGroup
 
-  virtual void tao_update_object_group (
-      const char * iogr,
-      PortableGroup::ObjectGroupRefVersion version,
-      CORBA::Boolean is_primary);
+  void tao_update_object_group (
+    char const *iogr,
+    PortableGroup::ObjectGroupRefVersion version,
+    CORBA::Boolean is_primary) override;
 
   /////////////////
   // implementation
@@ -146,7 +143,7 @@ private:
    */
   void store(long value);
 
-  void suicide(const char *);
+  void suicide(char const *);
 
   ///////////////
   // data members
@@ -195,7 +192,7 @@ private:
    * The CORBA object id assigned to this object.
    */
 
-  const ACE_TCHAR* name_persistent_storage;
+  ACE_TCHAR const *name_persistent_storage;
 };
 
 #include /**/ "ace/post.h"

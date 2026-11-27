@@ -103,9 +103,9 @@ run_main (int, ACE_TCHAR *[])
   // regardless of platform. In particular, this test relies on a handler
   // that doesn't consume ready-to-read data being called back - this won't
   // happen with ACE_WFMO_Reactor.
-  ACE_Select_Reactor *impl_ptr = nullptr;
+  ACE_Select_Reactor *impl_ptr {};
   ACE_NEW_RETURN (impl_ptr, ACE_Select_Reactor, -1);
-  std::unique_ptr<ACE_Select_Reactor> auto_impl (impl_ptr);
+  std::unique_ptr<ACE_Select_Reactor> const auto_impl (impl_ptr);
 
   ACE_Reactor reactor (impl_ptr);
 
@@ -113,7 +113,7 @@ run_main (int, ACE_TCHAR *[])
   Timer * timer = new Timer;
 
   // Initialize the timer and register with the reactor
-  if (-1 == timer->open (&reactor))
+  if (-1 == timer->open (std::addressof (reactor)))
     {
       ACE_ERROR_RETURN ((LM_ERROR, "Cannot initialize timer\n"), -1);
     }
@@ -227,9 +227,9 @@ int Timer::open(ACE_Reactor * r)
 
 void Timer::close()
 {
-  for(int i = 0; i != nhandlers; ++i)
+  for (Handler& handler : handler_)
   {
-      reactor()->remove_handler(&handler_[i], ACE_Event_Handler::ALL_EVENTS_MASK);
+      reactor()->remove_handler(std::addressof (handler), ACE_Event_Handler::ALL_EVENTS_MASK);
   }
   reactor()->cancel_timer(this);
 }
@@ -292,9 +292,9 @@ int Timer::handle_timeout(ACE_Time_Value const &, void const *)
 
 void Timer::send_data_through_handlers()
 {
-    for(int i = 0; i != nhandlers; ++i)
+    for (Handler& handler : handler_)
     {
-      handler_[i].send_dummy_data();
+      handler.send_dummy_data();
     }
 }
 

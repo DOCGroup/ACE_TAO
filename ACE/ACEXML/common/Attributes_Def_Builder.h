@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Attributes_Def_Builder.h
  *
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  */
-//=============================================================================
 #ifndef _ACEXML_ATTRIBUTES_DEF_BUILDER_H_
 #define _ACEXML_ATTRIBUTES_DEF_BUILDER_H_
 
@@ -61,12 +57,12 @@ public:
   /**
    * Specify the name of the attribute.
    */
-  virtual int setName (const ACEXML_Char *n) = 0;
+  virtual int setName (ACEXML_Char const *n) = 0;
 
   /**
    * Get the name of the attribute.
    */
-  virtual const ACEXML_Char *getName () = 0;
+  virtual ACEXML_Char const *getName () = 0;
 
   /**
    * Set the attribute type.
@@ -76,13 +72,13 @@ public:
   /**
    * Insert an element for NOTATION or ENUMERATION type attribute.
    */
-  virtual int insertList (const ACEXML_Char *Name) = 0;
+  virtual int insertList (ACEXML_Char const *Name) = 0;
 
   /**
    * Set default attribute declaration.
    */
   virtual int setDefault (const DEFAULT_DECL def,
-                          const ACEXML_Char *value) = 0;
+                          ACEXML_Char const *value) = 0;
 
   /**
    * Check validity of the current attribute definition being built.
@@ -118,9 +114,9 @@ public:
    *
    * @retval 0 if valid, -1 otherwise.
    */
-  virtual int setElement (const ACEXML_Char *namespaceURI,
-                          const ACEXML_Char *localName,
-                          const ACEXML_Char *qName) = 0;
+  virtual int setElement (ACEXML_Char const *namespaceURI,
+                          ACEXML_Char const *localName,
+                          ACEXML_Char const *qName) = 0;
 
   /**
    * Acquire an Attribute_Builder.
@@ -131,7 +127,6 @@ public:
    * Add a definition for one attribute.
    */
   virtual int insertAttribute (ACEXML_Attribute_Def_Builder *def) = 0;
-
 
   /**
    * Dump the content of the attribute definition.

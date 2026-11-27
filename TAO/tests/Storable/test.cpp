@@ -10,6 +10,7 @@
 // if the file is stale.
 
 #include "Savable.h"
+#include <string>
 
 #include "tao/Storable_FlatFileStream.h"
 #include "tao/SystemException.h"
@@ -19,7 +20,7 @@
 
 #include <iostream>
 
-const ACE_TCHAR *persistence_file = ACE_TEXT("test.dat");
+ACE_TCHAR const *persistence_file = ACE_TEXT("test.dat");
 
 int num_loops = 1;
 int sleep_msecs = 100;
@@ -82,17 +83,19 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   int exit_status = 0;
 
   if (parse_args (argc, argv) != 0)
+  {
     return 1;
+  }
 
-  int read_index = write_index ? 0 : 1;
+  const int read_index = write_index ? 0 : 1;
 
   TAO::Storable_Base::use_backup_default = use_backup;
 
   TAO::Storable_FlatFileFactory factory ("./");
 
-  ACE_CString str_write_value = "test_string";
-  int int_write_value = -100;
-  unsigned int unsigned_int_write_value = 100;
+  std::string str_write_value = "test_string";
+  const int int_write_value = -100;
+  const unsigned int unsigned_int_write_value = 100;
 
   const int bytes_size = 8;
   char bytes_write_value[bytes_size];
@@ -120,7 +123,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           // written from other process is correct.
           if (savable.is_loaded_from_stream ())
             {
-              int int_read = savable.int_get(read_index);
+              const int int_read = savable.int_get(read_index);
               // If value read is not 0 then the other
               // process has written to persistent store.
               // If not, it's too soon to test.
@@ -128,22 +131,28 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                 {
                   ACE_ASSERT (int_read == int_write_value);
 
-                  const ACE_CString & str_read = savable.string_get(read_index);
+                  std::string const & str_read = savable.string_get(read_index);
                   if (str_read != str_write_value)
-                    ACE_ERROR ((LM_ERROR,
-                                ACE_TEXT ("String read != num written.\n")));
+                    {
+                      ACE_ERROR ((LM_ERROR,
+                                  ACE_TEXT ("String read != num written.\n")));
+                    }
 
-                  unsigned int unsigned_int_read =
+                  const unsigned int unsigned_int_read =
                     savable.unsigned_int_get (read_index);
                   if (unsigned_int_read != unsigned_int_write_value)
-                    ACE_ERROR ((LM_ERROR,
-                                ACE_TEXT ("Int read != num written.\n")));
+                    {
+                      ACE_ERROR ((LM_ERROR,
+                                  ACE_TEXT ("Int read != num written.\n")));
+                    }
 
-                  int bytes_read_size =
+                  const int bytes_read_size =
                     savable.bytes_get (read_index, bytes_read);
                   if (bytes_read_size != bytes_size)
-                    ACE_ERROR ((LM_ERROR,
-                                ACE_TEXT ("Bytes read != num written.\n")));
+                    {
+                      ACE_ERROR ((LM_ERROR,
+                                  ACE_TEXT ("Bytes read != num written.\n")));
+                    }
 
                   for (int k = 0; k < bytes_size; ++k)
                     {
@@ -157,7 +166,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           savable.int_set(write_index, int_write_value);
           savable.unsigned_int_set(write_index, unsigned_int_write_value);
           savable.bytes_set(write_index, bytes_size, bytes_write_value);
-          int bytes_size = savable.bytes_get (write_index, bytes_read);
+          const int bytes_size = savable.bytes_get (write_index, bytes_read);
           for (int k = 0; k < bytes_size; ++k)
             {
               ACE_ASSERT (bytes_read[k] == bytes_write_value[k]);
@@ -187,7 +196,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       exit_status = 1;
     }
 
-  catch (const CORBA::PERSIST_STORE &)
+  catch (CORBA::PERSIST_STORE const &)
     {
       std::cout << "CORBA::PERSIST_STORE thrown" << std::endl;
       exit_status = 1;

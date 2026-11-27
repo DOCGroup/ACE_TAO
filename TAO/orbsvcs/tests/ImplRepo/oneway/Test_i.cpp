@@ -1,5 +1,3 @@
-/* -*- C++ -*-  */
-
 #include "Test_i.h"
 #include "ace/OS_NS_unistd.h"
 
@@ -8,9 +6,7 @@ Test_i::Test_i ()
 {
 }
 
-Test_i::~Test_i ()
-{
-}
+Test_i::~Test_i () = default;
 
 void
 Test_i::foo ()
@@ -26,5 +22,4 @@ Test_i::get_call_count ()
   this->count_ = 0;
   return r;
 }
-
 

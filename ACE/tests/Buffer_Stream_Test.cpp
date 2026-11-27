@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    Buffer_Stream_Test.cpp
  *
@@ -12,8 +10,6 @@
  *
  *  @author Prashant Jain <pjain@cs.wustl.edu> and Doug Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
-
 
 #include "test_config.h"
 #include "ace/Stream.h"
@@ -22,6 +18,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_time.h"
 
+#include <memory>
 
 #if defined (ACE_HAS_THREADS)
 
@@ -42,10 +39,12 @@ public:
   Common_Task () {}
 
   //FUZZ: disable check_for_lack_ACE_OS
-  // = ACE_Task hooks.
+  /// @name ACE_Task hooks
+  /// @{
   ///FUZZ: enable check_for_lack_ACE_OS
   int open (void * = nullptr) override;
   int close (u_long = 0) override;
+  /// @}
 };
 
 /**
@@ -89,7 +88,9 @@ int
 Common_Task::open (void *)
 {
   if (this->activate (THR_NEW_LWP | THR_DETACHED) == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("spawn")), -1);
+  }
   return 0;
 }
 
@@ -97,8 +98,8 @@ int
 Common_Task::close (u_long exit_status)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%t) thread is exiting with status %d in module %s\n"),
-             exit_status,
+              ACE_TEXT ("(%t) thread is exiting with status %Lu in module %s\n"),
+              exit_status,
               this->name ()));
 
   // Can do anything here that is required when a thread exits, e.g.,
@@ -116,11 +117,11 @@ Common_Task::close (u_long exit_status)
 int
 Supplier::svc ()
 {
-  ACE_Message_Block *mb = nullptr;
+  ACE_Message_Block *mb {};
 
   // Send one message for each letter of the alphabet, then send an empty
   // message to mark the end.
-  for (const char *c = ACE_ALPHABET; *c != '\0'; c++)
+  for (char const *c = ACE_ALPHABET; *c != '\0'; ++c)
     {
       // Allocate a new message.
       char d[2];
@@ -135,13 +136,17 @@ Supplier::svc ()
       mb->wr_ptr (2);
 
       if (this->put_next (mb) == -1)
-        ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
-                    ACE_TEXT ("put_next")));
+        {
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"),
+                      ACE_TEXT ("put_next")));
+        }
     }
 
   ACE_NEW_RETURN(mb, ACE_Message_Block, -1);
   if (this->put_next (mb) == -1)
+  {
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"), ACE_TEXT ("put_next")));
+  }
 
   return 0;
 }
@@ -161,10 +166,10 @@ Consumer::put (ACE_Message_Block *mb, ACE_Time_Value *tv)
 int
 Consumer::svc ()
 {
-  ACE_Message_Block *mb = nullptr;
+  ACE_Message_Block *mb {};
   int result;
-  const char *c = ACE_ALPHABET;
-  char *output = nullptr;
+  char const *c = ACE_ALPHABET;
+  char *output {};
 
   // Keep looping, reading a message out of the queue, until we
   // timeout or get a message with a length == 0, which signals us to
@@ -174,10 +179,12 @@ Consumer::svc ()
     {
       this->timeout_.set (ACE_OS::time (nullptr) + 4, 0); // Wait for upto 4 seconds
 
-      result = this->getq (mb, &this->timeout_);
+      result = this->getq (mb, std::addressof (this->timeout_));
 
       if (result == -1)
+      {
         break;
+      }
 
       size_t const length = mb->length ();
 
@@ -185,12 +192,14 @@ Consumer::svc ()
         {
           output = mb->rd_ptr ();
           ACE_TEST_ASSERT (*c == output[0]);
-          c++;
+          ++c;
         }
       mb->release ();
 
       if (length == 0)
+      {
         break;
+      }
     }
 
   ACE_TEST_ASSERT (result == 0 || errno == EWOULDBLOCK);
@@ -209,8 +218,8 @@ run_main (int, ACE_TCHAR *[])
 #if defined (ACE_HAS_THREADS)
   // Control hierachically-related active objects.
   MT_Stream stream;
-  MT_Module *cm = nullptr;
-  MT_Module *sm = nullptr;
+  MT_Module *cm {};
+  MT_Module *sm {};
 
   // Allocate the Consumer and Supplier modules.
   ACE_NEW_RETURN (cm, MT_Module (ACE_TEXT ("Consumer"), new Consumer), -1);
@@ -220,9 +229,13 @@ run_main (int, ACE_TCHAR *[])
   // Stream.  All processing is performed in the Stream.
 
   if (stream.push (cm) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("push")), 1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("push")), 1);
+    }
   else if (stream.push (sm) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("push")), 1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("push")), 1);
+    }
 
   // Barrier synchronization: wait for the threads to exit, then exit
   // ourselves.

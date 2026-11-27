@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Process_Semaphore.h
  *
@@ -9,7 +6,6 @@
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef ACE_PROCESS_SEMAPHORE_H
 #define ACE_PROCESS_SEMAPHORE_H
@@ -42,14 +38,15 @@ public:
   /// Initialize the semaphore, with an initial value of @a count and a
   /// maximum value of @a max.
   ACE_Process_Semaphore (u_int count = 1, // By default make this unlocked.
-                         const ACE_TCHAR *name = nullptr,
-                         void * = 0,
+                         ACE_TCHAR const *name = nullptr,
+                         void * = nullptr,
                          int max = 0x7FFFFFFF);
 
   /**
-   * Explicitly destroy the semaphore.  Note that only one thread
-   * should call this method since it doesn't protect against race
-   * conditions.
+   * Explicitly destroy the semaphore.
+   *
+   * @note Only one thread should call this method since it doesn't
+   * protect against race conditions.
    */
   int remove ();
 
@@ -110,7 +107,7 @@ public:
 
 #if defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM)
   /// Return the underlying lock.
-  const ACE_sema_t &lock () const;
+  ACE_sema_t const &lock () const;
 #endif /* ACE_WIN32 || ACE_HAS_POSIX_SEM */
 
   /// Dump the state of an object.
@@ -143,7 +140,7 @@ template<>
 class ACE_Export ACE_Malloc_Lock_Adapter_T<ACE_Process_Semaphore>
 {
 public:
-  ACE_Process_Semaphore * operator () (const ACE_TCHAR *name);
+  ACE_Process_Semaphore * operator () (ACE_TCHAR const *name);
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    ClientRequestInterceptor_Adapter.h
  *
@@ -11,7 +8,6 @@
  *  @author  Ossama Othman <ossama@uci.edu>
  *  @author  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_CLIENT_REQUEST_INTERCEPTOR_ADAPTER_H
 #define TAO_CLIENT_REQUEST_INTERCEPTOR_ADAPTER_H
@@ -73,7 +69,8 @@ namespace TAO
      * client side, only "starting" and "ending" interception points.
      *
      */
-    //@{
+    /// @{
+
     /// This method implements one of the "starting" client side
     /// interception points.
     virtual void send_request (Invocation_Base &invocation) = 0;
@@ -97,7 +94,7 @@ namespace TAO
     /// Register an interceptor with policies.
     virtual void add_interceptor (
       PortableInterceptor::ClientRequestInterceptor_ptr interceptor,
-      const CORBA::PolicyList& policies) = 0;
+      CORBA::PolicyList const & policies) = 0;
 
     /// Convert TAO Invocation status to a PI status
     virtual PortableInterceptor::ReplyStatus pi_reply_status (

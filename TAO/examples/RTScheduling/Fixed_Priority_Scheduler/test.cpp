@@ -9,6 +9,8 @@
 #include "ace/Event_Handler.h"
 #include "ace/Sig_Handler.h"
 
+#include <memory>
+
 class TestShutdown : public ACE_Event_Handler
 {
 public:
@@ -23,7 +25,7 @@ public:
 #endif
   }
 
-  ~TestShutdown ()
+  ~TestShutdown () override
   {
 #if !defined(ACE_LACKS_UNIX_SIGNALS)
     this->shutdown_.remove_handler (SIGTERM);
@@ -33,7 +35,7 @@ public:
 #endif
   }
 
-  virtual int handle_signal (int, siginfo_t*, ucontext_t*)
+  int handle_signal (int, siginfo_t*, ucontext_t*) override
   {
     ACE_DEBUG ((LM_DEBUG, "Shutting down...\n"));
     this->orb_->shutdown ();
@@ -62,23 +64,25 @@ DT_Test::check_supported_priorities ()
 
   if (thr_sched_policy_ == THR_SCHED_RR)
     {
-      //if (TAO_debug_level > 0)
-      ACE_DEBUG ((LM_DEBUG, "Sched policy = THR_SCHED_RR\n"));
+      ACE_DEBUG ((LM_DEBUG,
+                  "Sched policy = THR_SCHED_RR\n"));
 
       sched_policy_ = ACE_SCHED_RR;
     }
-  else
-  if (thr_sched_policy_ == THR_SCHED_FIFO)
+  else if (thr_sched_policy_ == THR_SCHED_FIFO)
     {
-      // if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG, "Sched policy = THR_SCHED_FIFO\n"));
+      ACE_DEBUG ((LM_DEBUG,
+                  "Sched policy = THR_SCHED_FIFO\n"));
 
       sched_policy_ = ACE_SCHED_FIFO;
     }
   else
     {
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG, "Sched policy = THR_SCHED_OTHER\n"));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "Sched policy = THR_SCHED_OTHER\n"));
+        }
 
       sched_policy_ = ACE_SCHED_OTHER;
     }
@@ -95,8 +99,11 @@ DT_Test::check_supported_priorities ()
                       " to run the test, aborting\n"));
           ACE_OS::exit (2);
         }
-      else ACE_DEBUG ((LM_DEBUG, "max_priority = %d, min_priority = %d\n",
-                       max_priority_, min_priority_));
+      else
+        {
+          ACE_DEBUG ((LM_DEBUG, "max_priority = %d, min_priority = %d\n",
+                      max_priority_, min_priority_));
+        }
     }
 }
 
@@ -115,7 +122,6 @@ DT_Test::init (int argc, ACE_TCHAR *argv [])
 
   TAO_RTScheduler_Manager_var manager = TAO_RTScheduler_Manager::_narrow (manager_obj.in ());
 
-
   ACE_NEW_RETURN (scheduler_,
                   Fixed_Priority_Scheduler (orb_.in ()),
                   -1);
@@ -127,7 +133,6 @@ DT_Test::init (int argc, ACE_TCHAR *argv [])
 
   current_  =
     RTScheduling::Current::_narrow (object.in ());
-
 
   if (sched_policy_ != ACE_SCHED_OTHER)
     {
@@ -143,8 +148,10 @@ DT_Test::init (int argc, ACE_TCHAR *argv [])
                           "test runs in time-shared class\n"));
             }
           else
-            ACE_ERROR ((LM_ERROR,
-                        "(%P|%t): sched_params failed\n"));
+            {
+              ACE_ERROR ((LM_ERROR,
+                          "(%P|%t): sched_params failed\n"));
+            }
         }
     }
 
@@ -154,16 +161,16 @@ DT_Test::init (int argc, ACE_TCHAR *argv [])
 void
 DT_Test::run (int argc, ACE_TCHAR* argv [])
 {
-  init (argc,argv);
+  init (argc, argv);
 
   TestShutdown killer (this->orb_.in ());
 
   if (this->dt_creator_->resolve_naming_service () == -1)
-    return;
-
+    {
+      return;
+    }
 
   //TASK_STATS::instance ()->init (this->dt_creator_->dt_count () * 100);
-
 
   this->dt_creator_->activate_root_poa ();
 
@@ -229,9 +236,11 @@ DT_Test::activate_task ()
                       50) == -1)
     {
       if (ACE_OS::last_error () == EPERM)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Insufficient privilege to run this test.\n")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Insufficient privilege to run this test.\n")),
+                            -1);
+        }
     }
 
   return 0;
@@ -247,11 +256,11 @@ DT_Test::svc ()
 
       dt_creator_->create_distributable_threads (current_.in ());
     }
-  catch (const CORBA::BAD_INV_ORDER &)
+  catch (CORBA::BAD_INV_ORDER const &)
     {
       // This exception can occur if ORB is already shutdown.
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return -1;
@@ -271,13 +280,14 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   int status = 0;
 
-  ACE_Service_Config::static_svcs ()->insert (&ace_svc_desc_FP_DT_Creator);
+  ACE_Service_Config::static_svcs ()->insert (
+    std::addressof (ace_svc_desc_FP_DT_Creator));
 
   try
     {
       DT_TEST::instance ()->run (argc, argv);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Caught exception:");
       status = 1;

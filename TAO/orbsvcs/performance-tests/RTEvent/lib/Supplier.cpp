@@ -27,7 +27,9 @@ Supplier::connect (RtecEventChannelAdmin::EventChannel_ptr ec)
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
     if (!CORBA::is_nil (this->proxy_consumer_.in ()))
+    {
       return;
+    }
 
     this->proxy_consumer_ =
       supplier_admin->obtain_push_consumer ();
@@ -37,7 +39,7 @@ Supplier::connect (RtecEventChannelAdmin::EventChannel_ptr ec)
     this->_this ();
 
   RtecEventChannelAdmin::SupplierQOS supplier_qos;
-  supplier_qos.is_gateway = 0;
+  supplier_qos.is_gateway = false;
   supplier_qos.publications.length (this->event_range_);
   for (CORBA::Long i = 0; i != this->event_range_; ++i)
     {
@@ -58,7 +60,9 @@ Supplier::disconnect ()
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
     if (CORBA::is_nil (this->proxy_consumer_.in ()))
+    {
       return;
+    }
     proxy = this->proxy_consumer_._retn ();
   }
 
@@ -68,7 +72,7 @@ Supplier::disconnect ()
     {
       proxy->disconnect_push_consumer ();
     }
-  catch (const CORBA::Exception&){}
+  catch (CORBA::Exception const&){}
 }
 
 void
@@ -80,7 +84,9 @@ Supplier::push (const RtecEventComm::EventSet &events)
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
     if (CORBA::is_nil (this->proxy_consumer_.in ()))
+    {
       return;
+    }
     proxy = this->proxy_consumer_;
   }
 

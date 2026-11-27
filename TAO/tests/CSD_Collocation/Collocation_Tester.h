@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file     Collocation_Tester.h
  *
@@ -7,9 +5,6 @@
  *
  *  @author  Nanbor Wang
  */
-//=============================================================================
-
-
 #if !defined (TAO_COLLOCATION_TEST_H)
 #define TAO_COLLOCATION_TEST_H
 
@@ -22,7 +17,7 @@
 class Collocation_Test
 {
 public:
-  Collocation_Test ();
+  Collocation_Test () = default;
 
   void shutdown ();
 

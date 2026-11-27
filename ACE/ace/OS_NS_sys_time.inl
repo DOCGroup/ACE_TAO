@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "ace/os_include/sys/os_time.h"
 #include "ace/os_include/os_errno.h"
 
@@ -34,7 +33,7 @@ ACE_OS::gettimeofday ()
 # if defined (ACE_HAS_TIMEZONE_GETTIMEOFDAY) || \
      defined (ACE_HAS_VOIDPTR_GETTIMEOFDAY) || \
      defined (ACE_HAS_SVR4_GETTIMEOFDAY)
-  ACE_OSCALL (::gettimeofday (&tv, 0), int, result);
+  ACE_OSCALL (::gettimeofday (&tv, nullptr), int, result);
 # elif defined (ACE_VXWORKS)
   // Assumes that struct timespec is same size as struct timeval,
   // which assumes that time_t is a long: it currently (VxWorks
@@ -59,9 +58,13 @@ ACE_OS::gettimeofday ()
 #endif /* 0 */
 #if !defined (ACE_WIN32) && !defined (ACE_LACKS_GETTIMEOFDAY)
   if (result == -1)
-    return ACE_Time_Value ((time_t)-1);
+    {
+      return ACE_Time_Value ((time_t)-1);
+    }
   else
-    return ACE_Time_Value (tv);
+    {
+      return ACE_Time_Value (tv);
+    }
 #endif // !defined (ACE_WIN32)
 }
 

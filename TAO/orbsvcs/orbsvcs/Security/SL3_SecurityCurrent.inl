@@ -1,6 +1,4 @@
-// -*- C++ -*-
 #include "tao/ORB_Core.h"
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

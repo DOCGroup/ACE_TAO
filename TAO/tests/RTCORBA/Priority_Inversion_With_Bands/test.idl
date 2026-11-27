@@ -1,4 +1,3 @@
-
 interface test
 {
   void initialize (in unsigned long total_iterations);

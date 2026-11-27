@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "ace/OS_NS_sys_socket.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -14,7 +13,7 @@ ACE_SOCK::set_option (int level,
                              option, (char *) optval, optlen);
 }
 
-// Provides access to the ACE_OS::getsockopt system call.
+/// Provides access to the ACE_OS::getsockopt system call.
 
 ACE_INLINE int
 ACE_SOCK::get_option (int level,

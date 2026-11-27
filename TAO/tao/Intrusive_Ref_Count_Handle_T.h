@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Intrusive_Ref_Count_Handle_T.h
  *
  *  @authors Tim Bradley  <bradley_t@ociweb.com>
  */
-//=============================================================================
 
 #ifndef TAO_INTRUSIVE_REF_COUNT_HANDLE_T_H
 #define TAO_INTRUSIVE_REF_COUNT_HANDLE_T_H
@@ -64,7 +60,7 @@ class TAO_Intrusive_Ref_Count_Handle
 {
 public:
   /// Default Constructor - enters the "nil" state.
-  TAO_Intrusive_Ref_Count_Handle ();
+  TAO_Intrusive_Ref_Count_Handle () = default;
 
   /// Ctor - By default, takes ownership of passed-in "copy" of reference
   ///        to T.  But the second argument (bool) can be changed from
@@ -79,19 +75,18 @@ public:
   TAO_Intrusive_Ref_Count_Handle (T* p, bool take_ownership = true);
 
   /// Copy Constructor - claims a "copy" of rhs object's reference to T.
-  TAO_Intrusive_Ref_Count_Handle (const TAO_Intrusive_Ref_Count_Handle& b);
+  TAO_Intrusive_Ref_Count_Handle (TAO_Intrusive_Ref_Count_Handle const &b);
 
-  /// Destructor
   ~TAO_Intrusive_Ref_Count_Handle ();
 
   /// Assignment Operator with T* argument.
   /// Takes ownership of passed-in "copy" of reference to T.
   TAO_Intrusive_Ref_Count_Handle& operator= (T* p);
 
-  /// Assignment Operator with const TAO_Smart_Ptr<T>& argument.
+  /// Assignment operator with a const @c TAO_Intrusive_Ref_Count_Handle reference.
   /// Claims a "copy" of rhs object's reference to T.
   TAO_Intrusive_Ref_Count_Handle& operator=
-                                   (const TAO_Intrusive_Ref_Count_Handle& b);
+                                   (TAO_Intrusive_Ref_Count_Handle const &b);
 
   /// Const Accessor to underlying pointer (T*) using arrow (->) operator.
   T* operator->() const;
@@ -116,7 +111,7 @@ public:
 
   /// Equality operator allows the refcounted object to be used generically
   /// as a contained object
-  bool operator== (const TAO_Intrusive_Ref_Count_Handle& h) const;
+  bool operator== (TAO_Intrusive_Ref_Count_Handle const &h) const;
 
 private:
   /// Claim a "copy" of the reference-counted object by adding
@@ -127,7 +122,7 @@ private:
   /// Drop our "copy" of the reference-counted object by removing
   /// one from its reference counter.  Do nothing if this smart pointer
   /// object is currently in the "nil" state.
-  /// Note that this method will always leave this smart pointer
+  /// @note This method will always leave this smart pointer
   /// in the "nil" state upon its return.
   void drop ();
 
@@ -135,7 +130,7 @@ private:
   /// Set to 0 when this smart pointer is in the "nil" state.  Otherwise,
   /// this smart pointer always owns a (reference-counted) "copy" of the
   /// object pointed to by the ptr_ data member.
-  T* ptr_;
+  T* ptr_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -1,10 +1,7 @@
-// -*- C++ -*-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
-TAO_EC_Null_ObserverStrategy::TAO_EC_Null_ObserverStrategy ()
-{
-}
+TAO_EC_Null_ObserverStrategy::TAO_EC_Null_ObserverStrategy () = default;
 
 // ****************************************************************
 
@@ -27,11 +24,13 @@ TAO_EC_Basic_ObserverStrategy::Observer_Entry::
 
 ACE_INLINE int
 TAO_EC_Basic_ObserverStrategy::Header_Compare::
-    operator () (const RtecEventComm::EventHeader& lhs,
-                 const RtecEventComm::EventHeader& rhs) const
+    operator () (RtecEventComm::EventHeader const & lhs,
+                 RtecEventComm::EventHeader const & rhs) const
 {
   if (lhs.source == rhs.source)
-    return lhs.type < rhs.type;
+    {
+      return lhs.type < rhs.type;
+    }
   return lhs.source < rhs.source;
 }
 

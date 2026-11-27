@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*Consumer):  orbsvcsexe, ftrteventclient, strategies {
   exename = consumer
 
@@ -22,5 +21,13 @@ project(*Supplier):  orbsvcsexe, ftrteventclient, strategies {
 
   Header_Files {
     PushSupplier.h
+  }
+}
+
+project(*UUID_Test): orbsvcsexe, ftrtevent {
+  exename = uuid_test
+
+  Source_Files {
+    UUID_Test.cpp
   }
 }

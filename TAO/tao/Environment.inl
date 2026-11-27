@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "ace/OS_Memory.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -7,7 +6,7 @@ ACE_INLINE
 CORBA::Exception *
 CORBA::Environment::exception () const
 {
-  return this->exception_;
+  return this->exception_.get ();
 }
 
 ACE_INLINE
@@ -19,7 +18,7 @@ CORBA::Environment::_duplicate (CORBA::Environment *x)
       return nullptr;
     }
 
-  CORBA::Environment* ptr = nullptr;
+  CORBA::Environment *ptr {};
   ACE_NEW_RETURN (ptr,
                   CORBA::Environment (*x),
                   nullptr);

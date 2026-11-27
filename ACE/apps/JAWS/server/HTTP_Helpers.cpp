@@ -6,9 +6,9 @@
 #include "ace/Guard_T.h"
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_stdio.h"
+#include <cstring>
 
-// = Static initialization.
-const char *const
+char const *const
 HTTP_Helper::months_[12]=
 {
   "Jan", "Feb", "Mar", "Apr", "May", "Jun",
@@ -17,32 +17,41 @@ HTTP_Helper::months_[12]=
 
 char const *HTTP_Helper::alphabet_ = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
-char * HTTP_Helper::date_string_ = 0;
+char * HTTP_Helper::date_string_ {};
 ACE_SYNCH_MUTEX HTTP_Helper::mutex_;
 
 ACE_SYNCH_MUTEX HTTP_Status_Code::lock_;
 int HTTP_Status_Code::instance_ = 0;
-const char *HTTP_Status_Code::Reason[HTTP_Status_Code::MAX_STATUS_CODE + 1];
+char const *HTTP_Status_Code::Reason[HTTP_Status_Code::MAX_STATUS_CODE + 1];
 
 time_t
-HTTP_Helper::HTTP_mktime (const char *httpdate)
+HTTP_Helper::HTTP_mktime (char const *httpdate)
 {
+  if (httpdate == nullptr)
+    {
+      return (time_t) -1;
+    }
+
   char *buf;
 
-  ACE_NEW_RETURN (buf, char[ACE_OS::strlen (httpdate) + 1], (time_t) -1);
+  ACE_NEW_RETURN (buf, char[std::strlen (httpdate) + 1], (time_t) -1);
 
   // Make spaces in the date be semi-colons so we can parse robustly
   // with sscanf.
 
-  const char *ptr1 = httpdate;
+  char const *ptr1 = httpdate;
   char *ptr2 = buf;
 
   do
     {
       if (*ptr1 == ' ')
-        *ptr2++ = ';';
+        {
+          *ptr2++ = ';';
+        }
       else
-        *ptr2++ = *ptr1;
+        {
+          *ptr2++ = *ptr1;
+        }
     }
   while (*ptr1++ != '\0');
 
@@ -59,9 +68,11 @@ HTTP_Helper::HTTP_mktime (const char *httpdate)
   // Should also support other versions (such as from NNTP and SMTP)
   // for robustness, but it should be clear how to extend this.
 
-  struct tm tms;
-  char month[4];
-  char weekday[10];
+  struct tm tms {};
+  tms.tm_isdst = -1;
+  char month[4] {};
+  char weekday[10] {};
+  bool parsed = false;
 
   if (::sscanf(buf, "%3s,;%2d;%3s;%4d;%2d:%2d:%2d;GMT", // RFC-1123 date format
                weekday,
@@ -71,13 +82,15 @@ HTTP_Helper::HTTP_mktime (const char *httpdate)
                &tms.tm_hour,
                &tms.tm_min,
                &tms.tm_sec) == 7)
-    ;
-  else if (::sscanf(buf, "%s,;%2d-%3s-%2d;%2d:%2d:%2d;GMT", // RFC-850 date format
+    {
+      parsed = true;
+    }
+  else if (::sscanf(buf, "%9s,;%2d-%3s-%2d;%2d:%2d:%2d;GMT", // RFC-850 date format
                     weekday,
                     &tms.tm_mday, month, &tms.tm_year,
                     &tms.tm_hour, &tms.tm_min, &tms.tm_sec) == 7)
     {
-      weekday[3] = '\0';
+      parsed = true;
     }
   else if (::sscanf(buf, "%3s;%3s;%2d;%2d:%2d:%2d;%4d", // ASCTIME date format.
                     weekday,
@@ -85,15 +98,23 @@ HTTP_Helper::HTTP_mktime (const char *httpdate)
                     &tms.tm_hour, &tms.tm_min, &tms.tm_sec,
                     &tms.tm_year) == 7)
     {
+      parsed = true;
     }
 
   delete [] buf;
+
+  if (!parsed)
+    {
+      return (time_t) -1;
+    }
 
   tms.tm_year = HTTP_Helper::fixyear (tms.tm_year);
   tms.tm_mon = HTTP_Helper::HTTP_month (month);
 
   if (tms.tm_mon == -1)
+  {
     return (time_t) -1;
+  }
 
   // mktime is a Standard C function.
   {
@@ -105,22 +126,22 @@ HTTP_Helper::HTTP_mktime (const char *httpdate)
   }
 }
 
-const char *
+char const *
 HTTP_Helper::HTTP_date ()
 {
-  if (HTTP_Helper::date_string_ == 0)
+  if (HTTP_Helper::date_string_ == nullptr)
     {
-      ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, m, HTTP_Helper::mutex_, 0));
+      ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, m, HTTP_Helper::mutex_, nullptr));
 
-      if (HTTP_Helper::date_string_ == 0)
+      if (HTTP_Helper::date_string_ == nullptr)
         {
           // 40 bytes is all I need.
-          ACE_NEW_RETURN (HTTP_Helper::date_string_, char[40], 0);
+          ACE_NEW_RETURN (HTTP_Helper::date_string_, char[40], nullptr);
 
           if (!HTTP_Helper::HTTP_date (HTTP_Helper::date_string_))
             {
               delete [] HTTP_Helper::date_string_;
-              HTTP_Helper::date_string_ = 0;
+              HTTP_Helper::date_string_ = nullptr;
             }
         }
     }
@@ -128,49 +149,57 @@ HTTP_Helper::HTTP_date ()
   return HTTP_Helper::date_string_;
 }
 
-const char *
+char const *
 HTTP_Helper::HTTP_date (char *s)
 {
   // Return the date-string formatted per HTTP standards.  Time must
   // be in UTC, so using the 'strftime' call (which obeys the locale)
   // isn't correct.
-  static const char* months[] = {"Jan","Feb","Mar","Apr","May","Jun",
-                                 "Jul","Aug","Sep","Oct","Nov","Dec"};
-  static const char* days[] = {"Sun","Mon","Tue","Wed","Thu","Fri","Sat"};
-
   time_t tloc;
   struct tm tms;
   char * date_string = s;
 
   if (ACE_OS::time (&tloc) != (time_t) -1
-      && ACE_OS::gmtime_r (&tloc, &tms) != 0)
+      && ACE_OS::gmtime_r (&tloc, &tms) != nullptr)
   {
+    static char const * months[] = {"Jan","Feb","Mar","Apr","May","Jun",
+                                   "Jul","Aug","Sep","Oct","Nov","Dec"};
+    static char const * days[] = {"Sun","Mon","Tue","Wed","Thu","Fri","Sat"};
+
     ACE_OS::sprintf (date_string,
                      "%s, %2.2d %s %4.4d %2.2d:%2.2d:%2.2d GMT",
                      days[tms.tm_wday], tms.tm_mday, months[tms.tm_mon],
                      tms.tm_year + 1900, tms.tm_hour, tms.tm_min, tms.tm_sec);
   }
   else
-    date_string = 0;
+  {
+    date_string = nullptr;
+  }
 
   return date_string;
 }
 
 int
-HTTP_Helper::HTTP_month (const char *month)
+HTTP_Helper::HTTP_month (char const *month)
 {
-  for (size_t i = 0; i < 12; i++)
-    if (ACE_OS::strcmp(month, HTTP_Helper::months_[i]) == 0)
-      return i;
+  for (size_t i = 0; i < 12; ++i)
+    {
+      if (std::strcmp (month, HTTP_Helper::months_[i]) == 0)
+        {
+          return i;
+        }
+    }
 
   return -1;
 }
 
-const char *
+char const *
 HTTP_Helper::HTTP_month (int month)
 {
   if (month < 0 || month >= 12)
-    return 0;
+  {
+    return nullptr;
+  }
 
   return HTTP_Helper::months_[month];
 }
@@ -184,17 +213,19 @@ HTTP_Helper::HTTP_decode_string (char *path)
   int i, j;
   char percentcode[3];
 
-  for (i = j = 0; path[i] != '\0'; i++, j++)
+  for (i = j = 0; path[i] != '\0'; ++i, ++j)
     {
       if (path[i] == '%')
         {
           percentcode[0] = path[++i];
           percentcode[1] = path[++i];
           percentcode[2] = '\0';
-          path[j] = (char) ACE_OS::strtol (percentcode, (char **) 0, 16);
+          path[j] = static_cast<char> (ACE_OS::strtol (percentcode, nullptr, 16));
         }
       else
+      {
         path[j] = path[i];
+      }
     }
 
   path[j] = path[i];
@@ -207,10 +238,10 @@ HTTP_Helper::HTTP_decode_base64 (char *data)
 {
   char inalphabet[256], decoder[256];
 
-  ACE_OS::memset (inalphabet, 0, sizeof (inalphabet));
-  ACE_OS::memset (decoder, 0, sizeof (decoder));
+  std::memset (inalphabet, 0, sizeof (inalphabet));
+  std::memset (decoder, 0, sizeof (decoder));
 
-  for (int i = ACE_OS::strlen (HTTP_Helper::alphabet_) - 1;
+  for (int i = std::strlen (HTTP_Helper::alphabet_) - 1;
        i >= 0;
        i--)
     {
@@ -229,11 +260,15 @@ HTTP_Helper::HTTP_decode_base64 (char *data)
   while ((c = *indata++) != '\0')
     {
       if (c == '=')
+      {
         break;
+      }
       if (c > 255 || ! inalphabet[c])
+      {
         continue;
+      }
       bits += decoder[c];
-      char_count++;
+      ++char_count;
       if (char_count == 4)
         {
           *outdata++ = (bits >> 16);
@@ -243,7 +278,9 @@ HTTP_Helper::HTTP_decode_base64 (char *data)
           char_count = 0;
         }
       else
+      {
         bits <<= 6;
+      }
     }
 
   if (c == '\0')
@@ -253,7 +290,7 @@ HTTP_Helper::HTTP_decode_base64 (char *data)
           ACE_DEBUG ((LM_DEBUG,
                      "base64 encoding incomplete: at least %d bits truncated\n",
                      ((4 - char_count) * 6)));
-            errors++;
+            ++errors;
         }
     }
   else
@@ -264,7 +301,7 @@ HTTP_Helper::HTTP_decode_base64 (char *data)
         case 1:
           ACE_DEBUG ((LM_DEBUG,
                       "base64 encoding incomplete: at least 2 bits missing\n"));
-          errors++;
+          ++errors;
           break;
         case 2:
           *outdata++ = (bits >> 10);
@@ -276,7 +313,7 @@ HTTP_Helper::HTTP_decode_base64 (char *data)
         }
     }
   *outdata = '\0';
-  return errors ? 0 : data;
+  return errors ? nullptr : data;
 }
 
 char *
@@ -297,11 +334,11 @@ HTTP_Helper::HTTP_encode_base64 (char *data)
       if (c > (int)ASCII_MAX)
         {
           ACE_DEBUG ((LM_DEBUG, "encountered char > 255 (decimal %d)\n", c));
-          error++;
+          ++error;
           break;
         }
       bits += c;
-      char_count++;
+      ++char_count;
 
       if (char_count == 3)
         {
@@ -313,7 +350,9 @@ HTTP_Helper::HTTP_encode_base64 (char *data)
           char_count = 0;
         }
       else
-          bits <<= 8;
+      {
+        bits <<= 8;
+      }
     }
 
   if (!error)
@@ -336,10 +375,10 @@ HTTP_Helper::HTTP_encode_base64 (char *data)
             }
         }
       *outdata = '\0';
-      ACE_OS::strcpy (data, buf);
+      std::strcpy (data, buf);
     }
 
-  return (error ? 0 : data);
+  return (error ? nullptr : data);
 }
 
 int
@@ -348,7 +387,9 @@ HTTP_Helper::fixyear (int year)
   // Fix the year 2000 problem
 
   if (year > 1000)
-    year -= 1900;
+    {
+      year -= 1900;
+    }
   else if (year < 100)
     {
       struct tm tms;
@@ -359,16 +400,22 @@ HTTP_Helper::fixyear (int year)
           ACE_OS::gmtime_r (&tloc, &tms);
 
           if (tms.tm_year % 100 == year)
+          {
             year = tms.tm_year;
+          }
 
           // The last two cases check boundary conditions, in case the
           // year just changed at the moment we checked to see if we
           // need to fix it.
           if ((year+1) % 100 == tms.tm_year % 100)
+          {
             year = tms.tm_year - 1;
+          }
 
           if (year == (tms.tm_year + 1) % 100)
+          {
             year = tms.tm_year + 1;
+          }
 
           // What to do if none of the above?
         }
@@ -377,18 +424,18 @@ HTTP_Helper::fixyear (int year)
   return year;
 }
 
-const char **
+char const **
 HTTP_Status_Code::instance ()
 {
   if (HTTP_Status_Code::instance_ == 0)
     {
-      ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, g, lock_, 0));
+      ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, g, lock_, nullptr));
 
       if (HTTP_Status_Code::instance_ == 0)
         {
           for (size_t i = 0;
                i < HTTP_Status_Code::MAX_STATUS_CODE + 1;
-               i++)
+               ++i)
             {
               switch (i)
                 {

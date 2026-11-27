@@ -1,7 +1,3 @@
-// -*- C++ -*-
-
-
-//=============================================================================
 /**
  *  @file    ExtValueDef_i.h
  *
@@ -9,8 +5,6 @@
  *
  *  @author Jeff Parsons <j.parsons@vanderbilt.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_EXTVALUEDEF_I_H
 #define TAO_EXTVALUEDEF_I_H

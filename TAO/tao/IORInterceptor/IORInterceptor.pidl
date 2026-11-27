@@ -1,5 +1,3 @@
-// -*- IDL -*-
-
 /**
  * @file IORInterceptor.pidl
  *
@@ -15,7 +13,6 @@
  * PortableInterceptor.
  */
 
-// File: IORInterceptor.idl
 #ifndef _IOR_INTERCEPTOR_IDL_
 #define _IOR_INTERCEPTOR_IDL_
 

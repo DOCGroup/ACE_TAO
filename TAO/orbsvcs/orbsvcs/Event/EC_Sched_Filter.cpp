@@ -2,11 +2,10 @@
 #include "orbsvcs/Event/EC_QOS_Info.h"
 #include "orbsvcs/Log_Macros.h"
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EC_Sched_Filter::
-    TAO_EC_Sched_Filter (const char* name,
+    TAO_EC_Sched_Filter (char const *name,
                          RtecScheduler::handle_t rt_info,
                          RtecScheduler::Scheduler_ptr scheduler,
                          TAO_EC_Filter* body,
@@ -15,7 +14,6 @@ TAO_EC_Sched_Filter::
                          RtecScheduler::Info_Type_t info_type)
 
   :  rt_info_ (rt_info),
-     rt_info_computed_ (0),
      name_ (name),
      scheduler_ (RtecScheduler::Scheduler::_duplicate (scheduler)),
      body_ (body),
@@ -23,13 +21,10 @@ TAO_EC_Sched_Filter::
      parent_info_ (parent_info),
      info_type_ (info_type)
 {
-  this->adopt_child (this->body_);
+  this->adopt_child (this->body_.get ());
 }
 
-TAO_EC_Sched_Filter::~TAO_EC_Sched_Filter ()
-{
-  delete this->body_;
-}
+TAO_EC_Sched_Filter::~TAO_EC_Sched_Filter () = default;
 
 TAO_EC_Filter::ChildrenIterator
 TAO_EC_Sched_Filter::begin () const
@@ -50,7 +45,7 @@ TAO_EC_Sched_Filter::size () const
 }
 
 int
-TAO_EC_Sched_Filter::filter (const RtecEventComm::EventSet &event,
+TAO_EC_Sched_Filter::filter (RtecEventComm::EventSet const &event,
                              TAO_EC_QOS_Info& qos_info)
 {
   return this->body_->filter (event, qos_info);
@@ -92,10 +87,10 @@ TAO_EC_Sched_Filter::compute_qos_info (TAO_EC_QOS_Info& qos_info)
 }
 
 void
-TAO_EC_Sched_Filter::push (const RtecEventComm::EventSet &event,
+TAO_EC_Sched_Filter::push (RtecEventComm::EventSet const &event,
                            TAO_EC_QOS_Info& qos_info)
 {
-  if (this->parent () != 0)
+  if (this->parent () != nullptr)
     {
       this->compute_qos_info (qos_info);
 
@@ -107,7 +102,7 @@ void
 TAO_EC_Sched_Filter::push_nocopy (RtecEventComm::EventSet &event,
                                   TAO_EC_QOS_Info& qos_info)
 {
-  if (this->parent () != 0)
+  if (this->parent () != nullptr)
     {
       this->compute_qos_info (qos_info);
 
@@ -128,18 +123,18 @@ TAO_EC_Sched_Filter::max_event_size () const
 }
 
 int
-TAO_EC_Sched_Filter::can_match (const RtecEventComm::EventHeader& header) const
+TAO_EC_Sched_Filter::can_match (RtecEventComm::EventHeader const &header) const
 {
   return this->body_->can_match (header);
 }
 
 int
-TAO_EC_Sched_Filter::add_dependencies (const RtecEventComm::EventHeader& header,
-                                       const TAO_EC_QOS_Info &qos_info)
+TAO_EC_Sched_Filter::add_dependencies (RtecEventComm::EventHeader const &header,
+                                       TAO_EC_QOS_Info const &qos_info)
 {
   this->init_rt_info ();
 
-  int matches = this->body_->add_dependencies (header,
+  int const matches = this->body_->add_dependencies (header,
                                                qos_info);
 
   if (matches != 0)
@@ -149,7 +144,7 @@ TAO_EC_Sched_Filter::add_dependencies (const RtecEventComm::EventHeader& header,
 
       RtecScheduler::RT_Info_var info =
         this->scheduler_->get (qos_info.rt_info);
-      ORBSVCS_DEBUG ((LM_DEBUG, "[%s] ----> [%s]\n",
+      ORBSVCS_DEBUG ((LM_DEBUG, "[%C] ----> [%C]\n",
                   this->name_.c_str (),
                   info->entry_point.in ()));
     }
@@ -174,7 +169,9 @@ void
 TAO_EC_Sched_Filter::init_rt_info ()
 {
   if (this->rt_info_computed_)
+  {
     return;
+  }
 
   // Provide dummy values the scheduler will compute them based on the
   // dependencies and the fact that this is a DISJUNCTION.
@@ -204,7 +201,7 @@ TAO_EC_Sched_Filter::init_rt_info ()
 
       RtecScheduler::RT_Info_var info =
         this->scheduler_->get (child.rt_info);
-      ORBSVCS_DEBUG ((LM_DEBUG, "[%s] ----> [%s]\n",
+      ORBSVCS_DEBUG ((LM_DEBUG, "[%C] ----> [%C]\n",
                   info->entry_point.in (),
                   this->name_.c_str ()));
     }
@@ -220,7 +217,7 @@ TAO_EC_Sched_Filter::init_rt_info ()
 
       RtecScheduler::RT_Info_var info =
         this->scheduler_->get (this->body_info_);
-      ORBSVCS_DEBUG ((LM_DEBUG, "[%s] ----> [%s]\n",
+      ORBSVCS_DEBUG ((LM_DEBUG, "[%C] ----> [%C]\n",
                   info->entry_point.in (),
                   this->name_.c_str ()));
     }
@@ -234,12 +231,12 @@ TAO_EC_Sched_Filter::init_rt_info ()
 
   RtecScheduler::RT_Info_var info =
     this->scheduler_->get (this->parent_info_);
-  ORBSVCS_DEBUG ((LM_DEBUG, "[%s] ----> [%s]\n",
+  ORBSVCS_DEBUG ((LM_DEBUG, "[%C] ----> [%C]\n",
               this->name_.c_str (),
               info->entry_point.in ()));
 #endif /* 0 */
 
-  this->rt_info_computed_ = 1;
+  this->rt_info_computed_ = true;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

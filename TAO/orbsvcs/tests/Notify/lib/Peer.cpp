@@ -15,9 +15,7 @@ TAO_Notify_Tests_Peer::TAO_Notify_Tests_Peer ()
 {
 }
 
-TAO_Notify_Tests_Peer::~TAO_Notify_Tests_Peer ()
-{
-}
+TAO_Notify_Tests_Peer::~TAO_Notify_Tests_Peer () = default;
 
 void
 TAO_Notify_Tests_Peer::init (PortableServer::POA_ptr poa)
@@ -69,12 +67,12 @@ TAO_Notify_Tests_Peer::init_state (ACE_Arg_Shifter& arg_shifter)
 }
 
 void
-TAO_Notify_Tests_Peer::set_name (ACE_CString& name)
+TAO_Notify_Tests_Peer::set_name (ACE_CString const & name)
 {
   this->name_ = name;
 }
 
-const ACE_CString&
+ACE_CString const &
 TAO_Notify_Tests_Peer::get_name ()
 {
   return this->name_;

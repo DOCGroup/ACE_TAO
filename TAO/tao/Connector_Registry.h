@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Connector_Registry.h
  *
@@ -8,7 +5,6 @@
  *
  *  @author  Fred Kuhns <fredk@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_CONNECTOR_REGISTRY_H
 #define TAO_CONNECTOR_REGISTRY_H
@@ -22,6 +18,8 @@
 
 #include "tao/Basic_Types.h"
 #include "ace/Global_Macros.h"
+#include <memory>
+#include <vector>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -31,8 +29,6 @@ class TAO_Connector;
 class TAO_MProfile;
 class TAO_Profile;
 class TAO_InputCDR;
-
-using TAO_ConnectorSetIterator = TAO_Connector**;
 
 /**
  * @class TAO_Connector_Registry
@@ -50,10 +46,8 @@ using TAO_ConnectorSetIterator = TAO_Connector**;
 class TAO_Export TAO_Connector_Registry
 {
 public:
-  ///  Default constructor.
   TAO_Connector_Registry ();
 
-  ///  Default destructor.
   ~TAO_Connector_Registry ();
 
   /// Return the connector bridges
@@ -67,18 +61,24 @@ public:
 
   /// Parse a string containing a URL style IOR and return an
   /// MProfile.
-  int make_mprofile (const char *ior, TAO_MProfile &mprofile);
+  int make_mprofile (char const *ior, TAO_MProfile &mprofile);
 
   /// Create a profile based on the contents of @a cdr
   TAO_Profile* create_profile (TAO_InputCDR& cdr);
 
   /// Obtain the object key delimiter used by the protocol specified in
   /// the provided URL style IOR.
-  char object_key_delimiter (const char *ior);
+  char object_key_delimiter (char const *ior);
 
-  // = Iterator.
-  TAO_ConnectorSetIterator begin () const;
-  TAO_ConnectorSetIterator end () const;
+  /// @name Iteration methods
+  /// @{
+
+  using const_iterator = std::vector<std::unique_ptr<TAO_Connector>>::const_iterator;
+
+  const_iterator begin () const;
+  const_iterator end () const;
+
+  /// @}
 
 private:
   TAO_Connector_Registry (TAO_Connector_Registry const &) = delete;
@@ -88,10 +88,7 @@ private:
 
 private:
   /// List of connectors that are currently open.
-  TAO_Connector **connectors_ {};
-
-  /// Number of connectors that are currently open.
-  size_t size_ {};
+  std::vector<std::unique_ptr<TAO_Connector>> connectors_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

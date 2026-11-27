@@ -1,12 +1,8 @@
-
-//=============================================================================
 /**
  *  @file   ami_test_i.h
  *
  *  @author Michael Kircher <Michael.Kircher@mchp.siemens.de>
  */
-//=============================================================================
-
 
 #ifndef TAO_AMI_TEST_I_H
 #define TAO_AMI_TEST_I_H
@@ -23,10 +19,10 @@
 class AMI_Test_i : public POA_A::AMI_Test
 {
 public:
-  /// ctor
-  AMI_Test_i (CORBA::ORB_ptr orb);
+  explicit AMI_Test_i (CORBA::ORB_ptr orb);
 
-  // The AMI_Test methods.
+  /// @name AMI_Test operations
+  /// @{
   CORBA::Long foo (CORBA::Long_out out_l,
                    CORBA::Long in_l,
                    char const* in_str) override;
@@ -36,6 +32,7 @@ public:
   CORBA::Long yadda () override;
 
   void yadda (CORBA::Long yadda) override;
+  /// @}
 
 private:
   CORBA::ORB_var orb_;
@@ -44,6 +41,5 @@ private:
 
   CORBA::Long yadda_;
 };
-
 
 #endif /* TAO_AMI_TEST_I_H */

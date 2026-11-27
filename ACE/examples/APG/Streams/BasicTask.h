@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 #ifndef BASIC_TASK_H
 #define BASIC_TASK_H
 
@@ -11,10 +10,9 @@ class BasicTask : public ACE_Task<ACE_MT_SYNCH>
 public:
   using inherited = ACE_Task<ACE_MT_SYNCH>;
 
-  BasicTask () : inherited()
-  { }
+  BasicTask () = default;
 
-  virtual int open (void * = 0)
+  int open (void * = nullptr) override
   {
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("BasicTask::open() starting ")
@@ -28,25 +26,27 @@ public:
 
   // Listing 101 code/ch18
   int put (ACE_Message_Block *message,
-           ACE_Time_Value *timeout)
+           ACE_Time_Value *timeout) override
   {
     return this->putq (message, timeout);
   }
   // Listing 101
 
   // Listing 1020 code/ch18
-  virtual int svc ()
+  int svc () override
   {
-    for (ACE_Message_Block *message = 0; ; )
+    for (ACE_Message_Block *message {}; ; )
       {
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("BasicTask::svc() - ")
                     ACE_TEXT ("waiting for work\n" )));
 
         if (this->getq (message) == -1)
-          ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
-                             ACE_TEXT ("getq")),
-                            -1);
+          {
+            ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
+                               ACE_TEXT ("getq")),
+                              -1);
+          }
         // Listing 1020
 
         // Listing 1021 code/ch18
@@ -96,7 +96,7 @@ public:
   }
 
   // Listing 103 code/ch18
-  virtual int close (u_long flags)
+  int close (u_long flags) override
   {
     int rval = 0;
 

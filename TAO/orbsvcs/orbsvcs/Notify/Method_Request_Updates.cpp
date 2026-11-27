@@ -5,12 +5,8 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Notify_Method_Request_Updates::TAO_Notify_Method_Request_Updates (const TAO_Notify_EventTypeSeq& added, const TAO_Notify_EventTypeSeq& removed, TAO_Notify_Proxy* proxy)
+TAO_Notify_Method_Request_Updates::TAO_Notify_Method_Request_Updates (TAO_Notify_EventTypeSeq const& added, TAO_Notify_EventTypeSeq const& removed, TAO_Notify_Proxy* proxy)
   : TAO_Notify_Method_Request_Updates_Base (added, removed, proxy)
-{
-}
-
-TAO_Notify_Method_Request_Updates::~TAO_Notify_Method_Request_Updates ()
 {
 }
 
@@ -22,20 +18,16 @@ TAO_Notify_Method_Request_Updates::execute ()
 
 /*****************************************************************************/
 
-TAO_Notify_Method_Request_Updates_No_Copy::TAO_Notify_Method_Request_Updates_No_Copy (const TAO_Notify_EventTypeSeq& added
-                                                                              , const TAO_Notify_EventTypeSeq& removed, TAO_Notify_Proxy* proxy)
+TAO_Notify_Method_Request_Updates_No_Copy::TAO_Notify_Method_Request_Updates_No_Copy (TAO_Notify_EventTypeSeq const& added
+                                                                              , TAO_Notify_EventTypeSeq const& removed, TAO_Notify_Proxy* proxy)
   : TAO_Notify_Method_Request_Updates_No_Copy_Base (added, removed, proxy)
-{
-}
-
-TAO_Notify_Method_Request_Updates_No_Copy::~TAO_Notify_Method_Request_Updates_No_Copy ()
 {
 }
 
 TAO_Notify_Method_Request_Queueable*
 TAO_Notify_Method_Request_Updates_No_Copy::copy ()
 {
-  TAO_Notify_Method_Request_Queueable* request = nullptr;
+  TAO_Notify_Method_Request_Queueable* request {};
 
   ACE_NEW_THROW_EX (request,
                     TAO_Notify_Method_Request_Updates (this->added_, this->removed_, this->proxy_),

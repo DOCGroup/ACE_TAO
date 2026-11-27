@@ -12,11 +12,11 @@ Disconnect<Client>::operator () (Client *client)
     {
       client->disconnect ();
     }
-  catch (const CORBA::Exception&){ };
+  catch (CORBA::Exception const&){ };
 }
 
 template<class Client> ACE_INLINE
 Auto_Disconnect<Client>::Auto_Disconnect (Client *client)
-  :  ACE_Utils::Auto_Functor<Client,Disconnect<Client> > (client)
+  :  ACE_Utils::Auto_Functor<Client,Disconnect<Client>> (client)
 {
 }

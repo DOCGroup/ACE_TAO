@@ -10,7 +10,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<class TARGET> void
-ACE_PushConsumer_Adapter<TARGET>::push (const RtecEventComm::EventSet& events)
+ACE_PushConsumer_Adapter<TARGET>::push (RtecEventComm::EventSet const& events)
 {
   target_->push (events);
 }

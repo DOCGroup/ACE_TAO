@@ -1,6 +1,3 @@
-/* -*- C++ -*- */
-
-// ============================================================================
 /**
  *  @file   EventLogConsumer.h
  *
@@ -8,9 +5,8 @@
  *  that are pushed to the EventLog.
  *
  *  @author Rob Ruff <rruff@scires.com>
- *  @D A Hanvey <d.hanvey@qub.ac.uk>
+ *  @author D A Hanvey <d.hanvey@qub.ac.uk>
  */
-// ============================================================================
 
 #ifndef TAO_TLS_EVENTLOGCONSUMER_H
 #define TAO_TLS_EVENTLOGCONSUMER_H
@@ -22,7 +18,6 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
 
 #include "orbsvcs/DsEventLogAdminS.h"
 #include "orbsvcs/Log/Log_i.h"
@@ -53,10 +48,8 @@ class TAO_EventLogFactory_i;
 class TAO_Event_LogConsumer : public virtual POA_CosEventComm::PushConsumer
 {
 public:
-  /// Constructor.
-  TAO_Event_LogConsumer (TAO_EventLog_i * log);
+  explicit TAO_Event_LogConsumer (TAO_EventLog_i * log);
 
-  /// Destructor.
   ~TAO_Event_LogConsumer () override;
 
   /// Connect to EventLog.

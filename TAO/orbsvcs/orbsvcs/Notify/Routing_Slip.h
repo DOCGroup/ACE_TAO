@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 /**
  *  @file Routing_Slip.h
  *
@@ -17,8 +15,9 @@
 
 #include "orbsvcs/Notify/Persistent_File_Allocator.h"  // for Persistent_Callback
 
-#include <ace/Vector_T.h>
 #include <ace/Malloc_Base.h>  // necessary?
+
+#include <vector>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -42,10 +41,10 @@ class Routing_Slip_Persistence_Manager;
 // referenced from this header
 
 /// A vector of Delivery Requests.  The body of a Routing_Slip.
-using Delivery_Request_Vec = ACE_Vector <Delivery_Request_Ptr>;
+using Delivery_Request_Vec = std::vector<Delivery_Request_Ptr>;
 
 /// A vector of Methods_.  Used during recovery.
-using Delivery_Method_Vec = ACE_Vector <TAO_Notify_Method_Request_Queueable *>;
+using Delivery_Method_Vec = std::vector<TAO_Notify_Method_Request_Queueable *>;
 
 class Routing_Slip;
 /// A reference-counted smart pointer to a Routing_Slip
@@ -63,11 +62,11 @@ class Routing_Slip_Queue;
 class TAO_Notify_Serv_Export Routing_Slip : public Persistent_Callback
 {
 // FUZZ: disable check_for_ACE_Guard
-  using Routing_Slip_Guard = ACE_Guard< TAO_SYNCH_MUTEX >;
+  using Routing_Slip_Guard = ACE_Guard<TAO_SYNCH_MUTEX>;
 // FUZZ: enable check_for_ACE_Guard
 public:
   /// "Factory" method for normal use.
-  static Routing_Slip_Ptr create (const TAO_Notify_Event::Ptr& event);
+  static Routing_Slip_Ptr create (TAO_Notify_Event::Ptr const& event);
 
   /// "Factory" method for use during reload from persistent storage.
   static Routing_Slip_Ptr create (
@@ -79,10 +78,15 @@ public:
   void reconnect ();
 
   /// Destructor (should be private but that inspires compiler wars)
-  virtual ~Routing_Slip ();
+  ~Routing_Slip () override;
 
-  //////////////////
-  // Action requests
+  Routing_Slip (Routing_Slip const &) = delete;
+  Routing_Slip (Routing_Slip &&) = delete;
+  Routing_Slip &operator= (Routing_Slip const &) = delete;
+  Routing_Slip &operator= (Routing_Slip &&) = delete;
+
+  /// @name Action requests
+  /// @{
 
   /// Route this event to destinations
   /// must be the Action request after
@@ -93,15 +97,14 @@ public:
   /// \param proxy_supplier the proxy supplier that will deliver the event
   /// \param filter should consumer-based filtering be applied?
   void dispatch (TAO_Notify_ProxySupplier * proxy_supplier, bool filter);
+  /// @}
 
-
-  /////////////////////////////////////////
   /// \brief Wait until the event/routing_slip has
   /// been saved at least once.
   void wait_persist ();
 
-  /////////////////////////////////////
-  // signals from the rest of the world
+  /// @name Signals from the rest of the world
+  /// @{
 
   /// \brief A delivery request has been satisfied.
   void delivery_request_complete (size_t request_id);
@@ -110,11 +113,11 @@ public:
   void at_front_of_persist_queue ();
 
   /// \brief The persistent storage has completed the last request.
-  virtual void persist_complete ();
+  void persist_complete () override;
+  /// @}
 
-  /////////////////////////////////////////////////////
-  // \brief Access the event associated with this routing slip
-  const TAO_Notify_Event::Ptr & event () const;
+  /// Access the event associated with this routing slip.
+  TAO_Notify_Event::Ptr const & event () const;
 
   /// \brief Provide an identifying number for this Routing Slip
   /// to use in debug messages.
@@ -147,7 +150,7 @@ private:
   bool create_persistence_manager();
 
   /// Private constructor for use by create method
-  Routing_Slip(const TAO_Notify_Event::Ptr& event);
+  explicit Routing_Slip(TAO_Notify_Event::Ptr const& event);
 
   /// Test to see if all deliveries are complete.
   bool all_deliveries_complete () const;
@@ -165,16 +168,16 @@ private:
   /// Protection for internal information
   TAO_SYNCH_MUTEX internals_;
   /// true when event persistence qos is guaranteed
-  bool is_safe_;
+  bool is_safe_ {};
   /// signalled when is_safe_ goes true
   ACE_SYNCH_CONDITION until_safe_;
 
   /// Smart pointer to this object
   /// Provides continuity between smart pointers and "Routing_Slip::this"
   /// Also lets the Routing_Slip manage its own minimum lifetime.
-  Routing_Slip_Ptr this_ptr_;
+  Routing_Slip_Ptr this_ptr_ {};
 
-  // The event being delivered.
+  /// The event being delivered.
   TAO_Notify_Event::Ptr event_;
 
   /// A  mini-state machine to control persistence
@@ -194,7 +197,7 @@ private:
     rssCOMPLETE,
     rssDELETING,
     rssTERMINAL
-  } state_;
+  } state_ = rssCREATING;
 
   /// A collection of delivery requests
   Delivery_Request_Vec delivery_requests_;
@@ -203,10 +206,10 @@ private:
   Delivery_Method_Vec delivery_methods_;
 
   /// How many delivery requests are complete
-  size_t complete_requests_;
+  size_t complete_requests_ {};
 
   /// Pointer to a Routing_Slip_Persistence_Manager
-  Routing_Slip_Persistence_Manager * rspm_;
+  Routing_Slip_Persistence_Manager * rspm_ {};
 
   int sequence_;
 

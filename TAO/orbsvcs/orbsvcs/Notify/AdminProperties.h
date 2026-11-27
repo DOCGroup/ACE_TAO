@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file AdminProperties.h
  *
@@ -23,7 +22,6 @@
 
 #include "tao/orbconf.h"
 
-#include "ace/Atomic_Op.h"
 #include "ace/Bound_Ptr.h"
 #include "ace/Condition_Thread_Mutex.h"
 
@@ -39,25 +37,31 @@ class TAO_Notify_Serv_Export TAO_Notify_AdminProperties
 {
 public:
   using Ptr = ACE_Strong_Bound_Ptr<TAO_Notify_AdminProperties, TAO_SYNCH_MUTEX>;
-  /// Constructor
   TAO_Notify_AdminProperties ();
 
-  /// Destructor
   virtual ~TAO_Notify_AdminProperties ();
 
+  TAO_Notify_AdminProperties (TAO_Notify_AdminProperties const &) = delete;
+  TAO_Notify_AdminProperties (TAO_Notify_AdminProperties &&) = delete;
+  TAO_Notify_AdminProperties &operator= (TAO_Notify_AdminProperties const &) = delete;
+  TAO_Notify_AdminProperties &operator= (TAO_Notify_AdminProperties &&) = delete;
+
   /// Init
-  int init (const CosNotification::PropertySeq& prop_seq);
+  int init (CosNotification::PropertySeq const& prop_seq);
 
   /// finish initialization after values are set by topology load
   void init ();
 
-  // = Const Accessors
-  const TAO_Notify_Property_Long& max_global_queue_length () const;
-  const TAO_Notify_Property_Long& max_consumers () const;
-  const TAO_Notify_Property_Long& max_suppliers () const;
-  const TAO_Notify_Property_Boolean& reject_new_events () const;
+  /// @name Const property accessors
+  /// @{
+  TAO_Notify_Property_Long const& max_global_queue_length () const;
+  TAO_Notify_Property_Long const& max_consumers () const;
+  TAO_Notify_Property_Long const& max_suppliers () const;
+  TAO_Notify_Property_Boolean const& reject_new_events () const;
+  /// @}
 
-  // = Non-const accessors
+  /// @name Mutable property and queue accessors
+  /// @{
   TAO_Notify_Property_Long & max_global_queue_length ();
   TAO_Notify_Property_Long & max_consumers ();
   TAO_Notify_Property_Long & max_suppliers ();
@@ -69,8 +73,8 @@ public:
 
   TAO_Notify_Atomic_Property_Long& consumers ();
   TAO_Notify_Atomic_Property_Long& suppliers ();
+  /// @}
 
-  // = Helper method
   /// Returns true if Queue is full
   CORBA::Boolean queue_full ();
 
@@ -79,8 +83,9 @@ protected:
   // values? Should they be configurable by the user so the resource
   // requirements can be bounded?
 
-  // = Admin. properties
-  // for all these properties the default O implies no limit
+  /// @name Admin properties
+  /// @{
+  /// A default value of zero means no limit for these properties.
   /**
    * The maximum number of events that will be queued by the channel before
    * the channel begins discarding events or rejecting new events upon
@@ -98,11 +103,11 @@ protected:
 
   /// Reject any new event.
   TAO_Notify_Property_Boolean reject_new_events_;
+  /// @}
 
-  //= Variables
   /// This is used to count the queue length across all buffers in the Notify Service
   /// to enforce the "MaxQueueLength" property.
-  CORBA::Long global_queue_length_;
+  CORBA::Long global_queue_length_ {};
 
   /// Global queue lock used to serialize access to all queues.
   TAO_SYNCH_MUTEX global_queue_lock_;
@@ -116,13 +121,11 @@ protected:
   TAO_Notify_Atomic_Property_Long suppliers_;
 };
 
-
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
 #include "orbsvcs/Notify/AdminProperties.inl"
 #endif /* __ACE_INLINE__ */
-
 
 #include /**/ "ace/post.h"
 #endif /* TAO_Notify_ADMINPROPERTIES_H */

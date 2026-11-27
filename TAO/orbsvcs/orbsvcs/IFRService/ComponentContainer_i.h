@@ -1,7 +1,3 @@
-// -*- C++ -*-
-
-
-//=============================================================================
 /**
  *  @file    ComponentContainer_i.h
  *
@@ -9,8 +5,6 @@
  *
  *  @author Jeff Parsons <j.parsons@vanderbilt.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_COMPONENTCONTAINER_I_H
 #define TAO_COMPONENTCONTAINER_I_H
@@ -108,7 +102,6 @@ protected:
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-
 
 #if defined(_MSC_VER)
 #pragma warning(pop)

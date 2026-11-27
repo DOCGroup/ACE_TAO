@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Multihomed_INET_Addr.h
  *
  *  @author Edward R. Mulholland <emulholl@atl.lmco.com>
  */
-//=============================================================================
 
 #ifndef ACE_MULTIHOMED_INET_ADDR_H
 #define ACE_MULTIHOMED_INET_ADDR_H
@@ -33,7 +29,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Multihomed_INET_Addr : public ACE_INET_Addr
 {
 public:
-  /// Default constructor.
   ACE_Multihomed_INET_Addr ();
 
   /**
@@ -43,7 +38,7 @@ public:
    * is assumed to be a port number, with the IP address being
    * INADDR_ANY.
    */
-  explicit ACE_Multihomed_INET_Addr (const char address[]);
+  explicit ACE_Multihomed_INET_Addr (char const address[]);
 
   /**
    * Constructs an ACE_Multihomed_INET_Addr from a @a port_number, a
@@ -57,10 +52,10 @@ public:
    * AF_INET6. To specify IPv4, use AF_INET.
    */
     ACE_Multihomed_INET_Addr(u_short port_number,
-                             const char primary_host_name[],
+                             char const primary_host_name[],
                              int encode = 1,
                              int address_family = AF_UNSPEC,
-                             const char *(secondary_host_names[]) = 0,
+                             char const *(secondary_host_names[]) = nullptr,
                              size_t size = 0);
 
   /**
@@ -74,7 +69,7 @@ public:
   ACE_Multihomed_INET_Addr(u_short port_number,
                            ACE_UINT32 primary_ip_addr = INADDR_ANY,
                            int encode = 1,
-                           const ACE_UINT32 *secondary_ip_addrs = nullptr,
+                           ACE_UINT32 const *secondary_ip_addrs = nullptr,
                            size_t size = 0);
 
 #if defined (ACE_HAS_WCHAR)
@@ -82,17 +77,17 @@ public:
      * WCHAR versions of the methods that take char's as arguments.
      */
   ACE_Multihomed_INET_Addr(u_short port_number,
-                           const wchar_t primary_host_name[],
+                           wchar_t const primary_host_name[],
                            int encode = 1,
                            int address_family = AF_UNSPEC,
-                           const wchar_t *(secondary_host_names[]) = 0,
+                           wchar_t const *(secondary_host_names[]) = nullptr,
                            size_t size = 0);
 
   int set (u_short port_number,
-           const wchar_t primary_host_name[],
+           wchar_t const primary_host_name[],
            int encode = 1,
            int address_family = AF_UNSPEC,
-           const wchar_t *(secondary_host_names[]) = 0,
+           wchar_t const *(secondary_host_names[]) = nullptr,
            size_t size = 0);
 
 #endif /* ACE_HAS_WCHAR */
@@ -101,10 +96,10 @@ public:
 
   /// Use compiler-generated assignment operator.
 
-  /// Default destructor.
   ~ACE_Multihomed_INET_Addr () override = default;
 
-  // = Direct initialization methods.
+  /// @name Direct initialization methods
+  /// @{
 
   // These methods are useful after the object has been constructed.
 
@@ -120,10 +115,10 @@ public:
    * AF_INET6. To specify IPv4, use AF_INET.
    */
   int set (u_short port_number,
-           const char primary_host_name[],
+           char const primary_host_name[],
            int encode = 1,
            int address_family = AF_UNSPEC,
-           const char *(secondary_host_names[]) = 0,
+           char const *(secondary_host_names[]) = nullptr,
            size_t size = 0);
 
   /**
@@ -137,7 +132,7 @@ public:
   int set (u_short port_number,
            ACE_UINT32 primary_ip_addr = INADDR_ANY,
            int encode = 1,
-           const ACE_UINT32 *secondary_ip_addrs = nullptr,
+           ACE_UINT32 const *secondary_ip_addrs = nullptr,
            size_t size = 0);
 
   /**
@@ -150,8 +145,10 @@ public:
    */
   void set_port_number (u_short port_number,
                         int encode = 1);
+  /// @}
 
-  // = Accessor methods.
+  /// @name Accessor methods
+  /// @{
 
   /**
    * Returns the number of secondary addresses.
@@ -177,12 +174,13 @@ public:
   /// IPV6 version of the above.
   void get_addresses(sockaddr_in6 *addrs, size_t size) const;
 #endif /* ACE_HAS_IPV6 */
+  /// @}
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-  ACE_Array<ACE_INET_Addr> secondaries_;
+  ACE_Array<ACE_INET_Addr> secondaries_ {};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

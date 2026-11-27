@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  * @file Server_ORBInitializer.h
  *
  * @author Iliyan jeliazkov <iliyan@ociweb.com>
  */
-//=============================================================================
 
 #ifndef SERVER_ORBINITIALIZER_T_H
 #define SERVER_ORBINITIALIZER_T_H
@@ -29,12 +25,17 @@ namespace Test
     public virtual ::CORBA::LocalObject
   {
   public:
-    Server_ORBInitializer (PortableInterceptor::ServerRequestInterceptor_ptr interceptor);
-    virtual ~Server_ORBInitializer ();
+    explicit Server_ORBInitializer (PortableInterceptor::ServerRequestInterceptor_ptr interceptor);
+    ~Server_ORBInitializer () override;
 
-    virtual void pre_init(PortableInterceptor::ORBInitInfo*);
+    Server_ORBInitializer (Server_ORBInitializer const &) = delete;
+    Server_ORBInitializer (Server_ORBInitializer &&) = delete;
+    Server_ORBInitializer &operator= (Server_ORBInitializer const &) = delete;
+    Server_ORBInitializer &operator= (Server_ORBInitializer &&) = delete;
 
-    virtual void post_init(PortableInterceptor::ORBInitInfo*);
+    void pre_init (PortableInterceptor::ORBInitInfo *) override;
+
+    void post_init (PortableInterceptor::ORBInitInfo *) override;
 
   private:
     PortableInterceptor::ServerRequestInterceptor_var interceptor_;

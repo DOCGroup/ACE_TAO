@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    sink_i.h
  *
@@ -10,8 +7,6 @@
  *
  *  @author Dale Wilson <wilsond@ociweb.com>
  */
-//=============================================================================
-
 
 #ifndef SINK_I_H
 #define SINK_I_H
@@ -22,13 +17,13 @@ class Sink_i : public POA_ThreeTier
 {
 public:
   /// Construct
-  /// @param an initialized ORB
-  Sink_i (CORBA::ORB_ptr orb);
-
-  /// Destructor
+  /// @param orb An initialized ORB
+  explicit Sink_i (CORBA::ORB_ptr orb);
   ~Sink_i () override = default;
-
-  bool parse_args (int &argc, ACE_TCHAR *argv[]);
+  Sink_i (Sink_i const &) = delete;
+  Sink_i &operator= (Sink_i const &) = delete;
+  Sink_i (Sink_i &&) = delete;
+  Sink_i &operator= (Sink_i &&) = delete;
 
   ///Implement ThreeTier methods
   void tick () override;
@@ -38,10 +33,10 @@ public:
   void shutdown () override;
 
 private:
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var const orb_;
 
-  unsigned long tickCount_;
-  unsigned long tockCount_;
+  CORBA::ULong tickCount_ {};
+  CORBA::ULong tockCount_ {};
 };
 
 #endif /* SINK_I_H */

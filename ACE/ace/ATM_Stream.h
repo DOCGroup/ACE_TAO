@@ -1,12 +1,8 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
  *  @file    ATM_Stream.h
  *
  *  @author Joe Hoffert
  */
-//=============================================================================
 
 #ifndef ACE_ATM_STREAM_H
 #define ACE_ATM_STREAM_H
@@ -45,10 +41,11 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_ATM_Stream
 {
 public:
-  /// Default constructor.
   ACE_ATM_Stream ();
 
-  // = ATM-specific open and shutdown operations.
+  /// @name ATM-specific open and shutdown operations
+  /// @{
+
   /// open the stream.
   int open (ACE_ATM_Params params = ACE_ATM_Params());
 
@@ -74,12 +71,15 @@ public:
                 int *flags = nullptr) const;
 
   /// Send exactly n bytes to the connected transport mechanism.
-  ssize_t send_n (const void *buf,
+  ssize_t send_n (void const *buf,
                   size_t n,
                   int flags) const;
+  /// @}
 
-  // = Meta-type info
+  /// @name Peer address type
+  /// @{
   using PEER_ADDR = ACE_ATM_Addr;
+  /// @}
 
   /// Dump the state of an object.
   void dump () const;

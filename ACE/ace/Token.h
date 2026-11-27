@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Token.h
  *
@@ -9,7 +6,6 @@
  *  @author Ported to ACE by
  *  @author Douglas C. Schmidt (d.schmidt@vanderbilt.edu)
  */
-//=============================================================================
 
 #ifndef ACE_TOKEN_H
 #define ACE_TOKEN_H
@@ -53,7 +49,7 @@ class ACE_Time_Value;
  * than many native OS mutexes.  For example, it implements
  * "recursive mutex" semantics, where a thread that owns the token
  * can reacquire it without deadlocking.  If the same thread calls
- * <acquire> multiple times, however, it must call <release> an
+ * @c acquire multiple times, however, it must call @c release an
  * equal number of times before the token is actually released.
  * Threads that are blocked awaiting the token are serviced in
  * strict FIFO/LIFO order as other threads release the token
@@ -85,50 +81,51 @@ public:
     LIFO = 0
   };
 
-  /// Constructor
-  ACE_Token (const ACE_TCHAR *name = nullptr, void * = 0);
+  ACE_Token (ACE_TCHAR const *name = nullptr, void * = nullptr);
 
-  /// Destructor
   virtual ~ACE_Token ();
 
-  // = Strategies
+  /// @name Queueing strategies
+  /// @{
 
   /// Retrieve the current queueing strategy.
   int queueing_strategy ();
 
   /// Set the queueing strategy.
   void queueing_strategy (int queueing_strategy);
+  /// @}
 
-  // = Synchronization operations.
+  /// @name Synchronization operations
+  /// @{
 
   /**
    * Acquire the token, sleeping until it is obtained or until the
    * expiration of @a timeout, which is treated as "absolute" time.  If
-   * some other thread currently holds the token then <sleep_hook> is
-   * called before our thread goes to sleep.  This <sleep_hook> can be
+   * some other thread currently holds the token then @c sleep_hook is
+   * called before our thread goes to sleep.  This @c sleep_hook can be
    * used by the requesting thread to unblock a token-holder that is
    * sleeping, e.g., by means of writing to a pipe (the ACE
    * ACE_Reactor uses this functionality).  Return values: 0 if
-   * acquires without calling <sleep_hook> 1 if <sleep_hook> is
+   * acquires without calling @c sleep_hook 1 if @c sleep_hook is
    * called.  2 if the token is signaled.  -1 if failure or timeout
    * occurs (if timeout occurs errno == ETIME) If @a timeout ==
    * <&ACE_Time_Value::zero> then acquire has polling semantics (and
-   * does *not* call <sleep_hook>).
+   * does *not* call @c sleep_hook).
    */
   int acquire (void (*sleep_hook)(void *),
                void *arg = nullptr,
                ACE_Time_Value *timeout = nullptr);
 
   /**
-   * This behaves just like the previous <acquire> method, except that
-   * it invokes the virtual function called <sleep_hook> that can be
+   * This behaves just like the previous @c acquire method, except that
+   * it invokes the virtual function called @c sleep_hook that can be
    * overridden by a subclass of ACE_Token.
    */
   int acquire (ACE_Time_Value *timeout = nullptr);
 
   /**
    * This should be overridden by a subclass to define the appropriate
-   * behavior before <acquire> goes to sleep.  By default, this is a
+   * behavior before @c acquire goes to sleep.  By default, this is a
    * no-op...
    */
   virtual void sleep_hook ();
@@ -137,25 +134,25 @@ public:
    * An optimized method that efficiently reacquires the token if no
    * other threads are waiting.  This is useful for situations where
    * you don't want to degrade the quality of service if there are
-   * other threads waiting to get the token.  If <requeue_position> ==
+   * other threads waiting to get the token.  If @c requeue_position ==
    * -1 and there are other threads waiting to obtain the token we are
-   * queued according to the queueing strategy.  If <requeue_position>
+   * queued according to the queueing strategy.  If @c requeue_position
    * > -1 then it indicates how many entries to skip over before
    * inserting our thread into the list of waiters (e.g.,
-   * <requeue_position> == 0 means "insert at front of the queue").
+   * @c requeue_position == 0 means "insert at front of the queue").
    * Renew has the rather odd semantics such that if there are other
    * waiting threads it will give up the token even if the
    * nesting_level_ > 1.  I'm not sure if this is really the right
    * thing to do (since it makes it possible for shared data to be
    * changed unexpectedly) so use with caution...  This method
-   * maintians the original token priority.  As in <acquire>, the
+   * maintians the original token priority.  As in @c acquire, the
    * @a timeout value is an absolute time.
    */
   int renew (int requeue_position = 0,
              ACE_Time_Value *timeout = nullptr);
 
   /// Become interface-compliant with other lock mechanisms (implements
-  /// a non-blocking <acquire>).
+  /// a non-blocking @c acquire).
   int tryacquire ();
 
   /// Shuts down the ACE_Token instance.
@@ -190,13 +187,15 @@ public:
   /// Lower priority try_acquire().
   int tryacquire_read ();
 
-  /// Just calls <tryacquire>.
+  /// Just calls @c tryacquire.
   int tryacquire_write ();
 
   /// Assumes the caller has acquired the token and returns 0.
   int tryacquire_write_upgrade ();
+  /// @}
 
-  // = Accessor methods.
+  /// @name Accessors
+  /// @{
 
   /// Return the number of threads that are currently waiting to get
   /// the token.
@@ -204,6 +203,7 @@ public:
 
   /// Return the id of the current thread that owns the token.
   ACE_thread_t current_owner ();
+  /// @}
 
   /// Dump the state of an object.
   void dump () const;
@@ -215,7 +215,6 @@ public:
   /// that are asleep waiting to obtain the token.
   struct ACE_Token_Queue_Entry
   {
-    /// Constructor
     ACE_Token_Queue_Entry (ACE_Thread_Mutex &m,
                            ACE_thread_t t_id);
 
@@ -231,7 +230,7 @@ public:
     int signal ();
 
     /// Pointer to next waiter.
-    ACE_Token_Queue_Entry *next_;
+    ACE_Token_Queue_Entry *next_ {};
 
     /// ACE_Thread id of this waiter.
     ACE_thread_t thread_id_;
@@ -245,7 +244,7 @@ public:
 #endif /* ACE_TOKEN_USES_SEMAPHORE */
 
     /// Ok to run.
-    int runable_;
+    int runable_ {};
   };
 
 private:
@@ -257,7 +256,6 @@ private:
 
   struct ACE_Token_Queue
   {
-    /// Constructor
     ACE_Token_Queue ();
 
     /// Remove a waiter from the queue.
@@ -268,13 +266,13 @@ private:
                        int requeue_position = -1);
 
     /// Head of the list of waiting threads.
-    ACE_Token_Queue_Entry *head_;
+    ACE_Token_Queue_Entry *head_ {};
 
     /// Tail of the list of waiting threads.
-    ACE_Token_Queue_Entry *tail_;
+    ACE_Token_Queue_Entry *tail_ {};
   };
 
-  /// Implements the <acquire> and <tryacquire> methods above.
+  /// Implements the @c acquire and @c tryacquire methods above.
   int shared_acquire (void (*sleep_hook_func)(void *),
                       void *arg,
                       ACE_Time_Value *timeout,
@@ -295,15 +293,15 @@ private:
   /// Current owner of the token.
   ACE_thread_t owner_;
 
-  /// Some thread (i.e., <owner_>) is using the token.  We need this
+  /// Some thread (i.e., @c owner_) is using the token.  We need this
   /// extra variable to deal with POSIX pthreads madness...
-  int in_use_;
+  int in_use_ {};
 
   /// Number of waiters.
-  int waiters_;
+  int waiters_ {};
 
   /// Current nesting level.
-  int nesting_level_;
+  int nesting_level_ {};
 
   /// The attributes for the condition variables, optimizes lock time.
   ACE_Condition_Attributes attributes_;
@@ -323,7 +321,7 @@ class ACE_Export ACE_Token
 public:
   int queueing_strategy () { ACE_NOTSUP_RETURN (-1); }
   void queueing_strategy (int /*queueing_strategy*/) { }
-  int acquire (ACE_Time_Value * = 0) { ACE_NOTSUP_RETURN (-1); }
+  int acquire (ACE_Time_Value * = nullptr) { ACE_NOTSUP_RETURN (-1); }
   int tryacquire () { ACE_NOTSUP_RETURN (-1); }
   int remove () { ACE_NOTSUP_RETURN (-1); }
   int release () { ACE_NOTSUP_RETURN (-1); }
@@ -351,7 +349,7 @@ public:
   /// Set queueing strategy.
   void queueing_strategy (int queueing_strategy);
 
-  int renew (int = 0, ACE_Time_Value * =0);
+  int renew (int = 0, ACE_Time_Value * = nullptr);
 
   /// Dump the state of an object.
   void dump () const;
@@ -365,7 +363,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #if defined (__ACE_INLINE__)
 #include "ace/Token.inl"
 #endif /* __ACE_INLINE__ */
-
 
 #include /**/ "ace/post.h"
 #endif /* ACE_TOKEN_H */

@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(MFC_Server): namingexe, portableserver, ace_mfc {
   after     += MFC_Client
   exename    = server

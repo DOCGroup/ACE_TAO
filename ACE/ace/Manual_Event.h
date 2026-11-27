@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//==========================================================================
 /**
  *  @file    Manual_Event.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//==========================================================================
 
 #ifndef ACE_MANUAL_EVENT_H
 #define ACE_MANUAL_EVENT_H
@@ -23,12 +19,12 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
- * @class ACE_Manual_Event
+ * @class ACE_Manual_Event_T
  *
  * @brief Manual Events.
  *
  * Specialization of Event mechanism which wakes up all waiting
- * thread on <signal>.  All platforms support process-scope locking
+ * thread on @c signal.  All platforms support process-scope locking
  * support.  However, only Win32 platforms support global naming and
  * system-scope locking support.
  */
@@ -36,21 +32,25 @@ template <class TIME_POLICY = ACE_System_Time_Policy>
 class ACE_Manual_Event_T : public ACE_Event_T<TIME_POLICY>
 {
 public:
+  ACE_Manual_Event_T (ACE_Manual_Event_T const &) = delete;
+  ACE_Manual_Event_T (ACE_Manual_Event_T &&) = delete;
+  ACE_Manual_Event_T &operator= (ACE_Manual_Event_T const &) = delete;
+  ACE_Manual_Event_T &operator= (ACE_Manual_Event_T &&) = delete;
+
   /// Constructor which will create manual event
   ACE_Manual_Event_T (int initial_state = 0,
                       int type = USYNC_THREAD,
-                      const char *name = nullptr,
+                      char const *name = nullptr,
                       void *arg = nullptr);
 
 #if defined (ACE_HAS_WCHAR)
   /// Constructor which will create manual event (wchar_t version)
   ACE_Manual_Event_T (int initial_state,
                       int type,
-                      const wchar_t *name,
+                      wchar_t const *name,
                       void *arg = nullptr);
 #endif /* ACE_HAS_WCHAR */
 
-  /// Default dtor.
   ~ACE_Manual_Event_T () override = default;
 
   /// Dump the state of an object.
@@ -63,10 +63,15 @@ public:
 class ACE_Manual_Event : public ACE_Manual_Event_T<ACE_System_Time_Policy>
 {
 public:
+  ACE_Manual_Event (ACE_Manual_Event const &) = delete;
+  ACE_Manual_Event (ACE_Manual_Event &&) = delete;
+  ACE_Manual_Event &operator= (ACE_Manual_Event const &) = delete;
+  ACE_Manual_Event &operator= (ACE_Manual_Event &&) = delete;
+
   /// Constructor which will create auto event
   ACE_Manual_Event (int initial_state = 0,
                     int type = USYNC_THREAD,
-                    const char *name = nullptr,
+                    char const *name = nullptr,
                     void *arg = nullptr)
   : ACE_Manual_Event_T<ACE_System_Time_Policy> (initial_state, type, name, arg)
   {}
@@ -75,13 +80,12 @@ public:
   /// Constructor which will create auto event (wchar_t version)
   ACE_Manual_Event (int initial_state,
                     int type,
-                    const wchar_t *name,
+                    wchar_t const *name,
                     void *arg = nullptr)
   : ACE_Manual_Event_T<ACE_System_Time_Policy> (initial_state, type, name, arg)
   {}
 #endif /* ACE_HAS_WCHAR */
 
-  /// Default dtor.
   ~ACE_Manual_Event () override = default;
 };
 

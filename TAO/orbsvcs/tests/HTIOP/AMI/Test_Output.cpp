@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-// ============================================================================
 /**
  *  @file Test_Output.cpp
  *
@@ -12,7 +9,6 @@
  *  @author David Levine <levine@cs.wustl.edu>
  *  @author Don Hinton <dhinton@dresystems.com>
  */
-// ============================================================================
 
 #include "../test_config.h"
 #include "ace/OS_NS_stdio.h"
@@ -20,6 +16,8 @@
 #include "ace/OS_NS_sys_stat.h"
 #include "ace/Guard_T.h"
 #include "ace/Object_Manager.h"
+
+#include <memory>
 
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
@@ -46,7 +44,7 @@ ACE_Test_Output::ACE_Test_Output ()
 ACE_Test_Output::~ACE_Test_Output ()
 {
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
-  ACE_LOG_MSG->msg_ostream (&cerr);
+  ACE_LOG_MSG->msg_ostream (std::addressof (cerr));
 #endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 
   ACE_LOG_MSG->clr_flags (ACE_Log_Msg::OSTREAM);
@@ -64,11 +62,11 @@ ACE_Test_Output::output_file ()
 }
 
 int
-ACE_Test_Output::set_output (const ACE_TCHAR *filename, int append)
+ACE_Test_Output::set_output (ACE_TCHAR const *filename, int append)
 {
   ACE_TCHAR temp[MAXPATHLEN];
   // Ignore the error value since the directory may already exist.
-  const ACE_TCHAR *test_dir {};
+  ACE_TCHAR const *test_dir {};
 
 #  if defined (ACE_WIN32) || !defined (ACE_USES_WCHAR)
   test_dir = ACE_OS::getenv (ACE_TEXT ("ACE_TEST_DIR"));
@@ -76,7 +74,9 @@ ACE_Test_Output::set_output (const ACE_TCHAR *filename, int append)
   ACE_TCHAR tempenv[MAXPATHLEN];
   char *test_dir_n = ACE_OS::getenv ("ACE_TEST_DIR");
   if (test_dir_n == 0)
-    test_dir = 0;
+    {
+      test_dir = 0;
+    }
   else
     {
       ACE_OS::strcpy (tempenv, ACE_TEXT_CHAR_TO_TCHAR (test_dir_n));
@@ -85,7 +85,9 @@ ACE_Test_Output::set_output (const ACE_TCHAR *filename, int append)
 #  endif /* ACE_WIN32 || !ACE_USES_WCHAR */
 
   if (test_dir == 0)
-    test_dir = ACE_TEXT ("");
+    {
+      test_dir = ACE_TEXT ("");
+    }
 
   // This could be done with ACE_OS::sprintf() but it requires different
   // format strings for wide-char POSIX vs. narrow-char POSIX and Windows.
@@ -121,13 +123,19 @@ ACE_Test_Output::set_output (const ACE_TCHAR *filename, int append)
   this->output_file_->open (ACE_TEXT_ALWAYS_CHAR (temp),
                             ios::out | (append ? ios::app : ios::trunc));
   if (this->output_file_->bad ())
+  {
     return -1;
+  }
 #else /* when ACE_LACKS_IOSTREAM_TOTALLY */
-  ACE_TCHAR *fmode = 0;
+  ACE_TCHAR *fmode {};
   if (append)
-    fmode = ACE_TEXT ("a");
+    {
+      fmode = ACE_TEXT ("a");
+    }
   else
-    fmode = ACE_TEXT ("w");
+    {
+      fmode = ACE_TEXT ("w");
+    }
   this->output_file_ = ACE_OS::fopen (temp, fmode);
 # endif /* ACE_LACKS_IOSTREAM_TOTALLY */
 
@@ -170,13 +178,13 @@ ACE_Test_Output::instance ()
   return ACE_Test_Output::instance_;
 }
 
-const ACE_TCHAR *
+ACE_TCHAR const *
 ACE_Test_Output::dll_name ()
 {
   return ACE_TEXT ("Test_Output");
 }
 
-const ACE_TCHAR *
+ACE_TCHAR const *
 ACE_Test_Output::name ()
 {
   return ACE_TEXT ("ACE_Test_Output");
@@ -194,7 +202,7 @@ randomize (int array[], size_t size)
 {
   size_t i;
 
-  for (i = 0; i < size; i++)
+  for (i = 0; i < size; ++i)
     array [i] = static_cast<int> (i);
 
   // See with a fixed number so that we can produce "repeatable"
@@ -203,7 +211,7 @@ randomize (int array[], size_t size)
 
   // Generate an array of random numbers from 0 .. size - 1.
 
-  for (i = 0; i < size; i++)
+  for (i = 0; i < size; ++i)
     {
       size_t index = ACE_OS::rand() % size--;
       int temp = array [index];

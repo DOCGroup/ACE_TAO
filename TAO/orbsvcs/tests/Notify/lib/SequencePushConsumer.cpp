@@ -4,7 +4,6 @@
 #include "SequencePushConsumer.inl"
 #endif /* __ACE_INLINE__ */
 
-
 TAO_Notify_Tests_SequencePushConsumer_Traits::TAO_Notify_Tests_SequencePushConsumer_Traits ()
   :type_ (CosNotifyChannelAdmin::SEQUENCE_EVENT)
 {
@@ -12,13 +11,9 @@ TAO_Notify_Tests_SequencePushConsumer_Traits::TAO_Notify_Tests_SequencePushConsu
 
 /*******************************************************************/
 
-TAO_Notify_Tests_SequencePushConsumer::TAO_Notify_Tests_SequencePushConsumer ()
-{
-}
+TAO_Notify_Tests_SequencePushConsumer::TAO_Notify_Tests_SequencePushConsumer () = default;
 
-TAO_Notify_Tests_SequencePushConsumer::~TAO_Notify_Tests_SequencePushConsumer ()
-{
-}
+TAO_Notify_Tests_SequencePushConsumer::~TAO_Notify_Tests_SequencePushConsumer () = default;
 
 void
 TAO_Notify_Tests_SequencePushConsumer::connect_to_peer (Proxy_Traits::PTR proxy_ptr, Peer_Traits::PTR peer_ptr)
@@ -43,8 +38,7 @@ TAO_Notify_Tests_SequencePushConsumer::disconnect_sequence_push_consumer ()
 
 void
 TAO_Notify_Tests_SequencePushConsumer::push_structured_events
-   (const CosNotification::EventBatch &/*notifications*/
-    )
+   (CosNotification::EventBatch const &/*notifications*/)
 {
   // NOP
 }

@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file   ESF_Busy_Lock.h
  *
@@ -28,27 +27,29 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * etc.).
  * One of the synchronization protocols used in the event services
  * uses the following protocol:
- * <UL>
- * <LI> To acquire the lock the @c busy method of the object is invoked.
- * <LI> To release the lock the @c idle method of the object is invoked.
- * <LI> Any changes performed while the lock is held are delayed until
- *      all the locks are released, i.e. the last call to @c idle
- *      executes the changes.
- * </UL>
+ * @li To acquire the lock the @c busy method of the object is invoked.
+ * @li To release the lock the @c idle method of the object is invoked.
+ * @li Any changes performed while the lock is held are delayed until
+ *     all the locks are released, i.e. the last call to @c idle
+ *     executes the changes.
  */
 template<class Adaptee>
 class TAO_ESF_Busy_Lock_Adapter
 {
 public:
-  /// Constructor
-  TAO_ESF_Busy_Lock_Adapter (Adaptee* adaptee);
+  explicit TAO_ESF_Busy_Lock_Adapter (Adaptee *adaptee);
+
+  TAO_ESF_Busy_Lock_Adapter (TAO_ESF_Busy_Lock_Adapter const &) = delete;
+  TAO_ESF_Busy_Lock_Adapter (TAO_ESF_Busy_Lock_Adapter &&) = delete;
+  TAO_ESF_Busy_Lock_Adapter &operator= (TAO_ESF_Busy_Lock_Adapter const &) = delete;
+  TAO_ESF_Busy_Lock_Adapter &operator= (TAO_ESF_Busy_Lock_Adapter &&) = delete;
 
   /**
    * @name The ACE_Lock methods
    *
    * Check the documentation in ace/Synch.h for details.
    */
-  //@{
+  /// @{
   int remove ();
   int acquire ();
   int tryacquire ();
@@ -57,10 +58,10 @@ public:
   int acquire_write ();
   int tryacquire_read ();
   int tryacquire_write ();
-  //@}
+  /// @}
 
 private:
-  Adaptee* adaptee_;
+  Adaptee *adaptee_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

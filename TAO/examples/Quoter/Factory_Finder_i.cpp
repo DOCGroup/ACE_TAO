@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    Factory_Finder_i.cpp
  *
@@ -8,8 +6,6 @@
  *
  *  @author Michael Kircher (mk1@cs.wustl.edu)
  */
-//=============================================================================
-
 
 #include "Factory_Finder_i.h"
 #include "QuoterC.h"
@@ -18,26 +14,17 @@
 
 #include "ace/Get_Opt.h"
 
-// Constructor
 Quoter_Factory_Finder_i::Quoter_Factory_Finder_i (int debug_level)
-: debug_level_ (debug_level)
+  : debug_level_ (debug_level)
 {
-  // Nothing
 }
-
-// Destructor.
-Quoter_Factory_Finder_i::~Quoter_Factory_Finder_i ()
-{
-  // Nothing
-}
-
 
 CosLifeCycle::Factories *
-Quoter_Factory_Finder_i::find_factories (const CosLifeCycle::Key &factory_key)
+Quoter_Factory_Finder_i::find_factories (CosLifeCycle::Key const &factory_key)
 {
-  const char *exception_message = "Null Message";
+  char const *exception_message = "Null Message";
 
-  CosLifeCycle::Factories *factories_ptr = 0;
+  CosLifeCycle::Factories_var factories;
 
   try
   {
@@ -50,8 +37,10 @@ Quoter_Factory_Finder_i::find_factories (const CosLifeCycle::Key &factory_key)
       orb_ptr->resolve_initial_references ("NameService");
 
     if (CORBA::is_nil (namingObj_var.in ()))
-      ACE_ERROR ((LM_ERROR,
-                  " (%P|%t) Unable get the Naming Service.\n"));
+      {
+        ACE_ERROR ((LM_ERROR,
+                    " (%P|%t) Unable get the Naming Service.\n"));
+      }
 
     // Narrow the object reference to a Naming Context.
     exception_message = "While narrowing the Naming Context";
@@ -68,30 +57,36 @@ Quoter_Factory_Finder_i::find_factories (const CosLifeCycle::Key &factory_key)
 
     // Check if it is a valid Quoter Factory reference
     if (CORBA::is_nil (quoterFactoryObject_var.in()))
+    {
       throw CosLifeCycle::NoFactory (factory_key);
+    }
 
     // create a sequence of factories object
-    factories_ptr = new CosLifeCycle::Factories (1);
+    factories = new CosLifeCycle::Factories (1);
 
     // using the Naming Service only one reference is available
-    factories_ptr->length (1);
+    factories->length (1);
 
     // Check if it is a valid Quoter Factory reference.
     if (CORBA::is_nil (quoterFactoryObject_var.in ())) // throw a NoFactory exception.
-      throw CosLifeCycle::NoFactory (factory_key);
+      {
+        throw CosLifeCycle::NoFactory (factory_key);
+      }
 
     // insert the object reference
-    (*factories_ptr)[0] = CORBA::Object::_duplicate (quoterFactoryObject_var.in());
+    (*factories)[0] = CORBA::Object::_duplicate (quoterFactoryObject_var.in ());
 
     if (this->debug_level_ > 1)
-      ACE_DEBUG ((LM_DEBUG,
-                  "Factory Finder: Have reference to a Quoter Factory.\n"));
+      {
+        ACE_DEBUG ((LM_DEBUG,
+                    "Factory Finder: Have reference to a Quoter Factory.\n"));
+      }
   }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       ACE_ERROR ((LM_ERROR, "Quoter_Factory_Finder::find_factories - %C\n", exception_message));
       throw CosLifeCycle::NoFactory (factory_key);
     }
 
-  return factories_ptr;
+  return factories._retn ();
 }

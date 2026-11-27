@@ -43,13 +43,13 @@ class TAO_Notify_Proxy_Builder_T
 public:
   PROXY_PTR
   build (PARENT *parent, CosNotifyChannelAdmin::ProxyID_out proxy_id
-         , const CosNotification::QoSProperties & initial_qos)
+         , CosNotification::QoSProperties const & initial_qos)
   {
     PROXY_VAR proxy_ret;
 
     TAO_Notify_Factory* factory = TAO_Notify_PROPERTIES::instance ()->factory ();
 
-    PROXY_IMPL* proxy = nullptr;
+    PROXY_IMPL* proxy {};
     factory->create (proxy);
 
     PortableServer::ServantBase_var servant (proxy);
@@ -76,7 +76,7 @@ public:
   {
     TAO_Notify_Factory* factory = TAO_Notify_PROPERTIES::instance ()->factory ();
 
-    PROXY_IMPL* proxy = nullptr;
+    PROXY_IMPL* proxy {};
     factory->create (proxy);
 
     PortableServer::ServantBase_var servant (proxy);
@@ -156,9 +156,7 @@ TAO_Notify_Builder::TAO_Notify_Builder ()
   TAO_Notify_AnyEvent::event_type_ = TAO_Notify_EventType::special ();
 }
 
-TAO_Notify_Builder::~TAO_Notify_Builder ()
-{
-}
+TAO_Notify_Builder::~TAO_Notify_Builder () = default;
 
 CosNotifyFilter::FilterFactory_ptr
 TAO_Notify_Builder::build_filter_factory (PortableServer::POA_ptr poa, TAO_Notify_FilterFactory*& ff)
@@ -177,12 +175,12 @@ TAO_Notify_Builder::build_filter_factory (PortableServer::POA_ptr poa, TAO_Notif
 
 CosNotifyChannelAdmin::EventChannelFactory_ptr
 TAO_Notify_Builder::build_event_channel_factory (PortableServer::POA_ptr poa,
-                                                 const char* name)
+                                                 char const *name)
 {
   TAO_Notify_Factory* factory = TAO_Notify_PROPERTIES::instance ()->factory ();
 
   // Create ECF
-  TAO_Notify_EventChannelFactory* ecf = nullptr;
+  TAO_Notify_EventChannelFactory* ecf {};
   factory->create (ecf, name);
 
   ecf->init (poa);
@@ -192,14 +190,14 @@ TAO_Notify_Builder::build_event_channel_factory (PortableServer::POA_ptr poa,
 CosNotifyChannelAdmin::EventChannel_ptr
 TAO_Notify_Builder::build_event_channel (
   TAO_Notify_EventChannelFactory* ecf,
-  const CosNotification::QoSProperties & initial_qos,
-  const CosNotification::AdminProperties & initial_admin,
+  CosNotification::QoSProperties const & initial_qos,
+  CosNotification::AdminProperties const & initial_admin,
   CosNotifyChannelAdmin::ChannelID_out id,
-  const char* ec_name)
+  char const *ec_name)
 {
   TAO_Notify_Factory* factory = TAO_Notify_PROPERTIES::instance ()->factory ();
 
-  TAO_Notify_EventChannel* ec = nullptr;
+  TAO_Notify_EventChannel* ec {};
   factory->create (ec, ec_name);
 
   ec->init (ecf, initial_qos, initial_admin);
@@ -219,11 +217,11 @@ TAO_Notify_EventChannel *
 TAO_Notify_Builder::build_event_channel (
   TAO_Notify_EventChannelFactory* ecf,
   const CosNotifyChannelAdmin::ChannelID id,
-  const char* ec_name)
+  char const *ec_name)
 {
   TAO_Notify_Factory* factory = TAO_Notify_PROPERTIES::instance ()->factory ();
 
-  TAO_Notify_EventChannel* ec = nullptr;
+  TAO_Notify_EventChannel* ec {};
   factory->create (ec, ec_name);
 
   ec->init (ecf); //, initial_qos, initial_admin
@@ -246,7 +244,7 @@ TAO_Notify_Builder::build_consumer_admin (
 
   TAO_Notify_Factory* factory = TAO_Notify_PROPERTIES::instance ()->factory ();
 
-  TAO_Notify_ConsumerAdmin* ca = nullptr;
+  TAO_Notify_ConsumerAdmin* ca {};
   factory->create (ca);
 
   ca->init (ec);
@@ -271,7 +269,7 @@ TAO_Notify_Builder::build_consumer_admin (
   const CosNotifyChannelAdmin::ChannelID id)
 {
   TAO_Notify_Factory* factory = TAO_Notify_PROPERTIES::instance ()->factory ();
-  TAO_Notify_ConsumerAdmin * ca = nullptr;
+  TAO_Notify_ConsumerAdmin * ca {};
   factory->create (ca);
 
   ca->init (ec);
@@ -292,7 +290,7 @@ TAO_Notify_Builder::build_supplier_admin (TAO_Notify_EventChannel* ec,
 
   TAO_Notify_Factory* factory = TAO_Notify_PROPERTIES::instance ()->factory ();
 
-  TAO_Notify_SupplierAdmin* sa = nullptr;
+  TAO_Notify_SupplierAdmin* sa {};
   factory->create (sa);
 
   sa->init (ec);
@@ -317,7 +315,7 @@ TAO_Notify_Builder::build_supplier_admin (
   const CosNotifyChannelAdmin::ChannelID id)
 {
   TAO_Notify_Factory* factory = TAO_Notify_PROPERTIES::instance ()->factory ();
-  TAO_Notify_SupplierAdmin * sa = nullptr;
+  TAO_Notify_SupplierAdmin * sa {};
   factory->create (sa);
 
   sa->init (ec);
@@ -334,7 +332,7 @@ CosNotifyChannelAdmin::ProxyConsumer_ptr
 TAO_Notify_Builder::build_proxy(TAO_Notify_SupplierAdmin* sa
                             , CosNotifyChannelAdmin::ClientType ctype
                             , CosNotifyChannelAdmin::ProxyID_out proxy_id
-                            , const CosNotification::QoSProperties & initial_qos)
+                            , CosNotification::QoSProperties const & initial_qos)
 {
   switch (ctype)
     {
@@ -368,7 +366,7 @@ CosNotifyChannelAdmin::ProxySupplier_ptr
 TAO_Notify_Builder::build_proxy(TAO_Notify_ConsumerAdmin* ca
                             , CosNotifyChannelAdmin::ClientType ctype
                             , CosNotifyChannelAdmin::ProxyID_out proxy_id
-                            , const CosNotification::QoSProperties & initial_qos)
+                            , CosNotification::QoSProperties const & initial_qos)
 {
   switch (ctype)
     {
@@ -503,9 +501,9 @@ TAO_Notify_Builder::apply_reactive_concurrency (TAO_Notify_Object& object)
 }
 
 void
-TAO_Notify_Builder::apply_thread_pool_concurrency (TAO_Notify_Object& object, const NotifyExt::ThreadPoolParams& tp_params)
+TAO_Notify_Builder::apply_thread_pool_concurrency (TAO_Notify_Object& object, NotifyExt::ThreadPoolParams const& tp_params)
 {
-  TAO_Notify_ThreadPool_Task* worker_task = nullptr;
+  TAO_Notify_ThreadPool_Task* worker_task {};
 
   ACE_NEW_THROW_EX (worker_task,
                     TAO_Notify_ThreadPool_Task (),
@@ -517,7 +515,7 @@ TAO_Notify_Builder::apply_thread_pool_concurrency (TAO_Notify_Object& object, co
 }
 
 void
-TAO_Notify_Builder::apply_lane_concurrency (TAO_Notify_Object& /*object*/, const NotifyExt::ThreadPoolLanesParams& /*tpl_params*/)
+TAO_Notify_Builder::apply_lane_concurrency (TAO_Notify_Object& /*object*/, NotifyExt::ThreadPoolLanesParams const& /*tpl_params*/)
 {
   // No lane support
   throw CORBA::NO_IMPLEMENT ();

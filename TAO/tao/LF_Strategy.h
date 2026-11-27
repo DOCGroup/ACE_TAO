@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file LF_Strategy.h
  *
  *  @author Carlos O'Ryan <coryan@uci.edu>
  */
-//=============================================================================
 
 #ifndef TAO_LF_STRATEGY_H
 #define TAO_LF_STRATEGY_H
@@ -42,7 +38,6 @@ class TAO_Leader_Follower;
 class TAO_Export TAO_LF_Strategy
 {
 public:
-  /// Destructor
   virtual ~TAO_LF_Strategy ();
 
   /// The current thread will handle an upcall

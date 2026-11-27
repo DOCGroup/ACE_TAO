@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    Naming_Test.cpp
  *
@@ -9,7 +7,6 @@
  *
  *  @author Prashant Jain <pjain@cs.wustl.edu> and Irfan Pyarali <irfan@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "randomize.h"
@@ -18,8 +15,9 @@
 #include "ace/Naming_Context.h"
 #include "ace/Profile_Timer.h"
 #include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
+
+#include <cstring>
 
 #if !defined ACE_LACKS_FCNTL || defined ACE_WIN32
 
@@ -31,12 +29,14 @@ static void
 initialize_array (int * array, int size)
 {
   for (int n = 0; n < size; ++n)
-    array[n] = n;
+    {
+      array[n] = n;
+    }
 }
 
 static void
 print_time (ACE_Profile_Timer &timer,
-            const char *test)
+            char const *test)
 {
   ACE_Profile_Timer::ACE_Elapsed_Time et;
   timer.stop ();
@@ -59,16 +59,16 @@ test_bind (ACE_Naming_Context &ns_context)
   randomize (array, sizeof (array) / sizeof (array[0]));
 
   // do the binds
-  for (size_t i = 0; i < ACE_NS_MAX_ENTRIES; i++)
+  for (int const name_number : array)
     {
-      ACE_OS::snprintf (name, BUFSIZ, "%s%d", "name", array[i]);
-      ACE_NS_WString w_name (name);
+      ACE_OS::snprintf (name, BUFSIZ, "%s%d", "name", name_number);
+      ACE_NS_WString const w_name (name);
 
-      ACE_OS::snprintf (value, BUFSIZ, "%s%d", "value", array[i]);
-      ACE_NS_WString w_value (value);
+      ACE_OS::snprintf (value, BUFSIZ, "%s%d", "value", name_number);
+      ACE_NS_WString const w_value (value);
 
-      ACE_OS::snprintf (type, BUFSIZ, "%s%d", "type", array [i]);
-      int bind_result = ns_context.bind (w_name, w_value, type);
+      ACE_OS::snprintf (type, BUFSIZ, "%s%d", "type", name_number);
+      int const bind_result = ns_context.bind (w_name, w_value, type);
       ACE_TEST_ASSERT (bind_result != -1);
     }
 }
@@ -77,14 +77,14 @@ static void
 test_find_failure (ACE_Naming_Context &ns_context)
 {
   ACE_OS::snprintf (name, BUFSIZ, "%s", "foo-bar");
-  ACE_NS_WString w_name (name);
+  ACE_NS_WString const w_name (name);
   ACE_NS_WString w_value;
-  char *l_type = nullptr;
+  char *l_type {};
 
   // Do the finds.
-  for (size_t i = 0; i < ACE_NS_MAX_ENTRIES; i++)
+  for (size_t i = 0; i < ACE_NS_MAX_ENTRIES; ++i)
     {
-      int resolve = ns_context.resolve (w_name, w_value, l_type);
+      int const resolve = ns_context.resolve (w_name, w_value, l_type);
       ACE_TEST_ASSERT (resolve == -1);
     }
 }
@@ -98,16 +98,16 @@ test_rebind (ACE_Naming_Context &ns_context)
   randomize (array, sizeof (array) / sizeof (array[0]));
 
   // do the rebinds
-  for (size_t i = 0; i < ACE_NS_MAX_ENTRIES; i++)
+  for (int const name_number : array)
     {
-      ACE_OS::snprintf (name, BUFSIZ, "%s%d", "name", array[i]);
-      ACE_NS_WString w_name (name);
+      ACE_OS::snprintf (name, BUFSIZ, "%s%d", "name", name_number);
+      ACE_NS_WString const w_name (name);
 
-      ACE_OS::snprintf (value, BUFSIZ, "%s%d", "value", -array[i]);
-      ACE_NS_WString w_value (value);
+      ACE_OS::snprintf (value, BUFSIZ, "%s%d", "value", -name_number);
+      ACE_NS_WString const w_value (value);
 
-      ACE_OS::snprintf (type, BUFSIZ, "%s%d", "type", -array[i]);
-      int rebind = ns_context.rebind (w_name, w_value, type);
+      ACE_OS::snprintf (type, BUFSIZ, "%s%d", "type", -name_number);
+      int const rebind = ns_context.rebind (w_name, w_value, type);
       ACE_TEST_ASSERT (rebind != -1);
     }
 }
@@ -121,11 +121,11 @@ test_unbind (ACE_Naming_Context &ns_context)
   randomize (array, sizeof (array) / sizeof (array[0]));
 
   // do the unbinds
-  for (size_t i = 0; i < ACE_NS_MAX_ENTRIES; i++)
+  for (int const name_number : array)
     {
-      ACE_OS::snprintf (name, BUFSIZ, "%s%d", "name", array[i]);
-      ACE_NS_WString w_name (name);
-      int unbind = ns_context.unbind (w_name);
+      ACE_OS::snprintf (name, BUFSIZ, "%s%d", "name", name_number);
+      ACE_NS_WString const w_name (name);
+      int const unbind = ns_context.unbind (w_name);
       ACE_TEST_ASSERT (unbind != -1);
     }
 }
@@ -142,31 +142,33 @@ test_find (ACE_Naming_Context &ns_context, int sign, int result)
   randomize (array, sizeof (array) / sizeof (array[0]));
 
   // do the finds
-  for (size_t i = 0; i < ACE_NS_MAX_ENTRIES; i++)
+  for (int const name_number : array)
     {
       if (sign == 1)
         {
-          ACE_OS::snprintf (temp_val, BUFSIZ, "%s%d", "value", array[i]);
-          ACE_OS::snprintf (temp_type, BUFSIZ, "%s%d", "type", array[i]);
+          ACE_OS::snprintf (temp_val, BUFSIZ, "%s%d", "value", name_number);
+          ACE_OS::snprintf (temp_type, BUFSIZ, "%s%d", "type", name_number);
         }
       else
         {
-          ACE_OS::snprintf (temp_val, BUFSIZ, "%s%d", "value", -array[i]);
-          ACE_OS::snprintf (temp_type, BUFSIZ, "%s%d", "type", -array[i]);
+          ACE_OS::snprintf (temp_val, BUFSIZ, "%s%d", "value", -name_number);
+          ACE_OS::snprintf (temp_type, BUFSIZ, "%s%d", "type", -name_number);
         }
 
-      ACE_OS::snprintf (name, BUFSIZ, "%s%d", "name", array[i]);
+      ACE_OS::snprintf (name, BUFSIZ, "%s%d", "name", name_number);
 
-      ACE_NS_WString w_name (name);
+      ACE_NS_WString const w_name (name);
       ACE_NS_WString w_value;
-      char *type_out = nullptr;
-      ACE_NS_WString val (temp_val);
+      char *type_out {};
+      ACE_NS_WString const val (temp_val);
 
       int const resolve_result = ns_context.resolve (w_name, w_value, type_out);
       if (resolve_result != result)
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("Error, resolve result not equal to resutlt (%d != %d)\n"),
-                    resolve_result, result));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("Error, resolve result not equal to resutlt (%d != %d)\n"),
+                      resolve_result, result));
+        }
 
       char *l_value = w_value.char_rep ();
 
@@ -176,17 +178,21 @@ test_find (ACE_Naming_Context &ns_context, int sign, int result)
           if (ns_context.name_options ()->debug ())
             {
               if (type_out)
-                ACE_DEBUG ((LM_DEBUG,
-                            ACE_TEXT ("Name: %C\tValue: %C\tType: %C\n"),
-                            name, l_value, type_out));
+                {
+                  ACE_DEBUG ((LM_DEBUG,
+                              ACE_TEXT ("Name: %C\tValue: %C\tType: %C\n"),
+                              name, l_value, type_out));
+                }
               else
-                ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Name: %C\tValue: %C\n"),
-                            name, l_value));
+                {
+                  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Name: %C\tValue: %C\n"),
+                              name, l_value));
+                }
             }
 
           if (type_out)
             {
-              ACE_TEST_ASSERT (ACE_OS::strcmp (type_out, temp_type) == 0);
+              ACE_TEST_ASSERT (std::strcmp (type_out, temp_type) == 0);
               delete[] type_out;
             }
         }
@@ -205,7 +211,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   ACE_UNUSED_ARG (argv);
 #else
   ACE_TCHAR temp_file [BUFSIZ];
-  ACE_Naming_Context *ns_context = nullptr;
+  ACE_Naming_Context *ns_context {};
   ACE_NEW_RETURN (ns_context, ACE_Naming_Context, -1);
 
   ACE_Name_Options *name_options = ns_context->name_options ();
@@ -224,18 +230,18 @@ run_main (int argc, ACE_TCHAR *argv[])
 # if defined (ACE_LINUX) && defined (__x86_64__)
   name_options->base_address ((char*)0x3c00000000);
 # endif
-  bool unicode = false;
+  bool const unicode = false;
 # if (defined (ACE_WIN32) && defined (ACE_USES_WCHAR))
   unicode = true;
 # endif /* ACE_WIN32 && ACE_USES_WCHAR */
-  if (unicode && name_options->use_registry () == 1)
+  if (unicode && name_options->use_registry ())
     {
       name_options->namespace_dir (ACE_TEXT ("Software\\ACE\\Name Service"));
       name_options->database (ACE_TEXT ("Version 1"));
     }
   else
     {
-      const ACE_TCHAR* pname = ACE::basename (name_options->process_name (),
+      ACE_TCHAR const * pname = ACE::basename (name_options->process_name (),
                                               ACE_DIRECTORY_SEPARATOR_CHAR);
       // Allow the user to determine where the context file will be
       // located just in case the current directory is not suitable for

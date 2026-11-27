@@ -1,14 +1,11 @@
-
-//=============================================================================
 /**
  *  @file     gauge.cpp
  *
  * Class implemtation for SMI Gauge32 class.
- * NOTES: This does not behave exactly as a Gauge described in RFC 1155
+ * @note This does not behave exactly as a Gauge described in RFC 1155
  *
  *  @author Peter E MellquistMichael R MacFaden  mrm@cisco.com - rework & ACE port
  */
-//=============================================================================
 
 /*===================================================================
   Copyright (c) 1996
@@ -27,53 +24,52 @@
 =====================================================================*/
 
 #include "asnmp/gauge.h"          // header file for gauge class
+#include <memory>
 
-// constructor with a value
-Gauge32::Gauge32( const unsigned long i):SnmpUInt32(i)
+Gauge32::Gauge32 (unsigned long i)
+  : SnmpUInt32 (i)
 {
   smival.syntax = sNMP_SYNTAX_GAUGE32;
 }
 
-// copy constructor
-Gauge32::Gauge32 ( const Gauge32 &g)
+Gauge32::Gauge32 (Gauge32 const &g)
   : SnmpUInt32 (g)
-{ this->smival.value.uNumber = g.smival.value.uNumber;
-     smival.syntax = sNMP_SYNTAX_GAUGE32;
-     valid_flag = 1;
-}
-
-// destructor
-Gauge32::~Gauge32()
 {
+  this->smival.value.uNumber = g.smival.value.uNumber;
+  smival.syntax = sNMP_SYNTAX_GAUGE32;
+  valid_flag = true;
 }
 
-// syntax type
+/// Syntax type.
 SmiUINT32 Gauge32::get_syntax()
 {
   return sNMP_SYNTAX_GAUGE32;
 }
 
-// overloaded assignment
-Gauge32& Gauge32::operator=( const Gauge32 &uli)
+/// Overloaded assignment.
+Gauge32 &Gauge32::operator= (Gauge32 const &uli)
 {
   this->smival.value.uNumber = uli.smival.value.uNumber;
-     return *this;
+  return *this;
 }
 
-// overloaded assignment
-Gauge32& Gauge32::operator=( const unsigned long int i)
+/// Overloaded assignment.
+Gauge32 &Gauge32::operator= (unsigned long i)
 {
-  smival.value.uNumber=i; return *this;
+  smival.value.uNumber = i;
+  return *this;
 }
 
-// general assignment from any Value
+/// General assignment from any value.
 // TODO: this is broken if not inherited from UInt32 (see UInt32 code).
 SnmpSyntax& Gauge32::operator=( SnmpSyntax &in_val)
 {
-  if ( this == &in_val )        // handle assignment from itself
+  if (this == std::addressof (in_val))        // handle assignment from itself
+    {
       return *this;
+    }
 
-  valid_flag = 0;               // will get set true if really valid
+  valid_flag = false;           // will get set true if really valid
   if (in_val.valid())
   {
     switch (in_val.get_syntax())
@@ -85,21 +81,21 @@ SnmpSyntax& Gauge32::operator=( SnmpSyntax &in_val)
       case sNMP_SYNTAX_INT32:           // implied cast int -> uint
           this->smival.value.uNumber =
                 ((Gauge32 &)in_val).smival.value.uNumber;
-          valid_flag = 1;
+          valid_flag = true;
           break;
     }
   }
   return *this;
 }
 
-// otherwise, act as unsigned long
-Gauge32::operator unsigned long()
+/// Otherwise, act as an unsigned long.
+Gauge32::operator unsigned long() const
 {
   return smival.value.uNumber;
 }
 
-// clone - create a new instance of this Value
+/// Create a new instance of this value.
 SnmpSyntax* Gauge32::clone() const
 {
-  return ( SnmpSyntax *) new Gauge32(*this);
+  return new Gauge32(*this);
 }

@@ -39,7 +39,6 @@ int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   int result {};
-  ACE_TCHAR const* ifr_ior_file {};
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Start\n")));
 
   try
@@ -47,6 +46,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv);
 
+      ACE_TCHAR const* ifr_ior_file {};
       if (parse_args (argc, argv, ifr_ior_file) == -1)
         {
           return -1;

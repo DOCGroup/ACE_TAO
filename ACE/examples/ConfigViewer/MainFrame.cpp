@@ -48,7 +48,6 @@ MainFrame::MainFrame(const wxString& title, const wxPoint& pos, const wxSize& si
                   wxTR_EDIT_LABELS | wxTR_HAS_BUTTONS | wxTR_LINES_AT_ROOT);
   m_pTreeCtrl->SetpListCtrl(m_pListCtrl);
 
-
   // Setup splitter
   m_pSplitter->SplitVertically(m_pTreeCtrl, m_pListCtrl);
   m_pSplitter->SetMinimumPaneSize(100);
@@ -83,7 +82,6 @@ MainFrame::MainFrame(const wxString& title, const wxPoint& pos, const wxSize& si
 #endif // wxUSE_STATUSBAR
 }
 
-
 MainFrame::~MainFrame()
 {
   delete m_pConfig;
@@ -96,7 +94,6 @@ MainFrame* MainFrame::Instance()
   return m_pInstance;
 }
 
-
 // event handlers
 
 void MainFrame::OnSize(wxSizeEvent& event)
@@ -104,7 +101,6 @@ void MainFrame::OnSize(wxSizeEvent& event)
   wxLayoutAlgorithm layout;
   layout.LayoutFrame(this, m_pListCtrl);
 }
-
 
 void MainFrame::OnQuit(wxCommandEvent& WXUNUSED(event))
 {
@@ -161,7 +157,7 @@ void MainFrame::OnFileOpenRegistry(wxCommandEvent& event)
   {
     return;
   }
-  HKEY Root = ACE_Configuration_Win32Registry::resolve_key(HKEY_LOCAL_MACHINE, Dlg.GetValue(), 0);
+  HKEY Root = ACE_Configuration_Win32Registry::resolve_key(HKEY_LOCAL_MACHINE, Dlg.GetValue(), false);
   ACE_Configuration_Win32Registry* pWin32Reg = new ACE_Configuration_Win32Registry(Root);;
   delete m_pConfig;
   SetNewConfig(pWin32Reg);

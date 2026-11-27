@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file Transport_Connector.h
  *
@@ -7,13 +6,13 @@
  *
  *  @author  Fred Kuhns <fredk@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_CONNECTOR_H
 #define TAO_CONNECTOR_H
 
 #include /**/ "ace/pre.h"
 #include "tao/Basic_Types.h"
+#include <memory>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -55,11 +54,15 @@ namespace TAO
 class TAO_Export TAO_Connector
 {
 public:
-  /// Default constructor.
-  TAO_Connector (CORBA::ULong tag);
+  TAO_Connector () = delete;
+  explicit TAO_Connector (CORBA::ULong tag);
 
-  /// The destructor.
   virtual ~TAO_Connector ();
+
+  TAO_Connector (TAO_Connector const &) = delete;
+  TAO_Connector (TAO_Connector &&) = delete;
+  TAO_Connector &operator= (TAO_Connector const &) = delete;
+  TAO_Connector &operator= (TAO_Connector &&) = delete;
 
   /**
    * The tag identifying the specific ORB transport layer protocol.
@@ -72,7 +75,7 @@ public:
 
   /// Parse a string containing a URL style IOR and return an
   /// MProfile.  Verify that ior is in the correct format.
-  int make_mprofile (const char *ior, TAO_MProfile &mprofile);
+  int make_mprofile (char const *ior, TAO_MProfile &mprofile);
 
   /// Helper function to assist corbaloc parsing. The default simply validates
   /// the protocol identifier and scans up to the next comma or slash.
@@ -80,7 +83,7 @@ public:
   /// method to  provide a custom scanner.
   /// The profile returned is either null if this the ior does not match or an
   /// empty profile of the correct type, obtained from make_profile().
-  virtual TAO_Profile *corbaloc_scan (const char *ior, size_t &len);
+  virtual TAO_Profile *corbaloc_scan (char const *ior, size_t &len);
 
   ///  Initialize object and register with reactor.
   virtual int open (TAO_ORB_Core *orb_core) = 0;
@@ -109,7 +112,7 @@ public:
 
   /// Check that the prefix of the provided endpoint is valid for use
   /// with a given pluggable protocol.
-  virtual int check_prefix (const char *endpoint) = 0;
+  virtual int check_prefix (char const *endpoint) = 0;
 
   /// Return the object key delimiter to use or expect.
   virtual char object_key_delimiter () const = 0;
@@ -187,7 +190,7 @@ protected:
   bool new_connection_is_ok (size_t busy_count);
 
   /// Wait for a transport to be connected
-  /// Note: no longer changes transport reference count
+  /// @note This no longer changes the transport reference count.
   /// @retval true if wait was uneventful
   /// @retval false if error occurred during wait
   bool wait_for_transport (TAO::Profile_Transport_Resolver *r,
@@ -206,14 +209,14 @@ protected:
 
 protected:
   /// The (a)synch connect strategy
-  TAO_Connect_Strategy *active_connect_strategy_;
+  std::unique_ptr<TAO_Connect_Strategy> active_connect_strategy_;
 
 private:
   /// IOP protocol tag.
   CORBA::ULong const tag_;
 
   /// Pointer to our ORB core
-  TAO_ORB_Core *orb_core_;
+  TAO_ORB_Core *orb_core_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

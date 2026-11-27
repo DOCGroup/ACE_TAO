@@ -13,6 +13,8 @@
 #include "ace/OS_NS_strings.h"
 #include "ace/os_include/os_netdb.h"
 #include "ace/OS_NS_sys_socket.h"
+#include <cstring>
+#include <string>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -28,7 +30,9 @@ TAO_UIPMC_Connector::open (TAO_ORB_Core *orb_core)
 
   // For the sake of uniformity do
   if (this->create_connect_strategy () == -1)
+  {
     return -1;
+  }
 
   return 0;
 }
@@ -43,15 +47,19 @@ int
 TAO_UIPMC_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
 {
   if (endpoint->tag () != IOP::TAG_UIPMC)
+  {
     return -1;
+  }
 
-  TAO_UIPMC_Endpoint *uipmc_endpoint =
-    dynamic_cast<TAO_UIPMC_Endpoint *> (endpoint);
+  TAO_UIPMC_Endpoint const *uipmc_endpoint =
+    dynamic_cast<TAO_UIPMC_Endpoint const *> (endpoint);
 
   if (uipmc_endpoint == nullptr)
+  {
     return -1;
+  }
 
-  const ACE_INET_Addr &remote_address =
+  ACE_INET_Addr const &remote_address =
     uipmc_endpoint->object_addr ();
 
   // Verify that the remote ACE_INET_Addr was initialized properly.
@@ -88,9 +96,11 @@ TAO_UIPMC_Connector::make_connection (TAO::Profile_Transport_Resolver *,
     dynamic_cast<TAO_UIPMC_Endpoint *> (desc.endpoint ());
 
   if (uipmc_endpoint == nullptr)
-    return 0;
+  {
+    return nullptr;
+  }
 
-  const ACE_INET_Addr &remote_address =
+  ACE_INET_Addr const &remote_address =
     uipmc_endpoint->object_addr ();
 
 #if defined (ACE_HAS_IPV6) && !defined (ACE_HAS_IPV6_V6ONLY)
@@ -112,22 +122,22 @@ TAO_UIPMC_Connector::make_connection (TAO::Profile_Transport_Resolver *,
                       ACE_TEXT ("interface <%s>!\n"),
                       remote_as_string));
         }
-      return 0;
+      return nullptr;
     }
 #endif /* ACE_HAS_IPV6 && ACE_HAS_IPV6_V6ONLY */
 
-  TAO_UIPMC_Connection_Handler *svc_handler = nullptr;
+  TAO_UIPMC_Connection_Handler *svc_handler {};
 
   ACE_NEW_RETURN (svc_handler,
                   TAO_UIPMC_Connection_Handler (this->orb_core ()),
-                  0);
+                  nullptr);
 
   // Make sure that we always do a remove_reference
   ACE_Event_Handler_var svc_handler_auto_ptr (svc_handler);
 
-  u_short port = 0;
-  const ACE_UINT32 ia_any = INADDR_ANY;
-  ACE_INET_Addr any_addr(port, ia_any);
+  u_short const port = 0;
+  ACE_UINT32 const ia_any = INADDR_ANY;
+  ACE_INET_Addr any_addr (port, ia_any);
 
 #if defined (ACE_HAS_IPV6)
   if (remote_address.get_type () == AF_INET6)
@@ -137,7 +147,7 @@ TAO_UIPMC_Connector::make_connection (TAO::Profile_Transport_Resolver *,
   ACE_INET_Addr local_addr(any_addr);
   svc_handler->addr (remote_address);
 
-  int retval= 0;
+  int retval = 0;
   while (uipmc_endpoint != nullptr)
     {
       if (uipmc_endpoint->is_preferred_network ())
@@ -153,19 +163,22 @@ TAO_UIPMC_Connector::make_connection (TAO::Profile_Transport_Resolver *,
       if (retval == 0)
         {
 #if defined (ACE_HAS_IPV6)
-          const ACE_TCHAR* prefer_if =
-            ACE_TEXT_CHAR_TO_TCHAR (uipmc_endpoint->preferred_if());
-          if (prefer_if && ACE_OS::strlen(prefer_if))
+          char const *const preferred_if = uipmc_endpoint->preferred_if ();
+          if (preferred_if != nullptr && preferred_if[0] != '\0')
             {
-              if (svc_handler->peer ().set_nic(prefer_if, AF_INET6))
+              std::basic_string<ACE_TCHAR> const prefer_if (
+                ACE_TEXT_CHAR_TO_TCHAR (preferred_if));
+              if (svc_handler->peer ().set_nic (prefer_if.c_str (), AF_INET6))
                 {
                   if (TAO_debug_level > 0)
-                        ORBSVCS_ERROR ((LM_ERROR,
-                            "TAO (%P|%t) - UIPMC_Connector::make_connection, "
-                            "connection to <%C:%u> - failed to set requested local network interface <%s>\n",
-                             uipmc_endpoint->host (),
-                             uipmc_endpoint->port (),
-                             prefer_if));
+                    {
+                      ORBSVCS_ERROR ((LM_ERROR,
+                                      ACE_TEXT ("TAO (%P|%t) - UIPMC_Connector::make_connection, ")
+                                      ACE_TEXT ("connection to <%C:%u> - failed to set requested local network interface <%s>\n"),
+                                      uipmc_endpoint->host (),
+                                      uipmc_endpoint->port (),
+                                      prefer_if.c_str ()));
+                    }
                   retval = -1;
                 }
             }
@@ -175,13 +188,15 @@ TAO_UIPMC_Connector::make_connection (TAO::Profile_Transport_Resolver *,
       else
        {
            if (TAO_debug_level > 3)
+             {
                 ORBSVCS_ERROR ((LM_ERROR,
                             "TAO (%P|%t) - UIPMC_Connector::make_connection, "
-                            "connection to <%C:%u> from interface <%s> failed (%p)\n",
+                            "connection to <%C:%u> from interface <%C> failed (%p)\n",
                              uipmc_endpoint->host (),
                              uipmc_endpoint->port (),
                              uipmc_endpoint->is_preferred_network () ? uipmc_endpoint->preferred_network () : "ANY",
                              ACE_TEXT ("errno")));
+             }
        }
       uipmc_endpoint = dynamic_cast<TAO_UIPMC_Endpoint *> (uipmc_endpoint->next());
     }
@@ -200,7 +215,7 @@ TAO_UIPMC_Connector::make_connection (TAO::Profile_Transport_Resolver *,
                       remote_address.get_port_number ()));
         }
 
-      return 0;
+      return nullptr;
     }
 
   // After the handler is opened we can try to obtain the real local address.
@@ -217,7 +232,7 @@ TAO_UIPMC_Connector::make_connection (TAO::Profile_Transport_Resolver *,
       ORBSVCS_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - UIPMC_Connector::make_connection, ")
                   ACE_TEXT ("new connection from <%C:%u> to <%C:%u> on ")
-                  ACE_TEXT ("HANDLE %d\n"),
+                  ACE_TEXT ("HANDLE %H\n"),
                   local_hostaddr,
                   local_addr.get_port_number (),
                   remote_hostaddr,
@@ -225,7 +240,7 @@ TAO_UIPMC_Connector::make_connection (TAO::Profile_Transport_Resolver *,
                   svc_handler->get_handle ()));
     }
 
-  TAO_Transport *transport = svc_handler->transport ();
+  TAO_Transport * const transport = svc_handler->transport ();
 
   // In case of errors transport is zero
   if (transport == nullptr)
@@ -234,6 +249,7 @@ TAO_UIPMC_Connector::make_connection (TAO::Profile_Transport_Resolver *,
 
       // Give users a clue to the problem.
       if (TAO_debug_level)
+        {
           ORBSVCS_ERROR ((LM_ERROR,
                       ACE_TEXT ("TAO (%P|%t) - UIPMC_Connector:")
                       ACE_TEXT (":make_connection, connection to ")
@@ -241,8 +257,9 @@ TAO_UIPMC_Connector::make_connection (TAO::Profile_Transport_Resolver *,
                       uipmc_endpoint->host (),
                       uipmc_endpoint->port (),
                       ACE_TEXT ("errno")));
+        }
 
-      return 0;
+      return nullptr;
     }
 
   // Add the handler to Cache
@@ -263,7 +280,7 @@ TAO_UIPMC_Connector::make_connection (TAO::Profile_Transport_Resolver *,
                       ACE_TEXT ("new connection to cache\n")));
         }
 
-      return 0;
+      return nullptr;
     }
 
   svc_handler_auto_ptr.release ();
@@ -271,18 +288,18 @@ TAO_UIPMC_Connector::make_connection (TAO::Profile_Transport_Resolver *,
 }
 
 TAO_Profile *
-TAO_UIPMC_Connector::create_profile (TAO_InputCDR& cdr)
+TAO_UIPMC_Connector::create_profile (TAO_InputCDR &cdr)
 {
-  TAO_Profile *pfile;
+  TAO_Profile *pfile {};
   ACE_NEW_RETURN (pfile,
                   TAO_UIPMC_Profile (this->orb_core ()),
-                  0);
+                  nullptr);
 
   int r = pfile->decode (cdr);
   if (r == -1)
     {
       pfile->_decr_refcnt ();
-      pfile = 0;
+      pfile = nullptr;
     }
 
   return pfile;
@@ -296,7 +313,7 @@ TAO_UIPMC_Connector::make_profile ()
   // or:
   //    host:port/object_key
 
-  TAO_Profile *profile = nullptr;
+  TAO_Profile *profile {};
   ACE_NEW_THROW_EX (profile,
                     TAO_UIPMC_Profile (this->orb_core ()),
                     CORBA::NO_MEMORY (
@@ -309,22 +326,32 @@ TAO_UIPMC_Connector::make_profile ()
 }
 
 int
-TAO_UIPMC_Connector::check_prefix (const char *endpoint)
+TAO_UIPMC_Connector::check_prefix (char const *endpoint)
 {
   // Check for a valid string
-  if (!endpoint || !*endpoint)
-    return -1;  // Failure
+  if (endpoint == nullptr || *endpoint == '\0')
+    {
+      return -1;  // Failure
+    }
 
-  static const char protocol[] = "miop";
-  static size_t const len = sizeof (protocol) - 1;
+  static constexpr char protocol[] = "miop";
+  size_t const len = sizeof (protocol) - 1;
 
-  size_t const slot = ACE_OS::strchr (endpoint, ':') - endpoint;
+  char const * const separator = std::strchr (endpoint, ':');
+  if (separator == nullptr)
+  {
+    return -1;
+  }
+
+  size_t const slot = separator - endpoint;
 
   // Check for the proper prefix in the IOR.  If the proper prefix
   // isn't in the IOR then it is not an IOR we can use.
   if (slot == len
       && ACE_OS::strncasecmp (endpoint, protocol, len) == 0)
+  {
     return 0;
+  }
 
   return -1;
   // Failure: not a MIOP IOR

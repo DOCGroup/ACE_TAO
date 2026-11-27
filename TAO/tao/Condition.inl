@@ -1,5 +1,3 @@
-// -*- C++ -*-
-//
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class MUTEX> ACE_INLINE int
@@ -10,17 +8,17 @@ TAO_Condition<MUTEX>::wait ()
 
 template <class MUTEX> ACE_INLINE int
 TAO_Condition<MUTEX>::wait (MUTEX &mutex,
-                            const ACE_Time_Value *abstime)
+                            ACE_Time_Value const *abstime)
 {
   return this->cond_->wait (mutex,
                            abstime);
 }
 
-/// Peform an "alertable" timed wait.  If the argument ABSTIME == 0
-/// then we do a regular cond_wait(), else we do a timed wait for up to
-/// @a abstime
+/// Perform an "alertable" timed wait.  If @a abstime is null, then we
+/// do a regular @c cond_wait(); otherwise, we do a timed wait up to
+/// @a abstime.
 template <class MUTEX> ACE_INLINE int
-TAO_Condition<MUTEX>::wait (const ACE_Time_Value *abstime)
+TAO_Condition<MUTEX>::wait (ACE_Time_Value const *abstime)
 {
   return this->wait (*this->mutex_, abstime);
 }

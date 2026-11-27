@@ -29,7 +29,7 @@ struct bounded_array_allocation_traits
 
   inline static value_type * default_buffer_allocation()
   {
-    return 0;
+    return nullptr;
   }
 
   inline static value_type * allocbuf(CORBA::ULong /* maximum */)
@@ -49,7 +49,6 @@ struct bounded_array_allocation_traits
 };
 } // namespace details
 } // namespace TAO
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

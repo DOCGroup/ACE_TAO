@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Service_Config_Test.cpp
  *
@@ -10,7 +7,6 @@
  *  @author David Levine <levine@cs.wustl.edu>
  *  @author Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "ace/OS_NS_stdio.h"
@@ -25,6 +21,8 @@
 #include "ace/Reactor.h"
 #include "ace/Thread_Manager.h"
 #include "ace/ARGV.h"
+
+#include <memory>
 
 static const u_int VARIETIES = 3;
 
@@ -102,7 +100,7 @@ Test_Singleton::Test_Singleton (u_short variety)
   if (variety_ != current_++)
     {
       ACE_DEBUG ((LM_ERROR,
-                  ACE_TEXT ("ERROR: instance %u created out of order!\n"),
+                  ACE_TEXT ("ERROR: instance %d created out of order!\n"),
                  variety_));
       ++error;
     }
@@ -118,7 +116,7 @@ Test_Singleton::~Test_Singleton ()
   if (variety_ != --current_)
     {
       ACE_OS::fprintf (stderr,
-                       ACE_TEXT ("ERROR: instance %u destroyed out of order!\n"),
+                       ACE_TEXT ("ERROR: instance %d destroyed out of order!\n"),
                        variety_);
       /* ACE_DEBUG ((LM_ERROR, ACE_TEXT ("ERROR: instance %u destroyed out of order!\n"),
                  variety_)); */
@@ -129,7 +127,7 @@ Test_Singleton::~Test_Singleton ()
 void
 testFailedServiceInit (int, ACE_TCHAR *[])
 {
-  static const ACE_TCHAR *refuse_svc =
+  static ACE_TCHAR const *refuse_svc =
 #if (ACE_USES_CLASSIC_SVC_CONF == 1)
     ACE_TEXT ("dynamic Refuses_Svc Service_Object * ")
     ACE_TEXT ("  Service_Config_DLL:_make_Refuses_Init() \"\"")
@@ -151,7 +149,7 @@ testFailedServiceInit (int, ACE_TCHAR *[])
     }
 
   // Try to find the service; it should not be there.
-  ACE_Service_Type const *svcp = nullptr;
+  ACE_Service_Type const *svcp {};
   if (-1 != ACE_Service_Repository::instance ()->find (ACE_TEXT ("Refuses_Svc"),
                                                        &svcp))
     {
@@ -162,18 +160,21 @@ testFailedServiceInit (int, ACE_TCHAR *[])
       ACE_TCHAR msg[1024];
       ACE_TCHAR *msgp = msg;
       if (svc_impl->info (&msgp, sizeof (msg) / sizeof (ACE_TCHAR)) > 0)
+      {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Refuses_Svc said: %s\n"), msg));
+      }
     }
   else
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("Repo reports no Refuses_Svc; correct.\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("Repo reports no Refuses_Svc; correct.\n")));
+    }
 }
-
 
 void
 testLoadingServiceConfFileAndProcessNo (int argc, ACE_TCHAR *argv[])
 {
-  u_int error0 = error;
+  u_int const error0 = error;
   ACE_ARGV new_argv;
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Starting testLoadingServiceConfFileAndProcessNo\n")));
@@ -190,17 +191,17 @@ testLoadingServiceConfFileAndProcessNo (int argc, ACE_TCHAR *argv[])
   //          generating this file on-the-fly from the UTF-8 encoded
   //          file by using functions like iconv(1) or iconv(3).
 #  if defined (ACE_WIN32)
-  const ACE_TCHAR svc_conf[] =
+  ACE_TCHAR const svc_conf[] =
     ACE_TEXT ("Service_Config_Test.UTF-16")
     ACE_TEXT (ACE_DEFAULT_SVC_CONF_EXT);
 #  else
-  const ACE_TCHAR svc_conf[] =
+  ACE_TCHAR const svc_conf[] =
     ACE_TEXT ("Service_Config_Test.WCHAR_T")
     ACE_TEXT (ACE_DEFAULT_SVC_CONF_EXT);
 #  endif /* ACE_WIN32 */
 #else
     // ASCII (UTF-8) encoded Service Configurator file.
-  const ACE_TCHAR svc_conf[] =
+  ACE_TCHAR const svc_conf[] =
     ACE_TEXT ("Service_Config_Test")
     ACE_TEXT (ACE_DEFAULT_SVC_CONF_EXT);
 #endif  /* ACE_USES_WCHAR */
@@ -269,11 +270,14 @@ testLoadingServiceConfFileAndProcessNo (int argc, ACE_TCHAR *argv[])
   ACE_Thread_Manager::instance ()->wait ();
 
   if (error == error0)
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT("testLoadingServiceConfFileAndProcessNo completed successfully\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT("testLoadingServiceConfFileAndProcessNo completed successfully\n")));
+    }
   else
+  {
     ACE_ERROR ((LM_ERROR, ACE_TEXT("testLoadingServiceConfFileAndProcessNo test failed\n")));
+  }
 }
-
 
 void
 testLoadingServiceConfFile (int argc, ACE_TCHAR *argv[])
@@ -292,17 +296,17 @@ testLoadingServiceConfFile (int argc, ACE_TCHAR *argv[])
   //          generating this file on-the-fly from the UTF-8 encoded
   //          file by using functions like iconv(1) or iconv(3).
 #  if defined (ACE_WIN32)
-  const ACE_TCHAR svc_conf[] =
+  ACE_TCHAR const svc_conf[] =
     ACE_TEXT ("Service_Config_Test.UTF-16")
     ACE_TEXT (ACE_DEFAULT_SVC_CONF_EXT);
 #  else
-  const ACE_TCHAR svc_conf[] =
+  ACE_TCHAR const svc_conf[] =
     ACE_TEXT ("Service_Config_Test.WCHAR_T")
     ACE_TEXT (ACE_DEFAULT_SVC_CONF_EXT);
 #  endif /* ACE_WIN32 */
 #else
     // ASCII (UTF-8) encoded Service Configurator file.
-  const ACE_TCHAR svc_conf[] =
+  ACE_TCHAR const svc_conf[] =
     ACE_TEXT ("Service_Config_Test")
     ACE_TEXT (ACE_DEFAULT_SVC_CONF_EXT);
 #endif  /* ACE_USES_WCHAR */
@@ -325,13 +329,17 @@ testLoadingServiceConfFile (int argc, ACE_TCHAR *argv[])
   if (daemon.open (new_argv.argc (), new_argv.argv ()) == -1)
     {
       if (errno == ENOENT)
-        ACE_DEBUG ((LM_WARNING,
-                    ACE_TEXT ("ACE_Service_Config::open: %p\n"),
-                    svc_conf));
+        {
+          ACE_DEBUG ((LM_WARNING,
+                      ACE_TEXT ("ACE_Service_Config::open: %p\n"),
+                      svc_conf));
+        }
       else
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("ACE_Service_Config::open: %p\n"),
-                    ACE_TEXT ("error")));
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("ACE_Service_Config::open: %p\n"),
+                      ACE_TEXT ("error")));
+        }
     }
 
   ACE_Time_Value tv (argc > 1 ? ACE_OS::atoi (argv[1]) : 2);
@@ -348,12 +356,11 @@ testLoadingServiceConfFile (int argc, ACE_TCHAR *argv[])
   ACE_Thread_Manager::instance ()->wait ();
 }
 
-
 // Loading and unloading the ACE logger service should not smash singletons.
 void
 testUnloadingACELoggingStrategy (int, ACE_TCHAR *[])
 {
-  static const ACE_TCHAR *load_logger =
+  static ACE_TCHAR const *load_logger =
 #if (ACE_USES_CLASSIC_SVC_CONF == 1)
     ACE_TEXT ("dynamic Logger Service_Object * ")
     ACE_TEXT ("  ACE:_make_ACE_Logging_Strategy() \"\"")
@@ -365,7 +372,7 @@ testUnloadingACELoggingStrategy (int, ACE_TCHAR *[])
 #endif /* (ACE_USES_CLASSIC_SVC_CONF == 1) */
     ;
 
-  static const ACE_TCHAR *unload_logger =
+  static ACE_TCHAR const *unload_logger =
 #if (ACE_USES_CLASSIC_SVC_CONF == 1)
     ACE_TEXT ("remove Logger")
 #else
@@ -377,10 +384,12 @@ testUnloadingACELoggingStrategy (int, ACE_TCHAR *[])
 
   // Ensure no errors are logged while searching for a valid ACE lib name;
   // these skew the scoreboard results.
-  u_long mask = ACE_LOG_MSG->priority_mask (ACE_Log_Msg::PROCESS);
+  u_long const mask = ACE_LOG_MSG->priority_mask (ACE_Log_Msg::PROCESS);
   ACE_LOG_MSG->priority_mask (mask & ~LM_ERROR, ACE_Log_Msg::PROCESS);
-  ACE_DEBUG ((LM_DEBUG, "Was %x, now %x\n", mask, mask & ~LM_ERROR));
-  int error_count = ACE_Service_Config::process_directive (load_logger);
+  ACE_DEBUG ((LM_DEBUG, "Was %Lu, now %Lu\n",
+              mask,
+              mask & ~LM_ERROR));
+  int const error_count = ACE_Service_Config::process_directive (load_logger);
   ACE_LOG_MSG->priority_mask (mask);
   if (error_count != 0)
     {
@@ -394,15 +403,17 @@ testUnloadingACELoggingStrategy (int, ACE_TCHAR *[])
 
   ACE_Reactor *r2 = ACE_Reactor::instance ();
   if (r1 != r2)
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Reactor before %@, after %@\n"), r1, r2));
+  {
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("Reactor before %@, after %@\n"),
+                static_cast<void *> (r1), static_cast<void *> (r2)));
+  }
 }
 
-
-// @brief The size of a repository is unlimited and can be exceeded
+/// @brief The size of a repository is unlimited and can be exceeded
 void
 testLimits (int , ACE_TCHAR *[])
 {
-  static const ACE_TCHAR *svc_desc1 =
+  static ACE_TCHAR const *svc_desc1 =
 #if (ACE_USES_CLASSIC_SVC_CONF == 1)
     ACE_TEXT ("dynamic Test_Object_1_More Service_Object * ")
     ACE_TEXT ("  Service_Config_DLL:_make_Service_Config_DLL() \"Test_Object_1_More\"")
@@ -413,7 +424,7 @@ testLimits (int , ACE_TCHAR *[])
 #endif /* (ACE_USES_CLASSIC_SVC_CONF == 1) */
     ;
 
-  static const ACE_TCHAR *svc_desc2 =
+  static ACE_TCHAR const *svc_desc2 =
 #if (ACE_USES_CLASSIC_SVC_CONF == 1)
     ACE_TEXT ("dynamic Test_Object_2_More Service_Object * ")
     ACE_TEXT ("  Service_Config_DLL:_make_Service_Config_DLL() \"Test_Object_2_More\"")
@@ -424,7 +435,7 @@ testLimits (int , ACE_TCHAR *[])
 #endif /* (ACE_USES_CLASSIC_SVC_CONF == 1) */
     ;
 
-  u_int error0 = error;
+  u_int const error0 = error;
 
   // Ensure enough room for one in a own, the repository can extend
   ACE_Service_Gestalt one (1, true);
@@ -454,7 +465,7 @@ testLimits (int , ACE_TCHAR *[])
     ACE_Service_Repository_Iterator sri (*one.current_service_repository (), false);
 
     size_t index = 0;
-    for (const ACE_Service_Type *sr;
+    for (ACE_Service_Type const *sr;
         sri.next (sr) != 0;
         sri.advance ())
       {
@@ -482,9 +493,13 @@ testLimits (int , ACE_TCHAR *[])
     }
 
   if (error == error0)
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Limits test completed successfully\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Limits test completed successfully\n")));
+    }
   else
+  {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Limits test failed\n")));
+  }
 }
 
 void
@@ -496,29 +511,29 @@ testrepository (int, ACE_TCHAR *[])
   ACE_Service_Type s1 (ACE_TEXT ("1"), nullptr, handle, false);
   ACE_Service_Type s2 (ACE_TEXT ("2"), nullptr, handle, false);
   ACE_Service_Type s3 (ACE_TEXT ("3"), nullptr, handle, false);
-  ACE_Service_Type* result = nullptr;
-  repository.insert (&s0);
+  ACE_Service_Type* result {};
+  repository.insert (std::addressof (s0));
   if (repository.current_size () != 1)
     {
       ++error;
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("Repository was wrong size %d\n"),
+                  ACE_TEXT ("Repository was wrong size %B\n"),
                   repository.current_size ()));
     }
-  repository.insert (&s1);
+  repository.insert (std::addressof (s1));
   if (repository.current_size () != 2)
     {
       ++error;
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("Repository was wrong size %d\n"),
+                  ACE_TEXT ("Repository was wrong size %B\n"),
                   repository.current_size ()));
     }
-  repository.insert (&s2);
+  repository.insert (std::addressof (s2));
   if (repository.current_size () != 3)
     {
       ++error;
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("Repository was wrong size %d\n"),
+                  ACE_TEXT ("Repository was wrong size %B\n"),
                   repository.current_size ()));
     }
   if (repository.remove (ACE_TEXT ("1"), &result) != 0)
@@ -531,7 +546,7 @@ testrepository (int, ACE_TCHAR *[])
     {
       ++error;
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("Repository was wrong size %d\n"),
+                  ACE_TEXT ("Repository was wrong size %B\n"),
                   repository.current_size ()));
     }
   if (repository.array ()[1] != nullptr)
@@ -541,12 +556,12 @@ testrepository (int, ACE_TCHAR *[])
                   ACE_TEXT ("Element 1 not zero\n"),
                   repository.current_size ()));
     }
-  repository.insert (&s3);
+  repository.insert (std::addressof (s3));
   if (repository.current_size () != 4)
     {
       ++error;
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("Repository was wrong size %d\n"),
+                  ACE_TEXT ("Repository was wrong size %B\n"),
                   repository.current_size ()));
     }
   repository.remove (ACE_TEXT ("0"), &result);
@@ -562,7 +577,7 @@ testrepository (int, ACE_TCHAR *[])
     {
       ++error;
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("Repository was wrong size %d\n"),
+                  ACE_TEXT ("Repository was wrong size %B\n"),
                   repository.current_size ()));
     }
   repository.close ();
@@ -570,12 +585,11 @@ testrepository (int, ACE_TCHAR *[])
     {
       ++error;
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("Repository was wrong size %d\n"),
+                  ACE_TEXT ("Repository was wrong size %B\n"),
                   repository.current_size ()));
     }
 }
 
-// @brief ??
 void
 testOrderlyInstantiation (int , ACE_TCHAR *[])
 {
@@ -606,7 +620,9 @@ extern "C" ACE_THR_FUNC_RETURN
 #  endif
 nonacethreadentry (void *args)
 {
-  ACE_Log_Msg::inherit_hook (nullptr, *(ACE_OS_Log_Msg_Attributes *)args);
+  ACE_Log_Msg::inherit_hook (
+    nullptr,
+    *static_cast<ACE_OS_Log_Msg_Attributes *> (args));
 
   if (ACE_Service_Config::instance()->find(ACE_TEXT("Test_Object_1_Thr")) != 0)
     {
@@ -616,9 +632,11 @@ nonacethreadentry (void *args)
       ++error;
     }
   else
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("In thr %t, located Test_Object_1_Thr ")
-                ACE_TEXT ("via ACE_Service_Config\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("In thr %t, located Test_Object_1_Thr ")
+                  ACE_TEXT ("via ACE_Service_Config\n")));
+    }
 
   if (0 != ACE_Service_Repository::instance()->find
       (ACE_TEXT("Test_Object_1_Thr")))
@@ -629,9 +647,11 @@ nonacethreadentry (void *args)
       ++error;
     }
   else
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("In thr %t, located Test_Object_1_Thr ")
-                ACE_TEXT ("via ACE_Service_Repository\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("In thr %t, located Test_Object_1_Thr ")
+                  ACE_TEXT ("via ACE_Service_Repository\n")));
+    }
 
   return ACE_THR_FUNC_RETURN_NULL;
 }
@@ -641,7 +661,7 @@ testNonACEThread ()
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Beginning non-ACE thread lookup test\n")));
 
-  static const ACE_TCHAR *svc_desc =
+  static ACE_TCHAR const *svc_desc =
 #if (ACE_USES_CLASSIC_SVC_CONF == 1)
     ACE_TEXT ("dynamic Test_Object_1_Thr Service_Object * ")
     ACE_TEXT ("  Service_Config_DLL:_make_Service_Config_DLL() \"Test_Object_1_Thr\"")
@@ -652,7 +672,7 @@ testNonACEThread ()
 #endif /* (ACE_USES_CLASSIC_SVC_CONF == 1) */
     ;
 
-  static const ACE_TCHAR *svc_remove =
+  static ACE_TCHAR const *svc_remove =
 #if (ACE_USES_CLASSIC_SVC_CONF == 1)
     ACE_TEXT ("remove Test_Object_1_Thr")
 #else
@@ -674,7 +694,7 @@ testNonACEThread ()
   ACE_OS_Log_Msg_Attributes log_msg_attrs;
   ACE_Log_Msg::init_hook (log_msg_attrs);
 
-  u_int errors_before = error;
+  u_int const errors_before = error;
 
 #if defined (ACE_HAS_WTHREADS)
   HANDLE thr_h = (HANDLE)_beginthreadex (0,
@@ -695,7 +715,7 @@ testNonACEThread ()
     }
 #elif defined (ACE_HAS_PTHREADS)
   pthread_t thr_id;
-  int status = pthread_create (&thr_id, nullptr, nonacethreadentry, &log_msg_attrs);
+  int const status = pthread_create (&thr_id, nullptr, nonacethreadentry, &log_msg_attrs);
   if (status != 0)
     {
       errno = status;
@@ -717,8 +737,10 @@ testNonACEThread ()
           ++error;
         }
       else
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("Main thr %t DOES find Test_Object_1_Thr\n")));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("Main thr %t DOES find Test_Object_1_Thr\n")));
+        }
     }
 
   if (-1 == ACE_Service_Config::process_directive (svc_remove))
@@ -754,7 +776,7 @@ run_main (int argc, ACE_TCHAR *argv[])
 #endif
   // Test with a large amount of threads to determine whether
   // TSS works correctly with non ACE threads
-  for (unsigned int i = 0 ; i < n_threads; i++)
+  for (unsigned int i = 0 ; i < n_threads; ++i)
     {
       testNonACEThread();
     }

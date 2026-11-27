@@ -1,13 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   Endpoint_Strategy.h
  *
  *  @author Sumedh Mungee <sumedh@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_AV_ENDPOINT_STRATEGY_H
 #define TAO_AV_ENDPOINT_STRATEGY_H
@@ -38,10 +33,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_AV_Export TAO_AV_Endpoint_Strategy
 {
 public:
-  /// Constructor
   TAO_AV_Endpoint_Strategy ();
 
-  /// Destructor
   virtual ~TAO_AV_Endpoint_Strategy ();
   TAO_AV_Endpoint_Strategy (TAO_AV_Endpoint_Strategy const &) = delete;
   TAO_AV_Endpoint_Strategy &operator= (TAO_AV_Endpoint_Strategy const &) = delete;
@@ -67,7 +60,6 @@ protected:
   AVStreams::VDev_var vdev_;
 };
 
-// ----------------------------------------------------------------------
 /**
  * @class TAO_AV_Endpoint_Process_Strategy
  * @brief Process-based strategy for creating endpoints.
@@ -79,9 +71,8 @@ class TAO_AV_Export TAO_AV_Endpoint_Process_Strategy
 public:
   /// Constructor. The process_options contain the name and arguments
   /// for the process to be created
-  TAO_AV_Endpoint_Process_Strategy (ACE_Process_Options *process_options);
+  explicit TAO_AV_Endpoint_Process_Strategy (ACE_Process_Options *process_options);
 
-  /// Destructor.
   ~TAO_AV_Endpoint_Process_Strategy () override;
   TAO_AV_Endpoint_Process_Strategy (TAO_AV_Endpoint_Process_Strategy const &) = delete;
   TAO_AV_Endpoint_Process_Strategy &operator= (TAO_AV_Endpoint_Process_Strategy const &) = delete;
@@ -111,17 +102,16 @@ protected:
   CosNaming::NamingContext_var naming_context_;
 
   /// Name and arguments for the process to be created
-  ACE_Process_Options *process_options_;
+  /// Non-owning process options supplied by the caller.
+  ACE_Process_Options *process_options_ {};
 
   /// name of this host used for resolving unique names.
   char host_[MAXHOSTNAMELEN];
 
   /// My child's process id.
-  pid_t pid_;
+  pid_t pid_ {-1};
 };
 
-
-// ----------------------------------------------------------------------
 
 /**
  * @class TAO_AV_Endpoint_Process_Strategy_A
@@ -131,10 +121,8 @@ class TAO_AV_Export TAO_AV_Endpoint_Process_Strategy_A
   : public TAO_AV_Endpoint_Process_Strategy
 {
 public:
-  /// Constructor
-  TAO_AV_Endpoint_Process_Strategy_A (ACE_Process_Options *process_options);
+  explicit TAO_AV_Endpoint_Process_Strategy_A (ACE_Process_Options *process_options);
 
-  /// Destructor.
   ~TAO_AV_Endpoint_Process_Strategy_A () override;
   TAO_AV_Endpoint_Process_Strategy_A (TAO_AV_Endpoint_Process_Strategy_A const &) = delete;
   TAO_AV_Endpoint_Process_Strategy_A &operator= (TAO_AV_Endpoint_Process_Strategy_A const &) = delete;
@@ -150,7 +138,6 @@ protected:
   int get_stream_endpoint () override;
 };
 
-// ----------------------------------------------------------------------
 
 /**
  * @class TAO_AV_Endpoint_Process_Strategy_B
@@ -160,10 +147,8 @@ class TAO_AV_Export TAO_AV_Endpoint_Process_Strategy_B
   : public TAO_AV_Endpoint_Process_Strategy
 {
 public:
-  /// Constructor
-  TAO_AV_Endpoint_Process_Strategy_B (ACE_Process_Options *process_options);
+  explicit TAO_AV_Endpoint_Process_Strategy_B (ACE_Process_Options *process_options);
 
-  /// Destructor.
   ~TAO_AV_Endpoint_Process_Strategy_B () override;
   TAO_AV_Endpoint_Process_Strategy_B (TAO_AV_Endpoint_Process_Strategy_B const &) = delete;
   TAO_AV_Endpoint_Process_Strategy_B &operator= (TAO_AV_Endpoint_Process_Strategy_B const &) = delete;
@@ -174,7 +159,6 @@ protected:
   /// Creates a "B" type stream endpoint, and a vdev
   int create_B (AVStreams::StreamEndPoint_B_ptr &stream_endpoint,
                 AVStreams::VDev_ptr &vdev) override;
-
 
   /// Gets the object reference of the "B" type streamendpoint.
   int get_stream_endpoint () override;

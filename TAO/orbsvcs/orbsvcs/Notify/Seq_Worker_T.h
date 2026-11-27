@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 /**
  *  @file Seq_Worker_T.h
  *
@@ -37,7 +35,6 @@ class TAO_Notify_Serv_Export TAO_Notify_Seq_Worker_T
   using SEQ_VAR = typename TYPE::SEQ_VAR;
 
 public:
-  /// Constructor
   TAO_Notify_Seq_Worker_T ();
 
   /// Create a SEQ
@@ -45,7 +42,7 @@ public:
 
 protected:
   /// TAO_ESF_Worker method
-  void work (TYPE* object);
+  void work (TYPE* object) override;
 
   /// The result
   SEQ_VAR seq_;

@@ -1,14 +1,9 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    SPIPE_Acceptor.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  *  @author Prashant Jain <pjain@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef ACE_SPIPE_ACCEPTOR_H
 #define ACE_SPIPE_ACCEPTOR_H
@@ -45,7 +40,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_SPIPE_Acceptor : public ACE_SPIPE
 {
 public:
-  /// Default constructor.
   ACE_SPIPE_Acceptor ();
 
   /// Initiate a passive-mode STREAM pipe listener.
@@ -64,7 +58,7 @@ public:
    * @param pipe_mode   Optional, ignored on non-Windows. The NT pipe
    *                    mode used when creating the pipe.
    */
-  ACE_SPIPE_Acceptor (const ACE_SPIPE_Addr &local_sap,
+  ACE_SPIPE_Acceptor (ACE_SPIPE_Addr const &local_sap,
                       int reuse_addr = 1,
                       int perms = ACE_DEFAULT_FILE_PERMS,
                       LPSECURITY_ATTRIBUTES sa = 0,
@@ -89,7 +83,7 @@ public:
    * @retval 0 for success.
    * @retval -1 for failure.
    */
-  int open (const ACE_SPIPE_Addr &local_sap,
+  int open (ACE_SPIPE_Addr const &local_sap,
             int reuse_addr = 1,
             int perms = ACE_DEFAULT_FILE_PERMS,
             LPSECURITY_ATTRIBUTES sa = 0,
@@ -101,7 +95,6 @@ public:
   /// Remove the underlying mounted pipe from the file system.
   int remove ();
 
-  // = Passive connection acceptance method.
   /**
    * Accept a new data transfer connection.
    *
@@ -110,6 +103,7 @@ public:
    * @param remote_addr    Optional, accepts the address of the peer.
    * @param timeout        0 means block forever, {0, 0} means poll.
    * @param restart        1 means "restart if interrupted."
+   * @param reset_new_handle Whether to reset the accepted handle before use.
    *
    * @retval 0 for success.
    * @retval -1 for failure.
@@ -120,9 +114,11 @@ public:
               bool restart = true,
               bool reset_new_handle = false);
 
-  // = Meta-type info
+  /// @name Peer types
+  /// @{
   using PEER_ADDR = ACE_SPIPE_Addr;
   using PEER_STREAM = ACE_SPIPE_Stream;
+  /// @}
 
   /// Dump the state of an object.
   void dump () const;
@@ -137,19 +133,19 @@ private:
 #if defined (ACE_HAS_WIN32_NAMED_PIPES)
   // On Windows, the SECURITY_ATTRIBUTES specified for the initial accept
   // operation is reused on all subsequent pipe instances as well.
-  LPSECURITY_ATTRIBUTES sa_;
+  LPSECURITY_ATTRIBUTES sa_ {};
 
   // On Windows, the pipe mode to create the pipe in.  This can be in
   // either a bytestream-oriented mode or a message-oriented mode.
   DWORD pipe_mode_;
 
-  // On Windows, the handle maintained in the ACE_IPC_SAP class is the
-  // event handle from event. The pipe handle is useless for telling
-  // when a pipe connect is done/ready, and it changes on each pipe
-  // acceptance, quite unlike other acceptor-type classes in ACE.
-  // This allows the get_handle()-obtained handle to be used for
-  // registering with the reactor (albeit for signal, not input)
-  // to tell when a pipe accept is done.
+  /// On Windows, the handle maintained in the ACE_IPC_SAP class is the
+  /// event handle from event. The pipe handle is useless for telling
+  /// when a pipe connect is done/ready, and it changes on each pipe
+  /// acceptance, quite unlike other acceptor-type classes in ACE.
+  /// This allows the get_handle()-obtained handle to be used for
+  /// registering with the reactor (albeit for signal, not input)
+  /// to tell when a pipe accept is done.
   ACE_OVERLAPPED   overlapped_;
   ACE_Manual_Event event_;
   ACE_HANDLE       pipe_handle_;

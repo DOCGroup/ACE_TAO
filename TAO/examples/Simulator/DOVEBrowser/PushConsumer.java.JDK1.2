@@ -1,19 +1,9 @@
-// ============================================================================
-//
-//
-// = FILENAME
-//    PushConsumer.java
-//
-// = AUTHOR
-//    Michael Kircher (mk1@cs.wustl.edu)
-//
-// = DESCRIPTION
-//    This is a Push Consumer which takes the data field of the
-//    event and updates with it a Data Handler.
-//
-//
-// ============================================================================
-
+/**
+ * @file PushConsumer.java.JDK1.2
+ * @author Michael Kircher (mk1@cs.wustl.edu)
+ * @brief This is a Push Consumer which takes the data field of the
+ * event and updates with it a Data Handler.
+ */
 
 public class PushConsumer extends RtecEventComm._PushConsumerImplBase
 {
@@ -46,14 +36,12 @@ public class PushConsumer extends RtecEventComm._PushConsumerImplBase
       dataHandler_ = dataHandler;
     }
 
-
   public void push (RtecEventComm.Event[] events)
     {
       if (total_received_ < 5)
 	System.out.println ("Demo Consumer: Received an event! ->Number: " + total_received_);
       else if (total_received_ == 5)
 	System.out.println ("Demo Consumer: Everything is fine. Going to be mute.");
-
 
       if (events.length == 0)
 	{
@@ -165,13 +153,4 @@ public class PushConsumer extends RtecEventComm._PushConsumerImplBase
 	}
     }
 }
-
-
-
-
-
-
-
-
-
 

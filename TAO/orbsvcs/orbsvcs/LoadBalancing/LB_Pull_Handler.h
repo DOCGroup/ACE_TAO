@@ -1,13 +1,8 @@
-// -*- C++ -*-
-
-//=======================================================================
 /**
  *  @file    LB_Pull_Handler.h
  *
  *  @author  Ossama Othman <ossama@uci.edu>
  */
-//=======================================================================
-
 
 #ifndef TAO_LB_PULL_HANDLER_H
 #define TAO_LB_PULL_HANDLER_H
@@ -41,7 +36,6 @@ class TAO_LB_LoadManager;
 class TAO_LB_Pull_Handler : public ACE_Event_Handler
 {
 public:
-  /// Constructor
   TAO_LB_Pull_Handler ();
 
   /// Receive the timeout event.

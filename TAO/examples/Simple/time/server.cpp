@@ -14,23 +14,25 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   try
     {
       if (server.init ("Time", argc, argv) == -1)
-        return 1;
+        {
+          return 1;
+        }
       else
         {
           server.run ();
         }
     }
-  catch (const CORBA::UserException& userex)
+  catch (CORBA::UserException const &userex)
     {
       userex._tao_print_exception ("User Exception in main");
       return 1;
     }
-  catch (const CORBA::SystemException& sysex)
+  catch (CORBA::SystemException const &sysex)
     {
       sysex._tao_print_exception ("System Exception in main");
       return 1;
     }
-  catch (const CORBA::Exception &e)
+  catch (CORBA::Exception const &e)
     {
       e._tao_print_exception ("CORBA exception in main");
       return 1;

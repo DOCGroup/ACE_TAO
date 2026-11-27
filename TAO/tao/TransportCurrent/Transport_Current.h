@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #ifndef TRANSPORT_CURRENT_H
 #define TRANSPORT_CURRENT_H
 

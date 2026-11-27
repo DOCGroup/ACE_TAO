@@ -4,7 +4,7 @@
 #include "ace/OS_NS_unistd.h"
 
 int client_num = 0;
-ACE_TCHAR *server_ior = 0;
+ACE_TCHAR *server_ior {};
 bool expect_transient = false;
 
 int
@@ -50,7 +50,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
 
       if (parse_args (argc, argv) != 0)
+      {
         return 1;
+      }
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t|%T) Client %d sending request to %C\n"),
@@ -67,7 +69,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                       ACE_TEXT ("(%P|%t|%T) Client %d received reply from server %d\n"),
                       client_num, n));
         }
-      catch (const CORBA::TRANSIENT &)
+      catch (CORBA::TRANSIENT const &)
         {
           if (expect_transient)
             {
@@ -85,7 +87,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
       return 0;
     }
-  catch(const CORBA::Exception& ex)
+  catch(CORBA::Exception const & ex)
     {
       ex._tao_print_exception (ACE_TEXT ("client:"));
     }

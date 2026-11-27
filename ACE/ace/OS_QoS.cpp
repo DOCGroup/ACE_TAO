@@ -1,14 +1,8 @@
-//=============================================================================
-///**
-// *  @file   OS_QoS.cpp
-// *
-// *
-// *
-// *  @brief  Contains OS specific data structures for QoS networking.
-// *
-// *  @author Craig Rodrigues  <crodrigu@bbn.com>
-// */
-//=============================================================================
+/**
+ * @file OS_QoS.cpp
+ * @brief Contains OS specific data structures for QoS networking.
+ * @author Craig Rodrigues <crodrigu@bbn.com>
+ */
 
 #include "ace/OS_QoS.h"
 #include "ace/OS_NS_errno.h"
@@ -301,13 +295,7 @@ ACE_Flow_Spec::priority (int p)
 }
 
 ACE_QoS::ACE_QoS ()
-#if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
-#else
-  : sending_flowspec_ (nullptr),
-    receiving_flowspec_ (nullptr)
-#endif /* ACE_HAS_WINSOCK2 */
-{
-}
+= default;
 
 ACE_Flow_Spec*
 ACE_QoS::sending_flowspec () const

@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    big_union.h
  *
@@ -7,25 +5,19 @@
  *
  *  @author   Aniruddha Gokhale
  */
-//=============================================================================
-
 
 #ifndef PARAM_TEST_BIG_UNION_H
 #define PARAM_TEST_BIG_UNION_H
 
 #include "param_testC.h"
 
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-//                        test Anys
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+/// test Anys
 class Test_Big_Union
 {
 public:
-  /// ctor
   Test_Big_Union ();
 
-  /// dtor
-  ~Test_Big_Union ();
+  ~Test_Big_Union () = default;
 
   enum {
     BIG_UNION_N_BRANCHES = 12
@@ -35,7 +27,7 @@ public:
   int run_sii_test (Param_Test_ptr objref);
 
   /// return operation name
-  const char *opname () const;
+  char const *opname () const;
 
   /// set values for parameters
   int init_parameters (Param_Test_ptr objref);
@@ -57,7 +49,7 @@ public:
 
 private:
   /// operation name
-  char *opname_;
+  char const *opname_;
 
   /// Coffee object used to test Big_Union with object.
   Coffee_var cobj_;

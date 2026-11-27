@@ -1,12 +1,8 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
  *  @file    Asynch_Acceptor.h
  *
  *  @author Irfan Pyarali (irfan@cs.wustl.edu)
  */
-//=============================================================================
 
 #ifndef ACE_ASYNCH_ACCEPTOR_H
 #define ACE_ASYNCH_ACCEPTOR_H
@@ -45,7 +41,7 @@ class ACE_Asynch_Acceptor : public ACE_Handler
 {
 public:
   /// A do nothing constructor.
-  ACE_Asynch_Acceptor ();
+  ACE_Asynch_Acceptor () = default;
 
   /// Virtual destruction
   ~ACE_Asynch_Acceptor () override;
@@ -104,7 +100,7 @@ public:
    * @see ACE_INET_Addr
    * @see ACE_Service_Handler
    */
-  virtual int open (const ACE_INET_Addr &address,
+  virtual int open (ACE_INET_Addr const &address,
                     size_t bytes_to_read = 0,
                     bool pass_addresses = false,
                     int backlog = ACE_DEFAULT_ASYNCH_BACKLOG,
@@ -130,7 +126,7 @@ public:
    * You need only call this method if the @a reissue_accept argument
    * passed to @c open() was 0.
    */
-  virtual int accept (size_t bytes_to_read = 0, const void *act = nullptr);
+  virtual int accept (size_t bytes_to_read = 0, void const *act = nullptr);
 
   /**
    * Cancels all pending accepts operations issued by this object.
@@ -160,26 +156,25 @@ public:
    *              the service will not be opened.
    * @retval  0   Service opening will proceeed.
    */
-  virtual int validate_connection (const ACE_Asynch_Accept::Result& result,
-                                   const ACE_INET_Addr &remote,
-                                   const ACE_INET_Addr& local);
+  virtual int validate_connection (ACE_Asynch_Accept::Result const & result,
+                                   ACE_INET_Addr const &remote,
+                                   ACE_INET_Addr const & local);
 
   /**
    * Template method for deciding whether to reissue accept.
    *
    * This hook method is called after each accept completes to decide if
-   * another accept should be initiated. If the method returns a non-zero
-   * value, another accept is initiated.
+   * another accept should be initiated. If the method returns true, another
+   * accept is initiated.
    *
    * The default implementation always returns the value passed as the
    * @c open() method's @a reissue_accept argument. That value can also
    * be changed using the @c reissue_accept() method.
    */
-  virtual int should_reissue_accept ();
+  virtual bool should_reissue_accept ();
 
-  //
-  // These are low level tweaking methods
-  //
+  /// @name Low-level acceptor options
+  /// @{
 
   /// Get flag that indicates if parsing and passing of addresses to
   /// the service_handler is necessary.
@@ -197,21 +192,22 @@ public:
 
   /// Get flag that indicates if a new accept should be reissued when a accept
   /// completes.
-  virtual int reissue_accept () const;
+  virtual bool reissue_accept () const;
 
   /// Set flag that indicates if a new accept should be reissued when a accept
   /// completes.
-  virtual void reissue_accept (int new_value);
+  virtual void reissue_accept (bool new_value);
 
-  /// Get bytes to be read with the <accept> call.
+  /// Get bytes to be read with the @c accept call.
   virtual size_t bytes_to_read () const;
 
-  /// Set bytes to be read with the <accept> call.
+  /// Set bytes to be read with the @c accept call.
   virtual void bytes_to_read (size_t new_value);
+  /// @}
 
 protected:
   /// This is called when an outstanding accept completes.
-  void handle_accept (const ACE_Asynch_Accept::Result &result) override;
+  void handle_accept (ACE_Asynch_Accept::Result const &result) override;
 
   /// Return the listen handle.
   ACE_HANDLE handle () const override;
@@ -219,7 +215,7 @@ protected:
   void handle (ACE_HANDLE h) override;
 
   /// This parses the address from read buffer.
-  void parse_address (const ACE_Asynch_Accept::Result &result,
+  void parse_address (ACE_Asynch_Accept::Result const &result,
                       ACE_INET_Addr &remote_address,
                       ACE_INET_Addr &local_address);
 
@@ -235,27 +231,27 @@ protected:
 
   /// Address family used to open this object. Obtained from @a address passed
   /// to @c open().
-  int addr_family_;
+  int addr_family_ {};
 
 private:
   /// Handle used to listen for new connections.
-  ACE_HANDLE listen_handle_;
+  ACE_HANDLE listen_handle_ {ACE_INVALID_HANDLE};
 
   /// Asynch_Accept used to make life easier :-)
   ACE_Asynch_Accept asynch_accept_;
 
   /// Flag that indicates if parsing of addresses is necessary.
-  bool pass_addresses_;
+  bool pass_addresses_ {};
 
   /// Flag that indicates if address validation is required.
-  bool validate_new_connection_;
+  bool validate_new_connection_ {};
 
   /// Flag that indicates if a new accept should be reissued when a
   /// accept completes.
-  int reissue_accept_;
+  bool reissue_accept_ {true};
 
-  /// Bytes to be read with the <accept> call.
-  size_t bytes_to_read_;
+  /// Bytes to be read with the @c accept call.
+  size_t bytes_to_read_ {};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

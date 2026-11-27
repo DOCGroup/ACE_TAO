@@ -4,51 +4,44 @@
 #include "ace/Argv_Type_Converter.h"
 #include "ace/OS_NS_unistd.h"
 #include "tao/TAO_Singleton_Manager.h"
+#include <memory>
 
+DllORB::DllORB () = default;
 
-DllORB::DllORB ()
- : failPrePostInit_ (3),
-   mp_barrier_ (0),
-   mv_orb_ (),
-   mv_rootPOA_ ()
-{
-}
-
-DllORB::~DllORB ()
-{
-  delete mp_barrier_;
-}
+DllORB::~DllORB () = default;
 
 int
 DllORB::init (int argc, ACE_TCHAR *argv[])
 {
-  int threadCnt = 1;
+  int threadCnt { 1 };
 
   try
     {
       ACE_Arg_Shifter as (argc, argv);
-      const ACE_TCHAR *currentArg = 0;
+      ACE_TCHAR const* currentArg {};
       while (as.is_anything_left ())
         {
           if ((currentArg = as.get_the_parameter (ACE_TEXT ("-NumThreads"))))
             {
               int num = ACE_OS::atoi (currentArg);
               if (num >= 1)
+              {
                 threadCnt = num;
+              }
               as.consume_arg ();
             }
         else
+        {
           as.ignore_arg ();
+        }
         }
 
       if (failPrePostInit_ < 3)
         {
           ACE_DEBUG ((LM_INFO,
                       ACE_TEXT ("Pre-ORB initialization ...\n")));
-          // -----------------------------------------------------------------
           // Pre-ORB initialization steps necessary for proper DLL ORB
           // support.
-          // -----------------------------------------------------------------
           // Make sure TAO's singleton manager is initialized, and set to not
           // register itself with the ACE_Object_Manager since it is under the
           // control of the Service Configurator.  If we register with the
@@ -56,7 +49,7 @@ DllORB::init (int argc, ACE_TCHAR *argv[])
           // (dangling) references to instances of objects created by this
           // module and destroyed by this object when it is dynamically
           // unloaded.
-          int register_with_object_manager = 0;
+          constexpr int register_with_object_manager {};
           TAO_Singleton_Manager * p_tsm = TAO_Singleton_Manager::instance ();
           int result = p_tsm->init (register_with_object_manager);
 
@@ -113,7 +106,7 @@ DllORB::init (int argc, ACE_TCHAR *argv[])
 
       mv_poaManager_->activate ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
   {
     ex._tao_print_exception ("DllORB::init: ");
     return -1;
@@ -124,7 +117,7 @@ DllORB::init (int argc, ACE_TCHAR *argv[])
     return -1;
   }
 
-  mp_barrier_ = new ACE_Thread_Barrier (threadCnt + 1);
+  mp_barrier_ = std::make_unique<ACE_Thread_Barrier> (threadCnt + 1);
 
   this->activate (THR_NEW_LWP|THR_JOINABLE|THR_INHERIT_SCHED, threadCnt);
   mp_barrier_->wait ();
@@ -132,13 +125,12 @@ DllORB::init (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-
 int
 DllORB::fini ()
 {
   try
     {
-      mv_poaManager_->deactivate (1, 1);
+      mv_poaManager_->deactivate (true, true);
       mv_poaManager_ = PortableServer::POAManager::_nil ();
 
       // attempt to protect against sporadic BAD_INV_ORDER exceptions
@@ -146,7 +138,7 @@ DllORB::fini ()
 
       mv_orb_->shutdown (true);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("DllORB::fini: ");
       return -1;
@@ -160,15 +152,14 @@ DllORB::fini ()
   // wait for our threads to finish
   this->wait ();
 
-  delete mp_barrier_;
-  mp_barrier_ = 0;
+  mp_barrier_.reset ();
 
   try
     {
       mv_orb_->destroy ();
       mv_orb_ = CORBA::ORB::_nil ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return -1;
@@ -176,10 +167,8 @@ DllORB::fini ()
 
   if (failPrePostInit_ < 3)
     {
-      // -----------------------------------------------------------------
       // Post-ORB finalization steps necessary for proper DLL ORB
       // support.
-      // -----------------------------------------------------------------
       // Explicitly clean up singletons created by TAO before
       // unloading this module.
       TAO_Singleton_Manager * p_tsm = TAO_Singleton_Manager::instance ();
@@ -213,18 +202,17 @@ DllORB::fini ()
   return 0;
 }
 
-
 int DllORB::svc ()
 {
   mp_barrier_->wait ();
 
-  int result = 0;
+  int result {};
 
   try
     {
       mv_orb_->run ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("DllORB::svc: ");
       result = 1;
@@ -237,6 +225,5 @@ int DllORB::svc ()
 
   return result;
 }
-
 
 ACE_FACTORY_DEFINE (bug2926, DllORB)

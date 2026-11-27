@@ -1,18 +1,14 @@
-
-//=============================================================================
 /**
  *  @file    SOCK_Test.cpp
  *
- *   This is a test of the <ACE_SOCK_Acceptor> and
- *   <ACE_SOCK_Connector> classes. The test forks two processes or
+ *   This is a test of the @c ACE_SOCK_Acceptor and
+ *   @c ACE_SOCK_Connector classes. The test forks two processes or
  *   spawns two threads (depending upon the platform) and then
  *   executes client and server allowing them to connect and
  *   exchange data.
  *
  *  @author Prashant Jain <pjain@cs.wustl.edu> and Doug Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
-
 
 #include "test_config.h"
 #include "ace/OS_NS_unistd.h"
@@ -24,26 +20,30 @@
 #include "ace/SOCK_Acceptor.h"
 #include "ace/Handle_Set.h"
 
+#include <memory>
 
 static const char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
 
-void *
+ACE_THR_FUNC_RETURN
 client (void *arg)
 {
-  ACE_INET_Addr *remote_addr = (ACE_INET_Addr *) arg;
+  ACE_INET_Addr *remote_addr = static_cast<ACE_INET_Addr *> (arg);
   ACE_INET_Addr server_addr (remote_addr->get_port_number (), ACE_LOCALHOST);
   ACE_SOCK_Stream cli_stream;
   ACE_SOCK_Connector con;
+  ACE_Time_Value const nonblocking_timeout (ACE_Time_Value::zero);
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) starting non-blocking connect\n")));
   // Initiate timed, non-blocking connection with server.
 
   // Attempt a non-blocking connect to the server.
   if (con.connect (cli_stream, server_addr,
-                   (ACE_Time_Value *) &ACE_Time_Value::zero) == -1)
+                   &nonblocking_timeout) == -1)
     {
       if (errno != EWOULDBLOCK)
+      {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("connection failed")));
+      }
 
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) starting timed connect\n")));
 
@@ -51,73 +51,101 @@ client (void *arg)
       // and wait up to ACE_DEFAULT_TIMEOUT seconds for it to complete.
       ACE_Time_Value tv (ACE_DEFAULT_TIMEOUT);
 
-      if (con.complete (cli_stream, &server_addr, &tv) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("connection failed")), 0);
+      if (con.complete (cli_stream, &server_addr, std::addressof (tv)) == -1)
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("(%P|%t) %p\n"),
+                      ACE_TEXT ("connection failed")));
+          return ACE_THR_FUNC_RETURN_NULL;
+        }
       else
-        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) connected to %C\n"),
-                    server_addr.get_host_name ()));
+        {
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) connected to %C\n"),
+                      server_addr.get_host_name ()));
+        }
     }
 
   if (cli_stream.disable (ACE_NONBLOCK) == -1)
+  {
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("disable")));
+  }
 
   // Test Bug 3606
-  const ACE_Time_Value def_timeout (ACE_DEFAULT_TIMEOUT);
+  ACE_Time_Value const def_timeout (ACE_DEFAULT_TIMEOUT);
   ACE_Time_Value tv (def_timeout);
-  int result = ACE::handle_ready (cli_stream.get_handle (), &tv,
+  int const result = ACE::handle_ready (cli_stream.get_handle (), std::addressof (tv),
                                   true, // read_ready
                                   true, // write_ready
                                   false);
   // we expect the handle to be at least write_ready since it is freshly connected.
   if (result == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("ACE::handle_ready")), 0);
+  {
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("ACE::handle_ready")));
+    return ACE_THR_FUNC_RETURN_NULL;
+  }
 
   // Send data to server (correctly handles "incomplete writes").
-  for (const char *c = ACE_ALPHABET; *c != '\0'; c++)
-    if (cli_stream.send_n (c, 1) == -1)
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("send_n")));
+  for (char const *c = ACE_ALPHABET; *c != '\0'; ++c)
+    {
+      if (cli_stream.send_n (c, 1) == -1)
+        {
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("send_n")));
+        }
+    }
 
   // Explicitly close the writer-side of the connection.
   if (cli_stream.close_writer () == -1)
+  {
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("close_writer")));
+  }
 
   char buf[1];
 
   // Wait for handshake with server.
   if (cli_stream.recv_n (buf, 1) != 1)
+  {
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("recv_n")));
+  }
 
   // Close the connection completely.
   if (cli_stream.close () == -1)
+  {
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("close")));
+  }
 
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
-void *
+ACE_THR_FUNC_RETURN
 server (void *arg)
 {
-  ACE_SOCK_Acceptor *peer_acceptor = (ACE_SOCK_Acceptor *) arg;
+  ACE_SOCK_Acceptor *peer_acceptor = static_cast<ACE_SOCK_Acceptor *> (arg);
 
   if (peer_acceptor->enable (ACE_NONBLOCK) == -1)
+  {
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("enable")));
+  }
 
   // Keep these objects out here to prevent excessive constructor
   // calls...
   ACE_SOCK_Stream new_stream;
   ACE_INET_Addr cli_addr;
-  const ACE_Time_Value def_timeout (ACE_DEFAULT_TIMEOUT);
+  ACE_Time_Value const def_timeout (ACE_DEFAULT_TIMEOUT);
   ACE_Time_Value tv (def_timeout);
 
   char buf[BUFSIZ];
-  const char *t = ACE_ALPHABET;
+  char const *t = ACE_ALPHABET;
 
-  int result = ACE::handle_read_ready (peer_acceptor->get_handle (), &tv);
+  int result = ACE::handle_read_ready (peer_acceptor->get_handle (),
+                                       std::addressof (tv));
 
   ACE_TEST_ASSERT (tv == def_timeout);
 
   if (result == -1)
-    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("handle_read_ready")), 0);
+  {
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("handle_read_ready")));
+    return ACE_THR_FUNC_RETURN_NULL;
+  }
 
   // Create a new ACE_SOCK_Stream endpoint (note automatic restart
   // if errno == EINTR).
@@ -129,18 +157,26 @@ server (void *arg)
 
       // Enable non-blocking I/O.
       if (new_stream.enable (ACE_NONBLOCK) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("enable")), 0);
+      {
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("enable")));
+        return ACE_THR_FUNC_RETURN_NULL;
+      }
 
       // Read data from client (terminate on error).
       for (ssize_t r_bytes; ;)
         {
           if (ACE::handle_read_ready (new_stream.get_handle (), nullptr) == -1)
-            ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("handle_read_ready")), 0);
+          {
+            ACE_ERROR ((LM_ERROR,
+                        ACE_TEXT ("(%P|%t) %p\n"),
+                        ACE_TEXT ("handle_read_ready")));
+            return ACE_THR_FUNC_RETURN_NULL;
+          }
 
           while ((r_bytes = new_stream.recv (buf, 1)) > 0)
             {
               ACE_TEST_ASSERT (*t == buf[0]);
-              t++;
+              ++t;
             }
 
           if (r_bytes == 0)
@@ -150,19 +186,28 @@ server (void *arg)
 
               // Handshake back with client.
               if (new_stream.send_n ("", 1) != 1)
+              {
                 ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("send_n")));
+              }
 
               // Close endpoint.
               if (new_stream.close () == -1)
+              {
                 ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("close")));
-              return nullptr;
+              }
+              return ACE_THR_FUNC_RETURN_NULL;
             }
           else if (r_bytes == -1)
             {
               if (errno == EAGAIN || errno == EWOULDBLOCK)
-                ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) no input available, going back to reading\n")));
+                {
+                  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) no input available, going back to reading\n")));
+                }
               else
-                ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("recv_n")), 0);
+              {
+                ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("recv_n")));
+                return ACE_THR_FUNC_RETURN_NULL;
+              }
             }
         }
     }
@@ -170,12 +215,16 @@ server (void *arg)
   if (result == -1)
     {
       if (errno == EWOULDBLOCK)
-        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) no connections available, shutting down\n")));
+        {
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) no connections available, shutting down\n")));
+        }
       else
+      {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("accept")));
+      }
     }
 
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 void
@@ -190,7 +239,9 @@ spawn ()
   // Bind listener to any port and then find out what the port was.
   if (peer_acceptor.open (ACE_Addr::sap_any) == -1
       || peer_acceptor.get_local_addr (server_addr) == -1)
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("open")));
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("open")));
+    }
   else
     {
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) starting server at port %d\n"),
@@ -206,17 +257,17 @@ spawn ()
                       1));
           ACE_OS::abort ();
         case 0:
-          client (&server_addr);
+          client (std::addressof (server_addr));
           ACE_OS::exit (0);
           /* NOTREACHED */
         default:
-          server ((void *) &peer_acceptor);
+          server (std::addressof (peer_acceptor));
           ACE_OS::wait ();
         }
 #elif defined (ACE_HAS_THREADS)
       if (ACE_Thread_Manager::instance ()->spawn
-          (ACE_THR_FUNC (server),
-           (void *) &peer_acceptor,
+          (server,
+           &peer_acceptor,
            THR_NEW_LWP | THR_DETACHED) == -1)
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("(%P|%t) %p\n%a"),
@@ -224,8 +275,8 @@ spawn ()
                     1));
 
       if (ACE_Thread_Manager::instance ()->spawn
-          (ACE_THR_FUNC (client),
-           (void *) &server_addr,
+          (client,
+           &server_addr,
            THR_NEW_LWP | THR_DETACHED) == -1)
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("(%P|%t) %p\n%a"),

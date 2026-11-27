@@ -1,13 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Codeset.h
  *
  *  @author Carlos O'Ryan <coryan@uci.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_CODESET_H
 #define TAO_CODESET_H
@@ -27,6 +22,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Codeset_Export TAO_Codeset_Initializer
 {
 public:
+  TAO_Codeset_Initializer () = delete;
+
   /// Used to force the initialization of the ORB code.
   static int init ();
 };

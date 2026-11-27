@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    ORT_Adapter.h
  *
  *  @author  Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-//=============================================================================
 #ifndef TAO_ORT_ADAPTER_H
 #define TAO_ORT_ADAPTER_H
 
@@ -20,7 +16,7 @@
 
 #include "tao/PI_ForwardC.h"
 #include "ace/Service_Object.h"
-#include "ace/Array_Base.h"
+#include <vector>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -57,8 +53,8 @@ namespace TAO
   {
   public:
     /// Activate the ORT library
-    virtual int activate (const char *server_id,
-                          const char *orb_id,
+    virtual int activate (char const *server_id,
+                          char const *orb_id,
                           PortableInterceptor::AdapterName *,
                           PortableServer::POA_ptr poa) = 0;
 
@@ -84,14 +80,14 @@ namespace TAO
      * Methods required by the
      * PortableInterceptor::ObjectReferenceFactory ValueType.
      */
-    //@{
+    /// @{
     virtual CORBA::Object_ptr make_object (
-      const char * repository_id,
-      const PortableInterceptor::ObjectId & id) = 0;
-    //@}
+      char const *repository_id,
+      PortableInterceptor::ObjectId const & id) = 0;
+    /// @}
   };
 
-  using ORT_Array = ACE_Array_Base<PortableInterceptor::ObjectReferenceTemplate*>;
+  using ORT_Array = std::vector<PortableInterceptor::ObjectReferenceTemplate*>;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

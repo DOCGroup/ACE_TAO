@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 /**
  *  @file   EC_Dispatching.h
  *
@@ -44,7 +42,6 @@ class TAO_EC_ProxyPushSupplier;
 class TAO_RTEvent_Serv_Export TAO_EC_Dispatching
 {
 public:
-  /// Destructor...
   virtual ~TAO_EC_Dispatching ();
 
   /// Initialize all the data structures, activate any internal threads,
@@ -65,7 +62,7 @@ public:
    */
   virtual void push (TAO_EC_ProxyPushSupplier *proxy,
                      RtecEventComm::PushConsumer_ptr consumer,
-                     const RtecEventComm::EventSet &event,
+                     RtecEventComm::EventSet const &event,
                      TAO_EC_QOS_Info &qos_info) = 0;
   virtual void push_nocopy (TAO_EC_ProxyPushSupplier *proxy,
                             RtecEventComm::PushConsumer_ptr consumer,

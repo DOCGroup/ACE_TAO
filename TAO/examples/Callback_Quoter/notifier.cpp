@@ -13,18 +13,20 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       int rc = notifier.init (argc, argv);
 
       if (rc == -1)
-        return 1;
+        {
+          return 1;
+        }
       else
         {
           notifier.run ();
         }
     }
-  catch (const CORBA::SystemException& sysex)
+  catch (CORBA::SystemException const &sysex)
     {
       sysex._tao_print_exception ("System Exception");
       return -1;
     }
-  catch (const CORBA::UserException& userex)
+  catch (CORBA::UserException const &userex)
     {
       userex._tao_print_exception ("User Exception");
       return -1;

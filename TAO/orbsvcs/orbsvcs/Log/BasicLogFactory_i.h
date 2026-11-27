@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   BasicLogFactory_i.h
  *
@@ -10,7 +7,6 @@
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  *  @author David A. Hanvey <d.hanvey@qub.ac.uk>
  */
-//=============================================================================
 
 #ifndef TAO_TLS_BASICLOGFACTORY_I_H
 #define TAO_TLS_BASICLOGFACTORY_I_H
@@ -46,13 +42,12 @@ class TAO_Log_Serv_Export TAO_BasicLogFactory_i :
   public TAO_LogMgr_i
 {
 public:
-  //= Initialization and termination code.
-
-  /// Constructor.
+  /// @name Initialization and termination
+  /// @{
   TAO_BasicLogFactory_i ();
 
-  /// Destructor.
   ~TAO_BasicLogFactory_i () override;
+  /// @}
 
   /// Activate this servant with the ORB and POA passed in.
   DsLogAdmin::BasicLogFactory_ptr
@@ -82,7 +77,7 @@ private:
   TAO_BasicLogFactory_i &operator= (TAO_BasicLogFactory_i &&) = delete;
 
 protected:
-  /// Our object ref. after <active>ation.
+  /// Our object reference after activation.
   DsLogAdmin::LogMgr_var        log_mgr_;
 };
 

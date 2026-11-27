@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 #ifndef ACE_ASYNCH_ACCEPTOR_C
 #define ACE_ASYNCH_ACCEPTOR_C
 
@@ -20,18 +19,9 @@
 #include "ace/SOCK_Stream.h"
 #include "ace/Sock_Connect.h"
 
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+#include <memory>
 
-template <class HANDLER>
-ACE_Asynch_Acceptor<HANDLER>::ACE_Asynch_Acceptor ()
-  : addr_family_ (0),
-    listen_handle_ (ACE_INVALID_HANDLE),
-    pass_addresses_ (false),
-    validate_new_connection_ (false),
-    reissue_accept_ (1),
-    bytes_to_read_ (0)
-{
-}
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class HANDLER>
 ACE_Asynch_Acceptor<HANDLER>::~ACE_Asynch_Acceptor ()
@@ -45,7 +35,7 @@ ACE_Asynch_Acceptor<HANDLER>::~ACE_Asynch_Acceptor ()
 }
 
 template <class HANDLER> int
-ACE_Asynch_Acceptor<HANDLER>::open (const ACE_INET_Addr &address,
+ACE_Asynch_Acceptor<HANDLER>::open (ACE_INET_Addr const &address,
                                     size_t bytes_to_read,
                                     bool pass_addresses,
                                     int backlog,
@@ -67,14 +57,16 @@ ACE_Asynch_Acceptor<HANDLER>::open (const ACE_INET_Addr &address,
   // Create the listener socket
   this->listen_handle_ = ACE_OS::socket (address.get_type (), SOCK_STREAM, 0);
   if (this->listen_handle_ == ACE_INVALID_HANDLE)
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("ACE_OS::socket")),
-                      -1);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                            ACE_TEXT ("%p\n"),
+                            ACE_TEXT ("ACE_OS::socket")),
+                           -1);
+    }
   // Initialize the ACE_Asynch_Accept
   if (this->asynch_accept_.open (*this,
                                  this->listen_handle_,
-                                 0,
+                                 nullptr,
                                  this->proactor ()) == -1)
     {
       ACE_Errno_Guard g (errno);
@@ -93,7 +85,8 @@ ACE_Asynch_Acceptor<HANDLER>::open (const ACE_INET_Addr &address,
       if (ACE_OS::setsockopt (this->listen_handle_,
                               SOL_SOCKET,
                               SO_REUSEADDR,
-                              (const char*) &one,
+                              reinterpret_cast<char const *> (
+                                std::addressof (one)),
                               sizeof one) == -1)
         {
           ACE_Errno_Guard g (errno);
@@ -107,7 +100,7 @@ ACE_Asynch_Acceptor<HANDLER>::open (const ACE_INET_Addr &address,
     }
 
   // If port is not specified, bind to any port.
-  static ACE_INET_Addr sa (ACE_sap_any_cast (const ACE_INET_Addr &));
+  static ACE_INET_Addr sa (ACE_sap_any_cast (ACE_INET_Addr const &));
 
   if (address == sa &&
       ACE::bind_port (this->listen_handle_,
@@ -151,9 +144,11 @@ ACE_Asynch_Acceptor<HANDLER>::open (const ACE_INET_Addr &address,
 
   // For the number of <intial_accepts>.
   if (number_of_initial_accepts == -1)
-    number_of_initial_accepts = backlog;
+    {
+      number_of_initial_accepts = backlog;
+    }
 
-  for (int i = 0; i < number_of_initial_accepts; i++)
+  for (int i = 0; i < number_of_initial_accepts; ++i)
     {
       // Initiate accepts.
       if (this->accept (bytes_to_read) == -1)
@@ -182,12 +177,14 @@ ACE_Asynch_Acceptor<HANDLER>::set_handle (ACE_HANDLE listen_handle)
   // Reinitialize the ACE_Asynch_Accept
   if (this->asynch_accept_.open (*this,
                                  this->listen_handle_,
-                                 0,
+                                 nullptr,
                                  this->proactor ()) == -1)
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("ACE_Asynch_Accept::open")),
-                      -1);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                            ACE_TEXT ("%p\n"),
+                            ACE_TEXT ("ACE_Asynch_Accept::open")),
+                           -1);
+    }
   return 0;
 }
 
@@ -198,17 +195,19 @@ ACE_Asynch_Acceptor<HANDLER>::get_handle () const
 }
 
 template <class HANDLER> int
-ACE_Asynch_Acceptor<HANDLER>::accept (size_t bytes_to_read, const void *act)
+ACE_Asynch_Acceptor<HANDLER>::accept (size_t bytes_to_read, void const *act)
 {
   ACE_TRACE ("ACE_Asynch_Acceptor<>::accept");
 
-  ACE_Message_Block *message_block = nullptr;
+  ACE_Message_Block *message_block {};
   // The space_needed calculation is drive by needs of Windows. POSIX doesn't
   // need to extra 16 bytes, but it doesn't hurt.
   size_t space_needed = sizeof (sockaddr_in) + 16;
 #if defined (ACE_HAS_IPV6)
   if (PF_INET6 == this->addr_family_)
-    space_needed = sizeof (sockaddr_in6) + 16;
+    {
+      space_needed = sizeof (sockaddr_in6) + 16;
+    }
 #endif /* ACE_HAS_IPV6 */
   space_needed = (2 * space_needed) + bytes_to_read;
 
@@ -216,6 +215,7 @@ ACE_Asynch_Acceptor<HANDLER>::accept (size_t bytes_to_read, const void *act)
   ACE_NEW_RETURN (message_block,
                   ACE_Message_Block (space_needed),
                   -1);
+  ACE_Message_Block_Unique_Ptr message_block_owner {message_block};
 
   // Initiate asynchronous accepts
   if (this->asynch_accept_.accept (*message_block,
@@ -226,20 +226,21 @@ ACE_Asynch_Acceptor<HANDLER>::accept (size_t bytes_to_read, const void *act)
                                    ACE_SIGRTMIN,
                                    this->addr_family_) == -1)
     {
-      // Cleanup on error
-      message_block->release ();
       return -1;
     }
+
+  // Ownership is transferred to the asynchronous accept operation.
+  message_block_owner.release ();
   return 0;
 }
 
 template <class HANDLER> void
-ACE_Asynch_Acceptor<HANDLER>::handle_accept (const ACE_Asynch_Accept::Result &result)
+ACE_Asynch_Acceptor<HANDLER>::handle_accept (ACE_Asynch_Accept::Result const &result)
 {
   ACE_TRACE ("ACE_Asynch_Acceptor<>::handle_accept");
 
   // Variable for error tracking
-  bool error = false;
+  bool error {};
 
   // If the asynchronous accept fails.
   if (!result.success () || result.accept_handle () == ACE_INVALID_HANDLE)
@@ -257,7 +258,8 @@ ACE_Asynch_Acceptor<HANDLER>::handle_accept (const ACE_Asynch_Accept::Result &re
       ACE_OS::setsockopt (result.accept_handle (),
                           SOL_SOCKET,
                           SO_UPDATE_ACCEPT_CONTEXT,
-                          (char *) &this->listen_handle_,
+                          reinterpret_cast<char *> (
+                            std::addressof (this->listen_handle_)),
                           sizeof (this->listen_handle_)) == -1)
     {
       error = true;
@@ -269,10 +271,12 @@ ACE_Asynch_Acceptor<HANDLER>::handle_accept (const ACE_Asynch_Accept::Result &re
   ACE_INET_Addr remote_address;
   if (!error &&
       (this->validate_new_connection_ || this->pass_addresses_))
-    // Parse the addresses.
-    this->parse_address (result,
-                         remote_address,
-                         local_address);
+    {
+      // Parse the addresses.
+      this->parse_address (result,
+                           remote_address,
+                           local_address);
+    }
 
   // Validate remote address
   if (!error &&
@@ -282,12 +286,12 @@ ACE_Asynch_Acceptor<HANDLER>::handle_accept (const ACE_Asynch_Accept::Result &re
       error = true;
     }
 
-  HANDLER *new_handler = nullptr;
+  HANDLER *new_handler {};
   if (!error)
     {
       // The Template method
       new_handler = this->make_handler ();
-      if (new_handler == 0)
+      if (new_handler == nullptr)
         {
           error = true;
         }
@@ -298,17 +302,23 @@ ACE_Asynch_Acceptor<HANDLER>::handle_accept (const ACE_Asynch_Accept::Result &re
     {
       // Update the Proactor unless make_handler() or constructed handler
       // set up its own.
-      if (new_handler->proactor () == 0)
-        new_handler->proactor (this->proactor ());
+      if (new_handler->proactor () == nullptr)
+        {
+          new_handler->proactor (this->proactor ());
+        }
 
       // Pass the addresses
       if (this->pass_addresses_)
-        new_handler->addresses (remote_address,
-                                local_address);
+        {
+          new_handler->addresses (remote_address,
+                                  local_address);
+        }
 
       // Pass the ACT
       if (result.act () != nullptr)
-        new_handler->act (result.act ());
+        {
+          new_handler->act (result.act ());
+        }
 
       // Set up the handler's new handle value
       new_handler->handle (result.accept_handle ());
@@ -321,7 +331,9 @@ ACE_Asynch_Acceptor<HANDLER>::handle_accept (const ACE_Asynch_Accept::Result &re
   // On failure, no choice but to close the socket
   if (error &&
       result.accept_handle() != ACE_INVALID_HANDLE )
-    ACE_OS::closesocket (result.accept_handle ());
+    {
+      ACE_OS::closesocket (result.accept_handle ());
+    }
 
   // Delete the dynamically allocated message_block
   result.message_block ().release ();
@@ -337,14 +349,16 @@ ACE_Asynch_Acceptor<HANDLER>::handle_accept (const ACE_Asynch_Accept::Result &re
       && result.error () != ECANCELED
 #endif
       )
-    this->accept (this->bytes_to_read_, result.act ());
+    {
+      this->accept (this->bytes_to_read_, result.act ());
+    }
 }
 
 template <class HANDLER> int
 ACE_Asynch_Acceptor<HANDLER>::validate_connection
-  (const ACE_Asynch_Accept::Result& /* result */,
-   const ACE_INET_Addr& /* remote */,
-   const ACE_INET_Addr& /* local */)
+  (ACE_Asynch_Accept::Result const & /* result */,
+   ACE_INET_Addr const & /* remote */,
+   ACE_INET_Addr const & /* local */)
 {
   // Default implementation always validates the remote address.
   return 0;
@@ -386,15 +400,17 @@ ACE_Asynch_Acceptor<HANDLER>::parse_address (const
 
   ACE_Message_Block &message_block = result.message_block ();
 
-  sockaddr *local_addr = nullptr;
-  sockaddr *remote_addr = nullptr;
-  int local_size = 0;
-  int remote_size = 0;
+  sockaddr *local_addr {};
+  sockaddr *remote_addr {};
+  int local_size {};
+  int remote_size {};
   // This matches setup in accept().
   size_t addr_size = sizeof (sockaddr_in) + 16;
 #if defined (ACE_HAS_IPV6)
   if (this->addr_family_ == PF_INET6)
-    addr_size = sizeof (sockaddr_in6) + 16;
+    {
+      addr_size = sizeof (sockaddr_in6) + 16;
+    }
 #endif /* ACE_HAS_IPV6 */
 
   ::GetAcceptExSockaddrs (message_block.rd_ptr (),
@@ -439,10 +455,10 @@ template <class HANDLER> HANDLER *
 ACE_Asynch_Acceptor<HANDLER>::make_handler ()
 {
   // Default behavior
-  HANDLER *handler = nullptr;
+  HANDLER *handler {};
   ACE_NEW_RETURN (handler,
                   HANDLER,
-                  0);
+                  nullptr);
   return handler;
 }
 
@@ -470,14 +486,14 @@ ACE_Asynch_Acceptor<HANDLER>::validate_new_connection (bool new_value)
   this->validate_new_connection_ = new_value;
 }
 
-template <class HANDLER> int
+template <class HANDLER> bool
 ACE_Asynch_Acceptor<HANDLER>::reissue_accept () const
 {
   return this->reissue_accept_;
 }
 
 template <class HANDLER> void
-ACE_Asynch_Acceptor<HANDLER>::reissue_accept (int new_value)
+ACE_Asynch_Acceptor<HANDLER>::reissue_accept (bool new_value)
 {
   this->reissue_accept_ = new_value;
 }
@@ -494,7 +510,7 @@ ACE_Asynch_Acceptor<HANDLER>::bytes_to_read (size_t new_value)
   this->bytes_to_read_ = new_value;
 }
 
-template <class HANDLER> int
+template <class HANDLER> bool
 ACE_Asynch_Acceptor<HANDLER>::should_reissue_accept ()
 {
   return this->reissue_accept_;

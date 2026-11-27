@@ -2,7 +2,6 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
      & eval 'exec perl -S $0 $argv:q'
      if 0;
 
-# -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::TestTarget;
@@ -270,6 +269,10 @@ sub run_clients ()
 
     run_client (
         "group_create -group ieec -policy least",
+        $NEGATIVE_TEST_RESULT);
+
+    run_client (
+        "group_create-extra -group invalid -policy round",
         $NEGATIVE_TEST_RESULT);
 
     run_client (

@@ -1,13 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    MEM_IO.h
  *
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef ACE_MEM_IO_H
 #define ACE_MEM_IO_H
@@ -27,14 +22,19 @@
 #include "ace/Process_Semaphore.h"
 #include "ace/Process_Mutex.h"
 
+#include <memory>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class ACE_Export ACE_Reactive_MEM_IO : public ACE_MEM_SAP
 {
 public:
-  ACE_Reactive_MEM_IO ();
-
-  ~ACE_Reactive_MEM_IO () override;
+  ACE_Reactive_MEM_IO () = default;
+  ~ACE_Reactive_MEM_IO () override = default;
+  ACE_Reactive_MEM_IO (ACE_Reactive_MEM_IO const &) = delete;
+  ACE_Reactive_MEM_IO (ACE_Reactive_MEM_IO &&) = delete;
+  ACE_Reactive_MEM_IO &operator= (ACE_Reactive_MEM_IO const &) = delete;
+  ACE_Reactive_MEM_IO &operator= (ACE_Reactive_MEM_IO &&) = delete;
 
   /**
    * Initialize the MEM_SAP object.
@@ -43,32 +43,32 @@ public:
    * underlying ACE_MMAP.
    */
   int init (ACE_HANDLE handle,
-                    const ACE_TCHAR *name,
-                    MALLOC_OPTIONS *options) override;
+            ACE_TCHAR const *name,
+            MALLOC_OPTIONS *options) override;
 
   /**
-   * Fetch location of next available data into <recv_buffer_>.
+   * Fetch location of next available data into @c recv_buffer_.
    * As this operation read the address of the data off the socket
    * using ACE::recv, @a timeout only applies to ACE::recv.
    */
   ssize_t recv_buf (ACE_MEM_SAP_Node *&buf,
-                            int flags,
-                            const ACE_Time_Value *timeout) override;
+                    int flags,
+                    ACE_Time_Value const *timeout) override;
 
   /**
-   * Wait to to @a timeout amount of time to send @a buf.  If <send>
+   * Wait to to @a timeout amount of time to send @a buf.  If @c send
    * times out a -1 is returned with @c errno == ETIME.  If it succeeds
    * the number of bytes sent is returned.  */
   ssize_t send_buf (ACE_MEM_SAP_Node *buf,
-                            int flags,
-                            const ACE_Time_Value *timeout) override;
+                    int flags,
+                    ACE_Time_Value const *timeout) override;
 
   /**
    * Convert the buffer offset @a off to absolute address to @a buf.
    * Return the size of valid information containing in the @a buf,
-   * -1 if <shm_malloc_> is not initialized.
+   * -1 if @c shm_malloc_ is not initialized.
    */
-  ssize_t get_buf_len (const ACE_OFF_T off, ACE_MEM_SAP_Node *&buf);
+  ssize_t get_buf_len (ACE_OFF_T const off, ACE_MEM_SAP_Node *&buf);
 };
 
 #if defined (ACE_WIN32) || !defined (_ACE_USE_SV_SEM)
@@ -76,17 +76,17 @@ class ACE_Export ACE_MT_MEM_IO : public ACE_MEM_SAP
 {
 public:
   /// Structure for a simple queue
-  typedef struct
+  struct MQ_Struct
   {
     ACE_MEM_SAP_Node::ACE_MEM_SAP_NODE_PTR head_;
     ACE_MEM_SAP_Node::ACE_MEM_SAP_NODE_PTR tail_;
-  } MQ_Struct;
+  };
 
   class Simple_Queue
   {
   public:
-    Simple_Queue ();
-    Simple_Queue (MQ_Struct *mq);
+    Simple_Queue () = default;
+    explicit Simple_Queue (MQ_Struct *mq);
 
     int init (MQ_Struct *mq, ACE_MEM_SAP::MALLOC_TYPE *malloc);
 
@@ -94,50 +94,54 @@ public:
 
     ACE_MEM_SAP_Node *read ();
   private:
-    MQ_Struct *mq_;
-    ACE_MEM_SAP::MALLOC_TYPE *malloc_;
+    /// Queue and allocator are owned by the shared-memory delivery strategy.
+    MQ_Struct *mq_ {};
+    ACE_MEM_SAP::MALLOC_TYPE *malloc_ {};
   };
 
-  typedef struct
+  struct Channel
   {
-    ACE_SYNCH_PROCESS_SEMAPHORE *sema_;
-    ACE_SYNCH_PROCESS_MUTEX *lock_;
+    std::unique_ptr<ACE_SYNCH_PROCESS_SEMAPHORE> sema_ {};
+    std::unique_ptr<ACE_SYNCH_PROCESS_MUTEX> lock_ {};
     Simple_Queue queue_;
-  } Channel;
+  };
 
-  ACE_MT_MEM_IO ();
-
-  virtual ~ACE_MT_MEM_IO ();
+  ACE_MT_MEM_IO () = default;
+  ~ACE_MT_MEM_IO () override = default;
+  ACE_MT_MEM_IO (ACE_MT_MEM_IO const &) = delete;
+  ACE_MT_MEM_IO (ACE_MT_MEM_IO &&) = delete;
+  ACE_MT_MEM_IO &operator= (ACE_MT_MEM_IO const &) = delete;
+  ACE_MT_MEM_IO &operator= (ACE_MT_MEM_IO &&) = delete;
 
   /**
    * Initialize the MEM_SAP object.
    */
-  virtual int init (ACE_HANDLE handle,
-                    const ACE_TCHAR *name,
-                    MALLOC_OPTIONS *options);
+  int init (ACE_HANDLE handle,
+            ACE_TCHAR const *name,
+            MALLOC_OPTIONS *options) override;
 
-  int fini ();
+  int fini () override;
 
   /**
-   * Fetch location of next available data into <recv_buffer_>.
+   * Fetch location of next available data into @c recv_buffer_.
    * As this operation read the address of the data off the socket
    * using ACE::recv, @a timeout only applies to ACE::recv.
    */
-  virtual ssize_t recv_buf (ACE_MEM_SAP_Node *&buf,
-                            int flags,
-                            const ACE_Time_Value *timeout);
+  ssize_t recv_buf (ACE_MEM_SAP_Node *&buf,
+                    int flags,
+                    ACE_Time_Value const *timeout) override;
 
   /**
-   * Wait to to @a timeout amount of time to send @a buf.  If <send>
+   * Wait to to @a timeout amount of time to send @a buf.  If @c send
    * times out a -1 is returned with @c errno == ETIME.  If it succeeds
    * the number of bytes sent is returned.  */
-  virtual ssize_t send_buf (ACE_MEM_SAP_Node *buf,
-                            int flags,
-                            const ACE_Time_Value *timeout);
+  ssize_t send_buf (ACE_MEM_SAP_Node *buf,
+                    int flags,
+                    ACE_Time_Value const *timeout) override;
 
 private:
-  Channel recv_channel_;
-  Channel send_channel_;
+  Channel recv_channel_ {};
+  Channel send_channel_ {};
 };
 #endif /* ACE_WIN32 || !_ACE_USE_SV_SEM */
 
@@ -170,11 +174,12 @@ private:
 class ACE_Export ACE_MEM_IO : public ACE_SOCK
 {
 public:
-  /// Constructor.
-  ACE_MEM_IO ();
-
-  /// Destructor.
-  ~ACE_MEM_IO ();
+  ACE_MEM_IO () = default;
+  ~ACE_MEM_IO () = default;
+  ACE_MEM_IO (ACE_MEM_IO const &) = delete;
+  ACE_MEM_IO (ACE_MEM_IO &&) = delete;
+  ACE_MEM_IO &operator= (ACE_MEM_IO const &) = delete;
+  ACE_MEM_IO &operator= (ACE_MEM_IO &&) = delete;
 
   using Signal_Strategy = enum
   {
@@ -185,19 +190,19 @@ public:
   /**
    * Initialize the MEM_SAP object.
    */
-  int init (const ACE_TCHAR *name,
+  int init (ACE_TCHAR const *name,
             ACE_MEM_IO::Signal_Strategy type = ACE_MEM_IO::Reactive,
             ACE_MEM_SAP::MALLOC_OPTIONS *options = nullptr);
 
   /**
    * Finalizing the MEM_IO object.  This method doesn't invoke
-   * the <remove> method.
+   * the @c remove method.
    */
   int fini ();
 
   /// Send an @a n byte buffer to the other process using shm_malloc_
   /// connected thru the socket.
-  ssize_t send (const void *buf,
+  ssize_t send (void const *buf,
                 size_t n,
                 int flags) ;
 
@@ -208,7 +213,7 @@ public:
 
   /// Send an @a n byte buffer to the other process using shm_malloc_
   /// connected thru the socket.
-  ssize_t send (const void *buf,
+  ssize_t send (void const *buf,
                 size_t n) ;
 
   /// Recv an @a n byte buffer from the shm_malloc_ thru connected socket.
@@ -217,54 +222,53 @@ public:
 
   /**
    * Wait to to @a timeout amount of time to send up to @a n bytes into
-   * @a buf from <handle> (uses the <send> call).  If <send> times out
+   * @a buf from @c handle (uses the @c send call).  If @c send times out
    * a -1 is returned with @c errno == ETIME.  If it succeeds the
    * number of bytes sent is returned.
    */
-  ssize_t send (const void *buf,
+  ssize_t send (void const *buf,
                 size_t n,
-                const ACE_Time_Value *timeout);
+                ACE_Time_Value const *timeout);
 
   /**
    * Wait to to @a timeout amount of time to send up to @a n bytes into
-   * @a buf from <handle> (uses the <send> call).  If <send> times out
+   * @a buf from @c handle (uses the @c send call).  If @c send times out
    * a -1 is returned with @c errno == ETIME.  If it succeeds the
    * number of bytes sent is returned.
    */
-  ssize_t send (const void *buf,
+  ssize_t send (void const *buf,
                 size_t n,
                 int flags,
-                const ACE_Time_Value *timeout);
+                ACE_Time_Value const *timeout);
 
   /**
    * Wait to to @a timeout amount of time to send the @a message_block.
-   * If <send> times out a -1 is returned with @c errno == ETIME.  If
+   * If @c send times out a -1 is returned with @c errno == ETIME.  If
    * it succeeds the number of bytes sent is returned.
    */
-  ssize_t send (const ACE_Message_Block *message_block,
-                const ACE_Time_Value *timeout);
+  ssize_t send (ACE_Message_Block const *message_block,
+                ACE_Time_Value const *timeout);
 
   /**
    * Wait up to @a timeout amount of time to receive up to @a n bytes
-   * into @a buf from <handle> (uses the <recv> call).  If <recv> times
+   * into @a buf from @c handle (uses the @c recv call).  If @c recv times
    * out a -1 is returned with @c errno == ETIME.  If it succeeds the
    * number of bytes received is returned.
    */
   ssize_t recv (void *buf,
                 size_t n,
-                const ACE_Time_Value *timeout);
+                ACE_Time_Value const *timeout);
 
   /**
    * Wait up to @a timeout amount of time to receive up to @a n bytes
-   * into @a buf from <handle> (uses the <recv> call).  If <recv> times
+   * into @a buf from @c handle (uses the @c recv call).  If @c recv times
    * out a -1 is returned with @c errno == ETIME.  If it succeeds the
    * number of bytes received is returned.
    */
   ssize_t recv (void *buf,
                 size_t n,
                 int flags,
-                const ACE_Time_Value *timeout);
-
+                ACE_Time_Value const *timeout);
 
   /// Dump the state of an object.
   void dump () const;
@@ -282,19 +286,19 @@ public:
   */
 
 private:
-  ssize_t fetch_recv_buf (int flag, const ACE_Time_Value *timeout);
+  ssize_t fetch_recv_buf (int flag, ACE_Time_Value const *timeout);
 
   /// Actual deliverying mechanism.
-  ACE_MEM_SAP *deliver_strategy_;
+  std::unique_ptr<ACE_MEM_SAP> deliver_strategy_ {};
 
-  /// Internal pointer for support recv/send.
-  ACE_MEM_SAP_Node *recv_buffer_;
+  /// Buffer currently leased from the delivery strategy; release it through that strategy.
+  ACE_MEM_SAP_Node *recv_buffer_ {};
 
-  /// Record the current total buffer size of <recv_buffer_>.
-  ssize_t buf_size_;
+  /// Record the current total buffer size of @c recv_buffer_.
+  ssize_t buf_size_ {};
 
-  /// Record the current read pointer location in <recv_buffer_>.
-  ssize_t cur_offset_;
+  /// Record the current read pointer location in @c recv_buffer_.
+  ssize_t cur_offset_ {};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

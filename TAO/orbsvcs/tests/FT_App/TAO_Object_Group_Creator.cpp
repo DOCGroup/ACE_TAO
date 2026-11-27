@@ -1,5 +1,3 @@
-/* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file    TAO_Object_Group_Creator.cpp
  *
@@ -8,7 +6,6 @@
  *
  *  @author Dale Wilson <wilson_d@ociweb.com>
  */
-//=============================================================================
 
 #include "TAO_Object_Group_Creator.h"
 #include <ace/OS_NS_stdio.h>
@@ -27,16 +24,13 @@ TAO::Object_Group_Creator::Object_Group_Creator ()
 {
 }
 
-TAO::Object_Group_Creator::~Object_Group_Creator ()
-{
-}
+TAO::Object_Group_Creator::~Object_Group_Creator () = default;
 
 int TAO::Object_Group_Creator::set_factory_registry (PortableGroup::FactoryRegistry_ptr factory)
 {
   this->registry_ = PortableGroup::FactoryRegistry::_duplicate (factory);
   return CORBA::is_nil (this->registry_.in ()) ? -1 : 0 ;
 }
-
 
 int TAO::Object_Group_Creator::init (CORBA::ORB_ptr orb)
 {
@@ -92,7 +86,7 @@ int TAO::Object_Group_Creator::init (CORBA::ORB_ptr orb)
         throw CORBA::OBJECT_NOT_EXIST ();
       }
     }
-    catch (const CORBA::Exception& ex)
+    catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception (
         "Creator: Exception resolving ReplicationManager,\n");
@@ -104,7 +98,7 @@ int TAO::Object_Group_Creator::init (CORBA::ORB_ptr orb)
   return result;
 }
 
-int TAO::Object_Group_Creator::unregister_role (const char * role)
+int TAO::Object_Group_Creator::unregister_role (char const *role)
 {
   int result = 0;
   ACE_ERROR ( (LM_INFO,
@@ -115,13 +109,12 @@ int TAO::Object_Group_Creator::unregister_role (const char * role)
   return result;
 }
 
-
 int TAO::Object_Group_Creator::create_detector_for_replica (
   CORBA::Object_ptr replica,
-  const char * role,
-  const char * type_id,
+  char const *role,
+  char const *type_id,
   PortableGroup::ObjectGroupId group_id,
-  const PortableGroup::Location & location)
+  PortableGroup::Location const & location)
 {
   int result = 0;
 
@@ -161,7 +154,7 @@ int TAO::Object_Group_Creator::create_detector_for_replica (
         PortableGroup::Criteria_var criteria;
         ACE_NEW_NORETURN (criteria,
           PortableGroup::Criteria);
-        if (criteria.ptr () == 0)
+        if (criteria.ptr () == nullptr)
         {
           ACE_ERROR ( (LM_ERROR,
             "%T %n (%P|%t)Object_Group_Creater: Error cannot allocate criteria.\n"
@@ -185,9 +178,8 @@ int TAO::Object_Group_Creator::create_detector_for_replica (
   return result;
 }
 
-
 CORBA::Object_ptr TAO::Object_Group_Creator::create_infrastructure_managed_group (
-    const char * type_id)
+    char const *type_id)
 {
   CORBA::Object_var group = CORBA::Object::_nil ();
 
@@ -237,7 +229,7 @@ CORBA::Object_ptr TAO::Object_Group_Creator::create_infrastructure_managed_group
 }
 
 CORBA::Object_ptr TAO::Object_Group_Creator::create_group (
-    const char * role,
+    char const *role,
     int write_iors)
 {
   CORBA::Object_var group = CORBA::Object::_nil ();
@@ -296,13 +288,13 @@ CORBA::Object_ptr TAO::Object_Group_Creator::create_group (
       creation_id >>= group_id;
     }
 
-    const PortableGroup::Location * first_location = 0;
+    PortableGroup::Location const *first_location {};
 
     for (CORBA::ULong nFact = 0; nFact < count; ++nFact)
     {
       ::PortableGroup::FactoryInfo & info = infos[nFact];
 
-      const char * loc_name = info.the_location[0].id;
+      char const *loc_name = info.the_location[0].id;
       ACE_ERROR ( (LM_INFO,
         "%T %n (%P|%t) Object_Group_Creator: Creating %s@%s\n",
         role,
@@ -329,7 +321,7 @@ CORBA::Object_ptr TAO::Object_Group_Creator::create_group (
           group_id,
           info.the_location);
 
-        const char * replica_ior = orb_->object_to_string (created_obj.in ());
+        char const *replica_ior = orb_->object_to_string (created_obj.in ());
 
         if (write_iors)
         {
@@ -392,7 +384,7 @@ CORBA::Object_ptr TAO::Object_Group_Creator::create_group (
       }
     }
 
-    if (first_location != 0 && this->have_replication_manager_)
+    if (first_location != nullptr && this->have_replication_manager_)
     {
       group = this->replication_manager_->set_primary_member (group.in (), * first_location);
     }
@@ -405,13 +397,12 @@ CORBA::Object_ptr TAO::Object_Group_Creator::create_group (
   return group._retn ();
 }
 
-
 int TAO::Object_Group_Creator::fini ()
 {
   return 0;
 }
 
-int TAO::Object_Group_Creator::write_ior_file (const char * outputFile, const char * ior)
+int TAO::Object_Group_Creator::write_ior_file (char const *outputFile, char const *ior)
 {
   int result = -1;
   FILE* out = ACE_OS::fopen (outputFile, "w");

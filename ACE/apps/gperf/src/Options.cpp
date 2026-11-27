@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 /**
  * Copyright (C) 1989 Free Software Foundation, Inc.
  * written by Douglas C. Schmidt (d.schmidt@vanderbilt.edu)
@@ -147,9 +145,14 @@ Options::key_sort (char *base, int len)
       for (curr = i + 1, tmp = base[curr];
            curr > 0 && tmp >= base[curr - 1];
            --curr)
-        if ((base[curr] = base[curr - 1]) == tmp)
-          // Oh no, a duplicate!!!
-          return 0;
+        {
+          base[curr] = base[curr - 1];
+          if (base[curr] == tmp)
+            {
+              // Oh no, a duplicate!!!
+              return 0;
+            }
+        }
 
       base[curr] = static_cast<char> (tmp);
     }
@@ -320,7 +323,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
           {
             ACE_SET_BITS (option_word_, DEBUGGING);
             ACE_ERROR ((LM_ERROR,
-                        "Starting program %n, version %s, with debugging on.\n",
+                        "Starting program %n, version %C, with debugging on.\n",
                         version_string));
             break;
           }
@@ -523,8 +526,8 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
         case 'k':
           {
             int const BAD_VALUE = -1;
-            int value;
-            Iterator expand (ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ()),
+            std::string const key_positions (ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ()));
+            Iterator expand (key_positions.c_str (),
                              1,
                              MAX_KEY_POS - 1,
                              WORD_END,
@@ -538,6 +541,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
               }
             else
               {
+                int value;
                 char *l_key_pos;
 
                 for (l_key_pos = key_positions_.data ();
@@ -694,7 +698,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
         // Print out the version and quit.
         case 'v':
           ACE_ERROR ((LM_ERROR,
-                      "%n: version %s\n%r\n",
+                      "%n: version %C\n%r\n",
                       version_string,
                       &Options::usage));
           ACE_OS::exit (0);

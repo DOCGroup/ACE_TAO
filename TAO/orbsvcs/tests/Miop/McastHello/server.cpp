@@ -4,13 +4,13 @@
 #include "orbsvcs/PortableGroup/MIOP.h"
 #include "orbsvcs/PortableGroup/GOA.h"
 
-static const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
+static ACE_TCHAR const *ior_output_file = ACE_TEXT("test.ior");
 
 // Use a multicast address in the administrative "site local" range, 239.255.0.0 to
 // 239.255.255.255.  The range 224.255.0.0 to 238.255.255.255 should also be valid
 // too.
-//static const char *group_ior = "corbaloc:miop:1.0@1.0-TestDomain-1/239.255.0.1:16000";
-static const ACE_TCHAR *group_ior = ACE_TEXT("corbaloc:miop:1.0@1.0-TestDomain-1/224.1.239.2:1234");
+//static char const *group_ior = "corbaloc:miop:1.0@1.0-TestDomain-1/239.255.0.1:16000";
+static ACE_TCHAR const *group_ior = ACE_TEXT("corbaloc:miop:1.0@1.0-TestDomain-1/224.1.239.2:1234");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -58,15 +58,19 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         PortableGroup::GOA::_narrow (poa_object.in ());
 
       if (CORBA::is_nil (root_poa.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Panic: nil RootPOA\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Panic: nil RootPOA\n"),
+                            1);
+        }
 
       PortableServer::POAManager_var poa_manager =
         root_poa->the_POAManager ();
 
       if (parse_args (argc, argv) != 0)
+      {
         return 1;
+      }
 
       CORBA::Object_var group1 =
         orb->string_to_object (group_ior);
@@ -74,10 +78,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // Output the Group IOR to the <ior_output_file>
       FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
       if (output_file == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot open output file for writing IOR: %s",
-                           ior_output_file),
-                           1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Cannot open output file for writing IOR: %s",
+                             ior_output_file),
+                             1);
+        }
       ACE_OS::fprintf (output_file, "%s", ACE_TEXT_ALWAYS_CHAR (group_ior));
       ACE_OS::fclose (output_file);
 
@@ -89,7 +95,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       root_poa->activate_object_with_id (id.in (),
                                          &server_impl);
-
 
       poa_manager->activate ();
 
@@ -103,13 +108,17 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // Validate that our servants got the right requests.
       if (server_impl.get_status () == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Multicast Servant did not receive expected requests!\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Multicast Servant did not receive expected requests!\n"),
+                            1);
+        }
       else
+      {
         ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - Success!\n"));
+      }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;

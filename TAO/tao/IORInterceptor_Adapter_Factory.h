@@ -1,13 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    IORInterceptor_Adapter_Factory.h
  *
  *  @author  George Edwards <g.edwards@vanderbilt.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_IORINTERCEPTOR_ADAPTER_FACTORY_H
 #define TAO_IORINTERCEPTOR_ADAPTER_FACTORY_H

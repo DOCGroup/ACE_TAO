@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Obchunk.h
  *
  *  @author Doug Schmidt
  */
-//=============================================================================
 
 #ifndef ACE_OBCHUNK_H
 #define ACE_OBCHUNK_H
@@ -32,10 +28,8 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Obchunk
 {
 public:
-  /// Constructor.
-  ACE_Obchunk (size_t size);
+  explicit ACE_Obchunk (size_t size);
 
-  /// Dtor.
   ~ACE_Obchunk () = default;
 
   /// Dump the state of an object.
@@ -54,12 +48,12 @@ public:
   char *cur_;
 
   /// Next chunk in the chain.
-  ACE_Obchunk *next_;
+  ACE_Obchunk *next_ {};
 
   /**
    * Pointer to the beginning contents of this chunk.  This field is
    * actually overlayed by the memory allocated by
-   * <ACE_Obstack::new_chunk>.  Therefore, it *must* come last.
+   * @c ACE_Obstack::new_chunk.  Therefore, it *must* come last.
    */
   char contents_[4];
 };

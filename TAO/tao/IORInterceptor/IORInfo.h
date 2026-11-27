@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-// ===================================================================
 /**
  *  @file   IORInfo.h
  *
  *  @author Ossama Othman <ossama@uci.edu>
  */
-// ===================================================================
 
 #ifndef TAO_IOR_INFO_H
 #define TAO_IOR_INFO_H
@@ -28,7 +24,6 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// Forward declarations.
@@ -45,27 +40,28 @@ class TAO_IORInfo
     public virtual ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
-  TAO_IORInfo (TAO_Root_POA *poa);
+  explicit TAO_IORInfo (TAO_Root_POA *poa);
 
   /**
    * @name PortableInterceptor::IORInfo Methods
    *
    * Methods exposed by the PortableInterceptor::IORInfo interface.
    */
-  //@{
+  /// @{
+
   /// Return the policy matching the given policy type that is in
   /// effect for the object whose IOR is being created.
   CORBA::Policy_ptr get_effective_policy (CORBA::PolicyType type) override;
 
   /// Add the given tagged component to all profiles.
-  void add_ior_component (IOP::TaggedComponent const& component) override;
+  void add_ior_component (IOP::TaggedComponent const &component) override;
 
   /// Add the given tagged component to all profiles matching the given
   /// ProfileId.
   void add_ior_component_to_profile (
-      IOP::TaggedComponent const& component,
+      IOP::TaggedComponent const &component,
       IOP::ProfileId profile_id) override;
+  /// @}
 
   char * manager_id () override;
 
@@ -76,9 +72,13 @@ public:
   PortableInterceptor::ObjectReferenceFactory *current_factory () override;
 
   void current_factory (
-      PortableInterceptor::ObjectReferenceFactory * current_factory) override;
+      PortableInterceptor::ObjectReferenceFactory *current_factory) override;
 
-  //@}
+  TAO_IORInfo () = delete;
+  TAO_IORInfo (TAO_IORInfo const &) = delete;
+  TAO_IORInfo &operator= (TAO_IORInfo const &) = delete;
+  TAO_IORInfo (TAO_IORInfo &&) = delete;
+  TAO_IORInfo &operator= (TAO_IORInfo &&) = delete;
 
   /// Invalidate this IORInfo instance.
   /**
@@ -109,16 +109,10 @@ protected:
    * this IORInfo object is no longer valid.  Throw an exception in
    * that case.
    */
-  void check_validity ();
+  void check_validity () const;
 
 private:
-  TAO_IORInfo (TAO_IORInfo const &) = delete;
-  void operator= (TAO_IORInfo const &) = delete;
-  TAO_IORInfo (TAO_IORInfo &&) = delete;
-  void operator= (TAO_IORInfo &&) = delete;
-
-private:
-  /// Pointer to POA
+  /// Non-owning POA pointer; invalidated when the interceptor callbacks end.
   TAO_Root_POA * poa_ {};
 
   /// True if the IORInterceptor::components_established()
@@ -129,7 +123,7 @@ private:
    * called after the IORInterceptor::establish_components()
    * interception point has been called.
    */
-  CORBA::Boolean components_established_ {};
+  bool components_established_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

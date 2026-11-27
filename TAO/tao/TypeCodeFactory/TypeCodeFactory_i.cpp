@@ -32,17 +32,19 @@
 #include "ace/Value_Ptr.h"
 #include "ace/OS_NS_ctype.h"
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
+#include <cstring>
+#include <string>
+#include <vector>
 
-TAO_TypeCodeFactory_i::~TAO_TypeCodeFactory_i () = default;
+TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TCF
 {
   namespace Struct
   {
     using field_array_type =
-      ACE_Array_Base<TAO::TypeCode::Struct_Field<CORBA::String_var,
-                                                  CORBA::TypeCode_var> >;
+      std::vector<TAO::TypeCode::Struct_Field<CORBA::String_var,
+                                               CORBA::TypeCode_var>>;
 
     using typecode_type = TAO::TypeCode::Struct<CORBA::String_var,
                                                 CORBA::TypeCode_var,
@@ -59,7 +61,7 @@ namespace TCF
     // Use an ACE::Value_Ptr to provide exception safety and proper
     // copying semantics.
     using elem_type = ACE::Value_Ptr<TAO::TypeCode::Case_Dynamic>;
-    using case_array_type = ACE_Array_Base<elem_type>;
+    using case_array_type = std::vector<elem_type>;
 
     using typecode_type = TAO::TypeCode::Union<CORBA::String_var,
                                                CORBA::TypeCode_var,
@@ -74,8 +76,8 @@ namespace TCF
   namespace Value
   {
     using field_array_type =
-      ACE_Array_Base<TAO::TypeCode::Value_Field<CORBA::String_var,
-                                                 CORBA::TypeCode_var> >;
+      std::vector<TAO::TypeCode::Value_Field<CORBA::String_var,
+                                              CORBA::TypeCode_var>>;
 
     using typecode_type = TAO::TypeCode::Value<CORBA::String_var,
                                                CORBA::TypeCode_var,
@@ -87,9 +89,6 @@ namespace TCF
                                                                     field_array_type>;
   }  // End namespace Value
 }
-
-
-TAO_TypeCodeFactory_i::TAO_TypeCodeFactory_i () = default;
 
 TAO_TypeCodeFactory_i *
 TAO_TypeCodeFactory_i::_narrow (CORBA::Object_ptr _tao_objref)
@@ -104,9 +103,9 @@ TAO_TypeCodeFactory_i::_narrow (CORBA::Object_ptr _tao_objref)
 
 CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_i::create_struct_tc (
-    const char *id,
-    const char *name,
-    const CORBA::StructMemberSeq &members)
+    char const *id,
+    char const *name,
+    CORBA::StructMemberSeq const &members)
 {
   return this->struct_except_tc_common (id,
                                         name,
@@ -116,12 +115,12 @@ TAO_TypeCodeFactory_i::create_struct_tc (
 
 CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_i::create_union_tc (
-    const char *id,
-    const char *name,
+    char const *id,
+    char const *name,
     CORBA::TypeCode_ptr discriminator_type,
-    const CORBA::UnionMemberSeq &members)
+    CORBA::UnionMemberSeq const &members)
 {
-  CORBA::TypeCode_ptr tc = CORBA::TypeCode_ptr ();
+  CORBA::TypeCode_ptr tc {};
 
   if (name == nullptr || !this->valid_name (name))
     {
@@ -142,7 +141,7 @@ TAO_TypeCodeFactory_i::create_union_tc (
     }
 
   CORBA::ULong const len = members.length ();
-  CORBA::ULong dups = 0;
+  CORBA::ULong dups {};
   CORBA::ULong raw_default_index = ACE_UINT32_MAX;
   CORBA::Long default_index = -1;
   CORBA::Octet value = ACE_OCTET_MAX;
@@ -155,18 +154,18 @@ TAO_TypeCodeFactory_i::create_union_tc (
   //
   // @@ Now that the TypeCode implementation has been rewritten, do we
   // still need to iterate over the members twice?
-  for (CORBA::ULong i = 0; i < len; ++i)
+  for (CORBA::ULong i {}; i < len; ++i)
     {
       CORBA::UnionMember const & member = members[i];
       char const * const member_name = member.name;
 
-      int trybind_status = 0;
+      int trybind_status {};
 
       if (i > 0)
         {
           // Is this a duplicate case label? If so, we have to adjust
           // the 'length' we encode - a member gets encoded only once.
-          if (ACE_OS::strcmp (member_name, members[i - 1].name) == 0)
+          if (std::strcmp (member_name, members[i - 1].name) == 0)
             {
               CORBA::Boolean const equiv =
                 member.type.in ()->equivalent (members[i - 1].type.in ());
@@ -190,16 +189,16 @@ TAO_TypeCodeFactory_i::create_union_tc (
             {
               // Only if we do not have a duplicate case label do we
               // check for a duplicate member name.
-              ACE_CString ext_id (member_name);
-              int int_id = 0;
+              ACE_CString const ext_id (member_name);
+              int int_id {};
 
               trybind_status = map.trybind (ext_id, int_id);
             }
         }
       else
         {
-          ACE_CString ext_id (member_name);
-          int int_id = 0;
+          ACE_CString const ext_id (member_name);
+          int int_id {};
 
           trybind_status = map.trybind (ext_id, int_id);
         }
@@ -224,7 +223,7 @@ TAO_TypeCodeFactory_i::create_union_tc (
         }
 
       // Reset the default index, if we have a default case label.
-      if ((member.label >>= CORBA::Any::to_octet (value)) == 1)
+      if (member.label >>= CORBA::Any::to_octet (value))
         {
           if (value == 0)
             {
@@ -269,12 +268,12 @@ TAO_TypeCodeFactory_i::create_union_tc (
   CORBA::TCKind const kind =
     discriminator_type->kind ();
 
-  CORBA::ULong ci = 0;  // Case array index.
+  CORBA::ULong ci {};  // Case array index.
 
-  bool is_recursive = false;
+  bool is_recursive {};
   CORBA::TypeCode_var recursive_tc;
 
-  for (CORBA::ULong index = 0; index < len; ++index)
+  for (CORBA::ULong index {}; index < len; ++index)
     {
       CORBA::UnionMember const & member = members[index];
 
@@ -282,8 +281,8 @@ TAO_TypeCodeFactory_i::create_union_tc (
         {
           // Is this a duplicate case label? If so, skip it - a member
           // goes into the TypeCode only once.
-          if (ACE_OS::strcmp (member.name,
-                              members[index - 1].name) == 0)
+          if (std::strcmp (member.name,
+                           members[index - 1].name) == 0)
             {
               continue;
             }
@@ -304,7 +303,8 @@ TAO_TypeCodeFactory_i::create_union_tc (
         }
 
       elem_type & element = cases[ci];
-      TAO::TypeCode::Case_Dynamic *the_case = nullptr;
+      // ACE::Value_Ptr below adopts this pointer.
+      TAO::TypeCode::Case_Dynamic *the_case {};
 
       if (index == raw_default_index)
         {
@@ -332,7 +332,7 @@ TAO_TypeCodeFactory_i::create_union_tc (
               {
                 TAO::Any_Impl * const impl = member.label.impl ();
                 TAO_InputCDR for_reading (
-                  static_cast<ACE_Message_Block *> (0));
+                  static_cast<ACE_Message_Block const *> (nullptr));
 
                 if (impl->encoded ())
                   {
@@ -340,7 +340,9 @@ TAO_TypeCodeFactory_i::create_union_tc (
                       dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
 
                     if (!unk)
+                    {
                       throw CORBA::INTERNAL ();
+                    }
 
                     // We don't want unk's rd_ptr to move, in case we
                     // are shared by another Any, so we use this to
@@ -351,11 +353,11 @@ TAO_TypeCodeFactory_i::create_union_tc (
                   {
                     TAO_OutputCDR out;
                     impl->marshal_value (out);
-                    TAO_InputCDR tmp (out);
+                    TAO_InputCDR const tmp (out);
                     for_reading = tmp;
                   }
 
-                CORBA::ULong label;
+                CORBA::ULong label {};
                 for_reading.read_ulong (label);
 
                 using case_type = TAO::TypeCode::Case_T<CORBA::ULong,
@@ -369,7 +371,7 @@ TAO_TypeCodeFactory_i::create_union_tc (
               break;
             case CORBA::tk_ulong:
               {
-                CORBA::ULong label;
+                CORBA::ULong label {};
                 if (!(member.label >>= label))
                   {
                     // Should never throw since label kind was
@@ -390,7 +392,7 @@ TAO_TypeCodeFactory_i::create_union_tc (
               break;
             case CORBA::tk_long:
               {
-                CORBA::Long label;
+                CORBA::Long label {};
                 if (!(member.label >>= label))
                   {
                     // Should never throw since label kind was
@@ -411,7 +413,7 @@ TAO_TypeCodeFactory_i::create_union_tc (
               break;
             case CORBA::tk_ushort:
               {
-                CORBA::UShort label;
+                CORBA::UShort label {};
                 if (!(member.label >>= label))
                   {
                     // Should never throw since label kind was
@@ -432,7 +434,7 @@ TAO_TypeCodeFactory_i::create_union_tc (
               break;
             case CORBA::tk_short:
               {
-                CORBA::Short label;
+                CORBA::Short label {};
                 if (!(member.label >>= label))
                   {
                     // Should never throw since label kind was
@@ -453,7 +455,7 @@ TAO_TypeCodeFactory_i::create_union_tc (
               break;
             case CORBA::tk_char:
               {
-                CORBA::Char label;
+                CORBA::Char label {};
                 if (!(member.label >>= CORBA::Any::to_char (label)))
                   {
                     // Should never throw since label kind was
@@ -474,7 +476,7 @@ TAO_TypeCodeFactory_i::create_union_tc (
               break;
             case CORBA::tk_boolean:
               {
-                CORBA::Boolean label;
+                CORBA::Boolean label {};
                 if (!(member.label >>= CORBA::Any::to_boolean (label)))
                   {
                     // Should never throw since label kind was
@@ -495,7 +497,7 @@ TAO_TypeCodeFactory_i::create_union_tc (
               break;
             case CORBA::tk_longlong:
               {
-                CORBA::LongLong label;
+                CORBA::LongLong label {};
                 if (!(member.label >>= label))
                   {
                     // Should never throw since label kind was
@@ -516,7 +518,7 @@ TAO_TypeCodeFactory_i::create_union_tc (
               break;
             case CORBA::tk_ulonglong:
               {
-                CORBA::ULongLong label;
+                CORBA::ULongLong label {};
                 if (!(member.label >>= label))
                   {
                     // Should never throw since label kind was
@@ -551,8 +553,7 @@ TAO_TypeCodeFactory_i::create_union_tc (
       element->type (member.type.in ());
     }
 
-  // @@ Blame this on MSVC++ 6 workarounds.  *sigh*
-  CORBA::TypeCode_var duped_disc_type (
+  CORBA::TypeCode_var const duped_disc_type (
     CORBA::TypeCode::_duplicate (discriminator_type));
 
   if (is_recursive)
@@ -588,11 +589,11 @@ TAO_TypeCodeFactory_i::create_union_tc (
 
 CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_i::create_enum_tc (
-    const char *id,
-    const char *name,
-    const CORBA::EnumMemberSeq &members)
+    char const *id,
+    char const *name,
+    CORBA::EnumMemberSeq const &members)
 {
-  CORBA::TypeCode_ptr tc = CORBA::TypeCode_ptr ();
+  CORBA::TypeCode_ptr tc {};
 
   if (name == nullptr || !this->valid_name (name))
     {
@@ -608,12 +609,12 @@ TAO_TypeCodeFactory_i::create_enum_tc (
 
   ACE_Hash_Map_Manager<ACE_CString, int, ACE_Null_Mutex> map;
 
-  ACE_Array_Base<CORBA::String_var> enumerators (len);
+  std::vector<CORBA::String_var> enumerators (len);
 
-  for (CORBA::ULong index = 0; index < len; ++index)
+  for (CORBA::ULong index {}; index < len; ++index)
     {
-      ACE_CString ext_id (members[index]);
-      int int_id = 0;
+      ACE_CString const ext_id (members[index]);
+      int int_id {};
 
       // Is there a duplicate member name?
       if (map.trybind (ext_id, int_id) != 0)
@@ -626,7 +627,7 @@ TAO_TypeCodeFactory_i::create_enum_tc (
 
   using typecode_type = TAO::TypeCode::Enum<
     CORBA::String_var,
-    ACE_Array_Base<CORBA::String_var>,
+    std::vector<CORBA::String_var>,
     TAO::True_RefCount_Policy>;
 
   ACE_NEW_THROW_EX (tc,
@@ -641,8 +642,8 @@ TAO_TypeCodeFactory_i::create_enum_tc (
 
 CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_i::create_alias_tc (
-    const char *id,
-    const char *name,
+    char const *id,
+    char const *name,
     CORBA::TypeCode_ptr original_type)
 {
   return this->alias_value_box_tc_common (id,
@@ -653,9 +654,9 @@ TAO_TypeCodeFactory_i::create_alias_tc (
 
 CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_i::create_exception_tc (
-    const char *id,
-    const char *name,
-    const CORBA::StructMemberSeq &members)
+    char const *id,
+    char const *name,
+    CORBA::StructMemberSeq const &members)
 {
   return this->struct_except_tc_common (id,
                                         name,
@@ -665,8 +666,8 @@ TAO_TypeCodeFactory_i::create_exception_tc (
 
 CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_i::create_interface_tc (
-    const char *id,
-    const char *name)
+    char const *id,
+    char const *name)
 {
   return this->create_tc_common (id,
                                  name,
@@ -692,7 +693,7 @@ TAO_TypeCodeFactory_i::create_fixed_tc (
     CORBA::UShort digits,
     CORBA::UShort scale)
 {
-  CORBA::TypeCode_ptr tc;
+  CORBA::TypeCode_ptr tc {};
   ACE_NEW_THROW_EX (tc,
                     TAO::TypeCode::Fixed<TAO::True_RefCount_Policy> (digits,
                                                                      scale),
@@ -721,12 +722,11 @@ TAO_TypeCodeFactory_i::create_array_tc (
 
 CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_i::create_value_tc (
-    const char *id,
-    const char *name,
+    char const *id,
+    char const *name,
     CORBA::ValueModifier type_modifier,
     CORBA::TypeCode_ptr concrete_base,
-    const CORBA::ValueMemberSeq &members
-  )
+    CORBA::ValueMemberSeq const &members)
 {
   return this->value_event_tc_common (id,
                                       name,
@@ -738,10 +738,9 @@ TAO_TypeCodeFactory_i::create_value_tc (
 
 CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_i::create_value_box_tc (
-    const char *id,
-    const char *name,
-    CORBA::TypeCode_ptr boxed_type
-  )
+    char const *id,
+    char const *name,
+    CORBA::TypeCode_ptr boxed_type)
 {
   return this->alias_value_box_tc_common (id,
                                           name,
@@ -751,9 +750,8 @@ TAO_TypeCodeFactory_i::create_value_box_tc (
 
 CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_i::create_native_tc (
-    const char *id,
-    const char *name
-  )
+    char const *id,
+    char const *name)
 {
   return this->create_tc_common (id,
                                  name,
@@ -761,9 +759,9 @@ TAO_TypeCodeFactory_i::create_native_tc (
 }
 
 CORBA::TypeCode_ptr
-TAO_TypeCodeFactory_i::create_recursive_tc (const char *id)
+TAO_TypeCodeFactory_i::create_recursive_tc (char const *id)
 {
-  CORBA::TypeCode_ptr tc = CORBA::TypeCode_ptr ();
+  CORBA::TypeCode_ptr tc {};
 
   if (id == nullptr || !this->valid_id (id))
     {
@@ -779,9 +777,8 @@ TAO_TypeCodeFactory_i::create_recursive_tc (const char *id)
 
 CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_i::create_abstract_interface_tc (
-    const char *id,
-    const char *name
-  )
+    char const *id,
+    char const *name)
 {
   return this->create_tc_common (id,
                                  name,
@@ -790,8 +787,8 @@ TAO_TypeCodeFactory_i::create_abstract_interface_tc (
 
 CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_i::create_local_interface_tc (
-    const char *id,
-    const char *name)
+    char const *id,
+    char const *name)
 {
   return this->create_tc_common (id,
                                  name,
@@ -800,8 +797,8 @@ TAO_TypeCodeFactory_i::create_local_interface_tc (
 
 CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_i::create_component_tc (
-    const char *id,
-    const char *name)
+    char const *id,
+    char const *name)
 {
   return this->create_tc_common (id,
                                  name,
@@ -809,7 +806,7 @@ TAO_TypeCodeFactory_i::create_component_tc (
 }
 
 CORBA::TypeCode_ptr
-TAO_TypeCodeFactory_i::create_home_tc (const char *id, const char *name)
+TAO_TypeCodeFactory_i::create_home_tc (char const *id, char const *name)
 {
   return this->create_tc_common (id,
                                  name,
@@ -818,11 +815,11 @@ TAO_TypeCodeFactory_i::create_home_tc (const char *id, const char *name)
 
 CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_i::create_event_tc (
-    const char *id,
-    const char *name,
+    char const *id,
+    char const *name,
     CORBA::ValueModifier type_modifier,
     CORBA::TypeCode_ptr concrete_base,
-    const CORBA::ValueMemberSeq &members)
+    CORBA::ValueMemberSeq const &members)
 {
   return this->value_event_tc_common (id,
                                       name,
@@ -832,13 +829,11 @@ TAO_TypeCodeFactory_i::create_event_tc (
                                       CORBA::tk_event);
 }
 
-// =====================================================================
-
 void
 TAO_TypeCodeFactory_i::compute_default_label (
   CORBA::TCKind kind,
   CORBA::ULong skip_slot,
-  const CORBA::UnionMemberSeq &members,
+  CORBA::UnionMemberSeq const &members,
   TAO::TypeCode::Case_Dynamic *& the_case)
 {
   // One to hold the current default value, one to
@@ -854,19 +849,13 @@ TAO_TypeCodeFactory_i::compute_default_label (
     CORBA::ULongLong ulonglong_val;
     CORBA::ULong enum_val;
     // TODO - handle (u)longlong types
-  } dv, u;
+  } dv {}, u {};
 
-  dv.char_val = 0;
-  dv.bool_val = 0;
   dv.short_val = ACE_INT16_MIN;
-  dv.ushort_val = 0;
   dv.long_val = ACE_INT32_MIN;
-  dv.ulong_val = 0;
-  dv.ulonglong_val = 0;
-  dv.enum_val = 0;
 
   CORBA::ULong const len = members.length ();
-  bool success = false;
+  bool success {};
 
   // A collision forces us to start over, because the label
   // values need not be in sorted order.
@@ -874,7 +863,7 @@ TAO_TypeCodeFactory_i::compute_default_label (
     {
       success = true;
 
-      for (CORBA::ULong i = 0; i < len; ++i)
+      for (CORBA::ULong i {}; i < len; ++i)
         {
           // This is the one we're trying to find a legal value for.
           if (i == skip_slot)
@@ -890,7 +879,7 @@ TAO_TypeCodeFactory_i::compute_default_label (
 
               if (u.char_val == dv.char_val)
                 {
-                  dv.char_val++;
+                  ++dv.char_val;
                   success = false;
                 }
               break;
@@ -908,7 +897,7 @@ TAO_TypeCodeFactory_i::compute_default_label (
 
               if (u.short_val == dv.short_val)
                 {
-                  dv.short_val++;
+                  ++dv.short_val;
                   success = false;
                 }
               break;
@@ -917,7 +906,7 @@ TAO_TypeCodeFactory_i::compute_default_label (
 
               if (u.ushort_val == dv.ushort_val)
                 {
-                  dv.ushort_val++;
+                  ++dv.ushort_val;
                   success = false;
                 }
               break;
@@ -926,7 +915,7 @@ TAO_TypeCodeFactory_i::compute_default_label (
 
               if (u.long_val == dv.long_val)
                 {
-                  dv.long_val++;
+                  ++dv.long_val;
                   success = false;
                 }
               break;
@@ -935,7 +924,7 @@ TAO_TypeCodeFactory_i::compute_default_label (
 
               if (u.ulong_val == dv.ulong_val)
                 {
-                  dv.ulong_val++;
+                  ++dv.ulong_val;
                   success = false;
                 }
               break;
@@ -944,22 +933,24 @@ TAO_TypeCodeFactory_i::compute_default_label (
 
               if (u.ulonglong_val == dv.ulonglong_val)
                 {
-                  dv.ulonglong_val++;
+                  ++dv.ulonglong_val;
                   success = false;
                 }
               break;
             case CORBA::tk_enum:
             {
-              TAO::Any_Impl *impl = members[i].label.impl ();
-              TAO_InputCDR for_reading (static_cast<ACE_Message_Block *> (0));
+              TAO::Any_Impl * const impl = members[i].label.impl ();
+              TAO_InputCDR for_reading (static_cast<ACE_Message_Block *> (nullptr));
 
               if (impl->encoded ())
                 {
-                  TAO::Unknown_IDL_Type *unk =
+                  TAO::Unknown_IDL_Type * const unk =
                     dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
 
                   if (!unk)
+                  {
                     throw CORBA::INTERNAL ();
+                  }
 
                   // We don't want unk's rd_ptr to move, in case
                   // we are shared by another Any, so we use this
@@ -970,7 +961,7 @@ TAO_TypeCodeFactory_i::compute_default_label (
                 {
                   TAO_OutputCDR out;
                   impl->marshal_value (out);
-                  TAO_InputCDR tmp (out);
+                  TAO_InputCDR const tmp (out);
                   for_reading = tmp;
                 }
 
@@ -978,7 +969,7 @@ TAO_TypeCodeFactory_i::compute_default_label (
 
               if (u.enum_val == dv.enum_val)
                 {
-                  dv.enum_val++;
+                  ++dv.enum_val;
                   success = false;
                 }
               break;
@@ -1086,11 +1077,10 @@ TAO_TypeCodeFactory_i::compute_default_label (
 
 CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_i::create_tc_common (
-    const char *id,
-    const char *name,
-    CORBA::TCKind kind
+    char const *id,
+    char const *name,
+    CORBA::TCKind kind)
 
-  )
 {
   if (name == nullptr || !this->valid_name (name))
     {
@@ -1103,7 +1093,7 @@ TAO_TypeCodeFactory_i::create_tc_common (
       throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 16, CORBA::COMPLETED_NO);
     }
 
-  CORBA::TypeCode_ptr tc;
+  CORBA::TypeCode_ptr tc {};
 
   using typecode_type = TAO::TypeCode::Objref<CORBA::String_var,
                                               TAO::True_RefCount_Policy>;
@@ -1118,11 +1108,10 @@ TAO_TypeCodeFactory_i::create_tc_common (
 CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_i::string_wstring_tc_common (
     CORBA::ULong bound,
-    CORBA::TCKind kind
+    CORBA::TCKind kind)
 
-  )
 {
-  CORBA::TypeCode_ptr tc;
+  CORBA::TypeCode_ptr tc {};
   ACE_NEW_THROW_EX (tc,
                     TAO::TypeCode::String<TAO::True_RefCount_Policy> (kind,
                                                                       bound),
@@ -1137,7 +1126,7 @@ TAO_TypeCodeFactory_i::sequence_array_tc_common (
     CORBA::TypeCode_ptr element_type,
     CORBA::TCKind kind)
 {
-  CORBA::TypeCode_ptr tc = CORBA::TypeCode_ptr ();
+  CORBA::TypeCode_ptr tc {};
 
   CORBA::Boolean const valid_element =
     this->valid_content_type (element_type);
@@ -1147,7 +1136,7 @@ TAO_TypeCodeFactory_i::sequence_array_tc_common (
       throw ::CORBA::BAD_TYPECODE (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
     }
 
-  CORBA::TypeCode_var tmp (CORBA::TypeCode::_duplicate (element_type));
+  CORBA::TypeCode_var const tmp (CORBA::TypeCode::_duplicate (element_type));
 
   using typecode_type = TAO::TypeCode::Sequence<CORBA::TypeCode_var,
                                                 TAO::True_RefCount_Policy>;
@@ -1161,14 +1150,13 @@ TAO_TypeCodeFactory_i::sequence_array_tc_common (
 
 CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_i::struct_except_tc_common (
-    const char *id,
-    const char *name,
-    const CORBA::StructMemberSeq & members,
-    CORBA::TCKind kind
+    char const *id,
+    char const *name,
+    CORBA::StructMemberSeq const & members,
+    CORBA::TCKind kind)
 
-  )
 {
-  CORBA::TypeCode_ptr tc = CORBA::TypeCode_ptr ();
+  CORBA::TypeCode_ptr tc {};
 
   if (name == nullptr || !this->valid_name (name))
     {
@@ -1188,11 +1176,11 @@ TAO_TypeCodeFactory_i::struct_except_tc_common (
 
   field_array_type fields (len);
 
-  bool is_recursive = false;
+  bool is_recursive {};
 
   CORBA::TypeCode_var recursive_tc;
 
-  for (CORBA::ULong index = 0; index < len; ++index)
+  for (CORBA::ULong index {}; index < len; ++index)
     {
       // Valid member type?
       CORBA::TypeCode_ptr const member_tc = members[index].type.in ();
@@ -1214,8 +1202,8 @@ TAO_TypeCodeFactory_i::struct_except_tc_common (
           throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 15, CORBA::COMPLETED_NO);
         }
 
-      ACE_CString ext_id (member_name);
-      int int_id = 0;
+      ACE_CString const ext_id (member_name);
+      int int_id {};
 
       // Is there a duplicate member name?
       if (map.trybind (ext_id, int_id) != 0)
@@ -1272,13 +1260,12 @@ TAO_TypeCodeFactory_i::struct_except_tc_common (
 
 CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_i::alias_value_box_tc_common (
-    const char *id,
-    const char *name,
+    char const *id,
+    char const *name,
     CORBA::TypeCode_ptr underlying_type,
-    CORBA::TCKind kind
-  )
+    CORBA::TCKind kind)
 {
-  CORBA::TypeCode_ptr tc = CORBA::TypeCode_ptr ();
+  CORBA::TypeCode_ptr tc {};
 
   if (name == nullptr || !this->valid_name (name))
     {
@@ -1298,7 +1285,7 @@ TAO_TypeCodeFactory_i::alias_value_box_tc_common (
       throw ::CORBA::BAD_TYPECODE (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
     }
 
-  CORBA::TypeCode_var tmp (CORBA::TypeCode::_duplicate (underlying_type));
+  CORBA::TypeCode_var const tmp (CORBA::TypeCode::_duplicate (underlying_type));
 
   using typecode_type = TAO::TypeCode::Alias<CORBA::String_var,
                                               CORBA::TypeCode_var,
@@ -1313,16 +1300,15 @@ TAO_TypeCodeFactory_i::alias_value_box_tc_common (
 
 CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_i::value_event_tc_common (
-    const char *id,
-    const char *name,
+    char const *id,
+    char const *name,
     CORBA::ValueModifier type_modifier,
     CORBA::TypeCode_ptr concrete_base,
-    const CORBA::ValueMemberSeq &members,
-    CORBA::TCKind kind
+    CORBA::ValueMemberSeq const &members,
+    CORBA::TCKind kind)
 
-  )
 {
-  CORBA::TypeCode_ptr tc = CORBA::TypeCode_ptr ();
+  CORBA::TypeCode_ptr tc {};
 
   if (name == nullptr || !this->valid_name (name))
     {
@@ -1342,10 +1328,10 @@ TAO_TypeCodeFactory_i::value_event_tc_common (
 
   ACE_Hash_Map_Manager<ACE_CString, int, ACE_Null_Mutex> map;
 
-  bool is_recursive = false;
+  bool is_recursive {};
   CORBA::TypeCode_var recursive_tc;
 
-  for (CORBA::ULong index = 0; index < len; ++index)
+  for (CORBA::ULong index {}; index < len; ++index)
     {
       // Valid member type?
       CORBA::TypeCode_ptr const member_tc = members[index].type.in ();
@@ -1360,15 +1346,15 @@ TAO_TypeCodeFactory_i::value_event_tc_common (
             CORBA::COMPLETED_NO);
         }
 
-      const char * const member_name = members[index].name;
+      char const * const member_name = members[index].name;
 
       if (member_name == nullptr || !this->valid_name (member_name))
         {
           throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 15, CORBA::COMPLETED_NO);
         }
 
-      ACE_CString ext_id (member_name);
-      int int_id = 0;
+      ACE_CString const ext_id (member_name);
+      int int_id {};
 
       // Is there a duplicate member name?
       if (map.trybind (ext_id, int_id) != 0)
@@ -1398,7 +1384,7 @@ TAO_TypeCodeFactory_i::value_event_tc_common (
       field.visibility = members[index].access;
     }
 
-  CORBA::TypeCode_var tmp (
+  CORBA::TypeCode_var const tmp (
     CORBA::TypeCode::_duplicate (CORBA::is_nil (concrete_base)
                                  ? CORBA::_tc_null
                                  : concrete_base));
@@ -1436,7 +1422,7 @@ TAO_TypeCodeFactory_i::value_event_tc_common (
 }
 
 CORBA::Boolean
-TAO_TypeCodeFactory_i::valid_name (const char *name)
+TAO_TypeCodeFactory_i::valid_name (char const *name)
 {
   // Empty string is valid for name.
   if (*name == '\0')
@@ -1449,7 +1435,7 @@ TAO_TypeCodeFactory_i::valid_name (const char *name)
       return false;
     }
 
-  const char *tmp = name + 1;
+  char const *tmp = name + 1;
 
   for (; *tmp; ++tmp)
     {
@@ -1467,30 +1453,21 @@ TAO_TypeCodeFactory_i::valid_name (const char *name)
 }
 
 CORBA::Boolean
-TAO_TypeCodeFactory_i::valid_id (const char *id)
+TAO_TypeCodeFactory_i::valid_id (char const *id)
 {
-  ACE_CString safety (id,
-                      0,
-                      false);
+  std::string const safety (id);
 
-  ACE_CString::size_type const pos = safety.find (':');
+  std::string::size_type const pos = safety.find (':');
 
-  if (pos == ACE_CString::npos)
+  if (pos == std::string::npos)
     {
-      return 0;
+      return false;
     }
 
-  ACE_CString format (safety.substr (0, pos));
-
-  if (format == "IDL"
-      || format == "RMI"
-      || format == "DCE"
-      || format == "LOCAL")
-    {
-      return true;
-    }
-
-  return false;
+  return safety.compare (0, pos, "IDL") == 0
+      || safety.compare (0, pos, "RMI") == 0
+      || safety.compare (0, pos, "DCE") == 0
+      || safety.compare (0, pos, "LOCAL") == 0;
 }
 
 CORBA::Boolean
@@ -1513,7 +1490,7 @@ TAO_TypeCodeFactory_i::valid_content_type (CORBA::TypeCode_ptr tc)
 
 CORBA::Boolean
 TAO_TypeCodeFactory_i::unique_label_values (
-  const CORBA::UnionMemberSeq &members,
+  CORBA::UnionMemberSeq const &members,
   CORBA::TypeCode_ptr disc_tc,
   CORBA::ULong default_index_slot)
 {
@@ -1534,7 +1511,7 @@ TAO_TypeCodeFactory_i::unique_label_values (
     CORBA::ULong enum_val;
     CORBA::ULongLong ulonglong_val;
     CORBA::LongLong longlong_val;
-  } s = {0, 0, 0, 0, 0, 0, 0, 0, 0 };
+  } s {};
 
   // Two cases - one for signed and one for unsigned discriminator types.
   if (disc_kind == CORBA::tk_long
@@ -1542,7 +1519,7 @@ TAO_TypeCodeFactory_i::unique_label_values (
     {
       ACE_Bounded_Set<CORBA::Long> checker (length);
 
-      for (CORBA::ULong i = 0; i < length; ++i)
+      for (CORBA::ULong i {}; i < length; ++i)
         {
           if (i == default_index_slot)
             {
@@ -1578,7 +1555,7 @@ TAO_TypeCodeFactory_i::unique_label_values (
     {
       ACE_Bounded_Set<CORBA::ULong> checker (length);
 
-      for (CORBA::ULong i = 0; i < length; ++i)
+      for (CORBA::ULong i {}; i < length; ++i)
         {
           if (i == default_index_slot)
             {
@@ -1625,8 +1602,8 @@ TAO_TypeCodeFactory_i::unique_label_values (
               break;
             case CORBA::tk_enum:
             {
-              TAO::Any_Impl *impl = members[i].label.impl ();
-              TAO_InputCDR for_reading (static_cast<ACE_Message_Block *> (0));
+              TAO::Any_Impl * const impl = members[i].label.impl ();
+              TAO_InputCDR for_reading (static_cast<ACE_Message_Block *> (nullptr));
 
               if (impl->encoded ())
                 {
@@ -1634,7 +1611,9 @@ TAO_TypeCodeFactory_i::unique_label_values (
                     dynamic_cast<TAO::Unknown_IDL_Type *> (impl);
 
                   if (!unk)
+                  {
                     throw CORBA::INTERNAL ();
+                  }
 
                   // We don't want unk's rd_ptr to move, in case
                   // we are shared by another Any, so we use this
@@ -1645,7 +1624,7 @@ TAO_TypeCodeFactory_i::unique_label_values (
                 {
                   TAO_OutputCDR out;
                   impl->marshal_value (out);
-                  TAO_InputCDR tmp (out);
+                  TAO_InputCDR const tmp (out);
                   for_reading = tmp;
                 }
 
@@ -1695,9 +1674,11 @@ TAO_TypeCodeFactory_i::check_recursion (CORBA::TCKind kind,
       && kind != CORBA::tk_union
       && kind != CORBA::tk_value
       && kind != CORBA::tk_event)
+  {
     return false;
+  }
 
-  CORBA::TypeCode_var unaliased_member =
+  CORBA::TypeCode_var const unaliased_member =
     TAO::unaliased_typecode (member);
 
   CORBA::TCKind const unaliased_member_kind =
@@ -1716,9 +1697,9 @@ TAO_TypeCodeFactory_i::check_recursion (CORBA::TCKind kind,
         CORBA::ULong const nfields =
           unaliased_member->member_count ();
 
-        for (CORBA::ULong i = 0; i < nfields; ++i)
+        for (CORBA::ULong i {}; i < nfields; ++i)
           {
-            CORBA::TypeCode_var member_tc =
+            CORBA::TypeCode_var const member_tc =
               unaliased_member->member_type (i);
 
             CORBA::TCKind const member_tc_kind =
@@ -1735,7 +1716,7 @@ TAO_TypeCodeFactory_i::check_recursion (CORBA::TCKind kind,
                     char const * member_tc_id =
                       member_tc->id ();
 
-                    if (ACE_OS::strcmp (id, member_tc_id) == 0)
+                    if (std::strcmp (id, member_tc_id) == 0)
                       {
                         TAO::TypeCode::Indirected_Type * const rtc =
                           dynamic_cast<
@@ -1775,10 +1756,10 @@ TAO_TypeCodeFactory_i::check_recursion (CORBA::TCKind kind,
                 if (member_tc_kind == CORBA::tk_value
                     || member_tc_kind == CORBA::tk_event)
                   {
-                    char const * member_tc_id = member_tc->id ();
+                    char const * const member_tc_id = member_tc->id ();
 
                     if (working_id != nullptr
-                        && ACE_OS::strcmp (working_id, member_tc_id) == 0)
+                        && std::strcmp (working_id, member_tc_id) == 0)
                       {
                         // We've found a recursion at a lower level but
                         // not the one we're looking for, so we must end
@@ -1813,13 +1794,13 @@ TAO_TypeCodeFactory_i::check_recursion (CORBA::TCKind kind,
     case CORBA::tk_sequence:
     case CORBA::tk_array:
       {
-        CORBA::TypeCode_var content_tc =
+        CORBA::TypeCode_var const content_tc =
           unaliased_member->content_type ();
 
         CORBA::TCKind const content_tc_kind =
           content_tc->kind ();
 
-        char const *content_tc_id = nullptr;
+        char const *content_tc_id {};
 
         if (content_tc_kind == CORBA::tk_struct
             || content_tc_kind == CORBA::tk_union
@@ -1830,7 +1811,7 @@ TAO_TypeCodeFactory_i::check_recursion (CORBA::TCKind kind,
 
         if (working_id != nullptr
             && content_tc_id != nullptr
-            && ACE_OS::strcmp (working_id, content_tc_id) == 0)
+            && std::strcmp (working_id, content_tc_id) == 0)
           {
             // We've found a recursion at a lower level but
             // not the one we're looking for, so we must
@@ -1840,7 +1821,7 @@ TAO_TypeCodeFactory_i::check_recursion (CORBA::TCKind kind,
 
        if (content_tc_kind == CORBA::TAO_TC_KIND_COUNT)
           {
-            if (ACE_OS::strcmp (id, content_tc_id) == 0)
+            if (std::strcmp (id, content_tc_id) == 0)
               {
                 TAO::TypeCode::Indirected_Type * const rtc =
                   dynamic_cast<TAO::TypeCode::Indirected_Type *>
@@ -1884,7 +1865,7 @@ TAO_TypeCodeFactory_i::check_recursion (CORBA::TCKind kind,
 CORBA::TypeCode_ptr
 TAO_TypeCodeFactory_i::make_recursive_tc (CORBA::TCKind kind, char const * id)
 {
-  CORBA::TypeCode_ptr tc = CORBA::TypeCode_ptr ();
+  CORBA::TypeCode_ptr tc {};
 
   switch (kind)
     {

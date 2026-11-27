@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    UIOP_Acceptor.h
  *
@@ -9,8 +6,6 @@
  *  @author Fred Kuhns <fredk@cs.wustl.edu>
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_UIOP_ACCEPTOR_H
 #define TAO_UIOP_ACCEPTOR_H
@@ -32,6 +27,8 @@
 #include "ace/Acceptor.h"
 #include "ace/LSOCK_Acceptor.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
@@ -42,13 +39,9 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Strategies_Export TAO_UIOP_Acceptor : public TAO_Acceptor
 {
 public:
-  // TAO_UIOP_Acceptor (ACE_UNIX_Addr &addr);
-  // Create Acceptor object using addr.
-
   /// Create Acceptor object using addr.
   TAO_UIOP_Acceptor ();
 
-  /// Destructor
   ~TAO_UIOP_Acceptor () override;
 
   using TAO_UIOP_BASE_ACCEPTOR = TAO_Strategy_Acceptor<TAO_UIOP_Connection_Handler, ACE_LSOCK_ACCEPTOR>;
@@ -61,7 +54,7 @@ public:
    *
    * Please check the documentation in Transport_Acceptor.h for details.
    */
-  //@{
+  /// @{
   int open (TAO_ORB_Core *orb_core,
             ACE_Reactor *reactor,
             int version_major,
@@ -78,12 +71,12 @@ public:
                       TAO_MProfile &mprofile,
                       CORBA::Short priority) override;
 
-  int is_collocated (TAO_Endpoint const *endpoint) override;
+  bool is_collocated (TAO_Endpoint const *endpoint) override;
   CORBA::ULong endpoint_count () override;
 
   int object_key (IOP::TaggedProfile &profile,
                   TAO::ObjectKey &key) override;
-  //@}
+  /// @}
 
 private:
   /// Implement the common part of the open*() methods
@@ -98,7 +91,7 @@ private:
   int parse_options (char const *options);
 
   /// Obtains uiop properties that must be used by this acceptor, i.e.,
-  /// initializes <uiop_properties_>.
+  /// initializes @c uiop_properties_.
   int init_uiop_properties ();
 
   /// Create a UIOP profile representing this acceptor.
@@ -120,10 +113,12 @@ private:
   /// The concrete acceptor, as a pointer to its base class.
   TAO_UIOP_BASE_ACCEPTOR base_acceptor_;
 
-  // Acceptor strategies.
-  TAO_UIOP_CREATION_STRATEGY *creation_strategy_ {};
-  TAO_UIOP_CONCURRENCY_STRATEGY *concurrency_strategy_ {};
-  TAO_UIOP_ACCEPT_STRATEGY *accept_strategy_ {};
+  /// @name Acceptor strategies
+  /// @{
+  std::unique_ptr<TAO_UIOP_CREATION_STRATEGY> creation_strategy_;
+  std::unique_ptr<TAO_UIOP_CONCURRENCY_STRATEGY> concurrency_strategy_;
+  std::unique_ptr<TAO_UIOP_ACCEPT_STRATEGY> accept_strategy_;
+  /// @}
 
   /// The GIOP version for this endpoint
   TAO_GIOP_Message_Version version_;

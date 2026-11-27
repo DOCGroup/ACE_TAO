@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #if defined (ACE_LACKS_ISCTYPE)
 #include "ace/OS_NS_errno.h"
 #endif
@@ -37,7 +36,9 @@ ACE_OS::ace_isascii (ACE_TCHAR c)
   return isascii ((unsigned char) c);
 #  endif /* ACE_LACKS_ISASCII */
   else
-    return c;
+    {
+      return c;
+    }
 # else
   return iswascii (c);
 # endif
@@ -192,9 +193,13 @@ ACE_OS::ace_towlower (wint_t c)
 {
 #if defined (ACE_LACKS_TOWLOWER)
   if (c < 256)
-    return tolower (static_cast<int> (c));
+    {
+      return tolower (static_cast<int> (c));
+    }
   else
-    return c;
+    {
+      return c;
+    }
 #else
   return towlower (c);
 #endif /* ACE_LACKS_TOWLOWER */

@@ -1,11 +1,8 @@
-// -*- C++ -*-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
-ACE_Stats_Value::ACE_Stats_Value (const u_int precision)
-  : whole_ (0),
-    fractional_ (0),
-    precision_ (precision)
+ACE_Stats_Value::ACE_Stats_Value (u_int const precision)
+  : precision_ (precision)
 {
 }
 
@@ -18,7 +15,7 @@ ACE_Stats_Value::precision () const
 
 ACE_INLINE
 void
-ACE_Stats_Value::whole (const ACE_UINT32 value)
+ACE_Stats_Value::whole (ACE_UINT32 const value)
 {
   whole_ = value;
 }
@@ -32,7 +29,7 @@ ACE_Stats_Value::whole () const
 
 ACE_INLINE
 void
-ACE_Stats_Value::fractional (const ACE_UINT32 value)
+ACE_Stats_Value::fractional (ACE_UINT32 const value)
 {
   fractional_ = value;
 }

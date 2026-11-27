@@ -1,12 +1,8 @@
-//* -*- C++ -*- */
-
-//=============================================================================
 /**
  *  @file    ace_wchar.h
  *
  *  @author Darrell Brunsch <brunsch@uci.edu>
  */
-//=============================================================================
 
 #ifndef ACE_WCHAR_H
 #define ACE_WCHAR_H
@@ -50,7 +46,7 @@
 
 #if defined (ACE_USES_STD_NAMESPACE_FOR_STDC_LIB) && \
             (ACE_USES_STD_NAMESPACE_FOR_STDC_LIB != 0)
-using std::size_t;
+using size_t;
 #endif /* ACE_USES_STD_NAMESPACE_FOR_STDC_LIB */
 
 // This makes the somewhat dubious assumption that if a platform lacks
@@ -61,7 +57,7 @@ using std::size_t;
 # endif /* ACE_WSTRING_HAS_USHORT_SUPPORT */
 #endif /* ACE_HAS_WCHAR && !ACE_LACKS_NATIVE_WCHAR_T */
 
-// Set the default behaviour for ACE_TEXT_WIDE to use the L-prefix
+/// Set the default behaviour for ACE_TEXT_WIDE to use the L-prefix.
 #if !defined (ACE_USES_L_PREFIX)
 # define ACE_USES_L_PREFIX 1
 #endif /* ACE_USES_L_PREFIX */
@@ -145,7 +141,7 @@ class ACE_Wide_To_Ascii
 {
 public:
   /// Constructor must take a wchar string.
-  ACE_Wide_To_Ascii (const wchar_t *s);
+  explicit ACE_Wide_To_Ascii (wchar_t const *s);
 
   /// Destructor will free up the memory.
   ~ACE_Wide_To_Ascii ();
@@ -165,9 +161,11 @@ private:
 #endif /* ACE_HAS_ICONV */
 
   /// Disallow these operation.
-  ACE_Wide_To_Ascii ();
-  ACE_Wide_To_Ascii (ACE_Wide_To_Ascii &);
-  ACE_Wide_To_Ascii& operator= (ACE_Wide_To_Ascii &);
+  ACE_Wide_To_Ascii () = delete;
+  ACE_Wide_To_Ascii (ACE_Wide_To_Ascii const &) = delete;
+  ACE_Wide_To_Ascii (ACE_Wide_To_Ascii &&) = delete;
+  ACE_Wide_To_Ascii &operator= (ACE_Wide_To_Ascii const &) = delete;
+  ACE_Wide_To_Ascii &operator= (ACE_Wide_To_Ascii &&) = delete;
 };
 
 /**
@@ -183,7 +181,7 @@ class ACE_Ascii_To_Wide
 {
 public:
   /// Constructor must take a wchar string.
-  ACE_Ascii_To_Wide (const char *s);
+  explicit ACE_Ascii_To_Wide (char const *s);
 
   /// Destructor will free up the memory.
   ~ACE_Ascii_To_Wide ();
@@ -192,7 +190,7 @@ public:
   wchar_t *wchar_rep ();
 
   /// Converts an char string to unicode/wide and returns a new string.
-  static wchar_t *convert (const char *str);
+  static wchar_t *convert (char const *str);
 
 private:
   /// Internal pointer to the converted string.
@@ -204,8 +202,10 @@ private:
 
   /// Disallow these operation.
   ACE_Ascii_To_Wide () = delete;
-  ACE_Ascii_To_Wide (ACE_Ascii_To_Wide &) = delete;
-  ACE_Ascii_To_Wide operator= (ACE_Ascii_To_Wide &) = delete;
+  ACE_Ascii_To_Wide (ACE_Ascii_To_Wide const &) = delete;
+  ACE_Ascii_To_Wide (ACE_Ascii_To_Wide &&) = delete;
+  ACE_Ascii_To_Wide &operator= (ACE_Ascii_To_Wide const &) = delete;
+  ACE_Ascii_To_Wide &operator= (ACE_Ascii_To_Wide &&) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

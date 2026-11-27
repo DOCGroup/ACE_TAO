@@ -6,41 +6,30 @@
 #include "tao/debug.h"
 #include "tao/TAO_Server_Request.h"
 
-#include "ace/Log_Msg.h"
-#include "ace/OS_NS_string.h"
-#include "ace/CORBA_macros.h"
+#include <algorithm>
 #include <cstring>
+#include <new>
+#include <utility>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Adapter_Registry::TAO_Adapter_Registry (TAO_ORB_Core *)
-  : adapters_capacity_ (16), // @@ Make it configurable
-    adapters_count_ (0),
-    adapters_ (nullptr)
 {
-  ACE_NEW (this->adapters_,
-           TAO_Adapter*[this->adapters_capacity_]);
 }
 
-TAO_Adapter_Registry::~TAO_Adapter_Registry ()
-{
-  for (size_t i = 0; i != this->adapters_count_; ++i)
-    delete this->adapters_[i];
-
-  delete[] this->adapters_;
-}
+TAO_Adapter_Registry::~TAO_Adapter_Registry () = default;
 
 void
 TAO_Adapter_Registry::close (int wait_for_completion)
 {
   try
     {
-      for (size_t i = 0; i != this->adapters_count_; ++i)
+      for (adapter_type const &adapter : this->adapters_)
         {
-          this->adapters_[i]->close (wait_for_completion);
+          adapter->close (wait_for_completion);
         }
     }
-  catch (const::CORBA::Exception &ex)
+  catch (::CORBA::Exception const &ex)
     {
       if (TAO_debug_level > 3)
         {
@@ -49,53 +38,45 @@ TAO_Adapter_Registry::close (int wait_for_completion)
         }
       return;
     }
-
-  return;
 }
 
 void
 TAO_Adapter_Registry::check_close (int wait_for_completion)
 {
-  for (size_t i = 0; i != this->adapters_count_; ++i)
+  for (adapter_type const &adapter : this->adapters_)
     {
-      this->adapters_[i]->check_close (wait_for_completion);
+      adapter->check_close (wait_for_completion);
     }
 }
 
 void
 TAO_Adapter_Registry::insert (TAO_Adapter *adapter)
 {
-  if (this->adapters_capacity_ == this->adapters_count_)
-    {
-      this->adapters_capacity_ *= 2;
-      TAO_Adapter **tmp = nullptr;
-      ACE_NEW_THROW_EX (tmp,
-                        TAO_Adapter*[this->adapters_capacity_],
-                        CORBA::NO_MEMORY ());
-
-      for (size_t i = 0; i != this->adapters_count_; ++i)
-        tmp[i] = this->adapters_[i];
-      delete[] this->adapters_;
-      this->adapters_ = tmp;
-    }
-
   int const priority = adapter->priority ();
-  for (size_t i = 0; i != this->adapters_count_; ++i)
+  adapter_container_type::const_iterator const position =
+    std::lower_bound (this->adapters_.begin (),
+                      this->adapters_.end (),
+                      priority,
+                      [] (adapter_type const& candidate, int target_priority)
+                      {
+                        return candidate->priority () < target_priority;
+                      });
+  adapter_container_type::difference_type const insertion_offset =
+    position - this->adapters_.begin ();
+
+  try
     {
-      if (this->adapters_[i]->priority () >= priority)
-        {
-          for (size_t j = this->adapters_count_ + 1;
-               j > i;
-               --j)
-            {
-              this->adapters_[j] = this->adapters_[j - 1];
-            }
-          this->adapters_[i] = adapter;
-          ++this->adapters_count_;
-          return;
-        }
+      // Reserve before taking ownership so a failed allocation leaves the
+      // adapter with the caller, as expected by insert's transfer contract.
+      this->adapters_.reserve (this->adapters_.size () + 1);
+      adapter_type owned_adapter (adapter);
+      this->adapters_.insert (this->adapters_.begin () + insertion_offset,
+                              std::move (owned_adapter));
     }
-  this->adapters_[this->adapters_count_++] = adapter;
+  catch (std::bad_alloc const &)
+    {
+      throw CORBA::NO_MEMORY ();
+    }
 }
 
 void
@@ -103,9 +84,9 @@ TAO_Adapter_Registry::dispatch (TAO::ObjectKey &key,
                                 TAO_ServerRequest &request,
                                 CORBA::Object_out forward_to)
 {
-  for (size_t i = 0; i != this->adapters_count_; ++i)
+  for (adapter_type const &adapter : this->adapters_)
     {
-      int const r = this->adapters_[i]->dispatch (key, request, forward_to);
+      int const r = adapter->dispatch (key, request, forward_to);
 
       if (r != TAO_Adapter::DS_MISMATCHED_KEY)
         {
@@ -121,12 +102,14 @@ TAO_Adapter_Registry::dispatch (TAO::ObjectKey &key,
 
 CORBA::Object_ptr
 TAO_Adapter_Registry::create_collocated_object (TAO_Stub *stub,
-                                                const TAO_MProfile &mprofile)
+                                                TAO_MProfile const &mprofile)
 {
-  for (size_t i = 0; i != this->adapters_count_; ++i)
+  for (adapter_container_type::iterator adapter = this->adapters_.begin ();
+       adapter != this->adapters_.end ();
+       ++adapter)
     {
       CORBA::Object_ptr x =
-        this->adapters_[i]->create_collocated_object (stub, mprofile);
+        (*adapter)->create_collocated_object (stub, mprofile);
       if (x != nullptr)
         {
           if (!stub->collocated_servant ())
@@ -134,13 +117,13 @@ TAO_Adapter_Registry::create_collocated_object (TAO_Stub *stub,
               // This adapter created an object but it was not able to locate
               // a servant so we need to give the rest of the adapters a chance to
               // initialise the stub and find a servant or forward us or whatever.
-              for (CORBA::Long go_on = 1; go_on && i != this->adapters_count_;
-                   ++i)
+              for (CORBA::Long go_on = 1;
+                   go_on && adapter != this->adapters_.end ();
+                   ++adapter)
                 {
                   // initialize_collocated_object only returns 0 if it has completely
                   // initialised the object.
-                  go_on = this->adapters_[i]->initialize_collocated_object (
-                    stub);
+                  go_on = (*adapter)->initialize_collocated_object (stub);
                 }
             }
           return x;
@@ -152,10 +135,10 @@ TAO_Adapter_Registry::create_collocated_object (TAO_Stub *stub,
 CORBA::Long
 TAO_Adapter_Registry::initialize_collocated_object (TAO_Stub *stub)
 {
-  for (size_t i = 0; i != this->adapters_count_; ++i)
+  for (adapter_type const &adapter : this->adapters_)
     {
       int const retval =
-        this->adapters_[i]->initialize_collocated_object (stub);
+        adapter->initialize_collocated_object (stub);
       if (retval == 0)
         {
           // initialize_collocated_object only returns 0 if it has completely
@@ -167,13 +150,15 @@ TAO_Adapter_Registry::initialize_collocated_object (TAO_Stub *stub)
 }
 
 TAO_Adapter *
-TAO_Adapter_Registry::find_adapter (const char *name) const
+TAO_Adapter_Registry::find_adapter (char const *name) const
 {
-  for (TAO_Adapter **i = this->adapters_;
-       i != this->adapters_ + this->adapters_count_;
-       ++i)
-    if (std::strcmp ((*i)->name (), name) == 0)
-      return *i;
+  for (adapter_type const &adapter : this->adapters_)
+    {
+      if (std::strcmp (adapter->name (), name) == 0)
+        {
+          return adapter.get ();
+        }
+    }
 
   return nullptr;
 }

@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    Chrono_Test.cpp
  *
@@ -10,8 +8,6 @@
  *
  *  @author Marcel Smit <msmit@remedy.nl>
  */
-//=============================================================================
-
 
 #include "test_config.h"
 #include "ace/OS_NS_unistd.h"
@@ -20,14 +16,15 @@
 #include "ace/Truncate.h"
 
 int
-tv_test_case (const ACE_Time_Value& tv, const char *what, time_t expect_sec, suseconds_t expect_usec = 0)
+tv_test_case (ACE_Time_Value const & tv, char const *what, time_t expect_sec, suseconds_t expect_usec = 0)
 {
   if (tv.sec () != expect_sec || tv.usec () != expect_usec)
   {
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("(%P|%t) unexpected value after converting %C to an ACE_Time_Value. ")
-                ACE_TEXT ("Expected <sec=%d,usec=%d> - got <sec=%d,usec=%d>\n"),
-                what, expect_sec, expect_usec, tv.sec (), tv.usec ()));
+                ACE_TEXT ("Expected <sec=%:,usec=%q> - got <sec=%:,usec=%q>\n"),
+                what, expect_sec, static_cast<ACE_INT64> (expect_usec),
+                tv.sec (), static_cast<ACE_INT64> (tv.usec ())));
     return 1;
   }
   return 0;
@@ -35,8 +32,8 @@ tv_test_case (const ACE_Time_Value& tv, const char *what, time_t expect_sec, sus
 
 template <class Rep, class Period>
 int
-tv_test_case (const std::chrono::duration<Rep, Period>& duration,
-  const char *what, time_t expect_sec, suseconds_t expect_usec = 0)
+tv_test_case (std::chrono::duration<Rep, Period> const & duration,
+  char const *what, time_t expect_sec, suseconds_t expect_usec = 0)
 {
   return tv_test_case (ACE_Time_Value {duration}, what, expect_sec, expect_usec);
 }
@@ -56,13 +53,13 @@ test_assignments ()
     ACE_Time_Value const tv = ACE_Time_Value { std::chrono::microseconds {10005} };
     errors += tv_test_case(tv, "microseconds (10005)", 0, 10005);
 
-    std::chrono::milliseconds ms_test { tv.msec () };
+    std::chrono::milliseconds const ms_test { tv.msec () };
     if (ms_test.count () != 10)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("(%P|%t) unexpected value after get_chrono_msec. ")
                   ACE_TEXT ("Expected <10> - got <%q>\n"),
-                  ms_test.count ()));
+                  static_cast<ACE_INT64> (ms_test.count ())));
       ++errors;
     }
   }
@@ -98,9 +95,9 @@ test_assignments ()
   };
 
   //                       half a day  3 hours   24 minutes 54 seconds
-  time_t expected_sec = { ((12*3600) + (3*3600) + (24*60) + 54 ) * 2 };
+  time_t const expected_sec = { ((12*3600) + (3*3600) + (24*60) + 54 ) * 2 };
   //                              238 milli   754 usec  342 nano (lost)
-  suseconds_t expected_usec = { ((238*1000) + 754 + 0) * 2 };
+  suseconds_t const expected_usec = { ((238*1000) + 754 + 0) * 2 };
   errors += tv_test_case(nsec,
     "two times half a day, 3 hours, 24 minutes, 54 seconds, "
     "238 milliseconds, 754 microseconds and 342 nanoseconds (lost)",
@@ -119,13 +116,13 @@ test_streamers ()
   // Three days, 13 hours, 54 seconds, 25 milliseconds and 132 microseconds
   constexpr int nr_hours { (3*24) + 13 };
 
-  std::chrono::hours day_test_h {nr_hours};
-  std::chrono::seconds day_test_s {54};
-  std::chrono::milliseconds day_test_ms {25};
-  std::chrono::microseconds day_test_us {132};
+  std::chrono::hours const day_test_h {nr_hours};
+  std::chrono::seconds const day_test_s {54};
+  std::chrono::milliseconds const day_test_ms {25};
+  std::chrono::microseconds const day_test_us {132};
 
-  std::chrono::seconds day_test_ts { day_test_h+day_test_s };
-  std::chrono::microseconds day_test_tus { day_test_ms+day_test_us };
+  std::chrono::seconds const day_test_ts { day_test_h+day_test_s };
+  std::chrono::microseconds const day_test_tus { day_test_ms+day_test_us };
   ACE_Time_Value const test_day {
     ACE_Time_Value {
       ACE_Utils::truncate_cast<time_t>(day_test_ts.count ()),
@@ -143,9 +140,10 @@ test_streamers ()
   {
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("(%P|%t) unexpected value after streaming an ")
-                ACE_TEXT ("ACE_Time_Value <sec=%d,usec=%d> into ")
+                ACE_TEXT ("ACE_Time_Value <sec=%:,usec=%q> into ")
                 ACE_TEXT ("std::chrono::hours. Expected <%d> - got <%q>.\n"),
-                test_day.sec (), test_day.usec (), nr_hours, h.count ()));
+                test_day.sec (), static_cast<ACE_INT64> (test_day.usec ()),
+                nr_hours, static_cast<ACE_INT64> (h.count ())));
     ++errors;
   }
 
@@ -155,9 +153,10 @@ test_streamers ()
   {
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("(%P|%t) unexpected value after streaming an ")
-                ACE_TEXT ("ACE_Time_Value <sec=%d,usec=%d> into ")
+                ACE_TEXT ("ACE_Time_Value <sec=%:,usec=%q> into ")
                 ACE_TEXT ("std::chrono::minutes. Expected <%d> - got <%q>.\n"),
-                test_day.sec (), test_day.usec (), expected_min, m.count ()));
+                test_day.sec (), static_cast<ACE_INT64> (test_day.usec ()),
+                expected_min, static_cast<ACE_INT64> (m.count ())));
     ++errors;
   }
 
@@ -167,9 +166,11 @@ test_streamers ()
   {
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("(%P|%t) unexpected value after streaming an ")
-                ACE_TEXT ("ACE_Time_Value <sec=%d,usec=%d> into ")
+                ACE_TEXT ("ACE_Time_Value <sec=%:,usec=%q> into ")
                 ACE_TEXT ("std::chrono::seconds. Expected <%q> - got <%q>.\n"),
-                test_day.sec (), test_day.usec (), expected_sec, s.count ()));
+                test_day.sec (), static_cast<ACE_INT64> (test_day.usec ()),
+                static_cast<ACE_INT64> (expected_sec),
+                static_cast<ACE_INT64> (s.count ())));
     ++errors;
   }
 
@@ -179,9 +180,11 @@ test_streamers ()
   {
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("(%P|%t) unexpected value after streaming an ")
-                ACE_TEXT ("ACE_Time_Value <sec=%d,usec=%d> into ")
+                ACE_TEXT ("ACE_Time_Value <sec=%:,usec=%q> into ")
                 ACE_TEXT ("std::chrono::milliseconds. Expected <%q> - got <%q>.\n"),
-                test_day.sec (), test_day.usec (), expected_msec, ms.count ()));
+                test_day.sec (), static_cast<ACE_INT64> (test_day.usec ()),
+                static_cast<ACE_INT64> (expected_msec),
+                static_cast<ACE_INT64> (ms.count ())));
     ++errors;
   }
 
@@ -191,9 +194,11 @@ test_streamers ()
   {
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("(%P|%t) unexpected value after streaming an ")
-                ACE_TEXT ("ACE_Time_Value <sec=%d,usec=%d> into ")
+                ACE_TEXT ("ACE_Time_Value <sec=%:,usec=%q> into ")
                 ACE_TEXT ("std::chrono::microseconds. Expected <%q> - got <%q>.\n"),
-                test_day.sec (), test_day.usec (), expected_usec, us.count ()));
+                test_day.sec (), static_cast<ACE_INT64> (test_day.usec ()),
+                static_cast<ACE_INT64> (expected_usec),
+                static_cast<ACE_INT64> (us.count ())));
     ++errors;
   }
 
@@ -203,12 +208,13 @@ test_streamers ()
   {
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("(%P|%t) unexpected value after streaming an ")
-                ACE_TEXT ("ACE_Time_Value <sec=%d,usec=%d> into ")
+                ACE_TEXT ("ACE_Time_Value <sec=%:,usec=%q> into ")
                 ACE_TEXT ("std::chrono::nanoseconds. Expected <%q> - got <%q>.\n"),
-                test_day.sec (), test_day.usec (), expected_nsec, ns.count ()));
+                test_day.sec (), static_cast<ACE_INT64> (test_day.usec ()),
+                static_cast<ACE_INT64> (expected_nsec),
+                static_cast<ACE_INT64> (ns.count ())));
     ++errors;
   }
-
 
   ACE_Time_Value const test_sec {12, 132};
   // Seconds
@@ -217,9 +223,10 @@ test_streamers ()
   {
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("(%P|%t) unexpected value after streaming an ")
-                ACE_TEXT ("ACE_Time_Value <sec=%d,usec=%d> into ")
-                ACE_TEXT ("std::chrono::seconds. Expected <%d> - got <%q>.\n"),
-                test_sec.sec (), test_sec.usec (), test_sec.sec (), s.count ()));
+                ACE_TEXT ("ACE_Time_Value <sec=%:,usec=%q> into ")
+                ACE_TEXT ("std::chrono::seconds. Expected <%:> - got <%q>.\n"),
+                test_sec.sec (), static_cast<ACE_INT64> (test_sec.usec ()),
+                test_sec.sec (), static_cast<ACE_INT64> (s.count ())));
     ++errors;
   }
 
@@ -230,9 +237,10 @@ test_streamers ()
   {
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("(%P|%t) unexpected value after streaming an ")
-                ACE_TEXT ("ACE_Time_Value <sec=%d,usec=%d> into ")
-                ACE_TEXT ("std::chrono::seconds. Expected <%d> - got <%q>.\n"),
-                test_sec2.sec (), test_sec2.usec (), test_sec2.sec (), s2.count ()));
+                ACE_TEXT ("ACE_Time_Value <sec=%:,usec=%q> into ")
+                ACE_TEXT ("std::chrono::seconds. Expected <%:> - got <%q>.\n"),
+                test_sec2.sec (), static_cast<ACE_INT64> (test_sec2.usec ()),
+                test_sec2.sec (), static_cast<ACE_INT64> (s2.count ())));
     ++errors;
   }
 
@@ -242,9 +250,10 @@ test_streamers ()
   {
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("(%P|%t) unexpected value after streaming an ")
-                ACE_TEXT ("ACE_Time_Value <sec=%d,usec=%d> into ")
+                ACE_TEXT ("ACE_Time_Value <sec=%:,usec=%q> into ")
                 ACE_TEXT ("std::chrono::milliseconds. Expected <%d> - got <%q>.\n"),
-                test_sec.sec (), test_sec.usec (), 12000, ms.count ()));
+                test_sec.sec (), static_cast<ACE_INT64> (test_sec.usec ()),
+                12000, static_cast<ACE_INT64> (ms.count ())));
     ++errors;
   }
 
@@ -254,9 +263,10 @@ test_streamers ()
   {
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("(%P|%t) unexpected value after streaming an ")
-                ACE_TEXT ("ACE_Time_Value <sec=%d,usec=%d> into ")
+                ACE_TEXT ("ACE_Time_Value <sec=%:,usec=%q> into ")
                 ACE_TEXT ("std::chrono::milliseconds. Expected <%d> - got <%q>.\n"),
-                test_sec2.sec (), test_sec2.usec (), 18000, ms2.count ()));
+                test_sec2.sec (), static_cast<ACE_INT64> (test_sec2.usec ()),
+                18000, static_cast<ACE_INT64> (ms2.count ())));
     ++errors;
   }
 
@@ -266,9 +276,10 @@ test_streamers ()
   {
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("(%P|%t) unexpected value after streaming an ")
-                ACE_TEXT ("ACE_Time_Value <sec=%d,usec=%d> into ")
-                ACE_TEXT ("std::chrono::microseconds. Expected <%d> - got <%q>.\n"),
-                test_sec.sec (), test_sec.usec (), test_sec.sec (), us.count ()));
+                ACE_TEXT ("ACE_Time_Value <sec=%:,usec=%q> into ")
+                ACE_TEXT ("std::chrono::microseconds. Expected <%:> - got <%q>.\n"),
+                test_sec.sec (), static_cast<ACE_INT64> (test_sec.usec ()),
+                test_sec.sec (), static_cast<ACE_INT64> (us.count ())));
     ++errors;
   }
 
@@ -278,9 +289,10 @@ test_streamers ()
   {
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("(%P|%t) unexpected value after streaming an ")
-                ACE_TEXT ("ACE_Time_Value <sec=%d,usec=%d> into ")
-                ACE_TEXT ("std::chrono::microseconds. Expected <%d> - got <%q>.\n"),
-                test_sec2.sec (), test_sec2.usec (), test_sec2.sec (), us2.count ()));
+                ACE_TEXT ("ACE_Time_Value <sec=%:,usec=%q> into ")
+                ACE_TEXT ("std::chrono::microseconds. Expected <%:> - got <%q>.\n"),
+                test_sec2.sec (), static_cast<ACE_INT64> (test_sec2.usec ()),
+                test_sec2.sec (), static_cast<ACE_INT64> (us2.count ())));
     ++errors;
   }
 
@@ -322,9 +334,10 @@ test_chrono_operators ()
   {
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("(%P|%t) unexpected value after adding an ACE_Time_Value ")
-                ACE_TEXT ("of <sec=%d,usec=%d> to a std::chrono::hours of 1. ")
-                ACE_TEXT ("Expected <2> - got <%d>.\n"),
-                tv_hr.sec (), tv_hr.usec (), hr.count ()));
+                ACE_TEXT ("of <sec=%:,usec=%q> to a std::chrono::hours of 1. ")
+                ACE_TEXT ("Expected <2> - got <%q>.\n"),
+                tv_hr.sec (), static_cast<ACE_INT64> (tv_hr.usec ()),
+                static_cast<ACE_INT64> (hr.count ())));
     ++errors;
   }
 
@@ -333,12 +346,12 @@ test_chrono_operators ()
   {
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("(%P|%t) unexpected value after substracting an ACE_Time_Value ")
-                ACE_TEXT ("of <sec=%d,usec=%d> to a std::chrono::hours of 2. ")
-                ACE_TEXT ("Expected <1> - got <%d>.\n"),
-                tv_hr.sec (), tv_hr.usec (), hr.count ()));
+                ACE_TEXT ("of <sec=%:,usec=%q> to a std::chrono::hours of 2. ")
+                ACE_TEXT ("Expected <1> - got <%q>.\n"),
+                tv_hr.sec (), static_cast<ACE_INT64> (tv_hr.usec ()),
+                static_cast<ACE_INT64> (hr.count ())));
     ++errors;
   }
-
 
   std::chrono::minutes mn {1};
   ACE_Time_Value const tv_min {75, 0};
@@ -347,9 +360,10 @@ test_chrono_operators ()
   {
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("(%P|%t) unexpected value after adding an ACE_Time_Value ")
-                ACE_TEXT ("of <sec=%d,usec=%d> to a std::chrono::minutes of 1. ")
-                ACE_TEXT ("Expected <2> - got <%d>.\n"),
-                tv_min.sec (), tv_min.usec (), mn.count ()));
+                ACE_TEXT ("of <sec=%:,usec=%q> to a std::chrono::minutes of 1. ")
+                ACE_TEXT ("Expected <2> - got <%q>.\n"),
+                tv_min.sec (), static_cast<ACE_INT64> (tv_min.usec ()),
+                static_cast<ACE_INT64> (mn.count ())));
     ++errors;
   }
 
@@ -358,9 +372,10 @@ test_chrono_operators ()
   {
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("(%P|%t) unexpected value after substracting an ACE_Time_Value ")
-                ACE_TEXT ("of <sec=%d,usec=%d> to a std::chrono::minutes of 2. ")
-                ACE_TEXT ("Expected <1> - got <%d>.\n"),
-                tv_min.sec (), tv_min.usec (), mn.count ()));
+                ACE_TEXT ("of <sec=%:,usec=%q> to a std::chrono::minutes of 2. ")
+                ACE_TEXT ("Expected <1> - got <%q>.\n"),
+                tv_min.sec (), static_cast<ACE_INT64> (tv_min.usec ()),
+                static_cast<ACE_INT64> (mn.count ())));
     ++errors;
   }
 
@@ -371,9 +386,10 @@ test_chrono_operators ()
   {
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("(%P|%t) unexpected value after adding an ACE_Time_Value ")
-                ACE_TEXT ("of <sec=%d,usec=%d> to a std::chrono::seconds of 1. ")
-                ACE_TEXT ("Expected <3> - got <%d>.\n"),
-                tv_sec.sec (), tv_sec.usec (), sec.count ()));
+                ACE_TEXT ("of <sec=%:,usec=%q> to a std::chrono::seconds of 1. ")
+                ACE_TEXT ("Expected <3> - got <%q>.\n"),
+                tv_sec.sec (), static_cast<ACE_INT64> (tv_sec.usec ()),
+                static_cast<ACE_INT64> (sec.count ())));
     ++errors;
   }
 
@@ -382,9 +398,10 @@ test_chrono_operators ()
   {
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("(%P|%t) unexpected value after substracting an ACE_Time_Value ")
-                ACE_TEXT ("of <sec=%d,usec=%d> to a std::chrono::seconds of 3. ")
-                ACE_TEXT ("Expected <1> - got <%d>.\n"),
-                tv_sec.sec (), tv_sec.usec (), sec.count ()));
+                ACE_TEXT ("of <sec=%:,usec=%q> to a std::chrono::seconds of 3. ")
+                ACE_TEXT ("Expected <1> - got <%q>.\n"),
+                tv_sec.sec (), static_cast<ACE_INT64> (tv_sec.usec ()),
+                static_cast<ACE_INT64> (sec.count ())));
     ++errors;
   }
 
@@ -395,9 +412,10 @@ test_chrono_operators ()
   {
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("(%P|%t) unexpected value after adding an ACE_Time_Value ")
-                ACE_TEXT ("of <sec=%d,usec=%d> to a std::chrono::milliseconds of 400. ")
-                ACE_TEXT ("Expected <1403> - got <%d>.\n"),
-                tv_msec.sec (), tv_msec.usec (), msec.count ()));
+                ACE_TEXT ("of <sec=%:,usec=%q> to a std::chrono::milliseconds of 400. ")
+                ACE_TEXT ("Expected <1403> - got <%q>.\n"),
+                tv_msec.sec (), static_cast<ACE_INT64> (tv_msec.usec ()),
+                static_cast<ACE_INT64> (msec.count ())));
     ++errors;
   }
 
@@ -406,9 +424,10 @@ test_chrono_operators ()
   {
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("(%P|%t) unexpected value after substracting an ACE_Time_Value ")
-                ACE_TEXT ("of <sec=%d,usec=%d> to a std::chrono::milliseconds of 1403. ")
-                ACE_TEXT ("Expected <400> - got <%d>.\n"),
-                tv_msec.sec (), tv_msec.usec (), msec.count ()));
+                ACE_TEXT ("of <sec=%:,usec=%q> to a std::chrono::milliseconds of 1403. ")
+                ACE_TEXT ("Expected <400> - got <%q>.\n"),
+                tv_msec.sec (), static_cast<ACE_INT64> (tv_msec.usec ()),
+                static_cast<ACE_INT64> (msec.count ())));
     ++errors;
   }
 
@@ -419,9 +438,10 @@ test_chrono_operators ()
   {
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("(%P|%t) unexpected value after adding an ACE_Time_Value ")
-                ACE_TEXT ("of <sec=%d,usec=%d> to a std::chrono::microseconds of 400. ")
-                ACE_TEXT ("Expected <3400> - got <%d>.\n"),
-                tv_usec.sec (), tv_usec.usec (), usec.count ()));
+                ACE_TEXT ("of <sec=%:,usec=%q> to a std::chrono::microseconds of 400. ")
+                ACE_TEXT ("Expected <3400> - got <%q>.\n"),
+                tv_usec.sec (), static_cast<ACE_INT64> (tv_usec.usec ()),
+                static_cast<ACE_INT64> (usec.count ())));
     ++errors;
   }
 
@@ -430,9 +450,10 @@ test_chrono_operators ()
   {
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("(%P|%t) unexpected value after substracting an ACE_Time_Value ")
-                ACE_TEXT ("of <sec=%d,usec=%d> to a std::chrono::microseconds of 3400. ")
-                ACE_TEXT ("Expected <400> - got <%d>.\n"),
-                tv_usec.sec (), tv_usec.usec (), usec.count ()));
+                ACE_TEXT ("of <sec=%:,usec=%q> to a std::chrono::microseconds of 3400. ")
+                ACE_TEXT ("Expected <400> - got <%q>.\n"),
+                tv_usec.sec (), static_cast<ACE_INT64> (tv_usec.usec ()),
+                static_cast<ACE_INT64> (usec.count ())));
     ++errors;
   }
 
@@ -442,9 +463,10 @@ test_chrono_operators ()
   {
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("(%P|%t) unexpected value after adding an ACE_Time_Value ")
-                ACE_TEXT ("of <sec=%d,usec=%d> to a std::chrono::nanoseconds of 4000. ")
-                ACE_TEXT ("Expected <3004000> - got <%d>.\n"),
-                tv_usec.sec (), tv_usec.usec (), nsec.count ()));
+                ACE_TEXT ("of <sec=%:,usec=%q> to a std::chrono::nanoseconds of 4000. ")
+                ACE_TEXT ("Expected <3004000> - got <%q>.\n"),
+                tv_usec.sec (), static_cast<ACE_INT64> (tv_usec.usec ()),
+                static_cast<ACE_INT64> (nsec.count ())));
     ++errors;
   }
 
@@ -453,9 +475,10 @@ test_chrono_operators ()
   {
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("(%P|%t) unexpected value after substracting an ACE_Time_Value ")
-                ACE_TEXT ("of <sec=%d,usec=%d> to a std::chrono::nanoseconds of 3004000. ")
-                ACE_TEXT ("Expected <4000> - got <%d>.\n"),
-                tv_usec.sec (), tv_usec.usec (), nsec.count ()));
+                ACE_TEXT ("of <sec=%:,usec=%q> to a std::chrono::nanoseconds of 3004000. ")
+                ACE_TEXT ("Expected <4000> - got <%q>.\n"),
+                tv_usec.sec (), static_cast<ACE_INT64> (tv_usec.usec ()),
+                static_cast<ACE_INT64> (nsec.count ())));
     ++errors;
   }
 
@@ -477,7 +500,7 @@ run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Chrono_Test"));
 
-  int errors = test_chrono ();
+  int const errors = test_chrono ();
 
   ACE_END_TEST;
   return errors;

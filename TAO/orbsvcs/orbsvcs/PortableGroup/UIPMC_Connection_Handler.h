@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file     UIPMC_Connection_Handler.h
  *
  *  @author Frank Hunleth <fhunleth@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_UIPMC_CONNECTION_HANDLER_H
 #define TAO_UIPMC_CONNECTION_HANDLER_H
@@ -50,27 +46,25 @@ class TAO_PortableGroup_Export TAO_UIPMC_Connection_Handler :
   public TAO_Connection_Handler
 {
 public:
-  TAO_UIPMC_Connection_Handler (ACE_Thread_Manager* t = nullptr);
+  explicit TAO_UIPMC_Connection_Handler (ACE_Thread_Manager *t = nullptr);
 
   /// Constructor. arg parameter is used by the Acceptor to pass the
   /// protocol configuration properties for this connection.
-  TAO_UIPMC_Connection_Handler (TAO_ORB_Core *orb_core);
+  explicit TAO_UIPMC_Connection_Handler (TAO_ORB_Core *orb_core);
 
-
-  /// Destructor.
   ~TAO_UIPMC_Connection_Handler () override;
 
-  //@{
+  /// @{
   /** @name Connection Handler overloads
    */
   int open_handler (void *v) override;
-  //@}
+  /// @}
 
   /// Close called by the Acceptor or Connector when connection
   /// establishment fails.
   int close (u_long = 0) override;
 
-  //@{
+  /// @{
   /** @name Event Handler overloads
    */
   int resume_handler () override;
@@ -78,10 +72,10 @@ public:
   int handle_input (ACE_HANDLE) override;
   int handle_output (ACE_HANDLE) override;
   int handle_close (ACE_HANDLE, ACE_Reactor_Mask) override;
-  int handle_timeout (const ACE_Time_Value &current_time,
-                      const void *act = nullptr) override;
+  int handle_timeout (ACE_Time_Value const &current_time,
+                      void const *act = nullptr) override;
   int open (void *) override;
-  //@}
+  /// @}
 
   /// Add ourselves to Cache.
   int add_transport_to_cache ();
@@ -90,40 +84,47 @@ public:
   int set_dscp_codepoint (CORBA::Boolean set_network_priority) override;
   int set_dscp_codepoint (CORBA::Long dscp_codepoint) override;
 
-  // UIPMC Additions - Begin
-  const ACE_INET_Addr &addr () const;
+  /// @name UIPMC additions
+  /// @{
+  ACE_INET_Addr const &addr () const;
 
-  void addr (const ACE_INET_Addr &addr);
+  void addr (ACE_INET_Addr const &addr);
 
-  const ACE_INET_Addr &local_addr () const;
+  ACE_INET_Addr const &local_addr () const;
 
-  void local_addr (const ACE_INET_Addr &addr);
+  void local_addr (ACE_INET_Addr const &addr);
 
   u_long send_hi_water_mark () const;
-  // UIPMC Additions - End
+  /// @}
 
 protected:
-  // UIPMC Additions - Begin
+  /// @name UIPMC additions
+  /// @{
 
-  // This is always the remote address
+  /// This is always the remote address.
   ACE_INET_Addr addr_;
 
-  // This is always the local address for the connector
+  /// This is always the local address for the connector.
   ACE_INET_Addr local_addr_;
 
-  // UIPMC Additions - End
+  /// @}
 
-  //@{
+  /// @{
   /**
    * @name TAO_Connection Handler overloads
    */
   int release_os_resources () override;
-  int handle_write_ready (const ACE_Time_Value *timeout) override;
-  //@}
+  int handle_write_ready (ACE_Time_Value const *timeout) override;
+  /// @}
 
-  // helper function used by the set_dscp_codepoint () methods to
-  // set the TOS field in the IP packets.
+  /// helper function used by the set_dscp_codepoint () methods to
+  /// set the TOS field in the IP packets.
   int set_tos (int tos);
+
+  TAO_UIPMC_Connection_Handler (TAO_UIPMC_Connection_Handler const &) = delete;
+  TAO_UIPMC_Connection_Handler (TAO_UIPMC_Connection_Handler &&) = delete;
+  TAO_UIPMC_Connection_Handler & operator= (TAO_UIPMC_Connection_Handler const &) = delete;
+  TAO_UIPMC_Connection_Handler & operator= (TAO_UIPMC_Connection_Handler &&) = delete;
 
 private:
   /// Stores the type of service value.
@@ -131,7 +132,7 @@ private:
 
   /// How much data can be sent without delays. It defaults to the size
   /// of the socket buffer.
-  u_long send_hi_water_mark_;
+  u_long send_hi_water_mark_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

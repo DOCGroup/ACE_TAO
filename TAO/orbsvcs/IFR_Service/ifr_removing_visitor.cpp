@@ -1,4 +1,3 @@
-/* -*- c++ -*- */
 #include "orbsvcs/Log_Macros.h"
 #include "ifr_removing_visitor.h"
 #include "utl_scope.h"

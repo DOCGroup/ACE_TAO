@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  * @file ServantLocator.h
  *
@@ -9,7 +6,6 @@
  *
  * @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef SERVANT_LOCATOR_H
 #define SERVANT_LOCATOR_H
@@ -43,26 +39,29 @@ class ServantLocator
     public virtual ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
-  ServantLocator (CORBA::ORB_ptr orb);
+  explicit ServantLocator (CORBA::ORB_ptr orb);
 
-  virtual PortableServer::Servant preinvoke (
-      const PortableServer::ObjectId & oid,
-      PortableServer::POA_ptr adapter,
-      const char * operation,
-      PortableServer::ServantLocator::Cookie & the_cookie);
+  ServantLocator (ServantLocator const &) = delete;
+  ServantLocator &operator= (ServantLocator const &) = delete;
+  ServantLocator (ServantLocator &&) = delete;
+  ServantLocator &operator= (ServantLocator &&) = delete;
 
-  virtual void postinvoke (
-      const PortableServer::ObjectId & oid,
-      PortableServer::POA_ptr adapter,
-      const char * operation,
-      PortableServer::ServantLocator::Cookie the_cookie,
-      PortableServer::Servant the_servant);
+  PortableServer::Servant preinvoke (
+    PortableServer::ObjectId const &oid,
+    PortableServer::POA_ptr adapter,
+    char const *operation,
+    PortableServer::ServantLocator::Cookie &the_cookie) override;
 
-  bool error_status_;
+  void postinvoke (
+    PortableServer::ObjectId const &oid,
+    PortableServer::POA_ptr adapter,
+    char const *operation,
+    PortableServer::ServantLocator::Cookie the_cookie,
+    PortableServer::Servant the_servant) override;
+
+  bool error_status_ {};
 protected:
-  /// Destructor.
-  ~ServantLocator ();
+  ~ServantLocator () override = default;
 
 private:
   /// Pseudo-reference to the ORB.

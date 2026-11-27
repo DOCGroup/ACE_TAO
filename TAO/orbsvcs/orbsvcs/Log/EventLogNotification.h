@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   EventLogNotification.h
  *
@@ -8,7 +5,6 @@
  *
  *  @author D A Hanvey <d.hanvey@qub.ac.uk>
  */
-//=============================================================================
 
 #ifndef TAO_TLS_EVENT_LOG_NOTIFICATION_H
 #define TAO_TLS_EVENT_LOG_NOTIFICATION_H
@@ -45,10 +41,8 @@ class TAO_EventLog_Serv_Export TAO_EventLogNotification :
   public POA_CosEventComm::PushSupplier
 {
 public:
-  /// Constructor.
-  TAO_EventLogNotification (CosEventChannelAdmin::EventChannel_ptr event_channel);
+  explicit TAO_EventLogNotification (CosEventChannelAdmin::EventChannel_ptr event_channel);
 
-  /// Destructor.
   ~TAO_EventLogNotification () override;
 
   /// The skeleton methods.
@@ -61,7 +55,6 @@ protected:
 
   /// Send the event on the event channel.
   void send_notification (CORBA::Any const & any) override;
-
 
 private:
   TAO_EventLogNotification (TAO_EventLogNotification const &) = delete;

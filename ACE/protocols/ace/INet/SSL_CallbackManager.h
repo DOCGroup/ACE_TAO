@@ -64,7 +64,7 @@ namespace ACE
 
               void initialize_callbacks (ACE_SSL_Context* ssl_ctx = ACE_SSL_Context::instance ());
 
-              const ACE_SSL_Context* context () const;
+              ACE_SSL_Context const* context () const;
 
               void set_certificate_callback (ACE::INet::SSL_CertificateCallback* cb);
               void set_password_callback (ACE::INet::SSL_PasswordCallback* cb);
@@ -75,12 +75,12 @@ namespace ACE
               int verify_certificate_callback (SSL_CertificateCallbackArg& arg);
               void passwd_callback (ACE_CString& pwd);
 
-              ACE_SSL_Context* ssl_ctx_;
+              ACE_SSL_Context* ssl_ctx_ {};
 
-              typedef ACE_Refcounted_Auto_Ptr<ACE::INet::SSL_CertificateCallback,
-                                              ACE_SYNCH::MUTEX>        TCertificateCallback;
-              typedef ACE_Refcounted_Auto_Ptr<ACE::INet::SSL_PasswordCallback,
-                                              ACE_SYNCH::MUTEX>        TPasswordCallback;
+              using TCertificateCallback =
+                ACE_Refcounted_Auto_Ptr<ACE::INet::SSL_CertificateCallback,
+                                        ACE_SYNCH::MUTEX>;
+              using TPasswordCallback = ACE_Refcounted_Auto_Ptr<ACE::INet::SSL_PasswordCallback, ACE_SYNCH::MUTEX>;
 
               TCertificateCallback cert_callback_;
               TPasswordCallback passwd_callback_;

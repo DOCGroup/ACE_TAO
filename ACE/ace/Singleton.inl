@@ -1,4 +1,3 @@
-// -*- C++ -*-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Default constructors.
@@ -7,33 +6,21 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 // have a default constructor.  Let the compiler figure it out . . .
 
 template <class TYPE, class ACE_LOCK> ACE_INLINE
-ACE_Singleton<TYPE, ACE_LOCK>::ACE_Singleton ()
-{
-}
+ACE_Singleton<TYPE, ACE_LOCK>::ACE_Singleton () = default;
 
 template <class TYPE, class ACE_LOCK> ACE_INLINE
-ACE_Unmanaged_Singleton<TYPE, ACE_LOCK>::ACE_Unmanaged_Singleton ()
-{
-}
+ACE_Unmanaged_Singleton<TYPE, ACE_LOCK>::ACE_Unmanaged_Singleton () = default;
 
 template <class TYPE, class ACE_LOCK> ACE_INLINE
-ACE_TSS_Singleton<TYPE, ACE_LOCK>::ACE_TSS_Singleton ()
-{
-}
+ACE_TSS_Singleton<TYPE, ACE_LOCK>::ACE_TSS_Singleton () = default;
 
 template <class TYPE, class ACE_LOCK> ACE_INLINE
-ACE_Unmanaged_TSS_Singleton<TYPE, ACE_LOCK>::ACE_Unmanaged_TSS_Singleton ()
-{
-}
+ACE_Unmanaged_TSS_Singleton<TYPE, ACE_LOCK>::ACE_Unmanaged_TSS_Singleton () = default;
 
 template <class TYPE, class ACE_LOCK> ACE_INLINE
-ACE_DLL_Singleton_T<TYPE, ACE_LOCK>::ACE_DLL_Singleton_T ()
-{
-}
+ACE_DLL_Singleton_T<TYPE, ACE_LOCK>::ACE_DLL_Singleton_T () = default;
 
 template <class TYPE, class ACE_LOCK>
-ACE_DLL_Singleton_T<TYPE, ACE_LOCK>::~ACE_DLL_Singleton_T ()
-{
-}
+ACE_DLL_Singleton_T<TYPE, ACE_LOCK>::~ACE_DLL_Singleton_T () = default;
 
 ACE_END_VERSIONED_NAMESPACE_DECL

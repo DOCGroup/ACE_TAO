@@ -1,12 +1,8 @@
-/* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file   Driver.h
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  */
-//=============================================================================
-
 
 #ifndef EC_DRIVER_H
 #define EC_DRIVER_H
@@ -50,10 +46,8 @@ class EC_Supplier;
 class EC_Test_Export EC_Driver
 {
 public:
-  /// Constructor
   EC_Driver ();
 
-  /// Destructor
   virtual ~EC_Driver ();
 
   /// Flag to indicate in the test should be verbose.
@@ -103,12 +97,12 @@ public:
   /// connect itself.
   virtual void connect_consumers ();
 
-  /// Connect consumer number <i> using the consumer_admin provided.
+  /// Connect consumer number @a i using the consumer_admin provided.
   virtual void connect_consumer (
     RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin,
     int i);
 
-  /// Build the QoS requirements for consumer <i>
+  /// Build the QoS requirements for consumer @a i.
   virtual void build_consumer_qos (
       int i,
       RtecEventChannelAdmin::ConsumerQOS& qos,
@@ -118,12 +112,12 @@ public:
   /// connect itself.
   virtual void connect_suppliers ();
 
-  /// Connect supplier number <i> using the supplier_admin provided.
+  /// Connect supplier number @a i using the supplier_admin provided.
   virtual void connect_supplier (
     RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin,
     int i);
 
-  /// Build the QoS requirements for supplier <i>
+  /// Build the QoS requirements for supplier @a i.
   virtual void build_supplier_qos (
       int i,
       RtecEventChannelAdmin::SupplierQOS& qos,
@@ -174,7 +168,7 @@ public:
 
   /// One of the consumers in the test has received an event
   virtual void consumer_push (void* consumer_cookie,
-                              const RtecEventComm::EventSet& event);
+                              RtecEventComm::EventSet const & event);
 
   /// One of the consumers has received a shutdown event
   virtual void consumer_shutdown (void* consumer_cookie);
@@ -204,7 +198,7 @@ public:
   virtual EC_Consumer* allocate_consumer (int i);
   virtual EC_Supplier* allocate_supplier (int i);
 
-  /// Allocate one task for supplier number <i>
+  /// Allocate one task for supplier number @a i.
   virtual int allocate_tasks ();
   virtual ACE_Task_Base* allocate_task (int i);
 
@@ -252,9 +246,7 @@ protected:
    * Consumer0: [start          , start           + count)
    * Consumer1: [start + 1*shift, start + 1*shift + count)
    * Consumer2: [start + 2*shift, start + 2*shift + count)
-   * .....
-   * ....
-   * .
+   * ...
    * Some sub-tests may choose other configurations, but this is good
    * for many cases.
    */
@@ -268,9 +260,7 @@ protected:
    * Supplier0: [start          , start           + count)
    * Supplier1: [start + 1*shift, start + 1*shift + count)
    * Supplier2: [start + 2*shift, start + 2*shift + count)
-   * .....
-   * ....
-   * .
+   * ...
    * Some sub-tests may choose other configurations, but this is good
    * for many cases.
    */
@@ -279,7 +269,7 @@ protected:
   int supplier_type_shift_;
 
   /// The name of a file where the process stores its pid
-  const ACE_TCHAR* pid_file_name_;
+  ACE_TCHAR const *pid_file_name_;
 
   /// Verbosity flag
   int verbose_;
@@ -301,7 +291,7 @@ protected:
   int use_remote_ec_;
 
   /// The name of the remote event service
-  const ACE_TCHAR *event_service_name_;
+  ACE_TCHAR const *event_service_name_;
 
   /// The event channel implementation
   POA_RtecEventChannelAdmin::EventChannel *ec_impl_;

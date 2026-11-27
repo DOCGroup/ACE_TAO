@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Trace.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef ACE_TRACE_H
 #define ACE_TRACE_H
@@ -36,9 +32,9 @@ class ACE_Export ACE_Trace
 public:
   /// Perform the first part of the trace, which prints out the string
   /// N, the LINE, and the ACE_FILE as the function is entered.
-  ACE_Trace (const ACE_TCHAR *n,
+  ACE_Trace (ACE_TCHAR const *n,
              int line = 0,
-             const ACE_TCHAR *file = ACE_TEXT (""));
+             ACE_TCHAR const *file = ACE_TEXT (""));
 
   /// Perform the second part of the trace, which prints out the NAME
   /// as the function is exited.
@@ -47,7 +43,8 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
-  // = Control the tracing level.
+  /// @name Tracing controls
+  /// @{
   /// Determine if tracing is enabled or not
   static bool is_tracing();
 
@@ -62,6 +59,7 @@ public:
 
   /// Get the nesting indentation level.
   static int get_nesting_indent ();
+  /// @}
 
   /// Dump the state of an object.
   void dump () const;
@@ -72,7 +70,7 @@ private:
   // multiple threads of control.
 
   /// Name of the method we are in.
-  const ACE_TCHAR *name_;
+  ACE_TCHAR const *name_;
 
   /// Keeps track of how far to indent per trace call.
   static int nesting_indent_;

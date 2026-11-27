@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   OS_NS_regex.h
  *
@@ -8,7 +5,6 @@
  *  @author Jesper S. M|ller<stophph@diku.dk>
  *  @author and a cast of thousands...
  */
-//=============================================================================
 
 #ifndef ACE_OS_NS_REGEX_H
 # define ACE_OS_NS_REGEX_H
@@ -33,16 +29,17 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace ACE_OS
 {
   // non=standard..
-  //@{ @name A set of wrappers for regular expressions.
+  /// @name A set of wrappers for regular expressions.
+  /// @{
   ACE_NAMESPACE_INLINE_FUNCTION
-  char *compile (const char *instring,
+  char *compile (char const *instring,
                  char *expbuf,
                  char *endbuf);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int step (const char *str,
+  int step (char const *str,
             char *expbuf);
-  //@}
+  /// @}
 
 } /* namespace ACE_OS */
 

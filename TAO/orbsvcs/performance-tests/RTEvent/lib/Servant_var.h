@@ -22,14 +22,12 @@ template<class SERVANT>
 class Servant_var
 {
 public:
-  /// Constructor
   /**
    * @param s The contained servant.  The constructor assumes
    * ownership.
    */
-  explicit Servant_var (SERVANT *s = 0);
+  explicit Servant_var (SERVANT *s = nullptr);
 
-  /// Copy constructor
   Servant_var (const Servant_var<SERVANT> &rhs);
 
   /// Assignment
@@ -38,13 +36,12 @@ public:
   /// Assignment
   Servant_var<SERVANT>& operator= (SERVANT *s);
 
-  /// Destructor
   ~Servant_var ();
 
   /// Helper method to increase the reference count on a servant.
   static SERVANT *duplicate (SERVANT *servart);
 
-  //@{
+  /// @{
   /** @name Smart pointer operations
    */
   const SERVANT * operator->() const;
@@ -52,15 +49,15 @@ public:
 
   operator SERVANT *();
   operator const SERVANT * () const;
-  //@}
+  /// @}
 
-  //@{
+  /// @{
   /** @name Canonical CORBA T_var methods
    */
   SERVANT *in () const;
   SERVANT *&out ();
   SERVANT *&inout ();
-  //@}
+  /// @}
 
 private:
   /// The owned object

@@ -1,4 +1,3 @@
-
 /**
  * @file Echo.h
  *
@@ -21,7 +20,7 @@ public:
   void echo_payload (Test::Payload &data) override;
 
 private:
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var const orb_;
 
   int abort_counter_;
 

@@ -1,18 +1,9 @@
-//
-// = FILENAME
-//    MultiDoubleVisComp.java
-//
-// = AUTHOR
-//    Chris Gill (core graph functionality), based on
-//    DoubleVisComp.java by Seth Widoff, and Michael Kircher
-//    (mk1@cs.wustl.edu)
-//
-// = DESCRIPTION
-//   This is a Visualization Component for displaying multiple
-//   plots of double precision integer values.
-//
-// ============================================================================
-
+/**
+ * @file MultiDoubleVisComp.java
+ * @author Chris Gill (core graph functionality), based on DoubleVisComp.java by Seth Widoff, and Michael Kircher (mk1@cs.wustl.edu)
+ * @brief This is a Visualization Component for displaying multiple
+ * plots of double precision integer values.
+ */
 
 import java.awt.*;
 import java.util.*;
@@ -123,8 +114,6 @@ public class MultiDoubleVisComp extends Canvas implements VisComp
     plot_count_ = new_plot_count;
   }
 
-
-
   public void setName (String title) {
       title_ = title;
   }
@@ -201,11 +190,8 @@ public class MultiDoubleVisComp extends Canvas implements VisComp
     repaint ();
   }
 
-
   public void update (Graphics g)
   {
-    int x1, y1, x2, y2;
-    float tmp, value_1, value_2;
     Dimension d = getSize ();
     FontMetrics fm = g.getFontMetrics ();
     int fheight = fm.getHeight ();
@@ -236,23 +222,21 @@ public class MultiDoubleVisComp extends Canvas implements VisComp
       {
         local_max_ [i] = 0;
         Enumeration queue_iter = plots_ [i].forward_iterator ();
-        value_1 = ((Float) queue_iter.nextElement ()).floatValue ();
-        x1 = d.width - 8;
+        float value_1 = ((Float) queue_iter.nextElement ()).floatValue ();
+        int x1 = d.width - 8;
         while (queue_iter.hasMoreElements ())
           {
-	    value_2 = ((Float) queue_iter.nextElement ()).floatValue ();
+	    float value_2 = ((Float) queue_iter.nextElement ()).floatValue ();
 
 	    if (value_1 > local_max_ [i])
 	      local_max_ [i] = value_1;
 
-            y1 = normalize (offscreensize_.height - fheight, value_1, i);
-            y2 = normalize (offscreensize_.height - fheight, value_2, i);
+            int y1 = normalize (offscreensize_.height - fheight, value_1, i);
+            int y2 = normalize (offscreensize_.height - fheight, value_2, i);
 
-	    tmp = value_2;
-	    value_2 = value_1;
-	    value_1 = tmp;
+	    value_1 = value_2;
 
-            x2 = x1 - spacing_;
+            int x2 = x1 - spacing_;
             offgraphics_.drawLine (x1, y1, x2, y2);
             x1 = x2;
 	    if (x1 <= 5)
@@ -353,7 +337,6 @@ public class MultiDoubleVisComp extends Canvas implements VisComp
       }
   }
 
-
   private int normalize (int height, float coord, int plot_index)
   {
     // First, figure out the ratio of the value to the max value
@@ -368,5 +351,4 @@ public class MultiDoubleVisComp extends Canvas implements VisComp
     return Math.round (location);
   }
 }
-
 

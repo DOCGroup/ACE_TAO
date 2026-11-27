@@ -15,7 +15,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
 TAO_Object_Ref_Table::register_initial_reference (
-  const char *id,
+  char const *id,
   CORBA::Object_ptr obj,
   bool rebind)
 {
@@ -27,17 +27,23 @@ TAO_Object_Ref_Table::register_initial_reference (
   if (rebind)
     {
       if (this->unbind_i (id) == -1)
-        return -1;
+        {
+          return -1;
+        }
       else
-        return this->bind_i (id, obj);
+        {
+          return this->bind_i (id, obj);
+        }
     }
   else
-    return this->bind_i (id, obj);
+    {
+      return this->bind_i (id, obj);
+    }
 }
 
 CORBA::Object_ptr
 TAO_Object_Ref_Table::unregister_initial_reference (
-  const char *id)
+  char const *id)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                     guard,
@@ -61,7 +67,7 @@ TAO_Object_Ref_Table::unregister_initial_reference (
 }
 
 int
-TAO_Object_Ref_Table::bind_i (const char *id, CORBA::Object_ptr obj)
+TAO_Object_Ref_Table::bind_i (char const *id, CORBA::Object_ptr obj)
 {
   // Make sure that the supplied Object reference is valid,
   // i.e. not nil.
@@ -71,7 +77,7 @@ TAO_Object_Ref_Table::bind_i (const char *id, CORBA::Object_ptr obj)
     {
       errno = EINVAL;
       return -1;
-    };
+    }
 
   Table::value_type const value =
     std::make_pair (CORBA::String_var (id),
@@ -97,7 +103,7 @@ TAO_Object_Ref_Table::bind_i (const char *id, CORBA::Object_ptr obj)
 }
 
 CORBA::Object_ptr
-TAO_Object_Ref_Table::resolve_initial_reference (const char * id)
+TAO_Object_Ref_Table::resolve_initial_reference (char const *id)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                     guard,

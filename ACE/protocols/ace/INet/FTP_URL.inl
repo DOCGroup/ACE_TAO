@@ -1,4 +1,3 @@
-// -*- C++ -*-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE
@@ -7,7 +6,7 @@ namespace ACE
   {
 
     ACE_INLINE
-    const ACE_CString& URL::get_scheme () const
+    ACE_CString const& URL::get_scheme () const
       {
         return protocol ();
       }

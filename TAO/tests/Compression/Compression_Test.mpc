@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*Zlib_Server): taoserver, compression, zlibcompressor,  {
   exename = zlibserver
   Source_Files {

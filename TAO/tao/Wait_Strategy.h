@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Wait_Strategy.h
  *
  *  @author  Alexander Babu Arulanthu <alex@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_WAIT_STRATEGY_H
 #define TAO_WAIT_STRATEGY_H
@@ -41,10 +37,9 @@ class TAO_Synch_Reply_Dispatcher;
 class TAO_Export TAO_Wait_Strategy
 {
 public:
-  /// Constructor.
+  TAO_Wait_Strategy () = delete;
   explicit TAO_Wait_Strategy (TAO_Transport *transport);
 
-  /// Destructor.
   virtual ~TAO_Wait_Strategy () = default;
 
   /**
@@ -54,8 +49,8 @@ public:
    */
   virtual int sending_request (TAO_ORB_Core *orb_core, TAO_Message_Semantics msg_semantics);
 
-  // The ORB finished handling the request; either the reply was received
-  // and dispatched, the request timed out or the connection was closed.
+  /// The ORB finished handling the request; either the reply was received
+  /// and dispatched, the request timed out or the connection was closed.
   virtual void finished_request ();
 
   /// Base class virtual method. Wait till the @c reply_received flag is
@@ -87,7 +82,7 @@ public:
   /// event to be deferred at the Leader_Follower which resumes
   /// the upcall at an opportune moment (when a new leader thread
   /// is activated).
-  virtual int defer_upcall (ACE_Event_Handler*);
+  virtual int defer_upcall (ACE_Event_Handler *);
 
   /// Get method for the flag
   bool is_registered () const;
@@ -96,17 +91,22 @@ public:
   void is_registered (bool flag);
 
 protected:
-  /// Transport object.
+  /// Non-owning transport; the transport owns this strategy.
   TAO_Transport *transport_;
 
   /// Flag to indicate whether the service handler that created the
   /// above transport has been registered with the reactor or not. The
   /// default is false.
-  bool is_registered_;
+  bool is_registered_ {};
+
+private:
+  TAO_Wait_Strategy (TAO_Wait_Strategy const &) = delete;
+  TAO_Wait_Strategy &operator= (TAO_Wait_Strategy const &) = delete;
+  TAO_Wait_Strategy (TAO_Wait_Strategy &&) = delete;
+  TAO_Wait_Strategy &operator= (TAO_Wait_Strategy &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-
 
 #if defined (__ACE_INLINE__)
 # include "tao/Wait_Strategy.inl"

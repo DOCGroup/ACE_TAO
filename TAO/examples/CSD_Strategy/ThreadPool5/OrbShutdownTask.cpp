@@ -1,21 +1,15 @@
-//=============================================================================
 /**
  *  @file    OrbShutdownTask.cpp
  *
  *  @author  Tim Bradley <bradley_t@ociweb.com>
  */
-//=============================================================================
 
 #include "OrbShutdownTask.h"
 #include "ace/CORBA_macros.h"
 #include "ace/OS_NS_unistd.h"
 
-OrbShutdownTask::OrbShutdownTask()
-{
-}
-
 void
-OrbShutdownTask::orb(CORBA::ORB_ptr orb)
+OrbShutdownTask::orb (CORBA::ORB_ptr orb)
 {
   this->orb_ = CORBA::ORB::_duplicate (orb);
 }
@@ -44,7 +38,7 @@ OrbShutdownTask::svc()
   ACE_DEBUG ((LM_DEBUG, "(%P|%t)OrbShutdownTask::svc shutdown orb\n"));
   try
   {
-    this->orb_->shutdown(0);
+    this->orb_->shutdown (false);
   }
   catch (...)
   {

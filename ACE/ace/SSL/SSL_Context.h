@@ -186,7 +186,7 @@ public:
    *  as a sequence of certificates in @a ca_file or as a set of
    *  individual certificates in @a ca_dir (or both).
    *
-   *  @note this method is called by set_mode() to load the default
+   *  @note This method is called by set_mode() to load the default
    *  environment settings for @a ca_file and @a ca_dir, if any. This
    *  allows for automatic service configuration (and backward
    *  compatibility with previous versions).
@@ -278,7 +278,7 @@ public:
    *  The last parameter @a depth can be used to set the verification
    *  depth.
    *
-   *  @note for verification to work correctly there should be a valid
+   *  @note For verification to work correctly there should be a valid
    *  CA name list set using load_trusted_ca().
    *
    *  @see OpenSSL documentation of SSL_CTX_set_verify(3) for details of
@@ -291,10 +291,8 @@ public:
    */
   void set_verify_peer (int strict = 0, int once = 1, int depth = 0);
 
-  /// TODO: a implementation that will lookup the CTX table for the list
-  /// of files and paths etc.
-  /// Query the location of trusted certification authority
-  /// certificates.
+  // TODO: Add an implementation that queries the context for trusted
+  // certification-authority certificate files and paths.
   // const char* ca_file_name() const;
   // const char* ca_dir_name() const;
 

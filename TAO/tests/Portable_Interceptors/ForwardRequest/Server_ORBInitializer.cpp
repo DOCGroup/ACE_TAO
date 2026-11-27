@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "Server_ORBInitializer.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
@@ -6,11 +5,6 @@
 #include "Server_Request_Interceptor.h"
 
 #include "tao/ORB_Constants.h"
-
-Server_ORBInitializer::Server_ORBInitializer ()
-  : server_interceptor_ ()
-{
-}
 
 void
 Server_ORBInitializer::pre_init (
@@ -22,7 +16,7 @@ void
 Server_ORBInitializer::post_init (
     PortableInterceptor::ORBInitInfo_ptr info)
 {
-  PortableInterceptor::ServerRequestInterceptor_ptr interceptor;
+  PortableInterceptor::ServerRequestInterceptor_ptr interceptor {};
   // Install the server request interceptor.
   ACE_NEW_THROW_EX (interceptor,
                     Server_Request_Interceptor,
@@ -34,7 +28,7 @@ Server_ORBInitializer::post_init (
 
   this->server_interceptor_ = interceptor;
 
-  info->add_server_request_interceptor (interceptor);
+  info->add_server_request_interceptor (server_interceptor_.in ());
 }
 
 PortableInterceptor::ServerRequestInterceptor_ptr

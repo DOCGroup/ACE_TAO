@@ -1,12 +1,8 @@
-/* -*- C++ -*- */
-
-// =================================================================
 /**
  * @file Current_Loader.cpp
  *
  * @author Iliyan Jeliazkov <iliyan@ociweb.com>
  */
-// =================================================================
 
 #include "ace/Service_Config.h"
 
@@ -25,13 +21,11 @@ namespace TAO
 {
   namespace Transport
   {
-    Current_Loader::~Current_Loader () = default;
-
     /// Initializes object when dynamic linking occurs.
     int
     Current_Loader::init (int, ACE_TCHAR *[])
     {
-      PortableInterceptor::ORBInitializer_ptr tmp = nullptr;
+      PortableInterceptor::ORBInitializer_ptr tmp {};
       ACE_NEW_THROW_EX (tmp,
                         Current_ORBInitializer<Current_Impl>
                           (ACE_TEXT ("TAO::Transport::Current")),
@@ -53,7 +47,6 @@ namespace TAO
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-
 #if defined (TAO_AS_STATIC_LIBS)
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -74,7 +67,6 @@ namespace TAO
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-
 
 #endif /* defined (TAO_AS_STATIC_LIBS) */
 

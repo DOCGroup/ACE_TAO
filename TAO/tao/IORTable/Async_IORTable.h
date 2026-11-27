@@ -1,15 +1,8 @@
-// -*- C++ -*-
-
-
-//=============================================================================
 /**
  *  @file    Async_IORTable.h
  *
  *  @author Phil Mesnier <mesnier_p@ociweb.com>
  */
-//=============================================================================
-
-
 #ifndef TAO_ASYNC_IORTABLE_H
 #define TAO_ASYNC_IORTABLE_H
 
@@ -28,6 +21,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Async_IORTable_Export TAO_Async_IORTable_Initializer
 {
 public:
+  TAO_Async_IORTable_Initializer () = delete;
+
   /// Used to force the initialization of the ORB code.
   static int init ();
 };

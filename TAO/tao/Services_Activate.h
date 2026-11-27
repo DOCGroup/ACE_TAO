@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Services_Activate.h
  *
@@ -9,7 +6,6 @@
  *
  *  @author Bala Natarajan <bala@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_SERVICES_ACTIVATE_H
 #define TAO_SERVICES_ACTIVATE_H
@@ -44,7 +40,6 @@ class TAO_Service_Callbacks;
 class TAO_Export TAO_Services_Activate : public ACE_Service_Object
 {
 public:
-  /// The destructor
   ~TAO_Services_Activate () override;
 
   /**

@@ -19,6 +19,7 @@
 #include "ace/INet/AuthenticationBase.h"
 #include "ace/INet/ClientRequestHandler.h"
 #include <iosfwd>
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -30,7 +31,7 @@ namespace ACE
         * @class ACE_INet_URLStream
         *
         * @brief Provides abstracted wrapper class for the resulting
-        *   stream of an URL <open> operation.
+        *   stream of an URL @c open operation.
         *
         * Provides proper life cycle management for either factory provided
         * or user provided request handlers.
@@ -38,7 +39,7 @@ namespace ACE
         class ACE_INET_Export URLStream
           {
             public:
-              URLStream (const URLStream& url_stream);
+              URLStream (URLStream const& url_stream);
               ~URLStream ();
 
               bool operator ! ();
@@ -52,13 +53,12 @@ namespace ACE
             private:
               friend class URL_Base;
 
-              URLStream (ClientRequestHandler& rh);
-              URLStream (ClientRequestHandler* rh);
+              explicit URLStream (ClientRequestHandler& rh);
+              explicit URLStream (ClientRequestHandler* rh);
 
-              typedef ACE_Refcounted_Auto_Ptr<ClientRequestHandler,
-                                              ACE_Null_Mutex> TRequestHandlerRef;
-
-              TRequestHandlerRef request_handler_ref_;
+              /// Owns handlers created by open().
+              std::shared_ptr<ClientRequestHandler> request_handler_ref_;
+              /// May observe a caller-owned handler.
               ClientRequestHandler* request_handler_;
           };
 
@@ -74,25 +74,25 @@ namespace ACE
               URL_Base ();
               virtual ~URL_Base ();
 
-              virtual bool parse (const ACE_CString& url_string);
+              virtual bool parse (ACE_CString const& url_string);
 
-              void set_path (const ACE_CString& path);
+              void set_path (ACE_CString const& path);
 
-              virtual void set_query (const ACE_CString& query);
+              virtual void set_query (ACE_CString const& query);
 
-              virtual void set_fragment (const ACE_CString& fragment);
+              virtual void set_fragment (ACE_CString const& fragment);
 
-              virtual const ACE_CString& get_scheme () const = 0;
+              virtual ACE_CString const& get_scheme () const = 0;
 
-              const ACE_CString& get_protocol () const;
+              ACE_CString const& get_protocol () const;
 
               virtual ACE_CString get_authority () const;
 
-              const ACE_CString& get_path () const;
+              ACE_CString const& get_path () const;
 
-              virtual const ACE_CString& get_query () const;
+              virtual ACE_CString const& get_query () const;
 
-              virtual const ACE_CString& get_fragment () const;
+              virtual ACE_CString const& get_fragment () const;
 
               virtual URLStream open () const;
 
@@ -100,20 +100,20 @@ namespace ACE
 
               virtual ACE_CString to_string () const = 0;
 
-              static URL_Base* create_from_string (const ACE_CString& url_string);
+              static URL_Base* create_from_string (ACE_CString const& url_string);
 
 #if defined (ACE_HAS_WCHAR)
-              virtual bool parse (const ACE_WString& url_string);
+              virtual bool parse (ACE_WString const& url_string);
 
               virtual ACE_WString to_wstring () const;
 
-              static URL_Base* create_from_wstring (const ACE_WString& url_string);
+              static URL_Base* create_from_wstring (ACE_WString const& url_string);
 #endif
 
               virtual bool validate ();
 
             protected:
-              static const ACE_CString empty_;
+              static ACE_CString const empty_;
 
               bool strip_scheme (ACE_CString& url_string);
 
@@ -132,19 +132,16 @@ namespace ACE
                   public:
                     Factory ();
                     virtual ~Factory ();
-                    virtual const ACE_CString& protocol () = 0;
-                    virtual URL_Base* create_from_string (const ACE_CString& url_string) = 0;
+                    virtual ACE_CString const& protocol () = 0;
+                    virtual URL_Base* create_from_string (ACE_CString const& url_string) = 0;
                 };
 
               static void register_factory (Factory* url_factory);
               static void deregister_factory (Factory* url_factory);
 
             private:
-              typedef ACE_Map_Manager<ACE_CString,
-                                      Factory*,
-                                      ACE_SYNCH::MUTEX> TURLFactoryMap;
-              typedef ACE_Singleton<TURLFactoryMap,
-                                    ACE_SYNCH::NULL_MUTEX> TURLFactorySingleton;
+              using TURLFactoryMap = ACE_Map_Manager<ACE_CString, Factory*, ACE_SYNCH::MUTEX>;
+              using TURLFactorySingleton = ACE_Singleton<TURLFactoryMap, ACE_SYNCH::NULL_MUTEX>;
               static TURLFactoryMap* factories_;
           };
 
@@ -159,27 +156,27 @@ namespace ACE
           : public URL_Base
           {
             public:
-              URL_INetBase(u_short port);
+              explicit URL_INetBase(u_short port);
               virtual ~URL_INetBase ();
 
-              void set_host (const ACE_CString& host);
+              void set_host (ACE_CString const& host);
 
               void set_port (u_short port);
 
-              const ACE_CString& get_host () const;
+              ACE_CString const& get_host () const;
 
               u_short get_port () const;
 
               virtual u_short default_port () const = 0;
 
-              virtual ACE_CString get_authority () const;
+              ACE_CString get_authority () const override;
 
-              virtual bool validate ();
+              bool validate () override;
 
             protected:
-              virtual int parse_authority (std::istream& is);
+              int parse_authority (std::istream& is) override;
 
-              virtual bool has_authority ();
+              bool has_authority () override;
 
               int parse_authority_i (std::istream& is,
                                      std::ostream& os,
@@ -189,7 +186,6 @@ namespace ACE
               ACE_CString host_;
               u_short port_;
           };
-
 
         /**
         * @class ACE_INet_URL_INetAuthBase
@@ -205,36 +201,33 @@ namespace ACE
           : public URL_INetBase
           {
             public:
-              URL_INetAuthBase(u_short port);
+              explicit URL_INetAuthBase(u_short port);
               virtual ~URL_INetAuthBase ();
 
-              const ACE_CString& get_user_info () const;
+              ACE_CString const& get_user_info () const;
 
-              void set_user_info (const ACE_CString& userinfo);
+              void set_user_info (ACE_CString const& userinfo);
 
-              virtual ACE_CString get_authority () const;
+              ACE_CString get_authority () const override;
 
             protected:
-              virtual int parse_authority (std::istream& is);
+              int parse_authority (std::istream& is) override;
 
             private:
               ACE_CString userinfo_;
 
             public:
-              static bool add_authenticator (const ACE_CString& auth_id, AuthenticatorBase* authenticator);
+              static bool add_authenticator (ACE_CString const& auth_id, AuthenticatorBase* authenticator);
 
-              static bool has_authenticator (const ACE_CString& auth_id);
+              static bool has_authenticator (ACE_CString const& auth_id);
 
-              static AuthenticatorBase* remove_authenticator (const ACE_CString& auth_id);
+              static AuthenticatorBase* remove_authenticator (ACE_CString const& auth_id);
 
               static bool authenticate (AuthenticationBase& authentication);
 
             private:
-              typedef ACE_Refcounted_Auto_Ptr<AuthenticatorBase,
-                                              ACE_SYNCH::NULL_MUTEX> authenticator_ptr;
-              typedef ACE_Map_Manager<ACE_CString,
-                                      authenticator_ptr,
-                                      ACE_SYNCH::RECURSIVE_MUTEX>  authenticator_map;
+              using authenticator_ptr = ACE_Refcounted_Auto_Ptr<AuthenticatorBase, ACE_SYNCH::NULL_MUTEX>;
+              using authenticator_map = ACE_Map_Manager<ACE_CString, authenticator_ptr, ACE_SYNCH::RECURSIVE_MUTEX>;
 
               static authenticator_map authenticators_;
           };

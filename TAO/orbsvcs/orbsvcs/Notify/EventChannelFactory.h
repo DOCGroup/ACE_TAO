@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file EventChannelFactory.h
  *
@@ -52,35 +51,39 @@ class TAO_Notify_Serv_Export TAO_Notify_EventChannelFactory
   using Routing_Slip_Set = ACE_Unbounded_Set <TAO_Notify::Routing_Slip_Ptr>;
 
 public:
-  using Ptr = TAO_Notify_Refcountable_Guard_T< TAO_Notify_EventChannelFactory >;
+  using Ptr = TAO_Notify_Refcountable_Guard_T<TAO_Notify_EventChannelFactory>;
 
-  /// Constructor
   TAO_Notify_EventChannelFactory ();
 
   /// Init the factory
   void init (PortableServer::POA_ptr poa);
 
-  /// Destructor
-  virtual ~TAO_Notify_EventChannelFactory ();
+  ~TAO_Notify_EventChannelFactory () override;
 
-  /// = ServantBase  Methods
-  virtual void _add_ref ();
-  virtual void _remove_ref ();
+  TAO_Notify_EventChannelFactory (TAO_Notify_EventChannelFactory const &) = delete;
+  TAO_Notify_EventChannelFactory (TAO_Notify_EventChannelFactory &&) = delete;
+  TAO_Notify_EventChannelFactory &operator= (TAO_Notify_EventChannelFactory const &) = delete;
+  TAO_Notify_EventChannelFactory &operator= (TAO_Notify_EventChannelFactory &&) = delete;
 
-  /// Remove @a channel from the <ec_container_>
+  /// @name Servant reference-count methods
+  /// @{
+  void _add_ref () override;
+  void _remove_ref () override;
+  /// @}
+
+  /// Remove @a channel from the @c ec_container_
   virtual void remove (TAO_Notify_EventChannel* channel);
 
   /// This method is called by the Notify_Service when the event channel
   /// is automatically created and bound in the name service.
   virtual CosNotifyChannelAdmin::EventChannel_ptr create_named_channel (
-      const CosNotification::QoSProperties& initial_qos,
-      const CosNotification::AdminProperties& initial_admin,
+      CosNotification::QoSProperties const &initial_qos,
+      CosNotification::AdminProperties const &initial_admin,
       CosNotifyChannelAdmin::ChannelID_out id,
-      const char* name);
+      char const *name);
 
-  //////////////////////////
-  // The following methods are for
-  // unit testing and debugging
+  /// @name Unit testing and debugging
+  /// @{
 
   /// Use the registered Topology_Factory to create a loader, and
   /// load the topology. If no Topology_Factory is registered
@@ -90,18 +93,19 @@ public:
   /// Use the passed in saver factory to generate topology saver objects.
   /// Does not take ownership.
   void set_topology_factory(TAO_Notify::Topology_Factory* sf);
+  /// @}
 
   //-- Topology_Parent
 
-  virtual bool is_persistent () const;
+  bool is_persistent () const override;
 
-  virtual void save_persistent (TAO_Notify::Topology_Saver& saver);
-  virtual bool change_to_parent ();
-  virtual TAO_Notify::Topology_Object* load_child (const ACE_CString &type,
-                                                   CORBA::Long id,
-                                                   const TAO_Notify::NVPList& attrs);
+  void save_persistent (TAO_Notify::Topology_Saver& saver) override;
+  bool change_to_parent () override;
+  TAO_Notify::Topology_Object* load_child (ACE_CString const &type,
+                                           CORBA::Long id,
+                                           TAO_Notify::NVPList const &attrs) override;
   CosNotifyChannelAdmin::EventChannelFactory_ptr activate_self ();
-  virtual void reconnect ();
+  void reconnect () override;
   virtual void validate ();
 
   /// at shutdown time, this causes the validator thread to exit.
@@ -112,42 +116,43 @@ public:
 
   void load_event_persistence ();
 
-  virtual void save_topology ();
+  void save_topology () override;
 
   TAO_Notify_ProxyConsumer * find_proxy_consumer (TAO_Notify::IdVec & id_path, size_t position);
   TAO_Notify_ProxySupplier * find_proxy_supplier (TAO_Notify::IdVec & id_path, size_t position);
   TAO_Notify_Object * follow_id_path (TAO_Notify::IdVec & id_path, size_t position);
-  virtual TAO_Notify_Object::ID get_id () const;
+  TAO_Notify_Object::ID get_id () const override;
 
 private:
-  /// = Data Members
-
-  /// = NotifyExt methods
-  virtual void destroy ();
+  /// @name NotifyExt methods
+  /// @{
+  void destroy () override;
 
   /// shutdown
-  virtual int shutdown ();
+  int shutdown () override;
 
-  virtual
   NotifyExt::ReconnectionRegistry::ReconnectionID register_callback (
-      NotifyExt::ReconnectionCallback_ptr reconnection);
+      NotifyExt::ReconnectionCallback_ptr reconnection) override;
 
-  virtual void unregister_callback (
-      NotifyExt::ReconnectionRegistry::ReconnectionID id);
+  void unregister_callback (
+      NotifyExt::ReconnectionRegistry::ReconnectionID id) override;
 
-  virtual CORBA::Boolean is_alive ();
+  CORBA::Boolean is_alive () override;
+  /// @}
 
 protected:
-  /// = CosNotifyChannelAdmin Methods
-  virtual ::CosNotifyChannelAdmin::EventChannel_ptr create_channel (
-      const CosNotification::QoSProperties & initial_qos,
-      const CosNotification::AdminProperties & initial_admin,
-      CosNotifyChannelAdmin::ChannelID_out id);
+  /// @name CosNotifyChannelAdmin methods
+  /// @{
+  ::CosNotifyChannelAdmin::EventChannel_ptr create_channel (
+      CosNotification::QoSProperties const &initial_qos,
+      CosNotification::AdminProperties const &initial_admin,
+      CosNotifyChannelAdmin::ChannelID_out id) override;
 
-  virtual ::CosNotifyChannelAdmin::ChannelIDSeq * get_all_channels ();
+  ::CosNotifyChannelAdmin::ChannelIDSeq * get_all_channels () override;
 
-  virtual ::CosNotifyChannelAdmin::EventChannel_ptr get_event_channel (
-      CosNotifyChannelAdmin::ChannelID id);
+  ::CosNotifyChannelAdmin::EventChannel_ptr get_event_channel (
+      CosNotifyChannelAdmin::ChannelID id) override;
+  /// @}
 
 private:
   using TAO_Notify_EventChannel_Container = TAO_Notify_Container_T<TAO_Notify_EventChannel>;
@@ -155,22 +160,22 @@ private:
   TAO_Notify_EventChannel_Container& ec_container();
 
   /// Container for Event Channels.
-  std::unique_ptr< TAO_Notify_EventChannel_Container > ec_container_;
+  std::unique_ptr<TAO_Notify_EventChannel_Container> ec_container_;
 
   TAO_SYNCH_MUTEX topology_save_lock_;
 
   CosNotifyChannelAdmin::EventChannelFactory_var channel_factory_;
 
   /// Change-in-progress detector to avoid duplicates
-  short topology_save_seq_;
-  TAO_Notify::Topology_Factory* topology_factory_;
+  short topology_save_seq_ {};
+  TAO_Notify::Topology_Factory* topology_factory_ {};
   TAO_Notify::Reconnection_Registry reconnect_registry_;
-  bool loading_topology_;
+  bool loading_topology_ {};
 
   Routing_Slip_Set routing_slip_restart_set_;
 
   /// Release this object.
-  virtual void release ();
+  void release () override;
 
   std::unique_ptr <TAO_Notify_validate_client_Task> validate_client_task_;
 

@@ -1,15 +1,13 @@
-
-//=============================================================================
 /**
  *  @file    DLL_Test_Impl.h
  *
  *  @author  Kirthika Parameswaran  <kirthika@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef ACE_TESTS_DLL_TEST_IMPL_H
 #define ACE_TESTS_DLL_TEST_IMPL_H
+
+#include <new>
 
 #include "DLL_Test.h"
 #include "ace/OS_Memory.h"
@@ -30,10 +28,8 @@
 class Hello_Impl : public Hello
 {
 public:
-  /// Constructor
   Hello_Impl ();
 
-  /// Destructor
   ~Hello_Impl ();
 
   /// See the documentation in the base class
@@ -51,8 +47,8 @@ public:
   void *operator new (size_t bytes);
 
   /// Overloaded new operator, nothrow_t variant.
-  void *operator new (size_t bytes, const std::nothrow_t &nt);
-  void operator delete (void *p, const std::nothrow_t&) noexcept;
+  void *operator new (size_t bytes, std::nothrow_t const &nt) noexcept;
+  void operator delete (void *p, std::nothrow_t const &) noexcept;
 
   void operator delete (void *ptr);
 };

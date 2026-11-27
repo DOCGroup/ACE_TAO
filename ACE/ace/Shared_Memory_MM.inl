@@ -1,8 +1,7 @@
-// -*- C++ -*-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// Return the name of file that is mapped (if any).
-ACE_INLINE const ACE_TCHAR *
+ACE_INLINE ACE_TCHAR const *
 ACE_Shared_Memory_MM::filename () const
 {
   return this->shared_memory_.filename ();
@@ -21,7 +20,7 @@ ACE_Shared_Memory_MM::open (ACE_HANDLE handle,
 }
 
 ACE_INLINE int
-ACE_Shared_Memory_MM::open (const ACE_TCHAR *file_name,
+ACE_Shared_Memory_MM::open (ACE_TCHAR const *file_name,
                             size_t len,
                             int flags,
                             int mode,

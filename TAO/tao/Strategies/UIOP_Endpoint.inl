@@ -1,15 +1,14 @@
-// -*- C++ -*-
 # if TAO_HAS_UIOP == 1
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_INLINE const ACE_UNIX_Addr &
+ACE_INLINE ACE_UNIX_Addr const &
 TAO_UIOP_Endpoint::object_addr () const
 {
   return this->object_addr_;
 }
 
-ACE_INLINE const char *
+ACE_INLINE char const *
 TAO_UIOP_Endpoint::rendezvous_point () const
 {
   return this->object_addr_.get_path_name ();

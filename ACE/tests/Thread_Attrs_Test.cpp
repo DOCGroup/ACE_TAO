@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    Thread_Attrs_Test.cpp
  *
@@ -8,7 +6,6 @@
  *
  *  @author Steve Huston <shuston@riverace.com>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "ace/Task.h"
@@ -105,18 +102,21 @@ int
 Cancel_Check::open (void *)
 {
   long flags = THR_NEW_LWP | THR_JOINABLE;
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Flags before cancels: 0x%x\n"), flags));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Flags before cancels: %Ld\n"),
+              flags));
   flags |= (this->enable_req_ ? THR_CANCEL_ENABLE : THR_CANCEL_DISABLE);
   flags |= (this->async_req_ ? THR_CANCEL_ASYNCHRONOUS : THR_CANCEL_DEFERRED);
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Flags after cancels: 0x%x\n"), flags));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Flags after cancels: %Ld\n"),
+              flags));
   if (this->activate (flags) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("Cancel_Check activate failed")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("Cancel_Check activate failed")),
+                        -1);
+    }
   return 0;
 }
-
 
 /**
  * @class Stack_Size_Check
@@ -185,9 +185,11 @@ Stack_Size_Check::svc ()
       this->failed_ = true;
     }
   else
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("%t: My stack size attr %B; correct.\n"),
-                my_size));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("%t: My stack size attr %B; correct.\n"),
+                  my_size));
+    }
   return 0;
 }
 
@@ -206,16 +208,17 @@ Stack_Size_Check::open (void *)
                       &stack_size_,
                       nullptr,
                       names) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("Stack_Size_Check activate failed")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("Stack_Size_Check activate failed")),
+                        -1);
+    }
 
   return 0;
 }
 
 #endif /* ACE_HAS_THREADS */
-
 
 int
 run_main (int, ACE_TCHAR *[])
@@ -229,12 +232,16 @@ run_main (int, ACE_TCHAR *[])
   if (status == 0)
     {
       if (size_checker.wait () == -1)
+        {
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("size_checker %p\n"),
                              ACE_TEXT ("wait")),
                             1);
+        }
       if (!size_checker)
-        status = 1;
+        {
+          status = 1;
+        }
     }
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Cancel flags sanity check:\n")
@@ -255,22 +262,30 @@ run_main (int, ACE_TCHAR *[])
     {
       check1.wait ();
       if (!check1)
+      {
         status = 1;
+      }
 
       check2.open (nullptr);
       check2.wait ();
       if (!check2)
+      {
         status = 1;
+      }
 
       check3.open (nullptr);
       check3.wait ();
       if (!check3)
+      {
         status = 1;
+      }
 
       check4.open (nullptr);
       check4.wait ();
       if (!check4)
+      {
         status = 1;
+      }
     }
   else
     {

@@ -6,31 +6,32 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_Dynamic_Service_Dependency::ACE_Dynamic_Service_Dependency (const ACE_TCHAR *principal)
+ACE_Dynamic_Service_Dependency::ACE_Dynamic_Service_Dependency (ACE_TCHAR const *principal)
 {
   this->init (ACE_Service_Config::current (), principal);
 }
 
-ACE_Dynamic_Service_Dependency::ACE_Dynamic_Service_Dependency (const ACE_Service_Gestalt *cfg,
-                                                                const ACE_TCHAR *principal)
+ACE_Dynamic_Service_Dependency::ACE_Dynamic_Service_Dependency (ACE_Service_Gestalt const *cfg,
+                                                                ACE_TCHAR const *principal)
 {
   this->init (cfg, principal);
 }
 
-
 ACE_Dynamic_Service_Dependency::~ACE_Dynamic_Service_Dependency ()
 {
   if (ACE::debug ())
-    ACELIB_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%P|%t) DSD, this=%@ - destroying\n"),
-                this));
+    {
+      ACELIB_DEBUG ((LM_DEBUG,
+                     ACE_TEXT ("(%P|%t) DSD, this=%@ - destroying\n"),
+                     this));
+    }
 }
 
 void
-ACE_Dynamic_Service_Dependency::init (const ACE_Service_Gestalt *cfg,
-                                      const ACE_TCHAR *principal)
+ACE_Dynamic_Service_Dependency::init (ACE_Service_Gestalt const *cfg,
+                                      ACE_TCHAR const *principal)
 {
-  const ACE_Service_Type* st =
+  ACE_Service_Type const* st =
     ACE_Dynamic_Service_Base::find_i (cfg, principal,false);
   if (ACE::debug ())
     {
@@ -40,6 +41,5 @@ ACE_Dynamic_Service_Dependency::init (const ACE_Service_Gestalt *cfg,
     }
   this->tracker_ = st->dll ();
 }
-
 
 ACE_END_VERSIONED_NAMESPACE_DECL

@@ -1,5 +1,3 @@
-// -*- C++ -*-
-//=============================================================================
 /**
  *  @file     Endpoint_Value_Impl.h
  *
@@ -7,7 +5,6 @@
  *
  *  @author  Phil Mesnier <mesnier_p@ociweb.com>
  */
-//=============================================================================
 
 #ifndef _TAO_ENDPOINT_VALUE_IMPL_H_
 #define _TAO_ENDPOINT_VALUE_IMPL_H_

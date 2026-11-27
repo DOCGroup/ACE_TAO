@@ -3,7 +3,7 @@
 #include <ace/Task.h>
 #include <ace/Get_Opt.h>
 
-const ACE_TCHAR * ior_output_file = ACE_TEXT ("serverA.ior");
+ACE_TCHAR const * ior_output_file = ACE_TEXT ("serverA.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -101,19 +101,21 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     // Output the IOR to the <ior_output_file>
     FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
     if (output_file == 0)
-      ACE_ERROR_RETURN ((LM_ERROR,
-      "Cannot open output file for writing IOR: %s",
-      ior_output_file),
-      1);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+        "Cannot open output file for writing IOR: %s",
+        ior_output_file),
+        1);
+      }
     ACE_OS::fprintf (output_file, "%s", ior.in ());
     ACE_OS::fclose (output_file);
 
     orb->run ();
 
-    rootPOA->destroy (1, 1);
+    rootPOA->destroy (true, true);
     orb->destroy ();
   }
-  catch (const CORBA::Exception &ex)
+  catch (CORBA::Exception const &ex)
   {
     ex._tao_print_exception ("Exception caught by serverA:");
     return 1;

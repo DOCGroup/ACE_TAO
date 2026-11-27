@@ -1,4 +1,3 @@
-// -*- C++ -*-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
@@ -14,8 +13,6 @@ namespace TAO
   {
     return this->byte_order_;
   }
-
-  // ===================================================================
 
   ACE_INLINE
   NVList_Argument::NVList_Argument (CORBA::NVList_ptr x, bool lazy_eval)

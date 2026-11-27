@@ -1,5 +1,4 @@
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/IFRService/OperationDef_i.h"
 #include "orbsvcs/IFRService/Repository_i.h"
 #include "orbsvcs/IFRService/IDLType_i.h"
@@ -73,9 +72,8 @@ TAO_OperationDef_i::result_i ()
 {
   ACE_TString result_path;
   this->repo_->config ()->get_string_value (this->section_key_,
-                                            "result",
+                                            ACE_TEXT ("result"),
                                             result_path);
-
 
   TAO_IDLType_i *impl =
     TAO_IFR_Service_Utils::path_to_idltype (result_path,
@@ -99,7 +97,7 @@ TAO_OperationDef_i::result_def_i ()
 {
   ACE_TString result_path;
   this->repo_->config ()->get_string_value (this->section_key_,
-                                            "result",
+                                            ACE_TEXT ("result"),
                                             result_path);
 
   CORBA::Object_var obj =
@@ -126,8 +124,8 @@ TAO_OperationDef_i::result_def_i (CORBA::IDLType_ptr result_def)
     TAO_IFR_Service_Utils::reference_to_path (result_def);
 
   this->repo_->config ()->set_string_value (this->section_key_,
-                                            "result",
-                                            result_path);
+                                            ACE_TEXT ("result"),
+                                            ACE_TEXT_CHAR_TO_TCHAR (result_path));
 }
 
 CORBA::ParDescriptionSeq *
@@ -147,8 +145,8 @@ TAO_OperationDef_i::params_i ()
   ACE_Configuration_Section_Key params_key;
   int status =
     this->repo_->config ()->open_section (this->section_key_,
-                                          "params",
-                                          0,
+                                          ACE_TEXT ("params"),
+                                          false,
                                           params_key);
 
   std::deque<ACE_Configuration_Section_Key> key_queue;
@@ -158,17 +156,17 @@ TAO_OperationDef_i::params_i ()
     {
       u_int count = 0;
       this->repo_->config ()->get_integer_value (params_key,
-                                                 "count",
+                                                 ACE_TEXT ("count"),
                                                  count);
 
       for (i = 0; i < count; ++i)
         {
           ACE_Configuration_Section_Key param_key;
-          char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
+          ACE_TCHAR *stringified = TAO_IFR_Service_Utils::int_to_string (i);
           status =
             this->repo_->config ()->open_section (params_key,
                                                   stringified,
-                                                  0,
+                                                  false,
                                                   param_key);
 
           if (status == 0)
@@ -202,21 +200,21 @@ TAO_OperationDef_i::params_i ()
 
       ACE_TString name;
       this->repo_->config ()->get_string_value (key,
-                                                "name",
+                                                ACE_TEXT ("name"),
                                                 name);
 
-      retval[i].name = name.c_str ();
+      retval[i].name = static_cast<char const *> (ACE_TEXT_ALWAYS_CHAR (name.c_str ()));
 
       u_int mode = 0;
       this->repo_->config ()->get_integer_value (key,
-                                                 "mode",
+                                                 ACE_TEXT ("mode"),
                                                  mode);
 
       retval[i].mode = static_cast<CORBA::ParameterMode> (mode);
 
       ACE_TString type_path;
       this->repo_->config ()->get_string_value (key,
-                                                "type_path",
+                                                ACE_TEXT ("type_path"),
                                                 type_path);
 
       TAO_IDLType_i *impl =
@@ -260,8 +258,8 @@ void
 TAO_OperationDef_i::params_i (CORBA::ParDescriptionSeq const &params)
 {
   this->repo_->config ()->remove_section (this->section_key_,
-                                          "params",
-                                          1);
+                                          ACE_TEXT ("params"),
+                                          true);
 
   CORBA::ULong length = params.length ();
 
@@ -272,34 +270,34 @@ TAO_OperationDef_i::params_i (CORBA::ParDescriptionSeq const &params)
 
   ACE_Configuration_Section_Key params_key;
   this->repo_->config ()->open_section (this->section_key_,
-                                        "params",
-                                        1,
+                                        ACE_TEXT ("params"),
+                                        true,
                                         params_key);
 
   this->repo_->config ()->set_integer_value (params_key,
-                                             "count",
+                                             ACE_TEXT ("count"),
                                              length);
   for (CORBA::ULong i {}; i < length; ++i)
     {
       ACE_Configuration_Section_Key param_key;
-      char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
+      ACE_TCHAR *stringified = TAO_IFR_Service_Utils::int_to_string (i);
       this->repo_->config ()->open_section (params_key,
                                             stringified,
-                                            1,
+                                            true,
                                             param_key);
 
       this->repo_->config ()->set_string_value (param_key,
-                                                "name",
-                                                params[i].name.in ());
+                                                ACE_TEXT ("name"),
+                                                ACE_TEXT_CHAR_TO_TCHAR (params[i].name.in ()));
       char * const type_path =
         TAO_IFR_Service_Utils::reference_to_path (params[i].type_def.in ());
 
       this->repo_->config ()->set_string_value (param_key,
-                                                "type_path",
-                                                type_path);
+                                                ACE_TEXT ("type_path"),
+                                                ACE_TEXT_CHAR_TO_TCHAR (type_path));
 
       this->repo_->config ()->set_integer_value (param_key,
-                                                 "mode",
+                                                 ACE_TEXT ("mode"),
                                                  params[i].mode);
     }
 }
@@ -319,7 +317,7 @@ TAO_OperationDef_i::mode_i ()
 {
   u_int mode;
   this->repo_->config ()->get_integer_value (this->section_key_,
-                                             "mode",
+                                             ACE_TEXT ("mode"),
                                              mode);
 
   return static_cast<CORBA::OperationMode> (mode);
@@ -339,7 +337,7 @@ void
 TAO_OperationDef_i::mode_i (CORBA::OperationMode mode)
 {
   this->repo_->config ()->set_integer_value (this->section_key_,
-                                             "mode",
+                                             ACE_TEXT ("mode"),
                                              mode);
 }
 
@@ -359,8 +357,8 @@ TAO_OperationDef_i::contexts_i ()
   ACE_Configuration_Section_Key contexts_key;
   int status =
     this->repo_->config ()->open_section (this->section_key_,
-                                          "contexts",
-                                          0,
+                                          ACE_TEXT ("contexts"),
+                                          false,
                                           contexts_key);
 
   std::deque<ACE_TString> context_queue;
@@ -375,7 +373,7 @@ TAO_OperationDef_i::contexts_i ()
       // IR objects so they can't be destroyed one at a time. To
       // make a change one has to call the mutator version of this
       // function and make a completely new list.
-      char *stringified = TAO_IFR_Service_Utils::int_to_string (index);
+      ACE_TCHAR *stringified = TAO_IFR_Service_Utils::int_to_string (index);
       while (this->repo_->config ()->get_string_value (contexts_key,
                                                        stringified,
                                                        context)
@@ -403,7 +401,7 @@ TAO_OperationDef_i::contexts_i ()
       context_string = context_queue.front ();
       context_queue.pop_front ();
 
-      (*ci_seq)[i] = context_string.c_str ();
+      (*ci_seq)[i] = static_cast<char const *> (ACE_TEXT_ALWAYS_CHAR (context_string.c_str ()));
     }
 
   return ci_seq;
@@ -423,26 +421,28 @@ void
 TAO_OperationDef_i::contexts_i (CORBA::ContextIdSeq const &contexts)
 {
   this->repo_->config ()->remove_section (this->section_key_,
-                                          "contexts",
-                                          0);
+                                          ACE_TEXT ("contexts"),
+                                          false);
 
   CORBA::ULong length = contexts.length ();
 
   if (length == 0)
+  {
     return;
+  }
 
   ACE_Configuration_Section_Key contexts_key;
   this->repo_->config ()->open_section (this->section_key_,
-                                        "contexts",
-                                        1,
+                                        ACE_TEXT ("contexts"),
+                                        true,
                                         contexts_key);
 
   for (CORBA::ULong i {}; i < length; ++i)
     {
-      char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
+      ACE_TCHAR *stringified = TAO_IFR_Service_Utils::int_to_string (i);
       this->repo_->config ()->set_string_value (contexts_key,
                                                 stringified,
-                                                contexts[i].in ());
+                                                ACE_TEXT_CHAR_TO_TCHAR (contexts[i].in ()));
     }
 }
 
@@ -462,8 +462,8 @@ TAO_OperationDef_i::exceptions_i ( )
   ACE_Configuration_Section_Key excepts_key;
   int status =
     this->repo_->config ()->open_section (this->section_key_,
-                                          "excepts",
-                                          0,
+                                          ACE_TEXT ("excepts"),
+                                          false,
                                           excepts_key);
 
   int index = 0;
@@ -513,7 +513,7 @@ TAO_OperationDef_i::exceptions_i ( )
 
       CORBA::Object_var obj =
         TAO_IFR_Service_Utils::create_objref (CORBA::dk_Exception,
-                                              path.c_str (),
+                                              ACE_TEXT_ALWAYS_CHAR (path.c_str ()),
                                               this->repo_);
 
       retval[i] = CORBA::ExceptionDef::_narrow (obj.in ());
@@ -536,8 +536,8 @@ void
 TAO_OperationDef_i::exceptions_i (CORBA::ExceptionDefSeq const &exceptions)
 {
   this->repo_->config ()->remove_section (this->section_key_,
-                                          "excepts",
-                                          0);
+                                          ACE_TEXT ("excepts"),
+                                          false);
 
   TAO_IFR_Service_Utils::set_exceptions (this->repo_->config (),
                                          this->section_key_,
@@ -555,10 +555,10 @@ TAO_OperationDef_i::make_description (
 
   ACE_TString container_id;
   this->repo_->config ()->get_string_value (this->section_key_,
-                                            "container_id",
+                                            ACE_TEXT ("container_id"),
                                             container_id);
 
-  od.defined_in = container_id.c_str ();
+  od.defined_in = static_cast<char const *> (ACE_TEXT_ALWAYS_CHAR (container_id.c_str ()));
 
   od.version = this->version_i ();
 
@@ -579,8 +579,8 @@ TAO_OperationDef_i::make_description (
   ACE_Configuration_Section_Key excepts_key;
   int status =
     this->repo_->config ()->open_section (this->section_key_,
-                                          "excepts",
-                                          0,
+                                          ACE_TEXT ("excepts"),
+                                          false,
                                           excepts_key);
 
   // This section may not have been created.
@@ -623,35 +623,35 @@ TAO_OperationDef_i::make_description (
           this->repo_->config ()->expand_path (this->repo_->root_key (),
                                                type_path,
                                                type_key,
-                                               0);
+                                               false);
 
           ACE_TString name;
           this->repo_->config ()->get_string_value (type_key,
-                                                    "name",
+                                                    ACE_TEXT ("name"),
                                                     name);
 
-          od.exceptions[i].name = name.c_str ();
+          od.exceptions[i].name = static_cast<char const *> (ACE_TEXT_ALWAYS_CHAR (name.c_str ()));
 
           ACE_TString id;
           this->repo_->config ()->get_string_value (type_key,
-                                                    "id",
+                                                    ACE_TEXT ("id"),
                                                     id);
 
-          od.exceptions[i].id = id.c_str ();
+          od.exceptions[i].id = static_cast<char const *> (ACE_TEXT_ALWAYS_CHAR (id.c_str ()));
 
           ACE_TString container_id;
           this->repo_->config ()->get_string_value (type_key,
-                                                    "container_id",
+                                                    ACE_TEXT ("container_id"),
                                                     container_id);
 
-          od.exceptions[i].defined_in = container_id.c_str ();
+          od.exceptions[i].defined_in = static_cast<char const *> (ACE_TEXT_ALWAYS_CHAR (container_id.c_str ()));
 
           ACE_TString version;
           this->repo_->config ()->get_string_value (type_key,
-                                                    "version",
+                                                    ACE_TEXT ("version"),
                                                     version);
 
-          od.exceptions[i].version = version.c_str ();
+          od.exceptions[i].version = static_cast<char const *> (ACE_TEXT_ALWAYS_CHAR (version.c_str ()));
 
           TAO_ExceptionDef_i impl (this->repo_);
           impl.section_key (type_key);

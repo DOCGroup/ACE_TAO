@@ -94,11 +94,14 @@ SLevel1_Server_i::authorize_level1 ()
   /// If the owner of this invocation is authorized to invoke this
   /// method, return 0 else return 1.
   if (authorize_1 == 0)
-    return 0;
+    {
+      return 0;
+    }
   else
-    return 1;
+    {
+      return 1;
+    }
 }
-
 
 CORBA::Boolean
 SLevel1_Server_i::authorize_level2 ()
@@ -106,7 +109,11 @@ SLevel1_Server_i::authorize_level2 ()
   /// If the owner of this invocation is authorized to invoke this
   /// method, return 0 else return 1.
   if (authorize_2 == 0)
-    return 0;
+    {
+      return 0;
+    }
   else
-    return 1;
+    {
+      return 1;
+    }
 }

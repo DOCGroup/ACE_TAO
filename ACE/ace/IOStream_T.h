@@ -1,6 +1,3 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
  *  @file    IOStream_T.h
  *
@@ -11,7 +8,6 @@
  * code. Instead, it should include "ace/IOStream.h".  That's because
  * we only put some conditional compilations in that file.
  */
-//=============================================================================
 
 #ifndef ACE_IOSTREAM_T_H
 #define ACE_IOSTREAM_T_H
@@ -30,7 +26,10 @@
 
 #  if defined (ACE_LACKS_IOSTREAM_FX)
 #   include "ace/os_include/os_ctype.h"
+#   include "ace/OS_NS_ctype.h"
 #  endif /**/
+
+#  include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -83,13 +82,13 @@ protected:
  * iostream class and derivatives provide you with a host of
  * convenient operators that access the streambuf.
  *
- * We inherit all characteristics of iostream and your <STREAM>
+ * We inherit all characteristics of @c iostream and your @c STREAM
  * class.  When you create a new class from this template, you
  * can use it anywhere you would have used your original
- * <STREAM> class.
+ * class.
  * To create an iostream for your favorite ACE IPC class (e.g.,
- * ACE_SOCK_Stream), feed that class to this template's
- * <STREAM> parameter, e.g.,
+ * ACE_SOCK_Stream), feed that class to this template's @c STREAM
+ * parameter, e.g.,
  * typedef ACE_Svc_Handler<ACE_SOCK_iostream,
  * ACE_INET_Addr, ACE_NULL_SYNCH>
  * Service_Handler;
@@ -117,35 +116,39 @@ public:
    */
   ACE_IOStream (u_int streambuf_size = ACE_STREAMBUF_SIZE);
 
-  /// We have to get rid of the <streambuf_> ourselves since we gave it
-  /// to the <iostream> base class;
-  virtual ~ACE_IOStream ();
+  /// The streambuf is owned here; the iostream base class only borrows it.
+  ~ACE_IOStream () override = default;
 
-  /// The only ambiguity in the multiple inheritance is the <close>
+  ACE_IOStream (ACE_IOStream const &) = delete;
+  ACE_IOStream (ACE_IOStream &&) = delete;
+  ACE_IOStream &operator= (ACE_IOStream const &) = delete;
+  ACE_IOStream &operator= (ACE_IOStream &&) = delete;
+
+  /// The only ambiguity in the multiple inheritance is the @c close()
   /// function.
   virtual int close ();
 
   /**
-   * Returns 1 if we're at the end of the <STREAM>, i.e., if the
+   * Returns 1 if we're at the end of the @c STREAM, i.e., if the
    * connection has closed down or an error has occurred, else 0.
-   * Under the covers, <eof> calls the streambuf's @a timeout function
+   * Under the covers, @c eof() calls the streambuf's @c timeout()
    * which will reset the timeout flag.  As as result, you should save
-   * the return of <eof> and check it instead of calling <eof>
+   * the return of @c eof() and check it instead of calling @c eof()
    * successively.
    */
   int eof () const;
 
   /**
-   * A simple string operator.  The base <iostream> has them for char*
-   * but that isn't always the best thing for a <String>.  If we don't
+   * A simple string operator. The base @c iostream has them for char*
+   * but that isn't always the best thing for @c String. If we don't
    * provide our own here, we may not get what we want.
    */
   virtual ACE_IOStream<STREAM> &operator>> (ACE_IOStream_String &v);
 
-  /// The converse of the <String::put> operator.
+  /// The converse of the @c String::put operator.
   virtual ACE_IOStream<STREAM> &operator<< (ACE_IOStream_String &v);
 
-  // = Using the macros to provide get/set operators.
+  /// Use macros to provide get/set operators.
   GETPUT_FUNC_SET (ACE_IOStream<STREAM>)
 
 #  if defined (ACE_LACKS_IOSTREAM_FX)
@@ -154,17 +157,23 @@ public:
       if (good ())
         {
           if (tie () != 0)
-             tie ()->flush ();
+            {
+              tie ()->flush ();
+            }
           if (!noskip && flags () & skipws)
             {
               int ch;
-              while (isspace (ch = rdbuf ()->sbumpc ()))
+              while (ACE_OS::ace_isspace (ch = rdbuf ()->sbumpc ()))
                 continue;
               if (ch != EOF)
+                {
                   rdbuf ()->sputbackc (ch);
+                }
             }
           if (good ())
+            {
               return 1;
+            }
         }
       setstate (failbit);
       return (0);
@@ -176,9 +185,13 @@ public:
       if (good ())
         {
           if (tie () != 0)
-             tie ()->flush ();
+            {
+              tie ()->flush ();
+            }
           if (good ())
+            {
               return 1;
+            }
         }
       setstate (failbit);
       return (0);
@@ -187,10 +200,18 @@ public:
   virtual int opfx ()
     {
       if (good () && tie () != 0)
-        tie ()->flush ();
+        {
+          tie ()->flush ();
+        }
       return good ();
     }
-  virtual void osfx () {  if (flags () & unitbuf) flush (); }
+  virtual void osfx ()
+    {
+      if (flags () & unitbuf)
+        {
+          flush ();
+        }
+    }
 #  else
 #    if defined (__GNUC__)
   virtual int ipfx0 () { return iostream::ipfx0 (); }  // Optimized ipfx(0)
@@ -212,14 +233,13 @@ public:
 protected:
   /// This is where all of the action takes place.  The streambuf_ is
   /// the interface to the underlying STREAM.
-  ACE_Streambuf_T<STREAM> *streambuf_;
+  std::unique_ptr<ACE_Streambuf_T<STREAM>> streambuf_;
 
 private:
-  // We move these into the private section so that they cannot be
-  // used by the application programmer.  This is necessary because
-  // streambuf_ will be buffering IO on the STREAM object.  If these
-  // functions were used in your program, there is a danger of getting
-  // the datastream out of sync.
+  /// These functions are private so that they cannot be used by the
+  /// application programmer. This is necessary because streambuf_ will
+  /// be buffering IO on the STREAM object. If used, these functions can
+  /// get the data stream out of sync.
   ssize_t send (...) = delete;
   ssize_t recv (...) = delete;
   ssize_t send_n (...) = delete;
@@ -271,6 +291,8 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #endif /* __ACE_INLINE__ */
 
 #include "ace/IOStream_T.cpp"
+
+#endif /* !ACE_LACKS_ACE_IOSTREAM */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_IOSTREAM_T_H */

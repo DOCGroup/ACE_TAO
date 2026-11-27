@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "ace/Log_Msg.h"
 
 #include "Server_Request_Interceptor.h"
@@ -6,42 +5,44 @@
 
 namespace Test
 {
-  Server_Request_Interceptor::Server_Request_Interceptor (const char* orbid, TEST test)
+  Server_Request_Interceptor::Server_Request_Interceptor (char const *orbid, TEST test)
     : request_count_ (0)
     , orb_id_ (::CORBA::string_dup (orbid))
     , test_ (test)
   {
   }
 
-  Server_Request_Interceptor::~Server_Request_Interceptor ()
-  {
-  }
+  Server_Request_Interceptor::~Server_Request_Interceptor () = default;
 
   void
-  Server_Request_Interceptor::test_transport_current (const ACE_TCHAR* amethod)
+  Server_Request_Interceptor::test_transport_current (ACE_TCHAR const *amethod)
   {
     CORBA::String_var name (this->name ());
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("%s (%P|%t) Test accessing Transport Current from %s\n"),
+                ACE_TEXT ("%C (%P|%t) Test accessing Transport Current from %s\n"),
                 name.in (),
                 amethod));
 
     ++this->request_count_;
 
      if (TAO_debug_level >=1)
-       ACE_DEBUG ((LM_DEBUG,
-                   ACE_TEXT ("%s (%P|%t) Getting the ORB\n"),
-                   name.in ()));
+       {
+         ACE_DEBUG ((LM_DEBUG,
+                     ACE_TEXT ("%C (%P|%t) Getting the ORB\n"),
+                     name.in ()));
+       }
 
     int tmpargc = 0;
-    ACE_TCHAR **argv = 0;
+    ACE_TCHAR **argv {};
     CORBA::ORB_var orb = CORBA::ORB_init (tmpargc,
                                           argv,
                                           this->orb_id_.in ());
     if (TAO_debug_level >=1)
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("%s (%P|%t) Resolving the TC\n"),
-                  name.in ()));
+      {
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("%C (%P|%t) Resolving the TC\n"),
+                    name.in ()));
+      }
 
    CORBA::Object_var tcobject =
      orb->resolve_initial_references ("TAO::Transport::Current");
@@ -50,7 +51,7 @@ namespace Test
    (*this->test_) (orb.in ());
 
    ACE_DEBUG ((LM_DEBUG,
-               ACE_TEXT ("%s (%P|%t) Success - Transport Current from %s\n"),
+               ACE_TEXT ("%C (%P|%t) Success - Transport Current from %s\n"),
                name.in (),
                amethod));
   }
@@ -61,7 +62,6 @@ namespace Test
   {
     return true;
   }
-
 
   char *
   Server_Request_Interceptor::name ()

@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   ProxyConsumerStateWorker.h
  *
  *  @author Huang-Ming Huang <hh1@cse.wustl.edu>
  */
-//=============================================================================
 
 #ifndef PROXYCONSUMERSTATEWORKER_H
 #define PROXYCONSUMERSTATEWORKER_H
@@ -25,7 +21,7 @@ class ProxyConsumerStateWorker
   : public TAO_ESF_Worker<TAO_EC_ProxyPushConsumer>
 {
 public:
-  ProxyConsumerStateWorker(FtRtecEventChannelAdmin::ProxyConsumerStates& states);
+  explicit ProxyConsumerStateWorker(FtRtecEventChannelAdmin::ProxyConsumerStates& states);
   ~ProxyConsumerStateWorker() override = default;
 
   ProxyConsumerStateWorker(ProxyConsumerStateWorker const&) = delete;
@@ -36,7 +32,7 @@ public:
   void set_size(size_t size) override;
   void work(TAO_EC_ProxyPushConsumer* object) override;
 private:
-  int index_;
+  int index_ {};
   FtRtecEventChannelAdmin::ProxyConsumerStates& consumerStates_;
 };
 

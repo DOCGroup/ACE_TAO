@@ -1,12 +1,8 @@
-// -*- C -*-
-//
-// ===================================================================
 /**
  *  @file ZIOP_PolicyFactory.h
  *
  *  @author Johnny Willemsen <jwillemsen@remedy.nl>
  */
-// ===================================================================
 #ifndef TAO_ZIOP_POLICY_FACTORY_H
 #define TAO_ZIOP_POLICY_FACTORY_H
 
@@ -36,6 +32,12 @@ class TAO_ZIOP_PolicyFactory
   , public ::CORBA::LocalObject
 {
 public:
+  TAO_ZIOP_PolicyFactory () = default;
+  TAO_ZIOP_PolicyFactory (TAO_ZIOP_PolicyFactory const &) = delete;
+  TAO_ZIOP_PolicyFactory &operator= (TAO_ZIOP_PolicyFactory const &) = delete;
+  TAO_ZIOP_PolicyFactory (TAO_ZIOP_PolicyFactory &&) = delete;
+  TAO_ZIOP_PolicyFactory &operator= (TAO_ZIOP_PolicyFactory &&) = delete;
+
   CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
                                    CORBA::Any const& value) override;
 

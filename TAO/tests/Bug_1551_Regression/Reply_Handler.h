@@ -1,10 +1,11 @@
-
 #ifndef REPLY_HANDLER_H
 #define REPLY_HANDLER_H
 
 #include /**/ "ace/pre.h"
 
 #include "TestS.h"
+
+#include <atomic>
 
 class Reply_Handler
   : public POA_Test::AMI_HelloHandler
@@ -26,9 +27,9 @@ private:
   void check_counter ();
 
 private:
-  ACE_Atomic_Op<TAO_SYNCH_MUTEX, long> counter_;
-  Test::Hello_var hello_;
-  CORBA::ORB_var orb_;
+  std::atomic<long> counter_ {1000};
+  Test::Hello_var const hello_;
+  CORBA::ORB_var const orb_;
 };
 
 #include /**/ "ace/post.h"

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "ace/OS_NS_errno.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

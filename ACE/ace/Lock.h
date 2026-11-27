@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//==========================================================================
 /**
  *  @file    Lock.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//==========================================================================
 
 #ifndef ACE_LOCK_H
 #define ACE_LOCK_H
@@ -30,8 +26,9 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * This class is typically used in conjunction with the
  * ACE_Lock_Adapter in order to provide a polymorphic
  * interface to the ACE synchronization mechanisms (e.g.,
- * ACE_Mutex, ACE_Semaphore, ACE_RW_Mutex, etc).  Note that
- * the reason that all of ACE doesn't use polymorphic locks is
+ * ACE_Mutex, ACE_Semaphore, ACE_RW_Mutex, etc).
+ *
+ * @note The reason that all of ACE doesn't use polymorphic locks is
  * that (1) they add ~20% extra overhead for virtual function
  * calls and (2) objects with virtual functions can't be placed
  * into shared memory.
@@ -46,9 +43,10 @@ public:
   virtual ~ACE_Lock () = default;
 
   /**
-   * Explicitly destroy the lock.  Note that only one thread should
-   * call this method since it doesn't protect against race
-   * conditions.
+   * Explicitly destroy the lock.
+   *
+   * @note Only one thread should call this method since it doesn't
+   * protect against race conditions.
    */
   virtual int remove () = 0;
 
@@ -123,7 +121,8 @@ public:
   /// you construct the underneath @c lock_.
   ~ACE_Adaptive_Lock () override = default;
 
-  // = Lock/unlock operations.
+  /// @name Lock and unlock operations
+  /// @{
 
   int remove () override;
   int acquire () override;
@@ -134,6 +133,7 @@ public:
   int tryacquire_read () override;
   int tryacquire_write () override;
   int tryacquire_write_upgrade () override;
+  /// @}
   void dump () const;
 
 protected:

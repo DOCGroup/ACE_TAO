@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file Reactive_Flushing_Strategy.h
  *
  *  @author Carlos O'Ryan <coryan@uci.edu>
  */
-//=============================================================================
 
 #ifndef TAO_REACTIVE_FLUSHING_STRATEGY_H
 #define TAO_REACTIVE_FLUSHING_STRATEGY_H

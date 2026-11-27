@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   Init_ACE.h
  *
@@ -10,8 +7,6 @@
  *  singletons, thread-specific services, loaded services, etc.)  will
  *  survive the @a ACE::fini().
  */
-//=============================================================================
-
 
 #ifndef ACE_INIT_ACE_H
 #define ACE_INIT_ACE_H

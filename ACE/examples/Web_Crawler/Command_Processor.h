@@ -1,16 +1,14 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
  *  @file    Command_Processor.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
-
 
 #ifndef _COMMAND_PROCESSOR_H
 #define _COMMAND_PROCESSOR_H
+
+#include <memory>
+#include <utility>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -27,12 +25,11 @@ class URL;
  *
  * @brief Abstract base class for a command.
  *
- * Each command is executed by a <Command_Processor>.
+ * Each command is executed by a @c Command_Processor.
  */
 class Command
 {
 public:
-  /// Virtual destructor.
   virtual ~Command ();
 
   /// This is the entry point to execute the command.
@@ -45,22 +42,26 @@ public:
  *
  * @brief Defines an API for executing a command on a URL.
  *
- * Each command is executed by a <Command_Processor>.
+ * Each command is executed by a @c Command_Processor.
  */
 class URL_Command : public Command
 {
 public:
-  /// Constructor.
-  URL_Command (URL *);
+  explicit URL_Command (std::unique_ptr<URL>);
+  ~URL_Command () override;
+  URL_Command (URL_Command const &) = delete;
+  URL_Command &operator= (URL_Command const &) = delete;
+  URL_Command (URL_Command &&) = delete;
+  URL_Command &operator= (URL_Command &&) = delete;
 
   /// Execute the URL command.
-  virtual int execute ();
+  int execute () override;
 
   /// Commit suicide.
-  int destroy ();
+  int destroy () override;
 private:
-  /// Pointer to the URL.
-  URL *url_;
+  /// URL whose command is being executed.
+  std::unique_ptr<URL> url_;
 };
 
 /**
@@ -75,13 +76,14 @@ class Command_Processor
 public:
   Command_Processor ();
 
-  /// Insert a new <Command> into the <Command_Processor>'s queue.
+  /// Insert a new @c Command into the queue. On success, ownership transfers
+  /// to this Command_Processor; on failure, the caller retains ownership.
   int insert (Command *);
 
-  /// Execute all the <Commands> in the queue.
+  /// Execute all the @c Commands in the queue.
   int execute ();
 
-  /// Destroy the <Command_Processor>.
+  /// Destroy the @c Command_Processor.
   int destroy ();
 
 protected:
@@ -89,9 +91,9 @@ protected:
   ~Command_Processor ();
 
 private:
-  // @@ You fill in here...
+  /// Commands successfully inserted are destroyed if they remain queued when
+  /// the processor is destroyed.
   ACE_Unbounded_Queue<Command *> url_queue_;
 };
-
 
 #endif /* _COMMAND_PROCESSOR_H */

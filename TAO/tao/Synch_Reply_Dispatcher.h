@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Synch_Reply_Dispatcher.h
  *
@@ -8,7 +5,6 @@
  *
  *  @author  Alexander Babu Arulanthu <alex@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_SYNCH_REPLY_DISPATCHER_H
 #define TAO_SYNCH_REPLY_DISPATCHER_H
@@ -43,11 +39,10 @@ class TAO_Export TAO_Synch_Reply_Dispatcher
   , public TAO_LF_Invocation_Event
 {
 public:
-  /// Constructor.
+  TAO_Synch_Reply_Dispatcher () = delete;
   TAO_Synch_Reply_Dispatcher (TAO_ORB_Core *orb_core,
                               IOP::ServiceContextList &sc);
 
-  /// Destructor.
   ~TAO_Synch_Reply_Dispatcher () override;
 
   /// Return the reply CDR.

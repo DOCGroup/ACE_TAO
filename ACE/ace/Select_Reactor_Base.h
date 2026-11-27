@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Select_Reactor_Base.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef ACE_SELECT_REACTOR_BASE_H
 #define ACE_SELECT_REACTOR_BASE_H
@@ -89,17 +85,15 @@ public:
 class ACE_Event_Tuple
 {
 public:
-  /// Default constructor.
   ACE_Event_Tuple ();
 
-  /// Constructor.
   ACE_Event_Tuple (ACE_Event_Handler *eh, ACE_HANDLE h);
 
   /// Equality operator.
-  bool operator== (const ACE_Event_Tuple &rhs) const;
+  bool operator== (ACE_Event_Tuple const &rhs) const;
 
   /// Inequality operator.
-  bool operator!= (const ACE_Event_Tuple &rhs) const;
+  bool operator!= (ACE_Event_Tuple const &rhs) const;
 
 public:
   /// Handle.
@@ -127,15 +121,13 @@ public:
 class ACE_Export ACE_Select_Reactor_Notify : public ACE_Reactor_Notify
 {
 public:
-  /// Constructor.
   ACE_Select_Reactor_Notify ();
 
-  /// Destructor.
   ~ACE_Select_Reactor_Notify () override;
 
   /// Initialize.
   int open (ACE_Reactor_Impl *,
-                    ACE_Timer_Queue * = 0,
+                    ACE_Timer_Queue * = nullptr,
                     int disable_notify_pipe = ACE_DISABLE_NOTIFY_PIPE_DEFAULT) override;
 
   /// Destroy.
@@ -152,7 +144,7 @@ public:
    * the caller will block until action is possible, else will wait
    * until the relative time specified in @c *timeout elapses).
    */
-  int notify (ACE_Event_Handler * = 0,
+  int notify (ACE_Event_Handler * = nullptr,
                       ACE_Reactor_Mask = ACE_Event_Handler::EXCEPT_MASK,
                       ACE_Time_Value * timeout = nullptr) override;
 
@@ -231,7 +223,7 @@ protected:
    * if NULL then the ACE_Select_Reactor has been initialized with
    * disable_notify_pipe.
    */
-  ACE_Select_Reactor_Impl *select_reactor_;
+  ACE_Select_Reactor_Impl *select_reactor_ {};
 
   /**
    * Contains the ACE_HANDLE the ACE_Select_Reactor is listening
@@ -275,7 +267,7 @@ protected:
  * and Win32.  In UNIX, ACE_HANDLE is an int, whereas in Win32
  * it's a void *.  This class hides all these details from the
  * bulk of the ACE_Select_Reactor code.  All of these methods
- * are called with the main <Select_Reactor> token lock held.
+ * are called with the main @c ACE_Select_Reactor token lock held.
  */
 class ACE_Export ACE_Select_Reactor_Handler_Repository
 {
@@ -285,7 +277,6 @@ public:
   using key_type = ACE_HANDLE;
   using value_type = ACE_Event_Handler *;
 
-  // = The mapping from <HANDLES> to <Event_Handlers>.
 #ifdef ACE_SELECT_REACTOR_BASE_USES_HASH_MAP
   /**
    * The NT version implements this via a hash map
@@ -312,6 +303,9 @@ public:
 
   using size_type = map_type::size_type;
 
+  /// @name Handler table operations
+  /// @{
+
   /// Default "do-nothing" constructor.
   ACE_Select_Reactor_Handler_Repository (ACE_Select_Reactor_Impl &);
 
@@ -329,8 +323,6 @@ public:
   /// Close down the repository.
   int close ();
 
-  // = Search structure operations.
-
   /**
    * Return the @c ACE_Event_Handler* associated with @c ACE_HANDLE.
    */
@@ -346,26 +338,35 @@ public:
   int unbind (ACE_HANDLE,
               ACE_Reactor_Mask mask);
 
-  /// Remove all the <ACE_HANDLE, ACE_Event_Handler> tuples.
+  /// Remove all ACE_HANDLE and ACE_Event_Handler tuples.
   int unbind_all ();
 
-  // = Sanity checking.
+  /// @}
 
-  // Check the @a handle to make sure it's a valid @c ACE_HANDLE that
-  // is within the range of legal handles (i.e., >= 0 && < max_size_).
+  /// @name Handle validation
+  /// @{
+
+  /// Check the @a handle to make sure it's a valid @c ACE_HANDLE that
+  /// is within the range of legal handles (i.e., >= 0 && < max_size_).
   bool invalid_handle (ACE_HANDLE handle);
 
-  // Check the @a handle to make sure it's a valid @c ACE_HANDLE that
-  // within the range of currently registered handles (i.e., >= 0 && <
-  // @c max_handlep1_).
+  /// Check the @a handle to make sure it's a valid @c ACE_HANDLE that
+  /// within the range of currently registered handles (i.e., >= 0 && <
+  /// @c max_handlep1_).
   bool handle_in_range (ACE_HANDLE handle);
 
-  // = Accessors.
+  /// @}
+
+  /// @name Repository accessors
+  /// @{
+
   /// Returns the current table size.
   size_type size () const;
 
   /// Maximum ACE_HANDLE value, plus 1.
   max_handlep1_type max_handlep1 () const;
+
+  /// @}
 
   /// Dump the state of an object.
   void dump () const;
@@ -393,7 +394,7 @@ private:
 #ifndef ACE_SELECT_REACTOR_BASE_USES_HASH_MAP
   /// The highest currently active handle, plus 1 (ranges between 0 and
   /// @c max_size_.
-  max_handlep1_type max_handlep1_;
+  max_handlep1_type max_handlep1_ {};
 #endif  /* !ACE_SELECT_REACTOR_BASE_USES_HASH_MAP */
 
   /// Underlying table of event handlers.
@@ -408,13 +409,14 @@ private:
 class ACE_Export ACE_Select_Reactor_Handler_Repository_Iterator
 {
 public:
-  typedef
-    ACE_Select_Reactor_Handler_Repository::map_type::const_iterator const_base_iterator;
+  using const_base_iterator =
+    ACE_Select_Reactor_Handler_Repository::map_type::const_iterator;
 
   explicit ACE_Select_Reactor_Handler_Repository_Iterator (
     ACE_Select_Reactor_Handler_Repository const * s);
 
-  // = Iteration methods.
+  /// @name Iteration methods
+  /// @{
 
   /// Pass back the @a next_item that hasn't been seen in the Set.
   /// Returns @c false when all items have been seen, else @c true.
@@ -426,6 +428,8 @@ public:
   /// Move forward by one element in the set.  Returns @c false when
   /// all the items in the set have been seen, else @c true.
   bool advance ();
+
+  /// @}
 
   /// Dump the state of an object.
   void dump () const;
@@ -451,10 +455,14 @@ private:
 class ACE_Export ACE_Select_Reactor_Impl : public ACE_Reactor_Impl
 {
 public:
+  ACE_Select_Reactor_Impl (ACE_Select_Reactor_Impl const &) = delete;
+  ACE_Select_Reactor_Impl (ACE_Select_Reactor_Impl &&) = delete;
+  ACE_Select_Reactor_Impl &operator= (ACE_Select_Reactor_Impl const &) = delete;
+  ACE_Select_Reactor_Impl &operator= (ACE_Select_Reactor_Impl &&) = delete;
+
   /// Default size of the Select_Reactor's handle table.
   static constexpr int DEFAULT_SIZE = ACE_DEFAULT_SELECT_REACTOR_SIZE;
 
-  /// Constructor.
   ACE_Select_Reactor_Impl (bool mask_signals = true);
 
   friend class ACE_Select_Reactor_Notify;
@@ -465,7 +473,7 @@ public:
    * ACE_Event_Handler object. Returns the number of notifications
    * purged. Returns -1 on error.
    */
-  int purge_pending_notifications (ACE_Event_Handler * = 0,
+  int purge_pending_notifications (ACE_Event_Handler * = nullptr,
                                            ACE_Reactor_Mask    = ACE_Event_Handler::ALL_EVENTS_MASK) override;
 
   /// Does the reactor allow the application to resume the handle on
@@ -475,73 +483,73 @@ public:
   int resumable_handler () override;
 
 protected:
-  /// Allow manipulation of the <wait_set_> mask and <ready_set_> mask.
+  /// Allow manipulation of the @c wait_set_ mask and @c ready_set_ mask.
   virtual int bit_ops (ACE_HANDLE handle,
                        ACE_Reactor_Mask mask,
                        ACE_Select_Reactor_Handle_Set &handle_set,
                        int ops);
 
   /// Enqueue ourselves into the list of waiting threads at the
-  /// appropriate point specified by <requeue_position_>.
+  /// appropriate point specified by @c requeue_position_.
   virtual void renew () = 0;
 
   /// Check to see if the Event_Handler associated with @a handle is
-  /// suspended. Returns 0 if not, 1 if so.
-  virtual int is_suspended_i (ACE_HANDLE handle) = 0;
+  /// suspended.
+  virtual bool is_suspended_i (ACE_HANDLE handle) = 0;
 
   /// When register/unregister occur, then we need to re-eval our
   /// wait/suspend/dispatch set.
   virtual void clear_dispatch_mask (ACE_HANDLE handle,
                                     ACE_Reactor_Mask mask);
 
-  /// Table that maps <ACE_HANDLEs> to <ACE_Event_Handler *>'s.
+  /// Table that maps @c ACE_HANDLE values to pointers to @c ACE_Event_Handler objects.
   ACE_Select_Reactor_Handler_Repository handler_rep_;
 
-  /// Tracks handles that are ready for dispatch from <select>
+  /// Tracks handles that are ready for dispatch from @c select()
   ACE_Select_Reactor_Handle_Set dispatch_set_;
 
-  /// Tracks handles that are waited for by <select>.
+  /// Tracks handles that are waited for by @c select().
   ACE_Select_Reactor_Handle_Set wait_set_;
 
   /// Tracks handles that are currently suspended.
   ACE_Select_Reactor_Handle_Set suspend_set_;
 
   /// Track HANDLES we are interested in for various events that must
-  /// be dispatched *without* going through <select>.
+  /// be dispatched *without* going through @c select().
   ACE_Select_Reactor_Handle_Set ready_set_;
 
   /// Defined as a pointer to allow overriding by derived classes...
-  ACE_Timer_Queue *timer_queue_;
+  ACE_Timer_Queue *timer_queue_ {};
 
   /// Handle signals without requiring global/static variables.
-  ACE_Sig_Handler *signal_handler_;
+  ACE_Sig_Handler *signal_handler_ {};
 
   /// Callback object that unblocks the ACE_Select_Reactor if it's
   /// sleeping.
-  ACE_Reactor_Notify *notify_handler_;
+  ACE_Reactor_Notify *notify_handler_ {};
 
   /// Keeps track of whether we should delete the timer queue (if we
   /// didn't create it, then we don't delete it).
-  bool delete_timer_queue_;
+  bool delete_timer_queue_ {};
 
   /// Keeps track of whether we should delete the signal handler (if we
   /// didn't create it, then we don't delete it).
-  bool delete_signal_handler_;
+  bool delete_signal_handler_ {};
 
   /// Keeps track of whether we need to delete the notify handler (if
   /// we didn't create it, then we don't delete it).
-  bool delete_notify_handler_;
+  bool delete_notify_handler_ {};
 
   /// True if we've been initialized yet...
-  bool initialized_;
+  bool initialized_ {};
 
-  /// Restart the <handle_events> event-loop method automatically when
-  /// <select> is interrupted via <EINTR>.
-  bool restart_;
+  /// Restart the @c handle_events event-loop method automatically when
+  /// @c select() is interrupted via @c EINTR.
+  bool restart_ {};
 
   /**
    * Position that the main ACE_Select_Reactor thread is requeued in
-   * the list of waiters during a <notify> callback.  If this value ==
+   * the list of waiters during a @c notify callback.  If this value ==
    * -1 we are requeued at the end of the list.  Else if it's 0 then
    * we are requeued at the front of the list.  Else if it's > 1 then
    * that indicates the number of waiters to skip over.
@@ -555,9 +563,9 @@ protected:
    * True if state has changed during dispatching of
    * ACE_Event_Handlers, else false.  This is used to determine
    * whether we need to make another trip through the
-   * <Select_Reactor>'s <wait_for_multiple_events> loop.
+   * @c ACE_Select_Reactor's @c wait_for_multiple_events() loop.
    */
-  bool state_changed_;
+  bool state_changed_ {};
 
   /**
    * If false then the Reactor will not mask the signals during the event
@@ -575,10 +583,7 @@ protected:
 private:
   /// Determine whether we should renew Select_Reactor's token after handling
   /// the notification message.
-  bool supress_renew_;
-
-  ACE_Select_Reactor_Impl (const ACE_Select_Reactor_Impl &) = delete;
-  ACE_Select_Reactor_Impl &operator = (const ACE_Select_Reactor_Impl &) = delete;
+  bool supress_renew_ {};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

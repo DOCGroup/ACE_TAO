@@ -1,4 +1,3 @@
-
 #ifndef SHUTDOWN_HELPER_H
 #define SHUTDOWN_HELPER_H
 #include /**/ "ace/pre.h"
@@ -10,11 +9,16 @@ class Shutdown_Helper
   : public virtual POA_Test::Shutdown_Helper
 {
 public:
-  /// Constructor
-  Shutdown_Helper (CORBA::ORB_ptr orb);
+  explicit Shutdown_Helper (CORBA::ORB_ptr orb);
+  Shutdown_Helper (Shutdown_Helper const &) = delete;
+  Shutdown_Helper (Shutdown_Helper &&) = delete;
+  Shutdown_Helper &operator= (Shutdown_Helper const &) = delete;
+  Shutdown_Helper &operator= (Shutdown_Helper &&) = delete;
 
-  // = The skeleton methods
-  virtual void shutdown ();
+  /// @name Skeleton methods
+  /// @{
+  void shutdown () override;
+  /// @}
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown

@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  * @file    Hash_Multi_Map_Manager_T.h
  *
@@ -18,7 +15,6 @@
  *
  * @author Shanshan Jiang <shanshan.jiang@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef ACE_HASH_MULTI_MAP_MANAGER_T_H
 #define ACE_HASH_MULTI_MAP_MANAGER_T_H
@@ -33,6 +29,7 @@
 #include "ace/Default_Constants.h"
 #include "ace/Functor_T.h"
 #include "ace/Log_Category.h"
+#include <memory>
 
 #include "ace/Unbounded_Set.h"
 
@@ -52,17 +49,14 @@ public:
   using VALUE_SET = ACE_Unbounded_Set<INT_ID>;
   using VALUE_SET_ITERATOR = ACE_Unbounded_Set_Iterator<INT_ID>;
 
-  /// Constructor.
-  ACE_Hash_Multi_Map_Entry (const EXT_ID &ext_id,
-                            const ACE_Unbounded_Set<INT_ID> &int_id_set,
+  ACE_Hash_Multi_Map_Entry (EXT_ID const &ext_id,
+                            ACE_Unbounded_Set<INT_ID> const &int_id_set,
                             ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *next = nullptr,
                             ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *prev = nullptr);
 
-  /// Constructor.
   ACE_Hash_Multi_Map_Entry (ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *next,
                             ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *prev);
 
-  /// Destructor.
   ~ACE_Hash_Multi_Map_Entry () = default;
 
   /// Key accessor.
@@ -135,6 +129,11 @@ template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class 
 class ACE_Hash_Multi_Map_Manager
 {
 public:
+  ACE_Hash_Multi_Map_Manager (ACE_Hash_Multi_Map_Manager const &) = delete;
+  ACE_Hash_Multi_Map_Manager (ACE_Hash_Multi_Map_Manager &&) = delete;
+  ACE_Hash_Multi_Map_Manager &operator= (ACE_Hash_Multi_Map_Manager const &) = delete;
+  ACE_Hash_Multi_Map_Manager &operator= (ACE_Hash_Multi_Map_Manager &&) = delete;
+
   friend class ACE_Hash_Multi_Map_Iterator_Base<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>;
   friend class ACE_Hash_Multi_Map_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>;
   friend class ACE_Hash_Multi_Map_Const_Iterator_Base<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>;
@@ -147,12 +146,12 @@ public:
   using lock_type = ACE_LOCK;
   using ENTRY = ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID>;
 
-  // = ACE-style iterator typedefs.
+  /// ACE-style iterator typedefs.
   using ITERATOR = ACE_Hash_Multi_Map_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>;
   using CONST_ITERATOR = ACE_Hash_Multi_Map_Const_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>;
   using REVERSE_ITERATOR = ACE_Hash_Multi_Map_Reverse_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>;
 
-  // = STL-style iterator typedefs.
+  /// STL-style iterator typedefs.
   using iterator = ACE_Hash_Multi_Map_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>;
   using const_iterator = ACE_Hash_Multi_Map_Const_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>;
   using reverse_iterator = ACE_Hash_Multi_Map_Reverse_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>;
@@ -227,16 +226,16 @@ public:
    * a new entry is bound successfully, returns 1 if an attempt is made
    * to bind an existing entry, and returns -1 if failures occur.
    */
-  int bind (const EXT_ID &ext_id,
-            const INT_ID &int_id);
+  int bind (EXT_ID const &ext_id,
+            INT_ID const &int_id);
 
   /**
    * Same as a normal bind, except the map entry is also passed back
    * to the caller.  The entry in this case will either be the newly
    * created entry, or the existing one.
    */
-  int bind (const EXT_ID &ext_id,
-            const INT_ID &int_id,
+  int bind (EXT_ID const &ext_id,
+            INT_ID const &int_id,
             ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *&entry);
 
   /**
@@ -245,16 +244,16 @@ public:
    * new entry is bound successfully, returns 1 if an attempt is made
    * to bind an existing entry, and returns -1 if failures occur.
    */
-  int bind (const EXT_ID &ext_id,
-            const ACE_Unbounded_Set<INT_ID> &int_id_set);
+  int bind (EXT_ID const &ext_id,
+            ACE_Unbounded_Set<INT_ID> const &int_id_set);
 
   /**
    * Same as a normal bind, except the map entry is also passed back
    * to the caller.  The entry in this case will either be the newly
    * created entry, or the existing one.
    */
-  int bind (const EXT_ID &ext_id,
-            const ACE_Unbounded_Set<INT_ID> &int_id_set,
+  int bind (EXT_ID const &ext_id,
+            ACE_Unbounded_Set<INT_ID> const &int_id_set,
             ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *&entry);
 
   /**
@@ -264,7 +263,7 @@ public:
    * if a new entry is bound successfully, returns 1 if an attempt is
    * made to bind an existing entry, and returns -1 if failures occur.
    */
-  int trybind (const EXT_ID &ext_id,
+  int trybind (EXT_ID const &ext_id,
                ACE_Unbounded_Set<INT_ID> &int_id_set);
 
   /**
@@ -272,7 +271,7 @@ public:
    * back to the caller.  The entry in this case will either be the
    * newly created entry, or the existing one.
    */
-  int trybind (const EXT_ID &ext_id,
+  int trybind (EXT_ID const &ext_id,
                ACE_Unbounded_Set<INT_ID> &int_id_set,
                ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *&entry);
 
@@ -282,16 +281,16 @@ public:
    * bound successfully, returns 1 if an existing entry was rebound,
    * and returns -1 if failures occur.
    */
-  int rebind (const EXT_ID &ext_id,
-              const ACE_Unbounded_Set<INT_ID> &int_id_set);
+  int rebind (EXT_ID const &ext_id,
+              ACE_Unbounded_Set<INT_ID> const &int_id_set);
 
   /**
    * Same as a normal rebind, except the map entry is also passed back
    * to the caller.  The entry in this case will either be the newly
    * created entry, or the existing one.
    */
-  int rebind (const EXT_ID &ext_id,
-              const ACE_Unbounded_Set<INT_ID> &int_id_set,
+  int rebind (EXT_ID const &ext_id,
+              ACE_Unbounded_Set<INT_ID> const &int_id_set,
               ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *&entry);
 
   /**
@@ -301,8 +300,8 @@ public:
    * Returns 0 if a new entry is bound successfully, returns 1 if an
    * existing entry was rebound, and returns -1 if failures occur.
    */
-  int rebind (const EXT_ID &ext_id,
-              const ACE_Unbounded_Set<INT_ID> &int_id_set,
+  int rebind (EXT_ID const &ext_id,
+              ACE_Unbounded_Set<INT_ID> const &int_id_set,
               ACE_Unbounded_Set<INT_ID> &old_int_id_set);
 
   /**
@@ -310,8 +309,8 @@ public:
    * to the caller.  The entry in this case will either be the newly
    * created entry, or the existing one.
    */
-  int rebind (const EXT_ID &ext_id,
-              const ACE_Unbounded_Set<INT_ID> &int_id_set,
+  int rebind (EXT_ID const &ext_id,
+              ACE_Unbounded_Set<INT_ID> const &int_id_set,
               ACE_Unbounded_Set<INT_ID> &old_int_id_set,
               ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *&entry);
 
@@ -325,8 +324,8 @@ public:
    * is bound successfully, returns 1 if an existing entry was rebound,
    * and returns -1 if failures occur.
    */
-  int rebind (const EXT_ID &ext_id,
-              const ACE_Unbounded_Set<INT_ID> &int_id_set,
+  int rebind (EXT_ID const &ext_id,
+              ACE_Unbounded_Set<INT_ID> const &int_id_set,
               EXT_ID &old_ext_id,
               ACE_Unbounded_Set<INT_ID> &old_int_id_set);
 
@@ -335,28 +334,28 @@ public:
    * to the caller.  The entry in this case will either be the newly
    * created entry, or the existing one.
    */
-  int rebind (const EXT_ID &ext_id,
-              const ACE_Unbounded_Set<INT_ID> &int_id_set,
+  int rebind (EXT_ID const &ext_id,
+              ACE_Unbounded_Set<INT_ID> const &int_id_set,
               EXT_ID &old_ext_id,
               ACE_Unbounded_Set<INT_ID> &old_int_id_set,
               ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *&entry);
 
   /// Locate @a ext_id and pass out parameter via @a int_id_set.
   /// Return 0 if found, returns -1 if not found.
-  int find (const EXT_ID &ext_id,
+  int find (EXT_ID const &ext_id,
             ACE_Unbounded_Set<INT_ID> &int_id_set) const;
 
   /// Locate @a ext_id and @a int_id.
   /// Return 0 if found, returns -1 if not found.
-  int find (const EXT_ID &ext_id,
-            const INT_ID &int_id) const;
+  int find (EXT_ID const &ext_id,
+            INT_ID const &int_id) const;
 
   /// Returns 0 if the @a ext_id is in the mapping, otherwise -1.
-  int find (const EXT_ID &ext_id) const;
+  int find (EXT_ID const &ext_id) const;
 
   /// Locate @a ext_id and pass out parameter via @a entry.  If found,
   /// return 0, returns -1 if not found.
-  int find (const EXT_ID &ext_id,
+  int find (EXT_ID const &ext_id,
             ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *&entry) const;
 
   /**
@@ -364,18 +363,18 @@ public:
    * int_id to the caller (this is useful for collections where the
    * int_ids are *not* dynamically allocated...)
    */
-  int unbind (const EXT_ID &ext_id);
+  int unbind (EXT_ID const &ext_id);
 
   /// Break any association of @a ext_id.  Returns the value of @a int_id_set
   /// in case the caller needs to deallocate memory. Return 0 if the
   /// unbind was successfully, and returns -1 if failures occur.
-  int unbind (const EXT_ID &ext_id,
+  int unbind (EXT_ID const &ext_id,
               ACE_Unbounded_Set<INT_ID> &int_id_set);
 
   /// Break any association of @a ext_id and @a int_id. Return 0 if the
   /// unbind was successfully, and returns -1 if failures occur.
-  int unbind (const EXT_ID &ext_id,
-              const INT_ID &int_id);
+  int unbind (EXT_ID const &ext_id,
+              INT_ID const &int_id);
 
   /// Remove @a entry from map. Return 0 if the unbind was successfully,
   /// and returns -1 if failures occur.
@@ -402,7 +401,8 @@ public:
   /// Dump the state of an object.
   void dump () const;
 
-  // = STL styled iterator factory functions.
+  /// @name STL styled iterator factory functions.
+  /// @{
 
   /// Return forward iterator.
   ACE_Hash_Multi_Map_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> begin ();
@@ -411,112 +411,112 @@ public:
   /// Return reverse iterator.
   ACE_Hash_Multi_Map_Reverse_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> rbegin ();
   ACE_Hash_Multi_Map_Reverse_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> rend ();
+  /// @}
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-  // = The following methods do the actual work.
-
   /// Returns 1 if @a id1 == @a id2, else 0.  This is defined as a
   /// separate method to facilitate template specialization.
-  int equal (const EXT_ID &id1, const EXT_ID &id2);
+  int equal (EXT_ID const &id1, EXT_ID const &id2);
 
   /// Compute the hash value of the @a ext_id.  This is defined as a
   /// separate method to facilitate template specialization.
-  u_long hash (const EXT_ID &ext_id);
+  u_long hash (EXT_ID const &ext_id);
 
-  // = These methods assume locks are held by private methods.
-
-  /// Performs bind.  Must be called with locks held.
-  int bind_i (const EXT_ID &ext_id,
-              const INT_ID &int_id);
+  /// @name Methods called with locks held
+  /// @{
 
   /// Performs bind.  Must be called with locks held.
-  int bind_i (const EXT_ID &ext_id,
-              const INT_ID &int_id,
+  int bind_i (EXT_ID const &ext_id,
+              INT_ID const &int_id);
+
+  /// Performs bind.  Must be called with locks held.
+  int bind_i (EXT_ID const &ext_id,
+              INT_ID const &int_id,
               ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *&entry);
 
   /// Performs bind.  Must be called with locks held.
-  int bind_i (const EXT_ID &ext_id,
-              const ACE_Unbounded_Set<INT_ID> &int_id_set);
+  int bind_i (EXT_ID const &ext_id,
+              ACE_Unbounded_Set<INT_ID> const &int_id_set);
 
   /// Performs bind.  Must be called with locks held.
-  int bind_i (const EXT_ID &ext_id,
-              const ACE_Unbounded_Set<INT_ID> &int_id_set,
+  int bind_i (EXT_ID const &ext_id,
+              ACE_Unbounded_Set<INT_ID> const &int_id_set,
               ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *&entry);
 
   /// Performs trybind.  Must be called with locks held.
-  int trybind_i (const EXT_ID &ext_id,
+  int trybind_i (EXT_ID const &ext_id,
                  ACE_Unbounded_Set<INT_ID> &int_id_set);
 
   /// Performs trybind.  Must be called with locks held.
-  int trybind_i (const EXT_ID &ext_id,
+  int trybind_i (EXT_ID const &ext_id,
                  ACE_Unbounded_Set<INT_ID> &int_id_set,
                  ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *&entry);
 
   /// Performs rebind.  Must be called with locks held.
-  int rebind_i (const EXT_ID &ext_id,
-                const ACE_Unbounded_Set<INT_ID> &int_id_set);
+  int rebind_i (EXT_ID const &ext_id,
+                ACE_Unbounded_Set<INT_ID> const &int_id_set);
 
   /// Performs rebind.  Must be called with locks held.
-  int rebind_i (const EXT_ID &ext_id,
-                const ACE_Unbounded_Set<INT_ID> &int_id_set,
+  int rebind_i (EXT_ID const &ext_id,
+                ACE_Unbounded_Set<INT_ID> const &int_id_set,
                 ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *&entry);
 
   /// Performs rebind.  Must be called with locks held.
-  int rebind_i (const EXT_ID &ext_id,
-                const ACE_Unbounded_Set<INT_ID> &int_id_set,
+  int rebind_i (EXT_ID const &ext_id,
+                ACE_Unbounded_Set<INT_ID> const &int_id_set,
                 ACE_Unbounded_Set<INT_ID> &old_int_id);
 
   /// Performs rebind.  Must be called with locks held.
-  int rebind_i (const EXT_ID &ext_id,
-                const ACE_Unbounded_Set<INT_ID> &int_id_set,
+  int rebind_i (EXT_ID const &ext_id,
+                ACE_Unbounded_Set<INT_ID> const &int_id_set,
                 ACE_Unbounded_Set<INT_ID> &old_int_id_set,
                 ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *&entry);
 
   /// Performs rebind.  Must be called with locks held.
-  int rebind_i (const EXT_ID &ext_id,
-                const ACE_Unbounded_Set<INT_ID> &int_id_set,
+  int rebind_i (EXT_ID const &ext_id,
+                ACE_Unbounded_Set<INT_ID> const &int_id_set,
                 EXT_ID &old_ext_id,
                 ACE_Unbounded_Set<INT_ID> &old_int_id_set);
 
   /// Performs rebind.  Must be called with locks held.
-  int rebind_i (const EXT_ID &ext_id,
-                const ACE_Unbounded_Set<INT_ID> &int_id_set,
+  int rebind_i (EXT_ID const &ext_id,
+                ACE_Unbounded_Set<INT_ID> const &int_id_set,
                 EXT_ID &old_ext_id,
                 ACE_Unbounded_Set<INT_ID> &old_int_id_set,
                 ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *&entry);
 
   /// Performs a find of @a int_id_set using @a ext_id as the key.  Must be
   /// called with locks held.
-  int find_i (const EXT_ID &ext_id,
+  int find_i (EXT_ID const &ext_id,
               ACE_Unbounded_Set<INT_ID> &int_id_set);
 
   /// Performs a find of @a ext_id and @a int_id.  Must be
   /// called with locks held.
-  int find_i (const EXT_ID &ext_id,
-              const INT_ID &int_id);
+  int find_i (EXT_ID const &ext_id,
+              INT_ID const &int_id);
 
   /// Performs a find using @a ext_id as the key.  Must be called with
   /// locks held.
-  int find_i (const EXT_ID &ext_id);
+  int find_i (EXT_ID const &ext_id);
 
   /// Performs a find using @a ext_id as the key.  Must be called with
   /// locks held.
-  int find_i (const EXT_ID &ext_id,
+  int find_i (EXT_ID const &ext_id,
               ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *&entry);
 
   /// Performs unbind.  Must be called with locks held.
-  int unbind_i (const EXT_ID &ext_id,
+  int unbind_i (EXT_ID const &ext_id,
                 ACE_Unbounded_Set<INT_ID> &int_id_set);
 
   /// Performs unbind.  Must be called with locks held.
-  int unbind_i (const EXT_ID &ext_id,
-                const INT_ID &int_id);
+  int unbind_i (EXT_ID const &ext_id,
+                INT_ID const &int_id);
 
   /// Performs unbind.  Must be called with locks held.
-  int unbind_i (const EXT_ID &ext_id);
+  int unbind_i (EXT_ID const &ext_id);
 
   /// Performs unbind.  Must be called with locks held.
   int unbind_i (ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *entry);
@@ -535,6 +535,7 @@ protected:
   /// Removes all the entries in Map_Manager.  Must be called with
   /// locks held.
   int unbind_all_i ();
+  /// @}
 
   /// Pointer to a memory allocator used for table_, so it should
   /// supply size*sizeof (@c ACE_Hash_Multi_Map_Entry<@c EXT_ID, @c INT_ID>),
@@ -558,7 +559,7 @@ protected:
 protected:
   /// Returns the @c ACE_Hash_Multi_Map_Entry object that corresponds to
   /// @a ext_id.
-  int shared_find (const EXT_ID &ext_id,
+  int shared_find (EXT_ID const &ext_id,
                    ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *&entry,
                    size_t &loc);
 
@@ -574,19 +575,14 @@ private:
    * which points to an @c ACE_Hash_Multi_Map_Entry that serves as the
    * beginning of a linked list of @c EXT_ID that hash to that bucket.
    */
-  ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *table_;
+  ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *table_ {};
 
   /// Total size of the hash table.
-  size_t total_size_;
+  size_t total_size_ {};
 
-  /// Current number of entries in the table
-  /// @note That this can be larger than total_size_ due to the
-  /// bucket chaining).
-  size_t cur_size_;
-
-  // = Disallow these operations.
-  void operator= (const ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &) = delete;
-  ACE_Hash_Multi_Map_Manager (const ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &) = delete;
+  /// Current number of entries; this can exceed @c total_size_ due to bucket
+  /// chaining.
+  size_t cur_size_ {};
 };
 
 /**
@@ -606,7 +602,7 @@ public:
   ACE_Hash_Multi_Map_Iterator_Base (ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &mm,
                                     int head);
 
-  // = ITERATION methods.
+  /// ITERATION methods.
 
   /// Pass back the @a next_entry that hasn't been seen in the Set.
   /// Returns 0 when all items have been seen, else 1.
@@ -626,8 +622,8 @@ public:
   ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>& map ();
 
   /// Check if two iterators point to the same position
-  bool operator== (const ACE_Hash_Multi_Map_Iterator_Base<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &) const;
-  bool operator!= (const ACE_Hash_Multi_Map_Iterator_Base<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &) const;
+  bool operator== (ACE_Hash_Multi_Map_Iterator_Base<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> const &) const;
+  bool operator!= (ACE_Hash_Multi_Map_Iterator_Base<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> const &) const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -669,10 +665,10 @@ class ACE_Hash_Multi_Map_Const_Iterator_Base
 public:
   /// Constructor.  If @a head != 0, the iterator constructed is positioned
   /// at the head of the map, it is positioned at the end otherwise.
-  ACE_Hash_Multi_Map_Const_Iterator_Base (const ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &mm,
+  ACE_Hash_Multi_Map_Const_Iterator_Base (ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> const &mm,
                                           int head);
 
-  // = ITERATION methods.
+  /// ITERATION methods.
 
   /// Pass back the @a next_entry that hasn't been seen in the Set.
   /// Returns 0 when all items have been seen, else 1.
@@ -689,11 +685,11 @@ public:
 
   /// Returns reference the @c Hash_Multi_Map_Manager that is being iterated
   /// over.
-  const ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>& map ();
+  ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> const & map ();
 
   /// Check if two iterators point to the same position
-  bool operator== (const ACE_Hash_Multi_Map_Const_Iterator_Base<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &) const;
-  bool operator!= (const ACE_Hash_Multi_Map_Const_Iterator_Base<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &) const;
+  bool operator== (ACE_Hash_Multi_Map_Const_Iterator_Base<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> const &) const;
+  bool operator!= (ACE_Hash_Multi_Map_Const_Iterator_Base<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> const &) const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -711,7 +707,7 @@ protected:
   void dump_i () const;
 
   /// Map we are iterating over.
-  const ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> *map_man_;
+  ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> const *map_man_;
 
   /// Keeps track of how far we've advanced in the table.
   ssize_t index_;
@@ -740,7 +736,7 @@ public:
   ACE_Hash_Multi_Map_Iterator (ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &mm,
                                int tail = 0);
 
-  // = Iteration methods.
+  /// Iteration methods.
   /// Move forward by one element in the set.  Returns 0 when all the
   /// items in the set have been seen, else 1.
   int advance ();
@@ -748,7 +744,8 @@ public:
   /// Dump the state of an object.
   void dump () const;
 
-  // = STL styled iteration, compare, and reference functions.
+  /// @name STL styled iteration, compare, and reference functions.
+  /// @{
 
   /// Prefix advance.
   ACE_Hash_Multi_Map_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &operator++ ();
@@ -761,6 +758,8 @@ public:
 
   /// Postfix reverse.
   ACE_Hash_Multi_Map_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> operator-- (int);
+
+  /// @}
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -782,10 +781,10 @@ template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class 
 class ACE_Hash_Multi_Map_Const_Iterator : public ACE_Hash_Multi_Map_Const_Iterator_Base<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>
 {
 public:
-  ACE_Hash_Multi_Map_Const_Iterator (const ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &mm,
+  ACE_Hash_Multi_Map_Const_Iterator (ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> const &mm,
                                      int tail = 0);
 
-  // = Iteration methods.
+  /// Iteration methods.
   /// Move forward by one element in the set.  Returns 0 when all the
   /// items in the set have been seen, else 1.
   int advance ();
@@ -793,7 +792,8 @@ public:
   /// Dump the state of an object.
   void dump () const;
 
-  // = STL styled iteration, compare, and reference functions.
+  /// @name STL styled iteration, compare, and reference functions.
+  /// @{
 
   /// Prefix advance.
   ACE_Hash_Multi_Map_Const_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &operator++ ();
@@ -806,6 +806,8 @@ public:
 
   /// Postfix reverse.
   ACE_Hash_Multi_Map_Const_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> operator-- (int);
+
+  /// @}
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -825,7 +827,7 @@ public:
  * @c ACE_GUARD or @c ACE_READ_GUARD on the @c ACE_Hash_Multi_Map_Manager's
  * internal lock, which is accessible via its @c mutex method.
  *
- * Note that a creation method for this new iterator cannot be added
+ * @note A creation method for this new iterator cannot be added
  * to the hash map, since this would require adding explicit template
  * instantiations for bucket iterators on platforms with broken
  * templates.
@@ -835,10 +837,11 @@ class ACE_Hash_Multi_Map_Bucket_Iterator
 {
 public:
   ACE_Hash_Multi_Map_Bucket_Iterator (ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &mm,
-                                      const EXT_ID &ext_id,
+                                      EXT_ID const &ext_id,
                                       int tail = 0);
 
-  // = STL styled iteration, compare, and reference functions.
+  /// @name STL styled iteration, compare, and reference functions.
+  /// @{
 
   /// Prefix advance.
   ACE_Hash_Multi_Map_Bucket_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &operator++ ();
@@ -863,8 +866,10 @@ public:
   ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>& map ();
 
   /// Check if two iterators point to the same position
-  bool operator== (const ACE_Hash_Multi_Map_Bucket_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &) const;
-  bool operator!= (const ACE_Hash_Multi_Map_Bucket_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &) const;
+  bool operator== (ACE_Hash_Multi_Map_Bucket_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> const &) const;
+  bool operator!= (ACE_Hash_Multi_Map_Bucket_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> const &) const;
+
+  /// @}
 
 protected:
   /// Move forward by one element in the set.  Returns 0 when there's
@@ -905,7 +910,7 @@ public:
   ACE_Hash_Multi_Map_Reverse_Iterator (ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &mm,
                                        int head = 0);
 
-  // = Iteration methods.
+  /// Iteration methods.
   /// Move forward by one element in the set.  Returns 0 when all the
   /// items in the set have been seen, else 1.
   int advance ();
@@ -913,7 +918,8 @@ public:
   /// Dump the state of an object.
   void dump () const;
 
-  // = STL styled iteration, compare, and reference functions.
+  /// @name STL styled iteration, compare, and reference functions.
+  /// @{
 
   /// Prefix reverse.
   ACE_Hash_Multi_Map_Reverse_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &operator++ ();
@@ -926,6 +932,8 @@ public:
 
   /// Postfix advance.
   ACE_Hash_Multi_Map_Reverse_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> operator-- (int);
+
+  /// @}
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

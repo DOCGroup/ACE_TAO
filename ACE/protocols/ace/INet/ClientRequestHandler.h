@@ -40,7 +40,7 @@ namespace ACE
               ClientRequestHandler ();
               virtual ~ClientRequestHandler ();
 
-              virtual std::istream& handle_open_request (const URL_Base& url) = 0;
+              virtual std::istream& handle_open_request (URL_Base const& url) = 0;
 
               virtual std::istream& response_stream () = 0;
 
@@ -49,8 +49,7 @@ namespace ACE
               static ConnectionCache& connection_cache ();
 
             private:
-              typedef ACE_Singleton<ConnectionCache,
-                                    ACE_SYNCH_MUTEX> TConnectionCacheSingleton;
+              using TConnectionCacheSingleton = ACE_Singleton<ConnectionCache, ACE_SYNCH_MUTEX>;
           };
 
         /**
@@ -76,20 +75,20 @@ namespace ACE
                 : public ConnectionKey
                 {
                   public:
-                    INetConnectionKey (const ACE_CString& host,
+                    INetConnectionKey (ACE_CString const& host,
                                        u_short port);
                     virtual ~INetConnectionKey ();
 
-                    virtual u_long hash () const;
+                    u_long hash () const override;
 
-                    virtual ConnectionKey* duplicate () const;
+                    ConnectionKey* duplicate () const override;
 
-                    const ACE_CString& host () const;
+                    ACE_CString const& host () const;
 
                     u_short port () const;
 
                   protected:
-                    virtual bool equal (const ConnectionKey& key) const;
+                    bool equal (ConnectionKey const& key) const override;
 
                   private:
                     ACE_CString host_;

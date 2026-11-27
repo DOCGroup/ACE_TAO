@@ -1,4 +1,3 @@
-
 #ifndef GOODDAY_H
 #define GOODDAY_H
 #include /**/ "ace/pre.h"

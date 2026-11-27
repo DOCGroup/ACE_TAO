@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file     nsconf.h
  *
@@ -7,7 +6,6 @@
  *  @author  Chris Cleeland
  *  @author  Douglas C. Schmidt
  */
-//=============================================================================
 
 #ifndef TAO_NAMESERVICE_CONF_H
 #define TAO_NAMESERVICE_CONF_H
@@ -36,7 +34,6 @@
 #if !defined (TAO_NAMING_CONTEXT_INDEX)
 #  define TAO_NAMING_CONTEXT_INDEX "Naming_Context_Index"
 #endif /* ! TAO_NAMING_CONTEXT_INDEX */
-
 
 #include /**/ "ace/post.h"
 #endif /*TAO_NAMESERVICE_CONF_H*/

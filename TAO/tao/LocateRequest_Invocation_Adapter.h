@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    LocateRequest_Invocation_Adapter.h
  *
  *  @author Balachandran Natarajan <bala@dre.vanderbilt.edu>
  */
-//=============================================================================
 #ifndef TAO_LOCATEREQUEST_INVOCATION_ADAPTER_H
 #define TAO_LOCATEREQUEST_INVOCATION_ADAPTER_H
 
@@ -56,7 +52,9 @@ namespace TAO
   class LocateRequest_Invocation_Adapter
   {
   public:
-    LocateRequest_Invocation_Adapter (CORBA::Object_ptr target);
+    LocateRequest_Invocation_Adapter () = delete;
+
+    explicit LocateRequest_Invocation_Adapter (CORBA::Object_ptr target);
 
     /// Start the invocation on the target
     void invoke ();

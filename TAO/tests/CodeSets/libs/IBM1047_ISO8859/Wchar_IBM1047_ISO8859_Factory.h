@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Wchar_IBM1047_ISO8859_Factory.h
  *
@@ -11,8 +8,6 @@
  *
  *  @author   Phil Mesnier <mesnier_p@ociweb.com>
  */
-//=============================================================================
-
 
 #ifndef WCHAR_IBM1047_ISO8859_FACTORY_H
 #define WCHAR_IBM1047_ISO8859_FACTORY_H
@@ -24,7 +19,7 @@
 #include "IBM1047_ISO8859_export.h"
 #include "Wchar_IBM1047_ISO8859_Translator.h"
 
-typedef TAO_Codeset_Translator_Factory_T<WIBM1047_ISO8859> Wchar_IBM1047_ISO8859_Factory;
+using Wchar_IBM1047_ISO8859_Factory = TAO_Codeset_Translator_Factory_T<WIBM1047_ISO8859>;
 
 ACE_STATIC_SVC_DECLARE_EXPORT (IBM1047_ISO8859, Wchar_IBM1047_ISO8859_Factory)
 ACE_FACTORY_DECLARE (IBM1047_ISO8859, Wchar_IBM1047_ISO8859_Factory)

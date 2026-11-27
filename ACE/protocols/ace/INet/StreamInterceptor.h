@@ -31,29 +31,29 @@ namespace ACE
         * @brief Abstract base for stream interceptors.
         *
         */
-        template <class ACE_CHAR_T, class TR = std::char_traits<ACE_CHAR_T> >
+        template <class ACE_CHAR_T, class TR = std::char_traits<ACE_CHAR_T>>
         class StreamInterceptorBase
           {
             public:
-              typedef std::basic_ios<ACE_CHAR_T, TR> ios_type;
-              typedef ACE_CHAR_T char_type;
-              typedef typename ios_type::openmode openmode;
+              using ios_type = std::basic_ios<ACE_CHAR_T, TR>;
+              using char_type = ACE_CHAR_T;
+              using openmode = typename ios_type::openmode;
 
               virtual ~StreamInterceptorBase ();
             protected:
               StreamInterceptorBase ();
 
             public:
-              virtual void before_write (const char_type* buffer,
+              virtual void before_write (char_type const* buffer,
                                          std::streamsize length_to_write);
               virtual void after_write (int length_written);
               virtual void before_read (std::streamsize length_to_read);
-              virtual void after_read (const char_type* buffer,
+              virtual void after_read (char_type const* buffer,
                                        int length_read);
               virtual void on_eof ();
           };
 
-        typedef StreamInterceptorBase<char> StreamInterceptor;
+        using StreamInterceptor = StreamInterceptorBase<char>;
       }
   }
 

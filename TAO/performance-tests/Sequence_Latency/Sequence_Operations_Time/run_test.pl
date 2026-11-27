@@ -2,7 +2,6 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
      & eval 'exec perl -S $0 $argv:q'
      if 0;
 
-# -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::TestTarget;
@@ -33,7 +32,7 @@ $CL = $client->CreateProcess ("test", "-ORBdebuglevel $debug_level");
 
 $client_status = $CL->SpawnWaitKill ($client->ProcessStartWaitInterval() + 405);
 
-if ($test_status != 0) {
+if ($client_status != 0) {
     print STDERR "ERROR: test returned $client_status\n";
     $status = 1;
 }

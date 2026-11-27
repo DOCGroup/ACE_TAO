@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file Unbounded_Set.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef ACE_UNBOUNDED_SET_H
 #define ACE_UNBOUNDED_SET_H
@@ -29,7 +25,7 @@ class ACE_Allocator;
 template<typename T>
 struct ACE_Unbounded_Set_Default_Comparator
 {
-  bool operator() (const T&lhs, const T&rhs) const;
+  bool operator() (T const &lhs, T const &rhs) const;
 };
 
 template<typename T>
@@ -41,14 +37,14 @@ class ACE_Unbounded_Set;
  */
 template <typename T>
 class ACE_Unbounded_Set_Iterator : public
-  ACE_Unbounded_Set_Ex_Iterator<T, ACE_Unbounded_Set_Default_Comparator<T> >
+  ACE_Unbounded_Set_Ex_Iterator<T, ACE_Unbounded_Set_Default_Comparator<T>>
 {
 public:
   using base_type = ACE_Unbounded_Set_Ex_Iterator<T, ACE_Unbounded_Set_Default_Comparator<T>>;
 
-  ACE_Unbounded_Set_Iterator (ACE_Unbounded_Set<T> &s, bool end = false);
+  explicit ACE_Unbounded_Set_Iterator (ACE_Unbounded_Set<T> &s, bool end = false);
 
-  ACE_Unbounded_Set_Iterator (const base_type &s);
+  ACE_Unbounded_Set_Iterator (base_type const &s);
 };
 
 /**
@@ -57,15 +53,15 @@ public:
  */
 template <class T>
 class ACE_Unbounded_Set_Const_Iterator : public
-  ACE_Unbounded_Set_Ex_Const_Iterator<T, ACE_Unbounded_Set_Default_Comparator<T> >
+  ACE_Unbounded_Set_Ex_Const_Iterator<T, ACE_Unbounded_Set_Default_Comparator<T>>
 {
 public:
   using base_type = ACE_Unbounded_Set_Ex_Const_Iterator<T, ACE_Unbounded_Set_Default_Comparator<T>>;
 
-  ACE_Unbounded_Set_Const_Iterator (const ACE_Unbounded_Set<T> &s,
-                                    bool end = false);
+  explicit ACE_Unbounded_Set_Const_Iterator (ACE_Unbounded_Set<T> const &s,
+                                             bool end = false);
 
-  ACE_Unbounded_Set_Const_Iterator (const base_type &s);
+  ACE_Unbounded_Set_Const_Iterator (base_type const &s);
 };
 
 /**
@@ -74,7 +70,7 @@ public:
  */
 template<typename T>
 class ACE_Unbounded_Set : public
-  ACE_Unbounded_Set_Ex<T, ACE_Unbounded_Set_Default_Comparator<T> >
+  ACE_Unbounded_Set_Ex<T, ACE_Unbounded_Set_Default_Comparator<T>>
 {
 public:
   ACE_Unbounded_Set (ACE_Allocator *alloc = nullptr);

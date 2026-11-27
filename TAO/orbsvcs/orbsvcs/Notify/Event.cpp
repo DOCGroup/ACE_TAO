@@ -19,18 +19,13 @@ TAO_Notify_Event::TAO_Notify_Event ()
 , timeout_ (CosNotification::Timeout)
 , reliable_ (CosNotification::EventReliability, true)
 , clone_ (0)
-, is_on_heap_ (false)
 , time_ (ACE_OS::gettimeofday ())
 {
   //  if (TAO_debug_level > 0)
   //  ORBSVCS_DEBUG ((LM_DEBUG,"event:%x  created\n", this ));
 }
 
-TAO_Notify_Event::~TAO_Notify_Event ()
-{
-  // if (TAO_debug_level > 1)
-  //  ORBSVCS_DEBUG ((LM_DEBUG,"event:%x  destroyed\n", this ));
-}
+TAO_Notify_Event::~TAO_Notify_Event () = default;
 void
 TAO_Notify_Event::release ()
 {
@@ -38,7 +33,7 @@ TAO_Notify_Event::release ()
 }
 
 void
-TAO_Notify_Event::translate (const CORBA::Any& any, CosNotification::StructuredEvent& notification)
+TAO_Notify_Event::translate (CORBA::Any const& any, CosNotification::StructuredEvent& notification)
 {
   notification.remainder_of_body <<= any;
   notification.header.fixed_header.event_type.type_name = CORBA::string_dup ("%ANY");
@@ -46,7 +41,7 @@ TAO_Notify_Event::translate (const CORBA::Any& any, CosNotification::StructuredE
 }
 
 void
-TAO_Notify_Event::translate (const CosNotification::StructuredEvent& notification, CORBA::Any& any)
+TAO_Notify_Event::translate (CosNotification::StructuredEvent const& notification, CORBA::Any& any)
 {
   any <<= notification;   // is the typecode set by this operation or do we need to set it explicity.
 }
@@ -55,8 +50,8 @@ TAO_Notify_Event::translate (const CosNotification::StructuredEvent& notificatio
 TAO_Notify_Event *
 TAO_Notify_Event::unmarshal (TAO_InputCDR & cdr)
 {
-  TAO_Notify_Event * result = nullptr;
-  ACE_CDR::Octet code = 0;
+  TAO_Notify_Event * result {};
+  ACE_CDR::Octet code {};
   if (cdr.read_octet (code))
   {
     switch (code)

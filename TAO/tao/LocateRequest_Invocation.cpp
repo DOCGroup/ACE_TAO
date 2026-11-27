@@ -1,5 +1,6 @@
-// -*- C++ -*-
 #include "tao/LocateRequest_Invocation.h"
+
+#include <memory>
 #include "tao/Profile_Transport_Resolver.h"
 #include "tao/operation_details.h"
 #include "tao/Stub.h"
@@ -32,7 +33,7 @@ namespace TAO
   class First_Request_Guard
   {
   public:
-    First_Request_Guard (TAO_Transport &transport);
+    explicit First_Request_Guard (TAO_Transport &transport);
 
     ~First_Request_Guard ();
 
@@ -116,7 +117,9 @@ namespace TAO
       this->init_target_spec (tspec, cdr);
 
       if (transport->generate_locate_request (tspec, this->details_, cdr) == -1)
+      {
         return TAO_INVOKE_FAILURE;
+      }
 
       countdown.update ();
 
@@ -124,7 +127,9 @@ namespace TAO
     }
 
     if (s != TAO_INVOKE_SUCCESS)
+    {
       return s;
+    }
 
     countdown.update ();
 
@@ -132,9 +137,16 @@ namespace TAO
     // back to cache. If the idling is successful let the
     // resolver about that.
     if (this->resolver_.transport ()->idle_after_send ())
+    {
       this->resolver_.transport_released ();
+    }
 
     s = this->wait_for_reply (max_wait_time, *rd.get (), dispatch_guard);
+
+    if (s != TAO_INVOKE_SUCCESS)
+      {
+        return s;
+      }
 
     s = this->check_reply (*rd.get ());
 
@@ -142,7 +154,9 @@ namespace TAO
     // back to  cache after receiving the reply. If the idling is
     // successful let the resolver about that.
     if (this->resolver_.transport ()->idle_after_reply ())
+    {
       this->resolver_.transport_released ();
+    }
 
     return s;
   }
@@ -153,7 +167,7 @@ namespace TAO
     TAO_InputCDR &cdr = rd.reply_cdr ();
 
     // Set the translators
-    this->resolver_.transport ()->assign_translators (&cdr, nullptr);
+    this->resolver_.transport ()->assign_translators (std::addressof (cdr), nullptr);
 
     switch (rd.locate_reply_status ())
       {
@@ -185,7 +199,7 @@ namespace TAO
           // We have received an exception with a request to change the
           // addressing mode. First let us read the mode that the
           // server/agent asks for.
-          CORBA::Short addr_mode = 0;
+          CORBA::Short addr_mode {};
 
           if (cdr.read_short (addr_mode) == 0)
             {

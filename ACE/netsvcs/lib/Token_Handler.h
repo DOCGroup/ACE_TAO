@@ -1,13 +1,9 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
  *  @file    Token_Handler.h
  *
  *  @author Douglas C. Schmidt (d.schmidt@vanderbilt.edu)
  *          Tim Harrison (harrison@cs.wustl.edu)
  */
-//=============================================================================
 
 #ifndef ACE_TOKEN_HANDLER_H
 #define ACE_TOKEN_HANDLER_H
@@ -29,8 +25,8 @@
 /**
  * @class ACE_Token_Handler
  *
- * @brief Product object created by an <ACE_Token_Acceptor>.  A
- * <Token_Handler> exchanges messages with a <Token_Proxy> object
+ * @brief Product object created by an @c ACE_Token_Acceptor.  A
+ * @c ACE_Token_Handler exchanges messages with an @c ACE_Token_Proxy object
  * on the client-side.
  *
  * This class is the main workhorse of the ACE Token service.  It
@@ -44,12 +40,11 @@
 class ACE_Svc_Export ACE_Token_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 {
 public:
-  /// Default constructor.
-  ACE_Token_Handler (ACE_Thread_Manager * = 0);
+  explicit ACE_Token_Handler (ACE_Thread_Manager * = nullptr);
 
-  // = Accessor and mutator methods.
+  /// @name Remote operations exported to a client.
+  /// @{
 
-  // = Remote operations "exported" to a client.
   /**
    * Try to acquire the token.
    * Precondition: client *may* hold the token already (i.e.,
@@ -82,10 +77,12 @@ public:
   /// Called by TS_[Mutex,RLock,WLock] when we are waiting and acquire
   /// the mutex.
   void token_acquired (ACE_TPQ_Entry *);
+  /// @}
 
 protected:
-  // = Low level routines for framing requests, dispatching
-  // operations, and returning replies.
+  /// @name Low-level routines for framing requests, dispatching operations,
+  /// and returning replies.
+  /// @{
 
   /// Our connection has been closed.
   virtual int abandon (int send_error);
@@ -99,15 +96,22 @@ protected:
 
   /// Create and send a reply to the client.
   virtual int send_reply (ACE_UINT32 errnum);
+  /// @}
 
-  // = Demultiplexing hooks.
-  /// Callback method invoked by the <ACE_Reactor> when client events
+  /// @name Demultiplexing hooks.
+  /// @{
+
+  /// Callback method invoked by the @c ACE_Reactor when client events
   /// arrive.
   virtual int handle_input (ACE_HANDLE);
+  /// @}
 
-  // = Timer hook.
+  /// @name Timer hook.
+  /// @{
+
   /// Enable clients to limit the amount of time they wait for a token.
-  virtual int handle_timeout (const ACE_Time_Value &tv, const void *arg);
+  virtual int handle_timeout (ACE_Time_Value const &tv, void const *arg);
+  /// @}
 
   /// return a proxy for the calling client_id and token name.
   ACE_Token_Proxy *get_proxy ();
@@ -135,16 +139,13 @@ private:
   ACE_Token_Reply token_reply_;
 };
 
-// = DESCRIPTION of ACE_TS_* classes:
-//     When Tokens are released, waiting token proxies are notified
-//     when the releasing thread calls token_acquired on the waiting
-//     proxy.  The Token Server specializes ACE_Token_Proxy to
-//     redefine the implementation of token_acquired.  When
-//     token_acquired is called, the Token_Handler can then send the
-//     response back over the socket connection to unblock the
-//     client side.
-//     Since only the Token_Handler uses ACE_TS_Mutex, we've moved
-//     the definition to the .cpp file.
+/**
+ * The token server mutex classes specialize ACE_Token_Proxy so that
+ * releasing a token notifies waiting clients.  When a waiting proxy
+ * acquires the token, the Token_Handler sends a response over the socket
+ * connection to unblock the client.  ACE_TS_Mutex is defined in this file
+ * because only the Token_Handler uses it.
+ */
 
 /**
  * @class ACE_TS_Mutex
@@ -155,7 +156,7 @@ class ACE_TS_Mutex : public ACE_Local_Mutex
 {
 public:
   /// Creation.
-  ACE_TS_Mutex (const ACE_TCHAR *name,
+  ACE_TS_Mutex (ACE_TCHAR const *name,
                 ACE_Token_Handler *th);
 
 protected:
@@ -170,7 +171,7 @@ protected:
   virtual void token_acquired (ACE_TPQ_Entry *);
 
   /// Duplication.
-  ACE_TS_Mutex (const ACE_TS_Mutex &);
+  ACE_TS_Mutex (ACE_TS_Mutex const &);
 
   /// Return a deep copy.
   virtual ACE_Token_Proxy *clone () const;
@@ -190,7 +191,7 @@ class ACE_TS_RLock : public ACE_Local_RLock
 {
 public:
   /// Creation.
-  ACE_TS_RLock (const ACE_TCHAR *name,
+  ACE_TS_RLock (ACE_TCHAR const *name,
                 ACE_Token_Handler *th);
 
 protected:
@@ -205,7 +206,7 @@ protected:
   virtual void token_acquired (ACE_TPQ_Entry *);
 
   /// Duplication.
-  ACE_TS_RLock (const ACE_TS_RLock&);
+  ACE_TS_RLock (ACE_TS_RLock const &);
 
   /// Return a deep copy.
   virtual ACE_Token_Proxy *clone () const;
@@ -225,7 +226,7 @@ class ACE_TS_WLock : public ACE_Local_WLock
 {
 public:
   /// Creation.
-  ACE_TS_WLock (const ACE_TCHAR *name,
+  ACE_TS_WLock (ACE_TCHAR const *name,
                 ACE_Token_Handler *th);
 
 protected:
@@ -240,7 +241,7 @@ protected:
   virtual void token_acquired (ACE_TPQ_Entry *);
 
   /// Duplication.
-  ACE_TS_WLock (const ACE_TS_WLock&);
+  ACE_TS_WLock (ACE_TS_WLock const &);
 
   /// Return a deep copy.
   virtual ACE_Token_Proxy *clone () const;
@@ -255,7 +256,7 @@ private:
  * @class ACE_Token_Acceptor
  *
  * @brief This class contains the service-specific methods that can't
- * easily be factored into the <ACE_Strategy_Acceptor>.
+ * easily be factored into the @c ACE_Strategy_Acceptor.
  */
 class ACE_Token_Acceptor : public ACE_Strategy_Acceptor<ACE_Token_Handler, ACE_SOCK_ACCEPTOR>
 {

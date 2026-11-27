@@ -15,7 +15,6 @@
 // does not compile the platform is just too broken.
 #include <list>
 
-
 int
 run_main (int, ACE_TCHAR *[])
 {
@@ -38,11 +37,9 @@ run_main (int, ACE_TCHAR *[])
 
   // ... add all the numbers to validate that they are there ...
   int sum = 0;
-  for(collection::iterator i = c.begin(), end = c.end();
-      i != end;
-      ++i)
+  for (int value : c)
     {
-      sum += *i;
+      sum += value;
     }
 
   // ... remember Euler ...
@@ -57,5 +54,4 @@ run_main (int, ACE_TCHAR *[])
   ACE_END_TEST;
   return status;
 }
-
 

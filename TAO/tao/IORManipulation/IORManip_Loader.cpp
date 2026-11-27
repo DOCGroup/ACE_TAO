@@ -10,7 +10,7 @@ TAO_IORManip_Loader::TAO_IORManip_Loader () = default;
 CORBA::Object_ptr
 TAO_IORManip_Loader::create_object (CORBA::ORB_ptr, int, ACE_TCHAR *[])
 {
-  CORBA::Object_ptr obj;
+  CORBA::Object_ptr obj {};
   ACE_NEW_RETURN (obj,
                   TAO_IOR_Manipulation_impl,
                   CORBA::Object::_nil ());
@@ -22,7 +22,6 @@ TAO_IORManip_Loader::Initializer ()
 {
   return ACE_Service_Config::process_directive (ace_svc_desc_TAO_IORManip_Loader);
 }
-
 
 ACE_STATIC_SVC_DEFINE (TAO_IORManip_Loader,
                        ACE_TEXT ("IORManip_Loader"),

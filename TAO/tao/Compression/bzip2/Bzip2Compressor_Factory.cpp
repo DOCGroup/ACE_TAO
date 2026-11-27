@@ -6,8 +6,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace TAO
 {
 Bzip2_CompressorFactory::Bzip2_CompressorFactory () :
-  ::TAO::CompressorFactory (::Compression::COMPRESSORID_BZIP2),
-  compressor_ (::Compression::Compressor::_nil ())
+  ::TAO::CompressorFactory (::Compression::COMPRESSORID_BZIP2)
 {
 }
 
@@ -15,6 +14,8 @@ Bzip2_CompressorFactory::Bzip2_CompressorFactory () :
 Bzip2_CompressorFactory::get_compressor (
     ::Compression::CompressionLevel compression_level)
 {
+  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, nullptr);
+
   // @todo, make a array based on compression level
   if (CORBA::is_nil (compressor_.in ()))
     {

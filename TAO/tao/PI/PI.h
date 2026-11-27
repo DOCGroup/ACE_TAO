@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-// ===================================================================
 /**
  *  @file   PI.h
  *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-// ===================================================================
 
 #ifndef TAO_PI_H
 #define TAO_PI_H
@@ -29,13 +25,15 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_PI_Export TAO_PI_Init
 {
 public:
+  TAO_PI_Init () = delete;
+
   /// Used to force the initialization of the ORB code.
   static int Initializer ();
 };
 
 #if defined (TAO_AS_STATIC_LIBS) || (defined (ACE_VXWORKS) && !defined (__RTP__))
-// only do this for static builds, it causes a circular
-// dependency for dynamic builds.
+/// only do this for static builds, it causes a circular
+/// dependency for dynamic builds.
 static int
 TAO_Requires_PI_Initializer = TAO_PI_Init::Initializer ();
 #endif /* TAO_AS_STATIC_LIBS */

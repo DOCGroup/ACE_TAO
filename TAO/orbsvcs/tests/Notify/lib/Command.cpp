@@ -5,15 +5,12 @@
 
 #include "ace/Log_Msg.h"
 
-
 TAO_Notify_Tests_Command::TAO_Notify_Tests_Command ()
-  :next_ (0), command_ (INVALID)
+  : command_ (INVALID)
 {
 }
 
-TAO_Notify_Tests_Command::~TAO_Notify_Tests_Command ()
-{
-}
+TAO_Notify_Tests_Command::~TAO_Notify_Tests_Command () = default;
 
 void
 TAO_Notify_Tests_Command::init (ACE_Arg_Shifter& /*arg_shifter*/)
@@ -42,7 +39,7 @@ TAO_Notify_Tests_Command::execute ()
         {
           this->execute_i ();
         }
-      catch (const CORBA::Exception& ex)
+      catch (CORBA::Exception const & ex)
         {
           ex._tao_print_exception (
             ACE_TEXT(
@@ -51,5 +48,7 @@ TAO_Notify_Tests_Command::execute ()
     }
 
   if (this->next_)
+  {
     this->next_->execute ();
+  }
 }

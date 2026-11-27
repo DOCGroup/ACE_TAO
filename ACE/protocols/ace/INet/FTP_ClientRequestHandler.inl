@@ -1,4 +1,5 @@
-// -*- C++ -*-
+#include <memory>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE
@@ -14,7 +15,7 @@ namespace ACE
     ACE_INLINE
     ClientRequestHandler::SessionHolder::session_type* ClientRequestHandler::SessionHolder::operator -> ()
       {
-        return &this->session_;
+        return std::addressof (this->session_);
       }
 
     ACE_INLINE
@@ -42,7 +43,6 @@ namespace ACE
         return this->active_port_;
       }
 
-
     ACE_INLINE
     Request& ClientRequestHandler::request ()
       {
@@ -50,7 +50,7 @@ namespace ACE
       }
 
     ACE_INLINE
-    const Request& ClientRequestHandler::request () const
+    Request const& ClientRequestHandler::request () const
       {
         return this->request_;
       }
@@ -62,7 +62,7 @@ namespace ACE
       }
 
     ACE_INLINE
-    const Response& ClientRequestHandler::response () const
+    Response const& ClientRequestHandler::response () const
       {
         return this->response_;
       }
@@ -83,18 +83,26 @@ namespace ACE
     std::ostream& ClientRequestHandler::request_stream ()
       {
         if (this->session_)
-          return this->out_data_stream_;
+          {
+            return this->out_data_stream_;
+          }
         else
-          return ACE::IOS::Null::out_stream_;
+          {
+            return ACE::IOS::Null::out_stream_;
+          }
       }
 
     ACE_INLINE
     std::istream& ClientRequestHandler::response_stream ()
       {
         if (this->session_)
-          return this->in_data_stream_;
+          {
+            return this->in_data_stream_;
+          }
         else
-          return ACE::IOS::Null::in_stream_;
+          {
+            return ACE::IOS::Null::in_stream_;
+          }
       }
   }
 }

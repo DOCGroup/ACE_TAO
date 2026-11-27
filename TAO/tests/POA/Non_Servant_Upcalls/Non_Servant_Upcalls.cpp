@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file     Non_Servant_Upcalls.cpp
  *
@@ -10,8 +8,6 @@
  *
  *  @author  Irfan Pyarali
  */
-//=============================================================================
-
 
 #include "testS.h"
 
@@ -19,9 +15,13 @@ class test_i :
   public virtual POA_test
 {
 public:
-  test_i (test_i *other);
+  explicit test_i (test_i *other);
+  test_i (test_i const &) = delete;
+  test_i (test_i &&) = delete;
+  test_i &operator= (test_i const &) = delete;
+  test_i &operator= (test_i &&) = delete;
 
-  ~test_i ();
+  ~test_i () override;
 
   test_i *other_;
 };
@@ -47,7 +47,7 @@ test_i::~test_i ()
 
           poa->deactivate_object (id.in ());
         }
-      catch (const CORBA::Exception& ex)
+      catch (CORBA::Exception const &ex)
         {
           ex._tao_print_exception ("test_i::~test_i");
         }
@@ -55,7 +55,7 @@ test_i::~test_i ()
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
@@ -76,7 +76,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       poa_manager->activate ();
 
-      test_i *servant1 = new test_i (0);
+      test_i *servant1 = new test_i (nullptr);
       test_i *servant2 = new test_i (servant1);
 
       PortableServer::ObjectId_var id1 =
@@ -97,7 +97,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught");
       return -1;

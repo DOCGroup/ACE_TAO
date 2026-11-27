@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Collocation_Resolver.h
  *
  *  @author  Irfan Pyarali
  */
-// ===================================================================
 
 #ifndef TAO_COLLOCATION_RESOLVER_H
 #define TAO_COLLOCATION_RESOLVER_H
@@ -43,7 +39,6 @@ class TAO_Export TAO_Collocation_Resolver
   : public ACE_Service_Object
 {
 public:
-  /// Destructor.
   ~TAO_Collocation_Resolver () override;
 
   /// Is @a object collocated?

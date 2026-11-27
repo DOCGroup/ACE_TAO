@@ -1,12 +1,8 @@
-// ============================================================================
-// ============================================================================
-
-
 // Construct a helper class instance from values for
 // the fields of the IDL struct it wraps.
 
 ACE_INLINE
-ACE_RT_Info::ACE_RT_Info (const char* entry_point_,
+ACE_RT_Info::ACE_RT_Info (char const *entry_point_,
                           RtecScheduler::Time worst_time_,
                           RtecScheduler::Time typical_time_,
                           RtecScheduler::Time cached_time_,
@@ -27,11 +23,10 @@ ACE_RT_Info::ACE_RT_Info (const char* entry_point_,
     this->threads = threads_;
 }
 
-
 // Construct a helper class instance from the IDL struct it wraps.
 
 ACE_INLINE
-ACE_RT_Info::ACE_RT_Info (const RtecScheduler::RT_Info& rt_info)
+ACE_RT_Info::ACE_RT_Info (RtecScheduler::RT_Info const& rt_info)
   :  RtecScheduler::RT_Info (rt_info)
 {
 }

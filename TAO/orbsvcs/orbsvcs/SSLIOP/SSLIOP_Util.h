@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    SSLIOP_Util.h
  *
@@ -8,8 +5,6 @@
  *
  *  @author  Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_SSLIOP_UTIL_H
 #define TAO_SSLIOP_UTIL_H
@@ -45,6 +40,8 @@ namespace TAO
     class Util
     {
     public:
+      Util () = delete;
+
       /// Access Current.
       static TAO::SSLIOP::Current_ptr current (TAO_ORB_Core *orb_core);
     };

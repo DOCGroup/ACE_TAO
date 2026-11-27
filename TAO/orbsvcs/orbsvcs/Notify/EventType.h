@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file EventType.h
  *
@@ -19,7 +18,6 @@
 #include "orbsvcs/CosNotificationC.h"
 #include "orbsvcs/Notify/Topology_Object.h"
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
@@ -33,29 +31,28 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Notify_Serv_Export TAO_Notify_EventType : public TAO_Notify::Topology_Savable
 {
 public:
-  /// Constructor
   TAO_Notify_EventType ();
-  TAO_Notify_EventType (const char* domain_name, const char* type_name);
-  TAO_Notify_EventType (const CosNotification::EventType& event_type);
-  // Constructor
+  TAO_Notify_EventType (char const *domain_name, char const *type_name);
+  explicit TAO_Notify_EventType (CosNotification::EventType const& event_type);
+  TAO_Notify_EventType (TAO_Notify_EventType const& event_type);
 
-  /// Destructor
   virtual ~TAO_Notify_EventType ();
 
   /// hash value
   u_long hash () const;
 
   /// Assignment from CosNotification::EventType
-  TAO_Notify_EventType& operator=(const CosNotification::EventType& event_type);
+  TAO_Notify_EventType& operator=(CosNotification::EventType const& event_type);
 
-  /// Assignment operator.
-  TAO_Notify_EventType& operator=(const TAO_Notify_EventType& event_type);
+  TAO_Notify_EventType& operator=(TAO_Notify_EventType const& event_type);
 
-  /// == operator
-  bool operator==(const TAO_Notify_EventType& notify_event_type) const;
+  /// @name Comparison operators
+  /// @{
+  bool operator==(TAO_Notify_EventType const& notify_event_type) const;
 
   /// != operator
-  bool operator!=(const TAO_Notify_EventType& notify_event_type) const;
+  bool operator!=(TAO_Notify_EventType const& notify_event_type) const;
+  /// @}
 
   /// Return the special event type.
   static TAO_Notify_EventType special ();
@@ -64,36 +61,38 @@ public:
   CORBA::Boolean is_special () const;
 
   /// Get the type underneath us.
-  const CosNotification::EventType& native () const;
+  CosNotification::EventType const& native () const;
 
   /// Helper to print contents.
   void dump () const;
 
   /// Initialize from an NVPList, return false on failure
-  bool init(const TAO_Notify::NVPList& attrs);
+  bool init(TAO_Notify::NVPList const& attrs);
 
   // TAO_Notify::Topology_Object
 
-  virtual void save_persistent (TAO_Notify::Topology_Saver& saver);
+  void save_persistent (TAO_Notify::Topology_Saver& saver) override;
 
 protected:
   friend class TAO_Notify_Constraint_Interpreter;
 
   /// Init this object.
-  void init_i (const char* domain_name, const char* type_name);
+  void init_i (char const *domain_name, char const *type_name);
 
   /// Recompute the hash value.
   void recompute_hash ();
 
-  bool domain_is_wildcard (const char* domain) const;
-  bool type_is_wildcard (const char* type) const;
+  bool domain_is_wildcard (char const *domain) const;
+  bool type_is_wildcard (char const *type) const;
 
-  // = Data Members
+  /// @name Data members
+  /// @{
   /// The event_type that we're decorating.
   CosNotification::EventType event_type_;
 
   /// The hash value computed.
   u_long hash_value_;
+  /// @}
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

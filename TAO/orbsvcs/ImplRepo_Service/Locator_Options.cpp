@@ -1,10 +1,8 @@
-//=============================================================================
 /**
  *  @file    Locator_Options.cpp
  *
  *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "Locator_Options.h"
 #include "ace/Arg_Shifter.h"
@@ -15,7 +13,7 @@
 #if defined (ACE_WIN32)
 static const HKEY SERVICE_REG_ROOT = HKEY_LOCAL_MACHINE;
 // This string must agree with the one used in Locator_NT_Service.h
-static const ACE_TCHAR *SERVICE_REG_PATH =
+static ACE_TCHAR const *SERVICE_REG_PATH =
   ACE_TEXT ("SYSTEM\\CurrentControlSet\\Services\\TAOImR\\Parameters");
 #endif /* ACE_WIN32 */
 
@@ -351,7 +349,7 @@ Options::init (int argc, ACE_TCHAR *argv[])
       return result;
     }
 
-  for (int i = 0; i < argc; ++i)
+  for (int i {}; i < argc; ++i)
     {
       this->cmdline_ += ACE_CString (ACE_TEXT_ALWAYS_CHAR(argv[i])) + ACE_CString (" ");
     }
@@ -364,7 +362,6 @@ Options::init_from_registry ()
   this->load_registry_options ();
   return 0;
 }
-
 
 void
 Options::print_usage () const
@@ -677,7 +674,7 @@ Options::debug () const
   return this->debug_;
 }
 
-const ACE_TString&
+ACE_TString const&
 Options::ior_filename () const
 {
   return this->ior_output_file_;
@@ -695,12 +692,12 @@ Options::service_command() const
   return this->service_command_;
 }
 
-const char*
+char const *
 Options::cmdline() const {
   return this->cmdline_.c_str ();
 }
 
-const ACE_TString&
+ACE_TString const&
 Options::persist_file_name() const {
   return this->persist_file_name_;
 }
@@ -783,7 +780,7 @@ Options::imr_type () const
   return this->imr_type_;
 }
 
-const ACE_CString &
+ACE_CString const &
 Options::ft_endpoint () const
 {
   return this->ft_endpoint_;

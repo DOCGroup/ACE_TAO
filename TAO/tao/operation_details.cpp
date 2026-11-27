@@ -16,9 +16,9 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::Exception *
-TAO_Operation_Details::corba_exception (const char *id) const
+TAO_Operation_Details::corba_exception (char const *id) const
 {
-  for (CORBA::ULong i = 0; i != this->ex_count_; ++i)
+  for (CORBA::ULong i {}; i != this->ex_count_; ++i)
     {
       if (this->ex_data_[i].id.compare (id) != 0)
         {
@@ -42,9 +42,9 @@ TAO_Operation_Details::corba_exception (const char *id) const
 }
 
 bool
-TAO_Operation_Details::has_exception (::CORBA::Exception& ex) const
+TAO_Operation_Details::has_exception (::CORBA::Exception &ex) const
 {
-  for (CORBA::ULong i = 0; i != this->ex_count_; ++i)
+  for (CORBA::ULong i {}; i != this->ex_count_; ++i)
     {
       if (this->ex_data_[i].id.compare(ex._rep_id ()) == 0)
         {
@@ -58,10 +58,12 @@ bool
 TAO_Operation_Details::marshal_args (TAO_OutputCDR &cdr)
 {
   try {
-    for (CORBA::ULong i = 0; i != this->num_args_; ++i)
+    for (CORBA::ULong i {}; i != this->num_args_; ++i)
       {
       if (!((*this->args_[i]).marshal (cdr)))
+      {
         return false;
+      }
       }
 
     // Nothing else to fragment.  We're also guaranteed to have
@@ -85,10 +87,12 @@ bool
 TAO_Operation_Details::demarshal_args (TAO_InputCDR &cdr)
 {
   try {
-    for (CORBA::ULong i = 0; i != this->num_args_; ++i)
+    for (CORBA::ULong i {}; i != this->num_args_; ++i)
       {
         if (!((*this->args_[i]).demarshal (cdr)))
+        {
           return false;
+        }
       }
 
     cdr.reset_vt_indirect_maps ();

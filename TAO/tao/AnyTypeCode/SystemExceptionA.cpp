@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/AnyTypeCode/SystemExceptionA.h"
 #include "tao/AnyTypeCode/Any_SystemException.h"
 #include "tao/AnyTypeCode/Any_Dual_Impl_T.h"
@@ -10,6 +9,8 @@
 #include "tao/AnyTypeCode/Null_RefCount_Policy.h"
 
 #include "tao/CORBA_String.h"
+
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -87,7 +88,7 @@ namespace CORBA
 {
   // An internal TypeCode.
   TypeCode_ptr const _tc_CompletionStatus =
-    &TAO::TypeCode::tc_CompletionStatus;
+    std::addressof (TAO::TypeCode::tc_CompletionStatus);
 }
 
 namespace TAO
@@ -98,8 +99,8 @@ namespace TAO
                  CORBA::TypeCode_ptr const *> const
     fields_CORBA_SystemException[] =
       {
-        { "minor",     &CORBA::_tc_ulong },
-        { "completed", &CORBA::_tc_CompletionStatus }
+        { "minor",     std::addressof (CORBA::_tc_ulong) },
+        { "completed", std::addressof (CORBA::_tc_CompletionStatus) }
       };
 
     using tc_SystemException = TAO::TypeCode::Struct<char const *,
@@ -124,14 +125,14 @@ namespace TAO \
   } \
 } \
 CORBA::TypeCode_ptr const CORBA::_tc_ ## name = \
-    &TAO::TypeCode::tc_CORBA_ ## name;
+    std::addressof (TAO::TypeCode::tc_CORBA_ ## name);
 
 STANDARD_EXCEPTION_LIST
 #undef  TAO_SYSTEM_EXCEPTION
 
 #define TAO_SYSTEM_EXCEPTION(name) \
 void \
-CORBA::operator<<= (CORBA::Any &any, const CORBA::name &ex) \
+CORBA::operator<<= (CORBA::Any &any, CORBA::name const &ex) \
 { \
   TAO::Any_SystemException::insert_copy ( \
       any, \
@@ -159,16 +160,16 @@ STANDARD_EXCEPTION_LIST
 
 #define TAO_SYSTEM_EXCEPTION(name) \
 CORBA::Boolean \
-CORBA::operator>>= (const CORBA::Any &any, \
-                    const CORBA::name *&ex) \
+CORBA::operator>>= (CORBA::Any const &any, \
+                    CORBA::name const *&ex) \
 { \
   return \
     TAO::Any_SystemException::extract ( \
         any, \
         CORBA::name ::_tao_any_destructor, \
         CORBA::_tc_ ## name, \
-        (const CORBA::SystemException *&) ex, \
-        &CORBA::name ::_tao_create); \
+        (CORBA::SystemException const *&) ex, \
+        std::addressof (CORBA::name ::_tao_create)); \
 }
 
 STANDARD_EXCEPTION_LIST

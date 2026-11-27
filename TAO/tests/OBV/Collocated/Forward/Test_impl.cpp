@@ -1,21 +1,23 @@
 #include "Test_impl.h"
 
 Test_impl::Test_impl (CORBA::ORB_ptr orb)
-    : orb_ (CORBA::ORB::_duplicate (orb))
+  : orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
 
-
 void
-reflect_node (BaseNode* bn)
+reflect_node (BaseNode *bn)
 {
-  if(bn == 0) return;
+  if (bn == nullptr)
+    {
+      return;
+    }
 
   reflect_node (bn->left ());
   reflect_node (bn->right ());
 
-  BaseNode *old_right = bn->right ();
-  BaseNode *old_left = bn->left ();
+  BaseNode * const old_right = bn->right ();
+  BaseNode * const old_left = bn->left ();
 
   CORBA::add_ref (old_right);
   CORBA::add_ref (old_left);
@@ -25,13 +27,13 @@ reflect_node (BaseNode* bn)
 }
 
 TreeController *
-Test_impl::reflect (TreeController * tc)
+Test_impl::reflect (TreeController *tc)
 {
-  if (tc != 0)
-  {
-    reflect_node (tc-> root());
-    tc->_add_ref ();
-  }
+  if (tc != nullptr)
+    {
+      reflect_node (tc->root ());
+      tc->_add_ref ();
+    }
   return tc;
 }
 

@@ -1,6 +1,5 @@
 #ifndef ACE_TIME_POLICY_H
 #define ACE_TIME_POLICY_H
-// -*- C++ -*-
 /**
  *  @file Time_Policy.h
  *
@@ -54,7 +53,7 @@ public:
 };
 
 /**
- * @class ACE_FPointer_Timer_Policy
+ * @class ACE_FPointer_Time_Policy
  *
  * @brief Implement a time policy based on a function pointer.
  *
@@ -86,7 +85,7 @@ public:
    *
    * Construct from a pointer to function.
    */
-  ACE_FPointer_Time_Policy(FPtr f);
+  explicit ACE_FPointer_Time_Policy(FPtr f);
 
   /// Return the current time according to this policy
   ACE_Time_Value_T<ACE_FPointer_Time_Policy> operator()() const;
@@ -116,7 +115,7 @@ public:
   /// Set delegate
   void set_delegate (ACE_Dynamic_Time_Policy_Base const * delegate);
 
-  ACE_Delegating_Time_Policy (const ACE_Delegating_Time_Policy&) = default;
+  ACE_Delegating_Time_Policy (ACE_Delegating_Time_Policy const&) = default;
   ACE_Delegating_Time_Policy (ACE_Delegating_Time_Policy&&) = default;
   ACE_Delegating_Time_Policy& operator = (ACE_Delegating_Time_Policy const &) = default;
   ACE_Delegating_Time_Policy &operator = (ACE_Delegating_Time_Policy&&)  = default;
@@ -128,7 +127,7 @@ private:
 };
 
 /**
- * @class ACE_Dynamic_Time_Policy_base
+ * @class ACE_Dynamic_Time_Policy_Base
  *
  * @brief Abstract base class for dynamically loaded and/or shared
  *        time policies.

@@ -42,7 +42,7 @@ TAO_ArrayDef_i::destroy_i ()
 
   this->repo_->config ()->remove_section (this->repo_->arrays_key (),
                                           name.c_str (),
-                                          0);
+                                          false);
 }
 
 CORBA::TypeCode_ptr
@@ -191,8 +191,7 @@ TAO_ArrayDef_i::element_type_def_i (CORBA::IDLType_ptr element_type_def)
 }
 
 void
-TAO_ArrayDef_i::destroy_element_type (
-  )
+TAO_ArrayDef_i::destroy_element_type ()
 {
   ACE_TString element_path;
   this->repo_->config ()->get_string_value (this->section_key_,
@@ -203,7 +202,7 @@ TAO_ArrayDef_i::destroy_element_type (
   this->repo_->config ()->expand_path (this->repo_->root_key (),
                                        element_path,
                                        element_key,
-                                       0);
+                                       false);
 
   u_int kind = 0;
   this->repo_->config ()->get_integer_value (element_key,

@@ -16,7 +16,7 @@ class ORB_Runner : public ACE_Task_Base
 {
 public:
   explicit ORB_Runner (CORBA::ORB_ptr orb) : orb_(CORBA::ORB::_duplicate(orb)) {}
-  int svc ()
+  int svc () override
   {
     this->orb_->run ();
     return 0;
@@ -62,13 +62,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
   ORB_Runner *runner = new ORB_Runner (orb.in ());
-  int poa_delay = 10;
   int shutdown_delay = 0;
 
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Start server main\n"));
 
   try
     {
+      int poa_delay = 10;
       ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("p:s:?"));
       int c;
 
@@ -145,10 +145,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) Destroying POA pid <%P>\n"));
 
-      root_poa->destroy(1,1);
+      root_poa->destroy(true,true);
       orb->destroy();
     }
-  catch(const CORBA::Exception& ex)
+  catch(CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Server main()");
       return 1;

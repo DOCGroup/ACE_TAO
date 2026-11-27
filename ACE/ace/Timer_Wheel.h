@@ -1,13 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Timer_Wheel.h
  *
  *  @author Darrell Brunsch (brunsch@cs.wustl.edu)
  */
-//=============================================================================
-
 
 #ifndef ACE_TIMER_WHEEL_H
 #define ACE_TIMER_WHEEL_H

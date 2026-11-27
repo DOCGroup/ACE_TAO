@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  * @file    Versioned_Namespace.h
  *
@@ -10,7 +7,6 @@
  *
  * @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef ACE_VERSIONED_NAMESPACE_H
 #define ACE_VERSIONED_NAMESPACE_H
@@ -18,7 +14,6 @@
 #ifndef ACE_CONFIG_MACROS_H
 # error This header is only meant to be included by or after "ace/config-lite.h".
 #endif  /* !ACE_CONFIG_LITE_H */
-
 
 #if defined (ACE_HAS_VERSIONED_NAMESPACE) && ACE_HAS_VERSIONED_NAMESPACE == 1
 

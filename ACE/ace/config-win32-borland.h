@@ -1,4 +1,3 @@
-//-*- C++ -*-
 // The following configuration file contains defines for Borland compilers.
 
 #ifndef ACE_CONFIG_WIN32_BORLAND_H

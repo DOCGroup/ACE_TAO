@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-// ===================================================================
 /**
  *  @file   UIOP_Transport.h
  *
@@ -8,7 +5,6 @@
  *  @author Ossama Othman <ossama@ece.uci.edu>
  *  @author Modified by Balachandran Natarajan <bala@cs.wustl.edu>
  */
-// ===================================================================
 
 #ifndef TAO_UIOP_TRANSPORT_H
 #define TAO_UIOP_TRANSPORT_H
@@ -30,8 +26,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// Forward decls.
-
 class TAO_ORB_Core;
 class TAO_UIOP_Connection_Handler;
 
@@ -47,19 +41,17 @@ using TAO_UIOP_SVC_HANDLER = ACE_Svc_Handler<ACE_LSOCK_STREAM, ACE_NULL_SYNCH>;
 class TAO_Strategies_Export TAO_UIOP_Transport : public TAO_Transport
 {
 public:
-  /// Constructor.
   TAO_UIOP_Transport (TAO_UIOP_Connection_Handler *handler,
                       TAO_ORB_Core *orb_core);
 
-  /// Default destructor.
-  ~TAO_UIOP_Transport () override;
+  ~TAO_UIOP_Transport () override = default;
 
 protected:
   /** @name Overridden Template Methods
    *
    * These are implementations of template methods declared by TAO_Transport.
    */
-  //@{
+  /// @{
   ACE_Event_Handler *event_handler_i () override;
   TAO_Connection_Handler *connection_handler_i () override;
 
@@ -87,9 +79,10 @@ public:
                     TAO_ServerRequest *request = nullptr,
                     TAO_Message_Semantics message_semantics = TAO_Message_Semantics (),
                     ACE_Time_Value *max_time_wait = nullptr) override;
-  //@}
+  /// @}
 
 private:
+  TAO_UIOP_Transport () = delete;
   TAO_UIOP_Transport (TAO_UIOP_Transport const &) = delete;
   TAO_UIOP_Transport &operator= (TAO_UIOP_Transport const &) = delete;
   TAO_UIOP_Transport (TAO_UIOP_Transport &&) = delete;

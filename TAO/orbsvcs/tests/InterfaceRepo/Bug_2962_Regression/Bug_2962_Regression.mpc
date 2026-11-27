@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*): taoclient, ifr_client {
 
   Source_Files {

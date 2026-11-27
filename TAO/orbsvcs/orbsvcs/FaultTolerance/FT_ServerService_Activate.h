@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  * @file FT_ServerService_Activate.h
  *
@@ -8,7 +5,6 @@
  *
  * @author Bala Natarajan <bala@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_FT_SERVERACTIVATE_H
 #define TAO_FT_SERVERACTIVATE_H
@@ -38,14 +34,17 @@ class TAO_FT_ServerORB_Export TAO_FT_ServerService_Activate
 : public ACE_Service_Object
 {
 public:
-  /// Constructor
   TAO_FT_ServerService_Activate ();
 
-  /// The destructor
   ~TAO_FT_ServerService_Activate () override;
 
   /// Used to force the initialization.
   static int Initializer ();
+
+  TAO_FT_ServerService_Activate (TAO_FT_ServerService_Activate const&) = delete;
+  TAO_FT_ServerService_Activate& operator= (TAO_FT_ServerService_Activate const&) = delete;
+  TAO_FT_ServerService_Activate (TAO_FT_ServerService_Activate&&) = delete;
+  TAO_FT_ServerService_Activate& operator= (TAO_FT_ServerService_Activate&&) = delete;
 };
 
 static int

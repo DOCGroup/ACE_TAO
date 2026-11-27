@@ -6,7 +6,7 @@ Hello::Hello (CORBA::ORB_ptr orb)
 }
 
 char *
-Hello::get_string (const char * mystring)
+Hello::get_string (char const *mystring)
 {
   ACE_DEBUG ((LM_DEBUG, "Received <%s>\n", mystring));
   return CORBA::string_dup ("Hello there!Hello there!Hello there!Hello there!Hello there!Hello there!Hello there!Hello there!Hello there!");
@@ -33,7 +33,7 @@ Hello::big_request (const ::Test::Octet_Seq & octet_in)
   if (octet_in.length () > 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT("Server side BLOB received len = %d\n"),
+                  ACE_TEXT("Server side BLOB received len = %u\n"),
                   octet_in.length ()));
     }
   else

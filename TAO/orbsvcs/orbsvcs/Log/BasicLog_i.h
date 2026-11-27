@@ -1,6 +1,3 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
  *  @file   BasicLog_i.h
  *
@@ -8,10 +5,8 @@
  *
  *  @author Matthew Braun <mjb2@cs.wustl.edu>
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
- *  @David A. Hanvey <d.hanvey@qub.ac.uk>
+ *  @author David A. Hanvey <d.hanvey@qub.ac.uk>
  */
-//=============================================================================
-
 
 #ifndef TAO_TLS_BASICLOG_I_H
 #define TAO_TLS_BASICLOG_I_H
@@ -50,7 +45,6 @@ class TAO_Log_Serv_Export TAO_BasicLog_i :
   public POA_DsLogAdmin::BasicLog
 {
 public:
-  /// Constructor.
   TAO_BasicLog_i (CORBA::ORB_ptr orb,
                   PortableServer::POA_ptr poa,
                   TAO_LogMgr_i &logmgr_i,
@@ -67,7 +61,6 @@ public:
   void destroy () override;
 
 protected:
-  /// Destructor.
   /**
    * Protected destructor to enforce proper memory management through
    * reference counting.

@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   OS_NS_unistd.h
  *
@@ -8,7 +5,6 @@
  *  @author Jesper S. M|ller<stophph@diku.dk>
  *  @author and a cast of thousands...
  */
-//=============================================================================
 
 #ifndef ACE_OS_NS_UNISTD_H
 # define ACE_OS_NS_UNISTD_H
@@ -37,7 +33,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace ACE_OS
 {
   ACE_NAMESPACE_INLINE_FUNCTION
-  int access (const char *path, int amode);
+  int access (char const *path, int amode);
 
 #if defined (ACE_HAS_WCHAR)
   ACE_NAMESPACE_INLINE_FUNCTION
@@ -65,7 +61,7 @@ namespace ACE_OS
                       bool quote_args = false);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int chdir (const char *path);
+  int chdir (char const *path);
 
 #if defined (ACE_HAS_WCHAR)
   ACE_NAMESPACE_INLINE_FUNCTION
@@ -73,7 +69,7 @@ namespace ACE_OS
 #endif /* ACE_HAS_WCHAR */
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int rmdir (const char *path);
+  int rmdir (char const *path);
 
 #if defined (ACE_HAS_WCHAR)
   ACE_NAMESPACE_INLINE_FUNCTION
@@ -94,43 +90,43 @@ namespace ACE_OS
             ACE_HANDLE newfd);
 
   extern ACE_Export
-  int execl (const char *path,
-             const char *arg0, ...);
+  int execl (char const *path,
+             char const *arg0, ...);
 
   extern ACE_Export
-  int execle (const char *path,
-              const char *arg0, ...);
+  int execle (char const *path,
+              char const *arg0, ...);
 
   extern ACE_Export
-  int execlp (const char *file,
-              const char *arg0, ...);
+  int execlp (char const *file,
+              char const *arg0, ...);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int execv (const char *path,
+  int execv (char const *path,
              char *const argv[]);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int execve (const char *path,
+  int execve (char const *path,
               char *const argv[],
               char *const envp[]);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int execvp (const char *file,
+  int execvp (char const *file,
               char *const argv[]);
 
-  //@{
+  /// @{
   /// Forks and exec's a process in a manner that works Windows.
   /// argv[0] must be the full path name to the executable.
   ACE_NAMESPACE_INLINE_FUNCTION
   pid_t fork ();
 
-  // not in susv3
+  /// Not in SUSv3.
   extern ACE_Export
-  pid_t fork (const ACE_TCHAR *program_name);
+  pid_t fork (ACE_TCHAR const *program_name);
 
   extern ACE_Export
   pid_t fork_exec (ACE_TCHAR *argv[]);
-  //@}
+  /// @}
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int fsync (ACE_HANDLE handle);
@@ -155,7 +151,7 @@ namespace ACE_OS
   ACE_NAMESPACE_INLINE_FUNCTION
   int getopt (int argc,
               char *const *argv,
-              const char *optstring);
+              char const *optstring);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   long getpagesize ();
@@ -175,7 +171,7 @@ namespace ACE_OS
   ACE_NAMESPACE_INLINE_FUNCTION
   uid_t geteuid ();
 
-  // should call gethostname()
+  /// Should call gethostname().
   ACE_NAMESPACE_INLINE_FUNCTION
   int hostname (char name[],
                 size_t maxnamelen);
@@ -225,7 +221,7 @@ namespace ACE_OS
 
   extern ACE_Export
   ssize_t pwrite (ACE_HANDLE handle,
-                  const void *buf,
+                  void const *buf,
                   size_t nbyte,
                   ACE_OFF_T offset);
 
@@ -242,8 +238,8 @@ namespace ACE_OS
 
   /**
    * Receive @a len bytes into @a buf from @a handle (uses the
-   * <ACE_OS::read> call, which uses the <read> system call on UNIX
-   * and the <ReadFile> call on Win32). If errors occur, -1 is
+   * @c ACE_OS::read call, which uses the @c read system call on UNIX
+   * and the @c ReadFile call on Win32). If errors occur, -1 is
    * returned.  If EOF occurs, 0 is returned.  Whatever data has been
    * read will be returned to the caller through @a bytes_transferred.
    *
@@ -255,7 +251,7 @@ namespace ACE_OS
                   size_t *bytes_transferred = nullptr);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  ssize_t readlink (const char *path,
+  ssize_t readlink (char const *path,
                     char *buf,
                     size_t bufsiz);
 
@@ -290,7 +286,7 @@ namespace ACE_OS
   int sleep (u_int seconds);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int sleep (const ACE_Time_Value &tv);
+  int sleep (ACE_Time_Value const &tv);
 
   // used by ARGV::string_to_argv
   extern ACE_Export
@@ -300,7 +296,7 @@ namespace ACE_OS
                       bool substitute_env_args = true);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  void swab (const void *src, void *dest, ssize_t n);
+  void swab (void const *src, void *dest, ssize_t n);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   long sysconf (int);
@@ -312,18 +308,18 @@ namespace ACE_OS
                 long count);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int truncate (const ACE_TCHAR *filename, ACE_OFF_T length);
+  int truncate (ACE_TCHAR const *filename, ACE_OFF_T length);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   useconds_t ualarm (useconds_t usecs,
                      useconds_t interval = 0);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  useconds_t ualarm (const ACE_Time_Value &tv,
-                     const ACE_Time_Value &tv_interval = ACE_Time_Value::zero);
+  useconds_t ualarm (ACE_Time_Value const &tv,
+                     ACE_Time_Value const &tv_interval = ACE_Time_Value::zero);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int unlink (const char *path);
+  int unlink (char const *path);
 
 #if defined (ACE_HAS_WCHAR)
   ACE_NAMESPACE_INLINE_FUNCTION
@@ -332,25 +328,25 @@ namespace ACE_OS
 
   ACE_NAMESPACE_INLINE_FUNCTION
   ssize_t write (ACE_HANDLE handle,
-                 const void *buf,
+                 void const *buf,
                  size_t nbyte);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   ssize_t write (ACE_HANDLE handle,
-                 const void *buf,
+                 void const *buf,
                  size_t nbyte,
                  ACE_OVERLAPPED *);
 
   /**
-   * Send @a len bytes from @a buf to @a handle (uses the <ACE_OS::write>
-   * calls, which is uses the <write> system call on UNIX and the
-   * <WriteFile> call on Win32).  If errors occur, -1 is returned.  If
+   * Send @a len bytes from @a buf to @a handle (uses the @c ACE_OS::write
+   * calls, which is uses the @c write system call on UNIX and the
+   * @c WriteFile call on Win32).  If errors occur, -1 is returned.  If
    * EOF occurs, 0 is returned.  Whatever data has been transmitted
    * will be returned to the caller through @a bytes_transferred.
    */
   extern ACE_Export
   ssize_t write_n (ACE_HANDLE handle,
-                   const void *buf,
+                   void const *buf,
                    size_t len,
                    size_t *bytes_transferred = nullptr);
 } /* namespace ACE_OS */

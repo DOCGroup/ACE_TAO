@@ -1,6 +1,5 @@
 #ifndef ACE_MONOTONIC_TIME_POLICY_H
 #define ACE_MONOTONIC_TIME_POLICY_H
-// -*- C++ -*-
 /**
  *  @file Monotonic_Time_Policy.h
  *

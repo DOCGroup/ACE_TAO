@@ -8,112 +8,78 @@
 #include <iostream>
 
 Messenger_i::Messenger_i (CORBA::ORB_ptr orb)
-: orb_ (CORBA::ORB::_duplicate (orb))
-, supplier_(new EventSequenceSupplier_i(orb))
+  : orb_ (CORBA::ORB::_duplicate (orb)),
+    supplier_ (new EventSequenceSupplier_i (orb))
 {
-  CORBA::Object_var naming_obj =
-    orb_->resolve_initial_references ("NameService");
-
-  CosNaming::NamingContextExt_var naming_context =
-    CosNaming::NamingContextExt::_narrow (naming_obj.in());
-
-  CORBA::Object_var obj = naming_context->resolve_str("NotifyEventChannelFactory");
-
-  CosNotifyChannelAdmin::EventChannelFactory_var notify_factory =
+  CORBA::Object_var const naming_obj = orb_->resolve_initial_references ("NameService");
+  CosNaming::NamingContextExt_var const naming_context =
+    CosNaming::NamingContextExt::_narrow (naming_obj.in ());
+  CORBA::Object_var const obj = naming_context->resolve_str ("NotifyEventChannelFactory");
+  CosNotifyChannelAdmin::EventChannelFactory_var const notify_factory =
     CosNotifyChannelAdmin::EventChannelFactory::_narrow (obj.in ());
 
-  CosNotifyChannelAdmin::ChannelID id;
-  CosNotification::QoSProperties initial_qos;
-  CosNotification::AdminProperties initial_admin;
+  CosNotifyChannelAdmin::ChannelID id {};
+  CosNotification::QoSProperties initial_qos {};
+  CosNotification::AdminProperties initial_admin {};
+  CosNotifyChannelAdmin::EventChannel_var const event_channel =
+    notify_factory->create_channel (initial_qos, initial_admin, id);
+  CosNaming::Name_var const name = naming_context->to_name ("MyEventChannel");
+  naming_context->rebind (name.in (), event_channel.in ());
 
-  CosNotifyChannelAdmin::EventChannel_var ec =
-    notify_factory->create_channel (initial_qos,
-    initial_admin,
-    id);
+  CosNotifyChannelAdmin::AdminID admin_id {};
+  CosNotifyChannelAdmin::InterFilterGroupOperator const ifgop = CosNotifyChannelAdmin::AND_OP;
+  CosNotifyChannelAdmin::SupplierAdmin_var const supplier_admin =
+    event_channel->new_for_suppliers (ifgop, admin_id);
+  CosNotifyChannelAdmin::ProxyID supplier_admin_proxy_id {};
+  CosNotifyChannelAdmin::ProxyConsumer_var const proxy_consumer =
+    supplier_admin->obtain_notification_push_consumer (
+      CosNotifyChannelAdmin::SEQUENCE_EVENT,
+      supplier_admin_proxy_id);
 
-  CosNaming::Name_var name = naming_context->to_name("MyEventChannel");
-  naming_context->rebind(name.in(), ec.in());
+  CORBA::Object_var const poa_obj = orb_->resolve_initial_references ("RootPOA");
+  PortableServer::POA_var const poa = PortableServer::POA::_narrow (poa_obj.in ());
+  PortableServer::POAManager_var const manager = poa->the_POAManager ();
+  manager->activate ();
 
-  CosNotifyChannelAdmin::AdminID adminid;
-  CosNotifyChannelAdmin::InterFilterGroupOperator ifgop =
-    CosNotifyChannelAdmin::AND_OP;
-
-  CosNotifyChannelAdmin::SupplierAdmin_var supplier_admin =
-    ec->new_for_suppliers (ifgop, adminid);
-
-  CosNotifyChannelAdmin::ProxyID supplieradmin_proxy_id;
-
-  CosNotifyChannelAdmin::ProxyConsumer_var proxy_consumer =
-    supplier_admin->obtain_notification_push_consumer(
-    CosNotifyChannelAdmin::SEQUENCE_EVENT,
-    supplieradmin_proxy_id);
-
-  CORBA::Object_var poa_obj = orb_->resolve_initial_references ("RootPOA");
-  PortableServer::POA_var poa = PortableServer::POA::_narrow (poa_obj.in());
-  PortableServer::POAManager_var mgr = poa->the_POAManager();
-  mgr->activate ();
-
-  PortableServer::ObjectId_var objectId = poa->activate_object(supplier_.get());
-  CORBA::Object_var supplier_obj = poa->id_to_reference(objectId.in());
-
-  CosNotifyComm::SequencePushSupplier_var supplier =
-    CosNotifyComm::SequencePushSupplier::_narrow(supplier_obj.in());
-
-  consumer_proxy_ =
-    CosNotifyChannelAdmin::SequenceProxyPushConsumer::_narrow(proxy_consumer.in());
-
-  consumer_proxy_->connect_sequence_push_supplier(supplier.in());
+  PortableServer::ObjectId_var const object_id = poa->activate_object (supplier_.get ());
+  CORBA::Object_var const supplier_obj = poa->id_to_reference (object_id.in ());
+  CosNotifyComm::SequencePushSupplier_var const supplier =
+    CosNotifyComm::SequencePushSupplier::_narrow (supplier_obj.in ());
+  consumer_proxy_ = CosNotifyChannelAdmin::SequenceProxyPushConsumer::_narrow (proxy_consumer.in ());
+  consumer_proxy_->connect_sequence_push_supplier (supplier.in ());
 }
 
-
-Messenger_i::~Messenger_i ()
-{
-}
-
-CORBA::Boolean Messenger_i::send_message (const char * user_name,
-                                          const char * subject,
-                                          char *& message)
+CORBA::Boolean
+Messenger_i::send_message (char const *user_name,
+                           char const *subject,
+                           char *&message)
 {
   std::cout << "Message from: " << user_name << std::endl;
   std::cout << "Subject:      " << subject << std::endl;
   std::cout << "Message:      " << message << std::endl;
 
-  // Event Definition
-  CosNotification::StructuredEvent event;
+  CosNotification::StructuredEvent event {};
+  event.header.fixed_header.event_type.domain_name = CORBA::string_dup ("OCI_TAO");
+  event.header.fixed_header.event_type.type_name = CORBA::string_dup ("examples");
+  event.header.fixed_header.event_name = CORBA::string_dup ("myevent");
 
-  event.header.fixed_header.event_type.domain_name =
-    CORBA::string_dup("OCI_TAO");
-  // string
-  event.header.fixed_header.event_type.type_name =
-    CORBA::string_dup("examples");
-  // string
-  event.header.fixed_header.event_name =
-    CORBA::string_dup("myevent");
-
-  // OptionalHeaderFields
-  // PropertySeq
-
-  // sequence<Property>: string name, any value
-  event.filterable_data.length (1);
-  event.filterable_data[0].name = CORBA::string_dup("Message from:");
-  event.filterable_data[0].value <<= (const char *)user_name;
-  event.filterable_data.length (2);
-  event.filterable_data[1].name = CORBA::string_dup("Subject:");
-  event.filterable_data[1].value <<= (const char *)subject;
   event.filterable_data.length (3);
-  event.filterable_data[2].name = CORBA::string_dup("Message:");
-  event.filterable_data[2].value <<= (const char *)message;
+  event.filterable_data[0].name = CORBA::string_dup ("Message from:");
+  event.filterable_data[0].value <<= user_name;
+  event.filterable_data[1].name = CORBA::string_dup ("Subject:");
+  event.filterable_data[1].value <<= subject;
+  event.filterable_data[2].name = CORBA::string_dup ("Message:");
+  event.filterable_data[2].value <<= message;
 
   std::cout << "pushing " << std::endl;
-  CosNotification::EventBatch events;
-  events.length(4);
+  CosNotification::EventBatch events {};
+  events.length (4);
   events[0] = event;
   events[1] = event;
   events[2] = event;
   events[3] = event;
 
-  consumer_proxy_->push_structured_events(events);
+  consumer_proxy_->push_structured_events (events);
 
-  return 1;
+  return true;
 }
-

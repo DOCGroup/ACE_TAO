@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /* Handles timeouts. */
 
 #ifndef _HANDLE_TIMEOUT_H
@@ -18,16 +17,20 @@
 class ACE_Svc_Export Handle_Timeout : public ACE_Service_Object
 {
 public:
-  Handle_Timeout ();
-  virtual int init (int argc, ACE_TCHAR *argv[]);
-  virtual int info (ACE_TCHAR **, size_t) const;
-  virtual int fini ();
+  Handle_Timeout () = default;
+  Handle_Timeout (Handle_Timeout const &) = delete;
+  Handle_Timeout (Handle_Timeout &&) = delete;
+  Handle_Timeout &operator= (Handle_Timeout const &) = delete;
+  Handle_Timeout &operator= (Handle_Timeout &&) = delete;
+  int init (int argc, ACE_TCHAR *argv[]) override;
+  int info (ACE_TCHAR **, size_t) const override;
+  int fini () override;
 
 private:
-  virtual ACE_HANDLE get_handle () const;
-  virtual int handle_timeout (const ACE_Time_Value &tv, const void *arg);
+  ACE_HANDLE get_handle () const override;
+  int handle_timeout (ACE_Time_Value const &tv, void const *arg) override;
 
-  int count;
+  int count {};
 };
 
 extern ACE_Service_Object_Type t1;

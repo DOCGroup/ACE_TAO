@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    typecode.h
  *
@@ -7,31 +5,25 @@
  *
  *  @author   Aniruddha Gokhale
  */
-//=============================================================================
-
 
 #ifndef PARAM_TEST_TYPECODE_H
 #define PARAM_TEST_TYPECODE_H
 
 #include "param_testC.h"
 
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-//                        test TypeCodes
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+/// test TypeCodes
 class Test_TypeCode
 {
 public:
-  /// ctor
   Test_TypeCode ();
 
-  /// dtor
-  ~Test_TypeCode ();
+  ~Test_TypeCode () = default;
 
   /// run the SII test
   int run_sii_test (Param_Test_ptr objref);
 
   /// return operation name
-  const char *opname () const;
+  char const *opname () const;
 
   /// set values for parameters
   int init_parameters (Param_Test_ptr objref);
@@ -57,7 +49,7 @@ private:
   CORBA::TypeCode_var tc_holder_;
 
   /// operation name
-  char *opname_;
+  char const *opname_;
 
   /// in parameter
   CORBA::TypeCode_var in_;

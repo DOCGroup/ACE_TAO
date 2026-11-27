@@ -22,6 +22,11 @@ namespace ACE_TMCast
 
     Group (ACE_INET_Addr const& addr, char const* id);
 
+    Group (Group const&) = delete;
+    Group (Group&&) = delete;
+    Group& operator= (Group const&) = delete;
+    Group& operator= (Group&&) = delete;
+
   public:
     void
     send (void const* msg, size_t size);
@@ -36,12 +41,6 @@ namespace ACE_TMCast
   private:
     class GroupImpl;
     std::unique_ptr<GroupImpl> pimpl_;
-
-  private:
-    Group (Group const&);
-
-    Group&
-    operator= (Group const&);
   };
 }
 

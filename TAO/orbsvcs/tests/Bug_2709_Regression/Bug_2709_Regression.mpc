@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*idl): taoidldefaults, fault_tolerance {
   IDL_Files {
     Test.idl

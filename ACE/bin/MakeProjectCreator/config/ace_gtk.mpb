@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project {
   macros   += ACE_HAS_GTK
 

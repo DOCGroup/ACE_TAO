@@ -22,7 +22,7 @@ TAO_Service_Type_Exporter::~TAO_Service_Type_Exporter ()
   {
     this->remove_all_types ();
   }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
   {
   };
 }
@@ -33,22 +33,24 @@ TAO_Service_Type_Exporter::remove_all_types ()
   ACE_DEBUG ((LM_DEBUG, "*** TAO_Service_Type_Exporter::removing all"
               " types from the Repository.\n"));
 
-  for (int i = NUM_TYPES - 1; i >= 0; i--)
+  for (int i = NUM_TYPES - 1; i >= 0; --i)
     {
       try
         {
           this->repos_->remove_type (TT_Info::INTERFACE_NAMES[i]);
         }
-      catch (const CosTrading::UnknownServiceType& excp)
+      catch (CosTrading::UnknownServiceType const & excp)
         {
           if (this->verbose_)
             {
-              if (excp.type.in () != 0)
+              if (excp.type.in () != nullptr)
+              {
                 ACE_DEBUG ((LM_DEBUG, "Service type not yet registered: %C\n", excp.type.in ()));
+              }
             }
           // Don't re-throw, this one is expected in the test.
         }
-      catch (const CORBA::Exception& e)
+      catch (CORBA::Exception const & e)
         {
           e._tao_print_exception ("TAO_Service_Type_Exporter::remove_all_types");
           throw;
@@ -80,18 +82,18 @@ TAO_Service_Type_Exporter::add_all_types_to_all ()
 
   ACE_DEBUG ((LM_DEBUG, "Exporting service types with each of the linked"
               " traders.\n"));
-  for (CORBA::ULong i = link_name_seq->length () - 1; i > 0; i--)
+  for (CORBA::ULong i = link_name_seq->length () - 1; i > 0; --i)
     {
-      CosTradingRepos::ServiceTypeRepository_ptr str = 0;
+      CosTradingRepos::ServiceTypeRepository_ptr str {};
       try
         {
           ACE_DEBUG ((LM_DEBUG, "Getting link information for %C\n",
-                      static_cast<const char*> (link_name_seq[i])));
+                      static_cast<char const *> (link_name_seq[i])));
           CosTrading::Link::LinkInfo_var link_info =
             link_if->describe_link (link_name_seq[i]);
 
           ACE_DEBUG ((LM_DEBUG, "Adding service types to %C\n",
-                      static_cast<const char*> (link_name_seq[i])));
+                      static_cast<char const *> (link_name_seq[i])));
 
           CosTrading::TypeRepository_var remote_repos =
             link_info->target->type_repos ();
@@ -99,7 +101,7 @@ TAO_Service_Type_Exporter::add_all_types_to_all ()
           str =
             CosTradingRepos::ServiceTypeRepository::_narrow (remote_repos.in ());
         }
-      catch (const CORBA::Exception& e)
+      catch (CORBA::Exception const & e)
         {
           e._tao_print_exception ("TAO_Service_Type_Exporter::add_all_types_to_all");
           throw;
@@ -113,7 +115,7 @@ void
 TAO_Service_Type_Exporter::
 add_all_types_to (CosTradingRepos::ServiceTypeRepository_ptr repos)
 {
-  for (int i = 0; i < NUM_TYPES; i++)
+  for (int i = 0; i < NUM_TYPES; ++i)
     {
       try
         {
@@ -123,37 +125,45 @@ add_all_types_to (CosTradingRepos::ServiceTypeRepository_ptr repos)
                            this->type_structs_[i].super_types);
         }
       catch (
-        const CosTradingRepos::ServiceTypeRepository::ServiceTypeExists& ste)
+        CosTradingRepos::ServiceTypeRepository::ServiceTypeExists const & ste)
         {
           ste._tao_print_exception (
             "TAO_Service_Type_Exporter::add_all_types_to");
 
           if (ste.name.in () != 0)
+          {
             ACE_DEBUG ((LM_DEBUG, "Invalid name: %C\n", ste.name.in ()));
+          }
           throw;
         }
-      catch (const CosTrading::IllegalPropertyName& excp)
+      catch (CosTrading::IllegalPropertyName const & excp)
         {
           excp._tao_print_exception (
             "TAO_Service_Type_Exporter::add_all_types_to");
 
           if (excp.name.in () != 0)
+          {
             ACE_DEBUG ((LM_DEBUG, "Invalid name: %C\n", excp.name.in ()));
+          }
           throw;
         }
       catch (
-        const CosTradingRepos::ServiceTypeRepository::ValueTypeRedefinition& vtr)
+        CosTradingRepos::ServiceTypeRepository::ValueTypeRedefinition const & vtr)
         {
           vtr._tao_print_exception (
             "TAO_Service_Type_Exporter::add_all_types_to");
 
           if (vtr.type_1.in () != 0)
+          {
             ACE_DEBUG ((LM_DEBUG, "Type One: %C\n", vtr.type_2.in ()));
+          }
           if (vtr.type_2.in () != 0)
+          {
             ACE_DEBUG ((LM_DEBUG, "Type Two: %C\n", vtr.type_2.in ()));
+          }
           throw;
         }
-      catch (const CORBA::Exception& e)
+      catch (CORBA::Exception const & e)
         {
           e._tao_print_exception (
             "TAO_Service_Type_Exporter::add_all_types_to");
@@ -171,7 +181,7 @@ TAO_Service_Type_Exporter::list_all_types ()
       ACE_DEBUG ((LM_DEBUG, "*** TAO_Service_Type_Exporter::"
                   "listing all types in the Repository.\n"));
 
-      sst.all_ (1);
+      sst.all_ (true);
       CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq_var type_names =
         this->repos_->list_types (sst);
 
@@ -184,7 +194,7 @@ TAO_Service_Type_Exporter::list_all_types ()
             if (this->verbose_)
               {
                 ACE_DEBUG ((LM_DEBUG, "type name: %C\n",
-                            static_cast<const char *> (type_names[index])));
+                            static_cast<char const *> (type_names[index])));
               }
           }
       }
@@ -194,7 +204,7 @@ TAO_Service_Type_Exporter::list_all_types ()
         throw CORBA::TRANSIENT(); // Try again later?
       };
     }
-  catch (const CORBA::Exception& e)
+  catch (CORBA::Exception const & e)
     {
       e._tao_print_exception ("TAO_Service_Type_Exporter::list_all_types");
       throw;
@@ -209,7 +219,7 @@ TAO_Service_Type_Exporter::describe_all_types ()
       ACE_DEBUG ((LM_DEBUG, "*** TAO_Service_Type_Exporter::"
                   "describing all types in the Repository.\n"));
 
-      for (int i = 0; i < NUM_TYPES; i++)
+      for (int i = 0; i < NUM_TYPES; ++i)
         {
           CosTradingRepos::ServiceTypeRepository::TypeStruct_var type_struct =
             this->repos_->describe_type (TT_Info::INTERFACE_NAMES[i]);
@@ -221,7 +231,7 @@ TAO_Service_Type_Exporter::describe_all_types ()
             }
         }
     }
-  catch (const CORBA::Exception& e)
+  catch (CORBA::Exception const & e)
     {
       e._tao_print_exception ("TAO_Service_Type_Exporter::describe_all_types");
       throw;
@@ -236,7 +246,7 @@ TAO_Service_Type_Exporter::fully_describe_all_types ()
       ACE_DEBUG ((LM_DEBUG, "*** TAO_Service_Type_Exporter::"
                   "fully describing all types in the Repository.\n"));
 
-      for (int i = 0; i < NUM_TYPES; i++)
+      for (int i = 0; i < NUM_TYPES; ++i)
         {
           CosTradingRepos::ServiceTypeRepository::TypeStruct_var type_struct =
             this->repos_->fully_describe_type (TT_Info::INTERFACE_NAMES[i]);
@@ -248,7 +258,7 @@ TAO_Service_Type_Exporter::fully_describe_all_types ()
             }
         }
     }
-  catch (const CORBA::Exception& e)
+  catch (CORBA::Exception const & e)
     {
       e._tao_print_exception ("TAO_Service_Type_Exporter::fully_describe_all_types");
       throw;
@@ -257,10 +267,10 @@ TAO_Service_Type_Exporter::fully_describe_all_types ()
 
 void
 TAO_Service_Type_Exporter::
-dump_typestruct (const char* type_name,
-                 const CosTradingRepos::ServiceTypeRepository::TypeStruct& type_struct) const
+dump_typestruct (char const *type_name,
+                 CosTradingRepos::ServiceTypeRepository::TypeStruct const & type_struct) const
 {
-  const char* mode_str[] =
+  char const *mode_str[] =
     {
       "Normal",
       "Read only",
@@ -272,13 +282,13 @@ dump_typestruct (const char* type_name,
   ACE_DEBUG ((LM_DEBUG, "Interface Name: %C\n", type_struct.if_name.in ()));
 
   int i = 0;
-  for (i = type_struct.super_types.length () - 1; i >= 0; i--)
+  for (i = type_struct.super_types.length () - 1; i >= 0; --i)
     {
       ACE_DEBUG ((LM_DEBUG, "Super Type: %C\n",
-                  (const char *) type_struct.super_types[i]));
+                  type_struct.super_types[i].in ()));
     }
 
-  for (i = type_struct.props.length () - 1; i >= 0; i--)
+  for (i = type_struct.props.length () - 1; i >= 0; --i)
     {
       ACE_DEBUG ((LM_DEBUG, "Property: %-20C  Mode: %-24C\n",
                   type_struct.props[i].name.in (),

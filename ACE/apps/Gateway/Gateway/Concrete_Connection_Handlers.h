@@ -1,6 +1,3 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
  *  @file    Concrete_Connection_Handlers.h
  *
@@ -9,8 +6,6 @@
  *
  *  @author Doug Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
-
 
 #ifndef CONCRETE_CONNECTION_HANDLER
 #define CONCRETE_CONNECTION_HANDLER
@@ -29,27 +24,31 @@
 class Supplier_Handler : public Connection_Handler
 {
 public:
-  Supplier_Handler (const Connection_Config_Info &);
+  explicit Supplier_Handler (Connection_Config_Info const &);
+  Supplier_Handler (Supplier_Handler const &) = delete;
+  Supplier_Handler (Supplier_Handler &&) = delete;
+  Supplier_Handler &operator= (Supplier_Handler const &) = delete;
+  Supplier_Handler &operator= (Supplier_Handler &&) = delete;
 
 protected:
-  // = All the following methods are upcalls, so they can be protected.
+  /// These methods are upcalls from the framework and are protected.
 
   /// Receive and process peer events.
-  virtual int handle_input (ACE_HANDLE = ACE_INVALID_HANDLE);
+  int handle_input (ACE_HANDLE = ACE_INVALID_HANDLE) override;
 
   /// Receive an event from a Supplier.
   virtual int recv (ACE_Message_Block *&);
 
   /**
-   * This delegates to the <Event_Channel> to do the actual
-   * processing.  Typically, it forwards the <event> to its
+   * This delegates to the @c Event_Channel to do the actual
+   * processing.  Typically, it forwards the @c event to its
    * appropriate Consumer.
    */
   int process (ACE_Message_Block *event);
 
   /// Keep track of event fragment to handle non-blocking recv's from
   /// Suppliers.
-  ACE_Message_Block *msg_frag_;
+  ACE_Message_Block *msg_frag_ {};
 };
 
 /**
@@ -65,15 +64,19 @@ protected:
 class Consumer_Handler : public Connection_Handler
 {
 public:
-  Consumer_Handler (const Connection_Config_Info &);
+  explicit Consumer_Handler (Connection_Config_Info const &);
+  Consumer_Handler (Consumer_Handler const &) = delete;
+  Consumer_Handler (Consumer_Handler &&) = delete;
+  Consumer_Handler &operator= (Consumer_Handler const &) = delete;
+  Consumer_Handler &operator= (Consumer_Handler &&) = delete;
 
   /// Send an event to a Consumer (may be queued if necessary).
-  virtual int put (ACE_Message_Block *event,
-                   ACE_Time_Value * = 0);
+  int put (ACE_Message_Block *event,
+           ACE_Time_Value * = nullptr) override;
 
 protected:
   /// Finish sending event when flow control conditions abate.
-  virtual int handle_output (ACE_HANDLE);
+  int handle_output (ACE_HANDLE) override;
 
   /// Perform a non-blocking put().
   int nonblk_put (ACE_Message_Block *mb);
@@ -82,32 +85,36 @@ protected:
   virtual ssize_t send (ACE_Message_Block *);
 
   /// Receive and process shutdowns from a Consumer.
-  virtual int handle_input (ACE_HANDLE);
+  int handle_input (ACE_HANDLE) override;
 };
 
 /**
  * @class Thr_Consumer_Handler
  *
- * @brief Runs each <Consumer_Handler> in a separate thread.
+ * @brief Runs each @c Consumer_Handler in a separate thread.
  */
 class Thr_Consumer_Handler : public Consumer_Handler
 {
 public:
-  Thr_Consumer_Handler (const Connection_Config_Info &);
+  explicit Thr_Consumer_Handler (Connection_Config_Info const &);
+  Thr_Consumer_Handler (Thr_Consumer_Handler const &) = delete;
+  Thr_Consumer_Handler (Thr_Consumer_Handler &&) = delete;
+  Thr_Consumer_Handler &operator= (Thr_Consumer_Handler const &) = delete;
+  Thr_Consumer_Handler &operator= (Thr_Consumer_Handler &&) = delete;
 
   /// Initialize the threaded Consumer_Handler object and spawn a new
   /// thread.
-  virtual int open (void *);
+  int open (void *) override;
 
   /// Send a message to a peer.
-  virtual int put (ACE_Message_Block *, ACE_Time_Value * = 0);
+  int put (ACE_Message_Block *, ACE_Time_Value * = nullptr) override;
 
 protected:
   /// Called when Peer shutdown unexpectedly.
-  virtual int handle_input (ACE_HANDLE);
+  int handle_input (ACE_HANDLE) override;
 
   /// Transmit peer messages.
-  virtual int svc ();
+  int svc () override;
 
   /**
    * When thread started, connection become blocked, so no need to use
@@ -116,26 +123,30 @@ protected:
    * not. If yes, handle_close do nothing, otherwise, it call parent
    * handle_close().
    */
-  virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
-                            ACE_Reactor_Mask = ACE_Event_Handler::ALL_EVENTS_MASK);
+  int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
+                    ACE_Reactor_Mask = ACE_Event_Handler::ALL_EVENTS_MASK) override;
 
 private:
   /// If the controlling is in thread's svc() or not.
-  int in_thread_;
+  bool in_thread_ {};
 };
 
 /**
  * @class Thr_Supplier_Handler
  *
- * @brief Runs each <Supplier_Handler> in a separate thread.
+ * @brief Runs each @c Supplier_Handler in a separate thread.
  */
 class Thr_Supplier_Handler : public Supplier_Handler
 {
 public:
-  Thr_Supplier_Handler (const Connection_Config_Info &pci);
+  explicit Thr_Supplier_Handler (Connection_Config_Info const &pci);
+  Thr_Supplier_Handler (Thr_Supplier_Handler const &) = delete;
+  Thr_Supplier_Handler (Thr_Supplier_Handler &&) = delete;
+  Thr_Supplier_Handler &operator= (Thr_Supplier_Handler const &) = delete;
+  Thr_Supplier_Handler &operator= (Thr_Supplier_Handler &&) = delete;
 
   /// Initialize the object and spawn a new thread.
-  virtual int open (void *);
+  int open (void *) override;
 
 protected:
   /**
@@ -145,15 +156,15 @@ protected:
    * not. If yes, handle_close do nothing, otherwise, it call parent
    * handle_close().
    */
-  virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
-                            ACE_Reactor_Mask = ACE_Event_Handler::ALL_EVENTS_MASK);
+  int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
+                    ACE_Reactor_Mask = ACE_Event_Handler::ALL_EVENTS_MASK) override;
 
   /// Transmit peer messages.
-  virtual int svc ();
+  int svc () override;
 
 private:
   /// If the controlling is in thread's svc() or not.
-  int in_thread_;
+  bool in_thread_ {};
 };
 
 #endif /* CONCRETE_CONNECTION_HANDLER */

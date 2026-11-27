@@ -22,9 +22,10 @@ namespace ACE_RMCast
 
   void Flow::send (Message_ptr m)
   {
-    if (Data const* data = static_cast<Data const*> (m->find (Data::id)))
+    Data const *data = static_cast<Data const *> (m->find (Data::id));
+    if (data != nullptr)
     {
-      ACE_Time_Value now_time (ACE_OS::gettimeofday ());
+      ACE_Time_Value const now_time (ACE_OS::gettimeofday ());
 
       Lock l (mutex_);
       sample_bytes_ += data->size ();
@@ -35,7 +36,7 @@ namespace ACE_RMCast
       }
       else
       {
-        ACE_Time_Value delta (now_time - sample_start_time_);
+        ACE_Time_Value const delta (now_time - sample_start_time_);
 
         if (delta > ACE_Time_Value (0, 2000))
         {
@@ -53,26 +54,25 @@ namespace ACE_RMCast
           !ACE::is_equal (current_tput_, 0.0) &&
           current_tput_ > cap_tput_)
       {
-        double dev = (current_tput_ - cap_tput_) / current_tput_;
+        double const dev = (current_tput_ - cap_tput_) / current_tput_;
 
         // cerr << "deviation: " << dev << endl;
 
         // Cap decay algorithm.
         //
         {
-          ACE_Time_Value delta (now_time - nak_time_);
+          ACE_Time_Value const delta (now_time - nak_time_);
 
-          unsigned long msec = delta.msec ();
+          unsigned long const msec = delta.msec ();
 
-          double x = msec / -16000.0;
-          double y = 1.0 * exp (x);
+          double const x = msec / -16000.0;
+          double const y = 1.0 * exp (x);
           cap_tput_ = cap_tput_ / y;
 
           // cerr << "cap decay: " << cap_tput_ << " bytes/usec" << endl;
         }
 
         l.release ();
-
 
         timespec time;
         time.tv_sec = 0;
@@ -81,7 +81,9 @@ namespace ACE_RMCast
         // Don't bother to sleep if the time is less than 10 usec.
         //
         if (time.tv_nsec > 10000)
+        {
           ACE_OS::sleep (ACE_Time_Value (time));
+        }
       }
     }
 
@@ -90,9 +92,10 @@ namespace ACE_RMCast
 
   void Flow::recv (Message_ptr m)
   {
-    if (NAK const* nak = static_cast<NAK const*> (m->find (NAK::id)))
+    NAK const *nak = static_cast<NAK const *> (m->find (NAK::id));
+    if (nak != nullptr)
     {
-      Address to (static_cast<To const*> (m->find (To::id))->address ());
+      Address const to (static_cast<To const*> (m->find (To::id))->address ());
 
       if (nak->address () == to)
       {
@@ -103,15 +106,16 @@ namespace ACE_RMCast
         //     << static_cast<From const*> (m->find (From::id))->address ()
         //     << " for " << nak->count () << " sns." << endl;
 
-
-        ACE_Time_Value nak_time (ACE_OS::gettimeofday ());
+        ACE_Time_Value const nak_time (ACE_OS::gettimeofday ());
 
         Lock l (mutex_);
 
         nak_time_ = nak_time;
 
         if (ACE::is_equal (cap_tput_, 0.0))
+        {
           cap_tput_ = current_tput_;
+        }
 
         if (!ACE::is_equal (cap_tput_, 0.0))
         {

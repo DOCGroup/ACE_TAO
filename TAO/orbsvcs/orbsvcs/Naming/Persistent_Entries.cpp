@@ -1,18 +1,19 @@
-//=============================================================================
 /**
  *  @file    Persistent_Entries.cpp
  *
  *  @author Marina Spivak <marina@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "orbsvcs/Naming/Persistent_Entries.h"
 #include "ace/SString.h"
 
+#include <cstring>
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Persistent_IntId::TAO_Persistent_IntId ()
-  : ref_ (0),
+  : ref_ (nullptr),
     type_ (CosNaming::nobject)
 {
 }
@@ -24,74 +25,73 @@ TAO_Persistent_IntId::TAO_Persistent_IntId (char * obj_ref,
 {
 }
 
-TAO_Persistent_IntId::TAO_Persistent_IntId (const TAO_Persistent_IntId &rhs)
+TAO_Persistent_IntId::TAO_Persistent_IntId (TAO_Persistent_IntId const &rhs)
 {
   ref_ = rhs.ref_;
   type_ = rhs.type_;
 }
 
-TAO_Persistent_IntId::~TAO_Persistent_IntId ()
-{
-}
+TAO_Persistent_IntId::~TAO_Persistent_IntId () = default;
 
 void
-TAO_Persistent_IntId::operator= (const TAO_Persistent_IntId &rhs)
+TAO_Persistent_IntId::operator= (TAO_Persistent_IntId const &rhs)
 {
   // check for self assignment.
-  if (&rhs == this)
+  if (std::addressof (rhs) == this)
+  {
     return;
+  }
 
   type_ = rhs.type_;
   ref_ = rhs.ref_;
 }
 
 TAO_Persistent_ExtId::TAO_Persistent_ExtId ()
-  : id_ (0),
-    kind_ (0)
+  : id_ (nullptr),
+    kind_ (nullptr)
 {
 }
 
-TAO_Persistent_ExtId::TAO_Persistent_ExtId (const char *id,
-                                            const char *kind)
+TAO_Persistent_ExtId::TAO_Persistent_ExtId (char const *id,
+                                            char const *kind)
   : id_ (id),
     kind_ (kind)
-
 {
 }
 
-TAO_Persistent_ExtId::TAO_Persistent_ExtId (const TAO_Persistent_ExtId &rhs)
+TAO_Persistent_ExtId::TAO_Persistent_ExtId (TAO_Persistent_ExtId const &rhs)
 {
   id_ = rhs.id_;
   kind_ = rhs.kind_;
 }
 
-TAO_Persistent_ExtId::~TAO_Persistent_ExtId ()
-{
-}
+TAO_Persistent_ExtId::~TAO_Persistent_ExtId () = default;
 
 void
-TAO_Persistent_ExtId::operator= (const TAO_Persistent_ExtId &rhs)
+TAO_Persistent_ExtId::operator= (TAO_Persistent_ExtId const &rhs)
 {
   // Check for self assignment.
-  if (&rhs == this)
+  if (std::addressof (rhs) == this)
+  {
     return;
+  }
 
   id_ = rhs.id_;
   kind_ = rhs.kind_;
 }
 
 bool
-TAO_Persistent_ExtId::operator== (const TAO_Persistent_ExtId &rhs) const
+TAO_Persistent_ExtId::operator== (TAO_Persistent_ExtId const &rhs) const
 {
-  return (ACE_OS::strcmp (id_, rhs.id_) == 0)
-    && (ACE_OS::strcmp (kind_, rhs.kind_) == 0);
+  return (std::strcmp (id_, rhs.id_) == 0)
+    && (std::strcmp (kind_, rhs.kind_) == 0);
 }
 
 bool
-TAO_Persistent_ExtId::operator!= (const TAO_Persistent_ExtId &rhs) const
+TAO_Persistent_ExtId::operator!= (TAO_Persistent_ExtId const &rhs) const
 {
-  return (ACE_OS::strcmp (id_, rhs.id_) != 0)
-    || (ACE_OS::strcmp (kind_, rhs.kind_) != 0);
+  return (std::strcmp (id_, rhs.id_) != 0)
+    || (std::strcmp (kind_, rhs.kind_) != 0);
 }
 
 u_long
@@ -103,21 +103,21 @@ TAO_Persistent_ExtId::hash () const
   return temp.hash ();
 }
 
-const char *
+char const *
 TAO_Persistent_ExtId::id ()
 {
   return id_;
 }
 
-const char *
+char const *
 TAO_Persistent_ExtId::kind ()
 {
   return kind_;
 }
 
 TAO_Persistent_Index_IntId::TAO_Persistent_Index_IntId ()
-  : counter_ (0),
-    hash_map_ (0)
+  : counter_ (nullptr),
+    hash_map_ (nullptr)
 {
 }
 
@@ -129,66 +129,66 @@ TAO_Persistent_Index_IntId::TAO_Persistent_Index_IntId (ACE_UINT32 *counter,
 {
 }
 
-TAO_Persistent_Index_IntId::TAO_Persistent_Index_IntId (const TAO_Persistent_Index_IntId &rhs)
+TAO_Persistent_Index_IntId::TAO_Persistent_Index_IntId (TAO_Persistent_Index_IntId const &rhs)
 {
   counter_ = rhs.counter_;
   hash_map_ = rhs.hash_map_;
 }
 
-TAO_Persistent_Index_IntId::~TAO_Persistent_Index_IntId ()
-{
-}
+TAO_Persistent_Index_IntId::~TAO_Persistent_Index_IntId () = default;
 
 void
-TAO_Persistent_Index_IntId::operator= (const TAO_Persistent_Index_IntId &rhs)
+TAO_Persistent_Index_IntId::operator= (TAO_Persistent_Index_IntId const &rhs)
 {
   // check for self assignment.
-  if (&rhs == this)
+  if (std::addressof (rhs) == this)
+  {
     return;
+  }
 
   counter_ = rhs.counter_;
   hash_map_ = rhs.hash_map_;
 }
 
 TAO_Persistent_Index_ExtId::TAO_Persistent_Index_ExtId ()
-  : poa_id_ (0)
+  : poa_id_ (nullptr)
 {
 }
 
-TAO_Persistent_Index_ExtId::TAO_Persistent_Index_ExtId (const char *poa_id)
+TAO_Persistent_Index_ExtId::TAO_Persistent_Index_ExtId (char const *poa_id)
   : poa_id_ (poa_id)
 {
 }
 
-TAO_Persistent_Index_ExtId::TAO_Persistent_Index_ExtId (const TAO_Persistent_Index_ExtId &rhs)
+TAO_Persistent_Index_ExtId::TAO_Persistent_Index_ExtId (TAO_Persistent_Index_ExtId const &rhs)
 {
   poa_id_ = rhs.poa_id_;
 }
 
-TAO_Persistent_Index_ExtId::~TAO_Persistent_Index_ExtId ()
-{
-}
+TAO_Persistent_Index_ExtId::~TAO_Persistent_Index_ExtId () = default;
 
 void
-TAO_Persistent_Index_ExtId::operator= (const TAO_Persistent_Index_ExtId &rhs)
+TAO_Persistent_Index_ExtId::operator= (TAO_Persistent_Index_ExtId const &rhs)
 {
   // Check for self assignment.
-  if (&rhs == this)
+  if (std::addressof (rhs) == this)
+  {
     return;
+  }
 
   poa_id_ = rhs.poa_id_;
 }
 
 bool
-TAO_Persistent_Index_ExtId::operator== (const TAO_Persistent_Index_ExtId &rhs) const
+TAO_Persistent_Index_ExtId::operator== (TAO_Persistent_Index_ExtId const &rhs) const
 {
-  return (ACE_OS::strcmp (poa_id_, rhs.poa_id_) == 0);
+  return (std::strcmp (poa_id_, rhs.poa_id_) == 0);
 }
 
 bool
-TAO_Persistent_Index_ExtId::operator!= (const TAO_Persistent_Index_ExtId &rhs) const
+TAO_Persistent_Index_ExtId::operator!= (TAO_Persistent_Index_ExtId const &rhs) const
 {
-  return (ACE_OS::strcmp (poa_id_, rhs.poa_id_) != 0);
+  return (std::strcmp (poa_id_, rhs.poa_id_) != 0);
 }
 
 u_long

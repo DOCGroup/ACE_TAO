@@ -12,6 +12,8 @@
 
 #include "Kokyu/Kokyu.h"
 
+#include <utility>
+
 #if     ! defined (__ACE_INLINE__)
 #include "orbsvcs/Event/EC_Kokyu_Dispatching.inl"
 #endif /* __ACE_INLINE__ */
@@ -19,9 +21,8 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EC_Kokyu_Dispatching::TAO_EC_Kokyu_Dispatching (TAO_EC_Event_Channel_Base *ec, int sched_policy, int sched_scope)
-  :allocator_ (0),
+  :allocator_ (nullptr),
    dispatcher_ (nullptr),
-   lanes_setup_ (0),
    disp_sched_policy_ (sched_policy),
    disp_sched_scope_ (sched_scope)
 {
@@ -29,7 +30,7 @@ TAO_EC_Kokyu_Dispatching::TAO_EC_Kokyu_Dispatching (TAO_EC_Event_Channel_Base *e
   this->scheduler_ = RtecScheduler::Scheduler::_narrow (tmp.in ());
 
   //@@VS - need to revisit this - should be some other allocator
-  if (this->allocator_ == 0)
+  if (this->allocator_ == nullptr)
     {
       this->allocator_ = ACE_Allocator::instance ();
     }
@@ -39,7 +40,9 @@ void
 TAO_EC_Kokyu_Dispatching::activate ()
 {
   if (!lanes_setup_)
+  {
     setup_lanes ();
+  }
 
   this->dispatcher_->activate ();
 
@@ -55,7 +58,7 @@ TAO_EC_Kokyu_Dispatching::setup_lanes ()
     {
       this->scheduler_->get_config_infos(configs.out());
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const&)
     {
       // Ignore exceptions..
     }
@@ -65,7 +68,7 @@ TAO_EC_Kokyu_Dispatching::setup_lanes ()
   // Convert RtecScheduler::Config_Info_Set     to Kokyu::ConfigInfoSet
   // OK to assume exact correspondence betwen Config_Info and ConfigInfo?
   Kokyu::ConfigInfoSet kconfigs(configs->length());
-  for(CORBA::ULong i=0; i<configs->length(); ++i) {
+  for(CORBA::ULong i {}; i<configs->length(); ++i) {
         kconfigs[i].preemption_priority_ = configs[i].preemption_priority;
         kconfigs[i].thread_priority_ = configs[i].thread_priority;
         switch (configs[i].dispatching_type) {
@@ -89,8 +92,8 @@ TAO_EC_Kokyu_Dispatching::setup_lanes ()
   // Create Kokyu::Dispatcher using factory
   Kokyu::Dispatcher_Auto_Ptr
     tmp(Kokyu::Dispatcher_Factory::create_dispatcher(attrs));
-  this->dispatcher_ = std::move(tmp);
-  this->lanes_setup_ = 1;
+  this->dispatcher_ = std::move (tmp);
+  this->lanes_setup_ = true;
 
   //ORBSVCS_DEBUG ((LM_DEBUG, "Kokyu dispatcher setup\n"));
 }
@@ -104,7 +107,7 @@ TAO_EC_Kokyu_Dispatching::shutdown ()
 void
 TAO_EC_Kokyu_Dispatching::push (TAO_EC_ProxyPushSupplier* proxy,
                                 RtecEventComm::PushConsumer_ptr consumer,
-                                const RtecEventComm::EventSet& event,
+                                RtecEventComm::EventSet const & event,
                                 TAO_EC_QOS_Info&     qos_info)
 {
   RtecEventComm::EventSet event_copy = event;
@@ -117,14 +120,18 @@ TAO_EC_Kokyu_Dispatching::push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
                                        RtecEventComm::EventSet& event,
                                        TAO_EC_QOS_Info& qos_info)
 {
-    if (this->dispatcher_.get () == 0)
-        this->setup_lanes ();
+    if (this->dispatcher_.get () == nullptr)
+    {
+      this->setup_lanes ();
+    }
 
     void* buf =
       this->allocator_->malloc (sizeof (TAO_EC_Kokyu_Push_Command ));
 
-    if (buf == 0)
+    if (buf == nullptr)
+    {
       throw CORBA::NO_MEMORY (TAO::VMCID, CORBA::COMPLETED_NO);
+    }
 
   // Create Dispatch_Command
   TAO_EC_Kokyu_Push_Command *cmd =
@@ -154,10 +161,6 @@ TAO_EC_Kokyu_Dispatching::push_nocopy (TAO_EC_ProxyPushSupplier* proxy,
 
 // ****************************************************************
 
-TAO_EC_Kokyu_Shutdown_Command::~TAO_EC_Kokyu_Shutdown_Command()
-{
-}
-
 int
 TAO_EC_Kokyu_Shutdown_Command::execute()
 {
@@ -182,7 +185,7 @@ TAO_EC_Kokyu_Push_Command::execute ()
       this->proxy_->push_to_consumer (this->consumer_.in (),
                                       this->event_);
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const&)
     {
       return -1;
     }

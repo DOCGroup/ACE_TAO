@@ -28,6 +28,31 @@ struct Tester
 {
   using value_type = tested_sequence::value_type;
 
+  int test_growth_preserves_values ()
+  {
+    tested_sequence owned;
+    owned.length (2);
+    owned[0] = 7;
+    owned[1] = 9;
+    owned.length (3);
+    CHECK_EQUAL (CORBA::ULong (3), owned.maximum ());
+    CHECK_EQUAL (7, owned[0]);
+    CHECK_EQUAL (9, owned[1]);
+    CHECK_EQUAL (0, owned[2]);
+
+    value_type buffer[] {7, 9};
+    tested_sequence borrowed (2, 2, buffer, false);
+    borrowed.length (3);
+    CHECK_EQUAL (true, borrowed.release ());
+    CHECK (borrowed.get_buffer () != buffer);
+    CHECK_EQUAL (7, borrowed[0]);
+    CHECK_EQUAL (9, borrowed[1]);
+    CHECK_EQUAL (0, borrowed[2]);
+    borrowed[0] = 11;
+    CHECK_EQUAL (7, buffer[0]);
+    return 0;
+  }
+
   int test_move_borrowed_buffer ()
   {
     value_type const initial[] {1, 4, 9, 16};
@@ -124,7 +149,7 @@ struct Tester
       source[0] = 42;
       value_type * const buffer = source.get_buffer();
 
-      tested_sequence destination(std::move(source));
+      tested_sequence destination (std::move (source));
 
       FAIL_RETURN_IF_NOT(a.expect(1), a);
       FAIL_RETURN_IF_NOT(f.expect(0), f);
@@ -152,7 +177,7 @@ struct Tester
       value_type * const buffer = source.get_buffer();
       tested_sequence destination(2, 1, alloc_and_init_buffer(), true);
 
-      destination = std::move(source);
+      destination = std::move (source);
 
       FAIL_RETURN_IF_NOT(a.expect(2), a);
       FAIL_RETURN_IF_NOT(f.expect(1), f);
@@ -452,7 +477,7 @@ struct Tester
   {
     value_type * buffer = alloc_and_init_buffer();
     tested_sequence a(8, 4, buffer, false);
-    CHECK(0 == a.get_buffer(true));
+    CHECK(nullptr == a.get_buffer(true));
     tested_sequence::freebuf(buffer);
     return 0;
   }
@@ -469,7 +494,7 @@ struct Tester
       tested_sequence const & b = a;
       CHECK_EQUAL(0UL, b.maximum());
       CHECK_EQUAL(0UL, b.length());
-      CHECK(0 != b.get_buffer());
+      CHECK(nullptr != b.get_buffer());
       CHECK_EQUAL(true, b.release());
 
       FAIL_RETURN_IF_NOT(c.expect(1), c);
@@ -485,6 +510,7 @@ struct Tester
   int test_all()
   {
     int status {};
+    status += this->test_growth_preserves_values ();
     status += this->test_move_borrowed_buffer ();
     status += this->test_ulong_constructor();
     status += this->test_copy_constructor_from_ulong();

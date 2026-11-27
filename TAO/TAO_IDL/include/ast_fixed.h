@@ -12,6 +12,7 @@ class AST_Expression;
 class TAO_IDL_FE_Export AST_Fixed : public virtual AST_ConcreteType
 {
 public:
+  AST_Fixed () = delete;
   AST_Fixed (UTL_ScopedName *name,
              AST_Expression *digits,
              AST_Expression *scale);

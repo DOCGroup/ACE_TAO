@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "FOO_IORInterceptor_ORBInitializer.h"
 #include "FOO_IORInterceptor.h"
 
@@ -7,8 +6,7 @@
 
 void
 FOO_IORInterceptor_ORBInitializer::pre_init (
-    PortableInterceptor::ORBInitInfo_ptr /* info */
-    )
+    PortableInterceptor::ORBInitInfo_ptr /* info */)
 {
 }
 
@@ -30,7 +28,7 @@ FOO_IORInterceptor_ORBInitializer::post_init (
   IOP::Codec_var codec =
     codec_factory->create_codec (encoding);
 
-  PortableInterceptor::IORInterceptor_ptr foo;
+  PortableInterceptor::IORInterceptor_ptr foo {};
   ACE_NEW_THROW_EX (foo,
                     FOO_IORInterceptor (codec.in ()),
                     CORBA::NO_MEMORY (

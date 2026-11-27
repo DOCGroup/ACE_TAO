@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    Recursive_Condition_Bug_Test.cpp
  *
@@ -12,7 +10,6 @@
  *
  *  @author Leonid Kvetnyi <leonidk@nice.com> and Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "ace/OS_NS_sys_time.h"
@@ -39,13 +36,15 @@ public:
     while (--max_iterations > 0)
       {
         // dequeue the next object
-        ACE_Message_Block * mb = nullptr;
+        ACE_Message_Block * mb {};
 
         if (this->getq (mb) == -1)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("(%t) %p\n"),
-                             ACE_TEXT ("getq failed")),
-                            -1);
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("(%t) %p\n"),
+                               ACE_TEXT ("getq failed")),
+                              -1);
+          }
 
         Test_Handler *handler = reinterpret_cast<Test_Handler *> (mb->base ());
         mb->release ();
@@ -55,10 +54,12 @@ public:
         if (timer_queue_.schedule (reinterpret_cast<ACE_Event_Handler *> (handler),
                                    this,
                                    timeout) == -1)
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("(%t) %p\n"),
-                             ACE_TEXT ("schedule failed")),
-                            -1);
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("(%t) %p\n"),
+                               ACE_TEXT ("schedule failed")),
+                              -1);
+          }
 
         ACE_DEBUG ((LM_INFO,
                     ACE_TEXT ("(%t) %d iteration(s) remain\n"),
@@ -76,15 +77,19 @@ public:
   {
   //FUZZ: enable check_for_lack_ACE_OS
     if (ACE_Task<ACE_MT_SYNCH>::activate (THR_NEW_LWP, 1) != 0)
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("(%t) %p\n"),
-                         ACE_TEXT ("Test_Task::activate")),
-                        -1);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("(%t) %p\n"),
+                           ACE_TEXT ("Test_Task::activate")),
+                          -1);
+      }
     if (0 != timer_queue_.activate ())
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("(%t) %p\n"),
-                         ACE_TEXT ("Test_Task::queue activate")),
-                        -1);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("(%t) %p\n"),
+                           ACE_TEXT ("Test_Task::queue activate")),
+                          -1);
+      }
     return 0;
   }
 
@@ -95,22 +100,21 @@ private:
 class Test_Handler : public ACE_Event_Handler
 {
 public:
-  int handle_timeout (const ACE_Time_Value &,
-                              const void *arg) override
+  int handle_timeout (ACE_Time_Value const &,
+                              void const *arg) override
   {
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("(%t) Test_Handler::handle_timeout\n")));
 
-    void *nc_arg = const_cast<void *> (arg);
     Test_Task *test_task =
-      reinterpret_cast<Test_Task *> (nc_arg);
-    ACE_Message_Block *mb = nullptr;
+      static_cast<Test_Task *> (const_cast<void *> (arg));
+    ACE_Message_Block *mb {};
     ACE_NEW_MALLOC_RETURN (mb,
                            static_cast<ACE_Message_Block *> (ACE_Allocator::instance()->malloc (sizeof (ACE_Message_Block))),
                            ACE_Message_Block (sizeof (*this),    // size
                                               ACE_Message_Block::MB_DATA, // type
                                               nullptr,       // cont
-                                              (char *) this,     // data
+                                              reinterpret_cast<char *> (this), // data
                                               nullptr,
                                               nullptr,
                                               ACE_DEFAULT_MESSAGE_BLOCK_PRIORITY,
@@ -140,18 +144,20 @@ run_main (int, ACE_TCHAR *[])
   Test_Task task;
 
   if (0 != task.open ())
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%t) %p\n"),
-                       ACE_TEXT ("open")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%t) %p\n"),
+                         ACE_TEXT ("open")),
+                        -1);
+    }
 
-  ACE_Message_Block *mb = nullptr;
+  ACE_Message_Block *mb {};
   ACE_NEW_MALLOC_RETURN (mb,
                          static_cast<ACE_Message_Block *> (ACE_Allocator::instance()->malloc (sizeof (ACE_Message_Block))),
                          ACE_Message_Block (sizeof (handler),    // size
                                             ACE_Message_Block::MB_DATA, // type
                                             nullptr,       // cont
-                                            (char *) &handler,
+                                            reinterpret_cast<char *> (&handler),
                                             nullptr,
                                             nullptr,
                                             ACE_DEFAULT_MESSAGE_BLOCK_PRIORITY,
@@ -162,15 +168,19 @@ run_main (int, ACE_TCHAR *[])
                           -1);
 
   if (-1 == task.putq (mb))
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%t) %p\n"),
-                       ACE_TEXT ("putq")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%t) %p\n"),
+                         ACE_TEXT ("putq")),
+                        -1);
+    }
 
   if (ACE_Thread_Manager::instance ()->wait () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "wait on Thread_Manager failed"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "wait on Thread_Manager failed"),
+                        -1);
+    }
 #else
   ACE_ERROR ((LM_ERROR,
               ACE_TEXT ("ACE doesn't support recursive condition variables on this platform\n")));

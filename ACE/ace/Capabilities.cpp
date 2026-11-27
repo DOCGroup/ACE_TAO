@@ -9,7 +9,7 @@
 
 #include "ace/OS_NS_stdio.h"
 
-#define ACE_ESC ((ACE_TCHAR)0x1b)
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -23,8 +23,8 @@ ACE_Capabilities::~ACE_Capabilities ()
   this->resetcaps ();
 }
 
-const ACE_TCHAR *
-ACE_Capabilities::parse (const ACE_TCHAR *buf, ACE_TString &cap)
+ACE_TCHAR const *
+ACE_Capabilities::parse (ACE_TCHAR const *buf, ACE_TString &cap)
 {
   while (*buf != ACE_TEXT ('\0') && *buf != ACE_TEXT (','))
     {
@@ -33,7 +33,7 @@ ACE_Capabilities::parse (const ACE_TCHAR *buf, ACE_TString &cap)
           ++buf;
           if (*buf == ACE_TEXT ('E') || *buf == ACE_TEXT ('e'))
             {
-              cap += ACE_ESC;
+              cap += ACE_TEXT ('\033');
               ++buf;
               continue;
             }
@@ -63,13 +63,15 @@ ACE_Capabilities::parse (const ACE_TCHAR *buf, ACE_TString &cap)
           if (ACE_OS::ace_isdigit(*buf))
             {
               // @@ UNICODE Does this work with unicode?
-              int oc = 0;
-              for (int i = 0;
+              int oc {};
+              for (int i {};
                    i < 3 && *buf && ACE_OS::ace_isdigit (*buf);
-                   i++)
-                oc = oc * 8 + (*buf++ - ACE_TEXT ('0'));
+                   ++i)
+                {
+                  oc = oc * 8 + (*buf++ - ACE_TEXT ('0'));
+                }
 
-              cap += (ACE_TCHAR) oc;
+              cap += static_cast<ACE_TCHAR> (oc);
               continue;
             }
         }
@@ -78,13 +80,15 @@ ACE_Capabilities::parse (const ACE_TCHAR *buf, ACE_TString &cap)
   return buf;
 }
 
-const ACE_TCHAR *
-ACE_Capabilities::parse (const ACE_TCHAR *buf, int &cap)
+ACE_TCHAR const *
+ACE_Capabilities::parse (ACE_TCHAR const *buf, int &cap)
 {
-  int n = 0;
+  int n {};
 
   while (*buf && ACE_OS::ace_isdigit (*buf))
-    n = n * 10 + (*buf++ - ACE_TEXT ('0'));
+    {
+      n = n * 10 + (*buf++ - ACE_TEXT ('0'));
+    }
 
   cap = n;
 
@@ -98,17 +102,16 @@ ACE_Capabilities::resetcaps ()
        !iter.done ();
        iter.advance ())
     {
-      CAPABILITIES_MAP::ENTRY *entry = nullptr;
+      CAPABILITIES_MAP::ENTRY *entry {};
       iter.next (entry);
       delete entry->int_id_;
     }
 
-  this->caps_.close ();
-  this->caps_.open ();
+  this->caps_.unbind_all ();
 }
 
 int
-ACE_Capabilities::fillent (const ACE_TCHAR *buf)
+ACE_Capabilities::fillent (ACE_TCHAR const *buf)
 {
   this->resetcaps ();
   while (*buf)
@@ -119,24 +122,35 @@ ACE_Capabilities::fillent (const ACE_TCHAR *buf)
       ACE_CapEntry *ce;
 
       // Skip blanks
-      while (*buf && ACE_OS::ace_isspace(*buf)) buf++;
+      while (*buf && ACE_OS::ace_isspace(*buf))
+        {
+          ++buf;
+        }
       // If we get end of line return
 
       if (*buf == ACE_TEXT ('\0'))
-        break;
+        {
+          break;
+        }
 
       if (*buf == ACE_TEXT ('#'))
         {
           while (*buf && *buf != ACE_TEXT ('\n'))
-            buf++;
+            {
+              ++buf;
+            }
           if (*buf == ACE_TEXT ('\n'))
-            buf++;
+            {
+              ++buf;
+            }
           continue;
         }
       while(*buf && *buf != ACE_TEXT ('=')
             && *buf!= ACE_TEXT ('#')
             && *buf != ACE_TEXT (','))
-        name += *buf++;
+        {
+          name += *buf++;
+        }
 
       // If name is null.
       switch (*buf)
@@ -147,11 +161,6 @@ ACE_Capabilities::fillent (const ACE_TCHAR *buf)
           ACE_NEW_RETURN (ce,
                           ACE_StringCapEntry (s),
                           -1);
-          if (this->caps_.bind (name, ce) == -1)
-            {
-              delete ce;
-              return -1;
-            }
           break;
         case ACE_TEXT ('#'):
           // Integer property
@@ -159,59 +168,72 @@ ACE_Capabilities::fillent (const ACE_TCHAR *buf)
           ACE_NEW_RETURN (ce,
                           ACE_IntCapEntry (n),
                           -1);
-          if (this->caps_.bind (name, ce) == -1)
-            {
-              delete ce;
-              return -1;
-            }
           break;
         case ACE_TEXT (','):
           // Boolean
           ACE_NEW_RETURN (ce,
                           ACE_BoolCapEntry (1),
                           -1);
-          if (this->caps_.bind (name, ce) == -1)
-            {
-              delete ce;
-              return -1;
-            }
           break;
         default:
           return 0;
         }
 
+      std::unique_ptr<ACE_CapEntry> entry (ce);
+      int const bind_result = this->caps_.bind (name, entry.get ());
+      if (bind_result == -1)
+        {
+          return -1;
+        }
+      if (bind_result == 0)
+        {
+          entry.release ();
+        }
+
       if (*buf++ != ACE_TEXT (','))
+      {
         return -1;
+      }
     }
 
   return 0;
 }
 
-int
-ACE_Capabilities::is_entry (const ACE_TCHAR *name, const ACE_TCHAR *line)
+bool
+ACE_Capabilities::is_entry (ACE_TCHAR const *name, ACE_TCHAR const *line)
 {
   for (;;)
     {
       // Skip blanks or irrelevant characters
       while (*line && ACE_OS::ace_isspace(*line))
-        ++line;
+        {
+          ++line;
+        }
 
       // End of line reached
       if (*line == ACE_TEXT ('\0'))
-        break;
+        {
+          break;
+        }
 
       // Build the entry name
       ACE_TString nextname;
       while (*line && *line != ACE_TEXT ('|') && *line != ACE_TEXT (','))
-        nextname += *line++;
+        {
+          nextname += *line++;
+        }
 
       // We have found the required entry?
       if (ACE_OS::strcmp (nextname.c_str (), name) == 0)
-        return 1;
+        {
+          return true;
+        }
 
       // Skip puntuaction char if neccesary.
       if (*line == ACE_TEXT ('|') || *line == ACE_TEXT (','))
-        ++line;
+        {
+          ++line;
+        }
       else
         {
           ACELIB_DEBUG ((LM_DEBUG,
@@ -219,7 +241,7 @@ ACE_Capabilities::is_entry (const ACE_TCHAR *name, const ACE_TCHAR *line)
           break;
         }
     }
-  return 0;
+  return false;
 }
 
 int
@@ -227,117 +249,144 @@ ACE_Capabilities::getline (FILE *fp, ACE_TString &line)
 {
   int ch;
 
-  line.set (nullptr, 0);
+  line.set (nullptr, false);
 
   while ((ch = ACE_OS::fgetc (fp)) != EOF && ch != ACE_TEXT ('\n'))
-    line += (ACE_TCHAR) ch;
+    {
+      line += static_cast<ACE_TCHAR> (ch);
+    }
 
   if (ch == EOF && line.length () == 0)
-    return -1;
+    {
+      return -1;
+    }
   else
+  {
     return 0;
+  }
 }
 
 int
-ACE_Capabilities::getval (const ACE_TCHAR *keyname, ACE_TString &val)
+ACE_Capabilities::getval (ACE_TCHAR const *keyname, ACE_TString &val)
 {
-  ACE_CapEntry* cap = nullptr;
+  ACE_CapEntry* cap {};
   if (this->caps_.find (keyname, cap) == -1)
+  {
     return -1;
+  }
 
-  ACE_StringCapEntry *scap =
-    dynamic_cast<ACE_StringCapEntry *> (cap);
+  ACE_StringCapEntry *scap = dynamic_cast<ACE_StringCapEntry *> (cap);
   if (scap == nullptr)
+  {
     return -1;
+  }
 
   val = scap->getval ();
   return 0;
 }
 
 int
-ACE_Capabilities::getval (const ACE_TCHAR *keyname, int &val)
+ACE_Capabilities::getval (ACE_TCHAR const *keyname, int &val)
 {
-  ACE_CapEntry *cap = nullptr;
+  ACE_CapEntry *cap {};
   if (this->caps_.find (keyname, cap) == -1)
+  {
     return -1;
+  }
 
-  ACE_IntCapEntry *icap =
-    dynamic_cast<ACE_IntCapEntry *> (cap);
+  ACE_IntCapEntry *icap = dynamic_cast<ACE_IntCapEntry *> (cap);
   if (icap != nullptr)
     {
       val = icap->getval ();
       return 0;
     }
 
-  ACE_BoolCapEntry *bcap =
-    dynamic_cast<ACE_BoolCapEntry *> (cap);
+  ACE_BoolCapEntry *bcap = dynamic_cast<ACE_BoolCapEntry *> (cap);
 
   if (bcap == nullptr)
+  {
     return -1;
+  }
 
   val = bcap->getval ();
   return 0;
 }
 
-static int
-is_empty (const ACE_TCHAR *line)
+static bool
+is_empty (ACE_TCHAR const *line)
 {
   while (*line && ACE_OS::ace_isspace (*line))
-    ++line;
+    {
+      ++line;
+    }
 
   return *line == ACE_TEXT ('\0') || *line == ACE_TEXT ('#');
 }
 
-static int
-is_line (const ACE_TCHAR *line)
+static bool
+is_line (ACE_TCHAR const *line)
 {
   while (*line && ACE_OS::ace_isspace (*line))
-    ++line;
+    {
+      ++line;
+    }
 
   return *line != ACE_TEXT ('\0');
 }
 
 int
-ACE_Capabilities::getent (const ACE_TCHAR *fname, const ACE_TCHAR *name)
+ACE_Capabilities::getent (ACE_TCHAR const *fname, ACE_TCHAR const *name)
 {
-  FILE *fp = ACE_OS::fopen (fname, ACE_TEXT ("r"));
+  std::unique_ptr<FILE, int (*) (FILE *)> fp {
+    ACE_OS::fopen (fname, ACE_TEXT ("r")), ACE_OS::fclose};
 
   if (fp == nullptr)
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Can't open %s file\n"),
-                       fname),
-                      -1);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                            ACE_TEXT ("Can't open %s file\n"),
+                            fname),
+                           -1);
+    }
 
-  int done;
+  bool done {};
   ACE_TString line;
 
-  while (0 == (done = (this->getline (fp, line) == -1))
+  while (!(done = (this->getline (fp.get (), line) == -1))
          && is_empty (line.c_str ()))
-    continue;
+    {
+      continue;
+    }
 
   while (!done)
     {
       ACE_TString newline;
       ACE_TString description;
 
-      while (0 == (done = (this->getline (fp, newline) == -1)))
-        if (is_line (newline.c_str ()))
-          description += newline;
-        else
-          break;
+      while (!(done = (this->getline (fp.get (), newline) == -1)))
+        {
+          if (is_line (newline.c_str ()))
+            {
+              description += newline;
+            }
+          else
+            {
+              break;
+            }
+        }
 
       if (this->is_entry (name, line.c_str()))
         {
-          ACE_OS::fclose (fp);
+          fp.reset ();
           return this->fillent (description.c_str ());
         }
 
       line = newline;
       while (!done && is_empty (line.c_str ()))
-        done = this->getline (fp, line) == -1;
+        {
+          done = this->getline (fp.get (), line) == -1;
+        }
     }
 
-  ACE_OS::fclose (fp);
   return -1;
 }
 

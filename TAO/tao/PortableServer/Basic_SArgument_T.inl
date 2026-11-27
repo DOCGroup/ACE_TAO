@@ -1,4 +1,3 @@
-// -*- C++ -*-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<typename S,
@@ -14,9 +13,6 @@ TAO::In_Basic_SArgument_T<S,Insert_Policy>::arg () const
 {
   return this->x_;
 }
-
-// ================================================================
-
 template<typename S,
          template <typename> class Insert_Policy>
 ACE_INLINE
@@ -30,9 +26,6 @@ TAO::Inout_Basic_SArgument_T<S,Insert_Policy>::arg ()
 {
   return this->x_;
 }
-
-// ================================================================
-
 template<typename S,
          template <typename> class Insert_Policy>
 ACE_INLINE
@@ -46,9 +39,6 @@ TAO::Out_Basic_SArgument_T<S,Insert_Policy>::arg ()
 {
   return this->x_;
 }
-
-// ================================================================
-
 template<typename S,
          template <typename> class Insert_Policy>
 ACE_INLINE

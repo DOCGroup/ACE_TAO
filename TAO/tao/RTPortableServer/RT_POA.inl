@@ -1,4 +1,3 @@
-// -*- C++ -*-
 // Exception macros
 #include "tao/PortableServer/poa_macros.h"
 #include "tao/PortableServer/POA_Guard.h"
@@ -6,7 +5,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE CORBA::Object_ptr
-TAO_RT_POA::create_reference_with_priority (const char * intf,
+TAO_RT_POA::create_reference_with_priority (char const *intf,
                                             RTCORBA::Priority priority)
 {
   // Check that this method can be used based on this POA's policies.
@@ -15,15 +14,15 @@ TAO_RT_POA::create_reference_with_priority (const char * intf,
   this->validate_priority (priority);
 
   // Lock access for the duration of this transaction.
-  TAO_POA_GUARD_RETURN (0);
+  TAO_POA_GUARD_RETURN (nullptr);
 
   return this->create_reference_i (intf, priority);
 }
 
 #if !defined (CORBA_E_MICRO)
 ACE_INLINE CORBA::Object_ptr
-TAO_RT_POA::create_reference_with_id_and_priority (const PortableServer::ObjectId & oid,
-                                                   const char * intf,
+TAO_RT_POA::create_reference_with_id_and_priority (PortableServer::ObjectId const &oid,
+                                                   char const *intf,
                                                    RTCORBA::Priority priority)
 {
   // Check that this method can be used based on this POA's policies.
@@ -32,7 +31,7 @@ TAO_RT_POA::create_reference_with_id_and_priority (const PortableServer::ObjectI
   this->validate_priority (priority);
 
   // Lock access for the duration of this transaction.
-  TAO_POA_GUARD_RETURN (0);
+  TAO_POA_GUARD_RETURN (nullptr);
 
   return this->create_reference_with_id_i (oid, intf, priority);
 }
@@ -49,10 +48,10 @@ TAO_RT_POA::activate_object_with_priority (PortableServer::Servant servant,
 
   while (true)
     {
-      bool wait_occurred_restart_call = false;
+      bool wait_occurred_restart_call {};
 
       // Lock access for the duration of this transaction.
-      TAO_POA_GUARD_RETURN (0);
+      TAO_POA_GUARD_RETURN (nullptr);
 
       PortableServer::ObjectId *result =
         this->activate_object_i (servant, priority, wait_occurred_restart_call);
@@ -61,15 +60,19 @@ TAO_RT_POA::activate_object_with_priority (PortableServer::Servant servant,
       // may have changed while we are waiting.  Therefore, we need to
       // restart this call.
       if (wait_occurred_restart_call)
-        continue;
+        {
+          continue;
+        }
       else
-        return result;
+        {
+          return result;
+        }
     }
 }
 
 #if !defined (CORBA_E_MICRO)
 ACE_INLINE void
-TAO_RT_POA::activate_object_with_id_and_priority (const PortableServer::ObjectId & oid,
+TAO_RT_POA::activate_object_with_id_and_priority (PortableServer::ObjectId const &oid,
                                                   PortableServer::Servant servant,
                                                   RTCORBA::Priority priority)
 {
@@ -80,7 +83,7 @@ TAO_RT_POA::activate_object_with_id_and_priority (const PortableServer::ObjectId
 
   while (true)
     {
-      bool wait_occurred_restart_call = false;
+      bool wait_occurred_restart_call {};
 
       // Lock access for the duration of this transaction.
       TAO_POA_GUARD;
@@ -94,9 +97,13 @@ TAO_RT_POA::activate_object_with_id_and_priority (const PortableServer::ObjectId
       // may have changed while we are waiting.  Therefore, we need to
       // restart this call.
       if (wait_occurred_restart_call)
-        continue;
+        {
+          continue;
+        }
       else
-        return;
+        {
+          return;
+        }
     }
 }
 #endif

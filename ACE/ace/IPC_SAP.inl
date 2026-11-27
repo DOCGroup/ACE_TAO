@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "ace/OS_NS_stropts.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -16,7 +15,7 @@ ACE_IPC_SAP::get_handle () const
   return this->handle_;
 }
 
-// Used to set the underlying handle_.
+/// Used to set the underlying handle_.
 
 ACE_INLINE void
 ACE_IPC_SAP::set_handle (ACE_HANDLE handle)
@@ -25,7 +24,7 @@ ACE_IPC_SAP::set_handle (ACE_HANDLE handle)
   this->handle_ = handle;
 }
 
-// Provides access to the ACE_OS::ioctl system call.
+/// Provides access to the ACE_OS::ioctl system call.
 
 ACE_INLINE int
 ACE_IPC_SAP::control (int cmd, void *arg) const

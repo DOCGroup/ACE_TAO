@@ -16,28 +16,23 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 /*****************************************************************************/
 
 template <class TYPE>
-TAO_Notify_PropertyBase_T<TYPE>::TAO_Notify_PropertyBase_T (const char* name)
-  : name_ (name), valid_(0)
+TAO_Notify_PropertyBase_T<TYPE>::TAO_Notify_PropertyBase_T (char const *name)
+  : name_ (name)
 {
 }
 
 template <class TYPE>
-TAO_Notify_PropertyBase_T<TYPE>::TAO_Notify_PropertyBase_T (const char* name, const TYPE& initial)
-  : name_ (name), value_ (initial), valid_ (1)
+TAO_Notify_PropertyBase_T<TYPE>::TAO_Notify_PropertyBase_T (char const *name, TYPE const& initial)
+  : name_ (name), value_ (initial), valid_ (true)
 {
 }
 
 template <class TYPE>
 TAO_Notify_PropertyBase_T<TYPE>::TAO_Notify_PropertyBase_T (
-  const TAO_Notify_PropertyBase_T &rhs)
+  TAO_Notify_PropertyBase_T const &rhs)
   : name_ (rhs.name_),
     value_ (rhs.value_),
     valid_ (rhs.valid_)
-{
-}
-
-template <class TYPE>
-TAO_Notify_PropertyBase_T<TYPE>::~TAO_Notify_PropertyBase_T ()
 {
 }
 
@@ -53,38 +48,38 @@ TAO_Notify_PropertyBase_T<TYPE>::get (CosNotification::PropertySeq& prop_seq)
 /*******************************************************************************/
 
 template <class TYPE>
-TAO_Notify_Property_T<TYPE>::TAO_Notify_Property_T (const char* name)
+TAO_Notify_Property_T<TYPE>::TAO_Notify_Property_T (char const *name)
   :TAO_Notify_PropertyBase_T <TYPE> (name)
 {
 }
 
 template <class TYPE>
-TAO_Notify_Property_T<TYPE>::TAO_Notify_Property_T (const char* name, const TYPE& initial)
+TAO_Notify_Property_T<TYPE>::TAO_Notify_Property_T (char const *name, TYPE const& initial)
   :TAO_Notify_PropertyBase_T <TYPE> (name, initial)
 {
 }
 
 template <class TYPE> int
-TAO_Notify_Property_T<TYPE>::set (const TAO_Notify_PropertySeq& property_seq)
+TAO_Notify_Property_T<TYPE>::set (TAO_Notify_PropertySeq const& property_seq)
 {
   CosNotification::PropertyValue value;
 
   if (property_seq.find (this->name_, value) == 0 && (value >>= this->value_))
     {
-      this->valid_ = 1;
+      this->valid_ = true;
       return 0;
     }
 
-  this->valid_ = 0;
+  this->valid_ = false;
   return -1;
 }
 
 template <class TYPE> int
-TAO_Notify_Property_T<TYPE>::set(const CosNotification::PropertyValue &value)
+TAO_Notify_Property_T<TYPE>::set(CosNotification::PropertyValue const &value)
 {
   if (value >>= this->value_)
   {
-    this->valid_ = 1;
+    this->valid_ = true;
     return 0;
   }
 
@@ -94,36 +89,36 @@ TAO_Notify_Property_T<TYPE>::set(const CosNotification::PropertyValue &value)
 /*******************************************************************************/
 
 template <class TYPE>
-TAO_Notify_StructProperty_T<TYPE>::TAO_Notify_StructProperty_T (const char* name)
-  :name_ (name), valid_(0)
+TAO_Notify_StructProperty_T<TYPE>::TAO_Notify_StructProperty_T (char const *name)
+  :name_ (name)
 {
 }
 
 template <class TYPE>
-TAO_Notify_StructProperty_T<TYPE>::TAO_Notify_StructProperty_T (const char* name, const TYPE& initial)
-  :name_ (name), value_ (initial), valid_ (1)
+TAO_Notify_StructProperty_T<TYPE>::TAO_Notify_StructProperty_T (char const *name, TYPE const& initial)
+  :name_ (name), value_ (initial), valid_ (true)
 {
 }
 
 template <class TYPE> int
 TAO_Notify_StructProperty_T<TYPE>::set (
-  const TAO_Notify_PropertySeq& property_seq)
+  TAO_Notify_PropertySeq const& property_seq)
 {
   CosNotification::PropertyValue value;
 
   if (property_seq.find (this->name_, value) == 0)
     {
-      const TYPE* extract_type {};
+      TYPE const* extract_type {};
 
       if ((value >>= extract_type)  && extract_type != 0) // make sure we get something valid.
         {
           this->value_ = *extract_type; // copy
-          this->valid_ = 1;
+          this->valid_ = true;
           return 0;
         }
     }
 
-  this->valid_ = 0;
+  this->valid_ = false;
   return -1;
 }
 

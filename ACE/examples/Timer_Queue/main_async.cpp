@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    main_async.cpp
  *
@@ -9,12 +7,12 @@
  *
  *  @author Douglas Schmidt      <d.schmidt@vanderbilt.edu> && Sergio Flores-Gaitan <sergio@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "ace/OS_main.h"
 #include "Driver.h"
 #include "Async_Timer_Queue_Test.h"
 #include <memory>
+#include <new>
 
 using ASYNC_TIMER_QUEUE_TEST_DRIVER = Timer_Queue_Test_Driver<Async_Timer_Queue *,
                                                               Async_Timer_Queue,
@@ -23,11 +21,12 @@ using ASYNC_TIMER_QUEUE_TEST_DRIVER = Timer_Queue_Test_Driver<Async_Timer_Queue 
 int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {
-  ASYNC_TIMER_QUEUE_TEST_DRIVER *tqtd;
-  ACE_NEW_RETURN (tqtd, Async_Timer_Queue_Test_Driver, -1);
-  // unique ptr ensures that the driver memory is released
-  // automatically.
-  std::unique_ptr <ASYNC_TIMER_QUEUE_TEST_DRIVER> driver (tqtd);
+  std::unique_ptr<ASYNC_TIMER_QUEUE_TEST_DRIVER> driver (
+    new (std::nothrow) Async_Timer_Queue_Test_Driver);
+  if (!driver)
+  {
+    return -1;
+  }
 
   return driver->run_test ();
 }

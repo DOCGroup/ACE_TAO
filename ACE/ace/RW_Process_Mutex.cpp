@@ -16,14 +16,14 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_RW_Process_Mutex)
 
-const ACE_TCHAR *
+ACE_TCHAR const *
 ACE_RW_Process_Mutex::unique_name ()
 {
   ACE::unique_name (this, this->name_, ACE_UNIQUE_NAME_LEN);
   return this->name_;
 }
 
-ACE_RW_Process_Mutex::ACE_RW_Process_Mutex (const ACE_TCHAR *name,
+ACE_RW_Process_Mutex::ACE_RW_Process_Mutex (ACE_TCHAR const *name,
                                             int flags,
                                             mode_t mode )
   : lock_ (name ? name : unique_name (), flags, mode)

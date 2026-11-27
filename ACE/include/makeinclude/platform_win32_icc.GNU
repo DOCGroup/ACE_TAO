@@ -1,5 +1,3 @@
-# -*- Makefile -*-
-
 # debug = 1
 # optimize = 1
 

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "test_i.h"
 
 test_i::test_i (PortableInterceptor::Current_ptr current,
@@ -10,10 +9,6 @@ test_i::test_i (PortableInterceptor::Current_ptr current,
 {
 }
 
-test_i::~test_i ()
-{
-}
-
 void
 test_i::invoke_me ()
 {
@@ -22,8 +17,6 @@ test_i::invoke_me ()
 
   // @note "TSC" is "thread scope current"
   //       "RSC" is "request scope current"
-
-  // ----------------------------------------------------
 
   // Verify that the following RSC->TSC->RSC copying scenario works:
   //
@@ -39,8 +32,6 @@ test_i::invoke_me ()
   // occur.
   PICurrentTest::test_var my_ref = this->_this ();
 
-  // ----------------------------------------------------
-
   CORBA::Any_var retrieved_any;
 
   try
@@ -51,7 +42,7 @@ test_i::invoke_me ()
       retrieved_any =
         this->current_->get_slot (this->slot_id_);
     }
-  catch (const PortableInterceptor::InvalidSlot& ex)
+  catch (PortableInterceptor::InvalidSlot const &ex)
     {
       ex._tao_print_exception (
         "Exception thrown in ""test_i::invoke_me() when calling ""Current::get_slot\n");
@@ -62,16 +53,18 @@ test_i::invoke_me ()
 
       throw CORBA::INTERNAL ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Unexpected exception\n");
     }
 
-  CORBA::Long retrieved;
+  CORBA::Long retrieved {};
   if (retrieved_any.in() >>= retrieved)
-    ACE_DEBUG ((LM_DEBUG,
-                "(%P|%t) Retrieved number <%d> from TSC.\n",
-                retrieved));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "(%P|%t) Retrieved number <%d> from TSC.\n",
+                  retrieved));
+    }
   else
     {
       ACE_DEBUG ((LM_DEBUG,
@@ -80,7 +73,6 @@ test_i::invoke_me ()
 
       throw CORBA::INTERNAL ();
     }
-  // ----------------------------------------------------
 
   // Note that the invocation must occur through the object
   // reference to force the client request interceptor
@@ -89,12 +81,10 @@ test_i::invoke_me ()
   // disabled.
   my_ref->invoke_you ();
 
-  // ----------------------------------------------------
-
   // Insert some data into the TSC PICurrent object.
-  const char str[] = "Drink milk!";
+  char const str[] = "Drink milk!";
 
-  CORBA::Any data;
+  CORBA::Any data {};
 
   data <<= str;
 
@@ -103,7 +93,7 @@ test_i::invoke_me ()
       this->current_->set_slot (this->slot_id_,
                                 data);
     }
-  catch (const PortableInterceptor::InvalidSlot& ex)
+  catch (PortableInterceptor::InvalidSlot const &ex)
     {
       ex._tao_print_exception (
         "Exception thrown in ""test_i::invoke_me() when calling ""Current::set_slot\n");
@@ -131,9 +121,9 @@ void
 test_i::invoke_we ()
 {
   // Insert some data into the TSC PICurrent object.
-  const char str[] = "We drink milk!";
+  char const str[] = "We drink milk!";
 
-  CORBA::Any data;
+  CORBA::Any data {};
 
   data <<= str;
 
@@ -142,7 +132,7 @@ test_i::invoke_we ()
       this->current_->set_slot (this->slot_id_,
                                 data);
     }
-  catch (const PortableInterceptor::InvalidSlot& ex)
+  catch (PortableInterceptor::InvalidSlot const &ex)
     {
       ex._tao_print_exception (
         "Exception thrown in ""test_i::invoke_me() when calling ""Current::set_slot\n");

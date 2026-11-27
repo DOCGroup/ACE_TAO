@@ -1,13 +1,9 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Based_Pointer_T.h
  *
  *  @author Dietrich Quehl <Dietrich.Quehl@med.siemens.de>
  *  @author Douglas C. Schmidt <schmidt@.cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef ACE_BASED_POINTER_T_H
 #define ACE_BASED_POINTER_T_H
@@ -43,8 +39,8 @@ class ACE_Based_Pointer_Basic
 {
 public:
   /**
-   * This constructor initializes the <base_offset_> by asking the
-   * <ACE_BASED_POINTER_REPOSITORY> Singleton for the base address of
+   * This constructor initializes the @c base_offset_ by asking the
+   * @c ACE_BASED_POINTER_REPOSITORY Singleton for the base address of
    * the memory region within which it is instantiated.  Two results
    * are possible:
    *
@@ -63,8 +59,8 @@ public:
 
   /**
    * Initialize this object using the @a initial pointer.  This
-   * constructor initializes the <base_offset_> by asking the
-   * <ACE_BASED_POINTER_REPOSITORY> Singleton for the base address of
+   * constructor initializes the @c base_offset_ by asking the
+   * @c ACE_BASED_POINTER_REPOSITORY Singleton for the base address of
    * the memory region within which it is instantiated.  Three results
    * are possible:
    *
@@ -79,35 +75,35 @@ public:
    *    based-pointer uses its address as an offset to its base
    *    address 0.
    *
-   * 3. If @a initial is 0 then set the value of <target_> to -1, which
+   * 3. If @a initial is 0 then set the value of @c target_ to -1, which
    *    indicates a "NULL" pointer.
    */
   ACE_Based_Pointer_Basic (CONCRETE *initial);
 
-  ACE_Based_Pointer_Basic (const ACE_Based_Pointer_Basic &) = delete;
+  ACE_Based_Pointer_Basic (ACE_Based_Pointer_Basic const &) = delete;
   ACE_Based_Pointer_Basic (ACE_Based_Pointer_Basic &&) = delete;
 
   /// Constructor for know base address. @a o is only used to
   /// resolve overload ambiguity.
-  ACE_Based_Pointer_Basic (const void *base_addr, int o);
+  ACE_Based_Pointer_Basic (void const *base_addr, int o);
 
   void operator= (CONCRETE *from);
 
-  void operator= (const ACE_Based_Pointer_Basic &);
+  void operator= (ACE_Based_Pointer_Basic const &);
 
   CONCRETE operator * () const;
 
-  bool operator< (const ACE_Based_Pointer_Basic &) const;
+  bool operator< (ACE_Based_Pointer_Basic const &) const;
 
-  bool operator<= (const ACE_Based_Pointer_Basic &) const;
+  bool operator<= (ACE_Based_Pointer_Basic const &) const;
 
-  bool operator> (const ACE_Based_Pointer_Basic &) const;
+  bool operator> (ACE_Based_Pointer_Basic const &) const;
 
-  bool operator>= (const ACE_Based_Pointer_Basic &) const;
+  bool operator>= (ACE_Based_Pointer_Basic const &) const;
 
-  bool operator== (const ACE_Based_Pointer_Basic &) const;
+  bool operator== (ACE_Based_Pointer_Basic const &) const;
 
-  bool operator!= (const ACE_Based_Pointer_Basic &) const;
+  bool operator!= (ACE_Based_Pointer_Basic const &) const;
 
   CONCRETE operator[] (int index) const;
 
@@ -126,10 +122,10 @@ public:
   void dump () const;
 
 protected:
-  ptrdiff_t target_;
+  ptrdiff_t target_ {};
 
   /// Keep track of our offset from the base pointer.
-  ptrdiff_t base_offset_;
+  ptrdiff_t base_offset_ {};
 
   /// Convert input pointer to CONCRETE using the base_offset_ and target_ adjustments
   static CONCRETE *based (ACE_Based_Pointer_Basic *p);
@@ -156,19 +152,19 @@ public:
   /// details.
   ACE_Based_Pointer ();
 
-  /// Initialize this object using the <initial> pointer.  See
+  /// Initialize this object using the @c initial pointer.  See
   /// constructor for ACE_Based_Pointer_Basic for details.
   ACE_Based_Pointer (CONCRETE *initial);
 
   /// Initialize this object with known @a base_addr.  @a dummy is
   /// a dummy value used to resolve overload ambiguity and it
   /// otherwise ignored.
-  ACE_Based_Pointer (const void *base_addr, int dummy);
+  ACE_Based_Pointer (void const *base_addr, int dummy);
 
-  ACE_Based_Pointer (const ACE_Based_Pointer &) = delete;
+  ACE_Based_Pointer (ACE_Based_Pointer const &) = delete;
   ACE_Based_Pointer (ACE_Based_Pointer &&) = delete;
 
-  void operator= (const ACE_Based_Pointer &);
+  void operator= (ACE_Based_Pointer const &);
 
   /// Pseudo-assignment operator.
   void operator = (CONCRETE *from);

@@ -1,4 +1,3 @@
-// -*- IDL -*-
 /**
  * @file IOP.pidl
  *
@@ -72,12 +71,12 @@ module IOP
   // const ServiceId FORWARDED_IDENTITY = 8;
   const ServiceId UnknownExceptionInfo = 9;
 
-  // The following are defined in CORBA v2.4.2 Chapter 24 (February, 2001):
+  /// The following are defined in CORBA v2.4.2 Chapter 24 (February, 2001):
   const ServiceId RTCorbaPriority = 10;
   const ServiceId RTCorbaPriorityRange = 11;
 
-  // The following are defined in the ptc/2000-04-04:
-  // Fault Tolerant CORBA Specification, V1.0
+  /// The following are defined in the ptc/2000-04-04 Fault Tolerant CORBA
+  /// Specification, V1.0.
   const ComponentId TAG_FT_GROUP = 27;
   const ComponentId TAG_FT_PRIMARY = 28;
   const ComponentId TAG_FT_HEARTBEAT_ENABLED = 29;
@@ -86,7 +85,7 @@ module IOP
 
   const ServiceId REP_NWPRIORITY = 0x54410005;
 
-  // The following are defined in 03-01-11
+  /// The following are defined in 03-01-11.
   const ProfileId TAG_UIPMC = 3;
   const ComponentId TAG_GROUP = 39;
   const ComponentId TAG_GROUP_IIOP = 40;

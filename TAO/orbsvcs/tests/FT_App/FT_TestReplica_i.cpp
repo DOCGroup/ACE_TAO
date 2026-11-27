@@ -1,5 +1,3 @@
-/* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file    FT_TestReplica_i.cpp
  *
@@ -7,7 +5,6 @@
  *
  *  @author Dale Wilson <wilson_d@ociweb.com>
  */
-//=============================================================================
 //
 
 #include "FT_TestReplica_i.h"
@@ -17,6 +14,8 @@
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
 #include "ace/OS_NS_stdio.h"
+
+#include <array>
 
 //////////////////
 // TestReplica_i
@@ -53,7 +52,7 @@ namespace
    * @returns value is the data loaded from state.
    */
   template<typename BUFFER>
-  long loadLong(const BUFFER & state, size_t offset)
+  long loadLong(BUFFER const & state, size_t offset)
   {
     long result
       = ((state[offset    ] & 0xFF) << 24)
@@ -109,11 +108,10 @@ namespace
      CORBA::COMPLETED_NO);                                         \
     }
 
-
 //////////////////////////////////////////////////
 // class FT_TestReplica_i construction/destruction
 
-FT_TestReplica_i::FT_TestReplica_i (FT_ReplicaFactory_i * factory, const char * name, unsigned long factory_id)
+FT_TestReplica_i::FT_TestReplica_i (FT_ReplicaFactory_i * factory, char const *name, unsigned long factory_id)
   : death_pending_ (FT_TEST::TestReplica::NOT_YET)
   , verbose_ (1)
   , name_ (name)
@@ -122,7 +120,7 @@ FT_TestReplica_i::FT_TestReplica_i (FT_ReplicaFactory_i * factory, const char * 
   , orb_ (0)
   , poa_ (0)
   , object_id_ (0)
-  , name_persistent_storage (0)
+  , name_persistent_storage (nullptr)
 {
 //  cout << name_.c_str() << '@' << this->factory_->location() << '#' << this->factory_id_ << " Construct" << endl;
 }
@@ -132,8 +130,7 @@ FT_TestReplica_i::~FT_TestReplica_i ()
 //  cout << name_.c_str() << '@' << this->factory_->location() << '#' << this->factory_id_ << " Destruct" << endl;
 }
 
-
-void FT_TestReplica_i::suicide(const char * note)
+void FT_TestReplica_i::suicide(char const *note)
 {
   ACE_OS::fprintf (stdout, "%s@%s#%lu Simulate FAULT_CODE fault: %s\n",
                    name_.c_str(), this->factory_->location(), this->factory_id_, note);
@@ -145,11 +142,10 @@ void FT_TestReplica_i::suicide(const char * note)
 /////////////////////////////////////////////////////
 // class FT_TestReplica_i public, non-CORBA interface
 
-
 //static
-const char * FT_TestReplica_i::repository_id()
+char const *FT_TestReplica_i::repository_id()
 {
-  const char * id =
+  char const *id =
     FT_TEST::_tc_TestReplica->id();
 
   return id;
@@ -164,7 +160,7 @@ FT_TestReplica_i::parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 //static
-const char *
+char const *
 FT_TestReplica_i::usage_options()
 {
   return "";
@@ -185,13 +181,12 @@ PortableServer::ObjectId FT_TestReplica_i::object_id()const
   return this->object_id_.in();
 }
 
-
 /**
  * Initialize this object.
  * @param orbManager our ORB -- we keep var to it.
  * @return zero for success; nonzero is process return code for failure.
  */
-int FT_TestReplica_i::init (CORBA::ORB_var & orb, const ACE_TCHAR* file_persistent)
+int FT_TestReplica_i::init (CORBA::ORB_var & orb, ACE_TCHAR const *file_persistent)
 {
   this->orb_ = orb;
 
@@ -202,14 +197,15 @@ int FT_TestReplica_i::init (CORBA::ORB_var & orb, const ACE_TCHAR* file_persiste
     this->orb_->resolve_initial_references (TAO_OBJID_ROOTPOA);
 
   if (CORBA::is_nil (poa_object.in ()))
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT (" (%P|%t) Unable to initialize the POA.\n")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT (" (%P|%t) Unable to initialize the POA.\n")),
+                        -1);
+    }
 
   // Get the POA object.
   this->poa_ =
     PortableServer::POA::_narrow (poa_object.in ());
-
 
   if (CORBA::is_nil(this->poa_.in ()))
   {
@@ -222,7 +218,6 @@ int FT_TestReplica_i::init (CORBA::ORB_var & orb, const ACE_TCHAR* file_persiste
     this->poa_->the_POAManager ();
 
   poa_manager->activate ();
-
 
   // Register with the POA.
 
@@ -242,7 +237,6 @@ int FT_TestReplica_i::fini ()
 {
   return 0;
 }
-
 
 /////////////////////////////////////////////////////
 // class FT_TestReplica_i:  PullMonitorable interface
@@ -265,21 +259,21 @@ CORBA::Boolean FT_TestReplica_i::is_alive ()
 FT::State * FT_TestReplica_i::get_update ()
 {
   KEVORKIAN_RETURN(DURING_GET_UPDATE, get_update, 0)
-  long counter = load();
+  long counter_value = load();
   ::FT::State_var vState = new ::FT::State;
-  vState->length(sizeof(counter));
-  storeLong(vState, 0, counter);
+  vState->length(sizeof(counter_value));
+  storeLong(vState, 0, counter_value);
   return vState._retn();
 }
 
-void FT_TestReplica_i::set_update (const FT::State & s)
+void FT_TestReplica_i::set_update (FT::State const & s)
 {
 #if defined(FT_TEST_LACKS_UPDATE)
   throw FT::InvalidUpdate ();
 #else // FT_TEST_LACKS_UPDATE
   KEVORKIAN(BEFORE_SET_UPDATE, set_update)
-  long counter = loadLong<FT::State>(s, 0);
-  store(counter);
+  long counter_value = loadLong<FT::State>(s, 0);
+  store(counter_value);
   KEVORKIAN(AFTER_SET_UPDATE, set_update)
 #endif // FT_TEST_LACKS_UPDATE
 }
@@ -292,31 +286,30 @@ void FT_TestReplica_i::set_update (const FT::State & s)
   throw FT::NoStateAvailable ();
 #else // FT_TEST_LACKS_STATE
   KEVORKIAN_RETURN(DURING_GET_STATE, get_state, 0)
-  long counter = load();
+  long counter_value = load();
   ::FT::State_var vState = new ::FT::State;
-  vState->length(sizeof(counter));
-  storeLong(vState, 0, counter);
+  vState->length(sizeof(counter_value));
+  storeLong(vState, 0, counter_value);
   return vState._retn();
 #endif // FT_TEST_LACKS_STATE
 }
 
-void FT_TestReplica_i::set_state (const FT::State & s)
+void FT_TestReplica_i::set_state (FT::State const & s)
 {
 #if defined(FT_TEST_LACKS_STATE)
   throw FT::InvalidState ();
 #else // FT_TEST_LACKS_STATE
   KEVORKIAN(BEFORE_SET_STATE, set_state)
-  long counter = loadLong<FT::State>(s, 0);
-  store(counter);
+  long counter_value = loadLong<FT::State>(s, 0);
+  store(counter_value);
   KEVORKIAN(AFTER_SET_STATE, set_state)
 #endif // FT_TEST_LACKS_STATE
 }
 
 void FT_TestReplica_i::tao_update_object_group (
-    const char * iogr,
+    char const *iogr,
     PortableGroup::ObjectGroupRefVersion version,
-    CORBA::Boolean is_primary
-  )
+    CORBA::Boolean is_primary)
 {
   ACE_UNUSED_ARG (iogr);
   ACE_UNUSED_ARG (version);
@@ -331,33 +324,33 @@ void FT_TestReplica_i::tao_update_object_group (
 void FT_TestReplica_i::set (CORBA::Long value)
 {
   KEVORKIAN(BEFORE_STATE_CHANGE, set)
-  long counter = value;
-  store(counter);
+  long counter_value = value;
+  store(counter_value);
   KEVORKIAN(BEFORE_REPLY, set)
 }
 
 CORBA::Long FT_TestReplica_i::increment (CORBA::Long delta)
 {
   KEVORKIAN_RETURN(BEFORE_STATE_CHANGE, increment, 0)
-  long counter = load ();
-  counter += delta;
-  store (counter);
+  long counter_value = load ();
+  counter_value += delta;
+  store (counter_value);
   KEVORKIAN_RETURN(BEFORE_REPLY, increment, 0)
-  return counter;
+  return counter_value;
 }
 
 CORBA::Long FT_TestReplica_i::get ()
 {
   KEVORKIAN_DURING_RETURN(get, 0)
-  long counter = load ();
-  return counter;
+  long counter_value = load ();
+  return counter_value;
 }
 
 CORBA::Long FT_TestReplica_i::counter ()
 {
   KEVORKIAN_DURING_RETURN([get]counter, 0)
-  long counter = load ();
-  return counter;
+  long counter_value = load ();
+  return counter_value;
 }
 
 void FT_TestReplica_i::counter (CORBA::Long counter)
@@ -414,37 +407,33 @@ void FT_TestReplica_i::request_quit()
   this->death_pending_ = FT_TEST::TestReplica::WHILE_IDLE;
 }
 
-
 void FT_TestReplica_i::store(long counter)
 {
-  FILE * f = ACE_OS::fopen(this->name_persistent_storage, "w");
-  if(f != 0)
+  FILE *f = ACE_OS::fopen(this->name_persistent_storage, "w");
+  if (f != nullptr)
   {
-    unsigned char* buffer = 0;
-    ACE_NEW (buffer, unsigned char [sizeof(long)]);
+    std::array<unsigned char, sizeof (long)> buffer {};
     storeLong(buffer, 0, counter);
-    ACE_OS::fwrite(buffer, 1, sizeof(long), f);
+    ACE_OS::fwrite(buffer.data (), 1, sizeof (long), f);
     ACE_OS::fclose(f);
     if (this->verbose_)
     {
       ACE_OS::fprintf (stdout, "%s@%s#%lu :%ld\n",
                        name_.c_str(), this->factory_->location(), this->factory_id_, counter);
     }
-    delete[] buffer;
-    buffer = 0;
   }
 }
 
 long FT_TestReplica_i::load ()
 {
-  long counter = 0;
-  FILE * f = ACE_OS::fopen(this->name_persistent_storage,"r");
-  if(f != 0)
+  long loaded_value = 0;
+  FILE *f = ACE_OS::fopen(this->name_persistent_storage, "r");
+  if (f != nullptr)
   {
-    unsigned char buffer[sizeof(long)];
-    ACE_OS::fread(buffer, 1, sizeof(long), f);
+    std::array<unsigned char, sizeof (long)> buffer {};
+    ACE_OS::fread(buffer.data (), 1, sizeof (long), f);
     ACE_OS::fclose(f);
-    counter = loadLong<unsigned char *>(buffer, 0);
+    loaded_value = loadLong (buffer, 0);
   }
-  return counter;
+  return loaded_value;
 }

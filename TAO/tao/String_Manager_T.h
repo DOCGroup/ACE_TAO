@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    String_Manager_T.h
  *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-//=============================================================================
 
 #ifndef TAO_STRING_MANAGER_T
 #define TAO_STRING_MANAGER_T
@@ -24,6 +20,7 @@
 #include "tao/String_Traits_Base_T.h"
 
 #include <algorithm>
+#include <cstring>
 #include <functional>
 
 /****************************************************************/
@@ -44,25 +41,23 @@ public:
   {
   }
 
-  /// Copy constructor
-  inline String_Manager_T (const String_Manager_T<charT> &rhs) :
+  inline String_Manager_T (String_Manager_T<charT> const &rhs) :
     ptr_ (s_traits::duplicate (rhs.ptr_))
   {
   }
 
-  /// Constructor from const char* makes a copy.
-  inline String_Manager_T (const character_type *s) :
+  /// Constructor from char const * makes a copy.
+  inline String_Manager_T (character_type const *s) :
     ptr_ (s_traits::duplicate (s))
   {
   }
 
-  /// Destructor
   inline ~String_Manager_T () {
     s_traits::release (this->ptr_);
   }
 
   /// Assignment from another managed type
-  inline String_Manager_T &operator= (const String_Manager_T<charT> &rhs) {
+  inline String_Manager_T &operator= (String_Manager_T<charT> const &rhs) {
     // Strongly exception safe by means of copy and non-throwing swap
     // technique.
     String_Manager_T <character_type> tmp (rhs);
@@ -71,7 +66,7 @@ public:
   }
 
   /// Assignment from var type will make a copy
-  inline String_Manager_T &operator= (const typename s_traits::string_var& value) {
+  inline String_Manager_T &operator= (typename s_traits::string_var const &value) {
     // Strongly exception safe by means of copy and non-throwing swap
     // technique.
     String_Manager_T <character_type> tmp (value.in ());
@@ -80,7 +75,7 @@ public:
   }
 
   /// Assignment from a constant * will make a copy
-  inline String_Manager_T &operator= (const character_type *p) {
+  inline String_Manager_T &operator= (character_type const *p) {
     // Strongly exception safe by means of copy and non-throwing swap
     // technique.
     String_Manager_T <character_type> tmp (p);
@@ -97,12 +92,12 @@ public:
   }
 
   /// Cast (read-only)
-  inline operator const character_type*() const {
+  inline operator character_type const *() const {
     return this->ptr_;
   }
 
   /// For in parameter.
-  inline const character_type *in () const {
+  inline character_type const *in () const {
     return this->ptr_;
   }
 
@@ -114,14 +109,14 @@ public:
   /// for out parameter.
   inline character_type *&out () {
     s_traits::release (this->ptr_);
-    this->ptr_ = 0;
+    this->ptr_ = nullptr;
     return this->ptr_;
   }
 
   /// For string of return type.
   inline character_type *_retn () {
     character_type *temp = this->ptr_;
-    this->ptr_ = 0;
+    this->ptr_ = nullptr;
     return temp;
   }
 
@@ -134,14 +129,14 @@ private:
   using WString_Manager = TAO::String_Manager_T<CORBA::WChar>;
 }
 
-inline bool operator< (const TAO::String_Manager &lhs, const TAO::String_Manager &rhs)
+inline bool operator< (TAO::String_Manager const &lhs, TAO::String_Manager const &rhs)
 {
-  return ACE_OS::strcmp (lhs.in(), rhs.in ()) < 0;
+  return std::strcmp (lhs.in (), rhs.in ()) < 0;
 }
 
-inline bool operator< (const TAO::WString_Manager &lhs, const TAO::WString_Manager &rhs)
+inline bool operator< (TAO::WString_Manager const &lhs, TAO::WString_Manager const &rhs)
 {
-  return ACE_OS::strcmp (lhs.in(), rhs.in ()) < 0;
+  return ACE_OS::strcmp (lhs.in (), rhs.in ()) < 0;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

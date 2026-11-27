@@ -1,4 +1,3 @@
-
 #include "Client_Task.h"
 
 Client_Task::Client_Task (Test::Sender_ptr sender,
@@ -33,7 +32,7 @@ Client_Task::svc ()
           this->sender_->get_data (this->event_size_, pl.out ());
         }
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       return -1;
     }
@@ -41,16 +40,17 @@ Client_Task::svc ()
   return 0;
 }
 
-
 void
 Client_Task::validate_connections ()
 {
-  for (int i = 0 ; i != 100; i++)
+  for (int i = 0 ; i != 100; ++i)
     {
       try
         {
           this->sender_->ping ();
         }
-      catch (const CORBA::Exception&){}
+      catch (CORBA::Exception const &)
+        {
+        }
     }
 }

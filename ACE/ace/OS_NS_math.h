@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   OS_NS_math.h
  *
@@ -8,7 +5,6 @@
  *  @author Jesper S. M|ller<stophph@diku.dk>
  *  @author and a cast of thousands...
  */
-//=============================================================================
 
 #ifndef ACE_OS_NS_MATH_H
 # define ACE_OS_NS_MATH_H
@@ -30,7 +26,6 @@
 #  undef ACE_EXPORT_MACRO
 #endif
 #define ACE_EXPORT_MACRO ACE_Export
-
 
 /*
  * We inline and undef some functions that may be implemented
@@ -59,7 +54,6 @@ inline double ace_log2_helper (double x)
     meaning the binary logarithm of x using the natural logarithm, for
     example, is:
 
-
                 log (x)
                    e
       log (x) = -------
@@ -77,7 +71,6 @@ inline double ace_log2_helper (double x)
 #  endif /* !ACE_LACKS_LOG2 */
 #endif /* defined (log2) */
 }
-
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -1,7 +1,5 @@
-/* -*-C++-*- */
 #ifndef COUNTER_
 #define COUNTER_
-//=============================================================================
 /**
  *  @file    counter.h
  *
@@ -9,7 +7,6 @@
  *
  *  @author Peter E Mellquist
  */
-//=============================================================================
 
 /*===================================================================
   Copyright (c) 1996
@@ -30,47 +27,40 @@
 #include "asnmp/smival.h"
 #include "asnmp/integer.h"
 
-//------------[ Counter32 Class ]------------------------------------------
-// The counter class allows all the functionality of unsigned
-// 32 bit integers but is recognized as a distinct SMI type. Counter32
-// class objects may be set or get into Vb objects.
-//
-// This class does not behave as defined by the abstract model
-// in RFC 1155 section 3.2.3.3
-
 /**
  * @class Counter32
  *
  * @brief Defines the member functions for the Counter32 concrete class
  * This class implements RFC 1155 Counter Object and is named
  * Counter32 after the RFC1902 redefinition of V1 SMI datatypes
+ * It behaves like an unsigned 32-bit integer, retains a distinct SMI type,
+ * and can be used in Vb objects. It does not follow the abstract model in
+ * RFC 1155 section 3.2.3.3.
  */
 class ASNMP_Export Counter32 : public SnmpUInt32
 {
 public:
-  /// constructor with a value
-  Counter32( const unsigned long i = 0);
+  Counter32 (unsigned long i = 0);
 
-  /// copy constructor
-  Counter32( const Counter32 &c);
+  Counter32 (Counter32 const &c);
 
   /// syntax type
-  SmiUINT32 get_syntax();
+  SmiUINT32 get_syntax() override;
 
   /// create a new instance of this Value
-  SnmpSyntax *clone() const;
+  SnmpSyntax *clone() const override;
 
   /// copy an instance of this Value
-  SnmpSyntax& operator=( SnmpSyntax &val);
+  SnmpSyntax &operator= (SnmpSyntax &val) override;
 
   /// overloaded assignment
-  Counter32& operator=( const Counter32 &uli);
+  Counter32 &operator= (Counter32 const &uli);
 
   /// overloaded assignment
-  Counter32& operator=( const unsigned long i);
+  Counter32 &operator= (unsigned long i);
 
   /// otherwise, behave like an unsigned long int
-  operator unsigned long();
+  operator unsigned long() const;
 };
 
 #endif // COUNTER_

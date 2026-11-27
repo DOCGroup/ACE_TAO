@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(RTKokyuEvent) : orbsvcslib, orbsvcs_output, install, rtevent_serv, rtsched, kokyu {
   sharedname   = TAO_RTKokyuEvent
   dynamicflags += TAO_RTKOKYUEVENT_BUILD_DLL

@@ -8,6 +8,7 @@
 #include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_ctype.h"
 #include "ace/Default_Constants.h"
+#include "ace/Malloc_Base.h"
 #include "ace/OS_Memory.h"
 #include "ace/OS_NS_Thread.h"
 #include "ace/Object_Manager_Base.h"
@@ -31,11 +32,14 @@ ACE_OS::argv_to_string (ACE_TCHAR **argv,
                         bool quote_args)
 {
   if (argv == nullptr || argv[0] == nullptr)
+  {
     return 0;
+  }
 
   int argc;
   for (argc = 0; argv[argc] != nullptr; ++argc)
-    continue;
+    {
+    }
 
   return argv_to_string (argc,
                          argv,
@@ -52,7 +56,9 @@ ACE_OS::argv_to_string (int argc,
                         bool quote_args)
 {
   if (argc <= 0 || argv == nullptr || argv[0] == nullptr)
+  {
     return 0;
+  }
 
   size_t buf_len = 0;
 
@@ -69,9 +75,12 @@ ACE_OS::argv_to_string (int argc,
           if (argv_p == argv)
             {
 #if defined (ACE_HAS_ALLOC_HOOKS)
-              argv_p = (ACE_TCHAR **) ACE_Allocator::instance()->malloc (argc * sizeof (ACE_TCHAR *));
+              argv_p = static_cast<ACE_TCHAR **> (
+                ACE_Allocator::instance ()->malloc (
+                  argc * sizeof (ACE_TCHAR *)));
 #else
-              argv_p = (ACE_TCHAR **) ACE_OS::malloc (argc * sizeof (ACE_TCHAR *));
+              argv_p = static_cast<ACE_TCHAR **> (
+                ACE_OS::malloc (argc * sizeof (ACE_TCHAR *)));
 #endif /* ACE_HAS_ALLOC_HOOKS */
               if (argv_p == nullptr)
                 {
@@ -104,9 +113,12 @@ ACE_OS::argv_to_string (int argc,
           if (argv_p == argv)
             {
 #if defined (ACE_HAS_ALLOC_HOOKS)
-              argv_p = (ACE_TCHAR **) ACE_Allocator::instance()->malloc (argc * sizeof (ACE_TCHAR *));
+              argv_p = static_cast<ACE_TCHAR **> (
+                ACE_Allocator::instance ()->malloc (
+                  argc * sizeof (ACE_TCHAR *)));
 #else
-              argv_p = (ACE_TCHAR **) ACE_OS::malloc (argc * sizeof (ACE_TCHAR *));
+              argv_p = static_cast<ACE_TCHAR **> (
+                ACE_OS::malloc (argc * sizeof (ACE_TCHAR *)));
 #endif /* ACE_HAS_ALLOC_HOOKS */
               if (argv_p == nullptr)
                 {
@@ -120,16 +132,22 @@ ACE_OS::argv_to_string (int argc,
           if (ACE_OS::strchr (temp, ACE_TEXT ('"')) != nullptr)
             {
               for (int j = 0; temp[j] != 0; ++j)
-                if (temp[j] == ACE_TEXT ('"'))
-                  ++quotes;
+                {
+                  if (temp[j] == ACE_TEXT ('"'))
+                    {
+                      ++quotes;
+                    }
+                }
             }
           argv_p[i] =
 #if defined (ACE_HAS_ALLOC_HOOKS)
-            (ACE_TCHAR *) ACE_Allocator::instance()->malloc ((ACE_OS::strlen (temp) + quotes + 3)
-                                                             * sizeof (ACE_TCHAR));
+            static_cast<ACE_TCHAR *> (
+              ACE_Allocator::instance ()->malloc (
+                (ACE_OS::strlen (temp) + quotes + 3) * sizeof (ACE_TCHAR)));
 #else
-            (ACE_TCHAR *) ACE_OS::malloc ((ACE_OS::strlen (temp) + quotes + 3)
-                                          * sizeof (ACE_TCHAR));
+            static_cast<ACE_TCHAR *> (
+              ACE_OS::malloc (
+                (ACE_OS::strlen (temp) + quotes + 3) * sizeof (ACE_TCHAR)));
 #endif /* ACE_HAS_ALLOC_HOOKS */
           if (argv_p[i] == nullptr)
             {
@@ -150,28 +168,36 @@ ACE_OS::argv_to_string (int argc,
               for (ACE_TCHAR *p = temp;
                    *p != 0;
                    *end++ = *p++)
-                if (*p == ACE_TEXT ('"'))
-                  *end++ = ACE_TEXT ('\\');
+                {
+                  if (*p == ACE_TEXT ('"'))
+                    {
+                      *end++ = ACE_TEXT ('\\');
+                    }
+                }
 
               *end++ = ACE_TEXT ('\0');
             }
           else
+          {
             end = ACE_OS::strecpy (end, temp);
+          }
 
           end[-1] = ACE_TEXT ('"');
 
           *end = ACE_TEXT ('\0');
           if (temp != argv[i])
+            {
 #if defined (ACE_HAS_ALLOC_HOOKS)
-            ACE_Allocator::instance()->free (temp);
+              ACE_Allocator::instance()->free (temp);
 #else
-            ACE_OS::free (temp);
+              ACE_OS::free (temp);
 #endif /* ACE_HAS_ALLOC_HOOKS */
+            }
         }
       buf_len += ACE_OS::strlen (argv_p[i]);
 
       // Add one for the extra space between each string.
-      buf_len++;
+      ++buf_len;
     }
 
   // Step through all argv params and copy each one into buf; separate
@@ -195,11 +221,13 @@ ACE_OS::argv_to_string (int argc,
     {
       end = ACE_OS::strecpy (end, argv_p[i]);
       if (argv_p[i] != argv[i])
+        {
 #if defined (ACE_HAS_ALLOC_HOOKS)
-        ACE_Allocator::instance()->free (argv_p[i]);
+          ACE_Allocator::instance()->free (argv_p[i]);
 #else
-        ACE_OS::free (argv_p[i]);
+          ACE_OS::free (argv_p[i]);
 #endif /* ACE_HAS_ALLOC_HOOKS */
+        }
 
       // Replace the null char that strecpy put there with white
       // space.
@@ -209,18 +237,20 @@ ACE_OS::argv_to_string (int argc,
   *end = ACE_TEXT ('\0');
 
   if (argv_p != argv)
+    {
 #if defined (ACE_HAS_ALLOC_HOOKS)
-    ACE_Allocator::instance()->free (argv_p);
+      ACE_Allocator::instance()->free (argv_p);
 #else
-    ACE_OS::free (argv_p);
+      ACE_OS::free (argv_p);
 #endif /* ACE_HAS_ALLOC_HOOKS */
+    }
 
   // The number of arguments.
   return argc;
 }
 
 int
-ACE_OS::execl (const char * /* path */, const char * /* arg0 */, ...)
+ACE_OS::execl (char const * /* path */, char const * /* arg0 */, ...)
 {
   ACE_OS_TRACE ("ACE_OS::execl");
   ACE_NOTSUP_RETURN (-1);
@@ -229,7 +259,7 @@ ACE_OS::execl (const char * /* path */, const char * /* arg0 */, ...)
 }
 
 int
-ACE_OS::execle (const char * /* path */, const char * /* arg0 */, ...)
+ACE_OS::execle (char const * /* path */, char const * /* arg0 */, ...)
 {
   ACE_OS_TRACE ("ACE_OS::execle");
   ACE_NOTSUP_RETURN (-1);
@@ -238,7 +268,7 @@ ACE_OS::execle (const char * /* path */, const char * /* arg0 */, ...)
 }
 
 int
-ACE_OS::execlp (const char * /* file */, const char * /* arg0 */, ...)
+ACE_OS::execlp (char const * /* file */, char const * /* arg0 */, ...)
 {
   ACE_OS_TRACE ("ACE_OS::execlp");
   ACE_NOTSUP_RETURN (-1);
@@ -247,7 +277,7 @@ ACE_OS::execlp (const char * /* file */, const char * /* arg0 */, ...)
 }
 
 pid_t
-ACE_OS::fork (const ACE_TCHAR *program_name)
+ACE_OS::fork (ACE_TCHAR const *program_name)
 {
   ACE_OS_TRACE ("ACE_OS::fork");
 # if defined (ACE_LACKS_FORK)
@@ -271,7 +301,9 @@ ACE_OS::fork (const ACE_TCHAR *program_name)
   // will not be updated.
 
   if (pid == 0)
-    ACE_Base_Thread_Adapter::sync_log_msg (program_name);
+    {
+      ACE_Base_Thread_Adapter::sync_log_msg (program_name);
+    }
 
 #else
 
@@ -291,13 +323,13 @@ ACE_OS::fork_exec (ACE_TCHAR *argv[])
 {
 # if defined (ACE_WIN32)
 
-  ACE_TCHAR *buf = nullptr;
-  std::unique_ptr<ACE_TCHAR[]> safe_ptr (buf);
+  ACE_TCHAR *buf {};
+  std::unique_ptr<ACE_TCHAR[], ACE_Array_Deleter<ACE_TCHAR>> safe_ptr (buf);
   if (ACE_OS::argv_to_string (argv, buf) != -1)
     {
       PROCESS_INFORMATION process_info;
       ACE_TEXT_STARTUPINFO startup_info;
-      ACE_OS::memset ((void *) &startup_info,
+      ACE_OS::memset (&startup_info,
                       0,
                       sizeof startup_info);
       startup_info.cb = sizeof startup_info;
@@ -329,7 +361,7 @@ ACE_OS::fork_exec (ACE_TCHAR *argv[])
 #   if defined (ACE_USES_WCHAR)
       // Wide-char builds need to convert the command-line args to
       // narrow char strings for execv ().
-      char **cargv = nullptr;
+      char **cargv {};
       int arg_count;
 #   endif /* ACE_HAS_WCHAR */
 
@@ -346,7 +378,9 @@ ACE_OS::fork_exec (ACE_TCHAR *argv[])
           ++arg_count;    // Need a 0-pointer end-of-array marker
           ACE_NEW_NORETURN (cargv, char*[arg_count]);
           if (cargv == 0)
-            ACE_OS::exit (errno);
+            {
+              ACE_OS::exit (errno);
+            }
           --arg_count;    // Back to 0-indexed
           cargv[arg_count] = 0;
           while (--arg_count >= 0)
@@ -354,7 +388,9 @@ ACE_OS::fork_exec (ACE_TCHAR *argv[])
           // Don't worry about freeing the cargv or the strings it points to.
           // Either the process will be replaced, or we'll exit.
           if (ACE_OS::execv (cargv[0], cargv) == -1)
-            ACE_OS::exit (errno);
+            {
+              ACE_OS::exit (errno);
+            }
 #   else
           if (ACE_OS::execv (argv[0], argv) == -1)
             {
@@ -392,9 +428,13 @@ ACE_OS::num_processors ()
   int mib[2] = { CTL_HW, HW_NCPU };
   size_t len = sizeof (num_processors);
   if (::sysctl (mib, 2, &num_processors, &len, 0, 0) != -1)
-    return num_processors;
+    {
+      return num_processors;
+    }
   else
-    return -1;
+    {
+      return -1;
+    }
 #else
   ACE_NOTSUP_RETURN (-1);
 #endif
@@ -413,7 +453,9 @@ ACE_OS::num_processors_online ()
   while (mask != 0)
     {
       if (mask & 1)
-        ++active_processors;
+        {
+          ++active_processors;
+        }
       mask >>= 1;
     }
   return active_processors;
@@ -423,7 +465,7 @@ ACE_OS::num_processors_online ()
   CPUSET_ZERO (cpuset);
   cpuset = vxCpuEnabledGet();
   unsigned int const maxcpu = vxCpuConfiguredGet();
-  for (unsigned int i =0; i < maxcpu; i++)
+  for (unsigned int i =0; i < maxcpu; ++i)
     {
       if (CPUSET_ISSET (cpuset, i))
         {
@@ -438,9 +480,13 @@ ACE_OS::num_processors_online ()
   int mib[2] = { CTL_HW, HW_NCPU };
   size_t len = sizeof (num_processors);
   if (::sysctl (mib, 2, &num_processors, &len, 0, 0) != -1)
-    return num_processors;
+    {
+      return num_processors;
+    }
   else
-    return -1;
+    {
+      return -1;
+    }
 #else
   ACE_NOTSUP_RETURN (-1);
 #endif
@@ -452,7 +498,7 @@ ACE_OS::read_n (ACE_HANDLE handle,
                 size_t len,
                 size_t *bt)
 {
-  size_t temp;
+  size_t temp {};
   size_t &bytes_transferred = bt == nullptr ? temp : *bt;
   ssize_t n = 0;
 
@@ -461,7 +507,7 @@ ACE_OS::read_n (ACE_HANDLE handle,
        bytes_transferred += n)
     {
       n = ACE_OS::read (handle,
-                        (char *) buf + bytes_transferred,
+                        static_cast<char *> (buf) + bytes_transferred,
                         len - bytes_transferred);
 
       if (n == -1 || n == 0)
@@ -532,7 +578,9 @@ ACE_OS::pread (ACE_HANDLE handle,
   if (result == FALSE)
     {
       if (::GetLastError () != ERROR_IO_PENDING)
-        return -1;
+        {
+          return -1;
+        }
 
       else
         {
@@ -541,7 +589,9 @@ ACE_OS::pread (ACE_HANDLE handle,
                                           &bytes_read,
                                           TRUE);
           if (result == FALSE)
-            return -1;
+            {
+              return -1;
+            }
         }
     }
 
@@ -553,7 +603,9 @@ ACE_OS::pread (ACE_HANDLE handle,
                             &bytes_read,
                             0);
   if (result == FALSE)
-    return -1;
+    {
+      return -1;
+    }
 
 #     endif /* ACE_HAS_WIN32_OVERLAPPED_IO */
 
@@ -586,18 +638,24 @@ ACE_OS::pread (ACE_HANDLE handle,
                                                SEEK_CUR);
 
   if (original_position == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   // Go to the correct position
   ACE_OFF_T altered_position = ACE_OS::lseek (handle, offset, SEEK_SET);
 
   if (altered_position == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   ssize_t const bytes_read = ACE_OS::read (handle, buf, nbytes);
 
   if (bytes_read == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   if (ACE_OS::lseek (handle,
                      original_position,
@@ -611,7 +669,7 @@ ACE_OS::pread (ACE_HANDLE handle,
 
 ssize_t
 ACE_OS::pwrite (ACE_HANDLE handle,
-                const void *buf,
+                void const *buf,
                 size_t nbytes,
                 ACE_OFF_T offset)
 {
@@ -666,7 +724,9 @@ ACE_OS::pwrite (ACE_HANDLE handle,
                                           &bytes_written,
                                           TRUE);
           if (result == FALSE)
-            return -1;
+            {
+              return -1;
+            }
         }
     }
 
@@ -688,7 +748,9 @@ ACE_OS::pwrite (ACE_HANDLE handle,
                              &bytes_written,
                              0);
   if (result == FALSE)
-    return -1;
+    {
+      return -1;
+    }
 
 #     endif /* ACE_HAS_WIN32_OVERLAPPED_IO */
 
@@ -721,20 +783,26 @@ ACE_OS::pwrite (ACE_HANDLE handle,
                                                0,
                                                SEEK_CUR);
   if (original_position == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   // Go to the correct position
   ACE_OFF_T altered_position = ACE_OS::lseek (handle,
                                               offset,
                                               SEEK_SET);
   if (altered_position == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   ssize_t const bytes_written = ACE_OS::write (handle,
                                                buf,
                                                nbytes);
   if (bytes_written == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   if (ACE_OS::lseek (handle,
                      original_position,
@@ -755,7 +823,9 @@ ACE_OS::string_to_argv (ACE_TCHAR *buf,
   argc = 0;
 
   if (buf == nullptr)
+  {
     return -1;
+  }
 
   ACE_TCHAR *cp = buf;
 
@@ -766,23 +836,28 @@ ACE_OS::string_to_argv (ACE_TCHAR *buf,
     {
       // Skip whitespace..
       while (ACE_OS::ace_isspace (*cp))
-        ++cp;
+        {
+          ++cp;
+        }
 
       // Increment count and move to next whitespace..
       if (*cp != ACE_TEXT ('\0'))
-        ++argc;
+        {
+          ++argc;
+        }
 
       while (*cp != ACE_TEXT ('\0') && !ACE_OS::ace_isspace (*cp))
         {
           // Grok quotes....
           if (*cp == ACE_TEXT ('\'') || *cp == ACE_TEXT ('"'))
             {
-              ACE_TCHAR quote = *cp;
+              ACE_TCHAR const quote = *cp;
 
               // Scan past the string..
               for (++cp; *cp != ACE_TEXT ('\0')
                    && (*cp != quote || cp[-1] == ACE_TEXT ('\\')); ++cp)
-                continue;
+                {
+                }
 
               // '\0' implies unmatched quote..
               if (*cp == ACE_TEXT ('\0'))
@@ -791,10 +866,14 @@ ACE_OS::string_to_argv (ACE_TCHAR *buf,
                   break;
                 }
               else
+              {
                 ++cp;
+              }
             }
           else
+          {
             ++cp;
+          }
         }
     }
 
@@ -805,15 +884,17 @@ ACE_OS::string_to_argv (ACE_TCHAR *buf,
   // Make sure that the buffer we're copying into is always large
   // enough.
   if (cp - buf >= ACE_DEFAULT_ARGV_BUFSIZ)
+    {
 #if defined (ACE_HAS_ALLOC_HOOKS)
-  ACE_ALLOCATOR_RETURN(argp,
-                       static_cast<ACE_TCHAR *>(ACE_Allocator::instance()->malloc(sizeof (ACE_TCHAR) * (cp - buf + 1))),
-                       -1);
+      ACE_ALLOCATOR_RETURN(argp,
+                           static_cast<ACE_TCHAR *>(ACE_Allocator::instance()->malloc(sizeof (ACE_TCHAR) * (cp - buf + 1))),
+                           -1);
 #else
-    ACE_NEW_RETURN (argp,
-                    ACE_TCHAR[cp - buf + 1],
-                    -1);
+      ACE_NEW_RETURN (argp,
+                      ACE_TCHAR[cp - buf + 1],
+                      -1);
 #endif /* ACE_HAS_ALLOC_HOOKS */
+    }
 
   // Make a new argv vector of argc + 1 elements.
 #if defined (ACE_HAS_ALLOC_HOOKS)
@@ -832,46 +913,60 @@ ACE_OS::string_to_argv (ACE_TCHAR *buf,
     {
       // Skip whitespace..
       while (ACE_OS::ace_isspace (*ptr))
-        ++ptr;
+        {
+          ++ptr;
+        }
 
       // Copy next argument and move to next whitespace..
       cp = argp;
       while (*ptr != ACE_TEXT ('\0') && !ACE_OS::ace_isspace (*ptr))
-        if (*ptr == ACE_TEXT ('\'') || *ptr == ACE_TEXT ('"'))
-          {
-            ACE_TCHAR quote = *ptr++;
+        {
+          if (*ptr == ACE_TEXT ('\'') || *ptr == ACE_TEXT ('"'))
+            {
+              ACE_TCHAR const quote = *ptr++;
 
-            while (*ptr != ACE_TEXT ('\0')
-                   && (*ptr != quote || ptr[-1] == ACE_TEXT ('\\')))
-              {
-                if (*ptr == quote && ptr[-1] == ACE_TEXT ('\\')) --cp;
-                *cp++ = *ptr++;
-              }
+              while (*ptr != ACE_TEXT ('\0')
+                     && (*ptr != quote || ptr[-1] == ACE_TEXT ('\\')))
+                {
+                  if (*ptr == quote && ptr[-1] == ACE_TEXT ('\\'))
+                    {
+                      --cp;
+                    }
+                  *cp++ = *ptr++;
+                }
 
-            if (*ptr == quote)
-              ++ptr;
-          }
-        else
-          *cp++ = *ptr++;
+              if (*ptr == quote)
+                {
+                  ++ptr;
+                }
+            }
+          else
+            {
+              *cp++ = *ptr++;
+            }
+        }
 
       *cp = ACE_TEXT ('\0');
 
       // Check for environment variable substitution here.
-      if (substitute_env_args) {
+      if (substitute_env_args)
+        {
           argv[i] = ACE_OS::strenvdup (argp);
 
           if (argv[i] == nullptr)
             {
               if (argp != arg)
+                {
 #if defined (ACE_HAS_ALLOC_HOOKS)
-                ACE_Allocator::instance()->free(argp);
+                  ACE_Allocator::instance()->free(argp);
 #else
-                delete [] argp;
+                  delete [] argp;
 #endif /* ACE_HAS_ALLOC_HOOKS */
+                }
               errno = ENOMEM;
               return -1;
             }
-      }
+        }
       else
         {
           argv[i] = ACE_OS::strdup (argp);
@@ -911,11 +1006,11 @@ ACE_OS::string_to_argv (ACE_TCHAR *buf,
 
 ssize_t
 ACE_OS::write_n (ACE_HANDLE handle,
-                 const void *buf,
+                 void const *buf,
                  size_t len,
                  size_t *bt)
 {
-  size_t temp;
+  size_t temp {};
   size_t &bytes_transferred = bt == nullptr ? temp : *bt;
   ssize_t n;
 
@@ -924,7 +1019,7 @@ ACE_OS::write_n (ACE_HANDLE handle,
        bytes_transferred += n)
     {
       n = ACE_OS::write (handle,
-                         (char *) buf + bytes_transferred,
+                         static_cast<char const *> (buf) + bytes_transferred,
                          len - bytes_transferred);
 
       if (n == -1 || n == 0)

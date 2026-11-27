@@ -3,31 +3,38 @@
 
 #include "TestC.h"
 
+#include <atomic>
+
+/// Provides a thread pool abstraction based on `ACE_Task`.
 class Thread_Pool : public ACE_Task<ACE_SYNCH>
 {
-  // = TITLE
-  //   Defines a thread pool abstraction based on the <ACE_Task>.
 public:
+  /// Activates `n_threads` worker threads in the pool.
   Thread_Pool (CORBA::ORB_ptr orb,
                ACE_Thread_Manager *thr_mgr,
                int n_threads);
-  // Constructor activates <n_threads> in the thread pool.
+  Thread_Pool (Thread_Pool const &) = delete;
+  Thread_Pool &operator= (Thread_Pool const &) = delete;
+  Thread_Pool (Thread_Pool &&) = delete;
+  Thread_Pool &operator= (Thread_Pool &&) = delete;
 
-  virtual ~Thread_Pool ();
-  // Destructor...
+  ~Thread_Pool () override = default;
   int shutdown ();
 
-  virtual int svc ();
+  int svc () override;
 
   virtual int put (Test::Echo_ptr echoptr);
 
-  virtual int put (ACE_Message_Block *mb,
-                   ACE_Time_Value *tv = 0);
-  // This allows the producer to pass messages to the <Thread_Pool>.
+  /// Enqueues a message block for the worker threads.
+  int put (ACE_Message_Block *mb,
+           ACE_Time_Value *tv = nullptr) override;
 
 private:
-  virtual int close (u_long);
-  // Close hook.
-  CORBA::ORB_var orb_;
-  ACE_Atomic_Op<TAO_SYNCH_MUTEX, int> nt_;     // number of threads
+  /// Close hook.
+  int close (u_long) override;
+
+  CORBA::ORB_var const orb_;
+
+  /// Number of threads in the pool.
+  std::atomic<int> nt_;
 };

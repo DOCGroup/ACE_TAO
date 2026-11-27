@@ -1,17 +1,14 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   FTEC_Event_Channel.h
  *
  *  @author Huang-Ming Huang <hh1@cse.wustl.edu>
  */
-//=============================================================================
 #ifndef FTEC_EVENT_CHANNEL_H
 #define FTEC_EVENT_CHANNEL_H
 
 #include "orbsvcs/FtRtEvent/EventChannel/ftrtec_export.h"
 #include "orbsvcs/FtRtecEventChannelAdminS.h"
+#include <memory>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -31,10 +28,10 @@ public:
 
   ~TAO_FTEC_Event_Channel() override;
 
-  TAO_FTEC_Event_Channel(TAO_FTEC_Event_Channel const&) = delete;
-  TAO_FTEC_Event_Channel(TAO_FTEC_Event_Channel&&) = delete;
-  TAO_FTEC_Event_Channel& operator=(TAO_FTEC_Event_Channel const&) = delete;
-  TAO_FTEC_Event_Channel& operator=(TAO_FTEC_Event_Channel&&) = delete;
+  TAO_FTEC_Event_Channel (TAO_FTEC_Event_Channel const &) = delete;
+  TAO_FTEC_Event_Channel (TAO_FTEC_Event_Channel &&) = delete;
+  TAO_FTEC_Event_Channel & operator= (TAO_FTEC_Event_Channel const &) = delete;
+  TAO_FTEC_Event_Channel & operator= (TAO_FTEC_Event_Channel &&) = delete;
 
   enum MEMBERSHIP {
     UNSPECIFIED,
@@ -61,7 +58,6 @@ public:
    */
   void set_listener(TAO_FTEC_Become_Primary_Listener* listener);
 
-
   /// RtecEventChannelAdmin::EventChannel Interface
 
   RtecEventChannelAdmin::ConsumerAdmin_ptr
@@ -81,62 +77,61 @@ public:
 
   ::FtRtecEventChannelAdmin::ObjectId * connect_push_consumer (
     RtecEventComm::PushConsumer_ptr push_consumer,
-    const RtecEventChannelAdmin::ConsumerQOS & qos) override;
+    RtecEventChannelAdmin::ConsumerQOS const & qos) override;
 
   ::FtRtecEventChannelAdmin::ObjectId * connect_push_supplier (
       RtecEventComm::PushSupplier_ptr push_supplier,
-      const RtecEventChannelAdmin::SupplierQOS & qos) override;
+      RtecEventChannelAdmin::SupplierQOS const & qos) override;
 
   void disconnect_push_supplier (
-      const FtRtecEventChannelAdmin::ObjectId & oid) override;
+      FtRtecEventChannelAdmin::ObjectId const & oid) override;
 
   void disconnect_push_consumer (
-      const FtRtecEventChannelAdmin::ObjectId & oid) override;
+      FtRtecEventChannelAdmin::ObjectId const & oid) override;
 
   void suspend_push_supplier (
-      const FtRtecEventChannelAdmin::ObjectId & oid) override;
+      FtRtecEventChannelAdmin::ObjectId const & oid) override;
 
   void resume_push_supplier (
-      const FtRtecEventChannelAdmin::ObjectId & oid) override;
+      FtRtecEventChannelAdmin::ObjectId const & oid) override;
 
   void push (
-      const FtRtecEventChannelAdmin::ObjectId & oid,
-      const RtecEventComm::EventSet & data) override;
+      FtRtecEventChannelAdmin::ObjectId const & oid,
+      RtecEventComm::EventSet const & data) override;
 
   /// FTRT::GroupManager Interfaces
   /// These are used for inter-replica communications
 
-  void set_state (const FTRT::State & s);
+  void set_state (FTRT::State const & s) override;
 
-  void set_update (const FTRT::State & s) override;
+  void set_update (FTRT::State const & s) override;
 
-  void oneway_set_update (const FTRT::State & s) override;
-
+  void oneway_set_update (FTRT::State const & s) override;
 
   CORBA::Boolean start (
         FTRT::FaultListener_ptr listener,
         FTRT::Location_out cur) override;
 
   void create_group (
-      const FTRT::ManagerInfoList & info_list,
+      FTRT::ManagerInfoList const & info_list,
       CORBA::ULong object_group_ref_version) override;
 
-  void join_group (const FTRT::ManagerInfo & info) override;
+  void join_group (FTRT::ManagerInfo const & info) override;
 
   void add_member (
-      const FTRT::ManagerInfo & info,
+      FTRT::ManagerInfo const & info,
       CORBA::ULong object_group_ref_version) override;
 
   void remove_member (
-      const FTRT::Location & crashed_location,
+      FTRT::Location const & crashed_location,
       CORBA::ULong object_group_ref_version) override;
 
-  void replica_crashed (const FTRT::Location & location) override;
+  void replica_crashed (FTRT::Location const & location) override;
 
 private:
   CORBA::ORB_var orb_;
   PortableServer::POA_var poa_, persistent_poa_;
-  TAO_FTEC_Event_Channel_Impl* ec_impl_;
+  std::unique_ptr<TAO_FTEC_Event_Channel_Impl> ec_impl_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

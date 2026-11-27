@@ -8,10 +8,6 @@ Policy::Policy (CORBA::ULong val)
 {
 }
 
-Policy::~Policy ()
-{
-}
-
 CORBA::ULong
 Policy::value ()
 {
@@ -27,7 +23,7 @@ Policy::policy_type ()
 CORBA::Policy_ptr
 Policy::copy ()
 {
-  CORBA::Policy_ptr p;
+  CORBA::Policy_ptr p {};
   ACE_NEW_THROW_EX (p,
                     Policy (this->value_),
                     CORBA::NO_MEMORY ());

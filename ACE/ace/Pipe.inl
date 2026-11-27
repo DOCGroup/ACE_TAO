@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "ace/Global_Macros.h"
 #include "ace/ACE.h"
 
@@ -41,8 +40,8 @@ ACE_Pipe::sendv_n (const iovec iov[], int n) const
 }
 
 ACE_INLINE ssize_t
-ACE_Pipe::send_n (const ACE_Message_Block *message_block,
-                  const ACE_Time_Value *timeout,
+ACE_Pipe::send_n (ACE_Message_Block const *message_block,
+                  ACE_Time_Value const *timeout,
                   size_t *bytes_transferred)
 {
   ACE_TRACE ("ACE_Pipe::send_n");
@@ -59,7 +58,7 @@ ACE_Pipe::send_n (const ACE_Message_Block *message_block,
 #endif /* ACE_WIN32 */
 }
 
-// Recv an n byte message from the file.
+/// Recv an n byte message from the file.
 
 ACE_INLINE ssize_t
 ACE_Pipe::recvv_n (iovec iov[], int n) const
@@ -78,7 +77,7 @@ ACE_Pipe::recvv_n (iovec iov[], int n) const
 #endif /* ACE_WIN32 */
 }
 
-// Send an <iovec> of size <n> to the file.
+/// Send an @c iovec of size @c n to the file.
 
 ACE_INLINE ssize_t
 ACE_Pipe::sendv (const iovec iov[], int n) const
@@ -91,11 +90,11 @@ ACE_Pipe::sendv (const iovec iov[], int n) const
 #endif /* ACE_WIN32 */
 }
 
-// Send exactly N bytes from BUF to this file.  Keeping trying until
-// this many bytes are sent.
+/// Send exactly N bytes from BUF to this file.  Keeping trying until
+/// this many bytes are sent.
 
 ACE_INLINE ssize_t
-ACE_Pipe::send_n (const void *buf, size_t n) const
+ACE_Pipe::send_n (void const *buf, size_t n) const
 {
   ACE_TRACE ("ACE_Pipe::send_n");
 #if defined (ACE_WIN32)
@@ -105,8 +104,8 @@ ACE_Pipe::send_n (const void *buf, size_t n) const
 #endif /* ACE_WIN32 */
 }
 
-// Receive exactly N bytes from this file into BUF.  Keep trying until
-// this many bytes are received.
+/// Receive exactly N bytes from this file into BUF.  Keep trying until
+/// this many bytes are received.
 
 ACE_INLINE ssize_t
 ACE_Pipe::recv_n (void *buf, size_t n) const
@@ -120,13 +119,13 @@ ACE_Pipe::recv_n (void *buf, size_t n) const
 }
 
 ACE_INLINE ssize_t
-ACE_Pipe::send (const void *buf, size_t n) const
+ACE_Pipe::send (void const *buf, size_t n) const
 {
   ACE_TRACE ("ACE_Pipe::send");
 #if defined (ACE_WIN32)
-  return ACE_OS::send (this->write_handle (), static_cast <const char *> (buf), n);
+  return ACE_OS::send (this->write_handle (), static_cast <char const *> (buf), n);
 #else
-  return ACE_OS::write (this->write_handle (), static_cast <const char *> (buf), n);
+  return ACE_OS::write (this->write_handle (), static_cast <char const *> (buf), n);
 #endif /* ACE_WIN32 */
 }
 
@@ -164,12 +163,12 @@ ACE_Pipe::recv (iovec iov[], int n) const
 }
 
 ACE_INLINE ssize_t
-ACE_Pipe::send (const void *buf, size_t n,
+ACE_Pipe::send (void const *buf, size_t n,
                 ACE_OVERLAPPED *overlapped) const
 {
   ACE_TRACE ("ACE_Pipe::send");
   return ACE_OS::write (this->write_handle (),
-                        static_cast <const char *> (buf), n,
+                        static_cast <char const *> (buf), n,
                         overlapped);
 }
 
@@ -192,7 +191,9 @@ ACE_Pipe::close_handle (int which)
   // that case!
 
   if (this->handles_[which] != ACE_INVALID_HANDLE)
-    result = ACE_OS::closesocket (this->handles_[which]);
+    {
+      result = ACE_OS::closesocket (this->handles_[which]);
+    }
   this->handles_[which] = ACE_INVALID_HANDLE;
   return result;
 }

@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   CEC_ProxyPullConsumer.h
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  */
-//=============================================================================
 
 #ifndef TAO_CEC_PROXYPULLCONSUMER_H
 #define TAO_CEC_PROXYPULLCONSUMER_H
@@ -37,7 +33,7 @@ class TAO_CEC_ProxyPullSupplier;
  * remember that this class is used to communicate with a
  * PullSupplier, so, in effect, this is the ambassador for a
  * supplier inside the event channel.
- * = MEMORY MANAGEMENT
+ * @par Memory Management
  * The object commits suicide when disconnect_pull_consumer() is
  * called.
  */
@@ -47,11 +43,9 @@ public:
   using _ptr_type = CosEventChannelAdmin::ProxyPullConsumer_ptr;
   using _var_type = CosEventChannelAdmin::ProxyPullConsumer_var;
 
-  /// constructor...
   TAO_CEC_ProxyPullConsumer (TAO_CEC_EventChannel* event_channel,
-                             const ACE_Time_Value &timeout);
+                             ACE_Time_Value const &timeout);
 
-  /// destructor...
   ~TAO_CEC_ProxyPullConsumer () override;
 
   TAO_CEC_ProxyPullConsumer (TAO_CEC_ProxyPullConsumer const &) = delete;
@@ -91,15 +85,19 @@ public:
   CORBA::ULong _incr_refcnt ();
   CORBA::ULong _decr_refcnt ();
 
-  // = The CosEventChannelAdmin::ProxyPullConsumer methods...
+  /// @name The CosEventChannelAdmin::ProxyPullConsumer methods
+  /// @{
   void connect_pull_supplier (CosEventComm::PullSupplier_ptr pull_supplier) override;
   void disconnect_pull_consumer () override;
 
-  // = The Servant methods
+  /// @}
+  /// @name The Servant methods
+  /// @{
   PortableServer::POA_ptr _default_POA () override;
   void _add_ref () override;
   void _remove_ref () override;
 
+  /// @}
 protected:
   /// Set the supplier, used by some implementations to change the
   /// policies used when invoking operations on the supplier.
@@ -119,15 +117,15 @@ protected:
 
 private:
   /// The supplier admin, used for activation and memory management.
-  TAO_CEC_EventChannel* event_channel_;
+  TAO_CEC_EventChannel* event_channel_ {};
 
   ACE_Time_Value timeout_;
 
   /// The locking strategy.
-  ACE_Lock* lock_;
+  ACE_Lock* lock_ {};
 
   /// The reference count.
-  CORBA::ULong refcount_;
+  CORBA::ULong refcount_ { 1 };
 
   /// The supplier -- use apply_policy() instead of assigning directly to
   /// supplier_.  This will keep supplier_ and nopolicy_supplier_ in sync.

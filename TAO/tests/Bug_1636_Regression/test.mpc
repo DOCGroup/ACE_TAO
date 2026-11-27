@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project (bug_1636_testclient) : taoclient, dynamicany, dynamicinterface, portableserver, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
    exename = client
 

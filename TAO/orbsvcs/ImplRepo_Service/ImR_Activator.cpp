@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 #include "orbsvcs/Log_Macros.h"
 #include "Activator_Options.h"
 #include "ImR_Activator_i.h"
@@ -11,7 +10,7 @@ class ImR_Activator_Shutdown : public Shutdown_Functor
 public:
   ImR_Activator_Shutdown (ImR_Activator_i& act);
 
-  void operator() (int which_signal);
+  void operator() (int which_signal) override;
 private:
   ImR_Activator_i& act_;
 };
@@ -28,7 +27,7 @@ ImR_Activator_Shutdown::operator() (int /*which_signal*/)
   {
     this->act_.shutdown (true);
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
   {
     ex._tao_print_exception ("ImR Activator: ");
   }
@@ -59,19 +58,21 @@ run_standalone (Activator_Options& opts)
           status = server.fini ();
 
           if (status == -1)
+          {
             return 1;
+          }
         }
       return 0;
     }
-  catch (const CORBA::SystemException& sysex)
+  catch (CORBA::SystemException const& sysex)
     {
       sysex._tao_print_exception ("System Exception");
     }
-  catch (const CORBA::UserException& userex)
+  catch (CORBA::UserException const& userex)
     {
       userex._tao_print_exception ("User Exception");
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Unknown Exception");
     }
@@ -91,7 +92,9 @@ run_service ()
   ACE_NT_SERVICE_RUN (service, SERVICE::instance (), ret);
 
   if (ret == 0)
-    ORBSVCS_ERROR ((LM_ERROR, "%p\n", "Couldn't start service"));
+    {
+      ORBSVCS_ERROR ((LM_ERROR, "%p\n", "Couldn't start service"));
+    }
 
   return ret;
 #else /* ACE_WIN32 */
@@ -109,7 +112,9 @@ static int
 run_service_command (Activator_Options& opts)
 {
   if (opts.service_command () == Activator_Options::SC_NONE)
+  {
     return 0;
+  }
 
 #if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_SERVICES)
   SERVICE::instance()->name (IMR_ACTIVATOR_SERVICE_NAME, IMR_ACTIVATOR_DISPLAY_NAME);
@@ -133,7 +138,7 @@ run_service_command (Activator_Options& opts)
         if (opts.service_command () == Activator_Options::SC_INSTALL)
           {
             // Must match Locator_NT_Service.h
-            const ACE_TCHAR* DEPENDS_ON = ACE_TEXT("TAOImR");
+            ACE_TCHAR const *DEPENDS_ON = ACE_TEXT("TAOImR");
 
             ret =  SERVICE::instance ()->insert (SERVICE_DEMAND_START,
                                                  SERVICE_ERROR_NORMAL,
@@ -158,14 +163,18 @@ run_service_command (Activator_Options& opts)
           ORBSVCS_ERROR ((LM_ERROR, "Error: Failed to install service. errno %d, error <%p>\n", errno, "install"));
         }
       if (ret == 0)
-        return 1;
+        {
+          return 1;
+        }
     }
   else if (opts.service_command () == Activator_Options::SC_REMOVE)
     {
       int ret = SERVICE::instance ()->remove ();
       ORBSVCS_DEBUG ((LM_DEBUG, "ImR Activator: Service removed\n"));
       if (ret == 0)
-        return 1; // If successful, then we don't want to continue.
+        {
+          return 1; // If successful, then we don't want to continue.
+        }
     }
   else
     {
@@ -189,18 +198,28 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   int result = opts.init (argc, argv);
   if (result < 0)
-    return 1;  // Error
+    {
+      return 1;  // Error
+    }
   else if (result > 0)
-    return 0;  // No error, but we should exit anyway.
+    {
+      return 0;  // No error, but we should exit anyway.
+    }
 
   result = run_service_command (opts);
   if (result < 0)
-    return 1;  // Error
+    {
+      return 1;  // Error
+    }
   else if (result > 0)
-    return 0;  // No error, but we should exit anyway.
+    {
+      return 0;  // No error, but we should exit anyway.
+    }
 
   if (opts.service ())
+  {
     return run_service ();
+  }
 
   return run_standalone (opts);
 }

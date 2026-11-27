@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  * @file Trader_T.h
  *
@@ -8,8 +5,6 @@
  * @author Seth Widoff <sbw1@cs.wustl.edu>
  * @author Irfan Pyarali <irfan@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_TRADER_H
 #define TAO_TRADER_H
@@ -55,8 +50,10 @@ template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 class TAO_Trader : public TAO_Trader_Base
 {
 public:
-  // The desired combination of interfaces to be passed to the
-  // TAO_Trader constructor.
+  TAO_Trader (TAO_Trader const&) = delete;
+  TAO_Trader& operator= (TAO_Trader const&) = delete;
+  TAO_Trader (TAO_Trader&&) = delete;
+  TAO_Trader& operator= (TAO_Trader&&) = delete;
 
   /// Offer Database Trait.
   using Offer_Database = TAO_Offer_Database<MAP_LOCK_TYPE>;
@@ -67,9 +64,8 @@ public:
    * The argument is a bitwise OR of desired Trader_Components as listed
    * in enumerated type above.
    */
-  TAO_Trader (Trader_Components components = LOOKUP);
+  explicit TAO_Trader (Trader_Components components = LOOKUP);
 
-  /// Destructor.
   ~TAO_Trader () override;
 
   /// Accessor for the structure with all the service offers.
@@ -91,11 +87,6 @@ protected:
   PortableServer::ServantBase* ifs_[5];
 
 private:
-  // = Disallow these operations.
-  TAO_Trader (TAO_Trader const&) = delete;
-  TAO_Trader& operator= (TAO_Trader const&) = delete;
-  TAO_Trader (TAO_Trader&&) = delete;
-  TAO_Trader& operator= (TAO_Trader&&) = delete;
 };
 
   // *************************************************************
@@ -107,9 +98,13 @@ class TAO_Trader_Components :
   public virtual IF
 {
 public:
-  TAO_Trader_Components (const TAO_Trading_Components_i& comps);
+  TAO_Trader_Components (TAO_Trader_Components const&) = delete;
+  TAO_Trader_Components& operator= (TAO_Trader_Components const&) = delete;
+  TAO_Trader_Components (TAO_Trader_Components&&) = delete;
+  TAO_Trader_Components& operator= (TAO_Trader_Components&&) = delete;
 
-  // = CosTrading::TraderComponents methods.
+  explicit TAO_Trader_Components (TAO_Trading_Components_i const& comps);
+
   /// Returns an object reference to the Lookup interface of the trader.
   /// Returns nil if the trader does not support Lookup interface.
   CosTrading::Lookup_ptr lookup_if () override;
@@ -131,21 +126,19 @@ public:
   CosTrading::Admin_ptr admin_if () override;
 
 private:
-  const TAO_Trading_Components_i& comps_;
-
-  TAO_Trader_Components (TAO_Trader_Components const&) = delete;
-  TAO_Trader_Components& operator= (TAO_Trader_Components const&) = delete;
-  TAO_Trader_Components (TAO_Trader_Components&&) = delete;
-  TAO_Trader_Components& operator= (TAO_Trader_Components&&) = delete;
+  TAO_Trading_Components_i const& comps_;
 };
 
 template <class IF>
 class TAO_Support_Attributes : public virtual IF
 {
 public:
-  TAO_Support_Attributes (const TAO_Support_Attributes_i& attrs);
+  TAO_Support_Attributes (TAO_Support_Attributes const&) = delete;
+  TAO_Support_Attributes& operator= (TAO_Support_Attributes const&) = delete;
+  TAO_Support_Attributes (TAO_Support_Attributes&&) = delete;
+  TAO_Support_Attributes& operator= (TAO_Support_Attributes&&) = delete;
 
-  // = CosTrading::SupportAttributes methods.
+  explicit TAO_Support_Attributes (TAO_Support_Attributes_i const& attrs);
 
   CORBA::Boolean supports_modifiable_properties () override;
 
@@ -156,43 +149,37 @@ public:
   CosTrading::TypeRepository_ptr type_repos () override;
 
 private:
-  const TAO_Support_Attributes_i& attrs_;
-
-  TAO_Support_Attributes (TAO_Support_Attributes const&) = delete;
-  TAO_Support_Attributes& operator= (TAO_Support_Attributes const&) = delete;
-  TAO_Support_Attributes (TAO_Support_Attributes&&) = delete;
-  TAO_Support_Attributes& operator= (TAO_Support_Attributes&&) = delete;
+  TAO_Support_Attributes_i const& attrs_;
 };
 
 template <class IF>
 class TAO_Import_Attributes : public virtual IF
 {
 public:
-  TAO_Import_Attributes (const TAO_Import_Attributes_i& attrs);
+  TAO_Import_Attributes (TAO_Import_Attributes const&) = delete;
+  TAO_Import_Attributes& operator= (TAO_Import_Attributes const&) = delete;
+  TAO_Import_Attributes (TAO_Import_Attributes&&) = delete;
+  TAO_Import_Attributes& operator= (TAO_Import_Attributes&&) = delete;
 
-  // = CosTrading::ImportAttributes methods.
+  explicit TAO_Import_Attributes (TAO_Import_Attributes_i const& attrs);
 
+  /// Search cardinality determines the maximum number of offers searched
+  /// before not considering other offers.
   CORBA::ULong def_search_card () override;
 
   CORBA::ULong max_search_card () override;
 
-  // Search cardinality determines the maximum number of offers searched
-  // before not considering other offers.
-
+  /// Match cardinality determines the maximum number of offers matched to
+  /// the constraints before not considering other offers.
   CORBA::ULong def_match_card () override;
 
   CORBA::ULong max_match_card () override;
 
-  // Match cardinality determines the maximum number of offers
-  // matched to the constraints before not considering other offers..
-
+  /// Return cardinality determines the maximum number of offers marked for
+  /// return before not considering other offers.
   CORBA::ULong def_return_card () override;
 
   CORBA::ULong max_return_card () override;
-
-  // Return cardinality determines the maximum number of offers marked
-  // to return before not considering other offers.
-
 
   CORBA::ULong max_list () override;
 
@@ -205,30 +192,24 @@ public:
   CosTrading::FollowOption max_follow_policy () override;
 
 private:
-  const TAO_Import_Attributes_i& attrs_;
-
-  TAO_Import_Attributes (TAO_Import_Attributes const&) = delete;
-  TAO_Import_Attributes& operator= (TAO_Import_Attributes const&) = delete;
-  TAO_Import_Attributes (TAO_Import_Attributes&&) = delete;
-  TAO_Import_Attributes& operator= (TAO_Import_Attributes&&) = delete;
+  TAO_Import_Attributes_i const& attrs_;
 };
 
 template <class IF>
 class TAO_Link_Attributes : public virtual IF
 {
 public:
-  TAO_Link_Attributes (const TAO_Link_Attributes_i& attrs);
-
-  // = CosTrading::LinkAttributes methods
-  CosTrading::FollowOption max_link_follow_policy () override;
-
-private:
-  const TAO_Link_Attributes_i& attrs_;
-
   TAO_Link_Attributes (TAO_Link_Attributes const&) = delete;
   TAO_Link_Attributes& operator= (TAO_Link_Attributes const&) = delete;
   TAO_Link_Attributes (TAO_Link_Attributes&&) = delete;
   TAO_Link_Attributes& operator= (TAO_Link_Attributes&&) = delete;
+
+  explicit TAO_Link_Attributes (TAO_Link_Attributes_i const& attrs);
+
+  CosTrading::FollowOption max_link_follow_policy () override;
+
+private:
+  TAO_Link_Attributes_i const& attrs_;
 };
 
   // *************************************************************
@@ -249,7 +230,7 @@ public:
   /// Calls the correct method on dyn_seq to extract the element type, then
   /// uses the appropriate form of equals comparison.
   int operator () (TAO_DynSequence_i& dyn_any,
-                   const ELEMENT_TYPE& element);
+                   ELEMENT_TYPE const& element);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*IDL): rteventexe, rtsched, naming, iortable, messaging {
 
   IDL_Files {

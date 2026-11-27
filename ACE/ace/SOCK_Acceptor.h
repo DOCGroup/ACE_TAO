@@ -1,12 +1,8 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
  *  @file    SOCK_Acceptor.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef ACE_SOCK_ACCEPTOR_H
 #define ACE_SOCK_ACCEPTOR_H
@@ -37,7 +33,6 @@ class ACE_Accept_QoS_Params;
 class ACE_Export ACE_SOCK_Acceptor : public ACE_SOCK
 {
 public:
-  /// Default constructor.
   ACE_SOCK_Acceptor ();
 
   /**
@@ -49,7 +44,7 @@ public:
    * the socket will only accept connections from IPv6 peers. If zero
    * the socket will accept both IPv4 and v6 if it is able to.
    */
-  ACE_SOCK_Acceptor (const ACE_Addr &local_sap,
+  ACE_SOCK_Acceptor (ACE_Addr const &local_sap,
                      int reuse_addr = 0,
                      int protocol_family = PF_UNSPEC,
                      int backlog = ACE_DEFAULT_BACKLOG,
@@ -57,7 +52,7 @@ public:
                      int ipv6_only = 0);
 
   /// Initialize a passive-mode QoS-enabled acceptor socket.
-  ACE_SOCK_Acceptor (const ACE_Addr &local_sap,
+  ACE_SOCK_Acceptor (ACE_Addr const &local_sap,
                      ACE_Protocol_Info *protocolinfo,
                      ACE_SOCK_GROUP g,
                      u_long flags,
@@ -78,7 +73,7 @@ public:
    * @retval Returns 0 on success and
    * -1 on failure.
    */
-  int open (const ACE_Addr &local_sap,
+  int open (ACE_Addr const &local_sap,
             int reuse_addr = 0,
             int protocol_family = PF_UNSPEC,
             int backlog = ACE_DEFAULT_BACKLOG,
@@ -87,7 +82,7 @@ public:
 
   /// Initialize a passive-mode QoS-enabled acceptor socket.  Returns 0
   /// on success and -1 on failure.
-  int open (const ACE_Addr &local_sap,
+  int open (ACE_Addr const &local_sap,
             ACE_Protocol_Info *protocolinfo,
             ACE_SOCK_GROUP g,
             u_long flags,
@@ -100,15 +95,15 @@ public:
   /// Close the socket.  Returns 0 on success and -1 on failure.
   int close ();
 
-  /// Default dtor.
   ~ACE_SOCK_Acceptor ();
 
-  // = Passive connection <accept> methods.
+  /// @name Passive connection accept methods
+  /// @{
   /**
    * Accept a new ACE_SOCK_Stream connection.  A @a timeout of 0
    * means block forever, a @a timeout of {0, 0} means poll.  @a restart
    * == true means "restart if interrupted," i.e., if errno == EINTR.
-   * Note that @a new_stream inherits the "blocking mode" of @c this
+   * @note @a new_stream inherits the "blocking mode" of @c this
    * ACE_SOCK_Acceptor, i.e., if @c this acceptor factory is in
    * non-blocking mode, the @a new_stream will be in non-blocking mode
    * and vice versa.
@@ -136,9 +131,13 @@ public:
               bool restart = true,
               bool reset_new_handle = false) const;
 
-  // = Meta-type info
+  /// @}
+
+  /// @name Meta-type information
+  /// @{
   using PEER_ADDR = ACE_INET_Addr;
   using PEER_STREAM = ACE_SOCK_Stream;
+  /// @}
 
   /// Dump the state of an object.
   void dump () const;
@@ -147,24 +146,24 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-  /// Perform operations that must occur before <ACE_OS::accept> is
+  /// Perform operations that must occur before @c ACE_OS::accept is
   /// called.
   int shared_accept_start (ACE_Time_Value *timeout,
                            bool restart,
                            int &in_blocking_mode) const;
 
-  /// Perform operations that must occur after <ACE_OS::accept> is
+  /// Perform operations that must occur after @c ACE_OS::accept is
   /// called.
   int shared_accept_finish (ACE_SOCK_Stream new_stream,
                             int in_blocking_mode,
                             bool reset_new_handle) const;
 
   /**
-   * This method factors out the common <open> code and is called by
-   * both the QoS-enabled <open> method and the BSD-style <open>
+   * This method factors out the common @c open code and is called by
+   * both the QoS-enabled @c open method and the BSD-style @c open
    * method.
    */
-  int shared_open (const ACE_Addr &local_sap,
+  int shared_open (ACE_Addr const &local_sap,
                    int protocol_family,
                    int backlog,
                    int ipv6_only);

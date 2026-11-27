@@ -1,28 +1,25 @@
 #include "EventChannel_Command.h"
 #include "ace/Log_Msg.h"
 
-
 #include "LookupManager.h"
 #include "Name.h"
 #include "Options_Parser.h"
 #include "orbsvcs/Notify/Service.h"
 
 TAO_Notify_Tests_EventChannel_Command::TAO_Notify_Tests_EventChannel_Command ()
-  : collocated_ (0)
+  : collocated_ (false)
 {
 }
 
-TAO_Notify_Tests_EventChannel_Command::~TAO_Notify_Tests_EventChannel_Command ()
-{
-}
+TAO_Notify_Tests_EventChannel_Command::~TAO_Notify_Tests_EventChannel_Command () = default;
 
-const char*
+char const *
 TAO_Notify_Tests_EventChannel_Command::get_name ()
 {
   return TAO_Notify_Tests_EventChannel_Command::name ();
 }
 
-const char*
+char const *
 TAO_Notify_Tests_EventChannel_Command::name ()
 {
   return TAO_Notify_Tests_Name::event_channel_command;
@@ -47,12 +44,12 @@ TAO_Notify_Tests_EventChannel_Command::init (ACE_Arg_Shifter& arg_shifter)
 
           if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("COLLOCATED")) == 0)
             {
-              this->collocated_ = 1;
+              this->collocated_ = true;
             }
 
           if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("COLOCATED")) == 0) // grandfather in misspelled
             {
-              this->collocated_ = 1;
+              this->collocated_ = true;
               ACE_DEBUG ((LM_WARNING, "TAO_Notify_Tests_EventChannel_Command::init --"
                           " warning: deprecated misspelled COLOCATED option used.\n"));
             }
@@ -91,7 +88,7 @@ TAO_Notify_Tests_EventChannel_Command::create_collocated_ecf ()
   // The Service Object.
   TAO_Notify_Service* notify_service = TAO_Notify_Service::load_default ();
 
-  if (notify_service == 0)
+  if (notify_service == nullptr)
     {
       ACE_DEBUG ((LM_DEBUG, "Service not found! check conf. file\n"));
       return;
@@ -115,17 +112,17 @@ TAO_Notify_Tests_EventChannel_Command::create_collocated_ecf ()
     notify_service->create (poa.in ());
 
   // Register with the Naming Service
-  CosNaming::Name_var name =
+  CosNaming::Name_var factory_name =
     naming->to_name (TAO_Notify_Tests_Name::event_channel_factory);
 
-  naming->rebind (name.in (),
+  naming->rebind (factory_name.in (),
                   notify_factory.in ());
 }
 
 void
 TAO_Notify_Tests_EventChannel_Command::handle_create ()
 {
-  if (this->collocated_ == 1)
+  if (this->collocated_)
     {
       this->create_collocated_ecf ();
     }

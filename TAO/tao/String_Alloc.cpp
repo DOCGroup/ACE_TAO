@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/String_Alloc.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_wchar.h"
@@ -18,7 +17,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 char *
-CORBA::string_dup (const char *str)
+CORBA::string_dup (char const *str)
 {
   if (!str)
     {
@@ -28,7 +27,9 @@ CORBA::string_dup (const char *str)
 
 #ifndef TAO_NO_SHARED_NULL_CORBA_STRING
   if (!*str)
-    return null_char;
+    {
+      return null_char;
+    }
 #endif /* TAO_NO_SHARED_NULL_CORBA_STRING */
 
   size_t const len = std::strlen (str);
@@ -38,7 +39,7 @@ CORBA::string_dup (const char *str)
   if (copy)
     {
       // The memcpy() assumes that the destination is a valid buffer.
-      ACE_OS::memcpy (copy, str, len + 1);
+      std::memcpy (copy, str, len + 1);
     }
 
   return copy;
@@ -48,7 +49,7 @@ char *
 CORBA::string_alloc (CORBA::ULong len)
 {
   // Allocate 1 + strlen to accomodate the null terminating character.
-  char *s = nullptr;
+  char *s {};
   ACE_NEW_RETURN (s,
                   char[size_t (len + 1)],
                   nullptr);
@@ -62,14 +63,18 @@ CORBA::string_free (char *str)
 {
 #ifndef TAO_NO_SHARED_NULL_CORBA_STRING
   if (null_char != str)
-#endif /* TAO_NO_SHARED_NULL_CORBA_STRING */
+    {
+      delete [] str;
+    }
+#else
   delete [] str;
+#endif /* TAO_NO_SHARED_NULL_CORBA_STRING */
 }
 
 // ****************************************************************
 
 CORBA::WChar*
-CORBA::wstring_dup (const WChar *const str)
+CORBA::wstring_dup (WChar const *const str)
 {
   if (!str)
     {
@@ -79,7 +84,9 @@ CORBA::wstring_dup (const WChar *const str)
 
 #ifndef TAO_NO_SHARED_NULL_CORBA_STRING
   if (!*str)
-    return null_wchar;
+    {
+      return null_wchar;
+    }
 #endif /* TAO_NO_SHARED_NULL_CORBA_STRING */
 
   CORBA::WChar* retval =
@@ -96,7 +103,7 @@ CORBA::wstring_dup (const WChar *const str)
 CORBA::WChar*
 CORBA::wstring_alloc (CORBA::ULong len)
 {
-  CORBA::WChar *s = nullptr;
+  CORBA::WChar *s {};
   ACE_NEW_RETURN (s,
                   CORBA::WChar [(size_t) (len + 1)],
                   nullptr);
@@ -108,8 +115,12 @@ CORBA::wstring_free (CORBA::WChar *const str)
 {
 #ifndef TAO_NO_SHARED_NULL_CORBA_STRING
   if (null_wchar != str)
-#endif /* TAO_NO_SHARED_NULL_CORBA_STRING */
+    {
+      delete [] str;
+    }
+#else
   delete [] str;
+#endif /* TAO_NO_SHARED_NULL_CORBA_STRING */
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

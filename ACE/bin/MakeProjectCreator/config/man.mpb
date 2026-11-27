@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project {
   Define_Custom(Man) {
     automatic = 1

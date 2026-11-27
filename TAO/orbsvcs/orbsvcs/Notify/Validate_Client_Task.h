@@ -1,11 +1,8 @@
-// -*- C++ -*-
-//=============================================================================
 /**
  *  @file   Validate_Client_Task.h
  *
  *  @author Yan Dai (dai_y@ociweb.com)
  */
-//=============================================================================
 
 #ifndef NOTIFY_VALIDATE_CLIENT_TASK_H
 #define NOTIFY_VALIDATE_CLIENT_TASK_H
@@ -27,7 +24,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Notify_EventChannelFactory;
 
-
 /**
  * @class TAO_Notify_validate_client_Task
  *
@@ -35,9 +31,6 @@ class TAO_Notify_EventChannelFactory;
  *
  * Defines the interface for the consumer control strategy.
  * This strategy handles misbehaving or failing consumers.
- * = MEMORY MANAGEMENT
- * = LOCKING
- * = TODO
  */
 class TAO_Notify_Serv_Export TAO_Notify_validate_client_Task
   : public ACE_Task<ACE_NULL_SYNCH>
@@ -45,14 +38,18 @@ class TAO_Notify_Serv_Export TAO_Notify_validate_client_Task
 public:
   using CONDITION = TAO_Condition<TAO_SYNCH_MUTEX>;
 
-  /// Constructor.  It does not assume ownership of the <event_channel>
+  /// Constructor. It does not assume ownership of the @a event_channel
   /// parameter.
-  TAO_Notify_validate_client_Task (const ACE_Time_Value &delay,
-                                     const ACE_Time_Value &interval,
+  TAO_Notify_validate_client_Task (ACE_Time_Value const &delay,
+                                     ACE_Time_Value const &interval,
                                      TAO_Notify_EventChannelFactory *ecf);
 
-  /// destructor...
-  virtual ~TAO_Notify_validate_client_Task ();
+  TAO_Notify_validate_client_Task (TAO_Notify_validate_client_Task const &) = delete;
+  TAO_Notify_validate_client_Task (TAO_Notify_validate_client_Task &&) = delete;
+  TAO_Notify_validate_client_Task &operator= (TAO_Notify_validate_client_Task const &) = delete;
+  TAO_Notify_validate_client_Task &operator= (TAO_Notify_validate_client_Task &&) = delete;
+
+  ~TAO_Notify_validate_client_Task () override;
 
   int svc () override;
 
@@ -70,7 +67,7 @@ private:
 
   CONDITION condition_;
 
-  bool shutdown_;
+  bool shutdown_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

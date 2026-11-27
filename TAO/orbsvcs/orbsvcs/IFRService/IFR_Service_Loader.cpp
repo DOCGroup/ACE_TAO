@@ -1,12 +1,11 @@
-// ================================================================
-// DESCRIPTION
-//   This class allows for dynamically loading
-//   the IFR Service.
-//
-// AUTHORS
-//   Jaiganesh Balasubramanian <jai@doc.ece.uci.edu>
-//   Priyanka Gontla <pgontla@ece.uci.edu>
-// ================================================================
+/**
+ * @file IFR_Service_Loader.cpp
+ *
+ * @brief Loads the IFR Service dynamically.
+ *
+ * @author Jaiganesh Balasubramanian <jai@doc.ece.uci.edu>
+ * @author Priyanka Gontla <pgontla@ece.uci.edu>
+ */
 
 #include "orbsvcs/IFRService/IFR_Service_Loader.h"
 #include "ace/Dynamic_Service.h"
@@ -15,8 +14,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_IFR_Service_Loader::TAO_IFR_Service_Loader ()
-{
-}
+= default;
 
 TAO_IFR_Service_Loader::~TAO_IFR_Service_Loader () = default;
 

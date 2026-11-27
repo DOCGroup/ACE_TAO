@@ -1,5 +1,3 @@
-/* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file    FT_ReplicaFactory_i.h
  *
@@ -10,11 +8,11 @@
  *
  *  @author Dale Wilson <wilson_d@ociweb.com>
  */
-//=============================================================================
 
 #ifndef FT_REPLICAFACTORY_H_
 #define FT_REPLICAFACTORY_H_
 #include <ace/ACE.h>
+#include <vector>
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -25,7 +23,6 @@ class  FT_ReplicaFactory_i;
 
 /////////////////////////////////
 // Includes needed by this header
-#include <ace/Vector_T.h>
 #include "FT_TestReplicaS.h"
 #include <ace/Thread_Manager.h>
 #include <ace/SString.h>
@@ -43,20 +40,14 @@ class  FT_ReplicaFactory_i
 //FT_TEST::ReplicaFactory
   : public virtual POA_PortableGroup::GenericFactory
 {
-  typedef ACE_Vector<FT_TestReplica_i *> ReplicaVec;
-  typedef ACE_Vector<ACE_CString> StringVec;
+  using ReplicaVec = std::vector<FT_TestReplica_i *>;
+  using StringVec = std::vector<ACE_CString>;
 
   //////////////////////
   // non-CORBA interface
 public:
-  /**
-   * Default constructor.
-   */
   FT_ReplicaFactory_i ();
 
-  /**
-   * Virtual destructor.
-   */
   virtual ~FT_ReplicaFactory_i ();
 
   /**
@@ -82,14 +73,13 @@ public:
 
   int idle(int & result);
 
-
   /**
    * Identify this replica factory.
    * @return a string to identify this object for logging/console message purposes.
    */
-  const ACE_TCHAR * identity () const;
+  ACE_TCHAR const *identity () const;
 
-  const char * location () const;
+  char const *location () const;
 
   /**
    * Remove pointer to individual replica; delete FT_TestReplica_i.
@@ -107,27 +97,27 @@ public:
 
   /////////////////////////////////////////
   // CORBA interface GenericFactory methods
-  virtual CORBA::Object_ptr create_object (
-    const char * type_id,
-    const PortableGroup::Criteria & the_criteria,
-    PortableGroup::GenericFactory::FactoryCreationId_out factory_creation_id);
+  CORBA::Object_ptr create_object (
+    char const *type_id,
+    PortableGroup::Criteria const &the_criteria,
+    PortableGroup::GenericFactory::FactoryCreationId_out factory_creation_id) override;
 
-  virtual void delete_object (
-    const PortableGroup::GenericFactory::FactoryCreationId & factory_creation_id);
+  void delete_object (
+    PortableGroup::GenericFactory::FactoryCreationId const &factory_creation_id) override;
 
   //////////////////////////////////////////
   // CORBA interface PullMonitorable methods
 
   virtual CORBA::Boolean is_alive ();
 
-  /////////////////////////
-  // Implementation methods
+  /// @name Implementation methods
+  /// @{
 private:
   /**
    * Actual replica creation happens in this method.
    * @param name becomes part of the objects identity.
    */
-  FT_TestReplica_i * create_replica(const char * name);
+  FT_TestReplica_i * create_replica(char const *name);
 
   /**
    * Find or allocate an ID for a new replica
@@ -137,16 +127,16 @@ private:
   /**
    * Write this factory's IOR to a file
    */
-  int write_ior (const ACE_TCHAR * outputFile, const char * ior);
+  int write_ior (ACE_TCHAR const *outputFile, char const *ior);
 
   /**
    * Clean house for factory shut down.
    */
   void shutdown_i ();
+  /// @}
 
-  ///////////////
-  // Data Members
-private:
+  /// @name Data members
+  /// @{
   /**
    * Protect internal state.
    * Mutex should be locked by corba methods, or by
@@ -180,7 +170,7 @@ private:
   /**
    * A file to which the factory's IOR should be written.
    */
-  const ACE_TCHAR * ior_output_file_;
+  ACE_TCHAR const *ior_output_file_;
 
   /**
    * A human-readable string to distinguish this from other Notifiers.
@@ -198,11 +188,10 @@ private:
 
   ::FT::ReplicationManager_var replication_manager_;
 
-
   /**
    * The factory registry IOR
    */
-  const ACE_TCHAR * factory_registry_ior_;
+  ACE_TCHAR const *factory_registry_ior_;
 
   /**
    * The factory registry with which to register.
@@ -210,14 +199,14 @@ private:
   PortableGroup::FactoryRegistry_var factory_registry_;
 
   /**
-   * true if registered with FactoryRegistry
+   * True if registered with FactoryRegistry.
    */
-  int registered_; // bool
+  int registered_;
 
   /**
    * A file to which the test replica's IOR will be written
    */
-  const ACE_TCHAR * test_output_file_;
+  ACE_TCHAR const *test_output_file_;
 
   /**
    * A name to be used to register the factory with the name service.
@@ -228,8 +217,7 @@ private:
 
   CosNaming::Name this_name_;
 
-  /////////////////
-  // The roles used to register types
+  /// The roles used to register types.
   StringVec roles_;
 
   /**
@@ -268,7 +256,8 @@ private:
   /**
   * A file that use by FT_TestReplica_i object
   */
-  const ACE_TCHAR* name_persistent_file_;
+  ACE_TCHAR const *name_persistent_file_;
+  /// @}
 };
 
 #endif /* FT_REPLICAFACTORY_H_  */

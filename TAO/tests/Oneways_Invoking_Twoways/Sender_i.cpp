@@ -8,9 +8,7 @@ Sender_i::Sender_i (CORBA::ORB_ptr orb,
 {
 }
 
-Sender_i::~Sender_i ()
-{
-}
+Sender_i::~Sender_i () = default;
 
 void
 Sender_i::active_objects (CORBA::Short no_threads
@@ -18,7 +16,6 @@ Sender_i::active_objects (CORBA::Short no_threads
 {
   this->active_objects_ = no_threads;
 }
-
 
 void
 Sender_i::send_ready_message (Test::Receiver_ptr receiver)

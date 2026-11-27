@@ -12,16 +12,20 @@ class Client_Peer
   : public POA_Test::Peer
 {
 public:
-  Client_Peer (CORBA::ORB_ptr orb);
+  explicit Client_Peer (CORBA::ORB_ptr orb);
+  Client_Peer (Client_Peer const &) = delete;
+  Client_Peer (Client_Peer &&) = delete;
+  Client_Peer &operator= (Client_Peer const &) = delete;
+  Client_Peer &operator= (Client_Peer &&) = delete;
 
-  void callme(Test::Peer_ptr callback,
-              CORBA::ULong max_depth,
-              Test::Payload const &);
-  void crash();
-  void noop();
+  void callme (Test::Peer_ptr callback,
+               CORBA::ULong max_depth,
+               Test::Payload const &) override;
+  void crash () override;
+  void noop () override;
 
 private:
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var orb_ {};
 };
 
 #endif /* Client_Peer__h_ */

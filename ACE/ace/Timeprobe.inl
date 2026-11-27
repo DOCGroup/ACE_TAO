@@ -1,8 +1,7 @@
-// -*- C++ -*-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE bool
-ACE_Event_Descriptions::operator== (const ACE_Event_Descriptions &rhs) const
+ACE_Event_Descriptions::operator== (ACE_Event_Descriptions const &rhs) const
 {
   return this->minimum_id_ == rhs.minimum_id_ &&
     this->descriptions_ == rhs.descriptions_;

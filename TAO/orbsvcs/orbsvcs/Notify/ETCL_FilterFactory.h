@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file ETCL_FilterFactory.h
  *
@@ -23,7 +22,6 @@
 #include "orbsvcs/Notify/ETCL_Filter.h"
 #include "orbsvcs/Notify/Topology_Saver.h"
 
-
 #if defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable:4250)
@@ -41,57 +39,59 @@ class TAO_Notify_Serv_Export TAO_Notify_ETCL_FilterFactory :
   public virtual TAO_Notify_FilterFactory
 {
 public:
-  /// Constructor
   TAO_Notify_ETCL_FilterFactory ();
 
-  /// Destructor
-  virtual ~TAO_Notify_ETCL_FilterFactory ();
+  ~TAO_Notify_ETCL_FilterFactory () override;
 
-  ///= TAO_Notify_FilterFactory methods.
+  TAO_Notify_ETCL_FilterFactory (TAO_Notify_ETCL_FilterFactory const &) = delete;
+  TAO_Notify_ETCL_FilterFactory (TAO_Notify_ETCL_FilterFactory &&) = delete;
+  TAO_Notify_ETCL_FilterFactory &operator= (TAO_Notify_ETCL_FilterFactory const &) = delete;
+  TAO_Notify_ETCL_FilterFactory &operator= (TAO_Notify_ETCL_FilterFactory &&) = delete;
 
-  virtual CosNotifyFilter::FilterFactory_ptr create (
-      PortableServer::POA_ptr filter_poa);
+  /// @name TAO_Notify_FilterFactory methods
+  /// @{
+  CosNotifyFilter::FilterFactory_ptr create (
+      PortableServer::POA_ptr filter_poa) override;
 
-  virtual void destroy ();
+  void destroy () override;
+  /// @}
 
-  ///= CosNotifyFilter::FilterFactory methods
+  /// @name CosNotifyFilter::FilterFactory methods
+  /// @{
+  CosNotifyFilter::Filter_ptr create_filter (
+      char const *constraint_grammar) override;
 
-  virtual CosNotifyFilter::Filter_ptr create_filter (
-      const char * constraint_grammar);
+  CosNotifyFilter::MappingFilter_ptr create_mapping_filter (
+      char const *constraint_grammar,
+      CORBA::Any const & default_value) override;
 
-  virtual CosNotifyFilter::MappingFilter_ptr create_mapping_filter (
-      const char * constraint_grammar,
-      const CORBA::Any & default_value);
+  void remove_filter (CosNotifyFilter::Filter_ptr filter) override;
 
-  virtual void remove_filter (
-      CosNotifyFilter::Filter_ptr filter);
+  void save_persistent (TAO_Notify::Topology_Saver &saver) override;
 
-
-  virtual void save_persistent (TAO_Notify::Topology_Saver& saver);
-
-  virtual TAO_Notify::Topology_Object* load_child (
-          const ACE_CString &type,
+  TAO_Notify::Topology_Object* load_child (
+          ACE_CString const &type,
           CORBA::Long id,
-          const TAO_Notify::NVPList& attrs);
+          TAO_Notify::NVPList const &attrs) override;
 
-  virtual TAO_Notify_Object::ID get_filter_id (CosNotifyFilter::Filter_ptr filter);
-  virtual CosNotifyFilter::Filter_ptr get_filter (const TAO_Notify_Object::ID& id);
+  TAO_Notify_Object::ID get_filter_id (CosNotifyFilter::Filter_ptr filter) override;
+  CosNotifyFilter::Filter_ptr get_filter (TAO_Notify_Object::ID const &id) override;
 
-  virtual CosNotifyFilter::FilterID get_filterid (CosNotifyFilter::Filter_ptr filter);
-  virtual CosNotifyFilter::Filter_ptr get_filter (CosNotifyFilter::FilterID id);
-
+  CosNotifyFilter::FilterID get_filterid (CosNotifyFilter::Filter_ptr filter) override;
+  CosNotifyFilter::Filter_ptr get_filter (CosNotifyFilter::FilterID id) override;
+  /// @}
 
 protected:
   CosNotifyFilter::Filter_ptr
-    create_filter (const char *constraint_grammar,
-                   const TAO_Notify_Object::ID& id,
+    create_filter (char const *constraint_grammar,
+                   TAO_Notify_Object::ID const& id,
                    TAO_Notify_ETCL_Filter*& filter);
 
   TAO_Notify_Object::ID find_filter_id (CosNotifyFilter::Filter_ptr filter);
-  CosNotifyFilter::Filter_ptr find_filter (const TAO_Notify_Object::ID& id);
+  CosNotifyFilter::Filter_ptr find_filter (TAO_Notify_Object::ID const& id);
 
   /// Release this object.
-  virtual void release ();
+  void release () override;
 
   /// The POA in which to activate the Filters.
   PortableServer::POA_var filter_poa_;

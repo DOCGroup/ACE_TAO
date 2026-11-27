@@ -1,13 +1,8 @@
-/* -*- c++ -*- */
-
-//=============================================================================
 /**
  *  @file    HTTP_Response.h
  *
  *  @author James Hu
  */
-//=============================================================================
-
 
 #ifndef HTTP_RESPONSE_H
 #define HTTP_RESPONSE_H
@@ -28,6 +23,11 @@ class HTTP_Request;
 class HTTP_Response
 {
 public:
+  HTTP_Response (HTTP_Response const &) = delete;
+  HTTP_Response (HTTP_Response &&) = delete;
+  HTTP_Response &operator= (HTTP_Response const &) = delete;
+  HTTP_Response &operator= (HTTP_Response &&) = delete;
+
   HTTP_Response (JAWS_IO &io,
                  HTTP_Request &request);
   HTTP_Response (HTTP_Request &request, JAWS_IO &io);
@@ -39,7 +39,7 @@ public:
   /// This returns an error response for cases where there is a problem
   /// with the request, logging the log_message.
   void error_response (int status,
-                       const char *log_message);
+                       char const *log_message);
 
 private:
   /// Called by process_request when the request is a normal request.
@@ -63,10 +63,10 @@ private:
 #if defined (ACE_JAWS_BASELINE)
   char *HTTP_HEADER;
 #else
-  const char *HTTP_HEADER;
+  char const *HTTP_HEADER;
 #endif
   /// HTTP Headers and trailers.
-  const char *HTTP_TRAILER;
+  char const *HTTP_TRAILER;
   int HTTP_HEADER_LENGTH;
   int HTTP_TRAILER_LENGTH;
 };

@@ -12,11 +12,16 @@
 #include "orbsvcs/Notify/EventChannel.h"
 #include "orbsvcs/Notify/Topology_Saver.h"
 #include "orbsvcs/Notify/Save_Persist_Worker_T.h"
+
+#include <cstring>
+#include <cstdlib>
 #include "orbsvcs/Notify/Reconnect_Worker_T.h"
 #include "orbsvcs/Notify/Consumer_Map.h"
 #include "orbsvcs/Notify/Supplier_Map.h"
 #include "orbsvcs/Notify/ConsumerAdmin.h"
 #include "orbsvcs/Notify/SupplierAdmin.h"
+
+#include <memory>
 
 #include "tao/debug.h"
 
@@ -28,19 +33,14 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_Admin::TAO_Notify_Admin ()
-  : ec_ (0)
-  , filter_operator_ (CosNotifyChannelAdmin::OR_OP)
-  , is_default_ (false)
 {
   // Initialize all Admin objects to initially be subscribed for all
   // events.  This is a reasonable default and is required to allow
   // Cos Event consumers/suppliers to send/receive events,
-  this->subscribed_types_.insert (TAO_Notify_EventType::special ());
+  this->subscribed_types_.add (TAO_Notify_EventType::special ());
 }
 
-TAO_Notify_Admin::~TAO_Notify_Admin ()
-{
-}
+TAO_Notify_Admin::~TAO_Notify_Admin () = default;
 
 void
 TAO_Notify_Admin::init (TAO_Notify::Topology_Parent* parent)
@@ -52,10 +52,9 @@ TAO_Notify_Admin::init (TAO_Notify::Topology_Parent* parent)
 
   filter_admin_.event_channel (this->ec_.get ());
 
-  // this-> on the following line confuses VC6
-  initialize (parent);
+  this->initialize (parent);
 
-  TAO_Notify_Proxy_Container* proxy_container = nullptr;
+  TAO_Notify_Proxy_Container* proxy_container {};
   ACE_NEW_THROW_EX (proxy_container,
                     TAO_Notify_Proxy_Container (),
                     CORBA::INTERNAL ());
@@ -101,7 +100,9 @@ int
 TAO_Notify_Admin::shutdown ()
 {
   if (TAO_Notify_Object::shutdown () == 1)
+  {
     return 1;
+  }
 
   this->proxy_container().shutdown ();
 
@@ -126,7 +127,7 @@ TAO_Notify_Admin::save_persistent (TAO_Notify::Topology_Saver& saver)
       TAO_Notify::NVPList attrs;
       this->save_attrs(attrs);
 
-      const char* type = this->get_admin_type_name();
+      char const *type = this->get_admin_type_name();
 
       bool want_all_children =
         saver.begin_object(this->id(), type, attrs, changed);
@@ -142,7 +143,7 @@ TAO_Notify_Admin::save_persistent (TAO_Notify::Topology_Saver& saver)
 
       TAO_Notify::Save_Persist_Worker<TAO_Notify_Proxy>
         wrk(saver, want_all_children);
-      this->proxy_container().collection()->for_each(&wrk);
+      this->proxy_container().collection()->for_each (std::addressof (wrk));
 
       saver.end_object(this->id(), type);
     }
@@ -161,48 +162,53 @@ TAO_Notify_Admin::save_attrs (TAO_Notify::NVPList& attrs)
 }
 
 void
-TAO_Notify_Admin::load_attrs(const TAO_Notify::NVPList& attrs)
+TAO_Notify_Admin::load_attrs(TAO_Notify::NVPList const &attrs)
 {
   TAO_Notify_Object::load_attrs (attrs);
-  const char* value = nullptr;
+  char const *value {};
   if (attrs.find ("InterFilterGroupOperator", value))
     {
-      this->filter_operator_ = static_cast <CosNotifyChannelAdmin::InterFilterGroupOperator> (ACE_OS::atoi (value));
+      this->filter_operator_ = static_cast <CosNotifyChannelAdmin::InterFilterGroupOperator> (
+        std::atoi (value));
     }
 
   if (attrs.find ("default", value))
     {
-      this->is_default_ = (ACE_OS::strcmp (value, "yes") == 0);
+      this->is_default_ = (std::strcmp (value, "yes") == 0);
     }
 }
 
 TAO_Notify::Topology_Object*
-TAO_Notify_Admin::load_child (const ACE_CString &type,
+TAO_Notify_Admin::load_child (ACE_CString const &type,
                               CORBA::Long id,
-                              const TAO_Notify::NVPList& attrs)
+                              TAO_Notify::NVPList const &attrs)
 {
   ACE_UNUSED_ARG (attrs);
   TAO_Notify::Topology_Object* result = this;
   if (type == "subscriptions")
     {
       if (DEBUG_LEVEL)
-        ORBSVCS_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%P|%t) Admin reload subscription %d\n"),
-                    static_cast<int> (id)
-                    ));
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("(%P|%t) Admin reload subscription %d\n"),
+                          static_cast<int> (id)
+                          ));
+        }
       // since we initialized our subscribed types to everything
       // in the constructor. we have to clear it out first.
-      this->subscribed_types_.reset();
-      result = &this->subscribed_types_;
+      this->subscribed_types_.clear ();
+      result = std::addressof (this->subscribed_types_);
     }
   else if (type == "filter_admin")
     {
       if (DEBUG_LEVEL)
-        ORBSVCS_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%P|%t) Admin reload filter_admin %d\n"),
-                    static_cast<int> (id)
-                    ));
-      result = & this->filter_admin_;
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("(%P|%t) Admin reload filter_admin %d\n"),
+                          static_cast<int> (id)
+                          ));
+        }
+      result = std::addressof (this->filter_admin_);
     }
   return result;
 }
@@ -211,7 +217,7 @@ void
 TAO_Notify_Admin::reconnect ()
 {
   TAO_Notify::Reconnect_Worker<TAO_Notify_Proxy> wrk;
-  this->proxy_container().collection()->for_each(&wrk);
+  this->proxy_container().collection()->for_each (std::addressof (wrk));
 }
 
 void
@@ -220,6 +226,5 @@ TAO_Notify_Admin::validate ()
   TAO_Notify::Validate_Worker<TAO_Notify_Proxy> wrk;
   this->proxy_container().collection()->for_each(&wrk);
 }
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL

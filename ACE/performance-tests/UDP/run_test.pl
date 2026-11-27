@@ -2,13 +2,12 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
      & eval 'exec perl -S $0 $argv:q'
      if 0;
 
-# -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::TestTarget;
 
 $SV = new PerlACE::Process ("udp_test", "-r");
-$CL = new PerlACE::Process ("udp_test", "-t -n 10000 localhost");
+$CL = new PerlACE::Process ("udp_test", "-t -n 10000 127.0.0.1");
 
 $status = 0;
 

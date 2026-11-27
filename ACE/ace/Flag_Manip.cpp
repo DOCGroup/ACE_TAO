@@ -19,8 +19,6 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// Flags are file status flags to turn on.
-
 #ifndef ACE_LACKS_FCNTL
 namespace {
   int set_flags_helper (ACE_HANDLE handle, int flags)
@@ -28,15 +26,21 @@ namespace {
     int val = ACE_OS::fcntl (handle, F_GETFL, 0);
 
     if (val == -1)
-      return -1;
+      {
+        return -1;
+      }
 
     // Turn on flags.
     ACE_SET_BITS (val, flags);
 
     if (ACE_OS::fcntl (handle, F_SETFL, val) == -1)
-      return -1;
+      {
+        return -1;
+      }
     else
-      return 0;
+      {
+        return 0;
+      }
   }
 
   int clr_flags_helper (ACE_HANDLE handle, int flags)
@@ -44,21 +48,28 @@ namespace {
     int val = ACE_OS::fcntl (handle, F_GETFL, 0);
 
     if (val == -1)
-      return -1;
+      {
+        return -1;
+      }
 
     // Turn flags off.
     ACE_CLR_BITS (val, flags);
 
     if (ACE_OS::fcntl (handle, F_SETFL, val) == -1)
-      return -1;
+      {
+        return -1;
+      }
     else
-      return 0;
+      {
+        return 0;
+      }
   }
 }
 #endif
 
 // INTEGRITY 11.4.6 simulator does not support ACE_NONBLOCK flag.
 // ACE_USES_GHS_ISIMPPC is defined when running on the simulator.
+/// Set the file status flags to turn on.
 int
 ACE::set_flags (ACE_HANDLE handle, int flags)
 {
@@ -107,8 +118,7 @@ ACE::set_flags (ACE_HANDLE handle, int flags)
 #endif /* ACE_USES_GHS_ISIMPPC */
 }
 
-// Flags are the file status flags to turn off.
-
+/// Clear the file status flags to turn off.
 int
 ACE::clr_flags (ACE_HANDLE handle, int flags)
 {
@@ -138,7 +148,7 @@ ACE::clr_flags (ACE_HANDLE handle, int flags)
       // nonblocking argument (1)
       // blocking:            (0)
       {
-        int nonblock = 0;
+        int nonblock {};
 #     if defined (ACE_LACKS_IOCTL)
         int dev_info;
         return ACE_OS::posix_devctl (handle, FIONBIO, &nonblock,

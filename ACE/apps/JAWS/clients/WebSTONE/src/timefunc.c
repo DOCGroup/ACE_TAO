@@ -48,7 +48,7 @@ addtime(struct timeval *OrigTime, struct timeval *NewTime)
         /*
          * NEED TO CARRY 1.
          */
-        OrigTime->tv_sec++;
+        ++OrigTime->tv_sec;
         OrigTime->tv_usec -= USECINSEC;
     }
     OrigTime->tv_sec += NewTime->tv_sec;
@@ -56,7 +56,9 @@ addtime(struct timeval *OrigTime, struct timeval *NewTime)
 
 
 void
-compdifftime(struct timeval *EndTime, struct timeval *StartTime, struct timeval *DiffTime)
+compdifftime(const struct timeval *EndTime,
+             const struct timeval *StartTime,
+             struct timeval *DiffTime)
 {
     struct timeval endtime = *EndTime;
 
@@ -66,7 +68,7 @@ compdifftime(struct timeval *EndTime, struct timeval *StartTime, struct timeval 
           * NEED TO BORROW.
           */
           endtime.tv_usec += USECINSEC;
-          endtime.tv_sec--;
+          --endtime.tv_sec;
       }
       DiffTime->tv_usec = endtime.tv_usec - StartTime->tv_usec;
       DiffTime->tv_sec =  endtime.tv_sec  - StartTime->tv_sec;
@@ -162,7 +164,11 @@ thruputpersec(const double n, struct timeval *t)
 
     tv = timevaldouble(t);
     if (tv != 0)
-        return n / timevaldouble(t);
+        {
+            return n / timevaldouble(t);
+        }
     else
-        return 0;
+        {
+            return 0;
+        }
 }

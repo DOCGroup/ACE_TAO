@@ -1,11 +1,8 @@
-/* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file    Gadget_Impl.cpp
  *
  *  @author Christopher Kohlhoff <chris@kohlhoff.com>
  */
-//=============================================================================
 
 #include "Gadget_Impl.h"
 #include "ace/Log_Msg.h"
@@ -29,14 +26,16 @@ Gadget_Part_var Gadget_Impl::remove_part ()
 {
   Gadget_Part_var removed_part;
   if (parts_.dequeue_head (removed_part) == -1)
-    return Gadget_Part_var();
+  {
+    return Gadget_Part_var (nullptr);
+  }
   return removed_part;
 }
 
 void Gadget_Impl::list_parts ()
 {
   ACE_Unbounded_Queue_Iterator<Gadget_Part_var> iter (parts_);
-  Gadget_Part_var *current_part;
+  Gadget_Part_var *current_part {};
   while (iter.next (current_part))
     {
       (*current_part)->print_info ();

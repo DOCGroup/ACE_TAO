@@ -1,14 +1,9 @@
-// -*- C++ -*-
 #include "test_i.h"
 
 test_i::test_i (CORBA::Short num,
                 CORBA::ORB_ptr orb)
   : number_ (num),
     orb_ (CORBA::ORB::_duplicate (orb))
-{
-}
-
-test_i::~test_i ()
 {
 }
 

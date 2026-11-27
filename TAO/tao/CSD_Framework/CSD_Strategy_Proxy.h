@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    CSD_Strategy_Proxy.h
  *
  *  @author  Tim Bradley <bradley_t@ociweb.com>
  */
-//=============================================================================
 
 #ifndef TAO_SERVANT_DISPATCHING_STRATEGY_PROXY_H
 #define TAO_SERVANT_DISPATCHING_STRATEGY_PROXY_H
@@ -23,7 +19,6 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/CSD_Framework/CSD_Strategy_Base.h"
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -44,10 +39,8 @@ namespace TAO
     class TAO_CSD_FW_Export Strategy_Proxy
     {
     public:
-      /// Default Constructor.
       Strategy_Proxy() = default;
 
-      /// Destructor.
       ~Strategy_Proxy();
 
       /// Mutator to provide the proxy with a CSD Strategy object.
@@ -71,7 +64,6 @@ namespace TAO
       void dispatch_request(TAO_ServerRequest& server_request,
                             TAO::Portable_Server::Servant_Upcall& upcall);
 
-
       /// Event - The POA has been (or is being) activated.
       bool poa_activated_event(TAO_ORB_Core& orb_core);
 
@@ -80,18 +72,18 @@ namespace TAO
 
       /// Event - A servant has been activated.
       void servant_activated_event(PortableServer::Servant servant,
-                                  const PortableServer::ObjectId& oid);
+                                  PortableServer::ObjectId const &oid);
 
       /// Event - A servant has been deactivated.
       void servant_deactivated_event(PortableServer::Servant servant,
-                                    const PortableServer::ObjectId& oid);
+                                    PortableServer::ObjectId const &oid);
 
-    private:
       Strategy_Proxy (Strategy_Proxy const &) = delete;
       Strategy_Proxy &operator= (Strategy_Proxy const &) = delete;
       Strategy_Proxy (Strategy_Proxy &&) = delete;
       Strategy_Proxy &operator= (Strategy_Proxy &&) = delete;
 
+    private:
       /// Smart Pointer to a custom servant dispatching strategy object.
       /// This smart pointer will be in the "nil" state when the "default"
       /// strategy is to be applied.

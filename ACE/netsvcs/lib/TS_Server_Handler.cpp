@@ -4,6 +4,7 @@
 #include "TS_Server_Handler.h"
 #include "ace/OS_NS_time.h"
 #include "ace/Signal.h"
+#include <memory>
 
 int
 ACE_TS_Server_Acceptor::parse_args (int argc, ACE_TCHAR *argv[])
@@ -45,32 +46,36 @@ ACE_TS_Server_Acceptor::init (int argc, ACE_TCHAR *argv[])
   // Set the acceptor endpoint into listen mode (use the Singleton
   // global Reactor...).
   if (this->open (this->service_addr_, ACE_Reactor::instance (),
-                  0, 0, 0,
-                  &this->scheduling_strategy_,
+                  nullptr, nullptr, nullptr,
+                  std::addressof (this->scheduling_strategy_),
                   ACE_TEXT ("Time Server"),
                   ACE_TEXT ("ACE time service")) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%n: %p on port %d\n"),
-                       ACE_TEXT ("acceptor::open failed"),
-                       this->service_addr_.get_port_number ()),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%n: %p on port %d\n"),
+                         ACE_TEXT ("acceptor::open failed"),
+                         this->service_addr_.get_port_number ()),
+                        -1);
+    }
 
   // Ignore SIGPIPE so that each <SVC_HANDLER> can handle this on its
   // own.
-  ACE_Sig_Action sig ((ACE_SignalHandler) SIG_IGN, SIGPIPE);
+  ACE_Sig_Action const sig ((ACE_SignalHandler) SIG_IGN, SIGPIPE);
   ACE_UNUSED_ARG (sig);
 
   ACE_INET_Addr server_addr;
 
   // Figure out what port we're really bound to.
   if (this->acceptor ().get_local_addr (server_addr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("get_local_addr")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("get_local_addr")),
+                        -1);
+    }
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("starting up Time Server at port %d on handle %d\n"),
+              ACE_TEXT ("starting up Time Server at port %d on handle %H\n"),
               server_addr.get_port_number (),
               this->acceptor ().get_handle ()));
   return 0;
@@ -81,7 +86,6 @@ ACE_TS_Server_Acceptor::init (int argc, ACE_TCHAR *argv[])
 
 ACE_SVC_FACTORY_DEFINE (ACE_TS_Server_Acceptor)
 
-// Default constructor.
 ACE_TS_Server_Handler::ACE_TS_Server_Handler (ACE_Thread_Manager *tm)
   : ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> (tm)
 {
@@ -100,22 +104,26 @@ ACE_TS_Server_Handler::open (void *)
 
   // Determine the address of the client and display it.
   if (this->peer ().get_remote_addr (client_addr) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("get_remote_addr")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("get_remote_addr")),
+                        -1);
+    }
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%t) accepted connection from host %C on fd %d\n"),
+              ACE_TEXT ("(%t) accepted connection from host %C on fd %H\n"),
               client_addr.get_host_name (),
               this->peer ().get_handle ()));
 
   // Call down to our parent to register ourselves with the Reactor.
-  if (ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>::open (0) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("open")),
-                      -1);
+  if (ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>::open (nullptr) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("open")),
+                        -1);
+    }
   return 0;
 }
 
@@ -124,21 +132,25 @@ ACE_TS_Server_Handler::send_request (ACE_Time_Request &request)
 {
   ACE_TRACE ("ACE_TS_Server_Handler::send_request");
   void *buffer;
-  ssize_t length = request.encode (buffer);
+  ssize_t const length = request.encode (buffer);
 
   if (length == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("encode failed")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("encode failed")),
+                        -1);
+    }
 
   // Transmit request via a blocking send.
 
   if (this->peer ().send_n (buffer, length) != length)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("send_n failed")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("send_n failed")),
+                        -1);
+    }
   return 0;
 }
 
@@ -158,7 +170,7 @@ ACE_TS_Server_Handler::abandon ()
 
 // Enable clients to limit the amount of time they'll wait
 /* VIRTUAL */ int
-ACE_TS_Server_Handler::handle_timeout (const ACE_Time_Value &, const void *)
+ACE_TS_Server_Handler::handle_timeout (ACE_Time_Value const &, void const *)
 {
   ACE_TRACE ("ACE_TS_Server_Handler::handle_timeout");
   return this->abandon ();
@@ -180,7 +192,7 @@ ACE_TS_Server_Handler::dispatch ()
 {
   ACE_TRACE ("ACE_TS_Server_Handler::dispatch");
   // Get the system time and then create an ACE_Time_Request
-  time_t t = ACE_OS::time (0);
+  time_t const t = ACE_OS::time (nullptr);
   ACE_Time_Request rq (ACE_Time_Request::TIME_UPDATE, t);
   return this->send_request (rq);
 }
@@ -196,7 +208,8 @@ ACE_TS_Server_Handler::recv_request ()
 
   // Since Time_Request messages are fixed size, read the entire
   // message in one go.
-  ssize_t const n = this->peer ().recv ((void *) &this->time_request_, bytes_expected);
+  ssize_t const n = this->peer ().recv (
+    std::addressof (this->time_request_), bytes_expected);
   if (n != bytes_expected)
     {
       switch (n)
@@ -207,7 +220,7 @@ ACE_TS_Server_Handler::recv_request ()
           ACE_FALLTHROUGH;
         default:
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("%p got %d bytes, expected %d bytes\n"),
+                      ACE_TEXT ("%p got %b bytes, expected %b bytes\n"),
                       ACE_TEXT ("recv failed"),
                       n,
                       bytes_expected));
@@ -243,15 +256,19 @@ ACE_TS_Server_Handler::handle_input (ACE_HANDLE)
   ACE_TRACE ("ACE_TS_Server_Handler::handle_input");
 
   if (this->recv_request () == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
-    return this->dispatch ();
+    {
+      return this->dispatch ();
+    }
 }
 
 ACE_TS_Server_Handler::~ACE_TS_Server_Handler ()
 {
   ACE_TRACE ("ACE_TS_Server_Handler::~ACE_TS_Server_Handler");
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("closing down Handle %d\n"),
+              ACE_TEXT ("closing down Handle %H\n"),
               this->get_handle ()));
 }

@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    Object_Manager_Test.cpp
  *
@@ -7,14 +5,11 @@
  *
  *  @author David L. Levine <levine@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #include "test_config.h"
 #include "ace/Object_Manager.h"
 #include "ace/OS_Memory.h"
 #include "ace/Init_ACE.h"
-
 
 static u_int *ip;
 

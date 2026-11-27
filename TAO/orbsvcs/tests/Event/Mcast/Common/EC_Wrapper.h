@@ -1,10 +1,11 @@
-/* -*- C++ -*- */
 #ifndef EC_WRAPPER_H
 #define EC_WRAPPER_H
 
 #include "orbsvcs/RtecEventChannelAdminS.h"
 #include "orbsvcs/Event/EC_Lifetime_Utils_T.h"
 #include "ECMcastTests_export.h"
+
+#include <memory>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -32,27 +33,32 @@ public:
   static PortableServer::Servant_var<EC_Wrapper> create ();
 
   /// Destructor.  Destroys the Event Channel implementation.
-  virtual ~EC_Wrapper ();
+  ~EC_Wrapper () override;
+
+  EC_Wrapper (EC_Wrapper const&) = delete;
+  EC_Wrapper (EC_Wrapper&&) = delete;
+  EC_Wrapper& operator= (EC_Wrapper const&) = delete;
+  EC_Wrapper& operator= (EC_Wrapper&&) = delete;
 
   /// Create and initialize underlying EC servant.
   int init (CORBA::ORB_ptr orb,
             PortableServer::POA_ptr poa);
 
   /// RtecEventChannelAdmin::Event_Channel methods.
-  //@{
-  virtual RtecEventChannelAdmin::ConsumerAdmin_ptr
-    for_consumers ();
-  virtual RtecEventChannelAdmin::SupplierAdmin_ptr
-    for_suppliers ();
+  /// @{
+  RtecEventChannelAdmin::ConsumerAdmin_ptr
+    for_consumers () override;
+  RtecEventChannelAdmin::SupplierAdmin_ptr
+    for_suppliers () override;
 
   /// Destroy the Event Channel, deactivate from POA, and shut down
   /// the ORB.
-  virtual void destroy ();
+  void destroy () override;
 
-  virtual RtecEventChannelAdmin::Observer_Handle
-    append_observer (RtecEventChannelAdmin::Observer_ptr observer);
-  virtual void remove_observer (RtecEventChannelAdmin::Observer_Handle);
-  //@}
+  RtecEventChannelAdmin::Observer_Handle
+    append_observer (RtecEventChannelAdmin::Observer_ptr observer) override;
+  void remove_observer (RtecEventChannelAdmin::Observer_Handle) override;
+  /// @}
 
 protected:
   /// Constructor (protected).  Clients can create new
@@ -65,14 +71,10 @@ private:
   void destroy_ec ();
 
   /// Event Channel implementation.
-  /*
-   * Once Event Channel implementation is made reference-counted, this
-   * pointer should turn into a Servant_var.
-   */
-  TAO_EC_Event_Channel *ec_impl_;
+  std::unique_ptr<TAO_EC_Event_Channel> ec_impl_ {};
 
   /// A reference to the ORB, so we can shut it down.
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var orb_ {};
 };
 
 #endif /* EC_WRAPPER_H */

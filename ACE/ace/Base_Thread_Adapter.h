@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Base_Thread_Adapter.h
  *
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef ACE_BASE_THREAD_ADAPTER_H
 #define ACE_BASE_THREAD_ADAPTER_H
@@ -106,23 +102,21 @@ public:
   static void close_log_msg ();
 
   /// Invoke the sync_log_msg_hook, if it is present
-  static void sync_log_msg (const ACE_TCHAR *prog_name);
+  static void sync_log_msg (ACE_TCHAR const *prog_name);
 
   /// Invoke the thr_desc_log_msg_hook, if it is present
   static ACE_OS_Thread_Descriptor *thr_desc_log_msg ();
 
 protected:
-  /// Constructor.
   ACE_Base_Thread_Adapter (ACE_THR_FUNC user_func,
                            void *arg,
                            ACE_THR_C_FUNC entry_point = (ACE_THR_C_FUNC) ACE_THREAD_ADAPTER_NAME,
                            ACE_OS_Thread_Descriptor *td = nullptr
 # if defined (ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS)
-                           , ACE_SEH_EXCEPT_HANDLER selector = 0
-                           , ACE_SEH_EXCEPT_HANDLER handler = 0
+                           , ACE_SEH_EXCEPT_HANDLER selector = nullptr
+                           , ACE_SEH_EXCEPT_HANDLER handler = nullptr
 # endif /* ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS */
-                           , long cancel_flags = 0
-                      );
+                           , long cancel_flags = 0);
   /// Inherit the logging features if the parent thread has an
   /// ACE_Log_Msg.
   void inherit_log_msg ();

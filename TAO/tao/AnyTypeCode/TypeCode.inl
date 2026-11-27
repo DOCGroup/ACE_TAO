@@ -1,4 +1,3 @@
-// -*- C++ -*-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<>
@@ -11,8 +10,6 @@ CORBA::release<> (CORBA::TypeCode_ptr obj)
     }
 }
 
-// --------------------------------------------------------------
-
 ACE_INLINE
 CORBA::TypeCode::TypeCode (CORBA::TCKind k)
   : kind_ (k)
@@ -23,7 +20,9 @@ ACE_INLINE CORBA::TypeCode_ptr
 CORBA::TypeCode::_duplicate (CORBA::TypeCode_ptr tc)
 {
   if (!CORBA::is_nil (tc))
-    tc->tao_duplicate ();
+    {
+      tc->tao_duplicate ();
+    }
 
   return tc;
 }

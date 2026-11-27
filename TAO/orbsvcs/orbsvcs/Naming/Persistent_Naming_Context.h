@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   Persistent_Naming_Context.h
  *
  *  @author Marina Spivak <marina@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_PERSISTENT_NAMING_CONTEXT_H
 #define TAO_PERSISTENT_NAMING_CONTEXT_H
@@ -36,8 +32,7 @@ public:
   /// Underlying data structure.
   using HASH_MAP = ACE_Hash_Map_With_Allocator<TAO_Persistent_ExtId, TAO_Persistent_IntId>;
 
-  /// Constructor.
-  TAO_Persistent_Bindings_Map (CORBA::ORB_ptr orb);
+  explicit TAO_Persistent_Bindings_Map (CORBA::ORB_ptr orb);
 
   /// Allocate hash map of size @a hash_map_size from persistent storage
   /// using the @a alloc.
@@ -56,12 +51,13 @@ public:
   /**
    * This method removes the hash map from persistent storage/frees up
    * the memory.  The hash map better be empty, since we are not
-   * cleaning up the insides. (We could add <close> to clean entries,
+   * cleaning up the insides. (We could add @c close to clean entries,
    * but not the data inside the entries.
    */
   void destroy ();
 
-  // = Accessor methods.
+  /// @name Accessor methods
+  /// @{
 
   /// Get a pointer to the underlying hash map.
   HASH_MAP *map ();
@@ -72,15 +68,17 @@ public:
   /// Return the size of the underlying hash table.
   size_t current_size () override;
 
-  // = Name bindings manipulation methods.
+  /// @}
+  /// @name Name bindings manipulation methods
+  /// @{
 
   /**
    * Add a binding with the specified parameters to the table.
    * Return 0 on success and -1 on failure, 1 if there already is a
    * binding with @a id and @a kind.
    */
-  int bind (const char *id,
-                    const char *kind,
+  int bind (char const *id,
+                    char const *kind,
                     CORBA::Object_ptr obj,
                     CosNaming::BindingType type) override;
 
@@ -90,33 +88,34 @@ public:
    * 0 or 1 on success.  Return -1 or -2 on failure. (-2 is returned
    * if the new and old bindings differ in type).
    */
-  int rebind (const char *id,
-                      const char *kind,
+  int rebind (char const *id,
+                      char const *kind,
                       CORBA::Object_ptr obj,
                       CosNaming::BindingType type) override;
 
   /**
-   * Remove a binding containing <id> and <kind> from the table.
+   * Remove a binding containing @c id and @c kind from the table.
    * Return 0 on success and -1 on failure.
    */
-  int unbind (const char * id,
-              const char * kind) override;
+  int unbind (char const *id,
+              char const *kind) override;
 
   /**
-   * Find the binding containing <id> and <kind> in the table, and
+   * Find the binding containing @c id and @c kind in the table, and
    * pass binding's type and object back to the caller by reference.
-   * Return 0 on success and -1 on failure.  Note: a 'duplicated' object
-   * reference is assigned to <obj>, so the caller is responsible for
-   * its deallocation.
+   * Return 0 on success and -1 on failure.
+   * @note A duplicated object reference is assigned to @a obj, so the caller
+   * is responsible for its deallocation.
    */
-  int find (const char * id,
-                    const char * kind,
+  int find (char const *id,
+                    char const *kind,
                     CORBA::Object_ptr & obj,
                     CosNaming::BindingType &type) override;
 
+  /// @}
 protected:
   /**
-   * Helper to the <open> method.  By isolating placement new into a
+   * Helper to the @c open method.  By isolating placement new into a
    * separate method, we can deal with memory allocation failures more
    * efficiently.  If there is a problem in HASH_MAP constructor, we
    * can clean up preallocated space.
@@ -124,9 +123,9 @@ protected:
   int open_helper (size_t hash_table_size,
                    void *buffer);
 
-  /// Helper: factors common code from <bind> and <rebind>.
-  int shared_bind (const char *id,
-                   const char *kind,
+  /// Helper: factors common code from @c bind and @c rebind.
+  int shared_bind (char const *id,
+                   char const *kind,
                    CORBA::Object_ptr obj,
                    CosNaming::BindingType type,
                    int rebind);
@@ -168,32 +167,34 @@ public:
    * Constructor that takes in preallocated data structure and takes
    * ownership of it.  This constructor is for 'recreating' servants
    * from persistent state. If no map is provided, it MUST be followed
-   * up by <init> to allocate the underlying data structure from
+   * up by @c init to allocate the underlying data structure from
    * persistent storage!
    */
   TAO_Persistent_Naming_Context (PortableServer::POA_ptr poa,
-                                 const char *poa_id,
+                                 char const *poa_id,
                                  TAO_Persistent_Context_Index *context_index,
-                                 HASH_MAP * map = 0,
-                                 ACE_UINT32 *counter = 0);
+                                 HASH_MAP * map = nullptr,
+                                 ACE_UINT32 *counter = nullptr);
 
-  /// Destructor.
   ~TAO_Persistent_Naming_Context () override;
 
-  // = Utility methods.
+  /// @name Utility methods
+  /// @{
   /**
    * This utility method factors out the code needed to create a new
    * Persistent Naming Context servant and activate it under the
    * specified POA with the specified id.  This function is static so
-   * that the code can be used, both from inside the class (e.g., <new_context>),
+   * that the code can be used, both from inside the class (e.g., @c new_context),
    * and from outside (e.g., Naming_Utils.cpp).
    */
   static CosNaming::NamingContext_ptr make_new_context (PortableServer::POA_ptr poa,
-                                                        const char *poa_id,
+                                                        char const *poa_id,
                                                         size_t context_size,
                                                         TAO_Persistent_Context_Index *ind);
 
-  // = Methods not implemented in TAO_Hash_Naming_Context.
+  /// @}
+  /// @name Methods not implemented in TAO_Hash_Naming_Context
+  /// @{
 
   /**
    * This operation returns a new naming context implemented by the
@@ -212,10 +213,11 @@ public:
              CosNaming::BindingList_out &bl,
              CosNaming::BindingIterator_out &bi) override;
 
+  /// @}
 protected:
   /**
-   * Set <destroyed_> flag (inherited from TAO_Hash_Naming_Context) to
-   * <level>.  Legal values for <destroyed_> are 0, 1, and 2.  The
+   * Set @c destroyed_ flag (inherited from TAO_Hash_Naming_Context) to
+   * @c level.  Legal values for @c destroyed_ are 0, 1, and 2.  The
    * values specify the extent of cleanup that should take place in the
    * context's destructor:
    * '0' - no cleanup (e.g., if the context goes out of scope, but
@@ -224,8 +226,8 @@ protected:
    * (e.g., if the initialization of this context was only partially completed
    * due to some failures, and we need to roll back);
    * '2' - free up the underlying data structure, and deregister this
-   * naming context from its <index_> (e.g., if the context had
-   * <destroy> method invoked and needs to be completely removed from existence).
+   * naming context from its @c index_ (e.g., if the context had
+   * @c destroy method invoked and needs to be completely removed from existence).
    */
   void set_cleanup_level (int level);
 

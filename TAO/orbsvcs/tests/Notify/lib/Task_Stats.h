@@ -1,5 +1,3 @@
-/* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file Task_Stats.h
  *
@@ -7,7 +5,6 @@
  *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  */
-//=============================================================================
 #ifndef TASK_STATS_H
 #define TASK_STATS_H
 
@@ -17,6 +14,8 @@
 #include "tao/orbconf.h"
 #include "tao/debug.h"
 #include "notify_test_export.h"
+
+#include <memory>
 
 /**
  * @class Base_Time
@@ -30,7 +29,7 @@ class TAO_NOTIFY_TEST_Export Base_Time
   ACE_hrtime_t base_time_;
 };
 
-typedef ACE_Singleton<Base_Time, TAO_SYNCH_MUTEX> BASE_TIME;
+using BASE_TIME = ACE_Singleton<Base_Time, TAO_SYNCH_MUTEX>;
 
 /**
  * @class Task_Stats
@@ -40,11 +39,14 @@ typedef ACE_Singleton<Base_Time, TAO_SYNCH_MUTEX> BASE_TIME;
 class TAO_NOTIFY_TEST_Export Task_Stats
 {
  public:
-  /// Constructor
   Task_Stats ();
 
-  /// Destructor
   ~Task_Stats ();
+
+  Task_Stats (Task_Stats const &) = delete;
+  Task_Stats &operator= (Task_Stats const &) = delete;
+  Task_Stats (Task_Stats &&) = delete;
+  Task_Stats &operator= (Task_Stats &&) = delete;
 
   /// Useful Global Scale Factor
   static ACE_High_Res_Timer::global_scale_factor_type gsf_;
@@ -67,28 +69,28 @@ class TAO_NOTIFY_TEST_Export Task_Stats
   /// Record a sample
   int sample (ACE_UINT64 inv_start_time, ACE_UINT64 inv_end_time);
 
-  void dump_samples (const ACE_TCHAR *file_name, const ACE_TCHAR *msg, int dump_samples);
+  void dump_samples (ACE_TCHAR const *file_name, ACE_TCHAR const *msg, bool dump_samples);
 
  protected:
   /// Base and end times
-  ACE_UINT64 base_time_;
-  ACE_UINT64 end_time_;
+  ACE_UINT64 base_time_ {};
+  ACE_UINT64 end_time_ {};
 
   /// The maximum number of samples
-  size_t max_samples_;
+  size_t max_samples_ {};
 
   /// The number of samples
-  size_t samples_count_;
+  size_t samples_count_ {};
 
   /// The samples : the time of invocation. and the recorded exec. time .
-  ACE_UINT64 *time_inv_;
-  ACE_UINT64 *time_exec_;
+  std::unique_ptr<ACE_UINT64[]> time_inv_;
+  std::unique_ptr<ACE_UINT64[]> time_exec_;
 
   /// The mean of the data set.
-  ACE_UINT64 mean_;
+  ACE_UINT64 mean_ {};
 
   /// The Var^2 of the data set.
-  ACE_UINT64 var_2_;
+  ACE_UINT64 var_2_ {};
 };
 
 #if defined (__ACE_INLINE__)

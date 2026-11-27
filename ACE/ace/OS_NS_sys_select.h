@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   OS_NS_sys_select.h
  *
@@ -8,7 +5,6 @@
  *  @author Jesper S. M|ller<stophph@diku.dk>
  *  @author and a cast of thousands...
  */
-//=============================================================================
 
 #ifndef ACE_OS_NS_SYS_SELECT_H
 # define ACE_OS_NS_SYS_SELECT_H
@@ -48,14 +44,14 @@ namespace ACE_OS
               fd_set *rfds,
               fd_set *wfds = nullptr,
               fd_set *efds = nullptr,
-              const ACE_Time_Value *tv = nullptr);
+              ACE_Time_Value const *tv = nullptr);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int select (int width,
               fd_set *rfds,
               fd_set *wfds,
               fd_set *efds,
-              const ACE_Time_Value &tv);
+              ACE_Time_Value const &tv);
 } /* namespace ACE_OS */
 
 ACE_END_VERSIONED_NAMESPACE_DECL

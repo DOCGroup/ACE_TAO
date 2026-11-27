@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/Acceptor_Filter.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    NamespaceSupport.h
  *
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef ACEXML_NAMESPACESUPPORT_H
 #define ACEXML_NAMESPACESUPPORT_H
@@ -23,30 +19,31 @@
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Containers_T.h"
 #include "ace/Null_Mutex.h"
+#include <memory>
 
+using ACEXML_NS_CONTEXT_ENTRY = ACE_Hash_Map_Entry<ACEXML_String,
+                                                   ACEXML_String>;
 
-typedef ACE_Hash_Map_Entry<ACEXML_String,
-                           ACEXML_String> ACEXML_NS_CONTEXT_ENTRY;
+using ACEXML_NS_CONTEXT = ACE_Hash_Map_Manager_Ex<ACEXML_String,
+                                                  ACEXML_String,
+                                                  ACE_Hash<ACEXML_String>,
+                                                  ACE_Equal_To<ACEXML_String>,
+                                                  ACE_Null_Mutex>;
 
-typedef ACE_Hash_Map_Manager_Ex<ACEXML_String,
-                                ACEXML_String,
-                                ACE_Hash<ACEXML_String>,
-                                ACE_Equal_To<ACEXML_String>,
-                                ACE_Null_Mutex> ACEXML_NS_CONTEXT;
+using ACEXML_NS_CONTEXT_ITER = ACE_Hash_Map_Iterator_Ex<ACEXML_String,
+                                                        ACEXML_String,
+                                                        ACE_Hash<ACEXML_String>,
+                                                        ACE_Equal_To<ACEXML_String>,
+                                                        ACE_Null_Mutex>;
 
-typedef ACE_Hash_Map_Iterator_Ex<ACEXML_String,
-                                 ACEXML_String,
-                                 ACE_Hash<ACEXML_String>,
-                                 ACE_Equal_To<ACEXML_String>,
-                                 ACE_Null_Mutex> ACEXML_NS_CONTEXT_ITER;
+using ACEXML_NS_CONTEXT_REVERSE_ITER =
+  ACE_Hash_Map_Reverse_Iterator_Ex<ACEXML_String,
+                                   ACEXML_String,
+                                   ACE_Hash<ACEXML_String>,
+                                   ACE_Equal_To<ACEXML_String>,
+                                   ACE_Null_Mutex>;
 
-typedef ACE_Hash_Map_Reverse_Iterator_Ex<ACEXML_String,
-                                         ACEXML_String,
-                                         ACE_Hash<ACEXML_String>,
-                                         ACE_Equal_To<ACEXML_String>,
-                                         ACE_Null_Mutex> ACEXML_NS_CONTEXT_REVERSE_ITER;
-
-using ACEXML_STR_LIST = ACE_Unbounded_Queue<const ACEXML_Char *>;
+using ACEXML_STR_LIST = ACE_Unbounded_Queue<ACEXML_Char const *>;
 
 /**
  * @class ACEXML_Namespace_Context_Stack
@@ -59,11 +56,14 @@ using ACEXML_STR_LIST = ACE_Unbounded_Queue<const ACEXML_Char *>;
 class ACEXML_Export ACEXML_Namespace_Context_Stack
 {
 public:
-  /// Default constructor.
   ACEXML_Namespace_Context_Stack ();
 
-  /// Destructor.
   ~ACEXML_Namespace_Context_Stack ();
+
+  ACEXML_Namespace_Context_Stack (ACEXML_Namespace_Context_Stack const &) = delete;
+  ACEXML_Namespace_Context_Stack (ACEXML_Namespace_Context_Stack &&) = delete;
+  ACEXML_Namespace_Context_Stack &operator= (ACEXML_Namespace_Context_Stack const &) = delete;
+  ACEXML_Namespace_Context_Stack &operator= (ACEXML_Namespace_Context_Stack &&) = delete;
 
   /// Push the old namespace before entering into a new namespace scope.
   int push (ACEXML_NS_CONTEXT * old);
@@ -72,7 +72,7 @@ public:
   ACEXML_NS_CONTEXT *pop ();
 
 private:
-  /// Internal stack structure to hold namespace context.
+  /// Owns contexts passed to push; pop transfers ownership back to the caller.
   ACE_Unbounded_Stack<ACEXML_NS_CONTEXT*> stack_;
 };
 
@@ -113,7 +113,7 @@ private:
  *  support.popContext();
  * @endcode
  *
- * Note that this class is optimized for the use case where most
+ * @note This class is optimized for the use case where most
  * elements do not contain Namespace declarations: if the same
  * prefix/URI mapping is repeated for each context (for example), this
  * class will be somewhat less efficient.
@@ -123,15 +123,14 @@ private:
 class ACEXML_Export ACEXML_NamespaceSupport
 {
 public:
-  /**
-   * Default constructor.
-   */
   ACEXML_NamespaceSupport ();
 
-  /**
-   * Default destructor.
-   */
   ~ACEXML_NamespaceSupport ();
+
+  ACEXML_NamespaceSupport (ACEXML_NamespaceSupport const &) = delete;
+  ACEXML_NamespaceSupport (ACEXML_NamespaceSupport &&) = delete;
+  ACEXML_NamespaceSupport &operator= (ACEXML_NamespaceSupport const &) = delete;
+  ACEXML_NamespaceSupport &operator= (ACEXML_NamespaceSupport &&) = delete;
 
   /**
    *  Initialize the namespace support object
@@ -141,16 +140,16 @@ public:
   /**
    * XMLNS default prefix and URI strings.
    */
-  static const ACEXML_Char *XMLNS_PREFIX;
-  static const ACEXML_Char *XMLNS;
+  static ACEXML_Char const *XMLNS_PREFIX;
+  static ACEXML_Char const *XMLNS;
 
   /**
    * Declare a Namespace prefix.  Return -1 if the prefix was illegal
    * or an internal error occurred.  Return 0 if the prefix gets declared
    * successfully, 1 if the prefix replaces an existing prefix definition.
    */
-  int declarePrefix (const ACEXML_Char *prefix,
-                     const ACEXML_Char *uri);
+  int declarePrefix (ACEXML_Char const *prefix,
+                     ACEXML_Char const *uri);
 
   /**
    * Return all prefixes declared in current context in
@@ -162,7 +161,7 @@ public:
   /**
    * Return one of the prefixes mapped to a Namespace URI.
    */
-  const ACEXML_Char *getPrefix (const ACEXML_Char *uri) const;
+  ACEXML_Char const *getPrefix (ACEXML_Char const *uri) const;
 
   /**
    * Return all prefixes currently declared in the user-supplied list.
@@ -174,13 +173,13 @@ public:
    * Return all prefixes currently declared for a URI in the
    * user-supplied list.
    */
-  int getPrefixes (const ACEXML_Char *uri,
+  int getPrefixes (ACEXML_Char const *uri,
                    ACEXML_STR_LIST &prefixes) const;
 
   /**
    * Look up a prefix and get the currently-mapped Namespace URI.
    */
-  const ACEXML_Char *getURI (const ACEXML_Char *prefix) const;
+  ACEXML_Char const *getURI (ACEXML_Char const *prefix) const;
 
   /**
    * Revert to the previous namespace context.
@@ -196,10 +195,10 @@ public:
    * @a is_attribute specifies whether the name is an attribute or not.
    *    Attributes have different scoping rules from elements.
    */
-  int processName (const ACEXML_Char *qName,
-                   const ACEXML_Char *&uri,
-                   const ACEXML_Char *&name,
-                   int is_attribute) const;
+  int processName (ACEXML_Char const *qName,
+                   ACEXML_Char const *&uri,
+                   ACEXML_Char const *&name,
+                   bool is_attribute) const;
 
   /**
    * Start a new Namespace context.  Prefixes defined in previous
@@ -224,7 +223,7 @@ private:
   /**
    * The effective namespace context.
    */
-  ACEXML_NS_CONTEXT *effective_context_;
+  std::unique_ptr<ACEXML_NS_CONTEXT> effective_context_ {};
 };
 
 #include /**/ "ace/post.h"

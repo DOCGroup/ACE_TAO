@@ -1,4 +1,3 @@
-//=============================================================================
 /**
 *  @file   amh_ss.cpp
 *
@@ -6,7 +5,6 @@
 *
 *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
 */
-//=============================================================================
 
 #include "interface.h"
 
@@ -135,9 +133,9 @@ class TAO_IDL_Downcast_Implementation_Worker
 public:
   TAO_IDL_Downcast_Implementation_Worker () = default;
 
-  int emit (be_interface *base,
+  int emit (be_interface *derived,
             TAO_OutStream *os,
-            be_interface *derived) override;
+            be_interface *base) override;
 };
 
 int
@@ -167,9 +165,9 @@ class TAO_IDL_Copy_Ctor_Worker
 public:
   TAO_IDL_Copy_Ctor_Worker () = default;
 
-  int emit (be_interface *base,
+  int emit (be_interface *derived,
             TAO_OutStream *os,
-            be_interface *derived) override;
+            be_interface *base) override;
 };
 
 int

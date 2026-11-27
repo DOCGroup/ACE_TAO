@@ -1,12 +1,8 @@
-// -*- C -*-
-
-// ===================================================================
 /**
  *  @file ZIOP_Policy_i.h
  *
  *  @author Johnny Willemsen - jwillemsen@remedy.nl
  */
-// ===================================================================
 
 #ifndef TAO_ZIOP_POLICY_I_H
 #define TAO_ZIOP_POLICY_I_H
@@ -41,10 +37,8 @@ class CompressorIdLevelListPolicy
 public:
   CompressorIdLevelListPolicy ();
 
-  /// Constructor.
   explicit CompressorIdLevelListPolicy (::Compression::CompressorIdLevelList const &val);
 
-  /// Copy constructor.
   CompressorIdLevelListPolicy (CompressorIdLevelListPolicy const& rhs);
 
   /// Returns a copy of this CompressorIdLevelListPolicy.
@@ -60,7 +54,7 @@ public:
 
   TAO_Cached_Policy_Type _tao_cached_type () const override;
 
-  // Returns the scope at which this policy can be applied. See orbconf.h.
+  /// Returns the scope at which this policy can be applied. See orbconf.h.
   TAO_Policy_Scope _tao_scope () const override;
 
   /// This method writes a CDR representation of the current object.
@@ -86,16 +80,14 @@ class CompressionEnablingPolicy
 public:
   CompressionEnablingPolicy () = default;
 
-  /// Constructor.
   explicit CompressionEnablingPolicy (::CORBA::Boolean val);
 
-  /// Copy constructor.
   CompressionEnablingPolicy (CompressionEnablingPolicy const& rhs);
 
   /// Returns a copy of this CompressionEnablingPolicy.
   CompressionEnablingPolicy *clone () const;
 
-  /// = The ZIOP::BidirectionalPolicy methods
+  /// The compression-enabled policy methods.
   ::CORBA::Boolean compression_enabled () override;
 
   CORBA::PolicyType policy_type () override;
@@ -106,7 +98,7 @@ public:
 
   TAO_Cached_Policy_Type _tao_cached_type () const override;
 
-  // Returns the scope at which this policy can be applied. See orbconf.h.
+  /// Returns the scope at which this policy can be applied. See orbconf.h.
   TAO_Policy_Scope _tao_scope () const override;
 
   /// This method writes a CDR representation of the current object.
@@ -130,16 +122,14 @@ class CompressionLowValuePolicy
   , public virtual ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
   explicit CompressionLowValuePolicy (::CORBA::ULong val);
 
-  /// Copy constructor.
   CompressionLowValuePolicy (CompressionLowValuePolicy const& rhs);
 
   /// Returns a copy of this CompressionLowValuePolicy.
   CompressionLowValuePolicy *clone () const;
 
-  /// = The ZIOP::BidirectionalPolicy methods
+  /// Returns the low compression threshold.
   ::CORBA::ULong low_value () override;
 
   CORBA::PolicyType policy_type () override;
@@ -165,10 +155,8 @@ class CompressionMinRatioPolicy
   , public virtual ::CORBA::LocalObject
 {
 public:
-  /// Constructor.
   explicit CompressionMinRatioPolicy (::Compression::CompressionRatio val);
 
-  /// Copy constructor.
   CompressionMinRatioPolicy (CompressionMinRatioPolicy const& rhs);
 
   /// Returns a copy of this CompressionMinRatioPolicy.
@@ -198,5 +186,4 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_BIDIR_POLICY_I_H */
-
 

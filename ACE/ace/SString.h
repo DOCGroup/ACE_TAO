@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    SString.h
  *
  *  @author Douglas C. Schmidt (d.schmidt@vanderbilt.edu)
  */
-//=============================================================================
 
 #ifndef ACE_SSTRING_H
 #define ACE_SSTRING_H
@@ -27,8 +23,8 @@
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
 #include "ace/iosfwd.h"
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-ACE_Export ACE_OSTREAM_TYPE &operator << (ACE_OSTREAM_TYPE &, const ACE_CString &);
-ACE_Export ACE_OSTREAM_TYPE &operator << (ACE_OSTREAM_TYPE &, const ACE_WString &);
+ACE_Export ACE_OSTREAM_TYPE &operator << (ACE_OSTREAM_TYPE &, ACE_CString const &);
+ACE_Export ACE_OSTREAM_TYPE &operator << (ACE_OSTREAM_TYPE &, ACE_WString const &);
 ACE_END_VERSIONED_NAMESPACE_DECL
 #endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 
@@ -58,28 +54,27 @@ class ACE_Export ACE_NS_WString : public ACE_WString
 public:
   using ACE_WString::size_type;
 
-  /// Default constructor.
   ACE_NS_WString (ACE_Allocator *alloc = nullptr);
 
   /// Constructor that copies @a s into dynamically allocated memory.
-  ACE_NS_WString (const char *s,
+  ACE_NS_WString (char const *s,
                   ACE_Allocator *alloc = nullptr);
 
   /// Constructor that copies @a s into dynamically allocated memory.
-  ACE_NS_WString (const ACE_WSTRING_TYPE *s,
+  ACE_NS_WString (ACE_WSTRING_TYPE const *s,
                   ACE_Allocator *alloc = nullptr);
 
 #if defined (ACE_WSTRING_HAS_USHORT_SUPPORT)
   /// Constructor that takes in a ushort16 string (mainly used by the
   /// ACE Name_Space classes)
-  ACE_NS_WString (const ACE_UINT16 *s,
+  ACE_NS_WString (ACE_UINT16 const *s,
                   size_type len,
                   ACE_Allocator *alloc = nullptr);
 #endif /* ACE_WSTRING_HAS_USHORT_SUPPORT */
 
   /// Constructor that copies @a len ACE_WSTRING_TYPE's of @a s into dynamically
   /// allocated memory (will NUL terminate the result).
-  ACE_NS_WString (const ACE_WSTRING_TYPE *s,
+  ACE_NS_WString (ACE_WSTRING_TYPE const *s,
                   size_type len,
                   ACE_Allocator *alloc = nullptr);
 
@@ -87,9 +82,8 @@ public:
   /// ACE_WSTRING_TYPE characters. The newly created memory is set memset to 0.
   ACE_NS_WString (size_type len, ACE_Allocator *alloc = nullptr);
 
-  /// Copy constructor.
-  ACE_NS_WString (const ACE_NS_WString &) = default;
-  ACE_NS_WString &operator= (const ACE_NS_WString&) = default;
+  ACE_NS_WString (ACE_NS_WString const &) = default;
+  ACE_NS_WString &operator= (ACE_NS_WString const &) = default;
 
   /// Constructor that copies @a c into dynamically allocated memory.
   ACE_NS_WString (ACE_WSTRING_TYPE c, ACE_Allocator *alloc = nullptr);
@@ -99,15 +93,14 @@ public:
   char *char_rep () const;
 
   /// Transform into a copy of a USHORT16 representation (caller must
-  /// delete).  Note, behavior is undefined when sizeof (wchar_t) != 2.
+  /// delete).
+  /// @note Behavior is undefined when sizeof (wchar_t) != 2.
   ACE_UINT16 *ushort_rep () const;
 };
 
 ACE_Export
-ACE_NS_WString operator + (const ACE_NS_WString &,
-                           const ACE_NS_WString &);
-
-// -----------------------------------------------------------------
+ACE_NS_WString operator + (ACE_NS_WString const &,
+                           ACE_NS_WString const &);
 
 /**
  * @class ACE_SString
@@ -136,23 +129,20 @@ public:
   /// No position constant
   static const size_type npos;
 
-  /// Default constructor.
   ACE_SString (ACE_Allocator *alloc = nullptr);
 
   /// Constructor that copies @a s into dynamically allocated memory.
-  ACE_SString (const char *s, ACE_Allocator *alloc = nullptr);
+  ACE_SString (char const *s, ACE_Allocator *alloc = nullptr);
 
   /// Constructor that copies @a len chars of @a s into dynamically
   /// allocated memory (will NUL terminate the result).
-  ACE_SString (const char *s, size_type len, ACE_Allocator *alloc = nullptr);
+  ACE_SString (char const *s, size_type len, ACE_Allocator *alloc = nullptr);
 
-  /// Copy constructor.
-  ACE_SString (const ACE_SString &);
+  ACE_SString (ACE_SString const &);
 
   /// Constructor that copies @a c into dynamically allocated memory.
   ACE_SString (char c, ACE_Allocator *alloc = nullptr);
 
-  /// Default destructor.
   ~ACE_SString () = default;
 
   /// Return the slot'th character in the string (doesn't perform
@@ -164,7 +154,7 @@ public:
   char &operator [] (size_type slot);
 
   /// Assignment operator (does copy memory).
-  ACE_SString &operator = (const ACE_SString &);
+  ACE_SString &operator = (ACE_SString const &);
 
   /**
    * Return a substring given an offset and length, if length == npos
@@ -187,25 +177,25 @@ public:
   void rep (char *s);
 
   /// Get the underlying pointer.
-  const char *rep () const;
+  char const *rep () const;
 
   /// Get the underlying pointer.
-  const char *fast_rep () const;
+  char const *fast_rep () const;
 
   /// Same as STL String's c_str() and fast_rep().
-  const char *c_str () const;
+  char const *c_str () const;
 
   /// Comparison operator that will match substrings.  Returns the
   /// slot of the first location that matches, else @c npos.
-  size_type strstr (const ACE_SString &s) const;
+  size_type strstr (ACE_SString const &s) const;
 
   /// Find @a str starting at pos.  Returns the slot of the first
   /// location that matches (will be >= pos), else npos.
-  size_type find (const ACE_SString &str, size_type pos = 0) const;
+  size_type find (ACE_SString const &str, size_type pos = 0) const;
 
   /// Find @a s starting at pos.  Returns the slot of the first
   /// location that matches (will be >= pos), else npos.
-  size_type find (const char *s, size_type pos = 0) const;
+  size_type find (char const *s, size_type pos = 0) const;
 
   /// Find @a c starting at pos.  Returns the slot of the first
   /// location that matches (will be >= pos), else npos.
@@ -216,19 +206,19 @@ public:
   size_type rfind (char c, size_type pos = npos) const;
 
   /// Equality comparison operator (must match entire string).
-  bool operator == (const ACE_SString &s) const;
+  bool operator == (ACE_SString const &s) const;
 
   /// Less than comparison operator.
-  bool operator < (const ACE_SString &s) const;
+  bool operator < (ACE_SString const &s) const;
 
   /// Greater than comparison operator.
-  bool operator > (const ACE_SString &s) const;
+  bool operator > (ACE_SString const &s) const;
 
   /// Inequality comparison operator.
-  bool operator != (const ACE_SString &s) const;
+  bool operator != (ACE_SString const &s) const;
 
   /// Performs a strcmp()-style comparison.
-  int compare (const ACE_SString &s) const;
+  int compare (ACE_SString const &s) const;
 
   /// Dump the state of an object.
   void dump () const;
@@ -241,14 +231,14 @@ private:
   ACE_Allocator *allocator_;
 
   /// Length of the ACE_SString (not counting the trailing '\\0').
-  size_type len_;
+  size_type len_ {};
 
   /// Pointer to data.
-  char *rep_;
+  char *rep_ {};
 };
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
-ACE_Export ACE_OSTREAM_TYPE &operator << (ACE_OSTREAM_TYPE &, const ACE_SString &);
+ACE_Export ACE_OSTREAM_TYPE &operator << (ACE_OSTREAM_TYPE &, ACE_SString const &);
 #endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 
 // This allows one to use W or C String based on the Unicode
@@ -267,7 +257,7 @@ using ACE_TString = ACE_CString;
  * @brief Simple class to automatically de-allocate strings
  *
  * Keeps a pointer to a string and deallocates it (using
- * <ACE_OS::free>) on its destructor.
+ * @c ACE_OS::free) on its destructor.
  * If you need to delete using "delete[]" the
  * std::unique_ptr<char[]> is your choice.
  * The class plays the same role as unique_ptr<>

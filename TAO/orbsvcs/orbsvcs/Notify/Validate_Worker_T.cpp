@@ -1,5 +1,3 @@
-/* -*- C++ -*-  */
-
 #ifndef NOTIFY_VALIDATE_WORKER_CPP
 #define NOTIFY_VALIDATE_WORKER_CPP
 
@@ -42,5 +40,4 @@ namespace TAO_Notify
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* VALIDATE_WORKER_CPP */
-
 

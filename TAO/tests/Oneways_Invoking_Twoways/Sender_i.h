@@ -1,10 +1,8 @@
-// ===================================================================
 /**
  *  @file   Sender_i.h
  *
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  **/
-// ===================================================================
 
 #ifndef TAO_TESTS_ONEWAYS_INVOKING_TWOWAYS_SENDER_I_H
 #define TAO_TESTS_ONEWAYS_INVOKING_TWOWAYS_SENDER_I_H
@@ -22,21 +20,26 @@ class Sender_i
   : public virtual POA_Test::Sender
 {
 public:
-  /// Constructor
   Sender_i (CORBA::ORB_ptr orb,
             CORBA::ULong no);
 
-  ///Destructor
-  virtual ~Sender_i ();
+  ~Sender_i () override;
 
-  // = The skeleton methods
-  virtual void active_objects (CORBA::Short ao);
+  Sender_i (Sender_i const &) = delete;
+  Sender_i (Sender_i &&) = delete;
+  Sender_i &operator= (Sender_i const &) = delete;
+  Sender_i &operator= (Sender_i &&) = delete;
 
-  virtual void send_ready_message (Test::Receiver_ptr receiver);
+  /// @name Skeleton methods
+  /// @{
+  void active_objects (CORBA::Short ao) override;
 
-  virtual void ping ();
+  void send_ready_message (Test::Receiver_ptr receiver) override;
 
-  virtual void shutdown ();
+  void ping () override;
+
+  void shutdown () override;
+  /// @}
 
 private:
   /// Our local ORB ptr

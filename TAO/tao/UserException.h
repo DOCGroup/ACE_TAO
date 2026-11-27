@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    UserException.h
  *
@@ -9,7 +6,6 @@
  *  @author DOC Group at Vanderbilt U, Wash U, and UCI
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef TAO_USER_EXCEPTION_H
 #define TAO_USER_EXCEPTION_H
@@ -39,36 +35,30 @@ namespace CORBA
   class TAO_Export UserException : public Exception
   {
   public:
-    /// Copy constructor.
     UserException (UserException const &rhs);
 
-    /// Destructor.
-    virtual ~UserException () = default;
+    ~UserException () override = default;
 
-    /// Assignment operator.
     UserException &operator= (UserException const &rhs);
 
     /// The narrow operation.
     static UserException *_downcast (CORBA::Exception *exception);
 
     /// The const version of narrow operation
-    static const UserException *_downcast (CORBA::Exception const *exception);
+    static UserException const *_downcast (CORBA::Exception const *exception);
 
-    virtual void _raise () const = 0;
+    void _raise () const override = 0;
 
-    virtual CORBA::TypeCode_ptr _tao_type () const;
-
-    // = TAO specific extension.
+    CORBA::TypeCode_ptr _tao_type () const override;
 
     /// Constructor from a repository id.
     UserException (char const *repository_id, char const *local_name);
 
     /// Returns a string containing information about the exception. This
     /// function is not CORBA compliant.
-    virtual ACE_CString _info () const;
+    ACE_CString _info () const override;
 
   protected:
-    /// Default constructor.
     UserException ();
   };
 }

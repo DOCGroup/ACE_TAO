@@ -1,13 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    ImR_Client.h
  *
  *  @author  Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-//=============================================================================
-
 
 #ifndef TAO_IMR_CLIENT_ADAPTER_IMPL_H
 #define TAO_IMR_CLIENT_ADAPTER_IMPL_H
@@ -33,9 +28,9 @@ namespace TAO
   namespace ImR_Client
   {
     /**
-     * @class IFR_Client_Adapter_Impl
+     * @class ImR_Client_Adapter_Impl
      *
-     * @brief IFR_Client_Adapter_Impl.
+     * @brief ImR_Client_Adapter_Impl.
      *
      * Class that adapts various functions in the PortableServer library
      * which use the Implementation Repository. This is the derived class
@@ -45,8 +40,12 @@ namespace TAO
       : public ::TAO::Portable_Server::ImR_Client_Adapter
     {
     public:
-      /// Constructor.
       ImR_Client_Adapter_Impl ();
+
+      ImR_Client_Adapter_Impl (ImR_Client_Adapter_Impl const &) = delete;
+      ImR_Client_Adapter_Impl &operator= (ImR_Client_Adapter_Impl const &) = delete;
+      ImR_Client_Adapter_Impl (ImR_Client_Adapter_Impl &&) = delete;
+      ImR_Client_Adapter_Impl &operator= (ImR_Client_Adapter_Impl &&) = delete;
 
       /// Used to force the initialization of the PortableServer code.
       static int Initializer ();
@@ -60,15 +59,10 @@ namespace TAO
       /// ImplRepo helper method, create an IMR-ified object for a
       /// key with a given type
       CORBA::Object_ptr imr_key_to_object (TAO_Root_POA *poa,
-                                            const TAO::ObjectKey &key,
-                                            const char *type_id) const override;
+                                            TAO::ObjectKey const &key,
+                                            char const *type_id) const override;
     private:
-      ImR_Client_Adapter_Impl (ImR_Client_Adapter_Impl const &) = delete;
-      ImR_Client_Adapter_Impl &operator= (ImR_Client_Adapter_Impl const &) = delete;
-      ImR_Client_Adapter_Impl (ImR_Client_Adapter_Impl &&) = delete;
-      ImR_Client_Adapter_Impl &operator= (ImR_Client_Adapter_Impl &&) = delete;
-
-      /// Implementation Repository Server Object
+      /// Non-owning pointer to the servant registered with the root POA.
       ServerObject_i *server_object_ {};
     };
 
@@ -77,7 +71,6 @@ namespace TAO
       TAO::ImR_Client::ImR_Client_Adapter_Impl::Initializer ();
   }
 }
-
 
 ACE_STATIC_SVC_DECLARE (ImR_Client_Adapter_Impl)
 ACE_FACTORY_DECLARE (TAO_IMR_Client, ImR_Client_Adapter_Impl)

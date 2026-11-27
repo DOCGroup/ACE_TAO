@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/AnyTypeCode/Any_Impl.h"
 #include "tao/AnyTypeCode/TypeCode.h"
 #include "tao/AnyTypeCode/Marshal.h"
@@ -26,7 +25,7 @@ TAO::Any_Impl::Any_Impl (_tao_destructor destructor,
 CORBA::Boolean
 TAO::Any_Impl::marshal (TAO_OutputCDR &cdr)
 {
-  CORBA::ValueBase *vb = nullptr;
+  CORBA::ValueBase *vb {};
   if (this->to_value (vb) && vb)
     {
       // Since we ARE a value type, we need to
@@ -34,15 +33,15 @@ TAO::Any_Impl::marshal (TAO_OutputCDR &cdr)
       // the type we are marshaling NOT the
       // typecode of the base pointer that may
       // have been inserted into the any.
-      if ((cdr << TAO_ORB_Core_instance ()
-                  ->valuetype_adapter()
-                  ->derived_type (vb)) == 0)
+      if (!(cdr << TAO_ORB_Core_instance ()
+                    ->valuetype_adapter()
+                    ->derived_type (vb)))
         {
           return false;
         }
     }
   // Otherwise send the typecode of the inserted type.
-  else if ((cdr << this->type_) == 0)
+  else if (!(cdr << this->type_))
     {
       return false;
     }
@@ -87,14 +86,14 @@ TAO::Any_Impl::_tao_byte_order () const
 void
 TAO::Any_Impl::_tao_any_string_destructor (void *x)
 {
-  char *tmp = static_cast<char *> (x);
+  char * const tmp = static_cast<char *> (x);
   CORBA::string_free (tmp);
 }
 
 void
 TAO::Any_Impl::_tao_any_wstring_destructor (void *x)
 {
-  CORBA::WChar *tmp = static_cast<CORBA::WChar *> (x);
+  CORBA::WChar * const tmp = static_cast<CORBA::WChar *> (x);
   CORBA::wstring_free (tmp);
 }
 
@@ -110,7 +109,9 @@ TAO::Any_Impl::_remove_ref ()
   CORBA::ULong const new_count = --this->refcount_;
 
   if (new_count != 0)
+  {
     return;
+  }
 
   this->free_value ();
 

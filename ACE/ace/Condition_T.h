@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//==========================================================================
 /**
  *  @file    Condition_T.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//==========================================================================
 
 #ifndef ACE_CONDITION_T_H
 #define ACE_CONDITION_T_H
@@ -43,34 +39,42 @@ class ACE_Time_Value;
  * up waiting threads by signaling the associated condition
  * variable.  The waiting threads, upon awakening, reacquire the
  * mutex and re-evaluate the condition.
- * Note, you can only parameterize <ACE_Condition> with
+ * @note You can only parameterize @c ACE_Condition with
  * @a ACE_Thread_Mutex, @a ACE_Recursive_Thread_Mutex, or @a ACE_Null_Mutex.
  */
 template <class MUTEX>
 class ACE_Condition
 {
 public:
+  ACE_Condition () = delete;
+  ACE_Condition (ACE_Condition const &) = delete;
+  ACE_Condition (ACE_Condition &&) = delete;
+  ACE_Condition &operator= (ACE_Condition const &) = delete;
+  ACE_Condition &operator= (ACE_Condition &&) = delete;
+
   /// Initialize the condition variable.
-  ACE_Condition (MUTEX &m, int type = USYNC_THREAD,
-                 const ACE_TCHAR *name = nullptr, void *arg = nullptr);
+  explicit ACE_Condition (MUTEX &m, int type = USYNC_THREAD,
+                          ACE_TCHAR const *name = nullptr, void *arg = nullptr);
 
   /// Initialize the condition variable.
   ACE_Condition (MUTEX &m,
-                 const ACE_Condition_Attributes &attributes,
-                 const ACE_TCHAR *name = nullptr,
+                 ACE_Condition_Attributes const &attributes,
+                 ACE_TCHAR const *name = nullptr,
                  void *arg = nullptr);
 
   /// Implicitly destroy the condition variable.
   ~ACE_Condition ();
 
-  // = Lock accessors.
+  /// @name Condition operations.
+  /// @{
+
   /**
    * Block on condition, or until absolute time-of-day has passed.  If
-   * @a abstime == 0 use "blocking" <wait> semantics.  Else, if @a abstime
+   * @a abstime == 0 use "blocking" @c wait semantics.  Else, if @a abstime
    * != 0 and the call times out before the condition is signaled
    * wait() returns -1 and sets errno to ETIME.
    */
-  int wait (const ACE_Time_Value *abstime);
+  int wait (ACE_Time_Value const *abstime);
 
   /// Block on condition.
   int wait ();
@@ -79,11 +83,11 @@ public:
    * Block on condition or until absolute time-of-day has passed.  If
    * @a abstime == 0 use "blocking" wait() semantics on the @a mutex
    * passed as a parameter (this is useful if you need to store the
-   * <Condition> in shared memory).  Else, if @a abstime != 0 and the
+   * @c Condition in shared memory).  Else, if @a abstime != 0 and the
    * call times out before the condition is signaled wait() returns -1
    * and sets errno to ETIME.
    */
-  int wait (MUTEX &mutex, const ACE_Time_Value *abstime = nullptr);
+  int wait (MUTEX &mutex, ACE_Time_Value const *abstime = nullptr);
 
   /// Signal one waiting thread.
   int signal ();
@@ -91,7 +95,11 @@ public:
   /// Signal *all* waiting threads.
   int broadcast ();
 
-  // = Utility methods.
+  /// @}
+
+  /// @name Utility methods.
+  /// @{
+
   /// Explicitly destroy the condition variable.
   int remove ();
 
@@ -100,6 +108,7 @@ public:
 
   /// Dump the state of an object.
   void dump () const;
+  /// @}
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -110,10 +119,6 @@ protected:
 
   /// Reference to mutex lock.
   MUTEX &mutex_;
-
-private:
-  void operator= (const ACE_Condition<MUTEX> &) = delete;
-  ACE_Condition (const ACE_Condition<MUTEX> &) = delete;
 };
 
 /**
@@ -137,7 +142,14 @@ template <class MUTEX>
 class ACE_Thread_Condition : public ACE_Condition<MUTEX>
 {
 public:
-  ACE_Thread_Condition (MUTEX &m, const ACE_TCHAR *name = nullptr, void *arg = nullptr);
+  ACE_Thread_Condition () = delete;
+  ACE_Thread_Condition (ACE_Thread_Condition const &) = delete;
+  ACE_Thread_Condition (ACE_Thread_Condition &&) = delete;
+  ACE_Thread_Condition &operator= (ACE_Thread_Condition const &) = delete;
+  ACE_Thread_Condition &operator= (ACE_Thread_Condition &&) = delete;
+  ~ACE_Thread_Condition () = default;
+
+  explicit ACE_Thread_Condition (MUTEX &m, ACE_TCHAR const *name = nullptr, void *arg = nullptr);
 
   /// Dump the state of an object.
   void dump () const;

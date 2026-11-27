@@ -21,8 +21,9 @@
 #endif /*TAO_HAS_INTERCEPTORS */
 
 #include <memory>
-#include "ace/OS_NS_string.h"
 #include "tao/ORB_Time_Policy.h"
+
+#include <cstring>
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Synch_Invocation.inl"
@@ -33,29 +34,29 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace
 {
   int
-  excep_for_type (const char *tid)
+  excep_for_type (char const *tid)
   {
-    if (ACE_OS::strcmp (tid, "IDL:omg.org/CORBA/TRANSIENT:1.0") == 0)
+    if (std::strcmp (tid, "IDL:omg.org/CORBA/TRANSIENT:1.0") == 0)
       {
         return TAO::FOE_TRANSIENT;
       }
-    else if (ACE_OS::strcmp (tid, "IDL:omg.org/CORBA/COMM_FAILURE:1.0") == 0)
+    else if (std::strcmp (tid, "IDL:omg.org/CORBA/COMM_FAILURE:1.0") == 0)
       {
         return TAO::FOE_COMM_FAILURE;
       }
-    else if (ACE_OS::strcmp (tid, "IDL:omg.org/CORBA/OBJECT_NOT_EXIST:1.0") == 0)
+    else if (std::strcmp (tid, "IDL:omg.org/CORBA/OBJECT_NOT_EXIST:1.0") == 0)
       {
         return TAO::FOE_OBJECT_NOT_EXIST;
       }
-    else if (ACE_OS::strcmp (tid, "IDL:omg.org/CORBA/INV_OBJREF:1.0") == 0)
+    else if (std::strcmp (tid, "IDL:omg.org/CORBA/INV_OBJREF:1.0") == 0)
       {
         return TAO::FOE_INV_OBJREF;
       }
-    else if (ACE_OS::strcmp (tid, "IDL:omg.org/CORBA/OBJ_ADAPTER:1.0") == 0)
+    else if (std::strcmp (tid, "IDL:omg.org/CORBA/OBJ_ADAPTER:1.0") == 0)
       {
         return TAO::FOE_OBJ_ADAPTER;
       }
-    else if (ACE_OS::strcmp (tid, "IDL:omg.org/CORBA/NO_RESPONSE:1.0") == 0)
+    else if (std::strcmp (tid, "IDL:omg.org/CORBA/NO_RESPONSE:1.0") == 0)
       {
         return TAO::FOE_NO_RESPONSE;
       }
@@ -107,7 +108,9 @@ namespace TAO
     s = this->send_request_interception ();
 
     if (s != TAO_INVOKE_SUCCESS)
-      return s;
+      {
+        return s;
+      }
 
     // We have started the interception flow. We need to call the
     // ending interception flow if things go wrong. The purpose of the
@@ -123,10 +126,12 @@ namespace TAO
                 this->retry_state_->forward_on_exception_increment(FOE_TRANSIENT))
               {
                 if (TAO_debug_level > 0)
-                  TAOLIB_DEBUG ((LM_INFO,
-                              ACE_TEXT ("TAO (%P|%t) - Synch_Twoway_Invocation::")
-                              ACE_TEXT ("remote_twoway retrying on TRANSIENT ")
-                              ACE_TEXT ("exception\n")));
+                  {
+                    TAOLIB_DEBUG ((LM_INFO,
+                                   ACE_TEXT ("TAO (%P|%t) - Synch_Twoway_Invocation::")
+                                   ACE_TEXT ("remote_twoway retrying on TRANSIENT ")
+                                   ACE_TEXT ("exception\n")));
+                  }
                 this->retry_state_->next_profile_retry (*this->stub ());
 #if TAO_HAS_INTERCEPTORS == 1
                 s = this->receive_other_interception ();
@@ -195,12 +200,16 @@ namespace TAO
             Invocation_Status const tmp = this->receive_other_interception ();
 
             if (tmp != TAO_INVOKE_SUCCESS)
-              s = tmp;
+              {
+                s = tmp;
+              }
           }
 #endif /* TAO_HAS_INTERCEPTORS */
 
         if (s != TAO_INVOKE_SUCCESS)
-          return s;
+          {
+            return s;
+          }
 
         countdown.update ();
 
@@ -208,7 +217,9 @@ namespace TAO
         // back to cache. If the idling is successful let the
         // resolver about that.
         if (transport->idle_after_send ())
-          this->resolver_.transport_released ();
+          {
+            this->resolver_.transport_released ();
+          }
 
         // @@ In all MT environments, there's a cancellation point lurking
         // here; need to investigate.  Client threads would frequently be
@@ -236,12 +247,16 @@ namespace TAO
 
             // Push the latest values for the return..
             if (tmp != TAO_INVOKE_SUCCESS)
-              s = tmp;
+              {
+                s = tmp;
+              }
           }
 #endif /* TAO_HAS_INTERCEPTORS */
 
         if (s != TAO_INVOKE_SUCCESS)
-          return s;
+          {
+            return s;
+          }
 
         // What happens when the above call returns an error through
         // the return value? That would be bogus as per the contract
@@ -251,7 +266,9 @@ namespace TAO
         // For some strategies one may want to release the transport
         // back to  cache after receiving the reply.
         if (transport->idle_after_reply ())
-          this->resolver_.transport_released ();
+          {
+            this->resolver_.transport_released ();
+          }
 
 #if TAO_HAS_INTERCEPTORS == 1
         Invocation_Status tmp = TAO_INVOKE_FAILURE;
@@ -264,19 +281,25 @@ namespace TAO
             tmp = this->receive_reply_interception ();
           }
         if (tmp != TAO_INVOKE_SUCCESS)
-          s = tmp;
+          {
+            s = tmp;
+          }
       }
     catch ( ::CORBA::Exception& ex)
       {
         PortableInterceptor::ReplyStatus const status =
-          this->handle_any_exception (&ex);
+          this->handle_any_exception (std::addressof (ex));
 
         if (status == PortableInterceptor::LOCATION_FORWARD ||
             status == PortableInterceptor::TRANSPORT_RETRY)
-          s = TAO_INVOKE_RESTART;
+          {
+            s = TAO_INVOKE_RESTART;
+          }
         else if (status == PortableInterceptor::SYSTEM_EXCEPTION
                  || status == PortableInterceptor::USER_EXCEPTION)
-          throw;
+          {
+            throw;
+          }
       }
     catch (...)
       {
@@ -288,9 +311,13 @@ namespace TAO
 
          if (st == PortableInterceptor::LOCATION_FORWARD ||
              st == PortableInterceptor::TRANSPORT_RETRY)
-           s = TAO_INVOKE_RESTART;
+           {
+             s = TAO_INVOKE_RESTART;
+           }
          else
+         {
            throw;
+         }
       }
 #endif /* TAO_HAS_INTERCEPTORS */
 
@@ -313,7 +340,9 @@ namespace TAO
     bool const
       expired = (max_wait_time && ACE_Time_Value::zero == *max_wait_time);
     if (expired)
-      errno = ETIME;
+      {
+        errno = ETIME;
+      }
     int const
       reply_error = expired ? -1 :
         this->resolver_.transport ()->wait_strategy ()->wait (max_wait_time, rd);
@@ -380,10 +409,12 @@ namespace TAO
                 this->retry_state_->forward_on_reply_closed_increment ())
               {
                 if (TAO_debug_level > 4)
-                  TAOLIB_DEBUG ((LM_DEBUG,
-                              ACE_TEXT ("TAO (%P|%t) - Synch_Twoway_Invocation::")
-                              ACE_TEXT ("wait_for_reply, forward profile on ")
-                              ACE_TEXT ("connection closed\n")));
+                  {
+                    TAOLIB_DEBUG ((LM_DEBUG,
+                                   ACE_TEXT ("TAO (%P|%t) - Synch_Twoway_Invocation::")
+                                   ACE_TEXT ("wait_for_reply, forward profile on ")
+                                   ACE_TEXT ("connection closed\n")));
+                  }
                 this->retry_state_->next_profile_retry (*this->stub ());
                 return TAO_INVOKE_RESTART;
               }
@@ -425,7 +456,7 @@ namespace TAO
     TAO_InputCDR &cdr = rd.reply_cdr ();
 
     // Set the translators
-    this->resolver_.transport ()->assign_translators (&cdr, nullptr);
+    this->resolver_.transport ()->assign_translators (std::addressof (cdr), nullptr);
 
     // At this point it can be assumed that the GIOP/whatever protocol
     // header and the reply header are already handled.  Further it
@@ -437,7 +468,7 @@ namespace TAO
       case GIOP::NO_EXCEPTION:
         {
           Reply_Guard mon (this, TAO_INVOKE_FAILURE);
-          if (this->details_.demarshal_args (cdr) == false)
+          if (!this->details_.demarshal_args (cdr))
             {
               throw ::CORBA::MARSHAL ();
             }
@@ -464,10 +495,12 @@ namespace TAO
                 {
                    // permanent condition not given
                     if (TAO_debug_level > 3)
+                      {
                         TAOLIB_DEBUG ((LM_DEBUG,
-                                    ACE_TEXT ("TAO (%P|%t) - Synch_Twoway_Invocation::")
-                                    ACE_TEXT ("check_reply_status: unexpected ")
-                                    ACE_TEXT ("LOCATION_FORWARD_PERM reply\n")));
+                                       ACE_TEXT ("TAO (%P|%t) - Synch_Twoway_Invocation::")
+                                       ACE_TEXT ("check_reply_status: unexpected ")
+                                       ACE_TEXT ("LOCATION_FORWARD_PERM reply\n")));
+                      }
 
                    throw ::CORBA::INTERNAL (0, CORBA::COMPLETED_NO);
                 }
@@ -489,7 +522,7 @@ namespace TAO
           // We have received a message with a request to change the
           // addressing mode. First let us read the mode that the
           // server/agent asks for.
-          CORBA::Short addr_mode = 0;
+          CORBA::Short addr_mode {};
 
           if (cdr.read_short (addr_mode) == 0)
             {
@@ -548,9 +581,11 @@ namespace TAO
                      TAO_INVOKE_FAILURE);
 
     if (TAO_debug_level > 3)
-      TAOLIB_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - Synch_Twoway_Invocation::")
-                  ACE_TEXT ("handle_user_exception\n")));
+      {
+        TAOLIB_DEBUG ((LM_DEBUG,
+                       ACE_TEXT ("TAO (%P|%t) - Synch_Twoway_Invocation::")
+                       ACE_TEXT ("handle_user_exception\n")));
+      }
 
     // Pull the exception from the stream.
     CORBA::String_var buf;
@@ -579,7 +614,7 @@ namespace TAO
 
     // We must manage the memory allocated
     // by the call above to alloc().
-    std::unique_ptr<CORBA::Exception> safety (exception);
+    std::unique_ptr<CORBA::Exception> const safety (exception);
 
     exception->_raise ();
 
@@ -592,9 +627,11 @@ namespace TAO
     Reply_Guard mon (this, TAO_INVOKE_FAILURE);
 
     if (TAO_debug_level > 3)
-      TAOLIB_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - Synch_Twoway_Invocation::")
-                  ACE_TEXT ("handle_system_exception\n")));
+      {
+        TAOLIB_DEBUG ((LM_DEBUG,
+                       ACE_TEXT ("TAO (%P|%t) - Synch_Twoway_Invocation::")
+                       ACE_TEXT ("handle_system_exception\n")));
+      }
 
     CORBA::String_var type_id;
 
@@ -605,18 +642,18 @@ namespace TAO
         throw ::CORBA::MARSHAL (0, CORBA::COMPLETED_MAYBE);
       }
 
-    CORBA::ULong minor = 0;
-    CORBA::ULong completion = 0;
+    CORBA::ULong minor {};
+    CORBA::ULong completion {};
 
     if (!(cdr >> minor) || !(cdr >> completion))
       {
         throw ::CORBA::MARSHAL (0, CORBA::COMPLETED_MAYBE);
       }
 
-    bool retry_on_exception = false;
-    bool do_forward = false;
+    bool retry_on_exception {};
+    bool do_forward {};
 
-    const TAO_ORB_Parameters *orb_params = this->stub ()->orb_core ()->orb_params ();
+    TAO_ORB_Parameters const *orb_params = this->stub ()->orb_core ()->orb_params ();
 
     if (this->retry_state_ &&
         this->retry_state_->forward_on_exception_limit_used () &&
@@ -669,14 +706,18 @@ namespace TAO
         mon.set_status (TAO_INVOKE_RESTART);
 
         if (TAO_debug_level > 4)
-          TAOLIB_DEBUG ((LM_DEBUG,
-                         ACE_TEXT ("TAO (%P|%t) - Synch_Twoway_Invocation::")
-                         ACE_TEXT ("handle_system_exception, profile forwarding ")
-                         ACE_TEXT ("on exception %C \n"),
-                         type_id.in ()));
+          {
+            TAOLIB_DEBUG ((LM_DEBUG,
+                           ACE_TEXT ("TAO (%P|%t) - Synch_Twoway_Invocation::")
+                           ACE_TEXT ("handle_system_exception, profile forwarding ")
+                           ACE_TEXT ("on exception %C \n"),
+                           type_id.in ()));
+          }
 
         if (do_forward)
-          this->stub ()->forwarded_on_exception (true);
+          {
+            this->stub ()->forwarded_on_exception (true);
+          }
 
         // Start the special case for FTCORBA.
         /**
@@ -690,7 +731,9 @@ namespace TAO
             this->resolver_.profile ());
 
         if (s == TAO_INVOKE_RESTART)
-          return s;
+          {
+            return s;
+          }
 
         // Attempt profile retry.
         /**
@@ -726,15 +769,17 @@ namespace TAO
     // Without this, the call to create_system_exception() above
     // causes a memory leak. On platforms without native exceptions,
     // the CORBA::Environment class manages the memory.
-    std::unique_ptr<CORBA::SystemException> safety (ex);
+    std::unique_ptr<CORBA::SystemException> const safety (ex);
 
     ex->minor (minor);
     ex->completed (CORBA::CompletionStatus (completion));
 
     if (TAO_debug_level > 4)
-      TAOLIB_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - Synch_Twoway_Invocation::")
-                  ACE_TEXT ("handle_system_exception, about to raise\n")));
+      {
+        TAOLIB_DEBUG ((LM_DEBUG,
+                       ACE_TEXT ("TAO (%P|%t) - Synch_Twoway_Invocation::")
+                       ACE_TEXT ("handle_system_exception, about to raise\n")));
+      }
 
     mon.set_status (TAO_INVOKE_SYSTEM_EXCEPTION);
 
@@ -743,8 +788,6 @@ namespace TAO
 
     return TAO_INVOKE_SYSTEM_EXCEPTION;
   }
-
-  // =========================================================================
 
   Synch_Oneway_Invocation::Synch_Oneway_Invocation (
     CORBA::Object_ptr otarget,
@@ -775,7 +818,9 @@ namespace TAO
     s = this->send_request_interception ();
 
     if (s != TAO_INVOKE_SUCCESS)
-      return s;
+      {
+        return s;
+      }
 
     try
       {
@@ -788,10 +833,12 @@ namespace TAO
                 this->retry_state_->forward_on_exception_increment(FOE_TRANSIENT))
               {
                 if (TAO_debug_level > 0)
-                  TAOLIB_DEBUG ((LM_INFO,
-                              ACE_TEXT ("TAO (%P|%t) - Synch_Oneway_Invocation::")
-                              ACE_TEXT ("remote_oneway retrying on TRANSIENT ")
-                              ACE_TEXT ("exception\n")));
+                  {
+                    TAOLIB_DEBUG ((LM_INFO,
+                                   ACE_TEXT ("TAO (%P|%t) - Synch_Oneway_Invocation::")
+                                   ACE_TEXT ("remote_oneway retrying on TRANSIENT ")
+                                   ACE_TEXT ("exception\n")));
+                  }
                 this->retry_state_->next_profile_retry (*this->stub ());
                 return TAO_INVOKE_RESTART;
               }
@@ -848,12 +895,14 @@ namespace TAO
                           if (r->register_handler (eh, ACE_Event_Handler::READ_MASK) == -1)
                             {
                               if (TAO_debug_level > 0)
-                                TAOLIB_ERROR ((LM_ERROR,
-                                            ACE_TEXT ("TAO (%P|%t) - Synch_Oneway_Invocation::")
-                                            ACE_TEXT ("remote_oneway transport[%B] ")
-                                            ACE_TEXT ("registration withreactor ")
-                                            ACE_TEXT ("returned an error\n"),
-                                            transport->id ()));
+                                {
+                                  TAOLIB_ERROR ((LM_ERROR,
+                                                 ACE_TEXT ("TAO (%P|%t) - Synch_Oneway_Invocation::")
+                                                 ACE_TEXT ("remote_oneway transport[%B] ")
+                                                 ACE_TEXT ("registration withreactor ")
+                                                 ACE_TEXT ("returned an error\n"),
+                                                 transport->id ()));
+                                }
                             }
                           else
                             {
@@ -867,9 +916,11 @@ namespace TAO
               else
                 {
                   if (TAO_debug_level > 4)
-                    TAOLIB_DEBUG ((LM_DEBUG,
-                                ACE_TEXT ("TAO (%P|%t) - Synch_Oneway_Invocation::")
-                                ACE_TEXT ("remote_oneway, queueing message\n")));
+                    {
+                      TAOLIB_DEBUG ((LM_DEBUG,
+                                     ACE_TEXT ("TAO (%P|%t) - Synch_Oneway_Invocation::")
+                                     ACE_TEXT ("remote_oneway, queueing message\n")));
+                    }
 
                   if (transport->format_queue_message (cdr,
                                                        max_wait_time,
@@ -887,14 +938,18 @@ namespace TAO
     catch ( ::CORBA::Exception& ex)
       {
         PortableInterceptor::ReplyStatus const status =
-          this->handle_any_exception (&ex);
+          this->handle_any_exception (std::addressof (ex));
 
         if (status == PortableInterceptor::LOCATION_FORWARD ||
             status == PortableInterceptor::TRANSPORT_RETRY)
-          s = TAO_INVOKE_RESTART;
+          {
+            s = TAO_INVOKE_RESTART;
+          }
         else if (status == PortableInterceptor::SYSTEM_EXCEPTION
                  || status == PortableInterceptor::USER_EXCEPTION)
-          throw;
+          {
+            throw;
+          }
       }
     catch (...)
       {
@@ -906,9 +961,13 @@ namespace TAO
 
         if (st == PortableInterceptor::LOCATION_FORWARD ||
             st == PortableInterceptor::TRANSPORT_RETRY)
-          s = TAO_INVOKE_RESTART;
+          {
+            s = TAO_INVOKE_RESTART;
+          }
         else
+        {
           throw;
+        }
       }
 #endif /* TAO_HAS_INTERCEPTORS */
 

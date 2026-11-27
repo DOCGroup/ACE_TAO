@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file RT_POA_Command.h
  *
@@ -29,22 +28,29 @@
 class TAO_RT_NOTIFY_TEST_Export TAO_Notify_Tests_RT_POA_Command : public TAO_Notify_Tests_Command
 {
 public:
-  /// Constructor
   TAO_Notify_Tests_RT_POA_Command ();
 
-  /// Destructor
-  ~TAO_Notify_Tests_RT_POA_Command ();
+  ~TAO_Notify_Tests_RT_POA_Command () override = default;
+
+  TAO_Notify_Tests_RT_POA_Command (TAO_Notify_Tests_RT_POA_Command const&) = delete;
+  TAO_Notify_Tests_RT_POA_Command (TAO_Notify_Tests_RT_POA_Command&&) = delete;
+  TAO_Notify_Tests_RT_POA_Command& operator= (TAO_Notify_Tests_RT_POA_Command const&) = delete;
+  TAO_Notify_Tests_RT_POA_Command& operator= (TAO_Notify_Tests_RT_POA_Command&&) = delete;
 
   /// Parse args and populate options.
-  /// The arg_shifter options are read in the following manner: -Create <name> -PriorityModel <CLIENT|SERVER> <priority> -Lanes <count> (-Lane <priority> ,<static_threads> <dynamic_threads>)* -Bands <count> (-Band <low> <high>)*
-  virtual void init (ACE_Arg_Shifter& arg_shifter);
+  /// The arg_shifter options use this syntax:
+  /// @code
+  /// -Create <name> -PriorityModel <CLIENT|SERVER> <priority> -Lanes <count>
+  /// (-Lane <priority> <static_threads> <dynamic_threads>)* -Bands <count> (-Band <low> <high>)*
+  /// @endcode
+  void init (ACE_Arg_Shifter& arg_shifter) override;
 
   /// Execute the command.
-  virtual void execute_i ();
+  void execute_i () override;
 
   /// Get the command name.
-  virtual const char* get_name ();
-  static const char* name ();
+  char const* get_name () override;
+  static char const *name ();
 
 protected:
   /// Create the POA with the params parsed.
@@ -57,15 +63,15 @@ protected:
     DUMP_STATE
   };
 
-  ACE_CString POA_name_;
+  ACE_CString POA_name_ {};
 
-  RTCORBA::PriorityModel priority_model_;
-  RTCORBA::Priority server_priority_;
+  RTCORBA::PriorityModel priority_model_ {RTCORBA::CLIENT_PROPAGATED};
+  RTCORBA::Priority server_priority_ {};
   RTCORBA::ThreadpoolLanes lanes_;
   RTCORBA::PriorityBands bands_;
 
-  CORBA::ULong thread_pool_static_threads_;
-  RTCORBA::Priority thread_pool_default_priority_;
+  CORBA::ULong thread_pool_static_threads_ {};
+  RTCORBA::Priority thread_pool_default_priority_ {};
 };
 
 #include /**/ "ace/post.h"

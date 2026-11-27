@@ -1,13 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Wait_On_LF_No_Upcall.h
  *
  *  @author  Chris Cleeland <cleeland@ociweb.com>
  */
-//=============================================================================
-
 
 #ifndef TAO_WAIT_ON_LF_NO_UPCALL_H
 #define TAO_WAIT_ON_LF_NO_UPCALL_H
@@ -40,20 +35,24 @@ namespace TAO
   class Wait_On_LF_No_Upcall : public TAO_Wait_On_Leader_Follower
   {
   public:
-     /// Constructor.
     explicit Wait_On_LF_No_Upcall (TAO_Transport *t);
 
-    /// Destructor.
     ~Wait_On_LF_No_Upcall () override = default;
 
-    /*! @copydoc TAO_Wait_Strategy::wait() */
+    /// @copydoc TAO_Wait_Strategy::wait()
     int wait (ACE_Time_Value *max_wait_time, TAO_Synch_Reply_Dispatcher &rd) override;
 
-    /*! @copydoc TAO_Wait_Strategy::can_process_upcalls() */
+    /// @copydoc TAO_Wait_Strategy::can_process_upcalls()
     bool can_process_upcalls () const override;
 
-    /*! @copydoc TAO_Wait_Strategy::defer_upcall() */
-    int defer_upcall (ACE_Event_Handler*) override;
+    /// @copydoc TAO_Wait_Strategy::defer_upcall()
+    int defer_upcall (ACE_Event_Handler *) override;
+
+    Wait_On_LF_No_Upcall () = delete;
+    Wait_On_LF_No_Upcall (Wait_On_LF_No_Upcall const &) = delete;
+    Wait_On_LF_No_Upcall &operator= (Wait_On_LF_No_Upcall const &) = delete;
+    Wait_On_LF_No_Upcall (Wait_On_LF_No_Upcall &&) = delete;
+    Wait_On_LF_No_Upcall &operator= (Wait_On_LF_No_Upcall &&) = delete;
   };
 }
 

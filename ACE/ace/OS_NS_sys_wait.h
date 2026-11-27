@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   OS_NS_sys_wait.h
  *
@@ -8,7 +5,6 @@
  *  @author Jesper S. M|ller<stophph@diku.dk>
  *  @author and a cast of thousands...
  */
-//=============================================================================
 
 #ifndef ACE_OS_NS_SYS_WAIT_H
 # define ACE_OS_NS_SYS_WAIT_H
@@ -36,10 +32,10 @@ namespace ACE_OS
   /// Calls OS @c ::wait function, so it's only portable to UNIX/POSIX
   /// platforms.
   ACE_NAMESPACE_INLINE_FUNCTION
-  pid_t wait (int * = 0);
+  pid_t wait (int * = nullptr);
 
   /**
-   * Calls @c ::WaitForSingleObject on Win32 and ACE::waitpid ()
+   * Calls @c WaitForSingleObject() on Win32 and @c ACE::waitpid()
    * otherwise.  Returns the passed in @a pid_t on success and -1 on
    * failure.
    * On Win32, @a pid is ignored if the @a handle is not equal to 0.

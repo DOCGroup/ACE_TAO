@@ -1,6 +1,3 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
 *  @file Locator_Repository.h
 *
@@ -9,7 +6,6 @@
 *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
 *  @author Priyanka Gontla <gontla_p@ociweb.com>
 */
-//=============================================================================
 
 #ifndef LOCATOR_REPOSITORY_H
 #define LOCATOR_REPOSITORY_H
@@ -61,17 +57,17 @@ public:
 
   virtual void shutdown ();
 
-  int unregister_if_address_reused (const ACE_CString& fqname,
-                                    const char* partial_ior,
+  int unregister_if_address_reused (ACE_CString const& fqname,
+                                    char const *partial_ior,
                                     ImR_Locator_i* imr_locator);
 
   /// Add a new server to the Repository
-  int add_server (const ACE_CString& fqname,
+  int add_server (ACE_CString const& fqname,
                   const ImplementationRepository::StartupOptions &options);
 
-  int add_server (const ACE_CString& fqname,
-                  const ACE_CString& partial_ior,
-                  const ACE_CString& ior,
+  int add_server (ACE_CString const& fqname,
+                  ACE_CString const& partial_ior,
+                  ACE_CString const& ior,
                   ImplementationRepository::ServerObject_ptr svrobj);
   int add_server_i (Server_Info *si);
 
@@ -79,15 +75,14 @@ public:
   /// a two step process, first the base POA must be registered then a
   /// list of peers may be added.
   int link_peers (Server_Info_Ptr base,
-                  const CORBA::StringSeq peers);
+                  CORBA::StringSeq const peers);
 
   /// Add a new activator to the Repository
-  int add_activator (const ACE_CString& name,
-    const CORBA::Long token,
-    const ACE_CString& ior = ACE_CString(""),
+  int add_activator (ACE_CString const& name,
+    CORBA::Long const token,
+    ACE_CString const& ior = ACE_CString(""),
     ImplementationRepository::Activator_ptr act =
-      ImplementationRepository::Activator::_nil()
-    );
+      ImplementationRepository::Activator::_nil());
 
   /// Update the associated information.
   int update_server (const Server_Info_Ptr& info);
@@ -95,22 +90,22 @@ public:
   int update_activator (const Activator_Info_Ptr& info);
 
   /// Update the peer's access state
-  virtual void notify_remote_access (const char *id,
+  virtual void notify_remote_access (char const *id,
                                      ImplementationRepository::AAM_Status state);
 
   /// Returns information related to startup.
-  Server_Info_Ptr get_active_server (const ACE_CString& name, int pid = 0);
+  Server_Info_Ptr get_active_server (ACE_CString const& name, int pid = 0);
 
   /// Returns information related to startup.
-  Activator_Info_Ptr get_activator (const ACE_CString& name);
+  Activator_Info_Ptr get_activator (ACE_CString const& name);
 
-  bool has_activator(const ACE_CString& name);
+  bool has_activator(ACE_CString const& name);
 
   /// Removes the server from the Repository.
-  int remove_server (const ACE_CString& name,
+  int remove_server (ACE_CString const& name,
                      ImR_Locator_i* imr_locator);
   /// Removes the activator from the Repository.
-  int remove_activator (const ACE_CString& name);
+  int remove_activator (ACE_CString const& name);
 
   /// Returns the internal hash map containing the server information.
   SIMap& servers();
@@ -120,15 +115,15 @@ public:
   const AIMap& activators() const;
 
   /// Indicate the persistence mode for the repository
-  virtual const ACE_TCHAR* repo_mode() const = 0;
+  virtual ACE_TCHAR const *repo_mode() const = 0;
 
   /// Convert to lower case
-  static ACE_CString lcase (const ACE_CString& s);
+  static ACE_CString lcase (ACE_CString const& s);
 
   /// Initialize the repo
   int init(PortableServer::POA_ptr root_poa,
            PortableServer::POA_ptr imr_poa,
-           const char* this_ior);
+           char const *this_ior);
 
   /// Indicate if multicast should be used
   bool multicast() const;
@@ -152,23 +147,23 @@ protected:
   virtual int persistent_update (const Activator_Info_Ptr& info, bool add) = 0;
 
   /// perform persistent remove
-  virtual int persistent_remove (const ACE_CString& name, bool activator) = 0;
+  virtual int persistent_remove (ACE_CString const& name, bool activator) = 0;
 
   /// recover the ImR Locator's IOR from the persisted file
   virtual int recover_ior ();
 
-  int setup_multicast (ACE_Reactor* reactor, const char* imr_ior);
+  int setup_multicast (ACE_Reactor* reactor, char const *imr_ior);
   void teardown_multicast ();
 
   bool registered () const;
 
   const Options& opts_;
   TAO_IOR_Multicast ior_multicast_;
-  const CORBA::ORB_var orb_;
+  CORBA::ORB_var const orb_;
   CORBA::String_var imr_ior_;
 
 private:
-  Server_Info_Ptr find_by_poa (const ACE_CString &name);
+  Server_Info_Ptr find_by_poa (ACE_CString const &name);
 
   bool registered_;
   /// The in-memory list of the server information.
@@ -192,20 +187,20 @@ public:
   virtual ~No_Backing_Store();
 
   /// indicate the persistence mode for the repository
-  virtual const ACE_TCHAR* repo_mode() const;
+  ACE_TCHAR const *repo_mode() const override;
 
 private:
   /// perform repo mode specific initialization (no-op)
-  virtual int init_repo(PortableServer::POA_ptr imr_poa);
+  int init_repo(PortableServer::POA_ptr imr_poa) override;
 
   /// perform server persistent update (no-op)
-  virtual int persistent_update(const Server_Info_Ptr& info, bool add);
+  int persistent_update(const Server_Info_Ptr& info, bool add) override;
 
   /// perform activator persistent update (no-op)
-  virtual int persistent_update(const Activator_Info_Ptr& info, bool add);
+  int persistent_update(const Activator_Info_Ptr& info, bool add) override;
 
   /// perform persistent remove (no-op)
-  virtual int persistent_remove(const ACE_CString& name, bool activator);
+  int persistent_remove(ACE_CString const& name, bool activator) override;
 };
 
 #endif /* LOCATOR_REPOSITORY_H */

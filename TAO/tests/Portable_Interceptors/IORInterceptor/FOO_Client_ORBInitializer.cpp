@@ -6,8 +6,7 @@
 
 void
 FOO_Client_ORBInitializer::pre_init (
-    PortableInterceptor::ORBInitInfo_ptr /* info */
-    )
+    PortableInterceptor::ORBInitInfo_ptr /* info */)
 {
 }
 
@@ -15,7 +14,7 @@ void
 FOO_Client_ORBInitializer::post_init (
     PortableInterceptor::ORBInitInfo_ptr info)
 {
-  IOP::CodecFactory_var codec_factory =
+  IOP::CodecFactory_var const codec_factory =
     info->codec_factory ();
 
   // Set up a structure that contains information necessary to
@@ -26,10 +25,10 @@ FOO_Client_ORBInitializer::post_init (
   encoding.minor_version = 2;
 
   // Obtain the CDR encapsulation Codec.
-  IOP::Codec_var codec =
+  IOP::Codec_var const codec =
     codec_factory->create_codec (encoding);
 
-  PortableInterceptor::ClientRequestInterceptor_ptr foo;
+  PortableInterceptor::ClientRequestInterceptor_ptr foo {};
   ACE_NEW_THROW_EX (foo,
                     FOO_ClientRequestInterceptor (codec.in ()),
                     CORBA::NO_MEMORY (
@@ -38,7 +37,7 @@ FOO_Client_ORBInitializer::post_init (
                         ENOMEM),
                       CORBA::COMPLETED_NO));
 
-  PortableInterceptor::ClientRequestInterceptor_var interceptor =
+  PortableInterceptor::ClientRequestInterceptor_var const interceptor =
     foo;
 
   info->add_client_request_interceptor (interceptor.in ());

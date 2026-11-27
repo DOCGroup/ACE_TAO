@@ -1,5 +1,3 @@
-/* -*- C++ -*-  */
-
 #ifndef TEST_I_H_
 #define TEST_I_H_
 

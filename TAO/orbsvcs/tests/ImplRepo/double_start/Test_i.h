@@ -1,5 +1,3 @@
-/* -*- C++ -*-  */
-
 #ifndef TEST_I_H_
 #define TEST_I_H_
 
@@ -12,15 +10,13 @@
 class  Test_i : public virtual POA_Test
 {
 public:
-  //Constructor
-  Test_i (CORBA::ORB_ptr orb);
+  explicit Test_i (CORBA::ORB_ptr orb);
 
-  //Destructor
-  virtual ~Test_i ();
+  ~Test_i () override;
 
-  virtual void arm ();
+  void arm () override;
 
-  virtual void trigger ();
+  void trigger () override;
 
   int exit_code () const;
 

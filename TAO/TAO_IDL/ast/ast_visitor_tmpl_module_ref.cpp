@@ -3,7 +3,6 @@
  *
  *  @author Jeff Parsons
  */
-//=============================================================================
 
 #include "ast_visitor_tmpl_module_ref.h"
 #include "ast_visitor_context.h"
@@ -15,6 +14,8 @@
 
 #include "global_extern.h"
 #include "nr_extern.h"
+
+#include <utility>
 
 ast_visitor_tmpl_module_ref::ast_visitor_tmpl_module_ref (
       ast_visitor_context *ctx)

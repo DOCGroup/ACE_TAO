@@ -9,20 +9,18 @@
 
 #include "ace/Dynamic_Service.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EC_Gateway_IIOP::TAO_EC_Gateway_IIOP ()
   :  busy_count_ (0),
-     update_posted_ (0),
-     cleanup_posted_ (0),
-     supplier_ec_suspended_ (0),
      supplier_info_ (0),
      consumer_info_ (0),
      consumer_ (this),
      consumer_is_active_ (false),
      supplier_ (this),
      supplier_is_active_ (false),
-     ec_control_ (nullptr),
      factory_ (nullptr),
      use_ttl_ (1),
      use_consumer_proxy_map_ (1)
@@ -34,7 +32,7 @@ TAO_EC_Gateway_IIOP::TAO_EC_Gateway_IIOP ()
 
       if (this->factory_ == nullptr)
         {
-          TAO_EC_Gateway_IIOP_Factory *f = nullptr;
+          TAO_EC_Gateway_IIOP_Factory *f {};
           ACE_NEW (f,
                    TAO_EC_Gateway_IIOP_Factory);
           this->factory_ = f;
@@ -48,11 +46,7 @@ TAO_EC_Gateway_IIOP::TAO_EC_Gateway_IIOP ()
     }
 }
 
-TAO_EC_Gateway_IIOP::~TAO_EC_Gateway_IIOP ()
-{
-   delete ec_control_;
-   ec_control_ = nullptr;
-}
+TAO_EC_Gateway_IIOP::~TAO_EC_Gateway_IIOP () = default;
 
 int
 TAO_EC_Gateway_IIOP::init (RtecEventChannelAdmin::EventChannel_ptr supplier_ec,
@@ -76,17 +70,19 @@ TAO_EC_Gateway_IIOP::init_i (RtecEventChannelAdmin::EventChannel_ptr supplier_ec
 
       if (ec_control_ == nullptr)
         {
-          ec_control_ = factory_->create_consumerec_control(this);
+          this->ec_control_.reset (this->factory_->create_consumerec_control (this));
           ec_control_->activate();
         }
 
       return 0;
     }
   else
-    ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                       "TAO_EC_Gateway_IIOP - init_i "
-                       "Supplier and consumer event channel reference "
-                       "should be nil.\n"), -1);
+    {
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                             "TAO_EC_Gateway_IIOP - init_i "
+                             "Supplier and consumer event channel reference "
+                             "should be nil.\n"), -1);
+    }
 }
 
 void
@@ -105,7 +101,7 @@ TAO_EC_Gateway_IIOP::cleanup_consumer_proxies ()
   // In case we are still pushing, don't cleanup the proxies
   if (this->busy_count_ != 0)
     {
-      this->cleanup_posted_ = 1;
+      this->cleanup_posted_ = true;
       return;
     }
 
@@ -132,12 +128,14 @@ TAO_EC_Gateway_IIOP::disconnect_consumer_proxies_i ()
         {
           RtecEventComm::PushConsumer_ptr consumer = (*j).int_id_;
           if (CORBA::is_nil (consumer))
+          {
             continue;
+          }
           try
             {
               consumer->disconnect_push_consumer ();
             }
-          catch (const CORBA::Exception&)
+          catch (CORBA::Exception const&)
             {
             }
           CORBA::release (consumer);
@@ -175,7 +173,7 @@ TAO_EC_Gateway_IIOP::reconnect_consumer_ec()
 
   if (this->busy_count_ != 0)
     {
-      this->update_posted_ = 1;
+      this->update_posted_ = true;
       return;
     }
 
@@ -184,10 +182,12 @@ TAO_EC_Gateway_IIOP::reconnect_consumer_ec()
 
 void
 TAO_EC_Gateway_IIOP::update_consumer (
-    const RtecEventChannelAdmin::ConsumerQOS& c_qos)
+    RtecEventChannelAdmin::ConsumerQOS const &c_qos)
 {
   if (c_qos.dependencies.length () == 0)
+  {
     return;
+  }
 
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
@@ -195,7 +195,7 @@ TAO_EC_Gateway_IIOP::update_consumer (
 
   if (this->busy_count_ != 0)
     {
-      this->update_posted_ = 1;
+      this->update_posted_ = true;
       return;
     }
 
@@ -213,7 +213,9 @@ TAO_EC_Gateway_IIOP::cleanup_consumer_proxies_i ()
         {
           RtecEventComm::PushConsumer_ptr consumer = (*j).int_id_;
           if (CORBA::is_nil (consumer))
+          {
             continue;
+          }
 
           CORBA::release (consumer);
         }
@@ -231,13 +233,15 @@ TAO_EC_Gateway_IIOP::cleanup_consumer_proxies_i ()
 
 void
 TAO_EC_Gateway_IIOP::update_consumer_i (
-    const RtecEventChannelAdmin::ConsumerQOS& c_qos)
+    RtecEventChannelAdmin::ConsumerQOS const &c_qos)
 {
   this->close_i ();
 
   if (CORBA::is_nil (this->consumer_ec_.in ())
       || CORBA::is_nil (this->supplier_ec_.in ()))
+  {
     return;
+  }
 
   // ORBSVCS_DEBUG ((LM_DEBUG, "ECG (%t) update_consumer_i\n"));
 
@@ -246,10 +250,10 @@ TAO_EC_Gateway_IIOP::update_consumer_i (
 
 void
 TAO_EC_Gateway_IIOP::open_i (
-    const RtecEventChannelAdmin::ConsumerQOS& c_qos)
+    RtecEventChannelAdmin::ConsumerQOS const &c_qos)
 {
-  // = Connect as a supplier to the consumer EC
-  RtecEventChannelAdmin::SupplierAdmin_var supplier_admin =
+  // Connect as a supplier to the consumer event channel.
+  RtecEventChannelAdmin::SupplierAdmin_var const supplier_admin =
     this->consumer_ec_->for_suppliers ();
 
   RtecEventChannelAdmin::ConsumerQOS sub = c_qos;
@@ -258,15 +262,15 @@ TAO_EC_Gateway_IIOP::open_i (
   // Change the RT_Info in the consumer QoS.
   // On the same loop we discover the subscriptions by event source,
   // and fill the consumer proxy map if we have to use this map.
-  for (CORBA::ULong i = 0; i < sub.dependencies.length (); ++i)
+  for (CORBA::ULong i {}; i < sub.dependencies.length (); ++i)
     {
       sub.dependencies[i].rt_info = this->supplier_info_;
 
       RtecEventChannelAdmin::ProxyPushConsumer_ptr proxy = nullptr;
-      const RtecEventComm::EventHeader &h =
+      RtecEventComm::EventHeader const &h =
         sub.dependencies[i].event.header;
 
-      RtecEventComm::EventSourceID sid = h.source;
+      RtecEventComm::EventSourceID const sid = h.source;
 
       //ORBSVCS_DEBUG ((LM_DEBUG,
       //            "ECG (%t)    trying (%d,%d)\n",
@@ -276,11 +280,15 @@ TAO_EC_Gateway_IIOP::open_i (
       // id or skip all subscriptions when we don't need to use the consumer
       // proxy map.
       if (sid == ACE_ES_EVENT_SOURCE_ANY || this->use_consumer_proxy_map_ == 0)
+      {
         continue;
+      }
 
       // Skip all the magic event types.
       if (ACE_ES_EVENT_ANY < h.type && h.type < ACE_ES_EVENT_UNDEFINED)
+      {
         continue;
+      }
 
       if (this->consumer_proxy_map_.find (sid, proxy) == -1)
         {
@@ -300,7 +308,7 @@ TAO_EC_Gateway_IIOP::open_i (
       this->supplier_is_active_ = true;
 
       // Obtain a reference to our supplier personality...
-      RtecEventComm::PushSupplier_var supplier_ref = this->supplier_._this ();
+      RtecEventComm::PushSupplier_var const supplier_ref = this->supplier_._this ();
 
       // For each subscription by source build the set of publications
       // (they may several, by type, for instance) and connect to the
@@ -313,29 +321,33 @@ TAO_EC_Gateway_IIOP::open_i (
           pub.publications.length (sub.dependencies.length () + 1);
           pub.is_gateway = true;
 
-          int c = 0;
+          int c {};
 
-          RtecEventComm::EventSourceID sid = (*j).ext_id_;
-          for (CORBA::ULong k = 0; k < sub.dependencies.length (); ++k)
+          RtecEventComm::EventSourceID const sid = (*j).ext_id_;
+          for (CORBA::ULong k {}; k < sub.dependencies.length (); ++k)
             {
-              const RtecEventComm::EventHeader& h =
+              RtecEventComm::EventHeader const &h =
                 sub.dependencies[k].event.header;
               if (h.source != sid
                   || (ACE_ES_EVENT_ANY < h.type
                       && h.type < ACE_ES_EVENT_UNDEFINED))
+              {
                 continue;
+              }
               pub.publications[c].event.header = h;
               pub.publications[c].dependency_info.dependency_type =
                 RtecBase::TWO_WAY_CALL;
               pub.publications[c].dependency_info.number_of_calls = 1;
               pub.publications[c].dependency_info.rt_info = this->consumer_info_;
-              c++;
+              ++c;
             }
           //ORBSVCS_DEBUG ((LM_DEBUG,
           //            "ECG (%t) supplier id %d has %d elements\n",
           //            sid, c));
           if (c == 0)
+          {
             continue;
+          }
 
           pub.publications.length (c);
 
@@ -352,20 +364,24 @@ TAO_EC_Gateway_IIOP::open_i (
   RtecEventChannelAdmin::SupplierQOS pub;
   pub.publications.length (sub.dependencies.length () + 1);
   pub.is_gateway = true;
-  int c = 0;
-  for (CORBA::ULong k = 0; k < sub.dependencies.length (); ++k)
+  int c {};
+  for (CORBA::ULong k {}; k < sub.dependencies.length (); ++k)
     {
-      const RtecEventComm::EventHeader& h =
+      RtecEventComm::EventHeader const &h =
         sub.dependencies[k].event.header;
-      RtecEventComm::EventSourceID sid = h.source;
+      RtecEventComm::EventSourceID const sid = h.source;
 
       // Skip all subscriptions with a specific source when we use the map
       if (sid != ACE_ES_EVENT_SOURCE_ANY && this->use_consumer_proxy_map_ == 1)
+      {
         continue;
+      }
 
       // Skip all the magic event types.
       if (ACE_ES_EVENT_ANY < h.type && h.type < ACE_ES_EVENT_UNDEFINED)
+      {
         continue;
+      }
 
       pub.publications[c].event.header = h;
       pub.publications[c].event.header.creation_time = ORBSVCS_Time::zero ();
@@ -373,7 +389,7 @@ TAO_EC_Gateway_IIOP::open_i (
         RtecBase::TWO_WAY_CALL;
       pub.publications[c].dependency_info.number_of_calls = 1;
       pub.publications[c].dependency_info.rt_info = this->consumer_info_;
-      c++;
+      ++c;
     }
 
   if (c > 0)
@@ -381,7 +397,7 @@ TAO_EC_Gateway_IIOP::open_i (
       this->supplier_is_active_ = true;
 
       // Obtain a reference to our supplier personality...
-      RtecEventComm::PushSupplier_var supplier_ref =
+      RtecEventComm::PushSupplier_var const supplier_ref =
         this->supplier_._this ();
 
       // Obtain the consumer....
@@ -414,7 +430,7 @@ TAO_EC_Gateway_IIOP::open_i (
 
 void
 TAO_EC_Gateway_IIOP::update_supplier (
-    const RtecEventChannelAdmin::SupplierQOS&)
+    RtecEventChannelAdmin::SupplierQOS const &)
 {
   // Do nothing...
 }
@@ -436,7 +452,7 @@ TAO_EC_Gateway_IIOP::disconnect_push_supplier ()
 }
 
 void
-TAO_EC_Gateway_IIOP::push (const RtecEventComm::EventSet &events)
+TAO_EC_Gateway_IIOP::push (RtecEventComm::EventSet const &events)
 {
   // ORBSVCS_DEBUG ((LM_DEBUG, "TAO_EC_Gateway_IIOP::push (%P|%t) -\n"));
 
@@ -449,25 +465,27 @@ TAO_EC_Gateway_IIOP::push (const RtecEventComm::EventSet &events)
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
-    this->busy_count_++;
+    ++this->busy_count_;
   }
 
-  // ORBSVCS_DEBUG ((LM_DEBUG, "ECG: %d event(s)\n", events.length ()));
+  // ORBSVCS_DEBUG ((LM_DEBUG, "ECG: %u event(s)\n", events.length ()));
 
   // @@ TODO, there is an extra data copy here, we should do the event
   // modification without it and only compact the necessary events.
   RtecEventComm::EventSet out (1);
   out.length (1);
-  for (CORBA::ULong i = 0; i < events.length (); ++i)
+  for (CORBA::ULong i {}; i < events.length (); ++i)
     {
       if (this->use_ttl_ == 1)
         {
           if (events[i].header.ttl == 0)
+          {
             continue;
+          }
         }
 
       RtecEventChannelAdmin::ProxyPushConsumer_ptr proxy = nullptr;
-      RtecEventComm::EventSourceID sid = events[i].header.source;
+      RtecEventComm::EventSourceID const sid = events[i].header.source;
       if (sid == ACE_ES_EVENT_SOURCE_ANY || this->use_consumer_proxy_map_ == 0
           || this->consumer_proxy_map_.find (sid, proxy) == -1)
         {
@@ -477,12 +495,16 @@ TAO_EC_Gateway_IIOP::push (const RtecEventComm::EventSet &events)
         }
 
       if (CORBA::is_nil (proxy))
+      {
         continue;
+      }
 
       out[0] = events[i];
 
       if (this->use_ttl_ == 1)
-        out[0].header.ttl--;
+      {
+        --out[0].header.ttl;
+      }
 
       // ORBSVCS_DEBUG ((LM_DEBUG, "ECG: event sent to proxy\n"));
       this->push_to_consumer(proxy, out);
@@ -491,17 +513,17 @@ TAO_EC_Gateway_IIOP::push (const RtecEventComm::EventSet &events)
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
-    this->busy_count_--;
+    --this->busy_count_;
 
-    if (this->busy_count_ == 0 && this->cleanup_posted_ != 0)
+    if (this->busy_count_ == 0 && this->cleanup_posted_)
       {
-        this->cleanup_posted_ = 0;
+        this->cleanup_posted_ = false;
         this->cleanup_consumer_proxies_i ();
       }
 
-    if (this->busy_count_ == 0 && this->update_posted_ != 0)
+    if (this->busy_count_ == 0 && this->update_posted_)
       {
-        this->update_posted_ = 0;
+        this->update_posted_ = false;
         this->update_consumer_i (this->c_qos_);
       }
   }
@@ -510,13 +532,13 @@ TAO_EC_Gateway_IIOP::push (const RtecEventComm::EventSet &events)
 void
 TAO_EC_Gateway_IIOP::push_to_consumer (
     RtecEventChannelAdmin::ProxyPushConsumer_ptr consumer,
-    const RtecEventComm::EventSet& event)
+    RtecEventComm::EventSet const &event)
 {
   try
     {
       consumer->push (event);
     }
-  catch (const CORBA::OBJECT_NOT_EXIST&)
+  catch (CORBA::OBJECT_NOT_EXIST const&)
     {
       ec_control_->event_channel_not_exist (this);
     }
@@ -524,7 +546,7 @@ TAO_EC_Gateway_IIOP::push_to_consumer (
     {
       ec_control_->system_exception (this, sysex);
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const&)
     {
       // Shouldn't happen.
     }
@@ -544,7 +566,7 @@ TAO_EC_Gateway_IIOP::shutdown ()
       PortableServer::POA_var poa =
         this->supplier_._default_POA ();
       PortableServer::ObjectId_var id =
-        poa->servant_to_id (&this->supplier_);
+        poa->servant_to_id (std::addressof (this->supplier_));
       poa->deactivate_object (id.in ());
       this->supplier_is_active_ = false;
     }
@@ -554,7 +576,7 @@ TAO_EC_Gateway_IIOP::shutdown ()
       PortableServer::POA_var poa =
         this->consumer_._default_POA ();
       PortableServer::ObjectId_var id =
-        poa->servant_to_id (&this->consumer_);
+        poa->servant_to_id (std::addressof (this->consumer_));
       poa->deactivate_object (id.in ());
       this->consumer_is_active_ = false;
     }
@@ -616,7 +638,7 @@ TAO_EC_Gateway_IIOP::consumer_ec_non_existent (
         CORBA::INTERNAL ());
 
     disconnected = false;
-    if (this->is_consumer_ec_connected_i () == 0)
+    if (!this->is_consumer_ec_connected_i ())
       {
         disconnected = true;
         return false;
@@ -635,22 +657,22 @@ TAO_EC_Gateway_IIOP::consumer_ec_non_existent (
 void
 TAO_EC_Gateway_IIOP::suspend_supplier_ec ()
 {
-  if (!CORBA::is_nil (this->supplier_proxy_.in ()) && supplier_ec_suspended_ == 0)
+  if (!CORBA::is_nil (this->supplier_proxy_.in ()) && !this->supplier_ec_suspended_)
     {
       this->supplier_proxy_->suspend_connection ();
 
-      supplier_ec_suspended_ = 1;
+      this->supplier_ec_suspended_ = true;
     }
 }
 
 void
 TAO_EC_Gateway_IIOP::resume_supplier_ec ()
 {
-  if (!CORBA::is_nil (this->supplier_proxy_.in ()) && supplier_ec_suspended_ == 1)
+  if (!CORBA::is_nil (this->supplier_proxy_.in ()) && this->supplier_ec_suspended_)
     {
       this->supplier_proxy_->resume_connection ();
 
-      supplier_ec_suspended_ = 0;
+      this->supplier_ec_suspended_ = false;
     }
 }
 

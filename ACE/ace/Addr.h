@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Addr.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef ACE_ADDR_H
 #define ACE_ADDR_H
@@ -33,43 +29,49 @@ public:
   /// Initializes instance variables.
   ACE_Addr (int type = -1, int size = -1);
 
-  /// Destructor.
   virtual ~ACE_Addr () = default;
 
-  // = Get/set the size of the address.
+  /// @name Address size accessors
+  /// @{
 
   /// Return the size of the address.
   int get_size () const;
 
   /// Sets the size of the address.
   void set_size (int size);
+  /// @}
 
-  // = Get/set the type of the address.
+  /// @name Address type accessors
+  /// @{
 
   /// Get the type of the address.
   int get_type () const;
 
   /// Set the type of the address.
   void set_type (int type);
+  /// @}
 
   /// Return a pointer to the address.
   virtual void *get_addr () const;
 
   /// Set a pointer to the address.
-  virtual void set_addr (const void *, int len);
+  virtual void set_addr (void const *, int len);
 
-  // = Equality/inequality tests
+  /// @name Address comparison
+  /// @{
+
   /// Check for address equality.
-  bool operator == (const ACE_Addr &sap) const;
+  bool operator == (ACE_Addr const &sap) const;
 
   /// Check for address inequality.
-  bool operator != (const ACE_Addr &sap) const;
+  bool operator != (ACE_Addr const &sap) const;
+  /// @}
 
   /// Initializes instance variables.
   void base_set (int type, int size);
 
   /// Wild-card address.
-  static const ACE_Addr sap_any;
+  static ACE_Addr const sap_any;
 
   /// Returns a hash value.  This should be overwritten by a subclass
   /// that can produce a better hash value.

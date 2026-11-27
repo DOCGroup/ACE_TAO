@@ -1,4 +1,5 @@
 #include "FP_Scheduler.h"
+#include "../Guid_Utils.h"
 #include "tao/RTScheduling/Request_Interceptor.h"
 #include "test.h"
 #include <atomic>
@@ -20,7 +21,7 @@ Segment_Sched_Param_Policy::value (RTCORBA::Priority value)
 CORBA::Policy_ptr
 Segment_Sched_Param_Policy::copy ()
 {
-  Segment_Sched_Param_Policy *copy = 0;
+  Segment_Sched_Param_Policy *copy {};
   ACE_NEW_THROW_EX (copy,
                     Segment_Sched_Param_Policy,
                     CORBA::NO_MEMORY ());
@@ -51,15 +52,13 @@ Fixed_Priority_Scheduler::Fixed_Priority_Scheduler (CORBA::ORB_ptr orb)
       this->current_ =
         RTScheduling::Current::_narrow (object.in ());
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Caught exception:");
     }
 }
 
-Fixed_Priority_Scheduler::~Fixed_Priority_Scheduler ()
-{
-}
+Fixed_Priority_Scheduler::~Fixed_Priority_Scheduler () = default;
 
 FP_Scheduling::SegmentSchedulingParameterPolicy_ptr
 Fixed_Priority_Scheduler::create_segment_scheduling_parameter (RTCORBA::Priority segment_priority)
@@ -78,18 +77,17 @@ Fixed_Priority_Scheduler::create_segment_scheduling_parameter (RTCORBA::Priority
   return segment_policy;
 }
 
-
 void
-Fixed_Priority_Scheduler::begin_new_scheduling_segment (const RTScheduling::Current::IdType &,
-                                                        const char *,
+Fixed_Priority_Scheduler::begin_new_scheduling_segment (RTScheduling::Current::IdType const &,
+                                                        char const *,
                                                         CORBA::Policy_ptr /*sched_policy*/,
                                                         CORBA::Policy_ptr)
 {
 }
 
 void
-Fixed_Priority_Scheduler::begin_nested_scheduling_segment (const RTScheduling::Current::IdType &guid,
-                                                           const char *name,
+Fixed_Priority_Scheduler::begin_nested_scheduling_segment (RTScheduling::Current::IdType const &guid,
+                                                           char const *name,
                                                            CORBA::Policy_ptr sched_param,
                                                            CORBA::Policy_ptr implicit_sched_param)
 {
@@ -100,8 +98,8 @@ Fixed_Priority_Scheduler::begin_nested_scheduling_segment (const RTScheduling::C
 }
 
 void
-Fixed_Priority_Scheduler::update_scheduling_segment (const RTScheduling::Current::IdType &guid,
-                                                     const char *name,
+Fixed_Priority_Scheduler::update_scheduling_segment (RTScheduling::Current::IdType const &guid,
+                                                     char const *name,
                                                      CORBA::Policy_ptr sched_param,
                                                      CORBA::Policy_ptr implicit_sched_param)
 {
@@ -112,18 +110,17 @@ Fixed_Priority_Scheduler::update_scheduling_segment (const RTScheduling::Current
 }
 
 void
-Fixed_Priority_Scheduler::end_scheduling_segment (const RTScheduling::Current::IdType &,
-                                                  const char *)
+Fixed_Priority_Scheduler::end_scheduling_segment (RTScheduling::Current::IdType const &,
+                                                  char const *)
 {
 }
 
 void
-Fixed_Priority_Scheduler::end_nested_scheduling_segment (const RTScheduling::Current::IdType &,
-                                                         const char *,
+Fixed_Priority_Scheduler::end_nested_scheduling_segment (RTScheduling::Current::IdType const &,
+                                                         char const *,
                                                          CORBA::Policy_ptr)
 {
 }
-
 
 void
 Fixed_Priority_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr request_info)
@@ -132,23 +129,23 @@ Fixed_Priority_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_p
   ACE_hthread_t current;
   ACE_Thread::self (current);
   if (ACE_Thread::getprio (current, priority) == -1)
+  {
     return;
+  }
 
   ACE_DEBUG ((LM_DEBUG,
               "Request thread priority is %d %d\n",
               priority,
               ACE_DEFAULT_THREAD_PRIORITY));
 
-
   RTScheduling::Current::IdType_var guid = this->current_->id ();
-  IOP::ServiceContext* srv_con = new IOP::ServiceContext;
-  srv_con->context_id = Client_Interceptor::SchedulingInfo;
-  srv_con->context_data.length (sizeof (size_t));
-  ACE_OS::memcpy (srv_con->context_data.get_buffer (),
-                  guid->get_buffer (),
-                  sizeof (size_t));
-  request_info->add_request_service_context (*srv_con,
-                                             0);
+  rtscheduling_guid_value (guid.in ());
+  IOP::ServiceContext srv_con;
+  srv_con.context_id = Client_Interceptor::SchedulingInfo;
+  srv_con.context_data.length (sizeof (size_t));
+  std::memcpy (srv_con.context_data.get_buffer (), guid->get_buffer (), sizeof (size_t));
+  request_info->add_request_service_context (srv_con,
+                                             false);
 }
 
 void
@@ -158,15 +155,12 @@ Fixed_Priority_Scheduler::receive_request (PortableInterceptor::ServerRequestInf
                                            CORBA::Policy_out /*sched_param*/,
                                            CORBA::Policy_out /*implicit_sched_param*/)
 {
-  IOP::ServiceContext* serv_cxt =
+  IOP::ServiceContext_var serv_cxt =
     request_info->get_request_service_context (Server_Interceptor::SchedulingInfo);
 
   if (serv_cxt != 0)
     {
-      size_t gu_id;
-      ACE_OS::memcpy (&gu_id,
-                      serv_cxt->context_data.get_buffer (),
-                      serv_cxt->context_data.length ());
+      size_t const gu_id = rtscheduling_guid_value (serv_cxt->context_data);
 
       ACE_TCHAR msg [BUFSIZ];
       ACE_OS::sprintf (msg,
@@ -176,24 +170,25 @@ Fixed_Priority_Scheduler::receive_request (PortableInterceptor::ServerRequestInf
 
       DT_TEST::instance ()->dt_creator ()->log_msg (ACE_TEXT_ALWAYS_CHAR(msg));
 
-      RTScheduling::Current::IdType* guid = 0;
-      ACE_NEW (guid,
-               RTScheduling::Current::IdType);
-
+      RTScheduling::Current::IdType *guid_ptr {};
+      ACE_NEW_THROW_EX (guid_ptr,
+                        RTScheduling::Current::IdType,
+                        CORBA::NO_MEMORY ());
+      RTScheduling::Current::IdType_var guid = guid_ptr;
 
       // Generate GUID.
       guid->length (sizeof(size_t));
 
-      ACE_OS::memcpy (guid->get_buffer (),
-                      &gu_id,
-                      sizeof(size_t));
+      std::memcpy (guid->get_buffer (), &gu_id, sizeof (gu_id));
 
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    "Receive request The Guid is %d\n",
-                    gu_id));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "Receive request The Guid is %B\n",
+                      gu_id));
+        }
 
-      guid_out.ptr () = guid;
+      guid_out = guid._retn ();
     }
 
 }
@@ -234,43 +229,43 @@ Fixed_Priority_Scheduler::receive_other (PortableInterceptor::ClientRequestInfo_
 }
 
 void
-Fixed_Priority_Scheduler::cancel (const RTScheduling::Current::IdType &)
+Fixed_Priority_Scheduler::cancel (RTScheduling::Current::IdType const &)
 {
 }
 
 CORBA::PolicyList*
 Fixed_Priority_Scheduler::scheduling_policies ()
 {
-  return 0;
+  return nullptr;
 }
 
 void
-Fixed_Priority_Scheduler::scheduling_policies (const CORBA::PolicyList &)
+Fixed_Priority_Scheduler::scheduling_policies (CORBA::PolicyList const &)
 {
 }
 
 CORBA::PolicyList*
 Fixed_Priority_Scheduler::poa_policies ()
 {
-  return 0;
+  return nullptr;
 }
 
 char *
 Fixed_Priority_Scheduler::scheduling_discipline_name ()
 {
-  return 0;
+  return nullptr;
 }
 
 RTScheduling::ResourceManager_ptr
-Fixed_Priority_Scheduler::create_resource_manager (const char *,
+Fixed_Priority_Scheduler::create_resource_manager (char const *,
                                                    CORBA::Policy_ptr)
 {
-  return 0;
+  return nullptr;
 }
 
 void
 Fixed_Priority_Scheduler::set_scheduling_parameter (PortableServer::Servant &,
-                                                    const char *,
+                                                    char const *,
                                                     CORBA::Policy_ptr)
 {
 }

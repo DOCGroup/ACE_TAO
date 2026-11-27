@@ -13,9 +13,9 @@
 
 class CSelectNSDialog : public CDialog
 {
-// Construction
 public:
-  CSelectNSDialog(CWnd* pParent = 0);   // standard constructor
+  /// standard constructor
+  CSelectNSDialog(CWnd* pParent = nullptr);
 
 // Dialog Data
   //{{AFX_DATA(CSelectNSDialog)
@@ -29,7 +29,8 @@ public:
   // ClassWizard generated virtual function overrides
   //{{AFX_VIRTUAL(CSelectNSDialog)
   protected:
-  virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
+  /// DDX/DDV support
+  virtual void DoDataExchange(CDataExchange* pDX);
   //}}AFX_VIRTUAL
 
 // Implementation
@@ -43,7 +44,6 @@ protected:
   afx_msg void OnDestroy();
   //}}AFX_MSG
   DECLARE_MESSAGE_MAP()
-
 
   ACE_Configuration_Win32Registry* m_pConfig;
   CString   m_IOR;

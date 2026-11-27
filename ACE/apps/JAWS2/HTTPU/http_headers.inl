@@ -1,4 +1,3 @@
-// -*- c++ -*-
 #if !defined (ACE_HAS_INLINED_OSCALLS)
 # undef ACE_INLINE
 # define ACE_INLINE
@@ -11,36 +10,36 @@ HTTP_Hdr_Node::operator int () const
 }
 
 ACE_INLINE
-HTTP_Hdr_Node::operator const char * () const
+HTTP_Hdr_Node::operator char const * () const
 {
   return this->token_;
 }
 
-ACE_INLINE const char *
+ACE_INLINE char const *
 HTTP_Hdr_Node::format () const
 {
   return this->format_;
 }
 
-ACE_INLINE const HTTP_Hdr_Node &
+ACE_INLINE HTTP_Hdr_Node const &
 HTTP_HCodes::hcode (int type) const
 {
-  const HTTP_Hdr_Node **hn = this->header_nodes_->find (type);
+  HTTP_Hdr_Node const **hn = this->header_nodes_->find (type);
 
   // No error checking!
   return **hn;
 }
 
-ACE_INLINE const char *
+ACE_INLINE char const *
 HTTP_Headers::header_token (int name) const
 {
-  const HTTP_Hdr_Node **hn = this->header_nodes_->find (name);
-  return ((hn && *hn) ? (const char *)**hn : 0);
+  HTTP_Hdr_Node const **hn = this->header_nodes_->find (name);
+  return hn && *hn ? static_cast<char const *> (**hn) : nullptr;
 }
 
-ACE_INLINE const char *
+ACE_INLINE char const *
 HTTP_Headers::header_strings (int name) const
 {
-  const HTTP_Hdr_Node **hn = this->header_nodes_->find (name);
-  return ((hn && *hn) ? (*hn)->format () : 0);
+  HTTP_Hdr_Node const **hn = this->header_nodes_->find (name);
+  return ((hn && *hn) ? (*hn)->format () : nullptr);
 }

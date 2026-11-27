@@ -47,12 +47,10 @@ TAO_FT_ServerORBInitializer::register_policy_factories (
   // types since a single policy factory is used to create each of
   // the different types of FTCORBA policies.
 
-
   CORBA::PolicyType type = FT::HEARTBEAT_ENABLED_POLICY;
   info->register_policy_factory (type,
                                  policy_factory.in ());
 }
-
 
 void
 TAO_FT_ServerORBInitializer::register_server_request_interceptors (
@@ -70,6 +68,5 @@ TAO_FT_ServerORBInitializer::register_server_request_interceptors (
 
   info->add_server_request_interceptor (server_interceptor.in ());
 }
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL

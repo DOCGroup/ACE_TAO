@@ -22,8 +22,10 @@ Task_Activator<Task>::Task_Activator (int priority,
                                       Task *task)
   : task_ (task)
 {
-  if (this->task_ == 0)
-    return;
+  if (this->task_ == nullptr)
+    {
+      return;
+    }
 
   // We explicitly ignore errors, this is exactly what we do in the
   // test anyway.  In a generic class we would need to throw an
@@ -34,7 +36,7 @@ Task_Activator<Task>::Task_Activator (int priority,
                              priority) == -1)
     {
       // Release, we cannot wait for it or anything like that...
-      this->task_ = 0;
+      this->task_ = nullptr;
       ACE_DEBUG ((LM_DEBUG,
                   "Task_Activator failed %p\n", ""));
     }
@@ -43,8 +45,10 @@ Task_Activator<Task>::Task_Activator (int priority,
 template<class Task>
 Task_Activator<Task>::~Task_Activator ()
 {
-  if (this->task_ == 0)
-    return;
+  if (this->task_ == nullptr)
+    {
+      return;
+    }
 
   // Wait until the task terminates
   this->task_->wait ();

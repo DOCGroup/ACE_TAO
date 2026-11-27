@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "ace/Task.h"
 #include "ace/svc_export.h"
 #include "tao/default_resource.h"
@@ -20,8 +19,15 @@ class Alt_Resource_Factory_Export My_Resource_Factory
   : public TAO_Default_Resource_Factory
 {
 public:
+  My_Resource_Factory () = default;
+
   /// Return the @c ACE_Reactor that will be utilized by the ORB.
-  virtual ACE_Reactor *get_reactor ();
+  ACE_Reactor *get_reactor () override;
+
+  My_Resource_Factory (My_Resource_Factory const &) = delete;
+  My_Resource_Factory &operator= (My_Resource_Factory const &) = delete;
+  My_Resource_Factory (My_Resource_Factory &&) = delete;
+  My_Resource_Factory &operator= (My_Resource_Factory &&) = delete;
 };
 
 ACE_FACTORY_DECLARE (Alt_Resource_Factory, My_Resource_Factory)
@@ -35,14 +41,21 @@ ACE_FACTORY_DECLARE (Alt_Resource_Factory, My_Resource_Factory)
 class ACE_Svc_Export DLL_ORB : public ACE_Task_Base
 {
 public:
+  DLL_ORB () = default;
+
   /// Initialize the @c TAO_ORB_Manager.
-  virtual int init (int argc, ACE_TCHAR *argv[]);
+  int init (int argc, ACE_TCHAR *argv[]) override;
 
   /// Shutdown the @c TAO_ORB_Manager.
-  virtual int fini ();
+  int fini () override;
 
   /// Concurrency hook.
-  virtual int svc ();
+  int svc () override;
+
+  DLL_ORB (DLL_ORB const &) = delete;
+  DLL_ORB &operator= (DLL_ORB const &) = delete;
+  DLL_ORB (DLL_ORB &&) = delete;
+  DLL_ORB &operator= (DLL_ORB &&) = delete;
 
 public:
   /// ORB pseudo-reference.
@@ -60,33 +73,37 @@ public:
  *
  * @brief Define a class that dynamically links the Time_Date service
  *        into a server process via the @c ACE_Service_Configurator.
- *        Note that this assumes the ORB has been linked previously.
+ *        @note This assumes the ORB has been linked previously.
  */
 class ACE_Svc_Export Time_Date_Servant : public ACE_Service_Object
 {
 public:
-  /// Constructor.
-  Time_Date_Servant ();
+  Time_Date_Servant () = default;
+
+  Time_Date_Servant (Time_Date_Servant const &) = delete;
+  Time_Date_Servant &operator= (Time_Date_Servant const &) = delete;
+  Time_Date_Servant (Time_Date_Servant &&) = delete;
+  Time_Date_Servant &operator= (Time_Date_Servant &&) = delete;
 
   /// Initialize the @c Time_Date servant.
-  virtual int init (int argc, ACE_TCHAR *argv[]);
+  int init (int argc, ACE_TCHAR *argv[]) override;
 
   /// Parse the "command-line" arguments.
   int parse_args (int argc, ACE_TCHAR *argv[]);
 
 private:
   /// Servant for the @c Time_Date object.
-  Time_Date_i * servant_;
+  Time_Date_i *servant_ {};
 
   /// File where the IOR of the server object is stored.
-  const ACE_TCHAR *ior_output_file_;
+  ACE_TCHAR const *ior_output_file_ {};
 
   /// Name of the ORB we're linking dynamically.
-  ACE_CString orb_;
+  ACE_CString orb_ {};
 };
 
-// The following Factory is used by the <ACE_Service_Config> and
-// dll_orb.conf file to dynamically initialize the state of the
-// Time_Date service.
+/// The following Factory is used by @c ACE_Service_Config and the
+/// dll_orb.conf file to dynamically initialize the state of the
+/// Time_Date service.
 ACE_SVC_FACTORY_DECLARE (DLL_ORB)
 ACE_SVC_FACTORY_DECLARE (Time_Date_Servant)

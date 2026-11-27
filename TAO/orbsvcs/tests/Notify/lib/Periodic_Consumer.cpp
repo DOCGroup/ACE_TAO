@@ -11,6 +11,8 @@
 #include "LookupManager.h"
 #include "Priority_Mapping.h"
 
+#include <cstring>
+
 int WARMUP_COUNT = 10;
 
 TAO_Notify_Tests_Periodic_Consumer::TAO_Notify_Tests_Periodic_Consumer ()
@@ -18,15 +20,12 @@ TAO_Notify_Tests_Periodic_Consumer::TAO_Notify_Tests_Periodic_Consumer ()
   , warmup_countdown_ (WARMUP_COUNT)
   , max_count_ (-1)
   , load_ (0)
-  , client_ (0)
   , check_priority_ (0)
   , stop_received_ (0)
 {
 }
 
-TAO_Notify_Tests_Periodic_Consumer::~TAO_Notify_Tests_Periodic_Consumer ()
-{
-}
+TAO_Notify_Tests_Periodic_Consumer::~TAO_Notify_Tests_Periodic_Consumer () = default;
 
 void
 TAO_Notify_Tests_Periodic_Consumer::task_callback (TAO_Notify_Tests_Task_Callback* client)
@@ -39,13 +38,16 @@ TAO_Notify_Tests_Periodic_Consumer::init_state (ACE_Arg_Shifter& arg_shifter)
 {
   // First, let the base class look for options.
   if (TAO_Notify_Tests_StructuredPushConsumer::init_state (arg_shifter) == -1)
+  {
     return -1;
+  }
 
-  const ACE_TCHAR *current_arg = 0;
+  ACE_TCHAR const *current_arg {};
 
   while (arg_shifter.is_anything_left ())
     {
-      if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-MaxCount"))))
+      current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-MaxCount"));
+      if (current_arg != nullptr)
         {
           this->max_count_ = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
@@ -53,7 +55,9 @@ TAO_Notify_Tests_Periodic_Consumer::init_state (ACE_Arg_Shifter& arg_shifter)
           if (max_count_ == 0)
           {
             if (this->client_)
+            {
               this->client_->done (this);
+            }
           }
         }
        else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Check_Priority")) == 0)
@@ -72,14 +76,16 @@ TAO_Notify_Tests_Periodic_Consumer::init_state (ACE_Arg_Shifter& arg_shifter)
 }
 
 void
-TAO_Notify_Tests_Periodic_Consumer::handle_start_event (const CosNotification::PropertySeq& prop_seq)
+TAO_Notify_Tests_Periodic_Consumer::handle_start_event (CosNotification::PropertySeq const & prop_seq)
 {
   if (TAO_debug_level > 0)
+  {
     ACE_DEBUG ((LM_DEBUG, "(%P, %t)Consumer %s received inital (-1)th event\n", this->name_.c_str ()));
+  }
 
   for (CORBA::ULong i = 0; i < prop_seq.length (); ++i)
     {
-      if (ACE_OS::strcmp (prop_seq[i].name.in (), "BaseTime") == 0)
+      if (std::strcmp (prop_seq[i].name.in (), "BaseTime") == 0)
         {
           TimeBase::TimeT base_time;
           ACE_hrtime_t base_time_hrtime;
@@ -91,11 +97,11 @@ TAO_Notify_Tests_Periodic_Consumer::handle_start_event (const CosNotification::P
         }
       // if max_count has not been already specified, get it from the supplier.
       else if (this->max_count_ == -1 &&
-               ACE_OS::strcmp (prop_seq[i].name.in (), "MaxCount") == 0)
+               std::strcmp (prop_seq[i].name.in (), "MaxCount") == 0)
         {
           prop_seq[i].value >>= this->max_count_;
         }
-      else if (ACE_OS::strcmp (prop_seq[i].name.in (), "Load") == 0)
+      else if (std::strcmp (prop_seq[i].name.in (), "Load") == 0)
         {
           prop_seq[i].value >>= this->load_;
         }
@@ -109,7 +115,7 @@ TAO_Notify_Tests_Periodic_Consumer::handle_start_event (const CosNotification::P
 }
 
 void
-TAO_Notify_Tests_Periodic_Consumer::check_priority (const CosNotification::PropertySeq& prop_seq)
+TAO_Notify_Tests_Periodic_Consumer::check_priority (CosNotification::PropertySeq const & prop_seq)
 {
   // Check if the event carries a Priority.
   int event_has_priority_set = 0;
@@ -117,7 +123,7 @@ TAO_Notify_Tests_Periodic_Consumer::check_priority (const CosNotification::Prope
 
   for (CORBA::ULong i = 0; i < prop_seq.length (); ++i)
     {
-      if (ACE_OS::strcmp (prop_seq[i].name.in (), CosNotification::Priority) == 0)
+      if (std::strcmp (prop_seq[i].name.in (), CosNotification::Priority) == 0)
         {
           prop_seq[i].value >>= event_priority;
 
@@ -152,30 +158,36 @@ TAO_Notify_Tests_Periodic_Consumer::check_priority (const CosNotification::Prope
       priority_mapping->to_CORBA (native_priority, corba_priority);
 
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG,
-                    "Periodic Consumer expected priority = %d, received priority = %d/%d (native/corba)\n",
-                    event_priority, native_priority, corba_priority));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "Periodic Consumer expected priority = %d, received priority = %d/%d (native/corba)\n",
+                      event_priority, native_priority, corba_priority));
+        }
 
       if (corba_priority != event_priority)
-        ACE_DEBUG ((LM_DEBUG,
-                    "Error: Periodic Consumer expected priority = %d, received priority = %d\n",
-                    event_priority, corba_priority));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "Error: Periodic Consumer expected priority = %d, received priority = %d\n",
+                      event_priority, corba_priority));
+        }
     }
 }
 
 void
-TAO_Notify_Tests_Periodic_Consumer::push_structured_event (const CosNotification::StructuredEvent & notification)
+TAO_Notify_Tests_Periodic_Consumer::push_structured_event (CosNotification::StructuredEvent const & notification)
 {
   ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
                       CORBA::INTERNAL ());
 
-  const CosNotification::PropertySeq& prop_seq =
+  CosNotification::PropertySeq const & prop_seq =
     notification.header.variable_header;
 
   if (this->count_ == -2)
     {
       if (--warmup_countdown_ == 0)
+      {
         this->count_ = -1;
+      }
 
       return;
     }
@@ -184,7 +196,9 @@ TAO_Notify_Tests_Periodic_Consumer::push_structured_event (const CosNotification
       this->handle_start_event (prop_seq);
 
       if (this->max_count_ > 0)
+      {
         this->stats_.init (this->max_count_);
+      }
 
       this->count_ = 0;
       return;
@@ -204,7 +218,7 @@ TAO_Notify_Tests_Periodic_Consumer::push_structured_event (const CosNotification
 
   for (CORBA::ULong i = 0; i < prop_seq.length (); ++i)
     {
-      if (ACE_OS::strcmp (prop_seq[i].name.in (), "Stop") == 0)
+      if (std::strcmp (prop_seq[i].name.in (), "Stop") == 0)
         {
           this->stop_received_ = 1;
         }
@@ -227,9 +241,11 @@ TAO_Notify_Tests_Periodic_Consumer::push_structured_event (const CosNotification
   (void)ACE::gcd (prime_number, prime_number/2 -1);
 
   for (CORBA::ULong load = this->load_; load != 0; --load)
-    ACE::is_prime (prime_number,
-                   2,
-                   prime_number / 2);
+        {
+      ACE::is_prime (prime_number,
+                     2,
+                     prime_number / 2);
+        }
 
   // ---
 
@@ -238,15 +254,19 @@ TAO_Notify_Tests_Periodic_Consumer::push_structured_event (const CosNotification
       stats_.end_time (ACE_OS::gethrtime ());
 
       if (this->client_)
+      {
         this->client_->done (this);
+      }
 
       if (TAO_debug_level > 0)
+      {
         ACE_DEBUG ((LM_DEBUG, "(%P, %t)Consumer %s done\n", this->name_.c_str ()));
+      }
     }
 }
 
 void
-TAO_Notify_Tests_Periodic_Consumer::dump_stats (ACE_TCHAR* msg, int dump_samples)
+TAO_Notify_Tests_Periodic_Consumer::dump_stats (ACE_TCHAR const *msg, bool dump_samples)
 {
   ACE_TCHAR buf[BUFSIZ];
   ACE_OS::sprintf (buf, ACE_TEXT("%s.dat"), this->name_.c_str ());

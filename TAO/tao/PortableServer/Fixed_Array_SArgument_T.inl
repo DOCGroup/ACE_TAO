@@ -1,4 +1,3 @@
-// -*- C++ -*-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<typename S_forany,
@@ -17,9 +16,6 @@ TAO::In_Fixed_Array_SArgument_T<S_forany,
   S_forany tmp (this->x_);
   return tmp.in ();
 }
-
-// ===========================================================================
-
 template<typename S_forany,
          template <typename> class Insert_Policy>
 ACE_INLINE
@@ -37,9 +33,6 @@ TAO::Inout_Fixed_Array_SArgument_T<S_forany,
   S_forany tmp (this->x_);
   return tmp.inout ();
 }
-
-// ===========================================================================
-
 template<typename S_forany,
          template <typename> class Insert_Policy>
 ACE_INLINE
@@ -57,9 +50,6 @@ TAO::Out_Fixed_Array_SArgument_T<S_forany,
   S_forany tmp (this->x_);
   return tmp.inout ();
 }
-
-// ===========================================================================
-
 template<typename S_var,
          typename S_forany,
          template <typename> class Insert_Policy>

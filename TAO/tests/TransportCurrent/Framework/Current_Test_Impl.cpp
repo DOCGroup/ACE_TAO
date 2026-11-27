@@ -1,20 +1,17 @@
-// -*- C++ -*-
 #include "tao/TransportCurrent/TCC.h"
 
 #include "Current_Test_Impl.h"
 
 Current_Test_Impl::Current_Test_Impl (CORBA::ORB_ptr orb,
                                       PortableServer::POA_ptr poa,
-                                      int do_collocated_calls)
+                                      bool do_collocated_calls)
   : orb_ (CORBA::ORB::_duplicate (orb))
   , poa_ (PortableServer::POA::_duplicate (poa))
   , do_collocated_calls_ (do_collocated_calls)
 {
 }
 
-Current_Test_Impl::~Current_Test_Impl ()
-{
-}
+Current_Test_Impl::~Current_Test_Impl () = default;
 
 ::CORBA::Long
 Current_Test_Impl::self_test ()
@@ -39,23 +36,23 @@ Current_Test_Impl::test_transport_current ()
 
   if (TAO_debug_level >= 1)
     {
-      ::CORBA::Long id = tc->id ();
+      ::CORBA::Long const id = tc->id ();
 
-      ::TAO::CounterT bs = tc->bytes_sent ();
+      ::TAO::CounterT const bs = tc->bytes_sent ();
 
-      ::TAO::CounterT br = tc->bytes_received ();
+      ::TAO::CounterT const br = tc->bytes_received ();
 
-      ::TAO::CounterT rs = tc->messages_sent ();
+      ::TAO::CounterT const rs = tc->messages_sent ();
 
-      ::TAO::CounterT rr = tc->messages_received ();
+      ::TAO::CounterT const rr = tc->messages_received ();
 
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("Current_Test_Impl (%P|%t) Transport [%q] - Sent/Received [bytes=%q/%q, messages=%q/%q]\n"),
-                  (ACE_UINT64)id,
-                  (ACE_UINT64)bs,
-                  (ACE_UINT64)br,
-                  (ACE_UINT64)rs,
-                  (ACE_UINT64)rr));
+                  ACE_TEXT ("Current_Test_Impl (%P|%t) Transport [%d] - Sent/Received [bytes=%Q/%Q, messages=%Q/%Q]\n"),
+                  id,
+                  bs,
+                  br,
+                  rs,
+                  rr));
     }
 
   if (TAO_debug_level > 2)
@@ -72,12 +69,12 @@ Current_Test_Impl::invoked_by_client ()
     {
       this->invoked_by_client_i ();
     }
-  catch (const TAO::Transport::NoContext&)
+  catch (TAO::Transport::NoContext const &)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("(%P|%t) server - Caught a Transport::NoContext exception\n")));
     }
-  catch (const CORBA::SystemException&)
+  catch (CORBA::SystemException const &)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("(%P|%t) server - Caught a CORBA::SystemException exception\n")));

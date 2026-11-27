@@ -1,13 +1,9 @@
-// -*- C++ -*-
-
-//==========================================================================
 /**
  *  @file    Get_Opt.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  *  @author Don Hinton <dhinton@gmx.net> (added long option support)
  */
-//==========================================================================
 
 #ifndef ACE_GET_OPT_H
 #define ACE_GET_OPT_H
@@ -15,6 +11,12 @@
 
 #include "ace/SStringfwd.h"
 #include "ace/Containers.h"
+
+#if defined (ACE_USES_WCHAR) && defined (__ACE_INLINE__)
+# include "ace/SString.h"
+#endif /* ACE_USES_WCHAR && __ACE_INLINE__ */
+
+#include <memory>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -84,6 +86,12 @@ public:
     /// option character in @a optstring.
     ARG_OPTIONAL = 2
   };
+
+#if defined (ACE_USES_WCHAR)
+private:
+  void ACE_Get_Opt_Init (ACE_TCHAR const *optstring);
+public:
+#endif /* ACE_USES_WCHAR */
 
   /**
    * Constructor initializes the command line to be parsed. All information
@@ -169,33 +177,34 @@ public:
 #ifndef ACE_USES_WCHAR
   ACE_Get_Opt (int argc,
                ACE_TCHAR **argv,
-               const ACE_TCHAR *optstring = ACE_TEXT (""),
+               ACE_TCHAR const *optstring = ACE_TEXT (""),
                int skip_args = 1,
                int report_errors = 0,
                int ordering = PERMUTE_ARGS,
                int long_only = 0);
 
 #else
-private:
-  void ACE_Get_Opt_Init (const ACE_TCHAR *optstring);
-public:
   ACE_Get_Opt (int argc,
                ACE_TCHAR **argv,
-               const ACE_TCHAR *optstring = ACE_TEXT (""),
+               ACE_TCHAR const *optstring = ACE_TEXT (""),
                int skip_args = 1,
                int report_errors = 0,
                int ordering = PERMUTE_ARGS,
                int long_only = 0);
   ACE_Get_Opt (int argc,
                ACE_TCHAR **argv,
-               const char *optstring,
+               char const *optstring,
                int skip_args = 1,
                int report_errors = 0,
                int ordering = PERMUTE_ARGS,
                int long_only = 0);
 #endif
-  /// Default dtor.
   ~ACE_Get_Opt ();
+
+  ACE_Get_Opt (ACE_Get_Opt const &) = delete;
+  ACE_Get_Opt (ACE_Get_Opt &&) = delete;
+  ACE_Get_Opt &operator= (ACE_Get_Opt const &) = delete;
+  ACE_Get_Opt &operator= (ACE_Get_Opt &&) = delete;
 
   /**
    * Scan elements of @a argv (whose length is @a argc) for short option
@@ -212,7 +221,7 @@ public:
    * @return The parsed option character. The following characters have
    * special significance.
    * @retval 0      A long option was found
-   * @retval '\?'   Either an unknown option character was found, or the
+   * @retval '?'    Either an unknown option character was found, or the
    *                option is known but requires an argument, none was
    *                specified, and @a optstring did not contain a leading
    *                colon.
@@ -275,7 +284,7 @@ public:
    * @retval 0  Success
    * @retval -1 The long option can not be added.
    */
-  int long_option (const ACE_TCHAR *name,
+  int long_option (ACE_TCHAR const *name,
                    OPTION_ARG_MODE has_arg = NO_ARG);
 
   /// Adds a long option with a corresponding short option.
@@ -292,13 +301,13 @@ public:
    * @retval 0  Success
    * @retval -1 The long option can not be added.
    */
-  int long_option (const ACE_TCHAR *name,
+  int long_option (ACE_TCHAR const *name,
                    int short_option,
                    OPTION_ARG_MODE has_arg = NO_ARG);
 
   /// Returns the name of the long option found on the last call to
   /// @c operator() or 0 if none was found.
-  const ACE_TCHAR *long_option () const;
+  ACE_TCHAR const *long_option () const;
 
   /// The number of arguments in the internal @c argv_.
   int argc () const;
@@ -310,14 +319,14 @@ public:
   /// applications to know if the found option was a short or long
   /// option, and is especially useful in cases where it was invalid
   /// and the caller wants to print out the invalid value.
-  const ACE_TCHAR *last_option () const;
+  ACE_TCHAR const *last_option () const;
 
   /// Dump the state of an object.
   void dump () const;
 
   /// Return the @a optstring.  This is handy to verify that calls to
   /// long_option added short options as expected.
-  const ACE_TCHAR *optstring () const;
+  ACE_TCHAR const *optstring () const;
 
 public:
   /*
@@ -371,7 +380,7 @@ public:
    * write code that relies on this member being public; use the
    * @c opt_arg() accessor method instead.
    */
-  ACE_TCHAR *optarg;
+  ACE_TCHAR *optarg {};
 
 private:
   /**
@@ -381,26 +390,25 @@ private:
   class ACE_Get_Opt_Long_Option
   {
   public:
-    /// ctor
-    ACE_Get_Opt_Long_Option (const ACE_TCHAR *name,
+    ACE_Get_Opt_Long_Option (ACE_TCHAR const *name,
                              int has_arg,
                              int val = 0);
 
-    /// Dtor.
     ~ACE_Get_Opt_Long_Option ();
 
-    bool operator < (const ACE_Get_Opt_Long_Option &rhs);
+    bool operator < (ACE_Get_Opt_Long_Option const &rhs);
 
     /// Long option name.
-    const ACE_TCHAR *name_;
+    /// Owned string allocated with ACE::strnew and released with matching allocator semantics.
+    ACE_TCHAR const *name_;
 
-    /// Contains value for <OPTION_ARG_MODE>.
+    /// Contains value for @c OPTION_ARG_MODE.
     int has_arg_;
 
     /// Contains a valid short option character or zero if it doesn't
     /// have a corresponding short option.  It can also contain a
-    /// non-printable value that cannot be passed to <optstring> but
-    /// will be returned by <operator()>.  This is handy for
+    /// non-printable value that cannot be passed to @c optstring but
+    /// will be returned by @c operator(). This is handy for
     /// simplifying long option handling, see tests/Get_Opt_Test.cpp
     /// for an example of this technique.
     int val_;
@@ -419,63 +427,59 @@ private:
 
   /// If permuting args, this functions manages the nonopt_start_ and
   /// nonopt_end_ indexes and makes calls to permute to actually
-  /// reorder the <argv>-elements.
+  /// reorder the @c argv-elements.
   void permute_args ();
 
-  /// Handles reordering <argv>-elements.
+  /// Handles reordering @c argv-elements.
   int permute ();
 
   /// Set last_option.
-  void last_option (const ACE_TString &s);
-
-  ACE_Get_Opt (const ACE_Get_Opt &) = delete;
-  ACE_Get_Opt &operator= (const ACE_Get_Opt &) = delete;
-  ACE_Get_Opt (ACE_Get_Opt &&) = delete;
-  ACE_Get_Opt &operator= (ACE_Get_Opt &&) = delete;
+  void last_option (ACE_TString const &s);
 
 private:
   /// Holds the option string.
-  ACE_TString *optstring_;
+  std::unique_ptr<ACE_TString> optstring_;
 
   /// Treat all options as long options.
-  int long_only_;
+  bool long_only_;
 
-  /// Keeps track of whether or not a colon was passed in <optstring>.
+  /// Keeps track of whether or not a colon was passed in @c optstring.
   /// This is used to determine the return value when required
   /// arguments are missing.
-  int has_colon_;
+  bool has_colon_ {};
 
   /// This is the last option, short or long, that was processed.  This
   /// is handy to have in cases where the option passed was invalid.
-  ACE_TString *last_option_;
+  std::unique_ptr<ACE_TString> last_option_;
 
   /**
    * The next char to be scanned in the option-element in which the
    * last option character we returned was found.  This allows us to
    * pick up the scan where we left off   *
    * If this is zero, or a null string, it means resume the scan
-   * by advancing to the next <argv>-element.
+   * by advancing to the next @c argv-element.
    */
-  ACE_TCHAR *nextchar_;
+  ACE_TCHAR *nextchar_ {};
 
   /// Most recently matched short option character.
-  int optopt_;
+  int optopt_ {};
 
-  /// Keeps track of ordering mode (default <PERMUTE_ARGS>).
+  /// Keeps track of ordering mode (default @c PERMUTE_ARGS).
   int ordering_;
 
-  /// Index of the first non-option <argv>-element found (only valid
+  /// Index of the first non-option @c argv-element found (only valid
   /// when permuting).
   int nonopt_start_;
 
-  /// Index of the <argv>-element following the last non-option element
+  /// Index of the @c argv-element following the last non-option element
   /// (only valid when permuting).
   int nonopt_end_;
 
-  /// Points to the long_option found on last call to <operator()>.
-  ACE_Get_Opt_Long_Option *long_option_;
+  /// Points to the long option found on the last call to @c operator().
+  ACE_Get_Opt_Long_Option *long_option_ {};
 
   /// Array of long options.
+  /// Owns each option object; ACE_Array retains raw pointers to preserve its allocation behavior.
   ACE_Array<ACE_Get_Opt_Long_Option*> long_opts_;
 
   /// Declare the dynamic allocation hooks.

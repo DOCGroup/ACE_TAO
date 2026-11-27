@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file     complex_any.h
  *
@@ -9,31 +7,25 @@
  *  @author Jeff Parsons
  *  @author Frank Buschmann
  */
-//=============================================================================
-
 
 #ifndef PARAM_TEST_COMPLEX_ANY_H
 #define PARAM_TEST_COMPLEX_ANY_H
 
 #include "param_testC.h"
 
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-//                        test complex Anys
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+/// test complex Anys
 class Test_Complex_Any
 {
 public:
-  /// ctor
   Test_Complex_Any ();
 
-  /// dtor
-  ~Test_Complex_Any ();
+  ~Test_Complex_Any () = default;
 
   /// run the SII test
   int run_sii_test (Param_Test_ptr objref);
 
   /// return operation name
-  const char *opname () const;
+  char const *opname () const;
 
   /// set values for parameters
   int init_parameters (Param_Test_ptr objref);
@@ -55,7 +47,7 @@ public:
 
 private:
   /// operation name
-  char *opname_;
+  char const *opname_;
 
   /// test counter.
   static size_t counter;
@@ -73,8 +65,8 @@ private:
   CORBA::Any_var ret_;
 
   /// Compares the sequence extracted from in_ to one of the others.
-  CORBA::Boolean comp_engine (const CORBA::AnySeq *in_seq,
-                              const CORBA::AnySeq *comp_seq);
+  CORBA::Boolean comp_engine (CORBA::AnySeq const *in_seq,
+                              CORBA::AnySeq const *comp_seq);
 };
 
 #endif /* PARAM_TEST_COMPLEX_ANY_H */

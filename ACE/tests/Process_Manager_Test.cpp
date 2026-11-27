@@ -1,10 +1,8 @@
-
-//=============================================================================
 /**
  *  @file    Process_Manager_Test.cpp
  *
  *    This program tests the various methods provided by
- *    <ACE_Process_Manager>.  It illustrates both the explicit <wait>
+ *    @c ACE_Process_Manager.  It illustrates both the explicit @a wait
  *    functions and the Reactor-style auto-reaping.  There's an
  *    Exit_Handler class that can print out (in Debug mode) when a
  *    child has been reaped.
@@ -15,7 +13,8 @@
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu> and Dave Madden <dhm@mersenne.com>
  */
-//=============================================================================
+
+#include <string>
 
 #include "test_config.h"
 #include "ace/SString.h"
@@ -37,9 +36,9 @@ static u_int process_id = 0;
 class Exit_Handler : public ACE_Event_Handler
 {
 public:
-  Exit_Handler (const char *msg): msg_ (msg) { }
+  Exit_Handler (char const *msg): msg_ (msg) { }
 
-  ~Exit_Handler () override { }
+  ~Exit_Handler () override = default;
 
   int handle_close (ACE_HANDLE, ACE_Reactor_Mask) override
   {
@@ -57,11 +56,11 @@ public:
     return 0;
   }
 private:
-  const char *msg_;
+  char const *msg_;
 };
 
 static void
-usage (const ACE_TCHAR *argv0)
+usage (ACE_TCHAR const *argv0)
 {
   ACE_ERROR ((LM_ERROR,
               ACE_TEXT ("usage: %s [-d] [sleep-seconds]\n"),
@@ -70,17 +69,17 @@ usage (const ACE_TCHAR *argv0)
 }
 
 static pid_t
-spawn_child (const ACE_TCHAR *argv0,
+spawn_child (ACE_TCHAR const *argv0,
              ACE_Process_Manager &mgr,
              int sleep_time,
              int my_process_id)
 {
 #if defined (ACE_WIN32)
-const ACE_TCHAR *cmdline_format = ACE_TEXT("\"%s\" %s %d");
+ACE_TCHAR const *cmdline_format = ACE_TEXT("\"%s\" %s %d");
 #elif !defined (ACE_USES_WCHAR)
-const ACE_TCHAR *cmdline_format = ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR ACE_TEXT("%s %s %d");
+ACE_TCHAR const *cmdline_format = ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR ACE_TEXT("%s %s %d");
 #else
-const ACE_TCHAR *cmdline_format = ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR ACE_TEXT("%ls %ls %d");
+ACE_TCHAR const *cmdline_format = ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR ACE_TEXT("%ls %ls %d");
 #endif
   ACE_Process_Options opts;
 
@@ -88,9 +87,13 @@ const ACE_TCHAR *cmdline_format = ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR ACE
   ACE_TCHAR cmd[16];
 
   if (debug_test)
-    ACE_OS::strcpy (cmd, ACE_TEXT ("-d"));
+    {
+      ACE_OS::strcpy (cmd, ACE_TEXT ("-d"));
+    }
   else
+  {
     cmd[0] = ACE_TEXT ('\0');
+  }
 
 #if defined (ACE_HAS_WIN32_PRIORITY_CLASS)
   if (my_process_id == 1)
@@ -119,7 +122,9 @@ const ACE_TCHAR *cmdline_format = ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR ACE
       ACE_OS::snprintf (prio, 64, ACE_TEXT ("and priority 'normal'"));
     }
   else
-    prio[0] = ACE_TEXT ('\0');
+    {
+      prio[0] = ACE_TEXT ('\0');
+    }
 
   ACE_TCHAR pd [16];
   ACE_OS::snprintf (pd, 16, ACE_TEXT (" -p %d"), my_process_id);
@@ -143,26 +148,30 @@ const ACE_TCHAR *cmdline_format = ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR ACE
                         opts.process_name(),
                         opts.command_line_buf ()));
 
-  pid_t result = mgr.spawn (opts);
+  pid_t const result = mgr.spawn (opts);
 
   if (result != ACE_INVALID_PID)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%P) spawned child: pid %d time %d %s\n"),
-                int (result), sleep_time, prio));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%P) spawned child: pid %d time %d %s\n"),
+                  int (result), sleep_time, prio));
+    }
   else
+  {
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("spawn failed")));
+  }
 
   return result;
 }
 
 ACE_CString order;
 
-ACE_Atomic_Op<ACE_SYNCH_MUTEX, int> running_tasks = 0;
+ACE_Atomic_Op<ACE_SYNCH_MUTEX, int> running_tasks {0};
 
 class Process_Task : public ACE_Task<ACE_SYNCH>
 {
 public:
-  Process_Task (const ACE_TCHAR *argv0,
+  Process_Task (ACE_TCHAR const *argv0,
                 ACE_Process_Manager &mgr,
                 int sleep_time)
     : argv0_ (argv0),
@@ -173,8 +182,7 @@ public:
       /// FUZZ: enable check_for_lack_ACE_OS
   int open (void*) override
   {
-    char tmp[10];
-    order += ACE_OS::itoa (sleep_time_, tmp, 10);
+    order += std::to_string (sleep_time_).c_str ();
     ++running_tasks;
     activate ();
     return 0;
@@ -184,7 +192,7 @@ public:
   {
     int result = 0;
     ACE_exitcode exitcode;
-    pid_t my_child = spawn_child (argv0_,
+    pid_t const my_child = spawn_child (argv0_,
                                   mgr_,
                                   sleep_time_,
                                   0);
@@ -197,16 +205,19 @@ public:
                     my_child,
                     result));
         if (result == ACE_INVALID_PID)
+        {
           ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P) %p\n"), ACE_TEXT ("error")));
+        }
         //test_status = 1;
       }
     else
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%P) reaped child, pid %d: %d\n"),
-                  my_child,
-                  exitcode));
-    char tmp[10];
-    order += ACE_OS::itoa (sleep_time_, tmp, 10);
+      {
+        ACE_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("(%P) reaped child, pid %d: %d\n"),
+                    my_child,
+                    exitcode));
+      }
+    order += std::to_string (sleep_time_).c_str ();
     return 0;
   }
 
@@ -219,7 +230,7 @@ public:
   }
 
 private:
-  const ACE_TCHAR *argv0_;
+  ACE_TCHAR const *argv0_;
   ACE_Process_Manager &mgr_;
   int sleep_time_;
 };
@@ -231,8 +242,8 @@ command_line_test ()
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Testing for last character of command line\n")));
   int result = 0;
-  const ACE_TCHAR *command = ACE_TEXT ("test Hello");
-  size_t command_len = ACE_OS::strlen (command);
+  ACE_TCHAR const *command = ACE_TEXT ("test Hello");
+  size_t const command_len = ACE_OS::strlen (command);
   ACE_Process_Options options (true, command_len + 1);
 
 #ifndef ACE_LACKS_VA_FUNCTIONS
@@ -315,32 +326,50 @@ run_main (int argc, ACE_TCHAR *argv[])
       check_process_priority(priority);
 
       if (priority == ABOVE_NORMAL_PRIORITY_CLASS)
-        ACE_OS::snprintf (prio, 64, ACE_TEXT ("and priority 'above normal'"));
+        {
+          ACE_OS::snprintf (prio, 64, ACE_TEXT ("and priority 'above normal'"));
+        }
       else if (priority == BELOW_NORMAL_PRIORITY_CLASS)
-        ACE_OS::snprintf (prio, 64, ACE_TEXT ("and priority 'below normal'"));
+        {
+          ACE_OS::snprintf (prio, 64, ACE_TEXT ("and priority 'below normal'"));
+        }
       else if (priority == HIGH_PRIORITY_CLASS)
-        ACE_OS::snprintf (prio, 64, ACE_TEXT ("and priority 'high'"));
+        {
+          ACE_OS::snprintf (prio, 64, ACE_TEXT ("and priority 'high'"));
+        }
       else if (priority == IDLE_PRIORITY_CLASS)
-        ACE_OS::snprintf (prio, 64, ACE_TEXT ("and priority 'idle'"));
+        {
+          ACE_OS::snprintf (prio, 64, ACE_TEXT ("and priority 'idle'"));
+        }
       else if (priority == NORMAL_PRIORITY_CLASS)
-        ACE_OS::snprintf (prio, 64, ACE_TEXT ("and priority 'normal'"));
+        {
+          ACE_OS::snprintf (prio, 64, ACE_TEXT ("and priority 'normal'"));
+        }
       else if (priority == REALTIME_PRIORITY_CLASS)
-        ACE_OS::snprintf (prio, 64, ACE_TEXT ("and priority 'realtime'"));
+        {
+          ACE_OS::snprintf (prio, 64, ACE_TEXT ("and priority 'realtime'"));
+        }
 #else
-      prio[0] = ACE_TEXT ('\0');
+      {
+        prio[0] = ACE_TEXT ('\0');
+      }
 #endif
       if (debug_test)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("%T: pid %P about to exit with code %d %s\n"),
-                    secs,
-                    prio));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("%T: pid %P about to exit with code %d %s\n"),
+                      secs,
+                      prio));
+        }
       ACE_END_LOG;
 
       return secs;
     }
 
   if (get_opt.opt_ind () != argc)      // incorrect usage
-    usage (argv[0]);
+    {
+      usage (argv[0]);
+    }
 
   ACE_START_TEST (ACE_TEXT ("Process_Manager_Test"));
 
@@ -350,7 +379,9 @@ run_main (int argc, ACE_TCHAR *argv[])
 
   int result = 0;
   if ((result = command_line_test ()) != 0)
+  {
     test_status = result;
+  }
 
   // Try the explicit <ACE_Process_Manager::wait> functions
   ACE_Process_Manager mgr;
@@ -359,9 +390,8 @@ run_main (int argc, ACE_TCHAR *argv[])
 
   ACE_exitcode exitcode;
 
-  // --------------------------------------------------
   // wait for a specific PID
-  pid_t child1 = spawn_child (argc > 0 ? argv[0] : ACE_TEXT ("Process_Manager_Test"),
+  pid_t const child1 = spawn_child (argc > 0 ? argv[0] : ACE_TEXT ("Process_Manager_Test"),
                               mgr,
                               1,
                               1);
@@ -375,22 +405,25 @@ run_main (int argc, ACE_TCHAR *argv[])
                   child1,
                   result));
       if (result == ACE_INVALID_PID)
+      {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P) %p\n"), ACE_TEXT ("error")));
+      }
       test_status = 1;
     }
   else
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%P) reaped child1, pid %d: %d\n"),
-                child1,
-                exitcode));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%P) reaped child1, pid %d: %d\n"),
+                  child1,
+                  exitcode));
+    }
 
-  // --------------------------------------------------
   // wait for a specific PID; another should finish first
-  pid_t child2 = spawn_child (argc > 0 ? argv[0] : ACE_TEXT ("Process_Manager_Test"),
+  pid_t const child2 = spawn_child (argc > 0 ? argv[0] : ACE_TEXT ("Process_Manager_Test"),
                               mgr,
                               1,
                               2);
-  pid_t child3 = spawn_child (argc > 0 ? argv[0] : ACE_TEXT ("Process_Manager_Test"),
+  pid_t const child3 = spawn_child (argc > 0 ? argv[0] : ACE_TEXT ("Process_Manager_Test"),
                               mgr,
                               4,
                               3);
@@ -404,14 +437,18 @@ run_main (int argc, ACE_TCHAR *argv[])
                   child3,
                   result));
       if (result == ACE_INVALID_PID)
+      {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P) %p\n"), ACE_TEXT ("error")));
+      }
       test_status = 1;
     }
   else
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%P) reaped child 3, pid %d: %d\n"),
-                child3,
-                exitcode));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%P) reaped child 3, pid %d: %d\n"),
+                  child3,
+                  exitcode));
+    }
 
   // Now wait for any...should get the one that finished earlier.
 
@@ -424,20 +461,23 @@ run_main (int argc, ACE_TCHAR *argv[])
                   child2,
                   result));
       if (result == ACE_INVALID_PID)
+      {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P) %p\n"), ACE_TEXT ("error")));
+      }
       test_status = 1;
     }
   else
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%P) reaped child 2, pid %d: %d\n"),
-                result,
-                exitcode));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%P) reaped child 2, pid %d: %d\n"),
+                  result,
+                  exitcode));
+    }
 
-  // --------------------------------------------------
   // Try the timed wait functions
 
   // This one shouldn't timeout:
-  pid_t child4 = spawn_child (argc > 0 ? argv[0] : ACE_TEXT ("Process_Manager_Test"),
+  pid_t const child4 = spawn_child (argc > 0 ? argv[0] : ACE_TEXT ("Process_Manager_Test"),
                               mgr,
                               1,
                               4);
@@ -450,17 +490,21 @@ run_main (int argc, ACE_TCHAR *argv[])
                   child4,
                   result));
       if (result == ACE_INVALID_PID)
+      {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P) %p\n"), ACE_TEXT ("error")));
+      }
       test_status = 1;
     }
   else
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%P) reaped child 4 pid %d: %d\n"),
-                result,
-                exitcode));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%P) reaped child 4 pid %d: %d\n"),
+                  result,
+                  exitcode));
+    }
 
   // This one should timeout:
-  pid_t child5 = spawn_child (argc > 0 ? argv[0] : ACE_TEXT ("Process_Manager_Test"),
+  pid_t const child5 = spawn_child (argc > 0 ? argv[0] : ACE_TEXT ("Process_Manager_Test"),
                               mgr,
                               4,
                               5);
@@ -471,12 +515,16 @@ run_main (int argc, ACE_TCHAR *argv[])
                   ACE_TEXT ("(%P) Error: expected wait to time out; got %d\n"),
                   result));
       if (result == ACE_INVALID_PID)
+      {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P) %p\n"), ACE_TEXT ("error")));
+      }
       test_status = 1;
     }
   else
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%P) Correctly timed out wait at child 5\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%P) Correctly timed out wait at child 5\n")));
+    }
 
   // Now wait indefinitely to clean up...
   result = mgr.wait (0, &exitcode);
@@ -488,17 +536,21 @@ run_main (int argc, ACE_TCHAR *argv[])
                   child5,
                   result));
       if (result == ACE_INVALID_PID)
+      {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P) %p\n"), ACE_TEXT ("error")));
+      }
       test_status = 1;
     }
   else
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%P) reaped child 5, pid %d: %d\n"),
-                result,
-                exitcode));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%P) reaped child 5, pid %d: %d\n"),
+                  result,
+                  exitcode));
+    }
 
   // Terminate a child process and make sure we can wait for it.
-  pid_t child6 = spawn_child (argc > 0 ? argv[0] : ACE_TEXT ("Process_Manager_Test"),
+  pid_t const child6 = spawn_child (argc > 0 ? argv[0] : ACE_TEXT ("Process_Manager_Test"),
                               mgr,
                               5,
                               6);
@@ -522,14 +574,18 @@ run_main (int argc, ACE_TCHAR *argv[])
           // Get the results of the termination.
 #if !defined(ACE_WIN32)
           if (WIFSIGNALED (status6) != 0)
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("(%P) child6 died on signal %d - correct\n"),
-                        WTERMSIG (status6)));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("(%P) child6 died on signal %d - correct\n"),
+                          WTERMSIG (status6)));
+            }
           else
-            ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT ("(%P) child6 should have died on signal, ")
-                        ACE_TEXT ("but didn't; exit status %d\n"),
-                        WEXITSTATUS (status6)));
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT ("(%P) child6 should have died on signal, ")
+                          ACE_TEXT ("but didn't; exit status %d\n"),
+                          WEXITSTATUS (status6)));
+            }
 #else
           ACE_DEBUG
             ((LM_DEBUG,
@@ -567,12 +623,11 @@ run_main (int argc, ACE_TCHAR *argv[])
 #endif /* ACE_HAS_THREADS */
 
 #if defined ACE_WIN32 || !defined ACE_LACKS_UNIX_SIGNALS
-  // --------------------------------------------------
   // Finally, try the reactor stuff...
   mgr.open (ACE_Process_Manager::DEFAULT_SIZE,
             ACE_Reactor::instance ());
 
-  pid_t child7 = spawn_child (argc > 0 ? argv[0] : ACE_TEXT ("Process_Manager_Test"),
+  pid_t const child7 = spawn_child (argc > 0 ? argv[0] : ACE_TEXT ("Process_Manager_Test"),
                               mgr,
                               5,
                               7);
@@ -593,9 +648,11 @@ run_main (int argc, ACE_TCHAR *argv[])
 
   size_t const nr_procs = mgr.managed ();
   if (nr_procs != 0)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("(%P) %d processes left in manager\n"),
-                nr_procs));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("(%P) %B processes left in manager\n"),
+                  nr_procs));
+    }
 #endif /* defined (ACE_WIN32) */
 #endif // ACE_HAS_PROCESS_SPAWN
   ACE_END_TEST;

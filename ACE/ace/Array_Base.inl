@@ -1,7 +1,6 @@
-// -*- C++ -*-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// Clean up the array (e.g., delete dynamically allocated memory).
+/// Clean up the array (e.g., delete dynamically allocated memory).
 template <class T> ACE_INLINE
 ACE_Array_Base<T>::~ACE_Array_Base ()
 {
@@ -80,19 +79,19 @@ ACE_Array_Base<T>::max_size () const
 }
 
 template <class T> ACE_INLINE bool
-ACE_Array_Base<T>::in_range (typename ACE_Array_Base<T>::size_type index) const
+ACE_Array_Base<T>::in_range (size_type index) const
 {
   return index < this->cur_size_;
 }
 
 template <class T> ACE_INLINE T &
-ACE_Array_Base<T>::operator[] (typename ACE_Array_Base<T>::size_type index)
+ACE_Array_Base<T>::operator[] (size_type index)
 {
   return this->array_[index];
 }
 
-template <class T> ACE_INLINE const T &
-ACE_Array_Base<T>::operator[] (typename ACE_Array_Base<T>::size_type index) const
+template <class T> ACE_INLINE T const &
+ACE_Array_Base<T>::operator[] (size_type index) const
 {
   return this->array_[index];
 }
@@ -109,8 +108,7 @@ ACE_Array_Iterator<T>::dump () const
 
 template <class T> ACE_INLINE
 ACE_Array_Iterator<T>::ACE_Array_Iterator (ACE_Array_Base<T> &a)
-    : current_ (0),
-      array_ (a)
+    : array_ (a)
 {
   // ACE_TRACE ("ACE_Array_Iterator<T>::ACE_Array_Iterator");
 }

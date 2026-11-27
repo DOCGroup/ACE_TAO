@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-// ===================================================================
 /**
  *  @file   FactoryC_impl.h
  *
  *  @author Boris Kolpackov <bosk@ipmce.ru>
  */
-// ===================================================================
 
 #ifndef TAO_FACTORY_FACTORY_C_IMPL_H
 #define TAO_FACTORY_FACTORY_C_IMPL_H

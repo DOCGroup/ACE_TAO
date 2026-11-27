@@ -1,7 +1,5 @@
-/*
- * @author Iliyan jeliazkov <iliyan@ociweb.com>
- * @author Lothar Werzinger <lothar@tradescape.biz>
- */
+/// @author Iliyan Jeliazkov <iliyan@ociweb.com>
+/// @author Lothar Werzinger <lothar@tradescape.biz>
 
 #ifndef DllOrb_h
 #define DllOrb_h
@@ -14,43 +12,41 @@
 
 #include "DllOrb_Export.h"
 
-/** The CORBA ORB as a dynamic loadable module.
-  *
-  */
+#include <memory>
+
+/// CORBA ORB hosted in a dynamically loaded service module.
 class DllOrb_Export DllOrb
-:
-  public ACE_Task_Base
+  : public ACE_Task_Base
 {
-  public:
-    /// Default constructor.
-    DllOrb (int nthreads = 1);
+public:
+  explicit DllOrb (int nthreads = 1);
 
-    /// Destructor.
-    ~DllOrb () noexcept;
+  ~DllOrb () noexcept override;
 
-    CORBA::ORB_ptr orb () const;
+  DllOrb (DllOrb const &) = delete;
+  DllOrb (DllOrb &&) = delete;
+  DllOrb &operator= (DllOrb const &) = delete;
+  DllOrb &operator= (DllOrb &&) = delete;
 
-    virtual int init (int argc, ACE_TCHAR *argv[]);
+  CORBA::ORB_ptr orb () const;
 
-    virtual int fini ();
+  int init (int argc, ACE_TCHAR *argv[]) override;
+  int fini () override;
 
-  // protected types and methods
-  protected:
-    virtual int svc ();
+protected:
+  int svc () override;
 
-  // private methods and instance variables
-  private:
-    int                            m_nthreads_;
-    unsigned int                   m_failPrePostInit;
+private:
+  int const m_nthreads_;
 
 #if defined (ACE_HAS_THREADS)
-    ACE_Thread_Barrier *           mp_barrier;
+  std::unique_ptr<ACE_Thread_Barrier> mp_barrier_ {};
 #endif
 
-    CORBA::ORB_var                 mv_orb;
-    PortableServer::POA_var        mv_rootPOA;
-    PortableServer::POAManager_var mv_poaManager;
-}; /* end of DllOrb */
+  CORBA::ORB_var mv_orb_ {};
+  PortableServer::POA_var mv_root_poa_ {};
+  PortableServer::POAManager_var mv_poa_manager_ {};
+};
 
 ACE_FACTORY_DECLARE (DllOrb, DllOrb)
 

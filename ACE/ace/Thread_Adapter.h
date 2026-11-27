@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Thread_Adapter.h
  *
  *  @author Carlos O'Ryan <coryan@uci.edu>
  */
-//=============================================================================
 
 #ifndef ACE_THREAD_ADAPTER_H
 #define ACE_THREAD_ADAPTER_H
@@ -44,20 +40,19 @@ class ACE_Thread_Descriptor;
 class ACE_Export ACE_Thread_Adapter : public ACE_Base_Thread_Adapter
 {
 public:
-  /// Constructor.
   ACE_Thread_Adapter (ACE_THR_FUNC user_func,
                       void *arg,
                       ACE_THR_C_FUNC entry_point = (ACE_THR_C_FUNC) ACE_THREAD_ADAPTER_NAME,
                       ACE_Thread_Manager *thr_mgr = nullptr,
                       ACE_Thread_Descriptor *td = nullptr
 #if defined (ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS)
-                      , ACE_SEH_EXCEPT_HANDLER selector = 0,
-                      ACE_SEH_EXCEPT_HANDLER handler = 0
+                      , ACE_SEH_EXCEPT_HANDLER selector = nullptr,
+                      ACE_SEH_EXCEPT_HANDLER handler = nullptr
 #endif /* ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS */
                       , long cancel_flags = 0);
 
   /**
-   * Execute the <user_func_> with the <arg>.  This function deletes
+   * Execute the @c user_func_ with the @c arg.  This function deletes
    * @c this, thereby rendering the object useless after the call
    * returns.
    */

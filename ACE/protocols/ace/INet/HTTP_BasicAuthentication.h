@@ -33,40 +33,39 @@ namespace ACE
         class ACE_INET_Export BasicAuthentication
           {
             public:
-              /// Constructor
               BasicAuthentication();
 
               /// Constructor. Sets user id and password.
-              BasicAuthentication(const ACE_CString& user, const ACE_CString& passwd);
+              BasicAuthentication(ACE_CString const& user, ACE_CString const& passwd);
 
               /// Constructor. Decodes cedentials from request (if any).
-              BasicAuthentication(const Request& request);
+              explicit BasicAuthentication(Request const& request);
 
-              /// Destructor
               virtual ~BasicAuthentication();
 
               /// Set user id.
-              void user (const ACE_CString& user);
+              void user (ACE_CString const& user);
 
               /// Get user id.
-              const ACE_CString& user () const;
+              ACE_CString const& user () const;
 
               /// Set password.
-              void password (const ACE_CString& passwd);
+              void password (ACE_CString const& passwd);
 
               /// Get password.
-              const ACE_CString& password () const;
+              ACE_CString const& password () const;
 
               /// Add authentication header with encoded credentials to request.
               void set_credentials (Request& request) const;
 
-              static const char* SCHEME;
+              static char const * SCHEME;
+
+              BasicAuthentication (BasicAuthentication const &) = delete;
+              BasicAuthentication (BasicAuthentication &&) = delete;
+              BasicAuthentication &operator= (BasicAuthentication const &) = delete;
+              BasicAuthentication &operator= (BasicAuthentication &&) = delete;
 
             private:
-              // prevent copying
-              BasicAuthentication(const BasicAuthentication&);
-              BasicAuthentication& operator =(BasicAuthentication&);
-
               ACE_CString user_;
               ACE_CString passwd_;
           };

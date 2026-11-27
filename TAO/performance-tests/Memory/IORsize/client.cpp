@@ -12,25 +12,27 @@ parse_args (int argc, ACE_TCHAR *argv[])
   int c;
 
   while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'n':
-        n = ACE_OS::atoi (get_opts.opt_arg ());
-        break;
+    {
+      switch (c)
+        {
+        case 'n':
+          n = ACE_OS::atoi (get_opts.opt_arg ());
+          break;
 
-      case 'k':
-        ior = get_opts.opt_arg ();
-        break;
+        case 'k':
+          ior = get_opts.opt_arg ();
+          break;
 
-      case '?':
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
-                           "-k <ior> "
-                           "\n",
-                           argv [0]),
-                          -1);
-      }
+        case '?':
+        default:
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "usage:  %s "
+                             "-k <ior> "
+                             "\n",
+                             argv [0]),
+                            -1);
+        }
+    }
   // Indicates successful parsing of the command line
   return 0;
 }
@@ -50,7 +52,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         PortableServer::POA::_narrow (poa_object.in ());
 
       if (parse_args (argc, argv) != 0)
+      {
         return 1;
+      }
 
       Foo_i *foo_i;
       ACE_NEW_RETURN (foo_i,
@@ -82,13 +86,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       for (CORBA::ULong l = 0;
            l != pl.length ();
-           l++)
+           ++l)
         {
           pl[l] = foo;
         }
 
       // Make a few calls to the remote object
-      for (int iter = 0; iter != n; iter++)
+      for (int iter = 0; iter != n; ++iter)
         {
           mem->send_objref (pl);
         }

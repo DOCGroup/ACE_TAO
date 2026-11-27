@@ -22,7 +22,7 @@ namespace
   /*                                                               */
   /*****************************************************************/
 
-  const ACE_UINT16 crc_table[] =
+  ACE_UINT16 const crc_table[] =
     {
      0x0000, 0x1189, 0x2312, 0x329B, 0x4624, 0x57AD, 0x6536, 0x74BF,
      0x8C48, 0x9DC1, 0xAF5A, 0xBED3, 0xCA6C, 0xDBE5, 0xE97E, 0xF8F7,
@@ -69,11 +69,11 @@ namespace
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_UINT16
-ACE::crc_ccitt (const char *string)
+ACE::crc_ccitt (char const *string)
 {
   ACE_UINT16 crc = 0xFFFF;
 
-  for (const char *p = string;
+  for (char const *p = string;
        *p != 0;
        ++p)
     {
@@ -84,12 +84,12 @@ ACE::crc_ccitt (const char *string)
 }
 
 ACE_UINT16
-ACE::crc_ccitt (const void *buffer, size_t len, ACE_UINT16 crc)
+ACE::crc_ccitt (void const *buffer, size_t len, ACE_UINT16 crc)
 {
   crc = static_cast<ACE_UINT16> (~crc);
 
-  for (const char *p = (const char *) buffer,
-                  *e = (const char *) buffer + len;
+  for (char const *p = static_cast<char const *> (buffer),
+                  *e = static_cast<char const *> (buffer) + len;
        p != e;
        ++p)
     {
@@ -100,17 +100,19 @@ ACE::crc_ccitt (const void *buffer, size_t len, ACE_UINT16 crc)
 }
 
 ACE_UINT16
-ACE::crc_ccitt (const iovec *iov, int len, ACE_UINT16 crc)
+ACE::crc_ccitt (iovec const *iov, int len, ACE_UINT16 crc)
 {
   crc = static_cast<ACE_UINT16> (~crc);
 
   for (int i = 0; i < len; ++i)
     {
-      for (const char *p = (const char *) iov[i].iov_base,
-                      *e = (const char *) iov[i].iov_base + iov[i].iov_len;
+      for (char const *p = static_cast<char const *> (iov[i].iov_base),
+                      *e = static_cast<char const *> (iov[i].iov_base) + iov[i].iov_len;
            p != e;
            ++p)
-        COMPUTE (crc, *p);
+        {
+          COMPUTE (crc, *p);
+        }
     }
 
   return static_cast<ACE_UINT16> (~crc);

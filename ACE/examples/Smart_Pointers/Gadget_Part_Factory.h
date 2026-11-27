@@ -1,11 +1,8 @@
-/* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file    Gadget_Part_Factory.h
  *
  *  @author Christopher Kohlhoff <chris@kohlhoff.com>
  */
-//=============================================================================
 
 #ifndef GADGET_PART_FACTORY_H
 #define GADGET_PART_FACTORY_H
@@ -26,7 +23,7 @@ public:
   /// means that the object will be deleted automatically if the caller
   /// "forgets" to collect the return value.
   static Gadget_Part_var create_gadget_part (Gadget_ptr owner,
-                                             const char *name,
+                                             char const *name,
                                              int size);
 };
 

@@ -16,7 +16,7 @@ ACE_TMAIN (int, ACE_TCHAR* argv[])
         }
 
       // Run the service.
-      const ACE_Service_Type* st = 0;
+      ACE_Service_Type const * st {};
       ACE_Service_Repository::instance ()->find (ACE_TEXT("TAO_MonitorAndControl"),
                                                  &st);
       if (st == 0)
@@ -25,7 +25,7 @@ ACE_TMAIN (int, ACE_TCHAR* argv[])
         }
 
       ACE_Service_Object* obj =
-        (ACE_Service_Object*) st->type ()->object ();
+        static_cast<ACE_Service_Object*> (st->type ()->object ());
       obj->resume ();
 
       // Wait for an external entity to stop it.

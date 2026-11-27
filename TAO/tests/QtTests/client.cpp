@@ -33,7 +33,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       app.exec ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return 1;
@@ -58,7 +58,7 @@ void
 Client::parse_args (int argc,
                     ACE_TCHAR *argv[])
 {
-  const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
+  ACE_TCHAR const *ior = ACE_TEXT("file://test.ior");
 
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k:"));
   int c;
@@ -119,7 +119,6 @@ Client::create_widgets (/**/)
   this->slider_->setValue (0);
 
   box_.addWidget(this->slider_);
-
 
   // Connect the valuechanged SIGNAL routine with the slot that we
   // have defined. THe slot routine would invoke the remote call.

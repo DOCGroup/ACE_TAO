@@ -1,13 +1,10 @@
-
-//=============================================================================
 /**
  *  @file    DLL_Test.cpp
  *
- *  This test illustrates the use of <ACE_DLL> wrapper class.
+ *  This test illustrates the use of @c ACE_DLL wrapper class.
  *
  *  @author Kirthika Parameswaran  <kirthika@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "ace/DLL.h"
@@ -17,8 +14,6 @@
 #include "ace/SString.h"
 #include "ace/OS_NS_dlfcn.h"
 #include "DLL_Test.h"
-
-#include <memory>
 
 #if defined (ACE_LD_DECORATOR_STR)
 # define OBJ_SUFFIX ACE_LD_DECORATOR_STR ACE_DLL_SUFFIX
@@ -45,9 +40,11 @@ int handle_test (ACE_DLL &dll)
   if (handle != ACE_SHLIB_INVALID_HANDLE)
     {
       if (local_dll.set_handle (handle) != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("Error setting handle.\n")),
-                          -1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Error setting handle.\n")),
+                            -1);
+        }
       return 0;
     }
   ACE_ERROR_RETURN ((LM_ERROR,
@@ -58,7 +55,7 @@ int handle_test (ACE_DLL &dll)
 int basic_test (ACE_DLL &dll)
 {
   ACE_TString dll_file;
-  const char *subdir_env = ACE_OS::getenv ("ACE_EXE_SUB_DIR");
+  char const *subdir_env = ACE_OS::getenv ("ACE_EXE_SUB_DIR");
   if (subdir_env)
     {
       dll_file = ACE_TEXT_CHAR_TO_TCHAR (subdir_env);
@@ -67,7 +64,7 @@ int basic_test (ACE_DLL &dll)
 
   dll_file += OBJ_PREFIX ACE_TEXT ("DLL_Test_Lib") OBJ_SUFFIX;
 
-  int retval = dll.open (dll_file.c_str());
+  const int retval = dll.open (dll_file.c_str());
 
   if (retval != 0)
     {
@@ -88,10 +85,12 @@ int basic_test (ACE_DLL &dll)
   ptrdiff_t tmp = reinterpret_cast<ptrdiff_t> (foo);
   Hello_Factory factory = reinterpret_cast<Hello_Factory> (tmp);
   if (factory == nullptr)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       dll.error ()),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         dll.error ()),
+                        -1);
+    }
 
   std::unique_ptr<Hello> my_hello (factory ());
 
@@ -125,16 +124,21 @@ int dynamic_cast_test (ACE_DLL &dll)
   ptrdiff_t tmp = reinterpret_cast<ptrdiff_t> (foo);
   PFN pfnAcquire = reinterpret_cast<PFN> (tmp);
   if (pfnAcquire == nullptr)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       dll.error ()),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         dll.error ()),
+                        -1);
+    }
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("before %@ %@\n"),
-              &child,  dynamic_cast<Child*> (parent)));
+              static_cast<void *> (&child),
+              static_cast<void *> (dynamic_cast<Child*> (parent))));
 
   if (pfnAcquire (&child) == -1)
+  {
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("dynamic_cast failed.\n")), -1);
+  }
 
   return 0;
 }
@@ -157,6 +161,23 @@ run_main (int, ACE_TCHAR *[])
 
   retval += handle_test (dll);
 
+  ACE_DLL missing;
+  if (missing.open (ACE_TEXT ("ace_nonexistent_dll_assignment_test")) == 0)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unexpectedly opened missing test library\n")));
+      ++retval;
+    }
+  else
+    {
+      ACE_DLL assigned;
+      assigned = missing;
+      if (assigned.error () == nullptr || assigned.error ()[0] == ACE_TEXT ('\0'))
+        {
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("DLL assignment lost the load error\n")));
+          ++retval;
+        }
+    }
+
   // Call close here so that any errors make it into the log.
   dll.close ();
 
@@ -168,7 +189,7 @@ run_main (int, ACE_TCHAR *[])
   void* invalid_handle = ACE_OS::dlsym (ACE_SHLIB_INVALID_HANDLE, ACE_TEXT ("open"));
   if (invalid_handle != nullptr)
     {
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("ACE_OS::dlsym using invalid handle should be nullptr and not %@\n")));
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("ACE_OS::dlsym using invalid handle should be nullptr\n")));
       ++retval;
     }
   else

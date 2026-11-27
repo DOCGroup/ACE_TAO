@@ -7,9 +7,7 @@
  * parties.
  */
 
-
 /* ------------------------------------------------------------------------ */
-
 
 /*
  * systems.h: Lists of defines for systems
@@ -18,12 +16,10 @@
  * and defines what extra functions your particular system needs.
  */
 
-
 #ifndef SYSTEMS_H
 #define SYSTEMS_H
 
 #include <string.h>
-
 
 #define DAEMON_ANY
 #define DAEMON_LISTEN_SIZE 128
@@ -50,7 +46,6 @@
 #undef NEED_CRYPT_PROTO
 #undef AUTH_DBM
 #define SEM_FLOCK
-
 
 #define ZERO(ptr,len) memset(ptr,0,len)
 

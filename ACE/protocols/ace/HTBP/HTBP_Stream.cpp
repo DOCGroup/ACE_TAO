@@ -1,12 +1,8 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
  *  @file    HTBP_Stream.cpp
  *
  *  @author Phil Mesnier, Priyanka Gontla
  */
-//=============================================================================
 #include "HTBP_Stream.h"
 
 #include "HTBP_Session.h"
@@ -17,20 +13,18 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Initialization and termination methods.
-/// Constructor.
 ACE::HTBP::Stream::Stream (ACE::HTBP::Session *s)
   : session_ (s)
 {
-  if (s == 0)
-    // create a temporary session to be replaced on first recv.
-    ACE_NEW (session_, ACE::HTBP::Session);
+  if (s == nullptr)
+    {
+      // create a temporary session to be replaced on first recv.
+      ACE_NEW (session_, ACE::HTBP::Session);
+    }
   session_->stream (this);
 }
 
-/// Destructor.
-ACE::HTBP::Stream::~Stream ()
-{
-}
+ACE::HTBP::Stream::~Stream () = default;
 
   /// Dump the state of an object.
 void
@@ -38,18 +32,14 @@ ACE::HTBP::Stream::dump () const
 {
 }
 
-
-//---------------------------------------------------------------------------
-// = I/O functions.
-
-/// Recv an <n> byte buffer from the connected socket.
+/// Recv an @a n byte buffer from the connected socket.
 ssize_t
 ACE::HTBP::Stream::recv (void *buf,
                          size_t n,
                          int flags,
-                         const ACE_Time_Value *timeout) const
+                         ACE_Time_Value const* timeout) const
 {
-  if (this->session_->inbound() == 0)
+  if (this->session_->inbound() == nullptr)
     {
       errno = EWOULDBLOCK;
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -61,13 +51,13 @@ ACE::HTBP::Stream::recv (void *buf,
   return this->session_->inbound()->recv(buf,n,flags,timeout);
 }
 
-  /// Recv an <n> byte buffer from the connected socket.
+  /// Recv an @a n byte buffer from the connected socket.
 ssize_t
 ACE::HTBP::Stream::recv (void *buf,
                          size_t n,
-                         const ACE_Time_Value *timeout) const
+                         ACE_Time_Value const* timeout) const
 {
-  if (this->session_->inbound() == 0)
+  if (this->session_->inbound() == nullptr)
     {
       errno = EWOULDBLOCK;
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -79,13 +69,13 @@ ACE::HTBP::Stream::recv (void *buf,
   return this->session_->inbound()->recv(buf,n,timeout);
 }
 
-  /// Recv an <iovec> of size <n> from the connected socket.
+  /// Recv an @c iovec of size @a n from the connected socket.
 ssize_t
 ACE::HTBP::Stream::recvv (iovec iov[],
                   int iovcnt,
-                  const ACE_Time_Value *timeout) const
+                  ACE_Time_Value const* timeout) const
 {
-  if (this->session_->inbound() == 0)
+  if (this->session_->inbound() == nullptr)
     {
       errno = EWOULDBLOCK;
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -99,9 +89,9 @@ ACE::HTBP::Stream::recvv (iovec iov[],
 
 ssize_t
 ACE::HTBP::Stream::recvv (iovec *io_vec,
-                  const ACE_Time_Value *timeout) const
+                  ACE_Time_Value const* timeout) const
 {
-  if (this->session_->inbound() == 0)
+  if (this->session_->inbound() == nullptr)
     {
       errno = EWOULDBLOCK;
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -128,13 +118,13 @@ ssize_t
 ACE::HTBP::Stream::send (const void *buf,
                  size_t n,
                  int flags,
-                 const ACE_Time_Value *timeout) const
+                 ACE_Time_Value const* timeout) const
 {
-  if (this->session_->outbound() == 0)
+  if (this->session_->outbound() == nullptr)
     {
-      ACE_Message_Block *msg = 0;
+      ACE_Message_Block *msg {};
       ACE_NEW_RETURN (msg,ACE_Message_Block(n),-1);
-      msg->copy ((const char *)buf,n);
+      msg->copy (static_cast<char const*> (buf), n);
       // probably ought to separately enqueue the flags and put the data buf
       // in a continuation message
       // Also, the timeout poses another interesting problem.
@@ -146,13 +136,13 @@ ACE::HTBP::Stream::send (const void *buf,
 ssize_t
 ACE::HTBP::Stream::send (const void *buf,
                  size_t n,
-                 const ACE_Time_Value *timeout) const
+                 ACE_Time_Value const* timeout) const
 {
-  if (this->session_->outbound() == 0)
+  if (this->session_->outbound() == nullptr)
     {
-      ACE_Message_Block *msg = 0;
+      ACE_Message_Block *msg {};
       ACE_NEW_RETURN (msg,ACE_Message_Block(n),-1);
-      msg->copy ((const char *)buf,n);
+      msg->copy (static_cast<char const*> (buf), n);
       return this->session_->enqueue(msg);
     }
   return this->session_->outbound()->send(buf,n,timeout);
@@ -161,18 +151,22 @@ ACE::HTBP::Stream::send (const void *buf,
 ssize_t
 ACE::HTBP::Stream::sendv (const iovec iov[],
                   int iovcnt,
-                  const ACE_Time_Value *timeout) const
+                  ACE_Time_Value const* timeout) const
 {
-  if (this->session_->outbound() == 0)
+  if (this->session_->outbound() == nullptr)
     {
-      ACE_Message_Block *msg = 0;
+      ACE_Message_Block *msg {};
       size_t total = 0;
       int i = 0;
-      for (; i < iovcnt; i++)
-        total += iov[i].iov_len;
+      for (; i < iovcnt; ++i)
+    {
+          total += iov[i].iov_len;
+    }
       ACE_NEW_RETURN (msg,ACE_Message_Block(total),-1);
-      for (i = 0; i < iovcnt; i++)
-        msg->copy ((const char *)iov[i].iov_base,iov[i].iov_len);
+      for (i = 0; i < iovcnt; ++i)
+    {
+          msg->copy (static_cast<char const*> (iov[i].iov_base), iov[i].iov_len);
+    }
       return this->session_->enqueue(msg);
     }
   return this->session_->outbound()->sendv(iov,iovcnt,timeout);
@@ -194,7 +188,7 @@ ssize_t
 ACE::HTBP::Stream::recv_n (void *,
                    size_t ,
                    int ,
-                   const ACE_Time_Value *,
+                   ACE_Time_Value const*,
                    size_t *) const
 {
   errno = ENOTSUP;
@@ -203,11 +197,11 @@ ACE::HTBP::Stream::recv_n (void *,
                     -1);
 }
 
-  /// Try to recv exactly <len> bytes into <buf> from the connected socket.
+  /// Try to recv exactly @a len bytes into @a buf from the connected socket.
 ssize_t
 ACE::HTBP::Stream::recv_n (void *,
                    size_t ,
-                   const ACE_Time_Value *,
+                   ACE_Time_Value const*,
                    size_t *) const
 {
   errno = ENOTSUP;
@@ -216,11 +210,11 @@ ACE::HTBP::Stream::recv_n (void *,
                     -1);
 }
 
-  /// Receive an <iovec> of size <iovcnt> from the connected socket.
+  /// Receive an @c iovec of size @a iovcnt from the connected socket.
 ssize_t
 ACE::HTBP::Stream::recvv_n (iovec [],
                    int ,
-                   const ACE_Time_Value *,
+                   ACE_Time_Value const*,
                    size_t *) const
 {
   errno = ENOTSUP;
@@ -229,12 +223,12 @@ ACE::HTBP::Stream::recvv_n (iovec [],
                     -1);
 }
 
-  /// Try to send exactly <len> bytes from <buf> to the connection socket.
+  /// Try to send exactly @a len bytes from @a buf to the connection socket.
 ssize_t
 ACE::HTBP::Stream::send_n (const void *,
                    size_t ,
                    int ,
-                   const ACE_Time_Value *,
+                   ACE_Time_Value const*,
                    size_t *) const
 {
   errno = ENOTSUP;
@@ -243,11 +237,11 @@ ACE::HTBP::Stream::send_n (const void *,
                     -1);
 }
 
-  /// Try to send exactly <len> bytes from <buf> to the connected socket.
+  /// Try to send exactly @a len bytes from @a buf to the connected socket.
 ssize_t
 ACE::HTBP::Stream::send_n (const void *,
                    size_t ,
-                   const ACE_Time_Value *,
+                   ACE_Time_Value const*,
                    size_t *) const
 {
   errno = ENOTSUP;
@@ -256,12 +250,12 @@ ACE::HTBP::Stream::send_n (const void *,
                     -1);
 }
 
-  /// Send all the <message_block>s chained through their <next> and
-  /// <cont> pointers.  This call uses the underlying OS gather-write
+  /// Send all the @a message_blocks chained through their @c next and
+  /// @c cont pointers.  This call uses the underlying OS gather-write
   /// operation to reduce the domain-crossing penalty.
 ssize_t
 ACE::HTBP::Stream::send_n (const ACE_Message_Block *,
-                   const ACE_Time_Value *,
+                   ACE_Time_Value const*,
                    size_t *) const
 {
   errno = ENOTSUP;
@@ -270,11 +264,11 @@ ACE::HTBP::Stream::send_n (const ACE_Message_Block *,
                     -1);
 }
 
-  /// Send an <iovec> of size <iovcnt> to the connected socket.
+  /// Send an @c iovec of size @a iovcnt to the connected socket.
 ssize_t
 ACE::HTBP::Stream::sendv_n (const iovec [],
                     int,
-                    const ACE_Time_Value *,
+                    ACE_Time_Value const*,
                     size_t *) const
 {
   errno = ENOTSUP;
@@ -340,7 +334,6 @@ ACE::HTBP::Stream::session (ACE::HTBP::Session *s)
   this->session_ = s;
   s->stream (this);
 }
-
 
 ACE_HANDLE
 ACE::HTBP::Stream::get_handle () const

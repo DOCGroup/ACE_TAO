@@ -1,6 +1,3 @@
-
-
-//=============================================================================
 /**
  *  @file    Logging_Service_i.h
  *
@@ -9,8 +6,6 @@
  *
  *  @author Nagarajan Surendran <naga@cs.wustl.edu> Matthew Braun <mjb2@cec.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef _LOG_SERVER_H
 #define _LOG_SERVER_H
@@ -42,11 +37,14 @@
 class Logger_Server
 {
 public:
-  /// Constructor.
-  Logger_Server ();
+  Logger_Server (Logger_Server const&) = delete;
+  Logger_Server (Logger_Server&&) = delete;
+  Logger_Server& operator= (Logger_Server const&) = delete;
+  Logger_Server& operator= (Logger_Server&&) = delete;
 
-  /// Destructor.
-  ~Logger_Server ();
+  Logger_Server () = default;
+
+  ~Logger_Server () = default;
 
   /// Initialize the Logger_Server state - parsing arguments and ...
   int init (int argc,
@@ -55,9 +53,9 @@ public:
   /// Run the ORB.
   int run ();
 
-  /// This function creates and returns a logger with the given <name>.
-  /// Currently, <name> is unused.
-  Logger_ptr make_logger (const char *name);
+  /// This function creates and returns a logger with the given @a name.
+  /// Currently, @a name is unused.
+  Logger_ptr make_logger (char const *name);
 
 private:
   /// Parses the commandline arguments.
@@ -80,14 +78,14 @@ private:
   Logger_Factory_var factory_;
 
   /// Number of commandline arguments.
-  int argc_;
+  int argc_ {};
 
   /// commandline arguments.
-  ACE_TCHAR **argv_;
+  ACE_TCHAR **argv_ {};
 
   /// The id to give the Logger_Factory instance (defaults to
   /// "LoggingService")
-  const ACE_TCHAR* service_name_;
+  ACE_TCHAR const *service_name_ {ACE_TEXT("LoggingService")};
 };
 
 #endif /* _LOG_SERVER_H */

@@ -1,12 +1,8 @@
-// -*- C++ -*-
-//
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 TAO_Incoming_Message_Queue::TAO_Incoming_Message_Queue (TAO_ORB_Core *orb_core)
-  : last_added_ (nullptr),
-    size_ (0),
-    orb_core_ (orb_core)
+  : orb_core_ (orb_core)
 {
 }
 

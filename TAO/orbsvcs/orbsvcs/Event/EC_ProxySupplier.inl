@@ -1,10 +1,9 @@
-// -*- C++ -*-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE void
 TAO_EC_ProxyPushSupplier::suspend_connection_i ()
 {
-  this->suspended_ = 1;
+  this->suspended_ = true;
 }
 
 ACE_INLINE void
@@ -21,7 +20,7 @@ TAO_EC_ProxyPushSupplier::suspend_connection_locked ()
 ACE_INLINE void
 TAO_EC_ProxyPushSupplier::resume_connection_i ()
 {
-  this->suspended_ = 0;
+  this->suspended_ = false;
 }
 
 ACE_INLINE void
@@ -78,7 +77,7 @@ TAO_EC_ProxyPushSupplier::consumer (RtecEventComm::PushConsumer_ptr consumer)
   this->consumer_i (consumer);
 }
 
-ACE_INLINE const RtecEventChannelAdmin::ConsumerQOS&
+ACE_INLINE RtecEventChannelAdmin::ConsumerQOS const&
 TAO_EC_ProxyPushSupplier::subscriptions () const
 {
   // @@ TODO There should be a better way to signal errors here.

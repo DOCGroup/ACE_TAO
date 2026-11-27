@@ -1,4 +1,3 @@
-// -*- C++ -*-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<typename S, typename S_var>
@@ -11,9 +10,6 @@ TAO::In_UB_String_SArgument_T<S,S_var>::arg () const
 {
   return this->x_.in ();
 }
-
-// ==========================================================================
-
 template<typename S, typename S_var>
 ACE_INLINE
 TAO::Inout_UB_String_SArgument_T<S,S_var>::Inout_UB_String_SArgument_T () = default;
@@ -25,9 +21,6 @@ TAO::Inout_UB_String_SArgument_T<S,S_var>::arg ()
 {
   return this->x_.inout ();
 }
-
-// ==========================================================================
-
 template<typename S, typename S_var>
 ACE_INLINE
 TAO::Out_UB_String_SArgument_T<S,S_var>::Out_UB_String_SArgument_T () = default;
@@ -39,9 +32,6 @@ TAO::Out_UB_String_SArgument_T<S,S_var>::arg ()
 {
   return this->x_.out ();
 }
-
-// ==========================================================================
-
 template<typename S, typename S_var>
 ACE_INLINE
 TAO::Ret_UB_String_SArgument_T<S,S_var>::Ret_UB_String_SArgument_T () = default;

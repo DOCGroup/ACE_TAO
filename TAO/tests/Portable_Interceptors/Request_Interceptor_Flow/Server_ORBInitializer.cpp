@@ -14,8 +14,8 @@ Server_ORBInitializer::post_init (
     PortableInterceptor::ORBInitInfo_ptr info)
 {
   // Create and register the test request interceptors.
-  PortableInterceptor::ServerRequestInterceptor_ptr si =
-    PortableInterceptor::ServerRequestInterceptor::_nil ();
+  // The var below takes ownership of each ACE_NEW allocation.
+  PortableInterceptor::ServerRequestInterceptor_ptr si {};
   ACE_NEW_THROW_EX (si,
                     Server_Request_Interceptor ("SERVER A"),
                     CORBA::NO_MEMORY (

@@ -11,17 +11,14 @@ Smart_Test_Proxy::method (CORBA::Short boo)
   ACE_DEBUG ((LM_DEBUG,
               "Yahoo, I am smart\n"));
 
-  CORBA::Short retval = 0;
   try
     {
-      retval = TAO_Test_Smart_Proxy_Base::method (boo);
+      return TAO_Test_Smart_Proxy_Base::method (boo);
     }
-  catch (const Test::Oops& reason)
+  catch (Test::Oops const &reason)
     {
       reason._tao_print_exception ("User Exception");
       return -1;
     }
-
-  return retval;
 }
 

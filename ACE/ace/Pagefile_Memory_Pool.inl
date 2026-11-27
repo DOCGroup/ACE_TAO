@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #if defined (ACE_WIN32)
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -43,7 +42,7 @@ ACE_Pagefile_Memory_Pool::protect (void *, size_t, int)
 ACE_INLINE void *
 ACE_Pagefile_Memory_Pool::base_addr () const
 {
-  return 0;
+  return nullptr;
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

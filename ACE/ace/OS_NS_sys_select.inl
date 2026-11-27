@@ -1,4 +1,4 @@
-// -*- C++ -*-
+#include <memory>
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_macros.h"
 #include "ace/Time_Value.h"
@@ -10,18 +10,18 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_INLINE int
 ACE_OS::select (int width,
                 fd_set *rfds, fd_set *wfds, fd_set *efds,
-                const ACE_Time_Value *timeout)
+                ACE_Time_Value const *timeout)
 {
   ACE_OS_TRACE ("ACE_OS::select");
 #if defined (ACE_HAS_NONCONST_SELECT_TIMEVAL)
   // We must defend against non-conformity!
   timeval copy;
-  timeval *timep = nullptr;
+  timeval *timep {};
 
   if (timeout != nullptr)
     {
       copy = *timeout;
-      timep = std::addressof(copy);
+      timep = std::addressof (copy);
     }
 #else
   const timeval *timep = (timeout == 0 ? (const timeval *)0 : *timeout);
@@ -46,7 +46,7 @@ ACE_OS::select (int width,
 ACE_INLINE int
 ACE_OS::select (int width,
                 fd_set *rfds, fd_set *wfds, fd_set *efds,
-                const ACE_Time_Value &timeout)
+                ACE_Time_Value const &timeout)
 {
   ACE_OS_TRACE ("ACE_OS::select");
 #if defined (ACE_HAS_NONCONST_SELECT_TIMEVAL)

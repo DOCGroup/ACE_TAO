@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    Notifier_Input_Handler.cpp
  *
@@ -6,7 +5,6 @@
  *
  *  @author Kirthika Parameswaran <kirthika@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "Notifier_Input_Handler.h"
 #include "tao/debug.h"
@@ -15,25 +13,19 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_ctype.h"
 
-// Constructor.
-Notifier_Input_Handler::Notifier_Input_Handler ()
-  : ior_output_file_ (0),
-    argc_ (0),
-    argv_ (0),
-    using_naming_service_ (1)
-{
-}
+#include <memory>
 
-// Destructor.
 Notifier_Input_Handler::~Notifier_Input_Handler ()
 {
    // Make sure to cleanup the STDIN handler.
   if (ACE_Event_Handler::remove_stdin_handler
       (this->notifier_i_.orb_->orb_core ()->reactor (),
        this->notifier_i_.orb_->orb_core ()->thr_mgr ()) == -1)
-     ACE_ERROR ((LM_ERROR,
-               "%p\n",
-               "remove_stdin_handler"));
+    {
+       ACE_ERROR ((LM_ERROR,
+                 "%p\n",
+                 "remove_stdin_handler"));
+    }
 }
 
 // The naming service is initialized and the naming context as well as
@@ -44,7 +36,9 @@ Notifier_Input_Handler::init_naming_service ()
   CORBA::ORB_var orb = this->orb_manager_.orb ();
 
   if (this->naming_server_.init (orb.in ()) == -1)
+  {
     return -1;
+  }
 
   // create the name for the naming service
   CosNaming::Name notifier_obj_name (1);
@@ -61,7 +55,7 @@ Notifier_Input_Handler::init_naming_service ()
       naming_server_->rebind (notifier_obj_name,
                               notifier_obj.in());
     }
-  catch (const CosNaming::NamingContext::AlreadyBound&)
+  catch (CosNaming::NamingContext::AlreadyBound const &)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "Unable to bind %s\n",
@@ -76,40 +70,44 @@ Notifier_Input_Handler::init_naming_service ()
 int
 Notifier_Input_Handler::parse_args ()
 {
-  ACE_Get_Opt get_opts (this->argc_, this->argv_, ACE_TEXT("df:s "));
+  ACE_Get_Opt get_opts (this->argc_, this->argv_.get (), ACE_TEXT("df:s "));
   int c;
 
   while ((c = get_opts ()) != -1)
-    switch (c)
-      {
-      case 'd':  // debug flag.
-        TAO_debug_level++;  ///*****
-        break;
+    {
+      switch (c)
+        {
+        case 'd':  // debug flag.
+          ++TAO_debug_level;  ///*****
+          break;
 
-      case 'f':  // output the IOR toi a file.
-        this->ior_output_file_ = ACE_OS::fopen (get_opts.opt_arg (), "w");
-        if (this->ior_output_file_ == 0)
+        case 'f':  // output the IOR toi a file.
+          this->ior_output_file_.reset (ACE_OS::fopen (get_opts.opt_arg (), "w"));
+          if (!this->ior_output_file_)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR,
+                                 "Unable to open %s for writing: %p\n",
+                                 get_opts.opt_arg ()),
+                                -1);
+            }
+          break;
+
+        case 's': // don't use the naming service
+          this->using_naming_service_ = false;
+          break;
+
+        case '?':  // display help for use of the server.
+        default:
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "Unable to open %s for writing: %p\n",
-                             get_opts.opt_arg ()),
-                            -1);
-        break;
-
-      case 's': // don't use the naming service
-        this->using_naming_service_ = 0;
-        break;
-
-      case '?':  // display help for use of the server.
-      default:
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s"
-                           " [-d]"
-                           " [-f] <ior_output_file>"
-                           " [-s]"
-                           "\n",
-                           argv_ [0]),
-                          1);
-      }
+                             "usage:  %s"
+                             " [-d]"
+                             " [-f] <ior_output_file>"
+                             " [-s]"
+                             "\n",
+                             this->argv_[0]),
+                            1);
+        }
+    }
 
   // Indicates successful parsing of command line.
   return 0;
@@ -123,20 +121,30 @@ Notifier_Input_Handler::init (int argc,
   // Call the init of <TAO_ORB_Manager> to initialize the ORB and
   // create the child poa under the root POA.
   this->argc_ = argc;
-  this->argv_ = argv;
+  ACE_TCHAR **argv_copy {};
+  ACE_NEW_RETURN (argv_copy, ACE_TCHAR *[argc], -1);
+  this->argv_.reset (argv_copy);
+  for (int i = 0; i < argc; ++i)
+            {
+      this->argv_[i] = argv[i];
+            }
 
   if (this->orb_manager_.init_child_poa (this->argc_,
-                                         this->argv_,
+                                         this->argv_.get (),
                                          "child_poa") == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "init_child_poa"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "init_child_poa"),
+                        -1);
+    }
 
   int retval = this->parse_args ();
 
   if (retval != 0)
+  {
     return retval;
+  }
 
   // Register our <Input_Handler> to handle STDIN events, which will
   // trigger the <handle_input> method to process these events.
@@ -147,10 +155,12 @@ Notifier_Input_Handler::init (int argc,
       (this,
        orb->orb_core ()->reactor (),
        orb->orb_core ()->thr_mgr ()) == -1)
-       ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "register_stdin_handler"),
-                      -1);
+    {
+         ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         "register_stdin_handler"),
+                        -1);
+    }
 
   // Stash our ORB pointer for later reference.
   this->notifier_i_.orb (orb.in ());
@@ -158,18 +168,18 @@ Notifier_Input_Handler::init (int argc,
   // Activate the servant in the POA.
   CORBA::String_var str  =
     this->orb_manager_.activate_under_child_poa ("Notifier",
-                                                 &this->notifier_i_);
+                                                 std::addressof (this->notifier_i_));
 
   ACE_DEBUG ((LM_DEBUG,
-              "The IOR is: <%s>\n",
+              "The IOR is: <%C>\n",
               str.in ()));
 
   if (this->ior_output_file_)
     {
-      ACE_OS::fprintf (this->ior_output_file_,
+      ACE_OS::fprintf (this->ior_output_file_.get (),
                        "%s",
                        str.in ());
-      ACE_OS::fclose (this->ior_output_file_);
+      this->ior_output_file_.reset ();
     }
 
   if (this->using_naming_service_)
@@ -207,7 +217,9 @@ Notifier_Input_Handler::handle_input (ACE_HANDLE)
       // and remove the devil from the picture i.e '\n' ! ;)
       ssize_t const strlen = ACE_OS::read (ACE_STDIN, buf, sizeof buf);
       if (buf[strlen -1] == '\n')
-        buf[strlen -1] = '\0';
+        {
+          buf[strlen -1] = '\0';
+        }
 
       ACE_DEBUG ((LM_DEBUG,
                   "%C",
@@ -220,7 +232,7 @@ Notifier_Input_Handler::handle_input (ACE_HANDLE)
           this->notifier_i_.shutdown ();
         }
     }
-   catch (const CORBA::Exception& ex)
+   catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Input_Handler::init");
       return -1;

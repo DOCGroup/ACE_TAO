@@ -8,10 +8,12 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
-ACE_Basic_Stats::accumulate (const ACE_Basic_Stats &rhs)
+ACE_Basic_Stats::accumulate (ACE_Basic_Stats const &rhs)
 {
   if (rhs.samples_count_ == 0)
+  {
     return;
+  }
 
   if (this->samples_count_ == 0)
     {
@@ -41,7 +43,7 @@ ACE_Basic_Stats::accumulate (const ACE_Basic_Stats &rhs)
 
 void
 ACE_Basic_Stats::dump_results (
-  const ACE_TCHAR *msg,
+  ACE_TCHAR const *msg,
   ACE_Basic_Stats::scale_factor_type sf) const
 {
 #ifndef ACE_NLOGGING
@@ -52,14 +54,14 @@ ACE_Basic_Stats::dump_results (
       return;
     }
 
-  ACE_UINT64 avg = this->sum_ / this->samples_count_;
+  ACE_UINT64 const avg = this->sum_ / this->samples_count_;
 
-  ACE_UINT64 l_min = this->min_ / sf;
-  ACE_UINT64 l_max = this->max_ / sf;
-  ACE_UINT64 l_avg = avg / sf;
+  ACE_UINT64 const l_min = this->min_ / sf;
+  ACE_UINT64 const l_max = this->max_ / sf;
+  ACE_UINT64 const l_avg = avg / sf;
 
   ACELIB_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("%s latency   : %Q[%d]/%Q/%Q[%d] (min/avg/max)\n"),
+              ACE_TEXT ("%s latency   : %Q[%u]/%Q/%Q[%u] (min/avg/max)\n"),
               msg,
               l_min, this->min_at_,
               l_avg,

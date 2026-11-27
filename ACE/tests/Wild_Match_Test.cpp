@@ -2,7 +2,7 @@
 #include "ace/Log_Msg.h"
 #include "test_config.h"
 
-bool match (const char *str, const char *pat, bool cs = true, bool cc = false)
+bool match (char const *str, char const *pat, bool cs = true, bool cc = false)
 {
   bool const result = ACE::wild_match (str, pat, cs, cc);
   ACE_DEBUG ((LM_DEBUG, "string {%C} %C pattern {%C}\t%C\t%C\n", str,

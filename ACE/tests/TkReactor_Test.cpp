@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    TkReactor_Test.cpp
  *
@@ -14,7 +13,6 @@
  *
  *  @author Nagarajan Surendran <naga@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "test_config.h"
 
@@ -27,8 +25,11 @@
 #include "ace/TkReactor/TkReactor.h"
 #include "ace/OS_NS_unistd.h"
 
+#include <memory>
 #include <tcl.h>
 #include <tk.h>
+
+#include <string>
 
 Tcl_Interp* tcl_interp;
 void eval (const char *s)
@@ -38,11 +39,10 @@ void eval (const char *s)
   int st = Tcl_GlobalEval(tcl_interp,buf);
   if (st != TCL_OK)
     {
-      int n =  ACE_OS::strlen(s);
-      char *wrk = new char[n + 80];
-      ACE_OS::snprintf (wrk, n + 80, "tkerror \"%s\"", s);
-      Tcl_GlobalEval(tcl_interp, wrk);
-      delete [] wrk;
+      std::string command = "tkerror \"";
+      command += s;
+      command += '"';
+      Tcl_GlobalEval(tcl_interp, command.c_str());
     }
 }
 
@@ -67,7 +67,7 @@ Quit (ClientData, XEvent *)
   quit = 1;
 }
 
-static void *
+static ACE_THR_FUNC_RETURN
 client (void *)
 {
   char buf[100];
@@ -86,28 +86,33 @@ client (void *)
   if (connector.connect (stream,
                          ACE_INET_Addr (SERV_TCP_PORT,
                                         ACE_DEFAULT_SERVER_HOST)) == -1)
-    ACE_ERROR ((LM_ERROR,
-                "(%P) %p\n",
-                "Socket open"));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "(%P) %p\n",
+                  ACE_TEXT ("Socket open")));
+    }
 
   if (stream.send (4,
-                   (void *) &mes_len,
-                   sizeof (size_t),
-                   (void *)buf,
-                   ACE_OS::strlen (buf) + 1) == -1)
-
-    ACE_ERROR ((LM_ERROR,
-                "(%P) %p\n",
-                "Socket send"));
+                   reinterpret_cast<char *> (&mes_len),
+                   static_cast<int> (sizeof mes_len),
+                   buf,
+                   static_cast<int> (ACE_OS::strlen (buf) + 1)) == -1)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "(%P) %p\n",
+                  ACE_TEXT ("Socket send")));
+    }
 
   if (stream.close () == -1)
-    ACE_ERROR ((LM_ERROR,
-                "(%P) %p\n",
-                "Socket close"));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "(%P) %p\n",
+                  ACE_TEXT ("Socket close")));
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               "(%P) Client: Message has been sent, about to exit...\n"));
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 // Callback for "Press Me" button.
@@ -127,9 +132,14 @@ inc_count (ClientData client_data, Tcl_Interp *interp,int, char **)
 
   //  sprintf (command,"set %s %s",(char *)client_data,new_string);
   // eval (command);
-  const char *varValue = Tcl_SetVar (interp,(char *)client_data,new_string,TCL_LEAVE_ERR_MSG);
+  const char *varValue = Tcl_SetVar (interp,
+                                     static_cast<const char *> (client_data),
+                                     new_string,
+                                     TCL_LEAVE_ERR_MSG);
   if (varValue == nullptr)
-    return TCL_ERROR;
+    {
+      return TCL_ERROR;
+    }
   return TCL_OK;
 }
 
@@ -141,15 +151,22 @@ inc_tmo (ClientData client_data)
   char new_string[80];
 
   if (count2 > 10)
-    ACE_OS::exit (0);
+    {
+      ACE_OS::exit (0);
+    }
   ACE_OS::snprintf (new_string, 80, "Events: [%d] [%d] [%d]",
                     count1, count2++, count3);
 
   //  sprintf (command,"set %s %s",(char *)client_data,new_string);
   //  eval (command);
-  const char *varValue = Tcl_SetVar (tcl_interp,(char *)client_data,new_string,TCL_LEAVE_ERR_MSG);
+  const char *varValue = Tcl_SetVar (tcl_interp,
+                                     static_cast<const char *> (client_data),
+                                     new_string,
+                                     TCL_LEAVE_ERR_MSG);
   if (varValue == nullptr)
-    ACE_ERROR ((LM_ERROR,"Tcl_SetVar failed in inc_tmo\n"));
+    {
+      ACE_ERROR ((LM_ERROR,"Tcl_SetVar failed in inc_tmo\n"));
+    }
 
   (void) Tk_CreateTimerHandler (1000,
                                 inc_tmo,
@@ -159,7 +176,7 @@ inc_tmo (ClientData client_data)
 class EV_handler : public ACE_Event_Handler
 {
 public:
-  int handle_timeout (const ACE_Time_Value &,
+  int handle_timeout (ACE_Time_Value const &,
                               const void *arg) override
   {
     char new_string[80];
@@ -168,9 +185,14 @@ public:
 
     //    sprintf (command,"set %s %s",(char *)arg,new_string);
     //    eval (command);
-    const char *varValue = Tcl_SetVar (tcl_interp,(char *)arg,new_string,TCL_LEAVE_ERR_MSG);
+    const char *varValue = Tcl_SetVar (tcl_interp,
+                                       static_cast<const char *> (arg),
+                                       new_string,
+                                       TCL_LEAVE_ERR_MSG);
     if (varValue == nullptr)
-      ACE_ERROR_RETURN ((LM_ERROR,"Tcl_SetVar failed in handle_timeout\n"),-1);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,"Tcl_SetVar failed in handle_timeout\n"),-1);
+      }
 
     return 0;
   }
@@ -185,22 +207,26 @@ public:
   //FUZZ: enable check_for_lack_ACE_OS
     char buf[100];
     int head;
-    ssize_t ret = this->peer ().recv_n ((char *) &head,
+    ssize_t ret = this->peer ().recv_n (reinterpret_cast<char *> (&head),
                                         sizeof (int));
     if (ret != sizeof (int))
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%P) %p\n",
-                         "read header"),
-                        -1);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%P) %p\n",
+                           ACE_TEXT ("read header")),
+                          -1);
+      }
 
     ret = this->peer ().recv_n (buf,
                                 (int) ntohl (head));
 
     if (ret != (int) ntohl (head))
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%P) %p\n",
-                         "read message"),
-                        -1);
+      {
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           "(%P) %p\n",
+                           ACE_TEXT ("read message")),
+                          -1);
+      }
     ACE_DEBUG ((LM_DEBUG,
                 " (%P)Server (ACE_SOCKET channel message): [%s]\n",
                 buf));
@@ -212,9 +238,13 @@ int
 init (Tcl_Interp *interp)
 {
   if (Tcl_Init (interp) == TCL_ERROR)
-    return TCL_ERROR;
+    {
+      return TCL_ERROR;
+    }
   if (Tk_Init (interp) == TCL_ERROR)
-    return TCL_ERROR;
+    {
+      return TCL_ERROR;
+    }
   return TCL_OK;
 }
 
@@ -256,7 +286,7 @@ run_main (int, ACE_TCHAR *[])
 
   // It will perform Tk Main Loop
   ACE_TkReactor reactor;
-  ACE_Reactor r (&reactor);
+  ACE_Reactor r (std::addressof (reactor));
 
   //Event Handler for ACE Timer.
   EV_handler evh;
@@ -264,21 +294,25 @@ run_main (int, ACE_TCHAR *[])
   ACE_Acceptor <Connection_Handler, ACE_SOCK_ACCEPTOR> acceptor;
 
   if (acceptor.open (ACE_INET_Addr ((u_short) SERV_TCP_PORT),
-                     &r) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "%p\n",
-                       "open"),
-                      -1);
+                     std::addressof (r)) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "%p\n",
+                         ACE_TEXT ("open")),
+                        -1);
+    }
 
-  if (reactor.schedule_timer (&evh,
-                              (const void *) "label_var",
+  if (reactor.schedule_timer (std::addressof (evh),
+                              "label_var",
                               ACE_Time_Value (2),
                               ACE_Time_Value (2))==-1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       " (%P|%t) can't register with reactor\n"),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         " (%P|%t) can't register with reactor\n"),
+                        -1);
+    }
 
-  ACE_Thread_Manager::instance ()->spawn ((ACE_THR_FUNC) client,
+  ACE_Thread_Manager::instance ()->spawn (client,
                                           nullptr,
                                           THR_NEW_LWP | THR_DETACHED);
 

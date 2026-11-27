@@ -8,18 +8,20 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      const char *group_name = "BasicGroup";
-      const char *location1 = "location1";
-      const char *location2 = "location2";
-      const char *location3 = "location3";
-      const char *location4 = "location4";
-      const char *location5 = "location5";
-      const char *location6 = "location6";
+      char const *group_name = "BasicGroup";
+      char const *location1 = "location1";
+      char const *location2 = "location2";
+      char const *location3 = "location3";
+      char const *location4 = "location4";
+      char const *location5 = "location5";
+      char const *location6 = "location6";
 
       LB_server lb_server (argc, argv);
 
       if (lb_server.start_orb_and_poa () != 0)
+      {
         return 1;
+      }
 
       // Either the object group was created or it existed
       // previously.
@@ -35,7 +37,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       try {
         (lb_server.name_svc ())->rebind (name, lb_server.object_group ());
       }
-      catch (const CORBA::Exception& ex)
+      catch (CORBA::Exception const & ex)
       {
         ex._tao_print_exception (
           ACE_TEXT ("Unable to bind object group in name service.\n"));
@@ -123,9 +125,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                   ACE_TEXT ("(%P|%t) server - event loop finished\n")));
 
       if (lb_server.destroy () == -1)
+      {
         return 1;
+      }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception (ACE_TEXT ("lb_server exception"));
       return 1;

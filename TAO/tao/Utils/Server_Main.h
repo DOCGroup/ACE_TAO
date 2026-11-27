@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 /**
  *  @file    Server_Main.h
  *
@@ -19,6 +17,7 @@
  *  and specify the status to be returned from the process.
  *
  *  The application should create a C/C++ main that looks something like:
+ *  @code
  *    #include <tao/Utils/Server_Main.h>
  *    #include "Xyzzy_i.h"
  *    int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
@@ -26,6 +25,7 @@
  *      Server_Main<Xyzzy_i> servant ("Xyzzy");
  *      return servant.run(argc, argv);
  *    }
+ *  @endcode
  *
  *  The servant implementation (Xyzzy_i in this case) must implement
  *  the following methods:
@@ -35,7 +35,7 @@
  *      int init (CORBA::ORB_ptr orb );
  *      int idle(int &result);
  *      int fini ();
- *      const char * identity () const;
+ *      char const *identity () const;
  *
  *      parse_args, self_register, self_unregister return 0 if ok, nonzero for error.
  *      idle returns 0 to continue execution; nonzero to exit -- returning "result" from the process
@@ -66,6 +66,7 @@ namespace TAO
     class Server_Main
     {
     public:
+      Server_Main () = delete;
       explicit Server_Main (char const *name);
       Server_Main (Server_Main const &) = delete;
       Server_Main (Server_Main &&) = delete;

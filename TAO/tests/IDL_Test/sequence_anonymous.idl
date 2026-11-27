@@ -21,7 +21,7 @@ interface seqTest
 
 /// Anonymous sequence members must be unique types even if the
 /// sequence itself is not, so the member name has been
-/// incorported into the sequence class name. #if !defined guards
+/// incorported into the sequence class name. \#if !defined guards
 /// are generated around code for the inner anonymous sequences.
 struct twinStruct
   {

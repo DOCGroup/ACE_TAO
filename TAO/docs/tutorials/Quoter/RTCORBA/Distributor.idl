@@ -29,6 +29,7 @@ module Stock
   {
     /// Event source operation to establish connectivity.
     /// @param c An object reference to the consumer the distributor should notify
+    /// @param priority The priority at which notifications are delivered.
     /// @returns A cookie used to identify the subscription.
     Cookie subscribe_notifier (in Stock::StockNameConsumer c,
                                in RTCORBA::Priority priority);
@@ -39,7 +40,7 @@ module Stock
       raises (Invalid_Subscription);
 
     /// Factory operation to return StockQuoter object reference.
-    /// @param The cookie returned from the call to subscribe notifier.
+    /// @param ck The cookie returned from the call to subscribe_notifier.
     /// This is used to control the priority that the Quoter runs at.
     StockQuoter provide_quoter_info (in Cookie ck)
       raises (Invalid_Subscription);

@@ -1,13 +1,9 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file     Local_Memory_Pool.h
  *
  *  @author Dougls C. Schmidt <d.schmidt@vanderbilt.edu>
  *  @author Prashant Jain <pjain@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef ACE_LOCAL_MEMORY_POOL_H
 #define ACE_LOCAL_MEMORY_POOL_H
@@ -49,8 +45,8 @@ public:
   using OPTIONS = ACE_Local_Memory_Pool_Options;
 
   /// Initialize the pool.
-  ACE_Local_Memory_Pool (const ACE_TCHAR *backing_store_name = nullptr,
-                         const OPTIONS *options = nullptr);
+  ACE_Local_Memory_Pool (ACE_TCHAR const *backing_store_name = nullptr,
+                         OPTIONS const *options = nullptr);
 
   virtual ~ACE_Local_Memory_Pool ();
 

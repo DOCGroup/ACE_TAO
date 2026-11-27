@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/PI_Server/PICurrent_Guard.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
@@ -20,7 +19,7 @@ TAO::PICurrent_Guard::PICurrent_Guard (TAO_ServerRequest &server_request,
     server_request.orb_core ()->pi_current ();
 
   TAO::PICurrent * const pi_current =
-    dynamic_cast <TAO::PICurrent*> (pi_current_obj);
+    dynamic_cast<TAO::PICurrent *> (pi_current_obj);
 
   // If the slot count is zero, there is nothing to copy.  Prevent any
   // copying (and hence TSS accesses) from occurring.
@@ -37,7 +36,7 @@ TAO::PICurrent_Guard::PICurrent_Guard (TAO_ServerRequest &server_request,
           // TSC to RSC copy.
           // Occurs after receive_request() interception point and
           // upcall.
-          this->src_  = tsc;
+          this->src_ = tsc;
           this->dest_ = rsc;
         }
       else
@@ -45,7 +44,7 @@ TAO::PICurrent_Guard::PICurrent_Guard (TAO_ServerRequest &server_request,
           // RSC to TSC copy.
           // Occurs after receive_request_service_contexts()
           // interception point.
-          this->src_  = rsc;
+          this->src_ = rsc;
           this->dest_ = tsc;
         }
     }

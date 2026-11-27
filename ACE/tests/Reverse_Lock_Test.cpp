@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    Reverse_Lock_Test.cpp
  *
@@ -9,7 +7,6 @@
  *
  *  @author Irfan Pyarali <irfan@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "ace/Synch_Traits.h"

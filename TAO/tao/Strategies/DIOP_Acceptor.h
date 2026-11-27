@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    DIOP_Acceptor.h
  *
@@ -8,8 +5,6 @@
  *
  *  @author  Michael Kircher
  */
-//=============================================================================
-
 
 #ifndef TAO_DIOP_ACCEPTOR_H
 #define TAO_DIOP_ACCEPTOR_H
@@ -29,10 +24,9 @@
 #include "tao/Acceptor_Impl.h"
 
 #include "tao/GIOP_Message_Version.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-// TAO DIOP_Acceptor concrete call definition
 
 /**
  * @class TAO_DIOP_Acceptor
@@ -44,10 +38,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Strategies_Export TAO_DIOP_Acceptor : public TAO_Acceptor
 {
 public:
-  /// Constructor.
   TAO_DIOP_Acceptor ();
 
-  /// Destructor.
   ~TAO_DIOP_Acceptor ();
 
   /// @@ Helper method for the implementation repository, should go
@@ -68,7 +60,7 @@ public:
    *
    * Please check the documentation in Transport_Acceptor.h for details.
    */
-  //@{
+  /// @{
   int open (TAO_ORB_Core *orb_core,
             ACE_Reactor *reactor,
             int version_major,
@@ -85,12 +77,12 @@ public:
                       TAO_MProfile &mprofile,
                       CORBA::Short priority) override;
 
-  int is_collocated (TAO_Endpoint const *endpoint) override;
+  bool is_collocated (TAO_Endpoint const *endpoint) override;
   CORBA::ULong endpoint_count () override;
 
   int object_key (IOP::TaggedProfile &profile,
                   TAO::ObjectKey &key) override;
-  //@}
+  /// @}
 
   /**
    * Set the host name for the given addr.
@@ -136,7 +128,7 @@ protected:
 
   /**
    * Probe the system for available network interfaces, and initialize
-   * the <addrs_> array with an ACE_INET_Addr for each network
+   * the @c addrs_ array with an ACE_INET_Addr for each network
    * interface.  The port for each initialized ACE_INET_Addr will be
    * set in the open_i() method.  This method only gets invoked when
    * no explicit hostname is provided in the specified endpoint.
@@ -162,19 +154,19 @@ protected:
 
   /// Helper method to add a new profile to the mprofile for
   /// each endpoint.
-  int create_new_profile (const TAO::ObjectKey &object_key,
+  int create_new_profile (TAO::ObjectKey const &object_key,
                           TAO_MProfile &mprofile,
                           CORBA::Short priority);
 
   /// Helper method to create a profile that contains all of
   /// our endpoints.
-  int create_shared_profile (const TAO::ObjectKey &object_key,
+  int create_shared_profile (TAO::ObjectKey const &object_key,
                              TAO_MProfile &mprofile,
                              CORBA::Short priority);
 protected:
   /// Array of ACE_INET_Addr instances, each one corresponding to a
   /// given network interface.
-  ACE_INET_Addr *addrs_ {};
+  std::unique_ptr<ACE_INET_Addr[]> addrs_;
 
   /**
    * The number of ports over which the acceptor should search (starting
@@ -190,7 +182,7 @@ protected:
    * example, if the IP address is INADDR_ANY (0.0.0.0) then there
    * will be possibly a different hostname for each interface.
    */
-  char **hosts_ {};
+  std::unique_ptr<char *[]> hosts_;
 
   /// The number of host names cached in the hosts_ array (equivalent
   /// to the number of endpoints opened by this Acceptor).
@@ -215,7 +207,6 @@ private:
   TAO_DIOP_Acceptor (TAO_DIOP_Acceptor &&) = delete;
   TAO_DIOP_Acceptor &operator= (TAO_DIOP_Acceptor &&) = delete;
 
-  // @@ Frank: From DIOP_Acceptor.h
   TAO_DIOP_Connection_Handler *connection_handler_ {};
 };
 

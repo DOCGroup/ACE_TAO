@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 /**
  *  @file   EC_Scheduling_Strategy.h
  *
@@ -46,7 +44,6 @@ class TAO_EC_QOS_Info;
 class TAO_RTEvent_Serv_Export TAO_EC_Scheduling_Strategy
 {
 public:
-  /// Destructor
   virtual ~TAO_EC_Scheduling_Strategy ();
 
   /// Add all the dependencies between @a supplier and @a consumer
@@ -56,7 +53,7 @@ public:
 
   /// Schedule an event set and deliver them to the filter in the
   /// desired order and grouping.
-  virtual void schedule_event (const RtecEventComm::EventSet &event,
+  virtual void schedule_event (RtecEventComm::EventSet const &event,
                                TAO_EC_ProxyPushConsumer *consumer,
                                TAO_EC_Supplier_Filter *filter) = 0;
 };

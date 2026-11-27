@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project : ace_x11 {
   requires += gl
 

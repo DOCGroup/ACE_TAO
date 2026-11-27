@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(ACE_Compression) : acelib, install, ace_output {
   sharedname   = *
   dynamicflags += ACE_COMPRESSION_BUILD_DLL

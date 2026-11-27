@@ -1,11 +1,8 @@
-// -*- C++ -*-
-//=============================================================================
 /**
  *  @file   Safe_InputCDR.h
  *
  *  @author Huang-Ming Huang <hh1@cse.wustl.edu>
  */
-//=============================================================================
 #ifndef SAFE_INPUTCDR_H
 #define SAFE_INPUTCDR_H
 #include /**/ "ace/pre.h"

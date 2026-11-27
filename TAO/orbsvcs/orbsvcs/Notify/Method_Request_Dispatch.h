@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 /**
  *  @file Method_Request_Dispatch.h
  *
@@ -38,17 +36,17 @@ class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Dispatch
 {
 public:
   /// an arbitrary code (Octet) to identify this delivery method type in persistent storage
-  enum {persistence_code = 1};
+  static constexpr int persistence_code = 1;
 
   /// Constuct from event
   TAO_Notify_Method_Request_Dispatch (
-    const TAO_Notify_Event * event,
+    TAO_Notify_Event const * event,
     TAO_Notify_ProxySupplier* proxy_supplier,
     bool filtering);
 
   /// Construct from a delivery rquest
   TAO_Notify_Method_Request_Dispatch (
-    const TAO_Notify::Delivery_Request_Ptr & delivery,
+    TAO_Notify::Delivery_Request_Ptr const & delivery,
     TAO_Notify_ProxySupplier* proxy_supplier,
     bool filtering);
 
@@ -56,21 +54,19 @@ public:
   /// event is passed separately because we may be using a copy
   /// of the one in the previous method request
   TAO_Notify_Method_Request_Dispatch (
-    const TAO_Notify_Method_Request_Event & request,
-    const TAO_Notify_Event * event,
+    TAO_Notify_Method_Request_Event const & request,
+    TAO_Notify_Event const * event,
     TAO_Notify_ProxySupplier* proxy_supplier,
     bool filtering);
 
 public:
-  /// Destructor
-  virtual ~TAO_Notify_Method_Request_Dispatch ();
+  ~TAO_Notify_Method_Request_Dispatch () override;
 
   /// Static method used to reconstruct a Method Request Dispatch
   static TAO_Notify_Method_Request_Dispatch_Queueable * unmarshal (
     TAO_Notify::Delivery_Request_Ptr & delivery_request,
     TAO_Notify_EventChannelFactory &ecf,
     TAO_InputCDR & cdr);
-
 
 protected:
   /// Execute the dispatch operation.
@@ -99,7 +95,7 @@ public:
   /// event is passed separately because we may be using a copy
   /// of the one in the previous method request
   TAO_Notify_Method_Request_Dispatch_Queueable (
-    const TAO_Notify_Method_Request_Event & request,
+    TAO_Notify_Method_Request_Event const & request,
     TAO_Notify_Event::Ptr & event,
     TAO_Notify_ProxySupplier* proxy_supplier,
     bool filtering);
@@ -107,12 +103,11 @@ public:
   /// Constuct construct from Delivery Request
   /// should ONLY be used by unmarshall
   TAO_Notify_Method_Request_Dispatch_Queueable (
-    const TAO_Notify::Delivery_Request_Ptr & request,
+    TAO_Notify::Delivery_Request_Ptr const & request,
     TAO_Notify_ProxySupplier* proxy_supplier,
     bool filtering);
 
-  /// Destructor
-  virtual ~TAO_Notify_Method_Request_Dispatch_Queueable ();
+  ~TAO_Notify_Method_Request_Dispatch_Queueable () override = default;
 
   /// Execute the Request
   int execute () override;
@@ -136,12 +131,11 @@ class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Dispatch_No_Copy
 public:
   /// Constuct construct from another method request
   TAO_Notify_Method_Request_Dispatch_No_Copy (
-    const TAO_Notify_Method_Request_Event & request,
+    TAO_Notify_Method_Request_Event const & request,
     TAO_Notify_ProxySupplier* proxy_supplier,
     bool filtering);
 
-  /// Destructor
-  virtual ~TAO_Notify_Method_Request_Dispatch_No_Copy ();
+  ~TAO_Notify_Method_Request_Dispatch_No_Copy () override = default;
 
   /// Execute the Request
   int execute () override;

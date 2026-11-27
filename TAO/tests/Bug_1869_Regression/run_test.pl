@@ -2,7 +2,6 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
      & eval 'exec perl -S $0 $argv:q'
      if 0;
 
-# -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::TestTarget;
@@ -46,6 +45,7 @@ sleep($client->ProcessStartWaitInterval() / 3);
 print STDERR "Kill server\n";
 
 $SV->Kill ();
+$SV->TimedWait (1);
 
 sleep($client->ProcessStartWaitInterval() / 3);
 
@@ -55,5 +55,14 @@ print STDERR "Restart server\n";
 $server_status = $SV->Spawn ();
 
 sleep($server->ProcessStartWaitInterval() + 15);
+
+$CL->Kill ();
+$CL->TimedWait (1);
+
+$server_status = $SV->TerminateWaitKill ($server->ProcessStopWaitInterval());
+if ($server_status != 0) {
+    print STDERR "ERROR: restarted server returned $server_status\n";
+    $status = 1;
+}
 
 exit $status;

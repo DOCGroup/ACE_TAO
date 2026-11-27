@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//==========================================================================
 /**
  *  @file    Synch_Traits.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//==========================================================================
 
 #ifndef ACE_SYNCH_TRAITS_H
 #define ACE_SYNCH_TRAITS_H
@@ -24,7 +20,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 // Forward decl
 class ACE_Null_Mutex;
 class ACE_Null_Semaphore;
-class ACE_Null_Mutex;
 class ACE_Thread_Mutex;
 class ACE_Process_Mutex;
 class ACE_Recursive_Thread_Mutex;

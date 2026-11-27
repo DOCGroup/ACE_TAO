@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 /**
  *  @file Method_Request_Shutdown.h
  *
@@ -30,11 +28,9 @@ class TAO_Notify_ThreadPool_Task;
 class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Shutdown : public TAO_Notify_Method_Request_Queueable
 {
 public:
-  /// Constructor
-  TAO_Notify_Method_Request_Shutdown (TAO_Notify_ThreadPool_Task* task);
+  explicit TAO_Notify_Method_Request_Shutdown (TAO_Notify_ThreadPool_Task* task);
 
-  /// Destructor
-  virtual ~TAO_Notify_Method_Request_Shutdown ();
+  ~TAO_Notify_Method_Request_Shutdown () override = default;
 
   /// Create a copy of this object.
   TAO_Notify_Method_Request_Queueable* copy () override;
@@ -43,7 +39,7 @@ public:
   int execute () override;
 
 private:
-  // Task to shutdown
+  /// Task to shut down.
   TAO_Notify_ThreadPool_Task* task_;
 };
 

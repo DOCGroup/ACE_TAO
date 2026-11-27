@@ -1,15 +1,11 @@
-
-//=============================================================================
 /**
  *  @file    Manual_Event_Test.cpp
  *
- *  This test verifies the functionality of the <ACE_Manual_Event>
+ *  This test verifies the functionality of the @c ACE_Manual_Event
  *  implementation.
  *
  *  @author Martin Corino <mcorino@remedy.nl>
  */
-//=============================================================================
-
 
 #include "test_config.h"
 #include "ace/Manual_Event.h"
@@ -20,6 +16,8 @@
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/Atomic_Op.h"
+
+#include <memory>
 
 // Test results, 'success' is 0
 static int test_result = 0;
@@ -54,28 +52,32 @@ parse_args (int argc, ACE_TCHAR *argv[])
   int c;
 
   while ((c = get_opt ()) != -1)
-    switch (c)
-      {
-      case 'w':
-        n_workers = ACE_OS::atoi (get_opt.opt_arg ());
-        break;
-      default:
-        print_usage_and_die ();
-        break;
-      }
+    {
+      switch (c)
+        {
+        case 'w':
+          n_workers = ACE_OS::atoi (get_opt.opt_arg ());
+          break;
+        default:
+          print_usage_and_die ();
+          break;
+        }
+    }
 }
 
 // Worker tries to acquire the semaphore, hold it for a while, and
 // then manually releases it.
 
-static void *
+static ACE_THR_FUNC_RETURN
 worker (void *)
 {
   if (evt.wait () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT (" (%P|%t) %p\n"),
-                       ACE_TEXT ("Failed waiting for pulse ()")),
-                      0);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT (" (%P|%t) %p\n"),
+                         ACE_TEXT ("Failed waiting for pulse ()")),
+                        0);
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT (" (%P|%t) awake\n")));
@@ -83,20 +85,24 @@ worker (void *)
   if (++n_awoken < n_workers)
     {
       //FUZZ: disable check_for_lack_ACE_OS
-      ACE_Time_Value wait (1, 0);   // Wait 10 sec
+      ACE_Time_Value const wait (1, 0);   // Wait 10 sec
       //FUZZ: enable check_for_lack_ACE_OS
 
       ACE_Time_Value tv = ACE_OS::gettimeofday () + wait;
 
-      if (evt.wait (&tv) == -1)
+      if (evt.wait (std::addressof (tv)) == -1)
         {
           // verify that we have ETIME
           if (ACE_OS::last_error () == ETIME)
-            ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" (%P|%t) timeout\n")));
+            {
+              ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" (%P|%t) timeout\n")));
+            }
           else
-            ACE_ERROR ((LM_ERROR,
-                        ACE_TEXT (" (%P|%t) wait failed %p\n"),
-                        ACE_TEXT ("but not with ETIME")));
+            {
+              ACE_ERROR ((LM_ERROR,
+                          ACE_TEXT (" (%P|%t) wait failed %p\n"),
+                          ACE_TEXT ("but not with ETIME")));
+            }
         }
       else
         {
@@ -104,7 +110,9 @@ worker (void *)
                       ACE_TEXT (" (%P|%t) awake in time\n")));
 
           if (++n_awoken2 >= (n_workers/2))
+          {
             evt.reset ();    // reset signal (rest times out)
+          }
         }
 
       // Check to ensure that an "infinite timeout" will work.
@@ -123,7 +131,9 @@ worker (void *)
                   ACE_TEXT (" (%P|%t) last awake; send signal\n")));
       // last one wakes others
       if (evt.signal () == -1)
+      {
         ACE_ERROR ((LM_ERROR, ACE_TEXT (" (%P|%t) %p\n"), ACE_TEXT ("signal")));
+      }
 
       ACE_OS::sleep (ACE_Time_Value (0, 200 * 1000));  // 200 msec
     }
@@ -139,7 +149,7 @@ worker (void *)
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" (%P|%t) worker finished\n")));
 
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 #endif /* ACE_HAS_THREADS */
@@ -155,13 +165,15 @@ int run_main (int argc, ACE_TCHAR *argv[])
 
   if (ACE_Thread_Manager::instance ()->spawn_n
       (static_cast<size_t> (n_workers),
-       ACE_THR_FUNC (worker),
+       worker,
        nullptr,
        THR_NEW_LWP) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("spawn_n")),
-                      1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("spawn_n")),
+                        1);
+    }
 
   // gives all workers chance to start
   ACE_OS::sleep (5);
@@ -171,10 +183,12 @@ int run_main (int argc, ACE_TCHAR *argv[])
 
   // Release the all workers.
   if (evt.pulse () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("pulse")),
-                      1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("pulse")),
+                        1);
+    }
 
   // Wait 2 sec
   ACE_OS::sleep (2);
@@ -186,10 +200,12 @@ int run_main (int argc, ACE_TCHAR *argv[])
 
   // Signal
   if (evt.signal () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("signal")),
-                      1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("signal")),
+                        1);
+    }
 
   ACE_Thread_Manager::instance ()->wait ();
 #else

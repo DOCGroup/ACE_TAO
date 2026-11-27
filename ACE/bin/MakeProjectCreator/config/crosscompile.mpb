@@ -1,5 +1,3 @@
-
-// -*- MPC -*-
 project {
   avoids += cross_compile
 

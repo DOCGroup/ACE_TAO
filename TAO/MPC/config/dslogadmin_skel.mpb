@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project : orbsvcslib, dslogadmin, portableserver {
   after      += DsLogAdmin_Skel
   libs       += TAO_DsLogAdmin_Skel

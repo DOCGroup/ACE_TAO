@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//==========================================================================
 /**
  *  @file    NT_Service.h
  *
  *  @author Steve Huston <shuston@riverace.com>
  */
-//==========================================================================
 
 #ifndef ACE_NT_SERVICE_H
 #define ACE_NT_SERVICE_H
@@ -45,7 +41,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  * NT Services can be implemented using the framework defined by
  * the ACE_NT_Service class, and the macros defined in this file.
- * Some quick refresher notes on NT Services:
+ * @note Quick refresher on NT Services:
  *
  *   - The main program defines an array of entries describing the
  *     services offered.  The ACE_NT_SERVICE_ENTRY macro can help with
@@ -104,15 +100,16 @@ public:
 
   /// Constructor primarily for use when inserting/removing/controlling
   /// the service.
-  ACE_NT_Service (const ACE_TCHAR *name,
-                  const ACE_TCHAR *desc = nullptr,
+  ACE_NT_Service (ACE_TCHAR const *name,
+                  ACE_TCHAR const *desc = nullptr,
                   DWORD start_timeout = ACE_NT_SERVICE_START_TIMEOUT,
                   DWORD service_type = SERVICE_WIN32_OWN_PROCESS,
                   DWORD controls_mask = SERVICE_ACCEPT_STOP);
 
   virtual ~ACE_NT_Service ();
 
-  // = Functions to operate the service
+  /// @name Service lifecycle hooks
+  /// @{
 
   /**
    * Hook called to open the service.  By default, sets the service
@@ -138,12 +135,12 @@ public:
 
   /**
    * This function is called in response to a request from the Service
-   * Dispatcher.  It must interact with the <svc> function to effect the
+   * Dispatcher.  It must interact with the @c svc function to effect the
    * requested control operation.  The default implementation handles
    * all requests as follows:
    *    SERVICE_CONTROL_STOP: set stop pending, set cancel flag
-   *    SERVICE_CONTROL_PAUSE: set pause pending, <suspend>, set paused
-   *    SERVICE_CONTROL_CONTINUE: set continue pending, <resume>, set running
+   *    SERVICE_CONTROL_PAUSE: set pause pending, @c suspend, set paused
+   *    SERVICE_CONTROL_CONTINUE: set continue pending, @c resume, set running
    *    SERVICE_CONTROL_INTERROGATE: reports current status
    *    SERVICE_CONTROL_SHUTDOWN: same as SERVICE_CONTROL_STOP.
    */
@@ -152,27 +149,26 @@ public:
   /// Set the svc_handle_ member.  This is only a public function because
   /// the macro-generated service function calls it.
   void svc_handle (const SERVICE_STATUS_HANDLE new_svc_handle);
+  /// @}
 
-
-  // = Methods which can be used to do SCP-like functions. The first group
-  // are used to register/insert and remove the service's definition in the
-  // SCM registry.
+  /// @name Service Control Manager operations
+  /// @{
 
   /// Sets the name and description for the service.
   /// If @a desc is 0, it takes the same value as name.
-  void name (const ACE_TCHAR *name, const ACE_TCHAR *desc = nullptr);
+  void name (ACE_TCHAR const *name, ACE_TCHAR const *desc = nullptr);
 
   /// Get the service name.
-  const ACE_TCHAR *name () const;
+  ACE_TCHAR const *name () const;
 
   /// Get the service description.
-  const ACE_TCHAR *desc () const;
+  ACE_TCHAR const *desc () const;
 
   /// Sets the host machine
-  void host (const ACE_TCHAR *host);
+  void host (ACE_TCHAR const *host);
 
   /// Get the host machine.
-  const ACE_TCHAR *host () const;
+  ACE_TCHAR const *host () const;
 
   /**
    * Insert (create) the service in the NT Service Control Manager,
@@ -183,12 +179,12 @@ public:
    */
   int insert (DWORD start_type = SERVICE_DEMAND_START,
               DWORD error_control = SERVICE_ERROR_IGNORE,
-              const ACE_TCHAR *exe_path = nullptr,
-              const ACE_TCHAR *group_name = nullptr,
+              ACE_TCHAR const *exe_path = nullptr,
+              ACE_TCHAR const *group_name = nullptr,
               LPDWORD tag_id = 0,
-              const ACE_TCHAR *dependencies = nullptr,
-              const ACE_TCHAR *account_name = nullptr,
-              const ACE_TCHAR *password = nullptr,
+              ACE_TCHAR const *dependencies = nullptr,
+              ACE_TCHAR const *account_name = nullptr,
+              ACE_TCHAR const *password = nullptr,
               DWORD desired_access = SERVICE_ALL_ACCESS);
 
   /**
@@ -203,8 +199,10 @@ public:
 
   /// Returns the current startup type.
   DWORD startup ();
+  /// @}
 
-  // = Methods to control ACE_Log_Msg behavior in the service.
+  /// @name Logging configuration
+  /// @{
 
   /**
    * Set the ACE_Log_Msg attributes that the service thread will use to
@@ -226,34 +224,27 @@ public:
    * correctly into the process's established logging setup.
    */
   void inherit_log_msg_attributes ();
+  /// @}
 
-  // = Methods which control the service's execution.
-
-  // These methods to start/pause/resume/stop/check the service all
-  // have the following common behavior with respect to @a wait_time
-  // and return value.  @a wait_time is a pointer to an ACE_Time_Value
-  // object.  If not supplied (a zero pointer) the function will wait
-  // indefinitely for the action to be finalized (service reach
-  // running state, completely shut down, etc.) or get "stuck" before
-  // returning.  If the time is supplied, it specifies how long to
-  // wait for the service to reach a steady state, and on return, it
-  // is updated to the service's last reported wait hint.  So, if you
-  // want to control the waiting yourself (for example, you want to
-  // react to UI events during the wait) specify a @a wait_time of (0,
-  // 0) and use the updated time to know when to check the service's
-  // state again.  NOTE!!!! The wait_time things don't work yet.  The
-  // calls always check status once, and do not wait for it to change.
-  //
-  // The return value from start_svc, stop_svc, pause_svc,
-  // continue_svc is 0 if the request to NT to effect the change was
-  // made successfully.  The service may refuse to change, or not do
-  // what you wanted; so if you need to know, supply a <svc_state>
-  // pointer to receive the service's reported last state on return
-  // and check it to see if it's what you want.  The functions only
-  // return -1 when the actual request to the service is refused -
-  // this would include privilege restrictions and if the service is
-  // not configured to receive the request (this is most likely to
-  // happen in the case of pause and continue).
+  /** @name Service execution control
+   *
+   * These methods share the following behavior for @c wait_time and
+   * their return values. If @c wait_time is null, the function waits
+   * indefinitely for the service to reach a steady state. Otherwise,
+   * it specifies how long to wait and is updated with the service's
+   * last reported wait hint. A zero time can be used to check the
+   * status again later while processing other events.
+   *
+   * @note The wait time is not currently used: the calls check status
+   * once and do not wait for it to change.
+   *
+   * The start, stop, pause and continue methods return 0 if the request
+   * was made successfully, even if the service refuses to change state.
+   * Supply @c svc_state to receive the service's last reported state.
+   * They return -1 if the request itself is refused, for example due
+   * to privilege restrictions or unsupported controls.
+   */
+  /// @{
 
   /**
    * Start the service (must have been inserted before).  wait_time is
@@ -269,7 +260,7 @@ public:
    */
   int start_svc (ACE_Time_Value *wait_time = nullptr,
                  DWORD *svc_state = nullptr,
-                 DWORD argc = 0, const ACE_TCHAR **argv = nullptr);
+                 DWORD argc = 0, ACE_TCHAR const **argv = nullptr);
 
   /**
    * Requests the service to stop.  Will wait up to @a wait_time for
@@ -298,7 +289,7 @@ public:
    */
   DWORD state (ACE_Time_Value *wait_hint = nullptr);
 
-  /// A version of <state> that returns -1 for failure, 0 for success.
+  /// A version of @c state that returns -1 for failure, 0 for success.
   /// The DWORD pointed to by @a pstate receives the state value.
   int state (DWORD *pstate, ACE_Time_Value *wait_hint = nullptr);
 
@@ -311,6 +302,7 @@ public:
    * ACE_OS::last_error to get the specific error indication.
    */
   int test_access (DWORD desired_access = SERVICE_ALL_ACCESS);
+  /// @}
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -336,16 +328,16 @@ protected:
   void wait_for_service_state (DWORD desired_state,
                                ACE_Time_Value *wait_time);
 
-  /// Called by <handle_control> when a stop/shutdown was requested.
+  /// Called by @c handle_control when a stop/shutdown was requested.
   virtual void stop_requested (DWORD control_code);
 
-  /// Called by <handle_control> when a pause was requested.
+  /// Called by @c handle_control when a pause was requested.
   virtual void pause_requested (DWORD control_code);
 
-  /// Called by <handle_control> when a continue was requested.
+  /// Called by @c handle_control when a continue was requested.
   virtual void continue_requested (DWORD control_code);
 
-  /// Called by <handle_control> when a interrogate was requested.
+  /// Called by @c handle_control when a interrogate was requested.
   virtual void interrogate_requested (DWORD control_code);
 
 protected:

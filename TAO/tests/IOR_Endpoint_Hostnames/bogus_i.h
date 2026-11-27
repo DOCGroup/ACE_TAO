@@ -1,4 +1,3 @@
-
 #ifndef bogus_h
 #define bogus_h
 #include /**/ "ace/pre.h"
@@ -9,10 +8,14 @@ class bogus
   : public virtual POA_Test::bogus
 {
 public:
-  bogus ();
-  virtual ~bogus ();
+  bogus () = default;
+  bogus (bogus const &) = delete;
+  bogus (bogus &&) = delete;
+  bogus &operator= (bogus const &) = delete;
+  bogus &operator= (bogus &&) = delete;
+  ~bogus () override = default;
 
-  virtual void noop ();
+  void noop () override;
 };
 
 #include /**/ "ace/post.h"

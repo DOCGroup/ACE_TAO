@@ -3,8 +3,8 @@
 class server_i : public POA_server
 {
 public:
-  server_i (int quiet,
-            CORBA::ORB_ptr orb);
+  server_i (bool const quiet,
+            CORBA::ORB_ptr const orb);
   server_i (server_i const &) = delete;
   server_i (server_i &&) = delete;
   server_i &operator= (server_i const &) = delete;
@@ -19,14 +19,14 @@ public:
 
   bool exception () const;
 private:
-  int quiet_;
-  // Be quiet.
+  /// Be quiet.
+  bool quiet_ {};
 
-  client_var client_;
-  // Pointer to server.
+  /// Pointer to the client.
+  client_var client_ {};
 
-  CORBA::ORB_var orb_;
-  // Pointer to orb.
+  /// Pointer to the ORB.
+  CORBA::ORB_var orb_ {};
 
-  bool exception_;
+  bool exception_ {};
 };

@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file     target.cpp
  *
@@ -7,7 +5,6 @@
  *
  *  @author Peter E MellquistMichael R MacFaden  mrm@cisco.com - rework & ACE port
  */
-//=============================================================================
 
 /*===================================================================
   Copyright (c) 1996
@@ -26,11 +23,9 @@
   =====================================================================*/
 
 #include "asnmp/target.h"
-#include "ace/OS_NS_stdio.h"
+#include <cstdio>
+#include <memory>
 
-//----------------------------------------------------------------------
-//--------[ Class default values ]----------------------
-//----------------------------------------------------------------------
 u_long SnmpTarget::default_timeout_ = DEF_TIMEOUT;
 int SnmpTarget::default_retries_ = DEF_RETRIES;
 u_long SnmpTarget::default_max_pdu_size_ = DEF_MAX_SNMP_PACKET;
@@ -39,238 +34,219 @@ snmp_version SnmpTarget::default_version_ = version1;
 OctetStr UdpTarget::default_rd_community_(READ_COMM_STR);
 OctetStr UdpTarget::default_wr_community_(WRITE_COMM_STR);
 
-//----------------------------------------------------------------------
-//--------[ Abstract SnmpTarget Member Functions ]----------------------
-//----------------------------------------------------------------------
-SnmpTarget::SnmpTarget():
-  validity_(0), timeout_(default_timeout_), retries_(default_retries_),
-  max_pdu_size_(default_max_pdu_size_), version_(default_version_)
+SnmpTarget::SnmpTarget ()
+  : timeout_ (default_timeout_), retries_ (default_retries_),
+    max_pdu_size_ (default_max_pdu_size_), version_ (default_version_)
 {
 }
 
-// return validity of target
-int SnmpTarget::valid() const
+/// Return the target's validity.
+int SnmpTarget::valid () const
 {
   return validity_;
 }
 
-// allow destruction of derived classes
-SnmpTarget::~SnmpTarget()
-{
-}
+/// Allow destruction of derived classes.
+SnmpTarget::~SnmpTarget() = default;
 
-// set the timeout
-void SnmpTarget::set_timeout( const u_long t)
+/// Set the timeout.
+void SnmpTarget::set_timeout (u_long t)
 {
   timeout_ = t;
 }
 
-// change the default timeout
-void SnmpTarget::set_default_timeout( const u_long t)
+/// Set the class-wide default timeout.
+void SnmpTarget::set_default_timeout (u_long t)
 {
   default_timeout_ = t;
 }
 
-// set the retry value
-void SnmpTarget::set_retry( const int r)
+/// Set the retry value.
+void SnmpTarget::set_retry (int r)
 {
   retries_ = r;
 }
 
-// change the default retries
-void SnmpTarget::set_default_retry( const int r)
+/// Set the class-wide default retry count.
+void SnmpTarget::set_default_retry (int r)
 {
   default_retries_ = r;
 }
 
-void SnmpTarget:: set_max_pdu_size(const u_long max_pdu_sz)
+void SnmpTarget::set_max_pdu_size (u_long max_pdu_sz)
 {
   max_pdu_size_ = max_pdu_sz;
 }
 
-
-void SnmpTarget::set_default_max_pdu_size(const u_long max_pdu_sz)
+void SnmpTarget::set_default_max_pdu_size (u_long max_pdu_sz)
 {
   default_max_pdu_size_ = max_pdu_sz;
 }
 
-void SnmpTarget::set_version( const snmp_version v)
+void SnmpTarget::set_version (snmp_version v)
 {
   version_ = v;
 }
 
-void SnmpTarget::set_default_version( const snmp_version v)
+void SnmpTarget::set_default_version (snmp_version v)
 {
   default_version_ = v;
 }
 
-snmp_version SnmpTarget::get_version() const
+snmp_version SnmpTarget::get_version () const
 {
   return version_;
 }
 
-snmp_version SnmpTarget::get_default_version() const
+snmp_version SnmpTarget::get_default_version () const
 {
   return default_version_;
 }
 
-u_long SnmpTarget::get_max_pdu_size() const
+u_long SnmpTarget::get_max_pdu_size () const
 {
   return max_pdu_size_;
 }
 
-// get the retry value
-int SnmpTarget::get_retry() const
+/// Return the retry value.
+int SnmpTarget::get_retry () const
 {
   return retries_;
 }
 
-// get the retry value
-int SnmpTarget::get_default_retry() const
+/// Return the class-wide default retry count.
+int SnmpTarget::get_default_retry () const
 {
   return default_retries_;
 }
 
-// get the timeout
-u_long SnmpTarget::get_timeout() const
+/// Return the timeout.
+u_long SnmpTarget::get_timeout () const
 {
   return timeout_;
 }
 
-SnmpTarget& SnmpTarget::operator=(const SnmpTarget& lhs)
+SnmpTarget &SnmpTarget::operator= (SnmpTarget const &lhs)
 {
-  if (this == &lhs)
+  if (this == std::addressof (lhs))
+  {
     return *this;
+  }
 
   validity_ = lhs.validity_;
   timeout_ = lhs.timeout_;
   retries_ = lhs.retries_;
-  max_pdu_size_ =lhs.max_pdu_size_;
+  max_pdu_size_ = lhs.max_pdu_size_;
   version_ = lhs.version_;
   return *this;
 }
 
-bool operator==(const SnmpTarget& lhs, const SnmpTarget& rhs)
+bool operator== (SnmpTarget const &lhs, SnmpTarget const &rhs)
 {
   if (lhs.timeout_ != rhs.timeout_)
-     return false;
+  {
+    return false;
+  }
 
   if (lhs.retries_ != rhs.retries_)
-     return false;
+  {
+    return false;
+  }
 
   if (lhs.max_pdu_size_ != rhs.max_pdu_size_)
+  {
     return false;
+  }
 
   if (lhs.version_ != rhs.version_)
+  {
     return false;
+  }
 
   return true;
 }
 
-
-//----------------------------------------------------------------------
-//--------[ IpTarget Member Functions ]----------------------------------
-//----------------------------------------------------------------------
-
-
-//---------[ UdpTarget::UdpTarget() ]----------------------------------
-
-UdpTarget::UdpTarget()
+UdpTarget::UdpTarget ()
+  : read_community_ (default_rd_community_),
+    write_community_ (default_wr_community_)
 {
-  validity_ = 0;
-  read_community_ = default_rd_community_; // assign by init fails
-  write_community_ = default_wr_community_;
 }
 
-UdpTarget::UdpTarget(const UdpAddress& udp) : udp_address_(udp)
+UdpTarget::UdpTarget (UdpAddress const &udp)
+  : read_community_ (default_rd_community_),
+    write_community_ (default_wr_community_),
+    udp_address_ (udp)
 {
-  if (udp_address_.valid())
-    validity_ = 1;
-  read_community_ = default_rd_community_;
-  write_community_ = default_wr_community_;
+  validity_ = udp_address_.valid () != 0;
 }
 
 // - copy constructor can be synthesised by compiler
 
-//-----------[ UdpTarget::~UdpTarget() ]--------------------------------
-UdpTarget::~UdpTarget()
+UdpTarget::~UdpTarget() = default;
+
+SnmpTarget *UdpTarget::clone () const
 {
+  return new UdpTarget (*this);
 }
 
-//-----------[ UdpTarget::clone() ]--------------------------------
-SnmpTarget * UdpTarget::clone() const
-{
-  return (SnmpTarget *) new UdpTarget(*this);
-}
-
-
-void UdpTarget::set_default_read_community(const OctetStr& rd_community)
+void UdpTarget::set_default_read_community (OctetStr const &rd_community)
 {
    default_rd_community_ = rd_community;
 }
 
-void UdpTarget::set_default_write_community(const OctetStr& wr_community)
+void UdpTarget::set_default_write_community (OctetStr const &wr_community)
 {
    default_wr_community_ = wr_community;
 }
-
-
-// get the read community name as an u_char and len
-void UdpTarget::get_read_community( OctetStr& read_community_oct) const
+/// Return the read community string and its length.
+void UdpTarget::get_read_community (OctetStr &read_community_oct) const
 {
   read_community_oct = read_community_;
 }
 
-//---------[ UdpTarget::set_getcommunity ]---------------------------------
-// set the read community name
-void UdpTarget::set_read_community( const OctetStr& new_read_community)
+/// Set the read community string.
+void UdpTarget::set_read_community (OctetStr const &new_read_community)
 {
   read_community_ = new_read_community;
 }
 
-//---------[ UdpTarget::get_writecommunity ]----------------------------
-// get the write community
-void UdpTarget::get_write_community( OctetStr &write_community_oct) const
+/// Return the write community string.
+void UdpTarget::get_write_community (OctetStr &write_community_oct) const
 {
   write_community_oct = write_community_;
 }
 
-//-----------[ UdpTarget::set_writecommunity ]---------------------------
-// set the write community
-void UdpTarget::set_write_community( const OctetStr& write_community_oct)
+/// Set the write community string.
+void UdpTarget::set_write_community (OctetStr const &write_community_oct)
 {
   write_community_ = write_community_oct;
 }
 
-//------------[ Address& UdpTarget::get_address() ]---------------------
-// get the address
-void UdpTarget::get_address( UdpAddress &address) const
+/// Return the address.
+void UdpTarget::get_address (UdpAddress &address) const
 {
   address = udp_address_;
-  return;
 }
 
-//-------------[ UdpTarget::set_address ]--------------------------------
-// set the address
-int UdpTarget::set_address( UdpAddress &udp_address)
+/// Set the address.
+int UdpTarget::set_address (UdpAddress &udp_address)
 {
   udp_address_ = udp_address;
-  if ( udp_address_.valid())
-    validity_ = 1;
-  else
-    validity_ = 0;
+  validity_ = udp_address_.valid () != 0;
 
   return validity_;
 }
 
-// overloaded assignment
-UdpTarget& UdpTarget::operator=( const UdpTarget& lhs)
+/// Assign from another UDP target.
+UdpTarget &UdpTarget::operator= (UdpTarget const &lhs)
 {
-  if (this == &lhs)
-     return *this;
+  if (this == std::addressof (lhs))
+  {
+    return *this;
+  }
 
   // assign base part
-  *((SnmpTarget *) this) = *((SnmpTarget *)&lhs);
+  SnmpTarget::operator= (lhs);
 
   udp_address_ = lhs.udp_address_;
   read_community_ = lhs.read_community_;
@@ -280,36 +256,45 @@ UdpTarget& UdpTarget::operator=( const UdpTarget& lhs)
   return *this;
 }
 
-const char *UdpTarget::to_string()
+char const *UdpTarget::to_string ()
 {
-  ACE_OS::sprintf(output_buffer_,"UdpTarget: [ valid: %d addr: %s rd: %s wr: %s \
-                  ver: %d, timeout: %d, retries: %d max_pdu_size: %d]",
-                  valid(), udp_address_.to_string(), read_community_.to_string(),
-                  write_community_.to_string(), version_, (int) timeout_,
-                  retries_, max_pdu_size_);
+  std::sprintf (output_buffer_,
+                "UdpTarget: [ valid: %d addr: %s rd: %s wr: %s ver: %d, timeout: %lu, "
+                "retries: %d max_pdu_size: %u]",
+                valid (), udp_address_.to_string (), read_community_.to_string (),
+                write_community_.to_string (), version_, timeout_, retries_, max_pdu_size_);
 
   return output_buffer_;
 }
 
-//=============[ int operator == UdpTarget, UdpTarget ]===============
-// equivlence operator overloaded
-bool operator==( const UdpTarget &lhs,const UdpTarget &rhs)
+/// Compare UDP targets for equivalence.
+bool operator== (UdpTarget const &lhs, UdpTarget const &rhs)
 {
   // need to compare all the members of a UdpTarget
   if ( lhs.read_community_ != rhs.read_community_)
+  {
     return false;  // !=
+  }
 
   if ( lhs.write_community_ != rhs.write_community_)
+  {
     return false;  // !=
+  }
 
   if ( lhs.udp_address_ != rhs.udp_address_)
+  {
     return false;
+  }
 
   if ( lhs.timeout_ != rhs.timeout_)
+  {
     return false;
+  }
 
   if ( lhs.retries_ != rhs.retries_)
+  {
     return false;
+  }
 
   return true;  // they are equal
 }

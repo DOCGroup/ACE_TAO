@@ -1,6 +1,5 @@
-// -*- C++ -*-
-// Returns a count of the number of currently valid entries (counting
-// both resumed and suspended entries).
+/// Returns a count of the number of currently valid entries (counting
+/// both resumed and suspended entries).
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 #include "ace/Guard_T.h"
@@ -34,8 +33,6 @@ ACE_Service_Repository_Iterator::done () const
 }
 
 ACE_INLINE
-ACE_Service_Repository_Iterator::~ACE_Service_Repository_Iterator ()
-{
-}
+ACE_Service_Repository_Iterator::~ACE_Service_Repository_Iterator () = default;
 
 ACE_END_VERSIONED_NAMESPACE_DECL

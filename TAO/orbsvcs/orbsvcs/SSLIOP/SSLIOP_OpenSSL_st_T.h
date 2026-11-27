@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   SSLIOP_OpenSSL_st_T.h
  *
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef TAO_SSLIOP_OPENSSL_ST_T_H
 #define TAO_SSLIOP_OPENSSL_ST_T_H
@@ -74,14 +70,13 @@ namespace TAO
        *
        * Constructors.
        */
-      //@{
+      /// @{
       OpenSSL_st_var ();
       OpenSSL_st_var (T * st);
       OpenSSL_st_var (OpenSSL_st_var<T> const & v);
       OpenSSL_st_var (T const & st);
-      //@}
+      /// @}
 
-      /// Destructor
       ~OpenSSL_st_var ();
 
       /**
@@ -89,16 +84,16 @@ namespace TAO
        *
        * Assignment operators.
        */
-      //@{
+      /// @{
       OpenSSL_st_var<T> & operator= (T* st);
       OpenSSL_st_var<T> & operator= (OpenSSL_st_var<T> const & v);
       OpenSSL_st_var<T> & operator= (T const & st);
-      //@}
+      /// @}
 
       T const * operator-> () const;
       T* operator-> ();
 
-      operator const T& () const;
+      operator T const& () const;
       operator T& ();
 
       T*  in () const;
@@ -115,7 +110,6 @@ namespace TAO
 }  // End TAO namespace.
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-
 
 #if defined (__ACE_INLINE__)
 #include "orbsvcs/SSLIOP/SSLIOP_OpenSSL_st_T.inl"

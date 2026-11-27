@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 /**
  * @file ORB_Shutdown.inl
  *
@@ -13,5 +11,5 @@ ORB_Shutdown::operator () (CORBA::ORB_ptr orb)
     {
       orb->shutdown (false);
     }
-  catch (const CORBA::Exception&){ };
+  catch (CORBA::Exception const&){ };
 }

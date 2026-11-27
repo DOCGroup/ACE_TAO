@@ -1,7 +1,5 @@
-/* -*-C++-*- */
 #ifndef ENTTRAPS_
 #define ENTTRAPS_
-//=============================================================================
 /**
  *  @file     enttraps.h
  *
@@ -9,7 +7,6 @@
  *
  *  @author Peter E MellquistMichael R MacFaden  mrm@cisco.com - rework & ACE port
  */
-//=============================================================================
 
 /*===================================================================
   Copyright (c) 1996
@@ -29,7 +26,6 @@
 
 #include "asnmp/asn1.h"                       // ASN.1 header file
 
-//--------------[ well known trap ids ]-----------------------------------
 /**
  * @class snmpTrapsOid
  *
@@ -40,7 +36,7 @@ class ASNMP_Export snmpTrapsOid : public Oid
 {
 public:
   snmpTrapsOid ():Oid("1.3.6.1.6.3.1.1.5"){}
-  SnmpSyntax& operator=( SnmpSyntax &val){ return Oid::operator=(val); }
+  SnmpSyntax& operator=( SnmpSyntax &val) override { return Oid::operator=(val); }
 };
 
 /**
@@ -52,7 +48,7 @@ class ASNMP_Export snmpTrapEnterpriseOid : public Oid
 {
 public:
   snmpTrapEnterpriseOid(): Oid("1.3.6.1.6.3.1.1.4.3.0") { }
-  SnmpSyntax& operator=( SnmpSyntax &val){ return Oid::operator=(val); }
+  SnmpSyntax& operator=( SnmpSyntax &val) override { return Oid::operator=(val); }
 };
 
 /**
@@ -64,7 +60,7 @@ class ASNMP_Export coldStartOid : public snmpTrapsOid
 {
 public:
   coldStartOid(){*this+=".1";}
-  SnmpSyntax& operator=( SnmpSyntax &val){ return snmpTrapsOid::operator=(val); }
+  SnmpSyntax& operator=( SnmpSyntax &val) override { return snmpTrapsOid::operator=(val); }
 };
 
 /**
@@ -76,7 +72,7 @@ class ASNMP_Export warmStartOid : public snmpTrapsOid
 {
 public:
   warmStartOid(){*this+=".2";}
-  SnmpSyntax& operator=( SnmpSyntax &val){ return snmpTrapsOid::operator=(val); }
+  SnmpSyntax& operator=( SnmpSyntax &val) override { return snmpTrapsOid::operator=(val); }
 };
 
 /**
@@ -88,11 +84,9 @@ class ASNMP_Export linkDownOid : public snmpTrapsOid
 {
 public:
   linkDownOid(){*this+=".3";}
-  SnmpSyntax& operator=( SnmpSyntax &val){ return snmpTrapsOid::operator=(val); }
+  SnmpSyntax& operator=( SnmpSyntax &val) override { return snmpTrapsOid::operator=(val); }
 };
 
-
-// SMI LinkUp Oid
 /**
  * @class linkUpOid
  *
@@ -102,7 +96,7 @@ class ASNMP_Export linkUpOid : public snmpTrapsOid
 {
 public:
   linkUpOid(){*this+=".4";}
-  SnmpSyntax& operator=( SnmpSyntax &val){ return snmpTrapsOid::operator=(val); }
+  SnmpSyntax& operator=( SnmpSyntax &val) override { return snmpTrapsOid::operator=(val); }
 };
 
 /**
@@ -114,7 +108,7 @@ class ASNMP_Export authenticationFailureOid : public snmpTrapsOid
 {
 public:
   authenticationFailureOid(){*this+=".5";}
-  SnmpSyntax& operator=( SnmpSyntax &val){ return snmpTrapsOid::operator=(val); }
+  SnmpSyntax& operator=( SnmpSyntax &val) override { return snmpTrapsOid::operator=(val); }
 };
 
 /**
@@ -126,7 +120,7 @@ class ASNMP_Export egpNeighborLossOid : public snmpTrapsOid
 {
 public:
   egpNeighborLossOid(){*this+=".6";}
-  SnmpSyntax& operator=( SnmpSyntax &val){ return snmpTrapsOid::operator=(val); }
+  SnmpSyntax& operator=( SnmpSyntax &val) override { return snmpTrapsOid::operator=(val); }
 };
 
 #ifdef DEFINE_TRAP_CONSTANTS_

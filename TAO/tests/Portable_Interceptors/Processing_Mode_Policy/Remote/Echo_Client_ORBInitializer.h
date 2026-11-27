@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #ifndef TAO_ECHO_CLIENT_ORB_INITIALIZER_H
 #define TAO_ECHO_CLIENT_ORB_INITIALIZER_H
 
@@ -9,7 +8,6 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
 
 #include "tao/PI/PI.h"
 #include "tao/PI/ProcessingModePolicyC.h"
@@ -28,21 +26,24 @@ class Echo_Client_ORBInitializer :
   public virtual ::CORBA::LocalObject
 {
 public:
-  Echo_Client_ORBInitializer
-    (PortableInterceptor::ProcessingMode proc_mode);
+  explicit Echo_Client_ORBInitializer (
+      PortableInterceptor::ProcessingMode proc_mode);
+  Echo_Client_ORBInitializer (Echo_Client_ORBInitializer const &) = delete;
+  Echo_Client_ORBInitializer (Echo_Client_ORBInitializer &&) = delete;
+  Echo_Client_ORBInitializer &operator= (Echo_Client_ORBInitializer const &) = delete;
+  Echo_Client_ORBInitializer &operator= (Echo_Client_ORBInitializer &&) = delete;
 
-  virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info);
+  void pre_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 
-  virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info);
+  void post_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 
 private:
-  PortableInterceptor::ProcessingMode processing_mode_;
+  PortableInterceptor::ProcessingMode const processing_mode_;
 };
 
 #if defined (_MSC_VER)
 #pragma warning(pop)
 #endif /* _MSC_VER */
-
 
 #include /**/ "ace/post.h"
 

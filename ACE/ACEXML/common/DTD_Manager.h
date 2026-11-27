@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    DTD_Manager.h
  *
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  */
-//=============================================================================
 #ifndef _ACEXML_DTD_Manager_H_
 #define _ACEXML_DTD_Manager_H_
 
@@ -69,11 +65,10 @@ public:
    * @todo I haven't figured out what memory management scheme
    *       we should use for the acquired validator.
    */
-  virtual ACEXML_Validator *getValidator (const ACEXML_Char *namespaceURI,
-                                          const ACEXML_Char *localName,
-                                          const ACEXML_Char *qName) = 0;
+  virtual ACEXML_Validator *getValidator (ACEXML_Char const *namespaceURI,
+                                          ACEXML_Char const *localName,
+                                          ACEXML_Char const *qName) = 0;
 };
-
 
 #include /**/ "ace/post.h"
 

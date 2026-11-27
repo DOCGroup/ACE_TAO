@@ -17,10 +17,12 @@
 #include "tao/debug.h"
 #include "tao/CDR.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_Method_Request_Lookup::TAO_Notify_Method_Request_Lookup (
-      const TAO_Notify_Event * event,
+      TAO_Notify_Event const * event,
       TAO_Notify_ProxyConsumer * proxy)
   : TAO_Notify_Method_Request_Event (event)
   , proxy_consumer_ (proxy)
@@ -28,14 +30,10 @@ TAO_Notify_Method_Request_Lookup::TAO_Notify_Method_Request_Lookup (
 }
 
 TAO_Notify_Method_Request_Lookup::TAO_Notify_Method_Request_Lookup (
-      const TAO_Notify::Delivery_Request_Ptr& delivery,
+      TAO_Notify::Delivery_Request_Ptr const& delivery,
       TAO_Notify_ProxyConsumer * proxy)
   : TAO_Notify_Method_Request_Event (delivery)
   , proxy_consumer_ (proxy)
-{
-}
-
-TAO_Notify_Method_Request_Lookup::~TAO_Notify_Method_Request_Lookup ()
 {
 }
 
@@ -57,7 +55,9 @@ TAO_Notify_Method_Request_Lookup::work (
 int TAO_Notify_Method_Request_Lookup::execute_i ()
 {
   if (this->proxy_consumer_->has_shutdown ())
+  {
     return 0; // If we were shutdown while waiting in the queue, return with no action.
+  }
 
   TAO_Notify_SupplierAdmin& parent = this->proxy_consumer_->supplier_admin ();
 
@@ -66,20 +66,24 @@ int TAO_Notify_Method_Request_Lookup::execute_i ()
                                                              parent.filter_operator ());
 
   if (TAO_debug_level > 1)
-    ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT("Notify (%P|%t) Proxyconsumer %x filter ")
-                          ACE_TEXT("eval result = %d\n"),
-                          &this->proxy_consumer_ , val));
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT("Notify (%P|%t) Proxyconsumer %@ filter ")
+                                ACE_TEXT("eval result = %d\n"),
+                                std::addressof (this->proxy_consumer_), val));
+    }
 
   // Filter failed - do nothing.
   if (!val)
+  {
     return 0;
+  }
 
   // The map of subscriptions.
   TAO_Notify_Consumer_Map& map = this->proxy_consumer_->event_manager ().consumer_map ();
 
   TAO_Notify_Consumer_Map::ENTRY* entry = map.find (this->event_->type ());
 
-  TAO_Notify_ProxySupplier_Collection* consumers = nullptr;
+  TAO_Notify_ProxySupplier_Collection* consumers {};
 
   if (entry != nullptr)
   {
@@ -112,14 +116,15 @@ TAO_Notify_Method_Request_Lookup::unmarshal (
   TAO_InputCDR & cdr)
 {
   bool ok = true;
-  TAO_Notify_Method_Request_Lookup_Queueable * result = nullptr;
+  TAO_Notify_Method_Request_Lookup_Queueable * result {};
   CORBA::ULong count;
   if (cdr.read_ulong (count))
   {
-    TAO_Notify::IdVec id_path (count);
-    for (size_t nid = 0; ok && nid < count; ++nid)
+    TAO_Notify::IdVec id_path;
+    id_path.reserve (count);
+    for (size_t nid {}; ok && nid < count; ++nid)
     {
-      TAO_Notify_Object::ID id = 0;
+      TAO_Notify_Object::ID id {};
       if ( cdr.read_long (id))
       {
         id_path.push_back (id);
@@ -157,11 +162,10 @@ TAO_Notify_Method_Request_Lookup::unmarshal (
   return result;
 }
 
-
 /****************************************************************/
 
 TAO_Notify_Method_Request_Lookup_Queueable::TAO_Notify_Method_Request_Lookup_Queueable (
-      const TAO_Notify_Event::Ptr& event,
+      TAO_Notify_Event::Ptr const& event,
       TAO_Notify_ProxyConsumer* proxy_consumer)
   : TAO_Notify_Method_Request_Lookup (event.get (), proxy_consumer)
   , TAO_Notify_Method_Request_Queueable (event.get ())
@@ -180,11 +184,6 @@ TAO_Notify_Method_Request_Lookup_Queueable::TAO_Notify_Method_Request_Lookup_Que
 {
 }
 
-
-TAO_Notify_Method_Request_Lookup_Queueable::~TAO_Notify_Method_Request_Lookup_Queueable ()
-{
-}
-
 int
 TAO_Notify_Method_Request_Lookup_Queueable::execute ()
 {
@@ -194,13 +193,9 @@ TAO_Notify_Method_Request_Lookup_Queueable::execute ()
 /******************************************************************************************************/
 
 TAO_Notify_Method_Request_Lookup_No_Copy::TAO_Notify_Method_Request_Lookup_No_Copy (
-        const TAO_Notify_Event* event,
+        TAO_Notify_Event const* event,
         TAO_Notify_ProxyConsumer* proxy_consumer)
   : TAO_Notify_Method_Request_Lookup (event, proxy_consumer)
-{
-}
-
-TAO_Notify_Method_Request_Lookup_No_Copy::~TAO_Notify_Method_Request_Lookup_No_Copy ()
 {
 }
 

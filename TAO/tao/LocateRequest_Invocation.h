@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    LocateRequest_Invocation.h
  *
  *  @author Balachandran Natarajan <bala@dre.vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef TAO_LOCATEREQUEST_INVOCATION_H
 #define TAO_LOCATEREQUEST_INVOCATION_H
@@ -38,6 +34,8 @@ namespace TAO
     : public Synch_Twoway_Invocation
   {
   public:
+    LocateRequest_Invocation () = delete;
+
     /**
      * @param otarget The target on which this invocation was
      *  started.

@@ -1,5 +1,3 @@
-/* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file   Notify_SequencePushSupplier.h
  *
@@ -8,7 +6,6 @@
  *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_NOTIFY_SEQUENCEPUSHSUPPLIER_H
 #define TAO_NOTIFY_SEQUENCEPUSHSUPPLIER_H
@@ -16,7 +13,7 @@
 
 #include "SequencePushSupplier.h"
 
-typedef TAO_Notify_Tests_SequencePushSupplier TAO_Notify_SequencePushSupplier;
+using TAO_Notify_SequencePushSupplier = TAO_Notify_Tests_SequencePushSupplier;
 
 #include /**/ "ace/post.h"
 #endif /* TAO_NOTIFY_SequencePUSHSUPPLIER_H */

@@ -4,7 +4,6 @@
 
 # if defined (ACE_HAS_THREADS)
 
-#include "ace/Log_Msg.h"
 #include "ace/Token.h"
 #include "ace/Process_Mutex.h"
 #include "ace/RW_Mutex.h"
@@ -16,56 +15,41 @@
 #include "ace/Null_Semaphore.h"
 #include "ace/Process_Semaphore.h"
 
-
 template<class LOCK>
 class ACE_Svc_Export Baseline_Lock_Test : public Baseline_Test_Base
 {
 public:
-  Baseline_Lock_Test ();
-  virtual ~Baseline_Lock_Test ();
+  Baseline_Lock_Test (Baseline_Lock_Test const &) = delete;
+  Baseline_Lock_Test (Baseline_Lock_Test &&) = delete;
+  Baseline_Lock_Test &operator= (Baseline_Lock_Test const &) = delete;
+  Baseline_Lock_Test &operator= (Baseline_Lock_Test &&) = delete;
+  Baseline_Lock_Test () = default;
 
-  virtual int acquire ();
-  virtual int release ();
+  int acquire () override;
+  int release () override;
   // These two method are used to test try_acquire performance.
 
-  virtual int test_acquire_release ();
-  virtual int test_try_lock ();
+  int test_acquire_release () override;
+  int test_try_lock () override;
   // Real test methods.
 
 private:
-  LOCK lock_;
-  //
+  LOCK lock_ {};
 };
-
-template<class LOCK>
-Baseline_Lock_Test<LOCK>::Baseline_Lock_Test ()
-{
-}
-
-template<class LOCK>
-Baseline_Lock_Test<LOCK>::~Baseline_Lock_Test ()
-{
-}
 
 template<class LOCK> int
 Baseline_Lock_Test<LOCK>::acquire ()
 {
-  int retv = 0;
   switch (this->what_)
     {
-    case TEST_READLOCK:
-      retv = this->lock_.acquire_read ();
-      break;
-    case TEST_WRITELOCK:
-      retv = this->lock_.acquire_write ();
-      break;
-    case TEST_LOCK:
+    case Lock_Type::read_lock:
+      return this->lock_.acquire_read ();
+    case Lock_Type::write_lock:
+      return this->lock_.acquire_write ();
+    case Lock_Type::lock:
     default:
-      retv = this->lock_.acquire ();
-      break;
+      return this->lock_.acquire ();
     }
-
-  return retv;
 }
 
 template<class LOCK> int
@@ -81,21 +65,21 @@ Baseline_Lock_Test<LOCK>::test_acquire_release ()
 
   switch (this->what_)
     {
-    case TEST_READLOCK:
+    case Lock_Type::read_lock:
       for (; baseline_options.inc_loop_counter () ; )
         {
           this->lock_.acquire_read ();
           this->lock_.release ();
         }
       break;
-    case TEST_WRITELOCK:
+    case Lock_Type::write_lock:
       for (; baseline_options.inc_loop_counter () ; )
         {
           this->lock_.acquire_write ();
           this->lock_.release ();
         }
       break;
-    case TEST_LOCK:
+    case Lock_Type::lock:
     default:
       for (; baseline_options.inc_loop_counter () ; )
         {
@@ -116,15 +100,15 @@ Baseline_Lock_Test<LOCK>::test_try_lock ()
   baseline_options.start_inc_timer ();
   switch (this->what_)
     {
-    case TEST_READLOCK:
+    case Lock_Type::read_lock:
       for (; baseline_options.inc_loop_counter () ; )
         this->lock_.tryacquire_read (); // This should always fail.
       break;
-    case TEST_WRITELOCK:
+    case Lock_Type::write_lock:
       for (; baseline_options.inc_loop_counter () ; )
         this->lock_.tryacquire_write (); // This should always fail.
       break;
-    case TEST_LOCK:
+    case Lock_Type::lock:
     default:
       for (; baseline_options.inc_loop_counter () ; )
         this->lock_.tryacquire (); // This should always fail.
@@ -138,77 +122,77 @@ Baseline_Lock_Test<LOCK>::test_try_lock ()
   return 0;
 }
 
-typedef Baseline_Lock_Test<ACE_Thread_Mutex> Baseline_Mutex_Test;
+using Baseline_Mutex_Test = Baseline_Lock_Test<ACE_Thread_Mutex>;
 
 ACE_SVC_FACTORY_DECLARE (Baseline_Mutex_Test)
 ACE_SVC_FACTORY_DEFINE (Baseline_Mutex_Test)
 
-typedef Baseline_Lock_Test<ACE_RW_Thread_Mutex> Baseline_RW_Thread_Mutex_Test;
+using Baseline_RW_Thread_Mutex_Test = Baseline_Lock_Test<ACE_RW_Thread_Mutex>;
 
 ACE_SVC_FACTORY_DECLARE (Baseline_RW_Thread_Mutex_Test)
 ACE_SVC_FACTORY_DEFINE (Baseline_RW_Thread_Mutex_Test)
 
-typedef Baseline_Lock_Test<ACE_RW_Mutex> Baseline_RW_Mutex_Test;
+using Baseline_RW_Mutex_Test = Baseline_Lock_Test<ACE_RW_Mutex>;
 
 ACE_SVC_FACTORY_DECLARE (Baseline_RW_Mutex_Test)
 ACE_SVC_FACTORY_DEFINE (Baseline_RW_Mutex_Test)
 
-typedef Baseline_Lock_Test<ACE_Process_Mutex> Baseline_Process_Mutex_Test;
+using Baseline_Process_Mutex_Test = Baseline_Lock_Test<ACE_Process_Mutex>;
 
 ACE_SVC_FACTORY_DECLARE (Baseline_Process_Mutex_Test)
 ACE_SVC_FACTORY_DEFINE (Baseline_Process_Mutex_Test)
 
-typedef Baseline_Lock_Test<ACE_RW_Process_Mutex> Baseline_RW_Process_Mutex_Test;
+using Baseline_RW_Process_Mutex_Test = Baseline_Lock_Test<ACE_RW_Process_Mutex>;
 
 ACE_SVC_FACTORY_DECLARE (Baseline_RW_Process_Mutex_Test)
 ACE_SVC_FACTORY_DEFINE (Baseline_RW_Process_Mutex_Test)
 
-typedef Baseline_Lock_Test<ACE_Null_Mutex> Baseline_Null_Mutex_Test;
+using Baseline_Null_Mutex_Test = Baseline_Lock_Test<ACE_Null_Mutex>;
 
 ACE_SVC_FACTORY_DECLARE (Baseline_Null_Mutex_Test)
 ACE_SVC_FACTORY_DEFINE (Baseline_Null_Mutex_Test)
 
-typedef Baseline_Lock_Test< ACE_Lock_Adapter<ACE_Null_Mutex> > Baseline_Adaptive_Null_Mutex_Test;
+using Baseline_Adaptive_Null_Mutex_Test = Baseline_Lock_Test<ACE_Lock_Adapter<ACE_Null_Mutex>>;
 
 ACE_SVC_FACTORY_DECLARE (Baseline_Adaptive_Null_Mutex_Test)
 ACE_SVC_FACTORY_DEFINE (Baseline_Adaptive_Null_Mutex_Test)
 
-typedef Baseline_Lock_Test<ACE_Recursive_Thread_Mutex> Baseline_Recursive_Mutex_Test;
+using Baseline_Recursive_Mutex_Test = Baseline_Lock_Test<ACE_Recursive_Thread_Mutex>;
 
 ACE_SVC_FACTORY_DECLARE (Baseline_Recursive_Mutex_Test)
 ACE_SVC_FACTORY_DEFINE (Baseline_Recursive_Mutex_Test)
 
-typedef Baseline_Lock_Test< ACE_Lock_Adapter<ACE_Thread_Mutex> > Baseline_Adaptive_Mutex_Test;
+using Baseline_Adaptive_Mutex_Test = Baseline_Lock_Test<ACE_Lock_Adapter<ACE_Thread_Mutex>>;
 
 ACE_SVC_FACTORY_DECLARE (Baseline_Adaptive_Mutex_Test)
 ACE_SVC_FACTORY_DEFINE (Baseline_Adaptive_Mutex_Test)
 
-typedef Baseline_Lock_Test< ACE_Lock_Adapter<ACE_RW_Mutex> > Baseline_Adaptive_RW_Mutex_Test;
+using Baseline_Adaptive_RW_Mutex_Test = Baseline_Lock_Test<ACE_Lock_Adapter<ACE_RW_Mutex>>;
 
 ACE_SVC_FACTORY_DECLARE (Baseline_Adaptive_RW_Mutex_Test)
 ACE_SVC_FACTORY_DEFINE (Baseline_Adaptive_RW_Mutex_Test)
 
-typedef Baseline_Lock_Test< ACE_Lock_Adapter<ACE_Recursive_Thread_Mutex> > Baseline_Adaptive_Recursive_Mutex_Test;
+using Baseline_Adaptive_Recursive_Mutex_Test = Baseline_Lock_Test<ACE_Lock_Adapter<ACE_Recursive_Thread_Mutex>>;
 
 ACE_SVC_FACTORY_DECLARE (Baseline_Adaptive_Recursive_Mutex_Test)
 ACE_SVC_FACTORY_DEFINE (Baseline_Adaptive_Recursive_Mutex_Test)
 
-typedef Baseline_Lock_Test<ACE_Semaphore> Baseline_Semaphore_Test;
+using Baseline_Semaphore_Test = Baseline_Lock_Test<ACE_Semaphore>;
 
 ACE_SVC_FACTORY_DECLARE (Baseline_Semaphore_Test)
 ACE_SVC_FACTORY_DEFINE (Baseline_Semaphore_Test)
 
-typedef Baseline_Lock_Test<ACE_Semaphore> Baseline_Process_Semaphore_Test;
+using Baseline_Process_Semaphore_Test = Baseline_Lock_Test<ACE_Semaphore>;
 
 ACE_SVC_FACTORY_DECLARE (Baseline_Process_Semaphore_Test)
 ACE_SVC_FACTORY_DEFINE (Baseline_Process_Semaphore_Test)
 
-typedef Baseline_Lock_Test<ACE_Null_Semaphore> Baseline_Null_Semaphore_Test;
+using Baseline_Null_Semaphore_Test = Baseline_Lock_Test<ACE_Null_Semaphore>;
 
 ACE_SVC_FACTORY_DECLARE (Baseline_Null_Semaphore_Test)
 ACE_SVC_FACTORY_DEFINE (Baseline_Null_Semaphore_Test)
 
-typedef Baseline_Lock_Test<ACE_Token> Baseline_Token_Test;
+using Baseline_Token_Test = Baseline_Lock_Test<ACE_Token>;
 
 ACE_SVC_FACTORY_DECLARE (Baseline_Token_Test)
 ACE_SVC_FACTORY_DEFINE (Baseline_Token_Test)

@@ -1,6 +1,57 @@
 #include "Thread_Task.h"
 #include "../Scheduler.h"
 #include "tao/RTScheduling/RTScheduler_Manager.h"
+#include "tao/RTScheduling/Current.h"
+#include "tao/RTScheduling/Request_Interceptor.h"
+#include "tao/PI_Server/ServerRequestInfo.h"
+#include "tao/ORB_Core.h"
+#include "tao/TAO_Server_Request.h"
+#include "tao/CDR.h"
+
+#include <memory>
+
+class Test_Scheduler : public TAO_Scheduler
+{
+public:
+  explicit Test_Scheduler (CORBA::ORB_ptr orb) : TAO_Scheduler (orb) {}
+
+  void receive_request (PortableInterceptor::ServerRequestInfo_ptr,
+                        RTScheduling::Current::IdType_out guid,
+                        CORBA::String_out,
+                        CORBA::Policy_out,
+                        CORBA::Policy_out) override
+  {
+    if (this->guid_length_ >= 0)
+      {
+        RTScheduling::Current::IdType *value = new RTScheduling::Current::IdType;
+        value->length (static_cast<CORBA::ULong> (this->guid_length_));
+        guid = value;
+      }
+  }
+
+  int guid_length_ {-1};
+};
+
+class Test_Request_Info : public TAO::ServerRequestInfo
+{
+public:
+  explicit Test_Request_Info (TAO_ServerRequest &request)
+    : TAO::ServerRequestInfo (request, nullptr, 0, nullptr, nullptr, 0) {}
+
+  IOP::ServiceContext *get_request_service_context (IOP::ServiceId id) override
+  {
+    IOP::ServiceContext *context = new IOP::ServiceContext;
+    context->context_id = id;
+    context->context_data.length (this->context_length_);
+    for (CORBA::ULong i {}; i < this->context_length_; ++i)
+      {
+        context->context_data[i] = 1;
+      }
+    return context;
+  }
+
+  CORBA::ULong context_length_ {};
+};
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
@@ -15,9 +66,101 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       TAO_RTScheduler_Manager_var manager = TAO_RTScheduler_Manager::_narrow (manager_obj.in ());
 
-      TAO_Scheduler scheduler (orb.in ());
+      Test_Scheduler scheduler (orb.in ());
 
-      manager->rtscheduler (&scheduler);
+      manager->rtscheduler (std::addressof (scheduler));
+
+      CORBA::Object_var current_object =
+        orb->resolve_initial_references ("RTScheduler_Current");
+      TAO_RTScheduler_Current *current =
+        dynamic_cast<TAO_RTScheduler_Current *> (current_object.in ());
+      if (current == nullptr)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR, "RTScheduler_Current has the wrong type\n"), 1);
+        }
+      TAO_InputCDR input (size_t {0});
+      TAO_OutputCDR output;
+      TAO_ServerRequest request (nullptr, input, output, nullptr, orb->orb_core ());
+      Test_Request_Info request_info (request);
+      Server_Interceptor interceptor (current);
+      int const invalid_lengths[] = {-1, 0, 1};
+      for (int const length : invalid_lengths)
+        {
+          scheduler.guid_length_ = length;
+          interceptor.receive_request (std::addressof (request_info));
+          if (current->implementation () != nullptr)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR, "Invalid GUID installed a current\n"), 1);
+            }
+        }
+
+      CORBA::ULong const invalid_context_lengths[] = {0, 1, sizeof (size_t) + 1};
+      for (CORBA::ULong const length : invalid_context_lengths)
+        {
+          request_info.context_length_ = length;
+          RTScheduling::Current::IdType_var decoded_guid;
+          CORBA::String_var name;
+          CORBA::Policy_var sched_param;
+          CORBA::Policy_var implicit_sched_param;
+          scheduler.TAO_Scheduler::receive_request (
+            std::addressof (request_info), decoded_guid.out (), name.out (),
+            sched_param.out (), implicit_sched_param.out ());
+          if (decoded_guid.ptr () != nullptr)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR, "Invalid context produced a GUID\n"), 1);
+            }
+        }
+
+      request_info.context_length_ = sizeof (size_t);
+      RTScheduling::Current::IdType_var decoded_guid;
+      CORBA::String_var decoded_name;
+      CORBA::Policy_var decoded_sched_param;
+      CORBA::Policy_var decoded_implicit_sched_param;
+      scheduler.TAO_Scheduler::receive_request (
+        std::addressof (request_info), decoded_guid.out (), decoded_name.out (),
+        decoded_sched_param.out (), decoded_implicit_sched_param.out ());
+      if (decoded_guid.ptr () == nullptr || decoded_guid->length () != sizeof (size_t))
+        {
+          ACE_ERROR_RETURN ((LM_ERROR, "Valid context did not produce a GUID\n"), 1);
+        }
+      for (CORBA::ULong i {}; i < decoded_guid->length (); ++i)
+        {
+          if (decoded_guid[i] != 1)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR, "Decoded GUID has incorrect data\n"), 1);
+            }
+        }
+
+      // Cancellation must not read past short GUIDs or overwrite its local
+      // numeric buffer for GUIDs larger than size_t.
+      DT_Hash_Map hash;
+      CORBA::ULong const lengths[] = {0, 1, sizeof (size_t) + 1};
+      for (CORBA::ULong const length : lengths)
+        {
+          RTScheduling::Current::IdType guid;
+          guid.length (length);
+          for (CORBA::ULong i {}; i < length; ++i)
+            {
+              guid[i] = 1;
+            }
+          TAO_RTScheduler_Current_i *test_current =
+            new TAO_RTScheduler_Current_i (orb->orb_core (), std::addressof (hash));
+          test_current->id (guid);
+          bool cancelled = false;
+          try
+            {
+              // cancel_thread deletes the current before throwing.
+              test_current->cancel_thread ();
+            }
+          catch (CORBA::THREAD_CANCELLED const &)
+            {
+              cancelled = true;
+            }
+          if (!cancelled)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR, "Cancellation did not throw\n"), 1);
+            }
+        }
 
       Thread_Task task (orb.in ());
 
@@ -30,7 +173,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return 1;

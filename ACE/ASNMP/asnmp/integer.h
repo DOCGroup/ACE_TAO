@@ -1,13 +1,10 @@
-/* -*-C++-*- */
 #ifndef SNMPINTEGER_
 #define SNMPINTEGER_
-//=============================================================================
 /**
  *  @file    integer.h
  *
  *  Class definition for Integer classes convertable to SMI.
  */
-//=============================================================================
 
 /*===================================================================
   Copyright (c) 1996
@@ -27,17 +24,12 @@
 
 #include "asnmp/smival.h"
 
-// TODO get rid of this constant
-#define INTOUTBUF 15  // largest ASCII formatted integer
+constexpr size_t INTOUTBUF = 3 * sizeof (long) + 2;
 
-//------------[ Integer Classes ]------------------------------------------
-// The integer class allows all the functionality of the various
-// integers but is contained in a Value object for consistency
-// among the various types.
-// class objects may be set or get into Vb objects.
-//
-
-// 32 bit unsigned integer class
+/// @name Integer classes.
+/// These classes wrap integers in Value objects to provide a consistent
+/// interface and integrate with Vb objects.
+/// @{
 /**
  * @class SnmpUInt32
  *
@@ -46,47 +38,42 @@
 class ASNMP_Export SnmpUInt32 : public SnmpSyntax
 {
 public:
-  /// default constructor
-  explicit SnmpUInt32 (const unsigned long i = 0);
+  explicit SnmpUInt32 (unsigned long const i = 0);
 
-  /// copy constructor
-  SnmpUInt32( const SnmpUInt32 &c);
+  SnmpUInt32 (SnmpUInt32 const &c);
 
-  /// destructor (ensure that SnmpSyntax::~SnmpSyntax() is overridden)
-  virtual ~SnmpUInt32();
+  ~SnmpUInt32 () override = default;
 
   /// syntax type
-  virtual SmiUINT32 get_syntax();
+  SmiUINT32 get_syntax() override;
 
   /// overloaded assignment
-  SnmpUInt32& operator=( const unsigned long i);
+  SnmpUInt32 &operator= (unsigned long const i);
 
   /// overloaded assignment
-  SnmpUInt32& operator=( const SnmpUInt32 &uli);
+  SnmpUInt32 &operator= (SnmpUInt32 const &uli);
 
   /// otherwise, behave like an unsigned long int
-  operator unsigned long();
+  operator unsigned long() const;
 
   /// get a printable ASCII value
-  virtual const char *to_string();
+  char const *to_string () override;
 
   /// create a new instance of this Value
-  virtual SnmpSyntax *clone() const;
+  SnmpSyntax *clone() const override;
 
   /// copy an instance of this Value
-  SnmpSyntax& operator=( SnmpSyntax &val);
+  SnmpSyntax& operator=( SnmpSyntax &val) override;
 
   /// did object construct properly
-  int valid() const;
+  int valid() const override;
 
 protected:
   /// contain string representation of object
-  int valid_flag;
-  char output_buffer[INTOUTBUF];
+  bool valid_flag {};
+  char output_buffer[INTOUTBUF] {};
 };
 
-
-// 32 bit signed integer class
   /**
    * @class SnmpInt32
    *
@@ -95,43 +82,42 @@ protected:
 class ASNMP_Export SnmpInt32 : public SnmpSyntax
 {
 public:
-  /// constructor with value
-  SnmpInt32 (const long i = 0);
+  SnmpInt32 (long const i = 0);
 
-  /// constructor with value
-  SnmpInt32 (const SnmpInt32 &c);
+  SnmpInt32 (SnmpInt32 const &c);
 
-  /// destructor (ensure that SnmpSyntax::~SnmpSyntax() is overridden)
-  virtual ~SnmpInt32();
+  ~SnmpInt32 () override = default;
 
   /// syntax type
-  virtual SmiUINT32 get_syntax();
+  SmiUINT32 get_syntax() override;
 
   /// overloaded assignment
-  SnmpInt32& operator=( const long i);
+  SnmpInt32 &operator= (long const i);
 
   /// overloaded assignment
-  SnmpInt32& operator=( const SnmpInt32 &li);
+  SnmpInt32 &operator= (SnmpInt32 const &li);
 
   /// otherwise, behave like a long int
-  operator long();
+  operator long() const;
 
   /// create a new instance of this Value
-  SnmpSyntax *clone() const;
+  SnmpSyntax *clone() const override;
 
   /// copy an instance of this Value
-  SnmpSyntax& operator=( SnmpSyntax &val);
+  SnmpSyntax& operator=( SnmpSyntax &val) override;
 
   /// get a printable ASCII value
-  const char *to_string();
+  char const *to_string () override;
 
   /// logical state of object
-  int valid() const;
+  int valid() const override;
 
 protected:
   /// contain string representation of object
-  int valid_flag;
-  char output_buffer[INTOUTBUF];
+  bool valid_flag {};
+  char output_buffer[INTOUTBUF] {};
 };
+
+/// @}
 
 #endif

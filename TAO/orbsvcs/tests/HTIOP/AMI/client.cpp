@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    client.cpp
  *
@@ -8,8 +6,6 @@
  *  @author Alexander Babu Arulanthu <alex@cs.wustl.edu>
  *  @author Michael Kircher <Michael.Kircher@mchp.siemens.de>
  */
-//=============================================================================
-
 
 #include "ace/OS_NS_sys_socket.h"
 #include "ace/Get_Opt.h"
@@ -17,8 +13,7 @@
 #include "ami_testC.h"
 #include "ami_testS.h"
 
-
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
+ACE_TCHAR const *ior = ACE_TEXT("file://test.ior");
 int nthreads = 5;
 int niterations = 5;
 int debug = 0;
@@ -71,7 +66,6 @@ parse_args (int argc, ACE_TCHAR *argv[])
 class Client : public ACE_Task_Base
 {
 public:
-  /// ctor
   Client (A::AMI_Test_ptr server, int niterations);
 
   /// The thread entry point.
@@ -91,10 +85,10 @@ public:
 class Handler : public POA_A::AMI_AMI_TestHandler
 {
 public:
-  Handler () {};
+  Handler () = default;
 
   void foo (CORBA::Long result,
-            CORBA::Long out_l)
+            CORBA::Long out_l) override
     {
       if (debug)
         {
@@ -104,10 +98,10 @@ public:
                       out_l));
         }
 
-      number_of_replies--;
+      --number_of_replies;
     };
 
-   void foo_excep (::Messaging::ExceptionHolder * excep_holder)
+  void foo_excep (::Messaging::ExceptionHolder * excep_holder) override
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <foo_excep> called:\n"));
@@ -115,37 +109,37 @@ public:
         {
           excep_holder->raise_exception ();
         }
-      catch (const CORBA::Exception& ex)
+      catch (CORBA::Exception const & ex)
         {
           ex._tao_print_exception ("Caught exception:");
         }
     };
 
-  void get_yadda (CORBA::Long result)
+  void get_yadda (CORBA::Long result) override
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <get_yadda> called: result <%d>\n",
                   result));
     };
 
-  void get_yadda_excep (::Messaging::ExceptionHolder *)
+  void get_yadda_excep (::Messaging::ExceptionHolder *) override
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <get_yadda_excep> called:\n"));
     };
 
-  void set_yadda ()
+  void set_yadda () override
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <set_yadda> called:\n"));
     };
 
-  void set_yadda_excep (::Messaging::ExceptionHolder *)
+  void set_yadda_excep (::Messaging::ExceptionHolder *) override
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Callback method <set_yadda_excep> called:\n"));
     };
-  ~Handler () {};
+  ~Handler () override = default;
 };
 
 // ReplyHandler.
@@ -160,7 +154,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) != 0)
+      {
         return 1;
+      }
 
       ACE_OS::socket_init ();
 
@@ -184,9 +180,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         orb->resolve_initial_references("RootPOA");
 
       if (CORBA::is_nil (poa_object.in ()))
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           " (%P|%t) Unable to initialize the POA.\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             " (%P|%t) Unable to initialize the POA.\n"),
+                            1);
+        }
 
       PortableServer::POA_var root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
@@ -201,9 +199,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       Client client (server.in (), niterations);
       if (client.activate (THR_NEW_LWP | THR_JOINABLE,
                            nthreads) != 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot activate client threads\n"),
-                          1);
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Cannot activate client threads\n"),
+                            1);
+        }
 
       // Main thread collects replies. It needs to collect
       // <nthreads*niterations> replies.
@@ -236,7 +236,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                       (nthreads*niterations) - number_of_replies));
         }
 
-
       client.thr_mgr ()->wait ();
 
       ACE_DEBUG ((LM_DEBUG, "threads finished\n"));
@@ -248,7 +247,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return 1;
@@ -287,7 +286,7 @@ Client::svc ()
                       niterations));
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("MT_Client: exception raised");
     }

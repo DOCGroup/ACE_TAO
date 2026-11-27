@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  * @file Null_Network_Interface_Monitor.h
  *
  * @author Jeff Parsons <j.parsons@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef NULL_NETWORK_INTERFACE_MONITOR_H
 #define NULL_NETWORK_INTERFACE_MONITOR_H
@@ -47,7 +43,7 @@ namespace ACE
       void clear_impl ();
 
     protected:
-      ACE_UINT64 value_;
+      ACE_UINT64 value_ {};
     };
   }
 }

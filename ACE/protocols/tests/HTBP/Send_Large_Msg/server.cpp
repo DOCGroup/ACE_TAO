@@ -10,12 +10,11 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_sys_socket.h"
 #include "ace/os_include/os_netdb.h"
+#include <array>
+#include <memory>
 
-const size_t Send_Size = 4*1024;
-const size_t Loops = 10;
-const size_t Total_Size = Send_Size * Loops;
 unsigned port = 8088;
-const ACE_TCHAR *notifier_file = 0;
+ACE_TCHAR const *notifier_file {};
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -53,44 +52,54 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_OS::socket_init (ACE_WSOCK_VERSION);
 
   if (parse_args (argc, argv) != 0)
+  {
     return 1;
+  }
 
   ACE_TCHAR host[MAXHOSTNAMELEN+1];
   if (ACE_OS::hostname (host,MAXHOSTNAMELEN) != 0)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("(%P|%t) Server failure: %p\n"),
-                       ACE_TEXT ("hostname")),
-                      1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("(%P|%t) Server failure: %p\n"),
+                         ACE_TEXT ("hostname")),
+                        1);
+    }
 
   ACE_INET_Addr local (port, host);
   ACE_SOCK_Stream sock[2];
-  ACE::HTBP::Channel *channels[2];
+  std::array<std::unique_ptr<ACE::HTBP::Channel>, 2> channels {};
   ACE_SOCK_Acceptor acc(local,1);
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT("(%P|%t) Server: ")
               ACE_TEXT("server is ready\n")));
 
-  if (notifier_file != 0)
+  if (notifier_file != nullptr)
     {
-      FILE *f = ACE_OS::fopen (notifier_file,ACE_TEXT("w+"));
-      const char *msg = "server ready";
-      ACE_OS::fwrite (msg,ACE_OS::strlen(msg),1,f);
-      ACE_OS::fclose (f);
+      std::unique_ptr<FILE, int (*) (FILE *)> file (
+        ACE_OS::fopen (notifier_file, ACE_TEXT ("w+")), ACE_OS::fclose);
+      if (!file)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Cannot open notifier file '%s'\n"),
+                             notifier_file), 1);
+        }
+      char const * const msg = "server ready";
+      ACE_OS::fwrite (msg, ACE_OS::strlen (msg), 1, file.get ());
     }
 
   acc.accept(sock[0]);
-  channels[0] = new ACE::HTBP::Channel (sock[0]);
+  channels[0] = std::make_unique<ACE::HTBP::Channel> (sock[0]);
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT("(%P|%t) Server: ")
-              ACE_TEXT("Got sock[0], handle = %d\n"),
+              ACE_TEXT("Got sock[0], handle = %H\n"),
               sock[0].get_handle()));
   acc.accept(sock[1]);
-  channels[1] = new ACE::HTBP::Channel(sock[1]);
+  channels[1] = std::make_unique<ACE::HTBP::Channel> (sock[1]);
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT("(%P|%t) Server: ")
-              ACE_TEXT("Got sock[1], handle = %d\n"),
+              ACE_TEXT("Got sock[1], handle = %H\n"),
               sock[1].get_handle()));
-  int res = 0;
+  int res {};
   while ((res = channels[0]->pre_recv()) != 0)
     {
       ACE_DEBUG ((LM_DEBUG,
@@ -114,16 +123,17 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_OS::sleep (1);
     }
 
-  ACE::HTBP::Session *session = channels[0]->session();
+  // Borrowed from channels[0], which owns the session.
+  ACE::HTBP::Session * const session = channels[0]->session();
   ACE::HTBP::Stream stream (session);
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT("(%P|%t) Server: ")
-              ACE_TEXT("using streams %d, %d. Got session = %x\n"),
+              ACE_TEXT("using streams %H, %H. Got session = %@\n"),
               sock[0].get_handle(),sock[1].get_handle(),session));
 
   ssize_t got = 1;
-  ssize_t total_recv = 0;
+  ssize_t total_recv {};
 
   while (got != 0)
     {
@@ -134,7 +144,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                   ACE_TEXT("got = %b\n"), got));
 
       if (got < 0)
+      {
         break;
+      }
       total_recv += got;
     }
 
@@ -142,14 +154,15 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               ACE_TEXT("(%P|%t) Server: ")
               ACE_TEXT("received %b\n"),total_recv));
 
-
   ACE_OS::strcpy (buffer,"I hear you !");
   ssize_t n = stream.send (buffer, ACE_OS::strlen (buffer)+1);
   if (n == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT("(%P|%t) Server: ")
-                       ACE_TEXT("%p\n"),
-                       ACE_TEXT("stream.send")),-1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT("(%P|%t) Server: ")
+                         ACE_TEXT("%p\n"),
+                         ACE_TEXT("stream.send")),-1);
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT("(%P|%t) Server: ")
@@ -158,13 +171,5 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   ACE_OS::sleep(1); // prevent test failure on windows when the connection
                     // closes too fast.
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT("(%P|%t) Server: ")
-              ACE_TEXT("deleting channels[1]\n")));
-  delete channels[1];
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT("(%P|%t) Server: ")
-              ACE_TEXT("deleting channels[0]\n")));
-  delete channels[0];
   return 0;
 }

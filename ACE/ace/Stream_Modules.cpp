@@ -8,7 +8,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE_Tyc(ACE_Stream_Head)
@@ -60,14 +59,15 @@ template <ACE_SYNCH_DECL, class TIME_POLICY> int
 ACE_Stream_Head<ACE_SYNCH_USE, TIME_POLICY>::control (ACE_Message_Block *mb)
 {
   ACE_TRACE ("ACE_Stream_Head<ACE_SYNCH_USE, TIME_POLICY>::control");
-  ACE_IO_Cntl_Msg *ioc = (ACE_IO_Cntl_Msg *) mb->rd_ptr ();
+  ACE_IO_Cntl_Msg *ioc = reinterpret_cast<ACE_IO_Cntl_Msg *> (mb->rd_ptr ());
   ACE_IO_Cntl_Msg::ACE_IO_Cntl_Cmds cmd;
 
   switch (cmd = ioc->cmd ())
     {
     case ACE_IO_Cntl_Msg::SET_LWM:
     case ACE_IO_Cntl_Msg::SET_HWM:
-      this->water_marks (cmd, *(size_t *) mb->cont ()->rd_ptr ());
+      this->water_marks (cmd,
+                         *reinterpret_cast<size_t *> (mb->cont ()->rd_ptr ()));
       ioc->rval (0);
       break;
     default:
@@ -91,9 +91,13 @@ ACE_Stream_Head<ACE_SYNCH_USE, TIME_POLICY>::canonical_flush (ACE_Message_Block 
     }
 
   if (ACE_BIT_ENABLED (*cp, ACE_Task_Flags::ACE_FLUSHW))
-    return this->reply (mb);
+    {
+      return this->reply (mb);
+    }
   else
-    mb->release ();
+    {
+      mb->release ();
+    }
   return 0;
 }
 
@@ -106,10 +110,14 @@ ACE_Stream_Head<ACE_SYNCH_USE, TIME_POLICY>::put (ACE_Message_Block *mb,
 
   if (mb->msg_type () == ACE_Message_Block::MB_IOCTL
       && (res = this->control (mb)) == -1)
-    return res;
+    {
+      return res;
+    }
 
   if (this->is_writer ())
-    return this->put_next (mb, tv);
+    {
+      return this->put_next (mb, tv);
+    }
   else // this->is_reader ()
     {
       switch (mb->msg_type ())
@@ -135,12 +143,17 @@ template <ACE_SYNCH_DECL, class TIME_POLICY> int
 ACE_Stream_Head<ACE_SYNCH_USE, TIME_POLICY>::info (ACE_TCHAR **strp, size_t length) const
 {
   ACE_TRACE ("ACE_Stream_Head<ACE_SYNCH_USE, TIME_POLICY>::info");
-  const ACE_TCHAR *name = this->name ();
+  ACE_TCHAR const * const name = this->name ();
 
-  if (*strp == nullptr && (*strp = ACE_OS::strdup (name)) == nullptr)
-    return -1;
-  else
-    ACE_OS::strsncpy (*strp, name, length);
+  if (*strp == nullptr)
+    {
+      *strp = ACE_OS::strdup (name);
+      if (*strp == nullptr)
+        {
+          return -1;
+        }
+    }
+  ACE_OS::strsncpy (*strp, name, length);
   return static_cast<int> (ACE_OS::strlen (name));
 }
 
@@ -198,7 +211,7 @@ template <ACE_SYNCH_DECL, class TIME_POLICY> int
 ACE_Stream_Tail<ACE_SYNCH_USE, TIME_POLICY>::control (ACE_Message_Block *mb)
 {
   ACE_TRACE ("ACE_Stream_Tail<ACE_SYNCH_USE, TIME_POLICY>::control");
-  ACE_IO_Cntl_Msg *ioc = (ACE_IO_Cntl_Msg *) mb->rd_ptr ();
+  ACE_IO_Cntl_Msg *ioc = reinterpret_cast<ACE_IO_Cntl_Msg *> (mb->rd_ptr ());
   ACE_IO_Cntl_Msg::ACE_IO_Cntl_Cmds cmd;
 
   switch (cmd = ioc->cmd ())
@@ -206,7 +219,7 @@ ACE_Stream_Tail<ACE_SYNCH_USE, TIME_POLICY>::control (ACE_Message_Block *mb)
     case ACE_IO_Cntl_Msg::SET_LWM:
     case ACE_IO_Cntl_Msg::SET_HWM:
       {
-        size_t wm_size = *(size_t *) mb->cont ()->rd_ptr ();
+        size_t wm_size = *reinterpret_cast<size_t *> (mb->cont ()->rd_ptr ());
 
         this->water_marks (cmd, wm_size);
         this->sibling ()->water_marks (cmd, wm_size);
@@ -240,7 +253,9 @@ ACE_Stream_Tail<ACE_SYNCH_USE, TIME_POLICY>::canonical_flush (ACE_Message_Block 
       return this->reply (mb);
     }
   else
-    mb->release ();
+    {
+      mb->release ();
+    }
 
   return 0;
 }
@@ -279,12 +294,17 @@ template <ACE_SYNCH_DECL, class TIME_POLICY> int
 ACE_Stream_Tail<ACE_SYNCH_USE, TIME_POLICY>::info (ACE_TCHAR **strp, size_t length) const
 {
   ACE_TRACE ("ACE_Stream_Tail<ACE_SYNCH_USE, TIME_POLICY>::info");
-  const ACE_TCHAR *name = this->name ();
+  ACE_TCHAR const * const name = this->name ();
 
-  if (*strp == nullptr && (*strp = ACE_OS::strdup (name)) == nullptr)
-    return -1;
-  else
-    ACE_OS::strsncpy (*strp, name, length);
+  if (*strp == nullptr)
+    {
+      *strp = ACE_OS::strdup (name);
+      if (*strp == nullptr)
+        {
+          return -1;
+        }
+    }
+  ACE_OS::strsncpy (*strp, name, length);
   return static_cast<int> (ACE_OS::strlen (name));
 }
 
@@ -358,12 +378,17 @@ ACE_Thru_Task<ACE_SYNCH_USE, TIME_POLICY>::info (ACE_TCHAR **strp,
                                     size_t length) const
 {
   ACE_TRACE ("ACE_Thru_Task<ACE_SYNCH_USE, TIME_POLICY>::info");
-  const ACE_TCHAR *name = this->name ();
+  ACE_TCHAR const * const name = this->name ();
 
-  if (*strp == nullptr && (*strp = ACE_OS::strdup (name)) == nullptr)
-    return -1;
-  else
-    ACE_OS::strsncpy (*strp, name, length);
+  if (*strp == nullptr)
+    {
+      *strp = ACE_OS::strdup (name);
+      if (*strp == nullptr)
+        {
+          return -1;
+        }
+    }
+  ACE_OS::strsncpy (*strp, name, length);
   return static_cast<int> (ACE_OS::strlen (name));
 }
 

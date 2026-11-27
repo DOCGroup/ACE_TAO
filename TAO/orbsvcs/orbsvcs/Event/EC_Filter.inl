@@ -1,11 +1,7 @@
-// -*- C++ -*-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
-TAO_EC_Filter::TAO_EC_Filter ()
-  :  parent_ (0)
-{
-}
+TAO_EC_Filter::TAO_EC_Filter () = default;
 
 ACE_INLINE TAO_EC_Filter*
 TAO_EC_Filter::parent () const
@@ -14,18 +10,24 @@ TAO_EC_Filter::parent () const
 }
 
 ACE_INLINE int
-TAO_EC_Filter::matches (const RtecEventComm::EventHeader& rhs,
-                        const RtecEventComm::EventHeader& lhs)
+TAO_EC_Filter::matches (RtecEventComm::EventHeader const &rhs,
+                        RtecEventComm::EventHeader const &lhs)
 {
   if ((rhs.source == 0 && rhs.type == 0)
       || (lhs.source == 0 && lhs.type == 0))
-    return 1;
+    {
+      return 1;
+    }
 
   if (rhs.source == 0 || lhs.source == 0)
-    return rhs.type == lhs.type;
+    {
+      return rhs.type == lhs.type;
+    }
 
   if (rhs.type == 0 || lhs.type == 0)
-    return rhs.source == lhs.source;
+    {
+      return rhs.source == lhs.source;
+    }
 
   return (rhs.type == lhs.type && rhs.source == lhs.source);
 }
@@ -33,9 +35,7 @@ TAO_EC_Filter::matches (const RtecEventComm::EventHeader& rhs,
 // ****************************************************************
 
 ACE_INLINE
-TAO_EC_Null_Filter::TAO_EC_Null_Filter ()
-{
-}
+TAO_EC_Null_Filter::TAO_EC_Null_Filter () = default;
 
 // ****************************************************************
 

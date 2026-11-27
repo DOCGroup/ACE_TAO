@@ -4,10 +4,10 @@
 #include "tao/RTCORBA/Priority_Mapping_Manager.h"
 #include "tao/Protocols_Hooks.h"
 
-const char *
+char const *
 sched_policy_name (int sched_policy)
 {
-  const char *name = 0;
+  char const *name {};
 
   switch (sched_policy)
     {
@@ -62,7 +62,9 @@ get_implicit_thread_CORBA_priority (CORBA::ORB_ptr orb)
     TAO_Priority_Mapping_Manager::_narrow (obj.in ());
 
   if (CORBA::is_nil (mapping_manager.in ()))
-    throw CORBA::INTERNAL ();
+    {
+      throw CORBA::INTERNAL ();
+    }
 
   RTCORBA::PriorityMapping *pm =
     mapping_manager.in ()->mapping ();

@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   OS_NS_stropts.h
  *
@@ -8,7 +5,6 @@
  *  @author Jesper S. M|ller<stophph@diku.dk>
  *  @author and a cast of thousands...
  */
-//=============================================================================
 
 #ifndef ACE_OS_NS_STROPTS_H
 #define ACE_OS_NS_STROPTS_H
@@ -69,10 +65,8 @@ using ACE_SOCK_GROUP = unsigned long;
 class ACE_Export ACE_Str_Buf : public strbuf
 {
 public:
-  /// Constructor.
   ACE_Str_Buf (void *b = nullptr, int l = 0, int max = 0);
 
-  /// Constructor.
   ACE_Str_Buf (strbuf &);
 };
 
@@ -95,16 +89,16 @@ namespace ACE_OS {
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int fattach (int handle,
-               const char *path);
+               char const *path);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int fdetach (const char *file);
+  int fdetach (char const *file);
 
   /// UNIX-style @c ioctl
   ACE_NAMESPACE_INLINE_FUNCTION
   int ioctl (ACE_HANDLE handle,
              ACE_IOCTL_TYPE_ARG2 cmd,
-             void * = 0);
+             void * = nullptr);
 
   /// QoS-enabled @c ioctl
   extern ACE_Export

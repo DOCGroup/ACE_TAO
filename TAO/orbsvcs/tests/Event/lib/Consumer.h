@@ -1,12 +1,8 @@
-/* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file   Consumer.h
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  */
-//=============================================================================
-
 
 #ifndef EC_CONSUMER_H
 #define EC_CONSUMER_H
@@ -37,14 +33,13 @@
 class EC_Test_Export EC_Consumer : public POA_RtecEventComm::PushConsumer
 {
 public:
-  /// Constructor
   EC_Consumer (EC_Driver* driver, void* cookie);
 
   /// The driver program can build the QoS attributes and obtain the
   /// ConsumerAdmin, we do the rest.
   virtual void connect (
       RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin,
-      const RtecEventChannelAdmin::ConsumerQOS& qos,
+      RtecEventChannelAdmin::ConsumerQOS const & qos,
       int shutdown_event_type);
 
   /**
@@ -53,7 +48,7 @@ public:
    * tests).
    */
   virtual void connect (
-      const RtecEventChannelAdmin::ConsumerQOS& qos,
+      RtecEventChannelAdmin::ConsumerQOS const & qos,
       int shutdown_event_type);
 
   /// returns 0 if it is not connected
@@ -71,14 +66,15 @@ public:
 
   /// Printout the statistics
   virtual void dump_results (
-    const ACE_TCHAR* name,
+    ACE_TCHAR const *name,
     ACE_High_Res_Timer::global_scale_factor_type global_scale_factor);
 
-  // = The RtecEventComm::PushConsumer methods
-
+  /// @name RtecEventComm::PushConsumer operations
+  /// @{
   /// The skeleton methods.
-  virtual void push (const RtecEventComm::EventSet& events);
-  virtual void disconnect_push_consumer ();
+  void push (RtecEventComm::EventSet const & events) override;
+  void disconnect_push_consumer () override;
+  /// @}
 
 private:
   /// The main driver for the test.

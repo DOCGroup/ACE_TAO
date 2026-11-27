@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/DiffServPolicy/DiffServPolicy_Factory.h"
 #include "tao/DiffServPolicy/Client_Network_Priority_Policy.h"
 #include "tao/DiffServPolicy/Server_Network_Priority_Policy.h"
@@ -10,13 +9,17 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 CORBA::Policy_ptr
 TAO_DiffServ_PolicyFactory::create_policy (
     CORBA::PolicyType type,
-    CORBA::Any const& value)
+    CORBA::Any const &value)
 {
   if (type == TAO::CLIENT_NETWORK_PRIORITY_TYPE)
-    return TAO_Client_Network_Priority_Policy::create (value);
+    {
+      return TAO_Client_Network_Priority_Policy::create (value);
+    }
 
   if (type == TAO::NETWORK_PRIORITY_TYPE)
-    return TAO_Server_Network_Priority_Policy::create (value);
+    {
+      return TAO_Server_Network_Priority_Policy::create (value);
+    }
 
   throw ::CORBA::PolicyError (CORBA::BAD_POLICY_TYPE);
 }
@@ -24,7 +27,7 @@ TAO_DiffServ_PolicyFactory::create_policy (
 CORBA::Policy_ptr
 TAO_DiffServ_PolicyFactory::_create_policy (CORBA::PolicyType type)
 {
-  CORBA::Policy_ptr policy = CORBA::Policy::_nil ();
+  CORBA::Policy_ptr policy {};
 
   if (type == TAO::CLIENT_NETWORK_PRIORITY_TYPE)
     {

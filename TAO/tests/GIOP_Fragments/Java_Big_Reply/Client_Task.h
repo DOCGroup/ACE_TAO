@@ -1,4 +1,3 @@
-
 #ifndef JAVA_BIG_REPLY_CLIENT_TASK_H
 #define JAVA_BIG_REPLY_CLIENT_TASK_H
 #include /**/ "ace/pre.h"
@@ -14,7 +13,6 @@
 class Client_Task : public ACE_Task_Base
 {
 public:
-  /// Constructor
   Client_Task (Test::Big_Reply_ptr receiver,
                CORBA::Long event_count,
                ACE_Thread_Manager *thr_mgr);

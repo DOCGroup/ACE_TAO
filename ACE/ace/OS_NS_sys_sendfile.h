@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    OS_NS_sys_sendfile.h
  *
  *  @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef ACE_OS_NS_SYS_SENDFILE_H
 #define ACE_OS_NS_SYS_SENDFILE_H
@@ -26,7 +22,6 @@
 #  undef ACE_EXPORT_MACRO
 #endif
 #define ACE_EXPORT_MACRO ACE_Export
-
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

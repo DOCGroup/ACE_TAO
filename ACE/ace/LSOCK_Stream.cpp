@@ -26,9 +26,13 @@ ACE_LSOCK_Stream::get_local_addr (ACE_Addr &addr) const
   ACE_UNIX_Addr lhs_unix_addr;
 
   if (rhs_unix_addr == nullptr)
-    return -1;
+    {
+      return -1;
+    }
   else if (ACE_SOCK::get_local_addr (lhs_unix_addr) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
     {
       *rhs_unix_addr = lhs_unix_addr;
@@ -123,7 +127,7 @@ ACE_LSOCK_Stream::recv_msg (iovec iov[],
 #elif defined (ACE_HAS_4_4BSD_SENDMSG_RECVMSG)
   recv_msg.msg_control = cmsgbuf;
   recv_msg.msg_controllen = sizeof cmsgbuf;
-  ssize_t result = ACE_OS::recvmsg (this->ACE_SOCK_Stream::get_handle (),
+  ssize_t const result = ACE_OS::recvmsg (this->ACE_SOCK_Stream::get_handle (),
                                     &recv_msg, 0);
   handle = *(ACE_HANDLE*) CMSG_DATA (cmsgptr) ;
   return result;

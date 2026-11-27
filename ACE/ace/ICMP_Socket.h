@@ -1,13 +1,9 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    ICMP_Socket.h
  *
  *  @author Robert S. Iakobashvili <coroberti@gmail.com> <coroberti@walla.co.il>
  *  @author Gonzalo A. Diethelm <gonzalo.diethelm@aditiva.com>
  */
-//=============================================================================
 
 #ifndef ACE_ICMP_SOCKET_H
 #define ACE_ICMP_SOCKET_H
@@ -42,7 +38,8 @@ public:
    *
    * Data transfer routines.
    */
-  //@{
+  /// @{
+
   /// Send an @a n byte @a buf to the datagram socket (uses
   /// @c sendto(3) ).
   ssize_t send (void const * buf,
@@ -57,13 +54,13 @@ public:
                 ACE_Addr & addr,
                 int flags = 0) const;
 
-  /// TODO: comment
+  /// Receive up to @a n bytes, waiting at most @a timeout.
   ssize_t recv (void * buf,
                 size_t n,
                 int flags,
                 ACE_Time_Value const * timeout) const;
 
-  //@}
+  /// @}
 
   /// Wrapper around the BSD-style @c socket system call (no QoS).
   int open (ACE_Addr const & local = ACE_Addr::sap_any,
@@ -77,8 +74,7 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-  // Protected constructors, so the class can only be derived from.
-  /// Default constructor.
+  /// Protected constructors, so the class can only be derived from.
   ACE_ICMP_Socket ();
 
   /// Constructor that takes a local listening address.

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/CSD_Framework/CSD_Framework_Loader.h"
 #include "tao/CSD_Framework/CSD_Object_Adapter_Factory.h"
 #include "tao/CSD_Framework/CSD_Strategy_Repository.h"
@@ -24,16 +23,8 @@ int
 TAO_CSD_Framework_Loader::init (int, ACE_TCHAR* [])
 {
   ACE_TRACE ("TAO_CSD_Framework_Loader::init");
-
-  // Only allow initialization once.
-  if (this->initialized_)
-    return 0;
-
-  this->initialized_ = true;
-
   return 0;
 }
-
 
 /////////////////////////////////////////////////////////////////////
 

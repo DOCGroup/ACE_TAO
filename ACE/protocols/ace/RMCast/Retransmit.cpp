@@ -4,6 +4,7 @@
 #include "ace/OS_NS_sys_time.h" // gettimeofday
 
 #include "Retransmit.h"
+#include <memory>
 
 namespace ACE_RMCast
 {
@@ -39,7 +40,7 @@ namespace ACE_RMCast
 
   void Retransmit::send (Message_ptr m)
   {
-    if (m->find (Data::id) != 0)
+    if (m->find (Data::id) != nullptr)
     {
       SN const* sn = static_cast<SN const*> (m->find (SN::id));
 
@@ -52,7 +53,8 @@ namespace ACE_RMCast
 
   void Retransmit::recv (Message_ptr m)
   {
-    if (NAK const* nak = static_cast<NAK const*> (m->find (NAK::id)))
+    NAK const *nak = static_cast<NAK const *> (m->find (NAK::id));
+    if (nak != nullptr)
     {
       Address to (static_cast<To const*> (m->find (To::id))->address ());
 
@@ -67,7 +69,7 @@ namespace ACE_RMCast
           u64* psn;
           j.next (psn);
 
-          Message_ptr m;
+          Message_ptr retransmit_message;
 
           Queue::ENTRY* pair;
 
@@ -75,7 +77,7 @@ namespace ACE_RMCast
           {
             //cerr << 5 << "PRTM " << to << " " << pair->ext_id_ << endl;
 
-            m = pair->int_id_.message ();
+            retransmit_message = pair->int_id_.message ();
 
             pair->int_id_.reset ();
           }
@@ -83,12 +85,12 @@ namespace ACE_RMCast
           {
             //cerr << 4 << "message " << *psn << " not available" << endl;
 
-            m = Message_ptr (new Message);
-            m->add (Profile_ptr (new SN (*psn)));
-            m->add (Profile_ptr (new NoData));
+            retransmit_message = Message_ptr (new Message);
+            retransmit_message->add (Profile_ptr (new SN (*psn)));
+            retransmit_message->add (Profile_ptr (new NoData));
           }
 
-          out_->send (m);
+          out_->send (retransmit_message);
         }
       }
     }
@@ -99,8 +101,8 @@ namespace ACE_RMCast
   ACE_THR_FUNC_RETURN Retransmit::
   track_thunk (void* obj)
   {
-    reinterpret_cast<Retransmit*> (obj)->track ();
-    return 0;
+    static_cast<Retransmit*> (obj)->track ();
+    return ACE_THR_FUNC_RETURN_NULL;
   }
 
   void Retransmit::
@@ -133,18 +135,24 @@ namespace ACE_RMCast
       time += params_.tick ();
 
       while (!stop_)
-      {
-        if (cond_.wait (&time) == -1)
         {
-          if (errno != ETIME)
-            ACE_OS::abort ();
-          else
-            break;
+          if (cond_.wait (std::addressof (time)) == -1)
+            {
+              if (errno != ETIME)
+                {
+                  ACE_OS::abort ();
+                }
+              else
+                {
+                  break;
+                }
+            }
         }
-      }
 
       if (stop_)
-        break;
+        {
+          break;
+        }
     }
   }
 }

@@ -1,13 +1,8 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
  *  @file    Capabilities.h
  *
  *  @author Arturo Montes <mitosys@colomsat.net.co>
  */
-//=============================================================================
-
 
 #ifndef ACE_CAPABILITIES_H
 #define ACE_CAPABILITIES_H
@@ -40,6 +35,11 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_CapEntry
 {
 public:
+   ACE_CapEntry () = delete;
+   ACE_CapEntry (ACE_CapEntry const &) = default;
+   ACE_CapEntry (ACE_CapEntry &&) = default;
+   ACE_CapEntry &operator= (ACE_CapEntry const &) = default;
+   ACE_CapEntry &operator= (ACE_CapEntry &&) = default;
    virtual ~ACE_CapEntry () = default;
 
 protected:
@@ -50,7 +50,7 @@ protected:
     ACE_BOOLCAP = 2
   };
 
-  ACE_CapEntry (int captype);
+  explicit ACE_CapEntry (int captype);
 
 protected:
   int captype_;
@@ -67,7 +67,8 @@ protected:
 class ACE_Export ACE_IntCapEntry : public ACE_CapEntry
 {
 public:
-  ACE_IntCapEntry (int val);
+  ACE_IntCapEntry () = delete;
+  explicit ACE_IntCapEntry (int val);
   int getval () const;
   ACE_ALLOC_HOOK_DECLARE;
 
@@ -86,7 +87,8 @@ protected:
 class ACE_Export ACE_StringCapEntry : public ACE_CapEntry
 {
 public:
-  ACE_StringCapEntry (const ACE_TString &val);
+  ACE_StringCapEntry () = delete;
+  explicit ACE_StringCapEntry (ACE_TString const &val);
   ACE_TString getval () const;
   ACE_ALLOC_HOOK_DECLARE;
 
@@ -105,7 +107,8 @@ protected:
 class ACE_Export ACE_BoolCapEntry : public ACE_CapEntry
 {
 public:
-  ACE_BoolCapEntry (int val);
+  ACE_BoolCapEntry () = delete;
+  explicit ACE_BoolCapEntry (int val);
   int getval () const;
   ACE_ALLOC_HOOK_DECLARE;
 
@@ -134,42 +137,44 @@ class ACE_Export ACE_Capabilities
 public:
   using CAPABILITIES_MAP = ACE_Hash_Map_Manager_Ex<ACE_TString, ACE_CapEntry *, ACE_Hash<ACE_TString>, ACE_Equal_To<ACE_TString>, ACE_Null_Mutex>;
 
-  /// The Constructor
   ACE_Capabilities ();
 
-  /// The Destructor
-  ~ACE_Capabilities();
+  ACE_Capabilities (ACE_Capabilities const &) = delete;
+  ACE_Capabilities (ACE_Capabilities &&) = delete;
+  ACE_Capabilities &operator= (ACE_Capabilities const &) = delete;
+  ACE_Capabilities &operator= (ACE_Capabilities &&) = delete;
+  ~ACE_Capabilities ();
 
 public:
   /// Get a string entry.
-  int getval (const ACE_TCHAR *ent, ACE_TString &val);
+  int getval (ACE_TCHAR const *ent, ACE_TString &val);
 
   /// Get an integer entry.
-  int getval (const ACE_TCHAR *ent, int &val);
+  int getval (ACE_TCHAR const *ent, int &val);
 
   /// Get the ACE_Capabilities name from FILE fname and load the
   /// associated capabitily entries in map.
-  int getent (const ACE_TCHAR *fname, const ACE_TCHAR *name);
+  int getent (ACE_TCHAR const *fname, ACE_TCHAR const *name);
 
 protected:
   /// Parse an integer property
-  const ACE_TCHAR *parse (const ACE_TCHAR *buf, int &cap);
+  ACE_TCHAR const *parse (ACE_TCHAR const *buf, int &cap);
 
   /// Parse a string property
-  const ACE_TCHAR *parse (const ACE_TCHAR *buf, ACE_TString &cap);
+  ACE_TCHAR const *parse (ACE_TCHAR const *buf, ACE_TString &cap);
 
   /// Fill the ACE_Capabilities with description in ent.
-  int fillent(const ACE_TCHAR *ent);
+  int fillent(ACE_TCHAR const *ent);
 
   /// Parse a cap entry
-  int parseent (const ACE_TCHAR *name, ACE_TCHAR *line);
+  int parseent (ACE_TCHAR const *name, ACE_TCHAR *line);
 
   /// Get a line from FILE input stream
   int getline (FILE* fp,
                ACE_TString &line);
 
   /// Is a valid entry
-  int is_entry (const ACE_TCHAR *name, const ACE_TCHAR *line);
+  bool is_entry (ACE_TCHAR const *name, ACE_TCHAR const *line);
 
   /// Reset the set of capabilities
   void resetcaps ();

@@ -1,7 +1,6 @@
-// -*- C++ -*-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_INLINE const ACE_rwlock_t &
+ACE_INLINE ACE_rwlock_t const &
 ACE_RW_Mutex::lock () const
 {
 // ACE_TRACE ("ACE_RW_Mutex::lock");

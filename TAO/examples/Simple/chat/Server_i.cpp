@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    Server_i.cpp
  *
@@ -7,26 +5,18 @@
  *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #include "Server_i.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 
 Server_i::Server_i ()
-  : ior_file_name_ (ACE_TEXT ("chat.ior"))
 {
-  Broadcaster_i *tmp = 0;
+  Broadcaster_i *tmp {};
   ACE_NEW_THROW_EX (tmp,
                     Broadcaster_i (),
                     CORBA::NO_MEMORY ());
   this->broadcaster_i_ = tmp;
-}
-
-Server_i::~Server_i ()
-{
-  // NO Op.
 }
 
 int
@@ -61,14 +51,18 @@ Server_i::init (int argc,
 {
   // Parse the command line options.
   if (this->parse_args(argc, argv) == -1)
+  {
     return -1;
+  }
 
   if (this->orb_manager_.init (argc,
                                argv) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("orb manager init failed")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("orb manager init failed")),
+                        -1);
+    }
 
   CORBA::ORB_var orb = this->orb_manager_.orb ();
 
@@ -90,19 +84,21 @@ Server_i::run ()
   // Run the main event loop for the ORB.
   int ret = this->orb_manager_.run ();
   if (ret == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("Server_i::run")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Server_i::run")),
+                        -1);
+    }
   return 0;
 }
 
 int
-Server_i::write_IOR (const char* ior)
+Server_i::write_IOR (char const *ior)
 {
   FILE* ior_output_file_ =
     ACE_OS::fopen (this->ior_file_name_, "w");
 
-  if (ior_output_file_)
+  if (ior_output_file_ != nullptr)
     {
       ACE_OS::fprintf (ior_output_file_,
                        ACE_TEXT ("%s"),

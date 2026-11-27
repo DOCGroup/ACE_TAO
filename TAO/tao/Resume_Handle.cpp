@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/Resume_Handle.h"
 #include "tao/ORB_Core.h"
 #include "debug.h"
@@ -25,7 +24,7 @@ TAO_Resume_Handle::resume_handle ()
       {
         TAOLIB_DEBUG ((LM_DEBUG,
                     "TAO (%P|%t) - Resume_Handle::resume_handle, "
-                    "resuming handler returned -1 for handle = %d\n",
+                    "resuming handler returned -1 for handle = %H\n",
                     this->handle_));
       }
     }

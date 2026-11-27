@@ -1,6 +1,3 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
  *  @file    ACE_Init_Test.h
  *
@@ -8,8 +5,6 @@
  *
  *  @author Steve Huston <shuston@riverace.com>
  */
-//=============================================================================
-
 
 #ifndef AFX_ACE_INIT_TEST_H__64FDC9FE_F7F9_11D2_89B6_00A024CC68DB__INCLUDED_
 #define AFX_ACE_INIT_TEST_H__64FDC9FE_F7F9_11D2_89B6_00A024CC68DB__INCLUDED_

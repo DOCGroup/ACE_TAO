@@ -24,14 +24,15 @@ public:
   {
     ++_destructorCalled;
     if (_destructorCalled > 1)
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("Test_Task::~Test_Task() should be called once!!!\n")));
+      {
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("Test_Task::~Test_Task() should be called once!!!\n")));
+      }
   }
 
 private:
   int _destructorCalled;
 };
-
 
 class Test_Module : public ACE_Module<ACE_SYNCH>
 {
@@ -48,7 +49,6 @@ public:
 private:
   Test_Task _writerTask, _readerTask;
 };
-
 
 int
 run_main (int, ACE_TCHAR *[])

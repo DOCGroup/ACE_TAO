@@ -1,65 +1,48 @@
-
-//=============================================================================
 /**
  *  @file    SchedEntry.cpp
  *
  *  @author Chris Gill
  */
-//=============================================================================
-
 
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Sched/SchedEntry.h"
 #include "ace/SString.h"
 #include "ace/OS_NS_stdio.h"
 
+#include <memory>
 #if ! defined (__ACE_INLINE__)
 #include "orbsvcs/Sched/SchedEntry.inl"
 #endif /* __ACE_INLINE__ */
 
+#include <cstdio>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-Task_Entry::Task_Entry ()
-  : rt_info_ (nullptr),
-    effective_period_(0),
-    dfs_status_ (NOT_VISITED),
-    discovered_ (-1),
-    finished_ (-1),
-    is_thread_delineator_ (0),
-    has_unresolved_remote_dependencies_ (0),
-    has_unresolved_local_dependencies_ (0),
-    calls_ (),
-    callers_ ()
-{
-}
 
 Task_Entry::~Task_Entry ()
 {
   // Zero out the task entry ACT in the corresponding rt_info
-  rt_info_->volatile_token = 0;
-
-  ACE_Unbounded_Set_Iterator <Task_Entry_Link *> iter(calls_);
-  Task_Entry_Link **link = nullptr;
+  if (rt_info_ != nullptr)
+    {
+      rt_info_->volatile_token = 0;
+    }
 
   // Iterate through the "calls" set of Task Entry Links and free each one
-
-  for (iter.first ();
-       ! iter.done ();
-       iter.advance (), link = nullptr)
-    {
-      if (iter.next (link) != 0 && link != nullptr && *link != nullptr)
-        {
-          // remove the link object pointer from the calling entry's
-          // "callers" set and destroy the link object
-          (*link)->called ().callers_.remove (*link);
-          delete (*link);
-        }
-    }
+  Task_Entry_Link **link;
+  ACE_Unbounded_Set_Iterator <Task_Entry_Link *> iter (calls_);
+  while (iter.next (link) != 0)
+  {
+    iter.advance ();
+    if (link != nullptr && *link != nullptr)
+      {
+        // Remove the link from the called entry's borrowed set, then destroy it.
+        (*link)->called ().callers_.remove (*link);
+        delete *link;
+      }
+  }
 }
 
-// Merge dispatches according to info type and type of call, update
-// relevant scheduling characteristics for this entry.
+/// Merges dispatches according to info type and type of call, updating
+/// relevant scheduling characteristics for this entry.
 
 Task_Entry::Propagation_Status
 Task_Entry::merge_dispatches (ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_entries,
@@ -77,13 +60,17 @@ Task_Entry::merge_dispatches (ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_ent
       // caller calls one OR the other, but this is problematic: how
       // do we map the dispatches for this ?
       if (prohibit_dispatches (RtecBase::TWO_WAY_CALL) < 0)
+      {
         result = TWO_WAY_DISJUNCTION;
+      }
 
       if (disjunctive_merge (RtecBase::ONE_WAY_CALL,
                              dispatch_entries,
                              unresolved_locals,
                              unresolved_remotes) < 0)
+      {
         result = INTERNAL_ERROR;
+      }
       break;
 
     case RtecScheduler::CONJUNCTION:
@@ -97,12 +84,16 @@ Task_Entry::merge_dispatches (ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_ent
       //       conjunctions of two-ways, but not disjunctions does not
       //       buy us anything, anyway).
       if (prohibit_dispatches (RtecBase::TWO_WAY_CALL) < 0)
+      {
         result = TWO_WAY_CONJUNCTION;
+      }
       if (conjunctive_merge (RtecBase::ONE_WAY_CALL,
                              dispatch_entries,
                              unresolved_locals,
                              unresolved_remotes) < 0)
+      {
         result = INTERNAL_ERROR;
+      }
       break;
 
     case RtecScheduler::OPERATION:
@@ -114,12 +105,16 @@ Task_Entry::merge_dispatches (ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_ent
                              dispatch_entries,
                              unresolved_locals,
                              unresolved_remotes) < 0)
+      {
         result = INTERNAL_ERROR;
+      }
       if (conjunctive_merge (RtecBase::ONE_WAY_CALL,
                              dispatch_entries,
                              unresolved_locals,
                              unresolved_remotes) < 0)
+      {
         result = INTERNAL_ERROR;
+      }
       break;
 
     default:
@@ -133,12 +128,10 @@ Task_Entry::merge_dispatches (ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_ent
   return result;
 }
 
-// Prohibit calls of the given type: currently used to enforce the
-// notion that two-way calls to disjunctive or conjunctive RT_Infos do
-// not have any defined meaning, and thus should be considered
-// dependency specification errors: if these constraints are removed
-// in the future, this method should be removed as well Returns 0 if
-// all is well, or -1 if an error has occurred.
+/// Prohibits calls of the given type, enforcing that two-way calls to
+/// disjunctive or conjunctive RT_Infos are treated as dependency
+/// specification errors. If these constraints are removed, this method
+/// should also be removed. Returns 0 if all is well, or -1 on error.
 
 int
 Task_Entry::prohibit_dispatches (Dependency_Type dt)
@@ -147,23 +140,22 @@ Task_Entry::prohibit_dispatches (Dependency_Type dt)
   // the given dependency type.
   for (ACE_Unbounded_Set_Iterator <Task_Entry_Link *> iter (callers_);
        ! iter.done ();
-      iter.advance ())
+       iter.advance ())
     {
-      Task_Entry_Link **link;
-
-      if (iter.next (link) == 0
-          || link == nullptr
-          || *link == nullptr
-          || (*link)->dependency_type () == dt)
+      Task_Entry_Link **link {};
+      if (iter.next (link) == 0 || link == nullptr || *link == nullptr ||
+          (*link)->dependency_type () == dt)
+      {
         return -1;
+      }
     }
 
   return 0;
 }
 
-// Perform disjunctive merge of arrival times of oneway calls: all
-// arrival times of all dependencies are duplicated by the multiplier
-// and repetition over the new frame size.
+/// Performs disjunctive merge of arrival times of oneway calls. All
+/// arrival times of all dependencies are duplicated by the multiplier
+/// and repeated over the new frame size.
 
 int
 Task_Entry::disjunctive_merge (Dependency_Type dt,
@@ -180,11 +172,10 @@ Task_Entry::disjunctive_merge (Dependency_Type dt,
        iter.advance ())
     {
       Task_Entry_Link **link;
-
-      if (iter.next (link) == 0
-          || link == nullptr
-          || *link == nullptr)
+      if (iter.next (link) == 0 || link == nullptr || *link == nullptr)
+      {
         return -1;
+      }
 
       // The link matches the dependency type given
       if ((*link)->dependency_type () == dt)
@@ -197,17 +188,17 @@ Task_Entry::disjunctive_merge (Dependency_Type dt,
             {
               // Propagate the unresolved remote dependency flag, and
               // issue a debug scheduler warning.
-              this->has_unresolved_remote_dependencies (1);
+              this->has_unresolved_remote_dependencies (true);
               ORBSVCS_DEBUG ((LM_DEBUG,
                           "Warning: an operation identified by "
                           "\"%s\" has unresolved remote dependencies.\n",
-                          (const char*) this->rt_info ()->entry_point));
+                          static_cast<char const *> (this->rt_info ()->entry_point)));
 
               // Record entry point in list of unresolved remote
               // dependencies
-              ACE_OS::sprintf (string_buffer,
+              std::sprintf (string_buffer,
                                "// %s\n",
-                               (const char*) this->rt_info ()->entry_point);
+                               static_cast<char const *> (this->rt_info ()->entry_point));
               unresolved_remotes +=
                 ACE_CString (string_buffer);
             }
@@ -220,17 +211,17 @@ Task_Entry::disjunctive_merge (Dependency_Type dt,
             {
               // Propagate the unresolved local dependency flag, and
               // issue a debug scheduler warning.
-              this->has_unresolved_local_dependencies (1);
+              this->has_unresolved_local_dependencies (true);
               ORBSVCS_DEBUG ((LM_DEBUG,
                           "Warning: an operation identified by "
                           "\"%s\" has unresolved local dependencies.\n",
-                          (const char*) this->rt_info ()->entry_point));
+                          static_cast<char const *> (this->rt_info ()->entry_point)));
 
               // Record entry point in list of unresolved local
               // dependencies
-              ACE_OS::sprintf (string_buffer,
+              std::sprintf (string_buffer,
                                "// %s\n",
-                               (const char*) this->rt_info ()->entry_point);
+                               static_cast<char const *> (this->rt_info ()->entry_point));
               unresolved_locals +=
                 ACE_CString (string_buffer);
             }
@@ -242,19 +233,21 @@ Task_Entry::disjunctive_merge (Dependency_Type dt,
                             (*link)->caller ().dispatches_, effective_period_,
                             (*link)->caller ().effective_period_,
                             (*link)->number_of_calls ()) < 0)
+          {
             return -1;
+          }
         }
     }
 
   return 0;
 }
 
-// Perform conjunctive merge of arrival times of calls: all arrival
-// times of all dependencies are duplicated by the multiplier and
-// repetition over the new frame size and then iteratively merged by
-// choosing the maximal arrival time at the current position in each
-// queue (iteration is in lockstep over all queues, and ends when any
-// queue ends).
+/// Performs conjunctive merge of arrival times of calls. All arrival
+/// times of all dependencies are duplicated by the multiplier and
+/// repeated over the new frame size, then iteratively merged by choosing
+/// the maximal arrival time at the current position in each queue. The
+/// iteration proceeds in lockstep over all queues and ends when any queue
+/// ends.
 
 int
 Task_Entry::conjunctive_merge (Dependency_Type dt,
@@ -262,7 +255,7 @@ Task_Entry::conjunctive_merge (Dependency_Type dt,
                                ACE_CString &unresolved_locals,
                                ACE_CString &unresolved_remotes)
 {
-  int result = 0;
+  int result {};
   char string_buffer [BUFSIZ];
 
   // Iterate over the dependencies, and determine the total frame
@@ -271,17 +264,15 @@ Task_Entry::conjunctive_merge (Dependency_Type dt,
   u_long frame_size = 1;
 
   ACE_Unbounded_Set_Iterator <Task_Entry_Link *> dep_iter (callers_);
-
   for (dep_iter.first ();
        dep_iter.done () == 0;
        dep_iter.advance ())
     {
       Task_Entry_Link **link;
-
-      if (dep_iter.next (link) == 0
-          || link == nullptr
-          || *link == nullptr)
+      if (dep_iter.next (link) == 0 || link == nullptr || *link == nullptr)
+      {
         return -1;
+      }
 
       // The link matches the dependency type given.
       if ((*link)->dependency_type () == dt)
@@ -294,17 +285,17 @@ Task_Entry::conjunctive_merge (Dependency_Type dt,
             {
               // Propagate the unresolved remote dependency flag, and
               // issue a debug scheduler warning.
-              this->has_unresolved_remote_dependencies (1);
+              this->has_unresolved_remote_dependencies (true);
               ORBSVCS_DEBUG ((LM_DEBUG,
                           "Warning: an operation identified by "
                           "\"%s\" has unresolved remote dependencies.\n",
-                          (const char*) this->rt_info ()->entry_point));
+                          static_cast<char const *> (this->rt_info ()->entry_point)));
 
               // Record entry point in list of unresolved remote
               // dependencies
-              ACE_OS::sprintf (string_buffer,
+              std::sprintf (string_buffer,
                                "// %s\n",
-                               (const char*) this->rt_info ()->entry_point);
+                               static_cast<char const *> (this->rt_info ()->entry_point));
               unresolved_remotes +=
                 ACE_CString (string_buffer);
             }
@@ -317,16 +308,16 @@ Task_Entry::conjunctive_merge (Dependency_Type dt,
             {
               // Propagate the unresolved local dependency flag, and
               // issue a debug scheduler warning.
-              this->has_unresolved_local_dependencies (1);
+              this->has_unresolved_local_dependencies (true);
               ORBSVCS_DEBUG ((LM_DEBUG,
                           "Warning: an operation identified by "
                           "\"%s\" has unresolved local dependencies.\n",
-                          (const char*) this->rt_info ()->entry_point));
+                          static_cast<char const *> (this->rt_info ()->entry_point)));
 
               // Record entry point in list of unresolved local dependencies
-              ACE_OS::sprintf (string_buffer,
+              std::sprintf (string_buffer,
                                "// %s\n",
-                               (const char*) this->rt_info ()->entry_point);
+                               static_cast<char const *> (this->rt_info ()->entry_point));
               unresolved_locals +=
                 ACE_CString (string_buffer);
             }
@@ -342,12 +333,43 @@ Task_Entry::conjunctive_merge (Dependency_Type dt,
                *this, dispatches_,
                effective_period_,
                frame_size) < 0)
+  {
     return -1;
+  }
 
   // A container and iterator for virtual dispatch sets over which the
   // conjunction will operate
   ACE_Ordered_MultiSet <Dispatch_Proxy_Iterator *> conj_set;
   ACE_Ordered_MultiSet_Iterator <Dispatch_Proxy_Iterator *> conj_set_iter (conj_set);
+  // The ACE set holds non-owning pointers; this guard owns and deletes them.
+  struct Proxy_Iterator_Set_Cleanup
+  {
+    explicit Proxy_Iterator_Set_Cleanup (
+      ACE_Ordered_MultiSet<Dispatch_Proxy_Iterator *> &set)
+      : set_ (set)
+    {
+    }
+
+    ~Proxy_Iterator_Set_Cleanup ()
+    {
+      ACE_Ordered_MultiSet_Iterator<Dispatch_Proxy_Iterator *> iter (set_);
+      Dispatch_Proxy_Iterator **proxy {};
+      for (iter.first (); iter.done () == 0; iter.advance ())
+        {
+          if (iter.next (proxy) != 0 && proxy != nullptr && *proxy != nullptr)
+          {
+            delete *proxy;
+          }
+        }
+    }
+
+    Proxy_Iterator_Set_Cleanup (Proxy_Iterator_Set_Cleanup const &) = delete;
+    Proxy_Iterator_Set_Cleanup (Proxy_Iterator_Set_Cleanup &&) = delete;
+    Proxy_Iterator_Set_Cleanup &operator= (Proxy_Iterator_Set_Cleanup const &) = delete;
+    Proxy_Iterator_Set_Cleanup &operator= (Proxy_Iterator_Set_Cleanup &&) = delete;
+
+    ACE_Ordered_MultiSet<Dispatch_Proxy_Iterator *> &set_;
+  } proxy_iterator_cleanup (conj_set);
 
   // Iterate over the dependencies, and for each of the given call
   // type, create a Dispatch_Proxy_Iterator for the caller's dispatch
@@ -358,40 +380,46 @@ Task_Entry::conjunctive_merge (Dependency_Type dt,
        dep_iter.advance ())
     {
       Task_Entry_Link **link;
-      if (dep_iter.next (link) == 0
-          || link == nullptr
-          || *link == nullptr)
+      if (dep_iter.next (link) == 0 || link == nullptr || *link == nullptr)
+      {
         return -1;
+      }
 
       // The link matches the dependency type given.
       if ((*link)->dependency_type () == dt)
         {
-          Dispatch_Proxy_Iterator *proxy_ptr;
+          Dispatch_Proxy_Iterator *proxy_ptr {};
           ACE_NEW_RETURN (proxy_ptr,
                           Dispatch_Proxy_Iterator ((*link)->caller ().dispatches_,
                                                    (*link)->caller ().effective_period_,
                                                    frame_size,
                                                    (*link)->number_of_calls ()),
                           -1);
+          std::unique_ptr<Dispatch_Proxy_Iterator> proxy_owner {proxy_ptr};
 
           // If there are no entries in the virtual set, we're done.
           if (proxy_ptr->done ())
-            return 0;
+            {
+              return 0;
+            }
           else if (conj_set.insert (proxy_ptr, conj_set_iter) < 0)
-            return -1;
+            {
+              return -1;
+            }
+          proxy_owner.release ();
         }
     }
 
   // loop, adding conjunctive dispatches, until one of the conjunctive
   // dispatch sources runs out of entries over the total frame
   conj_set_iter.first ();
-  int more_dispatches = (conj_set_iter.done ()) ? 0 : 1;
+  bool more_dispatches { !conj_set_iter.done () };
   while (more_dispatches)
     {
-      Time arrival = 0;
-      Time deadline = 0;
-      Preemption_Priority priority = 0;
-      OS_Priority OS_priority = 0;
+      Time arrival {};
+      Time deadline {};
+      Preemption_Priority priority {};
+      OS_Priority OS_priority {};
 
       for (conj_set_iter.first ();
            conj_set_iter.done () == 0;
@@ -418,17 +446,23 @@ Task_Entry::conjunctive_merge (Dependency_Type dt,
           // conjunctive merge strategy class.
 
           // Obtain a pointer to the current dispatch proxy iterator.
-          Dispatch_Proxy_Iterator **proxy_iter;
+          Dispatch_Proxy_Iterator **proxy_iter {};
           if (conj_set_iter.next (proxy_iter) == 0
               || proxy_iter == nullptr
               || *proxy_iter == nullptr)
+          {
             return -1;
+          }
 
           // Use latest arrival, latest deadline, lowest priority (0 is highest).
           if (arrival <= (*proxy_iter)->arrival ())
+          {
             arrival = (*proxy_iter)->arrival ();
+          }
           if (deadline <= (*proxy_iter)->deadline ())
+          {
             deadline = (*proxy_iter)->deadline ();
+          }
           if (priority <= (*proxy_iter)->priority ())
             {
               priority = (*proxy_iter)->priority ();
@@ -438,10 +472,12 @@ Task_Entry::conjunctive_merge (Dependency_Type dt,
           (*proxy_iter)->advance ();
 
           if ((*proxy_iter)->done ())
-            more_dispatches = 0;
+          {
+            more_dispatches = false;
+          }
         }
 
-      Dispatch_Entry *entry_ptr;
+      Dispatch_Entry *entry_ptr {};
       ACE_NEW_RETURN (entry_ptr,
                       Dispatch_Entry (arrival,
                                       deadline,
@@ -449,6 +485,7 @@ Task_Entry::conjunctive_merge (Dependency_Type dt,
                                       OS_priority,
                                       *this),
                       -1);
+      std::unique_ptr<Dispatch_Entry> entry_owner {entry_ptr};
 
       // If even one new dispatch was inserted, result is "something
       // happened".
@@ -457,13 +494,19 @@ Task_Entry::conjunctive_merge (Dependency_Type dt,
       // Add the new dispatch entry to the set of all dispatches, and
       // a link to it to the dispatch links for this task entry.
       if (dispatch_entries.insert (entry_ptr) < 0)
+      {
         return -1;
+      }
+      // The dispatch set now owns the entry; dispatch links are non-owning.
+      entry_owner.release ();
 
       // Use iterator for efficient insertion into the dispatch set.
       ACE_Ordered_MultiSet_Iterator <Dispatch_Entry_Link> insert_iter (dispatches_);
       if (dispatches_.insert (Dispatch_Entry_Link (*entry_ptr),
                               insert_iter) < 0)
+      {
         return -1;
+      }
 
       // TBD - Clients are not assigned priority, but rather obtain it
       // from their call dependencies.  We could complain here if
@@ -474,12 +517,10 @@ Task_Entry::conjunctive_merge (Dependency_Type dt,
   return result;
 }
 
-// This static method is used to reframe an existing dispatch set to
-// the given new period multiplier, creating new instances of each
-// existing dispatch (with adjusted arrival and deadline) in each
-// successive sub-frame.  Returns 1 if the set was reframed to a new
-// period, 0 if the set was not changed (the new period was not a
-// multiple of the old one), or -1 if an error occurred.
+/// Reframes an existing dispatch set to the given new period multiplier,
+/// creating new instances of each existing dispatch with adjusted arrival
+/// and deadline in each successive sub-frame. Returns 1 if the set was
+/// reframed to a new period, 0 if it was unchanged, or -1 on error.
 
 int
 Task_Entry::reframe (ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_entries,
@@ -487,7 +528,7 @@ Task_Entry::reframe (ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_entries,
                      ACE_Ordered_MultiSet <Dispatch_Entry_Link> &set,
                      u_long &set_period, u_long new_period)
 {
-  int result = 0;
+  int result {};
 
   // if the set period is zero, treat it as uninitialized,
   // and simply value the set period with the new period
@@ -496,11 +537,15 @@ Task_Entry::reframe (ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_entries,
       // make sure the new period is greater than the current
       // set period, and that they are harmonically related
       if (new_period <= set_period)
-        // return an error if they're not harmonically related,
-        // do nothing if set's frame is a multiple of the new frame
-        return (set_period % new_period) ? -1 : 0;
+        {
+          // return an error if they're not harmonically related,
+          // do nothing if set's frame is a multiple of the new frame
+          return (set_period % new_period) ? -1 : 0;
+        }
       else if (new_period % set_period)
-        return -1;
+        {
+          return -1;
+        }
 
       // make a shallow copy of the set in a new ordered multiset
       // using the Dispatch_Entry_Link smart pointers
@@ -510,12 +555,16 @@ Task_Entry::reframe (ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_entries,
 
       for (set_iter.first (); set_iter.done () == 0; set_iter.advance ())
         {
-          Dispatch_Entry_Link *link;
+          Dispatch_Entry_Link *link {};
 
           if (set_iter.next (link) == 0)
-            return -1;
+            {
+              return -1;
+            }
           else if (new_set.insert (*link, new_iter) < 0)
-            return -1;
+            {
+              return -1;
+            }
         }
 
       // Do a deep copy merge back into the set using the new period
@@ -539,10 +588,9 @@ Task_Entry::reframe (ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_entries,
   return result;
 }
 
-// This static method is used to merge an existing dispatch set,
-// multiplied by the given multipliers for the period and number of
-// instances in each period of each existing dispatch, into the given
-// "into" set, without affecting the "from set".
+/// Merges an existing dispatch set into the given destination set,
+/// applying the period and instance multipliers to each dispatch without
+/// affecting the source set.
 
 int
 Task_Entry::merge_frames (ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_entries,
@@ -554,7 +602,7 @@ Task_Entry::merge_frames (ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_entries
                           u_long number_of_calls,
                           u_long starting_dest_sub_frame)
 {
-  int status = 0;
+  int status {};
 
   // reframe dispatches in the destination set to the new frame size
   // (expands the destination set's period to be the new enclosing frame)
@@ -564,7 +612,9 @@ Task_Entry::merge_frames (ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_entries
                dest_period,
                ACE::minimum_frame_size (dest_period,
                                         src_period)) < 0)
-      return -1;
+  {
+    return -1;
+  }
 
   // use iterator for efficient insertion into the destination set
   ACE_Ordered_MultiSet_Iterator <Dispatch_Entry_Link> dest_iter (dest);
@@ -587,7 +637,7 @@ Task_Entry::merge_frames (ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_entries
       // should be one of the decisions factored out into the
       // disjunctive merge strategy class.
 
-      Dispatch_Entry *entry_ptr;
+      Dispatch_Entry *entry_ptr {};
       ACE_NEW_RETURN (entry_ptr,
                       Dispatch_Entry (src_iter.arrival (),
                                       src_iter.deadline (),
@@ -595,6 +645,7 @@ Task_Entry::merge_frames (ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_entries
                                       src_iter.OS_priority (),
                                       owner),
                       -1);
+      std::unique_ptr<Dispatch_Entry> entry_owner {entry_ptr};
 
       // if even one new dispatch was inserted, status is "something happened".
       status = 1;
@@ -602,10 +653,16 @@ Task_Entry::merge_frames (ACE_Unbounded_Set <Dispatch_Entry *> &dispatch_entries
       // add the new dispatch entry to the set of all dispatches, and
       // a link to it to the dispatch links for this task entry
       if (dispatch_entries.insert (entry_ptr) < 0)
+      {
         return -1;
+      }
+      // The dispatch set now owns the entry; dispatch links are non-owning.
+      entry_owner.release ();
 
-      else if (dest.insert (Dispatch_Entry_Link (*entry_ptr), dest_iter) < 0)
+      if (dest.insert (Dispatch_Entry_Link (*entry_ptr), dest_iter) < 0)
+      {
         return -1;
+      }
 
       // TBD - Clients are not assigned priority, but rather obtain it
       // from their call dependencies.  We could complain here if
@@ -648,7 +705,7 @@ Dispatch_Entry::Dispatch_Entry (Time arrival,
   dispatch_id_ = next_id_++;
 }
 
-Dispatch_Entry::Dispatch_Entry (const Dispatch_Entry &d)
+Dispatch_Entry::Dispatch_Entry (Dispatch_Entry const &d)
   : priority_ (d.priority_),
     OS_priority_ (d.OS_priority_),
     dynamic_subpriority_ (d.dynamic_subpriority_),
@@ -663,17 +720,21 @@ Dispatch_Entry::Dispatch_Entry (const Dispatch_Entry &d)
 }
 
 bool
-Dispatch_Entry::operator < (const Dispatch_Entry &d) const
+Dispatch_Entry::operator < (Dispatch_Entry const &d) const
 {
   // for positioning in the ordered dispatch multiset
 
   // lowest arrival time first
   if (this->arrival_ != d.arrival_)
+  {
     return this->arrival_ < d.arrival_ ? true : false;
+  }
 
   // highest priority second
   if (this->priority_ != d.priority_)
+  {
     return this->priority_ > d.priority_ ? true : false;
+  }
 
   // lowest laxity (highest dynamic sub-priority) third Just use low
   // 32 bits of worst_case_execution_time.  This will have to change
@@ -688,28 +749,24 @@ Dispatch_Entry::operator < (const Dispatch_Entry &d) const
   that_laxity -= d.task_entry ().rt_info ()->worst_case_execution_time;
 
   if (this_laxity != that_laxity)
+  {
     return (this_laxity < that_laxity) ? true : false;
+  }
 
   // finally, by higher importance
   return (task_entry ().rt_info ()->importance >
           d.task_entry ().rt_info ()->importance) ? true : false;
 }
 
-// ctor
-
 Dispatch_Entry_Link::Dispatch_Entry_Link (Dispatch_Entry &d)
   : dispatch_entry_ (d)
 {
 }
 
-// copy ctor
-
-Dispatch_Entry_Link::Dispatch_Entry_Link (const Dispatch_Entry_Link &d)
+Dispatch_Entry_Link::Dispatch_Entry_Link (Dispatch_Entry_Link const &d)
   : dispatch_entry_ (d.dispatch_entry_)
 {
 }
-
-// ctor
 
 Dispatch_Proxy_Iterator::Dispatch_Proxy_Iterator
   (ACE_Ordered_MultiSet <Dispatch_Entry_Link> &set,
@@ -727,9 +784,9 @@ Dispatch_Proxy_Iterator::Dispatch_Proxy_Iterator
   first (starting_sub_frame);
 }
 
-// positions the iterator at the first entry of the passed sub-frame,
-// returns 1 if it could position the iterator correctly, 0 if not,
-// and -1 if an error occurred.
+/// Positions the iterator at the first entry of the passed sub-frame.
+/// Returns 1 if it could position the iterator correctly, 0 if not,
+/// and -1 if an error occurred.
 
 int
 Dispatch_Proxy_Iterator::first (u_int sub_frame)
@@ -751,9 +808,9 @@ Dispatch_Proxy_Iterator::first (u_int sub_frame)
   return iter_.first ();
 }
 
-// positions the iterator at the last entry of the total frame,
-// returns 1 if it could position the iterator correctly, 0 if not,
-// and -1 if an error occurred.
+/// Positions the iterator at the last entry of the total frame.
+/// Returns 1 if it could position the iterator correctly, 0 if not,
+/// and -1 if an error occurred.
 
 int
 Dispatch_Proxy_Iterator::last ()
@@ -768,9 +825,9 @@ Dispatch_Proxy_Iterator::last ()
   return iter_.first ();
 }
 
-// positions the iterator at the next entry of the total frame,
-// returns 1 if it could position the iterator correctly, 0 if not,
-// and -1 if an error occurred.
+/// Positions the iterator at the next entry of the total frame.
+/// Returns 1 if it could position the iterator correctly, 0 if not,
+/// and -1 if an error occurred.
 
 int
 Dispatch_Proxy_Iterator::advance ()
@@ -778,10 +835,14 @@ Dispatch_Proxy_Iterator::advance ()
   int result = 1;
 
   if (iter_.done ())
-    result = 0; // cannot retreat if we're out of bounds
+    {
+      result = 0; // cannot retreat if we're out of bounds
+    }
   else if (current_call_ < number_of_calls_ - 1)
-    // if we're still in the same set of calls, increment the call counter
-    ++current_call_;
+    {
+      // if we're still in the same set of calls, increment the call counter
+      ++current_call_;
+    }
   else
     {
       // roll over the call counter
@@ -800,16 +861,18 @@ Dispatch_Proxy_Iterator::advance ()
               result = iter_.first ();
             }
           else
+          {
             result = 0; // cannot advance if we're already at the end
+          }
         }
     }
 
   return result;
 }
 
-// positions the iterator at the previous entry of the total frame,
-// returns 1 if it could position the iterator correctly, 0 if not,
-// and -1 if an error occurred.
+/// Positions the iterator at the previous entry of the total frame.
+/// Returns 1 if it could position the iterator correctly, 0 if not,
+/// and -1 if an error occurred.
 
 int
 Dispatch_Proxy_Iterator::retreat ()
@@ -817,10 +880,14 @@ Dispatch_Proxy_Iterator::retreat ()
   int result = 1;
 
   if (iter_.done ())
-    result = 0; // cannot retreat if we're out of bounds
+    {
+      result = 0; // cannot retreat if we're out of bounds
+    }
   else if (current_call_ > 0)
-    // if we're still in the same set of calls, decrement the call counter
-    --current_call_;
+    {
+      // if we're still in the same set of calls, decrement the call counter
+      --current_call_;
+    }
   else
     {
       // roll over the call counter
@@ -839,23 +906,27 @@ Dispatch_Proxy_Iterator::retreat ()
               result = iter_.last ();
             }
           else
+          {
             result = 0; // cannot retreat if we're already at the start
+          }
         }
     }
 
   return result;
 }
 
-// returns the adjusted arrival time of the virtual entry
+/// Returns the adjusted arrival time of the virtual entry.
 
 RtecScheduler::Time
 Dispatch_Proxy_Iterator::arrival () const
 {
-  Dispatch_Entry_Link *link;
+  Dispatch_Entry_Link *link {};
   if (iter_.done ()
       || iter_.next(link) == 0
       || link == nullptr)
+  {
     return 0;
+  }
 
   // Just use low 32 bits of arrival.  This will have to change when
   // TimeBase.idl is finalized.
@@ -863,16 +934,18 @@ Dispatch_Proxy_Iterator::arrival () const
          RtecScheduler::Time (current_frame_offset_);
 }
 
-// returns the adjusted deadline time of the virtual entry
+/// Returns the adjusted deadline time of the virtual entry.
 
 RtecScheduler::Time
 Dispatch_Proxy_Iterator::deadline () const
 {
-  Dispatch_Entry_Link *link;
+  Dispatch_Entry_Link *link {};
   if (iter_.done ()
       || iter_.next(link) == 0
       || link == nullptr)
+  {
     return 0;
+  }
 
   // Just use low 32 bits of deadline.  This will have to change when
   // TimeBase.idl is finalized.
@@ -880,36 +953,38 @@ Dispatch_Proxy_Iterator::deadline () const
          RtecScheduler::Time (current_frame_offset_);
 }
 
-// returns the scheduler priority of the virtual entry
+/// Returns the scheduler priority of the virtual entry.
 
 Dispatch_Proxy_Iterator::Preemption_Priority
 Dispatch_Proxy_Iterator::priority () const
 {
-  Dispatch_Entry_Link *link;
+  Dispatch_Entry_Link *link {};
 
   if (iter_.done ()
       || iter_.next(link) == 0
       || link == nullptr)
+  {
     return 0;
+  }
 
   return link->dispatch_entry ().priority ();
 }
 
-// returns the OS priority of the virtual entry
+/// Returns the OS priority of the virtual entry.
 
 Dispatch_Proxy_Iterator::OS_Priority
 Dispatch_Proxy_Iterator::OS_priority () const
 {
-  Dispatch_Entry_Link *link;
+  Dispatch_Entry_Link *link {};
   if (iter_.done ()
       || iter_.next(link) == 0
       || link == nullptr)
+  {
     return 0;
+  }
 
   return link->dispatch_entry ().OS_priority ();
 }
-
-// time slice constructor
 
 TimeLine_Entry::TimeLine_Entry (Dispatch_Entry &dispatch_entry,
                                 Time start, Time stop,

@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file   EC_Thread_Flags.h
  *
@@ -29,24 +28,24 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
   Encapsulate flags used for creating threads with \a
   ACE_OS::thr_create and \a ACE_Task::activate.
 
-  \note On platforms that do not support the thread schedulers, the
+  @note On platforms that do not support the thread schedulers, the
   ACE OS adaptation layer preserves the symbols for THR_SCHED_*, but
   defines them as zero.  Thus, on such platforms, setting a scheduler
   in the flags, then inquiring for the scheduler type will yield the
   same result as an unknown or unset scheduler.
 
-  \bugs This should really be part of ACE or ACE_OS, and maybe someday
+  @bug This should really be part of ACE or ACE_OS, and maybe someday
   it will, but right now it's not.
 
 */
 class TAO_RTEvent_Serv_Export TAO_EC_Thread_Flags
 {
 public:
-  TAO_EC_Thread_Flags () { }
-  /*! \brief See \a operator=() */
-  TAO_EC_Thread_Flags (const char* symbolic_flags)
+  TAO_EC_Thread_Flags () = default;
+  /// @brief See @a operator=().
+  explicit TAO_EC_Thread_Flags (char const *symbolic_flags)
     { this->parse_symbols(symbolic_flags); }
-  ~TAO_EC_Thread_Flags ();
+  ~TAO_EC_Thread_Flags () = default;
 
   // Default Copy CTOR is fine.
 
@@ -60,9 +59,9 @@ public:
 
     \sa TAO_EC_Thread_Flags::supported_flags
 
-    \note The \a sched value only gets set if the scheduler is specified using symbols.
+    @note The \a sched value only gets set if the scheduler is specified using symbols.
   */
-  const TAO_EC_Thread_Flags& operator= (const char* symbolic_flags)
+  TAO_EC_Thread_Flags const& operator= (char const *symbolic_flags)
     { this->parse_symbols(symbolic_flags); return *this; }
 
   /*!
@@ -89,22 +88,29 @@ public:
   */
   long default_priority () const;
 
-
   struct Supported_Flag
   {
-    const char* n; /// Flag name, e.g., THR_NEW_LWP
-    long        v; /// Flag value, i.e., actual symbol
+    /// Flag name, e.g., THR_NEW_LWP.
+    char const *n;
+
+    /// Flag value, i.e., actual symbol.
+    long        v;
   };
 
   // TETFSF == TAO_EC_THREAD_FLAGS_SUPPORTED_FLAGS
   static Supported_Flag supported_flags_[];
 
 protected:
-  long flags_; /// Value of all flags OR'd together
-  long scope_; /// Value of THR_SCOPE_*
-  long sched_; /// Value of THR_SCHED_*
+  /// Value of all flags OR'd together.
+  long flags_ {};
 
-  void parse_symbols (const char* syms);
+  /// Value of THR_SCOPE_*.
+  long scope_ {};
+
+  /// Value of THR_SCHED_*.
+  long sched_ {};
+
+  void parse_symbols (char const *syms);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

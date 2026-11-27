@@ -1,4 +1,3 @@
-// -*- C++ -*-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
@@ -11,7 +10,6 @@ TAO_Endpoint::TAO_Endpoint (CORBA::ULong tag,
   //    memory.
   , tag_ (tag)
   , priority_ (priority)
-
 {
 }
 

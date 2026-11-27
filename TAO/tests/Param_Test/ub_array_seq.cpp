@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    ub_array_seq.cpp
  *
@@ -7,8 +5,6 @@
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #include "helper.h"
 #include "ub_array_seq.h"
@@ -18,22 +14,14 @@
 // ************************************************************************
 
 Test_Array_Sequence::Test_Array_Sequence ()
-  : opname_ (CORBA::string_dup ("test_array_sequence")),
+  : opname_ ("test_array_sequence"),
     inout_ (new Param_Test::ArraySeq),
     out_ (new Param_Test::ArraySeq),
     ret_ (new Param_Test::ArraySeq)
 {
 }
 
-Test_Array_Sequence::~Test_Array_Sequence ()
-{
-  CORBA::string_free (this->opname_);
-  this->opname_ = 0;
-  // the other data members will be freed as they are "_var"s and objects
-  // (rather than pointers to objects)
-}
-
-const char *
+char const *
 Test_Array_Sequence::opname () const
 {
   return this->opname_;
@@ -50,7 +38,7 @@ Test_Array_Sequence::dii_req_invoke (CORBA::Request *req)
 
   req->invoke ();
 
-  const Param_Test::ArraySeq *tmp = 0;
+  Param_Test::ArraySeq const *tmp {};
   req->return_value () >>= tmp;
   this->ret_ = new Param_Test::ArraySeq (*tmp);
 
@@ -71,7 +59,7 @@ Test_Array_Sequence::init_parameters (Param_Test_ptr)
   Generator *gen = GENERATOR::instance (); // value generator
 
   // get some sequence length (not more than 10)
-  CORBA::ULong len = (CORBA::ULong) (gen->gen_long () % 10) + 1;
+  CORBA::ULong const len = (CORBA::ULong) (gen->gen_long () % 10) + 1;
 
   // set the length of the in sequence
   this->in_.length (len);
@@ -81,18 +69,18 @@ Test_Array_Sequence::init_parameters (Param_Test_ptr)
   // now set each individual element
   Param_Test::Fixed_Array tmp;
 
-  for (CORBA::ULong j = 0; j < Param_Test::DIM1; j++)
+  for (CORBA::ULong j = 0; j < Param_Test::DIM1; ++j)
     {
       tmp[j] = gen->gen_long ();
     }
 
   Param_Test::Fixed_Array_copy (this->inout_[0], tmp);
 
-  for (CORBA::ULong i = 0; i < this->in_.length (); i++)
+  for (CORBA::ULong i = 0; i < this->in_.length (); ++i)
     {
       // Generate some arbitrary array to be filled into the ith
       // location in the sequence.
-      for (CORBA::ULong j = 0; j < Param_Test::DIM1; j++)
+      for (CORBA::ULong j = 0; j < Param_Test::DIM1; ++j)
         {
           tmp[j] = gen->gen_long ();
         }
@@ -118,7 +106,7 @@ Test_Array_Sequence::run_sii_test (Param_Test_ptr objref)
 {
   try
     {
-      Param_Test::ArraySeq_out out (this->out_.out ());
+      Param_Test::ArraySeq_out const out (this->out_.out ());
 
       this->ret_ = objref->test_array_sequence (this->in_,
                                                 this->inout_.inout (),
@@ -126,7 +114,7 @@ Test_Array_Sequence::run_sii_test (Param_Test_ptr objref)
 
       return 0;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Test_Array_Sequence::run_sii_test\n");
     }
@@ -139,9 +127,13 @@ Test_Array_Sequence::check_validity ()
   if (this->compare (this->in_, this->inout_.in ()) &&
       this->compare (this->in_, this->out_.in ()) &&
       this->compare (this->in_, this->ret_.in ()))
-    return 1;
+  {
+    return true;
+  }
   else
-    return 0;
+  {
+    return false;
+  }
 }
 
 CORBA::Boolean
@@ -177,42 +169,42 @@ Test_Array_Sequence::compare (const Param_Test::ArraySeq &s1,
 {
   if (s1.maximum () != s2.maximum ())
     {
-      return 0;
+      return false;
     }
 
   if (s1.length () != s2.length ())
     {
-      return 0;
+      return false;
     }
 
-  for (CORBA::ULong i = 0; i < s1.length (); i++)
+  for (CORBA::ULong i = 0; i < s1.length (); ++i)
     {
       const Param_Test::Fixed_Array& vs1 = s1[i];
       const Param_Test::Fixed_Array& vs2 = s2[i];
 
-      for (CORBA::ULong j = 0; j < Param_Test::DIM1; j++)
+      for (CORBA::ULong j = 0; j < Param_Test::DIM1; ++j)
         {
           if (vs1[j] != vs2[j])
             {
-              return 0;
+              return false;
             }
         }
     }
 
-  return 1; // success
+  return true; // success
 }
 
 void
 Test_Array_Sequence::print_sequence (const Param_Test::ArraySeq &s)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "maximum = %d\n"
-              "length = %d\n",
+              "maximum = %u\n"
+              "length = %u\n",
               s.maximum (),
               s.length ()));
   ACE_DEBUG ((LM_DEBUG, "Elements -\n"));
 
-  for (CORBA::ULong i=0; i < s.length (); i++)
+  for (CORBA::ULong i=0; i < s.length (); ++i)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Element #%d --\n",
@@ -220,7 +212,7 @@ Test_Array_Sequence::print_sequence (const Param_Test::ArraySeq &s)
 
       const Param_Test::Fixed_Array& vs = s[i];
 
-      for (CORBA::ULong j = 0; j < Param_Test::DIM1; j++)
+      for (CORBA::ULong j = 0; j < Param_Test::DIM1; ++j)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "Element%d[%d] = %d\n",

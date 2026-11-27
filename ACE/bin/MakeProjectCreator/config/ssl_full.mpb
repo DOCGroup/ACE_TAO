@@ -1,4 +1,3 @@
-// -*- MPC -*-
 feature(!ace_for_tao) {
 
 // Includes ACE_SSL asynch stream support.

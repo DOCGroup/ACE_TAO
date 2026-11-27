@@ -1,5 +1,7 @@
 #include "Synch_i.h"
 
+#include <memory>
+
 Synch_i::Synch_i ()
 {
   this->synched_ = 0;
@@ -23,5 +25,5 @@ Synch_i::synched ()
 ACE_Time_Value*
 Synch_i::base_time ()
 {
-  return &this->base_time_;
+  return std::addressof (this->base_time_);
 }

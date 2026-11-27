@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   Naming_Context_Interface.h
  *
  *  @author Marina Spivak <marina@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_NAMING_CONTEXT_INTERFACE_H
 #define TAO_NAMING_CONTEXT_INTERFACE_H
@@ -17,6 +13,8 @@
 
 #include "orbsvcs/Naming/naming_serv_export.h"
 #include "ace/Null_Mutex.h"
+
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -35,7 +33,7 @@ class TAO_Naming_Context_Impl;
  * implementation.
  *
  * This class simply forwards all client requests to a concrete
- * NamingContext implementation through its <impl_> pointer.  See
+ * NamingContext implementation through its @c impl_ pointer.  See
  * README file for more info.  Comments for the idl methods
  * describe methods semantics - actual actions are carried out by
  * concrete implementors.
@@ -45,67 +43,71 @@ class TAO_Naming_Serv_Export TAO_Naming_Context :
   public virtual POA_CosNaming::NamingContextExt
 {
 public:
-  /// Constructor.  Initializes <impl_> with a concrete implementation.
-  TAO_Naming_Context (TAO_Naming_Context_Impl *impl);
+  /// Constructor.  Initializes @c impl_ with a concrete implementation.
+  explicit TAO_Naming_Context (TAO_Naming_Context_Impl *impl);
 
-  /// Destructor.
   ~TAO_Naming_Context () override;
 
-  // = CosNaming::NamingContext idl interface methods.
+  TAO_Naming_Context (TAO_Naming_Context const &) = delete;
+  TAO_Naming_Context &operator= (TAO_Naming_Context const &) = delete;
+  TAO_Naming_Context (TAO_Naming_Context &&) = delete;
+  TAO_Naming_Context &operator= (TAO_Naming_Context &&) = delete;
+
+  /// @name CosNaming::NamingContext idl interface methods
+  /// @{
 
   /**
-   * Create a binding for name <n> and object <obj> in the naming
+   * Create a binding for name @c n and object @c obj in the naming
    * context.  Compound names are treated as follows: ctx->bind (<c1;
-   * c2; c3; cn>, obj) = (ctx->resolve (<c1; c2; cn-1>))->bind (<cn>,
+   * c2; c3; cn>, obj) = (ctx->resolve (<c1; c2; cn-1>))->bind (@c cn,
    * obj) if the there already exists a binding for the specified
-   * name, <AlreadyBound> exception is thrown.  Naming contexts should
-   * be bound using <bind_context> and <rebind_context> in order to
+   * name, @c AlreadyBound exception is thrown.  Naming contexts should
+   * be bound using @c bind_context and @c rebind_context in order to
    * participate in name resolution later.
    */
-  void bind (const CosNaming::Name &n,
+  void bind (CosNaming::Name const &n,
              CORBA::Object_ptr obj) override;
 
   /**
-   * This is similar to <bind> operation above, except for when the
+   * This is similar to @c bind operation above, except for when the
    * binding for the specified name already exists in the specified
    * context.  In that case, the existing binding is replaced with the
    * new one.
    */
-  void rebind (const CosNaming::Name &n,
+  void rebind (CosNaming::Name const &n,
                CORBA::Object_ptr obj) override;
 
   /**
-   * This is the version of <bind> specifically for binding naming
+   * This is the version of @c bind specifically for binding naming
    * contexts, so that they will participate in name resolution when
    * compound names are passed to be resolved.
    */
-  void bind_context (const CosNaming::Name &n,
+  void bind_context (CosNaming::Name const &n,
                      CosNaming::NamingContext_ptr nc) override;
 
   /**
-   * This is a version of <rebind> specifically for naming contexts,
+   * This is a version of @c rebind specifically for naming contexts,
    * so that they can participate in name resolution when compound
    * names are passed.
    */
-  void rebind_context (const CosNaming::Name &n,
+  void rebind_context (CosNaming::Name const &n,
                        CosNaming::NamingContext_ptr nc) override;
 
   /**
    * Return object reference that is bound to the name.  Compound name
    * resolve is defined as follows: ctx->resolve (<c1; c2; cn>) =
-   * ctx->resolve (<c1; c2 cn-1>)->resolve (<cn>) The naming service
+   * ctx->resolve (<c1; c2 cn-1>)->resolve (@c cn) The naming service
    * does not return the type of the object.  Clients are responsible
    * for "narrowing" the object to the appropriate type.
    */
-  CORBA::Object_ptr resolve (const CosNaming::Name &n) override;
+  CORBA::Object_ptr resolve (CosNaming::Name const &n) override;
 
   /**
    * Remove the name binding from the context.  When compound names
    * are used, unbind is defined as follows: ctx->unbind (<c1; c2;
-   * cn>) = (ctx->resolve (<c1; c2; cn-1>))->unbind (<cn>)
+   * cn>) = (ctx->resolve (<c1; c2; cn-1>))->unbind (@c cn)
    */
-  void unbind (const CosNaming::Name &n) override;
-
+  void unbind (CosNaming::Name const &n) override;
 
   /**
    * This operation returns a new naming context implemented by the
@@ -121,23 +123,23 @@ public:
    * bound (the name argument excluding the last component).
    */
   CosNaming::NamingContext_ptr bind_new_context (
-      const CosNaming::Name &n) override;
+      CosNaming::Name const &n) override;
 
   /**
-   * Delete the naming context.  The user should take care to <unbind> any
+   * Delete the naming context.  The user should take care to @c unbind any
    * bindings in which the given context is bound to some names, to
-   * avoid dangling references when invoking <destroy> operation.
-   * NOTE: <destroy> is a no-op on the root context.
-   * NOTE: after <destroy> is invoked on a Naming Context, all
+   * avoid dangling references when invoking @c destroy operation.
+   * @note @c destroy is a no-op on the root context.
+   * @note After @c destroy is invoked on a Naming Context, all
    * BindingIterators associated with that Naming Context are also destroyed.
    */
   void destroy () override;
 
   /**
-   * Returns at most the requested number of bindings <how_many> in
-   * <bl>.  If the naming context contains additional bindings, they
+   * Returns at most the requested number of bindings @c how_many in
+   * @c bl.  If the naming context contains additional bindings, they
    * are returned with a BindingIterator.  In the naming context does
-   * not contain any additional bindings <bi> returned as null.
+   * not contain any additional bindings @c bi returned as null.
    */
   void list (CORBA::ULong how_many,
              CosNaming::BindingList_out bl,
@@ -149,14 +151,14 @@ public:
    * is invalid i.e. if the number of characters in the name is zero,
    * an InvalidName exception is to be raised.
    */
-  char * to_string (const CosNaming::Name &n) override;
+  char * to_string (CosNaming::Name const &n) override;
 
   /**
    * The in parameter is an stringified name. This function removes the
    * escape character '\' and destringifies the stringified name and returns
    * it.
    */
-  CosNaming::Name * to_name (const char *sn) override;
+  CosNaming::Name * to_name (char const *sn) override;
 
   /**
    * The in parameter addr refers to the address of the naming context
@@ -164,14 +166,14 @@ public:
    * context. This function returns a fully formed URL string like
    * iiopname://1.1@myhost.555xyz.com:9999/a/b/c
    */
-  char * to_url ( const char * addr,
-                  const char * sn) override;
+  char * to_url (char const *addr,
+                 char const *sn) override;
 
   /**
-   * Similar to <resolve> as in the CosNaming::NamingContext interface.
+   * Similar to @c resolve as in the CosNaming::NamingContext interface.
    * It accepts a strigified name as an argument instead of a Name.
    */
-  CORBA::Object_ptr resolve_str (const char * n) override;
+  CORBA::Object_ptr resolve_str (char const *n) override;
 
   /**
    * Mark the implementation stale state for replicated
@@ -182,6 +184,7 @@ public:
   /// Returns the Default POA of this Servant object
   PortableServer::POA_ptr _default_POA () override;
 
+  /// @}
 private:
   enum Hint
     {
@@ -190,21 +193,21 @@ private:
     };
 
   /**
-   * This private function is used as a helper to <to_name>. It reads
+   * This private function is used as a helper to @c to_name. It reads
    * character by character from 'src' and depending on the character,
    * either assigns it to 'dest' or returns back to the calling
    * function. If the character is a seperator between the 'id' and
    * 'kind' fields or a seperator between two name components, the
-   * control is returned back to the calling function <to_name>.
+   * control is returned back to the calling function @c to_name.
    */
-  void to_name_helper (char *dest, const char*& src, Hint hint);
+  void to_name_helper (char *dest, char const *&src, Hint hint);
 
   /**
-   * This method functions similar to <to_name_helper>. If the
+   * This method functions similar to @c to_name_helper. If the
    * character read is '.' or '/' or '\', an escape character '\' is
    * prepended before the character.
    */
-  void to_string_helper_assign (char * &k, const char * &src);
+  void to_string_helper_assign (char *&k, char const *&src);
 
   /**
    * This method helps count the number of characters in 'src' so
@@ -214,7 +217,7 @@ private:
    * added. Seperators between 'id' and 'kind' as well as seperators
    * between the name components are also counted.
    */
-  void to_string_helper_length (CORBA::ULong &len, const char * &src);
+  void to_string_helper_length (CORBA::ULong &len, char const *&src);
 
   /// Return 1 if the character is alphanumeric or a non-scaped
   /// punctuation.
@@ -222,12 +225,12 @@ private:
 
   /// Validate the to_url() method input, and compute the size of the
   /// returned URL address.
-  static size_t to_url_validate_and_compute_size (const char *add,
-                                                  const char *sn);
+  static size_t to_url_validate_and_compute_size (char const *add,
+                                                  char const *sn);
 
 protected:
   /// A concrete implementor of the NamingContext functions.
-  TAO_Naming_Context_Impl *impl_;
+  std::unique_ptr<TAO_Naming_Context_Impl> impl_;
 };
 
 /**
@@ -242,63 +245,63 @@ protected:
 class TAO_Naming_Serv_Export TAO_Naming_Context_Impl
 {
 public:
-  /// Destructor.
   virtual ~TAO_Naming_Context_Impl ();
 
-  // = CosNaming::NamingContext idl interface methods.
+  /// @name CosNaming::NamingContext idl interface methods
+  /// @{
 
   /**
-   * Create a binding for name <n> and object <obj> in the naming
+   * Create a binding for name @c n and object @c obj in the naming
    * context.  Compound names are treated as follows: ctx->bind (<c1;
-   * c2; c3; cn>, obj) = (ctx->resolve (<c1; c2; cn-1>))->bind (<cn>,
+   * c2; c3; cn>, obj) = (ctx->resolve (<c1; c2; cn-1>))->bind (@c cn,
    * obj) if the there already exists a binding for the specified
-   * name, <AlreadyBound> exception is thrown.  Naming contexts should
-   * be bound using <bind_context> and <rebind_context> in order to
+   * name, @c AlreadyBound exception is thrown.  Naming contexts should
+   * be bound using @c bind_context and @c rebind_context in order to
    * participate in name resolution later.
    */
-  virtual void bind (const CosNaming::Name &n,
+  virtual void bind (CosNaming::Name const &n,
                      CORBA::Object_ptr obj) = 0;
 
   /**
-   * This is similar to <bind> operation above, except for when the
+   * This is similar to @c bind operation above, except for when the
    * binding for the specified name already exists in the specified
    * context.  In that case, the existing binding is replaced with the
    * new one.
    */
-  virtual void rebind (const CosNaming::Name &n,
+  virtual void rebind (CosNaming::Name const &n,
                        CORBA::Object_ptr obj) = 0;
 
   /**
-   * This is the version of <bind> specifically for binding naming
+   * This is the version of @c bind specifically for binding naming
    * contexts, so that they will participate in name resolution when
    * compound names are passed to be resolved.
    */
-  virtual void bind_context (const CosNaming::Name &n,
+  virtual void bind_context (CosNaming::Name const &n,
                              CosNaming::NamingContext_ptr nc) = 0;
 
   /**
-   * This is a version of <rebind> specifically for naming contexts,
+   * This is a version of @c rebind specifically for naming contexts,
    * so that they can participate in name resolution when compound
    * names are passed.
    */
-  virtual void rebind_context (const CosNaming::Name &n,
+  virtual void rebind_context (CosNaming::Name const &n,
                                CosNaming::NamingContext_ptr nc) = 0;
 
   /**
    * Return object reference that is bound to the name.  Compound name
    * resolve is defined as follows: ctx->resolve (<c1; c2; cn>) =
-   * ctx->resolve (<c1; c2 cn-1>)->resolve (<cn>) The naming service
+   * ctx->resolve (<c1; c2 cn-1>)->resolve (@c cn) The naming service
    * does not return the type of the object.  Clients are responsible
    * for "narrowing" the object to the appropriate type.
    */
-  virtual CORBA::Object_ptr resolve (const CosNaming::Name &n) = 0;
+  virtual CORBA::Object_ptr resolve (CosNaming::Name const &n) = 0;
 
   /**
    * Remove the name binding from the context.  When compound names
    * are used, unbind is defined as follows: ctx->unbind (<c1; c2;
-   * cn>) = (ctx->resolve (<c1; c2; cn-1>))->unbind (<cn>)
+   * cn>) = (ctx->resolve (<c1; c2; cn-1>))->unbind (@c cn)
    */
-  virtual void unbind (const CosNaming::Name &n) = 0;
+  virtual void unbind (CosNaming::Name const &n) = 0;
 
   /**
    * This operation returns a new naming context implemented by the
@@ -313,23 +316,23 @@ public:
    * implemented by the same server as the context in which it was
    * bound (the name argument excluding the last component).
    */
-  virtual CosNaming::NamingContext_ptr bind_new_context (const CosNaming::Name &n) = 0;
+  virtual CosNaming::NamingContext_ptr bind_new_context (CosNaming::Name const &n) = 0;
 
   /**
-   * Delete the naming context.  The user should take care to <unbind> any
+   * Delete the naming context.  The user should take care to @c unbind any
    * bindings in which the given context is bound to some names, to
-   * avoid dangling references when invoking <destroy> operation.
-   * NOTE: <destroy> is a no-op on the root context.
-   * NOTE: after <destroy> is invoked on a Naming Context, all
+   * avoid dangling references when invoking @c destroy operation.
+   * @note @c destroy is a no-op on the root context.
+   * @note After @c destroy is invoked on a Naming Context, all
    * BindingIterators associated with that Naming Context are also destroyed.
    */
   virtual void destroy () = 0;
 
   /**
-   * Returns at most the requested number of bindings <how_many> in
-   * <bl>.  If the naming context contains additional bindings, they
+   * Returns at most the requested number of bindings @c how_many in
+   * @c bl.  If the naming context contains additional bindings, they
    * are returned with a BindingIterator.  In the naming context does
-   * not contain any additional bindings <bi> returned as null.
+   * not contain any additional bindings @c bi returned as null.
    */
   virtual void list (CORBA::ULong how_many,
                      CosNaming::BindingList_out &bl,
@@ -348,6 +351,7 @@ public:
    * persistence support.
    */
   virtual bool stale ();
+  /// @}
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

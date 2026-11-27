@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    nested_struct.h
  *
@@ -7,32 +5,26 @@
  *
  *  @author   Aniruddha Gokhale
  */
-//=============================================================================
-
 
 #ifndef PARAM_TEST_NESTED_STRUCT_H
 #define PARAM_TEST_NESTED_STRUCT_H
 
 #include "param_testC.h"
 
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
-//           test nested structs
-// =*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*
+/// test nested structs
 
 class Test_Nested_Struct
 {
 public:
-  /// ctor
   Test_Nested_Struct ();
 
-  /// dtor
-  ~Test_Nested_Struct ();
+  ~Test_Nested_Struct () = default;
 
   /// run the SII test
   int run_sii_test (Param_Test_ptr objref);
 
   /// return operation name
-  const char *opname () const;
+  char const *opname () const;
 
   /// set values for parameters
   int init_parameters (Param_Test_ptr objref);
@@ -54,7 +46,7 @@ public:
 
 private:
   /// operation name
-  char *opname_;
+  char const *opname_;
 
   /// in parameter
   Param_Test::Nested_Struct in_;

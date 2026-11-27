@@ -1,5 +1,3 @@
-/* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file    FT_FaultDetectorFactory_i.h
  *
@@ -10,24 +8,24 @@
  *
  *  @author Dale Wilson <wilson_d@ociweb.com>
  */
-//=============================================================================
 
 #ifndef FT_FAULTDETECTORFACTORY_I_H_
 #define FT_FAULTDETECTORFACTORY_I_H_
 #include /**/ "ace/pre.h"
 #include "ace/ACE.h"
-#include "ace/SString.h"
+#include <memory>
+#include <string>
+#include <vector>
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 /////////////////////////////////
 // Includes needed by this header
-#include <ace/Vector_T.h>
 #include <orbsvcs/FT_FaultDetectorFactoryS.h>
 #include <orbsvcs/FT_ReplicationManagerC.h>
 #include <ace/Thread_Manager.h>
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -86,19 +84,13 @@ namespace TAO
   // Class Declarations
   class  FT_FaultDetectorFactory_i : public virtual POA_FT::FaultDetectorFactory
   {
-    using DetectorVec = ACE_Vector<Fault_Detector_i *>;
+    using DetectorVec = std::vector<std::unique_ptr<Fault_Detector_i>>;
 
     //////////////////////
     // non-CORBA interface
   public:
-    /**
-     * Default constructor.
-     */
     FT_FaultDetectorFactory_i ();
 
-    /**
-     * Virtual destructor.
-     */
     ~FT_FaultDetectorFactory_i () override;
 
     /**
@@ -130,12 +122,11 @@ namespace TAO
      */
     int idle(int & result);
 
-
     /**
      * Identify this fault detector factory.
      * @return a string to identify this object for logging/console message purposes.
      */
-    const char * identity () const;
+    char const * identity () const;
 
     /**
      * Remove pointer to individual detector; delete Fault_Detector_i.
@@ -171,9 +162,9 @@ namespace TAO
 
     CORBA::Boolean is_alive () override;
 
-    /////////////////////////
-    // Implementation methods
   private:
+    /// @name Implementation methods
+    /// @{
     FT_FaultDetectorFactory_i (FT_FaultDetectorFactory_i const &) = delete;
     FT_FaultDetectorFactory_i (FT_FaultDetectorFactory_i &&) = delete;
     FT_FaultDetectorFactory_i & operator= (FT_FaultDetectorFactory_i const &) = delete;
@@ -193,10 +184,10 @@ namespace TAO
      * Clean house for factory shut down.
      */
     void shutdown_i ();
+    /// @}
 
-    ///////////////
-    // Data Members
-  private:
+    /// @name Data members
+    /// @{
     /**
      * Protect internal state.
      * Mutex should be locked by corba methods, or by
@@ -222,7 +213,6 @@ namespace TAO
      */
     PortableServer::ObjectId_var objectId_;
 
-
     /**
      * IOR of this object as assigned by orb.
      */
@@ -231,21 +221,18 @@ namespace TAO
     /**
      * A file to which the factory's IOR should be written.
      */
-    ACE_TCHAR const * ior_output_file_;
+    std::basic_string<ACE_TCHAR> ior_output_file_;
+    bool ior_written_ {};
 
-    /**
-     * A name to be used to register the factory with the name service.
-     */
-    char const * ns_name_;
-
+    /// Optional Naming Service registration state.
+    char const * ns_name_ {};
     ::CosNaming::NamingContext_var naming_context_;
-
     ::CosNaming::Name this_name_;
 
     /**
      * Quit on idle flag.
      */
-    int quit_on_idle_;
+    bool quit_on_idle_ {};
 
     /**
      * the FT::Domain where we're operating
@@ -267,7 +254,7 @@ namespace TAO
      * bool: if true, register with ReplicationManager.
      * default is true.  -x turns it off.
      */
-    int rm_register_;
+    bool rm_register_ {true};
 
     /**
      * the replication manager
@@ -277,7 +264,7 @@ namespace TAO
     /**
      * bool: if true the registration with ReplicationManager was successful.
      */
-    int registered_;
+    bool registered_ {};
 
     /**
      * The factory registry with which to register.
@@ -287,7 +274,7 @@ namespace TAO
     /**
      * A human-readable string to distinguish this from other Notifiers.
      */
-    ACE_CString identity_;
+    std::string identity_;
 
     /**
      * A manager for all FaultDetector threads.
@@ -305,12 +292,13 @@ namespace TAO
      * Used to determine when the factory is idle, and to avoid
      * fruitless searches for empty slots.
      */
-    size_t empty_slots_;
+    size_t empty_slots_ {};
 
     /**
      * boolean: starts false.  Set to true when it's time to quit.
      */
-    int quit_requested_;
+    bool quit_requested_ {};
+    /// @}
   };
 }   // namespace TAO
 

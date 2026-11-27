@@ -2,8 +2,7 @@
 #include "ace/Read_Buffer.h"
 #include "testC.h"
 
-
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
+ACE_TCHAR const *ior = ACE_TEXT("file://test.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -12,6 +11,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
   int c;
 
   while ((c = get_opts ()) != -1)
+  {
     switch (c)
       {
       case 'k':
@@ -26,6 +26,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            argv [0]),
                           -1);
       }
+  }
   // Indicates successful parsing of the command line
   return 0;
 }
@@ -39,7 +40,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         CORBA::ORB_init (argc, argv);
 
       if (parse_args (argc, argv) != 0)
+      {
         return 1;
+      }
 
       CORBA::Object_var object =
         orb->string_to_object (ior);
@@ -57,19 +60,21 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       while (!feof (stdin))
         {
-          ACE_Read_Buffer buf (stdin, 0);
-          char *line = buf.read ('\n');
-          if (line == 0)
+          ACE_Read_Buffer buf (stdin, false);
+          ACE_Read_Buffer_Unique_Ptr line (
+            buf.read ('\n'), {buf.alloc ()});
+          if (!line)
+          {
             break;
-          server->send_line (line);
-          buf.alloc ()->free (line);
+          }
+          server->send_line (line.get ());
         }
 
       server->shutdown ();
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return 1;

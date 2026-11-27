@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    IIOP_SSL_Connector.h
  *
@@ -8,8 +5,6 @@
  *
  *  @author Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_IIOP_SSL_CONNECTOR_H
 #define TAO_IIOP_SSL_CONNECTOR_H
@@ -23,6 +18,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/IIOP_Connector.h"
+
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -41,11 +38,9 @@ namespace TAO
   class IIOP_SSL_Connector : public TAO_IIOP_Connector
   {
   public:
-    /// Constructor.
     IIOP_SSL_Connector ();
 
-    /// Destructor.
-    ~IIOP_SSL_Connector () override;
+    ~IIOP_SSL_Connector () override = default;
 
     int open (TAO_ORB_Core *orb_core) override;
     int close () override;
@@ -65,7 +60,7 @@ namespace TAO
      *
      * Check the documentation in tao/Transport_Connector.h for details.
      */
-    //@{
+    /// @{
     int set_validate_endpoint (TAO_Endpoint *ep) override;
 
     TAO_Transport *make_connection (TAO::Profile_Transport_Resolver *r,
@@ -73,11 +68,15 @@ namespace TAO
                                     ACE_Time_Value *timeout = nullptr) override;
 
     int cancel_svc_handler (TAO_Connection_Handler * svc_handler) override;
-    //@}
+    /// @}
 
   private:
     /// Our connect strategy
     CONNECT_STRATEGY connect_strategy_;
+
+    /// Owned here; base_connector_ borrows these strategy pointers.
+    std::unique_ptr<CONNECT_CREATION_STRATEGY> creation_strategy_ {};
+    std::unique_ptr<CONNECT_CONCURRENCY_STRATEGY> concurrency_strategy_ {};
 
     /// The connector initiating connection requests for IIOP_SSL.
     BASE_CONNECTOR base_connector_;

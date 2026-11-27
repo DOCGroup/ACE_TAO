@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file ObjectKey_Table.h
  *
  *  @author Balachandran Natarajan <bala@dre.vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef TAO_OBJECTKEY_TABLE_H
 #define TAO_OBJECTKEY_TABLE_H
@@ -47,8 +43,8 @@ namespace TAO
   class TAO_Export Less_Than_ObjectKey
   {
   public:
-    bool operator () (const TAO::ObjectKey &lhs,
-                      const TAO::ObjectKey &rhs) const;
+    bool operator () (TAO::ObjectKey const &lhs,
+                      TAO::ObjectKey const &rhs) const;
   };
 
   /**
@@ -86,7 +82,7 @@ namespace TAO
   {
   public:
     /// Default Constructor and destructor..
-    ObjectKey_Table ();
+    ObjectKey_Table () = default;
 
     ~ObjectKey_Table ();
 
@@ -102,14 +98,14 @@ namespace TAO
      * new it is bounded to the table. Returns a 0 on success and a -1
      * on failure.
      */
-    int bind (const ObjectKey &key, Refcounted_ObjectKey *&key_new);
+    int bind (ObjectKey const &key, Refcounted_ObjectKey *&key_new);
 
     /// Unbind an ObjectKey from the table.
     int unbind (TAO::Refcounted_ObjectKey *&key);
 
   protected:
     /// Implementation for bind ().
-    int bind_i (const ObjectKey &key, Refcounted_ObjectKey *&key_new);
+    int bind_i (ObjectKey const &key, Refcounted_ObjectKey *&key_new);
 
     /// Implementation for unbind ().
     int unbind_i (Refcounted_ObjectKey *&key);

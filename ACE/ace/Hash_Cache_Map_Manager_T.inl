@@ -1,11 +1,10 @@
-// -*- C++ -*-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class CACHING_STRATEGY, class ATTRIBUTES>
 ACE_INLINE int
 ACE_Hash_Cache_Map_Manager<KEY, VALUE, HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY, ATTRIBUTES>::bind (
-  const KEY &key,
-  const VALUE &value)
+  KEY const &key,
+  VALUE const &value)
 {
   return ACE_HCMM_BASE::bind (key, value);
 }
@@ -13,8 +12,8 @@ ACE_Hash_Cache_Map_Manager<KEY, VALUE, HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY,
 template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class CACHING_STRATEGY, class ATTRIBUTES>
 ACE_INLINE int
 ACE_Hash_Cache_Map_Manager<KEY, VALUE, HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY, ATTRIBUTES>::rebind (
-  const KEY &key,
-  const VALUE &value)
+  KEY const &key,
+  VALUE const &value)
 {
   return ACE_HCMM_BASE::rebind (key, value);
 }
@@ -22,8 +21,8 @@ ACE_Hash_Cache_Map_Manager<KEY, VALUE, HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY,
 template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class CACHING_STRATEGY, class ATTRIBUTES>
 ACE_INLINE int
 ACE_Hash_Cache_Map_Manager<KEY, VALUE, HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY, ATTRIBUTES>::rebind (
-  const KEY &key,
-  const VALUE &value,
+  KEY const &key,
+  VALUE const &value,
   VALUE &old_value)
 {
   return ACE_HCMM_BASE::rebind (key, value, old_value);
@@ -32,8 +31,8 @@ ACE_Hash_Cache_Map_Manager<KEY, VALUE, HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY,
 template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class CACHING_STRATEGY, class ATTRIBUTES>
 ACE_INLINE int
 ACE_Hash_Cache_Map_Manager<KEY, VALUE, HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY, ATTRIBUTES>::rebind (
-  const KEY &key,
-  const VALUE &value,
+  KEY const &key,
+  VALUE const &value,
   KEY &old_key,
   VALUE &old_value)
 {
@@ -46,7 +45,7 @@ ACE_Hash_Cache_Map_Manager<KEY, VALUE, HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY,
 template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class CACHING_STRATEGY, class ATTRIBUTES>
 ACE_INLINE int
 ACE_Hash_Cache_Map_Manager<KEY, VALUE, HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY, ATTRIBUTES>::trybind (
-  const KEY &key,
+  KEY const &key,
   VALUE &value)
 {
   return ACE_HCMM_BASE::trybind (key, value);
@@ -54,14 +53,14 @@ ACE_Hash_Cache_Map_Manager<KEY, VALUE, HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY,
 
 template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class CACHING_STRATEGY, class ATTRIBUTES>
 ACE_INLINE int
-ACE_Hash_Cache_Map_Manager<KEY, VALUE, HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY, ATTRIBUTES>::unbind (const KEY &key)
+ACE_Hash_Cache_Map_Manager<KEY, VALUE, HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY, ATTRIBUTES>::unbind (KEY const &key)
 {
   return ACE_HCMM_BASE::unbind (key);
 }
 
 template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class CACHING_STRATEGY, class ATTRIBUTES>
 ACE_INLINE int
-ACE_Hash_Cache_Map_Manager<KEY, VALUE, HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY, ATTRIBUTES>::unbind (const KEY &key,
+ACE_Hash_Cache_Map_Manager<KEY, VALUE, HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY, ATTRIBUTES>::unbind (KEY const &key,
                                          VALUE &value)
 {
   return ACE_HCMM_BASE::unbind (key, value);

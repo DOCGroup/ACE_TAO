@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "test_i.h"
 
 test_i::test_i (CORBA::Short num,
@@ -8,9 +7,7 @@ test_i::test_i (CORBA::Short num,
 {
 }
 
-test_i::~test_i ()
-{
-}
+test_i::~test_i () = default;
 
 CORBA::Short
 test_i::number ()

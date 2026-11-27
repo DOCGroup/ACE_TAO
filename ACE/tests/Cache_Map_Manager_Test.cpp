@@ -1,17 +1,13 @@
-
-//=============================================================================
 /**
  *  @file    Cache_Map_Manager_Test.cpp
  *
- *   This is a test of the <ACE_Cache_Map_Manager> and
- *   <ACE_Hash_Cache_Map_Manager> that illustrates how to use the
+ *   This is a test of the @c ACE_Cache_Map_Manager and
+ *   @c ACE_Hash_Cache_Map_Manager that illustrates how to use the
  *   forward and reverse iterators, as well as the purging and
  *   caching features.
  *
  *  @author Kirthika Parameswaran  <kirthika@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #include "ace/OS_NS_string.h"
 
@@ -25,6 +21,9 @@
 #include "ace/Functor.h"
 #include "ace/Get_Opt.h"
 #include "Cache_Map_Manager_Test.h"     // Hash_Key class defined in here
+
+#include <memory>
+#include <new>
 
 using KEY = size_t;
 using VALUE = size_t;
@@ -48,7 +47,8 @@ using HASH_MAP_CACHING_UTILITY = ACE_Pair_Caching_Utility<KEY, CACHE_VALUE, HASH
 
 using MAP_CACHING_UTILITY = ACE_Pair_Caching_Utility<KEY, CACHE_VALUE, MAP_MANAGER, MAP_ITERATOR, ATTR>;
 
-// = Hash_Map_Manager related
+/// @name Hash_Map_Manager related types
+/// @{
 using HASH_MAP_CACHING_STRATEGY = ACS<ATTR, HASH_MAP_CACHING_UTILITY>;
 using HASH_MAP_LRU = ALRU<ATTR, HASH_MAP_CACHING_UTILITY>;
 using HASH_MAP_LFU = ALFU<ATTR, HASH_MAP_CACHING_UTILITY>;
@@ -58,8 +58,10 @@ using HASH_MAP_LRU_ADAPTER = ACSA<ATTR, HASH_MAP_CACHING_UTILITY, HASH_MAP_LRU>;
 using HASH_MAP_LFU_ADAPTER = ACSA<ATTR, HASH_MAP_CACHING_UTILITY, HASH_MAP_LFU>;
 using HASH_MAP_FIFO_ADAPTER = ACSA<ATTR, HASH_MAP_CACHING_UTILITY, HASH_MAP_FIFO>;
 using HASH_MAP_NULL_ADAPTER = ACSA<ATTR, HASH_MAP_CACHING_UTILITY, HASH_MAP_NULL>;
+/// @}
 
-// = Map_Manager related
+/// @name Map_Manager related types
+/// @{
 using MAP_CACHING_STRATEGY = ACS<ATTR, MAP_CACHING_UTILITY>;
 using MAP_LRU = ALRU<ATTR, MAP_CACHING_UTILITY>;
 using MAP_LFU = ALFU<ATTR, MAP_CACHING_UTILITY>;
@@ -69,9 +71,21 @@ using MAP_LRU_ADAPTER = ACSA<ATTR, MAP_CACHING_UTILITY, MAP_LRU>;
 using MAP_LFU_ADAPTER = ACSA<ATTR, MAP_CACHING_UTILITY, MAP_LFU>;
 using MAP_FIFO_ADAPTER = ACSA<ATTR, MAP_CACHING_UTILITY, MAP_FIFO>;
 using MAP_NULL_ADAPTER = ACSA<ATTR, MAP_CACHING_UTILITY, MAP_NULL>;
+/// @}
 
 using HASH_MAP_CACHE = ACE_Hash_Cache_Map_Manager<KEY, VALUE, Hash_Key, ACE_Equal_To<KEY>, HASH_MAP_CACHING_STRATEGY, ATTR>;
 using MAP_CACHE = ACMM<KEY, VALUE, MAP_MANAGER, MAP_ITERATOR, MAP_REVERSE_ITERATOR, MAP_CACHING_STRATEGY, ATTR>;
+
+static int cleanup_strategy_destruction_count = 0;
+
+class Tracking_Cleanup_Strategy : public ACE_Cleanup_Strategy<KEY, CACHE_VALUE, MAP_MANAGER>
+{
+public:
+  ~Tracking_Cleanup_Strategy () override
+  {
+    ++cleanup_strategy_destruction_count;
+  }
+};
 
 enum Caching_Strategy_Type
 {
@@ -88,12 +102,32 @@ static int randomize_lookups = 1;
 static int purge_percent = 10;
 static int debug = 0;
 static Caching_Strategy_Type caching_strategy_type = ACE_ALL;
-static KEY *lookup_array = nullptr;
+static std::unique_ptr<KEY[]> lookup_array;
+
+static void
+test_caching_utility_ownership ()
+{
+  int const initial_destruction_count = cleanup_strategy_destruction_count;
+  Tracking_Cleanup_Strategy borrowed_strategy;
+  {
+    MAP_CACHING_UTILITY utility (&borrowed_strategy, false);
+  }
+  ACE_TEST_ASSERT (cleanup_strategy_destruction_count == initial_destruction_count);
+
+  Tracking_Cleanup_Strategy *owned_strategy {};
+  ACE_NEW (owned_strategy,
+           Tracking_Cleanup_Strategy);
+  {
+    MAP_CACHING_UTILITY utility (owned_strategy, true);
+  }
+  ACE_TEST_ASSERT (cleanup_strategy_destruction_count == initial_destruction_count + 1);
+
+}
 
 static void
 run_iterator_cache (MAP_CACHE &cache)
 {
-  size_t iterations = cache.current_size ();
+  size_t const iterations = cache.current_size ();
   size_t counter = 0;
   MAP_CACHE::iterator end = cache.end ();
 
@@ -103,7 +137,7 @@ run_iterator_cache (MAP_CACHE &cache)
     {
       // Debugging info.
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%d|%d)"),
+                  ACE_TEXT ("(%B|%B)"),
                   (*iter).first (),
                   (*iter).second ()));
 
@@ -120,7 +154,7 @@ run_iterator_cache (MAP_CACHE &cache)
 static void
 run_iterator_hash_cache (HASH_MAP_CACHE &cache)
 {
-  size_t iterations = cache.current_size ();
+  size_t const iterations = cache.current_size ();
   size_t counter = 0;
   HASH_MAP_CACHE::iterator end = cache.end ();
 
@@ -130,7 +164,7 @@ run_iterator_hash_cache (HASH_MAP_CACHE &cache)
     {
       // Debugging info.
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%d|%d)"),
+                  ACE_TEXT ("(%B|%B)"),
                   (*iter).first (),
                   (*iter).second ()));
 
@@ -158,15 +192,19 @@ run_reverse_iterator_cache (MAP_CACHE &cache)
 
       // Debugging info.
       if (debug)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%d|%d)"),
-                    (*iter).first (),
-                    (*iter).second ()));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%B|%B)"),
+                      (*iter).first (),
+                      (*iter).second ()));
+        }
       --counter;
     }
 
   if (debug)
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
+    }
 
   ACE_TEST_ASSERT (counter == 0);
 }
@@ -185,15 +223,19 @@ run_reverse_iterator_hash_cache (HASH_MAP_CACHE &cache)
 
       // Debugging info.
       if (debug)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%d|%d)"),
-                    (*iter).first (),
-                    (*iter).second ()));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%B|%B)"),
+                      (*iter).first (),
+                      (*iter).second ()));
+        }
       --counter;
     }
 
   if (debug)
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
+    }
 
   ACE_TEST_ASSERT (counter == 0);
 }
@@ -210,7 +252,9 @@ find_test_cache (MAP_CACHE &cache)
       ACE_TEST_ASSERT (j == lookup_array[i]);
 
       if (debug)
-        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%d  "), j));
+      {
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%B  "), j));
+      }
 
       // Once more, with only the key. Test Bugzilla #4029.
       result = cache.find (lookup_array[i]);
@@ -220,7 +264,9 @@ find_test_cache (MAP_CACHE &cache)
     }
 
   if (debug)
+  {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
+  }
 }
 
 static void
@@ -229,43 +275,51 @@ find_test_hash_cache (HASH_MAP_CACHE &cache)
   for (size_t i = 0; i < no_of_lookups; ++i)
     {
       VALUE j = 0;
-      int result = cache.find (lookup_array[i], j);
+      int const result = cache.find (lookup_array[i], j);
 
       ACE_TEST_ASSERT (result != -1);
       ACE_TEST_ASSERT (j == lookup_array[i]);
 
       if (debug)
-        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%d  "), j));
+      {
+        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%B  "), j));
+      }
 
       ACE_UNUSED_ARG (result);
     }
 
   if (debug)
+  {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n")));
+  }
 }
 
 static void
 purge_test_cache (MAP_CACHE &cache)
 {
   // Get the number of entries in the container.
-  size_t current_map_size = cache.current_size ();
+  size_t const current_map_size = cache.current_size ();
 
   // Find the number of entries which will get purged.
-  size_t entries_to_remove = size_t ((double (purge_percent) / 100 * current_map_size) + 0.5);
+  size_t const entries_to_remove = size_t ((double (purge_percent) / 100 * current_map_size) + 0.5);
 
   // Tell the caching strategy how much to purge.
   cache.caching_strategy ().purge_percent (purge_percent);
 
   // Purge from cache.
-  int result = cache.purge ();
+  int const result = cache.purge ();
   ACE_TEST_ASSERT (result != -1);
   ACE_UNUSED_ARG (result);
 
   size_t resultant_size = 0;
   if (caching_strategy_type == ACE_NULL)
-    resultant_size = current_map_size;
+    {
+      resultant_size = current_map_size;
+    }
   else
-    resultant_size = current_map_size - entries_to_remove;
+    {
+      resultant_size = current_map_size - entries_to_remove;
+    }
 
   // Make sure the purge took out the appropriate number of entries.
   ACE_TEST_ASSERT (cache.current_size () == resultant_size);
@@ -276,24 +330,28 @@ static void
 purge_test_hash_cache (HASH_MAP_CACHE &cache)
 {
   // Get the number of entries in the container.
-  size_t current_map_size = cache.current_size ();
+  size_t const current_map_size = cache.current_size ();
 
   // Find the number of entries which will get purged.
-  size_t entries_to_remove = size_t ((double (purge_percent) / 100 * current_map_size) + 0.5);
+  size_t const entries_to_remove = size_t ((double (purge_percent) / 100 * current_map_size) + 0.5);
 
   // Tell the caching strategy how much to purge.
   cache.caching_strategy ().purge_percent (purge_percent);
 
   // Purge from cache.
-  int result = cache.purge ();
+  int const result = cache.purge ();
   ACE_TEST_ASSERT (result != -1);
   ACE_UNUSED_ARG (result);
 
   size_t resultant_size = 0;
   if (caching_strategy_type == ACE_NULL)
-    resultant_size = current_map_size;
+    {
+      resultant_size = current_map_size;
+    }
   else
-    resultant_size = current_map_size - entries_to_remove;
+    {
+      resultant_size = current_map_size - entries_to_remove;
+    }
 
   // Make sure the purge took out the appropriate number of entries.
   ACE_TEST_ASSERT (cache.current_size () == resultant_size);
@@ -312,19 +370,21 @@ functionality_test_cache (MAP_CACHING_STRATEGY &caching_strategy)
        i < iterations;
        ++i, ++j)
     {
-      int result = cache.bind (i, j);
+      int const result = cache.bind (i, j);
       ACE_TEST_ASSERT (result == 0);
       ACE_UNUSED_ARG (result);
 
       if (debug)
-        ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("keys[%d]=%d value=[%d]=%d\n"),
-                    i, i, j, j));
+        {
+          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("keys[%B]=%B value=[%B]=%B\n"),
+                      i, i, j, j));
+        }
       ++counter;
       ACE_TEST_ASSERT (cache.current_size () == counter);
     }
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Number of entries in cache before purging: %d\n"),
+              ACE_TEXT ("Number of entries in cache before purging: %B\n"),
               cache.current_size ()));
 
   run_iterator_cache (cache);
@@ -338,7 +398,7 @@ functionality_test_cache (MAP_CACHING_STRATEGY &caching_strategy)
   run_reverse_iterator_cache (cache);
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Number of entries in cache  after purging: %d\n"),
+              ACE_TEXT ("Number of entries in cache  after purging: %B\n"),
               cache.current_size ()));
 }
 
@@ -354,20 +414,22 @@ functionality_test_hash_cache (HASH_MAP_CACHING_STRATEGY &caching_strategy)
        i < iterations;
        ++i, ++j)
     {
-      int result = cache.bind (i, j);
+      int const result = cache.bind (i, j);
       ACE_TEST_ASSERT (result == 0);
       ACE_UNUSED_ARG (result);
 
       if (debug)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("keys[%d]=%d value=[%d]=%d\n"),
-                    i, i, j, j));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("keys[%B]=%B value=[%B]=%B\n"),
+                      i, i, j, j));
+        }
       ++counter;
       ACE_TEST_ASSERT (cache.current_size () == counter);
     }
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Number of entries in cache before purging: %d\n"),
+              ACE_TEXT ("Number of entries in cache before purging: %B\n"),
               cache.current_size ()));
 
   run_iterator_hash_cache (cache);
@@ -381,15 +443,15 @@ functionality_test_hash_cache (HASH_MAP_CACHING_STRATEGY &caching_strategy)
   run_reverse_iterator_hash_cache (cache);
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Number of entries in cache  after purging: %d\n"),
+              ACE_TEXT ("Number of entries in cache  after purging: %B\n"),
               cache.current_size ()));
 }
 
 void
 test_caching_strategy_type ()
 {
-  HASH_MAP_CACHING_STRATEGY *hash_map_caching_strategy = nullptr;
-  MAP_CACHING_STRATEGY *map_caching_strategy = nullptr;
+  HASH_MAP_CACHING_STRATEGY *hash_map_caching_strategy {};
+  MAP_CACHING_STRATEGY *map_caching_strategy {};
 
   switch (caching_strategy_type)
     {
@@ -451,13 +513,21 @@ parse_args (int argc, ACE_TCHAR *argv[])
       {
       case 'c':
         if (ACE_OS::strcmp (get_opt.opt_arg (), ACE_TEXT ("null")) == 0)
+        {
           caching_strategy_type = ACE_NULL;
+        }
         if (ACE_OS::strcmp (get_opt.opt_arg (), ACE_TEXT ("lru")) == 0)
+        {
           caching_strategy_type = ACE_LRU;
+        }
         if (ACE_OS::strcmp (get_opt.opt_arg (), ACE_TEXT ("lfu")) == 0)
+        {
           caching_strategy_type = ACE_LFU;
+        }
         if (ACE_OS::strcmp (get_opt.opt_arg (), ACE_TEXT ("fifo")) == 0)
+        {
           caching_strategy_type = ACE_FIFO;
+        }
         break;
       case 'i':
         iterations = ACE_OS::atoi (get_opt.opt_arg ());
@@ -496,12 +566,16 @@ int
 run_main (int argc, ACE_TCHAR *argv[])
 {
   // Validate options.
-  int result = parse_args (argc, argv);
+  int const result = parse_args (argc, argv);
   if (result != 0)
+  {
     return result;
+  }
 
   // Start the test only if options are valid.
   ACE_START_TEST (ACE_TEXT ("Cache_Map_Manager_Test"));
+
+  test_caching_utility_ownership ();
 
   // Remove the extra debugging attributes from Log_Msg output.
   ACE_LOG_MSG->clr_flags (ACE_Log_Msg::VERBOSE_LITE);
@@ -510,9 +584,12 @@ run_main (int argc, ACE_TCHAR *argv[])
   ACE_OS::srand (static_cast<u_int> (ACE_OS::time (nullptr)));
 
   // Create the lookup array.
-  ACE_NEW_RETURN (lookup_array,
-                  KEY[no_of_lookups],
-                  -1);
+  lookup_array.reset (new (std::nothrow) KEY[no_of_lookups]);
+  if (!lookup_array)
+    {
+      errno = ENOMEM;
+      return -1;
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("\nLookup sequence: ")));
@@ -523,12 +600,16 @@ run_main (int argc, ACE_TCHAR *argv[])
        ++k)
     {
       if (randomize_lookups != 0)
-        lookup_array[k] = ACE_OS::rand () % iterations;
+        {
+          lookup_array[k] = ACE_OS::rand () % iterations;
+        }
       else
-        lookup_array[k] = k % iterations;
+        {
+          lookup_array[k] = k % iterations;
+        }
 
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("%d  "),
+                  ACE_TEXT ("%B  "),
                   lookup_array[k]));
     }
 
@@ -554,8 +635,6 @@ run_main (int argc, ACE_TCHAR *argv[])
     {
       test_caching_strategy_type ();
     }
-
-  delete[] lookup_array;
 
   ACE_LOG_MSG->set_flags (ACE_Log_Msg::VERBOSE_LITE);
   ACE_END_TEST;

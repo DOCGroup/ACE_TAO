@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 /**
  *  @file   EC_QOS_Info.h
  *
@@ -39,22 +37,19 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_RTEvent_Serv_Export TAO_EC_QOS_Info
 {
 public:
-  /// Constructor
   TAO_EC_QOS_Info ();
 
-  /// Copy constructor, it does the obvious thing, but if it is not
-  /// here the HP/aCC compiler breaks.
-  TAO_EC_QOS_Info (const TAO_EC_QOS_Info &rhs);
+  TAO_EC_QOS_Info (TAO_EC_QOS_Info const &rhs);
 
-  RtecBase::handle_t rt_info;
-  RtecBase::Preemption_Priority_t preemption_priority;
+  RtecBase::handle_t rt_info {-1};
+  RtecBase::Preemption_Priority_t preemption_priority {};
 
   /**
    * Timer ids propagate their identity using this field, notice that
    * they cannot use the event type because there could be multiple
    * timeouts for the same consumer.
    */
-  long timer_id_;
+  long timer_id_ {-1};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

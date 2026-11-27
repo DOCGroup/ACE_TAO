@@ -10,18 +10,20 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       int retval = server.init (argc, argv);
 
       if (retval == -1)
-        return -1;
+        {
+          return -1;
+        }
       else
         {
           server.run ();
         }
     }
-  catch (const CORBA::SystemException& sysex)
+  catch (CORBA::SystemException const & sysex)
     {
       sysex._tao_print_exception ("Server: System Exception");
       return -1;
     }
-  catch (const CORBA::UserException& userex)
+  catch (CORBA::UserException const & userex)
     {
       userex._tao_print_exception ("Server: User Exception");
       return -1;

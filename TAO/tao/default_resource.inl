@@ -1,4 +1,3 @@
-// -*- C++ -*-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
@@ -12,7 +11,9 @@ ACE_INLINE
 TAO_RSF_Timer_Queue_Ptr::~TAO_RSF_Timer_Queue_Ptr ()
 {
   if (this->timer_queue_ != 0)
-    this->resource_factory_.destroy_timer_queue (this->timer_queue_);
+    {
+      this->resource_factory_.destroy_timer_queue (this->timer_queue_);
+    }
 }
 
 ACE_INLINE ACE_Timer_Queue*

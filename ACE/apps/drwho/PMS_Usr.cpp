@@ -19,9 +19,11 @@
 int
 PMS_Usr::encode (char *packet, int &packet_length)
 {
-  if (Options::get_opt (Options::DEBUGGING) != 0)
-    ACE_DEBUG ((LM_DEBUG,
-                "in PMS_Usr::encode"));
+  if (Options::get_opt (Options::DEBUGGING))
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  "in PMS_Usr::encode"));
+    }
 
   char *buf_ptr = packet;
 
@@ -40,7 +42,7 @@ PMS_Usr::encode (char *packet, int &packet_length)
   *buf_ptr++ = '\n';
   packet_length = buf_ptr - packet;
 
-  if (Options::get_opt (Options::DEBUGGING) != 0)
+  if (Options::get_opt (Options::DEBUGGING))
     {
       ACE_DEBUG ((LM_DEBUG,
                   "packet_length = %d\n",
@@ -60,7 +62,7 @@ PMS_Usr::encode (char *packet, int &packet_length)
 int
 PMS_Usr::decode (char *packet, int &packet_length)
 {
-  if (Options::get_opt (Options::DEBUGGING) != 0)
+  if (Options::get_opt (Options::DEBUGGING))
     {
       ACE_DEBUG ((LM_DEBUG,
                   "in PMS_Usr::decode, packet_length = %d\n",
@@ -70,12 +72,10 @@ PMS_Usr::decode (char *packet, int &packet_length)
                   "\n"));
     }
 
-  ACE_NEW_RETURN (this->ss,
-                  SL_Server (packet),
-                  -1);
+  Search_Struct *lookup {};
+  ACE_NEW_RETURN (lookup, SL_Server (packet), -1);
+  this->ss.reset (lookup);
   return 1;
 }
 
-PMS_Usr::PMS_Usr ()
-{
-}
+PMS_Usr::PMS_Usr () = default;

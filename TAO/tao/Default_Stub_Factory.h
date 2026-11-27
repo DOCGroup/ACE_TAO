@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Default_Stub_Factory.h
  *
@@ -10,7 +7,6 @@
  *
  *  @author  Angelo Corsaro <corsaro@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_DEFAULT_STUB_FACTORY_H_
 #define TAO_DEFAULT_STUB_FACTORY_H_
@@ -40,12 +36,11 @@ class TAO_Export TAO_Default_Stub_Factory
   : public TAO_Stub_Factory
 {
 public:
-  /// Destructor.
   ~TAO_Default_Stub_Factory () override = default;
 
   /// Creates a Stub Object.
-  TAO_Stub *create_stub (const char *repository_id,
-                         const TAO_MProfile &profiles,
+  TAO_Stub *create_stub (char const *repository_id,
+                         TAO_MProfile const &profiles,
                          TAO_ORB_Core *orb_core) override;
 };
 

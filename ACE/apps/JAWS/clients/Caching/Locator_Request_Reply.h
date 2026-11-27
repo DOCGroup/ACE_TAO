@@ -1,19 +1,15 @@
-/* -*- C++ -*- */
-
-
-//=============================================================================
 /**
  *  @file    Locator_Request_Reply.h
  *
  *  @author Nanbor Wang
  */
-//=============================================================================
-
 
 #ifndef ACE_LOCATOR_REQUEST_REPLY_H
 #define ACE_LOCATOR_REQUEST_REPLY_H
 
 #include "URL_Properties.h"
+
+#include <memory>
 
 /**
  * @class ACE_URL_Locator_Request
@@ -27,42 +23,40 @@
 class ACE_Svc_Export ACE_URL_Locator_Request
 {
 public:
-  /// Default ctor.
   ACE_URL_Locator_Request ();
 
-  /// Default dtor.
   ~ACE_URL_Locator_Request ();
 
   /**
    * Query the locator for HTTP with designate properties (none, some,
    * or all).  The locator being queried will return a sequence of
-   * offers with <how_many> offers in it.  This interface allocates
-   * <offer> so users must deallocate it after use.
+   * offers with @c how_many offers in it.  This interface allocates
+   * @c offer so users must deallocate it after use.
    */
   int url_query (const int how,
-                 const ACE_URL_Property_Seq &pseq,
+                 ACE_URL_Property_Seq const &pseq,
                  const int how_many);
 
   /// Export an offer to the locator.
-  int export_offer (const ACE_URL_Offer &offer);
+  int export_offer (ACE_URL_Offer const &offer);
 
   /// Withdraw an offer.  return 0 if succeed, -1 otherwise.
-  int withdraw_offer (const ACE_WString &offer_id);
+  int withdraw_offer (ACE_WString const &offer_id);
 
   /// Query a specific offer.
-  int describe_offer (const ACE_WString &offer_id);
+  int describe_offer (ACE_WString const &offer_id);
 
   /// Modify a previously registered offer.
-  int modify_offer (const ACE_WString &offer_id,
-                    const char *url = 0,
-                    const ACE_URL_Property_Seq &del = 0,
-                    const ACE_URL_Property_Seq &modify = 0);
+  int modify_offer (ACE_WString const &offer_id,
+                    char const *url = nullptr,
+                    ACE_URL_Property_Seq const &del = 0,
+                    ACE_URL_Property_Seq const &modify = 0);
 
   /// Modify a previously registered offer.
-  int modify_offer (const ACE_WString &offer_id,
-                    const ACE_WString *url = 0,
-                    const ACE_URL_Property_Seq &del = 0,
-                    const ACE_URL_Property_Seq &modify = 0);
+  int modify_offer (ACE_WString const &offer_id,
+                    ACE_WString const *url = nullptr,
+                    ACE_URL_Property_Seq const &del = 0,
+                    ACE_URL_Property_Seq const &modify = 0);
 
   /// Encode request for network communication.  If succeed,
   /// returns the size of the buffer, otherwise, return 0.
@@ -77,16 +71,16 @@ public:
   size_t decode (void *buffer);
 
   /// A bunch of methods to access internal data.
-  const int how () const;
-  const int how_many () const;
-  const u_int opcode () const;
-  const ACE_URL_Property_Seq *seq () const;
-  const ACE_URL_Property_Seq *del () const;
-  const ACE_URL_Property_Seq *modify () const;
-  const ACE_URL_Offer *offer () const;
-  const ACE_WString &id () const;
-  const ACE_WString &url () const;
-  const char *buffer () const;
+  int how () const;
+  int how_many () const;
+  u_int opcode () const;
+  ACE_URL_Property_Seq const *seq () const;
+  ACE_URL_Property_Seq const *del () const;
+  ACE_URL_Property_Seq const *modify () const;
+  ACE_URL_Offer const *offer () const;
+  ACE_WString const &id () const;
+  ACE_WString const &url () const;
+  char const *buffer () const;
 
   /// Print out this object.
   void dump () const;
@@ -96,42 +90,41 @@ protected:
   /// this request.
   size_t size ();
 
+  /// Bit masks identifying which request fields are present.
   enum {
     VALID_SEQ1 = 0x1,
     VALID_SEQ2 = 0X2,
     VALID_OFFER = 0X4
   };
-  // These constants used to indicate which pointers are valid.
-
   /// Request type code.
   u_int code_;
 
   /// Query method (if code_ == QUERY.)
-  int how_;
+  int how_ {};
 
   /// How many offers are we interested in in this query.
-  int how_many_;
+  int how_many_ {};
 
   /// Bit flag to mark valid pointers within this object.
-  int valid_ptr_;
+  int valid_ptr_ {};
 
   /// For query or del in modify_offer.
-  ACE_URL_Property_Seq *seq1_;
+  std::unique_ptr<ACE_URL_Property_Seq> seq1_;
 
   /// For modify seq. in modify_offer.
-  ACE_URL_Property_Seq *seq2_;
+  std::unique_ptr<ACE_URL_Property_Seq> seq2_;
 
   /// Offer to export.
-  ACE_URL_Offer *offer_;
+  std::unique_ptr<ACE_URL_Offer> offer_;
 
   /// Offer ID.
-  ACE_WString id_;
+  ACE_NS_WString id_;
 
   /// URL of this offer.
-  ACE_WString url_;
+  ACE_NS_WString url_;
 
   /// Buffer to store encoded data.
-  char *buffer_;
+  std::unique_ptr<char[]> buffer_;
 };
 
 /**
@@ -146,10 +139,8 @@ protected:
 class ACE_Svc_Export ACE_URL_Locator_Reply
 {
 public:
-  /// Default ctor.
   ACE_URL_Locator_Reply ();
 
-  /// Default dtor.
   ~ACE_URL_Locator_Reply ();
 
   /// Setup a reply message for EXPORT, WITHDRAW, or MODIFY operations.
@@ -157,11 +148,11 @@ public:
 
   /// Setup a reply for QUERY operation.
   int query_reply (int result, size_t num,
-                   const ACE_URL_Offer_Seq &offers);
+                   ACE_URL_Offer_Seq const &offers);
 
   /// Construct a reply for DESCRIBE operation.
   int describe_reply (int result,
-                      const ACE_URL_Offer &offer);
+                      ACE_URL_Offer const &offer);
 
   /// Encode request for network communication.  If succeed,
   /// returns the size of the buffer, otherwise, return 0.
@@ -175,13 +166,13 @@ public:
    */
   size_t decode (void *buffer);
 
-  // Accessor function.
-  const size_t num_offers () const;
-  const ACE_URL_Offer *offer () const;
-  const ACE_URL_Offer_Seq *offers () const;
-  const u_int opcode () const;
-  const u_int status () const;
-  const char *buffer () const ;
+  /// Accessors for reply fields.
+  size_t num_offers () const;
+  ACE_URL_Offer const *offer () const;
+  ACE_URL_Offer_Seq const *offers () const;
+  u_int opcode () const;
+  u_int status () const;
+  char const *buffer () const;
 
   /// Print out this object.
   void dump () const ;
@@ -191,32 +182,31 @@ protected:
   /// this request.
   size_t size ();
 
+  /// Bit masks identifying which reply fields are present.
   enum {
     VALID_OFFER = 0x1,
     VALID_OFFERS = 0x2
   };
-  // Valid pointer masks.
-
   /// Holds the original op code.
   u_int code_;
 
   /// Holds the result of an operation from the Location Server.
-  int status_;
+  int status_ {};
 
   /// Holds the number of valid offers in the offers_ sequence.
-  size_t num_offers_;
+  size_t num_offers_ {};
 
   /// Flag that marks valid internal pointers.
-  int valid_ptr_;
+  int valid_ptr_ {};
 
   /// Holds a single offer.  Used in query offer property.
-  ACE_URL_Offer *offer_;
+  std::unique_ptr<ACE_URL_Offer> offer_;
 
   /// Holds the replying offer sequence from a Locator.
-  ACE_URL_Offer_Seq *offers_;
+  std::unique_ptr<ACE_URL_Offer_Seq> offers_;
 
   /// Buffer to store encoded data.
-  char *buffer_;
+  std::unique_ptr<char[]> buffer_;
 };
 #if defined (__ACE_INLINE__)
 #include "Locator_Request_Reply.inl"

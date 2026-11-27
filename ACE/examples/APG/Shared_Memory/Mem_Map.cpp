@@ -1,12 +1,12 @@
 #include "ace/OS_NS_fcntl.h"
-#include "ace/OS_NS_string.h"
+#include <cstring>
 #include "ace/Mem_Map.h"
 #include "ace/Log_Msg.h"
 
 // Listing 1 code/ch17
 int ACE_TMAIN (int, ACE_TCHAR *argv[])
 {
-  ACE_HANDLE srcHandle = ACE_OS::open (argv[1], O_RDONLY);
+  ACE_HANDLE const srcHandle = ACE_OS::open (argv[1], O_RDONLY);
   ACE_ASSERT(srcHandle != ACE_INVALID_HANDLE);
 
   ACE_Mem_Map srcMap (srcHandle, static_cast<size_t> (-1), PROT_READ, ACE_MAP_PRIVATE);
@@ -20,9 +20,7 @@ int ACE_TMAIN (int, ACE_TCHAR *argv[])
                        ACE_MAP_SHARED);
   ACE_ASSERT(destMap.addr () != nullptr);
 
-  ACE_OS::memcpy (destMap.addr (),
-                  srcMap.addr (),
-                  srcMap.size ());
+  std::memcpy (destMap.addr (), srcMap.addr (), srcMap.size ());
   destMap.sync ();
 
   srcMap.close ();

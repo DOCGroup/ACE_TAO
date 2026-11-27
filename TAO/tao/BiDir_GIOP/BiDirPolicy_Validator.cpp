@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/BiDir_GIOP/BiDirPolicy_Validator.h"
 #include "tao/BiDir_GIOP/BiDir_Policy_i.h"
 #include "tao/Policy_Set.h"
@@ -26,7 +25,9 @@ TAO_BiDirPolicy_Validator::validate_impl (TAO_Policy_Set &policies)
 
       // Set the flag in the ORB_Core
       if (val == BiDirPolicy::BOTH)
+      {
         orb_core_.bidir_giop_policy (true);
+      }
     }
 }
 

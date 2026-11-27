@@ -25,7 +25,6 @@
 class TAO_RTEC_Perf_Export Loopback_Pair
 {
 public:
-  /// Constructor
   /**
    * We need a default constructor because this class is often used in
    * arrays.
@@ -40,9 +39,6 @@ public:
    *        The Loopback_Consumer consumes the same event, the
    *        Loopback_Supplier generates (base_event_type + 1), and the
    *        consumer subscribes for that type too.
-   * @param iterations The number of iterations expected on the test.
-   * @param workload_in_usecs The consumer workload, in microseconds.
-   * @param gsf The high resolution timer global scale factor.
    *
    */
   void init (CORBA::Long experiment_id,
@@ -56,13 +52,13 @@ public:
   /// Disconnect from the event channel
   void disconnect ();
 
-  //@{
+  /// @{
   /** @name Accessors
    */
   Loopback_Supplier *loopback_supplier () const;
 
   Loopback_Consumer *loopback_consumer () const;
-  //@}
+  /// @}
 
 private:
   Servant_var<Loopback_Supplier> loopback_supplier_;

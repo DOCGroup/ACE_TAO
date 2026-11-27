@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project : portableserver, avoids_minimum_corba, avoids_corba_e_compact, avoids_corba_e_micro {
   after    += RTCORBA_Common
   libs     += RTCORBA_Common

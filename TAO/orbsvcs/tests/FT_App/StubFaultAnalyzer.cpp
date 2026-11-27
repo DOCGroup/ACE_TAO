@@ -1,23 +1,9 @@
-// -*- C++ -*-
 #include "StubFaultAnalyzer.h"
 #include "ace/Get_Opt.h"
 #include "orbsvcs/PortableGroup/PG_Properties_Encoder.h"
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
 #include "ace/OS_NS_stdio.h"
-
-StubFaultAnalyzer::StubFaultAnalyzer ()
-  : readyFile_(0)
-  , detector_ior_(0)
-  , notifier_ior_(0)
-{
-}
-
-
-StubFaultAnalyzer::~StubFaultAnalyzer ()
-{
-}
-
 
 int StubFaultAnalyzer::parse_args (int argc, ACE_TCHAR * argv[])
 {
@@ -30,7 +16,7 @@ int StubFaultAnalyzer::parse_args (int argc, ACE_TCHAR * argv[])
     {
       case 'r':
       {
-        this->replicaIORs.push_back (ACE_TEXT_ALWAYS_CHAR(get_opts.opt_arg ()));
+        this->replicaIORs.emplace_back (ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ()));
         break;
       }
       case 'd':
@@ -60,7 +46,7 @@ int StubFaultAnalyzer::parse_args (int argc, ACE_TCHAR * argv[])
 
   if(! optionError)
   {
-    if (0 == replicaIORs.size())
+    if (this->replicaIORs.empty ())
     {
       ACE_ERROR ((LM_ERROR,
         "at least one -r option is required.\n"
@@ -68,14 +54,14 @@ int StubFaultAnalyzer::parse_args (int argc, ACE_TCHAR * argv[])
       optionError = -1;
     }
 
-    if (0 == this->detector_ior_)
+    if (this->detector_ior_.empty ())
     {
       ACE_ERROR ((LM_ERROR,
         "-d option is required.\n"
         ));
       optionError = -1;
     }
-    if (0 == this->notifier_ior_)
+    if (this->notifier_ior_.empty ())
     {
       ACE_ERROR ((LM_ERROR,
         "-n option is required.\n"
@@ -108,26 +94,25 @@ int StubFaultAnalyzer::init (CORBA::ORB_ptr orb)
   this->orb_ = CORBA::ORB::_duplicate (orb);
   //////////////////////////////////////////
   // resolve reference to detector factory
-  CORBA::Object_var detector_obj = this->orb_->string_to_object(this->detector_ior_);
+  CORBA::Object_var detector_obj = this->orb_->string_to_object (this->detector_ior_.c_str ());
   this->factory_ = ::FT::FaultDetectorFactory::_narrow(detector_obj.in ());
   if (CORBA::is_nil(this->factory_.in ()))
   {
     ACE_OS::fprintf (stderr, "Can't resolve Detector Factory IOR %s\n",
-                     ACE_TEXT_ALWAYS_CHAR (this->detector_ior_));
+                     ACE_TEXT_ALWAYS_CHAR (this->detector_ior_.c_str ()));
     result = -1;
   }
 
   //////////////////////////////////////////
   // resolve references to notifier
-  CORBA::Object_var not_obj = this->orb_->string_to_object(this->notifier_ior_);
+  CORBA::Object_var not_obj = this->orb_->string_to_object (this->notifier_ior_.c_str ());
   this->notifier_ = ::FT::FaultNotifier::_narrow(not_obj.in ());
   if (CORBA::is_nil(this->notifier_.in ()))
   {
     ACE_OS::fprintf (stderr, "Can't resolve Notifier IOR %s\n",
-                     ACE_TEXT_ALWAYS_CHAR (this->notifier_ior_));
+                     ACE_TEXT_ALWAYS_CHAR (this->notifier_ior_.c_str ()));
     result = -1;
   }
-
 
   //////////////////////////////////
   // register fault consumers
@@ -148,16 +133,15 @@ int StubFaultAnalyzer::init (CORBA::ORB_ptr orb)
     ////////////////////////////////////
     // resolve references to replicas
     // create a fault detector for each replica
-    size_t replicaCount = this->replicaIORs.size();
-    for(size_t nRep = 0; result == 0 && nRep < replicaCount; ++nRep)
+    for (std::string const &ior_name : this->replicaIORs)
     {
-      const char * iorName = this->replicaIORs[nRep];
-      CORBA::Object_var rep_obj = this->orb_->string_to_object(iorName);
+      CORBA::Object_var rep_obj = this->orb_->string_to_object (ior_name.c_str ());
       FT::PullMonitorable_var replica = FT::PullMonitorable::_narrow(rep_obj.in ());
       if (CORBA::is_nil(replica.in ()))
       {
-        ACE_OS::fprintf (stderr, "Can't resolve Replica IOR %s\n", iorName);
+        ACE_OS::fprintf (stderr, "Can't resolve Replica IOR %s\n", ior_name.c_str ());
         result = -1;
+        break;
       }
       else
       {
@@ -196,7 +180,7 @@ int StubFaultAnalyzer::init (CORBA::ORB_ptr orb)
         PortableGroup::Criteria_var criteria;
         ACE_NEW_NORETURN (criteria,
           PortableGroup::Criteria);
-        if (criteria.ptr() == 0)
+        if (criteria.ptr() == nullptr)
         {
           ACE_ERROR((LM_ERROR,
             "Error cannot allocate criteria.\n"
@@ -209,7 +193,7 @@ int StubFaultAnalyzer::init (CORBA::ORB_ptr orb)
           PortableGroup::GenericFactory::FactoryCreationId_var factory_creation_id;
 
           ACE_DEBUG((LM_DEBUG,
-            "Call create_object with type: %s\n", type_id.in()
+            "Call create_object with type: %C\n", type_id.in()
             ));
           this->factory_->create_object (
             type_id.in(),
@@ -219,9 +203,9 @@ int StubFaultAnalyzer::init (CORBA::ORB_ptr orb)
       }
     }
 
-    if (result == 0 && this->readyFile_ != 0)
+    if (result == 0 && !this->readyFile_.empty ())
     {
-      FILE *ready = ACE_OS::fopen (this->readyFile_, "w");
+      FILE *ready = ACE_OS::fopen (this->readyFile_.c_str (), "w");
       if ( ready )
       {
         ACE_OS::fprintf (ready, "ready\n");
@@ -232,11 +216,10 @@ int StubFaultAnalyzer::init (CORBA::ORB_ptr orb)
   return result;
 }
 
-
 /**
  * Return a string to identify this object for logging/console message purposes.
  */
-const char * StubFaultAnalyzer::identity () const
+char const *StubFaultAnalyzer::identity () const
 {
   return this->identity_.c_str();
 }
@@ -250,7 +233,6 @@ int StubFaultAnalyzer::fini ()
   this->batchConsumer_.fini();
   return 0;
 }
-
 
 int StubFaultAnalyzer::idle(int & result)
 {

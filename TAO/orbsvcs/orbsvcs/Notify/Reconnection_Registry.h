@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 /**
  *  @file Reconnection_Registry.h
  *
@@ -26,10 +24,10 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Notify
 {
-  extern const char REGISTRY_TYPE[];
-  extern const char RECONNECT_ID[];
-  extern const char RECONNECT_IOR[];
-  extern const char REGISTRY_CALLBACK_TYPE[];
+  extern char const REGISTRY_TYPE[];
+  extern char const RECONNECT_ID[];
+  extern char const RECONNECT_IOR[];
+  extern char const REGISTRY_CALLBACK_TYPE[];
 
   /**
    * @class Reconnection_Registry
@@ -49,14 +47,12 @@ namespace TAO_Notify
                               ACE_SYNCH_NULL_MUTEX>;
 
   public:
-    /// Constructor
-    Reconnection_Registry (Topology_Parent & parent);
+    explicit Reconnection_Registry (Topology_Parent & parent);
 
-    /// Destructor
-    virtual ~Reconnection_Registry ();
+    ~Reconnection_Registry () override;
 
-    //////////////////////////
-    // During normal operation
+    /// @name Normal operation
+    /// @{
 
     /// Add a new callback to the registry
     ::NotifyExt::ReconnectionRegistry::ReconnectionID register_callback (
@@ -66,25 +62,28 @@ namespace TAO_Notify
     void unregister_callback (::NotifyExt::ReconnectionRegistry::ReconnectionID id);
 
     CORBA::Boolean is_alive ();
+    /// @}
 
-    //////////////////////
-    // During topology save
-    virtual void save_persistent (Topology_Saver& saver);
+    /// @name Topology save
+    /// @{
+    void save_persistent (Topology_Saver& saver) override;
+    /// @}
 
-    ///////////////////////////////////////
-    // During reload of persistent topology
+    /// @name Persistent topology reload
+    /// @{
 
-    virtual Topology_Object* load_child (const ACE_CString & type,
+    Topology_Object* load_child (ACE_CString const & type,
       CORBA::Long id,
-      const NVPList& attrs);
+      NVPList const& attrs) override;
 
     void send_reconnect (CosNotifyChannelAdmin::EventChannelFactory_ptr dest_factory);
+    /// @}
 
   private:
-    void release ();
+    void release () override;
 
     Reconnection_Registry_Type reconnection_registry_;
-    ::NotifyExt::ReconnectionRegistry::ReconnectionID highest_id_;
+    ::NotifyExt::ReconnectionRegistry::ReconnectionID highest_id_ {};
   };
 } // namespace TAO_Notify
 

@@ -30,21 +30,25 @@ DSRT_Dispatcher_Impl (ACE_Sched_Params::Policy sched_policy,
     active_prio_ (ACE_Sched_Params::next_priority
                   (sched_policy_,
                    min_prio_)),
-    shutdown_flagged_ (0),
+    shutdown_flagged_ (false),
     non_rt_thr_flags_ (THR_NEW_LWP | THR_JOINABLE | THR_BOUND),
-    curr_scheduled_thr_handle_ (0)
+    rt_thr_flags_ (0),
+    curr_scheduled_thr_handle_ {},
+    curr_scheduled_guid_ {}
 {
   if (sched_policy_ == ACE_SCHED_FIFO)
-    rt_thr_flags_ = non_rt_thr_flags_ | THR_SCHED_FIFO;
+    {
+      rt_thr_flags_ = non_rt_thr_flags_ | THR_SCHED_FIFO;
+    }
   else if (sched_policy_ == ACE_SCHED_RR)
-    rt_thr_flags_ = non_rt_thr_flags_ | THR_SCHED_RR;
+    {
+      rt_thr_flags_ = non_rt_thr_flags_ | THR_SCHED_RR;
+    }
 }
 
 //virtual - so don't inline
 template <class DSRT_Scheduler_Traits>
-DSRT_Dispatcher_Impl<DSRT_Scheduler_Traits>::~DSRT_Dispatcher_Impl ()
-{
-}
+DSRT_Dispatcher_Impl<DSRT_Scheduler_Traits>::~DSRT_Dispatcher_Impl () = default;
 
 }
 

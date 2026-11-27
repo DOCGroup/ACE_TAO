@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    smart_proxy_ch.h
  *
@@ -8,7 +6,6 @@
  *
  *  @author Kirthika Parameswaran  <kirthika@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef _BE_VISITOR_OPERATION_SMART_PROXY_CH_H_
 #define _BE_VISITOR_OPERATION_SMART_PROXY_CH_H_

@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*server): rt_server, strategies, rtcorbacommon {
   Source_Files {
     server.cpp

@@ -1,14 +1,8 @@
-
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
  *  @file   HTTP_Parser.h
  *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-//=============================================================================
-
 
 #ifndef TAO_HTTP_PARSER_H
 #define TAO_HTTP_PARSER_H
@@ -41,11 +35,13 @@ class TAO_HTTP_Parser : public TAO_IOR_Parser
 public:
   TAO_HTTP_Parser () = default;
   ~TAO_HTTP_Parser () override = default;
+  TAO_HTTP_Parser (TAO_HTTP_Parser const &) = delete;
+  TAO_HTTP_Parser (TAO_HTTP_Parser &&) = delete;
+  TAO_HTTP_Parser &operator= (TAO_HTTP_Parser const &) = delete;
+  TAO_HTTP_Parser &operator= (TAO_HTTP_Parser &&) = delete;
 
-  // = The IOR_Parser methods, please read the documentation in
-  //   IOR_Parser.h
-  bool match_prefix (const char *ior_string) const override;
-  CORBA::Object_ptr parse_string (const char *ior, CORBA::ORB_ptr orb) override;
+  bool match_prefix (char const *ior_string) const override;
+  CORBA::Object_ptr parse_string (char const *ior, CORBA::ORB_ptr orb) override;
 };
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO, TAO_HTTP_Parser)

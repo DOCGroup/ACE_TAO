@@ -28,7 +28,7 @@ Client_Options::Client_Options (int &argc, ACE_TCHAR *argv[])
 
   while (arg_shifter.is_anything_left ())
     {
-      const ACE_TCHAR *arg = arg_shifter.get_current ();
+      ACE_TCHAR const *arg = arg_shifter.get_current ();
 
       if (ACE_OS::strcmp (arg, ACE_TEXT("-k")) == 0)
         {
@@ -65,11 +65,13 @@ Client_Options::Client_Options (int &argc, ACE_TCHAR *argv[])
 
 int
 Client_Options::option (ACE_Arg_Shifter &arg_shifter,
-                        const ACE_TCHAR *option_name,
+                        ACE_TCHAR const *option_name,
                         int &option_value)
 {
   if (ACE_OS::strcmp (arg_shifter.get_current (), option_name) != 0)
+  {
     return 0;
+  }
   arg_shifter.consume_arg ();
   if (arg_shifter.is_parameter_next ())
     {
@@ -86,11 +88,13 @@ Client_Options::option (ACE_Arg_Shifter &arg_shifter,
 
 int
 Client_Options::boolean_option (ACE_Arg_Shifter &arg_shifter,
-                                const ACE_TCHAR *option_name,
+                                ACE_TCHAR const *option_name,
                                 int &option_value)
 {
   if (ACE_OS::strcmp (arg_shifter.get_current (), option_name) != 0)
+  {
     return 0;
+  }
   arg_shifter.consume_arg ();
   option_value = 1;
   return 1;

@@ -20,7 +20,7 @@ Client_Pair::init (CORBA::Long experiment_id,
                    PortableServer::POA_ptr supplier_poa,
                    PortableServer::POA_ptr consumer_poa)
 {
-  const CORBA::Long source_event_range = 1;
+  CORBA::Long const source_event_range = 1;
   this->init (experiment_id,
               base_event_type,
               source_event_range,

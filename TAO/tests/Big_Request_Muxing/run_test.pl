@@ -2,7 +2,6 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
      & eval 'exec perl -S $0 $argv:q'
      if 0;
 
-# -*- perl -*-
 
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::TestTarget;
@@ -34,8 +33,6 @@ $SV = $server->CreateProcess ("server", "-ORBdebuglevel $debug_level -o $server_
                                         "-e $expected -l $maybe_lost");
 $CL1 = $client1->CreateProcess ("client", "-k file://$client1_iorfile");
 $CL2 = $client2->CreateProcess ("client", "-k file://$client2_iorfile");
-
-# -*- perl -*-
 
 for ($n = 0; $n < 10; ++$n) {
     print "=================================================================\n";

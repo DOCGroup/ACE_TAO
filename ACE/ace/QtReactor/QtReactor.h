@@ -1,13 +1,9 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    QtReactor.h
  *
  *  @author Hamish Friedlander <ullexco@wave.co.nz>
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef ACE_QTREACTOR_H
 #define ACE_QTREACTOR_H
@@ -52,7 +48,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * etc. They are specific to Qt which uses these as a call back
  * methods implementation mechanism.
  *
- * \note Marek Brudka <mbrudka@elka.pw.edu.pl>: ACE_QtReactor was
+ * @note Marek Brudka <mbrudka@elka.pw.edu.pl>: ACE_QtReactor was
  * quickly bugfixed to meet ACE 5.4.2 (6.0.0?) deadline.
  * While it passes QtReactor_Test now, there is a great
  * room for improvements as the implementation is rather inefficient
@@ -96,88 +92,96 @@ class ACE_QtReactor_Export ACE_QtReactor
     Q_OBJECT
 
 public:
-    /** \brief Constructor follows  @ACE_Select_Reactor
-        \param QApplication *qapp, qapplication which runs events loop
-    */
+    /**
+     * Construct a reactor for the Qt application @a qapp, which runs the
+     * event loop. Other arguments are forwarded to @c ACE_Select_Reactor.
+     */
     explicit ACE_QtReactor (QApplication *qapp = nullptr,
-        ACE_Sig_Handler * = 0,
-        ACE_Timer_Queue * = 0,
+        ACE_Sig_Handler * = nullptr,
+        ACE_Timer_Queue * = nullptr,
         int disable_notify_pipe = 0,
         ACE_Reactor_Notify *notify = nullptr,
         bool mask_signals = true,
         int s_queue = ACE_SELECT_TOKEN::FIFO);
 
-    /** \brief Constructor follows @ACE_Select_Reactor
-        \param QApplication *qapp, qapplication which runs events loop
-    */
+    /**
+     * Construct a reactor for the Qt application @a qapp, which runs the
+     * event loop. Other arguments are forwarded to @c ACE_Select_Reactor.
+     */
     explicit ACE_QtReactor (size_t size,
         QApplication *qapp = nullptr,
         bool restart = false,
-        ACE_Sig_Handler * = 0,
-        ACE_Timer_Queue * = 0,
+        ACE_Sig_Handler * = nullptr,
+        ACE_Timer_Queue * = nullptr,
         int disable_notify_pipe = 0,
         ACE_Reactor_Notify *notify = nullptr,
         bool mask_signals = true,
         int s_queue = ACE_SELECT_TOKEN::FIFO);
 
-    virtual ~ACE_QtReactor ();
+    ~ACE_QtReactor () override;
+
+    ACE_QtReactor (ACE_QtReactor const &) = delete;
+    ACE_QtReactor (ACE_QtReactor &&) = delete;
+    ACE_QtReactor &operator = (ACE_QtReactor const &) = delete;
+    ACE_QtReactor &operator = (ACE_QtReactor &&) = delete;
 
     void qapplication (QApplication *qapp);
 
-    // = Timer operations.
-    virtual long schedule_timer (ACE_Event_Handler *handler,
-        const void *arg,
-        const ACE_Time_Value &delay_time,
-        const ACE_Time_Value &interval);
+    /// @name Timer operations
+    /// @{
+    long schedule_timer (ACE_Event_Handler *handler,
+        void const *arg,
+        ACE_Time_Value const &delay_time,
+        ACE_Time_Value const &interval) override;
 
-    virtual int  cancel_timer (ACE_Event_Handler *handler,
-        int dont_call_handle_close = 1);
+    int cancel_timer (ACE_Event_Handler *handler,
+        int dont_call_handle_close = 1) override;
 
-    virtual int  cancel_timer (long timer_id,
-        const void **arg = nullptr,
-        int dont_call_handle_close = 1);
+    int cancel_timer (long timer_id,
+        void const **arg = nullptr,
+        int dont_call_handle_close = 1) override;
+    /// @}
 
 protected:
     /// Register a single @a handler.
-    virtual int register_handler_i (ACE_HANDLE handle,
+    int register_handler_i (ACE_HANDLE handle,
         ACE_Event_Handler *handler,
-        ACE_Reactor_Mask mask);
+        ACE_Reactor_Mask mask) override;
 
-    /// Register a set of <handlers> with Qt.
-    virtual int register_handler_i (const ACE_Handle_Set &handles,
+    /// Register the set of @a handles with Qt.
+    int register_handler_i (ACE_Handle_Set const &handles,
         ACE_Event_Handler *handler,
-        ACE_Reactor_Mask mask);
+        ACE_Reactor_Mask mask) override;
 
+    /// Remove the event handler associated with this @a handle.
+    int remove_handler_i (ACE_HANDLE handle,
+        ACE_Reactor_Mask mask) override;
 
-    /// Remove the <handler> associated with this @a handle.
-    virtual int remove_handler_i (ACE_HANDLE handle,
-        ACE_Reactor_Mask mask);
-
-    /// Remove a set of <handles>.
-    virtual int remove_handler_i (const ACE_Handle_Set &handles,
-        ACE_Reactor_Mask mask);
+    /// Remove the set of @a handles.
+    int remove_handler_i (ACE_Handle_Set const &handles,
+        ACE_Reactor_Mask mask) override;
 
     /// Wait for events to occur.
-    virtual int wait_for_multiple_events (ACE_Select_Reactor_Handle_Set &handle_set,
-        ACE_Time_Value *max_wait_time);
+    int wait_for_multiple_events (ACE_Select_Reactor_Handle_Set &handle_set,
+        ACE_Time_Value *max_wait_time) override;
 
     virtual int QtWaitForMultipleEvents (int width,
         ACE_Select_Reactor_Handle_Set &wait_set,
         ACE_Time_Value *max_wait_time);
 
-    virtual int bit_ops (ACE_HANDLE handle,
+    int bit_ops (ACE_HANDLE handle,
         ACE_Reactor_Mask mask,
         ACE_Select_Reactor_Handle_Set &handle_set,
-        int ops);
+        int ops) override;
 
-    int set_enable_flag_by_mask (int flag_value, ACE_HANDLE handle, ACE_Reactor_Mask mask);
+    int set_enable_flag_by_mask (bool enabled,
+                                ACE_HANDLE handle,
+                                ACE_Reactor_Mask mask);
     void create_notifiers_for_handle (ACE_HANDLE handle);
     void destroy_notifiers_for_handle (ACE_HANDLE handle);
 
-    // Wait for Qt events to occur
-
-    /// Some Qt stuff that we need to have
-    QApplication *qapp_ ;
+    /// Borrowed from the application owner.
+    QApplication *qapp_ {};
 
     /// Typedef of a map.
     using MAP = ACE_Map_Manager<ACE_HANDLE, QSocketNotifier *, ACE_Null_Mutex>;
@@ -192,7 +196,8 @@ protected:
     MAP exception_notifier_;
 
     /// The timer class that would provide timer-signals & single-shot timers
-    QTimer *qtime_ ;
+    /// Owned timer, recreated when the next timeout changes.
+    QTimer *qtime_ {};
 
 private:
     /// This method ensures there's an Qt timeout for the first timeout
@@ -207,12 +212,10 @@ private:
     ACE_HANDLE handle_from_sender () const;
 #endif
 
-    /// Deny access since member-wise won't work...
-    ACE_QtReactor (const ACE_QtReactor &);
-    ACE_QtReactor &operator= (const ACE_QtReactor &);
-
 private slots:
-    // These are all part of the communication mechanism adopted in Qt.
+    /// @name Qt signal callbacks
+    /// @{
+
     /// Dispatch a Read Event
     void read_event (ACE_QT_HANDLE_TYPE p_handle);
 
@@ -224,6 +227,7 @@ private slots:
 
     /// Dispatch a timeout event
     void timeout_event ();
+    /// @}
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

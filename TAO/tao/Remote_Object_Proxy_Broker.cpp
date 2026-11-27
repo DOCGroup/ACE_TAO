@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/Remote_Object_Proxy_Broker.h"
 #include "tao/CORBA_String.h"
 #include "tao/UB_String_Arguments.h"
@@ -10,13 +9,15 @@
 
 #include "ace/Dynamic_Service.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
   CORBA::Boolean
   Remote_Object_Proxy_Broker::_is_a (CORBA::Object_ptr target,
-                                     const char *type_id)
+                                     char const *type_id)
   {
     TAO::Arg_Traits<ACE_InputCDR::to_boolean>::ret_val _tao_retval;
     TAO::Arg_Traits<char *>::in_arg_val _tao_id (type_id);
@@ -105,7 +106,7 @@ namespace TAO
   char *
   Remote_Object_Proxy_Broker::_repository_id (CORBA::Object_ptr target)
   {
-    TAO::Arg_Traits< ::CORBA::Char *>::ret_val _tao_retval;
+    TAO::Arg_Traits<::CORBA::Char *>::ret_val _tao_retval;
 
     TAO::Argument *_tao_signature [] =
       {
@@ -126,13 +127,11 @@ namespace TAO
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */
 }
 
-// -----------------------------------------------------
-
 TAO::Remote_Object_Proxy_Broker *
 the_tao_remote_object_proxy_broker ()
 {
   static TAO::Remote_Object_Proxy_Broker the_broker;
-  return &the_broker;
+  return std::addressof (the_broker);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

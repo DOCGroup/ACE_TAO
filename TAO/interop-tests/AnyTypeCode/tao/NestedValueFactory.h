@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #ifndef NESTEDVALUEFACTORY_H
 #define NESTEDVALUEFACTORY_H
 
@@ -6,7 +5,8 @@
 
 class Demo_NestedValueFactory : public virtual CORBA::ValueFactoryBase
 {
-  virtual CORBA::ValueBase* create_for_unmarshal();
+public:
+  CORBA::ValueBase *create_for_unmarshal () override;
 };
 
 #endif

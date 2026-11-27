@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file  Bug_4189_Regression_Test.cpp
  *
@@ -7,7 +6,6 @@
  * For broadcast sockets it should be possible to open the same port more than
  * once at the time on a host.
  */
-//=============================================================================
 
 #include "test_config.h"
 #include "ace/OS_NS_string.h"
@@ -47,7 +45,8 @@ int reuseAddr_test ()
 }
 
 /* \brief Thread main function to run run_receiver function
-   \note run_receiver return valu is stored in receiver_exit_code global variable
+   @note The run_receiver() return value is stored in the receiver_exit_code
+   global variable.
 */
 static ACE_THR_FUNC_RETURN run_thread_receiver (void *)
 {
@@ -62,9 +61,11 @@ int run_main (int, ACE_TCHAR *[])
 
 #if defined (ACE_HAS_THREADS)
   if (ACE_Thread_Manager::instance ()->spawn_n (2, run_thread_receiver) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("spawn_n ()")), -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("spawn_n ()")), -1);
+    }
 
   ACE_Thread_Manager::instance ()->wait ();
 #endif

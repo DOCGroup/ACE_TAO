@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 /**
  *  @file   ESF_Peer_Admin.h
  *
@@ -33,7 +31,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * the proxy peers (i.e. the ProxySuppliers for the ProxyConsumers
  * and vice-versa).
  *
- * <H2>Requirements</H2>
+ * @par Requirements
  *
  * In addition to the requirements imposed by ESF_Proxy_Admin<>
  * the PROXY interface must implement:
@@ -56,29 +54,32 @@ template<class EVENT_CHANNEL, class PROXY, class INTERFACE, class PEER>
 class TAO_ESF_Peer_Admin : public TAO_ESF_Proxy_Admin<EVENT_CHANNEL,PROXY,INTERFACE>
 {
 public:
-  /// Constructor
-  TAO_ESF_Peer_Admin (EVENT_CHANNEL *ec);
+  explicit TAO_ESF_Peer_Admin (EVENT_CHANNEL *ec);
 
-  /// destructor
-  ~TAO_ESF_Peer_Admin () override;
+  ~TAO_ESF_Peer_Admin () override = default;
+
+  TAO_ESF_Peer_Admin (TAO_ESF_Peer_Admin const &) = delete;
+  TAO_ESF_Peer_Admin (TAO_ESF_Peer_Admin &&) = delete;
+  TAO_ESF_Peer_Admin &operator= (TAO_ESF_Peer_Admin const &) = delete;
+  TAO_ESF_Peer_Admin &operator= (TAO_ESF_Peer_Admin &&) = delete;
 
   /**
-   * A <peer> has connected, this is invoked when the peer's client
+   * A @c peer has connected, this is invoked when the peer's client
    * has invoked the connect_xxx_yyy() method.
    * The default implementation is a no-op.
    */
   virtual void peer_connected (PEER *peer);
 
   /**
-   * A <peer> has reconnected, i.e. its client has invoked the
+   * A @c peer has reconnected, i.e. its client has invoked the
    * connect_xxx_yyy() method, but the peer was connected already.
    * The default implementation delegates on the collection
-   * <reconnected> method
+   * @c reconnected method
    */
   virtual void peer_reconnected (PEER *peer);
 
   /**
-   * A <peer> has been disconnected. The default implementation
+   * A @c peer has been disconnected. The default implementation
    * removes the object from the collection and deactivates the
    * proxy.
    */

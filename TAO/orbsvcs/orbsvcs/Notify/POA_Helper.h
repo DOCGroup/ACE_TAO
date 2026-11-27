@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 /**
  *  @file POA_Helper.h
  *
@@ -31,27 +29,25 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Notify_Serv_Export TAO_Notify_POA_Helper
 {
 public:
-  /// Default Constructor
   TAO_Notify_POA_Helper ();
 
-  TAO_Notify_POA_Helper (const TAO_Notify_POA_Helper &) = delete;
+  TAO_Notify_POA_Helper (TAO_Notify_POA_Helper const &) = delete;
   TAO_Notify_POA_Helper (TAO_Notify_POA_Helper &&) = delete;
-  TAO_Notify_POA_Helper &operator= (const TAO_Notify_POA_Helper &) = delete;
+  TAO_Notify_POA_Helper &operator= (TAO_Notify_POA_Helper const &) = delete;
   TAO_Notify_POA_Helper &operator= (TAO_Notify_POA_Helper &&) = delete;
 
   /// Create a new PortableServer::POA.
-  void init (PortableServer::POA_ptr parent_poa, const char* poa_name);
+  void init (PortableServer::POA_ptr parent_poa, char const *poa_name);
 
 #if !defined (CORBA_E_MICRO)
   /// Create a new persistent PortableServer::POA.
   void init_persistent (PortableServer::POA_ptr parent_poa,
-                        const char* poa_name);
+                        char const *poa_name);
 #endif /* !CORBA_E_MICRO */
 
   /// Create a new PortableServer::POA. The name is chosen at random.
   void init (PortableServer::POA_ptr parent_poa);
 
-  /// Destructor
   virtual ~TAO_Notify_POA_Helper ();
 
   /// Get underlying POA
@@ -94,7 +90,7 @@ protected:
 
   /// Apply the polices and create child POA.
   void create_i (PortableServer::POA_ptr parent_poa,
-                 const char* poa_name,
+                 char const *poa_name,
                  CORBA::PolicyList &policy_list);
 
   /// Convert id to ObjectID

@@ -20,7 +20,7 @@ namespace ACE
 {
   namespace Monitor_Control
   {
-    Monitor_Base::Monitor_Base (const char* name,
+    Monitor_Base::Monitor_Base (char const * name,
                                 Monitor_Control_Types::Information_Type type)
       : ACE_Refcountable_T<ACE_SYNCH_MUTEX> (1)
       , data_ (type)
@@ -58,7 +58,7 @@ namespace ACE
         {
           ACELIB_ERROR ((LM_ERROR,
                       ACE_TEXT ("receive: can't store numeric value - ")
-                      ACE_TEXT ("%s is a string type monitor\n"),
+                      ACE_TEXT ("%C is a string type monitor\n"),
                       this->name_.c_str ()));
           return;
         }
@@ -107,13 +107,13 @@ namespace ACE
     }
 
     void
-    Monitor_Base::receive (const Monitor_Control_Types::NameList& data)
+    Monitor_Base::receive (Monitor_Control_Types::NameList const& data)
     {
       if (this->data_.type_ != Monitor_Control_Types::MC_LIST)
         {
           ACELIB_ERROR ((LM_ERROR,
                       ACE_TEXT ("receive: can't store string values - ")
-                      ACE_TEXT ("%s is a numeric type monitor\n"),
+                      ACE_TEXT ("%C is a numeric type monitor\n"),
                       this->name_.c_str ()));
           return;
         }
@@ -135,11 +135,11 @@ namespace ACE
     }
 
     long
-    Monitor_Base::add_constraint (const char* expression,
+    Monitor_Base::add_constraint (char const * expression,
                                   Control_Action* action)
     {
       /// Thread-safe and guaranteed to be unique.
-      long id = Monitor_Point_Registry::instance ()->constraint_id ();
+      long const id = Monitor_Point_Registry::instance ()->constraint_id ();
 
       CONSTRAINTS::value_type entry;
       entry.first = id;
@@ -162,9 +162,9 @@ namespace ACE
     }
 
     Control_Action*
-    Monitor_Base::remove_constraint (const long constraint_id)
+    Monitor_Base::remove_constraint (long const constraint_id)
     {
-      Control_Action* retval = nullptr;
+      Control_Action* retval {};
 
       {
         ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, guard, this->mutex_, nullptr);
@@ -207,7 +207,7 @@ namespace ACE
     }
 
     void
-    Monitor_Base::add_to_registry (const ACE_Time_Value& time)
+    Monitor_Base::add_to_registry (ACE_Time_Value const& time)
     {
       MC_ADMINMANAGER *mgr =
         ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");
@@ -215,7 +215,7 @@ namespace ACE
       if (!mgr->admin ().monitor_point (this, time))
         {
           ACELIB_ERROR ((LM_ERROR,
-                      "monitor point %s registration failed\n",
+                      "monitor point %C registration failed\n",
                       this->name ()));
         }
     }
@@ -245,7 +245,7 @@ namespace ACE
           || this->data_.type_ == Monitor_Control_Types::MC_LIST)
         {
           ACELIB_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("average: %s is wrong monitor type\n"),
+                             ACE_TEXT ("average: %C is wrong monitor type\n"),
                              this->name_.c_str ()),
                             0);
         }
@@ -265,7 +265,7 @@ namespace ACE
           || this->data_.type_ == Monitor_Control_Types::MC_LIST)
         {
           ACELIB_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("sum_of_squares: %s ")
+                             ACE_TEXT ("sum_of_squares: %C ")
                              ACE_TEXT ("is wrong monitor type\n"),
                              this->name_.c_str ()),
                             0);
@@ -282,7 +282,7 @@ namespace ACE
       if (this->data_.type_ == Monitor_Control_Types::MC_GROUP)
         {
           ACELIB_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("count: %s is a monitor group\n"),
+                             ACE_TEXT ("count: %C is a monitor group\n"),
                              this->name_.c_str ()),
                             0UL);
         }
@@ -301,7 +301,7 @@ namespace ACE
           || this->data_.type_ == Monitor_Control_Types::MC_LIST)
         {
           ACELIB_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("minimum_sample: %s ")
+                             ACE_TEXT ("minimum_sample: %C ")
                              ACE_TEXT ("is wrong monitor type\n"),
                              this->name_.c_str ()),
                             0);
@@ -319,7 +319,7 @@ namespace ACE
           || this->data_.type_ == Monitor_Control_Types::MC_LIST)
         {
           ACELIB_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("maximum_sample: %s ")
+                             ACE_TEXT ("maximum_sample: %C ")
                              ACE_TEXT ("is wrong monitor type\n"),
                              this->name_.c_str ()),
                             0);
@@ -337,7 +337,7 @@ namespace ACE
           || this->data_.type_ == Monitor_Control_Types::MC_LIST)
         {
           ACELIB_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("last_sample: %s ")
+                             ACE_TEXT ("last_sample: %C ")
                              ACE_TEXT ("is wrong monitor type\n"),
                              this->name_.c_str ()),
                             0);
@@ -356,7 +356,7 @@ namespace ACE
       if (this->data_.type_ != Monitor_Control_Types::MC_LIST)
         {
           ACELIB_ERROR ((LM_ERROR,
-                      ACE_TEXT ("get_list: %s is not a ")
+                      ACE_TEXT ("get_list: %C is not a ")
                       ACE_TEXT ("list monitor type\n"),
                       this->name_.c_str ()));
 

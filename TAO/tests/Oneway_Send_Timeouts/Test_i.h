@@ -3,26 +3,33 @@
 
 #include "TestS.h"
 
+#include <atomic>
+
 class Test_i : public virtual POA_Test
 {
 public:
-  Test_i (CORBA::ORB_ptr orb);
-  virtual ~Test_i ();
+  explicit Test_i (CORBA::ORB_ptr orb);
+  ~Test_i () override;
 
-  virtual void sleep (CORBA::Long sec, CORBA::Long msec);
+  Test_i (Test_i const &) = delete;
+  Test_i &operator= (Test_i const &) = delete;
+  Test_i (Test_i &&) = delete;
+  Test_i &operator= (Test_i &&) = delete;
 
-  virtual void unsleep ();
+  void sleep (CORBA::Long sec, CORBA::Long msec) override;
 
-  virtual void dummy_one_way (const char* msg);
+  void unsleep () override;
 
-  virtual void dummy_two_way ();
+  void dummy_one_way (char const *msg) override;
 
-  virtual void shutdown ();
+  void dummy_two_way () override;
+
+  void shutdown () override;
 
 private:
-  volatile bool sleep_;
-  volatile bool unsleep_;
-  volatile bool shutdown_;
+  std::atomic<bool> sleep_;
+  std::atomic<bool> unsleep_;
+  std::atomic<bool> shutdown_;
   CORBA::ORB_var orb_;
 };
 

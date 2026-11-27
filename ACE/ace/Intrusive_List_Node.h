@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file Intrusive_List_Node.h
  *
  *  @author Carlos O'Ryan <coryan@uci.edu>
  */
-//=============================================================================
 
 #ifndef ACE_INTRUSIVE_LIST_NODE_H
 #define ACE_INTRUSIVE_LIST_NODE_H
@@ -23,35 +19,30 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 /**
  * @class ACE_Intrusive_List_Node
  *
- * @brief Implement the requirements for ACE_Intrusive_List
+ * @brief Implement the requirements for ACE_Intrusive_List.
  *
  * The class should be used as follows:
  *
- * class My_Object : public ACE_Intrusive_List_Node<My_Object> {<BR>
- * ....<BR>
- * };<BR>
- *
- * However, ACE is supported on platforms that would surely get
- * confused using such templates, the class is provided as a helper
- * for our lucky users that only need portability to modern C++
- * compilers.
+ * @code
+ * class My_Object : public ACE_Intrusive_List_Node<My_Object>
+ * {
+ *   // ...
+ * };
+ * @endcode
  */
 template <class T>
 class ACE_Intrusive_List_Node
 {
 public:
-  /** @name Accesors and modifiers to the next and previous pointers
-   *
-   */
-  //@{
+  /// @name Accessors and modifiers for the next and previous pointers
+  /// @{
   T *prev () const;
   void prev (T *);
   T *next () const;
   void next (T *);
-  //@}
+  /// @}
 
 protected:
-  /// Constructor
   /**
    * The constructor is protected, because only derived classes should
    * be instantiated.

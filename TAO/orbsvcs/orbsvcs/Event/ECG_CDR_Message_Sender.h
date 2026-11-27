@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 /**
  *  @file ECG_CDR_Message_Sender.h
  *
@@ -75,11 +73,12 @@ class TAO_RTEvent_Serv_Export TAO_ECG_CDR_Message_Sender
 public:
   static constexpr size_t ECG_HEADER_SIZE = 32;
   static constexpr size_t ECG_MIN_MTU = 32 + 8;
-  static constexpr size_t ECG_MAX_MTU = 65536; // Really optimistic...
+  /// Really optimistic...
+  static constexpr size_t ECG_MAX_MTU = 65536;
   static constexpr size_t ECG_DEFAULT_MTU = 1024;
 
   /// Initialization and termination methods.
-  //@{
+  /// @{
   TAO_ECG_CDR_Message_Sender (CORBA::Boolean crc = false);
 
   /// Set the endpoint for sending messages.
@@ -90,12 +89,12 @@ public:
    */
   void init (TAO_ECG_Refcounted_Endpoint endpoint_rptr);
 
-  // Shutdown this component.  Frees up the endpoint.
+  /// Shutdown this component.  Frees up the endpoint.
   void shutdown ();
-  //@}
+  /// @}
 
   /// Setters/getters.
-  //@{
+  /// @{
   /// Get the local endpoint used to send the events.
   int get_local_addr (ACE_INET_Addr& addr);
 
@@ -107,7 +106,7 @@ public:
    */
   int mtu (CORBA::ULong mtu);
   CORBA::ULong mtu () const;
-  //@}
+  /// @}
 
   /// The main method - send a CDR message.
   /**
@@ -123,8 +122,8 @@ public:
    * bytes per-second, sleeping before sending more or queueing them
    * to send later via the reactor.
    */
-  void send_message (const TAO_OutputCDR &cdr,
-                     const ACE_INET_Addr &addr);
+  void send_message (TAO_OutputCDR const &cdr,
+                     ACE_INET_Addr const &addr);
 
 private:
   /// Return the datagram...
@@ -135,7 +134,7 @@ private:
    * the header, the rest of the iovec array should contain pointers
    * to the actual data.
    */
-  void send_fragment (const ACE_INET_Addr &addr,
+  void send_fragment (ACE_INET_Addr const &addr,
                       CORBA::ULong request_id,
                       CORBA::ULong request_size,
                       CORBA::ULong fragment_size,
@@ -151,8 +150,8 @@ private:
    * The maximum fragment payload (i.e. the size without the header is
    * also required); @a total_length returns the total message size.
    */
-  CORBA::ULong compute_fragment_count (const ACE_Message_Block* begin,
-                                       const ACE_Message_Block* end,
+  CORBA::ULong compute_fragment_count (ACE_Message_Block const *begin,
+                                       ACE_Message_Block const *end,
                                        int iov_size,
                                        CORBA::ULong max_fragment_payload,
                                        CORBA::ULong& total_length);

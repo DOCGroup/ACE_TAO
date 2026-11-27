@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    Memcpy_Test.cpp
  *
@@ -7,7 +6,6 @@
  * This test compares the performance of ACE_OS::memcpy with
  * that of smemcpy which unrolls the memcpy loop upto size = 16.
  */
-//=============================================================================
 
 #include "ace/OS_NS_string.h"
 #include "ace/High_Res_Timer.h"
@@ -15,7 +13,7 @@
 #include "test_config.h"
 
 void *
-smemcpy (void *dest, const void *src, const size_t n)
+smemcpy (void *dest, void const *src, size_t const n)
 {
   unsigned char *to = static_cast<unsigned char*> (dest);
   const unsigned char *from = static_cast<const unsigned char*> (src);
@@ -66,8 +64,8 @@ testit (int type)
 
   switch (type)
     {
-    case 0: smemcpy ((void*)buffer, (void*)" THIS IS A TEST", size); break;
-    case 1:  ACE_OS::memcpy ((void*)buffer, (void*)" THIS IS A TEST", size); break;
+    case 0: smemcpy (buffer, " THIS IS A TEST", size); break;
+    case 1:  ACE_OS::memcpy (buffer, " THIS IS A TEST", size); break;
     }
 
 }
@@ -82,11 +80,15 @@ run_main (int, ACE_TCHAR *[])
   struct timeval start, now;
 
   for (size_t i = ITERATIONS; i > 0; --i)
-    testit (0);
+    {
+      testit (0);
+    }
 
   start = ACE_High_Res_Timer::gettimeofday_hr ();
   for (size_t j = ITERATIONS; j > 0; --j)
-    testit (0);
+    {
+      testit (0);
+    }
 
   now = ACE_High_Res_Timer::gettimeofday_hr ();
 
@@ -98,7 +100,9 @@ run_main (int, ACE_TCHAR *[])
 
   start = ACE_High_Res_Timer::gettimeofday_hr ();
   for (size_t k = ITERATIONS; k > 0; --k)
-    testit (1);
+    {
+      testit (1);
+    }
 
   now = ACE_High_Res_Timer::gettimeofday_hr ();
 

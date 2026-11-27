@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    main.cpp
  *
@@ -8,14 +6,11 @@
  *
  *  @author Doug Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
-
 
 #include "ace/OS_main.h"
 #include "ace/Signal.h"
 #include "Web_Crawler.h"
 #include "Options.h"
-
 
 void sig_handler (int)
 {
@@ -27,15 +22,20 @@ void sig_handler (int)
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Sig_Action sa ((ACE_SignalHandler) sig_handler, SIGFPE);
+  ACE_Sig_Action const sa ((ACE_SignalHandler) sig_handler, SIGFPE);
   Web_Crawler crawler;
 
   if (crawler.open (argc, argv) == -1)
-    return 1;
+    {
+      return 1;
+    }
   else if (crawler.run () == -1)
-    return 1;
+    {
+      return 1;
+    }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
-
 

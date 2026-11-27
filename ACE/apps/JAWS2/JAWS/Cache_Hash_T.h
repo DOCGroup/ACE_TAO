@@ -1,4 +1,3 @@
-/* -*- c++ -*- */
 #ifndef JAWS_CACHE_HASH_T_H
 #define JAWS_CACHE_HASH_T_H
 
@@ -14,27 +13,30 @@ class JAWS_Cache_Hash
 public:
   using CACHE_BUCKET_MANAGER = JAWS_Hash_Bucket_Manager<EXT_ID, JAWS_Cache_Object *, EQ_FUNC>;
 
-  JAWS_Cache_Hash (ACE_Allocator *alloc = 0, size_t size = 521);
-  // 521 == smallest number > 512 that is prime.  Why is a prime
-  // number important?  I am trying to maximize scattering when using
-  // mod on the hashed value.  This might be bogus though.
+  /// Construct the hash table with at least size buckets; the default 521 is
+  /// the smallest prime greater than 512.
+  explicit JAWS_Cache_Hash (ACE_Allocator *alloc = nullptr, size_t size = 521);
 
   virtual ~JAWS_Cache_Hash ();
+  JAWS_Cache_Hash (JAWS_Cache_Hash const &) = delete;
+  JAWS_Cache_Hash (JAWS_Cache_Hash &&) = delete;
+  JAWS_Cache_Hash &operator= (JAWS_Cache_Hash const &) = delete;
+  JAWS_Cache_Hash &operator= (JAWS_Cache_Hash &&) = delete;
 
-  int find (const EXT_ID &ext_id) const;
-  int find (const EXT_ID &ext_id, JAWS_Cache_Object *&int_id) const;
-  int bind (const EXT_ID &ext_id, JAWS_Cache_Object *const &int_id);
-  int trybind (const EXT_ID &ext_id, JAWS_Cache_Object *&int_id);
-  int rebind (const EXT_ID &ext_id, JAWS_Cache_Object *const &int_id,
+  int find (EXT_ID const &ext_id) const;
+  int find (EXT_ID const &ext_id, JAWS_Cache_Object *&int_id) const;
+  int bind (EXT_ID const &ext_id, JAWS_Cache_Object *const &int_id);
+  int trybind (EXT_ID const &ext_id, JAWS_Cache_Object *&int_id);
+  int rebind (EXT_ID const &ext_id, JAWS_Cache_Object *const &int_id,
               EXT_ID &old_ext_id, JAWS_Cache_Object *&old_int_id);
 
-  int unbind (const EXT_ID &ext_id);
-  int unbind (const EXT_ID &ext_id, JAWS_Cache_Object *&int_id);
+  int unbind (EXT_ID const &ext_id);
+  int unbind (EXT_ID const &ext_id, JAWS_Cache_Object *&int_id);
 
   size_t size () const;
 
 protected:
-  virtual unsigned long hash (const EXT_ID &ext_id) const;
+  virtual unsigned long hash (EXT_ID const &ext_id) const;
   bool isprime (size_t number) const;
   int new_cachebucket (size_t idx);
 
@@ -43,6 +45,7 @@ private:
   size_t size_;
 
   ACE_SYNCH_MUTEX lock_;
+  /// Allocator-owned array of bucket-manager pointers.
   CACHE_BUCKET_MANAGER **hashtable_;
 };
 

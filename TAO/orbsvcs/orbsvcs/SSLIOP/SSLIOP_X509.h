@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   SSLIOP_X509.h
  *
  *  @author Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
 
 #ifndef TAO_SSLIOP_X509_H
 #define TAO_SSLIOP_X509_H
@@ -23,7 +19,7 @@
 
 #include <openssl/x509.h>
 #include <openssl/crypto.h>
-
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -33,14 +29,9 @@ namespace TAO
   {
     // OpenSSL @c X509 structure traits specialization.
     template <>
-    struct OpenSSL_traits< ::X509 >
+    struct OpenSSL_traits<::X509>
     {
       /// Increase the reference count on the given OpenSSL structure.
-      /**
-       * @note This used to be in a function template but MSVC++ 6
-       *       can't handle function templates correctly so reproduce
-       *       the code in each specialization.  *sigh*
-       */
       static ::X509 * _duplicate (::X509 * st)
       {
         if (st != nullptr)
@@ -60,7 +51,7 @@ namespace TAO
       /// Perform deep copy of the given OpenSSL structure.
       static ::X509 * copy (::X509 const & st)
       {
-        return ::X509_dup (const_cast< ::X509 *> (&st));
+        return ::X509_dup (const_cast<::X509 *> (std::addressof (st)));
       }
 
       /// Decrease the reference count on the given OpenSSL
@@ -71,10 +62,9 @@ namespace TAO
       }
     };
 
-    using X509_var = OpenSSL_st_var< ::X509 >;
+    using X509_var = OpenSSL_st_var<::X509>;
   }  // End SSLIOP namespace.
 }  // End TAO namespace.
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

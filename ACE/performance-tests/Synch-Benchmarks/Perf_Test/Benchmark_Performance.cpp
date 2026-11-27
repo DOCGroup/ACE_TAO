@@ -10,7 +10,7 @@ int buffer;
 
 // Initialize the static variables.
 /* static */
-sig_atomic_t Benchmark_Performance::done_ = 0;
+sig_atomic_t Benchmark_Performance::done_ {};
 
 Benchmark_Performance_Test_Base::Benchmark_Performance_Test_Base ()
   : Benchmark_Base (Benchmark_Base::PERFORMANCE)

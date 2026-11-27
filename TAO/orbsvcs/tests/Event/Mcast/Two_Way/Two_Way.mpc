@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*application): messaging, rteventexe, rtevent_serv, naming {
   after  += ECMcastTests_lib
   libs     += ECMcastTests
@@ -9,6 +8,14 @@ project(*application): messaging, rteventexe, rtevent_serv, naming {
 
   Source_Files {
     application.cpp
+  }
+}
+
+project(*payload_test): rteventexe {
+  exename = heartbeat_payload_test
+
+  Source_Files {
+    heartbeat_payload_test.cpp
   }
 }
 

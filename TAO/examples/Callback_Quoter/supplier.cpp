@@ -10,7 +10,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
               "\n\tMarket Status Supplier Daemon\n\n"));
 
   if (supplier.init (argc, argv) == -1)
-    return -1;
+    {
+      return -1;
+    }
   else
-    return supplier.run ();
+    {
+      return supplier.run ();
+    }
 }

@@ -1,13 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Fixed_Array_Argument_T.h
  *
  *  @authors Jeff Parsons and Carlos O'Ryan
  */
-//=============================================================================
-
 
 #ifndef TAO_FIXED_ARRAY_ARGUMENT_T_H
 #define TAO_FIXED_ARRAY_ARGUMENT_T_H
@@ -15,6 +10,8 @@
 #include /**/ "ace/pre.h"
 #include "tao/Argument.h"
 #include "tao/Array_Traits_T.h"
+
+#include <memory>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -60,12 +57,23 @@ namespace TAO
   {
   public:
     In_Fixed_Array_Clonable_Argument_T (typename S_forany::_slice_type const * x);
-    ~In_Fixed_Array_Clonable_Argument_T () override;
+    ~In_Fixed_Array_Clonable_Argument_T () override = default;
 
     Argument* clone () override;
 
   private:
-    bool is_clone_ {};
+    using array_traits = details::array_traits<S_forany>;
+    using slice_type = typename array_traits::slice_type;
+
+    struct Slice_Deleter
+    {
+      void operator() (slice_type *slice) const
+      {
+        array_traits::free (slice);
+      }
+    };
+
+    std::unique_ptr<slice_type, Slice_Deleter> clone_buffer_;
   };
 
   /**

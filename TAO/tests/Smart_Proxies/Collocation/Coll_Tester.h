@@ -1,15 +1,8 @@
-//============================================================================
-//
-//  =FILENAME
-//     Collocation_Test.h
-//
-//  =DESCRIPTION
-//     Server class to perform testing of TAO's collocation mechanism.
-//
-//  =AUTHOR
-//     Nanbor Wang
-//
-//=============================================================================
+/**
+ * @file Coll_Tester.h
+ * @brief Tests TAO's collocation mechanism.
+ * @author Nanbor Wang
+ */
 
 #if !defined (TAO_COLLOCATION_TEST_H)
 #define TAO_COLLOCATION_TEST_H
@@ -20,24 +13,24 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
 class Collocation_Test
 {
 public:
-  Collocation_Test ();
+  Collocation_Test () = default;
+  ~Collocation_Test ();
+  Collocation_Test (Collocation_Test const &) = delete;
+  Collocation_Test (Collocation_Test &&) = delete;
+  Collocation_Test &operator= (Collocation_Test const &) = delete;
+  Collocation_Test &operator= (Collocation_Test &&) = delete;
 
+  /// Initialize the ORB and activate the servants.
   int init (int argc, ACE_TCHAR *argv[]);
-  // Initializing the Collocation_Test object.
 
-  int parse_args (int argc, ACE_TCHAR *argv[]);
-  // Parse the test specific arguments.
-
+  /// Narrow the object reference to the diamond interfaces and test calls.
   int test_narrow ();
-  // This test narrow an object reference to its base class and see
-  // if it works correctly.
 
+  /// Run the collocation test.
   int run ();
-  // Run the test.
 
 private:
   CORBA::ORB_var orb_;
@@ -46,14 +39,14 @@ private:
 
   PortableServer::POAManager_var poa_manager_;
 
+  /// The object reference for the diamond servant.
   CORBA::Object_var diamond_obj_;
-  // Our basic test object.
 
+  /// Servants used by the basic narrowing test.
   Top_i top_servant_;
   Left_i left_servant_;
   Right_i right_servant_;
   Buttom_i diamond_servant_;
-  // A collection of servant for basic narrowing test.
 };
 
 #endif /* TAO_COLLOCATION_TEST_H */

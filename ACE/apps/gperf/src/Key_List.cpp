@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 /**
  * Copyright (C) 1989 Free Software Foundation, Inc.
  * written by Douglas C. Schmidt (d.schmidt@vanderbilt.edu)
@@ -244,7 +242,8 @@ Key_List::special_input (char delimiter, std::string& result)
             {
               // Discard the rest of the delimiter line.
               while ((c = getchar ()) != '\n' && c != EOF)
-                continue;
+                {
+                }
 
               if (!result.empty () && result.back () == '\n')
                 {
@@ -650,9 +649,11 @@ Key_List::reorder ()
 void
 Key_List::output_min_max ()
 {
-  List_Node *temp {};
-  for (temp = head; temp->next; temp = temp->next)
-    continue;
+  List_Node *temp = head;
+  while (temp->next)
+    {
+      temp = temp->next;
+    }
 
   min_hash_value = head->hash_value;
   max_hash_value = temp->hash_value;
@@ -686,11 +687,6 @@ Key_List::output_cpp17_constants (bool static_storage)
       ACE_OS::printf ("%sconstexpr size_t MIN_WORD_LENGTH {%d};\n"
                       "%sconstexpr size_t MAX_WORD_LENGTH {%d};\n",
                       storage, min_key_len, storage, max_key_len);
-      emitted = true;
-    }
-
-  if (use_word_lengths)
-    {
       ACE_OS::printf ("%sconstexpr int MIN_HASH_VALUE {%d};\n",
                       storage, min_hash_value);
       emitted = true;
@@ -948,18 +944,33 @@ Key_List::output_switch (int use_keyword_table)
                           lowest_case_value);
 
           for (temp = curr; temp && ++i <= number_of_cases; temp = temp->next)
-            if (option[LENTABLE])
-              ACE_OS::printf ("                case %*d: if (len == %d) s = \"%s\"; else return %s; break;\n",
-                      Key_List::field_width,
-                      temp->hash_value - lowest_case_value,
-                      temp->length,
-                      temp->key.c_str (),
-                      generated_null_pointer ());
-            else
-              ACE_OS::printf ("                case %*d: s = \"%s\"; break;\n",
-                      Key_List::field_width,
-                      temp->hash_value - lowest_case_value,
-                      temp->key.c_str ());
+            {
+              if (option[LENTABLE])
+                {
+                  ACE_OS::printf ("                case %*d:\n"
+                                  "                  if (len == %d)\n"
+                                  "                    {\n"
+                                  "                      s = \"%s\";\n"
+                                  "                    }\n"
+                                  "                  else\n"
+                                  "                    {\n"
+                                  "                      return %s;\n"
+                                  "                    }\n"
+                                  "                  break;\n",
+                                  Key_List::field_width,
+                                  temp->hash_value - lowest_case_value,
+                                  temp->length,
+                                  temp->key.c_str (),
+                                  generated_null_pointer ());
+                }
+              else
+                {
+                  ACE_OS::printf ("                case %*d: s = \"%s\"; break;\n",
+                                  Key_List::field_width,
+                                  temp->hash_value - lowest_case_value,
+                                  temp->key.c_str ());
+                }
+            }
 
           ACE_OS::printf ("                default: return %s;\n                }\n              ",
                           generated_null_pointer ());
@@ -985,13 +996,13 @@ void
 Key_List::output_keylength_table ()
 {
   int const max_column = 15;
-  int slot = 0;
-  int column = 0;
   char const *indent = option[GLOBAL] ? "" : "  ";
   List_Node *temp;
 
   if (!option[DUP] && !option[SWITCH])
     {
+      int slot = 0;
+      int column = 0;
       char const *const qualifier = option[CONSTANT] ? "constexpr " : "";
       char const *const element_type = max_key_len <= UCHAR_MAX
         ? "char" : max_key_len <= USHRT_MAX ? "short" : "long";
@@ -1237,14 +1248,30 @@ Key_List::output_binary_search_function ()
   ACE_OS::printf ("while (last >= first)\n");
   ACE_OS::printf ("\t{\n");
   ACE_OS::printf ("\t   middle = (last + first) / 2;\n");
-  ACE_OS::printf ("\t   if (%sstrcmp (wordlist[middle].%s, str) == 0)\n      break;\n",
+  ACE_OS::printf ("\t   if (%sstrcmp (wordlist[middle].%s, str) == 0)\n"
+                  "\t     {\n"
+                  "\t       break;\n"
+                  "\t     }\n",
                   string_compare_prefix (false), option.key_name ().c_str ());
-  ACE_OS::printf ("\t   if (%sstrcmp (wordlist[middle].%s, str) < 0)\n      first = middle + 1;\n",
+  ACE_OS::printf ("\t   if (%sstrcmp (wordlist[middle].%s, str) < 0)\n"
+                  "\t     {\n"
+                  "\t       first = middle + 1;\n"
+                  "\t     }\n",
                   string_compare_prefix (false), option.key_name ().c_str ());
-  ACE_OS::printf ("\t   else last = middle - 1;\n");
+  ACE_OS::printf ("\t   else\n"
+                  "\t     {\n"
+                  "\t       last = middle - 1;\n"
+                  "\t     }\n");
   ACE_OS::printf ("\t}\n");
-  ACE_OS::printf ("if (last < first)\n  return %s;\n", generated_null_pointer ());
-  ACE_OS::printf ("else\n  return (%swordlist[middle]%s);\n}\n",
+  ACE_OS::printf ("if (last < first)\n"
+                  "  {\n"
+                  "    return %s;\n"
+                  "  }\n",
+                  generated_null_pointer ());
+  ACE_OS::printf ("else\n"
+                  "  {\n"
+                  "    return (%swordlist[middle]%s);\n"
+                  "  }\n}\n",
                   generated_address_prefix (), generated_address_suffix ());
 
   if (additional_code)
@@ -1343,11 +1370,13 @@ Key_List::output_linear_search_function ()
 
   // Logic to handle the Linear Search.
 
-  ACE_OS::printf ("for (int i=0; i<=%d; i++)",total_keys-1);
+  ACE_OS::printf ("for (int i=0; i<=%d; ++i)",total_keys-1);
   ACE_OS::printf ("\t{\n");
-  ACE_OS::printf ("\t   if (%sstrcmp (wordlist[i].%s, str) == 0)\n",
+  ACE_OS::printf ("\t   if (%sstrcmp (wordlist[i].%s, str) == 0)\n"
+                  "\t     {\n",
                   string_compare_prefix (false), option.key_name ().c_str ());
-  ACE_OS::printf ("\t        return %swordlist[i]%s;\n",
+  ACE_OS::printf ("\t       return %swordlist[i]%s;\n"
+                  "\t     }\n",
                   generated_address_prefix (), generated_address_suffix ());
   ACE_OS::printf ("\t}\n");
   ACE_OS::printf ("return %s;\n}\n", generated_null_pointer ());
@@ -1414,7 +1443,8 @@ Key_List::output_hash_function ()
   for (Key_List::field_width = 2;
        (count /= 10) > 0;
        ++Key_List::field_width)
-    continue;
+    {
+    }
 
   if (option[INLINE])
     {
@@ -1442,7 +1472,9 @@ Key_List::output_hash_function ()
       for (count = 0; count < ACE_ASCII_SIZE; ++count)
         {
           if (!(count % max_column))
-            ACE_OS::printf ("\n    ");
+            {
+              ACE_OS::printf ("\n    ");
+            }
 
           target = ascii_to_ebcdic[count];
           ACE_OS::printf ("%*d,",
@@ -1547,7 +1579,9 @@ Key_List::output_hash_function ()
                                     "(charmap[static_cast<unsigned char> (str[%d])]) %% asso_values.size ()];\n",
                                     i, i - 1);
                     if (i > 1)
-                      ACE_OS::printf ("        [[fallthrough]];\n");
+                      {
+                        ACE_OS::printf ("        [[fallthrough]];\n");
+                      }
                   }
               else
                 for (i = max_key_len; i > 0; --i)
@@ -1555,7 +1589,9 @@ Key_List::output_hash_function ()
                     ACE_OS::printf ("      case %d:\n        hval += asso_values[static_cast<unsigned char> "
                                     "(str[%d]) %% asso_values.size ()];\n", i, i - 1);
                     if (i > 1)
-                      ACE_OS::printf ("        [[fallthrough]];\n");
+                      {
+                        ACE_OS::printf ("        [[fallthrough]];\n");
+                      }
                   }
 
               ACE_OS::printf ("    }\n  return hval;\n}\n\n");
@@ -1606,7 +1642,7 @@ Key_List::count_duplicates (List_Node *link,
 
       if (option[DEBUGGING])
         ACE_DEBUG ((LM_DEBUG,
-                    "%s linked keyword = %s, slot = %d, hash_value = %d\n",
+                    "%C linked keyword = %C, slot = %d, hash_value = %d\n",
                     type,
                     ptr->key.c_str (),
                     ptr->slot,
@@ -1671,7 +1707,7 @@ Key_List::output_lookup_array ()
 
           if (option[DEBUGGING])
             ACE_DEBUG ((LM_DEBUG,
-                        "keyword = %s, slot = %d, hash_value = %d, lookup_array[hash_value] = %d\n",
+                        "keyword = %C, slot = %d, hash_value = %d, lookup_array[hash_value] = %d\n",
                         temp->key.c_str (),
                         temp->slot,
                         temp->hash_value,
@@ -1792,7 +1828,6 @@ Key_List::output_lookup_array ()
 
       for (Key_List::field_width = 2; (count /= 10) > 0; ++Key_List::field_width)
         {
-          continue;
         }
 
       int const max_column = 15;
@@ -2251,14 +2286,14 @@ Key_List::dump ()
               total_duplicates ? total_duplicates + 1 : 0,
               max_key_len));
 
-  u_int keysig_width = option.max_keysig_size () > std::strlen ("keysig")
-    ? option.max_keysig_size ()
-    : static_cast<u_int> (std::strlen ("keysig"));
+  int const keysig_width = option.max_keysig_size () > std::strlen ("keysig")
+    ? static_cast<int> (option.max_keysig_size ())
+    : static_cast<int> (std::strlen ("keysig"));
 
-  size_t key_length = this->max_key_length ();
-  size_t keyword_width = key_length > std::strlen ("keysig")
+  int const key_length = this->max_key_length ();
+  int const keyword_width = key_length > static_cast<int> (std::strlen ("keysig"))
     ? key_length
-    : std::strlen ("keysig");
+    : static_cast<int> (std::strlen ("keysig"));
 
   ACE_DEBUG ((LM_DEBUG,
               "\nList contents are:\n(hash value, key length, slot, %*s, %*s, duplicates):\n",
@@ -2287,7 +2322,7 @@ Key_List::dump ()
                dup = dup->link)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          " %s",
+                          " %C",
                           dup->key.c_str ()));
             }
         }

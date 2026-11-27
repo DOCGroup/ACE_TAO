@@ -1,4 +1,3 @@
-//  -*- MPC -*-
 project(Transcoder_Test): aceexe, acexml {
   exename = Transcoder_Test
   Source_Files {
@@ -10,6 +9,20 @@ project(NamespaceSupport_Test): aceexe, acexml {
   exename = NamespaceSupport_Test
   Source_Files {
     NamespaceSupport_Test.cpp
+  }
+}
+
+project(AttributesImpl_Test): aceexe, acexml {
+  exename = AttributesImpl_Test
+  Source_Files {
+    AttributesImpl_Test.cpp
+  }
+}
+
+project(URL_Addr_Test): aceexe, acexml {
+  exename = URL_Addr_Test
+  Source_Files {
+    URL_Addr_Test.cpp
   }
 }
 

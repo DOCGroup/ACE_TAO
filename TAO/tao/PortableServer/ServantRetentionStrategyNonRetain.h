@@ -1,13 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file ServantRetentionStrategyNonRetain.h
  *
  *  @author  Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-//=============================================================================
-
 #ifndef TAO_SERVANT_RETENTION_STRATEGY_NON_RETAIN_H
 #define TAO_SERVANT_RETENTION_STRATEGY_NON_RETAIN_H
 #include /**/ "ace/pre.h"
@@ -20,6 +15,7 @@
 
 #include "tao/PortableServer/Servant_Location.h"
 #include <atomic>
+#include <cstdint>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -51,40 +47,40 @@ namespace TAO
                        bool &wait_occurred_restart_call) override;
 
       void
-      activate_object_with_id (const PortableServer::ObjectId &id,
+      activate_object_with_id (PortableServer::ObjectId const &id,
                                PortableServer::Servant servant,
                                CORBA::Short priority,
                                bool &wait_occurred_restart_call) override;
 
-      void deactivate_object (const PortableServer::ObjectId &id) override;
+      void deactivate_object (PortableServer::ObjectId const &id) override;
 
       PortableServer::Servant find_servant (
-        const PortableServer::ObjectId &system_id) override;
+        PortableServer::ObjectId const &system_id) override;
 
       int is_servant_in_map (PortableServer::Servant servant,
                              bool &wait_occurred_restart_call) override;
 
       PortableServer::ObjectId *system_id_to_object_id (
-        const PortableServer::ObjectId &system_id) override;
+        PortableServer::ObjectId const &system_id) override;
 
       PortableServer::Servant
-      user_id_to_servant (const PortableServer::ObjectId &id) override;
+      user_id_to_servant (PortableServer::ObjectId const &id) override;
 
       CORBA::Object_ptr
-      id_to_reference (const PortableServer::ObjectId &id,
+      id_to_reference (PortableServer::ObjectId const &id,
                        bool indirect) override;
 
       TAO_Servant_Location servant_present (
-        const PortableServer::ObjectId &system_id,
+        PortableServer::ObjectId const &system_id,
         PortableServer::Servant &servant) override;
 
       PortableServer::Servant find_servant (
-        const PortableServer::ObjectId &system_id,
+        PortableServer::ObjectId const &system_id,
         TAO::Portable_Server::Servant_Upcall &servant_upcall,
         TAO::Portable_Server::POA_Current_Impl &poa_current_impl) override;
 
       int find_servant_priority (
-        const PortableServer::ObjectId &system_id,
+        PortableServer::ObjectId const &system_id,
         CORBA::Short &priority) override;
 
       void deactivate_all_objects () override;
@@ -93,32 +89,33 @@ namespace TAO
 
       CORBA::Object_ptr servant_to_reference (PortableServer::Servant servant) override;
 
-      CORBA::Object_ptr create_reference (const char *intf, CORBA::Short priority) override;
+      CORBA::Object_ptr create_reference (char const *intf, CORBA::Short priority) override;
 
 #if !defined (CORBA_E_MICRO)
       CORBA::Object_ptr create_reference_with_id (
-        const PortableServer::ObjectId &oid,
-        const char *intf,
+        PortableServer::ObjectId const &oid,
+        char const *intf,
         CORBA::Short priority) override;
 #endif
 
       int rebind_using_user_id_and_system_id (
         PortableServer::Servant servant,
-        const PortableServer::ObjectId &user_id,
-        const PortableServer::ObjectId &system_id,
+        PortableServer::ObjectId const &user_id,
+        PortableServer::ObjectId const &system_id,
         TAO::Portable_Server::Servant_Upcall &servant_upcall) override;
 
       CORBA::Boolean servant_has_remaining_activations (PortableServer::Servant servant) override;
 
-      int unbind_using_user_id (const PortableServer::ObjectId &user_id) override;
+      int unbind_using_user_id (PortableServer::ObjectId const &user_id) override;
 
       ::PortableServer::ServantRetentionPolicyValue type() const override;
 
       TAO_Active_Object_Map * get_active_object_map() const override;
 
     protected:
+      /// Non-owning back-reference set by the POA during strategy initialization.
       TAO_Root_POA *poa_ {};
-      std::atomic<uint32_t> sys_id_count_ { 0 };
+      std::atomic<std::uint32_t> sys_id_count_ { 0 };
     };
   }
 }

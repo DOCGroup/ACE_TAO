@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Parse_Node.h
  *
  *  @author Doug Schmidt
  */
-//=============================================================================
 
 #ifndef ACE_PARSE_NODE_H
 #define ACE_PARSE_NODE_H
@@ -46,7 +42,7 @@ class ACE_Parse_Node
 {
 public:
   ACE_Parse_Node ();
-  explicit ACE_Parse_Node (const ACE_TCHAR *name);
+  explicit ACE_Parse_Node (ACE_TCHAR const *name);
   virtual ~ACE_Parse_Node ();
 
   ACE_Parse_Node *link () const;
@@ -55,7 +51,7 @@ public:
   /// Will update the yyereno member and/or the corresponding configuration
   virtual void apply (ACE_Service_Gestalt *cfg, int &yyerrno) = 0;
 
-  const ACE_TCHAR *name () const;
+  ACE_TCHAR const *name () const;
   void print () const;
 
   /// Dump the state of an object.
@@ -65,12 +61,14 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-  const ACE_TCHAR *name_;
-  ACE_Parse_Node *next_;
+  ACE_TCHAR const *name_ {};
+  ACE_Parse_Node *next_ {};
 
 private:
-  ACE_Parse_Node (const ACE_Parse_Node&) = delete;
-  ACE_Parse_Node& operator= (const ACE_Parse_Node&) = delete;
+  ACE_Parse_Node (ACE_Parse_Node const &) = delete;
+  ACE_Parse_Node (ACE_Parse_Node &&) = delete;
+  ACE_Parse_Node &operator= (ACE_Parse_Node const &) = delete;
+  ACE_Parse_Node &operator= (ACE_Parse_Node &&) = delete;
 };
 
 /**
@@ -85,7 +83,7 @@ private:
 class ACE_Suspend_Node : public ACE_Parse_Node
 {
 public:
-  ACE_Suspend_Node (const ACE_TCHAR *name);
+  explicit ACE_Suspend_Node (ACE_TCHAR const *name);
   ~ACE_Suspend_Node () override;
 
   void apply (ACE_Service_Gestalt *cfg, int &yyerrno) override;
@@ -97,8 +95,10 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-  ACE_Suspend_Node (const ACE_Suspend_Node&) = delete;
-  ACE_Suspend_Node& operator= (const ACE_Suspend_Node&) = delete;
+  ACE_Suspend_Node (ACE_Suspend_Node const &) = delete;
+  ACE_Suspend_Node (ACE_Suspend_Node &&) = delete;
+  ACE_Suspend_Node &operator= (ACE_Suspend_Node const &) = delete;
+  ACE_Suspend_Node &operator= (ACE_Suspend_Node &&) = delete;
 };
 
 /**
@@ -113,7 +113,7 @@ private:
 class ACE_Resume_Node : public ACE_Parse_Node
 {
 public:
-  ACE_Resume_Node (const ACE_TCHAR *name);
+  explicit ACE_Resume_Node (ACE_TCHAR const *name);
   ~ACE_Resume_Node () override;
 
   void apply (ACE_Service_Gestalt *cfg, int &yyerrno) override;
@@ -125,8 +125,10 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-  ACE_Resume_Node (const ACE_Resume_Node&) = delete;
-  ACE_Resume_Node& operator= (const ACE_Resume_Node&) = delete;
+  ACE_Resume_Node (ACE_Resume_Node const &) = delete;
+  ACE_Resume_Node (ACE_Resume_Node &&) = delete;
+  ACE_Resume_Node &operator= (ACE_Resume_Node const &) = delete;
+  ACE_Resume_Node &operator= (ACE_Resume_Node &&) = delete;
 };
 
 /**
@@ -141,7 +143,7 @@ private:
 class ACE_Remove_Node : public ACE_Parse_Node
 {
 public:
-  ACE_Remove_Node (const ACE_TCHAR *name);
+  explicit ACE_Remove_Node (ACE_TCHAR const *name);
   ~ACE_Remove_Node () override;
 
   void apply (ACE_Service_Gestalt *cfg, int &yyerrno) override;
@@ -153,8 +155,10 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-  ACE_Remove_Node (const ACE_Remove_Node&) = delete;
-  ACE_Remove_Node& operator= (const ACE_Remove_Node&) = delete;
+  ACE_Remove_Node (ACE_Remove_Node const &) = delete;
+  ACE_Remove_Node (ACE_Remove_Node &&) = delete;
+  ACE_Remove_Node &operator= (ACE_Remove_Node const &) = delete;
+  ACE_Remove_Node &operator= (ACE_Remove_Node &&) = delete;
 };
 
 /**
@@ -169,11 +173,11 @@ private:
 class ACE_Static_Node : public ACE_Parse_Node
 {
 public:
-  ACE_Static_Node (const ACE_TCHAR *name, ACE_TCHAR *params = nullptr);
+  explicit ACE_Static_Node (ACE_TCHAR const *name, ACE_TCHAR *params = nullptr);
   ~ACE_Static_Node () override;
 
   void apply (ACE_Service_Gestalt *cfg, int &yyerrno) override;
-  virtual const ACE_Service_Type *record (const ACE_Service_Gestalt *g) const;
+  virtual ACE_Service_Type const *record (ACE_Service_Gestalt const *g) const;
 
   ACE_TCHAR *parameters () const;
 
@@ -188,10 +192,11 @@ private:
   ACE_TCHAR *parameters_;
 
 private:
-  ACE_Static_Node (const ACE_Static_Node&) = delete;
-  ACE_Static_Node& operator= (const ACE_Static_Node&) = delete;
+  ACE_Static_Node (ACE_Static_Node const &) = delete;
+  ACE_Static_Node (ACE_Static_Node &&) = delete;
+  ACE_Static_Node &operator= (ACE_Static_Node const &) = delete;
+  ACE_Static_Node &operator= (ACE_Static_Node &&) = delete;
 };
-
 
 class ACE_Service_Type_Factory;
 
@@ -222,11 +227,13 @@ public:
 
 private:
   /// Pointer to a descriptor that describes this node.
-  std::unique_ptr<const ACE_Service_Type_Factory> factory_;
+  std::unique_ptr<ACE_Service_Type_Factory const> factory_;
 
 private:
-  ACE_Dynamic_Node (const ACE_Dynamic_Node&) = delete;
-  ACE_Dynamic_Node& operator= (const ACE_Dynamic_Node&) = delete;
+  ACE_Dynamic_Node (ACE_Dynamic_Node const &) = delete;
+  ACE_Dynamic_Node (ACE_Dynamic_Node &&) = delete;
+  ACE_Dynamic_Node &operator= (ACE_Dynamic_Node const &) = delete;
+  ACE_Dynamic_Node &operator= (ACE_Dynamic_Node &&) = delete;
 };
 
 /**
@@ -241,7 +248,7 @@ private:
 class ACE_Stream_Node : public ACE_Parse_Node
 {
 public:
-  ACE_Stream_Node (const ACE_Static_Node *, const ACE_Parse_Node *);
+  ACE_Stream_Node (ACE_Static_Node const *, ACE_Parse_Node const *);
   ~ACE_Stream_Node () override;
 
   void apply (ACE_Service_Gestalt *cfg, int &yyerrno) override;
@@ -254,12 +261,14 @@ public:
 
 private:
   /// Linked list of modules that are part of the stream.
-  const ACE_Static_Node *node_;
-  const ACE_Parse_Node *mods_;
+  ACE_Static_Node const *node_;
+  ACE_Parse_Node const *mods_;
 
 private:
-  ACE_Stream_Node (const ACE_Stream_Node&) = delete;
-  ACE_Stream_Node& operator= (const ACE_Stream_Node&) = delete;
+  ACE_Stream_Node (ACE_Stream_Node const &) = delete;
+  ACE_Stream_Node (ACE_Stream_Node &&) = delete;
+  ACE_Stream_Node &operator= (ACE_Stream_Node const &) = delete;
+  ACE_Stream_Node &operator= (ACE_Stream_Node &&) = delete;
 };
 
 /**
@@ -273,7 +282,7 @@ private:
 class ACE_Dummy_Node : public ACE_Parse_Node
 {
 public:
-  ACE_Dummy_Node (const ACE_Static_Node *, const ACE_Parse_Node *);
+  ACE_Dummy_Node (ACE_Static_Node const *, ACE_Parse_Node const *);
   ~ACE_Dummy_Node () override;
 
   void apply (ACE_Service_Gestalt *cfg, int &yyerrno) override;
@@ -286,12 +295,14 @@ public:
 
 private:
   /// Linked list of modules that we're dealing with.
-  const ACE_Static_Node *node_;
-  const ACE_Parse_Node *mods_;
+  ACE_Static_Node const *node_;
+  ACE_Parse_Node const *mods_;
 
 private:
-  ACE_Dummy_Node (const ACE_Dummy_Node&) = delete;
-  ACE_Dummy_Node& operator= (const ACE_Dummy_Node&) = delete;
+  ACE_Dummy_Node (ACE_Dummy_Node const &) = delete;
+  ACE_Dummy_Node (ACE_Dummy_Node &&) = delete;
+  ACE_Dummy_Node &operator= (ACE_Dummy_Node const &) = delete;
+  ACE_Dummy_Node &operator= (ACE_Dummy_Node &&) = delete;
 };
 
 /**
@@ -307,9 +318,9 @@ class ACE_Location_Node
 {
 public:
   ACE_Location_Node ();
-  const ACE_DLL &dll ();
-  const ACE_TCHAR *pathname () const;
-  void pathname (const ACE_TCHAR *h);
+  ACE_DLL const &dll ();
+  ACE_TCHAR const *pathname () const;
+  void pathname (ACE_TCHAR const *h);
   int dispose () const;
 
   virtual ~ACE_Location_Node ();
@@ -319,7 +330,7 @@ public:
   /// repository
   virtual void *symbol (ACE_Service_Gestalt *cfgptr,
                         int &yyerrno,
-                        ACE_Service_Object_Exterminator * = 0) = 0;
+                        ACE_Service_Object_Exterminator * = nullptr) = 0;
 
   /// Dump the state of an object.
   void dump () const;
@@ -331,24 +342,26 @@ protected:
   int open_dll (int & yyerrno);
 
   /// Pathname to the shared library we are working on.
-  const ACE_TCHAR *pathname_;
+  ACE_TCHAR const *pathname_ {};
 
   /**
    * Flag indicating whether the Service_Object generated by this
    * Location Node should be deleted or not
    * (ACE_Service_Type::DELETE_OBJ.)
    */
-  int must_delete_;
+  int must_delete_ {};
 
   /// The open shared library.
   ACE_DLL dll_;
 
   /// Symbol that we've obtained from the shared library.
-  void *symbol_;
+  void *symbol_ {};
 
 private:
-  ACE_Location_Node (const ACE_Location_Node&) = delete;
-  ACE_Location_Node& operator= (const ACE_Location_Node&) = delete;
+  ACE_Location_Node (ACE_Location_Node const &) = delete;
+  ACE_Location_Node (ACE_Location_Node &&) = delete;
+  ACE_Location_Node &operator= (ACE_Location_Node const &) = delete;
+  ACE_Location_Node &operator= (ACE_Location_Node &&) = delete;
 };
 
 /**
@@ -363,10 +376,10 @@ private:
 class ACE_Object_Node : public ACE_Location_Node
 {
 public:
-  ACE_Object_Node (const ACE_TCHAR *pathname, const ACE_TCHAR *obj_name);
+  ACE_Object_Node (ACE_TCHAR const *pathname, ACE_TCHAR const *obj_name);
   void *symbol (ACE_Service_Gestalt *config,
                         int &yyerrno,
-                        ACE_Service_Object_Exterminator * = 0) override;
+                        ACE_Service_Object_Exterminator * = nullptr) override;
   ~ACE_Object_Node () override;
 
   /// Dump the state of an object.
@@ -377,11 +390,13 @@ public:
 
 private:
   /// Name of the object that we're parsing.
-  const ACE_TCHAR *object_name_;
+  ACE_TCHAR const *object_name_;
 
 private:
-  ACE_Object_Node (const ACE_Object_Node&) = delete;
-  ACE_Object_Node& operator= (const ACE_Object_Node&) = delete;
+  ACE_Object_Node (ACE_Object_Node const &) = delete;
+  ACE_Object_Node (ACE_Object_Node &&) = delete;
+  ACE_Object_Node &operator= (ACE_Object_Node const &) = delete;
+  ACE_Object_Node &operator= (ACE_Object_Node &&) = delete;
 };
 
 /**
@@ -396,7 +411,7 @@ private:
 class ACE_Function_Node : public ACE_Location_Node
 {
 public:
-  ACE_Function_Node (const ACE_TCHAR *pathname, const ACE_TCHAR *func_name);
+  ACE_Function_Node (ACE_TCHAR const *pathname, ACE_TCHAR const *func_name);
   void *symbol (ACE_Service_Gestalt *config,
                         int &yyerrno,
                         ACE_Service_Object_Exterminator *gobbler = nullptr) override;
@@ -430,11 +445,13 @@ private:
 
 private:
   /// Name of the function that we're parsing.
-  const ACE_TCHAR *function_name_;
+  ACE_TCHAR const *function_name_;
 
 private:
-  ACE_Function_Node (const ACE_Function_Node&) = delete;
-  ACE_Function_Node& operator= (const ACE_Function_Node&) = delete;
+  ACE_Function_Node (ACE_Function_Node const &) = delete;
+  ACE_Function_Node (ACE_Function_Node &&) = delete;
+  ACE_Function_Node &operator= (ACE_Function_Node const &) = delete;
+  ACE_Function_Node &operator= (ACE_Function_Node &&) = delete;
 };
 
 /**
@@ -451,10 +468,10 @@ private:
 class ACE_Static_Function_Node : public ACE_Location_Node
 {
 public:
-  explicit ACE_Static_Function_Node (const ACE_TCHAR *func_name);
+  explicit ACE_Static_Function_Node (ACE_TCHAR const *func_name);
   void *symbol (ACE_Service_Gestalt *config,
                         int &yyerrno,
-                        ACE_Service_Object_Exterminator * = 0) override;
+                        ACE_Service_Object_Exterminator * = nullptr) override;
   ~ACE_Static_Function_Node () override;
 
   /// Dump the state of an object.
@@ -465,11 +482,13 @@ public:
 
 private:
   /// Name of the function that we're parsing.
-  const ACE_TCHAR *function_name_;
+  ACE_TCHAR const *function_name_;
 
 private:
-  ACE_Static_Function_Node (const ACE_Static_Function_Node&) = delete;
-  ACE_Static_Function_Node& operator= (const ACE_Static_Function_Node&) = delete;
+  ACE_Static_Function_Node (ACE_Static_Function_Node const &) = delete;
+  ACE_Static_Function_Node (ACE_Static_Function_Node &&) = delete;
+  ACE_Static_Function_Node &operator= (ACE_Static_Function_Node const &) = delete;
+  ACE_Static_Function_Node &operator= (ACE_Static_Function_Node &&) = delete;
 };
 
 /// A helper class used to safely register dynamic services, which may contains
@@ -493,11 +512,11 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-  /**
-   * Not implemented to enforce no copying
-   */
-  ACE_Service_Type_Factory(const ACE_Service_Type_Factory&) = delete;
-  ACE_Service_Type_Factory& operator=(const ACE_Service_Type_Factory&) = delete;
+  /// Prevent copying and moving.
+  ACE_Service_Type_Factory (ACE_Service_Type_Factory const &) = delete;
+  ACE_Service_Type_Factory (ACE_Service_Type_Factory &&) = delete;
+  ACE_Service_Type_Factory &operator= (ACE_Service_Type_Factory const &) = delete;
+  ACE_Service_Type_Factory &operator= (ACE_Service_Type_Factory &&) = delete;
 
 private:
   ACE_TString name_;

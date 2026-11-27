@@ -1,4 +1,3 @@
-// -*- C++ -*-
 // -- PortableServer Include --
 #include "tao/PortableServer/POA_Current.h"
 #include "tao/PortableServer/POA_Current_Impl.h"
@@ -18,7 +17,9 @@ namespace TAO
       POA_Current_Impl *impl = this->implementation ();
 
       if (impl == nullptr)
+      {
         throw PortableServer::Current::NoContext ();
+      }
       return impl->get_POA ();
     }
 
@@ -28,7 +29,9 @@ namespace TAO
       POA_Current_Impl *impl = this->implementation ();
 
       if (impl == nullptr)
+      {
         throw PortableServer::Current::NoContext ();
+      }
       return impl->get_object_id ();
     }
 
@@ -38,7 +41,9 @@ namespace TAO
       POA_Current_Impl *impl = this->implementation ();
 
       if (impl == nullptr)
+      {
         throw PortableServer::Current::NoContext ();
+      }
       return impl->get_servant ();
     }
 
@@ -48,7 +53,9 @@ namespace TAO
       POA_Current_Impl *impl = this->implementation ();
 
       if (impl == nullptr)
+      {
         throw PortableServer::Current::NoContext ();
+      }
       return impl->get_reference ();
     }
 

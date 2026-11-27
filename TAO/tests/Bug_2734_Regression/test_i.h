@@ -1,12 +1,8 @@
-
-//=============================================================================
 /**
- *  @file   test_i.h
+ * @file test_i.h
  *
- *  @author Carlos O'Ryan
+ * @author Carlos O'Ryan
  */
-//=============================================================================
-
 
 #ifndef TAO_TIMEOUT_TEST_I_H
 #define TAO_TIMEOUT_TEST_I_H
@@ -23,7 +19,6 @@
 class Simple_Server_i : public POA_Simple_Server
 {
 public:
-  /// ctor
   explicit Simple_Server_i (CORBA::ORB_ptr orb);
 
   Simple_Server_i (Simple_Server_i const &) = delete;
@@ -31,14 +26,16 @@ public:
   Simple_Server_i (Simple_Server_i &&) = delete;
   Simple_Server_i &operator= (Simple_Server_i &&) = delete;
 
-  // = The Simple_Server methods.
+  /// @name Simple_Server methods
+  /// @{
   CORBA::Long echo (CORBA::Long x,
                     CORBA::Long msecs) override;
   void shutdown () override;
+  /// @}
 
 private:
   /// The ORB
-  CORBA::ORB_var orb_;
+  CORBA::ORB_var const orb_;
 };
 
 #endif /* TAO_TIMEOUT_TEST_I_H */

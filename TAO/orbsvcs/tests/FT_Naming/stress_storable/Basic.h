@@ -1,6 +1,3 @@
-// -*- C++ -*-
-//
-
 #ifndef BASIC_H
 #define BASIC_H
 
@@ -20,7 +17,6 @@ class Basic
   : public virtual POA_Test::Basic
 {
 public:
-  /// Constructor
   Basic (CORBA::Object_ptr object_group,
          FT_Naming::NamingManager_ptr lm,
          CORBA::ORB_ptr orb,
@@ -33,7 +29,7 @@ public:
   void remove_member () override;
 
 private:
-  const char* object_group_name_;
+  char const *object_group_name_;
 
   /// Use an ORB reference to convert strings to objects and shutdown
   /// the application.

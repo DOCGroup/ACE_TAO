@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    IIOP_Connector.h
  *
@@ -10,7 +7,6 @@
  *  @author Ossama Othman <ossama@uci.edu>
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_IIOP_CONNECTOR_H
 #define TAO_IIOP_CONNECTOR_H
@@ -32,6 +28,8 @@
 #include "ace/SOCK_Connector.h"
 #include "ace/Connector.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_IIOP_Endpoint;
@@ -50,14 +48,10 @@ class TAO_IIOP_Endpoint;
 class TAO_Export TAO_IIOP_Connector : public TAO_Connector
 {
 public:
-  /// Constructor.
   TAO_IIOP_Connector ();
 
-  /// Destructor.
   ~TAO_IIOP_Connector () override;
 
-  // = The TAO_Connector methods, please check the documentation on
-  // Transport_Connector.h
   int open (TAO_ORB_Core *orb_core) override;
   int close () override;
   TAO_Profile *create_profile (TAO_InputCDR & cdr) override;
@@ -86,8 +80,6 @@ protected:
   /// may be tried.
   int supports_parallel_connects () const override;
 
-  // = The TAO_Connector methods, please check the documentation on
-  // Transport_Connector.h
   int set_validate_endpoint (TAO_Endpoint *ep) override;
 
   TAO_Transport *make_connection (
@@ -108,6 +100,11 @@ protected:
   int cancel_svc_handler (TAO_Connection_Handler * svc_handler) override;
 
 private:
+  TAO_IIOP_Connector (TAO_IIOP_Connector const &) = delete;
+  TAO_IIOP_Connector &operator= (TAO_IIOP_Connector const &) = delete;
+  TAO_IIOP_Connector (TAO_IIOP_Connector &&) = delete;
+  TAO_IIOP_Connector &operator= (TAO_IIOP_Connector &&) = delete;
+
   /// This is the first half of making a connection. Both make_connection
   /// and make_parallel_connection will start out using begin_connection.
   int begin_connection (TAO_IIOP_Connection_Handler *&svc_handler,
@@ -121,23 +118,24 @@ private:
   /// The winning transport is returned.
   TAO_Transport *complete_connection (int result,
                                       TAO_Transport_Descriptor_Interface &desc,
-                                      TAO_IIOP_Connection_Handler **&sh_list,
-                                      TAO_IIOP_Endpoint **ep_list,
+                                      TAO_IIOP_Connection_Handler * const *sh_list,
+                                      TAO_IIOP_Endpoint * const *ep_list,
                                       unsigned count,
                                       TAO::Profile_Transport_Resolver *r,
                                       TAO_LF_Multi_Event *mev,
                                       ACE_Time_Value *timeout = nullptr);
 
-
   /// Return the remote endpoint, a helper function
   TAO_IIOP_Endpoint *remote_endpoint (TAO_Endpoint *ep);
 
-private:
   /// Our connect strategy
   TAO_IIOP_CONNECT_STRATEGY connect_strategy_;
 
   /// The connector initiating connection requests for IIOP.
   TAO_IIOP_BASE_CONNECTOR base_connector_;
+
+  std::unique_ptr<TAO_IIOP_CONNECT_CREATION_STRATEGY> creation_strategy_;
+  std::unique_ptr<TAO_IIOP_CONNECT_CONCURRENCY_STRATEGY> concurrency_strategy_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

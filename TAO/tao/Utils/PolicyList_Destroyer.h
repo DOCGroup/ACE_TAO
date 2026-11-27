@@ -1,4 +1,3 @@
-// -*- C++ -*-
 /**
  * @file PolicyList_Destroyer.h
  *
@@ -32,6 +31,7 @@ namespace TAO
       : public CORBA::PolicyList
     {
     public:
+      PolicyList_Destroyer () = delete;
       explicit PolicyList_Destroyer (CORBA::ULong length_hint);
       ~PolicyList_Destroyer () noexcept;
 

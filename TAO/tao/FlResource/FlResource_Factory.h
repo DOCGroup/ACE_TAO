@@ -1,13 +1,9 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   FlResource_Factory.h
  *
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  *  @author Marek Brudka <mbrudka@aster.pl>
  */
-//=============================================================================
 #ifndef TAO_FLRESOURCE_FACTORY_H
 #define TAO_FLRESOURCE_FACTORY_H
 #include /**/ "ace/pre.h"
@@ -39,19 +35,20 @@ namespace TAO
   class TAO_FlResource_Export FlResource_Factory : public GUIResource_Factory
   {
   public:
-    FlResource_Factory ();
+    FlResource_Factory () = default;
+
+    FlResource_Factory (FlResource_Factory const &) = delete;
+    FlResource_Factory &operator= (FlResource_Factory const &) = delete;
+    FlResource_Factory (FlResource_Factory &&) = delete;
+    FlResource_Factory &operator= (FlResource_Factory &&) = delete;
 
   protected:
     /// Create or obtain current reactor implementation
     ACE_Reactor_Impl *reactor_impl () override;
 
   private:
-    FlResource_Factory (FlResource_Factory const &) = delete;
-    FlResource_Factory &operator= (FlResource_Factory const &) = delete;
-    FlResource_Factory (FlResource_Factory &&) = delete;
-    FlResource_Factory &operator= (FlResource_Factory &&) = delete;
-
-    /// Reactor created by this factory.
+    /// Reactor created here; ownership transfers to the ACE_Reactor
+    /// returned by get_reactor().
     ACE_FlReactor *reactor_impl_ {};
   };
 }

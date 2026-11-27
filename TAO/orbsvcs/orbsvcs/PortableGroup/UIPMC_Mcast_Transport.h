@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file     UIPMC_Mcast_Transport.h
  *
  *  @author Vladimir Zykov <vz@prismtech.com>
  */
-//=============================================================================
 
 #ifndef TAO_UIPMC_MCAST_TRANSPORT_H
 #define TAO_UIPMC_MCAST_TRANSPORT_H
@@ -23,6 +19,7 @@
 #include "ace/SOCK_Stream.h"
 #include "ace/Svc_Handler.h"
 #include "ace/Refcountable_T.h"
+#include <deque>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -43,8 +40,7 @@ namespace TAO_PG
  */
 class TAO_PortableGroup_Export TAO_UIPMC_Mcast_Transport : public TAO_Transport
 {
-  // This is necessary on some old compilers such as Studio 9 for SunOS
-  // to let UIPMC_Recv_Packet_Cleanup_Guard access private cleanup_packets().
+  // The guard invokes the private cleanup_packets() method.
   friend class TAO_PG::UIPMC_Recv_Packet_Cleanup_Guard;
 
 public:
@@ -52,12 +48,15 @@ public:
                                TAO_PG::UIPMC_Recv_Packet *,
                                ACE_SYNCH_NULL_MUTEX>;
 
-  /// Constructor.
   TAO_UIPMC_Mcast_Transport (TAO_UIPMC_Mcast_Connection_Handler *handler,
                              TAO_ORB_Core *orb_core);
 
-  /// Default destructor.
   ~TAO_UIPMC_Mcast_Transport () override;
+
+  TAO_UIPMC_Mcast_Transport (TAO_UIPMC_Mcast_Transport const &) = delete;
+  TAO_UIPMC_Mcast_Transport (TAO_UIPMC_Mcast_Transport &&) = delete;
+  TAO_UIPMC_Mcast_Transport & operator= (TAO_UIPMC_Mcast_Transport const &) = delete;
+  TAO_UIPMC_Mcast_Transport & operator= (TAO_UIPMC_Mcast_Transport &&) = delete;
 
   /// Look for the documentation in Transport.h.
   int handle_input (TAO_Resume_Handle &rh,
@@ -68,7 +67,7 @@ protected:
    *
    * These are implementations of template methods declared by TAO_Transport.
    */
-  //@{
+  /// @{
   ACE_Event_Handler *event_handler_i () override;
   TAO_Connection_Handler *connection_handler_i () override;
 
@@ -102,7 +101,7 @@ public:
                             TAO_ServerRequest * = nullptr,
                             TAO_Message_Semantics = TAO_Message_Semantics (),
                             ACE_Time_Value * = nullptr) override;
-  //@}
+  /// @}
 
 private:
   /// Receive a UDP message and extract all necessary info from the MIOP
@@ -135,7 +134,7 @@ private:
   TAO_SYNCH_MUTEX recv_lock_;
 
   /// Complete packets.
-  using Packets_Queue = ACE_Unbounded_Queue<TAO_PG::UIPMC_Recv_Packet *>;
+  using Packets_Queue = std::deque<TAO_PG::UIPMC_Recv_Packet *>;
   Packets_Queue complete_;
 
   /// A lock for access synchronization to complete queue.

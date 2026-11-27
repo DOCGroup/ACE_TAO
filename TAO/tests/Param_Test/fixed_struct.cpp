@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    fixed_struct.cpp
  *
@@ -7,8 +5,6 @@
  *
  *  @author   Aniruddha Gokhale
  */
-//=============================================================================
-
 
 #include "helper.h"
 #include "fixed_struct.h"
@@ -18,17 +14,11 @@
 // ************************************************************************
 
 Test_Fixed_Struct::Test_Fixed_Struct ()
-  : opname_ (CORBA::string_dup ("test_fixed_struct"))
+  : opname_ ("test_fixed_struct")
 {
 }
 
-Test_Fixed_Struct::~Test_Fixed_Struct ()
-{
-  CORBA::string_free (this->opname_);
-  this->opname_ = 0;
-}
-
-const char *
+char const *
 Test_Fixed_Struct::opname () const
 {
   return this->opname_;
@@ -44,7 +34,7 @@ Test_Fixed_Struct::dii_req_invoke (CORBA::Request *req)
 
   req->invoke ();
 
-  const Param_Test::Fixed_Struct *tmp = 0;
+  Param_Test::Fixed_Struct const *tmp {};
   req->return_value () >>= tmp;
   this->ret_ = *tmp;
 
@@ -68,26 +58,18 @@ Test_Fixed_Struct::init_parameters (Param_Test_ptr /*objref*/
   //ACE_UNUSED_ARG (objref);
 
   this->in_ = gen->gen_fixed_struct ();
-  ACE_OS::memset (&this->inout_,
-                  0,
-                  sizeof (Param_Test::Fixed_Struct));
+  this->inout_ = {};
   return 0;
 }
 
 int
 Test_Fixed_Struct::reset_parameters ()
 {
-  ACE_OS::memset (&this->inout_,
-                  0,
-                  sizeof (Param_Test::Fixed_Struct));
+  this->inout_ = {};
 
-  ACE_OS::memset (&this->out_,
-                  0,
-                  sizeof (Param_Test::Fixed_Struct));
+  this->out_ = {};
 
-  ACE_OS::memset (&this->ret_,
-                  0,
-                  sizeof (Param_Test::Fixed_Struct));
+  this->ret_ = {};
 
   return 0;
 }
@@ -103,7 +85,7 @@ Test_Fixed_Struct::run_sii_test (Param_Test_ptr objref)
 
       return 0;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Test_Fixed_Struct::run_sii_test\n");
     }
@@ -134,9 +116,11 @@ Test_Fixed_Struct::check_validity ()
       ACE::is_equal (this->in_.f, this->ret_.f) &&
       this->in_.b == this->ret_.b &&
       ACE::is_equal (this->in_.d, this->ret_.d))
-    return 1;
+    return true;
   else
-    return 0;
+  {
+    return false;
+  }
 }
 
 CORBA::Boolean

@@ -1,10 +1,6 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file     ClientORBInitializer.h
  */
-//=============================================================================
 #ifndef CLIENTORBINITIALIZER_H
 #define CLIENTORBINITIALIZER_H
 
@@ -33,9 +29,15 @@ class ClientORBInitializer :
   public virtual ::CORBA::LocalObject
 {
 public:
-  virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info);
+  ClientORBInitializer () = default;
 
-  virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info);
+  ClientORBInitializer (ClientORBInitializer const &) = delete;
+  ClientORBInitializer (ClientORBInitializer &&) = delete;
+  ClientORBInitializer &operator= (ClientORBInitializer const &) = delete;
+  ClientORBInitializer &operator= (ClientORBInitializer &&) = delete;
+
+  void pre_init (PortableInterceptor::ORBInitInfo_ptr info) override;
+  void post_init (PortableInterceptor::ORBInitInfo_ptr info) override;
 };
 
 #if defined(_MSC_VER)

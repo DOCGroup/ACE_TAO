@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 #ifndef TAO_ThreadAction_H
 #define TAO_ThreadAction_H
 
@@ -17,7 +15,7 @@ class TAO_RTScheduler_Export TAO_ThreadAction:
   public ::CORBA::LocalObject
 {
 public:
-  virtual void _cxx_do (CORBA::VoidData data) = 0;
+  void _cxx_do (CORBA::VoidData data) override = 0;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

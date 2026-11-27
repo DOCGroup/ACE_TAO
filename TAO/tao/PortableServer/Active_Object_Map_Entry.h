@@ -1,14 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Active_Object_Map_Entry.h
  *
  *  @author Irfan Pyarali
  */
-//=============================================================================
-
-
 #ifndef TAO_ACTIVE_OBJECT_MAP_ENTRY_H
 #define TAO_ACTIVE_OBJECT_MAP_ENTRY_H
 
@@ -19,7 +13,6 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -34,7 +27,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  */
 struct TAO_Active_Object_Map_Entry
 {
-  /// Default constructor.
   TAO_Active_Object_Map_Entry () = default;
 
   /// User id.
@@ -50,7 +42,7 @@ struct TAO_Active_Object_Map_Entry
   CORBA::UShort reference_count_ {1};
 
   /// Has this servant been deactivated already?
-  CORBA::Boolean deactivated_ {false};
+  CORBA::Boolean deactivated_ {};
 
   /// Priority of this servant.
   CORBA::Short priority_ {-1};

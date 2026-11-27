@@ -9,7 +9,6 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
-
 class CServerView : public CView
 {
 protected: // create from serialization only
@@ -26,7 +25,8 @@ public:
 // ClassWizard generated virtual function overrides
 //{{AFX_VIRTUAL(CServerView)
 public:
-  virtual void OnDraw(CDC* pDC);  // overridden to draw this view
+  /// Draws this view.
+  virtual void OnDraw(CDC* pDC);
   virtual BOOL PreCreateWindow(CREATESTRUCT& cs);
 protected:
   virtual BOOL OnPreparePrinting(CPrintInfo* pInfo);

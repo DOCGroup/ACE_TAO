@@ -9,6 +9,10 @@
 
 #include "ace/Malloc_Base.h"
 
+#include <cerrno>
+#include <limits>
+#include <memory>
+
 #if !defined (__ACE_INLINE__)
 #include "ace/Map_Manager.inl"
 #endif /* __ACE_INLINE__ */
@@ -29,31 +33,32 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::open (size_t size,
 {
   ACE_WRITE_GUARD_RETURN (ACE_LOCK, ace_mon, this->lock_, -1);
 
+  if (size == 0 || size > this->occupied_list_id ())
+    {
+      errno = EINVAL;
+      return -1;
+    }
+
   // Close old map (if any).
   this->close_i ();
 
   // Use the user specified allocator or the default singleton one.
   if (alloc == nullptr)
-    alloc = ACE_Allocator::instance ();
+    {
+      alloc = ACE_Allocator::instance ();
+    }
 
   this->allocator_ = alloc;
-
-  // This assertion is here to help track a situation that shouldn't
-  // happen.
-  ACE_ASSERT (size != 0);
 
   // Active_Map_Manager depends on the <slot_index_> being of fixed
   // size. It cannot be size_t because size_t is 64-bits on 64-bit
   // platform and 32-bits on 32-bit platforms. Size of the <slot_index_>
   // has to be consistent across platforms. ACE_UIN32 is chosen as
-  // ACE_UIN32_MAX is big enough. The assert is to ensure that the user
-  // doesn't open the ACE_Map_Manager with a bigger size than we can
-  // handle.
-  ACE_ASSERT (size <= ACE_UINT32_MAX);
+  // ACE_UINT32_MAX is big enough. The two sentinel values are reserved.
 
   // Resize from 0 to <size>.  Note that this will also set up the
   // circular free list.
-  return this->resize_i ((ACE_UINT32) size);
+  return this->resize_i (static_cast<ACE_UINT32> (size));
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> int
@@ -78,8 +83,8 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::close_i ()
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> int
-ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::bind_i (const EXT_ID &ext_id,
-                                                   const INT_ID &int_id)
+ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::bind_i (EXT_ID const &ext_id,
+                                                   INT_ID const &int_id)
 {
   // Try to find the key.
   ACE_UINT32 slot = 0;
@@ -87,12 +92,16 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::bind_i (const EXT_ID &ext_id,
                                             slot);
 
   if (result == 0)
-    // We found the key. Nothing to change.
-    return 1;
+    {
+      // We found the key. Nothing to change.
+      return 1;
+    }
   else
-    // We didn't find the key.
-    return this->shared_bind (ext_id,
-                              int_id);
+    {
+      // We didn't find the key.
+      return this->shared_bind (ext_id,
+                                int_id);
+    }
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> int
@@ -103,7 +112,9 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::next_free (ACE_UINT32 &free_slot)
 
   // If we do find a free slot, return successfully.
   if (free_slot != this->free_list_id ())
-    return 0;
+    {
+      return 0;
+    }
 
 #if defined (ACE_HAS_LAZY_MAP_MANAGER)
 
@@ -115,7 +126,9 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::next_free (ACE_UINT32 &free_slot)
 
   // If we do find a free slot, return successfully.
   if (free_slot != this->free_list_id ())
-    return 0;
+    {
+      return 0;
+    }
 
 #endif /* ACE_HAS_LAZY_MAP_MANAGER */
 
@@ -124,8 +137,10 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::next_free (ACE_UINT32 &free_slot)
 
   // Check for errors.
   if (result == 0)
-    // New free slot.
-    free_slot = this->free_list_.next ();
+    {
+      // New free slot.
+      free_slot = this->free_list_.next ();
+    }
 
   return result;
 }
@@ -194,17 +209,25 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::shared_move (ACE_UINT32 slot,
   ACE_UINT32 current_list_prev = entry.prev ();
 
   if (current_list_prev == current_list_id)
-    current_list.next (entry.next ());
+    {
+      current_list.next (entry.next ());
+    }
   else
-    this->search_structure_[current_list_prev].next (entry.next ());
+    {
+      this->search_structure_[current_list_prev].next (entry.next ());
+    }
 
   // Fix the entry after us.
   ACE_UINT32 current_list_next = entry.next ();
 
   if (current_list_next == current_list_id)
-    current_list.prev (entry.prev ());
+    {
+      current_list.prev (entry.prev ());
+    }
   else
-    this->search_structure_[current_list_next].prev (entry.prev ());
+    {
+      this->search_structure_[current_list_next].prev (entry.prev ());
+    }
 
   // Add to new list.
 
@@ -218,14 +241,18 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::shared_move (ACE_UINT32 slot,
 
   // Fix entry after us.
   if (new_list_next == new_list_id)
-    new_list.prev (slot);
+    {
+      new_list.prev (slot);
+    }
   else
-    this->search_structure_[new_list_next].prev (slot);
+    {
+      this->search_structure_[new_list_next].prev (slot);
+    }
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> int
-ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::shared_bind (const EXT_ID &ext_id,
-                                                        const INT_ID &int_id)
+ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::shared_bind (EXT_ID const &ext_id,
+                                                        INT_ID const &int_id)
 {
   // This function assumes that the find() has already been done, and
   // therefore, simply adds to the map.
@@ -251,8 +278,8 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::shared_bind (const EXT_ID &ext_id,
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> int
-ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::rebind_i (const EXT_ID &ext_id,
-                                                     const INT_ID &int_id,
+ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::rebind_i (EXT_ID const &ext_id,
+                                                     INT_ID const &int_id,
                                                      EXT_ID &old_ext_id,
                                                      INT_ID &old_int_id)
 {
@@ -276,14 +303,16 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::rebind_i (const EXT_ID &ext_id,
       return 1;
     }
   else
-    // We didn't find it, so let's add it.
-    return this->shared_bind (ext_id,
-                              int_id);
+    {
+      // We didn't find it, so let's add it.
+      return this->shared_bind (ext_id,
+                                int_id);
+    }
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> int
-ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::rebind_i (const EXT_ID &ext_id,
-                                                     const INT_ID &int_id,
+ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::rebind_i (EXT_ID const &ext_id,
+                                                     INT_ID const &int_id,
                                                      INT_ID &old_int_id)
 {
   // First try to find the key.
@@ -305,14 +334,16 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::rebind_i (const EXT_ID &ext_id,
       return 1;
     }
   else
-    // We didn't find it, so let's add it.
-    return this->shared_bind (ext_id,
-                              int_id);
+    {
+      // We didn't find it, so let's add it.
+      return this->shared_bind (ext_id,
+                                int_id);
+    }
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> int
-ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::rebind_i (const EXT_ID &ext_id,
-                                                     const INT_ID &int_id)
+ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::rebind_i (EXT_ID const &ext_id,
+                                                     INT_ID const &int_id)
 {
   // First try to find the key.
   ACE_UINT32 slot = 0;
@@ -331,13 +362,15 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::rebind_i (const EXT_ID &ext_id,
       return 1;
     }
   else
-    // We didn't find it, so let's add it.
-    return this->shared_bind (ext_id,
-                              int_id);
+    {
+      // We didn't find it, so let's add it.
+      return this->shared_bind (ext_id,
+                                int_id);
+    }
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> int
-ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::trybind_i (const EXT_ID &ext_id,
+ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::trybind_i (EXT_ID const &ext_id,
                                                       INT_ID &int_id)
 {
   // Try to find the key.
@@ -352,13 +385,15 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::trybind_i (const EXT_ID &ext_id,
       return 1;
     }
   else
-    // We didn't find it, so let's bind it!
-    return this->bind_i (ext_id,
-                         int_id);
+    {
+      // We didn't find it, so let's bind it!
+      return this->bind_i (ext_id,
+                           int_id);
+    }
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> int
-ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::find_and_return_index (const EXT_ID &ext_id,
+ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::find_and_return_index (EXT_ID const &ext_id,
                                                                   ACE_UINT32 &slot)
 {
   // Go through the entire occupied list looking for the key.
@@ -368,7 +403,9 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::find_and_return_index (const EXT_ID &
     {
 #if defined (ACE_HAS_LAZY_MAP_MANAGER)
       if (this->search_structure_[i].free_)
-        continue;
+        {
+          continue;
+        }
 #endif /* ACE_HAS_LAZY_MAP_MANAGER */
 
       if (this->equal (this->search_structure_[i].ext_id_,
@@ -411,7 +448,9 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::unbind_all ()
 
 #if defined (ACE_HAS_LAZY_MAP_MANAGER)
       if (current_slot.free_)
-        continue;
+        {
+          continue;
+        }
 #endif /* ACE_HAS_LAZY_MAP_MANAGER */
 
       this->unbind_slot (position_of_current_slot);
@@ -419,7 +458,7 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::unbind_all ()
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> int
-ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::find_i (const EXT_ID &ext_id,
+ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::find_i (EXT_ID const &ext_id,
                                                    INT_ID &int_id)
 {
   // Try to find the key.
@@ -427,14 +466,16 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::find_i (const EXT_ID &ext_id,
   int result = this->find_and_return_index (ext_id,
                                             slot);
   if (result == 0)
-    // Key was found.  Make a copy of value.
-    int_id = this->search_structure_[slot].int_id_;
+    {
+      // Key was found.  Make a copy of value.
+      int_id = this->search_structure_[slot].int_id_;
+    }
 
   return result;
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> int
-ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::unbind_and_return_index (const EXT_ID &ext_id,
+ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::unbind_and_return_index (EXT_ID const &ext_id,
                                                                     ACE_UINT32 &slot)
 {
   // Try to find the key.
@@ -442,7 +483,9 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::unbind_and_return_index (const EXT_ID
                                             slot);
 
   if (result == 0)
-    this->unbind_slot (slot);
+    {
+      this->unbind_slot (slot);
+    }
 
   return result;
 }
@@ -472,7 +515,7 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::unbind_slot (ACE_UINT32 slot)
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> int
-ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::unbind_i (const EXT_ID &ext_id,
+ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::unbind_i (EXT_ID const &ext_id,
                                                      INT_ID &int_id)
 {
   // Unbind the entry.
@@ -480,8 +523,10 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::unbind_i (const EXT_ID &ext_id,
   int result = this->unbind_and_return_index (ext_id,
                                               slot);
   if (result == 0)
-    // If found, copy the value.
-    int_id = this->search_structure_[slot].int_id_;
+    {
+      // If found, copy the value.
+      int_id = this->search_structure_[slot].int_id_;
+    }
 
   return result;
 }
@@ -490,47 +535,86 @@ template <class EXT_ID, class INT_ID, class ACE_LOCK> int
 ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::resize_i (ACE_UINT32 new_size)
 {
   ACE_UINT32 i;
-  ENTRY *temp = nullptr;
+  ENTRY *temp {};
+
+  if (new_size <= this->total_size_ || new_size > this->occupied_list_id ()
+      || static_cast<size_t> (new_size) > (std::numeric_limits<size_t>::max) () / sizeof (ENTRY))
+    {
+      errno = ENOMEM;
+      return -1;
+    }
 
   // Allocate new memory.
   ACE_ALLOCATOR_RETURN (temp,
-                        (ENTRY *) this->allocator_->malloc (new_size * sizeof (ENTRY)),
+                        static_cast<ENTRY *> (
+                          this->allocator_->malloc (new_size * sizeof (ENTRY))),
                         -1);
 
-  // Copy over the occupied entires.
-  for (i = this->occupied_list_.next ();
-       i != this->occupied_list_id ();
-       i = this->search_structure_[i].next ())
-    // Call the copy constructor using operator placement new.
-    new (&(temp[i])) ENTRY (this->search_structure_[i]);
-
-  // Copy over the free entires.
-  for (i = this->free_list_.next ();
-       i != this->free_list_id ();
-       i = this->search_structure_[i].next ())
-    // Call the copy constructor using operator placement new.
-    new (&(temp[i])) ENTRY (this->search_structure_[i]);
-
-  // Construct the new elements.
-  for (i = this->total_size_; i < new_size; i++)
+  ACE_UINT32 copied_occupied {};
+  ACE_UINT32 copied_free {};
+  ACE_UINT32 constructed_new {};
+  ACE_UINT32 last_occupied = this->occupied_list_id ();
+  ACE_UINT32 last_free = this->free_list_id ();
+  try
     {
-      // Call the constructor for each element in the array using
-      // operator placement new.  Note that this requires a default
-      // constructor for <EXT_ID> and <INT_ID>.
-      new (&(temp[i])) ENTRY;
-      temp[i].next (i + 1);
-      temp[i].prev (i - 1);
+      for (i = this->occupied_list_.next ();
+           i != this->occupied_list_id ();
+           i = this->search_structure_[i].next ())
+        {
+          new (std::addressof (temp[i])) ENTRY (this->search_structure_[i]);
+          last_occupied = i;
+          ++copied_occupied;
+        }
+
+      for (i = this->free_list_.next ();
+           i != this->free_list_id ();
+           i = this->search_structure_[i].next ())
+        {
+          new (std::addressof (temp[i])) ENTRY (this->search_structure_[i]);
+          last_free = i;
+          ++copied_free;
+        }
+
+      for (i = this->total_size_; i < new_size; ++i)
+        {
+          new (std::addressof (temp[i])) ENTRY;
+          ++constructed_new;
+          temp[i].next (i + 1);
+          temp[i].prev (i - 1);
 
 #if defined (ACE_HAS_LAZY_MAP_MANAGER)
 
-      // Even though this slot is initially free, we need the <free_>
-      // flag to be zero so that we don't have to set it when the slot
-      // is moved to the occupied list.  In addition, this flag has no
-      // meaning while this slot is in the free list.
-      temp[i].free_ = false;
+          // Even though this slot is initially free, we need the <free_>
+          // flag to be zero so that we don't have to set it when the slot
+          // is moved to the occupied list.  In addition, this flag has no
+          // meaning while this slot is in the free list.
+          temp[i].free_ = false;
 
 #endif /* ACE_HAS_LAZY_MAP_MANAGER */
 
+        }
+    }
+  catch (...)
+    {
+      while (constructed_new > 0)
+        {
+          --constructed_new;
+          temp[this->total_size_ + constructed_new].~ENTRY ();
+        }
+      while (copied_free > 0)
+        {
+          temp[last_free].~ENTRY ();
+          last_free = this->search_structure_[last_free].prev ();
+          --copied_free;
+        }
+      while (copied_occupied > 0)
+        {
+          temp[last_occupied].~ENTRY ();
+          last_occupied = this->search_structure_[last_occupied].prev ();
+          --copied_occupied;
+        }
+      this->allocator_->free (temp);
+      throw;
     }
 
   // Add new entries to the free list.
@@ -556,11 +640,15 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::new_size ()
   ACE_UINT32 current_size = this->total_size_;
 
   if (current_size < MAX_EXPONENTIAL)
-    // Exponentially increase if we haven't reached MAX_EXPONENTIAL.
-    current_size *= 2;
+    {
+      // Exponentially increase if we haven't reached MAX_EXPONENTIAL.
+      current_size *= 2;
+    }
   else
-    // Linear increase if we have reached MAX_EXPONENTIAL.
-    current_size += LINEAR_INCREASE;
+    {
+      // Linear increase if we have reached MAX_EXPONENTIAL.
+      current_size += LINEAR_INCREASE;
+    }
 
   // This should be the new size.
   return current_size;
@@ -570,12 +658,12 @@ template <class EXT_ID, class INT_ID, class ACE_LOCK> void
 ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::free_search_structure ()
 {
   // Free up the structure.
-  if (this->search_structure_ != 0)
+  if (this->search_structure_ != nullptr)
     {
-      for (ACE_UINT32 i = 0; i < this->total_size_; i++)
+      for (ACE_UINT32 i = 0; i < this->total_size_; ++i)
         // Explicitly call the destructor.
         {
-          ENTRY *ss = &this->search_structure_[i];
+          ENTRY *ss = std::addressof (this->search_structure_[i]);
           // The "if" second argument results in a no-op instead of
           // deallocation.
           ACE_DES_FREE_TEMPLATE2 (ss, ACE_NOOP,
@@ -584,7 +672,7 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::free_search_structure ()
 
       // Actually free the memory.
       this->allocator_->free (this->search_structure_);
-      this->search_structure_ = 0;
+      this->search_structure_ = nullptr;
     }
 }
 
@@ -609,8 +697,10 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("total_size_ = %d"), this->total_size_));
-  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\ncur_size_ = %d"), this->cur_size_));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("total_size_ = %u"),
+                 this->total_size_));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\ncur_size_ = %u"),
+                 this->cur_size_));
   this->allocator_->dump ();
   this->lock_.dump ();
   ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));

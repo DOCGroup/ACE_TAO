@@ -4,13 +4,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 int
-TAO::ObjectKey_Table::bind (const TAO::ObjectKey &key,
+TAO::ObjectKey_Table::bind (TAO::ObjectKey const &key,
                             TAO::Refcounted_ObjectKey *&key_new)
 
 {
-  key_new = 0;
+  key_new = nullptr;
 
-  int retval = 0;
+  int retval {};
 
   {
     ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,

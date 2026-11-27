@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    Thread_Creation_Threshold_Test.cpp
  *
@@ -10,12 +8,10 @@
  *
  *  @author Chris Cleeland <cleeland@ociweb.com>
  */
-//=============================================================================
-
 
 #include "test_config.h"
+#include "ace/Atomic_Op.h"
 #include "ace/Task.h"
-
 
 #if defined (ACE_HAS_THREADS)
 #include "ace/Lock_Adapter_T.h"
@@ -37,24 +33,23 @@ const unsigned long MAX_THREAD = 100000;
 namespace
 {
   // Change this to 'true' if you want lots of debugging messages in the log
-  const bool PRINT_DEBUG_MSGS = true;
+  bool const PRINT_DEBUG_MSGS = true;
 }
 
 /**
  * @class Thread_Pool
  *
- * @brief Defines a thread pool abstraction based on the <ACE_Task>.
+ * @brief Defines a thread pool abstraction based on the @c ACE_Task.
  */
 class Thread_Pool : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
-  /// Create the thread pool containing <n_threads>.
+  /// Create the thread pool containing @a n_threads.
   Thread_Pool (int n_threads);
 
-  /// Destructor...
   ~Thread_Pool () override;
 
-  /// Iterate <n_iterations> time printing off a message and "waiting"
+  /// Iterate @c n_iterations time printing off a message and "waiting"
   /// for all other threads to complete this iteration.
   int svc () override;
 
@@ -98,16 +93,16 @@ Thread_Pool::operator!()
   return ! this->failed_;
 }
 
-Thread_Pool::~Thread_Pool ()
-{
-}
+Thread_Pool::~Thread_Pool () = default;
 
 int
 Thread_Pool::close (u_long)
 {
   if (this->doprint_)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%P|%t) worker thread closing down\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%P|%t) worker thread closing down\n")));
+    }
   return 0;
 }
 
@@ -127,8 +122,8 @@ Thread_Pool::start ()
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) thread activation ")
-                  ACE_TEXT ("failed after %u threads\n"),
-                  this->total_threads()));
+                  ACE_TEXT ("failed after %Lu threads\n"),
+                  this->total_threads ()));
       this->failed_ = true;
     }
 }
@@ -136,12 +131,16 @@ Thread_Pool::start ()
 int
 Thread_Pool::svc ()
 {
-  unsigned long t = ++this->total_activated_threads_;
+  unsigned long const t = ++this->total_activated_threads_;
   if (PRINT_DEBUG_MSGS) // change this to 'true' for debugging
-    this->doprint_ = (t > 65530);
+    {
+      this->doprint_ = (t > 65530);
+    }
 
   if (this->doprint_)
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT("  (%P|%t) thread started.\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT("  (%P|%t) thread started.\n")));
+    }
 
   // Note that the <ACE_Task::svc_run> method automatically removes us
   // from the <ACE_Thread_Manager> when the thread exits.
@@ -156,26 +155,31 @@ int
 Thread_Pool::open (void *)
 {
   if (PRINT_DEBUG_MSGS)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("(%P|%t) pool start %d threads...\n"),
-                this->n_threads_));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("(%P|%t) pool start %d threads...\n"),
+                  this->n_threads_));
+    }
 
   if (this->total_activated_threads_ >= (65534 - this->n_threads_))
-    no_op ();
+    {
+      no_op ();
+    }
 
   // Create a pool of worker threads.
   if (this->activate (THR_NEW_LWP,
                       this->n_threads_) == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("activate failed")),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("activate failed")),
+                        -1);
+    }
 
   return 0;
 }
 
 #endif /* ACE_HAS_THREADS */
-
 
 int
 run_main (int, ACE_TCHAR *[])
@@ -185,9 +189,9 @@ run_main (int, ACE_TCHAR *[])
 #if defined (ACE_HAS_THREADS)
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) will try to start and kill up")
-              ACE_TEXT (" to %u threads sequentially\n"),
+              ACE_TEXT (" to %Lu threads sequentially\n"),
               MAX_THREAD));
-  int initial_pool_size = 50;
+  int const initial_pool_size = 50;
 
   // Create the worker tasks.
   Thread_Pool thread_pool (initial_pool_size);
@@ -209,19 +213,23 @@ run_main (int, ACE_TCHAR *[])
         }
 
       if (PRINT_DEBUG_MSGS)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("%u total threads\n"),
-                    thread_pool.total_threads()));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("%Lu total threads\n"),
+                      thread_pool.total_threads ()));
+        }
 
       int& n_threads = thread_pool.n_threads_;
       const unsigned long THREAD_THRESHOLD = 63336;
       if (thread_pool.total_threads() >= (THREAD_THRESHOLD - n_threads))
+      {
         n_threads = 1;
+      }
     }
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("%u total threads successfully started and died;")
-              ACE_TEXT (" expected %u.\n"),
+              ACE_TEXT ("%Lu total threads successfully started and died;")
+              ACE_TEXT (" expected %Lu.\n"),
               thread_pool.total_threads (),
               MAX_THREAD));
 #else

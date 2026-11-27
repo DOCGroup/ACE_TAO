@@ -8,6 +8,7 @@
 #include "ace/Singleton.h"
 #include "ace/INet/INet_Log.h"
 
+#include <cstring>
 #include <openssl/x509.h>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -18,19 +19,15 @@ namespace ACE
   {
     int SSL_CallbackManager::ssl_ctx_mngr_index_ = (-2);
 
-    SSL_CallbackManager::SSL_CallbackManager ()
-      {
-      }
+    SSL_CallbackManager::SSL_CallbackManager () = default;
 
-    SSL_CallbackManager::~SSL_CallbackManager ()
-      {
-      }
+    SSL_CallbackManager::~SSL_CallbackManager () = default;
 
     void SSL_CallbackManager::initialize_callbacks (ACE_SSL_Context* ssl_ctx)
       {
         if (ssl_ctx_mngr_index_ < -1)
           {
-            ssl_ctx_mngr_index_ = ::SSL_CTX_get_ex_new_index (0, 0, 0,0,0);
+            ssl_ctx_mngr_index_ = ::SSL_CTX_get_ex_new_index (0, nullptr, nullptr, nullptr, nullptr);
             if (ssl_ctx_mngr_index_ < 0)
               {
                 INET_ERROR (1, (LM_ERROR, DLINFO
@@ -40,11 +37,11 @@ namespace ACE
               }
           }
 
-        this->ssl_ctx_ = ssl_ctx == 0 ? ACE_SSL_Context::instance () : ssl_ctx;
+        this->ssl_ctx_ = ssl_ctx == nullptr ? ACE_SSL_Context::instance () : ssl_ctx;
         ::SSL_CTX_set_ex_data (this->ssl_ctx_->context (), ssl_ctx_mngr_index_, this);
         this->ssl_ctx_->default_verify_callback (extern_C_verify_certificate_callback);
-        ::SSL_CTX_set_default_passwd_cb (ssl_ctx->context(), extern_C_passwd_callback);
-        ::SSL_CTX_set_default_passwd_cb_userdata (ssl_ctx->context(), this);
+        ::SSL_CTX_set_default_passwd_cb (this->ssl_ctx_->context (), extern_C_passwd_callback);
+        ::SSL_CTX_set_default_passwd_cb_userdata (this->ssl_ctx_->context (), this);
       }
 
     SSL_CallbackManager* SSL_CallbackManager::instance ()
@@ -54,7 +51,7 @@ namespace ACE
 
     int SSL_CallbackManager::verify_certificate_callback (SSL_CertificateCallbackArg& arg)
       {
-        TCertificateCallback cert_cb = this->cert_callback_;
+        TCertificateCallback const cert_cb = this->cert_callback_;
         if (cert_cb)
           {
             cert_cb->handle_certificate_failure (arg);
@@ -64,7 +61,7 @@ namespace ACE
 
     void SSL_CallbackManager::passwd_callback (ACE_CString& pwd)
       {
-        TPasswordCallback pw_cb = passwd_callback_;
+        TPasswordCallback const pw_cb = passwd_callback_;
         if (pw_cb)
           {
             pw_cb->get_privatekey_password (pwd);
@@ -77,12 +74,12 @@ namespace ACE
         {
           // Retrieve the pointer to the SSL of the connection currently treated
           void* ex_data = ::X509_STORE_CTX_get_ex_data (cert_ctx, ::SSL_get_ex_data_X509_STORE_CTX_idx());
-          ::SSL* ssl = reinterpret_cast< ::SSL* > (ex_data);
+          ::SSL* ssl = static_cast<::SSL*> (ex_data);
           // Retrieve SSL_CTX pointer of the connection currently treated
           ::SSL_CTX* ssl_ctx = ::SSL_get_SSL_CTX (ssl);
           // Retrieve our SSL_CallbackManager
           ex_data = ::SSL_CTX_get_ex_data (ssl_ctx, SSL_CallbackManager::ssl_ctx_mngr_index_);
-          SSL_CallbackManager* cbmngr = reinterpret_cast<SSL_CallbackManager*> (ex_data);
+          SSL_CallbackManager* cbmngr = static_cast<SSL_CallbackManager*> (ex_data);
 
           SSL_CertificateCallbackArg arg (cbmngr->context(), cert_ctx);
           ok = cbmngr->verify_certificate_callback (arg);
@@ -93,24 +90,25 @@ namespace ACE
 
     int extern_C_passwd_callback (char* buf, int size, int /*rwflag*/, void* user_data)
       {
-        if (user_data == 0)
+        if (buf == nullptr || size <= 0 || user_data == nullptr)
+        {
           return 0;
+        }
 
-        SSL_CallbackManager* cbmngr = reinterpret_cast<SSL_CallbackManager*> (user_data);
+        SSL_CallbackManager* cbmngr = static_cast<SSL_CallbackManager*> (user_data);
 
         ACE_CString pwd;
         cbmngr->passwd_callback (pwd);
         if (!pwd.empty ())
           {
-            ACE_OS::strncpy (buf, pwd.c_str (), size);
-            buf[size - 1] = '\0';
-            if (size > ACE_Utils::truncate_cast<int> (pwd.length ()))
-              size = ACE_Utils::truncate_cast<int> (pwd.length ());
-
-            return size;
+            int const password_length = ACE_Utils::truncate_cast<int> (pwd.length ());
+            ACE_OS::strsncpy (buf, pwd.c_str (), size);
+            return password_length < size ? password_length : size - 1;
           }
         else
+        {
           return 0;
+        }
       }
 
   }

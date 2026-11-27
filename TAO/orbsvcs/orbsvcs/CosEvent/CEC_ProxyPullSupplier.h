@@ -1,13 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   CEC_ProxyPullSupplier.h
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  */
-//=============================================================================
-
 
 #ifndef TAO_CEC_PROXYPULLSUPPLIER_H
 #define TAO_CEC_PROXYPULLSUPPLIER_H
@@ -20,9 +15,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Message_Queue.h"
 #include "ace/Condition_Thread_Mutex.h"
-#include "ace/Unbounded_Queue.h"
+#include <deque>
 
 #include "orbsvcs/CosEvent/event_serv_export.h"
 
@@ -40,11 +34,11 @@ class TAO_CEC_ProxyPullConsumer;
  * remember that this class is used to communicate with a
  * PullConsumer, so, in effect, this is the ambassador for a
  * consumer inside the event channel.
- * = MEMORY MANAGEMENT
+ * @par Memory Management
  * It does not assume ownership of the TAO_CEC_Dispatching object.
  * It makes a copy of the ConsumerQOS and the consumer object
  * reference.
- * = LOCKING
+ * @par Locking
  * Locking is strategized, the event channel acts as a factory for
  * the locking strategies.
  */
@@ -54,11 +48,9 @@ public:
   using _ptr_type = CosEventChannelAdmin::ProxyPullSupplier_ptr;
   using _var_type = CosEventChannelAdmin::ProxyPullSupplier_var;
 
-  /// constructor...
   TAO_CEC_ProxyPullSupplier (TAO_CEC_EventChannel* event_channel,
-                             const ACE_Time_Value &timeout);
+                             ACE_Time_Value const &timeout);
 
-  /// destructor...
   ~TAO_CEC_ProxyPullSupplier () override;
 
   TAO_CEC_ProxyPullSupplier (TAO_CEC_ProxyPullSupplier const &) = delete;
@@ -95,9 +87,10 @@ public:
   CORBA::Boolean consumer_non_existent (CORBA::Boolean_out disconnected);
 
   /// Push an event into the queue.
-  void push (const CORBA::Any &event);
+  void push (CORBA::Any const &event);
 
-  // = The CosEventChannelAdmin::ProxyPullSupplier methods...
+  /// @name The CosEventChannelAdmin::ProxyPullSupplier methods
+  /// @{
   void connect_pull_consumer (CosEventComm::PullConsumer_ptr pull_consumer) override;
   CORBA::Any *pull () override;
   CORBA::Any *try_pull (CORBA::Boolean_out has_event) override;
@@ -107,11 +100,14 @@ public:
   CORBA::ULong _incr_refcnt ();
   CORBA::ULong _decr_refcnt ();
 
-  // = The Servant methods
+  /// @}
+  /// @name The Servant methods
+  /// @{
   PortableServer::POA_ptr _default_POA () override;
   void _add_ref () override;
   void _remove_ref () override;
 
+  /// @}
 protected:
   /// Set the consumer, used by some implementations to change the
   /// policies used when invoking operations on the consumer.
@@ -131,15 +127,15 @@ protected:
 
 private:
   /// The Event Channel that owns this object.
-  TAO_CEC_EventChannel* event_channel_;
+  TAO_CEC_EventChannel* event_channel_ {};
 
   ACE_Time_Value timeout_;
 
   /// The locking strategy.
-  ACE_Lock* lock_;
+  ACE_Lock* lock_ {};
 
   /// The reference count.
-  CORBA::ULong refcount_;
+  CORBA::ULong refcount_ { 1 };
 
   /// The consumer -- use apply_policy() instead of assigning directly to
   /// consumer_.  This will keep consumer_ and nopolicy_consumer_ in sync.
@@ -148,9 +144,8 @@ private:
   /// The consumer without any policies applied
   CosEventComm::PullConsumer_var nopolicy_consumer_;
 
-  /// If the flag is not zero then we are connected, notice that the
-  /// consumer can be nil.
-  int connected_;
+  /// Whether the proxy is connected. The consumer can be nil.
+  bool connected_ {};
 
   /// Store the default POA.
   PortableServer::POA_var default_POA_;
@@ -158,7 +153,7 @@ private:
   /// Use a message queue to pass the
   TAO_SYNCH_MUTEX queue_lock_;
   TAO_SYNCH_CONDITION wait_not_empty_;
-  ACE_Unbounded_Queue<CORBA::Any> queue_;
+  std::deque<CORBA::Any> queue_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

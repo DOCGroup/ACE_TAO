@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 #ifndef COMMAND_MODULE_H
 #define COMMAND_MODULE_H
 
@@ -13,7 +12,7 @@ public:
   using inherited = ACE_Module<ACE_MT_SYNCH, ACE_System_Time_Policy>;
   using Task = ACE_Task<ACE_MT_SYNCH, ACE_System_Time_Policy>;
 
-  CommandModule (const ACE_TCHAR *module_name,
+  CommandModule (ACE_TCHAR const *module_name,
                    CommandTask *writer,
                    CommandTask *reader,
                    ACE_SOCK_Stream *peer);

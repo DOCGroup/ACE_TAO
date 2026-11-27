@@ -1,13 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  * @file SL3_ObjectCredentialsPolicy.h
  *
  * @author Ossama Othman <ossama@dre.vanderbilt.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_SL3_OBJECT_CREDENTIALS_POLICY_H
 #define TAO_SL3_OBJECT_CREDENTIALS_POLICY_H
@@ -27,7 +22,6 @@
 #pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -51,9 +45,13 @@ namespace TAO
         public virtual ::CORBA::LocalObject
     {
     public:
-      /// Constructor
-      ObjectCredentialsPolicy (
-        const SecurityLevel3::OwnCredentialsList & creds);
+      explicit ObjectCredentialsPolicy (
+        SecurityLevel3::OwnCredentialsList const & creds);
+
+      ObjectCredentialsPolicy (ObjectCredentialsPolicy const &) = delete;
+      ObjectCredentialsPolicy (ObjectCredentialsPolicy &&) = delete;
+      ObjectCredentialsPolicy &operator= (ObjectCredentialsPolicy const &) = delete;
+      ObjectCredentialsPolicy &operator= (ObjectCredentialsPolicy &&) = delete;
 
       /**
        * @name SecurityLevel3::ObjectCredentialsPolicy Methods
@@ -61,7 +59,7 @@ namespace TAO
        * Methods required by the
        * SecurityLevel3::ObjectCredentialsPolicy interface.
        */
-      //@{
+      /// @{
       SecurityLevel3::OwnCredentialsList * creds_list () override;
 
       CORBA::PolicyType policy_type () override;
@@ -69,15 +67,14 @@ namespace TAO
       CORBA::Policy_ptr copy () override;
 
       void destroy () override;
-      //@}
+      /// @}
 
     protected:
-      /// Destructor
       /**
        * Protected destructor to enforce proper memory management
        * through the reference counting mechanism.
        */
-      ~ObjectCredentialsPolicy () override;
+      ~ObjectCredentialsPolicy () override = default;
 
     private:
       /// List of POA-specific OwnCredentials.

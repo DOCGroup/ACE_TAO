@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   Constraint_Interpreter.h
  *
  *  @author Jeff Parsons <j.parsons@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef CONSTRAINT_INTERPRETER_H
 #define CONSTRAINT_INTERPRETER_H
@@ -46,15 +42,15 @@ namespace ACE
     public:
       Constraint_Interpreter () = default;
 
-      virtual ~Constraint_Interpreter () = default;
+      ~Constraint_Interpreter () override = default;
 
       /**
        * This method builds an expression tree representing the
-       * constraint specified in <constraints>, and returns -1 with
+       * constraint specified in @a constraints, and returns -1 with
        * an error message if the constraint given has syntax errors or
        * semantic errors, such as mismatched types.
        */
-      int build_tree (const char* constraints);
+      int build_tree (char const* constraints);
 
       /// Returns true if the constraint is evaluated successfully by
       /// the evaluator.

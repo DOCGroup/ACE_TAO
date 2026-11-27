@@ -39,7 +39,6 @@ run_main (int, ACE_TCHAR *[])
 #include "ace/OS_NS_unistd.h"
 #include "ace/Thread_Manager.h"
 
-
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #undef THIS_FILE

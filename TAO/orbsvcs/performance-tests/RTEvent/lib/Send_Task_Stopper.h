@@ -22,7 +22,6 @@
 class TAO_RTEC_Perf_Export Send_Task_Stopper : public Task_Activator<Send_Task>
 {
 public:
-  /// Constructor
   Send_Task_Stopper (int priority,
                      int scheduling_class,
                      Send_Task *task);

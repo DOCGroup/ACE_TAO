@@ -18,7 +18,7 @@ run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT("Compiler_Features_25_Test"));
 
-  int retval = 0;
+  int const retval = 0;
   if (Foo::is_true() && !Foo::is_false())
     {
       ACE_DEBUG ((LM_INFO,

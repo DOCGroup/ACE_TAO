@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Log_Msg_Callback.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef ACE_LOG_MSG_CALLBACK_H
 #define ACE_LOG_MSG_CALLBACK_H
@@ -52,7 +48,6 @@ class ACE_Log_Record;
 class ACE_Export ACE_Log_Msg_Callback
 {
 public:
-  /// Default constructor
   ACE_Log_Msg_Callback () = default;
 
   /// No-op virtual destructor.

@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 /**
  *  @file     ValueBase.h
  *
@@ -26,10 +24,7 @@
 #include "tao/Any_Insert_Policy_T.h"
 
 #include "ace/Basic_Types.h"
-#include "ace/Synch_Traits.h"
-#include "ace/Thread_Mutex.h"
 #include <atomic>
-#include "ace/Null_Mutex.h"
 #include <vector>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -59,7 +54,7 @@ public:
                  CORBA::Long init_level = 0);
 
   /// Methods to support chunking.
-  /// Note: These methods are called for both chunking and non-chunking
+  /// @note These methods are called for both chunking and non-chunking
   ///       valuetype. These methods checks the chunking_ flag. If it's
   ///       set to be false the methods return true rightaway.
 
@@ -147,13 +142,17 @@ namespace CORBA
 
     virtual CORBA::ValueBase* _copy_value () TAO_local_COPY_VALUE_IS_PURE;
 
-    // Reference counting.
+    /// @name Reference counting
+    /// @{
     virtual void _add_ref () = 0;
     virtual void _remove_ref () = 0;
     virtual CORBA::ULong _refcount_value () = 0;
+    /// @}
 
-    // dynamic casting
+    /// @name Dynamic casting
+    /// @{
     static CORBA::ValueBase* _downcast (CORBA::ValueBase *);
+    /// @}
 
     /// TAO extension
 
@@ -167,7 +166,7 @@ namespace CORBA
     /// Give the list of the RepositoryIds in the valuetype "truncatable"
     /// inheritance hierarchy. List the id of this valuetype as first
     /// RepositoryID and go up the "truncatable" derivation hierarchy.
-    /// Note the truncatable repo ids only list the truncatable base types
+    /// @note The truncatable repo ids only list the truncatable base types
     /// to which this type is safe to truncate, not all its parents.
     virtual void _tao_obv_truncatable_repo_ids (Repository_Id_List &) const = 0;
 
@@ -365,7 +364,8 @@ namespace TAO_OBV_GIOP_Flags
   constexpr CORBA::Long Type_info_single = 2;
   constexpr CORBA::Long Type_info_list = 6;
   constexpr CORBA::Long Chunking_tag_sigbits = 8;
-  constexpr CORBA::Long Indirection_tag = -1; // 0xffffffff
+  /// Indirection tag (0xffffffff).
+  constexpr CORBA::Long Indirection_tag = -1;
   constexpr CORBA::Long Null_tag = 0;
 
   TAO_OBV_GIOP_FLAGS_INLINE_FUNCTION CORBA::Boolean is_null_ref          (CORBA::Long tag);
@@ -414,8 +414,8 @@ namespace TAO
     static void add_ref (CORBA::ValueBase *);
     static void remove_ref (CORBA::ValueBase *);
 
-    // For INOUT value type arguments, so they can use the same set
-    // of arg classes as interfaces.
+    /// For INOUT value type arguments, so they can use the same set
+    /// of arg classes as interfaces.
     static void release (CORBA::ValueBase *);
   };
 }

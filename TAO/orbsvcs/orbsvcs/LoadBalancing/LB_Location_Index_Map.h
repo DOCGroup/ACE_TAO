@@ -1,13 +1,8 @@
-// -*- C++ -*-
-
-//=======================================================================
 /**
  *  @file    LB_Location_Index_Map.h
  *
  *  @author  Ossama Othman <ossama@uci.edu>
  */
-//=======================================================================
-
 
 #ifndef TAO_LB_LOCATION_INDEX_MAP_H
 #define TAO_LB_LOCATION_INDEX_MAP_H

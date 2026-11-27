@@ -1,6 +1,7 @@
-// -*- C++ -*-
 #include "tao/ORB_Core_TSS_Resources.h"
 #include "tao/ORB_Table.h"
+
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -27,7 +28,9 @@ TAO_ORB_Core::_decr_refcnt ()
 {
   unsigned long const count = --this->refcount_;
   if (count != 0)
-    return count;
+    {
+      return count;
+    }
 
   this->fini ();
   return 0;
@@ -37,9 +40,11 @@ ACE_INLINE ACE_Lock *
 TAO_ORB_Core::locking_strategy ()
 {
   if (this->resource_factory ()->use_locked_data_blocks ())
-    return &this->data_block_lock_;
+    {
+      return std::addressof (this->data_block_lock_);
+    }
 
-  return 0;
+  return nullptr;
 }
 
 ACE_INLINE CORBA::Boolean
@@ -85,10 +90,10 @@ TAO_ORB_Core::get_network_priority_protocols_hooks ()
 }
 
 ACE_INLINE CORBA::Boolean
-TAO_ORB_Core::service_profile_selection (const TAO_MProfile &mprofile,
+TAO_ORB_Core::service_profile_selection (TAO_MProfile const &mprofile,
                                          TAO_Profile  *&profile)
 {
-  CORBA::Boolean retval = false;
+  CORBA::Boolean retval {};
   // @@ If different services have the same feature we may want to
   // prioritise them here. We need to decide here whose selection of
   // profile is more important.
@@ -104,7 +109,7 @@ TAO_ORB_Core::service_profile_selection (const TAO_MProfile &mprofile,
 ACE_INLINE CORBA::Boolean
 TAO_ORB_Core::object_is_nil (CORBA::Object_ptr obj)
 {
-  CORBA::Boolean retval = false;
+  CORBA::Boolean retval {};
   if (this->ft_service_.service_callback ())
     {
       retval = this->ft_service_.service_callback ()->object_is_nil (obj);
@@ -112,10 +117,9 @@ TAO_ORB_Core::object_is_nil (CORBA::Object_ptr obj)
   return retval;
 }
 
-
 ACE_INLINE TAO_Service_Callbacks::Profile_Equivalence
-TAO_ORB_Core::is_profile_equivalent (const TAO_Profile *this_p,
-                                     const TAO_Profile *that_p)
+TAO_ORB_Core::is_profile_equivalent (TAO_Profile const *this_p,
+                                     TAO_Profile const *that_p)
 {
   TAO_Service_Callbacks::Profile_Equivalence retval
     = TAO_Service_Callbacks::DONT_KNOW;
@@ -156,7 +160,7 @@ TAO_ORB_Core::ft_send_extended_sc ()
 ACE_INLINE ACE_Thread_Manager *
 TAO_ORB_Core::thr_mgr ()
 {
-  return &this->tm_;
+  return std::addressof (this->tm_);
 }
 
 ACE_INLINE CORBA::ORB_ptr
@@ -180,30 +184,30 @@ TAO_ORB_Core::request_dispatcher ()
 ACE_INLINE TAO_ORB_Core::InitRefMap *
 TAO_ORB_Core::init_ref_map ()
 {
-  return &this->init_ref_map_;
+  return std::addressof (this->init_ref_map_);
 }
 
 ACE_INLINE void
-TAO_ORB_Core::set_default (const char * orb_id)
+TAO_ORB_Core::set_default (char const *orb_id)
 {
   TAO::ORB_Table * const table = TAO::ORB_Table::instance ();
   table->set_default (orb_id);
 }
 
 ACE_INLINE void
-TAO_ORB_Core::not_default (const char * orb_id)
+TAO_ORB_Core::not_default (char const *orb_id)
 {
   TAO::ORB_Table * const table = TAO::ORB_Table::instance ();
   table->not_default (orb_id);
 }
 
 ACE_INLINE void
-TAO_ORB_Core::optimize_collocation_objects (CORBA::Boolean opt)
+TAO_ORB_Core::optimize_collocation_objects (bool opt)
 {
   this->opt_for_collocation_ = opt;
 }
 
-ACE_INLINE CORBA::Boolean
+ACE_INLINE bool
 TAO_ORB_Core::optimize_collocation_objects () const
 {
   return this->opt_for_collocation_;
@@ -247,7 +251,7 @@ TAO_ORB_Core::protocol_factories ()
 ACE_INLINE TAO_Parser_Registry *
 TAO_ORB_Core::parser_registry ()
 {
-  return &this->parser_registry_;
+  return std::addressof (this->parser_registry_);
 }
 
 #undef TAO_OC_RETRIEVE
@@ -265,7 +269,8 @@ TAO_ORB_Core::policy_manager ()
 ACE_INLINE TAO_ORB_Core_TSS_Resources*
 TAO_ORB_Core::get_tss_resources ()
 {
-  return ACE_TSS_GET (&this->tss_resources_,TAO_ORB_Core_TSS_Resources);
+  return ACE_TSS_GET (std::addressof (this->tss_resources_),
+                      TAO_ORB_Core_TSS_Resources);
 }
 
 ACE_INLINE void *
@@ -275,7 +280,9 @@ TAO_ORB_Core::get_tss_resource (size_t slot_id)
     this->get_tss_resources ();
 
   if (slot_id >= tss_resources->ts_objects_.size ())
-    return 0;
+    {
+      return nullptr;
+    }
 
   return tss_resources->ts_objects_[slot_id];
 }
@@ -298,18 +305,20 @@ TAO_ORB_Core::set_tss_resource (size_t slot_id, void *ts_object)
   // If the TSS array isn't large enough, then increase its size.
   // We're guaranteed not to exceed the number of allocated slots by
   // the above check.
-  const size_t old_size = tss_resources->ts_objects_.size ();
-  const size_t new_size = slot_id + 1;
+  size_t const old_size = tss_resources->ts_objects_.size ();
+  size_t const new_size = slot_id + 1;
   if (slot_id >= old_size
       && tss_resources->ts_objects_.size (new_size) != 0)
-    return -1;
+    {
+      return -1;
+    }
 
-  // Initialize intermediate array elements to zero, since they
+  // Initialize intermediate array elements to nullptr, since they
   // haven't been initialized yet.  This ensures that garbage is not
   // returned when accessing any of those elements at a later point in
   // time.
   for (size_t i = old_size; i < slot_id; ++i)
-    tss_resources->ts_objects_[i] = 0;
+    tss_resources->ts_objects_[i] = nullptr;
 
   tss_resources->ts_objects_[slot_id] = ts_object;
 
@@ -340,10 +349,10 @@ TAO_ORB_Core::thread_per_connection_timeout (ACE_Time_Value &timeout) const
   return this->thread_per_connection_use_timeout_;
 }
 
-ACE_INLINE const char *
+ACE_INLINE char const *
 TAO_ORB_Core::orbid () const
 {
-  return this->orbid_;
+  return this->orbid_.c_str ();
 }
 
 ACE_INLINE void
@@ -416,7 +425,7 @@ TAO_ORB_Core::resolve_compression_manager ()
   return CORBA::Object::_duplicate (this->compression_manager_);
 }
 
-ACE_INLINE const char *
+ACE_INLINE char const *
 TAO_ORB_Core::server_id () const
 {
   return this->server_id_.c_str();
@@ -426,15 +435,19 @@ ACE_INLINE TAO_Codeset_Manager *
 TAO_ORB_Core::codeset_manager()
 {
   if (this->orb_params()->negotiate_codesets() == 0)
-    return 0;
-  if (this->codeset_manager_ == 0)
+    {
+      return nullptr;
+    }
+  if (this->codeset_manager_ == nullptr)
     {
       // This causes a factory to be loaded which will call
       // the codeset_manager setter in this thread.
       this->codeset_manager_ =
         this->resource_factory()->codeset_manager();
-      if (this->codeset_manager_ == 0)
-        this->orb_params()->negotiate_codesets(false);
+      if (this->codeset_manager_ == nullptr)
+        {
+          this->orb_params()->negotiate_codesets(false);
+        }
     }
   return this->codeset_manager_;
 }
@@ -473,8 +486,8 @@ ACE_INLINE TAO::PolicyFactory_Registry_Adapter *
 TAO_ORB_Core::policy_factory_registry ()
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->lock_,
-                    0);
-  if (policy_factory_registry_ == 0)
+                    nullptr);
+  if (policy_factory_registry_ == nullptr)
     {
       return this->policy_factory_registry_i ();
     }
@@ -634,9 +647,9 @@ TAO_ORB_Core::serverrequestinterceptor_adapter ()
 ACE_INLINE  CORBA::Boolean
 TAO_ORB_Core::is_permanent_forward_condition
 (const CORBA::Object_ptr obj,
- const TAO_Service_Context &service_context)
+ TAO_Service_Context const &service_context)
 {
-  const TAO_Service_Callbacks *service_callback =
+  TAO_Service_Callbacks const *service_callback =
       this->fault_tolerance_service ().service_callback ();
 
   // Since forward location is allowed to be nil then check for it.

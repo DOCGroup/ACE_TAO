@@ -1,6 +1,3 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
  *  @file    Event_Persistence_Strategy.h
  *
@@ -8,7 +5,6 @@
  *
  *  @author Jonathan Pollack <pollack_j@ociweb.com>
  */
-//=============================================================================
 
 #ifndef EVENT_PERSISTENCE_STRATEGY_H
 #define EVENT_PERSISTENCE_STRATEGY_H
@@ -33,10 +29,10 @@ namespace TAO_Notify
   class TAO_Notify_Serv_Export Event_Persistence_Strategy: public ACE_Service_Object
   {
   public:
-    // get the current factory, creating it if necessary
+    /// Get the current factory, creating it if necessary.
     virtual Event_Persistence_Factory * get_factory () = 0;
 
-    // release the current factory so a new one can be created
+    /// Release the current factory so a new one can be created.
     virtual void reset () = 0;
   };
 } // namespace TAO_Notify

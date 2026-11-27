@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 /**
  *  @file   ESF_Proxy_Collection.h
  *
@@ -71,7 +69,7 @@ template<class Target> class TAO_ESF_Worker;
  * + _incr_refcnt() - increment the reference count.
  * + _decr_refcnt() - decrement the reference count.
  *
- * = VARIANTS
+ * @par Variants
  *
  * We identify several sources of variation:
  *
@@ -124,8 +122,14 @@ template<class PROXY>
 class TAO_ESF_Proxy_Collection
 {
 public:
-  /// destructor
-  virtual ~TAO_ESF_Proxy_Collection ();
+  TAO_ESF_Proxy_Collection () = default;
+
+  virtual ~TAO_ESF_Proxy_Collection () = default;
+
+  TAO_ESF_Proxy_Collection (TAO_ESF_Proxy_Collection const &) = delete;
+  TAO_ESF_Proxy_Collection (TAO_ESF_Proxy_Collection &&) = delete;
+  TAO_ESF_Proxy_Collection &operator= (TAO_ESF_Proxy_Collection const &) = delete;
+  TAO_ESF_Proxy_Collection &operator= (TAO_ESF_Proxy_Collection &&) = delete;
 
   /**
    * Iterate over the collection and invoke worker->work() for each

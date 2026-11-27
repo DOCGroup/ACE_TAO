@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   Connection_Handler.h
  *
  *  @author Balachandran Natarajan  <bala@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_CONNECTION_HANDLER_H
 #define TAO_CONNECTION_HANDLER_H
@@ -46,10 +42,8 @@ class TAO_Transport;
 class TAO_Export TAO_Connection_Handler : public TAO_LF_CH_Event
 {
 public:
-  /// Constructor
   explicit TAO_Connection_Handler (TAO_ORB_Core *orb_core);
 
-  /// Destructor
   virtual ~TAO_Connection_Handler ();
 
   /// Return the underlying transport object
@@ -122,7 +116,7 @@ public:
   /// Release the OS resources related to this handler.
   virtual int release_os_resources ();
 
-  virtual int handle_write_ready (const ACE_Time_Value *timeout);
+  virtual int handle_write_ready (ACE_Time_Value const *timeout);
 
 protected:
   /// Return our TAO_ORB_Core pointer
@@ -136,7 +130,7 @@ protected:
   /// Set options on the socket
   int set_socket_option (ACE_SOCK &sock, int snd_size, int rcv_size);
 
-  //@{
+  /// @{
   /**
    * @name Helper methods for Event_Handler-based derived classes.
    *
@@ -151,10 +145,10 @@ protected:
   int handle_output_eh (ACE_HANDLE h, ACE_Event_Handler * eh);
 
   /// Implement the handle_input() callback
-  // We're actually going to pull the code from the protocol-specific
-  // handlers back into this class, because they ALL look exactly the same.
-  // If some other protocol comes along and needs to do something different,
-  // it is always free to override handle_input() as it sees fit.
+  /// We're actually going to pull the code from the protocol-specific
+  /// handlers back into this class, because they ALL look exactly the same.
+  /// If some other protocol comes along and needs to do something different,
+  /// it is always free to override handle_input() as it sees fit.
   int handle_input_eh (ACE_HANDLE h, ACE_Event_Handler * eh);
   int handle_input_internal (ACE_HANDLE h, ACE_Event_Handler *eh);
 
@@ -175,24 +169,24 @@ protected:
    * See the SSLIOP protocol for an interesting use-case
    */
   virtual void pos_io_hook (int & return_value);
-  //@}
+  /// @}
 
 private:
-  TAO_Connection_Handler (const TAO_Connection_Handler &) = delete;
-  TAO_Connection_Handler &operator= (const TAO_Connection_Handler &) = delete;
+  TAO_Connection_Handler (TAO_Connection_Handler const &) = delete;
+  TAO_Connection_Handler &operator= (TAO_Connection_Handler const &) = delete;
 
   /// Pointer to the TAO_ORB_Core
   TAO_ORB_Core * const orb_core_;
 
   /// Transport object reference
-  TAO_Transport* transport_;
+  TAO_Transport* transport_ {};
 
   /// Stores the connection pending state
-  bool connection_pending_;
+  bool connection_pending_ {};
 
   /// Once closed make sure the transport is not added back to the cache.
   /// This is distinct from the leader-follower state so it cannot be reset.
-  bool is_closed_;
+  bool is_closed_ {};
 };
 
 /**
@@ -214,9 +208,9 @@ public:
     ref_.add_reference ();
   }
 
-  TAO_Auto_Reference (const TAO_Auto_Reference &) = delete;
+  TAO_Auto_Reference (TAO_Auto_Reference const &) = delete;
   TAO_Auto_Reference (TAO_Auto_Reference &&) = delete;
-  TAO_Auto_Reference &operator= (const TAO_Auto_Reference &) = delete;
+  TAO_Auto_Reference &operator= (TAO_Auto_Reference const &) = delete;
   TAO_Auto_Reference &operator= (TAO_Auto_Reference &&) = delete;
 
   ~TAO_Auto_Reference ()
@@ -227,7 +221,6 @@ public:
 private:
   T& ref_;
 };
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

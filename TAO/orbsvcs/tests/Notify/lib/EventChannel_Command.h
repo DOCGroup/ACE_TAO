@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file EventChannel_Command.h
  *
@@ -31,24 +30,23 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_EventChannel_Command : public TAO_Notify_Tests_Command
 {
 public:
-  /// Constructor
   TAO_Notify_Tests_EventChannel_Command ();
 
-  /// Destructor
   virtual ~TAO_Notify_Tests_EventChannel_Command ();
 
   /// Parse args and populate options.
-  virtual void init (ACE_Arg_Shifter& arg_shifter);
+  void init (ACE_Arg_Shifter& arg_shifter) override;
 
   /// Execute the command.
-  virtual void execute_i ();
+  void execute_i () override;
 
   /// Name of object
-  virtual const char* get_name ();
-  static const char* name ();
+  char const *get_name () override;
+  static char const *name ();
 
 protected:
-  ///= Data Members
+  /// @name Data members
+  /// @{
   enum COMMAND
   {
     CREATE,
@@ -70,15 +68,18 @@ protected:
 
   /// Flag to tell if the Channel Factory should be collocated.
   CORBA::Boolean collocated_;
+  /// @}
 
   /// Helper method to create a collocated ECF.
   void create_collocated_ecf ();
 
-  /// = Handlers
+  /// @name Handlers
+  /// @{
   void handle_create ();
   void handle_destroy ();
   void handle_set_qos ();
   void handle_status ();
+  /// @}
 };
 
 #include /**/ "ace/post.h"

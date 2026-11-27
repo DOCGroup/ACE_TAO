@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   Network_Priority_Mapping.h
  *
@@ -9,8 +6,6 @@
  *
  *  @author Yamuna Krishnamurthy (yamuna@oomworks.com)
  */
-//=============================================================================
-
 
 #ifndef TAO_NETWORK_PRIORITY_MAPPING_H
 #define TAO_NETWORK_PRIORITY_MAPPING_H
@@ -38,7 +33,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_RTCORBA_Export TAO_Network_Priority_Mapping
 {
 public:
-  /// The destructor
   virtual ~TAO_Network_Priority_Mapping ();
 
   virtual CORBA::Boolean
@@ -55,6 +49,4 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
 #endif /* TAO_NETWORK_PRIORITY_MAPPING_H */
-
-
 

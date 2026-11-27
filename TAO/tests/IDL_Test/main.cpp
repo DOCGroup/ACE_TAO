@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    main.cpp
  *
@@ -8,7 +6,6 @@
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "pragmaS.h"
 #include "unionC.h"
@@ -22,34 +19,94 @@
 #include "valuetype_opt_accessorC.h"
 #include "fixedA.h"
 #include "keywordsS.h"
+#include "array_anon_nestedC.h"
 
 #include "ace/Log_Msg.h"
 #include "tao/AnyTypeCode/Any.h"
+#include "tao/BD_String_Argument_T.h"
+#include "tao/Vector_CDR_T.h"
+#include "tao/Environment.h"
+#include "tao/Queued_Data.h"
+#include "tao/Base_Transport_Property.h"
+#include "tao/ETCL/TAO_ETCL_Constraint.h"
+#include "tao/Policy_Set.h"
 
 #include <cstring>
+#include <memory>
 #include <type_traits>
+#include <utility>
 
-static_assert (std::is_abstract<OBV_Supports_Inherited_Operation>::value,
+static_assert (std::is_abstract_v<OBV_Supports_Inherited_Operation>,
                "A valuetype that supports an inherited operation is abstract");
-static_assert (!std::is_abstract<OBV_Supports_Abstract_Operation>::value,
+static_assert (std::is_nothrow_move_constructible_v<CORBA::Any>
+               && std::is_nothrow_move_assignable_v<CORBA::Any>
+               && std::is_nothrow_move_constructible_v<CORBA::Any_var>
+               && std::is_nothrow_move_assignable_v<CORBA::Any_var>
+               && std::is_move_constructible_v<CORBA::Any_out>
+               && std::is_move_assignable_v<CORBA::Any_out>,
+               "Any and its wrappers accept rvalues");
+static_assert (std::is_move_constructible_v<CORBA::Environment>
+               && std::is_move_assignable_v<CORBA::Environment>
+               && std::is_move_constructible_v<TAO_Base_Transport_Property>
+               && std::is_move_constructible_v<TAO_ETCL_Literal_Constraint>
+               && std::is_move_assignable_v<TAO_ETCL_Literal_Constraint>
+               && std::is_move_constructible_v<ETCL_Literal_Constraint>
+               && std::is_move_assignable_v<ETCL_Literal_Constraint>
+               && std::is_move_constructible_v<TAO_Policy_Set>,
+               "Copyable TAO classes accept rvalues through their copy operations");
+static_assert (!std::is_move_constructible_v<TAO_Queued_Data>,
+               "Queued nodes cannot be move constructed");
+static_assert (std::is_constructible_v<TAO_ETCL_Literal_Constraint,
+                                       CORBA::Any const *>,
+               "ETCL literals accept a const Any");
+static_assert (!std::is_abstract_v<OBV_Supports_Abstract_Operation>,
                "A directly supported abstract-interface operation uses its generated default");
-static_assert (!std::is_abstract<OBV_Copy_Derived>::value,
+static_assert (!std::is_abstract_v<OBV_Copy_Derived>,
                "A concrete derived valuetype gets its own copy implementation");
-static_assert (std::is_abstract<OBV_Copy_Operation_Derived>::value,
+static_assert (std::is_abstract_v<OBV_Copy_Operation_Derived>,
                "A derived operation-bearing valuetype requires its own copy");
-static_assert (std::is_abstract<OBV_Copy_Factory_Derived>::value,
+static_assert (std::is_abstract_v<OBV_Copy_Factory_Derived>,
                "A factory-bearing derived valuetype must provide its own copy");
-static_assert (std::is_abstract<OBV_Copy_Factory_Operation_Derived>::value,
+static_assert (std::is_abstract_v<OBV_Copy_Factory_Operation_Derived>,
                "A derived valuetype must not inherit a sliced copy through a factory base");
-static_assert (std::is_base_of<CORBA::ValueFactoryBase,
-                               Accessor_Optimized_Derived_init>::value,
+static_assert (std::is_base_of_v<CORBA::ValueFactoryBase,
+                                 Accessor_Optimized_Derived_init>,
                "An optimized derived valuetype retains its concrete factory");
-static_assert (!std::is_abstract<Accessor_Optimized_Refcount_Derived>::value,
+static_assert (!std::is_abstract_v<Accessor_Optimized_Refcount_Derived>,
                "An optimized valuetype inherits supported-interface refcount overrides");
-static_assert (!std::is_abstract<Accessor_Optimized_Refcount_Inherited>::value,
+static_assert (!std::is_abstract_v<Accessor_Optimized_Refcount_Inherited>,
                "An optimized valuetype can add a supported interface with an inherited counter");
-static_assert (std::is_abstract<Accessor_Optimized_Operation_Derived>::value,
+static_assert (std::is_abstract_v<Accessor_Optimized_Operation_Derived>,
                "An optimized derived valuetype must not inherit a sliced copy");
+
+template <typename String_Var>
+void
+test_bounded_string_clone (
+  typename String_Var::s_traits::char_type *source,
+  typename String_Var::s_traits::char_type const *expected,
+  int &error_count)
+{
+  using Argument = TAO::In_BD_String_Clonable_Argument_T<
+    String_Var, 4, TAO::Any_Insert_Policy_Noop>;
+
+  Argument original (source);
+  std::unique_ptr<TAO::Argument> const copy (original.clone ());
+  Argument const * const cloned = dynamic_cast<Argument const *> (copy.get ());
+  if (source != nullptr && source[0] != 0)
+    {
+      source[0] = 0;
+    }
+
+  if (cloned == nullptr
+      || (expected == nullptr && cloned->arg () != nullptr)
+      || (expected != nullptr
+          && (cloned->arg () == nullptr
+              || ACE_OS::strcmp (cloned->arg (), expected) != 0)))
+    {
+      ++error_count;
+      ACE_ERROR ((LM_ERROR, "Bounded string argument clone failed\n"));
+    }
+}
 
 class hello_i : public virtual POA_hello
 {
@@ -143,7 +200,7 @@ struct something_handler
 
 template <typename Type>
 void
-expect_equals (int &error_count, const char *name, Type actual, Type expected)
+expect_equals (int &error_count, char const *name, Type actual, Type expected)
 {
   if (actual != expected)
     {
@@ -156,7 +213,7 @@ expect_equals (int &error_count, const char *name, Type actual, Type expected)
 
 template <typename Callable>
 void
-expect_bad_param (int &error_count, const char *name, Callable callable)
+expect_bad_param (int &error_count, char const *name, Callable callable)
 {
   try
     {
@@ -550,7 +607,7 @@ test_default_initialized_union (int &error_count)
     array_union.value ()[1], 0);
 
   DefaultInitializedStringUnion string_union;
-  expect_equals<const char *> (
+  expect_equals<char const *> (
     error_count, "DefaultInitializedStringUnion::value",
     string_union.value (), nullptr);
 
@@ -930,7 +987,117 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   int error_count = 0;
 
-  const ACE_CDR::ULongLong test_ull =
+  CORBA::Any source_any;
+  source_any <<= CORBA::Long (42);
+  CORBA::Any moved_value (std::move (source_any));
+  CORBA::Any assigned_value;
+  assigned_value <<= CORBA::Long (12);
+  assigned_value = std::move (moved_value);
+  CORBA::Any * const self_value = std::addressof (assigned_value);
+  assigned_value = std::move (*self_value);
+  CORBA::Any shared_value (assigned_value);
+  assigned_value = std::move (shared_value);
+  CORBA::Long extracted_value {};
+  if (source_any.impl () != nullptr || moved_value.impl () != nullptr ||
+      shared_value.impl () != nullptr ||
+      !(assigned_value >>= extracted_value) || extracted_value != 42)
+    {
+      ++error_count;
+      ACE_ERROR ((LM_ERROR, "Any move failed\n"));
+    }
+
+  CORBA::Any_var original_any (new CORBA::Any);
+  CORBA::Any * const original_any_ptr = original_any.ptr ();
+  CORBA::Any_var moved_any (std::move (original_any));
+  CORBA::Any_var assigned_any (new CORBA::Any);
+  assigned_any = std::move (moved_any);
+  CORBA::Any_var * const self_any = std::addressof (assigned_any);
+  assigned_any = std::move (*self_any);
+  if (original_any.ptr () != nullptr || moved_any.ptr () != nullptr ||
+      assigned_any.ptr () != original_any_ptr)
+    {
+      ++error_count;
+      ACE_ERROR ((LM_ERROR, "Any_var move failed\n"));
+    }
+
+  teststruct::_b array = {'a', 'b', 'c', 'd'};
+  using array_vector = std::vector<teststruct::_b_slice *>;
+  array_vector const source {array};
+  TAO_OutputCDR output;
+  if (!TAO::marshal_array_vector<teststruct::_b_forany> (output, source))
+    {
+      ++error_count;
+      ACE_ERROR ((LM_ERROR, "Failed to marshal array vector\n"));
+    }
+  else
+    {
+      TAO_InputCDR input (output);
+      array_vector target;
+      bool const decoded =
+        TAO::demarshal_array_vector<teststruct::_b_forany> (input, target);
+      if (!decoded || target.size () != 1
+          || std::memcmp (target[0], array, sizeof array) != 0)
+        {
+          ++error_count;
+          ACE_ERROR ((LM_ERROR, "Array vector round trip failed\n"));
+        }
+      for (teststruct::_b_slice * const element : target)
+        {
+          teststruct::_b_free (element);
+        }
+    }
+
+  TAO_OutputCDR truncated_output;
+  truncated_output << CORBA::ULong (1);
+  truncated_output << ACE_OutputCDR::from_char ('a');
+  TAO_InputCDR truncated_input (truncated_output);
+  array_vector unchanged {array};
+  if (TAO::demarshal_array_vector<teststruct::_b_forany> (
+        truncated_input, unchanged)
+      || unchanged.size () != 1 || unchanged[0] != array)
+    {
+      ++error_count;
+      ACE_ERROR ((LM_ERROR, "Truncated array vector changed the target\n"));
+    }
+
+  using object_vector = std::vector<hello_ptr>;
+  object_vector const objects {hello::_nil (), hello::_nil ()};
+  TAO_OutputCDR objects_output;
+  if (!TAO::marshal_objref_vector<hello> (objects_output, objects))
+    {
+      ++error_count;
+      ACE_ERROR ((LM_ERROR, "Failed to marshal object vector\n"));
+    }
+  else
+    {
+      TAO_InputCDR objects_input (objects_output);
+      object_vector decoded_objects;
+      if (!TAO::demarshal_objref_vector<hello> (objects_input, decoded_objects)
+          || decoded_objects.size () != objects.size ())
+        {
+          ++error_count;
+          ACE_ERROR ((LM_ERROR, "Object vector round trip failed\n"));
+        }
+      for (hello_ptr const object : decoded_objects)
+        {
+          CORBA::release (object);
+        }
+    }
+
+  TAO_OutputCDR partial_objects_output;
+  partial_objects_output << CORBA::ULong (2);
+  partial_objects_output << hello::_nil ();
+  TAO_InputCDR partial_objects_input (partial_objects_output);
+  object_vector unchanged_objects {hello::_nil ()};
+  if (TAO::demarshal_objref_vector<hello> (partial_objects_input,
+                                            unchanged_objects)
+      || unchanged_objects.size () != 1)
+    {
+      ++error_count;
+      ACE_ERROR ((LM_ERROR, "Partial object vector changed the target\n"));
+    }
+
+  ACE_CDR::ULongLong const test_ull =
     ACE_UINT64_LITERAL (122192928000000000);
 
   if (test_ull != AAAX)
@@ -942,7 +1109,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                   ACE_TEXT (" is incorrect\n")));
     }
 
-  const CORBA::LongLong test_nll = ACE_INT64_LITERAL (-122192928000000000);
+  CORBA::LongLong const test_nll = ACE_INT64_LITERAL (-122192928000000000);
 
   if (test_nll != NAAA)
     {
@@ -953,7 +1120,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                   ACE_TEXT (" is incorrect\n")));
     }
 
-  const CORBA::LongLong test_pll = ACE_INT64_LITERAL (122192928000000000);
+  CORBA::LongLong const test_pll = ACE_INT64_LITERAL (122192928000000000);
 
   if (test_pll != PAAA)
     {
@@ -968,6 +1135,24 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv);
+
+      CORBA::Object_var object =
+        orb->string_to_object ("corbaloc:iiop:127.0.0.1:12345/vector-test");
+      hello_var reference = hello::_unchecked_narrow (object.in ());
+      TAO_OutputCDR partial_reference_output;
+      partial_reference_output << CORBA::ULong (2);
+      partial_reference_output << reference.in ();
+      TAO_InputCDR partial_reference_input (partial_reference_output);
+      object_vector reference_target {hello::_nil ()};
+      if (CORBA::is_nil (reference.in ())
+          || TAO::demarshal_objref_vector<hello> (partial_reference_input,
+                                                  reference_target)
+          || reference_target.size () != 1
+          || !CORBA::is_nil (reference_target[0]))
+        {
+          ++error_count;
+          ACE_ERROR ((LM_ERROR, "Partial object vector decoding failed\n"));
+        }
 
       Accessor_Optimized_Value_init * const opt_accessor_factory =
         new Accessor_Optimized_Value_init;
@@ -1277,6 +1462,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       {
         something_handler x;
+        PortableServer::ServantBase * const servant = &x;
         char const * base[] =
         {
           "IDL:bug_1985_c/d/AMI_somethingHandler:1.0",
@@ -1296,7 +1482,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               }
           }
 
-        if (!dynamic_cast<POA_bug_1985_c::d::AMI_somethingHandler*> (&x))
+        if (!dynamic_cast<POA_bug_1985_c::d::AMI_somethingHandler*> (servant))
           {
             ++error_count;
             ACE_ERROR ((LM_ERROR,
@@ -1304,7 +1490,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                         base[0]));
           }
 
-        if (!dynamic_cast<POA_bug_1985_a::b::AMI_somethingHandler*> (&x))
+        if (!dynamic_cast<POA_bug_1985_a::b::AMI_somethingHandler*> (servant))
           {
             ++error_count;
             ACE_ERROR ((LM_ERROR,
@@ -1312,7 +1498,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                        base[1]));
           }
 
-        if (!dynamic_cast<POA_Messaging::ReplyHandler*> (&x))
+        if (!dynamic_cast<POA_Messaging::ReplyHandler*> (servant))
           {
             ++error_count;
             ACE_ERROR ((LM_ERROR,
@@ -1330,7 +1516,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       field.value._d (FTYPE_VARCHAR);
       CORBA::Any any1;
       any1 <<= field;
-      const Field *outfield {};
+      Field const *outfield {};
 
       if ((any1 >>= outfield) == 0)
         {
@@ -1340,7 +1526,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                       "duplicate case label value\n"));
         }
 
-      const char *str = outfield->value.strValue ();
+      char const *str = outfield->value.strValue ();
 
       if (std::strcmp (str, "duplicate case label test string") != 0)
         {
@@ -1381,7 +1567,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       root_poa->destroy (true, true);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Unexpected exception in main");
       return 1;
@@ -1396,6 +1582,24 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   test_default_initialized_union (error_count);
   test_fixed_typecodes (error_count);
   test_union_discriminators (error_count);
+
+  char empty[] = "";
+  char bounded[] = "abcd";
+  char over_bound[] = "abcdef";
+  test_bounded_string_clone<CORBA::String_var> (nullptr, nullptr, error_count);
+  test_bounded_string_clone<CORBA::String_var> (empty, "", error_count);
+  test_bounded_string_clone<CORBA::String_var> (bounded, "abcd", error_count);
+  test_bounded_string_clone<CORBA::String_var> (over_bound, "abcdef", error_count);
+
+  CORBA::WChar wide_empty[] = {0};
+  CORBA::WChar wide_bounded[] = {'a', 'b', 'c', 'd', 0};
+  CORBA::WChar wide_over_bound[] = {'a', 'b', 'c', 'd', 'e', 'f', 0};
+  CORBA::WChar const wide_expected[] = {'a', 'b', 'c', 'd', 0};
+  CORBA::WChar const wide_over_expected[] = {'a', 'b', 'c', 'd', 'e', 'f', 0};
+  test_bounded_string_clone<CORBA::WString_var> (nullptr, nullptr, error_count);
+  test_bounded_string_clone<CORBA::WString_var> (wide_empty, wide_empty, error_count);
+  test_bounded_string_clone<CORBA::WString_var> (wide_bounded, wide_expected, error_count);
+  test_bounded_string_clone<CORBA::WString_var> (wide_over_bound, wide_over_expected, error_count);
 
   return error_count ? 1 : 0;
 }

@@ -12,12 +12,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                              argv);
 
       test_impl foo_i;
-      int something = 28;
-      foo_i.bar ((CORBA::VoidData) &something);
+      int something {28};
+      foo_i.bar (&something);
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Caught exception:");
 
@@ -26,9 +26,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           orb->shutdown ();
           orb->destroy ();
         }
-      catch (const CORBA::Exception& ex)
+      catch (CORBA::Exception const & shutdown_ex)
         {
-          ex._tao_print_exception ("Caught exception while shutting down:");
+          shutdown_ex._tao_print_exception ("Caught exception while shutting down:");
           return 1;
         }
       return 0;

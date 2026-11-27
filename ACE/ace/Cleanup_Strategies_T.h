@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Cleanup_Strategies_T.h
  *
  *  @author Kirthika Parameswaran <kirthika@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef CLEANUP_STRATEGIES_H
 #define CLEANUP_STRATEGIES_H
@@ -36,7 +32,6 @@ template <class KEY, class VALUE, class CONTAINER>
 class ACE_Cleanup_Strategy
 {
 public:
-  /// Destructor.
   virtual ~ACE_Cleanup_Strategy () = default;
 
   /// The method which will do the cleanup of the entry in the container.
@@ -62,7 +57,7 @@ class ACE_Recyclable_Handler_Cleanup_Strategy : public ACE_Cleanup_Strategy<KEY,
 {
 public:
   /// The method which will do the cleanup of the entry in the container.
-  virtual int cleanup (CONTAINER &container, KEY *key, VALUE *value);
+  int cleanup (CONTAINER &container, KEY *key, VALUE *value) override;
 };
 
 //////////////////////////////////////////////////////////////////////
@@ -84,7 +79,7 @@ class ACE_Refcounted_Recyclable_Handler_Cleanup_Strategy : public ACE_Cleanup_St
 {
 public:
   /// The method which will do the cleanup of the entry in the container.
-  virtual int cleanup (CONTAINER &container, KEY *key, VALUE *value);
+  int cleanup (CONTAINER &container, KEY *key, VALUE *value) override;
 };
 
 //////////////////////////////////////////////////////////////////////
@@ -106,7 +101,7 @@ class ACE_Handler_Cleanup_Strategy : public ACE_Cleanup_Strategy<KEY, VALUE, CON
 {
 public:
   /// The method which will do the cleanup of the entry in the container.
-  virtual int cleanup (CONTAINER &container, KEY *key, VALUE *value);
+  int cleanup (CONTAINER &container, KEY *key, VALUE *value) override;
 };
 
 //////////////////////////////////////////////////////////////////////
@@ -125,7 +120,7 @@ class ACE_Null_Cleanup_Strategy : public ACE_Cleanup_Strategy<KEY, VALUE, CONTAI
 {
 public:
   /// The dummy cleanup method.
-  virtual int cleanup (CONTAINER &container, KEY *key, VALUE *value);
+  int cleanup (CONTAINER &container, KEY *key, VALUE *value) override;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

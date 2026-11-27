@@ -1,13 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    LSOCK_Dgram.h
  *
  *  @author Doug Schmidt
  */
-//=============================================================================
-
 
 #ifndef ACE_LOCAL_SOCK_DGRAM_H
 #define ACE_LOCAL_SOCK_DGRAM_H
@@ -34,16 +29,15 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_LSOCK_Dgram : public ACE_SOCK_Dgram, public ACE_LSOCK
 {
 public:
-  /// Default constructor.
   ACE_LSOCK_Dgram ();
 
   /// Initiate a local dgram.
-  ACE_LSOCK_Dgram (const ACE_Addr &local,
+  ACE_LSOCK_Dgram (ACE_Addr const &local,
                    int protocol_family = PF_UNIX,
                    int protocol = 0);
 
   /// Initiate a local dgram.
-  int open (const ACE_Addr &local,
+  int open (ACE_Addr const &local,
             int protocol_family = PF_UNIX,
             int protocol = 0);
 

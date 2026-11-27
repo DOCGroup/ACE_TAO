@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-// -------------------------------------------------------------
 /**
  * @file TC_Constants_Forward.h
  *
@@ -8,8 +5,6 @@
  *
  * @deprecated Use TypeCode_Constants.h instead.
  */
-// -------------------------------------------------------------
-
 #ifndef TAO_TC_CONSTANTS_FORWARD_H
 #define TAO_TC_CONSTANTS_FORWARD_H
 

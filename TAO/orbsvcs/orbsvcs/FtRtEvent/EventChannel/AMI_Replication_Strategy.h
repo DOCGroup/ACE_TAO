@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   AMI_Replication_Strategy.h
  *
  *  @author Huang-Ming Huang <hh1@cse.wustl.edu>
  */
-//=============================================================================
 
 #ifndef AMI_REPLICATION_STRATEGY_H
 #define AMI_REPLICATION_STRATEGY_H
@@ -34,8 +30,13 @@ public:
   /**
    * @param mt Specifies whether multithreaded ORB is used.
    */
-  AMI_Replication_Strategy(bool mt);
-  ~AMI_Replication_Strategy() override;
+  explicit AMI_Replication_Strategy(bool mt);
+  ~AMI_Replication_Strategy() override = default;
+  AMI_Replication_Strategy(AMI_Replication_Strategy const&) = delete;
+  AMI_Replication_Strategy(AMI_Replication_Strategy&&) = delete;
+  AMI_Replication_Strategy& operator=(AMI_Replication_Strategy const&) = delete;
+  AMI_Replication_Strategy& operator=(AMI_Replication_Strategy&&) = delete;
+
   void replicate_request(FTRT::State const& state,
     RollbackOperation rollback,
     FtRtecEventChannelAdmin::ObjectId const& oid) override;
@@ -47,11 +48,6 @@ public:
   int acquire_write () override;
   int release () override;
 private:
-  AMI_Replication_Strategy(AMI_Replication_Strategy const&) = delete;
-  AMI_Replication_Strategy(AMI_Replication_Strategy&&) = delete;
-  AMI_Replication_Strategy& operator=(AMI_Replication_Strategy const&) = delete;
-  AMI_Replication_Strategy& operator=(AMI_Replication_Strategy&&) = delete;
-
   bool mt_;
 };
 

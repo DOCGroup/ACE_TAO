@@ -9,9 +9,13 @@
 #include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_sys_socket.h"
+#include "ace/OS_NS_stropts.h"
 #include "ace/OS_NS_netdb.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/os_include/net/os_if.h"
+
+#include <cstring>
+#include <memory>
 
 #if defined (ACE_HAS_IPV6)
 #  include "ace/Guard_T.h"
@@ -108,18 +112,21 @@ ACE::bind_port (ACE_HANDLE handle, ACE_UINT32 ip_addr, int address_family)
 
 #if defined (ACE_HAS_IPV6)
   if (address_family != PF_INET6)
-    // What do we do if it is PF_"INET6?  Since it's 4 bytes, it must be an
-    // IPV4 address. Is there a difference?  Why is this test done? dhinton
+    {
+      // What do we do if it is PF_"INET6?  Since it's 4 bytes, it must be an
+      // IPV4 address. Is there a difference?  Why is this test done? dhinton
+      addr = ACE_INET_Addr ((u_short)0, ip_addr);
+    }
+  else if (ip_addr != INADDR_ANY)
+    {
+      // address_family == PF_INET6 and a non default IP address means to bind
+      // to the IPv4-mapped IPv6 address
+      addr.set ((u_short)0, ip_addr, 1, 1);
+    }
 #else /* ACE_HAS_IPV6 */
-    ACE_UNUSED_ARG (address_family);
+  ACE_UNUSED_ARG (address_family);
+  addr = ACE_INET_Addr ((u_short)0, ip_addr);
 #endif /* !ACE_HAS_IPV6 */
-    addr = ACE_INET_Addr ((u_short)0, ip_addr);
-#if defined (ACE_HAS_IPV6)
- else if (ip_addr != INADDR_ANY)
- // address_family == PF_INET6 and a non default IP address means to bind
- // to the IPv4-mapped IPv6 address
-   addr.set ((u_short)0, ip_addr, 1, 1);
-#endif /* ACE_HAS_IPV6 */
 
   // The OS kernel should select a free port for us.
   return ACE_OS::bind (handle,
@@ -129,7 +136,7 @@ ACE::bind_port (ACE_HANDLE handle, ACE_UINT32 ip_addr, int address_family)
 
 int
 ACE::get_bcast_addr (ACE_UINT32 &bcast_addr,
-                     const ACE_TCHAR *host_name,
+                     ACE_TCHAR const *host_name,
                      ACE_UINT32 host_addr,
                      ACE_HANDLE handle)
 {
@@ -145,13 +152,17 @@ ACE::get_bcast_addr (ACE_UINT32 &bcast_addr,
   ACE_HANDLE s = handle;
 
   if (s == ACE_INVALID_HANDLE)
-    s = ACE_OS::socket (AF_INET, SOCK_STREAM, 0);
+    {
+      s = ACE_OS::socket (AF_INET, SOCK_STREAM, 0);
+    }
 
   if (s == ACE_INVALID_HANDLE)
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("ACE_OS::socket")),
-                      -1);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                            ACE_TEXT ("%p\n"),
+                            ACE_TEXT ("ACE_OS::socket")),
+                           -1);
+    }
 
   struct ifconf ifc;
   char buf[BUFSIZ];
@@ -162,11 +173,13 @@ ACE::get_bcast_addr (ACE_UINT32 &bcast_addr,
   // Get interface structure and initialize the addresses using UNIX
   // techniques
   if (ACE_OS::ioctl (s, SIOCGIFCONF_CMD, (char *) &ifc) == -1)
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("ACE::get_bcast_addr:")
-                       ACE_TEXT ("ioctl (get interface configuration)")),
-                      -1);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                            ACE_TEXT ("%p\n"),
+                            ACE_TEXT ("ACE::get_bcast_addr:")
+                            ACE_TEXT ("ioctl (get interface configuration)")),
+                           -1);
+    }
 
   struct ifreq *ifr = ifc.ifc_req;
 
@@ -178,27 +191,29 @@ ACE::get_bcast_addr (ACE_UINT32 &bcast_addr,
       hostent *hp = ACE_OS::gethostbyname (ACE_TEXT_ALWAYS_CHAR (host_name));
 
       if (hp == nullptr)
-        return -1;
+        {
+          return -1;
+        }
       else
-        ACE_OS::memcpy ((char *) &ip_addr.sin_addr.s_addr,
+        {
+          std::memcpy (&ip_addr.sin_addr.s_addr,
 # ifdef ACE_HOSTENT_H_ADDR
-                        (char *) hp->ACE_HOSTENT_H_ADDR,
+                       hp->ACE_HOSTENT_H_ADDR,
 # else
-                        (char *) hp->h_addr,
+                       hp->h_addr,
 # endif
-                        hp->h_length);
+                       hp->h_length);
+        }
     }
   else
     {
-      ACE_OS::memset ((void *) &ip_addr, 0, sizeof ip_addr);
-      ACE_OS::memcpy ((void *) &ip_addr.sin_addr,
-                      (void*) &host_addr,
-                      sizeof ip_addr.sin_addr);
+      std::memset (&ip_addr, 0, sizeof ip_addr);
+      std::memcpy (&ip_addr.sin_addr, &host_addr, sizeof ip_addr.sin_addr);
     }
 
 #if !defined (__QNX__) && !defined (__FreeBSD__) && !defined(__NetBSD__) && !defined (__Lynx__)
   for (int n = ifc.ifc_len / sizeof (struct ifreq) ; n > 0;
-       n--, ifr++)
+       --n, ++ifr)
 #else
   // see mk_broadcast@SOCK_Dgram_Bcast.cpp
   for (int nbytes = ifc.ifc_len; nbytes >= (int) sizeof (struct ifreq) &&
@@ -208,18 +223,18 @@ ACE::get_bcast_addr (ACE_UINT32 &bcast_addr,
           (nbytes -= sizeof (ifr->ifr_name) + ifr->ifr_addr.sa_len,
             ifr = (struct ifreq *)
               ((caddr_t) &ifr->ifr_addr + ifr->ifr_addr.sa_len)) :
-          (nbytes -= sizeof (struct ifreq), ifr++)))
+          (nbytes -= sizeof (struct ifreq), ++ifr)))
 #endif /* !defined (__QNX__) && !defined (__FreeBSD__) && !defined(__NetBSD__) && !defined (__Lynx__) */
     {
       struct sockaddr_in if_addr;
 
       // Compare host ip address with interface ip address.
-      ACE_OS::memcpy (&if_addr,
-                      &ifr->ifr_addr,
-                      sizeof if_addr);
+      std::memcpy (&if_addr, &ifr->ifr_addr, sizeof if_addr);
 
       if (ip_addr.sin_addr.s_addr != if_addr.sin_addr.s_addr)
+      {
         continue;
+      }
 
       if (ifr->ifr_addr.sa_family != AF_INET)
         {
@@ -252,42 +267,48 @@ ACE::get_bcast_addr (ACE_UINT32 &bcast_addr,
         }
 
       if (ACE_BIT_ENABLED (flags.ifr_flags, IFF_LOOPBACK))
-        continue;
+        {
+          continue;
+        }
 
       if (ACE_BIT_ENABLED (flags.ifr_flags, IFF_BROADCAST))
         {
           if (ACE_OS::ioctl (s,
                              SIOCGIFBRDADDR,
                              (char *) &if_req) == -1)
-            ACELIB_ERROR ((LM_ERROR,
-                        ACE_TEXT ("%p\n"),
-                        ACE_TEXT ("ACE::get_bcast_addr:")
-                        ACE_TEXT ("ioctl (get broadaddr)")));
+            {
+              ACELIB_ERROR ((LM_ERROR,
+                             ACE_TEXT ("%p\n"),
+                             ACE_TEXT ("ACE::get_bcast_addr:")
+                             ACE_TEXT ("ioctl (get broadaddr)")));
+            }
           else
             {
-              ACE_OS::memcpy (&ip_addr,
-                              &if_req.ifr_broadaddr,
-                              sizeof if_req.ifr_broadaddr);
+              std::memcpy (&ip_addr, &if_req.ifr_broadaddr, sizeof if_req.ifr_broadaddr);
 
-              ACE_OS::memcpy ((void *) &host_addr,
-                              (void *) &ip_addr.sin_addr,
-                              sizeof host_addr);
+              std::memcpy (&host_addr, &ip_addr.sin_addr, sizeof host_addr);
 
               if (handle == ACE_INVALID_HANDLE)
-                ACE_OS::close (s);
+                {
+                  ACE_OS::close (s);
+                }
 
               bcast_addr = host_addr;
               return 0;
             }
         }
       else
-        ACELIB_ERROR ((LM_ERROR,
-                    ACE_TEXT ("%p\n"),
-                    ACE_TEXT ("ACE::get_bcast_addr:")
-                    ACE_TEXT ("Broadcast is not enabled for this interface.")));
+        {
+          ACELIB_ERROR ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("ACE::get_bcast_addr:")
+                         ACE_TEXT ("Broadcast is not enabled for this interface.")));
+        }
 
       if (handle == ACE_INVALID_HANDLE)
-        ACE_OS::close (s);
+        {
+          ACE_OS::close (s);
+        }
 
       bcast_addr = host_addr;
       return 0;
@@ -320,13 +341,17 @@ ACE::get_fqdn (ACE_INET_Addr const & addr,
                            addr_size, hostname,
                            static_cast<ACE_SOCKET_LEN> (len),
                            nullptr, 0, NI_NAMEREQD) != 0)
-    return -1;
+    {
+      return -1;
+    }
 
   if (ACE::debug ())
-    ACELIB_DEBUG ((LM_DEBUG,
-                   ACE_TEXT ("(%P|%t) - ACE::get_fqdn, ")
-                   ACE_TEXT ("canonical host name is %C\n"),
-                   hostname));
+    {
+      ACELIB_DEBUG ((LM_DEBUG,
+                     ACE_TEXT ("(%P|%t) - ACE::get_fqdn, ")
+                     ACE_TEXT ("canonical host name is %C\n"),
+                     hostname));
+    }
 
   return 0;
 #else // below, ACE_LACKS_GETNAMEINFO
@@ -334,7 +359,7 @@ ACE::get_fqdn (ACE_INET_Addr const & addr,
   hostent hentry;
   ACE_HOSTENT_DATA buf;
 
-  char * ip_addr = nullptr;
+  char * ip_addr {};
   int ip_addr_size = 0;
   if (addr.get_type () == AF_INET)
     {
@@ -365,16 +390,20 @@ ACE::get_fqdn (ACE_INET_Addr const & addr,
    // if it's not found in the host file or the DNS datase, there is nothing
    // much we can do. embed the IP address
    if (hp == 0 || hp->h_name == 0)
-     return -1;
+     {
+       return -1;
+     }
 
    if (ACE::debug())
-     ACELIB_DEBUG ((LM_DEBUG,
-                 ACE_TEXT ("(%P|%t) - ACE::get_fqdn, ")
-                 ACE_TEXT ("canonical host name is %C\n"),
-                 hp->h_name));
+     {
+       ACELIB_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) - ACE::get_fqdn, ")
+                      ACE_TEXT ("canonical host name is %C\n"),
+                      hp->h_name));
+     }
 
    // check if the canonical name is the FQDN
-   if (!ACE_OS::strchr(hp->h_name, '.'))
+   if (!std::strchr (hp->h_name, '.'))
      {
        // list of address
        char** p;
@@ -387,25 +416,29 @@ ACE::get_fqdn (ACE_INET_Addr const & addr,
          {
            for (q = hp->h_aliases; *q != 0; ++q)
              {
-               if (ACE_OS::strchr(*q, '.'))
+               if (std::strchr (*q, '.'))
                  {
                    // we got an FQDN from an alias. use this
-                   if (ACE_OS::strlen (*q) >= len)
-                     // the hostname is too huge to fit into a
-                     // buffer of size MAXHOSTNAMELEN
-                     // should we check other aliases as well
-                     // before bailing out prematurely?
-                     // for right now, let's do it. this (short name)
-                     // is atleast better than embedding the IP
-                     // address in the profile
-                     continue;
+                   if (std::strlen (*q) >= len)
+                     {
+                       // the hostname is too huge to fit into a
+                       // buffer of size MAXHOSTNAMELEN
+                       // should we check other aliases as well
+                       // before bailing out prematurely?
+                       // for right now, let's do it. this (short name)
+                       // is atleast better than embedding the IP
+                       // address in the profile
+                       continue;
+                     }
 
                    if (ACE::debug ())
-                     ACELIB_DEBUG ((LM_DEBUG,
-                                 ACE_TEXT ("(%P|%t) - ACE::get_fqdn, ")
-                                 ACE_TEXT ("found fqdn within alias as %C\n"),
-                                 *q));
-                   ACE_OS::strcpy (hostname, *q);
+                     {
+                       ACELIB_DEBUG ((LM_DEBUG,
+                                      ACE_TEXT ("(%P|%t) - ACE::get_fqdn, ")
+                                      ACE_TEXT ("found fqdn within alias as %C\n"),
+                                      *q));
+                     }
+                   std::strcpy (hostname, *q);
 
                    return 0;
                  }
@@ -416,7 +449,7 @@ ACE::get_fqdn (ACE_INET_Addr const & addr,
    // The canonical name may be an FQDN when we reach here.
    // Alternatively, the canonical name (a non FQDN) may be the best
    // we can do.
-   if (ACE_OS::strlen (hp->h_name) >= len)
+   if (std::strlen (hp->h_name) >= len)
      {
        // The hostname is too large to fit into a buffer of size
        // MAXHOSTNAMELEN.
@@ -424,7 +457,7 @@ ACE::get_fqdn (ACE_INET_Addr const & addr,
      }
    else
      {
-       ACE_OS::strcpy (hostname, hp->h_name);
+       std::strcpy (hostname, hp->h_name);
      }
 
    return 0;
@@ -440,15 +473,17 @@ get_ip_interfaces_win32 (size_t &count,
   int i, n_interfaces, status;
 
   INTERFACE_INFO info[64];
-  SOCKET sock;
+  ACE_HANDLE sock;
 
   // Get an (overlapped) DGRAM socket to test with
-  sock = socket (AF_INET, SOCK_DGRAM, 0);
-  if (sock == INVALID_SOCKET)
-    return -1;
+  sock = ACE_OS::socket (AF_INET, SOCK_DGRAM, 0);
+  if (sock == ACE_INVALID_HANDLE)
+    {
+      return -1;
+    }
 
   DWORD bytes;
-  status = WSAIoctl(sock,
+  status = WSAIoctl (reinterpret_cast<ACE_SOCKET> (sock),
                     SIO_GET_INTERFACE_LIST,
                     0,
                     0,
@@ -457,9 +492,11 @@ get_ip_interfaces_win32 (size_t &count,
                     &bytes,
                     0,
                     0);
-  closesocket (sock);
+  ACE_OS::closesocket (sock);
   if (status == SOCKET_ERROR)
-    return -1;
+    {
+      return -1;
+    }
 
   n_interfaces = bytes / sizeof(INTERFACE_INFO);
 
@@ -471,20 +508,21 @@ get_ip_interfaces_win32 (size_t &count,
 
 # if defined (ACE_HAS_IPV6) && defined (SIO_ADDRESS_LIST_QUERY)
 
-  LPSOCKET_ADDRESS_LIST v6info;
-  char *buffer;
+  LPSOCKET_ADDRESS_LIST v6info {};
+  char *buffer_raw {};
   DWORD buflen = sizeof (SOCKET_ADDRESS_LIST) + (63 * sizeof (SOCKET_ADDRESS));
-  ACE_NEW_RETURN (buffer,
+  ACE_NEW_RETURN (buffer_raw,
                   char[buflen],
                   -1);
-  v6info = reinterpret_cast<LPSOCKET_ADDRESS_LIST> (buffer);
+  std::unique_ptr<char[]> buffer (buffer_raw);
+  v6info = reinterpret_cast<LPSOCKET_ADDRESS_LIST> (buffer.get ());
 
   // Get an (overlapped) DGRAM socket to test with.
   // If it fails only return IPv4 interfaces.
-  sock = socket (AF_INET6, SOCK_DGRAM, IPPROTO_UDP);
-  if (sock != INVALID_SOCKET)
+  sock = ACE_OS::socket (AF_INET6, SOCK_DGRAM, IPPROTO_UDP);
+  if (sock != ACE_INVALID_HANDLE)
     {
-      status = WSAIoctl(sock,
+      status = WSAIoctl (reinterpret_cast<ACE_SOCKET> (sock),
                         SIO_ADDRESS_LIST_QUERY,
                         0,
                         0,
@@ -493,64 +531,76 @@ get_ip_interfaces_win32 (size_t &count,
                         &bytes,
                         0,
                         0);
-      closesocket (sock);
+      ACE_OS::closesocket (sock);
       if (status != SOCKET_ERROR)
-        n_v6_interfaces = v6info->iAddressCount;
+        {
+          n_v6_interfaces = v6info->iAddressCount;
+        }
     }
 # endif /* ACE_HAS_IPV6 */
 
-  ACE_NEW_RETURN (addrs,
+  ACE_INET_Addr *addr_array {};
+  ACE_NEW_RETURN (addr_array,
                   ACE_INET_Addr[n_interfaces + n_v6_interfaces],
                   -1);
+  std::unique_ptr<ACE_INET_Addr[]> safe_addr_array (addr_array);
 
   // Now go through the list and transfer the good ones to the list of
   // because they're down or don't have an IP address.
   for (count = 0, i = 0; i < n_interfaces; ++i)
     {
       LPINTERFACE_INFO lpii;
-      struct sockaddr_in *addrp = nullptr;
+      struct sockaddr_in *addrp {};
 
-      lpii = &info[i];
+      lpii = info + i;
       if (!(lpii->iiFlags & IFF_UP))
-        continue;
+        {
+          continue;
+        }
 
       // We assume IPv4 addresses here
       addrp = reinterpret_cast<struct sockaddr_in *> (&lpii->iiAddress.AddressIn);
       if (addrp->sin_addr.s_addr == INADDR_ANY)
-        continue;
+        {
+          continue;
+        }
 
       // Set the address for the caller.
-      addrs[count].set(addrp, sizeof(sockaddr_in));
+      addr_array[count].set(addrp, sizeof(sockaddr_in));
       ++count;
     }
 
 # if defined (ACE_HAS_IPV6) && defined (SIO_ADDRESS_LIST_QUERY)
   // Now go through the list and transfer the good ones to the list of
   // because they're down or don't have an IP address.
-  for (i = 0; i < n_v6_interfaces; i++)
+  for (i = 0; i < n_v6_interfaces; ++i)
     {
       struct sockaddr_in6 *addr6p;
 
       if (v6info->Address[i].lpSockaddr->sa_family != AF_INET6)
-        continue;
+        {
+          continue;
+        }
 
       addr6p = reinterpret_cast<struct sockaddr_in6 *> (v6info->Address[i].lpSockaddr);
       if (IN6_IS_ADDR_UNSPECIFIED(&addr6p->sin6_addr))  // IN6ADDR_ANY?
-        continue;
+        {
+          continue;
+        }
 
       // Set the address for the caller.
-      addrs[count].set(reinterpret_cast<struct sockaddr_in *> (addr6p), sizeof(sockaddr_in6));
+      addr_array[count].set(reinterpret_cast<struct sockaddr_in *> (addr6p), sizeof(sockaddr_in6));
       ++count;
     }
 
-  delete [] buffer; // Clean up
 # endif /* ACE_HAS_IPV6 */
 
   if (count == 0)
     {
-      delete [] addrs;
-      addrs = 0;
+      return 0;
     }
+
+  addrs = safe_addr_array.release ();
 
   return 0;
 }
@@ -562,21 +612,29 @@ get_ip_interfaces_getifaddrs (size_t &count,
 {
   // Take advantage of the BSD getifaddrs function that simplifies
   // access to connected interfaces.
-  struct ifaddrs *ifap = nullptr;
-  struct ifaddrs *p_if = nullptr;
+  struct ifaddrs *ifap {};
+  struct ifaddrs *p_if {};
 
   if (::getifaddrs (&ifap) != 0)
-    return -1;
+    {
+      return -1;
+    }
+  std::unique_ptr<struct ifaddrs, decltype (&::freeifaddrs)> const safe_ifap (
+    ifap, ::freeifaddrs);
 
   // Count number of interfaces.
   size_t num_ifs = 0;
   for (p_if = ifap; p_if != nullptr; p_if = p_if->ifa_next)
-    ++num_ifs;
+    {
+      ++num_ifs;
+    }
 
   // Now create and initialize output array.
-  ACE_NEW_RETURN (addrs,
+  ACE_INET_Addr *addr_array {};
+  ACE_NEW_RETURN (addr_array,
                   ACE_INET_Addr[num_ifs],
                   -1); // caller must free
+  std::unique_ptr<ACE_INET_Addr[]> safe_addr_array (addr_array);
 
   // Pull the address out of each INET interface.  Not every interface
   // is for IP, so be careful to count properly.  When setting the
@@ -589,22 +647,25 @@ get_ip_interfaces_getifaddrs (size_t &count,
        p_if = p_if->ifa_next)
     {
       if (p_if->ifa_addr == nullptr)
+      {
         continue;
+      }
 
       // Check to see if it's up.
       if ((p_if->ifa_flags & IFF_UP) != IFF_UP)
+      {
         continue;
+      }
 
       if (p_if->ifa_addr->sa_family == AF_INET)
         {
-          struct sockaddr_in *addr =
-            reinterpret_cast<sockaddr_in *> (p_if->ifa_addr);
+          sockaddr_in *addr = reinterpret_cast<sockaddr_in *> (p_if->ifa_addr);
 
           // Sometimes the kernel returns 0.0.0.0 as the interface
           // address, skip those...
           if (addr->sin_addr.s_addr != INADDR_ANY)
             {
-              addrs[count].set ((u_short) 0,
+              addr_array[count].set ((u_short) 0,
                                 addr->sin_addr.s_addr,
                                 0);
               ++count;
@@ -613,13 +674,12 @@ get_ip_interfaces_getifaddrs (size_t &count,
 # if defined (ACE_HAS_IPV6)
       else if (p_if->ifa_addr->sa_family == AF_INET6)
         {
-          struct sockaddr_in6 *addr =
-            reinterpret_cast<sockaddr_in6 *> (p_if->ifa_addr);
+          sockaddr_in6 *addr = reinterpret_cast<sockaddr_in6 *> (p_if->ifa_addr);
 
           // Skip the ANY address
           if (!IN6_IS_ADDR_UNSPECIFIED(&addr->sin6_addr))
             {
-              addrs[count].set(reinterpret_cast<struct sockaddr_in *> (addr),
+              addr_array[count].set(reinterpret_cast<struct sockaddr_in *> (addr),
                                sizeof(sockaddr_in6));
               ++count;
             }
@@ -627,12 +687,11 @@ get_ip_interfaces_getifaddrs (size_t &count,
 # endif /* ACE_HAS_IPV6 */
     }
 
-  ::freeifaddrs (ifap);
+  addrs = safe_addr_array.release ();
 
   return 0;
 }
 #endif // ACE_WIN32 || ACE_HAS_GETIFADDRS
-
 
 // return an array of all configured IP interfaces on this host, count
 // rc = 0 on success (count == number of interfaces else -1 caller is
@@ -657,10 +716,12 @@ ACE::get_ip_interfaces (size_t &count, ACE_INET_Addr *&addrs)
   ACE_HANDLE handle = ACE::get_handle();
 
   if (handle == ACE_INVALID_HANDLE)
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("ACE::get_ip_interfaces:open")),
-                      -1);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("%p\n"),
+                           ACE_TEXT ("ACE::get_ip_interfaces:open")),
+                          -1);
+    }
 
   size_t num_ifs = 0;
 
@@ -674,15 +735,15 @@ ACE::get_ip_interfaces (size_t &count, ACE_INET_Addr *&addrs)
   // what it returned, so increase the num_ifs by one.
   ++num_ifs;
 
-  struct IFREQ *ifs = nullptr;
+  struct IFREQ *ifs {};
   ACE_NEW_RETURN (ifs,
                   struct IFREQ[num_ifs],
                   -1);
-  ACE_OS::memset (ifs, 0, num_ifs * sizeof (struct IFREQ));
+  std::memset (ifs, 0, num_ifs * sizeof (struct IFREQ));
 
   std::unique_ptr<struct IFREQ[]> p_ifs (ifs);
 
-  if (p_ifs.get() == 0)
+  if (!p_ifs)
     {
       ACE_OS::close (handle);
       errno = ENOMEM;
@@ -690,7 +751,7 @@ ACE::get_ip_interfaces (size_t &count, ACE_INET_Addr *&addrs)
     }
 
   struct IFCONF ifcfg;
-  ACE_OS::memset (&ifcfg, 0, sizeof (struct IFCONF));
+  std::memset (&ifcfg, 0, sizeof (struct IFCONF));
 
 # ifdef SETFAMILY
   ifcfg.IFC_FAMILY = AF_UNSPEC;  // request all families be returned
@@ -716,9 +777,11 @@ ACE::get_ip_interfaces (size_t &count, ACE_INET_Addr *&addrs)
 
   // Now create and initialize output array.
 
-  ACE_NEW_RETURN (addrs,
+  ACE_INET_Addr *addr_array {};
+  ACE_NEW_RETURN (addr_array,
                   ACE_INET_Addr[num_ifs],
                   -1); // caller must free
+  std::unique_ptr<ACE_INET_Addr[]> safe_addr_array (addr_array);
 
   struct IFREQ *pcur = p_ifs.get ();
   size_t num_ifs_found = ifcfg.IFC_LEN / sizeof (struct IFREQ); // get the number of returned ifs
@@ -731,7 +794,7 @@ ACE::get_ip_interfaces (size_t &count, ACE_INET_Addr *&addrs)
 
   for (size_t i = 0;
        i < num_ifs_found;
-       i++)
+       ++i)
     {
       if (pcur->IFR_ADDR.SA_FAMILY == AF_INET
 #  if defined (ACE_HAS_IPV6)
@@ -755,9 +818,11 @@ ACE::get_ip_interfaces (size_t &count, ACE_INET_Addr *&addrs)
               int addrlen = static_cast<int> (sizeof (struct sockaddr_in));
 #  if defined (ACE_HAS_IPV6)
               if (addr->sin_family == AF_INET6)
-                addrlen = static_cast<int> (sizeof (struct sockaddr_in6));
+                {
+                  addrlen = static_cast<int> (sizeof (struct sockaddr_in6));
+                }
 #  endif
-              addrs[count].set (addr, addrlen);
+              addr_array[count].set (addr, addrlen);
               ++count;
             }
         }
@@ -781,18 +846,19 @@ ACE::get_ip_interfaces (size_t &count, ACE_INET_Addr *&addrs)
   // Retrieve IPv6 local interfaces by scanning /proc/net/if_inet6 if
   // it exists.  If we cannot open it then ignore possible IPv6
   // interfaces, we did our best;-)
-  FILE* fp = nullptr;
+  FILE* fp {};
   char addr_p[8][5];
   char s_ipaddr[64];
   int scopeid;
   struct addrinfo hints, *res0;
   int error;
 
-  ACE_OS::memset (&hints, 0, sizeof (hints));
+  std::memset (&hints, 0, sizeof (hints));
   hints.ai_flags = AI_NUMERICHOST;
   hints.ai_family = AF_INET6;
 
-  if ((fp = ACE_OS::fopen (ACE_TEXT ("/proc/net/if_inet6"), ACE_TEXT ("r"))) != 0)
+  fp = ACE_OS::fopen (ACE_TEXT ("/proc/net/if_inet6"), ACE_TEXT ("r"));
+  if (fp != nullptr)
     {
       while (fscanf (fp,
                      "%4s%4s%4s%4s%4s%4s%4s%4s %02x %*02x %*02x %*02x %*8s\n",
@@ -802,7 +868,7 @@ ACE::get_ip_interfaces (size_t &count, ACE_INET_Addr *&addrs)
           // Format the address intoa proper IPv6 decimal address specification and
           // resolve the resulting text using getaddrinfo().
 
-          const char* ip_fmt = "%s:%s:%s:%s:%s:%s:%s:%s%%%d";
+          char const* ip_fmt = "%s:%s:%s:%s:%s:%s:%s:%s%%%d";
           ACE_OS::snprintf (s_ipaddr, 64, ip_fmt,
                             addr_p[0], addr_p[1], addr_p[2], addr_p[3],
                             addr_p[4], addr_p[5], addr_p[6], addr_p[7],
@@ -810,12 +876,14 @@ ACE::get_ip_interfaces (size_t &count, ACE_INET_Addr *&addrs)
 
           error = ACE_OS::getaddrinfo (s_ipaddr, 0, &hints, &res0);
           if (error)
-            continue;
+            {
+              continue;
+            }
 
           if (res0->ai_family == AF_INET6 &&
                 !IN6_IS_ADDR_UNSPECIFIED (&reinterpret_cast<sockaddr_in6 *> (res0->ai_addr)->sin6_addr))
             {
-              addrs[count].set(reinterpret_cast<sockaddr_in *> (res0->ai_addr), res0->ai_addrlen);
+              addr_array[count].set(reinterpret_cast<sockaddr_in *> (res0->ai_addr), res0->ai_addrlen);
               ++count;
             }
           ACE_OS::freeaddrinfo (res0);
@@ -824,6 +892,7 @@ ACE::get_ip_interfaces (size_t &count, ACE_INET_Addr *&addrs)
     }
 # endif /* ACE_HAS_IPV6 && !ACE_LACKS_FSCANF */
 
+  addrs = safe_addr_array.release ();
   return 0;
 #else
   ACE_UNUSED_ARG (count);
@@ -848,11 +917,13 @@ ACE::count_interfaces (ACE_HANDLE handle, size_t &how_many)
   int if_num = 0;
 # endif /* SIOCGLIFNUM */
   if (ACE_OS::ioctl (handle, cmd, (caddr_t)&if_num) == -1)
-    ACELIB_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("ACE::count_interfaces:")
-                       ACE_TEXT ("ioctl - SIOCGLIFNUM failed")),
-                      -1);
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("%p\n"),
+                           ACE_TEXT ("ACE::count_interfaces:")
+                           ACE_TEXT ("ioctl - SIOCGLIFNUM failed")),
+                          -1);
+    }
 # if defined (SIOCGLIFNUM)
   how_many = if_num.lifn_count;
 # else
@@ -873,7 +944,7 @@ return 0;
   int const num_ifs = MAX_INTERFACES;
 
   struct ifconf ifcfg;
-  size_t ifreq_size = num_ifs * sizeof (struct ifreq);
+  size_t const ifreq_size = num_ifs * sizeof (struct ifreq);
   struct ifreq *p_ifs;
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
@@ -888,8 +959,8 @@ return 0;
       return -1;
     }
 
-  ACE_OS::memset (p_ifs, 0, ifreq_size);
-  ACE_OS::memset (&ifcfg, 0, sizeof (struct ifconf));
+  std::memset (p_ifs, 0, ifreq_size);
+  std::memset (&ifcfg, 0, sizeof (struct ifconf));
 
   ifcfg.ifc_req = p_ifs;
   ifcfg.ifc_len = ifreq_size;
@@ -918,12 +989,14 @@ return 0;
   // interface to mark the end of the returned interfaces.
   for (i = 0;
        i < num_ifs;
-       i++)
+       ++i)
     {
       /* In OpenBSD, the length of the list is returned. */
       ifcfg.ifc_len -= sizeof (struct ifreq);
       if (ifcfg.ifc_len < 0)
+      {
         break;
+      }
 
       ++if_count;
 # if !defined (__QNX__) && !defined (__FreeBSD__) && !defined(__NetBSD__) && !defined (__Lynx__)
@@ -948,9 +1021,10 @@ return 0;
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
 # if defined (ACE_HAS_IPV6)
-  FILE* fp = nullptr;
+  FILE* fp {};
 
-  if ((fp = ACE_OS::fopen (ACE_TEXT ("/proc/net/if_inet6"), ACE_TEXT ("r"))) != nullptr)
+  fp = ACE_OS::fopen (ACE_TEXT ("/proc/net/if_inet6"), ACE_TEXT ("r"));
+  if (fp != nullptr)
     {
       // Scan the lines according to the expected format but don't really read any input
       while (fscanf (fp, "%*32s %*02x %*02x %*02x %*02x %*8s\n") != EOF)
@@ -995,13 +1069,16 @@ ip_check (int &ipvn_enabled, int pf)
     {
 #if defined (ACE_WIN32)
       static bool recursing = false;
-      if (recursing) return 1;
+      if (recursing)
+        {
+          return 1;
+        }
 
       // as of the release of Windows 2008, even hosts that have IPv6 interfaces disabled
       // will still permit the creation of a PF_INET6 socket, thus rendering the socket
       // creation test inconsistent. The recommended solution is to get the list of
       // endpoint addresses and see if any match the desired family.
-      ACE_INET_Addr *if_addrs = nullptr;
+      ACE_INET_Addr *if_addrs {};
       size_t if_cnt = 0;
 
       // assume enabled to avoid recursion during interface lookup.
@@ -1010,14 +1087,17 @@ ip_check (int &ipvn_enabled, int pf)
       recursing = false;
 
       bool found = false;
-      for (size_t i = 0; !found && i < if_cnt; i++)
+      for (size_t i = 0; !found && i < if_cnt; ++i)
         {
           found = (if_addrs[i].get_type () == pf);
         }
       delete [] if_addrs;
 
       // If the list of interfaces is empty, we've tried too quickly. Assume enabled, but don't cache the result
-      if (!if_cnt) return 1;
+      if (!if_cnt)
+        {
+          return 1;
+        }
 
       ipvn_enabled = found ? 1 : 0;
 #else

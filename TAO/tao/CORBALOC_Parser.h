@@ -1,14 +1,9 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   CORBALOC_Parser.h
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  *  @author Priyanka Gontla (pgontla@uci.edu)
  */
-//=============================================================================
-
 
 #ifndef TAO_CORBALOC_PARSER_H
 #define TAO_CORBALOC_PARSER_H
@@ -34,29 +29,28 @@ class TAO_MProfile;
 /**
  * @class TAO_CORBALOC_Parser
  *
- * @brief Implements the <corbaloc:> IOR format
+ * @brief Implements the @c corbaloc: IOR format
  *
- * This class implements the <corbaloc:> IOR format.
+ * This class implements the @c corbaloc: IOR format.
  * It is dynamically loaded by the ORB and used to parse the
- * string to separate the individual <obj_addr> from the list of object
- * addresses <obj_addr_list>.
+ * string to separate the individual @c obj_addr from the list of object
+ * addresses @c obj_addr_list.
  */
 class TAO_CORBALOC_Parser : public TAO_IOR_Parser
 {
 public:
-  /// Constructor
   TAO_CORBALOC_Parser () = default;
 
-  /// The destructor
   ~TAO_CORBALOC_Parser () override = default;
 
-  /// = The IOR_Parser methods, please read the documentation in
-  ///   IOR_Parser.h
-  bool match_prefix (const char *ior_string) const override;
+  /// @name IOR_Parser methods
+  /// @{
+  bool match_prefix (char const *ior_string) const override;
 
   /// Parse the ior-string that is passed.
-  CORBA::Object_ptr parse_string (const char *ior,
+  CORBA::Object_ptr parse_string (char const *ior,
                                   CORBA::ORB_ptr orb) override;
+  /// @}
 
 private:
   /**
@@ -68,10 +62,10 @@ private:
                                              TAO_MProfile &mprofile);
 
   /// Gets the pointer to the key_string when the protocol used is RIR
-  CORBA::Object_ptr parse_string_rir_helper (const char *corbaloc_name,
+  CORBA::Object_ptr parse_string_rir_helper (char const *corbaloc_name,
                                              CORBA::ORB_ptr orb);
 
-  void make_canonical (const char *ior,
+  void make_canonical (char const *ior,
                        size_t ior_len,
                        ACE_CString &canonical_endpoint);
 

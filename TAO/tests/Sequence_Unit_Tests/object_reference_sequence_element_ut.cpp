@@ -16,10 +16,10 @@
 
 using namespace TAO_VERSIONED_NAMESPACE_NAME::TAO::details;
 
-  typedef object_reference_traits<mock_reference,mock_reference_var,true> tested_element_traits;
-  typedef object_reference_sequence_element<tested_element_traits> tested_element;
-  typedef mock_reference * reference_type;
-  typedef tested_element_traits::object_type_var reference_var;
+  using tested_element_traits = object_reference_traits<mock_reference,mock_reference_var,true>;
+  using tested_element = object_reference_sequence_element<tested_element_traits>;
+  using reference_type = mock_reference *;
+  using reference_var = tested_element_traits::object_type_var;
 
   int test_assignment_from_var_release_true()
   {
@@ -30,7 +30,7 @@ using namespace TAO_VERSIONED_NAMESPACE_NAME::TAO::details;
     {
       reference_type xe = mock_reference::allocate(1);
       tested_element x(xe, true);
-      reference_var y(mock_reference::allocate(2));
+      reference_var const y(mock_reference::allocate(2));
 
       FAIL_RETURN_IF_NOT(md.expect(0), md);
       FAIL_RETURN_IF_NOT(mr.expect(0), mr);
@@ -67,7 +67,7 @@ using namespace TAO_VERSIONED_NAMESPACE_NAME::TAO::details;
       reference_type xe = mock_reference::allocate(1);
       reference_type oldxe = xe;
       tested_element x(xe, false);
-      reference_var y(mock_reference::allocate(2));
+      reference_var const y(mock_reference::allocate(2));
 
       FAIL_RETURN_IF_NOT(md.expect(0), md);
       FAIL_RETURN_IF_NOT(mr.expect(0), mr);
@@ -103,7 +103,7 @@ using namespace TAO_VERSIONED_NAMESPACE_NAME::TAO::details;
     {
       reference_type xe = mock_reference::allocate(1);
       tested_element x(xe, true);
-      reference_var y(mock_reference::allocate(2));
+      reference_var const y(mock_reference::allocate(2));
 
       FAIL_RETURN_IF_NOT(md.expect(0), md);
       FAIL_RETURN_IF_NOT(mr.expect(0), mr);
@@ -143,7 +143,7 @@ using namespace TAO_VERSIONED_NAMESPACE_NAME::TAO::details;
       tested_element x(xe, true);
 
       reference_type ye = mock_reference::allocate(2);
-      tested_element y(ye, true);
+      tested_element const y(ye, true);
 
       FAIL_RETURN_IF_NOT(d.expect(0), d);
       FAIL_RETURN_IF_NOT(r.expect(0) ,r);
@@ -182,7 +182,7 @@ using namespace TAO_VERSIONED_NAMESPACE_NAME::TAO::details;
       tested_element x(xe, false);
 
       reference_type ye = mock_reference::allocate(2);
-      tested_element y(ye, true);
+      tested_element const y(ye, true);
 
       FAIL_RETURN_IF_NOT(d.expect(0), d);
       FAIL_RETURN_IF_NOT(r.expect(0), r);
@@ -286,7 +286,7 @@ using namespace TAO_VERSIONED_NAMESPACE_NAME::TAO::details;
 
 int ACE_TMAIN(int,ACE_TCHAR*[])
 {
-  int status = 0;
+  int status {};
   try
     {
       status += test_assignment_from_var_release_true ();

@@ -18,33 +18,33 @@
 #include "ace/os_include/netinet/os_tcp.h"
 #include "ace/os_include/os_netdb.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_SHMIOP_Connection_Handler::TAO_SHMIOP_Connection_Handler (ACE_Thread_Manager *t)
-  : TAO_SHMIOP_SVC_HANDLER (t, 0 , 0),
-    TAO_Connection_Handler (0)
+  : TAO_SHMIOP_SVC_HANDLER (t, nullptr, nullptr),
+    TAO_Connection_Handler (nullptr)
 {
   // This constructor should *never* get called, it is just here to
   // make the compiler happy: the default implementation of the
   // Creation_Strategy requires a constructor with that signature, we
   // don't use that implementation, but some (most?) compilers
   // instantiate it anyway.
-  ACE_ASSERT (0);
+  ACE_ASSERT (false);
 }
 
-
 TAO_SHMIOP_Connection_Handler::TAO_SHMIOP_Connection_Handler (TAO_ORB_Core *orb_core)
-  : TAO_SHMIOP_SVC_HANDLER (orb_core->thr_mgr (), 0, 0),
+  : TAO_SHMIOP_SVC_HANDLER (orb_core->thr_mgr (), nullptr, nullptr),
     TAO_Connection_Handler (orb_core)
 {
-  TAO_SHMIOP_Transport *specific_transport = nullptr;
+  TAO_SHMIOP_Transport *specific_transport {};
   ACE_NEW (specific_transport,
           TAO_SHMIOP_Transport(this, orb_core));
 
   // store this pointer (indirectly increment ref count)
   this->transport (specific_transport);
 }
-
 
 TAO_SHMIOP_Connection_Handler::~TAO_SHMIOP_Connection_Handler ()
 {
@@ -72,7 +72,9 @@ int
 TAO_SHMIOP_Connection_Handler::open (void*)
 {
   if (this->shared_open() == -1)
+  {
     return -1;
+  }
 
   TAO_SHMIOP_Protocol_Properties protocol_properties;
 
@@ -108,21 +110,27 @@ TAO_SHMIOP_Connection_Handler::open (void*)
   if (this->set_socket_option (this->peer (),
                                protocol_properties.send_buffer_size_,
                                protocol_properties.recv_buffer_size_) == -1)
+  {
     return -1;
+  }
 
 #if !defined (ACE_LACKS_TCP_NODELAY)
   if (this->peer ().set_option (ACE_IPPROTO_TCP,
                                 TCP_NODELAY,
-                                (void *) &protocol_properties.no_delay_,
+                                std::addressof (protocol_properties.no_delay_),
                                 sizeof (protocol_properties.no_delay_)) == -1)
+  {
     return -1;
+  }
 
 #endif /* ! ACE_LACKS_TCP_NODELAY */
 
   if (this->transport ()->wait_strategy ()->non_blocking ())
     {
       if (this->peer ().enable (ACE_NONBLOCK) == -1)
+      {
         return -1;
+      }
     }
 
   // Called by the <Strategy_Acceptor> when the handler is
@@ -133,25 +141,32 @@ TAO_SHMIOP_Connection_Handler::open (void*)
 
   // Get the peername.
   if (this->peer ().get_remote_addr (addr) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   // Verify that we can resolve the peer hostname.
   else if (addr.addr_to_string (local_as_string, sizeof (local_as_string)) == -1)
-    return -1;
+    {
+      return -1;
+    }
 
   if (TAO_debug_level > 0)
     {
       TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - SHMIOP connection from client")
-                  ACE_TEXT ("<%s> on %d\n"),
-                  local_as_string, this->peer ().get_handle ()));
+                  ACE_TEXT ("<%s> on %H\n"),
+                  local_as_string,
+                  this->peer ().get_handle ()));
     }
 
   // Set that the transport is now connected, if fails we return -1
   // Use C-style cast b/c otherwise we get warnings on lots of
   // compilers
   if (!this->transport ()->post_open ((size_t) this->get_handle ()))
+  {
     return -1;
+  }
 
   // Not needed, anyway
   this->state_changed (TAO_LF_Event::LFS_SUCCESS,
@@ -181,7 +196,7 @@ TAO_SHMIOP_Connection_Handler::handle_input (ACE_HANDLE h)
 int
 TAO_SHMIOP_Connection_Handler::handle_output (ACE_HANDLE handle)
 {
-  int result =
+  int const result =
     this->handle_output_eh (handle, this);
 
   if (result == -1)
@@ -194,8 +209,8 @@ TAO_SHMIOP_Connection_Handler::handle_output (ACE_HANDLE handle)
 }
 
 int
-TAO_SHMIOP_Connection_Handler::handle_timeout (const ACE_Time_Value &,
-                                               const void *)
+TAO_SHMIOP_Connection_Handler::handle_timeout (ACE_Time_Value const &,
+                                               void const *)
 {
   // Using this to ensure this instance will be deleted (if necessary)
   // only after reset_state(). Without this, when this refcount==1 -
@@ -203,7 +218,7 @@ TAO_SHMIOP_Connection_Handler::handle_timeout (const ACE_Time_Value &,
   // will delete this. At that point this->reset_state() is in no
   // man's territory and that causes SEGV on some platforms (Windows!)
 
-  TAO_Auto_Reference<TAO_SHMIOP_Connection_Handler> safeguard (*this);
+  TAO_Auto_Reference<TAO_SHMIOP_Connection_Handler> const safeguard (*this);
 
   // NOTE: Perhaps not the best solution, as it feels like the upper
   // layers should be responsible for this?
@@ -211,7 +226,7 @@ TAO_SHMIOP_Connection_Handler::handle_timeout (const ACE_Time_Value &,
   // We don't use this upcall for I/O.  This is only used by the
   // Connector to indicate that the connection timedout.  Therefore,
   // we should call close().
-  int ret = this->close ();
+  int const ret = this->close ();
   this->reset_state (TAO_LF_Event::LFS_TIMEOUT);
   return ret;
 }
@@ -220,7 +235,7 @@ int
 TAO_SHMIOP_Connection_Handler::handle_close (ACE_HANDLE,
                                              ACE_Reactor_Mask)
 {
-  ACE_ASSERT (0);
+  ACE_ASSERT (false);
   return 0;
 }
 
@@ -243,7 +258,9 @@ TAO_SHMIOP_Connection_Handler::add_transport_to_cache ()
 
   // Get the peername.
   if (this->peer ().get_remote_addr (addr) == -1)
+  {
     return -1;
+  }
 
   // Construct an  SHMIOP_Endpoint object
   TAO_SHMIOP_Endpoint endpoint (
@@ -251,17 +268,17 @@ TAO_SHMIOP_Connection_Handler::add_transport_to_cache ()
       this->orb_core()->orb_params()->use_dotted_decimal_addresses ());
 
   // Construct a property object
-  TAO_Base_Transport_Property prop (&endpoint);
+  TAO_Base_Transport_Property prop (std::addressof (endpoint));
 
   TAO::Transport_Cache_Manager &cache =
     this->orb_core ()->lane_resources ().transport_cache ();
 
   // Add the handler to Cache
-  return cache.cache_transport (&prop, this->transport ());
+  return cache.cache_transport (std::addressof (prop), this->transport ());
 }
 
 int
-TAO_SHMIOP_Connection_Handler::handle_write_ready (const ACE_Time_Value *t)
+TAO_SHMIOP_Connection_Handler::handle_write_ready (ACE_Time_Value const *t)
 {
   return ACE::handle_write_ready (this->peer ().get_handle (), t);
 }

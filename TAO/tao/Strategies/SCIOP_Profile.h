@@ -1,14 +1,9 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file     SCIOP_Profile.h
  *
  *  @author  Jason Cohen, Lockheed Martin ATL  <jcohen@atl.lmco.com>
  *  @author  Keith O'Hara, Lockheed Martin ATL
  */
-//=============================================================================
-
 
 #ifndef TAO_SCIOP_PROFILE_H
 #define TAO_SCIOP_PROFILE_H
@@ -28,7 +23,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// TAO SCIOP_Profile concrete Profile definitions
 /**
  * @class TAO_SCIOP_Profile
  *
@@ -64,10 +58,9 @@ public:
                     TAO_GIOP_Message_Version const &version,
                     TAO_ORB_Core *orb_core);
 
-  /// Profile constructor, default.
   explicit TAO_SCIOP_Profile (TAO_ORB_Core *orb_core);
 
-  /// Destructor is to be called only through <_decr_refcnt>.
+  /// Destructor is to be called only through @c _decr_refcnt.
   ~TAO_SCIOP_Profile ();
 
   /// Template methods. Please see Profile.h for documentation.
@@ -77,9 +70,9 @@ public:
   CORBA::ULong endpoint_count () const override;
   CORBA::ULong hash (CORBA::ULong max) override;
   /**
-   * Add <endp> to this profile's list of endpoints (it is inserted
+   * Add @c endp to this profile's list of endpoints (it is inserted
    * next to the head of the list).  This profiles takes ownership of
-   * <endp>.
+   * @c endp.
    */
   void add_endpoint (TAO_SCIOP_Endpoint *endp);
 
@@ -92,6 +85,7 @@ protected:
   CORBA::Boolean do_is_equivalent (TAO_Profile const *other_profile) override;
 
 protected:
+  TAO_SCIOP_Profile () = delete;
   TAO_SCIOP_Profile (TAO_SCIOP_Profile const &) = delete;
   TAO_SCIOP_Profile &operator= (TAO_SCIOP_Profile const &) = delete;
   TAO_SCIOP_Profile (TAO_SCIOP_Profile &&) = delete;
@@ -113,7 +107,7 @@ protected:
    * endpoints is used for #2. If the ORB is configured to use
    * preferred interfaces for invocation, TAO creates an endpoint per
    * preferred interface. To be clear, every tuple
-   * <destination:target> will have an endpoint. What TAO essentially
+   * @c destination:target will have an endpoint. What TAO essentially
    * does is that creates it multiple endpoints so that the invocation
    * code path can use existing iterating techniques to try one
    * preferred interface after another (if the first did not work). If
@@ -124,12 +118,12 @@ protected:
    * local address.
    * Addressing info of the default endpoint, i.e., head of the list,
    * is transmitted using standard SCIOP ProfileBody components.  See
-   * <encode_endpoints> method documentation above for how the rest of
+   * @c encode_endpoints method documentation above for how the rest of
    * the endpoint list is transmitted.
    */
   TAO_SCIOP_Endpoint endpoint_;
 
-  /// Number of endpoints in the list headed by <endpoint_>.
+  /// Number of endpoints in the list headed by @c endpoint_.
   CORBA::ULong count_ {1};
 };
 

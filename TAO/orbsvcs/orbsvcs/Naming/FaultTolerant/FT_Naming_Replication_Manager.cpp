@@ -1,13 +1,9 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  * @file   FT_Naming_Replication_Manager.cpp
  *
  * @author Kevin Stanley <stanleyk@ociweb.com>
  * @author Phil Mesnier
  */
-//=============================================================================
 
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Naming/FaultTolerant/FT_Naming_Replication_Manager.h"
@@ -18,6 +14,9 @@
 #include "ace/OS_NS_ctype.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/Log_Msg.h"
+#include "ace/ARGV.h"
+
+#include <cstring>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -37,7 +36,7 @@ FT_Update_Replicant_i::notify_update (CORBA::ULongLong seq_num,
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("(%P|%t) FT_Update_Replicant_i::notify_updated_entity ")
-                          ACE_TEXT ("expected %Lu got %Lu\n"),
+                          ACE_TEXT ("expected %Q got %Q\n"),
                           expected, seq_num ));
         }
       this->owner_.replica_seq_num_ = seq_num;
@@ -48,7 +47,7 @@ FT_Update_Replicant_i::notify_update (CORBA::ULongLong seq_num,
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("(%P|%t) FT_Update_Replicant_i::notify_updated_entity ")
-                          ACE_TEXT ("expected %Lu got %Lu\n"),
+                          ACE_TEXT ("expected %Q got %Q\n"),
                           expected, seq_num ));
         }
       --this->owner_.replica_seq_num_;
@@ -58,7 +57,7 @@ FT_Update_Replicant_i::notify_update (CORBA::ULongLong seq_num,
 
 void
 FT_Update_Replicant_i::register_peer (FT_Naming::UpdatePushNotifier_ptr peer,
-                                      const FT_Naming::ReplicaInfo& iors,
+                                      FT_Naming::ReplicaInfo const &iors,
                                       CORBA::ULongLong seq_num)
 {
   this->owner_.peer_ = FT_Naming::UpdatePushNotifier::_duplicate (peer);
@@ -66,7 +65,6 @@ FT_Update_Replicant_i::register_peer (FT_Naming::UpdatePushNotifier_ptr peer,
   this->owner_.server_.update_iors (iors);
 }
 
-//---------------------------------------------------------------------------
 
 TAO_FT_Naming_Replication_Manager::TAO_FT_Naming_Replication_Manager (TAO_FT_Naming_Server &owner)
   : me_ (),
@@ -86,37 +84,33 @@ TAO_FT_Naming_Replication_Manager::TAO_FT_Naming_Replication_Manager (TAO_FT_Nam
 {
 }
 
-TAO_FT_Naming_Replication_Manager::~TAO_FT_Naming_Replication_Manager()
-{
-}
-
 void
 TAO_FT_Naming_Replication_Manager::init_orb ()
 {
-  int argc = 8;
-  ACE_TCHAR *argv[11];
-  argv[0] = ACE_OS::strdup (ACE_TEXT (""));
-  argv[1] = ACE_OS::strdup (ACE_TEXT ("-ORBIgnoreDefaultSvcConfFile"));
-  argv[2] = ACE_OS::strdup (ACE_TEXT ("-ORBGestalt"));
-  argv[3] = ACE_OS::strdup (ACE_TEXT ("Local"));
-  argv[4] = ACE_OS::strdup (ACE_TEXT ("-ORBSvcConfDirective"));
-  argv[5] = ACE_OS::strdup (ACE_TEXT ("static Client_Strategy_Factory \"-ORBConnectStrategy Blocked -ORBDefaultSyncScope server\""));
-  argv[6] = ACE_OS::strdup (ACE_TEXT ("-ORBDottedDecimalAddresses"));
-  argv[7] = ACE_OS::strdup (ACE_TEXT ("1"));
+  ACE_ARGV orb_args;
+  if (orb_args.add (ACE_TEXT ("")) == -1
+      || orb_args.add (ACE_TEXT ("-ORBIgnoreDefaultSvcConfFile")) == -1
+      || orb_args.add (ACE_TEXT ("-ORBGestalt")) == -1
+      || orb_args.add (ACE_TEXT ("Local")) == -1
+      || orb_args.add (ACE_TEXT ("-ORBSvcConfDirective")) == -1
+      || orb_args.add (ACE_TEXT ("static Client_Strategy_Factory \"-ORBConnectStrategy Blocked -ORBDefaultSyncScope server\""), true) == -1
+      || orb_args.add (ACE_TEXT ("-ORBDottedDecimalAddresses")) == -1
+      || orb_args.add (ACE_TEXT ("1")) == -1)
+    throw CORBA::NO_MEMORY ();
+
+  ACE_TString endpoint;
   if (endpoint_.length ())
     {
-      argv[8] = ACE_OS::strdup (ACE_TEXT ("-ORBListenEndpoints"));
-      argv[9] = ACE_OS::strdup (ACE_TEXT_CHAR_TO_TCHAR (endpoint_.c_str ()));
-      argc += 2;
+      endpoint = ACE_TEXT_CHAR_TO_TCHAR (endpoint_.c_str ());
+      if (orb_args.add (ACE_TEXT ("-ORBListenEndpoints")) == -1
+          || orb_args.add (endpoint.c_str ()) == -1)
+      {
+        throw CORBA::NO_MEMORY ();
+      }
     }
-  else
-    {
-      argv[8] = 0;
-      argv[9] = 0;
-    }
-  argv[10] = 0;
 
-  this->orb_ = CORBA::ORB_init (argc, argv, "replicator_orb");
+  int argc = orb_args.argc ();
+  this->orb_ = CORBA::ORB_init (argc, orb_args.argv (), "replicator_orb");
   this->reactor_ = this->orb_->orb_core ()->reactor ();
   CORBA::Object_var obj = this->orb_->resolve_initial_references ("RootPOA");
   PortableServer::POA_var poa = PortableServer::POA::_narrow (obj.in ());
@@ -164,7 +158,7 @@ TAO_FT_Naming_Replication_Manager::svc ()
     {
       this->orb_->run ();
     }
-  catch (const CORBA::SystemException &ex)
+  catch (CORBA::SystemException const &ex)
     {
       if (TAO_debug_level > 0)
         {
@@ -175,7 +169,6 @@ TAO_FT_Naming_Replication_Manager::svc ()
     }
   return 0;
 }
-
 
 int
 TAO_FT_Naming_Replication_Manager::handle_exception (ACE_HANDLE )
@@ -222,19 +215,17 @@ TAO_FT_Naming_Replication_Manager::handle_exception (ACE_HANDLE )
       CORBA::Long len = this->to_send_.length ();
       FT_Naming::UpdateInfoSeq payload (len);
       payload.length (len);
-      CORBA::Long p = 0;
-      for (CORBA::Long l = 0; l < len; l++)
+      for (CORBA::Long l {}; l < len; ++l)
         {
-           payload[p++] = this->to_send_[l];
+          payload[l] = this->to_send_[l];
         }
-      payload.length (p);
       this->to_send_.length (0);
       CORBA::ULongLong seq = ++this->seq_num_;
       mon.release ();
 
       this->peer_->notify_update (seq, payload);
     }
-  catch (const CORBA::Exception &)
+  catch (CORBA::Exception const &)
     {
       this->peer_ = FT_Naming::UpdatePushNotifier::_nil ();
     }
@@ -253,7 +244,7 @@ TAO_FT_Naming_Replication_Manager::send_objgrp_update (PortableGroup::ObjectGrou
   ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->lock_);
   CORBA::Long len = this->to_send_.length ();
   bool found = false;
-  for (CORBA::Long i = len -1; !found && i >= 0; i--)
+  for (CORBA::Long i = len - 1; !found && i >= 0; --i)
     {
       if (this->to_send_[i]._d() == FT_Naming::obj_grp &&
           this->to_send_[i].grp().id == id)
@@ -292,7 +283,7 @@ TAO_FT_Naming_Replication_Manager::send_objgrp_update (PortableGroup::ObjectGrou
 }
 
 void
-TAO_FT_Naming_Replication_Manager::send_context_update (const ACE_CString & name,
+TAO_FT_Naming_Replication_Manager::send_context_update (std::string const &name,
                                     FT_Naming::ChangeType change)
 {
   if (this->reactor_ == nullptr)
@@ -304,11 +295,11 @@ TAO_FT_Naming_Replication_Manager::send_context_update (const ACE_CString & name
   CORBA::Long len = this->to_send_.length ();
   bool found = false;
 
-  for (CORBA::Long i = len -1; !found && i >= 0; i--)
+  for (CORBA::Long i = len - 1; !found && i >= 0; --i)
     {
       if (this->to_send_[i]._d() == FT_Naming::ctx_name &&
-          ACE_OS::strcmp (this->to_send_[i].ctx().context_name,
-                          name.c_str()) == 0)
+          std::strcmp (this->to_send_[i].ctx().context_name,
+                       name.c_str()) == 0)
         {
           found = true;
           FT_Naming::ChangeType pending = this->to_send_[i].ctx().change_type;
@@ -380,7 +371,7 @@ TAO_FT_Naming_Replication_Manager::peer_init_i ()
           this->peer_ = FT_Naming::UpdatePushNotifier::_narrow (obj.in());
           non_exist = (this->peer_->_non_existent() == 1);
         }
-      catch (const CORBA::Exception& ex)
+      catch (CORBA::Exception const &ex)
         {
           if (TAO_debug_level > 0)
             {
@@ -439,12 +430,11 @@ TAO_FT_Naming_Replication_Manager::update_peer_registration ()
       this->peer_->register_peer (this->me_, info, this->seq_num_);
       success = true;
     }
-  catch (const CORBA::Exception &)
+  catch (CORBA::Exception const &)
     {
     }
   return success;
 }
-
 
 bool
 TAO_FT_Naming_Replication_Manager::init_peer ()

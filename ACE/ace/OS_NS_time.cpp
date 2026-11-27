@@ -24,10 +24,12 @@ ACE_OS::localtime_r (const time_t *t, struct tm *res)
   ACE_OS_GUARD
 
   ACE_UNUSED_ARG (res);
-  struct tm * res_ptr = nullptr;
+  struct tm * res_ptr {};
   ACE_OSCALL (::localtime (t), struct tm *, res_ptr);
-  if (res_ptr == 0)
-    return 0;
+  if (res_ptr == nullptr)
+    {
+      return nullptr;
+    }
   else
     {
       *res = *res_ptr;
@@ -51,14 +53,16 @@ ACE_OS::mktime (struct tm *t)
 
 #if defined (ACE_LACKS_STRPTIME)
 char *
-ACE_OS::strptime_emulation (const char *buf, const char *format, struct tm *tm)
+ACE_OS::strptime_emulation (char const *buf, char const *format, struct tm *tm)
 {
   int bi = 0;
   int fi = 0;
   bool percent = false;
 
-  if (!buf || !format)
-    return 0;
+  if (buf == nullptr || format == nullptr)
+    {
+      return nullptr;
+    }
 
   while (format[fi] != '\0')
     {
@@ -74,7 +78,9 @@ ACE_OS::strptime_emulation (const char *buf, const char *format, struct tm *tm)
                   ++bi;
                 }
               else
-                return const_cast<char*> (buf + bi);
+                {
+                  return const_cast<char*> (buf + bi);
+                }
               break;
 
               /* not supported yet: weekday via locale long/short names
@@ -109,36 +115,50 @@ ACE_OS::strptime_emulation (const char *buf, const char *format, struct tm *tm)
             case 'e':
               if (!ACE_OS::strptime_getnum
                      (buf + bi, &tm->tm_mday, &bi, &fi, 1, 31))
-                return const_cast<char*> (buf + bi);
+                {
+                  return const_cast<char*> (buf + bi);
+                }
 
               break;
 
             case 'D':                        /* %m/%d/%y */
               if (!ACE_OS::strptime_getnum
                      (buf + bi, &tm->tm_mon, &bi, &fi, 1, 12))
-                return const_cast<char*> (buf + bi);
+                {
+                  return const_cast<char*> (buf + bi);
+                }
 
               --fi;
-              tm->tm_mon--;
+              --tm->tm_mon;
 
               if (buf[bi] != '/')
-                return const_cast<char*> (buf + bi);
+                {
+                  return const_cast<char*> (buf + bi);
+                }
 
               ++bi;
 
               if (!ACE_OS::strptime_getnum
                      (buf + bi, &tm->tm_mday, &bi, &fi, 1, 31))
-                return const_cast<char*> (buf + bi);
+                {
+                  return const_cast<char*> (buf + bi);
+                }
 
               --fi;
               if (buf[bi] != '/')
-                return const_cast<char*> (buf + bi);
+                {
+                  return const_cast<char*> (buf + bi);
+                }
               ++bi;
               if (!ACE_OS::strptime_getnum
                      (buf + bi, &tm->tm_year, &bi, &fi, 0, 99))
-                return const_cast<char*> (buf + bi);
+                {
+                  return const_cast<char*> (buf + bi);
+                }
               if (tm->tm_year < 69)
-                tm->tm_year += 100;
+                {
+                  tm->tm_year += 100;
+                }
               break;
 
             case 'H':                        /* hour (0-23) */
@@ -146,7 +166,9 @@ ACE_OS::strptime_emulation (const char *buf, const char *format, struct tm *tm)
             case 'k':
               if (!ACE_OS::strptime_getnum
                      (buf + bi, &tm->tm_hour, &bi, &fi, 0, 23))
-                return const_cast<char*> (buf + bi);
+                {
+                  return const_cast<char*> (buf + bi);
+                }
               break;
 
               /* not supported yet:
@@ -159,23 +181,29 @@ ACE_OS::strptime_emulation (const char *buf, const char *format, struct tm *tm)
             case 'j':                        /* day of year (0-366) */
               if (!ACE_OS::strptime_getnum
                      (buf + bi, &tm->tm_yday, &bi, &fi, 1, 366))
-                return const_cast<char*> (buf + bi);
+                {
+                  return const_cast<char*> (buf + bi);
+                }
 
-              tm->tm_yday--;
+              --tm->tm_yday;
               break;
 
             case 'm':                        /* an escaped % */
               if (!ACE_OS::strptime_getnum
                      (buf + bi, &tm->tm_mon, &bi, &fi, 1, 12))
-                return const_cast<char*> (buf + bi);
+                {
+                  return const_cast<char*> (buf + bi);
+                }
 
-              tm->tm_mon--;
+              --tm->tm_mon;
               break;
 
             case 'M':                        /* minute (0-59) */
               if (!ACE_OS::strptime_getnum
                      (buf + bi, &tm->tm_min, &bi, &fi, 0, 59))
-                return const_cast<char*> (buf + bi);
+                {
+                  return const_cast<char*> (buf + bi);
+                }
 
               break;
 
@@ -192,51 +220,71 @@ ACE_OS::strptime_emulation (const char *buf, const char *format, struct tm *tm)
             case 'R':                        /* %H:%M */
               if (!ACE_OS::strptime_getnum
                      (buf + bi, &tm->tm_hour, &bi, &fi, 0, 23))
-                return const_cast<char*> (buf + bi);
+                {
+                  return const_cast<char*> (buf + bi);
+                }
 
               --fi;
               if (buf[bi] != ':')
-                return const_cast<char*> (buf + bi);
+                {
+                  return const_cast<char*> (buf + bi);
+                }
               ++bi;
               if (!ACE_OS::strptime_getnum
                      (buf + bi, &tm->tm_min, &bi, &fi, 0, 59))
-                return const_cast<char*> (buf + bi);
+                {
+                  return const_cast<char*> (buf + bi);
+                }
 
               break;
 
             case 'S':                        /* seconds (0-61) */
               if (!ACE_OS::strptime_getnum
                      (buf + bi, &tm->tm_sec, &bi, &fi, 0, 61))
-                return const_cast<char*> (buf + bi);
+                {
+                  return const_cast<char*> (buf + bi);
+                }
               break;
 
             case 'T':                        /* %H:%M:%S */
               if (!ACE_OS::strptime_getnum
                      (buf + bi, &tm->tm_hour, &bi, &fi, 0, 23))
-                return const_cast<char*> (buf + bi);
+                {
+                  return const_cast<char*> (buf + bi);
+                }
 
               --fi;
               if (buf[bi] != ':')
-                return const_cast<char*> (buf + bi);
+                {
+                  return const_cast<char*> (buf + bi);
+                }
               ++bi;
               if (!ACE_OS::strptime_getnum
                      (buf + bi, &tm->tm_min, &bi, &fi, 0, 59))
-                return const_cast<char*> (buf + bi);
+                {
+                  return const_cast<char*> (buf + bi);
+                }
 
               --fi;
               if (buf[bi] != ':')
-                return const_cast<char*> (buf + bi);
+                {
+                  return const_cast<char*> (buf + bi);
+                }
               ++bi;
               if (!ACE_OS::strptime_getnum
                      (buf + bi, &tm->tm_sec, &bi, &fi, 0, 61))
-                return const_cast<char*> (buf + bi);
+                {
+                  return const_cast<char*> (buf + bi);
+                }
 
               break;
 
             case 'w':                        /* day of week (0=Sun-6) */
               if (!ACE_OS::strptime_getnum
                      (buf + bi, &tm->tm_wday, &bi, &fi, 0, 6))
-                return const_cast<char*> (buf + bi);
+                {
+                  return const_cast<char*> (buf + bi);
+                }
 
               break;
 
@@ -253,16 +301,22 @@ ACE_OS::strptime_emulation (const char *buf, const char *format, struct tm *tm)
             case 'y':                        /* the year - 1900 (0-99) */
               if (!ACE_OS::strptime_getnum
                      (buf + bi, &tm->tm_year, &bi, &fi, 0, 99))
-                return const_cast<char*> (buf + bi);
+                {
+                  return const_cast<char*> (buf + bi);
+                }
 
               if (tm->tm_year < 69)
-                tm->tm_year += 100;
+                {
+                  tm->tm_year += 100;
+                }
               break;
 
             case 'Y':                        /* the full year (1999) */
               if (!ACE_OS::strptime_getnum
                      (buf + bi, &tm->tm_year, &bi, &fi, 0, 0))
-                return const_cast<char*> (buf + bi);
+                {
+                  return const_cast<char*> (buf + bi);
+                }
 
               tm->tm_year -= 1900;
               break;
@@ -287,7 +341,9 @@ ACE_OS::strptime_emulation (const char *buf, const char *format, struct tm *tm)
                   ++bi;
                 }
               else
-                return const_cast<char*> (buf + bi);
+                {
+                  return const_cast<char*> (buf + bi);
+                }
             }
         } /* if (percent) */
     } /* while (format[fi] */
@@ -296,7 +352,7 @@ ACE_OS::strptime_emulation (const char *buf, const char *format, struct tm *tm)
 }
 
 int
-ACE_OS::strptime_getnum (const char *buf,
+ACE_OS::strptime_getnum (char const *buf,
                          int *num,
                          int *bi,
                          int *fi,
@@ -309,12 +365,16 @@ ACE_OS::strptime_getnum (const char *buf,
     {
       tmp = (tmp * 10) + (buf[i] - '0');
       if (max && (tmp > max))
-        return 0;
+        {
+          return 0;
+        }
       ++i;
     }
 
   if (tmp < min)
-    return 0;
+    {
+      return 0;
+    }
   else if (i)
     {
       *num = tmp;
@@ -323,7 +383,9 @@ ACE_OS::strptime_getnum (const char *buf,
       return 1;
     }
   else
-    return 0;
+    {
+      return 0;
+    }
 }
 #endif /* ACE_LACKS_STRPTIME */
 

@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Name_Handler.h
  *
@@ -8,8 +5,6 @@
  *  @author Gerhard Lenzer
  *  @author and Douglas C. Schmidt
  */
-//=============================================================================
-
 
 #ifndef ACE_NAME_HANDLER_H
 #define ACE_NAME_HANDLER_H
@@ -28,7 +23,6 @@
 #include "ace/Null_Mutex.h"
 #include "ace/svc_export.h"
 
-
 #if defined ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT
 template class ACE_Svc_Export ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
 #endif /* ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT */
@@ -36,11 +30,11 @@ template class ACE_Svc_Export ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
 /**
  * @class ACE_Name_Handler
  *
- * @brief Product object created by <ACE_Name_Acceptor>.  An
- * <ACE_Name_Handler> exchanges messages with a <ACE_Name_Proxy>
+ * @brief Product object created by @c ACE_Name_Acceptor.  An
+ * @c ACE_Name_Handler exchanges messages with an @c ACE_Name_Proxy
  * object on the client-side.
  *
- * This class is the main workhorse of the <ACE_Name_Server>.  It
+ * This class is the main workhorse of the @c ACE_Name_Server.  It
  * handles client requests to bind, rebind, resolve, and unbind
  * names.  It also schedules and handles timeouts that are used to
  * support "timed waits."  Clients used timed waits to bound the
@@ -50,30 +44,33 @@ class ACE_Svc_Export ACE_Name_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, 
 {
 public:
   /// Pointer to a member function of ACE_Name_Handler returning int
-  typedef int (ACE_Name_Handler::*OPERATION) ();
+  using OPERATION = int (ACE_Name_Handler::*) ();
 
   /// Pointer to a member function of ACE_Naming_Context returning int
-  typedef int (ACE_Naming_Context::*LIST_OP) (ACE_PWSTRING_SET &, const ACE_NS_WString &);
+  using LIST_OP = int (ACE_Naming_Context::*) (ACE_PWSTRING_SET &, ACE_NS_WString const &);
 
   /// Pointer to a member function of ACE_Name_Handler returning ACE_Name_Request
-  typedef ACE_Name_Request (ACE_Name_Handler::*REQUEST) (ACE_NS_WString *);
+  using REQUEST = ACE_Name_Request (ACE_Name_Handler::*) (ACE_NS_WString *);
 
-  /// Default constructor.
-  ACE_Name_Handler (ACE_Thread_Manager * = 0);
+  explicit ACE_Name_Handler (ACE_Thread_Manager * = nullptr);
 
-  /// Activate this instance of the <ACE_Name_Handler> (called by the
-  /// <ACE_Strategy_Acceptor>).
-  virtual int open (void * = 0);
+  /// Activate this instance of @c ACE_Name_Handler (called by the
+  /// @c ACE_Strategy_Acceptor).
+  int open (void * = nullptr) override;
 
 protected:
-  // = Helper routines for the operations exported to clients.
+  /// @name Helper routines for the operations exported to clients.
+  /// @{
 
   /// Give up waiting (e.g., when a timeout occurs or a client shuts
   /// down unexpectedly).
   virtual int abandon ();
 
-  // = Low level routines for framing requests, dispatching
-  // operations, and returning replies.
+  /// @}
+
+  /// @name Low-level routines for framing requests, dispatching operations,
+  /// and returning replies.
+  /// @{
 
   /// Receive, frame, and decode the client's request.
   virtual int recv_request ();
@@ -88,18 +85,26 @@ protected:
 
   /// Special kind of reply
   virtual int send_request (ACE_Name_Request &);
+  /// @}
 
-  // = Demultiplexing hooks.
-  /// Return the underlying <ACE_HANDLE>.
-  virtual ACE_HANDLE get_handle () const;
+  /// @name Demultiplexing hooks.
+  /// @{
 
-  /// Callback method invoked by the <ACE_Reactor> when client events
+  /// Return the underlying @c ACE_HANDLE.
+  ACE_HANDLE get_handle () const override;
+
+  /// Callback method invoked by the @c ACE_Reactor when client events
   /// arrive.
-  virtual int handle_input (ACE_HANDLE);
+  int handle_input (ACE_HANDLE) override;
 
-  // = Timer hook.
+  /// @}
+
+  /// @name Timer hook.
+  /// @{
+
   /// Enable clients to limit the amount of time they wait for a name.
-  virtual int handle_timeout (const ACE_Time_Value &tv, const void *arg);
+  int handle_timeout (ACE_Time_Value const &tv, void const *arg) override;
+  /// @}
 
   /// Ensure dynamic allocation...
   ~ACE_Name_Handler ();
@@ -110,16 +115,16 @@ private:
 
   struct LIST_ENTRY
   {
+    /// A member function pointer that performs the appropriate
+    /// operation (e.g., LIST_NAMES, LIST_VALUES, or LIST_TYPES).
     LIST_OP operation_;
-    // A member function pointer that performs the appropriate
-    // operation (e.g., LIST_NAMES, LIST_VALUES, or LIST_TYPES).
 
+    /// A member function pointer that serves as a factory to create a
+    /// request that is passed back to the client.
     REQUEST request_factory_;
-    // A member function pointer that serves as a factory to create a
-    // request that is passed back to the client.
 
-    const char *description_;
-    // Name of the operation we're dispatching (used for debugging).
+    /// Name of the operation we're dispatching (used for debugging).
+    char const *description_;
   };
 
   /// This is the table of pointers to functions that we use to
@@ -179,13 +184,13 @@ private:
  * @class ACE_Name_Acceptor
  *
  * @brief This class contains the service-specific methods that can't
- * easily be factored into the <ACE_Strategy_Acceptor>.
+ * easily be factored into the @c ACE_Strategy_Acceptor.
  */
 class ACE_Name_Acceptor : public ACE_Strategy_Acceptor<ACE_Name_Handler, ACE_SOCK_ACCEPTOR>
 {
 public:
   /// Dynamic linking hook.
-  virtual int init (int argc, ACE_TCHAR *argv[]);
+  int init (int argc, ACE_TCHAR *argv[]) override;
 
   /// Parse svc.conf arguments.
   int parse_args (int argc, ACE_TCHAR *argv[]);
@@ -202,6 +207,5 @@ private:
 };
 
 ACE_SVC_FACTORY_DECLARE (ACE_Name_Acceptor)
-
 
 #endif /* ACE_NAME_HANDLER_H */

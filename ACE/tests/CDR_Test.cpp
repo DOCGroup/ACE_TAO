@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    CDR_Test.cpp
  *
@@ -7,8 +5,6 @@
  *
  *  @author Istvan Buki <istvan.buki@euronet.be> and Jeff Parsons <parsons@cs.wustl.edu> and Carlos O'Ryan <coryan@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #include "test_config.h"
 #include "ace/Get_Opt.h"
@@ -18,9 +14,9 @@
 #include "ace/SString.h"
 #include "ace/ACE.h"
 #include "ace/OS_NS_stdlib.h"
-#include "ace/OS_NS_string.h"
 #include "ace/OS_NS_wchar.h"
 
+#include <cstring>
 
 static int n = 4096;
 static int nloops = 100;
@@ -32,11 +28,11 @@ struct CDR_Test_Types
   ACE_CDR::Octet o;
   ACE_CDR::Short s;
   ACE_CDR::Long l;
-  const ACE_CDR::Char *str;
-  const ACE_CDR::WChar *wstr;
-  const std::string std_str;
+  ACE_CDR::Char const *str;
+  ACE_CDR::WChar const *wstr;
+  std::string const std_str;
 #if !defined(ACE_LACKS_STD_WSTRING)
-  const std::wstring std_wstr;
+  std::wstring const std_wstr;
 #endif
   ACE_CDR::Double d;
   ACE_CDR::Short reps;
@@ -90,7 +86,9 @@ CDR_Test_Types::CDR_Test_Types ()
   for (int i = 0;
        i < CDR_Test_Types::ARRAY_SIZE;
        ++i)
+  {
     a[i] = i;
+  }
 }
 
 static int
@@ -104,24 +102,24 @@ short_stream ()
   ACE_SizeCDR ss;
 
   // Basic types for output
-  ACE_CDR::Char ch = 'A';
+  ACE_CDR::Char const ch = 'A';
   ACE_CDR::Char wchtmp[] = {'\xF3'};
-  ACE_CDR::WChar wch = *wchtmp;
+  ACE_CDR::WChar const wch = *wchtmp;
   ACE_CDR::WChar wchar2[] = {'\x00'};    // empty wide string
   ACE_CDR::WChar *wstr = wchar2;
-  ACE_CString str ("Test String");
-  std::string std_str ("std string");
-  std::string_view std_stringview {"std stringview"};
+  ACE_CString const str ("Test String");
+  std::string const std_str ("std string");
+  std::string_view const std_stringview {"std stringview"};
 #if !defined(ACE_LACKS_STD_WSTRING)
-  std::wstring std_wstr (L"std wstring");
+  std::wstring const std_wstr (L"std wstring");
 #endif
-  ACE_CDR::Short s = -123;
-  ACE_CDR::UShort us =  123;
-  ACE_CDR::Long l = -65800L;
-  ACE_CDR::ULong ul =  65800UL;
-  ACE_CDR::Float f =  1.23f;
-  ACE_CDR::Double d =  123.456789;
-  ACE_CDR::Fixed fx = ACE_CDR::Fixed::from_string ("8158901571290874");
+  ACE_CDR::Short const s = -123;
+  ACE_CDR::UShort const us =  123;
+  ACE_CDR::Long const l = -65800L;
+  ACE_CDR::ULong const ul =  65800UL;
+  ACE_CDR::Float const f =  1.23f;
+  ACE_CDR::Double const d =  123.456789;
+  ACE_CDR::Fixed const fx = ACE_CDR::Fixed::from_string ("8158901571290874");
 
   // Arrays for output
   ACE_CDR::Short s_array[3] = { -1, 0, 1 };
@@ -130,8 +128,8 @@ short_stream ()
   ACE_CDR::Double d_array[3] = { -123.456789, 0.0, 123.456789 };
   ACE_CDR::Boolean b_array[3] = { false, true, false };
 
-  ACE_OutputCDR::from_char fc (ch);
-  ACE_OutputCDR::from_wchar fwc (wch);
+  ACE_OutputCDR::from_char const fc (ch);
+  ACE_OutputCDR::from_wchar const fwc (wch);
   os << fc;
   os << fwc;
   os << str;
@@ -179,25 +177,29 @@ short_stream ()
 
   // Check the size.
   if (ss.total_length () != os.total_length ())
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("representation length does not match")),
                       1);
+  }
 
-  const ACE_Message_Block *out_mb = os.begin ();
-  size_t len = out_mb->length ();
+  ACE_Message_Block const *out_mb = os.begin ();
+  size_t const len = out_mb->length ();
 
   // Create an input stream (copy constructor)
   ACE_InputCDR is (os);
-  const ACE_Message_Block *in_mb = is.start ();
+  ACE_Message_Block const *in_mb = is.start ();
 
   if (in_mb->length () != len)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("buffer length not preserved")),
                       1);
+  }
 
-  for (i = 0; i < len; i++)
+  for (i = 0; i < len; ++i)
     {
       unsigned long const in_chunk =
         static_cast<unsigned long> (* (in_mb->rd_ptr () + i));
@@ -206,16 +208,18 @@ short_stream ()
         static_cast<unsigned long> (* (out_mb->rd_ptr () + i));
 
       if (in_chunk != out_chunk)
+      {
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("%p\n"),
                            ACE_TEXT ("buffer contents not preserved")),
                           1);
+      }
     }
 
   // Basic types for input
   ACE_CDR::Char ch1 = '\0';
   ACE_CDR::WChar wch1 = '\x00';
-  ACE_CDR::WChar *wstr1 = nullptr;
+  ACE_CDR::WChar *wstr1 {};
   ACE_CString str1;
   std::string std_str1;
   std::string std_stringview1;
@@ -239,16 +243,16 @@ short_stream ()
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Checking operators and arrays\n\n")));
 
-  ACE_InputCDR::to_char tc (ch1);
+  ACE_InputCDR::to_char const tc (ch1);
   is >> tc;
-  ACE_InputCDR::to_wchar twc (wch1);
+  ACE_InputCDR::to_wchar const twc (wch1);
   is >> twc;
   is >> str1;
-  ACE_InputCDR::to_wstring twstr (wstr1, 0);
+  ACE_InputCDR::to_wstring const twstr (wstr1, 0);
   is >> twstr;
   // @todo Lose the std::unique_ptr.  We should be using a
   //       std::string, or the like.
-  std::unique_ptr<ACE_CDR::WChar[]> safe_wstr (wstr1);
+  std::unique_ptr<ACE_CDR::WChar[]> const safe_wstr (wstr1);
   is >> std_str1;
   is >> std_stringview1;
 #if !defined(ACE_LACKS_STD_WSTRING)
@@ -267,118 +271,162 @@ short_stream ()
   is.read_double_array (d_array1, 3);
 
   if (ch1 != ch)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("char transfer error")),
                       1);
+  }
 
   if (wch1 != wch)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("wchar transfer error")),
                       1);
+  }
 
   if (str1 != str)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("string transfer error")),
                       1);
+  }
 
   if (ACE_OS::wscmp (wstr1, wstr))
+  {
      ACE_ERROR_RETURN ((LM_ERROR,
                         ACE_TEXT ("%p\n"),
                         ACE_TEXT ("wide string transfer error")),
                        1);
+  }
 
   if (std_str1 != std_str)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("std::string transfer error")),
                       1);
+  }
 
   if (std_stringview1 != std_stringview)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("std::string_view transfer error")),
                       1);
+  }
 
 #if !defined(ACE_LACKS_STD_WSTRING)
   if (std_wstr1 != std_wstr)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("std::wstring transfer error")),
                       1);
+  }
 #endif
 
   if (s1 != s)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("short transfer error")),
                       1);
+  }
 
   if (us1 != us)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("ushort transfer error")),
                       1);
+  }
 
   if (l1 != l)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("long transfer error")),
                       1);
+  }
 
   if (ul1 != ul)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("ulong transfer error")),
                       1);
+  }
 
   if (!ACE::is_equal (f1, f))
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("float transfer error")),
                       1);
+  }
 
   if (!ACE::is_equal (d1, d))
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("double transfer error")),
                       1);
+  }
 
   if (fx1 != fx)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("fixed transfer error")),
                       1);
+  }
 
-  for (i = 0 ; i < 3; i++)
+  for (i = 0 ; i < 3; ++i)
+  {
     if (s_array1[i] != s_array[i])
+    {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("%p\n"),
                          ACE_TEXT ("short array transfer error")),
                         1);
+    }
+  }
 
-  for (i = 0 ; i < 3; i++)
+  for (i = 0 ; i < 3; ++i)
+  {
     if (l_array1[i] != l_array[i])
+    {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("%p\n"),
                          ACE_TEXT ("long array transfer error")),
                         1);
+    }
+  }
 
-  for (i = 0 ; i < 3; i++)
+  for (i = 0 ; i < 3; ++i)
+  {
     if (!ACE::is_equal (f_array1[i], f_array[i]))
+    {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("%p\n"),
                          ACE_TEXT ("float array transfer error")),
                         1);
+    }
+  }
 
-  for (i = 0 ; i < 3; i++)
+  for (i = 0 ; i < 3; ++i)
+  {
     if (!ACE::is_equal (d_array1[i], d_array[i]))
+    {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("%p\n"),
                          ACE_TEXT ("double array transfer error")),
                         1);
+    }
+  }
 
   return 0;
 }
@@ -389,55 +437,73 @@ CDR_Test_Types::test_put (ACE_OutputCDR &cdr)
   for (int i = 0; i < n; ++i)
     {
       if (cdr.write_octet (this->o) == 0)
+      {
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("write_octet[%d] failed\n"),
                            i),
                           1);
+      }
       if (cdr.write_short (this->s) == 0)
+      {
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("write_short[%d] failed\n"),
                            i),
                           1);
+      }
       if (cdr.write_octet (this->o) == 0)
+      {
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("write_octet-2[%d] failed\n"),
                            i),
                           1);
+      }
       if (cdr.write_long (this->l) == 0)
+      {
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("write_long[%d] failed\n"),
                            i),
                           1);
+      }
       if (cdr.write_long (this->l) == 0)
+      {
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("write_long-2[%d] failed\n"),
                            i),
                           1);
+      }
 
       if (cdr.write_string (this->str) == 0)
+      {
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("write_string[%d] failed\n"),
                            i),
                           1);
+      }
 
       if (cdr.write_wstring (this->wstr) == 0)
+      {
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("write_wstring[%d] failed\n"),
                            i),
                           1);
+      }
 
       if (cdr.write_string (this->std_str) == 0)
+      {
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("write_string(std)[%d] failed\n"),
                            i),
                           1);
+      }
 
 #if !defined(ACE_LACKS_STD_WSTRING)
       if (cdr.write_wstring (this->std_wstr) == 0)
+      {
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("write_wstring(std)[%d] failed\n"),
                            i),
                           1);
+      }
 #endif
     }
 
@@ -454,106 +520,142 @@ CDR_Test_Types::test_get (ACE_InputCDR &cdr) const
   for (int i = 0; i < n; ++i)
     {
       if (cdr.read_octet (xo) == 0)
+      {
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("read_octet[%d] failed\n"),
                            i),
                           1);
+      }
       if (xo != this->o)
+      {
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("octet[%d] differs\n"),
                            i),
                           1);
+      }
       if (cdr.read_short (xs) == 0)
+      {
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("read_short[%d] failed\n"),
                            i), 1);
+      }
       if (xs != this->s)
+      {
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("short[%d] differs\n"),
                            i),
                           1);
+      }
       if (cdr.read_octet (xo) == 0)
+      {
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("read_octet-2[%d] failed\n"),
                            i),
                           1);
+      }
       if (xo != this->o)
+      {
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("octet-2[%d] differs\n"),
                            i),
                           1);
+      }
       if (cdr.read_long (xl) == 0)
+      {
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("read_long[%d] failed\n"),
                            i),
                           1);
+      }
       if (xl != this->l)
+      {
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("long[%d] differs\n"),
                            i),
                           1);
+      }
       if (cdr.read_long (xl) == 0)
+      {
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("read_long-2[%d] failed\n"),
                            i),
                           1);
+      }
       if (xl != this->l)
+      {
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("long-2[%d] differs\n"),
                            i),
                           1);
+      }
 
       ACE_CDR::Char *xstr;
       if (cdr.read_string (xstr) == 0)
+      {
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("read_string2[%d] failed\n"),
                            i),
                           1);
-      std::unique_ptr<ACE_CDR::Char[]> auto_xstr (xstr);
-      if (ACE_OS::strcmp (auto_xstr.get (), this->str) != 0)
+      }
+      std::unique_ptr<ACE_CDR::Char[]> const auto_xstr (xstr);
+      if (std::strcmp (auto_xstr.get (), this->str) != 0)
+      {
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("string[%d] differs\n"),
                            i),
                           1);
+      }
 
       ACE_CDR::WChar *wstr1;
       if (cdr.read_wstring (wstr1) == 0)
+      {
         ACE_ERROR_RETURN ((LM_ERROR,
                             ACE_TEXT ("read_wstring2[%d] failed\n"),
                             i),
                            1);
+      }
       // zero length
-      std::unique_ptr<ACE_CDR::WChar[]> auto_xwstr (wstr1);
+      std::unique_ptr<ACE_CDR::WChar[]> const auto_xwstr (wstr1);
        if (ACE_OS::wslen(auto_xwstr.get () ))
+       {
          ACE_ERROR_RETURN ((LM_ERROR,
                             ACE_TEXT ("wstring[%d] differs\n"),
                              i),
                             1);
+       }
 
        std::string std_xstr;
        if (cdr.read_string (std_xstr) == 0)
+       {
          ACE_ERROR_RETURN ((LM_ERROR,
                             ACE_TEXT ("read_string(std)[%d] failed\n"),
                             i),
                            1);
+       }
        if (std_xstr != this->std_str)
+       {
          ACE_ERROR_RETURN ((LM_ERROR,
                             ACE_TEXT ("std::string[%d] differs\n"),
                             i),
                            1);
+       }
 
 #if !defined(ACE_LACKS_STD_WSTRING)
        std::wstring std_xwstr;
        if (cdr.read_wstring (std_xwstr) == 0)
+       {
          ACE_ERROR_RETURN ((LM_ERROR,
                             ACE_TEXT ("read_wstring(std)[%d] failed\n"),
                             i),
                            1);
+       }
        if (std_xwstr != this->std_wstr)
+       {
          ACE_ERROR_RETURN ((LM_ERROR,
                             ACE_TEXT ("std::wstring[%d] differs\n"),
                             i),
                            1);
+       }
 #endif
     }
   return 0;
@@ -566,123 +668,167 @@ CDR_Test_Types::test_put_placeholder (ACE_OutputCDR &cdr)
   // Long
   char *pos = cdr.write_long_placeholder ();
   if (test_put (cdr) != 0)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("test_put (long placeholder) failed\n")),
                       1);
+  }
   if (!cdr.replace (this->repl, pos))
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("replace(long) failed\n")),
                       1);
+  }
 
   // ULong
   pos = cdr.write_long_placeholder ();
   if (test_put (cdr) != 0)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("test_put (long placeholder) failed\n")),
                       1);
+  }
   if (!cdr.replace (this->repul, pos))
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("replace(ulong) failed\n")),
                       1);
+  }
 
   // Short
   pos = cdr.write_short_placeholder ();
   if (test_put (cdr) != 0)
+  {
    ACE_ERROR_RETURN ((LM_ERROR,
                       ACE_TEXT ("test_put (short placeholder) failed\n")),
                      1);
+  }
   if (!cdr.replace (this->reps, pos))
+  {
    ACE_ERROR_RETURN ((LM_ERROR,
                       ACE_TEXT ("replace(short) failed\n")),
                      1);
+  }
 
   // UShort
   pos = cdr.write_short_placeholder ();
   if (test_put (cdr) != 0)
+  {
    ACE_ERROR_RETURN ((LM_ERROR,
                       ACE_TEXT ("test_put (short placeholder) failed\n")),
                      1);
+  }
   if (!cdr.replace (this->repus, pos))
+  {
    ACE_ERROR_RETURN ((LM_ERROR,
                       ACE_TEXT ("replace(ushort) failed\n")),
                      1);
+  }
 
   // Boolean
   pos = cdr.write_boolean_placeholder ();
   if (test_put (cdr) != 0)
+  {
    ACE_ERROR_RETURN ((LM_ERROR,
                       ACE_TEXT ("test_put (boolean placeholder) failed\n")),
                      1);
+  }
   if (!cdr.replace (this->repb, pos))
+  {
    ACE_ERROR_RETURN ((LM_ERROR,
                       ACE_TEXT ("replace(boolean) failed\n")),
                      1);
+  }
 
   // Char
   pos = cdr.write_char_placeholder ();
   if (test_put (cdr) != 0)
+  {
    ACE_ERROR_RETURN ((LM_ERROR,
                       ACE_TEXT ("test_put (char placeholder) failed\n")),
                      1);
+  }
   if (!cdr.replace (this->repc, pos))
+  {
    ACE_ERROR_RETURN ((LM_ERROR,
                       ACE_TEXT ("replace(char) failed\n")),
                      1);
+  }
 
   // LongLong
   pos = cdr.write_longlong_placeholder ();
   if (test_put (cdr) != 0)
+  {
    ACE_ERROR_RETURN ((LM_ERROR,
                       ACE_TEXT ("test_put (longlong placeholder) failed\n")),
                      1);
+  }
   if (!cdr.replace (this->repll, pos))
+  {
    ACE_ERROR_RETURN ((LM_ERROR,
                       ACE_TEXT ("replace(longlong) failed\n")),
                      1);
+  }
 
   // ULongLong
   pos = cdr.write_longlong_placeholder ();
   if (test_put (cdr) != 0)
+  {
    ACE_ERROR_RETURN ((LM_ERROR,
                       ACE_TEXT ("test_put (longlong placeholder) failed\n")),
                      1);
+  }
   if (!cdr.replace (this->repull, pos))
+  {
    ACE_ERROR_RETURN ((LM_ERROR,
                       ACE_TEXT ("replace(ulonglong) failed\n")),
                      1);
+  }
 
   // Octet
   pos = cdr.write_octet_placeholder ();
   if (test_put (cdr) != 0)
+  {
    ACE_ERROR_RETURN ((LM_ERROR,
                       ACE_TEXT ("test_put (octet placeholder) failed\n")),
                      1);
+  }
   if (!cdr.replace (this->repo, pos))
+  {
    ACE_ERROR_RETURN ((LM_ERROR,
                       ACE_TEXT ("replace(octet) failed\n")),
                      1);
+  }
 
   // Float
   pos = cdr.write_float_placeholder ();
   if (test_put (cdr) != 0)
+  {
    ACE_ERROR_RETURN ((LM_ERROR,
                       ACE_TEXT ("test_put (float placeholder) failed\n")),
                      1);
+  }
   if (!cdr.replace (this->repf, pos))
+  {
    ACE_ERROR_RETURN ((LM_ERROR,
                       ACE_TEXT ("replace(float) failed\n")),
                      1);
+  }
 
   // Double
   pos = cdr.write_double_placeholder ();
   if (test_put (cdr) != 0)
+  {
    ACE_ERROR_RETURN ((LM_ERROR,
                       ACE_TEXT ("test_put (double placeholder) failed\n")),
                      1);
+  }
   if (!cdr.replace (this->repd, pos))
+  {
    ACE_ERROR_RETURN ((LM_ERROR,
                       ACE_TEXT ("replace(double) failed\n")),
                      1);
+  }
 
   return 0;
 }
@@ -703,151 +849,216 @@ CDR_Test_Types::test_get_placeholder (ACE_InputCDR &cdr) const
   ACE_CDR::Double xd;
 
   if (cdr.read_long (xl) == 0)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("read_long failed\n")),
                       1);
+  }
   if (xl != this->repl)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("replaced long differs\n")),
                       1);
+  }
 
   // The bunch of stuff written after the placeholder by test_put_placeholder
   // should still be valid; check that it is.
   if (test_get (cdr) != 0)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("test_get (long) failed\n")),
                       1);
+  }
 
   if (cdr.read_ulong (xul) == 0)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("read_ulong failed\n")), 1);
+  }
   if (xul != this->repul)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("replaced ulong differs\n")),
                       1);
+  }
 
   if (test_get (cdr) != 0)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("test_get (ulong) failed\n")),
                       1);
+  }
 
   if (cdr.read_short (xs) == 0)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("read_short failed\n")), 1);
+  }
   if (xs != this->reps)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("replaced short differs\n")),
                       1);
+  }
 
   if (test_get (cdr) != 0)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("test_get (short) failed\n")),
                       1);
+  }
 
   if (cdr.read_ushort (xus) == 0)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("read_ushort failed\n")), 1);
+  }
   if (xus != this->repus)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("replaced ushort differs\n")),
                       1);
+  }
 
   if (test_get (cdr) != 0)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("test_get (ushort) failed\n")),
                       1);
+  }
 
   if (!cdr.read_boolean (xb))
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("read_boolean failed\n")), 1);
+  }
   if (xb != this->repb)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("replaced boolean differs\n")),
                       1);
+  }
 
   if (test_get (cdr) != 0)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("test_get (boolean) failed\n")),
                       1);
+  }
 
   if (cdr.read_char (xc) == 0)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("read_char failed\n")), 1);
+  }
   if (xc != this->repc)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("replaced char differs\n")),
                       1);
+  }
 
   if (test_get (cdr) != 0)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("test_get (char) failed\n")),
                       1);
-
+  }
 
   if (cdr.read_longlong (xll) == 0)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("read_longlong failed\n")), 1);
+  }
   if (xll != this->repll)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("replaced longlong differs\n")),
                       1);
+  }
 
   if (test_get (cdr) != 0)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("test_get (longlong) failed\n")),
                       1);
+  }
 
   if (cdr.read_ulonglong (xull) == 0)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("read_ulonglong failed\n")), 1);
+  }
   if (xull != this->repull)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("replaced ulonglong differs\n")),
                       1);
+  }
 
   if (test_get (cdr) != 0)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("test_get (ulonglong) failed\n")),
                       1);
+  }
 
   if (cdr.read_octet (xo) == 0)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("read_octet failed\n")), 1);
+  }
   if (xo != this->repo)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("replaced octet differs\n")),
                       1);
+  }
 
   if (test_get (cdr) != 0)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("test_get (octet) failed\n")),
                       1);
+  }
 
   if (cdr.read_float (xf) == 0)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("read_float failed\n")), 1);
+  }
   if (xf != this->repf)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("replaced float differs\n")),
                       1);
+  }
 
   if (test_get (cdr) != 0)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("test_get (float) failed\n")),
                       1);
+  }
 
   if (cdr.read_double (xd) == 0)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("read_double failed\n")), 1);
+  }
   if (xd != this->repd)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("replaced double differs\n")),
                       1);
+  }
 
   if (test_get (cdr) != 0)
+  {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("test_get (double) failed\n")),
                       1);
+  }
 
   return 0;
 }
@@ -859,8 +1070,8 @@ int boolean_test ()
               ACE_TEXT ("Testing invalid boolean\n")));
 
   ACE_OutputCDR os;
-  ACE_CDR::Boolean bin { true };
-  ACE_CDR::Octet oin { 2 };
+  ACE_CDR::Boolean const bin { true };
+  ACE_CDR::Octet const oin { 2 };
   os.write_boolean(bin);
   os.write_octet(oin);
 
@@ -940,7 +1151,7 @@ run_main (int argc, ACE_TCHAR *argv[])
       switch (opt)
         {
           case 'd':
-            debug++;
+            ++debug;
             break;
           case 'n':
             n = ACE_OS::atoi (get_opt.opt_arg ());
@@ -976,7 +1187,9 @@ run_main (int argc, ACE_TCHAR *argv[])
               ACE_TEXT ("Testing ACE CDR functions - short stream\n\n")));
 
   if (short_stream () != 0 )
+  {
     return 1;
+  }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Short stream - no errors\n\n")
@@ -988,7 +1201,9 @@ run_main (int argc, ACE_TCHAR *argv[])
       CDR_Test_Types test_types;
 
       if (test_types.test_put (output) != 0)
+      {
         return 1;
+      }
 
       ACE_InputCDR input (output);
       if (debug > 0)
@@ -1006,7 +1221,9 @@ run_main (int argc, ACE_TCHAR *argv[])
         }
 
       if (test_types.test_get (input) != 0)
+      {
         return 1;
+      }
     }
 
   ACE_DEBUG ((LM_DEBUG,
@@ -1019,7 +1236,9 @@ run_main (int argc, ACE_TCHAR *argv[])
       CDR_Test_Types test_types;
 
       if (test_types.test_put (output) != 0)
+      {
         return 1;
+      }
 
       ACE_InputCDR input (output.begin ());
       if (debug > 0)
@@ -1037,7 +1256,9 @@ run_main (int argc, ACE_TCHAR *argv[])
         }
 
       if (test_types.test_get (input) != 0)
+      {
         return 1;
+      }
     }
 
   ACE_DEBUG ((LM_DEBUG,
@@ -1048,15 +1269,21 @@ run_main (int argc, ACE_TCHAR *argv[])
   CDR_Test_Types test_types;
 
   if (test_types.test_put (output) != 0)
+  {
     return 1;
+  }
 
   if (output.begin () == output.end ())
+  {
     ACE_DEBUG ((LM_WARNING,
                 ACE_TEXT ("Only one block needed; test no effective.\n")));
+  }
   else
     {
       if (output.consolidate () != 0)
+      {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("consolidate")));
+      }
     }
 
   ACE_InputCDR input (output);
@@ -1075,7 +1302,9 @@ run_main (int argc, ACE_TCHAR *argv[])
     }
 
   if (test_types.test_get (input) != 0)
+  {
     return 1;
+  }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Consolidation - no errors\n\n")
@@ -1083,7 +1312,9 @@ run_main (int argc, ACE_TCHAR *argv[])
 
   output.reset();
   if (test_types.test_put_placeholder (output) != 0)
+  {
     return 1;
+  }
 
   input = ACE_InputCDR(output);
   if (debug > 0)
@@ -1101,13 +1332,19 @@ run_main (int argc, ACE_TCHAR *argv[])
     }
 
   if (test_types.test_get_placeholder (input) != 0)
+  {
     return 1;
+  }
 
   if (boolean_test () != 0)
+  {
     return 1;
+  }
 
   if (boolean_array_test () != 0)
+  {
     return 1;
+  }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Placeholder/Replace - no errors\n\n")));

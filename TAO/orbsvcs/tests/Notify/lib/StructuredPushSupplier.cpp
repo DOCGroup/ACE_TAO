@@ -4,7 +4,6 @@
 #include "StructuredPushSupplier.inl"
 #endif /* __ACE_INLINE__ */
 
-
 TAO_Notify_Tests_StructuredPushSupplier_Traits::TAO_Notify_Tests_StructuredPushSupplier_Traits ()
   :type_ (CosNotifyChannelAdmin::STRUCTURED_EVENT)
 {
@@ -12,18 +11,13 @@ TAO_Notify_Tests_StructuredPushSupplier_Traits::TAO_Notify_Tests_StructuredPushS
 
 /*******************************************************************/
 
-TAO_Notify_Tests_StructuredPushSupplier::TAO_Notify_Tests_StructuredPushSupplier ()
-{
-}
+TAO_Notify_Tests_StructuredPushSupplier::TAO_Notify_Tests_StructuredPushSupplier () = default;
 
-TAO_Notify_Tests_StructuredPushSupplier::~TAO_Notify_Tests_StructuredPushSupplier ()
-{
-}
+TAO_Notify_Tests_StructuredPushSupplier::~TAO_Notify_Tests_StructuredPushSupplier () = default;
 
 void
 TAO_Notify_Tests_StructuredPushSupplier::send_event (
-    const CosNotification::StructuredEvent& event
-  )
+    CosNotification::StructuredEvent const & event)
 {
   ACE_ASSERT (!CORBA::is_nil (this->proxy_.in ()));
 

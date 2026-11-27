@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "IIOP_Server_Request_Interceptor.h"
 
 /// Prototype
@@ -13,7 +12,7 @@ int
 ACE_TMAIN (int argc,
            ACE_TCHAR *argv[])
 {
-  Test::IIOP_Server_Request_Interceptor* cri = 0;
+  Test::IIOP_Server_Request_Interceptor *cri {};
   ACE_NEW_RETURN (cri,
                   Test::IIOP_Server_Request_Interceptor ("test_orb",
                                                          test_transport_current),

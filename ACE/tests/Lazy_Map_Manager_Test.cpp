@@ -1,21 +1,16 @@
-
-//=============================================================================
 /**
  *  @file    Lazy_Map_Manager_Test.cpp
  *
- *   This is a simple test of the <ACE_Map_Manager> and
- *   <ACE_Active_Map_Manager> that illustrates how lazy map managers
+ *   This is a simple test of the @c ACE_Map_Manager and
+ *   @c ACE_Active_Map_Manager that illustrates how lazy map managers
  *   allow the deletion of entries while iterating over the map.
  *
  *  @author Irfan Pyarali <irfan@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #include "test_config.h"
 #include "ace/Map_Manager.h"
 #include "ace/Active_Map_Manager.h"
-
 
 // Simple map manager.
 using LAZY_MAP = ACE_Map_Manager<int, int, ACE_Null_Mutex>;
@@ -71,7 +66,9 @@ map_test ()
 
   // Insert a few entries.
   for (i = 0; i < 3; ++i)
-    map.bind (i, i);
+    {
+      map.bind (i, i);
+    }
 
   display_map (map);
 
@@ -108,9 +105,11 @@ map_test ()
          iter != map.end ();
          ++iter)
     {
-      LAZY_MAP::ENTRY &entry = *iter;
+      LAZY_MAP::ENTRY const &entry = *iter;
       if (entry.int_id_ == 1)
-        map.unbind (1);
+        {
+          map.unbind (1);
+        }
     }
 
     display_map (map);
@@ -123,9 +122,11 @@ map_test ()
          iter != map.end ();
          ++iter)
       {
-        LAZY_MAP::ENTRY &entry = *iter;
+        LAZY_MAP::ENTRY const &entry = *iter;
         if (entry.int_id_ == 0)
-          map.unbind (0);
+          {
+            map.unbind (0);
+          }
       }
 
     display_map (map);
@@ -138,9 +139,11 @@ map_test ()
          iter != map.end ();
          ++iter)
       {
-        LAZY_MAP::ENTRY &entry = *iter;
+        LAZY_MAP::ENTRY const &entry = *iter;
         if (entry.int_id_ == 2)
-          map.unbind (2);
+          {
+            map.unbind (2);
+          }
       }
 
     display_map (map);
@@ -150,13 +153,17 @@ map_test ()
 
   // Insert a few entries.  This will force an increase in map size.
   for (i = 0; i < 4; ++i)
-    map.bind (i, i);
+    {
+      map.bind (i, i);
+    }
 
   display_map (map);
 
   // Remove a few entries (in reverse order).
   for (i = 3; i >= 0; --i)
-    map.unbind (i);
+    {
+      map.unbind (i);
+    }
 
   display_map (map);
 }
@@ -217,7 +224,9 @@ active_map_test ()
 
   // Insert a few entries.
   for (i = 0; i < 3; ++i)
-    map.bind (i, keys[i]);
+    {
+      map.bind (i, keys[i]);
+    }
 
   display_map (map);
 
@@ -254,9 +263,11 @@ active_map_test ()
          iter != map.end ();
          ++iter)
     {
-      ACTIVE_MAP::ENTRY &entry = *iter;
+      ACTIVE_MAP::ENTRY const &entry = *iter;
       if (entry.int_id_ == 1)
-        map.unbind (keys[1]);
+        {
+          map.unbind (keys[1]);
+        }
     }
 
     display_map (map);
@@ -269,9 +280,11 @@ active_map_test ()
          iter != map.end ();
          ++iter)
       {
-        ACTIVE_MAP::ENTRY &entry = *iter;
+        ACTIVE_MAP::ENTRY const &entry = *iter;
         if (entry.int_id_ == 0)
-          map.unbind (keys[0]);
+          {
+            map.unbind (keys[0]);
+          }
       }
 
     display_map (map);
@@ -284,9 +297,11 @@ active_map_test ()
          iter != map.end ();
          ++iter)
       {
-        ACTIVE_MAP::ENTRY &entry = *iter;
+        ACTIVE_MAP::ENTRY const &entry = *iter;
         if (entry.int_id_ == 2)
-          map.unbind (keys[2]);
+          {
+            map.unbind (keys[2]);
+          }
       }
 
     display_map (map);
@@ -296,13 +311,17 @@ active_map_test ()
 
   // Insert a few entries.  This will force an increase in map size.
   for (i = 0; i < 4; ++i)
-    map.bind (i, keys[i]);
+    {
+      map.bind (i, keys[i]);
+    }
 
   display_map (map);
 
   // Remove a few entries (in reverse order).
   for (i = 3; i >= 0; --i)
-    map.unbind (keys[i]);
+    {
+      map.unbind (keys[i]);
+    }
 
   display_map (map);
 }

@@ -27,7 +27,7 @@ ACE_FIFO_Recv_Msg::dump () const
 // aren't any writers at the moment!
 
 int
-ACE_FIFO_Recv_Msg::open (const ACE_TCHAR *fifo_name,
+ACE_FIFO_Recv_Msg::open (ACE_TCHAR const *fifo_name,
                          int flags,
                          mode_t perms,
                          int persistent,
@@ -47,7 +47,7 @@ ACE_FIFO_Recv_Msg::ACE_FIFO_Recv_Msg ()
   ACE_TRACE ("ACE_FIFO_Recv_Msg::ACE_FIFO_Recv_Msg");
 }
 
-ACE_FIFO_Recv_Msg::ACE_FIFO_Recv_Msg (const ACE_TCHAR *fifo_name,
+ACE_FIFO_Recv_Msg::ACE_FIFO_Recv_Msg (ACE_TCHAR const *fifo_name,
                                       int flags,
                                       mode_t perms,
                                       int persistent,
@@ -60,7 +60,9 @@ ACE_FIFO_Recv_Msg::ACE_FIFO_Recv_Msg (const ACE_TCHAR *fifo_name,
                                      perms,
                                      persistent,
                                      sa) == -1)
+  {
     ACELIB_ERROR ((LM_ERROR,  ACE_TEXT ("%p\n"),  ACE_TEXT ("ACE_FIFO_Recv_Msg")));
+  }
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

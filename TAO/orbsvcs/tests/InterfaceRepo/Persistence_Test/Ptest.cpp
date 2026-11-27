@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "Ptest.h"
 #include "ace/Get_Opt.h"
 #include <cstring>

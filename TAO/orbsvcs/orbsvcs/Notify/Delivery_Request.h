@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 #ifndef TAO_NOTIFY_DELIVERY_REQUEST_H
 #define TAO_NOTIFY_DELIVERY_REQUEST_H
 #include /**/ "ace/pre.h"
@@ -6,7 +5,6 @@
 #include "orbsvcs/Notify/notify_serv_export.h"
 #include "orbsvcs/Notify/Topology_Object.h"
 #include "orbsvcs/Notify/Event.h"
-#include <ace/Vector_T.h>
 #include <ace/Bound_Ptr.h>
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -25,8 +23,6 @@ namespace TAO_Notify
 class Delivery_Request;
 /// A reference-counted smart pointer to a Delivery_Request.
 using Delivery_Request_Ptr = ACE_Strong_Bound_Ptr<Delivery_Request, TAO_SYNCH_MUTEX>;
-
-using Delivery_Request_Queue = ACE_Unbounded_Queue<Delivery_Request_Ptr>;
 
 // Forward declarations of TAO_Notify classes/pointers/collections referenced
 // in this header
@@ -47,7 +43,7 @@ public:
   /// Normal constructor
   /// \param routing_slip the routing slip that owns this Delivery Request.
   /// \param request_id an id that identifies this Delivery Request to the Routing Slip.
-  Delivery_Request (const Routing_Slip_Ptr & routing_slip, size_t request_id);
+  Delivery_Request (Routing_Slip_Ptr const & routing_slip, size_t request_id);
 
   /// \brief A static "factory" method for use during restart.
   ///
@@ -57,7 +53,7 @@ public:
   /// \param cdr A CDR stream from which the peristent information for this Delivery Requect can be retrieved.
   /// \return a pointer to the newly-allocated Delivery Request
   static Delivery_Request_Ptr create (
-    const Routing_Slip_Ptr & routing_slip,
+    Routing_Slip_Ptr const & routing_slip,
     size_t request_id,
     TAO_Notify_EventChannelFactory & ecf,
     TAO_InputCDR & cdr);
@@ -65,16 +61,21 @@ public:
   /// a normal destructor.
   ~Delivery_Request ();
 
+  Delivery_Request (Delivery_Request const&) = delete;
+  Delivery_Request (Delivery_Request&&) = delete;
+  Delivery_Request& operator= (Delivery_Request const&) = delete;
+  Delivery_Request& operator= (Delivery_Request&&) = delete;
+
   /// \brief A method to indicate the delivery is complete.
   ///
   /// To be called by the delivery method associated with this delivery request.
   void complete ();
 
   /// \brief An accessor method for the event associated with the Routing Slip that owns this Delivery request.
-  const TAO_Notify_Event::Ptr & event () const;
+  TAO_Notify_Event::Ptr const & event () const;
 
   /// \brief An accessor method for the routing slip that owns this request.
-  const Routing_Slip_Ptr & routing_slip ()const;
+  Routing_Slip_Ptr const & routing_slip ()const;
 
   /// \brief Capture Delivery Type for the Delivery Method
   ///
@@ -100,23 +101,14 @@ public:
   /// expose routing slip method
   void dispatch (TAO_Notify_ProxySupplier * proxy_supplier, bool filter);
 
-  // Meaningless, but needed by ACE_Vector on some platforms (gcc2.x LynxOS)
-  bool operator == (const Delivery_Request & rhs) const;
-  // Meaningless, but needed by ACE_Vector on some platforms
-  bool  operator != (const Delivery_Request & rhs) const;
-
 private:
   /// No null constructor.
   Delivery_Request ();
-  /// No copy constructor.
-  Delivery_Request (const Delivery_Request & rhs);
-  /// no assignment operator
-  Delivery_Request & operator = (const Delivery_Request & rhs);
 
 private:
   Routing_Slip_Ptr routing_slip_;
   size_t request_id_;
-  ACE_CDR::Octet delivery_type_;
+  ACE_CDR::Octet delivery_type_ {};
   IdVec destination_id_;
 };
 } // namespace

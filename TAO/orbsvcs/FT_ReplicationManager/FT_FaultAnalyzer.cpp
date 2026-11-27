@@ -1,5 +1,3 @@
-/* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file    FT_FaultAnalyzer.cpp
  *
@@ -7,16 +5,11 @@
  *
  *  @author Steve Totten <totten_s@ociweb.com>
  */
-//=============================================================================
 
 #include "FT_FaultAnalyzer.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-/// Default constructor.
-TAO::FT_FaultAnalyzer::FT_FaultAnalyzer () = default;
-
-/// Destructor.
 TAO::FT_FaultAnalyzer::~FT_FaultAnalyzer () = default;
 
 TAO_END_VERSIONED_NAMESPACE_DECL

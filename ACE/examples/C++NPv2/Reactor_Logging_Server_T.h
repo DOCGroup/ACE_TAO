@@ -12,7 +12,7 @@ template <class ACCEPTOR>
 class Reactor_Logging_Server : public ACCEPTOR
 {
 public:
-  Reactor_Logging_Server (int argc, char *argv[],
+  Reactor_Logging_Server (int argc, ACE_TCHAR *argv[],
                           ACE_Reactor *reactor);
 };
 

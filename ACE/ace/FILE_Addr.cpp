@@ -1,4 +1,5 @@
 #include "ace/FILE_Addr.h"
+#include <memory>
 #include "ace/Lib_Find.h"
 #include "ace/Log_Category.h"
 #include "ace/OS_NS_stdlib.h"
@@ -20,7 +21,7 @@ ACE_FILE_Addr::ACE_FILE_Addr ()
 }
 
 int
-ACE_FILE_Addr::set (const ACE_FILE_Addr &sa)
+ACE_FILE_Addr::set (ACE_FILE_Addr const &sa)
 {
   if (sa.get_type () == AF_ANY)
     {
@@ -50,50 +51,55 @@ ACE_FILE_Addr::set (const ACE_FILE_Addr &sa)
 #  endif /* ACE_DEFAULT_TEMP_FILE */
 
       if (ACE_OS::mktemp (this->filename_) == nullptr)
+      {
         return -1;
+      }
       this->base_set (AF_FILE,
                       static_cast<int> (ACE_OS::strlen (this->filename_) + 1));
 #endif /* ACE_DISABLE_MKTEMP */
     }
   else
     {
-      (void)ACE_OS::strsncpy (this->filename_, sa.filename_, sa.get_size ());
+      (void) ACE_OS::strsncpy (this->filename_,
+                               sa.filename_,
+                               sizeof this->filename_ / sizeof (ACE_TCHAR));
 
-      this->base_set (sa.get_type (), sa.get_size ());
+      this->base_set (sa.get_type (),
+                      static_cast<int> (ACE_OS::strlen (this->filename_) + 1));
     }
   return 0;
 }
 
-// Copy constructor.
-
-ACE_FILE_Addr::ACE_FILE_Addr (const ACE_FILE_Addr &sa)
+ACE_FILE_Addr::ACE_FILE_Addr (ACE_FILE_Addr const &sa)
   : ACE_Addr (AF_FILE, sizeof this->filename_)
 {
   this->set (sa);
 }
 
 int
-ACE_FILE_Addr::set (const ACE_TCHAR *filename)
+ACE_FILE_Addr::set (ACE_TCHAR const *filename)
 {
-  this->ACE_Addr::base_set (AF_FILE,
-                            static_cast<int> (ACE_OS::strlen (filename) + 1));
   (void) ACE_OS::strsncpy (this->filename_,
                            filename,
                            sizeof this->filename_ / sizeof (ACE_TCHAR));
+  this->ACE_Addr::base_set (
+    AF_FILE, static_cast<int> (ACE_OS::strlen (this->filename_) + 1));
   return 0;
 }
 
 ACE_FILE_Addr &
-ACE_FILE_Addr::operator= (const ACE_FILE_Addr &sa)
+ACE_FILE_Addr::operator= (ACE_FILE_Addr const &sa)
 {
-  if (this != &sa)
+  if (this != std::addressof (sa))
+  {
     this->set (sa);
+  }
   return *this;
 }
 
 // Create a ACE_Addr from a ACE_FILE pathname.
 
-ACE_FILE_Addr::ACE_FILE_Addr (const ACE_TCHAR *filename)
+ACE_FILE_Addr::ACE_FILE_Addr (ACE_TCHAR const *filename)
 {
   this->set (filename);
 }
@@ -110,7 +116,8 @@ ACE_FILE_Addr::addr_to_string (ACE_TCHAR *s, size_t len) const
 void *
 ACE_FILE_Addr::get_addr () const
 {
-  return (void *)&this->filename_;
+  return const_cast<void *> (
+    static_cast<void const *> (std::addressof (this->filename_)));
 }
 
 void

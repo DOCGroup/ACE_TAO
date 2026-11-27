@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 #include /**/ "NT_Notify_Service.h"
 
 #if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_SERVICES)
@@ -14,19 +13,13 @@
 #define TAO_NOTIFY_SERVICE_OPTS_NAME ACE_TEXT ("TaoNotifyServiceOptions")
 #define TAO_SERVICE_PARAM_COUNT ACE_TEXT ("TaoServiceParameterCount")
 
-TAO_NT_Notify_Service::TAO_NT_Notify_Service ()
-  : argc_ (0),
-    argc_save_ (0),
-    argv_ (0),
-    argv_save_ (0)
-{
-}
+TAO_NT_Notify_Service::TAO_NT_Notify_Service () = default;
 
 TAO_NT_Notify_Service::~TAO_NT_Notify_Service ()
 {
   if (argv_save_)
     {
-      for (int i = 0; i < argc_save_; i++)
+      for (int i = 0; i < argc_save_; ++i)
         ACE_OS::free (argv_save_[i]);
 
       ACE_OS::free (argv_save_);
@@ -41,11 +34,13 @@ TAO_NT_Notify_Service::handle_control (DWORD control_code)
     {
       report_status (SERVICE_STOP_PENDING);
       TAO_ORB_Core_instance ()->reactor ()->end_reactor_event_loop ();
-      TAO_ORB_Core_instance ()->orb ()->shutdown (1);
+      TAO_ORB_Core_instance ()->orb ()->shutdown (true);
       report_status (SERVICE_STOPPED);
     }
   else
-    ACE_NT_Service::handle_control (control_code);
+    {
+      ACE_NT_Service::handle_control (control_code);
+    }
 }
 
 int
@@ -55,13 +50,13 @@ TAO_NT_Notify_Service::handle_exception (ACE_HANDLE)
 }
 
 void
-TAO_NT_Notify_Service::report_error (const ACE_TCHAR *format,
-                                     const ACE_TCHAR *val,
+TAO_NT_Notify_Service::report_error (ACE_TCHAR const *format,
+                                     ACE_TCHAR const *val,
                                      LONG result)
 {
   ACE_TCHAR msg[100];
   ACE_TEXT_FormatMessage (FORMAT_MESSAGE_FROM_SYSTEM,
-                          0,
+                          nullptr,
                           result,
                           LANG_SYSTEM_DEFAULT,
                           msg,
@@ -72,7 +67,7 @@ TAO_NT_Notify_Service::report_error (const ACE_TCHAR *format,
 void
 TAO_NT_Notify_Service::arg_manip (char *args, DWORD arglen, bool query)
 {
-  HKEY hkey = 0;
+  HKEY hkey {};
 
   // It looks in the NT Registry under
   // \\HKEY_LOCAL_MACHINE\SOFTWARE\ACE\TAO for the value of
@@ -96,7 +91,7 @@ TAO_NT_Notify_Service::arg_manip (char *args, DWORD arglen, bool query)
         {
           result = ACE_TEXT_RegQueryValueEx (hkey,
                                              TAO_NOTIFY_SERVICE_OPTS_NAME,
-                                             0,
+                                             nullptr,
                                              &type,
                                              (BYTE *)args,
                                              &arglen);
@@ -119,12 +114,12 @@ TAO_NT_Notify_Service::arg_manip (char *args, DWORD arglen, bool query)
           result = ACE_TEXT_RegCreateKeyEx (REGISTRY_KEY_ROOT,
                                             TAO_REGISTRY_SUBKEY,
                                             0,
-                                            0,
+                                            nullptr,
                                             0,
                                             KEY_WRITE,
-                                            0,
+                                            nullptr,
                                             &hkey,
-                                            0);
+                                            nullptr);
         }
       DWORD bufSize = static_cast<DWORD>(ACE_OS::strlen (args) + 1);
       if (result == ERROR_SUCCESS)
@@ -152,10 +147,10 @@ TAO_NT_Notify_Service::arg_manip (char *args, DWORD arglen, bool query)
 }
 
 int
-TAO_NT_Notify_Service::set_args (const ACE_TCHAR *args)
+TAO_NT_Notify_Service::set_args (ACE_TCHAR const *args)
 {
   char argbuf[ACE_DEFAULT_ARGV_BUFSIZ];
-  if (args == 0)
+  if (args == nullptr)
     {
       this->arg_manip (argbuf, ACE_DEFAULT_ARGV_BUFSIZ, true);
       ACE_OS::printf ("%s\n", argbuf);
@@ -172,7 +167,7 @@ int
 TAO_NT_Notify_Service::init (int argc,
                              ACE_TCHAR *argv[])
 {
-  HKEY hkey = 0;
+  HKEY hkey {};
   BYTE buf[ACE_DEFAULT_ARGV_BUFSIZ];
 
   *buf = '\0';
@@ -195,7 +190,7 @@ TAO_NT_Notify_Service::init (int argc,
 
   ACE_TEXT_RegQueryValueEx (hkey,
                             TAO_NOTIFY_SERVICE_OPTS_NAME,
-                            0,
+                            nullptr,
                             &type,
                             buf,
                             &bufSize);
@@ -206,7 +201,7 @@ TAO_NT_Notify_Service::init (int argc,
 
   if (ACE_OS::strlen ((char *) buf) > 0)
     {
-      ACE_ARGV args ((const char*) buf);
+      ACE_ARGV args ((char const *) buf);
       // Allocate the internal args list to be one bigger than the
       // args list passed into the function. We use a 'save' list in
       // case we use a 'destructive' args list processor - this way we
@@ -216,11 +211,11 @@ TAO_NT_Notify_Service::init (int argc,
 
       // Copy the values into the internal args buffer.
       int i;
-      for (i = 0; i < argc; i++)
+      for (i = 0; i < argc; ++i)
         argv_save_[i] = ACE_OS::strdup (argv[i]);
 
       int j = 0;
-      for (i = argc; i < static_cast<int> ((args.argc () + argc)); i++)
+      for (i = argc; i < static_cast<int> ((args.argc () + argc)); ++i)
         argv_save_[i] = ACE_OS::strdup (args.argv ()[j++]);
 
       // Set the arg counter.
@@ -245,12 +240,14 @@ TAO_NT_Notify_Service::svc ()
   try
     {
       if (notify_service.init (argc_, argv_) == -1)
-        return -1;
+        {
+          return -1;
+        }
 
       report_status (SERVICE_RUNNING);
       notify_service.run ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception (ACE_TEXT ("TAO NT Notify Service"));
       return -1;

@@ -1,4 +1,3 @@
-
 interface Test
 {
   void test_method (in boolean client_propagated,

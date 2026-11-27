@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*Bug_3384_Regression_idl): taoidldefaults {
   idlflags += -Sp
   IDL_Files {
@@ -7,7 +6,7 @@ project(*Bug_3384_Regression_idl): taoidldefaults {
   custom_only = 1
 }
 
-project(*Bug_3384_Regression_Server): taoserver, messaging, strategies {
+project(*Bug_3384_Regression_Server): taoserver, messaging, strategies, utils {
   after += *Bug_3384_Regression_idl
   Source_Files {
     server.cpp
@@ -21,7 +20,7 @@ project(*Bug_3384_Regression_Server): taoserver, messaging, strategies {
   }
 }
 
-project(*Bug_3384_Regression_Client): taoserver, messaging, strategies {
+project(*Bug_3384_Regression_Client): taoserver, messaging, strategies, utils {
   exename = client
   after += *Bug_3384_Regression_idl
   Source_Files {

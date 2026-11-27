@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  * @file Constraint_Visitor.h
  *
  * @author Jeff Parsons <j.parsons@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef CONSTRAINT_VISITOR_H
 #define CONSTRAINT_VISITOR_H
@@ -51,7 +47,12 @@ namespace ACE
       : public ETCL_Constraint_Visitor
     {
     public:
-      Constraint_Visitor (const Monitor_Control_Types::Data& data);
+      Constraint_Visitor (Constraint_Visitor const &) = delete;
+      Constraint_Visitor (Constraint_Visitor &&) = delete;
+      Constraint_Visitor &operator= (Constraint_Visitor const &) = delete;
+      Constraint_Visitor &operator= (Constraint_Visitor &&) = delete;
+
+      explicit Constraint_Visitor (Monitor_Control_Types::Data const& data);
       ~Constraint_Visitor () override = default;
 
       ACE_CDR::Boolean evaluate_constraint (ETCL_Constraint *root);
@@ -69,7 +70,7 @@ namespace ACE
                            int op_type);
 
     private:
-      const Monitor_Control_Types::Data& data_;
+      Monitor_Control_Types::Data const& data_;
       ACE_Unbounded_Queue<ETCL_Literal_Constraint> queue_;
     };
   }

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "AsyncListManager.h"
 #include "Iterator.h"
 #include "Locator_Repository.h"
@@ -6,8 +5,7 @@
 
 #include "orbsvcs/Log_Macros.h"
 
-//---------------------------------------------------------------------------
-//---------------------------------------------------------------------------
+#include <memory>
 
 AsyncListManager::AsyncListManager (Locator_Repository const *repo,
                                     PortableServer::POA_ptr poa,
@@ -46,11 +44,11 @@ AsyncListManager::init_list ()
 {
   CORBA::ULong const len =
     static_cast<CORBA::ULong> (this->repo_->servers ().current_size ());
-  Locator_Repository::SIMap::ENTRY* entry = nullptr;
+  Locator_Repository::SIMap::ENTRY* entry {};
   Locator_Repository::SIMap::CONST_ITERATOR it (this->repo_->servers ());
   this->server_list_.length (len);
   this->waiters_ = 0;
-  for (CORBA::ULong i = 0; i < len; i++)
+  for (CORBA::ULong i {}; i < len; ++i)
     {
       it.next (entry);
       it.advance ();
@@ -59,7 +57,7 @@ AsyncListManager::init_list ()
       info->setImRInfo (&this->server_list_[i]);
       if (this->pinger_ != nullptr)
         {
-          ListLiveListener *l = nullptr;
+          ListLiveListener *l {};
           ACE_NEW (l, ListLiveListener (info->ping_id (),
                                         info->pid,
                                         i,
@@ -102,7 +100,7 @@ AsyncListManager::make_iterator (ImplementationRepository::ServerInformationIter
   si = ImplementationRepository::ServerInformationIterator::_nil ();
   try
     {
-      ImR_AsyncIterator* imr_iter = nullptr;
+      ImR_AsyncIterator* imr_iter {};
       ACE_NEW_THROW_EX (imr_iter,
                         ImR_AsyncIterator (start, this),
                         CORBA::NO_MEMORY ());
@@ -116,7 +114,7 @@ AsyncListManager::make_iterator (ImplementationRepository::ServerInformationIter
         ServerInformationIterator::_unchecked_narrow (obj.in ());
       return true;
     }
-  catch (const CORBA::SystemException& ex)
+  catch (CORBA::SystemException const& ex)
     {
       ex._tao_print_exception ("AsyncListManager:final state constructing iterator\n");
       ImplementationRepository::AMH_AdministrationExceptionHolder h (ex._tao_duplicate());
@@ -124,12 +122,12 @@ AsyncListManager::make_iterator (ImplementationRepository::ServerInformationIter
         {
           this->primary_->list_excep (&h);
         }
-      catch (const CORBA::Exception& ex2)
+      catch (CORBA::Exception const& ex2)
         {
           ex2._tao_print_exception ("AsyncListManager:final calling list_excep\n");
         }
     }
-  catch (const CORBA::UserException& ex)
+  catch (CORBA::UserException const& ex)
     {
       ex._tao_print_exception ("AsyncListManager:final state constructing iterator\n");
       ImplementationRepository::AMH_AdministrationExceptionHolder h (new CORBA::INTERNAL);
@@ -137,7 +135,7 @@ AsyncListManager::make_iterator (ImplementationRepository::ServerInformationIter
         {
           this->primary_->list_excep (&h);
         }
-      catch (const CORBA::Exception& ex2)
+      catch (CORBA::Exception const& ex2)
         {
           ex2._tao_print_exception ("AsyncListManager:final calling list_excep\n");
         }
@@ -168,17 +166,17 @@ AsyncListManager::final_state ()
   if (this->first_ > 0 || this->how_many_ < len)
     {
       alt_list.length (this->how_many_);
-      for (CORBA::ULong i = 0; i < this->how_many_; i++)
+      for (CORBA::ULong i {}; i < this->how_many_; ++i)
         {
           alt_list[i] = this->server_list_[i + this->first_];
         }
-      sil = &alt_list;
+      sil = std::addressof (alt_list);
     }
 
   if (!CORBA::is_nil (this->primary_.in ()))
     {
       ImplementationRepository::ServerInformationIterator_var server_iterator;
-      if (sil !=  &this->server_list_)
+      if (sil != std::addressof (this->server_list_))
         {
           excepted = !this->make_iterator (server_iterator.out(), this->how_many_);
         }
@@ -194,7 +192,7 @@ AsyncListManager::final_state ()
             {
               this->primary_->list (*sil, server_iterator.in ());
             }
-          catch (const CORBA::Exception &ex)
+          catch (CORBA::Exception const &ex)
             {
               ex._tao_print_exception ("AsyncListManager:final state sending list\n");
               ImplementationRepository::AMH_AdministrationExceptionHolder h (ex._tao_duplicate());
@@ -211,7 +209,7 @@ AsyncListManager::final_state ()
         {
           this->secondary_->next_n (done, *sil);
         }
-      catch (const CORBA::Exception &ex)
+      catch (CORBA::Exception const &ex)
         {
           ex._tao_print_exception ("AsyncListManager:final state sending secondary list\n");
           ImplementationRepository::AMH_ServerInformationIteratorExceptionHolder h (ex._tao_duplicate());
@@ -329,9 +327,6 @@ AsyncListManager::_remove_ref ()
       delete this;
     }
 }
-
-//---------------------------------------------------------------------------
-//---------------------------------------------------------------------------
 
 ListLiveListener::ListLiveListener (char const *server,
                                     int pid,

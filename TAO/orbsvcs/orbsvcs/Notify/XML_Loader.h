@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    XML_Loader.h
  *
@@ -8,7 +5,6 @@
  *
  *  @author Jonathan Pollack <pollack_j@ociweb.com>
  */
-//=============================================================================
 
 #ifndef XML_LOADER_H
 #define XML_LOADER_H
@@ -27,6 +23,8 @@
 
 #include "ace/streams.h"
 
+#include <vector>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Notify
@@ -35,41 +33,43 @@ namespace TAO_Notify
 class XML_Loader : public ACEXML_DefaultHandler , public Topology_Loader
 {
 public:
-  /// The constructor.
   XML_Loader ();
 
-  virtual ~XML_Loader ();
+  ~XML_Loader () override;
+
+  XML_Loader (XML_Loader const &) = delete;
+  XML_Loader (XML_Loader &&) = delete;
+  XML_Loader &operator= (XML_Loader const &) = delete;
+  XML_Loader &operator= (XML_Loader &&) = delete;
 
   /// Open a file and perform preliminary validation to determine whether
   /// the file is complete and valid.
-  bool open (const ACE_TString & file_name);
+  bool open (ACE_TString const &file_name);
 
-  ///////////////////////////////////
-  // Override Topology_Loader methods
-  // see Topology_Loader.h for documentation
-  virtual void load (Topology_Object *root);
+  /// Overrides the Topology_Loader operation.
+  void load (Topology_Object *root) override;
 
+  /// @name ACEXML_DefaultHandler operations
+  /// @{
 
-  /////////////////////////////////////////
-  // Override ACEXML_DefaultHandler methods
+  void startElement (ACEXML_Char const *namespaceURI,
+    ACEXML_Char const *localName,
+    ACEXML_Char const *qName,
+    ACEXML_Attributes *atts) override;
 
-  virtual void startElement (const ACEXML_Char* namespaceURI,
-    const ACEXML_Char* localName,
-    const ACEXML_Char* qName,
-    ACEXML_Attributes* atts);
-
-  virtual void endElement (const ACEXML_Char*,
-    const ACEXML_Char*,
-    const ACEXML_Char* name);
+  void endElement (ACEXML_Char const *,
+    ACEXML_Char const *,
+    ACEXML_Char const *name) override;
+  /// @}
 
 private:
   /// The name of the file from which data is read.
   ACE_TString file_name_;
 
-  using TopoStack = ACE_Unbounded_Stack<Topology_Object *>;
+  using TopoStack = std::vector<Topology_Object *>;
   TopoStack object_stack_;
   /// If false, then we're just checking syntax of topology file.
-  bool live_;
+  bool live_ {};
 };
 } // namespace TAO_Notify
 

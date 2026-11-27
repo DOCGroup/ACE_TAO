@@ -4,25 +4,32 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_stdio.h"
 
+#include <memory>
+
+/// Implements the Test interface declared in test.idl.
 class Test_i : public POA_Test
 {
-  // = TITLE
-  //   An implementation for the Test interface in test.idl
-  //
 public:
-  Test_i (CORBA::ORB_ptr orb);
-  // ctor
+  explicit Test_i (CORBA::ORB_ptr orb);
+  ~Test_i () override = default;
 
-  // = The Test methods.
-  void test_method ();
+  Test_i (Test_i const &) = delete;
+  Test_i (Test_i &&) = delete;
+  Test_i &operator= (Test_i const &) = delete;
+  Test_i &operator= (Test_i &&) = delete;
+
+  /// @name Test operations
+  /// @{
+  void test_method () override;
 
   //FUZZ: disable check_for_lack_ACE_OS
-  void shutdown ();
+  void shutdown () override;
   //FUZZ: enable check_for_lack_ACE_OS
+  /// @}
 
 private:
-  CORBA::ORB_var orb_;
-  // The ORB
+  /// ORB used to shut down the server.
+  CORBA::ORB_var const orb_;
 };
 
 Test_i::Test_i (CORBA::ORB_ptr orb)
@@ -45,25 +52,28 @@ Test_i::shutdown ()
 
 //*************************************************************************
 
-const ACE_TCHAR *ior_output_file1 = ACE_TEXT("test1.ior");
-const ACE_TCHAR *ior_output_file2 = ACE_TEXT("test2.ior");
+struct Server_Options
+{
+  ACE_TCHAR const *ior_output_file1 {ACE_TEXT("test1.ior")};
+  ACE_TCHAR const *ior_output_file2 {ACE_TEXT("test2.ior")};
+};
 
-// Parse command-line arguments.
+/// Parses command-line arguments.
 int
-parse_args (int argc, ACE_TCHAR *argv[])
+parse_args (int argc, ACE_TCHAR *argv[], Server_Options &options)
 {
   ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("o:p:"));
-  int c;
+  int c {};
 
   while ((c = get_opts ()) != -1)
     switch (c)
       {
       case 'o':
-        ior_output_file1 = get_opts.opt_arg ();
+        options.ior_output_file1 = get_opts.opt_arg ();
         break;
 
       case 'p':
-        ior_output_file2 = get_opts.opt_arg ();
+        options.ior_output_file2 = get_opts.opt_arg ();
         break;
 
       case '?':
@@ -81,76 +91,86 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-check_for_nil (CORBA::Object_ptr obj, const char *msg)
+check_for_nil (CORBA::Object_ptr obj, char const *msg)
 {
   if (CORBA::is_nil (obj))
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       "ERROR: Object reference <%C> is nil\n",
-                       msg),
-                      -1);
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "ERROR: Object reference <%C> is nil\n",
+                         msg),
+                        -1);
+    }
   else
+  {
     return 0;
+  }
 }
 
 int
 create_object (PortableServer::POA_ptr poa,
                CORBA::ORB_ptr orb,
-               Test_i *server_impl,
-               const ACE_TCHAR *filename)
+               Test_i * const server_impl,
+               ACE_TCHAR const *filename)
 {
   // Register with poa.
   PortableServer::ObjectId_var id =
     poa->activate_object (server_impl);
 
-
-  CORBA::Object_var server =
+  CORBA::Object_var const server =
     poa->id_to_reference (id.in ());
 
   // Print out the IOR.
-  CORBA::String_var ior =
+  CORBA::String_var const ior =
     orb->object_to_string (server.in ());
 
   ACE_DEBUG ((LM_DEBUG, "<%C>\n\n", ior.in ()));
 
   // Print ior to the file.
-  if (filename != 0)
+  if (filename != nullptr)
     {
-      FILE *output_file= ACE_OS::fopen (filename, "w");
-      if (output_file == 0)
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           "Cannot open output file for writing IOR: %s",
-                           filename),
-                          -1);
-      ACE_OS::fprintf (output_file, "%s", ior.in ());
-      ACE_OS::fclose (output_file);
+      std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+        ACE_OS::fopen (filename, ACE_TEXT("w")), ACE_OS::fclose);
+      if (output_file == nullptr)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Cannot open output file for writing IOR: %s",
+                             filename),
+                            -1);
+        }
+      ACE_OS::fprintf (output_file.get (), "%s", ior.in ());
     }
 
   return 0;
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
       // ORB.
-      CORBA::ORB_var orb =
+      CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
       // Parse arguments.
-      if (parse_args (argc, argv) != 0)
+      Server_Options options;
+      if (parse_args (argc, argv, options) != 0)
+      {
         return -1;
+      }
 
       // RootPOA.
       CORBA::Object_var object =
         orb->resolve_initial_references("RootPOA");
-      PortableServer::POA_var root_poa =
+      PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (object.in ());
       if (check_for_nil (root_poa.in (), "RootPOA") == -1)
+      {
         return -1;
+      }
 
       // POAManager.
-      PortableServer::POAManager_var poa_manager =
+      PortableServer::POAManager_var const poa_manager =
         root_poa->the_POAManager ();
 
       // Servants.
@@ -158,20 +178,23 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       Test_i server_impl2 (orb.in ());
 
       // Create Objects.
-      int result;
-      result = create_object (root_poa.in (),
-                              orb.in (),
-                              &server_impl1,
-                              ior_output_file1);
+      int result = create_object (root_poa.in (),
+                                 orb.in (),
+                                 &server_impl1,
+                                 options.ior_output_file1);
       if (result == -1)
+      {
         return -1;
+      }
 
       result = create_object (root_poa.in (),
                               orb.in (),
                               &server_impl2,
-                              ior_output_file2);
+                              options.ior_output_file2);
       if (result == -1)
+      {
         return -1;
+      }
 
       // Run ORB Event loop.
       poa_manager->activate ();
@@ -180,7 +203,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "Server ORB event loop finished\n"));
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception (
         "Unexpected exception caught in Private_Connection test server:");

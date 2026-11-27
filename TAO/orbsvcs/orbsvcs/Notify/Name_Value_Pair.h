@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
 *  @file    Name_Value_Pair.h
 *
 *  @author Jonathan Pollack <pollack_j@ociweb.com>
 */
-//=============================================================================
 
 #ifndef NAME_VALUE_PAIR_H
 #define NAME_VALUE_PAIR_H
@@ -17,7 +13,8 @@
 #include "orbsvcs/Notify/notify_serv_export.h"
 
 #include "ace/SString.h"
-#include "ace/Vector_T.h"
+
+#include <vector>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -36,27 +33,27 @@ namespace TAO_Notify
   class TAO_Notify_Serv_Export NVP {
   public:
     /// Construct an undefined name/value (to allow use in collections)
-    NVP();
+    NVP() = default;
     /// Construct from a property containing a short value.
-    explicit NVP(const TAO_Notify_Property_Short& p);
+    explicit NVP(TAO_Notify_Property_Short const& p);
     /// Construct from a property containing a long value.
-    explicit NVP(const TAO_Notify_Property_Long& p);
+    explicit NVP(TAO_Notify_Property_Long const& p);
     /// Construct from a property containing a time value
-    explicit NVP(const TAO_Notify_Property_Time& p);
+    explicit NVP(TAO_Notify_Property_Time const& p);
     /// Construct from a property containing a boolean value
-    explicit NVP(const TAO_Notify_Property_Boolean& p);
+    explicit NVP(TAO_Notify_Property_Boolean const& p);
 
     /// Construct from name and long value.
-    NVP(const char * n, CORBA::Long v);
+    NVP(char const *n, CORBA::Long v);
     /// Construct from name and string value.
-    NVP(const char * n, const char * v);
+    NVP(char const *n, char const *v);
     /// Construct from name and string value.
-    NVP(const char * n, const ACE_CString & v);
+    NVP(char const *n, ACE_CString const & v);
 
-    /// Assignment operator
-    bool operator==(const NVP& rhs) const;
+    /// Equality comparison operator.
+    bool operator==(NVP const& rhs) const;
     /// Comparison operator compares only name (not value)
-    bool operator!=(const NVP& rhs) const;
+    bool operator!=(NVP const& rhs) const;
     ACE_CString name;
     ACE_CString value;
   };
@@ -75,22 +72,22 @@ namespace TAO_Notify
     /// Find the NVP with the same name as the property, copy the value.
     void load(TAO_Notify_Property_Boolean& p) const;
     /// Find the NVP with specified name, copy the value to a string.
-    bool load(const char * n, CORBA::Long& v) const;
+    bool load(char const *n, CORBA::Long& v) const;
     /// Find the NVP with specified name, copy the value to a long.
-    bool load(const char * n, ACE_CString& v) const;
+    bool load(char const *n, ACE_CString& v) const;
     /// add a new name/value pair.
-    void push_back(const NVP& v);
+    void push_back(NVP const& v);
     /// size of the collection.
     size_t size() const;
     /// access NVP via numeric index.
-    const NVP& operator[](size_t ndx) const;
+    NVP const& operator[](size_t ndx) const;
     /// low level access: find
-    bool find (const char * name, ACE_CString& val) const;
+    bool find (char const *name, ACE_CString& val) const;
     /// low level access:  use this when you don't need a CString
-    bool find (const char * name, const char *& val) const;
+    bool find (char const *name, char const *& val) const;
 
   private:
-    ACE_Vector<NVP> list_;
+    std::vector<NVP> list_;
   };
 } // namespace TAO_Notify
 

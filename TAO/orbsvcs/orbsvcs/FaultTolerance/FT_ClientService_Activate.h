@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  * @file FT_ClientService_Activate.h
  *
@@ -8,7 +5,6 @@
  *
  * @author Bala Natarajan <bala@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_FT_CLIENTACTIVATE_H
 #define TAO_FT_CLIENTACTIVATE_H
@@ -40,10 +36,8 @@ class TAO_Service_Callbacks;
 class TAO_FT_ClientORB_Export TAO_FT_ClientService_Activate : public TAO_Services_Activate
 {
 public:
-  /// Constructor
   TAO_FT_ClientService_Activate ();
 
-  /// The destructor
   ~TAO_FT_ClientService_Activate () override;
 
   /**
@@ -55,6 +49,11 @@ public:
 
   /// Used to force the initialization.
   static int Initializer ();
+
+  TAO_FT_ClientService_Activate (TAO_FT_ClientService_Activate const&) = delete;
+  TAO_FT_ClientService_Activate& operator= (TAO_FT_ClientService_Activate const&) = delete;
+  TAO_FT_ClientService_Activate (TAO_FT_ClientService_Activate&&) = delete;
+  TAO_FT_ClientService_Activate& operator= (TAO_FT_ClientService_Activate&&) = delete;
 };
 
 static int

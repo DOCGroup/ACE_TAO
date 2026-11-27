@@ -6,12 +6,13 @@
 #include "Receiver_Stats.inl"
 #endif /* __ACE_INLINE__ */
 
-
 void
-Receiver_Stats::accumulate (const Receiver_Stats &rhs)
+Receiver_Stats::accumulate (Receiver_Stats const &rhs)
 {
   if (rhs.samples_count_ == 0)
+  {
     return;
+  }
 
   if (this->samples_count_ == 0)
     {
@@ -27,16 +28,20 @@ Receiver_Stats::accumulate (const Receiver_Stats &rhs)
   this->samples_count_ += rhs.samples_count_;
 
   if (this->min_ > rhs.min_)
+  {
     this->min_ = rhs.min_;
+  }
   if (this->max_ < rhs.max_)
+  {
     this->max_ = rhs.max_;
+  }
 
   this->sum_  += rhs.sum_;
   this->sum2_ += rhs.sum2_;
 }
 
 void
-Receiver_Stats::dump_results (const ACE_TCHAR *msg,
+Receiver_Stats::dump_results (ACE_TCHAR const *msg,
                               FILE *file,
                               ACE_UINT32 sf) const
 {

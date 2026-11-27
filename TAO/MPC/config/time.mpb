@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project : orbsvcslib {
   after     += CosTime
   libs      += TAO_CosTime

@@ -10,8 +10,64 @@
 #include "ace/Malloc_Base.h"
 #include "ace/Service_Config.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_unistd.h"
+
+#include <cstring>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
+namespace
+{
+  // Takes ownership of handle, including when creating the stream fails.
+  FILE *open_read_stream (ACE_HANDLE handle)
+  {
+    if (handle == ACE_INVALID_HANDLE)
+      {
+        return nullptr;
+      }
+#if defined (ACE_WIN32)
+    int const crt_handle = ::_open_osfhandle (reinterpret_cast<intptr_t> (handle), 0);
+    if (crt_handle == -1)
+      {
+        int const saved_errno = errno;
+        ACE_OS::close (handle);
+        errno = saved_errno;
+        return nullptr;
+      }
+# if defined (ACE_USES_WCHAR)
+    FILE * const stream = ::_wfdopen (crt_handle, L"r");
+# else
+    FILE * const stream = ::_fdopen (crt_handle, "r");
+# endif
+    if (stream == nullptr)
+      {
+        int const saved_errno = errno;
+        ::_close (crt_handle);
+        errno = saved_errno;
+      }
+#else
+    FILE * const stream = ACE_OS::fdopen (handle, ACE_TEXT ("r"));
+    if (stream == nullptr)
+      {
+        int const saved_errno = errno;
+        ACE_OS::close (handle);
+        errno = saved_errno;
+      }
+#endif
+    return stream;
+  }
+}
+
+void
+ACE_Read_Buffer_Unique_Ptr_Deleter::operator() (char *buffer) const
+{
+  if (buffer != nullptr)
+    {
+      ACE_Allocator * const allocator =
+        this->allocator != nullptr ? this->allocator : ACE_Allocator::instance ();
+      allocator->free (buffer);
+    }
+}
 
 void
 ACE_Read_Buffer::dump () const
@@ -19,10 +75,10 @@ ACE_Read_Buffer::dump () const
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Read_Buffer::dump");
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("size_ = %d"), this->size_));
-  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\noccurrences_ = %d"), this->occurrences_));
-  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nstream_ = %x"), this->stream_));
-  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nallocator_ = %x"), this->allocator_));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("size_ = %B"), this->size_));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\noccurrences_ = %B"), this->occurrences_));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nstream_ = %@"), this->stream_));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nallocator_ = %@"), this->allocator_));
   ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
@@ -30,66 +86,71 @@ ACE_Read_Buffer::dump () const
 ACE_Read_Buffer::ACE_Read_Buffer (FILE *fp,
                                   bool close_on_delete,
                                   ACE_Allocator *alloc)
-  : size_ (0),
-    occurrences_ (0),
-    stream_ (fp),
+  : stream_ (fp),
     close_on_delete_ (close_on_delete),
     allocator_ (alloc)
 {
   ACE_TRACE ("ACE_Read_Buffer::ACE_Read_Buffer");
   if (this->allocator_ == nullptr)
-    this->allocator_ = ACE_Allocator::instance ();
+    {
+      this->allocator_ = ACE_Allocator::instance ();
+    }
 }
 
 ACE_Read_Buffer::ACE_Read_Buffer (ACE_HANDLE handle,
                                   bool close_on_delete,
                                   ACE_Allocator *alloc)
-  : size_ (0),
-    occurrences_ (0),
-    stream_ (ACE_OS::fdopen (handle, ACE_TEXT ("r"))),
+#if defined (ACE_LACKS_DUP)
+  : stream_ (close_on_delete ? open_read_stream (handle)
+                             : ACE_OS::fdopen (handle, ACE_TEXT ("r"))),
     close_on_delete_ (close_on_delete),
+#else
+  : stream_ (open_read_stream (close_on_delete ? handle : ACE_OS::dup (handle))),
+    close_on_delete_ (true),
+#endif
     allocator_ (alloc)
 {
   ACE_TRACE ("ACE_Read_Buffer::ACE_Read_Buffer");
 
   if (this->allocator_ == nullptr)
-    this->allocator_ = ACE_Allocator::instance ();
+    {
+      this->allocator_ = ACE_Allocator::instance ();
+    }
 }
 
 ACE_Read_Buffer::~ACE_Read_Buffer ()
 {
   ACE_TRACE ("ACE_Read_Buffer::~ACE_Read_Buffer");
 
-  if (this->close_on_delete_)
-    ACE_OS::fclose (this->stream_);
+  if (this->close_on_delete_ && this->stream_ != nullptr)
+    {
+      ACE_OS::fclose (this->stream_);
+    }
 }
 
-// Input: term        the character to terminate on
-//        search      the character to search for
-//        replace     the character with which to replace search
-// Output: a buffer containing the contents of stream
-// Method: call the recursive helper function read_helper
-
+/// Reads from the stream up to the termination character.
+///
+/// If @a search is nonnegative, its occurrences are replaced with @a replace.
+/// The result is returned in a dynamically allocated buffer.
 char *
 ACE_Read_Buffer::read (int term, int search, int replace)
 {
   ACE_TRACE ("ACE_Read_Buffer::read");
   this->occurrences_ = 0;
   this->size_ = 0;
+  if (this->stream_ == nullptr)
+    {
+      return nullptr;
+    }
   return this->rec_read (term, search, replace);
 }
 
-// Input: term       the termination character
-//        search     the character to search for
-//        replace    the character with which to replace search
-// Purpose: read in a file to a buffer using only a single dynamic
-//          allocation.
-// Method: read until the local buffer is full and then recurse.
-//         Must continue until the termination character is reached.
-//         Allocate the final buffer based on the number of local
-//         buffers read and as the recursive calls bottom out,
-//         copy them in reverse order into the allocated buffer.
-
+/// Reads through the stream using a single dynamic allocation.
+///
+/// Reads until the local buffer is full and then recurses, continuing until
+/// the termination character is reached. It allocates the final buffer based
+/// on the number of local buffers read and copies them in reverse order as the
+/// recursive calls return.
 char *
 ACE_Read_Buffer::rec_read (int term, int search, int replace)
 {
@@ -97,9 +158,9 @@ ACE_Read_Buffer::rec_read (int term, int search, int replace)
   // This is our temporary workspace.
   char buf[BUFSIZ];
 
-  int c = EOF;
-  size_t slot = 0;
-  int done = 0;
+  int c {EOF};
+  size_t slot {};
+  bool done {};
 
   // Read in the file char by char
   while (slot < BUFSIZ)
@@ -113,7 +174,9 @@ ACE_Read_Buffer::rec_read (int term, int search, int replace)
           break;
         }
       else if (c == term)
-        done = 1;
+        {
+          done = true;
+        }
 
       // Check for possible substitutions.
       if (c == search)
@@ -121,14 +184,18 @@ ACE_Read_Buffer::rec_read (int term, int search, int replace)
           ++this->occurrences_;
 
           if (replace >= 0)
-            c = replace;
+            {
+              c = replace;
+            }
         }
 
-      buf[slot++] = (char) c;
+      buf[slot++] = static_cast<char> (c);
 
       // Substitutions must be made before checking for termination.
       if (done)
-        break;
+        {
+          break;
+        }
     }
 
   // Increment the number of bytes.
@@ -136,9 +203,11 @@ ACE_Read_Buffer::rec_read (int term, int search, int replace)
 
   // Don't bother going any farther if the total size is 0.
   if (this->size_ == 0)
-    return nullptr;
+    {
+      return nullptr;
+    }
 
-  char *result = nullptr;
+  char *result {};
 
   // Recurse, when the recursion bottoms out, allocate the result
   // buffer.
@@ -146,7 +215,7 @@ ACE_Read_Buffer::rec_read (int term, int search, int replace)
     {
       // Use the allocator to acquire the memory.  The + 1 allows
       // space for the null terminator.
-      result = (char *) this->allocator_->malloc (this->size_ + 1);
+      result = static_cast<char *> (this->allocator_->malloc (this->size_ + 1));
 
       if (result == nullptr)
         {
@@ -158,14 +227,20 @@ ACE_Read_Buffer::rec_read (int term, int search, int replace)
       // Null terminate the buffer.
       *result = '\0';
     }
-  else if ((result = this->rec_read (term, search, replace)) == nullptr)
-    return nullptr;
+  else
+    {
+      result = this->rec_read (term, search, replace);
+      if (result == nullptr)
+        {
+          return nullptr;
+        }
+    }
 
-  // Copy buf into the appropriate location starting from end of
-  // buffer.  Peter says this is confusing and that we should use
-  // memcpy() ;-)
-  for (size_t j = slot; j > 0; j--)
-    *--result = buf[j - 1];
+  if (slot != 0)
+    {
+      result -= slot;
+      std::memcpy (result, buf, slot);
+    }
 
   return result;
 }

@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Invocation_Base.h
  *
  *  @author Balachandran Natarajan <bala@dre.vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef TAO_INVOCATION_BASE_H
 #define TAO_INVOCATION_BASE_H
@@ -60,7 +56,7 @@ namespace TAO
     virtual ~Invocation_Base ();
 
     /// Accessor and mutator methods
-    //@{
+    /// @{
     TAO_Stub *stub () const;
 
     /// Accessor and mutator methods for forwarded object
@@ -105,7 +101,7 @@ namespace TAO
 
     /// The operaton details of the invocation
     TAO_Operation_Details &operation_details ();
-    //@}
+    /// @}
 
   protected:
     /**
@@ -114,11 +110,13 @@ namespace TAO
      *
      * @param target the target on which this invocation is flowing
      * ie. the effective target
+     * @param stub The stub associated with the invocation.
      *
      * @param op operation details of the invocation on @a target
      *
      * @param response_expected flag to indicate whether the
      * operation encapsulated by @a op returns a response or not.
+     * @param request_is_remote Whether the invocation is remote.
      */
     Invocation_Base (CORBA::Object_ptr otarget,
                      CORBA::Object_ptr target,
@@ -141,13 +139,14 @@ namespace TAO
     GIOP::ReplyStatusType reply_status_;
 
   private:
+    Invocation_Base () = delete;
     Invocation_Base (Invocation_Base const &) = delete;
     Invocation_Base &operator= (Invocation_Base const &) = delete;
     Invocation_Base (Invocation_Base &&) = delete;
     Invocation_Base &operator= (Invocation_Base &&) = delete;
 
   private:
-    //@{
+    /// @{
     /**
      * The following object reference pointers are *not*
      * duplicated. They are cached for portable interceptors, and they
@@ -159,14 +158,14 @@ namespace TAO
 
     /// The effective target on which the invocation is on.
     CORBA::Object_ptr target_;
-    //@}
+    /// @}
 
     TAO_Stub *stub_;
 
     /// Operations invoked by the
     /// PortableInterceptor::ClientRequestInfo object to get details
     /// about the operation and related stuff.
-    //@{
+    /// @{
 #if TAO_HAS_INTERCEPTORS == 1
   public:
     /// Return a reference to the number of interceptors pushed on to
@@ -220,19 +219,19 @@ namespace TAO
     ClientRequestInterceptor_Adapter *cri_adapter_;
     ServerRequestInterceptor_Adapter *sri_adapter_;
 
-    size_t stack_size_;
+    size_t stack_size_ {};
 
     TAO::Invocation_Status invoke_status_;
 
   private:
     /// Pointer to the caught exception.
-    CORBA::Exception *caught_exception_;
+    CORBA::Exception *caught_exception_ {};
 
     /// Flag used to distinguish a remote invocation versus a collocated
     /// (thru-poa) invocation.
     bool const is_remote_request_;
 #endif /*TAO_HAS_INTERCEPTORS*/
-    //@}
+    /// @}
   };
 }
 

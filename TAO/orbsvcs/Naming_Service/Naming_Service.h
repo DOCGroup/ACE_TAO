@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//==========================================================================
 /**
  *  @file    Naming_Service.h
  *
@@ -9,8 +6,6 @@
  *
  *  @author Nagarajan Surendran (naga@cs.wustl.edu) Marina Spivak <marina@cs.wustl.edu>
  */
-//==========================================================================
-
 
 #ifndef TAO_NAMING_SERVICE_H
 #define TAO_NAMING_SERVICE_H
@@ -26,13 +21,12 @@
  * @brief Defines a class that encapsulates the implementation of the
  * COS Naming Service.
  *
- * This class makes use of the <TAO_Naming_Server>
+ * This class makes use of @c TAO_Naming_Server
  * to implement the COS Naming Service.
  */
 class TAO_Naming_Service
 {
 public:
-  /// Default Constructor.
   TAO_Naming_Service ();
 
   /// Constructor taking the command-line arguments.
@@ -55,7 +49,6 @@ public:
   /// Shut down the TAO_Naming_Service; you must still call fini().
   virtual void shutdown ();
 
-  /// Destructor.
   virtual ~TAO_Naming_Service ();
 
 protected:

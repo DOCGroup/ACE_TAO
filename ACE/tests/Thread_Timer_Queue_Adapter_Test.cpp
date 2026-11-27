@@ -6,7 +6,6 @@
  * This test verifies the functionality of the ACE_Timer_Queue_Thread_Adapter.
  * It also shows the usage of custom event handlers.
  */
-//=============================================================================
 
 #include "ace/Timer_Wheel.h"
 #include "ace/Timer_Queue_Adapters.h"
@@ -22,16 +21,10 @@
 class ICustomEventHandler
 {
     public:
-        /// Default constructor.
-        ///
-        /// @return
         ICustomEventHandler()
         {
         }
 
-        /// Default destructor.
-        ///
-        /// @return
         virtual ~ICustomEventHandler()
         {
         }
@@ -52,12 +45,10 @@ class CCustomEventHandlerUpcall
     public:
         using TTimerQueue = ACE_Timer_Queue_T<ICustomEventHandler *, CCustomEventHandlerUpcall, ACE_Null_Mutex>;
 
-        /// Default constructor
         CCustomEventHandlerUpcall()
         {
         }
 
-        /// Destructor.
         ~CCustomEventHandlerUpcall()
         {
         }
@@ -65,9 +56,9 @@ class CCustomEventHandlerUpcall
         /// This method is called when the timer expires.
         int timeout (TTimerQueue&,
                      ICustomEventHandler* p_Handler,
-                     const void* p_vParameter,
+                     void const * p_vParameter,
                      int /*recurring_timer*/,
-                     const ACE_Time_Value& /*cur_time*/)
+                     ACE_Time_Value const & /*cur_time*/)
         {
             ACE_TRACE("timeout");
 
@@ -75,15 +66,15 @@ class CCustomEventHandlerUpcall
         }
 
         /// This method is called when a timer is registered.
-        int registration(TTimerQueue&, ICustomEventHandler*, const void*) { return 0; }
+        int registration(TTimerQueue&, ICustomEventHandler*, void const *) { return 0; }
 
         /// This method is called before the timer expires.
-        int preinvoke(TTimerQueue&, ICustomEventHandler*, const void*,
-            int, const ACE_Time_Value&, const void*&) { return 0; }
+        int preinvoke(TTimerQueue&, ICustomEventHandler*, void const *,
+            int, ACE_Time_Value const &, void const *&) { return 0; }
 
         /// This method is called after the timer expires.
-        int postinvoke(TTimerQueue&, ICustomEventHandler*, const void*,
-            int, const ACE_Time_Value&, const void*) { return 0; }
+        int postinvoke(TTimerQueue&, ICustomEventHandler*, void const *,
+            int, ACE_Time_Value const &, void const *) { return 0; }
 
         /// This method is called when a handler is canceled
         int cancel_type(TTimerQueue&, ICustomEventHandler*, int, int&) { return 0; }
@@ -98,7 +89,7 @@ class CCustomEventHandlerUpcall
 
         /// This method is called when the timer queue is destroyed and
         /// the timer is still contained in it
-        int deletion(TTimerQueue&, ICustomEventHandler* p_Handler, const void*)
+        int deletion(TTimerQueue&, ICustomEventHandler* p_Handler, void const *)
         {
             ACE_TRACE("deletion");
             delete p_Handler;
@@ -113,18 +104,12 @@ class CCustomEventHandlerUpcall
 class CTestEventHandler : public ICustomEventHandler
 {
     public:
-        /// Default constructor.
-        ///
-        /// @return
         CTestEventHandler(long* p_iCallCount)
         : m_p_iCallCount(p_iCallCount)
         {
             ACE_DEBUG((LM_DEBUG, ACE_TEXT("%I(%t) Initializing test event handler.\n")));
         }
 
-        /// Default destructor.
-        ///
-        /// @return
         ~CTestEventHandler() override
         {
             ACE_DEBUG((LM_DEBUG, ACE_TEXT("%I(%t) Destroying test event handler.\n")));
@@ -136,10 +121,10 @@ class CTestEventHandler : public ICustomEventHandler
         /// @param p_vParameter
         int operator() (void* p_vParameter) override
         {
-            long iParameter = ACE_Utils::truncate_cast<long> ((intptr_t)p_vParameter);
+            long const iParameter = ACE_Utils::truncate_cast<long> ((intptr_t)p_vParameter);
 
             ACE_DEBUG((LM_DEBUG,
-                       ACE_TEXT("%I(%t) Incrementing test event handler call count by %d.\n"),
+                       ACE_TEXT("%I(%t) Incrementing test event handler call count by %Ld.\n"),
                        iParameter));
 
             m_Mutex.acquire();
@@ -177,14 +162,14 @@ run_main (int, ACE_TCHAR *[])
     {
         // Create a test event handler
         long iCallCount = 0;
-        CTestEventHandler* p_TestEventHandler = nullptr;
+        CTestEventHandler* p_TestEventHandler {};
         ACE_NEW_RETURN(p_TestEventHandler, CTestEventHandler(&iCallCount), -1);
 
         ACE_DEBUG((LM_DEBUG,
             ACE_TEXT("%I(%t) Scheduling timer...\n")));
 
         TimerWheelThreadAdapter.schedule(p_TestEventHandler,
-            (void*) 1,
+            reinterpret_cast<void *> (1),
             ACE_OS::gettimeofday() + ACE_Time_Value(1, 0));
 
         ACE_OS::sleep(ACE_Time_Value(1, 100 * 1000));
@@ -199,15 +184,15 @@ run_main (int, ACE_TCHAR *[])
     {
         // Create a test event handler
         long iCallCount = 0;
-        CTestEventHandler* p_TestEventHandler = nullptr;
+        CTestEventHandler* p_TestEventHandler {};
         ACE_NEW_RETURN(p_TestEventHandler, CTestEventHandler(&iCallCount), -1);
 
         ACE_DEBUG((LM_DEBUG,
             ACE_TEXT("%I(%t) Scheduling timer...\n")));
 
-        long lTimerHandle =
+        long const lTimerHandle =
             TimerWheelThreadAdapter.schedule(p_TestEventHandler,
-                (void*) 1,
+                reinterpret_cast<void *> (1),
                 ACE_OS::gettimeofday() + ACE_Time_Value(1, 0));
 
         // Cancel the repeating timer
@@ -226,16 +211,16 @@ run_main (int, ACE_TCHAR *[])
     {
         // Create a test event handler
         long iCallCount = 0;
-        CTestEventHandler* p_TestEventHandler = nullptr;
+        CTestEventHandler* p_TestEventHandler {};
         ACE_NEW_RETURN(p_TestEventHandler, CTestEventHandler(&iCallCount), -1);
 
         ACE_DEBUG((LM_DEBUG,
                    ACE_TEXT("%I(%t) Scheduling timer...\n")));
 
-        long lTimerHandle =
+        long const lTimerHandle =
             TimerWheelThreadAdapter.schedule
                 (p_TestEventHandler,
-                 (void*) 1,
+                 reinterpret_cast<void *> (1),
                  ACE_OS::gettimeofday() + ACE_Time_Value(1, 0),
                  ACE_Time_Value(1, 0));
 
@@ -255,7 +240,7 @@ run_main (int, ACE_TCHAR *[])
     {
         // Create a test event handler
         long iCallCount = 0;
-        CTestEventHandler* p_TestEventHandler = nullptr;
+        CTestEventHandler* p_TestEventHandler {};
         ACE_NEW_RETURN(p_TestEventHandler, CTestEventHandler(&iCallCount), -1);
 
         ACE_DEBUG((LM_DEBUG,
@@ -263,17 +248,17 @@ run_main (int, ACE_TCHAR *[])
 
         TimerWheelThreadAdapter.schedule
                 (p_TestEventHandler,
-                 (void*) 1,
+                 reinterpret_cast<void *> (1),
                  ACE_OS::gettimeofday() + ACE_Time_Value(1, 0));
 
         TimerWheelThreadAdapter.schedule
                 (p_TestEventHandler,
-                 (void*) 1,
+                 reinterpret_cast<void *> (1),
                  ACE_OS::gettimeofday() + ACE_Time_Value(1, 0));
 
         TimerWheelThreadAdapter.schedule
                 (p_TestEventHandler,
-                 (void*) 1,
+                 reinterpret_cast<void *> (1),
                  ACE_OS::gettimeofday() + ACE_Time_Value(2, 0));
 
         ACE_OS::sleep(ACE_Time_Value(3, 0));

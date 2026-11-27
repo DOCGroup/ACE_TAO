@@ -9,9 +9,9 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_LB_ORBInitializer::TAO_LB_ORBInitializer (
-  const CORBA::StringSeq & object_groups,
-  const CORBA::StringSeq & repository_ids,
-  const char * location)
+  CORBA::StringSeq const & object_groups,
+  CORBA::StringSeq const & repository_ids,
+  char const *location)
   : object_groups_ (object_groups),
     repository_ids_ (repository_ids),
     location_ (location),
@@ -54,8 +54,6 @@ TAO_LB_ORBInitializer::post_init (
   PortableInterceptor::IORInterceptor_var ior_interceptor = tmp;
 
   info->add_ior_interceptor (ior_interceptor.in ());
-
-  // ----------------
 
   PortableInterceptor::ServerRequestInterceptor_ptr sri;
   ACE_NEW_THROW_EX (sri,

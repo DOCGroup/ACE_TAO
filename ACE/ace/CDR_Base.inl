@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #if defined (ACE_HAS_INTRINSIC_BYTESWAP)
 // Take advantage of MSVC++ byte swapping compiler intrinsics (found
 // in <stdlib.h>).
@@ -11,55 +10,12 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-//
-// The ACE_CDR::swap_X and ACE_CDR::swap_X_array routines are broken
-// in 5 cases for optimization:
-//
-// * MSVC++ 7.1 or better
-//   => Compiler intrinsics
-//
-// * AMD64 CPU + gnu g++
-//   => gcc amd64 inline assembly.
-//
-// * x86 Pentium CPU + gnu g++
-//   (ACE_HAS_PENTIUM && __GNUG__)
-//   => gcc x86 inline assembly.
-//
-// * x86 Pentium CPU and (_MSC_VER) or BORLAND C++)
-//   (ACE_HAS_PENTIUM && ( _MSC_VER || __BORLANDC__ )
-//   => MSC x86 inline assembly.
-//
-// * 64 bit architecture
-//   (ACE_SIZEOF_LONG == 8)
-//   => shift/masks using 64bit words.
-//
-// * default
-//   (none of the above)
-//   => shift/masks using 32bit words.
-//
-// Some things you could find useful to know if you intend to mess
-// with this optimizations for swaps:
-//
-//      * MSVC++ don't assume register values are conserved between
-//        statements. So you can clobber any register you want,
-//        whenever you want (well not *anyone* really, see manual).
-//        The MSVC++ optimizer will try to pick different registers
-//        for the C++ statements sorrounding your asm block, and if
-//        it's not possible will use the stack.
-//
-//      * If you clobber registers with asm statements in gcc, you
-//        better do it in an asm-only function, or save/restore them
-//        before/after in the stack. If not, sorrounding C statements
-//        could end using the same registers and big-badda-bum (been
-//        there, done that...). The big-badda-bum could happen *even
-//        if you specify the clobbered register in your asm's*.
-//        Even better, use gcc asm syntax for detecting the register
-//        asigned to a certain variable so you don't have to clobber any
-//        register directly.
-//
+// The byte-swap routines select compiler intrinsics, platform functions,
+// inline assembly, or shift-and-mask implementations according to the
+// available platform features.
 
 ACE_INLINE void
-ACE_CDR::swap_2 (const char *orig, char* target)
+ACE_CDR::swap_2 (char const *orig, char* target)
 {
 #if defined (ACE_HAS_INTRINSIC_BYTESWAP)
   // Take advantage of MSVC++ compiler intrinsic byte swapping
@@ -89,14 +45,14 @@ ACE_CDR::swap_2 (const char *orig, char* target)
   __asm rol ax, 8;
   __asm mov [ecx], ax;
 #else
-  ACE_UINT16 usrc = * reinterpret_cast<const ACE_UINT16*> (orig);
+  ACE_UINT16 usrc = * reinterpret_cast<ACE_UINT16 const*> (orig);
   ACE_UINT16* udst = reinterpret_cast<ACE_UINT16*> (target);
   *udst = (usrc << 8) | (usrc >> 8);
 #endif /* ACE_HAS_PENTIUM */
 }
 
 ACE_INLINE void
-ACE_CDR::swap_4 (const char* orig, char* target)
+ACE_CDR::swap_4 (char const *orig, char* target)
 {
 #if defined (ACE_HAS_INTRINSIC_BYTESWAP)
   // Take advantage of MSVC++ compiler intrinsic byte swapping
@@ -115,7 +71,7 @@ ACE_CDR::swap_4 (const char* orig, char* target)
 #elif defined(ACE_HAS_INTEL_ASSEMBLY)
   // We have ACE_HAS_PENTIUM, so we know the sizeof's.
   unsigned int j =
-    *reinterpret_cast<const unsigned int*> (orig);
+    *reinterpret_cast<unsigned int const*> (orig);
   asm ("bswap %1" : "=r" (j) : "0" (j));
   *reinterpret_cast<unsigned int*> (target) = j;
 #elif defined(ACE_HAS_PENTIUM) \
@@ -127,14 +83,14 @@ ACE_CDR::swap_4 (const char* orig, char* target)
   __asm bswap eax;
   __asm mov [ecx], eax;
 #else
-  ACE_UINT32 x = * reinterpret_cast<const ACE_UINT32*> (orig);
+  ACE_UINT32 x = * reinterpret_cast<ACE_UINT32 const*> (orig);
   x = (x << 24) | ((x & 0xff00) << 8) | ((x & 0xff0000) >> 8) | (x >> 24);
   * reinterpret_cast<ACE_UINT32*> (target) = x;
 #endif /* ACE_HAS_INTRINSIC_BYTESWAP */
 }
 
 ACE_INLINE void
-ACE_CDR::swap_8 (const char* orig, char* target)
+ACE_CDR::swap_8 (char const *orig, char* target)
 {
 #if defined (ACE_HAS_INTRINSIC_BYTESWAP)
   // Take advantage of MSVC++ compiler intrinsic byte swapping
@@ -158,8 +114,8 @@ ACE_CDR::swap_8 (const char* orig, char* target)
   *reinterpret_cast<unsigned long*> (target) = x;
 #elif defined(ACE_HAS_PENTIUM) && defined(__GNUG__) \
     && !defined(ACE_LACKS_INLINE_ASSEMBLY)
-  unsigned int i =*reinterpret_cast<const unsigned int*> (orig);
-  unsigned int j = *reinterpret_cast<const unsigned int*> (orig + 4);
+  unsigned int i =*reinterpret_cast<unsigned int const*> (orig);
+  unsigned int j = *reinterpret_cast<unsigned int const*> (orig + 4);
   asm ("bswap %1" : "=r" (i) : "0" (i));
   asm ("bswap %1" : "=r" (j) : "0" (j));
   *reinterpret_cast<unsigned int*> (target + 4) = i;
@@ -186,8 +142,8 @@ ACE_CDR::swap_8 (const char* orig, char* target)
   x = (x << 32) | (x >> 32);
   *reinterpret_cast<unsigned long*> (target) = x;
 #else
-  ACE_UINT32 x = * reinterpret_cast<const ACE_UINT32*> (orig);
-  ACE_UINT32 y = * reinterpret_cast<const ACE_UINT32*> (orig + 4);
+  ACE_UINT32 x = * reinterpret_cast<ACE_UINT32 const*> (orig);
+  ACE_UINT32 y = * reinterpret_cast<ACE_UINT32 const*> (orig + 4);
   x = (x << 24) | ((x & 0xff00) << 8) | ((x & 0xff0000) >> 8) | (x >> 24);
   y = (y << 24) | ((y & 0xff00) << 8) | ((y & 0xff0000) >> 8) | (y >> 24);
   * reinterpret_cast<ACE_UINT32*> (target) = y;
@@ -196,7 +152,7 @@ ACE_CDR::swap_8 (const char* orig, char* target)
 }
 
 ACE_INLINE void
-ACE_CDR::swap_16 (const char* orig, char* target)
+ACE_CDR::swap_16 (char const *orig, char* target)
 {
   swap_8 (orig + 8, target);
   swap_8 (orig, target + 8);
@@ -206,7 +162,9 @@ ACE_INLINE size_t
 ACE_CDR::first_size (size_t minsize)
 {
   if (minsize == 0)
-    return ACE_CDR::DEFAULT_BUFSIZE;
+    {
+      return ACE_CDR::DEFAULT_BUFSIZE;
+    }
 
   size_t newsize = ACE_CDR::DEFAULT_BUFSIZE;
   while (newsize < minsize)
@@ -241,12 +199,16 @@ ACE_CDR::next_size (size_t minsize)
     {
       // If necessary increment the size
       if (newsize < ACE_CDR::EXP_GROWTH_MAX)
-        // Quickly multiply by two using a bit shift.  This is
-        // guaranteed to work since the variable is an unsigned
-        // integer.
-        newsize <<= 1;
+        {
+          // Quickly multiply by two using a bit shift.  This is
+          // guaranteed to work since the variable is an unsigned
+          // integer.
+          newsize <<= 1;
+        }
       else
-        newsize += ACE_CDR::LINEAR_GROWTH_CHUNK;
+        {
+          newsize += ACE_CDR::LINEAR_GROWTH_CHUNK;
+        }
     }
 
   return newsize;
@@ -280,8 +242,8 @@ ACE_CDR::Fixed::digit (int n) const
 ACE_INLINE void
 ACE_CDR::Fixed::digit (int n, int val)
 {
-  const int idx = 15 - (n + 1) / 2;
-  const int byte = (n % 2) ? (this->value_[idx] & 0xf0) | val
+  int const idx = 15 - (n + 1) / 2;
+  int const byte = (n % 2) ? (this->value_[idx] & 0xf0) | val
                            : ((val << 4) | (this->value_[idx] & 0xf));
   this->value_[idx] = static_cast<ACE_CDR::Octet> (byte);
 }
@@ -350,13 +312,13 @@ ACE_CDR::Fixed::IteratorBase::storage (Fixed *outer) const
 }
 
 ACE_INLINE ACE_CDR::Octet
-ACE_CDR::Fixed::IteratorBase::storage (const Fixed *outer) const
+ACE_CDR::Fixed::IteratorBase::storage (Fixed const *outer) const
 {
   return outer->value_[15 - (this->digit_ + 1) / 2];
 }
 
 ACE_INLINE bool
-ACE_CDR::Fixed::IteratorBase::compare (const IteratorBase &rhs) const
+ACE_CDR::Fixed::IteratorBase::compare (IteratorBase const &rhs) const
 {
   return this->digit_ == rhs.digit_;
 }
@@ -409,19 +371,19 @@ ACE_CDR::Fixed::Iterator::operator-- (int)
 }
 
 ACE_INLINE bool
-ACE_CDR::Fixed::Iterator::operator== (const Iterator &rhs) const
+ACE_CDR::Fixed::Iterator::operator== (Iterator const &rhs) const
 {
   return this->compare (rhs);
 }
 
 ACE_INLINE bool
-ACE_CDR::Fixed::Iterator::operator!= (const Iterator &rhs) const
+ACE_CDR::Fixed::Iterator::operator!= (Iterator const &rhs) const
 {
   return !(*this == rhs);
 }
 
 ACE_INLINE
-ACE_CDR::Fixed::ConstIterator::ConstIterator (const Fixed *outer, int digit)
+ACE_CDR::Fixed::ConstIterator::ConstIterator (Fixed const *outer, int digit)
   : IteratorBase (digit), outer_ (outer) {}
 
 ACE_INLINE ACE_CDR::Octet
@@ -469,13 +431,13 @@ ACE_CDR::Fixed::ConstIterator::operator-- (int)
 }
 
 ACE_INLINE bool
-ACE_CDR::Fixed::ConstIterator::operator== (const ConstIterator &rhs) const
+ACE_CDR::Fixed::ConstIterator::operator== (ConstIterator const &rhs) const
 {
   return this->compare (rhs);
 }
 
 ACE_INLINE bool
-ACE_CDR::Fixed::ConstIterator::operator!= (const ConstIterator &rhs) const
+ACE_CDR::Fixed::ConstIterator::operator!= (ConstIterator const &rhs) const
 {
   return !(*this == rhs);
 }
@@ -550,14 +512,20 @@ ACE_INLINE void
 ACE_CDR::Fixed::ltrim ()
 {
   for (int i = this->digits_ - 1; i >= this->scale_ && i > 0; --i)
-    if (this->digit (i) == 0)
-      --this->digits_;
-    else
-      break;
+    {
+      if (this->digit (i) == 0)
+        {
+          --this->digits_;
+        }
+      else
+        {
+          break;
+        }
+    }
 }
 
 ACE_INLINE ACE_CDR::Fixed
-operator+ (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs)
+operator+ (ACE_CDR::Fixed const &lhs, ACE_CDR::Fixed const &rhs)
 {
   ACE_CDR::Fixed f = lhs;
   f += rhs;
@@ -565,7 +533,7 @@ operator+ (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs)
 }
 
 ACE_INLINE ACE_CDR::Fixed
-operator- (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs)
+operator- (ACE_CDR::Fixed const &lhs, ACE_CDR::Fixed const &rhs)
 {
   ACE_CDR::Fixed f = lhs;
   f -= rhs;
@@ -573,7 +541,7 @@ operator- (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs)
 }
 
 ACE_INLINE ACE_CDR::Fixed
-operator* (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs)
+operator* (ACE_CDR::Fixed const &lhs, ACE_CDR::Fixed const &rhs)
 {
   ACE_CDR::Fixed f = lhs;
   f *= rhs;
@@ -581,7 +549,7 @@ operator* (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs)
 }
 
 ACE_INLINE ACE_CDR::Fixed
-operator/ (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs)
+operator/ (ACE_CDR::Fixed const &lhs, ACE_CDR::Fixed const &rhs)
 {
   ACE_CDR::Fixed f = lhs;
   f /= rhs;
@@ -589,41 +557,40 @@ operator/ (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs)
 }
 
 ACE_INLINE bool
-operator< (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs)
+operator< (ACE_CDR::Fixed const &lhs, ACE_CDR::Fixed const &rhs)
 {
   return lhs.less (rhs);
 }
 
 ACE_INLINE bool
-operator> (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs)
+operator> (ACE_CDR::Fixed const &lhs, ACE_CDR::Fixed const &rhs)
 {
   return rhs < lhs;
 }
 
 ACE_INLINE bool
-operator>= (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs)
+operator>= (ACE_CDR::Fixed const &lhs, ACE_CDR::Fixed const &rhs)
 {
   return !(lhs < rhs);
 }
 
 ACE_INLINE bool
-operator<= (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs)
+operator<= (ACE_CDR::Fixed const &lhs, ACE_CDR::Fixed const &rhs)
 {
   return !(rhs < lhs);
 }
 
 ACE_INLINE bool
-operator== (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs)
+operator== (ACE_CDR::Fixed const &lhs, ACE_CDR::Fixed const &rhs)
 {
   return lhs.equal (rhs);
 }
 
 ACE_INLINE bool
-operator!= (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs)
+operator!= (ACE_CDR::Fixed const &lhs, ACE_CDR::Fixed const &rhs)
 {
   return !(lhs == rhs);
 }
-
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 

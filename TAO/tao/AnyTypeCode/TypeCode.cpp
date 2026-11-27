@@ -37,7 +37,9 @@ CORBA::TypeCode::equal (TypeCode_ptr tc) const
   CORBA::TCKind const tc_kind = tc->kind ();
 
   if (tc_kind != this->kind_)
+  {
     return false;
+  }
 
   try
     {
@@ -46,16 +48,20 @@ CORBA::TypeCode::equal (TypeCode_ptr tc) const
       char const * const this_id = this->id ();
 
       if (std::strcmp (this_id, tc_id) != 0)
+      {
         return false;
+      }
 
       char const * const tc_name = tc->name ();
 
       char const * const this_name = this->name ();
 
       if (std::strcmp (this_name, tc_name) != 0)
+      {
         return false;
+      }
     }
-  catch (const ::CORBA::TypeCode::BadKind&)
+  catch (::CORBA::TypeCode::BadKind const &)
     {
       // Some TypeCodes do not support the id() and name()
       // operations.  Ignore the failure, and continue equality
@@ -81,27 +87,29 @@ CORBA::TypeCode::equivalent (TypeCode_ptr tc) const
   CORBA::TypeCode_ptr const mutable_this =
     const_cast<CORBA::TypeCode_ptr> (this);
 
-  CORBA::TypeCode_var unaliased_this = TAO::unaliased_typecode (mutable_this);
-  CORBA::TypeCode_var unaliased_tc = TAO::unaliased_typecode (tc);
+  CORBA::TypeCode_var const unaliased_this = TAO::unaliased_typecode (mutable_this);
+  CORBA::TypeCode_var const unaliased_tc = TAO::unaliased_typecode (tc);
 
   CORBA::TCKind const this_kind = unaliased_this->kind ();
   CORBA::TCKind const tc_kind = unaliased_tc->kind ();
 
   if (tc_kind != this_kind)
+  {
     return false;
+  }
 
   try
     {
       char const * const this_id = unaliased_this->id ();
       char const * const tc_id = unaliased_tc->id ();
 
-      if (std::strlen (this_id) != 0
-          && std::strlen (tc_id) != 0)
+      if (this_id[0] != '\0'
+          && tc_id[0] != '\0')
         {
           return std::strcmp (this_id, tc_id) == 0;
         }
     }
-  catch (const ::CORBA::TypeCode::BadKind&)
+  catch (::CORBA::TypeCode::BadKind const &)
     {
       // Some TypeCodes do not support the id() operation.  Ignore the
       // failure, and continue equivalence verification using TypeCode
@@ -201,8 +209,6 @@ CORBA::TypeCode::concrete_base_type_i () const
   throw ::CORBA::TypeCode::BadKind ();
 }
 
-// ---------------------------------------------------------------
-
 CORBA::TypeCode::Bounds::Bounds ()
   : CORBA::UserException ("IDL:omg.org/CORBA/TypeCode/Bounds:1.0",
                           "Bounds")
@@ -218,8 +224,8 @@ CORBA::TypeCode::Bounds::_downcast (CORBA::Exception *ex)
 CORBA::Exception *
 CORBA::TypeCode::Bounds::_alloc ()
 {
-  CORBA::Exception *retval = nullptr;
-  ACE_NEW_RETURN (retval, ::CORBA::TypeCode::Bounds, 0);
+  CORBA::Exception *retval {};
+  ACE_NEW_RETURN (retval, ::CORBA::TypeCode::Bounds, nullptr);
   return retval;
 }
 
@@ -229,7 +235,7 @@ CORBA::TypeCode::Bounds::_tao_duplicate () const
   CORBA::Exception *result;
   ACE_NEW_RETURN (result,
                   CORBA::TypeCode::Bounds (*this),
-                  0);
+                  nullptr);
   return result;
 }
 
@@ -255,8 +261,6 @@ CORBA::TypeCode::Bounds::_tao_decode (TAO_InputCDR &)
 {
 }
 
-// ****************************************************************
-
 CORBA::TypeCode::BadKind::BadKind ()
   : CORBA::UserException ("IDL:omg.org/CORBA/TypeCode/BadKind:1.0",
                           "BadKind")
@@ -272,10 +276,10 @@ CORBA::TypeCode::BadKind::_downcast (CORBA::Exception *ex)
 CORBA::Exception *
 CORBA::TypeCode::BadKind::_tao_duplicate () const
 {
-  CORBA::Exception *result = nullptr;
+  CORBA::Exception *result {};
   ACE_NEW_RETURN (result,
                   CORBA::TypeCode::BadKind (*this),
-                  0);
+                  nullptr);
   return result;
 }
 
@@ -300,8 +304,6 @@ void
 CORBA::TypeCode::BadKind::_tao_decode (TAO_InputCDR &)
 {
 }
-
-// ---------------------------------------------------------------
 
 bool
 TAO::TypeCode::marshal (TAO_OutputCDR & cdr,
@@ -330,29 +332,23 @@ TAO::TypeCode::aligned_offset (CORBA::ULong offset)
                                                  ACE_CDR::LONG_ALIGN));
 }
 
-// ---------------------------------------------------------------
-
 CORBA::Boolean
 operator<< (TAO_OutputCDR & cdr,
-            const CORBA::TypeCode_ptr tc)
+            CORBA::TypeCode_ptr const tc)
 {
   return TAO::TypeCode::marshal (cdr, tc, 0);
 }
-
-// ---------------------------------------------------------------
 
 #if defined (GEN_OSTREAM_OPS)
 
 std::ostream &
 operator<< (std::ostream & strm,
-            const CORBA::TypeCode_ptr)
+            CORBA::TypeCode_ptr const)
 {
   return strm << "CORBA::TypeCode";
 }
 
 #endif /* GEN_OSTREAM_OPS */
-
-// ---------------------------------------------------------------
 
 CORBA::TypeCode_ptr
 TAO::unaliased_typecode (CORBA::TypeCode_ptr tc)
@@ -383,31 +379,29 @@ TAO::unaliased_typecode (CORBA::TypeCode_ptr tc)
   return CORBA::TypeCode::_duplicate (tc);
 }
 
-// =========================================================
-
-// Traits specializations for CORBA::TypeCode.
+/// Traits specializations for CORBA::TypeCode.
 namespace TAO
 {
-  CORBA::TypeCode_ptr
-  Objref_Traits<CORBA::TypeCode>::duplicate (CORBA::TypeCode_ptr p)
+  ::CORBA::TypeCode_ptr
+  Objref_Traits<::CORBA::TypeCode>::duplicate (::CORBA::TypeCode_ptr p)
   {
     return CORBA::TypeCode::_duplicate (p);
   }
 
   void
-  Objref_Traits<CORBA::TypeCode>::release (CORBA::TypeCode_ptr p)
+  Objref_Traits<::CORBA::TypeCode>::release (::CORBA::TypeCode_ptr p)
   {
     ::CORBA::release (p);
   }
 
-  CORBA::TypeCode_ptr
-  Objref_Traits<CORBA::TypeCode>::nil ()
+  ::CORBA::TypeCode_ptr
+  Objref_Traits<::CORBA::TypeCode>::nil ()
   {
     return CORBA::TypeCode::_nil ();
   }
 
   CORBA::Boolean
-  Objref_Traits<CORBA::TypeCode>::marshal (CORBA::TypeCode_ptr p,
+  Objref_Traits<::CORBA::TypeCode>::marshal (::CORBA::TypeCode_ptr p,
                                            TAO_OutputCDR & cdr)
   {
     return cdr << p;
@@ -428,12 +422,10 @@ namespace TAO
   }
 }
 
-// =========================================================
-
 CORBA::TCKind
 TAO::unaliased_kind (CORBA::TypeCode_ptr tc)
 {
-  CORBA::TypeCode_var unaliased_tc = TAO::unaliased_typecode (tc);
+  CORBA::TypeCode_var const unaliased_tc = TAO::unaliased_typecode (tc);
 
   return unaliased_tc->kind ();
 }

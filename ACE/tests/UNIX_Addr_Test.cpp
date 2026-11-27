@@ -9,6 +9,8 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_unistd.h"
 
+#include <cstring>
+
 int run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("UNIX_Addr_Test"));
@@ -16,7 +18,7 @@ int run_main (int, ACE_TCHAR *[])
 #if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
   // Default ctor and empty path.
   ACE_UNIX_Addr addr;
-  ACE_UNIX_Addr empty("");
+  ACE_UNIX_Addr const empty("");
   ACE_TEST_ASSERT (addr == empty);
   ACE_TEST_ASSERT (addr.get_type () == AF_UNIX);
   ACE_TEST_ASSERT (addr.get_size () == empty.get_size ());
@@ -34,8 +36,8 @@ int run_main (int, ACE_TCHAR *[])
   addr.set (path);
   ACE_TEST_ASSERT (addr.get_size () > origin);
   ACE_TEST_ASSERT (addr.addr_to_string (buf, sizeof (buf)) == 0);
-  ACE_TEST_ASSERT (strcmp (path, ACE_TEXT_ALWAYS_CHAR(buf)) == 0);
-  ACE_TEST_ASSERT (strcmp (path, addr.get_path_name ()) == 0);
+  ACE_TEST_ASSERT (ACE_OS::strcmp (path, ACE_TEXT_ALWAYS_CHAR(buf)) == 0);
+  ACE_TEST_ASSERT (ACE_OS::strcmp (path, addr.get_path_name ()) == 0);
 
   // Set longer path by ACE_UNIX_Addr::string_to_addr
   origin = addr.get_size ();
@@ -43,8 +45,8 @@ int run_main (int, ACE_TCHAR *[])
   addr.string_to_addr (path);
   ACE_TEST_ASSERT (addr.get_size () > origin);
   ACE_TEST_ASSERT (addr.addr_to_string (buf, sizeof (buf)) == 0);
-  ACE_TEST_ASSERT (strcmp (path, ACE_TEXT_ALWAYS_CHAR(buf)) == 0);
-  ACE_TEST_ASSERT (strcmp (path, addr.get_path_name ()) == 0);
+  ACE_TEST_ASSERT (ACE_OS::strcmp (path, ACE_TEXT_ALWAYS_CHAR(buf)) == 0);
+  ACE_TEST_ASSERT (ACE_OS::strcmp (path, addr.get_path_name ()) == 0);
 
   // Set shorter path by ACE_UNIX_Addr::string_to_addr
   origin = addr.get_size ();
@@ -52,8 +54,8 @@ int run_main (int, ACE_TCHAR *[])
   addr.string_to_addr (path);
   ACE_TEST_ASSERT (addr.get_size () < origin);
   ACE_TEST_ASSERT (addr.addr_to_string (buf, sizeof (buf)) == 0);
-  ACE_TEST_ASSERT (strcmp (path, ACE_TEXT_ALWAYS_CHAR(buf)) == 0);
-  ACE_TEST_ASSERT (strcmp (path, addr.get_path_name ()) == 0);
+  ACE_TEST_ASSERT (ACE_OS::strcmp (path, ACE_TEXT_ALWAYS_CHAR(buf)) == 0);
+  ACE_TEST_ASSERT (ACE_OS::strcmp (path, addr.get_path_name ()) == 0);
 
   // Bounds checking
   path = "/tmp/bounds.test";
@@ -77,8 +79,8 @@ int run_main (int, ACE_TCHAR *[])
     path1[107] = '\0';
     path2[107] = '\0';
 
-    ACE_UNIX_Addr addr1(path1);
-    ACE_UNIX_Addr addr2(path2);
+    ACE_UNIX_Addr const addr1(path1);
+    ACE_UNIX_Addr const addr2(path2);
 
     // Should detect difference at the last valid character
     ACE_TEST_ASSERT(!(addr1 == addr2));
@@ -86,17 +88,17 @@ int run_main (int, ACE_TCHAR *[])
 
   // Regular paths comparison
   {
-    ACE_UNIX_Addr addr1 ("/tmp/test1");
-    ACE_UNIX_Addr addr2 ("/tmp/test1");
-    ACE_UNIX_Addr addr3 ("/tmp/test2");
+    ACE_UNIX_Addr const addr1 ("/tmp/test1");
+    ACE_UNIX_Addr const addr2 ("/tmp/test1");
+    ACE_UNIX_Addr const addr3 ("/tmp/test2");
 
     ACE_TEST_ASSERT (addr1 == addr2);
     ACE_TEST_ASSERT (!(addr1 == addr3));
   }
 
   {
-    ACE_UNIX_Addr addr1 ("/tmp/test1");
-    ACE_UNIX_Addr addr2 ("/tmp/test2");
+    ACE_UNIX_Addr const addr1 ("/tmp/test1");
+    ACE_UNIX_Addr const addr2 ("/tmp/test2");
 
     ACE_TEST_ASSERT (!(addr1 == addr2));
   }
@@ -104,9 +106,9 @@ int run_main (int, ACE_TCHAR *[])
 #if defined(ACE_LINUX)
   // Abstract paths comparison
   {
-    ACE_UNIX_Addr addr1 ("@test1");
-    ACE_UNIX_Addr addr2 ("@test1");
-    ACE_UNIX_Addr addr3 ("@test2");
+    ACE_UNIX_Addr const addr1 ("@test1");
+    ACE_UNIX_Addr const addr2 ("@test1");
+    ACE_UNIX_Addr const addr3 ("@test2");
 
     ACE_TEST_ASSERT (addr1 == addr2);
     ACE_TEST_ASSERT (!(addr1 == addr3));
@@ -114,8 +116,8 @@ int run_main (int, ACE_TCHAR *[])
 
   // Mixed comparison (abstract vs regular)
   {
-    ACE_UNIX_Addr addr1 ("@test1");
-    ACE_UNIX_Addr addr2 ("/test1");
+    ACE_UNIX_Addr const addr1 ("@test1");
+    ACE_UNIX_Addr const addr2 ("/test1");
 
     ACE_TEST_ASSERT (!(addr1 == addr2));
   }
@@ -137,17 +139,17 @@ int run_main (int, ACE_TCHAR *[])
   path = "@/tmp/ace.test";
   addr.set (path);
   ACE_TEST_ASSERT (addr.addr_to_string (buf, sizeof (buf)) == 0);
-  ACE_TEST_ASSERT (strcmp (path, ACE_TEXT_ALWAYS_CHAR(buf)) == 0);
+  ACE_TEST_ASSERT (ACE_OS::strcmp (path, ACE_TEXT_ALWAYS_CHAR(buf)) == 0);
   ACE_TEST_ASSERT (*addr.get_path_name () == '\0');
-  ACE_TEST_ASSERT (strcmp (path + 1, addr.get_path_name () + 1) == 0);
+  ACE_TEST_ASSERT (ACE_OS::strcmp (path + 1, addr.get_path_name () + 1) == 0);
 
   // Set abstract path by string_to_addr.
   path = "@/tmp/unix_addr_test";
   addr.string_to_addr (path);
   ACE_TEST_ASSERT (addr.addr_to_string (buf, sizeof (buf)) == 0);
-  ACE_TEST_ASSERT (strcmp (path, ACE_TEXT_ALWAYS_CHAR(buf)) == 0);
+  ACE_TEST_ASSERT (ACE_OS::strcmp (path, ACE_TEXT_ALWAYS_CHAR(buf)) == 0);
   ACE_TEST_ASSERT (*addr.get_path_name () == '\0');
-  ACE_TEST_ASSERT (strcmp (path + 1, addr.get_path_name () + 1) == 0);
+  ACE_TEST_ASSERT (ACE_OS::strcmp (path + 1, addr.get_path_name () + 1) == 0);
 
   // Test maximum length abstract path
   char max_path[108] = "@";  // sizeof(sun_path) is typically 108
@@ -155,10 +157,10 @@ int run_main (int, ACE_TCHAR *[])
   max_path[sizeof(max_path) - 1] = '\0';
   addr.set(max_path);
   ACE_TEST_ASSERT(addr.addr_to_string(buf, sizeof(buf)) == 0);
-  ACE_TEST_ASSERT(strcmp(max_path, ACE_TEXT_ALWAYS_CHAR(buf)) == 0);
+  ACE_TEST_ASSERT (ACE_OS::strcmp (max_path, ACE_TEXT_ALWAYS_CHAR(buf)) == 0);
 
   // Test comparison of abstract paths
-  ACE_UNIX_Addr addr2("@/tmp/ace.test");
+  ACE_UNIX_Addr const addr2("@/tmp/ace.test");
   ACE_TEST_ASSERT(addr2 == addr2);
   ACE_TEST_ASSERT(!(addr2 != addr2));
 
@@ -166,11 +168,10 @@ int run_main (int, ACE_TCHAR *[])
   ACE_TEST_ASSERT(addr.set("@") == 0);  // Empty abstract path
   ACE_TEST_ASSERT(addr.set("@@/tmp/test") == 0);  // Multiple @ prefixes
 
-
   // Test path with embedded null
   char null_path[] = "@/tmp/te\0st";
   ACE_TEST_ASSERT(addr.set(null_path) == 0);
-  ACE_TEST_ASSERT(ACE_OS::strcmp(addr.get_path_name() + 1, "/tmp/te") == 0);
+  ACE_TEST_ASSERT (std::strcmp (addr.get_path_name () + 1, "/tmp/te") == 0);
 
   // Abstract paths with difference at the end
   {
@@ -184,8 +185,8 @@ int run_main (int, ACE_TCHAR *[])
     path1[107] = '\0';
     path2[107] = '\0';
 
-    ACE_UNIX_Addr addr1(path1);
-    ACE_UNIX_Addr addr2(path2);
+    ACE_UNIX_Addr const addr1(path1);
+    ACE_UNIX_Addr const addr2(path2);
 
     // Should detect difference at the last valid character
     ACE_TEST_ASSERT(!(addr1 == addr2));

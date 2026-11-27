@@ -13,14 +13,12 @@ namespace ACE_RMCast
   class Flow : public Element
   {
   public:
-    Flow (Parameters const& );
+    explicit Flow (Parameters const& );
 
   public:
-    virtual void
-    send (Message_ptr m);
+    void send (Message_ptr m) override;
 
-    virtual void
-    recv (Message_ptr m);
+    void recv (Message_ptr m) override;
 
   private:
     // Parameters const& params_;
@@ -36,6 +34,5 @@ namespace ACE_RMCast
     double cap_tput_;
   };
 }
-
 
 #endif  // ACE_RMCAST_FLOW_H

@@ -25,7 +25,6 @@
 
 #endif  /* ACE_HAS_VERSIONED_NAMESPACE == 1 */
 
-
 #ifdef __cplusplus
 extern "C" {
 #endif

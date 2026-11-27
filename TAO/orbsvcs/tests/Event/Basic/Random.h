@@ -1,12 +1,8 @@
-/* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file   Random.h
  *
  *  @author Carlos O'Ryan (coryan@cs.wustl.edu)
  */
-//=============================================================================
-
 
 #ifndef EC_RANDOM_H
 #define EC_RANDOM_H
@@ -28,14 +24,17 @@ class RND_Consumer
   : public POA_RtecEventComm::PushConsumer
 {
 public:
-  /// Constructor
-  RND_Consumer (RND_Driver *driver);
+  explicit RND_Consumer (RND_Driver *driver);
+  RND_Consumer (RND_Consumer const &) = delete;
+  RND_Consumer &operator= (RND_Consumer const &) = delete;
+  RND_Consumer (RND_Consumer &&) = delete;
+  RND_Consumer &operator= (RND_Consumer &&) = delete;
 
-  void push (const RtecEventComm::EventSet &event);
-  void disconnect_push_consumer ();
+  void push (RtecEventComm::EventSet const &event) override;
+  void disconnect_push_consumer () override;
 
   void connect (RtecEventChannelAdmin::ConsumerAdmin_ptr admin,
-                const RtecEventChannelAdmin::ConsumerQOS &qos);
+                RtecEventChannelAdmin::ConsumerQOS const &qos);
   void disconnect ();
 
 protected:
@@ -60,9 +59,13 @@ RND_Consumer::RND_Consumer (RND_Driver *driver)
 class RND_Timer : public RND_Consumer
 {
 public:
-  RND_Timer (RND_Driver *driver);
+  explicit RND_Timer (RND_Driver *driver);
+  RND_Timer (RND_Timer const &) = delete;
+  RND_Timer &operator= (RND_Timer const &) = delete;
+  RND_Timer (RND_Timer &&) = delete;
+  RND_Timer &operator= (RND_Timer &&) = delete;
 
-  void push (const RtecEventComm::EventSet &event);
+  void push (RtecEventComm::EventSet const &event) override;
 };
 
 inline
@@ -81,21 +84,24 @@ class RND_Supplier
   , public ACE_Task_Base
 {
 public:
-  /// Constructor
-  RND_Supplier (int verbose);
+  explicit RND_Supplier (bool verbose);
+  RND_Supplier (RND_Supplier const &) = delete;
+  RND_Supplier &operator= (RND_Supplier const &) = delete;
+  RND_Supplier (RND_Supplier &&) = delete;
+  RND_Supplier &operator= (RND_Supplier &&) = delete;
 
   void connect (RtecEventChannelAdmin::SupplierAdmin_ptr admin,
-                const RtecEventChannelAdmin::SupplierQOS &qos);
+                RtecEventChannelAdmin::SupplierQOS const &qos);
   void disconnect ();
 
   /// Push a single event...
   void push_new_event ();
   void push (RtecEventComm::EventSet &event);
 
-  virtual void disconnect_push_supplier ();
+  void disconnect_push_supplier () override;
 
   /// Active method
-  virtual int svc ();
+  int svc () override;
 
 private:
   /// The supplier.
@@ -105,12 +111,12 @@ private:
   TAO_SYNCH_MUTEX lock_;
 
   /// Be verbose about the progress of the test
-  int verbose_;
+  bool verbose_;
 };
 
 inline
-RND_Supplier::RND_Supplier (int verbose)
-  :  verbose_ (verbose)
+RND_Supplier::RND_Supplier (bool verbose)
+  : verbose_ (verbose)
 {
 }
 
@@ -120,19 +126,19 @@ class RND_Driver
 {
 public:
   RND_Driver ();
+  RND_Driver (RND_Driver const &) = delete;
+  RND_Driver &operator= (RND_Driver const &) = delete;
+  RND_Driver (RND_Driver &&) = delete;
+  RND_Driver &operator= (RND_Driver &&) = delete;
 
   /// Run the test
   int run (int argc, ACE_TCHAR *argv[]);
 
   /// The main timer has expired
-  void timer (const RtecEventComm::Event &e);
+  void timer (RtecEventComm::Event const &e);
 
   /// One of the consumers has received an event
-  void event (const RtecEventComm::Event &e);
-
-private:
-  RND_Driver (const RND_Driver &);
-  RND_Driver& operator= (const RND_Driver &);
+  void event (RtecEventComm::Event const &e);
 
 private:
   /// The main timer
@@ -145,13 +151,16 @@ private:
   int nsuppliers_;
 
   /// The suppliers
-  RND_Supplier **suppliers_;
+  // The servants are reference-counted by PortableServer; this array stores
+  // the raw servant pointers until they are deactivated and _remove_ref()'d.
+  RND_Supplier **suppliers_ {};
 
   /// Number of consumers
   int nconsumers_;
 
   /// The consumers
-  RND_Consumer **consumers_;
+  // See suppliers_: the array does not own the reference-counted servants.
+  RND_Consumer **consumers_ {};
 
   /// Maximum recursion
   int max_recursion_;

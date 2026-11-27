@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  * @file client_i.h
  *
@@ -9,7 +6,6 @@
  *
  * @author Robert Martin <martin_r@ociweb.com>
  */
-//=============================================================================
 
 #ifndef CLIENT_I_H
 #define CLIENT_I_H
@@ -26,10 +22,15 @@ class client_i
   : public virtual POA_client
 {
 public:
-  client_i (server_ptr s);
-  virtual ~client_i ();
+  explicit client_i (server_ptr s);
+  ~client_i () override = default;
 
-  virtual void test_reply (const char *msg);
+  client_i (client_i const &) = delete;
+  client_i (client_i &&) = delete;
+  client_i &operator= (client_i const &) = delete;
+  client_i &operator= (client_i &&) = delete;
+
+  void test_reply (char const *msg) override;
 
 private:
   server_var server_;

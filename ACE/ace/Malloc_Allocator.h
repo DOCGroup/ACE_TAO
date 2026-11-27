@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//==========================================================================
 /**
  *  @file   Malloc_Allocator.h
  *
  *  @author Based on code that formerly existed in another ACE file.
  */
-//==========================================================================
 
 #ifndef ACE_MALLOC_ALLOCATOR_H
 #define ACE_MALLOC_ALLOCATOR_H
@@ -45,31 +41,35 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * malloc(), calloc(), and free(). All other methods are no-ops that
  * return -1 and set @c errno to @c ENOTSUP.  If you require this
  * functionality, please use: ACE_Allocator_Adapter <ACE_Malloc
- * <ACE_LOCAL_MEMORY_POOL, MUTEX> >, which will allow you to use the
+ * <ACE_LOCAL_MEMORY_POOL, MUTEX>>, which will allow you to use the
  * added functionality of bind/find/etc. while using the new/delete
  * operators.
  */
 class ACE_Export ACE_New_Allocator : public ACE_Allocator
 {
 public:
-  /// These methods are defined.
+  /// @name Memory allocation operations
+  /// @{
   void *malloc (size_t nbytes) override;
   void *calloc (size_t nbytes, char initial_value = '\0') override;
   void *calloc (size_t n_elem, size_t elem_size, char initial_value = '\0') override;
   void free (void *ptr) override;
+  /// @}
 
-  /// These methods are no-ops.
+  /// @name Unsupported operations
+  /// @{
   int remove () override;
-  int bind (const char *name, void *pointer, int duplicates = 0) override;
-  int trybind (const char *name, void *&pointer) override;
-  int find (const char *name, void *&pointer) override;
-  int find (const char *name) override;
-  int unbind (const char *name) override;
-  int unbind (const char *name, void *&pointer) override;
+  int bind (char const *name, void *pointer, int duplicates = 0) override;
+  int trybind (char const *name, void *&pointer) override;
+  int find (char const *name, void *&pointer) override;
+  int find (char const *name) override;
+  int unbind (char const *name) override;
+  int unbind (char const *name, void *&pointer) override;
   int sync (ssize_t len = -1, int flags = MS_SYNC) override;
   int sync (void *addr, size_t len, int flags = MS_SYNC) override;
   int protect (ssize_t len = -1, int prot = PROT_RDWR) override;
   int protect (void *addr, size_t len, int prot = PROT_RDWR) override;
+  /// @}
 #if defined (ACE_HAS_MALLOC_STATS)
   virtual void print_stats () const;
 #endif /* ACE_HAS_MALLOC_STATS */
@@ -104,12 +104,12 @@ public:
   void *calloc (size_t n_elem, size_t elem_size, char initial_value = '\0') override;
   void free (void *ptr) override;
   int remove () override;
-  int bind (const char *name, void *pointer, int duplicates = 0) override;
-  int trybind (const char *name, void *&pointer) override;
-  int find (const char *name, void *&pointer) override;
-  int find (const char *name) override;
-  int unbind (const char *name) override;
-  int unbind (const char *name, void *&pointer) override;
+  int bind (char const *name, void *pointer, int duplicates = 0) override;
+  int trybind (char const *name, void *&pointer) override;
+  int find (char const *name, void *&pointer) override;
+  int find (char const *name) override;
+  int unbind (char const *name) override;
+  int unbind (char const *name, void *&pointer) override;
   int sync (ssize_t len = -1, int flags = MS_SYNC) override;
   int sync (void *addr, size_t len, int flags = MS_SYNC) override;
   int protect (ssize_t len = -1, int prot = PROT_RDWR) override;
@@ -129,7 +129,7 @@ protected:
   /// Size of the buffer.
   size_t size_;
 
-  /// Pointer to the current offset in the <buffer_>.
+  /// Pointer to the current offset in the @c buffer_.
   size_t offset_;
 };
 

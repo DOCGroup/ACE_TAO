@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 /**
  *  @file Property_Boolean.h
  *
@@ -31,30 +29,28 @@ class TAO_Notify_PropertySeq;
 class TAO_Notify_Serv_Export TAO_Notify_Property_Boolean
 {
 public:
-  /// Constructor
-  TAO_Notify_Property_Boolean (const char* name, CORBA::Boolean initial);
+  TAO_Notify_Property_Boolean (char const *name, CORBA::Boolean initial);
 
-  /// Constructor
-  TAO_Notify_Property_Boolean (const char* name);
+  explicit TAO_Notify_Property_Boolean (char const *name);
 
   /// Assignment from TAO_Notify_Property_Boolean
-  TAO_Notify_Property_Boolean& operator= (const TAO_Notify_Property_Boolean& rhs);
+  TAO_Notify_Property_Boolean& operator= (TAO_Notify_Property_Boolean const& rhs);
 
   /// Assignment from CORBA::Boolean
-  TAO_Notify_Property_Boolean& operator= (const CORBA::Boolean& rhs);
+  TAO_Notify_Property_Boolean& operator= (CORBA::Boolean const& rhs);
 
   /// Equality comparison operator.
-  bool operator== (const CORBA::Boolean &rhs) const;
+  bool operator== (CORBA::Boolean const &rhs) const;
 
   /// Inequality comparison operator.
-  bool operator!= (const CORBA::Boolean &rhs) const;
+  bool operator!= (CORBA::Boolean const &rhs) const;
 
-  int set (const TAO_Notify_PropertySeq& property_seq);
+  int set (TAO_Notify_PropertySeq const& property_seq);
 
   void get (CosNotification::PropertySeq& prop_seq);
 
   /// Return the name
-  const char * name () const;
+  char const *name () const;
 
   /// Return the value.
   CORBA::Boolean value () const;
@@ -64,13 +60,13 @@ public:
 
 protected:
   /// The Property name.
-  const char* name_;
+  char const *name_;
 
   /// The value
-  CORBA::Boolean value_;
+  CORBA::Boolean value_ {};
 
   /// Is the value valid
-  CORBA::Boolean valid_;
+  CORBA::Boolean valid_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

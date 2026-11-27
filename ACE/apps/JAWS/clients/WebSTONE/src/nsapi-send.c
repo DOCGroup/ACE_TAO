@@ -61,7 +61,9 @@ int nsapi_send(pblock *pb, Session *sn, Request *rq)
      * file size was specified.
      */
     if ( !(query_string = pblock_findval("query", rq->reqpb)) )
-        filesize = FILE_SIZE;
+        {
+            filesize = FILE_SIZE;
+        }
     else {
         filesize = atoi(&(query_string[5]));
     }
@@ -70,13 +72,15 @@ int nsapi_send(pblock *pb, Session *sn, Request *rq)
 
     /* Generate the output */
     maxindex = sizeof(HEADERS) + filesize;
-    for (index=sizeof(HEADERS); index < (maxindex); index++)
+    for (index=sizeof(HEADERS); index < (maxindex); ++index)
         /* generate random characters from A-Z */
         buffer[index] = rand() %26 + 63;
 
     /* Send the output */
     if (net_write(sn->csd, buffer, sizeof(HEADERS)-1+filesize, 0) == IO_ERROR)
-        return REQ_EXIT;
+        {
+            return REQ_EXIT;
+        }
 
     return REQ_PROCEED;
 }

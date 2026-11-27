@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//==========================================================================
 /**
  *  @file    SV_Message_Queue.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//===========================================================================
 
 #ifndef ACE_SV_MESSAGE_QUEUE_H
 #define ACE_SV_MESSAGE_QUEUE_H
@@ -35,15 +31,17 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_SV_Message_Queue
 {
 public:
-  // = Useful symbolic constants.
+  /// @name Queue flags
+  /// @{
   enum
   {
     ACE_CREATE = IPC_CREAT,
     ACE_OPEN   = 0,
     ACE_NOWAIT = IPC_NOWAIT
   };
+  /// @}
 
-  /// Open a message queue using the <external_id>.
+  /// Open a message queue using the @c external_id.
   ACE_SV_Message_Queue ();
   ACE_SV_Message_Queue (key_t external_id,
                         int create = ACE_SV_Message_Queue::ACE_OPEN,
@@ -61,15 +59,17 @@ public:
   /// Close down and remove the message queue from the system.
   int remove ();
 
-  // = Message transfer methods.
+  /// @name Message transfer
+  /// @{
   ssize_t recv (ACE_SV_Message &mb,
                 int length,
                 long mtype = 0,
                 int mflags = 0);
 
-  int send (const ACE_SV_Message &mb,
+  int send (ACE_SV_Message const &mb,
             int length,
             int mflags = 0);
+  /// @}
 
   /// Access the underlying control operations.
   int control (int option, void *arg = nullptr);
@@ -87,7 +87,7 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-  /// Returned from the underlying <msgget> system call.
+  /// Returned from the underlying @c msgget system call.
   int internal_id_;
 };
 

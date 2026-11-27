@@ -1,9 +1,6 @@
-// -*- C++ -*-
-//=============================================================================
 /**
  *  @file   ImR_ResponseHandler.h
  */
-//=============================================================================
 
 #ifndef IMR_RESPONSE_HANDLER_H
 #define IMR_RESPONSE_HANDLER_H
@@ -14,8 +11,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
-//----------------------------------------------------------------------------
 /**
  * @class ImR_ResponseHandler
  *
@@ -30,7 +25,7 @@ public:
   virtual ~ImR_ResponseHandler ();
 
   // Dummy implementations used for internal operations
-  virtual void send_ior (const char *pior);
+  virtual void send_ior (char const *pior);
   virtual void send_exception (CORBA::Exception *ex);
 };
 

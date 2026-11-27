@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 /**
  *  @file   EC_Reactive_Timeout_Generator.h
  *
@@ -37,22 +35,22 @@ class TAO_RTEvent_Serv_Export TAO_EC_Reactive_Timeout_Generator
   : public TAO_EC_Timeout_Generator
 {
 public:
-  /// Constructor.
-  /// If <reactor> is 0 then we use the reactor in the ORB singleton.
+  /// If @a reactor is 0 then we use the reactor in the ORB singleton.
   TAO_EC_Reactive_Timeout_Generator (ACE_Reactor *reactor = nullptr);
 
-  /// destructor
-  virtual ~TAO_EC_Reactive_Timeout_Generator () override;
+  ~TAO_EC_Reactive_Timeout_Generator () override = default;
 
-  // = The TAO_EC_Timeout_Generator methods.
-  virtual void activate () override;
-  virtual void shutdown () override;
-  virtual int schedule_timer (TAO_EC_Timeout_Filter* filter,
-                              const ACE_Time_Value& delta,
-                              const ACE_Time_Value& interval);
-  virtual int cancel_timer (const TAO_EC_QOS_Info& info,
-                            int id);
+  /// @name The TAO_EC_Timeout_Generator methods
+  /// @{
+  void activate () override;
+  void shutdown () override;
+  int schedule_timer (TAO_EC_Timeout_Filter* filter,
+                      ACE_Time_Value const & delta,
+                      ACE_Time_Value const & interval) override;
+  int cancel_timer (TAO_EC_QOS_Info const & info,
+                    int id) override;
 
+  /// @}
 private:
   /// The reactor
   ACE_Reactor *reactor_;

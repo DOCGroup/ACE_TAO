@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 /**
  * @file ECG_Adapters.h
  *
@@ -39,8 +37,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_RTEvent_Serv_Export TAO_ECG_Handler_Shutdown
 {
 public:
-  // Define virtual destructor to make sure we can delete derived
-  // objects through a pointer to TAO_ECG_Handler_Shutdown.
+  /// Define virtual destructor to make sure we can delete derived
+  /// objects through a pointer to TAO_ECG_Handler_Shutdown.
   virtual ~TAO_ECG_Handler_Shutdown ();
   virtual int shutdown () = 0;
 };
@@ -62,12 +60,12 @@ public:
 
   /// Call the RtecUDPAdmin::AddrServer::get_addr.  Throws exception
   /// if nil Address Server was specified in init ().
-  virtual void get_addr (const RtecEventComm::EventHeader& header,
+  virtual void get_addr (RtecEventComm::EventHeader const &header,
                  RtecUDPAdmin::UDP_Addr_out addr) = 0;
 
   /// Call the RtecUDPAdmin::AddrServer::get_address.  Throws exception
   /// if nil Address Server was specified in init ().
-  virtual void get_address (const RtecEventComm::EventHeader& header,
+  virtual void get_address (RtecEventComm::EventHeader const &header,
                                RtecUDPAdmin::UDP_Address_out addr) = 0;
 };
 

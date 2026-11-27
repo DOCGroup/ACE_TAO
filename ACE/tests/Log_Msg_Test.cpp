@@ -1,16 +1,14 @@
-//=============================================================================
 /**
  *  @file    Log_Msg_Test.cpp
  *
- *   This program tests the <ACE_Log_Msg> class in various ways and
- *   also illustrates many of the features of the <ACE_Log_Msg> For
- *   instance, this program tests the <ACE_Log_Msg> abstraction wrt
+ *   This program tests the @c ACE_Log_Msg class in various ways and
+ *   also illustrates many of the features of the @c ACE_Log_Msg For
+ *   instance, this program tests the @c ACE_Log_Msg abstraction wrt
  *   writing to stderr and to a file.  It also tests writing to user
  *   defined callback objects.
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
-//=============================================================================
 
 #include "test_config.h"
 
@@ -18,6 +16,7 @@
 #include "ace/streams.h"
 
 #include "ace/FILE_Connector.h"
+#include <climits>
 #include <memory>
 #include "ace/Log_Msg_Callback.h"
 #include "ace/Log_Record.h"
@@ -50,7 +49,7 @@ class Logger : public ACE_Log_Msg_Callback
 public:
   /// Constructor sets whether we're testing "recursive" callback
   /// logging!
-  Logger (bool be_recursive = true);
+  explicit Logger (bool be_recursive = true);
 
   /// Logging callback
   void log (ACE_Log_Record &log_record) override;
@@ -59,7 +58,7 @@ public:
 
 private:
   /// Flag for testing verbose logging.
-  bool verbose_logging_;
+  bool verbose_logging_ {};
 
   /// Flag for testing recursive callback logging.
   bool recursive_;
@@ -89,10 +88,13 @@ Logger::log (ACE_Log_Record &log_record)
   if (!this->verbose_logging_)
     {
       if (use_log_msg)
-        ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("Logger::log->%s\n"),
-                    log_record.msg_data ()));
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("Logger::log->%s\n"),
+                      log_record.msg_data ()));
+        }
       else
+        {
 #ifdef ACE_LACKS_IOSTREAM_TOTALLY
         ACE_OS::fprintf (ace_file_stream::instance ()->output_file (),
                          "Recursive Logger callback = %s\n",
@@ -103,21 +105,25 @@ Logger::log (ACE_Log_Record &log_record)
           << log_record.msg_data ()
           << endl;
 #endif /* ACE_LACKS_IOSTREAM_TOTALLY */
+        }
     }
   else
     {
       ACE_TCHAR verbose_msg[ACE_Log_Record::MAXVERBOSELOGMSGLEN];
-      int result = log_record.format_msg (ACE_LOG_MSG->local_host (),
+      int const result = log_record.format_msg (ACE_LOG_MSG->local_host (),
                                           ACE_LOG_MSG->flags (),
                                           verbose_msg,
                                           ACE_Log_Record::MAXVERBOSELOGMSGLEN);
       if (result == 0)
         {
           if (use_log_msg)
-            ACE_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("Logger::log->%s\n"),
-                        verbose_msg));
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("Logger::log->%s\n"),
+                          verbose_msg));
+            }
           else
+            {
 #ifdef ACE_LACKS_IOSTREAM_TOTALLY
             ACE_OS::fprintf (ace_file_stream::instance ()->output_file (),
                              "Recursive Logger callback = %s\n",
@@ -128,12 +134,15 @@ Logger::log (ACE_Log_Record &log_record)
               << log_record.msg_data ()
               << endl;
 #endif /* ACE_LACKS_IOSTREAM_TOTALLY */
+            }
         }
     }
 
   // Cleanup on the way out.
   if (use_log_msg)
+  {
     this->recursive_ = true;
+  }
 }
 
 static void
@@ -161,7 +170,7 @@ test_callbacks ()
   logger.verbose (true);
 
   // Set the callback object.
-  ACE_LOG_MSG->msg_callback (&logger);
+  ACE_LOG_MSG->msg_callback (std::addressof (logger));
 
   // This message should show up via the Logger callback.
   ACE_DEBUG ((LM_DEBUG,
@@ -199,46 +208,54 @@ test_callbacks ()
 }
 
 static void
-test_log_msg_features (const ACE_TCHAR *program)
+test_log_msg_features (ACE_TCHAR const *program)
 {
   // Note that the default behavior is to log to STDERR...
 
   int counter = 1 ;
 
   if (ACE_LOG_MSG->open (program) == -1)
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("cannot open logger!!!\n")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("cannot open logger!!!\n")));
+    }
 
   cause_error ();
 
   // Check to see what happened.
   if (ACE_LOG_MSG->op_status () == -1
       && ACE_LOG_MSG->errnum () == EWOULDBLOCK)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("op_status and errnum work!\n")));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("op_status and errnum work!\n")));
+    }
   else
-    ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("op_status and errnum failed!\n")));
+    {
+      ACE_ERROR ((LM_ERROR,
+                  ACE_TEXT ("op_status and errnum failed!\n")));
+    }
 
-  const char *badname = "badname";
+  char const *badname = "badname";
 
   // We use the DEBUG messages instead of error messages. This is to
   // help the scripts. If we print out error messages the scripts
   // start catching them as errors.
   if (ACE_OS::open (badname,
                     O_RDONLY) == ACE_INVALID_HANDLE)
-    ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("%n: (%x), can't open %C%r\n"),
-                10000,
-                badname,
-                cleanup));
+    {
+      ACE_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("%n: (%x), can't open %C%r\n"),
+                  10000,
+                  badname,
+                  cleanup));
+    }
 
   // Try a log operation that would overflow the logging buffer if not
   // properly guarded.
   ACE_TCHAR big[ACE_Log_Record::MAXLOGMSGLEN + 1];
   size_t i = 0;
-  static const ACE_TCHAR alphabet[] = ACE_TEXT ("abcdefghijklmnopqrstuvwxyz");
-  size_t j = ACE_OS::strlen (alphabet);
+  static ACE_TCHAR const alphabet[] = ACE_TEXT ("abcdefghijklmnopqrstuvwxyz");
+  size_t const j = ACE_OS::strlen (alphabet);
   while (i < ACE_Log_Record::MAXLOGMSGLEN)
     {
       size_t const index = i++;
@@ -247,7 +264,9 @@ test_log_msg_features (const ACE_TCHAR *program)
   big[ACE_Log_Record::MAXLOGMSGLEN] = ACE_TEXT ('\0');
   ACE_DEBUG ((LM_INFO, ACE_TEXT ("This is too big:%l %s\n"), big));
 
-  ACE_HEX_DUMP((LM_INFO, (const char*)big, ACE_Log_Record::MAXLOGMSGLEN ));
+  ACE_HEX_DUMP ((LM_INFO,
+                 reinterpret_cast<char const *> (big),
+                 ACE_Log_Record::MAXLOGMSGLEN));
 
   // Exercise many different combinations of OSTREAM.
 
@@ -319,7 +338,7 @@ test_log_msg_features (const ACE_TCHAR *program)
 
   // Print out the binary bytes of the array in hex form.
   ACE_LOG_MSG->log_hexdump (LM_DEBUG,
-                            (char *) array,
+                            reinterpret_cast<char const *> (array),
                             sizeof array);
 
   // Disable the LM_DEBUG and LM_INFO messages.
@@ -384,7 +403,7 @@ test_acelib_category()
 
   Log_Count  counter;
 
-  ACE_LOG_MSG->msg_callback (&counter);
+  ACE_LOG_MSG->msg_callback (std::addressof (counter));
 
   // Disable the LM_DEBUG and LM_INFO messages.
   u_long priority_mask =
@@ -446,7 +465,6 @@ test_acelib_category()
     ++failed;
   }
 
-
   if (failed == 0) {
     ACE_DEBUG((LM_DEBUG, "All ace lib category log passed\n"));
   }
@@ -474,16 +492,18 @@ test_ostream ()
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
   // Create a persistent store.
-  const ACE_TCHAR *filename = ACE_TEXT ("output");
+  ACE_TCHAR const *filename = ACE_TEXT ("output");
   ofstream myostream (ACE_TEXT_ALWAYS_CHAR (filename), ios::out | ios::trunc);
 
   // Check for errors.
   if (myostream.bad ())
+  {
     return -1;
+  }
 
   OFSTREAM *old_stream = ace_file_stream::instance ()->output_file ();
   // Set the ostream.
-  ACE_LOG_MSG->msg_ostream (&myostream);
+  ACE_LOG_MSG->msg_ostream (std::addressof (myostream));
 
   // This message should show up in the ostream.
   ACE_DEBUG ((LM_DEBUG,
@@ -495,7 +515,7 @@ test_ostream ()
 
   ACE_FILE_Connector connector;
   ACE_FILE_IO file;
-  ACE_FILE_Addr file_addr (filename);
+  ACE_FILE_Addr const file_addr (filename);
 
   // Open up the file.
   if (connector.connect (file, file_addr) == -1)
@@ -527,27 +547,26 @@ test_ostream ()
     }
 
   // Allocate the input buffer
-  char *buffer = nullptr;
+  char *buffer {};
   ACE_NEW_RETURN (buffer,
                   char[info.size_ + 1],
                   -1);
   // Make sure <buffer> is released automagically.
-  std::unique_ptr<char[]> b (buffer);
+  std::unique_ptr<char[]> const b (buffer);
 
   // Read the file into the buffer.
-  ssize_t size = file.recv (buffer,
+  ssize_t const size = file.recv (buffer,
                             info.size_);
   if (size != info.size_)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("Read %d bytes, rather than expected %d bytes\n"),
+                         ACE_TEXT ("Read %b bytes, rather than expected %q bytes\n"),
                          size,
-                         info.size_),
+                         static_cast<ACE_INT64> (info.size_)),
                         -1);
     }
   // Make sure to NUL-terminate this turkey!
   buffer[size] = '\0';
-
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("%C"),
@@ -556,10 +575,12 @@ test_ostream ()
 #if !defined (TEST_CAN_UNLINK_IN_ADVANCE)
   file.close ();
   if (file.unlink () == -1)
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("unlink failed for %p\n"),
-                       file_addr.get_path_name ()),
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("unlink failed for %p\n"),
+                         file_addr.get_path_name ()),
                        1);
+    }
 #endif
 
 #endif /* ACE_LACKS_IOSTREAM_TOTALLY */
@@ -572,7 +593,6 @@ test_ostream ()
   return 0;
 }
 
-
 // For testing the format specifiers, a class is defined as a callback
 // mechanism. It will get the formatted messages and check them for
 // correctness. The test_format_specs() function will set the first
@@ -582,10 +602,10 @@ test_ostream ()
 class Log_Spec_Verify : public ACE_Log_Msg_Callback
 {
 public:
-  Log_Spec_Verify (bool be_recursive = true) : fail_ (0), tests_ (0), recursive_ (be_recursive) {};
+  explicit Log_Spec_Verify (bool be_recursive = true) : fail_ (0), tests_ (0), recursive_ (be_recursive) {};
 
-  void expected_handles (const ACE_TCHAR *handle,
-                         const ACE_TCHAR *invalid_handle)
+  void expected_handles (ACE_TCHAR const *handle,
+                         ACE_TCHAR const *invalid_handle)
   {
     this->expected_handle_ = handle;
     this->expected_invalid_handle_ = invalid_handle;
@@ -605,8 +625,8 @@ private:
 
   bool recursive_;
 
-  const ACE_TCHAR *expected_handle_ {};
-  const ACE_TCHAR *expected_invalid_handle_ {};
+  ACE_TCHAR const *expected_handle_ {};
+  ACE_TCHAR const *expected_invalid_handle_ {};
 };
 
 void
@@ -630,8 +650,9 @@ Log_Spec_Verify::log (ACE_Log_Record &log_record)
     }
   else
     {
-      const ACE_TCHAR *b = log_record.msg_data ();
-      const ACE_TCHAR *expect = nullptr;
+      ACE_TCHAR const *b = log_record.msg_data ();
+      ACE_TCHAR const *expect {};
+      ACE_TCHAR integer_expected[64];
 
       ++this->tests_;
 
@@ -656,7 +677,7 @@ Log_Spec_Verify::log (ACE_Log_Record &log_record)
           // Check if we have a string, exact length could vary
           if (b != log_record.msg_data () && ACE_OS::strlen (b) < 15)
             {
-              ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Test %s failed; expected %d\n"),
+              ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Test %s failed; expected %B\n"),
                           log_record.msg_data (), ACE_OS::strlen (b)));
               ++this->fail_;
             }
@@ -701,6 +722,24 @@ Log_Spec_Verify::log (ACE_Log_Record &log_record)
           expect = this->expected_invalid_handle_;
           b += 3;
         }
+      else if (ACE_OS::strncmp (b, ACE_TEXT ("l9:"), 3) == 0)
+        {
+          ACE_OS::snprintf (integer_expected, 64, ACE_TEXT ("%ld"), LONG_MAX);
+          expect = integer_expected;
+          b += 3;
+        }
+      else if (ACE_OS::strncmp (b, ACE_TEXT ("l10:"), 4) == 0)
+        {
+          ACE_OS::snprintf (integer_expected, 64, ACE_TEXT ("%lu"), ULONG_MAX);
+          expect = integer_expected;
+          b += 4;
+        }
+      else if (ACE_OS::strncmp (b, ACE_TEXT ("l11:"), 4) == 0)
+        {
+          ACE_OS::snprintf (integer_expected, 64, ACE_TEXT ("%ld"), LONG_MIN);
+          expect = integer_expected;
+          b += 4;
+        }
       else
         {
           ACE_ERROR ((LM_ERROR,
@@ -719,21 +758,27 @@ Log_Spec_Verify::log (ACE_Log_Record &log_record)
 
   // Cleanup on the way out.
   if (use_log_msg)
+  {
     this->recursive_ = true;
+  }
 }
 
 int
 Log_Spec_Verify::result ()
 {
   if (this->fail_ == 0)
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("All logging specifier tests passed.\n")));
-  else
-    ACE_ERROR ((LM_ERROR, ACE_TEXT ("%d logging specifier tests failed!\n"),
-                this->fail_));
-
-  if (this->tests_ != 21)
     {
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Expected number of tests run is %d, not 21!\n"),
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("All logging specifier tests passed.\n")));
+    }
+  else
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("%d logging specifier tests failed!\n"),
+                  this->fail_));
+    }
+
+  if (this->tests_ != 24)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Expected number of tests run is %d, not 24!\n"),
                   this->tests_));
       ++this->fail_;
     }
@@ -754,8 +799,8 @@ test_format_specs ()
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%}%IONE\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%}%IENDINDENTING\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%W\n"), ACE_TEXT_WIDE ("My string test\n")));
-  ACE_WCHAR_T *nill_string = nullptr;
-  char* char_nill_string = nullptr;
+  ACE_WCHAR_T *nill_string {};
+  char* char_nill_string {};
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%W\n"), nill_string));
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%s\n"), nill_string));
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%C\n"), char_nill_string));
@@ -768,7 +813,7 @@ test_format_specs ()
 
   Log_Spec_Verify  verifier;
 
-  ACE_LOG_MSG->msg_callback (&verifier);
+  ACE_LOG_MSG->msg_callback (std::addressof (verifier));
   ACE_LOG_MSG->clr_flags (ACE_Log_Msg::VERBOSE_LITE);
   ACE_LOG_MSG->clr_flags (ACE_Log_Msg::VERBOSE);
   ACE_LOG_MSG->linenum (42);
@@ -812,10 +857,10 @@ test_format_specs ()
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("l6:%D\n")));
   ACE_Time_Value tv = ACE_OS::gettimeofday ();
   tv += ACE_Time_Value (25*60*60); // + 25 hours
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("l6:%#D\n"), &tv));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("l6:%#D\n"), std::addressof (tv)));
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("l6:%T\n")));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("l6:%#T\n"), &tv));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("l6:%#T\n"), std::addressof (tv)));
 
   ACE_TCHAR expected_handle[64];
   ACE_TCHAR expected_invalid_handle[64];
@@ -834,6 +879,9 @@ test_format_specs ()
   verifier.expected_handles (expected_handle, expected_invalid_handle);
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("l7:%H"), handle));
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("l8:%H"), ACE_INVALID_HANDLE));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("l9:%Ld"), LONG_MAX));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("l10:%Lu"), ULONG_MAX));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("l11:%Ld"), LONG_MIN));
 
   ACE_LOG_MSG->msg_ostream (ace_file_stream::instance ()->output_file ());
   ACE_LOG_MSG->msg_callback (nullptr);

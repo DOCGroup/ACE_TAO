@@ -1,13 +1,12 @@
-// -*- C++ -*-
-// Creates a Local ACE_FILE.
+/// Creates a Local ACE_FILE.
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 ACE_FILE_Connector::ACE_FILE_Connector (ACE_FILE_IO &new_io,
-                                        const ACE_FILE_Addr &remote_sap,
+                                        ACE_FILE_Addr const &remote_sap,
                                         ACE_Time_Value *timeout,
-                                        const ACE_Addr &local_sap,
+                                        ACE_Addr const &local_sap,
                                         int reuse_addr,
                                         int flags,
                                         int perms)
@@ -15,11 +14,13 @@ ACE_FILE_Connector::ACE_FILE_Connector (ACE_FILE_IO &new_io,
   ACE_TRACE ("ACE_FILE_Connector::ACE_FILE_Connector");
   if (this->connect (new_io, remote_sap, timeout, local_sap,
                      reuse_addr, flags, perms) == ACE_IO_SAP::INVALID_HANDLE
-      && timeout != 0 && !(errno == EWOULDBLOCK || errno == ETIME))
-    ACELIB_ERROR ((LM_ERROR,
-                ACE_TEXT ("address %s, %p\n"),
-                remote_sap.get_path_name (),
-                ACE_TEXT ("ACE_FILE_IO")));
+      && timeout != nullptr && !(errno == EWOULDBLOCK || errno == ETIME))
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("address %s, %p\n"),
+                     remote_sap.get_path_name (),
+                     ACE_TEXT ("ACE_FILE_IO")));
+    }
 }
 
 ACE_INLINE bool

@@ -1,13 +1,10 @@
-/* -*-C++-*- */
 #ifndef SNMPERRS_H_
 #define SNMPERRS_H_
-//=============================================================================
 /**
  *  @file    snmperrs.h
  *
  * Definition of error macros and error strings
  */
-//=============================================================================
 
 /*===================================================================
   Copyright (c) 1996
@@ -25,12 +22,9 @@
   derivatives based upon this software code base.
 ============================================================================*/
 
-
-//-------[ Positive ASNMP Error Return Codes ]------------------------------
-// These values are error status values from RFC 1905
-//
-// The values can be returned via Pdu::get_error_status()
-//
+/// @name Positive ASNMP error return codes.
+/// @{
+/// RFC 1905 error status values returned by Pdu::get_error_status().
 #define SNMP_ERROR_SUCCESS           0   // Success Status
 #define SNMP_ERROR_TOO_BIG           1   // Pdu encoding too big
 #define SNMP_ERROR_NO_SUCH_NAME      2   // No such VB name, see error index
@@ -50,24 +44,30 @@
 #define SNMP_ERROR_AUTH_ERR         16   // Authentication failure
 #define SNMP_ERROR_NOT_WRITEABLE    17   // Mib Object not writeable
 #define SNMP_ERROR_INCONSIS_NAME    18   // Inconsistent naming used
+/// @}
 
+/// @name Negative ASNMP result and error return codes.
+/// @{
 
-//-------[ Negative ASNMP Result/Error Return Codes ]-------------------
-
-// General
+/// @name General errors.
+/// @{
 #define SNMP_CLASS_SUCCESS                 0  // success
 #define SNMP_CLASS_ERROR                  -1  // general error
 #define SNMP_CLASS_RESOURCE_UNAVAIL       -2  // e.g., malloc failed
 #define SNMP_CLASS_INTERNAL_ERROR         -3  // unexpected / internal error
 #define SNMP_CLASS_UNSUPPORTED            -4  // unsupported function
+/// @}
 
-// Callback reasons:
+/// @name Callback reasons.
+/// @{
 #define SNMP_CLASS_TIMEOUT                -5  // outstanding request timed out
 #define SNMP_CLASS_ASYNC_RESPONSE         -6  // received response for outstd request
 #define SNMP_CLASS_NOTIFICATION           -7  // received notification (trap/inform)
 #define SNMP_CLASS_SESSION_DESTROYED      -8  // snmp::destroyed with oustanding reqs pending
+/// @}
 
-// Snmp Class:
+/// @name SNMP class errors.
+/// @{
 #define SNMP_CLASS_INVALID                -10 // snmp::mf called on invalid instance
 #define SNMP_CLASS_INVALID_PDU            -11 // invalid pdu passed to mf
 #define SNMP_CLASS_INVALID_TARGET         -12 // invalid target passed to mf
@@ -78,26 +78,30 @@
 #define SNMP_CLASS_INVALID_OID            -17 // invalid oid passed to mf
 #define SNMP_CLASS_INVALID_ADDRESS        -18 // invalid address passed to mf
 #define SNMP_CLASS_ERR_STATUS_SET         -19 // agent returned response pdu with error_status set
+/// @}
 
-// Transport Errors:
+/// @name Transport errors.
+/// @{
 #define SNMP_CLASS_TL_UNSUPPORTED         -20 // transport unsupported
 #define SNMP_CLASS_TL_IN_USE              -21 // transport in use
 #define SNMP_CLASS_TL_FAILED              -22 // transport operation failed
+/// @}
 
-// extras
+/// @name Other errors.
+/// @{
 #define SNMP_CLASS_SHUTDOWN               -23 // used for back door shutdown
 #define SNMP_INVALID_ARGS                 -24 // invalid args passed
+/// @}
+/// @}
 
 #ifdef INCLUDE_SNMP_ERR_STRINGS_
-
-// ASCII strings returned through Snmp::error() function.  NOTE: altering
-// the strings in this header file will not affect the return values of
-// Snmp::error(), unless you rebuild the ASNMP library from source.
 
 #define MAX_POS_ERROR                    SNMP_ERROR_INCONSIS_NAME
 #define MAX_NEG_ERROR                    SNMP_CLASS_SHUTDOWN
 
-static const char * pErrs[] = {
+/// ASCII strings returned by Snmp::error().
+/// @note Changes to these strings require rebuilding the ASNMP library.
+static char const * pErrs[] = {
   "Success",                                                  // 0
   "SNMP: Response PDU Too Big",                               // 1
   "SNMP: Variable does not exist",                            // 2
@@ -120,8 +124,7 @@ static const char * pErrs[] = {
   "SNMP: Unknown error code",                                 // Always last
 };
 
-
-static const char * nErrs[] = {
+static char const * nErrs[] = {
   // General:
   // 0  SNMP_CLASS_SUCCESS
   "ASNMP: Success",

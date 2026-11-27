@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file     oid.cpp
  *
@@ -9,7 +7,6 @@
  *
  *  @author Peter E MellquistMichael R MacFaden  mrm@cisco.com - rework & ACE port
  */
-//=============================================================================
 
 /*===================================================================
   Copyright (c) 1996
@@ -27,68 +24,75 @@
   derivatives based upon this software code base.
 =====================================================================*/
 
-//---------[ external C libraries used ]--------------------------------
+#include <cstring>
+#include <memory>
 
 #include "asnmp/oid.h"                  // include def for oid class
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_Memory.h"
 #include "ace/OS_NS_ctype.h"
+#include <cerrno>
+#include <limits>
+#include <new>
+#include <utility>
 
 enum Defs {SNMPBUFFSIZE=300,
            SNMPCHARSIZE=15};          // max oid value (4294967295UL)
 
 #define NO_MEM_STR "ERROR: Oid::to_string: memory allocation failure"
 
-//=============[Oid::get_syntax()]====================================
 SmiUINT32 Oid::get_syntax()
 {
   return sNMP_SYNTAX_OID;
 }
 
-
-//=============[Oid::Oid( const char *dotted_string ]=====================
-// constructor using a dotted string
-//
-// do a string to oid using the string passed in
-Oid::Oid( const char * dotted_oid_string, size_t size)
+/// Construct an OID from its dotted string representation.
+Oid::Oid( char const * dotted_oid_string, size_t size)
 {
   // can't init enum SmiValue so just memset it clean
   set_null();
 
-  size_t z;
-  if ((z = ACE_OS::strlen(dotted_oid_string)) == 0) {
+  size_t const z = std::strlen (dotted_oid_string);
+  if (z == 0)
+  {
     set_invalid();
     return;
   }
 
   if (size == (unsigned int)-1)
+  {
     size = z;
+  }
   if (size > z)
+  {
     size = z;
-
-  char *ptr = (char *)dotted_oid_string;;
-  if (size < z) {
-    // create new buffer if needed
-    ACE_NEW(ptr, char [size]);
-
-    // sz should be in StrToOid?
-    ACE_OS::memcpy( (void *)ptr, dotted_oid_string, size);
   }
 
-  size_t byte_counter;
-  if (StrToOid( (char *) ptr, &smival.value.oid, byte_counter) < 0)
+  char const *parse_string = dotted_oid_string;
+  std::unique_ptr<char[]> truncated_string;
+  if (size < z) {
+    truncated_string.reset (new (std::nothrow) char[size + 1]);
+    if (!truncated_string)
+      {
+        set_invalid ();
+        return;
+      }
+
+    std::memcpy (truncated_string.get (), dotted_oid_string, size);
+    truncated_string[size] = '\0';
+    parse_string = truncated_string.get ();
+  }
+
+  size_t byte_counter {};
+  if (StrToOid (parse_string, &smival.value.oid, byte_counter) < 0)
+  {
     set_invalid();
-  if (ptr != dotted_oid_string)
-    delete [] ptr;
+  }
 }
 
-
-//=============[Oid::Oid( const Oid &oid) ]================================
-// constructor using another oid object
-//
-// do an oid copy using the oid object passed in
-Oid::Oid ( const Oid &oid)
+/// Copy an OID.
+Oid::Oid ( Oid const &oid)
   : SnmpSyntax (oid)
 {
   set_null();
@@ -104,12 +108,16 @@ Oid::Oid ( const Oid &oid)
   }
 }
 
+Oid::Oid (Oid &&oid) noexcept
+  : SnmpSyntax (oid),
+    iv_str (std::move (oid.iv_str))
+{
+  oid.smival.value.oid.ptr = nullptr;
+  oid.smival.value.oid.len = 0;
+}
 
-//=============[Oid::Oid( const unsigned long *raw_oid, int oid_len) ]====
-// constructor using raw numeric form
-//
-// copy the integer values into the private member
-Oid::Oid(const unsigned long *raw_oid, size_t oid_len)
+/// Construct an OID from raw integer values.
+Oid::Oid(unsigned long const *raw_oid, size_t oid_len)
 {
   set_null();
 
@@ -119,35 +127,20 @@ Oid::Oid(const unsigned long *raw_oid, size_t oid_len)
   if (raw_oid && oid_len > 0) {
     ACE_NEW(smival.value.oid.ptr, SmiUINT32[ oid_len]);
     smival.value.oid.len = oid_len;
-    for (size_t i=0; i < oid_len; i++)
-      smival.value.oid.ptr[i] = raw_oid[i];
+    for (size_t i=0; i < oid_len; ++i)
+      {
+        smival.value.oid.ptr[i] = raw_oid[i];
+      }
   }
 }
 
-//=============[Oid::~Oid]==============================================
-// destructor
-//
-// free up the descriptor space
+/// Release the descriptor storage.
 Oid::~Oid()
 {
-  // free up the octet deep memory
-  if ( smival.value.oid.ptr ) {
-    set_invalid();
-  }
-
-  // free up the output string
-  if ( iv_str != 0)
-    delete [] iv_str;
+  set_invalid ();
 }
 
-
-//=============[Oid::operator = const char * dotted_string ]==============
-// assignment to a string operator overloaded
-//
-// free the existing oid
-// create the new oid from the string
-// return this object
-void Oid::set_data( const char *dotted_oid_string)
+void Oid::set_data( char const *dotted_oid_string)
 {
   // delete the old value
   if ( smival.value.oid.ptr ) {
@@ -156,101 +149,118 @@ void Oid::set_data( const char *dotted_oid_string)
 
   // assign the new value
   size_t byte_counter;
-  if (StrToOid( (char *) dotted_oid_string, &smival.value.oid, byte_counter) <0)
+  if (StrToOid (dotted_oid_string, &smival.value.oid, byte_counter) < 0)
+  {
     set_invalid();
+  }
 }
 
-
-//=============[Oid:: operator = const Oid &oid ]==========================
-// assignment to another oid object overloaded
-//
-// free the existing oid
-// create a new one from the object passed in
+/// Assign from another OID.
 // TODO: measure perf vs memory of no realloc in case where len >= oid.len
-Oid& Oid::operator=( const Oid &oid)
+Oid& Oid::operator=( Oid const &oid)
 {
   // protect against assignment from self
-  if ( this == &oid)
-      return *this;
+  if (this == std::addressof (oid))
+  {
+    return *this;
+  }
 
   set_invalid();
 
   // check for zero len on source
   if ( oid.smival.value.oid.len == 0)
-     return *this;
+  {
+    return *this;
+  }
 
   const SmiLPOID srcOid = (SmiLPOID) &(oid.smival.value.oid);
   init_value(srcOid, oid.smival.value.oid.len);
   return *this;
 }
 
-// assign this object the oid, set to invalid if copy fails
+Oid &Oid::operator= (Oid &&oid) noexcept
+{
+  if (this != std::addressof (oid))
+    {
+      this->set_invalid ();
+      this->smival = oid.smival;
+      this->iv_str = std::move (oid.iv_str);
+      oid.smival.value.oid.ptr = nullptr;
+      oid.smival.value.oid.len = 0;
+    }
+  return *this;
+}
+
+Oid& Oid::operator= (char const *dotted_oid_string)
+{
+  return *this = Oid (dotted_oid_string);
+}
+
+/// Initialize this OID from another raw OID value.
 void Oid::init_value(const SmiLPOID srcOid, size_t len)
 {
   // allocate some memory for the oid
   ACE_NEW(smival.value.oid.ptr, SmiUINT32[ len]);
   size_t byte_counter;
-  OidCopy( srcOid, (SmiLPOID) &smival.value.oid, byte_counter);
+  OidCopy (srcOid, std::addressof (smival.value.oid), byte_counter);
 }
 
-void Oid::init_value(const unsigned long *raw_oid, size_t oid_len)
+void Oid::init_value(unsigned long const *raw_oid, size_t oid_len)
 {
   if (smival.value.oid.ptr)
+  {
     delete [] smival.value.oid.ptr;
+  }
 
   ACE_NEW(smival.value.oid.ptr, SmiUINT32[ oid_len]);
-  ACE_OS::memcpy((SmiLPBYTE) smival.value.oid.ptr,
-                 (SmiLPBYTE) raw_oid,
-                 (size_t) (oid_len * sizeof(SmiUINT32)));
+  std::memcpy (smival.value.oid.ptr, raw_oid, oid_len * sizeof (SmiUINT32));
   smival.value.oid.len = oid_len;
 }
 
-//==============[Oid:: operator += const char *a ]=========================
-// append operator, appends a string
-//
-// allocate some space for a max oid string
-// extract current string into space
-// concat new string
-// free up existing oid
-// make a new oid from string
-// delete allocated space
-Oid& Oid::operator+=( const char *a)
+/// Append a dotted string to this OID.
+Oid& Oid::operator+=( char const *a)
 {
-  unsigned long n;
-
   if (!a)
+  {
     return *this;
+  }
 
   if ( *a=='.')
-    a++;
-  size_t sz = ACE_OS::strlen(a);
+  {
+    ++a;
+  }
+  size_t const sz = std::strlen (a);
 
   if (valid()) {
-    n = (smival.value.oid.len *SNMPCHARSIZE) + smival.value.oid.len + 1 + sz;
-    char *ptr;
-    ACE_NEW_RETURN(ptr, char[ n], *this);
+    unsigned long const n = (smival.value.oid.len *SNMPCHARSIZE) + smival.value.oid.len + 1 + sz;
+    std::unique_ptr<char[]> const ptr (new (std::nothrow) char[n]);
+    if (!ptr)
+      {
+        errno = ENOMEM;
+        return *this;
+      }
     size_t byte_counter;
-    if (OidToStr(&smival.value.oid, n,ptr, byte_counter) > 0) {
-        delete [] ptr;
+    if (OidToStr (&smival.value.oid, n, ptr.get (), byte_counter) > 0) {
         set_invalid();
         return *this;
       }
 
-   if (ACE_OS::strlen(ptr))
-     ACE_OS::strcat(ptr,".");
-   ACE_OS::strcat(ptr,a);
+   if (std::strlen (ptr.get ()))
+   {
+     std::strcat (ptr.get (), ".");
+   }
+   std::strcat (ptr.get (), a);
    if ( smival.value.oid.len !=0) {
      set_invalid();
     }
 
-   if (StrToOid( (char *) ptr, &smival.value.oid, byte_counter) < 0) {
+   if (StrToOid (ptr.get (), &smival.value.oid, byte_counter) < 0) {
        set_invalid();
    }
-   delete [] ptr;
   }
   else {
     size_t byte_counter;
-    if (StrToOid( (char *) a, &smival.value.oid, byte_counter) < 0) {
+    if (StrToOid (a, &smival.value.oid, byte_counter) < 0) {
       set_invalid();
     }
   }
@@ -258,90 +268,108 @@ Oid& Oid::operator+=( const char *a)
   return *this;
 }
 
-//=============[ bool operator == oid,oid ]=================================
-// equivlence operator overloaded
-bool operator==( const Oid &lhs, const Oid &rhs)
+/// Compare two OIDs for equality.
+bool operator==( Oid const &lhs, Oid const &rhs)
 {
   // ensure same len, then use left_comparison
   if (rhs.length() != lhs.length())
+  {
     return false;
+  }
   if( lhs.left_comparison( rhs.length(), rhs) == 0)
-    return true;
+    {
+      return true;
+    }
   else
+  {
     return false;
+  }
 }
 
-//==============[ bool operator!=( Oid &x,Oid &y) ]=======================
-//not equivlence operator overloaded
-bool operator!=( const Oid &lhs,const Oid &rhs)
+/// Compare two OIDs for inequality.
+bool operator!=( Oid const &lhs,Oid const &rhs)
 {
   return (!(lhs == rhs));
 }
 
-//==============[ bool operator<( Oid &x,Oid &y) ]========================
-// less than < overloaded
-bool operator<( const Oid &lhs,const Oid &rhs)
+/// Compare two OIDs for ordering.
+bool operator<( Oid const &lhs,Oid const &rhs)
 {
   int result;
 
   // call left_comparison with the current
   // Oidx, Oidy and len of Oidx
   if ((result = lhs.left_comparison( rhs.length(), rhs)) < 0)
-    return true;
+    {
+      return true;
+    }
   else if (result > 0)
-    return false;
+    {
+      return false;
+    }
 
   else{
     // if here, equivalent substrings, call the shorter one <
     if (lhs.length() < rhs.length())
-      return true;
+      {
+        return true;
+      }
     else
+    {
       return false;
+    }
   }
 }
 
-//==============[ bool operator<=( Oid &x,Oid &y) ]=======================
-// less than <= overloaded
-bool operator<=( const Oid &x,const Oid &y)
+/// Compare two OIDs for less-than-or-equal ordering.
+bool operator<=( Oid const &x,Oid const &y)
 {
   if ( (x < y) || (x == y) )
-    return true;
+    {
+      return true;
+    }
   else
+  {
     return false;
+  }
 }
 
-//==============[ bool operator>( Oid &x,Oid &y) ]========================
-// greater than > overloaded
-bool operator>( const Oid &x,const Oid &y)
+/// Compare two OIDs for greater-than ordering.
+bool operator>( Oid const &x,Oid const &y)
 {
   // just invert existing <=
   if (!(x<=y))
-    return true;
+    {
+      return true;
+    }
   else
+  {
     return false;
+  }
 }
 
-//==============[ bool operator>=( Oid &x,Oid &y) ]=======================
-// greater than >= overloaded
-bool operator>=( const Oid &x,const Oid &y)
+/// Compare two OIDs for greater-than-or-equal ordering.
+bool operator>=( Oid const &x,Oid const &y)
 {
   // just invert existing <
   if (!(x<y))
-    return true;
+    {
+      return true;
+    }
   else
+  {
     return false;
+  }
 }
 
-//===============[Oid::oidval ]=============================================
-// return the WinSnmp oid part
+/// Return the WinSNMP OID representation.
 SmiLPOID Oid::oidval()
 {
-  return (SmiLPOID) &smival.value.oid;
+  return std::addressof (smival.value.oid);
 }
 
-//===============[Oid::set_data ]==---=====================================
-// copy data from raw form...
-void Oid::set_data( const unsigned long *raw_oid, const size_t oid_len)
+/// Set this OID from raw integer values.
+void Oid::set_data( unsigned long const *raw_oid, size_t const oid_len)
 {
   if (smival.value.oid.len < oid_len) {
     if ( smival.value.oid.ptr) {
@@ -351,19 +379,15 @@ void Oid::set_data( const unsigned long *raw_oid, const size_t oid_len)
   init_value(raw_oid, oid_len);
 }
 
-
-//===============[Oid::len ]================================================
-// return the len of the oid
+/// Return the number of sub-identifiers.
 size_t Oid::length() const
 {
   return smival.value.oid.len;
 }
 
-//===============[Oid::trim( unsigned int) ]============================
-// trim off the n leftmost values of an oid
-// Note!, does not adjust actual space for
-// speed
-void Oid::trim( const size_t n)
+/// Trim the requested number of leftmost sub-identifiers.
+/// The allocated storage is retained for speed.
+void Oid::trim( size_t const n)
 {
   // verify that n is legal
   if ((n<=smival.value.oid.len)&&(n>0)) {
@@ -375,41 +399,34 @@ void Oid::trim( const size_t n)
   }
 }
 
-//===============[Oid::set_invalid() ]====================
-// make this object invalid by resetting all values
+/// Invalidate this OID and release its storage.
 void Oid::set_invalid() {
   delete [] smival.value.oid.ptr;
-  smival.value.oid.ptr = 0;
+  smival.value.oid.ptr = nullptr;
   smival.value.oid.len = 0;
-  delete [] iv_str;
-  iv_str = 0;
+  iv_str.reset ();
 }
 
-//===============[Oid::set_null() ]====================
 void Oid::set_null() {
   smival.syntax = sNMP_SYNTAX_OID;
-  smival.value.oid.ptr = 0;
+  smival.value.oid.ptr = nullptr;
   smival.value.oid.len = 0;
-  iv_str = 0;
+  iv_str.reset ();
 }
 
-//===============[Oid::operator += const unsigned int) ]====================
-// append operator, appends an int
-//
-// allocate some space for a max oid string
-// extract current string into space
-// concat new string
-// free up existing oid
-// make a new oid from string
-// delete allocated space
+/// Append an integer sub-identifier to this OID.
 Oid& Oid::operator+=( const unsigned long i)
 {
-  unsigned long n = (smival.value.oid.len * SNMPCHARSIZE)
-    + ( smival.value.oid.len -1) + 1 + 4;
-  char buffer[SNMPBUFFSIZE];
+  size_t const max_component_size =
+    std::numeric_limits<unsigned long>::digits10 + 1 > SNMPCHARSIZE
+      ? std::numeric_limits<unsigned long>::digits10 + 1
+      : SNMPCHARSIZE;
+  size_t const n = smival.value.oid.len * max_component_size
+    + smival.value.oid.len + std::numeric_limits<unsigned long>::digits10 + 2;
 
   // two cases: null oid, existing oid
   if (valid()) {
+    char buffer[SNMPBUFFSIZE];
     // allocate some temporary space
     char *ptr;
     ACE_NEW_RETURN(ptr, char[ n], *this);
@@ -420,71 +437,67 @@ Oid& Oid::operator+=( const unsigned long i)
        return *this;
     }
 
-    if (ACE_OS::strlen(ptr))
-       ACE_OS::strcat(ptr,".");
+    if (std::strlen (ptr))
+    {
+      std::strcat (ptr, ".");
+    }
 
     if (ACE_OS::sprintf( buffer,"%lu",i) != -1) {
-       ACE_OS::strcat(ptr, buffer);
+       std::strcat (ptr, buffer);
        if ( smival.value.oid.ptr ) {
          set_invalid();
        }
-       if (StrToOid( (char *) ptr, &smival.value.oid, byte_counter) < 0) {
+       if (StrToOid (ptr, &smival.value.oid, byte_counter) < 0) {
          set_invalid();
        }
        delete [] ptr;
     }
   }
   else {
-    init_value((const unsigned long *)&i, (size_t)1);
+    init_value (std::addressof (i), 1);
   }
 
   return *this;
 }
 
-//===============[Oid::operator += const Oid) ]========================
-// append operator, appends an Oid
-//
-// allocate some space for a max oid string
-// extract current string into space
-// concat new string
-// free up existing oid
-// make a new oid from string
-// delete allocated space
-Oid& Oid::operator+=( const Oid &o)
+/// Append another OID's sub-identifiers.
+Oid& Oid::operator+=( Oid const &o)
 {
-  SmiLPUINT32 new_oid;
-
   if (o.smival.value.oid.len == 0)
+  {
     return *this;
-
-  ACE_NEW_RETURN(new_oid,
-        SmiUINT32[ smival.value.oid.len + o.smival.value.oid.len], *this);
-  if (smival.value.oid.ptr) {
-    ACE_OS::memcpy((SmiLPBYTE) new_oid,
-                   (SmiLPBYTE) smival.value.oid.ptr,
-                   (size_t) (smival.value.oid.len*sizeof(SmiUINT32)));
-
-    delete [] smival.value.oid.ptr;
   }
 
-  // out with the old, in with the new...
-  smival.value.oid.ptr = new_oid;
+  size_t const old_length = smival.value.oid.len;
+  size_t const new_length = old_length + o.smival.value.oid.len;
+  std::unique_ptr<SmiUINT32[]> new_oid (new (std::nothrow) SmiUINT32[new_length]);
+  if (!new_oid)
+    {
+      errno = ENOMEM;
+      return *this;
+    }
 
-  ACE_OS::memcpy((SmiLPBYTE) &new_oid[smival.value.oid.len],
-                 (SmiLPBYTE) o.smival.value.oid.ptr,
-                 (size_t) (o.smival.value.oid.len*sizeof(SmiUINT32)));
+  if (old_length != 0)
+    {
+      std::memcpy (new_oid.get (), smival.value.oid.ptr, old_length * sizeof (SmiUINT32));
+    }
 
-  smival.value.oid.len += o.smival.value.oid.len;
+  std::memcpy (new_oid.get () + old_length, o.smival.value.oid.ptr, o.smival.value.oid.len * sizeof (SmiUINT32));
+
+  delete [] smival.value.oid.ptr;
+  smival.value.oid.ptr = new_oid.release ();
+  smival.value.oid.len = new_length;
   return *this;
 }
 
-// return string portion of the oid
-//
-const char * Oid::to_string()
+/// Return this OID's dotted string representation.
+char const * Oid::to_string()
 {
   unsigned long n;
   if (!valid())
+  {
     return ""; // be consistent with other classes
+  }
 
   // the worst case char len of an oid can be..
   // oid.len*3 + dots in between if each oid is XXXX
@@ -492,127 +505,136 @@ const char * Oid::to_string()
 
   n = (smival.value.oid.len *SNMPCHARSIZE) + ( smival.value.oid.len -1) + 1 ;
   if (n == 0)
+  {
     n = 1; // need at least 1 byte for a null string
+  }
 
   // adjust the len of output array in case size was adjusted
-  if ( iv_str != 0)
-    delete [] iv_str;
-  // allocate some space for the output string
-  ACE_NEW_RETURN(iv_str, char[ n], "");
+  std::unique_ptr<char[]> new_string {new (std::nothrow) char[n]};
+  if (!new_string)
+    {
+      errno = ENOMEM;
+      return "";
+    }
 
   // convert to an output string
-  size_t how_many;
-  if ( valid() && iv_str != 0)
-    if (OidToStr(&smival.value.oid,n,iv_str, how_many) < 0)
-      return "ERROR: Oid::OidToStr failed";
-  return iv_str;
+  if (valid ())
+    {
+      size_t how_many {};
+      if (OidToStr (&smival.value.oid, n, new_string.get (), how_many) < 0)
+        {
+          return "ERROR: Oid::OidToStr failed";
+        }
+    }
+  iv_str = std::move (new_string);
+  return iv_str.get ();
 }
 
-//==============[Oid::suboid( unsigned int start, n) ]=============
 int Oid::suboid(Oid& new_oid, size_t start, size_t how_many)
 {
   if (how_many == 0)
-     return 0;
+    {
+      return 0;
+    }
   else
   if (how_many == (size_t)-1)
-     how_many = length();
+    {
+      how_many = length();
+    }
   else
   if (how_many > length())
+    {
       how_many = length();
+    }
 
   // reset new_oid
   new_oid.set_invalid();
 
   size_t new_size = how_many - start;
   if (new_size == 0)
-     new_size++;
+  {
+    ++new_size;
+  }
   new_oid.smival.value.oid.len = new_size;
   ACE_NEW_RETURN(new_oid.smival.value.oid.ptr,
         SmiUINT32 [ new_oid.smival.value.oid.len], -1);
   // copy source to destination
-  ACE_OS::memcpy( (SmiLPBYTE) new_oid.smival.value.oid.ptr,
-                    (SmiLPBYTE) (smival.value.oid.ptr + start),
-                    new_size * sizeof(SmiLPBYTE));
+  std::memcpy (new_oid.smival.value.oid.ptr, smival.value.oid.ptr + start, new_size * sizeof (SmiUINT32));
   return 0;
 }
 
-
-//=============[Oid::StrToOid( char *string, SmiLPOID dst) ]==============
-// convert a string to an oid
-int Oid::StrToOid( const char *string, SmiLPOID dstOid, size_t& how_many)
+/// Convert a dotted string to an OID value.
+int Oid::StrToOid( char const *string, SmiLPOID dstOid, size_t& how_many)
 {
   size_t index = 0;
-  size_t number = 0;
 
   // make a temp buffer to copy the data into first
-  SmiLPUINT32 temp;
-  unsigned long nz;
+  size_t nz;
 
   if (string && *string) {
-     nz = ACE_OS::strlen( string);
+     nz = std::strlen (string);
     }
   else {
      dstOid->len = 0;
-     dstOid->ptr = 0;
+     dstOid->ptr = nullptr;
      return -1;
   }
 
-  ACE_NEW_RETURN(temp, SmiUINT32[ nz], -1);
+  std::unique_ptr<SmiUINT32[]> const temp (new (std::nothrow) SmiUINT32[nz]);
+  if (!temp)
+    {
+      errno = ENOMEM;
+      return -1;
+    }
   while (*string!=0 && index<nz) {
     // init the number for each token
-    number = 0;
+    size_t number = 0;
     // skip over the dot
     if (*string=='.')
-        string++;
+    {
+      ++string;
+    }
 
             // grab a digit token and convert it to a long int
     while (ACE_OS::ace_isdigit(*string))
-      number=number*10 + *(string++)-'0';
+      {
+        number=number*10 + *(string++)-'0';
+      }
 
                 // check for invalid chars
     if (*string!=0 && *string!='.') {
       // Error: Invalid character in string
-      delete [] temp;
       return -1;
     }
 
     // stuff the value into the array
-    temp[index] = number;
-    index++;  // bump the counter
+    temp[index] = static_cast<SmiUINT32> (number);
+    ++index;  // bump the counter
   }
-
 
   // get some space for the real oid
   ACE_NEW_RETURN(dstOid->ptr, SmiUINT32[ index], -1);
-  // TODO: make tmp autoptr type delete [] temp to prevent leak
-
   // copy in the temp data
-  ACE_OS::memcpy((SmiLPBYTE) dstOid->ptr, (SmiLPBYTE) temp,
-         (size_t) (index*sizeof(SmiUINT32)));
+  std::memcpy (dstOid->ptr, temp.get (), index * sizeof (SmiUINT32));
 
   // set the len of the oid
   dstOid->len = index;
-
-  // free up temp data
-  delete [] temp;
 
   how_many = index;
   return 0;
 }
 
-
-//===============[Oid::OidCopy( source, destination) ]====================
-// Copy an oid, return bytes copied
+/// Copy an OID value and report the number of copied sub-identifiers.
 int Oid::OidCopy( SmiLPOID srcOid, SmiLPOID dstOid, size_t& how_many_bytes)
 {
   // check source len ! zero
   if (srcOid->len == 0)
+  {
     return -1;
+  }
 
   // copy source to destination
-  ACE_OS::memcpy((SmiLPBYTE) dstOid->ptr,
-                 (SmiLPBYTE) srcOid->ptr,
-                 (size_t) (srcOid->len * sizeof(SmiUINT32)));
+  std::memcpy (dstOid->ptr, srcOid->ptr, srcOid->len * sizeof (SmiUINT32));
 
   //set the new len
   dstOid->len = srcOid->len;
@@ -621,14 +643,9 @@ int Oid::OidCopy( SmiLPOID srcOid, SmiLPOID dstOid, size_t& how_many_bytes)
   return 0;
 }
 
-
-//===============[Oid::left_comparison( n, Oid) ]=================================
-// compare the n leftmost values of two oids ( left-to_right )
-//
-// self == Oid then return 0, they are equal
-// self < Oid then return -1, <
-// self > Oid then return 1,  >
-int Oid::left_comparison( const unsigned long n, const Oid &o) const
+/// Compare the requested number of leftmost sub-identifiers.
+/// Returns 0 when equal, -1 when this OID is less, and 1 when greater.
+int Oid::left_comparison( const unsigned long n, Oid const &o) const
 {
   unsigned long z;
   unsigned long len = n;
@@ -636,11 +653,14 @@ int Oid::left_comparison( const unsigned long n, const Oid &o) const
 
   // 1st case they both are null
   if (( len==0)&&( this->smival.value.oid.len==0))
+  {
     return 0;  // equal
+  }
 
-  // verify that n is valid, must be >= 0
-  if ( len <=0)
+  if (len == 0)
+  {
     return 1;                         // ! equal
+  }
 
   // only compare for the minimal length
   if (len > this->smival.value.oid.len) {
@@ -655,67 +675,77 @@ int Oid::left_comparison( const unsigned long n, const Oid &o) const
   z = 0;
   while(z < len) {
     if ( this->smival.value.oid.ptr[z] < o.smival.value.oid.ptr[z])
+    {
       return -1;                              // less than
+    }
     if ( this->smival.value.oid.ptr[z] > o.smival.value.oid.ptr[z])
+    {
       return 1;                               // greater than
-    z++;
+    }
+    ++z;
   }
 
   // if we truncated the len then these may not be equal
   if (reduced_len) {
     if (this->smival.value.oid.len < o.smival.value.oid.len)
+    {
       return -1;
+    }
     if (this->smival.value.oid.len > o.smival.value.oid.len)
+    {
       return 1;
+    }
   }
   return 0;                                 // equal
 
 }
 
-
-//===============[Oid::left_comparison( n, Oid) ]=================================
-// compare the n rightmost bytes (right-to-left)
-// returns 0, equal
-// returns -1, <
-// returns 1 , >
-int Oid::right_comparison( const unsigned long n, const Oid &o) const
+/// Compare the requested number of rightmost sub-identifiers.
+/// Returns 0 when equal, -1 when this OID is less, and 1 when greater.
+int Oid::right_comparison( const unsigned long n, Oid const &o) const
 {
    // oid to compare must have at least the same number
    // of sub-ids to comparison else the argument Oid is
    // less than THIS
    if ( o.length() < n)
-      return -1;
+   {
+     return -1;
+   }
 
    // also can't compare argument oid for sub-ids which
    // THIS does not have
    if ( this->length() < n)
-      return -1;
-
-   int start = (int) this->length();
-   int end = (int) start - (int) n;
-   for ( int z=start;z< end;z--)
    {
-       if ( o.smival.value.oid.ptr[z] < this->smival.value.oid.ptr[z])
-          return -1;
-       if ( o.smival.value.oid.ptr[z] > this->smival.value.oid.ptr[z])
-          return 1;
+     return -1;
+   }
+
+   size_t const this_length = this->length ();
+   size_t const other_length = o.length ();
+   for (size_t offset = 0; offset < n; ++offset)
+   {
+       size_t const this_index = this_length - offset - 1;
+       size_t const other_index = other_length - offset - 1;
+       if (this->smival.value.oid.ptr[this_index] < o.smival.value.oid.ptr[other_index])
+       {
+         return -1;
+       }
+       if (this->smival.value.oid.ptr[this_index] > o.smival.value.oid.ptr[other_index])
+       {
+         return 1;
+       }
    }
 
    return 0;   // they are equal
 
 }
 
-
-//================[ Oid::valid() ]========================================
-// is the Oid object valid
-// returns validity
+/// Return whether this OID has valid storage.
 int Oid::valid() const
 {
    return ( smival.value.oid.ptr ? 1 : 0 );
 }
 
-//================[Oid::OidToStr ]=========================================
-// convert an oid to a string
+/// Convert an OID value to its dotted string representation.
 int Oid::OidToStr( SmiLPOID srcOid, unsigned long size,
                   char *string, size_t& how_many_bytes)
 {
@@ -728,40 +758,48 @@ int Oid::OidToStr( SmiLPOID srcOid, unsigned long size,
 
   // verify there is something to copy
   if (srcOid->len == 0)
+  {
     return -1;
+  }
 
   // loop through and build up a string
-  for (index=0; index < srcOid->len; index++) {
+  for (index=0; index < srcOid->len; ++index) {
     // convert data element to a string
     if (ACE_OS::sprintf( szNumber,"%lu", srcOid->ptr[index]) == -1)
+    {
       return -1;
+    }
 
     // verify len is not over
-    if (totLen + ACE_OS::strlen(szNumber) + 1 >= size)
+    if (totLen + std::strlen (szNumber) + 1 >= size)
+    {
       return -2;
+    }
 
     // if not at end, pad with a dot
     if (totLen!=0)
+    {
       string[totLen++] = '.';
+    }
 
     // copy the string token into the main string
-    ACE_OS::strcpy(string + totLen, szNumber);
+    std::strcpy (string + totLen, szNumber);
 
     // adjust the total len
-    totLen += ACE_OS::strlen(szNumber);
+    totLen += std::strlen (szNumber);
   }
 
   how_many_bytes = totLen + 1;
   return 0;
 }
 
-
-//================[ general Value = operator ]========================
 SnmpSyntax& Oid::operator=( SnmpSyntax &val)
 {
   // protect against assignment from self
-  if ( this == &val )
+  if (this == std::addressof (val))
+  {
     return *this;
+  }
 
   // blow away old value
   smival.value.oid.len = 0;
@@ -781,14 +819,12 @@ SnmpSyntax& Oid::operator=( SnmpSyntax &val)
   return *this;
 }
 
-//================[ [] operator ]=====================================
 unsigned long& Oid::operator[](size_t position)
 {
   return smival.value.oid.ptr[position];
 }
 
-//================[ clone ]===========================================
 SnmpSyntax *Oid::clone() const
 {
-  return (SnmpSyntax *) new Oid(*this);
+  return new Oid(*this);
 }

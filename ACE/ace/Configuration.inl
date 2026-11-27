@@ -1,7 +1,6 @@
-// -*- C++ -*-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_INLINE const ACE_TCHAR*
+ACE_INLINE ACE_TCHAR const *
 ACE_Configuration_ExtId::name ()
 {
   return name_;

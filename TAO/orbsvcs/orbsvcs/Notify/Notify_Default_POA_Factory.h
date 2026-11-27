@@ -1,13 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file   Notify_Default_POA_Factory.h
  *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_NOTIFY_DEFAULT_POA_FACTORY_H
 #define TAO_NOTIFY_DEFAULT_POA_FACTORY_H

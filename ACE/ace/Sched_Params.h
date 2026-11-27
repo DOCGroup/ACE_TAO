@@ -1,13 +1,9 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Sched_Params.h
  *
  *  @author David Levine <levine@cs.wustl.edu>
  *  @author Carlos O'Ryan <coryan@uci.edu>
  */
-//=============================================================================
 
 #ifndef ACE_SCHED_PARAMS_H
 #define ACE_SCHED_PARAMS_H
@@ -29,7 +25,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  * @brief Container for scheduling-related parameters.
  *
- * ACE_Sched_Params are passed via <ACE_OS::sched_params> to the
+ * ACE_Sched_Params are passed via @c ACE_OS::sched_params to the
  * OS to specify scheduling parameters.  These parameters include
  * scheduling policy, such as FIFO (ACE_SCHED_FIFO), round-robin
  * (ACE_SCHED_RR), or an implementation-defined "OTHER"
@@ -37,22 +33,22 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * and a time-slice quantum for round-robin scheduling.  A
  * "scope" parameter specifies whether the ACE_Sched_Params
  * applies to the current process, or current thread.  Please
- * see the "NOTE" below about not all combinations of parameters
- * being legal on a particular platform.
+ * see the note below about combinations of parameters that may not
+ * be legal on a particular platform.
  * For the case of thread priorities, it is intended that
- * <ACE_OS::sched_params> usually be called from <main> before
+ * @c ACE_OS::sched_params usually be called from @c main before
  * any threads have been spawned.  If spawned threads inherit
  * their parent's priority (I think that's the default behavior
  * for all of our platforms), then this sets the default base
  * priority.  Individual thread priorities can be adjusted as
- * usual using <ACE_OS::thr_prio> or via the ACE_Thread
+ * usual using @c ACE_OS::thr_prio or via the ACE_Thread
  * interface.  See the parameter descriptions in the private:
  * section below.
  * @note This class does not do any checking of parameters.  It
  * is just a container class.  If it is constructed with values
  * that are not supported on a platform, the call to
- * <ACE_OS::sched_params> will fail by returning -1 with EINVAL
- * (available through <ACE_OS::last_error>).
+ * @c ACE_OS::sched_params will fail by returning -1 with EINVAL
+ * (available through @c ACE_OS::last_error).
  */
 class ACE_Export ACE_Sched_Params
 {
@@ -65,39 +61,44 @@ class ACE_Export ACE_Sched_Params
 public:
   using Policy = int;
 
-  /// Constructor.
-  ACE_Sched_Params (const Policy policy,
-                    const ACE_Sched_Priority priority,
+  ACE_Sched_Params (Policy const policy,
+                    ACE_Sched_Priority const priority,
                     const int scope = ACE_SCOPE_THREAD,
-                    const ACE_Time_Value &quantum = ACE_Time_Value::zero);
+                    ACE_Time_Value const &quantum = ACE_Time_Value::zero);
 
   /// Termination.
   ~ACE_Sched_Params ();
 
-  // = Get/Set methods:
-
-  // = Get/Set policy
+  /// @name Policy accessors
+  /// @{
   Policy policy () const;
-  void policy (const Policy);
+  void policy (Policy const);
+  /// @}
 
-  // = Get/Set priority.
+  /// @name Priority accessors
+  /// @{
   ACE_Sched_Priority priority () const;
-  void priority (const ACE_Sched_Priority);
+  void priority (ACE_Sched_Priority const);
+  /// @}
 
-  // = Get/Set scope.
+  /// @name Scope accessors
+  /// @{
   int scope () const;
   void scope(const int);
+  /// @}
 
-  // = Get/Set quantum.
-  const ACE_Time_Value &quantum () const;
-  void quantum (const ACE_Time_Value &);
+  /// @name Quantum accessors
+  /// @{
+  ACE_Time_Value const &quantum () const;
+  void quantum (ACE_Time_Value const &);
+  /// @}
 
-  // = Accessors for OS-specific priorities.
-  // These return priority values for ACE_SCHED_OTHER if the Policy value
-  // is invalid.
-  static int priority_min (const Policy,
+  /// @name Accessors for OS-specific priorities
+  /// These return priority values for ACE_SCHED_OTHER if the policy is invalid.
+  /// @{
+  static int priority_min (Policy const,
                            const int scope = ACE_SCOPE_THREAD);
-  static int priority_max (const Policy,
+  static int priority_max (Policy const,
                            const int scope = ACE_SCOPE_THREAD);
 
   /**
@@ -107,7 +108,7 @@ public:
    * already the highest priority (for the specified policy), then it is
    * returned.
    */
-  static int next_priority (const Policy,
+  static int next_priority (Policy const,
                             const int priority,
                             const int scope = ACE_SCOPE_THREAD);
 
@@ -118,20 +119,21 @@ public:
    * already the lowest priority (for the specified policy), then it is
    * returned.
    */
-  static int previous_priority (const Policy,
+  static int previous_priority (Policy const,
                                 const int priority,
                                 const int scope = ACE_SCOPE_THREAD);
+  /// @}
 
 private:
   /// Scheduling policy.
   Policy policy_;
 
-  /// Default <priority_>: for setting the priority for the process, LWP,
+  /// Default @c priority_: for setting the priority for the process, LWP,
   /// or thread, as indicated by the scope_ parameter.
   ACE_Sched_Priority priority_;
 
   /**
-   * <scope_> must be one of the following:
+   * @c scope_ must be one of the following:
    *   ACE_SCOPE_PROCESS:  sets the scheduling policy for the
    *     process, and the process priority.  On some platforms,
    *     such as Win32, the scheduling policy can _only_ be
@@ -139,7 +141,7 @@ private:
    *   ACE_SCOPE_THREAD: sets the scheduling policy for the thread,
    *     if the OS supports it, such as with Posix threads, and the
    *     thread priority.
-   * NOTE:  I don't think that these are the same as POSIX
+   * @note  I don't think that these are the same as POSIX
    *        contention scope.  POSIX users who are interested in,
    *        and understand, contention scope will have to set it
    *        by using system calls outside of ACE.
@@ -147,7 +149,7 @@ private:
   int scope_;
 
   /**
-   * The <quantum_> is for time slicing.  An ACE_Time_Value of 0 has
+   * The @c quantum_ is for time slicing.  An ACE_Time_Value of 0 has
    * special significance: it means time-slicing is disabled; with
    * that, a thread that is running on a CPU will continue to run
    * until it blocks or is preempted.  Currently ignored if the OS
@@ -172,10 +174,9 @@ class ACE_Export ACE_Sched_Priority_Iterator
 public:
   /// Initialize the iterator, the arguments define the scheduling
   /// policy and scope for the priorities (see ACE_Sched_Param).
-  ACE_Sched_Priority_Iterator (const ACE_Sched_Params::Policy &policy,
+  ACE_Sched_Priority_Iterator (ACE_Sched_Params::Policy const &policy,
                                int scope = ACE_SCOPE_THREAD);
 
-  /// Default dtor.
   ~ACE_Sched_Priority_Iterator ();
 
   /// Check if there are more priorities.
@@ -189,7 +190,7 @@ public:
   void next ();
 
   /// Accessor for the scheduling policy over which we are iterating.
-  const ACE_Sched_Params::Policy &policy () const;
+  ACE_Sched_Params::Policy const &policy () const;
 
   /// Accessor for the scheduling
   int scope () const;

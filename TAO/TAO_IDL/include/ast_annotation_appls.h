@@ -49,13 +49,13 @@ public:
   bool empty () const;
   size_t size () const;
 
-  /// Iterate through vector_
-  ///{
+  /// @name Iterate through vector_
+  /// @{
   iterator begin ();
   iterator end ();
   const_iterator begin () const;
   const_iterator end () const;
-  ///}
+  /// @}
 
   /**
    * Direct access to the AST_Annotation_Appl pointers by index.

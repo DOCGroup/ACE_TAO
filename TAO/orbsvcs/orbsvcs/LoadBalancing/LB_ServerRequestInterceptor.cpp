@@ -2,7 +2,7 @@
 #include "orbsvcs/LoadBalancing/LB_ServerRequestInterceptor.h"
 #include "orbsvcs/LoadBalancing/LB_LoadAlert.h"
 #include "tao/debug.h"
-#include "ace/OS_NS_string.h"
+#include <cstring>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -12,9 +12,7 @@ TAO_LB_ServerRequestInterceptor::TAO_LB_ServerRequestInterceptor (
 {
 }
 
-TAO_LB_ServerRequestInterceptor::~TAO_LB_ServerRequestInterceptor ()
-{
-}
+TAO_LB_ServerRequestInterceptor::~TAO_LB_ServerRequestInterceptor () = default;
 
 char *
 TAO_LB_ServerRequestInterceptor::name ()
@@ -35,10 +33,12 @@ TAO_LB_ServerRequestInterceptor::receive_request_service_contexts (
     {
       CORBA::String_var op = ri->operation ();
 
-      if (ACE_OS::strcmp (op.in (), "_get_loads") == 0        // LoadMonitor
-          || ACE_OS::strcmp (op.in (), "disable_alert") == 0  // LoadAlert
-          || ACE_OS::strcmp (op.in (), "enable_alert") == 0)  // LoadAlert
-        return;  // Do not redirect.
+      if (std::strcmp (op.in (), "_get_loads") == 0        // LoadMonitor
+          || std::strcmp (op.in (), "disable_alert") == 0  // LoadAlert
+          || std::strcmp (op.in (), "enable_alert") == 0)  // LoadAlert
+        {
+          return;  // Do not redirect.
+        }
 
 #if 0
       try
@@ -50,12 +50,12 @@ TAO_LB_ServerRequestInterceptor::receive_request_service_contexts (
           // Use TAO-specific "compiled marshaling" instead of
           // standard interpretive marshaling via a CDR encapsulation
           // Codec for efficiency reasons.
-          const char * buf =
-            reinterpret_cast<const char *> (service_context->context_data.get_buffer ());
+          char const *buf =
+            reinterpret_cast<char const *> (service_context->context_data.get_buffer ());
           TAO_InputCDR cdr (buf,
                             service_context->context_data.length ());
 
-          CORBA::Boolean byte_order;
+          CORBA::Boolean byte_order {};
           if ((cdr >> ACE_InputCDR::to_boolean (byte_order)) == 0)
             throw CORBA::BAD_PARAM ();
 
@@ -75,7 +75,7 @@ TAO_LB_ServerRequestInterceptor::receive_request_service_contexts (
           // overloaded.
           throw CORBA::TRANSIENT ();
         }
-      catch (const CORBA::BAD_PARAM& ex)
+      catch (CORBA::BAD_PARAM const& ex)
         {
           // No CosLoadBalancing::LB_GROUP_REF ServiceContext.  This
           // probably means that the target object is not
@@ -87,7 +87,6 @@ TAO_LB_ServerRequestInterceptor::receive_request_service_contexts (
           // send the forward object group reference in the
           // ServiceContextList.  Any "misbehaving" client can avoid
           // that, in which case no load will ever be shed!
-
 
           // Make sure we get a CORBA::BAD_PARAM for the right
           // reason.
@@ -144,9 +143,11 @@ TAO_LB_ServerRequestInterceptor::send_other (
         ri->reply_status ();
 
       if (status == PortableInterceptor::LOCATION_FORWARD)
-        ORBSVCS_DEBUG ((LM_INFO,
-                    ACE_TEXT ("TAO_LB_ServerRequestInterceptor -- ")
-                    ACE_TEXT ("LOCATION FORWARDED\n")));
+        {
+          ORBSVCS_DEBUG ((LM_INFO,
+                          ACE_TEXT ("TAO_LB_ServerRequestInterceptor -- ")
+                          ACE_TEXT ("LOCATION FORWARDED\n")));
+        }
     }
 }
 

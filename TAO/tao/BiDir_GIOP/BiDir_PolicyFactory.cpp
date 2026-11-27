@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/BiDir_GIOP/BiDir_PolicyFactory.h"
 #include "tao/BiDir_GIOP/BiDirGIOP.h"
 #include "tao/BiDir_GIOP/BiDir_Policy_i.h"

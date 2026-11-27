@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  * @file Foo_i.h
  *
@@ -8,7 +5,6 @@
  *
  * @author Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
 
 #ifndef NULL_CIPHER_FOO_I_H
 #define NULL_CIPHER_FOO_I_H
@@ -18,10 +14,14 @@
 class Foo_i : public virtual POA_Foo
 {
 public:
-  /// Constructor.
-  Foo_i (CORBA::ORB_ptr);
+  explicit Foo_i (CORBA::ORB_ptr);
 
-  virtual void shutdown ();
+  void shutdown () override;
+
+  Foo_i (Foo_i const &) = delete;
+  Foo_i &operator= (Foo_i const &) = delete;
+  Foo_i (Foo_i &&) = delete;
+  Foo_i &operator= (Foo_i &&) = delete;
 
 private:
   /// Reference to the ORB.

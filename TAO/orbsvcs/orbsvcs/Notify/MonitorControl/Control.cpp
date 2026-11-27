@@ -2,16 +2,14 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_NS_Control::~TAO_NS_Control ()
-{
-}
+TAO_NS_Control::~TAO_NS_Control () = default;
 
-TAO_NS_Control::TAO_NS_Control (const char* name)
+TAO_NS_Control::TAO_NS_Control (char const *name)
  : name_ (name)
 {
 }
 
-const ACE_CString&
+ACE_CString const&
 TAO_NS_Control::name () const
 {
   return this->name_;

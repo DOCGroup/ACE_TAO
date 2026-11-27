@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  * @file Service_Config_DLL.h
  *
  * @author Ossama Othman <ossama@uci.edu>
  */
-//=============================================================================
 
 #ifndef SERVICE_CONFIG_DLL_H
 #define SERVICE_CONFIG_DLL_H
@@ -34,21 +30,20 @@
 class Service_Config_DLL_Export Service_Config_DLL : public ACE_Task_Base
 {
 public:
-  /// Constructor.
   Service_Config_DLL ();
 
   /// Initializes object when dynamic linking occurs.
-  virtual int init (int argc, ACE_TCHAR *argv[]);
+  int init (int argc, ACE_TCHAR *argv[]) override;
 
   /// Terminates object when dynamic unlinking occurs.
-  virtual int fini ();
+  int fini () override;
 
   /// Run by a daemon thread.
   /**
    * Each thread will invoke the Service Configurator via this
    * method unless the object is the "FINAL" object.
    */
-  virtual int svc ();
+  int svc () override;
 
 private:
   /// Directives to be passed to be processed by the Service
@@ -65,17 +60,17 @@ private:
 class Service_Config_DLL_Export Refuses_Init : public ACE_Service_Object
 {
 public:
-  // Constructor; required for factory function.
+  /// Constructor; required for factory function.
   Refuses_Init () {}
 
   /// Initializes object when dynamic linking occurs.
-  virtual int init (int argc, ACE_TCHAR *argv[]);
+  int init (int argc, ACE_TCHAR *argv[]) override;
 
   /// Terminates object when dynamic unlinking occurs.
-  virtual int fini ();
+  int fini () override;
 
   /// Returns information on a service object.
-  virtual int info (ACE_TCHAR **info_string, size_t length = 0) const;
+  int info (ACE_TCHAR **info_string, size_t length = 0) const override;
 };
 
 ACE_FACTORY_DECLARE (Service_Config_DLL, Service_Config_DLL)

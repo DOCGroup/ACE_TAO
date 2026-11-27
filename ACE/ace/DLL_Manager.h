@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    DLL_Manager.h
  *
  *  @author Don Hinton <dhinton@ieee.org>
  */
-//=============================================================================
 
 #ifndef ACE_DLL_MANAGER_H
 #define ACE_DLL_MANAGER_H
@@ -55,14 +51,12 @@ public:
   /// Error stack. Fixed size should suffice. Ignores any errors exceeding the size.
   using ERROR_STACK = ACE_Fixed_Stack<ACE_TString, 10>;
 
-  /// Default constructor.
   ACE_DLL_Handle ();
 
-  /// Destructor.
   ~ACE_DLL_Handle ();
 
   /// Returns the name of the shared library (without prefixes or suffixes).
-  const ACE_TCHAR *dll_name () const;
+  ACE_TCHAR const *dll_name () const;
 
   /**
    * This method opens and dynamically links a library/DLL.
@@ -70,17 +64,17 @@ public:
    *        attempt to apply the platform's standard library/DLL prefixes
    *        and suffixes, allowing a simple, unadorned name to be passed
    *        regardless of platform. The set of name transforms is listed
-   *        below. A @i decorator is a platform's name designator for a debug
+   *        below. A @a decorator is a platform's name designator for a debug
    *        vs release build. For example, on Windows it is usually "d".
    *        @li Prefix + name + decorator + suffix
    *        @li Prefix + name + suffix
    *        @li Name + decorator + suffix
    *        @li Name + suffix
    *        @li Name
-   *        Note that the transforms with @i decorator will be avoided if
+   *        @note The transforms with @a decorator will be avoided if
    *        ACE is built with the @c ACE_DISABLE_DEBUG_DLL_CHECK config macro.
    *
-   *        @Note There is another mode for locating library/DLL files that
+   *        @note There is another mode for locating library/DLL files that
    *        was used in old versions of ACE. The alternate method builds
    *        more combinations of pathname by combining the names transforms
    *        above with locations listed in the platform's standard "path"
@@ -106,13 +100,13 @@ public:
    * @retval -1 On failure
    * @retval 0 On success.
    */
-  int open (const ACE_TCHAR *dll_name,
+  int open (ACE_TCHAR const *dll_name,
             int open_mode,
             ACE_SHLIB_HANDLE handle,
             ERROR_STACK *errors = nullptr);
 
-  /// Call to close the DLL object.  If unload = 0, it only decrements
-  /// the refcount, but if unload = 1, then it will actually unload
+  /// Call to close the DLL object.  If unload is false, it only decrements
+  /// the refcount, but if unload is true, then it will actually unload
   /// the library when the refcount == 0;
   int close (int unload = 0);
 
@@ -124,10 +118,10 @@ public:
   /// @a ignore_errors flag to suppress logging errors if @a symbol_name isn't
   /// found.  This is nice if you just want to probe a dll to see what's
   /// available, since missing functions in that case aren't really errors.
-  void *symbol (const ACE_TCHAR *symbol_name, bool ignore_errors = false);
+  void *symbol (ACE_TCHAR const *symbol_name, bool ignore_errors = false);
 
   /// Resolves and returns any error encountered.
-  void *symbol (const ACE_TCHAR *symbol_name, bool ignore_errors,
+  void *symbol (ACE_TCHAR const *symbol_name, bool ignore_errors,
                 ACE_TString &error);
 
   /**
@@ -139,7 +133,7 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-  /// Returns a string explaining why <symbol> or <open>
+  /// Returns a string explaining why @c symbol or @c open
   /// failed in @a err.  This is used internal to print out the error to the log,
   /// but since this object is shared, we can't store or return the error
   /// to the caller.
@@ -148,7 +142,7 @@ private:
   /// Builds array of DLL names to try to dlopen, based on platform
   /// and configured DLL prefixes/suffixes.
   /// Returns the array of names to try in @a try_names.
-  void get_dll_names (const ACE_TCHAR *dll_name,
+  void get_dll_names (ACE_TCHAR const *dll_name,
                       ACE_Array<ACE_TString> &try_names);
 
   /**
@@ -168,20 +162,20 @@ private:
    * @retval false On failure
    * @retval true On success
    */
-  bool open_i (const ACE_TCHAR *dll_name, int open_mode, ERROR_STACK* errors);
+  bool open_i (ACE_TCHAR const *dll_name, int open_mode, ERROR_STACK* errors);
 
-  ACE_DLL_Handle (const ACE_DLL_Handle &) = delete;
-  void operator= (const ACE_DLL_Handle &) = delete;
+  ACE_DLL_Handle (ACE_DLL_Handle const &) = delete;
+  ACE_DLL_Handle &operator= (ACE_DLL_Handle const &) = delete;
   ACE_DLL_Handle (ACE_DLL_Handle &&) = delete;
-  void operator= (ACE_DLL_Handle &&) = delete;
+  ACE_DLL_Handle &operator= (ACE_DLL_Handle &&) = delete;
 
 private:
   /// Keep track of how many ACE_DLL objects have a reference to this
   /// dll.
-  sig_atomic_t refcount_;
+  sig_atomic_t refcount_ {};
 
   /// Name of the shared library.
-  ACE_TCHAR *dll_name_;
+  ACE_TCHAR *dll_name_ {};
 
   /// Handle to the actual library loaded by the OS.
   ACE_SHLIB_HANDLE handle_;
@@ -245,13 +239,13 @@ public:
 
   /// Factory for ACE_DLL_Handle objects.  If one already exits,
   /// its refcount is incremented.
-  ACE_DLL_Handle *open_dll (const ACE_TCHAR *dll_name,
+  ACE_DLL_Handle *open_dll (ACE_TCHAR const *dll_name,
                             int openmode,
                             ACE_SHLIB_HANDLE handle,
                             ACE_DLL_Handle::ERROR_STACK *errors = nullptr);
 
   /// Close the underlying dll.  Decrements the refcount.
-  int close_dll (const ACE_TCHAR *dll_name);
+  int close_dll (ACE_TCHAR const *dll_name);
 
   /// Returns the current per-process UNLOAD_POLICY.
   u_long unload_policy () const;
@@ -264,10 +258,8 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-  /// Default constructor.
   ACE_DLL_Manager (int size = ACE_DLL_Manager::DEFAULT_SIZE);
 
-  /// Destructor.
   ~ACE_DLL_Manager ();
 
   /// Allocate handle_vector_.
@@ -277,7 +269,7 @@ protected:
   int close ();
 
   /// Find dll in handle_vector_.
-  ACE_DLL_Handle *find_dll (const ACE_TCHAR *dll_name) const;
+  ACE_DLL_Handle *find_dll (ACE_TCHAR const *dll_name) const;
 
   /// Applies strategy for unloading dll.
   int unload_dll (ACE_DLL_Handle *dll_handle, int force_unload = 0);
@@ -286,20 +278,20 @@ private:
   /// Close the singleton instance.
   static void close_singleton ();
 
-  ACE_DLL_Manager (const ACE_DLL_Manager &) = delete;
-  void operator= (const ACE_DLL_Manager &) = delete;
+  ACE_DLL_Manager (ACE_DLL_Manager const &) = delete;
+  ACE_DLL_Manager &operator= (ACE_DLL_Manager const &) = delete;
   ACE_DLL_Manager (ACE_DLL_Manager &&) = delete;
-  void operator= (ACE_DLL_Manager &&) = delete;
+  ACE_DLL_Manager &operator= (ACE_DLL_Manager &&) = delete;
 
 private:
   /// Vector containing all loaded handle objects.
-  ACE_DLL_Handle **handle_vector_;
+  ACE_DLL_Handle **handle_vector_ {};
 
   /// Current number of handles.
-  int current_size_;
+  int current_size_ {};
 
   /// Maximum number of handles.
-  int total_size_;
+  int total_size_ {};
 
   /// Unload strategy.
   u_long unload_policy_;

@@ -1,10 +1,9 @@
-// -*- C++ -*-
 #include "ace/OS_NS_unistd.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE int
-ACE_FIFO::get_local_addr (const ACE_TCHAR *&r) const
+ACE_FIFO::get_local_addr (ACE_TCHAR const *&r) const
 {
   ACE_TRACE ("ACE_FIFO::get_local_addr");
   r = this->rendezvous_;

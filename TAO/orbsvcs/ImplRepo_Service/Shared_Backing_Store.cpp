@@ -19,6 +19,11 @@
 #include "tao/IORManipulation/IORManip_Loader.h"
 #include "tao/ORB_Core.h"
 
+#include <cstdio>
+#include <cstdlib>
+#include <memory>
+#include <string>
+
 namespace {
   class Lockable_File
   {
@@ -33,7 +38,7 @@ namespace {
     {
     }
 
-    Lockable_File (const ACE_TString& file,
+    Lockable_File (ACE_TString const& file,
                    const int flags,
                    bool unlink_in_destructor = false)
       : file_lock_ (),
@@ -55,20 +60,40 @@ namespace {
     {
       if (this->file_ != nullptr)
         {
+#if defined (ACE_LACKS_DUP) && !defined (ACE_WIN32)
+          if (this->file_lock_ != nullptr)
+            {
+              if (this->locked_)
+                {
+                  this->file_lock_->release ();
+                }
+              // The stream owns the lock's handle when it cannot be duplicated.
+              this->file_lock_->set_handle (ACE_INVALID_HANDLE);
+            }
+#endif
           close_file ();
-          this->file_lock_.reset ();
         }
+      this->file_lock_.reset ();
       this->locked_ = false;
     }
 
     FILE* get_file ()
     {
-      lock ();
+      if (this->file_ != nullptr)
+        {
+          lock ();
+#if !defined (ACE_WIN32)
+          if (!this->locked_)
+            {
+              return nullptr;
+            }
+#endif
+        }
 
       return this->file_;
     }
 
-    FILE* get_file (const ACE_TString& file,
+    FILE* get_file (ACE_TString const& file,
                     const int flags,
                     bool unlink_in_destructor = false)
     {
@@ -77,7 +102,7 @@ namespace {
     }
 
   private:
-    void init_fl (const ACE_TString& file,
+    void init_fl (ACE_TString const& file,
                   const int flags,
                   bool unlink_in_destructor = false)
     {
@@ -86,27 +111,42 @@ namespace {
       flags_ = flags | O_CREAT;
       unlink_in_destructor_ = unlink_in_destructor;
 
-      const ACE_TCHAR* const flags_str =
+      ACE_TCHAR const *const flags_str =
         ((flags_ & O_RDWR) != 0) ? ACE_TEXT ("r+") :
         (((flags_ & O_WRONLY) != 0) ? ACE_TEXT ("w") : ACE_TEXT ("r"));
       this->filename_ = file;
 #if defined (ACE_WIN32)
       this->file_ = ACE_OS::fopen (file.c_str(), flags_str);
 #else
-      this->file_lock_.reset
-        (new ACE_File_Lock (file.c_str (),
-                            flags_, 0666, unlink_in_destructor));
+      this->file_lock_ = std::make_unique<ACE_File_Lock> (file.c_str (),
+                                                          flags_, 0666,
+                                                          unlink_in_destructor);
 
-      // Truncating output so this will not allow reading then writing
-      ACE_OS::ftruncate (this->file_lock_->get_handle (), 0);
+#if defined (ACE_LACKS_DUP)
       this->file_ = ACE_OS::fdopen (this->file_lock_->get_handle (), flags_str);
-#endif
+#else
+      // The stream and the file lock each own their descriptor.
+      ACE_HANDLE const stream_handle = ACE_OS::dup (this->file_lock_->get_handle ());
+      if (stream_handle != ACE_INVALID_HANDLE)
+        {
+          this->file_ = ACE_OS::fdopen (stream_handle, flags_str);
+          if (this->file_ == nullptr)
+            {
+              int const saved_errno = errno;
+              ACE_OS::close (stream_handle);
+              errno = saved_errno;
+            }
+        }
+#endif /* ACE_LACKS_DUP */
+#endif /* ACE_WIN32 */
     }
 
     void close_file ()
     {
       if (this->file_ == nullptr)
+      {
         return;
+      }
 
       ACE_OS::fflush (this->file_);
       ACE_OS::fclose (this->file_);
@@ -124,9 +164,11 @@ namespace {
     {
 #if !defined (ACE_WIN32)
       if (this->locked_)
+      {
         return;
+      }
 
-      if (file_lock_.get () == nullptr)
+      if (!file_lock_)
         {
           ORBSVCS_ERROR ((LM_ERROR,
                           ACE_TEXT("(%P|%t) ERROR: Shared_Backing_Store ")
@@ -151,6 +193,11 @@ namespace {
         }
 
       this->locked_ = res == 0;
+      if (this->locked_ && (this->flags_ & (O_RDWR | O_WRONLY)) != 0
+          && ACE_OS::ftruncate (this->file_lock_->get_handle (), 0) != 0)
+        {
+          this->locked_ = false;
+        }
 
       if (!this->locked_)
         {
@@ -168,7 +215,6 @@ namespace {
     bool unlink_in_destructor_;
     ACE_TString filename_;
   }; // class Lockable_File
-
 
   void
   create_uid (const Options::ImrType repo_type,
@@ -189,18 +235,16 @@ namespace {
         id.repo_type_str = ACE_TEXT ("2");
       }
 
-    ACE_TCHAR tmp[20];
-    ACE_OS::itoa(repo_id, tmp, 10);
-
-    id.repo_id_str = tmp;
+    std::string const repo_id_string = std::to_string (repo_id);
+    id.repo_id_str = ACE_TEXT_CHAR_TO_TCHAR (repo_id_string.c_str ());
     id.unique_filename = id.repo_type_str + ACE_TEXT ("_") +
       id.repo_id_str + ACE_TEXT (".xml");
   }
 
   void write_listing_item (FILE* list,
-                           const ACE_TString& fname,
-                           const ACE_CString& name,
-                           const ACE_TCHAR* tag)
+                           ACE_TString const& fname,
+                           ACE_CString const& name,
+                           ACE_TCHAR const *tag)
   {
     ACE_OS::fprintf (list, "\t<%s", ACE_TEXT_ALWAYS_CHAR (tag));
     ACE_OS::fprintf (list, " fname=\"%s\"", ACE_TEXT_ALWAYS_CHAR (fname.c_str ()));
@@ -209,7 +253,6 @@ namespace {
 
 } // End anonymous namespace
 
-//---------------------------------------------------------------------------
 
 Shared_Backing_Store::Shared_Backing_Store(const Options& opts,
                                            CORBA::ORB_ptr orb,
@@ -243,9 +286,7 @@ Shared_Backing_Store::Shared_Backing_Store(const Options& opts,
                    ACE_CString());
 }
 
-Shared_Backing_Store::~Shared_Backing_Store()
-{
-}
+Shared_Backing_Store::~Shared_Backing_Store() = default;
 
 void
 Shared_Backing_Store::shutdown ()
@@ -255,7 +296,7 @@ Shared_Backing_Store::shutdown ()
 }
 
 void
-Shared_Backing_Store::bind_unique_id (const ACE_CString& key,
+Shared_Backing_Store::bind_unique_id (ACE_CString const& key,
                                       UniqueIdMap& unique_ids,
                                       const UniqueId& uid)
 {
@@ -263,7 +304,7 @@ Shared_Backing_Store::bind_unique_id (const ACE_CString& key,
 }
 
 void
-Shared_Backing_Store::find_unique_id (const ACE_CString& key,
+Shared_Backing_Store::find_unique_id (ACE_CString const& key,
                                       UniqueIdMap &unique_ids,
                                       UniqueId &uid)
 {
@@ -276,14 +317,14 @@ Shared_Backing_Store::find_unique_id (const ACE_CString& key,
 }
 
 void
-Shared_Backing_Store::update_unique_id (const ACE_CString &key,
+Shared_Backing_Store::update_unique_id (ACE_CString const &key,
                                         UniqueIdMap& unique_ids,
                                         Options::ImrType& entry_repo_type,
                                         unsigned int& entry_repo_id,
                                         UniqueId& uid)
 {
   UniqueId temp_id;
-  const bool found = (unique_ids.find (key, temp_id) == 0);
+  bool const found = (unique_ids.find (key, temp_id) == 0);
 
   ::create_uid (entry_repo_type, entry_repo_id, uid);
   this->bind_unique_id (key, unique_ids, uid);
@@ -318,7 +359,7 @@ Shared_Backing_Store::update_unique_id (const ACE_CString &key,
 }
 
 void
-Shared_Backing_Store::verify_unique_id (const ACE_CString& key,
+Shared_Backing_Store::verify_unique_id (ACE_CString const& key,
                                         const XML_Backing_Store::NameValues& extra_params,
                                         UniqueIdMap& unique_ids)
   {
@@ -341,14 +382,15 @@ Shared_Backing_Store::verify_unique_id (const ACE_CString& key,
          this->repo_values_[Shared_Backing_Store::REPO_TYPE].first))
       {
         repo_type =
-          (Options::ImrType)ACE_OS::atoi(extra_params[Shared_Backing_Store::REPO_TYPE].second.c_str());
+          static_cast<Options::ImrType> (
+            std::atoi (extra_params[Shared_Backing_Store::REPO_TYPE].second.c_str ()));
       }
     if ((size > Shared_Backing_Store::REPO_ID) &&
         (extra_params[Shared_Backing_Store::REPO_ID].first ==
          this->repo_values_[Shared_Backing_Store::REPO_ID].first))
       {
         repo_id =
-          ACE_OS::atoi(extra_params[Shared_Backing_Store::REPO_ID].second.c_str());
+          std::atoi (extra_params[Shared_Backing_Store::REPO_ID].second.c_str ());
       }
     else
       {
@@ -362,7 +404,7 @@ Shared_Backing_Store::verify_unique_id (const ACE_CString& key,
   }
 
 int
-Shared_Backing_Store::persistent_remove (const ACE_CString& name,
+Shared_Backing_Store::persistent_remove (ACE_CString const& name,
                                          bool activator)
 {
   Lockable_File listing_lf;
@@ -383,10 +425,26 @@ Shared_Backing_Store::persistent_remove (const ACE_CString& name,
       return err;
       }
 
-  const ACE_TString fname = this->filename_ + uid.unique_filename;
+  ACE_TString const fname = this->filename_ + uid.unique_filename;
   {
-    // take the lock, then remove the file
-    Lockable_File file(fname, O_WRONLY, true);
+    // Hold the file lock while removing the file on platforms that support it.
+    Lockable_File file (fname, O_WRONLY);
+    if (file.get_file () == nullptr)
+      {
+        ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("(%P|%t) Could not lock file %s\n"),
+                               fname.c_str ()), -1);
+      }
+#if defined (ACE_WIN32)
+    // Windows does not allow unlinking an open file.
+    file.release ();
+#endif
+    if (ACE_OS::unlink (fname.c_str ()) != 0)
+      {
+        ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("(%P|%t) Could not remove file %s\n"),
+                               fname.c_str ()), -1);
+      }
   }
   listing_lf.release();
 
@@ -417,43 +475,60 @@ Shared_Backing_Store::persistent_update (const Server_Info_Ptr& info, bool add)
   UniqueId uid;
   this->find_unique_id (info->key_name_, this->server_uids_, uid);
 
-  const ACE_TString fname = this->filename_ + uid.unique_filename;
+  ACE_TString const fname = this->filename_ + uid.unique_filename;
   if (this->opts_.debug() > 9)
     {
       ORBSVCS_DEBUG((LM_INFO, ACE_TEXT ("(%P|%t) Persisting server to %s(%C)\n"),
         fname.c_str(), info->key_name_.c_str()));
     }
   Lockable_File server_file (fname, O_WRONLY);
-  const ACE_TString bfname = fname + ACE_TEXT (".bak");
+  ACE_TString const bfname = fname + ACE_TEXT (".bak");
   FILE* fp = server_file.get_file();
   if (fp == nullptr)
     {
-      ORBSVCS_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) Couldn't write to file %s\n"),
-        fname.c_str()));
-      //return -1;
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("(%P|%t) Couldn't write to file %s\n"),
+                             fname.c_str ()), -1);
     }
   // successful added file (if adding), so release the listing file lock
   listing_lf.release();
-  if (fp != nullptr)
+  ACE_OS::fprintf (fp,"<?xml version=\"1.0\"?>\n");
+
+  this->repo_values_[REPO_TYPE].second = ACE_TEXT_ALWAYS_CHAR (uid.repo_type_str.c_str ());
+  this->repo_values_[REPO_ID].second = ACE_TEXT_ALWAYS_CHAR (uid.repo_id_str.c_str ());
+
+  this->persist (fp, *info, "", this->repo_values_);
+  int const flush_error = ACE_OS::fflush (fp);
+  if (flush_error != 0 || std::ferror (fp) != 0)
     {
-      ACE_OS::fprintf (fp,"<?xml version=\"1.0\"?>\n");
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("(%P|%t) Could not write file %s\n"),
+                             fname.c_str ()), -1);
+    }
 
-      this->repo_values_[REPO_TYPE].second = ACE_TEXT_ALWAYS_CHAR (uid.repo_type_str.c_str ());
-      this->repo_values_[REPO_ID].second = ACE_TEXT_ALWAYS_CHAR (uid.repo_id_str.c_str ());
-
-      this->persist (fp, *info, "", this->repo_values_);
-
-      // Copy the current file to a backup.
-      FILE* bfp = ACE_OS::fopen (bfname.c_str(),ACE_TEXT("w"));
-      ACE_OS::fprintf (bfp,"<?xml version=\"1.0\"?>\n");
-      this->persist (bfp, *info, "", this->repo_values_);
-      ACE_OS::fflush (bfp);
-      ACE_OS::fclose (bfp);
+  // Copy the current file to a backup.
+  std::unique_ptr<FILE, int (*) (FILE *)> bfp (
+    ACE_OS::fopen (bfname.c_str (), ACE_TEXT ("w")), ACE_OS::fclose);
+  if (!bfp)
+    {
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("(%P|%t) Couldn't write to file %s\n"),
+                             bfname.c_str ()), -1);
+    }
+  ACE_OS::fprintf (bfp.get (), "<?xml version=\"1.0\"?>\n");
+  this->persist (bfp.get (), *info, "", this->repo_values_);
+  int const write_error = std::ferror (bfp.get ());
+  int const close_error = ACE_OS::fclose (bfp.release ());
+  if (write_error != 0 || close_error != 0)
+    {
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("(%P|%t) Could not write backup file %s\n"),
+                             bfname.c_str ()), -1);
     }
   server_file.release ();
 
   ImplementationRepository::UpdateInfo entity;
-  entity.name = static_cast<const char *> (ACE_TEXT_ALWAYS_CHAR (name.c_str ()));
+  entity.name = static_cast<char const *> (ACE_TEXT_ALWAYS_CHAR (name.c_str ()));
   ImplementationRepository::RepoInfo rinfo;
   rinfo.kind = ImplementationRepository::repo_server;
   rinfo.repo.repo_id = uid.repo_id;
@@ -463,7 +538,6 @@ Shared_Backing_Store::persistent_update (const Server_Info_Ptr& info, bool add)
 
   return 0;
 }
-
 
 int
 Shared_Backing_Store::persistent_update(const Activator_Info_Ptr& info, bool add)
@@ -483,7 +557,7 @@ Shared_Backing_Store::persistent_update(const Activator_Info_Ptr& info, bool add
   UniqueId uid;
   this->find_unique_id (name, this->activator_uids_,uid);
 
-  const ACE_TString fname = this->filename_ + uid.unique_filename;
+  ACE_TString const fname = this->filename_ + uid.unique_filename;
   if (this->opts_.debug() > 9)
     {
       ORBSVCS_DEBUG ((LM_INFO,
@@ -491,7 +565,7 @@ Shared_Backing_Store::persistent_update(const Activator_Info_Ptr& info, bool add
                       fname.c_str(), info->name.c_str()));
     }
   Lockable_File activator_file (fname, O_WRONLY);
-  const ACE_TString bfname = fname + ACE_TEXT (".bak");
+  ACE_TString const bfname = fname + ACE_TEXT (".bak");
   FILE* fp = activator_file.get_file();
   if (fp == nullptr)
     {
@@ -508,13 +582,33 @@ Shared_Backing_Store::persistent_update(const Activator_Info_Ptr& info, bool add
   this->repo_values_[REPO_ID].second = ACE_TEXT_ALWAYS_CHAR (uid.repo_id_str.c_str ());
 
   persist (fp, *info, "", this->repo_values_);
+  int const flush_error = ACE_OS::fflush (fp);
+  if (flush_error != 0 || std::ferror (fp) != 0)
+    {
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("(%P|%t) Could not write file %s\n"),
+                             fname.c_str ()), -1);
+    }
 
   // Copy the current file to a backup.
-  FILE* bfp = ACE_OS::fopen (bfname.c_str(),ACE_TEXT("w+"));
-  ACE_OS::fprintf (bfp,"<?xml version=\"1.0\"?>\n");
-  persist (bfp, *info, "", this->repo_values_);
-  ACE_OS::fflush (bfp);
-  ACE_OS::fclose (bfp);
+  std::unique_ptr<FILE, int (*) (FILE *)> bfp (
+    ACE_OS::fopen (bfname.c_str (), ACE_TEXT ("w+")), ACE_OS::fclose);
+  if (!bfp)
+    {
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("(%P|%t) Couldn't write to file %s\n"),
+                             bfname.c_str ()), -1);
+    }
+  ACE_OS::fprintf (bfp.get (), "<?xml version=\"1.0\"?>\n");
+  persist (bfp.get (), *info, "", this->repo_values_);
+  int const write_error = std::ferror (bfp.get ());
+  int const close_error = ACE_OS::fclose (bfp.release ());
+  if (write_error != 0 || close_error != 0)
+    {
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("(%P|%t) Could not write backup file %s\n"),
+                             bfname.c_str ()), -1);
+    }
   activator_file.release ();
 
   ImplementationRepository::UpdateInfo entity;
@@ -529,7 +623,7 @@ Shared_Backing_Store::persistent_update(const Activator_Info_Ptr& info, bool add
   return 0;
 }
 
-const ACE_TCHAR*
+ACE_TCHAR const *
 Shared_Backing_Store::repo_mode() const
 {
   return this->listing_file_.c_str();
@@ -560,11 +654,13 @@ Shared_Backing_Store::connect_replicas ()
           // Verify that we recovered the IOR successfully. If we did not
           // then fail startup of the backup IMR Locator.
           if (this->recover_ior () == -1)
-            ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                                   ACE_TEXT("Error: Unable to retrieve IOR from combined IOR ")
-                                   ACE_TEXT ("file: %C\n"),
-                                   replica_ior_file.c_str()),
-                                  -1);
+            {
+              ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                                     ACE_TEXT("Error: Unable to retrieve IOR from combined IOR ")
+                                     ACE_TEXT ("file: %C\n"),
+                                     replica_ior_file.c_str()),
+                                    -1);
+            }
         }
       else
         { // There has been a startup error. The backup can only be started
@@ -609,9 +705,9 @@ Shared_Backing_Store::init_repo(PortableServer::POA_ptr)
         }
       else
         {
-          const ACE_Vector<ACE_TString>& filenames = listings->filenames();
+          ACE_Vector<ACE_TString> const& filenames = listings->filenames();
           size_t const sz = filenames.size ();
-          for (CORBA::ULong i = 0; i < sz; ++i)
+          for (CORBA::ULong i {}; i < sz; ++i)
             {
               if (this->opts_.debug() > 9)
                 {
@@ -658,15 +754,15 @@ Shared_Backing_Store::persistent_load (bool only_changes)
       listings->remove_unmatched (*this);
     }
 
-  const ACE_Vector<ACE_TString>& filenames = listings->filenames ();
+  ACE_Vector<ACE_TString> const& filenames = listings->filenames ();
   size_t const sz = filenames.size ();
   if (this->opts_.debug() > 9)
     {
       ORBSVCS_DEBUG((LM_INFO, ACE_TEXT ("(%P|%t) persistent_load %d files\n"), sz));
     }
-  for (CORBA::ULong i = 0; i < sz; ++i)
+  for (CORBA::ULong i {}; i < sz; ++i)
     {
-      const ACE_TString& fname = filenames[i];
+      ACE_TString const& fname = filenames[i];
       Lockable_File file(fname, O_RDONLY);
 
       if (this->load_file (fname, file.get_file()) != 0)
@@ -682,7 +778,7 @@ Shared_Backing_Store::XMLHandler_Ptr
 Shared_Backing_Store::get_listings (Lockable_File& listing_lf,
                                     bool only_changes) const
 {
-  LocatorListings_XMLHandler *raw_xml = nullptr;
+  LocatorListings_XMLHandler *raw_xml {};
   if (only_changes)
     {
       ACE_NEW_RETURN (raw_xml,
@@ -698,7 +794,9 @@ Shared_Backing_Store::get_listings (Lockable_File& listing_lf,
                       XMLHandler_Ptr());
     }
 
-  XMLHandler_Ptr listings_handler (raw_xml);
+  std::unique_ptr<LocatorListings_XMLHandler> raw_xml_owner (raw_xml);
+  XMLHandler_Ptr listings_handler (raw_xml_owner.get ());
+  raw_xml_owner.release ();
 
   if (this->load_file (this->listing_file_,
                        *listings_handler,
@@ -738,7 +836,7 @@ Shared_Backing_Store::sync_load ()
       if (this->opts_.debug() > 5)
         {
           ORBSVCS_DEBUG((LM_INFO,
-                         ACE_TEXT("(%P|%t) sync_load INC_SYNC, %d files\n"),
+                         ACE_TEXT("(%P|%t) sync_load INC_SYNC, %B files\n"),
                          this->sync_files_.size ()));
         }
 
@@ -775,7 +873,7 @@ Shared_Backing_Store::write_listing (FILE* list)
   UniqueId uid;
 
   // Save servers
-  Locator_Repository::SIMap::ENTRY* sientry = nullptr;
+  Locator_Repository::SIMap::ENTRY* sientry {};
   Locator_Repository::SIMap::CONST_ITERATOR siit (this->servers ());
   for (; siit.next (sientry); siit.advance() )
     {
@@ -788,11 +886,11 @@ Shared_Backing_Store::write_listing (FILE* list)
     }
 
   // Save Activators
-  Locator_Repository::AIMap::ENTRY* aientry = nullptr;
+  Locator_Repository::AIMap::ENTRY* aientry {};
   Locator_Repository::AIMap::CONST_ITERATOR aiit (this->activators ());
   for (; aiit.next (aientry); aiit.advance ())
     {
-      const ACE_CString& aname = aientry->ext_id_;
+      ACE_CString const& aname = aientry->ext_id_;
       this->find_unique_id (aname, this->activator_uids_, uid);
       ::write_listing_item (list, uid.unique_filename, aname,
                           Locator_XMLHandler::ACTIVATOR_INFO_TAG);
@@ -815,11 +913,19 @@ Shared_Backing_Store::persist_listings (Lockable_File& listing_lf)
     }
 
   this->write_listing (list);
+  int const flush_error = ACE_OS::fflush (list);
+  if (flush_error != 0 || std::ferror (list) != 0)
+    {
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Could not write listing file %s\n"),
+                             this->listing_file_.c_str ()), -1);
+    }
 
-  const ACE_TString bfname = this->listing_file_ + ACE_TEXT (".bak");
+  ACE_TString const bfname = this->listing_file_ + ACE_TEXT (".bak");
 
   // Write backup file
-  FILE* baklist = ACE_OS::fopen (bfname.c_str(), ACE_TEXT("w"));
+  std::unique_ptr<FILE, int (*) (FILE *)> baklist (
+    ACE_OS::fopen (bfname.c_str (), ACE_TEXT ("w")), ACE_OS::fclose);
   if (baklist == nullptr)
     {
       ORBSVCS_ERROR ((LM_ERROR,
@@ -828,9 +934,15 @@ Shared_Backing_Store::persist_listings (Lockable_File& listing_lf)
       return -1;
     }
 
-  this->write_listing (baklist);
-  ACE_OS::fflush (baklist);
-  ACE_OS::fclose (baklist);
+  this->write_listing (baklist.get ());
+  int const write_error = std::ferror (baklist.get ());
+  int const close_error = ACE_OS::fclose (baklist.release ());
+  if (write_error != 0 || close_error != 0)
+    {
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Could not write backup file %s\n"),
+                             bfname.c_str ()), -1);
+    }
 
   return 0;
 }
@@ -847,9 +959,10 @@ Shared_Backing_Store::report_ior(PortableServer::POA_ptr imr_poa)
   IORTable::Table_var ior_table = IORTable::Table::_narrow (obj.in ());
   ACE_ASSERT (! CORBA::is_nil (ior_table.in ()));
 
-  const char* const replica_name(IMR_REPLICA[this->imr_type_]);
+  char const *const replica_name(IMR_REPLICA[this->imr_type_]);
   ACE_CString replica_filename = replica_ior_filename(false);
-  FILE* fp = ACE_OS::fopen (replica_filename.c_str (), "w");
+  std::unique_ptr<FILE, int (*) (FILE *)> fp (
+    ACE_OS::fopen (replica_filename.c_str (), "w"), ACE_OS::fclose);
   if (fp == nullptr)
     {
       ORBSVCS_ERROR_RETURN ((LM_ERROR,
@@ -859,8 +972,14 @@ Shared_Backing_Store::report_ior(PortableServer::POA_ptr imr_poa)
 
   CORBA::String_var replica_ior = this->replicator_.ior ();
   ior_table->bind(replica_name, replica_ior.in());
-  ACE_OS::fprintf (fp, "%s", replica_ior.in ());
-  ACE_OS::fclose (fp);
+  int const write_result = ACE_OS::fprintf (fp.get (), "%s", replica_ior.in ());
+  int const close_result = ACE_OS::fclose (fp.release ());
+  if (write_result < 0 || close_result != 0)
+    {
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
+        ACE_TEXT ("(%P|%t) ImR: Could not write file: %C\n"),
+        replica_filename.c_str ()), -1);
+    }
 
   int err = 0;
   // only report the imr ior if the fault tolerant ImR is complete
@@ -873,15 +992,15 @@ Shared_Backing_Store::report_ior(PortableServer::POA_ptr imr_poa)
 }
 
 char*
-Shared_Backing_Store::locator_service_ior (const char* peer_ior) const
+Shared_Backing_Store::locator_service_ior (char const *peer_ior) const
 {
-  const CORBA::Object_ptr this_obj =
+  CORBA::Object_ptr const this_obj =
     this->orb_->string_to_object(this->non_ft_imr_ior_.in ());
-  const CORBA::Object_ptr peer_obj =
+  CORBA::Object_ptr const peer_obj =
     this->orb_->string_to_object(peer_ior);
-  const CORBA::Object_ptr& obj1 =
+  CORBA::Object_ptr const& obj1 =
     (this->imr_type_ == Options::PRIMARY_IMR) ? this_obj : peer_obj;
-  const CORBA::Object_ptr& obj2 =
+  CORBA::Object_ptr const& obj2 =
     (this->imr_type_ != Options::PRIMARY_IMR) ? this_obj : peer_obj;
 
   CORBA::Object_var IORM =
@@ -902,6 +1021,8 @@ Shared_Backing_Store::load_server (Server_Info *info,
                                    bool server_started,
                                    const NameValues& extra_params)
 {
+  std::unique_ptr<Server_Info> info_owner (info);
+
   if (this->opts_.debug() > 4)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
@@ -917,7 +1038,9 @@ Shared_Backing_Store::load_server (Server_Info *info,
   if (this->servers ().find (info->key_name_, si) != 0)
     {
       // Create new or replace the existing entry
-      XML_Backing_Store::load_server (info, server_started, extra_params);
+      XML_Backing_Store::load_server (info_owner.release (),
+                                      server_started,
+                                      extra_params);
       return;
     }
 
@@ -925,7 +1048,6 @@ Shared_Backing_Store::load_server (Server_Info *info,
   bool was_started = si->is_running ();
 
   *si.get () = *info;
-  delete info;
 
   if (!server_started)
     {
@@ -957,9 +1079,9 @@ Shared_Backing_Store::load_server (Server_Info *info,
 }
 
 void
-Shared_Backing_Store::load_activator (const ACE_CString& activator_name,
+Shared_Backing_Store::load_activator (ACE_CString const& activator_name,
                                       long token,
-                                      const ACE_CString& ior,
+                                      ACE_CString const& ior,
                                       const NameValues& extra_params)
 {
   // use this to make sure an unique id entry is created
@@ -970,7 +1092,7 @@ Shared_Backing_Store::load_activator (const ACE_CString& activator_name,
 }
 
 void
-Shared_Backing_Store::notify_remote_access (const char * id,
+Shared_Backing_Store::notify_remote_access (char const *id,
                                           ImplementationRepository::AAM_Status s)
 {
   this->replicator_.send_access_state (id, s);
@@ -986,7 +1108,7 @@ Shared_Backing_Store::updates_available
   if (seq_gap)
     {
       bool found = false;
-      for (CORBA::Long i = 0; !found && i < len; i++)
+      for (CORBA::Long i {}; !found && i < len; ++i)
         {
           if (this->updates_[i].action._d () == ImplementationRepository::repo_update)
             {
@@ -1004,7 +1126,7 @@ Shared_Backing_Store::updates_available
           this->updates_[len++].action.info (rinfo);
         }
     }
-  for (CORBA::ULong i = 0; i < info.length (); i++)
+  for (CORBA::ULong i {}; i < info.length (); ++i)
     {
       if (info[i].action._d () == ImplementationRepository::access || !seq_gap)
         {
@@ -1014,9 +1136,12 @@ Shared_Backing_Store::updates_available
   this->updates_.length (len);
 
   if (this->notified_)
+  {
     return;
+  }
   this->notified_ = true;
-  this->orb_->orb_core ()->reactor ()->notify (&this->update_handler_);
+  this->orb_->orb_core ()->reactor ()->notify
+    (std::addressof (this->update_handler_));
 }
 
 int
@@ -1032,7 +1157,7 @@ Shared_Backing_Store::process_updates ()
   //  ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->sync_lock_);
   this->notified_ = false;
   this->sync_needed_ = NO_SYNC;
-  for (CORBA::ULong i = 0; i < this->updates_.length (); i++)
+  for (CORBA::ULong i {}; i < this->updates_.length (); ++i)
     {
       ImplementationRepository::UpdateInfo &entity = this->updates_[i];
       switch (entity.action._d ())
@@ -1063,7 +1188,7 @@ Shared_Backing_Store::process_updates ()
                 continue;
               }
             this->sync_needed_ = INC_SYNC;
-            const ACE_CString name = entity.name.in ();
+            ACE_CString const name = entity.name.in ();
             Options::ImrType repo_type = (Options::ImrType)entity.action.info().repo.repo_type;
             unsigned int repo_id = entity.action.info().repo.repo_id;
             UniqueId uid;
@@ -1072,13 +1197,13 @@ Shared_Backing_Store::process_updates ()
                               this->activator_uids_ :
                               this->server_uids_,
                               repo_type, repo_id, uid);
-            const ACE_TString fname = this->filename_ + uid.unique_filename;
+            ACE_TString const fname = this->filename_ + uid.unique_filename;
             this->sync_files_.insert (fname);
             break;
           }
         case ImplementationRepository::repo_remove:
           {
-            const ACE_CString name = entity.name.in ();
+            ACE_CString const name = entity.name.in ();
             if (entity.action.kind() == ImplementationRepository::repo_activator)
               {
                 this->activators().unbind (name);
@@ -1122,7 +1247,7 @@ Shared_Backing_Store::gen_ior (char*& ft_imr_ior)
 
   // otherwise we need to combine the primary and backup ior to make
   // the fault tolerant ImR ior
-  char* combined_ior = nullptr;
+  char* combined_ior {};
   CORBA::String_var reason;
   try
     {
@@ -1152,8 +1277,8 @@ Shared_Backing_Store::gen_ior (char*& ft_imr_ior)
     }
 
   ft_imr_ior = combined_ior;
-  // pass as const char* to make sure string is copied
-  this->imr_ior_ = (const char*)ft_imr_ior;
+  // pass as char const *to make sure string is copied
+  this->imr_ior_ = (char const *)ft_imr_ior;
 
   PortableServer::POA_var null_poa;
   Locator_Repository::report_ior(null_poa.in ());
@@ -1177,27 +1302,27 @@ Shared_Backing_Store::replica_ior_filename(bool peer_ior_file) const
 }
 
 Shared_Backing_Store::LocatorListings_XMLHandler::LocatorListings_XMLHandler(
-  const ACE_TString& dir)
+  ACE_TString const& dir)
 : dir_(dir),
   only_changes_(false)
 {
 }
 
 Shared_Backing_Store::LocatorListings_XMLHandler::LocatorListings_XMLHandler(
-  const ACE_TString& dir,
+  ACE_TString const& dir,
   const Locator_Repository::SIMap& servers,
   const Locator_Repository::AIMap& activators)
 : dir_(dir),
   only_changes_(true)
 {
-  Locator_Repository::SIMap::ENTRY* sientry = nullptr;
+  Locator_Repository::SIMap::ENTRY* sientry {};
   Locator_Repository::SIMap::CONST_ITERATOR siit (servers);
   for (; siit.next (sientry); siit.advance() )
     {
       unmatched_servers_.bind (sientry->ext_id_, sientry->int_id_);
     }
 
-  Locator_Repository::AIMap::ENTRY* aientry = nullptr;
+  Locator_Repository::AIMap::ENTRY* aientry {};
   Locator_Repository::AIMap::CONST_ITERATOR aiit (activators);
   for (; aiit.next (aientry); aiit.advance() )
     {
@@ -1212,7 +1337,7 @@ Shared_Backing_Store::LocatorListings_XMLHandler::startElement (
   const ACEXML_Char* qName,
   ACEXML_Attributes* attrs)
 {
-  const bool server =
+  bool const server =
     (ACE_OS::strcasecmp (qName, Locator_XMLHandler::SERVER_INFO_TAG) == 0);
   if (!server &&
       (ACE_OS::strcasecmp (qName, Locator_XMLHandler::ACTIVATOR_INFO_TAG) != 0))
@@ -1259,7 +1384,7 @@ void
 Shared_Backing_Store::LocatorListings_XMLHandler::remove_unmatched(
   Locator_Repository& repo)
 {
-  Locator_Repository::SIMap::ENTRY* sientry = nullptr;
+  Locator_Repository::SIMap::ENTRY* sientry {};
   Locator_Repository::SIMap::CONST_ITERATOR siit (this->unmatched_servers_);
   for (; siit.next (sientry); siit.advance() )
     {
@@ -1272,7 +1397,7 @@ Shared_Backing_Store::LocatorListings_XMLHandler::remove_unmatched(
         }
     }
 
-  Locator_Repository::AIMap::ENTRY* aientry = nullptr;
+  Locator_Repository::AIMap::ENTRY* aientry {};
   Locator_Repository::AIMap::CONST_ITERATOR aiit (this->unmatched_activators_);
   for (; aiit.next (aientry); aiit.advance ())
     {
@@ -1286,7 +1411,7 @@ Shared_Backing_Store::LocatorListings_XMLHandler::remove_unmatched(
     }
 }
 
-const ACE_Vector<ACE_TString>&
+ACE_Vector<ACE_TString> const&
 Shared_Backing_Store::LocatorListings_XMLHandler::filenames() const
 {
   return this->filenames_;

@@ -1,5 +1,3 @@
-// -*- C++ -*-
-//=============================================================================
 /**
  *  @file   Forwarder.h
  *
@@ -8,7 +6,6 @@
  *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
  *  @author Priyanka Gontla <pgontla@doc.ece.uci.edu>
  */
-//=============================================================================
 
 #ifndef IMR_FORWARDER_H
 #define IMR_FORWARDER_H
@@ -29,7 +26,6 @@
 
 class ImR_Locator_i;
 
-//----------------------------------------------------------------------------
 /**
  * @class ImR_DSI_ReplyHandler
  *
@@ -50,8 +46,8 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 class ImR_DSI_ResponseHandler : public ImR_ResponseHandler
 {
 public:
-  ImR_DSI_ResponseHandler (const char *key,
-                        const char *server_name,
+  ImR_DSI_ResponseHandler (char const *key,
+                        char const *server_name,
                         CORBA::ORB_ptr orb,
                         TAO_AMH_DSI_Response_Handler_ptr resp);
 
@@ -61,6 +57,7 @@ public:
   void send_exception (CORBA::Exception *ex) override;
 
 private:
+  /// Takes ownership of ex and transfers it to the AMH exception holder.
   void invoke_excep_i (CORBA::Exception *ex);
 
   CORBA::String_var key_str_;
@@ -69,8 +66,6 @@ private:
   TAO_AMH_DSI_Response_Handler_var resp_;
 };
 
-
-//---------------------------------------------------------------------------
 /**
  * @class ImR_Forwarder
  *
@@ -84,7 +79,7 @@ private:
 class Locator_Export ImR_DSI_Forwarder : public virtual TAO_DynamicImplementation
 {
 public:
-  ImR_DSI_Forwarder (ImR_Locator_i& imr_impl);
+  explicit ImR_DSI_Forwarder (ImR_Locator_i& imr_impl);
   ~ImR_DSI_Forwarder () override;
 
   void _dispatch (TAO_ServerRequest& request,
@@ -102,7 +97,6 @@ public:
 
   void invoke_primary_interface(CORBA::ServerRequest_ptr request);
 
-
   void init(CORBA::ORB_ptr orb);
 
 private:
@@ -115,6 +109,5 @@ private:
   /// Variable to save the ORB reference passed to the constr.
   CORBA::ORB_ptr orb_;
 };
-
 
 #endif /* IMR_FORWARDER_H */

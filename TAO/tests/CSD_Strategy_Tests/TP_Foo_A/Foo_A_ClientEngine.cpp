@@ -16,7 +16,7 @@ Foo_A_ClientEngine::execute()
 {
   // Make sure the connection is established before making
   // remote invocations.
-  if (AppHelper::validate_connection (this->obj_.in ()) == false)
+  if (!AppHelper::validate_connection (this->obj_.in ()))
     {
       ACE_ERROR((LM_ERROR, "(%P|%t)Foo_A_ClientEngine::execute  " \
                           "client %d connect failed.\n", this->client_id_));
@@ -26,20 +26,20 @@ Foo_A_ClientEngine::execute()
   // Verify the return values and return the results.
   bool check_validity = true;
 
-  CORBA::Long i = this->client_id_;
+  CORBA::Long const i = this->client_id_;
 
   this->obj_->op1();
 
   this->obj_->op2(i);
 
-  CORBA::Long value = this->obj_->op3(i);
+  CORBA::Long const value = this->obj_->op3(i);
 
   if (value != i)
     {
       check_validity = false;
     }
 
-  for (CORBA::Long j = 1; j <= 5; j++)
+  for (CORBA::Long j = 1; j <= 5; ++j)
     {
       this->obj_->op4(495 + (i * 5) + j);
     }
@@ -50,7 +50,7 @@ Foo_A_ClientEngine::execute()
   {
     this->obj_->op5();
   }
-  catch (const FooException& )
+  catch (FooException const & )
   {
     // Expected
     caught_exception = true;
@@ -65,7 +65,6 @@ Foo_A_ClientEngine::execute()
 
   return check_validity;
 }
-
 
 void
 Foo_A_ClientEngine::expected_results(Foo_A_Statistics& stats)

@@ -16,15 +16,15 @@
 template<typename object_t, typename object_t_var>
 struct testing_object_reference_traits
   : public TAO::details::object_reference_traits_base<object_t, object_t_var>
-  , public TAO::details::object_reference_traits_decorator<object_t, object_t_var, testing_object_reference_traits<object_t, object_t_var> >
+  , public TAO::details::object_reference_traits_decorator<object_t, object_t_var, testing_object_reference_traits<object_t, object_t_var>>
 {
   static call_counter default_initializer_calls;
   static call_counter duplicate_calls;
   static call_counter release_calls;
 
-  typedef object_t object_type;
-  typedef object_t_var object_type_var;
-  typedef TAO::details::object_reference_traits<object_t,object_t_var,false> real_traits;
+  using object_type = object_t;
+  using object_type_var = object_t_var;
+  using real_traits = TAO::details::object_reference_traits<object_t,object_t_var,false>;
 
   static object_type * default_initializer()
   {

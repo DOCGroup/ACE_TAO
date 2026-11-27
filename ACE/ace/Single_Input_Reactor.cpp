@@ -24,7 +24,7 @@ int ACE_Single_Input_Reactor::register_handler (ACE_Event_Handler *event_handler
   event_handler_ = event_handler;
   event_handler->add_reference ();
   // disable ACE_NONBLOCK, see ACE_IPC_SAP::disable()
-  const auto handle = event_handler->get_handle ();
+  ACE_HANDLE const handle = event_handler->get_handle ();
 #if defined ACE_WIN32 || defined ACE_VXWORKS
   u_long nonblock = 0;
   ACE_OS::ioctl (handle, FIONBIO, &nonblock);
@@ -36,7 +36,7 @@ int ACE_Single_Input_Reactor::register_handler (ACE_Event_Handler *event_handler
 
 int ACE_Single_Input_Reactor::handle_events (ACE_Time_Value *)
 {
-  const auto handler = event_handler_.handler ();
+  ACE_Event_Handler * const handler = event_handler_.handler ();
   if (handler)
     {
       return handler->handle_input (handler->get_handle ());
@@ -80,7 +80,7 @@ int ACE_Single_Input_Reactor::close ()
   return 0;
 }
 
-int ACE_Single_Input_Reactor::work_pending (const ACE_Time_Value &)
+int ACE_Single_Input_Reactor::work_pending (ACE_Time_Value const &)
 {
   return 0;
 }
@@ -125,7 +125,7 @@ int ACE_Single_Input_Reactor::register_handler (ACE_HANDLE, ACE_HANDLE, ACE_Even
   return 0;
 }
 
-int ACE_Single_Input_Reactor::register_handler (const ACE_Handle_Set &, ACE_Event_Handler *, ACE_Reactor_Mask)
+int ACE_Single_Input_Reactor::register_handler (ACE_Handle_Set const &, ACE_Event_Handler *, ACE_Reactor_Mask)
 {
   return 0;
 }
@@ -135,7 +135,7 @@ int ACE_Single_Input_Reactor::register_handler (int, ACE_Event_Handler *, ACE_Si
   return 0;
 }
 
-int ACE_Single_Input_Reactor::register_handler (const ACE_Sig_Set &, ACE_Event_Handler *, ACE_Sig_Action *)
+int ACE_Single_Input_Reactor::register_handler (ACE_Sig_Set const &, ACE_Event_Handler *, ACE_Sig_Action *)
 {
   return 0;
 }
@@ -150,7 +150,7 @@ int ACE_Single_Input_Reactor::remove_handler (ACE_HANDLE, ACE_Reactor_Mask)
   return 0;
 }
 
-int ACE_Single_Input_Reactor::remove_handler (const ACE_Handle_Set &, ACE_Reactor_Mask)
+int ACE_Single_Input_Reactor::remove_handler (ACE_Handle_Set const &, ACE_Reactor_Mask)
 {
   return 0;
 }
@@ -160,7 +160,7 @@ int ACE_Single_Input_Reactor::remove_handler (int, ACE_Sig_Action *, ACE_Sig_Act
   return 0;
 }
 
-int ACE_Single_Input_Reactor::remove_handler (const ACE_Sig_Set &)
+int ACE_Single_Input_Reactor::remove_handler (ACE_Sig_Set const &)
 {
   return 0;
 }
@@ -175,7 +175,7 @@ int ACE_Single_Input_Reactor::suspend_handler (ACE_HANDLE)
   return 0;
 }
 
-int ACE_Single_Input_Reactor::suspend_handler (const ACE_Handle_Set &)
+int ACE_Single_Input_Reactor::suspend_handler (ACE_Handle_Set const &)
 {
   return 0;
 }
@@ -195,7 +195,7 @@ int ACE_Single_Input_Reactor::resume_handler (ACE_HANDLE)
   return 0;
 }
 
-int ACE_Single_Input_Reactor::resume_handler (const ACE_Handle_Set &)
+int ACE_Single_Input_Reactor::resume_handler (ACE_Handle_Set const &)
 {
   return 0;
 }
@@ -215,12 +215,12 @@ bool ACE_Single_Input_Reactor::uses_event_associations ()
   return false;
 }
 
-long ACE_Single_Input_Reactor::schedule_timer (ACE_Event_Handler *, const void *, const ACE_Time_Value &, const ACE_Time_Value &)
+long ACE_Single_Input_Reactor::schedule_timer (ACE_Event_Handler *, void const *, ACE_Time_Value const &, ACE_Time_Value const &)
 {
   return 0;
 }
 
-int ACE_Single_Input_Reactor::reset_timer_interval (long, const ACE_Time_Value &)
+int ACE_Single_Input_Reactor::reset_timer_interval (long, ACE_Time_Value const &)
 {
   return 0;
 }
@@ -230,7 +230,7 @@ int ACE_Single_Input_Reactor::cancel_timer (ACE_Event_Handler *, int)
   return 0;
 }
 
-int ACE_Single_Input_Reactor::cancel_timer (long, const void **, int)
+int ACE_Single_Input_Reactor::cancel_timer (long, void const **, int)
 {
   return 0;
 }

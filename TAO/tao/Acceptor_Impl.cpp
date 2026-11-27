@@ -1,13 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file     Acceptor_Impl.cpp
  *
  *  @author  Carlos O'Ryan <coryan@uci.edu>  Ossama Othman <ossama@dre.vanderbilt.edu>
  */
-//=============================================================================
-
 
 #ifndef TAO_ACCEPTOR_IMPL_CPP
 #define TAO_ACCEPTOR_IMPL_CPP
@@ -69,9 +64,11 @@ TAO_Concurrency_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *sh,
 
   // Indicate that this transport was opened in the server role
   if (TAO_debug_level > 6)
-    TAOLIB_DEBUG ((LM_DEBUG,
-                "TAO (%P|%t) - Concurrency_Strategy::activate_svc_handler, "
-                "opened as TAO_SERVER_ROLE\n"));
+    {
+      TAOLIB_DEBUG ((LM_DEBUG,
+                     "TAO (%P|%t) - Concurrency_Strategy::activate_svc_handler, "
+                     "opened as TAO_SERVER_ROLE\n"));
+    }
 
   // Here the service handler has been created and the new connection
   // has been accepted.  #REFCOUNT# is one at this point.
@@ -112,13 +109,13 @@ TAO_Concurrency_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *sh,
   // point.
   TAO_Server_Strategy_Factory *f = this->orb_core_->server_factory ();
 
-  int result = 0;
+  int result {};
 
   // Do we need to create threads?
   if (f->activate_server_connections ())
     {
       // Thread-per-connection concurrency model
-      TAO_Thread_Per_Connection_Handler *tpch = nullptr;
+      TAO_Thread_Per_Connection_Handler *tpch {};
 
       ACE_NEW_RETURN (tpch,
                       TAO_Thread_Per_Connection_Handler (sh,
@@ -166,17 +163,21 @@ TAO_Concurrency_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *sh,
       // #REFCOUNT# is zero at this point.
 
       if (TAO_debug_level > 0)
-         {
-           ACE_TCHAR const *error_message = nullptr;
-           if (f->activate_server_connections ())
-             error_message = ACE_TEXT("could not activate new connection");
-           else
-             error_message = ACE_TEXT("could not register new connection in the reactor");
+        {
+          ACE_TCHAR const *error_message {};
+          if (f->activate_server_connections ())
+            {
+              error_message = ACE_TEXT("could not activate new connection");
+            }
+          else
+            {
+              error_message = ACE_TEXT("could not register new connection in the reactor");
+            }
 
-           TAOLIB_ERROR ((LM_ERROR,
-                       ACE_TEXT("TAO (%P|%t) - Concurrency_Strategy::activate_svc_handler, ")
-                       ACE_TEXT("%s\n"), error_message));
-         }
+          TAOLIB_ERROR ((LM_ERROR,
+                         ACE_TEXT("TAO (%P|%t) - Concurrency_Strategy::activate_svc_handler, ")
+                         ACE_TEXT("%s\n"), error_message));
+        }
 
       return -1;
     }
@@ -214,7 +215,6 @@ TAO_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::accept_svc_handler (SVC_H
 
   return result;
 }
-
 
 /////////////////////////////////////////////////////////////////////
 

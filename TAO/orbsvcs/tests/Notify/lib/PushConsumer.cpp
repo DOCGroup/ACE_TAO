@@ -4,7 +4,6 @@
 #include "PushConsumer.inl"
 #endif /* __ACE_INLINE__ */
 
-
 TAO_Notify_Tests_PushConsumer_Traits::TAO_Notify_Tests_PushConsumer_Traits ()
   :type_ (CosNotifyChannelAdmin::ANY_EVENT)
 {
@@ -12,13 +11,9 @@ TAO_Notify_Tests_PushConsumer_Traits::TAO_Notify_Tests_PushConsumer_Traits ()
 
 /*******************************************************************/
 
-TAO_Notify_Tests_PushConsumer::TAO_Notify_Tests_PushConsumer ()
-{
-}
+TAO_Notify_Tests_PushConsumer::TAO_Notify_Tests_PushConsumer () = default;
 
-TAO_Notify_Tests_PushConsumer::~TAO_Notify_Tests_PushConsumer ()
-{
-}
+TAO_Notify_Tests_PushConsumer::~TAO_Notify_Tests_PushConsumer () = default;
 
 void
 TAO_Notify_Tests_PushConsumer::connect_to_peer (Proxy_Traits::PTR proxy_ptr, Peer_Traits::PTR peer_ptr)
@@ -42,7 +37,7 @@ TAO_Notify_Tests_PushConsumer::disconnect_push_consumer ()
 }
 
 void
-TAO_Notify_Tests_PushConsumer::push (const CORBA::Any & /*data*/)
+TAO_Notify_Tests_PushConsumer::push (CORBA::Any const & /*data*/)
 {
   // NOP
 }

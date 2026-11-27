@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /**
  *  @file Event_Map_T.h
  *
@@ -35,11 +34,14 @@ class TAO_Notify_Event_Map_T
 public:
   using ENTRY = TAO_Notify_Event_Map_Entry_T<PROXY>;
 
-  /// Constructor
   TAO_Notify_Event_Map_T ();
 
-  /// Destructor
   ~TAO_Notify_Event_Map_T ();
+
+  TAO_Notify_Event_Map_T (TAO_Notify_Event_Map_T const &) = delete;
+  TAO_Notify_Event_Map_T (TAO_Notify_Event_Map_T &&) = delete;
+  TAO_Notify_Event_Map_T &operator= (TAO_Notify_Event_Map_T const &) = delete;
+  TAO_Notify_Event_Map_T &operator= (TAO_Notify_Event_Map_T &&) = delete;
 
   /// Init
   void init ();
@@ -51,18 +53,18 @@ public:
   void disconnect (PROXY* proxy);
 
   /// Associate PROXY and event_type.
-  /// Returns 1 if <event_type> is being seem for the 1st time otherwise returns 0.
+  /// Returns 1 if @a event_type is seen for the first time; otherwise returns 0.
   /// Returns -1 on error.
-  int insert (PROXY* proxy, const TAO_Notify_EventType& event_type);
+  int insert (PROXY* proxy, TAO_Notify_EventType const& event_type);
 
   /// Remove association of PROXY and event_type.
-  /// Returns 1 if <event_type> is being seem for the last time otherwise returns 0.
+  /// Returns 1 if @a event_type is seen for the last time; otherwise returns 0.
   /// Returns -1 on error.
-  int remove (PROXY* proxy, const TAO_Notify_EventType& event_type);
+  int remove (PROXY* proxy, TAO_Notify_EventType const& event_type);
 
-  /// Find the collection mapped to the <event_type>
+  /// Find the collection mapped to @a event_type.
   /// The usage_count on the entry returned is incremented.
-  ENTRY* find (const TAO_Notify_EventType& event_type);
+  ENTRY* find (TAO_Notify_EventType const& event_type);
 
   /// Find the default broadcast list.
   typename ENTRY::COLLECTION* broadcast_collection ();
@@ -74,7 +76,7 @@ public:
   void release (ENTRY* entry);
 
   /// Access all the event types available
-  const TAO_Notify_EventTypeSeq& event_types ();
+  TAO_Notify_EventTypeSeq const& event_types ();
 
   /// Access number of proxys connected in all.
   int proxy_count ();
@@ -87,7 +89,7 @@ protected:
   ACE_LOCK lock_;
 
   /// Count of proxys connected.
-  int proxy_count_;
+  int proxy_count_ {};
 
   /// The default broadcast list for EventType::special.
   ENTRY broadcast_entry_;

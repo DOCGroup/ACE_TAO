@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "ace/Handle_Set.h"
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_sys_select.h"
@@ -22,20 +21,22 @@ ACE_IOStream<STREAM>::eof () const
 
   // Timeout, not an eof
   if (this->streambuf_->timeout())
-    return 0;
+    {
+      return 0;
+    }
 
   // No timeout, got enough data:  not eof
   if (rval == sizeof(char))
-    return 0;
+    {
+      return 0;
+    }
 
   // No timeout, not enough data:  definately eof
   return 1;
 }
 
 template <class STREAM> ACE_INLINE
-ACE_SOCK_Dgram_SC<STREAM>::ACE_SOCK_Dgram_SC ()
-{
-}
+ACE_SOCK_Dgram_SC<STREAM>::ACE_SOCK_Dgram_SC () = default;
 
 template <class STREAM> ACE_INLINE
 ACE_SOCK_Dgram_SC<STREAM>::ACE_SOCK_Dgram_SC (STREAM &source,
@@ -71,14 +72,22 @@ ACE_SOCK_Dgram_SC<STREAM>::recv (char *buf,
   if (tv != 0)
     {
       ACE_HANDLE handle = this->get_handle ();
+#if !defined (ACE_WIN32)
+      if (handle < 0 || handle >= ACE_FD_SETSIZE)
+        {
+          errno = EINVAL;
+          return -1;
+        }
+#endif /* ! ACE_WIN32 */
+
       ACE_Handle_Set handle_set;
 
       handle_set.set_bit (handle);
 
       switch (ACE_OS::select (int (handle) + 1,
-                              (fd_set *) handle_set, // read_fds.
-                              (fd_set *) 0,          // write_fds.
-                              (fd_set *) 0,          // exception_fds.
+                              handle_set.fdset (), // read_fds.
+                              nullptr,             // write_fds.
+                              nullptr,             // exception_fds.
                               tv))
         {
         case 0:
@@ -93,9 +102,15 @@ ACE_SOCK_Dgram_SC<STREAM>::recv (char *buf,
   int rval = STREAM::recv (buf, len, peer_, flags);
 #if defined (ACE_WIN32)
   if (rval == SOCKET_ERROR)
-    if (::WSAGetLastError () == WSAEMSGSIZE)
-      if (ACE_BIT_ENABLED (flags, MSG_PEEK))
-        rval = len;
+    {
+      if (::WSAGetLastError () == WSAEMSGSIZE)
+        {
+          if (ACE_BIT_ENABLED (flags, MSG_PEEK))
+            {
+              rval = len;
+            }
+        }
+    }
 #endif /* ACE_WIN32 */
   return rval < len ? rval : len;
 }

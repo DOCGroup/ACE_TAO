@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    client.cpp
  *
@@ -7,8 +5,6 @@
  *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  */
-//=============================================================================
-
 
 #include "Client_i.h"
 
@@ -20,9 +16,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       Client_i client_i;
 
       if (client_i.init (argc, argv) == -1 || client_i.run () == -1)
+      {
         return -1;
+      }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("client::main\t\n");
       return -1;

@@ -3,7 +3,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_unistd.h"
 
-const ACE_TCHAR *ior = ACE_TEXT ("file://test.ior");
+ACE_TCHAR const *ior = ACE_TEXT ("file://test.ior");
 CORBA::ORB_var orb;
 
 int
@@ -46,7 +46,7 @@ do_test ()
                   ACE_TEXT ("client contact completed\n")));
       return;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("client caught %C during contact\n"),
@@ -63,7 +63,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   {
     orb = CORBA::ORB_init(argc, argv);
   }
-  catch(const CORBA::Exception& ex)
+  catch(CORBA::Exception const & ex)
   {
     ex._tao_print_exception (ACE_TEXT ("client ORB init:"));
     return 1;
@@ -71,11 +71,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   try {
     if (parse_args (argc, argv) != 0)
+    {
       return 1;
+    }
 
     do_test ();
   }
-  catch(const CORBA::Exception& ex) {
+  catch(CORBA::Exception const & ex) {
     ex._tao_print_exception (ACE_TEXT ("client:"));
     retval = -1;
   }
@@ -84,7 +86,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   {
     orb->destroy();
   }
-  catch(const CORBA::Exception& ex)
+  catch(CORBA::Exception const & ex)
   {
     ex._tao_print_exception (ACE_TEXT ("client ORB destroy:"));
     return 1;

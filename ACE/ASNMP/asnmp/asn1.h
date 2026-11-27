@@ -1,7 +1,5 @@
-/* -*-C++-*- */
 #ifndef ASN1
 #define ASN1
-//=============================================================================
 /**
  *  @file    asn1.h
  *
@@ -12,8 +10,6 @@
  *
  *  @author Steve Waldbusser/CMU ?
  */
-//=============================================================================
-
 
 /**********************************************************************
         Copyright 1988, 1989, 1991, 1992 by Carnegie Mellon University
@@ -56,7 +52,6 @@ typedef unsigned char   oid;
 
 #define MAX_OID_LEN         64  /* max subid's in an oid */
 
-
 // asn.1 values
 #define ASN_BOOLEAN          (0x01)
 #define ASN_INTEGER          (0x02)
@@ -83,7 +78,6 @@ typedef unsigned char   oid;
 #define MAX_NAME_LEN   64
 #define SNMP_VERSION_1 0
 #define SNMP_VERSION_2C 1
-
 
 // defined types (from the SMI, RFC 1065)
 #define SMI_IPADDRESS   (ASN_APPLICATION | 0)
@@ -114,32 +108,48 @@ typedef unsigned char   oid;
 
 typedef struct sockaddr_in  ipaddr;
 
-// pdu
+/// Protocol data unit fields.
 struct snmp_pdu {
-    int     command;         // pdu type
-    unsigned long  reqid;    // Request id
-    unsigned long  errstat;      // Error status
-    unsigned long  errindex; // Error index
+    /// PDU type.
+    int     command;
+    /// Request ID.
+    unsigned long  reqid;
+    /// Error status.
+    unsigned long  errstat;
+    /// Error index.
+    unsigned long  errindex;
 
-    // Trap information
-    oid     *enterprise;     // System OID
+    /// @name Trap information.
+    /// @{
+    /// System OID.
+    oid     *enterprise;
     int     enterprise_length;
-    ipaddr  agent_addr;     // address of object generating trap
-    int     trap_type;      // trap type
-    int     specific_type;  // specific type
-    unsigned long  time;        // Uptime
+    /// Address of the object generating the trap.
+    ipaddr  agent_addr;
+    /// Trap type.
+    int     trap_type;
+    /// Specific trap type.
+    int     specific_type;
+    /// Uptime.
+    unsigned long  time;
+    /// @}
 
-        // vb list
+    /// Variable bindings.
     struct variable_list *variables;
 };
 
-// vb list
+/// One variable binding in a PDU.
 struct variable_list {
-    struct variable_list *next_variable;    // 0 for last variable
-    oid     *name;                          // Object identifier of variable
-    int     name_length;                    // number of subid's in name
-    unsigned char   type;                   // ASN type of variable
-    union {                                 // value of variable
+    /// Null for the last variable.
+    struct variable_list *next_variable;
+    /// Object identifier of the variable.
+    oid     *name;
+    /// Number of subidentifiers in name.
+    int     name_length;
+    /// ASN type of the variable.
+    unsigned char   type;
+    /// Variable value.
+    union {
         long    *integer;
         unsigned char   *string;
         oid     *objid;
@@ -264,7 +274,6 @@ static unsigned char * build_unsigned_int64( unsigned char *data,
                                          int countersize);
 };
 
-
 // CMU Interface class for SNMPv1, SNMPv2c routines
 /**
  * @class cmu_snmp
@@ -309,7 +318,6 @@ class ASNMP_Export cmu_snmp
                                   int var_val_len,
                                   unsigned char *var_val,
                                   int *listlength);
-
 
 static unsigned char *auth_parse(unsigned char *data,
                                int *length,
