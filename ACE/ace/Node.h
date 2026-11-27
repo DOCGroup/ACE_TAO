@@ -54,12 +54,12 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-  ACE_Node (T const &i, ACE_Node<T, C> *n);
-  ACE_Node (ACE_Node<T, C> *n = nullptr, int = 0);
+  ACE_Node (T const &i, ACE_Node *n);
+  ACE_Node (ACE_Node *n = nullptr, int = 0);
 
 private:
   /// Pointer to next element in the list of ACE_Nodes.
-  ACE_Node<T, C> *next_ {};
+  ACE_Node *next_ {};
 
   /// Current value of the item in this node.
   T item_;
