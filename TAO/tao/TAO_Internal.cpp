@@ -594,6 +594,15 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 namespace
 {
+  bool
+  extract_parameter (ACE_Arg_Shifter &arg_shifter,
+                     ACE_TCHAR const *option,
+                     ACE_TCHAR const *&parameter)
+  {
+    parameter = arg_shifter.get_the_parameter (option);
+    return parameter != nullptr;
+  }
+
   /// Open services, belonging to the gestalt instance.
 
   int
@@ -943,8 +952,9 @@ namespace
 
             arg_shifter.consume_arg ();
           }
-        else if (nullptr != (current_arg = arg_shifter.get_the_parameter
-                       (ACE_TEXT ("-ORBServiceConfigLoggerKey"))))
+        else if (extract_parameter (arg_shifter,
+                                    ACE_TEXT ("-ORBServiceConfigLoggerKey"),
+                                    current_arg))
           {
             svc_config_argv.add (ACE_TEXT ("-k"));
             svc_config_argv.add (current_arg, true); // quote args!
@@ -960,16 +970,17 @@ namespace
             // Don't consume, the ORB_Core::init will use it again.
             arg_shifter.ignore_arg();
 
-            if (nullptr != (current_arg = arg_shifter.get_current()))
-            {
-              negotiate_codesets = (ACE_OS::atoi (current_arg));
-            }
+            current_arg = arg_shifter.get_current ();
+            if (current_arg != nullptr)
+              {
+                negotiate_codesets = (ACE_OS::atoi (current_arg));
+              }
 
             arg_shifter.ignore_arg();
           }
-        else if (nullptr != (current_arg =
-                       arg_shifter.get_the_parameter
-                       (ACE_TEXT ("-ORBDebugLevel"))))
+        else if (extract_parameter (arg_shifter,
+                                    ACE_TEXT ("-ORBDebugLevel"),
+                                    current_arg))
           {
             // Allowing different ORBs to change the global debug
             // level may be unexpected, but since this
