@@ -18,7 +18,7 @@ TAO_Exclusive_TMS::~TAO_Exclusive_TMS () = default;
 CORBA::ULong
 TAO_Exclusive_TMS::request_id ()
 {
-  ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX, ace_mon, this->lock_, 0));
+  ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0));
 
   this->request_sent_ = false;
   this->transport_idle_ = false;
@@ -55,7 +55,7 @@ int
 TAO_Exclusive_TMS::bind_dispatcher (CORBA::ULong request_id,
                                     ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher> rd)
 {
-  ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX, ace_mon, this->lock_, -1));
+  ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, -1));
 
   this->request_id_ = request_id;
   this->rd_.reset (rd.get ());
@@ -66,7 +66,7 @@ TAO_Exclusive_TMS::bind_dispatcher (CORBA::ULong request_id,
 bool
 TAO_Exclusive_TMS::has_request ()
 {
-  ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX, ace_mon, this->lock_, false));
+  ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, false));
 
   return this->rd_.get () != nullptr;
 }
@@ -74,7 +74,7 @@ TAO_Exclusive_TMS::has_request ()
 int
 TAO_Exclusive_TMS::unbind_dispatcher (CORBA::ULong request_id)
 {
-  ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX, ace_mon, this->lock_, -1));
+  ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, -1));
 
   if (!this->rd_ || this->request_id_ != request_id)
     {
@@ -92,7 +92,7 @@ TAO_Exclusive_TMS::dispatch_reply (TAO_Pluggable_Reply_Params &params)
   ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher> rd {};
 
   {
-    ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX, ace_mon, this->lock_, -1));
+    ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, -1));
 
     // Check the ids.
     if (!this->rd_ || this->request_id_ != params.request_id_)
@@ -125,7 +125,7 @@ TAO_Exclusive_TMS::reply_timed_out (CORBA::ULong request_id)
   ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher> rd {};
 
   {
-    ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX, ace_mon, this->lock_, -1));
+    ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, -1));
 
     // Check the ids.
     if (!this->rd_ || this->request_id_ != request_id)
@@ -158,7 +158,7 @@ TAO_Exclusive_TMS::idle_after_send ()
   bool make_idle {};
 
   {
-    ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX, ace_mon, this->lock_, false));
+    ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, false));
 
     this->request_sent_ = true;
 
@@ -188,7 +188,7 @@ TAO_Exclusive_TMS::idle_after_reply ()
   bool make_idle {};
 
   {
-    ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX, ace_mon, this->lock_, false));
+    ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, false));
 
     if (this->request_sent_ && !this->transport_idle_)
       {
@@ -215,7 +215,7 @@ TAO_Exclusive_TMS::connection_closed ()
   ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher> rd {};
 
   {
-    ACE_MT (ACE_GUARD (TAO_SYNCH_RECURSIVE_MUTEX, ace_mon, this->lock_));
+    ACE_MT (ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_));
 
     rd.reset (this->rd_.get ());
   }

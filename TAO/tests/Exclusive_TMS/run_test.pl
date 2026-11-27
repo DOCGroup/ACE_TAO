@@ -8,11 +8,11 @@ use PerlACE::TestTarget;
 my $target = PerlACE::TestTarget::create_target (1)
   || die "Create target failed\n";
 
-my $test = $target->CreateProcess ("exclusive_tms_completion");
+my $test = $target->CreateProcess ("exclusive_tms_test");
 my $status = $test->SpawnWaitKill ($target->ProcessStartWaitInterval ());
 
 if ($status != 0) {
-    print STDERR "ERROR: exclusive_tms_completion returned $status\n";
+    print STDERR "ERROR: exclusive_tms_test returned $status\n";
     exit 1;
 }
 

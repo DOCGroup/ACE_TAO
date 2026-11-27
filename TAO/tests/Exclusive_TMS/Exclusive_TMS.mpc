@@ -1,0 +1,8 @@
+project(*Exclusive TMS): taoclient {
+  exename = exclusive_tms_test
+  Source_Files {
+    test.cpp
+  }
+  IDL_Files {
+  }
+}

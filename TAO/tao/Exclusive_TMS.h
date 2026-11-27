@@ -69,7 +69,7 @@ private:
 
 protected:
   /// Lock protecting the request state.
-  TAO_SYNCH_RECURSIVE_MUTEX lock_ {};
+  TAO_SYNCH_MUTEX lock_ {};
 
   /// Used to generate a different request_id on each call to
   /// request_id().

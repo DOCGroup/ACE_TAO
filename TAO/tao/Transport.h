@@ -26,6 +26,7 @@
 #include "ace/Basic_Stats.h"
 #include <atomic>
 #include <cstdint>
+#include <memory>
 
 struct iovec;
 
