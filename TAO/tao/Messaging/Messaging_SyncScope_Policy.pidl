@@ -1,5 +1,3 @@
-// -*- IDL -*-
-
 /**
  *  @file   Messaging_SyncScope_Policy.pidl
  */
@@ -15,14 +13,14 @@
 
 module Messaging
 {
-  // Synchronization Policy (default = WITH_TRANSPORT)
+  /// Synchronization Policy (default = WITH_TRANSPORT)
 
-  //
-  // Locally-Constrained Policy Objects
-  //
+  /// @name Locally-Constrained Policy Objects
+  /// @{
   local interface SyncScopePolicy : CORBA::Policy {
     readonly attribute SyncScope synchronization;
   };
+  /// @}
 };
 
 #endif /*TAO_MESSAGING_SYNCSCOPE_POLICY_PIDL*/

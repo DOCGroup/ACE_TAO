@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "TestC.h"
 #include "ace/Get_Opt.h"
 
@@ -57,21 +56,38 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                             1);
         }
 
-      try{
-          Test::Timestamp time = 10;
+      bool received_no_response = false;
+      try
+        {
+          roundtrip->test_method (0);
+        }
+      catch (CORBA::NO_RESPONSE const &)
+        {
+          received_no_response = true;
+        }
+
+      if (!received_no_response)
+        {
+          roundtrip->shutdown ();
+          orb->destroy ();
+          ACE_ERROR_RETURN ((LM_ERROR, "ERROR, expecting NO_RESPONSE\n"), 1);
+        }
+
+      try
+        {
+          Test::Timestamp const time = 10;
           roundtrip->test_method (time);
         }
-      catch (const Test::ServerOverload& )
+      catch (Test::ServerOverload const &)
         {
           ACE_DEBUG ((LM_DEBUG, "Received expected exception\n"));
           received_expected_exception = true;
-
-          roundtrip->shutdown ();
         }
 
+      roundtrip->shutdown ();
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("");
       return 1;

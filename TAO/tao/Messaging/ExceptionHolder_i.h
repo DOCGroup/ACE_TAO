@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    ExceptionHolder_i.h
  *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-//=============================================================================
 
 #ifndef TAO_MESSAGING_EXCEPTIONHOLDER_I_H
 #define TAO_MESSAGING_EXCEPTIONHOLDER_I_H
@@ -75,8 +71,10 @@ namespace TAO
     ~ExceptionHolder () override;
 
   private:
+    /// Non-owning pointer to generated exception decoder metadata.
     TAO::Exception_Data* data_ {};
     CORBA::ULong count_ {};
+    /// Non-owning pointers to the active CDR codeset translators.
     ACE_Char_Codeset_Translator *char_translator_ {};
     ACE_WChar_Codeset_Translator *wchar_translator_ {};
   };

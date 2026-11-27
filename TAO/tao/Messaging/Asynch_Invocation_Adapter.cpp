@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/Messaging/Asynch_Invocation_Adapter.h"
 #include "tao/Messaging/Asynch_Reply_Dispatcher.h"
 #include "tao/Messaging/Asynch_Invocation.h"
@@ -52,8 +51,8 @@ namespace TAO
     if (TAO_debug_level >= 4)
       {
         TAOLIB_DEBUG ((LM_DEBUG,
-                    "TAO_Messaging (%P|%t) - Asynch_Invocation_Adapter::"
-                    "invoke\n"));
+                      "TAO_Messaging (%P|%t) - Asynch_Invocation_Adapter::"
+                      "invoke\n"));
       }
 
     // If the reply handler is nil, we do not create a reply dispatcher.

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/Messaging/Connection_Timeout_Policy_i.h"
 #include "tao/ORB_Core.h"
 #include "tao/Stub.h"
@@ -85,8 +84,7 @@ TAO_ConnectionTimeoutPolicy::hook (TAO_ORB_Core *orb_core,
 
       if (TAO_debug_level > 0)
         {
-          ACE_UINT64 msecs {};
-          const_cast<ACE_Time_Value const &> (time_value).msec (msecs);
+          ACE_UINT64 const msecs = time_value.get_msec ();
           TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - Connect timeout is ")
                       ACE_TEXT ("%Q milliseconds\n"),
@@ -107,7 +105,9 @@ TAO_ConnectionTimeoutPolicy::create (CORBA::Any const &val)
 
   TimeBase::TimeT value {};
   if (!(val >>= value))
-    throw ::CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
+    {
+      throw ::CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
+    }
 
   TAO_ConnectionTimeoutPolicy *tmp {};
   ACE_NEW_THROW_EX (tmp,
@@ -164,8 +164,7 @@ TAO_ConnectionTimeoutPolicy::set_time_value (ACE_Time_Value &time_value)
 
   if (TAO_debug_level > 0)
     {
-      ACE_UINT64 msecs;
-      const_cast<ACE_Time_Value const &> (time_value).msec (msecs);
+      ACE_UINT64 const msecs = time_value.get_msec ();
       TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - Connect timeout is ")
                   ACE_TEXT ("%Q milliseconds\n"),

@@ -127,7 +127,7 @@ TAO_ServerRequest::TAO_ServerRequest (TAO_GIOP_Message_Base *mesg_base,
 
 // Constructor used in Thru-POA collocation code.
 TAO_ServerRequest::TAO_ServerRequest (TAO_ORB_Core * orb_core,
-                                      TAO_Operation_Details const & details,
+                                      TAO_Operation_Details & details,
                                       CORBA::Object_ptr target)
   : mesg_base_ (nullptr),
     operation_ (details.opname ()),
@@ -169,7 +169,7 @@ TAO_ServerRequest::TAO_ServerRequest (TAO_ORB_Core * orb_core,
     this->request_service_context_.service_info ();
 
   IOP::ServiceContextList & src_request_contexts =
-    (const_cast <TAO_Operation_Details&> (details)).request_service_info ();
+    details.request_service_info ();
 
   dest_request_contexts.replace (src_request_contexts.maximum (),
                                  src_request_contexts.length (),
@@ -215,8 +215,7 @@ TAO_ServerRequest::reply_service_context ()
     }
   else
     {
-      return const_cast <TAO_Operation_Details*> (
-        this->operation_details_)->reply_service_context ();
+      return this->operation_details_->reply_service_context ();
     }
 }
 

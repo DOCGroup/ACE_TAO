@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 /**
  *  @file   Messaging_Policy_i.h
  *
@@ -37,6 +35,8 @@ class TAO_RelativeRoundtripTimeoutPolicy
 {
 public:
   explicit TAO_RelativeRoundtripTimeoutPolicy (TimeBase::TimeT const &relative_expiry);
+
+  TAO_RelativeRoundtripTimeoutPolicy () = delete;
 
   TAO_RelativeRoundtripTimeoutPolicy (TAO_RelativeRoundtripTimeoutPolicy const &rhs);
   TAO_RelativeRoundtripTimeoutPolicy &operator= (TAO_RelativeRoundtripTimeoutPolicy const &) = delete;
@@ -97,6 +97,8 @@ class TAO_Messaging_Export TAO_Sync_Scope_Policy
 public:
   explicit TAO_Sync_Scope_Policy (Messaging::SyncScope synchronization);
 
+  TAO_Sync_Scope_Policy () = delete;
+
   TAO_Sync_Scope_Policy (TAO_Sync_Scope_Policy const &rhs);
   TAO_Sync_Scope_Policy &operator= (TAO_Sync_Scope_Policy const &) = delete;
   TAO_Sync_Scope_Policy (TAO_Sync_Scope_Policy &&) = delete;
@@ -113,7 +115,7 @@ public:
   /// CORBA::ORB::create_policy.
   static CORBA::Policy_ptr create (CORBA::Any const &val);
 
-  /// Returns a copy of <this>.
+  /// Returns a copy of this object.
   virtual TAO_Sync_Scope_Policy *clone () const;
 
   Messaging::SyncScope synchronization () override;
@@ -126,7 +128,7 @@ public:
 
   void destroy () override;
 
-  // Return the cached policy type for this policy.
+  /// Returns the cached policy type for this policy.
   TAO_Cached_Policy_Type _tao_cached_type () const override;
 private:
   /// The attribute

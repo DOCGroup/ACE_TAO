@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/Messaging/Messaging_ORBInitializer.h"
 #include "tao/Messaging/Messaging_Policy_i.h"
 #include "tao/Messaging/Connection_Timeout_Policy_i.h"
@@ -23,11 +22,13 @@ TAO_Messaging_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr inf
   if (CORBA::is_nil (tao_info.in ()))
     {
       if (TAO_debug_level > 0)
-        TAOLIB_ERROR ((LM_ERROR,
-                    "(%P|%t) TAO_Messaging_ORBInitializer::pre_init:\n"
-                    "(%P|%t)    Unable to narrow "
-                    "\"PortableInterceptor::ORBInitInfo_ptr\" to\n"
-                    "(%P|%t)   \"TAO_ORBInitInfo *.\"\n"));
+        {
+          TAOLIB_ERROR ((LM_ERROR,
+                        "(%P|%t) TAO_Messaging_ORBInitializer::pre_init:\n"
+                        "(%P|%t)    Unable to narrow "
+                        "\"PortableInterceptor::ORBInitInfo_ptr\" to\n"
+                        "(%P|%t)   \"TAO_ORBInitInfo *.\"\n"));
+        }
 
       throw ::CORBA::INTERNAL ();
     }
@@ -36,6 +37,7 @@ TAO_Messaging_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr inf
 #endif
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
+  // ORB_Core takes ownership of both queueing strategies and deletes them.
   TAO::Transport_Queueing_Strategy* queuing_strategy {};
   ACE_NEW (queuing_strategy,
            TAO::Eager_Transport_Queueing_Strategy);
@@ -81,11 +83,13 @@ TAO_Messaging_ORBInitializer::register_value_factory (
   if (CORBA::is_nil (tao_info.in ()))
     {
       if (TAO_debug_level > 0)
-        TAOLIB_ERROR ((LM_ERROR,
-                    "(%P|%t) TAO_Messaging_ORBInitializer::register_value_factory:\n"
-                    "(%P|%t)    Unable to narrow "
-                    "\"PortableInterceptor::ORBInitInfo_ptr\" to\n"
-                    "(%P|%t)   \"TAO_ORBInitInfo *.\"\n"));
+        {
+          TAOLIB_ERROR ((LM_ERROR,
+                        "(%P|%t) TAO_Messaging_ORBInitializer::register_value_factory:\n"
+                        "(%P|%t)    Unable to narrow "
+                        "\"PortableInterceptor::ORBInitInfo_ptr\" to\n"
+                        "(%P|%t)   \"TAO_ORBInitInfo *.\"\n"));
+        }
 
       throw ::CORBA::INTERNAL ();
     }
@@ -122,7 +126,7 @@ TAO_Messaging_ORBInitializer::register_policy_factories (
   // types since a single policy factory is used to create each of
   // the different types of Messaging policies.
 
-  CORBA::PolicyType type[] = {
+  CORBA::PolicyType const type[] = {
 #if (TAO_HAS_RELATIVE_REQUEST_TIMEOUT_POLICY == 1)
     Messaging::RELATIVE_RT_TIMEOUT_POLICY_TYPE,
 #endif  /* TAO_HAS_RELATIVE_REQUEST_TIMEOUT_POLICY == 1 */
@@ -166,12 +170,11 @@ TAO_Messaging_ORBInitializer::register_policy_factories (
 #endif  /* TAO_HAS_CONNECTION_TIMEOUT_POLICY == 1 */
   };
 
-  CORBA::PolicyType const * const end = type + sizeof (type) / sizeof (type[0]);
-  for (CORBA::PolicyType const *i = type; i != end; ++i)
+  for (CORBA::PolicyType const policy_type : type)
     {
       try
         {
-          info->register_policy_factory (*i, policy_factory.in ());
+          info->register_policy_factory (policy_type, policy_factory.in ());
         }
       catch (::CORBA::BAD_INV_ORDER const &ex)
         {
