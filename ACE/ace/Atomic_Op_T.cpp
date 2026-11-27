@@ -54,7 +54,7 @@ ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::ACE_Atomic_Op_Ex (ACE_LOCK & mtx)
 template <class ACE_LOCK, class TYPE>
 ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::ACE_Atomic_Op_Ex (
   ACE_LOCK & mtx,
-  typename ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::arg_type c)
+  arg_type c)
   : mutex_ (mtx)
   , value_ (c)
 {
@@ -72,7 +72,7 @@ ACE_Atomic_Op<ACE_LOCK, TYPE>::ACE_Atomic_Op ()
 
 template <class ACE_LOCK, class TYPE>
 ACE_Atomic_Op<ACE_LOCK, TYPE>::ACE_Atomic_Op (
-  typename ACE_Atomic_Op<ACE_LOCK, TYPE>::arg_type c)
+  arg_type c)
   : impl_ (own_mutex_, c)
 {
   // ACE_TRACE ("ACE_Atomic_Op<ACE_LOCK, TYPE>::ACE_Atomic_Op");

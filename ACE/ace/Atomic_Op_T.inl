@@ -177,7 +177,7 @@ ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::value_i ()
 template <class ACE_LOCK, class TYPE>
 ACE_INLINE ACE_Atomic_Op_Ex<ACE_LOCK, TYPE> &
 ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::operator= (
-  typename ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::arg_type rhs)
+  arg_type rhs)
 {
   // ACE_TRACE ("ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::operator=");
   ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, *this);
@@ -196,7 +196,7 @@ ACE_Atomic_Op<ACE_LOCK, TYPE>::ACE_Atomic_Op (
 template <class ACE_LOCK, class TYPE>
 ACE_INLINE ACE_Atomic_Op<ACE_LOCK, TYPE> &
 ACE_Atomic_Op<ACE_LOCK, TYPE>::operator= (
-  typename ACE_Atomic_Op<ACE_LOCK, TYPE>::arg_type i)
+  arg_type i)
 {
   this->impl_ = i;
   return *this;
