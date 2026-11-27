@@ -2,6 +2,8 @@
 
 #include "ftp.h"
 
+#include "ace/OS_NS_sys_socket.h"
+
 #include <memory>
 
 int
@@ -91,6 +93,24 @@ FTP_Client_StreamEndPoint::set_protocol_object (char const *,
   this->callback_.set_protocol_object (object);
   return 0;
 }
+
+void
+FTP_Client_StreamEndPoint::set_flow_handler (char const *flowname,
+                                             TAO_AV_Flow_Handler *handler)
+{
+  TAO_Base_StreamEndPoint::set_flow_handler (flowname, handler);
+
+  char const multicast_loop = 1;
+  if (ACE_OS::setsockopt (handler->event_handler ()->get_handle (),
+                          IPPROTO_IP,
+                          IP_MULTICAST_LOOP,
+                          std::addressof (multicast_loop),
+                          sizeof (multicast_loop)) != 0)
+  {
+    ACE_ERROR ((LM_ERROR, "Unable to enable multicast loopback: %m\n"));
+  }
+}
+
 Endpoint_Reactive_Strategy::Endpoint_Reactive_Strategy (CORBA::ORB_ptr orb,
                                                         PortableServer::POA_ptr poa)
 {

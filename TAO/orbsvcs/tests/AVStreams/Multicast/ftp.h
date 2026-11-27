@@ -60,6 +60,9 @@ public:
   int set_protocol_object (char const *flowname,
                            TAO_AV_Protocol_Object *object) override;
 
+  void set_flow_handler (char const *flowname,
+                         TAO_AV_Flow_Handler *handler) override;
+
 protected:
   FTP_Client_Callback callback_;
 };
