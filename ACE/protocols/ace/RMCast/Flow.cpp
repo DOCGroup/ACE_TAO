@@ -22,7 +22,8 @@ namespace ACE_RMCast
 
   void Flow::send (Message_ptr m)
   {
-    if (Data const* data = static_cast<Data const*> (m->find (Data::id)))
+    Data const *data = static_cast<Data const *> (m->find (Data::id));
+    if (data != nullptr)
     {
       ACE_Time_Value const now_time (ACE_OS::gettimeofday ());
 
@@ -91,7 +92,8 @@ namespace ACE_RMCast
 
   void Flow::recv (Message_ptr m)
   {
-    if (NAK const* nak = static_cast<NAK const*> (m->find (NAK::id)))
+    NAK const *nak = static_cast<NAK const *> (m->find (NAK::id));
+    if (nak != nullptr)
     {
       Address const to (static_cast<To const*> (m->find (To::id))->address ());
 

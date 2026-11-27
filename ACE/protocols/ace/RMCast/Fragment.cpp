@@ -18,7 +18,8 @@ namespace ACE_RMCast
 
   void Fragment::send (Message_ptr m)
   {
-    if (Data const* data = static_cast<Data const*> (m->find (Data::id)))
+    Data const *data = static_cast<Data const *> (m->find (Data::id));
+    if (data != nullptr)
     {
       size_t max_payload_size (
         params_.max_packet_size () - max_service_size);

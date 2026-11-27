@@ -53,7 +53,8 @@ namespace ACE_RMCast
 
   void Retransmit::recv (Message_ptr m)
   {
-    if (NAK const* nak = static_cast<NAK const*> (m->find (NAK::id)))
+    NAK const *nak = static_cast<NAK const *> (m->find (NAK::id));
+    if (nak != nullptr)
     {
       Address to (static_cast<To const*> (m->find (To::id))->address ());
 

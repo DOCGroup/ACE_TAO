@@ -17,9 +17,11 @@ namespace ACE_RMCast
     Address from (
       static_cast<From const*> (m->find (From::id))->address ());
 
-    if (Data const* data = static_cast<Data const*> (m->find (Data::id)))
+    Data const *data = static_cast<Data const *> (m->find (Data::id));
+    if (data != nullptr)
     {
-      if (Part const* part = static_cast<Part const*> (m->find (Part::id)))
+      Part const *part = static_cast<Part const *> (m->find (Part::id));
+      if (part != nullptr)
       {
         if (map_.find (from, e) == -1)
         {

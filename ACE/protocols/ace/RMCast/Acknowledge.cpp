@@ -254,7 +254,8 @@ namespace ACE_RMCast
     //
     Lock l (mutex_);
 
-    if (NRTM const* nrtm = static_cast<NRTM const*> (m->find (NRTM::id)))
+    NRTM const *nrtm = static_cast<NRTM const *> (m->find (NRTM::id));
+    if (nrtm != nullptr)
     {
       for (Map::iterator i (hold_.begin ()), e (hold_.end ()); i != e; ++i)
       {
@@ -331,7 +332,8 @@ namespace ACE_RMCast
 
   void Acknowledge::send (Message_ptr m)
   {
-    if (Data const* data = static_cast<Data const*> (m->find (Data::id)))
+    Data const *data = static_cast<Data const *> (m->find (Data::id));
+    if (data != nullptr)
     {
       size_t const max_payload_size (
         params_.max_packet_size () - max_service_size);
