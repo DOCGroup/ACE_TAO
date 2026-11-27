@@ -30,20 +30,6 @@
 /// Current release version.
 extern char const *version_string;
 
-/// Reads input keys, possibly applies the reordering heuristic, sets
-/// the maximum associated value size (rounded up to the nearest power
-/// of 2), may initialize the associated values array, and determines
-/// the maximum hash table size.
-/// @note Using random numbers is often helpful, though it is less
-/// deterministic.
-Gen_Perf::Gen_Perf ()
-  : max_hash_value (0),
-    fewest_collisions (0),
-    num_done (1),
-    union_set {}
-{
-}
-
 /// Merge two disjoint hash key multisets to form the ordered disjoint
 /// union of the sets.  (In a multiset, an element can occur multiple
 /// times).  Precondition: both set1 and set2 must be
@@ -100,8 +86,8 @@ Gen_Perf::sort_set (char *union_set, int len)
 {
   for (int i = 0, j = len - 1; i < j; ++i)
     {
-      int curr;
-      unsigned char tmp;
+      int curr {};
+      unsigned char tmp {};
 
       for (curr = i + 1, tmp = static_cast<unsigned char> (union_set[curr]);
            curr > 0
@@ -260,6 +246,12 @@ Gen_Perf::change (List_Node *prior, List_Node *curr)
   return 0;
 }
 
+/// Reads input keys, possibly applies the reordering heuristic, sets
+/// the maximum associated value size (rounded up to the nearest power
+/// of 2), may initialize the associated values array, and determines
+/// the maximum hash table size.
+/// @note Using random numbers is often helpful, though it is less
+/// deterministic.
 int
 Gen_Perf::open ()
 {
@@ -360,8 +352,8 @@ Gen_Perf::compute_binary_search ()
 
   // Assign hash values.
   List_Node *curr {};
-  int hash_value;
-  for (hash_value = 0, curr = this->key_list.head;
+  int hash_value {};
+  for (curr = this->key_list.head;
        curr != nullptr;
        curr = curr->next, ++hash_value)
     {
@@ -380,8 +372,8 @@ Gen_Perf::compute_linear_search ()
 
   // Assign hash values.
   List_Node *curr {};
-  int hash_value = 0;
-  for (hash_value = 0, curr = this->key_list.head;
+  int hash_value {};
+  for (curr = this->key_list.head;
        curr != nullptr;
        curr = curr->next, ++hash_value)
     {
