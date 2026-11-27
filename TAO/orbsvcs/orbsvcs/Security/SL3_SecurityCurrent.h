@@ -42,7 +42,7 @@ namespace TAO
      * Thread-specific information may be retrieved from the target
      * security service through this object.
      *
-     * @note This SecurityCurrent implementation basically a variant
+     * @note This SecurityCurrent implementation is a variant
      *       of the bridge design pattern.  All operations are
      *       delegated on to concrete implementations.
      */

@@ -153,7 +153,7 @@ public:
    * return a value more than zero and decide to resume the handler
    * themselves.
    *
-   * @note This method has an affect only when used with the
+   * @note This method has an effect only when used with the
    * ACE_Dev_Poll_Reactor (and then, only on Linux) or the ACE_TP_Reactor.
    */
   virtual int resume_handler ();

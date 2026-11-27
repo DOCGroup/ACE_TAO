@@ -270,7 +270,7 @@ public:
   /// Dynamically link the shared object file and retrieve a pointer to
   /// the designated shared object in this file.
   /// @deprecated
-  /// @note This is error-prone in the presense of dynamic services,
+  /// @note This is error-prone in the presence of dynamic services,
   /// which in turn initialize their own static services. This method
   /// will allow those static services to register *before* the dynamic
   /// service that owns them.  Upon finalization of the static services

@@ -196,7 +196,7 @@ public:
 
   /// Clear contents of map.
   /**
-   * @note This a constant time (O(1)) operation.
+   * @note This is a constant-time (O(1)) operation.
    */
   void clear ();
 

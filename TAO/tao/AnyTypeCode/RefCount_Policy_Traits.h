@@ -35,7 +35,7 @@ namespace TAO
    * operations, etc at compile-time based on the reference counting
    * policy and type being operated on.
    *
-   * @note This merely a forward declaration since we really only care
+   * @note This is merely a forward declaration since we only care
    *       about the partial specializations below.
    */
   template<class RefCountPolicy, typename TypePtr>

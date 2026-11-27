@@ -83,7 +83,7 @@ namespace TAO
 
   protected:
     /**
-     * @note This constructor is protected since it not meant to be
+     * @note This constructor is protected since it is not meant to be
      *       instantiated/used as a standalone object.
      */
     True_RefCount_Policy () = default;

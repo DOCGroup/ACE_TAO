@@ -80,7 +80,7 @@ module SSLIOP {
   /// The AuthData structure is the SSLIOP-specific authentication
   /// data that will be passed to the
   /// SecurityLevel2::PrincipalAuthenticator::authenticate() method.
-  /// @note this TAO-specific.
+  /// @note This is TAO-specific.
   struct AuthData {
     File certificate;
     File key;
