@@ -284,7 +284,6 @@ ACE_TS_Clerk_Handler::send_request (ACE_UINT32 sequence_num, ACE_Time_Info &time
 {
   ACE_TRACE ("ACE_TS_Clerk_Handler::send_request");
   void    *buffer;
-  ssize_t length;
 
   // Update current sequence number
   this->cur_sequence_num_ = sequence_num;
@@ -296,7 +295,8 @@ ACE_TS_Clerk_Handler::send_request (ACE_UINT32 sequence_num, ACE_Time_Info &time
   // Now prepare a new time update request
   ACE_Time_Request request (ACE_Time_Request::TIME_UPDATE, 0, nullptr);
 
-  if ((length = request.encode (buffer)) == -1)
+  ssize_t const length = request.encode (buffer);
+  if (length == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"),
                          ACE_TEXT ("encode failed")), -1);

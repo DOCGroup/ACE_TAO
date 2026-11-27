@@ -467,14 +467,14 @@ ACE_Thr_Server_Logging_Handler<LOG_MESSAGE_RECEIVER>::open (void *)
 template<class LOG_MESSAGE_RECEIVER> int
 ACE_Thr_Server_Logging_Handler<LOG_MESSAGE_RECEIVER>::svc ()
 {
-  int result = 0;
+  int result {};
 
   // Loop until the client terminates the connection or an error occurs.
-
-  while ((result = this->handle_input ()) == 0)
+  do
     {
-      continue;
+      result = this->handle_input ();
     }
+  while (result == 0);
 
   return result;
 }
