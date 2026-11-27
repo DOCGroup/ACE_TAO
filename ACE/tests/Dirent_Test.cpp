@@ -24,8 +24,8 @@
 #include <utility>
 #include <cerrno>
 
-static_assert (!std::is_copy_constructible<ACE_Dirent>::value, "Directory streams cannot be copied");
-static_assert (!std::is_copy_assignable<ACE_Dirent>::value, "Directory streams cannot be copied");
+static_assert (!std::is_copy_constructible_v<ACE_Dirent>, "Directory streams cannot be copied");
+static_assert (!std::is_copy_assignable_v<ACE_Dirent>, "Directory streams cannot be copied");
 
 #if defined (ACE_HAS_TCHAR_DIRENT)
 #  define TEST_ENTRY ACE_TEXT ("run_test.lst")

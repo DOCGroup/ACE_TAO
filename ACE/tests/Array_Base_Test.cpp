@@ -9,8 +9,8 @@
 
 #include <type_traits>
 
-static_assert (!std::is_move_constructible<ACE_Array_Base<int>>::value);
-static_assert (!std::is_move_assignable<ACE_Array_Base<int>>::value);
+static_assert (!std::is_move_constructible_v<ACE_Array_Base<int>>);
+static_assert (!std::is_move_assignable_v<ACE_Array_Base<int>>);
 
 int
 run_main (int, ACE_TCHAR *[])

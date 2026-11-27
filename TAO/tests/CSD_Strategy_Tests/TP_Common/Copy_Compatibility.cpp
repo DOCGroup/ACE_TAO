@@ -9,7 +9,7 @@
 
 #include <type_traits>
 
-static_assert (std::is_copy_constructible<TAO::CSD::TP_Cancel_Visitor>::value);
-static_assert (std::is_move_assignable<TAO::CSD::TP_Cancel_Visitor>::value);
-static_assert (std::is_copy_constructible<TAO::CSD::TP_Dispatchable_Visitor>::value);
-static_assert (std::is_move_assignable<TAO::CSD::TP_Dispatchable_Visitor>::value);
+static_assert (std::is_copy_constructible_v<TAO::CSD::TP_Cancel_Visitor>);
+static_assert (std::is_move_assignable_v<TAO::CSD::TP_Cancel_Visitor>);
+static_assert (std::is_copy_constructible_v<TAO::CSD::TP_Dispatchable_Visitor>);
+static_assert (std::is_move_assignable_v<TAO::CSD::TP_Dispatchable_Visitor>);

@@ -85,25 +85,25 @@ namespace
     }
   };
 
-  static_assert (std::is_copy_constructible<Handler>::value);
-  static_assert (std::is_move_assignable<Handler>::value);
-  static_assert (std::is_copy_constructible<Adapter>::value);
-  static_assert (std::is_move_assignable<Adapter>::value);
-  static_assert (std::is_copy_constructible<Strategy>::value);
-  static_assert (std::is_move_constructible<Strategy>::value);
-  static_assert (!std::is_copy_assignable<Strategy>::value);
-  static_assert (std::is_copy_constructible<TAO_Default_Acceptor_Filter>::value);
-  static_assert (std::is_move_assignable<TAO_Default_Acceptor_Filter>::value);
-  static_assert (std::is_copy_constructible<Object_Adapter>::value);
-  static_assert (std::is_move_assignable<Object_Adapter>::value);
-  static_assert (std::is_same<decltype (std::declval<TAO_Acceptor &> ().is_collocated (nullptr)),
-                              bool>::value);
+  static_assert (std::is_copy_constructible_v<Handler>);
+  static_assert (std::is_move_assignable_v<Handler>);
+  static_assert (std::is_copy_constructible_v<Adapter>);
+  static_assert (std::is_move_assignable_v<Adapter>);
+  static_assert (std::is_copy_constructible_v<Strategy>);
+  static_assert (std::is_move_constructible_v<Strategy>);
+  static_assert (!std::is_copy_assignable_v<Strategy>);
+  static_assert (std::is_copy_constructible_v<TAO_Default_Acceptor_Filter>);
+  static_assert (std::is_move_assignable_v<TAO_Default_Acceptor_Filter>);
+  static_assert (std::is_copy_constructible_v<Object_Adapter>);
+  static_assert (std::is_move_assignable_v<Object_Adapter>);
+  static_assert (std::is_same_v<decltype (std::declval<TAO_Acceptor &> ().is_collocated (nullptr)),
+                                bool>);
   using Match_Prefix = int (TAO_Protocol_Factory::*) (std::string const &);
-  static_assert (std::is_same<decltype (&TAO_Protocol_Factory::match_prefix),
-                              Match_Prefix>::value);
-  static_assert (std::is_constructible<TAO_Protocol_Item, std::string const &>::value);
-  static_assert (std::is_same<decltype (std::declval<TAO_Protocol_Item &> ().protocol_name ()),
-                              std::string const &>::value);
-  static_assert (std::is_same<decltype (Connector_Probe::active_connect_strategy_),
-                              std::unique_ptr<TAO_Connect_Strategy>>::value);
+  static_assert (std::is_same_v<decltype (&TAO_Protocol_Factory::match_prefix),
+                                Match_Prefix>);
+  static_assert (std::is_constructible_v<TAO_Protocol_Item, std::string const &>);
+  static_assert (std::is_same_v<decltype (std::declval<TAO_Protocol_Item &> ().protocol_name ()),
+                                std::string const &>);
+  static_assert (std::is_same_v<decltype (Connector_Probe::active_connect_strategy_),
+                                std::unique_ptr<TAO_Connect_Strategy>>);
 }
