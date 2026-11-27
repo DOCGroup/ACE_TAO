@@ -1631,7 +1631,7 @@ incompatible_types (AST_Expression::ExprType t1,
 // @@(JP) This just maps one enum to another. It's a temporary fix,
 // but AST_Expression::EvalKind should go eventually.
 static AST_Expression::AST_ExprValue *
-eval_kind (AST_Expression::AST_ExprValue *ev, AST_Expression::EvalKind ek)
+eval_kind (AST_Expression::AST_ExprValue const *ev, AST_Expression::EvalKind ek)
 {
   // Make a copy to simplify the memory management logic.
   AST_Expression::AST_ExprValue *newval {};

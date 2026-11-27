@@ -5,10 +5,11 @@
 
 class AST_Union;
 
-// Representation of a forward union declaration.
+/// Represents a forward union declaration.
 class TAO_IDL_FE_Export AST_UnionFwd : public virtual AST_StructureFwd
 {
 public:
+  AST_UnionFwd () = delete;
   AST_UnionFwd (AST_UnionFwd const &) = delete;
   AST_UnionFwd (AST_UnionFwd &&) = delete;
   AST_UnionFwd &operator= (AST_UnionFwd const &) = delete;

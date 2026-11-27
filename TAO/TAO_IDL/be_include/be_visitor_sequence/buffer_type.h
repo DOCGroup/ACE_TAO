@@ -1,6 +1,3 @@
-/* -*- c++ -*- */
-
-//=============================================================================
 /**
  *  @file    buffer_type.h
  *
@@ -10,7 +7,6 @@
  *
  *  @author Aniruddha Gokhale
  */
-//=============================================================================
 
 #ifndef _BE_VISITOR_SEQUENCE_BUFFER_TYPE_H_
 #define _BE_VISITOR_SEQUENCE_BUFFER_TYPE_H_
@@ -30,9 +26,9 @@ public:
 
   ~be_visitor_sequence_buffer_type () override;
 
-  be_visitor_sequence_buffer_type (const be_visitor_sequence_buffer_type &) = delete;
+  be_visitor_sequence_buffer_type (be_visitor_sequence_buffer_type const &) = delete;
   be_visitor_sequence_buffer_type (be_visitor_sequence_buffer_type &&) = delete;
-  be_visitor_sequence_buffer_type &operator= (const be_visitor_sequence_buffer_type &) = delete;
+  be_visitor_sequence_buffer_type &operator= (be_visitor_sequence_buffer_type const &) = delete;
   be_visitor_sequence_buffer_type &operator= (be_visitor_sequence_buffer_type &&) = delete;
 
   int visit_predefined_type (be_predefined_type *node) override;

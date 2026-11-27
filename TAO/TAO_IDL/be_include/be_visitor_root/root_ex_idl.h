@@ -1,6 +1,3 @@
-/* -*- c++ -*- */
-
-//=============================================================================
 /**
  *  @file    root_ex_idl.h
  *
@@ -10,7 +7,6 @@
  *
  *  @author Jeff Parsons
  */
-//=============================================================================
 
 #ifndef _BE_VISITOR_ROOT_ROOT_EX_IDL_H_
 #define _BE_VISITOR_ROOT_ROOT_EX_IDL_H_
@@ -30,9 +26,9 @@ public:
 
   ~be_visitor_root_ex_idl () override;
 
-  be_visitor_root_ex_idl (const be_visitor_root_ex_idl &) = delete;
+  be_visitor_root_ex_idl (be_visitor_root_ex_idl const &) = delete;
   be_visitor_root_ex_idl (be_visitor_root_ex_idl &&) = delete;
-  be_visitor_root_ex_idl &operator= (const be_visitor_root_ex_idl &) = delete;
+  be_visitor_root_ex_idl &operator= (be_visitor_root_ex_idl const &) = delete;
   be_visitor_root_ex_idl &operator= (be_visitor_root_ex_idl &&) = delete;
 
   int visit_root (be_root *node) override;

@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    ami_handler_reply_stub_operation_cs.h
  *
@@ -8,7 +6,6 @@
  *
  *  @author Michael Kircher
  */
-//=============================================================================
 
 #ifndef _BE_VISITOR_OPERATION_OPERATION_AMI_HANDLER_REPLY_STUB_OPERATION_CS_H_
 #define _BE_VISITOR_OPERATION_OPERATION_AMI_HANDLER_REPLY_STUB_OPERATION_CS_H_

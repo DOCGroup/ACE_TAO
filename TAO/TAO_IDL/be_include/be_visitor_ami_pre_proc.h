@@ -1,6 +1,3 @@
-
-/* -*- c++ -*- */
-//=============================================================================
 /**
  *  @file    be_visitor_ami_pre_proc.h
  *
@@ -11,7 +8,6 @@
  *
  *  @author Michael Kircher <Michael.Kircher@mchp.siemens.de>
  */
-//=============================================================================
 
 #ifndef TAO_BE_VISITOR_AMI_PRE_PROC_H
 #define TAO_BE_VISITOR_AMI_PRE_PROC_H

@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    interface_svth.h
  *
@@ -9,7 +7,6 @@
  *
  *  @author Marcel Smit
  */
-//=============================================================================
 
 #ifndef _BE_INTERFACE_INTERFACE_SVTH_H_
 #define _BE_INTERFACE_INTERFACE_SVTH_H_

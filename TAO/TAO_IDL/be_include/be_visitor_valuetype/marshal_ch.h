@@ -1,6 +1,3 @@
-/* -*- c++ -*- */
-
-//=============================================================================
 /**
  *  @file    marshal_ch.h
  *
@@ -9,7 +6,6 @@
  *
  *  @author Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
  */
-//=============================================================================
 
 #ifndef _BE_VISITOR_VALUETYPE_MARSHAL_CH_H_
 #define _BE_VISITOR_VALUETYPE_MARSHAL_CH_H_

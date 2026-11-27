@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    interface_is.h
  *
@@ -8,7 +6,6 @@
  *
  *  @author Yamuna Krishnamurthy (yamuna@cs.wustl.edu)
  */
-//=============================================================================
 
 #ifndef _BE_INTERFACE_INTERFACE_IS_H_
 #define _BE_INTERFACE_INTERFACE_IS_H_

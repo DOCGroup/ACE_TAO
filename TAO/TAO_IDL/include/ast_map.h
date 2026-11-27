@@ -75,6 +75,7 @@ class AST_Type;
 class TAO_IDL_FE_Export AST_Map : public virtual AST_ConcreteType
 {
 public:
+  AST_Map () = delete;
   AST_Map (AST_Expression *max_size,
            AST_Type *key_bt,
            AST_Type *val_bt,
@@ -88,8 +89,8 @@ public:
   AST_Map &operator= (AST_Map const &) = delete;
   AST_Map &operator= (AST_Map &&) = delete;
 
+  /// Check whether this type or a type in the list is involved in recursion.
   bool in_recursion (std::vector<AST_Type *> &list) override;
-  // Are we or the node represented by node involved in recursion.
 
   // Data Accessors.
   AST_Expression *max_size () const;
@@ -99,26 +100,25 @@ public:
 
   /**
    * Returns the fully dealiased base type if it's a typedef. If it's not a
-   * typedef, the it returns the same value as as key_type().
+   * typedef, it returns the same value as key_type().
    */
   AST_Type *primitive_key_type () const;
 
   /**
    * Returns the fully dealiased base type if it's a typedef. If it's not a
-   * typedef, the it returns the same value as as value_type().
+   * typedef, it returns the same value as value_type().
    */
   AST_Type *primitive_value_type () const;
 
+  /// Whether this map is unbounded.
   virtual bool unbounded () const;
-  // Is this map bounded or not.
 
-  // Recursively called on valuetype to check for legal use as
-  // a primary key. Overridden for valuetype, struct, map,
-  // union, array, typedef, and interface.
+  /// Recursively checks whether the type is legal as a primary key.
+  /// Overridden for valuetypes, structs, maps, unions, arrays,
+  /// typedefs and interfaces.
   bool legal_for_primary_key () const override;
 
-  // Is the element type a forward declared struct or union
-  // that hasn't yet been fully defined?
+  /// Whether the element types are fully defined.
   bool is_defined () override;
 
   // Cleanup method.
@@ -132,51 +132,39 @@ public:
 
   static AST_Decl::NodeType const NT;
 
-  /**
-   * Get and Set Annotations on the key type
-   */
-  ///{
+  /// @name Key type annotations
+  /// @{
   AST_Annotation_Appls &key_type_annotations ();
   void key_type_annotations (AST_Annotation_Appls const &annotations);
-  ///}
+  /// @}
 
-  /**
-   * Get and Set Annotations on the value type
-   */
-  ///{
+  /// @name Value type annotations
+  /// @{
   AST_Annotation_Appls &value_type_annotations ();
   void value_type_annotations (AST_Annotation_Appls const &annotations);
-  ///}
+  /// @}
 
 private:
   // Data.
+  /// Maximum map size.
   std::unique_ptr<AST_Expression> pd_max_size;
-  // Maximum map size.
 
-  /**
-  * Key type for map
-  **/
+  /// Key type for the map.
   AST_Type *key_pd_type;
 
-  /**
-  * Value type for map
-  **/
+  /// Value type for the map.
   AST_Type *value_pd_type;
 
+  /// Whether the map is unbounded.
   bool unbounded_ {true};
-  // Whether we are bounded or unbounded.
 
   std::unique_ptr<AST_Type> owned_key_type_;
   std::unique_ptr<AST_Type> owned_value_type_;
 
-  /**
-   * Annotations on the key type
-   */
+  /// Annotations on the key type.
   AST_Annotation_Appls key_type_annotations_;
 
-  /**
-   * Annotations on the value type
-   */
+  /// Annotations on the value type.
   AST_Annotation_Appls value_type_annotations_;
 };
 

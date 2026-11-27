@@ -1,6 +1,3 @@
-/* -*- c++ -*- */
-
-//=============================================================================
 /**
  *  @file    be_helper.h
  *
@@ -9,7 +6,6 @@
  *
  *  @author Aniruddha Gokhale Improvements by Carlos O'Ryan
  */
-//=============================================================================
 
 #ifndef TAO_BE_OUTSTRM_H
 #define TAO_BE_OUTSTRM_H
@@ -164,7 +160,7 @@ public:
   int nl ();
 
   /// "printf" style variable argument print
-  int print (const char *format, ...)
+  int print (char const *format, ...)
     ACE_GCC_FORMAT_ATTRIBUTE (printf, 2, 3);
 
   /// Generate a \#if !defined, \#define macro
@@ -180,10 +176,10 @@ public:
 
   // Avoid duplication for the underlying type of size_t
   template <typename Dummy = TAO_OutStream &>
-  typename std::enable_if<std::is_same<Dummy, TAO_OutStream &>::value &&
-                          !std::is_same<ACE_CDR::ULongLong, size_t>::value &&
-                          !std::is_same<ACE_CDR::ULong, size_t>::value,
-                          TAO_OutStream &>::type
+  std::enable_if_t<std::is_same_v<Dummy, TAO_OutStream &> &&
+                   !std::is_same_v<ACE_CDR::ULongLong, size_t> &&
+                   !std::is_same_v<ACE_CDR::ULong, size_t>,
+                   TAO_OutStream &>
   operator << (size_t const num)
   {
     this->flush_pending_whitespace ();
@@ -195,7 +191,7 @@ public:
     return *this;
   }
 
-  TAO_OutStream &operator<< (const char *str);
+  TAO_OutStream &operator<< (char const *str);
   TAO_OutStream &operator<< (char ch);
   TAO_OutStream &operator<< (std::string const &str);
   TAO_OutStream &operator<< (const ACE_CDR::UShort num);
@@ -210,10 +206,10 @@ public:
   /// @name Stream manipulators
   /// @{
 
-  TAO_OutStream &operator<< (const TAO_NL& nl);
-  TAO_OutStream &operator<< (const TAO_NL_2& nl_twice);
-  TAO_OutStream &operator<< (const TAO_INDENT& i);
-  TAO_OutStream &operator<< (const TAO_UNINDENT& i);
+  TAO_OutStream &operator<< (TAO_NL const & nl);
+  TAO_OutStream &operator<< (TAO_NL_2 const & nl_twice);
+  TAO_OutStream &operator<< (TAO_INDENT const & i);
+  TAO_OutStream &operator<< (TAO_UNINDENT const & i);
 
   /// @}
 
@@ -234,7 +230,7 @@ public:
 
   TAO_OutStream &print (AST_Expression *idl);
 
-  void insert_comment (const char *file, int line);
+  void insert_comment (char const *file, int line);
 #define TAO_INSERT_COMMENT(STRM) (STRM)->insert_comment (__FILE__, __LINE__)
 
 protected:

@@ -9,7 +9,6 @@
 *  @author Mayur Deshpande <mayur@ics.uci.edu>
 *  @author Carlos O'Ryan   <coryan@uci.edu>
 */
-//=============================================================================
 
 #include "be_visitor_amh_pre_proc.h"
 #include "be_visitor_context.h"
@@ -391,8 +390,8 @@ be_visitor_amh_pre_proc::add_exception_reply (be_operation *node,
                   be_operation (be_global->void_type (),
                                 AST_Operation::OP_noflags,
                                 operation_name.get (),
-                                1,
-                                0),
+                                true,
+                                false),
                   -1);
   std::unique_ptr<be_operation, BE_AST_Decl_Deleter> operation_owner (node_excep);
 
@@ -474,8 +473,8 @@ be_visitor_amh_pre_proc::add_normal_reply (be_operation *node,
                   be_operation (be_global->void_type (),
                                 AST_Operation::OP_noflags,
                                 op_name.get (),
-                                1,
-                                0),
+                                true,
+                                false),
                   -1);
   std::unique_ptr<be_operation, BE_AST_Decl_Deleter> operation_owner (operation);
 
@@ -622,9 +621,9 @@ be_visitor_amh_pre_proc::create_exception_holder (be_interface *node)
                                   AST_Type_List {},
                                   0,
                                   nullptr,
-                                  0,
-                                  0,
-                                  0));
+                                  false,
+                                  false,
+                                  false));
 
   idl_global->scopes ().pop ();
   if (excep_holder == nullptr)
@@ -757,8 +756,8 @@ be_visitor_amh_pre_proc::create_raise_operation (
                   be_operation (be_global->void_type (),
                                 AST_Operation::OP_noflags,
                                 op_name.get (),
-                                0,
-                                0),
+                                false,
+                                false),
                   -1);
   std::unique_ptr<be_operation, BE_AST_Decl_Deleter> operation_owner (operation);
 
@@ -807,8 +806,8 @@ be_visitor_amh_pre_proc::generate_get_operation (be_attribute *node)
                   be_operation (node->field_type (),
                                 AST_Operation::OP_noflags,
                                 get_name.get (),
-                                1,
-                                0),
+                                true,
+                                false),
                   nullptr);
   std::unique_ptr<be_operation, BE_AST_Decl_Deleter> operation_owner (operation);
 
@@ -850,8 +849,8 @@ be_visitor_amh_pre_proc::generate_set_operation (be_attribute *node)
                   be_operation (be_global->void_type (),
                                 AST_Operation::OP_noflags,
                                 set_op_name.get (),
-                                0,
-                                0),
+                                false,
+                                false),
                   nullptr);
   std::unique_ptr<be_operation, BE_AST_Decl_Deleter> operation_owner (operation);
 

@@ -1,5 +1,3 @@
-/* -*- c++ -*- */
-//=============================================================================
 /**
  *  @file    be_visitor_any_extracted_type_decl.h
  *
@@ -8,7 +6,6 @@
  *
  *  @author Jeff Parsons
  */
-//=============================================================================
 
 #ifndef BE_VISITOR_ANY_EXTRACTED_TYPE_DECL_H
 #define BE_VISITOR_ANY_EXTRACTED_TYPE_DECL_H

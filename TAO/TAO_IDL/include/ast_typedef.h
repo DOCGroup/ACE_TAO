@@ -68,13 +68,12 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_type.h"
 #include "ast_field.h"
 
-// Representation of typedef declaration.
-// A typedef declaration is a renaming of a base type.
-
+/// Represents a typedef that renames a base type.
 class TAO_IDL_FE_Export AST_Typedef : public virtual AST_Type,
                                       public virtual AST_Field
 {
 public:
+  AST_Typedef () = delete;
   AST_Typedef (AST_Typedef const &) = delete;
   AST_Typedef (AST_Typedef &&) = delete;
   AST_Typedef &operator= (AST_Typedef const &) = delete;
@@ -86,24 +85,25 @@ public:
 
   ~AST_Typedef () override;
 
+  /// Traverse the typedef chain to return the most primitive base type.
   AST_Type *primitive_base_type () const;
-  // Return the most primitive base type by traversing the chain of typedefed
-  // base types.
 
   // Data Accessors.
   AST_Type *base_type () const;
 
+  /// Recursively checks whether the type is legal as a primary key.
+  /// Overridden for valuetypes, structs, sequences, unions, arrays,
+  /// typedefs and interfaces.
   bool legal_for_primary_key () const override;
-  // Recursively called on valuetype to check for legal use as
-  // a primary key. Overridden for valuetype, struct, sequence,
-  // union, array, typedef, and interface.
 
-  bool is_local () override;
   // Override the base class method.
+  bool is_local () override;
 
+  /// @name Base type ownership accessors
+  /// @{
   bool owns_base_type () const;
   void owns_base_type (bool val);
-  // Sometimes this has to be accessed or managed from outside.
+  /// @}
 
   // AST Dumping.
   void dump (ACE_OSTREAM_TYPE &o) override;
@@ -118,22 +118,18 @@ public:
 
   bool dump_annotations_inline () const override { return true; }
 
-  /**
-   * Recursively acquired annotations from typedefs.
-   */
+  /// Recursively acquired annotations from typedefs.
   AST_Annotation_Appls &annotations () override;
 
 protected:
+  /// Compute the size type if it is unknown.
   int compute_size_type () override;
-  // Compute the size type if it is unknown.
 
-  /**
-   * Cache of Recursively acquired annotations from typedefs.
-   */
-  ///{
+  /// @name Cache of recursively acquired typedef annotations
+  /// @{
   AST_Annotation_Appls cached_annotations_;
   bool has_cached_annotations_ {};
-  ///}
+  /// @}
 };
 
 #endif           // _AST_TYPEDEF_AST_TYPEDEF_HH

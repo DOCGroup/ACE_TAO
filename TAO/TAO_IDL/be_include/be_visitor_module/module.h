@@ -1,6 +1,3 @@
-/* -*- c++ -*- */
-
-//=============================================================================
 /**
  *  @file    module.h
  *
@@ -9,7 +6,6 @@
  *
  *  @author Aniruddha Gokhale
  */
-//=============================================================================
 
 #ifndef _BE_VISITOR_MODULE_MODULE_H_
 #define _BE_VISITOR_MODULE_MODULE_H_
@@ -28,9 +24,9 @@ public:
 
   ~be_visitor_module () override;
 
-  be_visitor_module (const be_visitor_module &) = delete;
+  be_visitor_module (be_visitor_module const &) = delete;
   be_visitor_module (be_visitor_module &&) = delete;
-  be_visitor_module &operator= (const be_visitor_module &) = delete;
+  be_visitor_module &operator= (be_visitor_module const &) = delete;
   be_visitor_module &operator= (be_visitor_module &&) = delete;
 
   int visit_constant (be_constant *node) override;

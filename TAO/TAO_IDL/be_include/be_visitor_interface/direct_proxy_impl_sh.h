@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    direct_proxy_impl_sh.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author  Angelo Corsaro <corsaro@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef BE_DIRECT_PROXY_IMPL_SH_H_
 #define BE_DIRECT_PROXY_IMPL_SH_H_

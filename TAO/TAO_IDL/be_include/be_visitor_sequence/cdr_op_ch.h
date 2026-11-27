@@ -1,6 +1,3 @@
-/* -*- c++ -*- */
-
-//=============================================================================
 /**
  *  @file    cdr_op_ch.h
  *
@@ -10,7 +7,6 @@
  *
  *  @author Aniruddha Gokhale
  */
-//=============================================================================
 
 #ifndef _BE_VISITOR_SEQUENCE_CDR_OP_CH_H_
 #define _BE_VISITOR_SEQUENCE_CDR_OP_CH_H_
@@ -30,9 +26,9 @@ public:
 
   ~be_visitor_sequence_cdr_op_ch () override;
 
-  be_visitor_sequence_cdr_op_ch (const be_visitor_sequence_cdr_op_ch &) = delete;
+  be_visitor_sequence_cdr_op_ch (be_visitor_sequence_cdr_op_ch const &) = delete;
   be_visitor_sequence_cdr_op_ch (be_visitor_sequence_cdr_op_ch &&) = delete;
-  be_visitor_sequence_cdr_op_ch &operator= (const be_visitor_sequence_cdr_op_ch &) = delete;
+  be_visitor_sequence_cdr_op_ch &operator= (be_visitor_sequence_cdr_op_ch const &) = delete;
   be_visitor_sequence_cdr_op_ch &operator= (be_visitor_sequence_cdr_op_ch &&) = delete;
 
   /// visit sequence

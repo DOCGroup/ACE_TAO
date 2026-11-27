@@ -75,6 +75,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_stdio.h"
 
+#include <algorithm>
+
 AST_Type::AST_Type (AST_Decl::NodeType nt,
                     UTL_ScopedName *n)
   : COMMON_Base (),
@@ -367,15 +369,12 @@ bool
 AST_Type::match_names (AST_Type *t,
                        std::vector<AST_Type *> const &list) const
 {
-  for (AST_Type *type : list)
-    {
-      if (t->full_name () == type->full_name ())
-        {
-          return true;
-        }
-    }
-
-  return false;
+  return std::any_of (list.begin (),
+                      list.end (),
+                      [t] (AST_Type *type)
+                      {
+                        return t->full_name () == type->full_name ();
+                      });
 }
 
 int

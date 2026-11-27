@@ -1,6 +1,3 @@
-/* -*- c++ -*- */
-
-//=============================================================================
 /**
  *  @file    component.h
  *
@@ -9,7 +6,6 @@
  *
  *  @author Jeff Parsons
  */
-//=============================================================================
 
 #ifndef _BE_VISITOR_COMPONENT_COMPONENT_H_
 #define _BE_VISITOR_COMPONENT_COMPONENT_H_

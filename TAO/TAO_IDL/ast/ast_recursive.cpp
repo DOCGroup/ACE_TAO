@@ -83,7 +83,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "nr_extern.h"
 
 bool
-AST_illegal_interface_recursion (AST_Decl *t)
+AST_illegal_interface_recursion (AST_Decl const *t)
 {
   // Can't be 0 since we know we have an interface or valuetype.
   // If we encounter the argument in an enclosing scope, it's illegal.

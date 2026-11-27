@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    argument_invoke.h
  *
@@ -9,7 +7,6 @@
  *
  *  @author Aniruddha Gokhale
  */
-//=============================================================================
 
 #ifndef _BE_VISITOR_OPERATION_ARGUMENT_INVOKE_H_
 #define _BE_VISITOR_OPERATION_ARGUMENT_INVOKE_H_

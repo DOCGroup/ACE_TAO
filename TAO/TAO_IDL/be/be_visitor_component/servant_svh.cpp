@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    servant_svh.cpp
  *
@@ -8,7 +6,6 @@
  *
  *  @author Jeff Parsons
  */
-//=============================================================================
 
 #include "component.h"
 
@@ -52,7 +49,7 @@ be_visitor_servant_svh::visit_component (be_component *node)
       << "::CIAO::" << be_global->ciao_container_type ()
       << "_Container, ::CIAO::" << be_global->ciao_container_type () << "_Context_Impl_T<"
       << be_idt_nl << global << sname_str << "::CCM_" << lname << "_Context," << be_nl
-      << global << sname_str << "::" << lname << "> > >"
+      << global << sname_str << "::" << lname << ">>>"
       << be_uidt << be_uidt << be_uidt << be_uidt << be_uidt << be_uidt_nl
       << "{" << be_nl
       << "public:" << be_idt_nl;

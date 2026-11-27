@@ -1,6 +1,3 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
  *  @file    native_ch.h
  *
@@ -8,7 +5,6 @@
  *
  *  @author Johnny Willemsen
  */
-//=============================================================================
 
 #ifndef _BE_VISITOR_NATIVE_NATIVE_CH_H_
 #define _BE_VISITOR_NATIVE_NATIVE_CH_H_
@@ -27,9 +23,9 @@ public:
 
   ~be_visitor_native_ch () override = default;
 
-  be_visitor_native_ch (const be_visitor_native_ch &) = delete;
+  be_visitor_native_ch (be_visitor_native_ch const &) = delete;
   be_visitor_native_ch (be_visitor_native_ch &&) = delete;
-  be_visitor_native_ch &operator= (const be_visitor_native_ch &) = delete;
+  be_visitor_native_ch &operator= (be_visitor_native_ch const &) = delete;
   be_visitor_native_ch &operator= (be_visitor_native_ch &&) = delete;
 
   /// visit native.

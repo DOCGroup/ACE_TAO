@@ -77,12 +77,11 @@ class AST_Decl;
 class AST_Param_Holder;
 class AST_Enum;
 
-// Representation of expression values.
-
-// An expression (and maybe its value, if computed).
+/// Represents an expression and its value, if computed.
 class TAO_IDL_FE_Export AST_Expression
 {
 public:
+  AST_Expression () = delete;
   // Enum to define all the different operators to combine expressions.
   enum ExprComb
     {
@@ -288,11 +287,11 @@ public:
   // Evaluate then store value inside this AST_Expression.
   void evaluate (EvalKind ek);
 
-  /// Compare two AST_Expressions.
-  ///{
+  /// @name Compare two AST_Expressions
+  /// @{
   bool operator== (AST_Expression *vc);
   bool compare (AST_Expression *vc);
-  ///}
+  /// @}
 
   // Accessor for the member.
   AST_Decl *get_tdef () const;
@@ -302,11 +301,11 @@ public:
 
   static std::string exprtype_to_string (ExprType t);
 
-  /// Pointer to enum of this value if applicable
-  ///{
+  /// @name Enum associated with this value, if applicable
+  /// @{
   AST_Enum *enum_parent () const;
   void enum_parent (AST_Enum *node);
-  ///}
+  /// @}
 
 protected:
   // Evaluate different sets of operators.
@@ -323,40 +322,40 @@ protected:
   bool type_mismatch (ExprType et);
 
 private:
+  /// Scope.
   UTL_Scope *pd_defined_in;
-  // Scope.
 
+  /// Line defined in.
   long pd_line;
-  // Line defined in.
 
+  /// File defined in.
   std::string pd_file_name;
-  // What file defined in.
 
+  /// Expression combinator.
   ExprComb pd_ec;
-  // What combinator.
 
+  /// Computed value.
   std::unique_ptr<AST_ExprValue> pd_ev;
-  // Computed value.
 
+  /// First sub-expression.
   std::unique_ptr<AST_Expression> pd_v1;
-  // 1st sub-expression.
 
+  /// Second sub-expression.
   std::unique_ptr<AST_Expression> pd_v2;
-  // 2nd sub-expression.
 
+  /// Symbolic name, if any.
   std::unique_ptr<UTL_ScopedName> pd_n;
-  // Symbolic name (if any).
 
+  /// Propagates the aliased constant type.
   AST_Decl *tdef;
-  // Propagates aliased constant type.
 
+  /// Non-null if created from a reference to a template parameter.
   AST_Param_Holder *param_holder_ {};
-  // Non-zero if we were created from a reference template param.
 
-  // Fill out the lineno, filename and definition scope details.
+  /// Fill out the line, filename and definition scope details.
   void fill_definition_details ();
 
-  // Internal evaluation.
+  /// Internal evaluation.
   virtual AST_ExprValue *eval_internal (EvalKind ek);
 
   /// Pointer to enum of this value if applicable

@@ -1,5 +1,3 @@
-/* -*- c++ -*- */
-//=============================================================================
 /**
  *  @file    cdr_op_ch.h
  *
@@ -8,7 +6,6 @@
  *
  *  @author Aniruddha Gokhale
  */
-//=============================================================================
 
 #ifndef _BE_VISITOR_FIELD_CDR_OP_CH_H_
 #define _BE_VISITOR_FIELD_CDR_OP_CH_H_
@@ -26,9 +23,9 @@ public:
   explicit be_visitor_field_cdr_op_ch (be_visitor_context *ctx);
   ~be_visitor_field_cdr_op_ch () override;
 
-  be_visitor_field_cdr_op_ch (const be_visitor_field_cdr_op_ch &) = delete;
+  be_visitor_field_cdr_op_ch (be_visitor_field_cdr_op_ch const &) = delete;
   be_visitor_field_cdr_op_ch (be_visitor_field_cdr_op_ch &&) = delete;
-  be_visitor_field_cdr_op_ch &operator= (const be_visitor_field_cdr_op_ch &) = delete;
+  be_visitor_field_cdr_op_ch &operator= (be_visitor_field_cdr_op_ch const &) = delete;
   be_visitor_field_cdr_op_ch &operator= (be_visitor_field_cdr_op_ch &&) = delete;
 
   int visit_field (be_field *node) override;

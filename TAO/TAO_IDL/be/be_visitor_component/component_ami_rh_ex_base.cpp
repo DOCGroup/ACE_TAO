@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    component_ami_rh_ex_base.cpp
  *
@@ -8,7 +6,6 @@
  *
  *  @author Jeff Parsons
  */
-//=============================================================================
 
 #include "component.h"
 
@@ -158,8 +155,6 @@ be_visitor_component_ami_rh_ex_base::gen_attr_op (
 
   return 0;
 }
-
-// ======================================================
 
 Exec_ReplyHandler_Op_Attr_Generator::Exec_ReplyHandler_Op_Attr_Generator (
     be_visitor_scope * visitor)

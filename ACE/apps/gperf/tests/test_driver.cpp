@@ -35,7 +35,9 @@ gperf_test_main (int argc, ACE_TCHAR *argv[], Gperf_Test_Mode const test_mode)
           ACE_OS::printf ("in word set %s\n", buf);
         }
       else if (verbose)
-        ACE_OS::printf ("NOT in word set %s\n", buf);
+        {
+          ACE_OS::printf ("NOT in word set %s\n", buf);
+        }
     }
 
   if (test_mode == Gperf_Test_Mode::switch_prefix)

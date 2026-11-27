@@ -1,6 +1,3 @@
-/* -*- c++ -*- */
-
-//=============================================================================
 /**
  *  @file    discriminant_ci.h
  *
@@ -10,7 +7,6 @@
  *
  *  @author Aniruddha Gokhale
  */
-//=============================================================================
 
 #ifndef _BE_VISITOR_UNION_DISCRIMINANT_CI_H_
 #define _BE_VISITOR_UNION_DISCRIMINANT_CI_H_

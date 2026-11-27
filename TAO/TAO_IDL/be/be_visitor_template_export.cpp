@@ -1,4 +1,3 @@
-//=============================================================================
 /**
 *  @file   be_visitor_template_export.cpp
 *
@@ -6,7 +5,6 @@
 *
 *  @author Jeff Parsons <j.parsons@vanderbilt.edu>
 */
-//=============================================================================
 
 #include "be_visitor_template_export.h"
 #include "be_visitor_context.h"

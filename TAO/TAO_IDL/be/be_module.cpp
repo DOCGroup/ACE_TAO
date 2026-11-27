@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    be_module.cpp
  *
@@ -8,7 +7,6 @@
  *  @author Copyright 1994-1995 by Sun Microsystems
  *  @author Inc. and Aniruddha Gokhale
  */
-//=============================================================================
 
 #include "be_module.h"
 #include "be_visitor.h"

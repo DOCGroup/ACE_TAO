@@ -78,6 +78,7 @@ class ast_visitor;
 class TAO_IDL_FE_Export AST_UnionLabel
 {
 public:
+  AST_UnionLabel () = delete;
   // Define kind of label.
   enum UnionLabel
     {
@@ -111,11 +112,11 @@ public:
 private:
   // Data.
 
+  /// Label kind.
   UnionLabel pd_label_kind;
-  // Label kind.
 
+  /// Label expression.
   std::unique_ptr<AST_Expression> pd_label_val;
-  // Label expression.
 };
 
 #endif           // _AST_UNION_LABEL_AST_UNION_LABEL_HH

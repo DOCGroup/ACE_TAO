@@ -1,4 +1,3 @@
-// -*- MPC -*-cr
 project(TAO_IDL_EXE) : aceexe, install, tao_rules, tao_output, tao_idl_fe {
   exename      = tao_idl
   exeout       = $(ACE_ROOT)/bin

@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(TAO_IDL_BE) : acelib, install_lib, tao_rules, tao_output, tao_vc8warnings, tao_idl_fe {
   sharedname   = TAO_IDL_BE
   dynamicflags += TAO_IDL_BE_BUILD_DLL

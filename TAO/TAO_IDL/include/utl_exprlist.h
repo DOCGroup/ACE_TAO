@@ -71,17 +71,11 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 class AST_Expression;
 
-// List of expressions.
-
-// NOTE: This list class only works correctly because we use single public
-//       inheritance, as opposed to multiple inheritance or public virtual.
-//       It relies on a type-unsafe cast from UTL_List to subclasses, which
-//       will cease to operate correctly if you use either multiple or
-//       public virtual inheritance.
-
+/// List of expressions.
 class TAO_IDL_FE_Export UTL_ExprList : public UTL_List
 {
 public:
+  UTL_ExprList () = delete;
   UTL_ExprList (AST_Expression *s,
                 UTL_ExprList *cdr);
   UTL_ExprList (UTL_ExprList const &) = delete;
@@ -109,13 +103,14 @@ private:
   Expression_Owner pd_car_data;
 };
 
-// Active iterator for UTL_ExprList.
+/// Active iterator for UTL_ExprList.
 class   UTL_ExprlistActiveIterator : public UTL_ListActiveIterator
 {
 public:
+  UTL_ExprlistActiveIterator () = delete;
   explicit UTL_ExprlistActiveIterator (UTL_ExprList *s);
 
-  // Get current item.
+  /// Get the current item.
   AST_Expression *item () const;
 };
 

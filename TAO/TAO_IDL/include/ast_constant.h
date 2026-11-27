@@ -71,19 +71,19 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_decl.h"
 #include "global_extern.h"
 
-// Representation of constant declaration:
-//
-// NOTE: Part of the job of the constructor is to convert
-// the AST_Constant_val it received to the type denoted by
-// the ConstantType it received.
-//
-// NOTE: There are two constructors here, one that gets a NodeType
-// parameter. This constructor is used from AST_EnumVal, which is
-// just a glorified AST_Constant
-
+/**
+ * @brief Represents a constant declaration.
+ *
+ * @note The constructor converts the supplied constant value to the
+ * requested constant type.
+ *
+ * @note The constructor accepting a node type is used by AST_EnumVal,
+ * which is a specialized AST_Constant.
+ */
 class TAO_IDL_FE_Export AST_Constant : public virtual AST_Decl
 {
 public:
+  AST_Constant () = delete;
   AST_Constant (AST_Expression::ExprType et,
                 AST_Decl::NodeType nt,
                 AST_Expression *ev,
@@ -107,8 +107,8 @@ public:
   bool ifr_added () const;
   void ifr_added (bool val);
 
+  /// Generate the scoped name if the constant's type is an enum.
   UTL_ScopedName *enum_full_name ();
-  // If our type is enum, we have to generate the scoped name.
 
   // AST Dumping.
   void dump (ACE_OSTREAM_TYPE &o) override;
@@ -124,14 +124,14 @@ public:
   bool annotatable () const override { return true; }
 
 protected:
+  /// The value.
   std::unique_ptr<AST_Expression> pd_constant_value;
-  // The value.
 
+  /// The expression type.
   AST_Expression::ExprType pd_et;
-  // Its expression type.
 
+  /// Whether this node has been added to the IFR.
   bool ifr_added_ {};
-  // Has this node been added to the IFR?
 };
 
 #endif           // _AST_CONSTANT_AST_CONSTANT_HH

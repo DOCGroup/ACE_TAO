@@ -1,6 +1,3 @@
-
-/* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file    ifr_adding_visitor_operation.h
  *
@@ -8,7 +5,6 @@
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_IFR_ADDING_VISITOR_OPERATION_H
 #define TAO_IFR_ADDING_VISITOR_OPERATION_H

@@ -1,4 +1,3 @@
-/* -*- c++ -*- */
 #include <cstdint>
 #include <memory>
 #include <string>

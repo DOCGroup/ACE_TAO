@@ -3,7 +3,6 @@
  *
  *  @author Jeff Parsons
  */
-//=============================================================================
 
 #include "ast_visitor_tmpl_module_inst.h"
 #include "ast_visitor_reifying.h"
@@ -38,8 +37,6 @@
 #include "ast_param_holder.h"
 #include "ast_expression.h"
 
-#include "ast_param_holder.h"
-
 #include "utl_namelist.h"
 #include "utl_identifier.h"
 #include "utl_exceptlist.h"
@@ -51,6 +48,7 @@
 #include "nr_extern.h"
 
 #include <memory>
+#include <utility>
 
 namespace
 {

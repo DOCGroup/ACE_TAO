@@ -174,7 +174,8 @@ public:
 
   // Other Operations.
 
-  // Name Lookup Mechanism
+  /// @name Name lookup
+  /// @{
   AST_Decl *lookup_by_name (UTL_ScopedName *,
                             bool full_def_only = false,
                             bool for_add = true);
@@ -186,14 +187,14 @@ public:
                               bool full_def_only,
                               AST_Decl *&final_parent_decl);
 
-  // Look up the Identifier * specified only in the local scope.
+  /// Look up the specified identifier only in the local scope.
   AST_Decl *lookup_by_name_local (Identifier *,
                                   bool full_def_only = false);
 
-  // Look up a predefined type by its ExprType.
+  /// Look up a predefined type by its ExprType.
   AST_Decl *lookup_primitive_type (AST_Expression::ExprType);
 
-  // Look up one of the pseudo-object types.
+  /// Look up one of the pseudo-object types.
   AST_Decl *lookup_pseudo (Identifier *);
 
   AST_Decl *lookup_by_name (std::string const& name);
@@ -201,36 +202,32 @@ public:
   virtual AST_Decl *look_in_prev_mods_local (Identifier *e,
                                              bool ignore_fwd = false);
 
-  // A no-op here, overridden for types like interface
-  // (look_in_inherited), modules (look_in_prev_mods) etc.
+  /// No-op here; overridden for types such as interfaces and modules.
   virtual AST_Decl *special_lookup (UTL_ScopedName *e,
                                     bool ful_def_only,
                                     AST_Decl *&final_parent_decl);
+  /// @}
 
-  // How many entries are used?
+  /// Number of entries used.
   virtual unsigned long nmembers () const;
 
-  // If the Identifier string (from the scoped name which has been
-  // already determined to be of length 1) matches a param,
-  // create and return a param holder AST node, otherwise
-  // return 0.
+  /// Create and return a parameter holder if the single-component scoped
+  /// name matches a parameter; otherwise return null.
   static AST_Param_Holder *match_param (UTL_ScopedName *e);
 
-  // Add to decls. Node represents a local declaration
-  // The new decl e is inserted after ex if ex is not 0.
-  // This one is public because the case of a reopened
-  // module necessitates a call to this from
-  // be_generator::create_module().
+  /// Add a local declaration, inserting @a e after @a ex if supplied.
+  /// Public for reopened modules created by be_generator::create_module().
   void add_to_scope (AST_Decl *e,
                      AST_Decl *ex = nullptr);
 
-  // Add to name_referenced identifier list. It's public because
-  // a union needs to add its enum discriminator label names.
+  /// Add to the referenced-name list; public for union discriminator labels.
   void add_to_name_referenced (Identifier *id);
 
-  // Accessors for the has_prefix_ member.
+  /// @name Prefix flag accessors
+  /// @{
   bool has_prefix () const;
   void has_prefix (bool val);
+  /// @}
 
   // Cleanup function.
   void destroy () override;
@@ -245,78 +242,73 @@ protected:
   // Additionally, UTL_Scope also maintains a record of what nodes
   // defined elsewhere were referenced in this scope.
 
-  // Replace old_decl with new_decl.
+  /// Replace @a old_decl with @a new_decl.
   void replace_scope (AST_Decl *old_decl,
                       AST_Decl *new_decl);
 
-  // Replace old_decl with new_decl.
+  /// Replace @a old_decl with @a new_decl.
   void replace_referenced (AST_Decl *old_decl,
                            AST_Decl *new_decl);
 
-  // Add to referenced nodes set.
-  // If ex is not 0 'e' will be inserted at the position
-  // after ex, which is already in the list.
+  /// Add to the referenced nodes; insert @a e after @a ex if supplied.
+  /// The supplied @a ex must already be in the list.
   void add_to_referenced (AST_Decl *e,
                           bool recursive,
                           Identifier *id,
                           AST_Decl *ex = nullptr);
 
-  // Add to local types. Node represents a local manifest type.
+  /// Add a local manifest type.
   void add_to_local_types (AST_Decl *e);
 
-  // Has this node been referenced here already?
+  /// Whether this node has already been referenced here.
   virtual bool referenced (AST_Decl *e,
                                Identifier *id = nullptr);
 
-  // Look up a scoped name in the inherited list.
+  /// Look up a scoped name in the inherited list.
   virtual AST_Decl *look_in_inherited (UTL_ScopedName *,
                                        bool treat_as_ref);
 
-  // Look up a scoped name in the supported interface list.
+  /// Look up a scoped name in the supported interface list.
   virtual AST_Decl *look_in_supported (UTL_ScopedName *,
                                        bool treat_as_ref);
 
-  // Lookup based on the local name.
+  /// Look up by local name.
   AST_Decl *lookup_for_add (AST_Decl *d);
 
-  // Is there a (case-insensitive) clash between a local name
-  // and an IDL keyword?
+  /// Check for a case-insensitive clash between a local name and an IDL keyword.
   int idl_keyword_clash (Identifier *e);
 
-  // Checks for modules, or defns of forward declared struct or unions.
+  /// Check for modules or definitions of forward-declared structs or unions.
   bool redef_clash (AST_Decl::NodeType new_nt,
                     AST_Decl::NodeType scope_elem_nt);
 
+  /// Set the appropriate seen flag for a specification-defined sequence
+  /// of a basic type.
   void check_for_predef_seq (AST_Decl *d);
-  // Set the appropriate *_seen_ flag if we are seeing a spec-defined
-  // sequence of a basic type.
 
 protected:
   // Data.
 
-  // What type is this node? This is a cache of the information
-  // in AST_Decl
+  /// Node type cached from AST_Decl.
   AST_Decl::NodeType const pd_scope_node_type;
 
-  // Storage for declarations in this scope.
+  /// Storage for declarations in this scope.
   std::vector<AST_Decl *> pd_decls;             // Store declarations
 
-  // Storage for local manifest types in this scope.
+  /// Storage for local manifest types in this scope.
   std::vector<AST_Decl *> pd_local_types;       // Store types
 
-  // Storage for referenced nodes in this scope.
+  /// Storage for referenced nodes in this scope.
   std::vector<AST_Decl *> pd_referenced;        // Store references
 
-  // Storage for identifiers used in this scope. CORBA 2.3 introduced
-  // stricter rules for clashes during name resolution, and the information
-  // in pd_referenced is not enough to catch them all.
+  /// Identifiers used in this scope, for name clashes not covered by
+  /// pd_referenced under the CORBA 2.3 name-resolution rules.
   std::vector<std::unique_ptr<Identifier>> pd_name_referenced; // Store name references
 
-  // Have we seen a #pragma prefix declaration in this scope?
+  /// Whether a \#pragma prefix declaration was seen in this scope.
   bool has_prefix_ {};
 
-  // Used in lookup of various CORBA pseudo objects, which also
-  // determines generation of specific #include headers.
+  /// Pseudo-object lookup also determines which headers to include.
   enum class Which_Pseudo
   {
     TypeCode,
@@ -346,8 +338,8 @@ public:
   AST_Structure *fe_add_full_struct_type (AST_Structure *t);
   AST_StructureFwd *fe_add_fwd_struct_type (AST_StructureFwd *t);
 
-  /// No-op base class version of the specialized adding actions.
-
+  /// @name No-op base class versions of specialized adding actions
+  /// @{
   virtual
   AST_PredefinedType *fe_add_predefined_type (
     AST_PredefinedType *t);
@@ -492,6 +484,7 @@ public:
   virtual
   AST_Annotation_Member *fe_add_annotation_member (
     AST_Annotation_Member *annotation_member);
+  /// @}
 
 protected:
   /// Quick check on the head of a name to see if it's global.
@@ -515,35 +508,36 @@ private:
                              bool full_def_only = false);
 };
 
-// Active iterator for a UTL_Scope node
+/// Active iterator for a UTL_Scope node.
 class TAO_IDL_FE_Export UTL_ScopeActiveIterator
 {
 public:
   // Operations.
 
+  UTL_ScopeActiveIterator () = delete;
   UTL_ScopeActiveIterator (UTL_Scope *s,
                            UTL_Scope::ScopeIterationKind ik);
 
-  // Advance to next item.
+  /// Advance to the next item.
   void next ();
 
-  // Get current item.
+  /// Get the current item.
   AST_Decl *item ();
 
-  // Have we iterated over entire scope?
+  /// Whether the entire scope has been visited.
   bool is_done ();
 
 private:
-  // Scope to iterate over.
+  /// Scope to iterate over.
   UTL_Scope *iter_source;
 
-  // What kind of iteration?
+  /// Kind of iteration.
   UTL_Scope::ScopeIterationKind ik;
 
-  // What stage?
+  /// Current iteration stage.
   UTL_Scope::ScopeIterationKind stage;
 
-  // What location in stage?
+  /// Current location in the stage.
   size_t il;
 };
 

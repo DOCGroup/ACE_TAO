@@ -1,4 +1,3 @@
-//=============================================================================
 /**
 *  @file   amh_rh_sh.cpp
 *
@@ -7,11 +6,9 @@
 *
 *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
 */
-//=============================================================================
 
 #include "interface.h"
 
-#include <string>
 #include <string>
 
 be_visitor_amh_rh_interface_sh::be_visitor_amh_rh_interface_sh (

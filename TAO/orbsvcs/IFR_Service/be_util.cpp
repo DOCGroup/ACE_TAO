@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    be_util.cpp
  *
@@ -7,15 +5,12 @@
  *
  *  @author Jeff Parsons
  */
-//=============================================================================
 
 #include "orbsvcs/Log_Macros.h"
 #include "be_util.h"
 #include "be_extern.h"
 
 #include "ast_generator.h"
-
-#include "orbsvcs/Log_Macros.h"
 
 #include <memory>
 #include <new>

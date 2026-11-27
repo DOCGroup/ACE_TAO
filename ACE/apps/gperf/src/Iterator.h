@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 /**
  * Copyright (C) 1989 Free Software Foundation, Inc.
  * written by Douglas C. Schmidt (d.schmidt@vanderbilt.edu)
@@ -47,7 +45,7 @@
 class Iterator
 {
 public:
-  Iterator (char *s,
+  Iterator (char const *s,
             int lo,
             int hi,
             int word_end,
@@ -62,7 +60,7 @@ public:
 
 private:
   /// A pointer to the string provided by the user.
-  char *str;
+  char const *str;
 
   /// Value returned after last key is processed.
   int end;
@@ -78,6 +76,11 @@ private:
 
   /// Smallest possible value, inclusive.
   int lo_bound;
+
+  /// Range progress for this iterator.
+  bool range_active_ {};
+  int current_value_ {};
+  int upper_bound_ {};
 };
 
 #endif /* ITERATOR_H */

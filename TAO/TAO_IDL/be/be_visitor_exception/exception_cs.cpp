@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    exception_cs.cpp
  *
@@ -7,7 +5,6 @@
  *
  *  @author Aniruddha Gokhale
  */
-//=============================================================================
 
 #include "exception.h"
 #include "be_visitor_typecode/typecode_defn.h"

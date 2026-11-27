@@ -1,6 +1,3 @@
-/* -*- c++ -*- */
-
-//=============================================================================
 /**
  *  @file    public_assign_cs.h
  *
@@ -10,7 +7,6 @@
  *
  *  @author Aniruddha Gokhale
  */
-//=============================================================================
 
 #ifndef _BE_VISITOR_UNION_BRANCH_PUBLIC_ASSIGN_CS_H_
 #define _BE_VISITOR_UNION_BRANCH_PUBLIC_ASSIGN_CS_H_

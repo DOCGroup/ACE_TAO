@@ -1,6 +1,3 @@
-
-/* -*- c++ -*- */
-//=============================================================================
 /**
  *  @file    be_visitor_template_export.h
  *
@@ -12,7 +9,6 @@
  *
  *  @author Jeff Parsons <j.parsons@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef TAO_BE_VISITOR_TEMPLATE_EXPORT_H
 #define TAO_BE_VISITOR_TEMPLATE_EXPORT_H
@@ -22,7 +18,7 @@
 class AST_Interface;
 
 /**
- * @class :
+ * @class be_visitor_template_export
  *
  * @brief be_visitor_template_export
  *

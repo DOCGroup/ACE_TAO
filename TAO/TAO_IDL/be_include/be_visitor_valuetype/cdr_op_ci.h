@@ -1,6 +1,3 @@
-/* -*- c++ -*- */
-
-//=============================================================================
 /**
  *  @file    cdr_op_ci.h
  *
@@ -9,7 +6,6 @@
  *
  *  @author Torsten Kuepper <kuepper2@lfa.uni-wuppertal.de>
  */
-//=============================================================================
 
 #ifndef _BE_VISITOR_VALUETYPE_CDR_OP_CI_H_
 #define _BE_VISITOR_VALUETYPE_CDR_OP_CI_H_

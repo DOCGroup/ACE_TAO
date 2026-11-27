@@ -1,5 +1,3 @@
-/* -*- c++ -*- */
-//=============================================================================
 /**
  *  @file    be_visitor_member_type_decl.h
  *
@@ -7,7 +5,6 @@
  *
  *  @author Jeff Parsons
  */
-//=============================================================================
 
 #ifndef BE_VISITOR_MEMBER_TYPE_DECL_H
 #define BE_VISITOR_MEMBER_TYPE_DECL_H

@@ -1,6 +1,3 @@
-/* -*- c++ -*- */
-
-//=============================================================================
 /**
  *  @file    root_ch.h
  *
@@ -10,7 +7,6 @@
  *
  *  @author Aniruddha Gokhale
  */
-//=============================================================================
 
 #ifndef _BE_VISITOR_ROOT_ROOT_CH_H_
 #define _BE_VISITOR_ROOT_ROOT_CH_H_
@@ -30,9 +26,9 @@ public:
 
   ~be_visitor_root_ch () override;
 
-  be_visitor_root_ch (const be_visitor_root_ch &) = delete;
+  be_visitor_root_ch (be_visitor_root_ch const &) = delete;
   be_visitor_root_ch (be_visitor_root_ch &&) = delete;
-  be_visitor_root_ch &operator= (const be_visitor_root_ch &) = delete;
+  be_visitor_root_ch &operator= (be_visitor_root_ch const &) = delete;
   be_visitor_root_ch &operator= (be_visitor_root_ch &&) = delete;
 
   int visit_root (be_root *node) override;

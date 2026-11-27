@@ -1,6 +1,3 @@
-/* -*- c++ -*- */
-
-//=============================================================================
 /**
  *  @file    map_ch.h
  *
@@ -10,7 +7,6 @@
  *
  *  @author Tyler Mayoff
  */
-//=============================================================================
 
 #ifndef _BE_VISITOR_MAP_MAP_CH_H_
 #define _BE_VISITOR_MAP_MAP_CH_H_
@@ -30,9 +26,9 @@ public:
 
   ~be_visitor_map_ch () override = default;
 
-  be_visitor_map_ch (const be_visitor_map_ch &) = delete;
+  be_visitor_map_ch (be_visitor_map_ch const &) = delete;
   be_visitor_map_ch (be_visitor_map_ch &&) = delete;
-  be_visitor_map_ch &operator= (const be_visitor_map_ch &) = delete;
+  be_visitor_map_ch &operator= (be_visitor_map_ch const &) = delete;
   be_visitor_map_ch &operator= (be_visitor_map_ch &&) = delete;
 
   /// visit map node.

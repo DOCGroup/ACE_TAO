@@ -65,7 +65,7 @@ FE_Utils::Temp_File_Guard::register_created_file (std::string const& filename)
 void
 FE_Utils::Temp_File_Guard::unregister_file (std::string const& filename)
 {
-  for (auto i = this->created_files_.begin ();
+  for (File_List::iterator i = this->created_files_.begin ();
        i != this->created_files_.end ();
        ++i)
     {
@@ -578,7 +578,7 @@ FE_Utils::is_include_file_found (std::string &inc_file,
   inc_file += idl_file_name;
   if (ACE_OS::realpath (inc_file.c_str (), abspath) != nullptr)
     {
-      File_Handle test (
+      File_Handle const test (
         ACE_OS::fopen (abspath, "r"), ACE_OS::fclose);
 
       if (!test)

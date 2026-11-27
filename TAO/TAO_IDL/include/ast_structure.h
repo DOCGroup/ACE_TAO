@@ -65,27 +65,23 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _AST_STRUCTURE_AST_STRUCTURE_HH
 #define _AST_STRUCTURE_AST_STRUCTURE_HH
 
-// Representation of structure:
-//
-// NOTE: add (AST_ConcreteType *) is defined here because a structure
-// can contain locally defined types in addition to fields.
-//
-// NOTE: add (AST_EnumValue *) is defined here because enums can
-// be defined manifest locally; the constants defined in these
-// enums are inserted in the enclosing scope. It is unlikely that
-// a BE writer will need to overload this function in AST_Structure.
-
 #include "ast_concrete_type.h"
 #include "utl_scope.h"
 
 #include <cstddef>
 #include <vector>
 
+/**
+ * @brief Represents a structure that can contain fields and local types.
+ *
+ * @note Constants of locally defined enums are inserted into this scope.
+ */
 class TAO_IDL_FE_Export AST_Structure
   : public virtual AST_ConcreteType,
     public virtual UTL_Scope
 {
 public:
+  AST_Structure () = delete;
   AST_Structure (AST_Structure const &) = delete;
   AST_Structure (AST_Structure &&) = delete;
   AST_Structure &operator= (AST_Structure const &) = delete;
@@ -108,33 +104,32 @@ public:
   // Overridden for unions.
   virtual void redefine (AST_Structure *from);
 
+  /// Return the count of members.
   virtual int member_count ();
-  // Return the count of members.
 
+  /// Return the count of actual fields.
   virtual ACE_CDR::ULong nfields () const;
-  // Return the count of actual fields.
 
+  /// Get an individual field node.
   virtual int field (AST_Field *&result,
                      ACE_CDR::ULong slot) const;
-  // Get an individual field node.
 
+  // Override the base class method.
   bool is_local () override;
-  // Overwrite the is_local method.
 
+  /// Check whether this type or a type in the list is involved in recursion.
   bool in_recursion (std::vector<AST_Type *> &list) override;
-  // Are we or the node represented by node involved in recursion.
 
+  /// Whether this scope contains a wstring at some nesting level.
   int contains_wstring () override;
-  // Do we contain a wstring at some nesting level?
 
-  // Is this struct or union defined? This predicate returns FALSE when a
-  // forward declaration is not defined yet, and TRUE in
-  // all other cases.
+  /// Whether this struct or union is defined. A forward declaration that
+  /// has not yet been defined returns false; other cases return true.
   bool is_defined () override;
 
-  // Recursively called on valuetype to check for legal use as
-  // a primary key. Overridden for valuetype, struct, sequence,
-  // union, array, typedef, and interface.
+  /// Recursively checks whether the type is legal as a primary key.
+  /// Overridden for valuetypes, structs, sequences, unions, arrays,
+  /// typedefs and interfaces.
   bool legal_for_primary_key () const override;
 
   // Accessors for the member.
@@ -159,11 +154,11 @@ public:
 
   AST_Field *fe_add_field (AST_Field *f) override;
 
-  /// Easy Member Access
-  ///{
+  /// @name Member access
+  /// @{
   virtual AST_Decl *operator[] (size_t const index);
   virtual AST_Decl *operator[] (std::string const& name);
-  ///}
+  /// @}
 
 protected:
   friend class tao_yy::parser;
@@ -177,26 +172,25 @@ protected:
 
   AST_EnumVal *fe_add_enum_val (AST_EnumVal *v) override;
 
+  /// Compute the size type if it is unknown.
   int compute_size_type () override;
-  // Compute the size type if it is unknown.
 
+  /// Field nodes, excluding other members such as values of an enum
+  /// declared inside the struct.
   std::vector<AST_Field *> fields_;
-  // Container for this struct's field nodes. Excludes nodes included
-  // in member_count, i.e., enum values of an enum declared inside
-  // the struct.
 
 private:
+  /// Count the number of members.
   int compute_member_count ();
-  // Count the number of members.
 
+  /// Number of members.
   int member_count_ {-1};
-  // Number of members.
 
+  /// Whether this structure contains a local type.
   int local_struct_ {-1};
-  // We also need to determine whether we contain any local type.
 
+  /// The forward declaration this structure may have been created from.
   AST_StructureFwd *fwd_decl_ {};
-  // The forward declaration we may have been created from.
 };
 
 #endif           // _AST_STRUCTURE_AST_STRUCTURE_HH

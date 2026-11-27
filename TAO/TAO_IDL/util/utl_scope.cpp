@@ -1778,14 +1778,16 @@ UTL_Scope::match_param (UTL_ScopedName *e)
               return
                 idl_global->gen ()->create_param_holder (
                   &sn,
-                  const_cast<FE_Utils::T_Param_Info *> (&param_info));
+                  const_cast<FE_Utils::T_Param_Info *> (
+                    std::addressof (param_info)));
             }
           else
             {
               return
                 idl_global->gen ()->create_param_holder (
                   e,
-                  const_cast<FE_Utils::T_Param_Info *> (&param_info));
+                  const_cast<FE_Utils::T_Param_Info *> (
+                    std::addressof (param_info)));
             }
         }
 

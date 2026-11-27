@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 /**
  * Copyright (C) 1989 Free Software Foundation, Inc.
  * written by Douglas C. Schmidt (d.schmidt@vanderbilt.edu)
@@ -37,7 +35,7 @@
 class Gen_Perf
 {
 public:
-  Gen_Perf ();
+  Gen_Perf () = default;
 
   Gen_Perf (Gen_Perf const &) = delete;
   Gen_Perf (Gen_Perf &&) = delete;
@@ -61,23 +59,23 @@ private:
   static void sort_set (char *union_set, int len);
 
   /// Maximum possible hash value.
-  int max_hash_value;
+  int max_hash_value {};
 
   /// Records fewest # of collisions for asso value.
-  int fewest_collisions;
+  int fewest_collisions {};
 
   /// Number of keywords processed without a collision.
-  int num_done;
+  int num_done {1};
 
   /// Disjoint union.
-  std::unique_ptr<char[]> union_set;
+  std::unique_ptr<char[]> union_set {};
 
   /// List of the keys we're trying to map into a perfect hash
   /// function.
-  Key_List key_list;
+  Key_List key_list {};
 
   /// Table that keeps track of key collisions.
-  Bool_Array char_search;
+  Bool_Array char_search {};
 };
 
 #endif /* GEN_PERF_H */

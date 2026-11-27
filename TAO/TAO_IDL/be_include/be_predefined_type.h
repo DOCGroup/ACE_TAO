@@ -1,6 +1,3 @@
-/* -*- c++ -*- */
-
-//=============================================================================
 /**
  *  @file    be_predefined_type.h
  *
@@ -10,7 +7,6 @@
  *  @author Copyright 1994-1995 by Sun Microsystems
  *  @author Inc. and Aniruddha Gokhale
  */
-//=============================================================================
 
 #ifndef _BE_PREDEFINED_TYPE_H
 #define _BE_PREDEFINED_TYPE_H
@@ -49,7 +45,7 @@ protected:
 
   /**
    * The object and TypeCode repository IDs have a mandatory omg.org
-   * prefix, but the default compute_repoID() uses the #pragma's to
+   * prefix, but the default compute_repoID() uses pragma directives to
    * obtain prefixes.
    */
   virtual void compute_repoID ();

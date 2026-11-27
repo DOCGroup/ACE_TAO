@@ -7,7 +7,7 @@
 #include <string>
 
 int
-BE_save_orb_args (int &argc, ACE_TCHAR *argv[])
+BE_save_orb_args (int argc, ACE_TCHAR *argv[])
 {
   int i = 1;
   std::basic_string<ACE_TCHAR> holder;
@@ -54,8 +54,8 @@ BE_save_orb_args (int &argc, ACE_TCHAR *argv[])
         }
     }
 
-  std::string const orb_args (ACE_TEXT_ALWAYS_CHAR (holder.c_str ()));
-  be_global->orb_args (orb_args);
+  std::string const orb_args_value (ACE_TEXT_ALWAYS_CHAR (holder.c_str ()));
+  be_global->orb_args (orb_args_value);
 
   return 0;
 }

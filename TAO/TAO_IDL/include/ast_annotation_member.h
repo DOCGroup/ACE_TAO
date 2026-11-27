@@ -18,6 +18,7 @@ class AST_Expression;
 class TAO_IDL_FE_Export AST_Annotation_Member : public virtual AST_Field
 {
 public:
+  AST_Annotation_Member () = delete;
   AST_Annotation_Member (
     AST_Expression::ExprType expr_type,
     AST_Type *type, UTL_ScopedName *name);
@@ -46,12 +47,12 @@ public:
   /// AST Dumping
   void dump (ACE_OSTREAM_TYPE &o) override;
 
-  /// Get and Set the Value
-  ///{
+  /// @name Get and set the value
+  /// @{
   AST_Expression *value () const;
   void value (AST_Expression *value);
   void value (std::unique_ptr<AST_Expression> value);
-  ///}
+  /// @}
 
   /// Get the ExprType
   AST_Expression::ExprType expr_type () const;

@@ -1,6 +1,3 @@
-/* -*- c++ -*- */
-
-//=============================================================================
 /**
  *  @file    attribute.h
  *
@@ -8,7 +5,6 @@
  *
  *  @author Aniruddha Gokhale
  */
-//=============================================================================
 
 #ifndef _BE_VISITOR_ATTRIBUTE_ATTRIBUTE_H
 #define _BE_VISITOR_ATTRIBUTE_ATTRIBUTE_H

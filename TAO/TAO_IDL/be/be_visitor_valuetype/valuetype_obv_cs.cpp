@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    valuetype_obv_cs.cpp
  *
@@ -9,7 +8,6 @@
  *  @author Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
  *  @author derived from interface_ch.cpp from Aniruddha Gokhale
  */
-//=============================================================================
 
 #include "valuetype.h"
 
@@ -282,7 +280,9 @@ be_visitor_valuetype_obv_cs::gen_obv_call_base_constructor_args (
       if (f && !dynamic_cast<be_attribute*> (si.item ()))
         {
           if (index++) // comma before 2nd onwards
-            *os << ",";
+            {
+              *os << ",";
+            }
 
           // output each accessor on new line
           *os << be_nl;

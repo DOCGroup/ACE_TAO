@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    exceptlist_cs.h
  *
@@ -8,7 +6,6 @@
  *
  *  @author Aniruddha Gokhale
  */
-//=============================================================================
 
 #ifndef _BE_VISITOR_OPERATION_EXCEPTIONLIST_CS_H_
 #define _BE_VISITOR_OPERATION_EXCEPTIONLIST_CS_H_

@@ -1,6 +1,3 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
  *  @file    be_visitor_interface_fwd.h
  *
@@ -8,7 +5,6 @@
  *
  *  @author Aniruddha Gokhale
  */
-//=============================================================================
 
 #ifndef TAO_BE_VISITOR_INTERFACE_FWD_H
 #define TAO_BE_VISITOR_INTERFACE_FWD_H

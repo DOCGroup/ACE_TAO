@@ -1,6 +1,3 @@
-/* -*- c++ -*- */
-
-//=============================================================================
 /**
  *  @file    root_cnh.h
  *
@@ -10,7 +7,6 @@
  *
  *  @author Jeff Parsons
  */
-//=============================================================================
 
 #ifndef _BE_VISITOR_ROOT_ROOT_CNH_H_
 #define _BE_VISITOR_ROOT_ROOT_CNH_H_
@@ -30,9 +26,9 @@ public:
 
   ~be_visitor_root_cnh () override;
 
-  be_visitor_root_cnh (const be_visitor_root_cnh &) = delete;
+  be_visitor_root_cnh (be_visitor_root_cnh const &) = delete;
   be_visitor_root_cnh (be_visitor_root_cnh &&) = delete;
-  be_visitor_root_cnh &operator= (const be_visitor_root_cnh &) = delete;
+  be_visitor_root_cnh &operator= (be_visitor_root_cnh const &) = delete;
   be_visitor_root_cnh &operator= (be_visitor_root_cnh &&) = delete;
 
   int visit_root (be_root *node) override;

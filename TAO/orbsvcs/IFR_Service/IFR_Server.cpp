@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 #include "orbsvcs/Log_Macros.h"
 #include "IFR_Service.h"
 #include "tao/Environment.h"
@@ -7,7 +6,7 @@
 class IFR_Service_Shutdown_Functor : public Shutdown_Functor
 {
 public:
-  IFR_Service_Shutdown_Functor (IFR_Service & ifr);
+  explicit IFR_Service_Shutdown_Functor (IFR_Service & ifr);
 
   IFR_Service_Shutdown_Functor (IFR_Service_Shutdown_Functor const &) = delete;
   IFR_Service_Shutdown_Functor (IFR_Service_Shutdown_Functor &&) = delete;

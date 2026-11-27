@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #ifndef BE_USES_H
 #define BE_USES_H
 
@@ -28,13 +27,11 @@ public:
   // Cleanup.
   void destroy () override;
 
+  /// Set the original uses from which this one was created; applies only to implied IDL.
   void original_uses (be_uses *original_uses);
-  // Sets the original uses from which this one was created,
-  // applies only to implied IDL.
 
+  /// Return the original uses from which this one was created; applies only to implied IDL.
   be_uses *original_uses ();
-  // Returns the original uses from which this one was created,
-  // applies only to implied IDL
 
 private:
   be_uses *original_uses_ {};

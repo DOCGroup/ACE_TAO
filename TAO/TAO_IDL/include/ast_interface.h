@@ -65,10 +65,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _AST_INTERFACE_AST_INTERFACE_HH
 #define _AST_INTERFACE_AST_INTERFACE_HH
 
-// NOTE: add (AST_EnumValue *) is defined here because enums can
-// be defined manifest locally; the constants defined in these
-// enums are inserted in the enclosing scope.
-
 #include "ast_type.h"
 #include "utl_scope.h"
 
@@ -80,10 +76,12 @@ class AST_Interface;
 using AST_Type_List = std::vector<AST_Type *>;
 using AST_Interface_List = std::vector<AST_Interface *>;
 
+/// @note Constants of locally defined enums are inserted into this scope.
 class TAO_IDL_FE_Export AST_Interface : public virtual AST_Type,
                                         public virtual UTL_Scope
 {
 public:
+  AST_Interface () = delete;
   AST_Interface (AST_Interface const &) = delete;
   AST_Interface (AST_Interface &&) = delete;
   AST_Interface &operator= (AST_Interface const &) = delete;
@@ -98,11 +96,13 @@ public:
 
   ~AST_Interface () override;
 
-  // This serves for interfaces, value types, components, and eventtypes.
+  /// Handle forward redefinition for interfaces, valuetypes, components
+  /// and eventtypes.
   static void fwd_redefinition_helper (AST_Interface *&i,
                                        UTL_Scope *s);
 
-  // Overridden for valuetypes, components, and eventtypes.
+  /// Redefine the interface; overridden for valuetypes, components and
+  /// eventtypes.
   virtual void redefine (AST_Interface *from);
 
   AST_Type_List const& inherits () const;
@@ -118,13 +118,11 @@ public:
 
   AST_Operation *be_add_operation (AST_Operation *);
 
-  // Is this interface defined? This predicate returns FALSE when an
-  // interface was forward declared but not defined yet, and TRUE in
-  // all other cases.
+  /// Whether this interface is defined. A forward-declared interface
+  /// that has not yet been defined returns false; other cases return true.
   bool is_defined () override;
 
-  // Check if we have redefined any of our parents' operations or attributes,
-  // and check if there is such a clash among the parents
+  /// Check for redefined operations or attributes and clashes among parents.
   bool redef_clash ();
 
   // Accessors for the member.
@@ -135,7 +133,7 @@ public:
   AST_InterfaceFwd *fwd_decl () const;
   void fwd_decl (AST_InterfaceFwd *node);
 
-  // Look through inherited interfaces.
+  /// Look through inherited interfaces.
   AST_Decl *look_in_inherited (UTL_ScopedName *e,
                                bool full_def_only) override;
 
@@ -149,9 +147,9 @@ public:
   /// and make a list of the abstract parents, if any.
   void analyze_parentage ();
 
-  // Recursively called on valuetype to check for legal use as
-  // a primary key. Overridden for valuetype, struct, sequence,
-  // union, array, typedef, and interface.
+  /// Recursively checks whether the type is legal as a primary key.
+  /// Overridden for valuetypes, structs, sequences, unions, arrays,
+  /// typedefs and interfaces.
   bool legal_for_primary_key () const override;
 
   AST_Decl *special_lookup (UTL_ScopedName *e,
@@ -181,15 +179,16 @@ public:
 protected:
   // Data.
 
-  // Immediate ancestors.
+  /// @name Immediate ancestors
+  /// @{
   AST_Type_List pd_inherits;
   long pd_n_inherits;
+  /// @}
 
-  // All ancestors.
+  /// All ancestors.
   AST_Interface_List pd_inherits_flat;
 
-  // Queue data structure needed for breadth-first traversal of
-  // inheritance tree.
+  /// Queue used for breadth-first traversal of the inheritance tree.
   std::deque<AST_Type *> insert_queue;
 
   // For a special case of a deeply nested inheritance graph and one specific
@@ -200,20 +199,17 @@ protected:
   // higher up in the tree than the second parent. In addition, if the second
   // parent turns out to be a child of the first .
 
-  // Queue of dequeued nodes to be searched for the above case.
+  /// Queue of dequeued nodes searched for the multiple-inheritance case.
   std::deque<AST_Type *> del_queue;
 
-  // Are we the equivalent interface of a home?
+  /// Whether this is the equivalent interface of a home.
   bool home_equiv_ {};
 
-  // The forward declaration we may have been created from.
+  /// The forward declaration this interface may have been created from.
   AST_InterfaceFwd *fwd_decl_ {};
 
-  // Must keep these base interface placeholders in a separate
-  // container, so they can be destroyed. Iterating over
-  // pd_inherits won't work because the real interfaces will
-  // probably already be destroyed and the pointers will be
-  // garbage.
+  /// Base interface placeholders are kept separately for destruction;
+  /// real interfaces in pd_inherits may already have been destroyed.
   std::vector<AST_Type *> param_holders_;
 
   /// Do we have both abstract and concrete parents?
@@ -255,15 +251,13 @@ protected:
   // This version checks for redefinitions of attributes or operations.
   AST_Decl *lookup_for_add (AST_Decl *d);
 
+  /// Populate the insert queue with parents and, for valuetypes, supported
+  /// interfaces from this type and its parents.
   void redef_clash_populate_r (AST_Type *t);
-  // Populate the insert queue with our parents, and, if we are a
-  // valuetype, with our supported interface and our parents'
-  // supported interfaces.
 
+  /// Insert without duplicates by searching both traversal queues.
   int insert_non_dup (AST_Type *t,
                       bool abstract_paths_only = false);
-  // Do non-duplicating insert of bi, by searching both the
-  // insert queue and the delete queue.
 };
 
 #endif           // _AST_INTERFACE_AST_INTERFACE_HH
