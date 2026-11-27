@@ -172,11 +172,7 @@ ACE_Hash_Map_Manager_Ex<EXT_ID,
                         HASH_KEY,
                         COMPARE_KEYS,
                         ACE_LOCK>::unbind (
-  typename ACE_Hash_Map_Manager_Ex<EXT_ID,
-                                   INT_ID,
-                                   HASH_KEY,
-                                   COMPARE_KEYS,
-                                   ACE_LOCK>::iterator pos)
+  iterator pos)
 {
   return this->unbind (std::addressof (*pos));
 }
@@ -447,11 +443,7 @@ ACE_Hash_Map_Manager_Ex<EXT_ID,
                         COMPARE_KEYS,
                         ACE_LOCK>::find (
   EXT_ID const &ext_id,
-  typename ACE_Hash_Map_Manager_Ex<EXT_ID,
-                                   INT_ID,
-                                   HASH_KEY,
-                                   COMPARE_KEYS,
-                                   ACE_LOCK>::iterator & pos) const
+  iterator & pos) const
 {
   ENTRY * entry {};
   size_t index = 0;
