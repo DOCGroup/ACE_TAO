@@ -33,38 +33,38 @@ Bool_Array::~Bool_Array ()
     {
       ACE_DEBUG ((LM_DEBUG,
                   "\ndumping boolean array information\n"
-                  "size = %Lu\niteration number = %Lu\nend of array dump\n",
+                  "size = %B\niteration number = %Lu\nend of array dump\n",
                   size_,
                   generation_number_));
     }
 }
 
 int
-Bool_Array::open (u_long s)
+Bool_Array::open (size_t s)
 {
   this->generation_number_ = 1;
   this->size_ = s;
 
-  u_long *storage_array {};
+  generation_type *storage_array {};
   ACE_NEW_RETURN (storage_array,
-                  u_long[s],
+                  generation_type[s],
                   -1);
   this->storage_array_.reset (storage_array);
 
-  std::fill_n (this->storage_array_.get (), s, 0UL);
+  std::fill_n (this->storage_array_.get (), s, generation_type {});
 
   if (option[DEBUGGING])
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "\nbool array size = %Lu, total bytes = %B\n",
+                  "\nbool array size = %B, total bytes = %B\n",
                   size_,
-                  static_cast<size_t> (size_) * sizeof (unsigned long)));
+                  size_ * sizeof (generation_type)));
     }
   return 0;
 }
 
 int
-Bool_Array::find (u_long slot)
+Bool_Array::find (size_t slot)
 {
   if (this->storage_array_[slot] == generation_number_)
     {
@@ -89,7 +89,7 @@ Bool_Array::reset ()
         }
 
       this->generation_number_ = 1;
-      std::fill_n (this->storage_array_.get (), size_, 0UL);
+      std::fill_n (this->storage_array_.get (), size_, generation_type {});
       if (option[DEBUGGING])
         {
           ACE_DEBUG ((LM_DEBUG,
