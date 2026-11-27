@@ -54,14 +54,15 @@ TAO::ObjectKey_Table::destroy ()
                         0);
 
       TABLE::ITERATOR const end_iter = this->table_.end ();
-      TABLE::ITERATOR start;
+      TABLE::ITERATOR start = this->table_.begin ();
 
-      while ((start = this->table_.begin ()) != end_iter)
+      while (start != end_iter)
         {
           TABLE::ENTRY &ent = (*start);
 
           ent.item ()->decr_refcount ();
           this->table_.unbind (std::addressof (ent));
+          start = this->table_.begin ();
         }
     }
 

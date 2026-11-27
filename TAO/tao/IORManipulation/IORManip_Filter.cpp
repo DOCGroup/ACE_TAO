@@ -23,12 +23,13 @@ TAO_IORManip_Filter::sanitize (CORBA::Object_ptr object,
 {
   TAO_MProfile profiles = object->_stubobj ()->base_profiles ();
   TAO_MProfile new_profiles (profiles.profile_count ());
-  TAO_Profile *profile {};
+  TAO_Profile *profile = profiles.get_next ();
 
-  while ((profile = profiles.get_next ()) != nullptr)
+  while (profile != nullptr)
     {
       // Call the filter implementation
       this->filter_and_add (profile, new_profiles, guideline);
+      profile = profiles.get_next ();
     }
 
   // The remainder of this code has been lifted from IORManipulation.cpp

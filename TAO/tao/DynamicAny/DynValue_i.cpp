@@ -859,8 +859,9 @@ TAO_DynValue_i::to_outputCDR (TAO_OutputCDR &out_cdr)
             }
 
           // Recursive step - Add this member to the out_cdr
-          if (TAO_DynValue_i *member= // Assignment
-              dynamic_cast<TAO_DynValue_i *> (this->da_members_[currentMember].in ()))
+          TAO_DynValue_i *member =
+            dynamic_cast<TAO_DynValue_i *> (this->da_members_[currentMember].in ());
+          if (member != nullptr)
             {
               member->to_outputCDR (out_cdr);
             }

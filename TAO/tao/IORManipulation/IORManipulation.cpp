@@ -265,22 +265,24 @@ TAO_IOR_Manipulation_impl::is_in_ior (
     CORBA::Object_ptr ior2)
 {
   CORBA::ULong count {};
-  TAO_Profile *pfile1 {};
-  TAO_Profile *pfile2 {};
   std::unique_ptr<TAO_MProfile> tmp_pfiles1 (ior1->_stubobj ()->make_profiles ());
   std::unique_ptr<TAO_MProfile> tmp_pfiles2 (ior2->_stubobj ()->make_profiles ());
 
   tmp_pfiles1->rewind ();
-  while ((pfile1 = tmp_pfiles1->get_next ()) != nullptr)
+  TAO_Profile *pfile1 = tmp_pfiles1->get_next ();
+  while (pfile1 != nullptr)
     {
       tmp_pfiles2->rewind ();
-      while ((pfile2 = tmp_pfiles2->get_next ()) != nullptr)
+      TAO_Profile *pfile2 = tmp_pfiles2->get_next ();
+      while (pfile2 != nullptr)
         {
           if (pfile1->is_equivalent (pfile2))
             {
               ++count;
             }
+          pfile2 = tmp_pfiles2->get_next ();
         }
+      pfile1 = tmp_pfiles1->get_next ();
     }
 
   if (count == 0)

@@ -832,7 +832,6 @@ TAO::Storable_FlatFileFactory::is_nfs (std::string const &directory)
     }
   size_t match {};
   size_t const dirlen = std::strlen(dir);
-  struct mntent *ent {};
   char const *fname = "/etc/mtab";
   FILE *mt = ::setmntent(fname,"r");
   if (mt == nullptr)
@@ -846,7 +845,9 @@ TAO::Storable_FlatFileFactory::is_nfs (std::string const &directory)
         }
       return ret;
     }
-  while ((ent = ::getmntent(mt)) != nullptr)
+  for (struct mntent *ent = ::getmntent (mt);
+       ent != nullptr;
+       ent = ::getmntent (mt))
     {
       size_t const len = std::strlen(ent->mnt_dir);
 
