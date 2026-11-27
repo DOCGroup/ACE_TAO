@@ -22,6 +22,7 @@
 #include "ace/os_include/os_netdb.h"
 
 #include <memory>
+#include <new>
 
 // The following works around bugs with some operating systems, which
 // don't allow multiple threads/process to call accept() on the same
@@ -213,6 +214,8 @@ namespace {
 
   private:
     enum Direction { READX, WRITEX }; // VxWorks defines READ and WRITE
+    void send_data_i ();
+    void finish_send_data (bool successful);
     bool wait_for_completion(Direction direction);
 
     ssize_t send (IovecGuard& iovec_array,
@@ -288,6 +291,22 @@ Svc_Handler::open (void *)
 
 void
 Svc_Handler::send_data ()
+{
+  try
+    {
+      this->send_data_i ();
+    }
+  catch (std::bad_alloc const &)
+    {
+      ACE_DEBUG ((LM_INFO,
+                  ACE_TEXT ("(%P|%t) unable to allocate a larger test buffer; ")
+                  ACE_TEXT ("the partial-send threshold was not reached\n")));
+      this->finish_send_data (true);
+    }
+}
+
+void
+Svc_Handler::send_data_i ()
 {
   bool successful = true;
   bool win32_test = false;
@@ -571,13 +590,19 @@ Svc_Handler::send_data ()
       successful = false;
     }
 
+  this->finish_send_data (successful);
+}
+
+void
+Svc_Handler::finish_send_data (bool const successful)
+{
   // need to indicate that the message is restarting
   // this may fail if the server reads the char and closes before
   // it is done, so let the server report the error if there was one
-  send_desc = ACE_TEXT ("indicating no more messages");
-  this->send(FINISHED_CHAR, send_desc);
+  ACE_TCHAR const * const send_desc = ACE_TEXT ("indicating no more messages");
+  this->send (FINISHED_CHAR, send_desc);
 
-  this->wait_for_completion(READX);
+  this->wait_for_completion (READX);
   if (close () == -1)
     {
       ACE_ERROR ((LM_ERROR,
