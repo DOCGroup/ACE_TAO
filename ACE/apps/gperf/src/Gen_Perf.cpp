@@ -37,7 +37,7 @@ extern char const *version_string;
 int
 Gen_Perf::compute_disjoint_union (char *set1, char *set2, char *set3)
 {
-  char *base = set3;
+  char *base {set3};
 
   while (*set1 && *set2)
     {
@@ -84,7 +84,7 @@ Gen_Perf::compute_disjoint_union (char *set1, char *set2, char *set3)
 void
 Gen_Perf::sort_set (char *union_set, int len)
 {
-  for (int i = 0, j = len - 1; i < j; ++i)
+  for (int i {}, j {len - 1}; i < j; ++i)
     {
       int curr {};
       unsigned char tmp {};
@@ -106,7 +106,7 @@ Gen_Perf::sort_set (char *union_set, int len)
 int
 Gen_Perf::hash (List_Node *key_node)
 {
-  int sum = option[NOLENGTH] ? 0 : key_node->length;
+  int sum {option[NOLENGTH] ? 0 : key_node->length};
 
   for (char const ptr : key_node->keysig)
     {
@@ -126,9 +126,9 @@ Gen_Perf::hash (List_Node *key_node)
 inline int
 Gen_Perf::affects_prev (char c, List_Node *curr)
 {
-  size_t const index = Vectors::character_index (c);
-  int const original_char = Vectors::asso_values[index];
-  int total_iterations = 0;
+  size_t const index {Vectors::character_index (c)};
+  int const original_char {Vectors::asso_values[index]};
+  int total_iterations {};
 
   if (!option[FAST])
     {
@@ -146,7 +146,7 @@ Gen_Perf::affects_prev (char c, List_Node *curr)
 
   // Try all legal associated values.
 
-  for (int i = total_iterations - 1; i >= 0; --i)
+  for (int i {total_iterations - 1}; i >= 0; --i)
     {
       Vectors::asso_values[index] =
         (Vectors::asso_values[index]
@@ -156,11 +156,11 @@ Gen_Perf::affects_prev (char c, List_Node *curr)
       // Iteration Number array is a win, O(1) intialization time!
       this->char_search.reset ();
 
-      int collisions = 0;
+      int collisions {};
 
       // See how this asso_value change affects previous keywords.  If
       // it does better than before we'll take it!
-      for (List_Node *ptr = this->key_list.head;
+      for (List_Node *ptr {this->key_list.head};
            this->char_search.find (this->hash (ptr)) == 0
            || ++collisions < fewest_collisions;
            ptr = ptr->next)
@@ -210,7 +210,7 @@ Gen_Perf::change (List_Node *prior, List_Node *curr)
   // continue normal action.
   ++fewest_collisions;
 
-  for (char *temp = this->union_set.get (); *temp != '\0'; ++temp)
+  for (char *temp {this->union_set.get ()}; *temp != '\0'; ++temp)
     {
       if (affects_prev (*temp, curr) == 0)
         {
@@ -227,7 +227,7 @@ Gen_Perf::change (List_Node *prior, List_Node *curr)
         }
     }
 
-  for (List_Node *ptr = this->key_list.head;
+  for (List_Node *ptr {this->key_list.head};
        ptr != curr;
        ptr = ptr->next)
     {
@@ -265,8 +265,8 @@ Gen_Perf::open ()
       this->key_list.reorder ();
     }
 
-  int asso_value_max = option.asso_max ();
-  int const non_linked_length = this->key_list.keyword_list_length ();
+  int asso_value_max {option.asso_max ()};
+  int const non_linked_length {this->key_list.keyword_list_length ()};
 
   if (asso_value_max == 0)
     {
@@ -287,19 +287,19 @@ Gen_Perf::open ()
     {
       ACE_OS::srand ((u_int) ACE_OS::time (nullptr));
 
-      for (int i = 0; i < ACE_STANDARD_CHARACTER_SET_SIZE; ++i)
+      for (int i {}; i < ACE_STANDARD_CHARACTER_SET_SIZE; ++i)
         {
           Vectors::asso_values[i] = (ACE_OS::rand () & (asso_value_max - 1));
         }
     }
   else
     {
-      int const asso_value = option.initial_value ();
+      int const asso_value {option.initial_value ()};
 
       // Initialize array if user requests non-zero default.
       if (asso_value)
         {
-          for (int i = ACE_STANDARD_CHARACTER_SET_SIZE - 1; i >= 0; --i)
+          for (int i {ACE_STANDARD_CHARACTER_SET_SIZE - 1}; i >= 0; --i)
             {
               Vectors::asso_values[i] = asso_value & (option.asso_max () - 1);
             }
@@ -393,7 +393,7 @@ Gen_Perf::compute_perfect_hash ()
     {
       this->hash (curr);
 
-      for (List_Node *ptr = this->key_list.head;
+      for (List_Node *ptr {this->key_list.head};
            ptr != curr;
            ptr = ptr->next)
         {
@@ -496,7 +496,7 @@ Gen_Perf::~Gen_Perf ()
     {
       ACE_DEBUG ((LM_DEBUG,
                   "\ndumping occurrence and associated values tables\n"));
-      for (int i = 0; i < ACE_STANDARD_CHARACTER_SET_SIZE; ++i)
+      for (int i {}; i < ACE_STANDARD_CHARACTER_SET_SIZE; ++i)
         {
           if (Vectors::occurrences[i])
             {
