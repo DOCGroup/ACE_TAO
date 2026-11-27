@@ -4,7 +4,6 @@ project(*idl): taoidldefaults, ami {
   }
   custom_only = 1
 }
-
 project(*Server): taoserver, messaging, ami {
   after += *idl
   Source_Files {
@@ -16,7 +15,6 @@ project(*Server): taoserver, messaging, ami {
   IDL_Files {
   }
 }
-
 project(*Client): messaging, taoserver, ami {
   exename = client
   after += *idl
@@ -36,15 +34,6 @@ project(*Simple Client): messaging, taoserver, ami {
     simple_client.cpp
     ami_testS.cpp
     ami_testC.cpp
-  }
-  IDL_Files {
-  }
-}
-
-project(*Exclusive TMS Completion): taoclient {
-  exename = exclusive_tms_completion
-  Source_Files {
-    exclusive_tms_completion.cpp
   }
   IDL_Files {
   }
