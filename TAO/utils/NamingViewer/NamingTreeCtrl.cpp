@@ -131,13 +131,14 @@ void CNamingTreeCtrl::ClearChildren(HTREEITEM hItem)
     return;
   }
 
-  HTREEITEM hChild;
-  while(hChild = GetNextItem(hItem, TVGN_CHILD))
+  HTREEITEM hChild = GetNextItem(hItem, TVGN_CHILD);
+  while(hChild != nullptr)
   {
     // Remove our reference count on the object reference
     ClearChildren(hChild);
     delete GetTreeObject(hChild);
     DeleteItem(hChild);
+    hChild = GetNextItem(hItem, TVGN_CHILD);
   }
 }
 
