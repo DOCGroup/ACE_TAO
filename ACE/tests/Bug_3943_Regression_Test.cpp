@@ -181,6 +181,7 @@ namespace {
   struct IovecGuard
   {
     IovecGuard(const int count, const int slot, const buffer_len max);
+    ~IovecGuard () = default;
     char* getBufferAtOffset(ssize_t const offset);
 
     const int iovcnt_;
