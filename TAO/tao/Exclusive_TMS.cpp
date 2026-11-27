@@ -2,19 +2,11 @@
 #include "tao/Reply_Dispatcher.h"
 #include "tao/debug.h"
 #include "tao/Transport.h"
-#include "tao/ORB_Core.h"
-#include "tao/Client_Strategy_Factory.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Exclusive_TMS::TAO_Exclusive_TMS (TAO_Transport *transport)
-  : TAO_Transport_Mux_Strategy (transport),
-    lock_ (transport->orb_core ()->client_factory ()->create_transport_mux_strategy_lock ()),
-    request_id_generator_ (0),
-    request_id_ (0),
-    rd_ (nullptr),
-    request_sent_ (false),
-    transport_idle_ (false)
+  : TAO_Transport_Mux_Strategy (transport)
 {
 }
 
@@ -26,10 +18,7 @@ TAO_Exclusive_TMS::~TAO_Exclusive_TMS () = default;
 CORBA::ULong
 TAO_Exclusive_TMS::request_id ()
 {
-  ACE_GUARD_RETURN (ACE_Lock,
-                    ace_mon,
-                    *this->lock_,
-                    0);
+  ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX, ace_mon, this->lock_, 0));
 
   this->request_sent_ = false;
   this->transport_idle_ = false;
@@ -47,12 +36,16 @@ TAO_Exclusive_TMS::request_id ()
 
   if ((bidir_flag == 1 && ACE_ODD (this->request_id_generator_))
        || (bidir_flag == 0 && ACE_EVEN (this->request_id_generator_)))
-    ++this->request_id_generator_;
+    {
+      ++this->request_id_generator_;
+    }
 
   if (TAO_debug_level > 4)
-    TAOLIB_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("TAO (%P|%t) - Exclusive_TMS::request_id - [%d]\n"),
-                this->request_id_generator_));
+    {
+      TAOLIB_DEBUG ((LM_DEBUG,
+                     ACE_TEXT ("TAO (%P|%t) - Exclusive_TMS::request_id - [%d]\n"),
+                     this->request_id_generator_));
+    }
 
   return this->request_id_generator_;
 }
@@ -62,13 +55,10 @@ int
 TAO_Exclusive_TMS::bind_dispatcher (CORBA::ULong request_id,
                                     ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher> rd)
 {
-  ACE_GUARD_RETURN (ACE_Lock,
-                    ace_mon,
-                    *this->lock_,
-                    -1);
+  ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX, ace_mon, this->lock_, -1));
 
   this->request_id_ = request_id;
-  this->rd_ = rd.get ();
+  this->rd_.reset (rd.get ());
 
   return 0;
 }
@@ -76,24 +66,20 @@ TAO_Exclusive_TMS::bind_dispatcher (CORBA::ULong request_id,
 bool
 TAO_Exclusive_TMS::has_request ()
 {
-  ACE_GUARD_RETURN (ACE_Lock,
-                    ace_mon,
-                    *this->lock_,
-                    false);
+  ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX, ace_mon, this->lock_, false));
 
-  return this->rd_ != nullptr;
+  return this->rd_.get () != nullptr;
 }
 
 int
 TAO_Exclusive_TMS::unbind_dispatcher (CORBA::ULong request_id)
 {
-  ACE_GUARD_RETURN (ACE_Lock,
-                    ace_mon,
-                    *this->lock_,
-                    -1);
+  ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX, ace_mon, this->lock_, -1));
 
   if (!this->rd_ || this->request_id_ != request_id)
-    return -1;
+    {
+      return -1;
+    }
 
   this->rd_.release ();
 
@@ -103,21 +89,20 @@ TAO_Exclusive_TMS::unbind_dispatcher (CORBA::ULong request_id)
 int
 TAO_Exclusive_TMS::dispatch_reply (TAO_Pluggable_Reply_Params &params)
 {
-  ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher> rd;
+  ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher> rd {};
 
   {
-    ACE_GUARD_RETURN (ACE_Lock,
-                      ace_mon,
-                      *this->lock_,
-                      -1);
+    ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX, ace_mon, this->lock_, -1));
 
     // Check the ids.
     if (!this->rd_ || this->request_id_ != params.request_id_)
       {
         if (TAO_debug_level > 0)
-          TAOLIB_DEBUG ((LM_DEBUG,
-                         ACE_TEXT ("TAO (%P|%t) - Exclusive_TMS::dispatch_reply - [%d] != [%d]\n"),
-                         this->request_id_, params.request_id_));
+          {
+            TAOLIB_DEBUG ((LM_DEBUG,
+                           ACE_TEXT ("TAO (%P|%t) - Exclusive_TMS::dispatch_reply - [%d] != [%d]\n"),
+                           this->request_id_, params.request_id_));
+          }
 
         // The return value 0 informs the transport that the mux strategy
         // did not find the right reply handler.
@@ -137,21 +122,20 @@ TAO_Exclusive_TMS::dispatch_reply (TAO_Pluggable_Reply_Params &params)
 int
 TAO_Exclusive_TMS::reply_timed_out (CORBA::ULong request_id)
 {
-  ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher> rd;
+  ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher> rd {};
 
   {
-    ACE_GUARD_RETURN (ACE_Lock,
-                      ace_mon,
-                      *this->lock_,
-                      -1);
+    ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX, ace_mon, this->lock_, -1));
 
     // Check the ids.
     if (!this->rd_ || this->request_id_ != request_id)
       {
         if (TAO_debug_level > 0)
-          TAOLIB_DEBUG ((LM_DEBUG,
-                         ACE_TEXT ("TAO (%P|%t) - Exclusive_TMS::reply_timed_out - [%d] != [%d]\n"),
-                         this->request_id_, request_id));
+          {
+            TAOLIB_DEBUG ((LM_DEBUG,
+                           ACE_TEXT ("TAO (%P|%t) - Exclusive_TMS::reply_timed_out - [%d] != [%d]\n"),
+                           this->request_id_, request_id));
+          }
 
         // The return value 0 informs the transport that the mux strategy
         // did not find the right reply handler.
@@ -171,13 +155,10 @@ TAO_Exclusive_TMS::reply_timed_out (CORBA::ULong request_id)
 bool
 TAO_Exclusive_TMS::idle_after_send ()
 {
-  bool make_idle = false;
+  bool make_idle {};
 
   {
-    ACE_GUARD_RETURN (ACE_Lock,
-                      ace_mon,
-                      *this->lock_,
-                      false);
+    ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX, ace_mon, this->lock_, false));
 
     this->request_sent_ = true;
 
@@ -188,7 +169,7 @@ TAO_Exclusive_TMS::idle_after_send ()
         this->transport_idle_ = true;
         make_idle = true;
       }
-    }
+  }
 
   if (make_idle && this->transport_ != nullptr)
     {
@@ -204,13 +185,10 @@ TAO_Exclusive_TMS::idle_after_send ()
 bool
 TAO_Exclusive_TMS::idle_after_reply ()
 {
-  bool make_idle = false;
+  bool make_idle {};
 
   {
-    ACE_GUARD_RETURN (ACE_Lock,
-                      ace_mon,
-                      *this->lock_,
-                      false);
+    ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX, ace_mon, this->lock_, false));
 
     if (this->request_sent_ && !this->transport_idle_)
       {
@@ -234,12 +212,10 @@ TAO_Exclusive_TMS::idle_after_reply ()
 void
 TAO_Exclusive_TMS::connection_closed ()
 {
-  ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher> rd;
+  ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher> rd {};
 
   {
-    ACE_GUARD (ACE_Lock,
-               ace_mon,
-               *this->lock_);
+    ACE_MT (ACE_GUARD (TAO_SYNCH_RECURSIVE_MUTEX, ace_mon, this->lock_));
 
     rd.reset (this->rd_.get ());
   }

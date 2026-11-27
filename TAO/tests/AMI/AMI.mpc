@@ -1,4 +1,3 @@
-// -*- MPC -*-
 project(*idl): taoidldefaults, ami {
   IDL_Files {
     ami_test.idl
@@ -37,6 +36,15 @@ project(*Simple Client): messaging, taoserver, ami {
     simple_client.cpp
     ami_testS.cpp
     ami_testC.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*Exclusive TMS Completion): taoclient {
+  exename = exclusive_tms_completion
+  Source_Files {
+    exclusive_tms_completion.cpp
   }
   IDL_Files {
   }

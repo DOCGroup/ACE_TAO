@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    Exclusive_TMS.h
  *
  *  @author  Alexander Babu Arulanthu <alex@cs.wustl.edu>
  */
-//=============================================================================
 
 
 #ifndef TAO_EXCLUSIVE_TMS_H
@@ -15,8 +11,7 @@
 #include /**/ "ace/pre.h"
 
 #include "tao/Transport_Mux_Strategy.h"
-
-#include <memory>
+#include "tao/orbconf.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -40,10 +35,8 @@ class TAO_Reply_Dispatcher;
 class TAO_Export TAO_Exclusive_TMS : public TAO_Transport_Mux_Strategy
 {
 public:
-  /// Constructor.
-  TAO_Exclusive_TMS (TAO_Transport *transport);
+  explicit TAO_Exclusive_TMS (TAO_Transport *transport);
 
-  /// Destructor.
   ~TAO_Exclusive_TMS () override;
 
   /**
@@ -52,7 +45,7 @@ public:
    * Please read the documentation in the TAO_Transport_Mux_Strategy class
    * for details.
    */
-  //@{
+  /// @{
   CORBA::ULong request_id () override;
   int bind_dispatcher (CORBA::ULong request_id,
                        ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher> rd) override;
@@ -65,28 +58,35 @@ public:
   bool idle_after_reply () override;
   void connection_closed () override;
   bool has_request () override;
-  //@}
+  /// @}
+
+private:
+  TAO_Exclusive_TMS () = delete;
+  TAO_Exclusive_TMS (TAO_Exclusive_TMS const &) = delete;
+  TAO_Exclusive_TMS (TAO_Exclusive_TMS &&) = delete;
+  TAO_Exclusive_TMS &operator= (TAO_Exclusive_TMS const &) = delete;
+  TAO_Exclusive_TMS &operator= (TAO_Exclusive_TMS &&) = delete;
 
 protected:
   /// Lock protecting the request state.
-  std::unique_ptr<ACE_Lock> lock_;
+  TAO_SYNCH_RECURSIVE_MUTEX lock_ {};
 
   /// Used to generate a different request_id on each call to
   /// request_id().
-  CORBA::ULong request_id_generator_;
+  CORBA::ULong request_id_generator_ {};
 
   /// Request id for the current request.
-  CORBA::ULong request_id_;
+  CORBA::ULong request_id_ {};
 
   /// Reply Dispatcher corresponding to the request. If this is zero we don't
   /// have a reply, if it not zero we have one
-  ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher> rd_;
+  ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher> rd_ {};
 
   /// True after sending the current request has completed.
-  bool request_sent_;
+  bool request_sent_ {};
 
   /// Prevent both completion paths from idling the transport.
-  bool transport_idle_;
+  bool transport_idle_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
