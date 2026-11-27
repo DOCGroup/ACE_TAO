@@ -37,6 +37,7 @@
 
 #include "ace/SString.h"
 #include <atomic>
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -249,6 +250,9 @@ namespace CORBA
 
     /// Set to true upon completion of invoke() or handle_response().
     CORBA::Boolean response_received_ {};
+
+    /// Exception received for a deferred request.
+    std::unique_ptr<CORBA::Exception> deferred_exception_;
 
     /// Can be reset by a gateway when passing along a request.
     int byte_order_ {TAO_ENCAP_BYTE_ORDER};

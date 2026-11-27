@@ -84,6 +84,31 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_OS::sleep (1); // Give the server time to terminate.
 
       ACE_DEBUG ((LM_INFO,
+                  "(%P|%t) - #### Deferred twoway DII after server termination\n"));
+
+      bool received_comm_failure {};
+      try
+        {
+          req = obj->_request ("get_string");
+          req->set_return_type (CORBA::_tc_string);
+          req->send_deferred ();
+          req->get_response ();
+        }
+      catch (CORBA::COMM_FAILURE const &ex)
+        {
+          received_comm_failure =
+            req->response_received () &&
+            ex.completed () == CORBA::COMPLETED_MAYBE;
+        }
+
+      if (!received_comm_failure)
+        {
+          ACE_DEBUG ((LM_ERROR,
+                      "(%P|%t) - Expected COMM_FAILURE from deferred request\n"));
+          test_result = 1;
+        }
+
+      ACE_DEBUG ((LM_INFO,
                   "(%P|%t) - #### Multiple deferred twoway DII (with discarded replies)\n"));
 
       constexpr int iterations {10};

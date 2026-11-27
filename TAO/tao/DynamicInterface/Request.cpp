@@ -11,6 +11,7 @@
 #include "tao/AnyTypeCode/NVList.h"
 #include "tao/Object.h"
 #include "tao/Pluggable_Messaging_Utils.h"
+#include "tao/SystemException.h"
 #include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
 
 #include "ace/Log_Msg.h"
@@ -22,6 +23,7 @@
 #include <array>
 #include <cstring>
 #include <memory>
+#include <utility>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -183,6 +185,7 @@ CORBA::Request::send_deferred ()
                this->lock_);
 
     this->response_received_ = false;
+    this->deferred_exception_.reset ();
   }
   bool const has_arguments = this->args_->count () != 0;
 
@@ -276,9 +279,32 @@ CORBA::Request::_tao_reply_stub (TAO_InputCDR &_tao_in,
 void
 CORBA::Request::get_response ()
 {
-  while (!this->response_received_)
+  while (!this->response_received ())
     {
       (void) this->orb_->perform_work ();
+    }
+
+  std::unique_ptr<CORBA::Exception> exception;
+  {
+    ACE_GUARD (TAO_SYNCH_MUTEX,
+               ace_mon,
+               this->lock_);
+
+    if (this->deferred_exception_)
+      {
+        CORBA::Exception * const duplicate =
+          this->deferred_exception_->_tao_duplicate ();
+        if (duplicate == nullptr)
+          {
+            throw CORBA::NO_MEMORY ();
+          }
+        exception.reset (duplicate);
+      }
+  }
+
+  if (exception)
+    {
+      exception->_raise ();
     }
 
   if (this->lazy_evaluation_)
@@ -346,8 +372,35 @@ CORBA::Request::handle_response (TAO_InputCDR &incoming,
       }
 
       break;
-    case GIOP::USER_EXCEPTION:
     case GIOP::SYSTEM_EXCEPTION:
+      {
+        CORBA::String_var type_id;
+        if (!(incoming >> type_id.inout ()))
+          {
+            throw CORBA::MARSHAL (0, CORBA::COMPLETED_MAYBE);
+          }
+
+        CORBA::SystemException *system_exception =
+          TAO::create_system_exception (type_id.in ());
+        if (system_exception == nullptr)
+          {
+            ACE_NEW_THROW_EX (system_exception,
+                              CORBA::UNKNOWN,
+                              CORBA::NO_MEMORY ());
+          }
+
+        std::unique_ptr<CORBA::Exception> exception (system_exception);
+        system_exception->_tao_decode (incoming);
+
+        ACE_GUARD (TAO_SYNCH_MUTEX,
+                   ace_mon,
+                   this->lock_);
+
+        this->deferred_exception_ = std::move (exception);
+        this->response_received_ = true;
+      }
+      break;
+    case GIOP::USER_EXCEPTION:
     case GIOP::LOCATION_FORWARD:
     case GIOP::LOCATION_FORWARD_PERM:
     default:
