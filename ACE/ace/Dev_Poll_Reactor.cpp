@@ -1118,12 +1118,11 @@ ACE_Dev_Poll_Reactor::dispatch (Token_Guard &guard)
   // We dispatch only one to effectively dispatch events concurrently.
   // As soon as an event is located, the token is released, allowing the
   // next waiter to begin getting an event while we dispatch one here.
-  int result = 0;
-
   // Handle timers early since they may have higher latency
   // constraints than I/O handlers.  Ideally, the order of
   // dispatching should be a strategy...
-  if ((result = this->dispatch_timer_handler (guard)) != 0)
+  int result = this->dispatch_timer_handler (guard);
+  if (result != 0)
     {
       return result;
     }
