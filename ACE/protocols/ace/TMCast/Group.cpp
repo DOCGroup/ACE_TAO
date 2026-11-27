@@ -184,14 +184,14 @@ namespace ACE_TMCast
                 MessagePtr const m (in_link_data_.front ());
                 in_link_data_.pop ();
 
-                LinkData* data;
+                LinkData *data = dynamic_cast<LinkData *> (m.get ());
 
-                if (dynamic_cast<LinkFailure*>(m.get()))
+                if (dynamic_cast<LinkFailure *> (m.get ()))
                 {
                   // cerr << "link failure" << endl;
                   throw false;
                 }
-                else if ((data = dynamic_cast<LinkData*> (m.get ())))
+                else if (data != nullptr)
                 {
                   // INSYNC, TL, CT
 

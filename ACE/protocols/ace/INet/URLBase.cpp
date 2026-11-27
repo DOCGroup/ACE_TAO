@@ -77,10 +77,9 @@ namespace ACE
             ACE::IOS::CString_OStream sos;
             ACE::IOS::CString_IStream sis (uri);
 
-            int ch;
-
             // parse authority part (if any)
-            if ((ch = this->parse_authority (sis)) == '/' ||
+            int ch = this->parse_authority (sis);
+            if (ch == '/' ||
                 !this->has_authority ())      // relative paths allowed if no authority
               {
                 // parse path part
