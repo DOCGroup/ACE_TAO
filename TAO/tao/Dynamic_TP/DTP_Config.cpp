@@ -50,115 +50,134 @@ TAO_DTP_Config::init (int argc, ACE_TCHAR* argv[])
   ACE_TCHAR const *name {};
   bool overwrite {};
 
-  int r {};
-
   for (int curarg {}; curarg < argc; ++curarg)
     {
       long val {};
-      if ((r = this->parse_string (curarg,
-                                   argc,
-                                   argv,
-                                   ACE_TEXT ("-DTPName"), name)) != 0)
+      int r = this->parse_string (curarg,
+                                  argc,
+                                  argv,
+                                  ACE_TEXT ("-DTPName"), name);
+      if (r < 0)
         {
-          if (r < 0)
-            {
-              return -1;
-            }
-        }
-      else if ((r = this->parse_bool (curarg,
-                                      argc,
-                                      argv,
-                                      ACE_TEXT("-DTPOverwrite"),
-                                      overwrite )) != 0)
-        {
-          if (r < 0)
-            {
-              return -1;
-            }
-        }
-      else if ((r = this->parse_long (curarg,
-                                      argc,
-                                      argv,
-                                      ACE_TEXT("-DTPMin"),
-                                      val )) != 0)
-        {
-          if (r < 0)
-            {
-              return -1;
-            }
-          entry.min_threads_ = val;
-        }
-      else if ((r = this->parse_long (curarg,
-                                      argc,
-                                      argv,
-                                      ACE_TEXT("-DTPInit"),
-                                      val )) != 0)
-        {
-          if (r < 0)
-            {
-              return -1;
-            }
-          entry.init_threads_ = val;
-        }
-      else if ((r = this->parse_long (curarg,
-                                      argc,
-                                      argv,
-                                      ACE_TEXT("-DTPMax"),
-                                      val )) != 0)
-        {
-          if (r < 0)
-            {
-              return -1;
-            }
-          entry.max_threads_ = val;
-        }
-      else if ((r = this->parse_long (curarg,
-                                      argc,
-                                      argv,
-                                      ACE_TEXT("-DTPStack"),
-                                      val )) != 0)
-        {
-          if (r < 0)
-            {
-              return -1;
-            }
-          entry.stack_size_ = val;
-        }
-      else if ((r = this->parse_long (curarg,
-                                      argc,
-                                      argv,
-                                      ACE_TEXT("-DTPTImeout"),
-                                      val )) != 0)
-        {
-          if (r < 0)
-            {
-              return -1;
-            }
-          entry.timeout_ = val;
-        }
-      else if ((r = this->parse_long (curarg,
-                                      argc,
-                                      argv,
-                                      ACE_TEXT("-DTPQueue"),
-                                      val )) != 0)
-        {
-          if (r < 0)
-            {
-              return -1;
-            }
-             entry.queue_depth_ = val;
-        }
-      else
-        {
-          if (TAO_debug_level > 0)
-            {
-              TAOLIB_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("TAO (%P|%t) - DTP_Config - ")
-                          ACE_TEXT ("Unrecognized argv[%d], %C\n"),
-                         curarg, argv[curarg]));
-            }
           return -1;
         }
+      if (r > 0)
+        {
+          continue;
+        }
+
+      r = this->parse_bool (curarg,
+                            argc,
+                            argv,
+                            ACE_TEXT ("-DTPOverwrite"),
+                            overwrite);
+      if (r < 0)
+        {
+          return -1;
+        }
+      if (r > 0)
+        {
+          continue;
+        }
+
+      r = this->parse_long (curarg,
+                            argc,
+                            argv,
+                            ACE_TEXT ("-DTPMin"),
+                            val);
+      if (r < 0)
+        {
+          return -1;
+        }
+      if (r > 0)
+        {
+          entry.min_threads_ = val;
+          continue;
+        }
+
+      r = this->parse_long (curarg,
+                            argc,
+                            argv,
+                            ACE_TEXT ("-DTPInit"),
+                            val);
+      if (r < 0)
+        {
+          return -1;
+        }
+      if (r > 0)
+        {
+          entry.init_threads_ = val;
+          continue;
+        }
+
+      r = this->parse_long (curarg,
+                            argc,
+                            argv,
+                            ACE_TEXT ("-DTPMax"),
+                            val);
+      if (r < 0)
+        {
+          return -1;
+        }
+      if (r > 0)
+        {
+          entry.max_threads_ = val;
+          continue;
+        }
+
+      r = this->parse_long (curarg,
+                            argc,
+                            argv,
+                            ACE_TEXT ("-DTPStack"),
+                            val);
+      if (r < 0)
+        {
+          return -1;
+        }
+      if (r > 0)
+        {
+          entry.stack_size_ = val;
+          continue;
+        }
+
+      r = this->parse_long (curarg,
+                            argc,
+                            argv,
+                            ACE_TEXT ("-DTPTImeout"),
+                            val);
+      if (r < 0)
+        {
+          return -1;
+        }
+      if (r > 0)
+        {
+          entry.timeout_ = val;
+          continue;
+        }
+
+      r = this->parse_long (curarg,
+                            argc,
+                            argv,
+                            ACE_TEXT ("-DTPQueue"),
+                            val);
+      if (r < 0)
+        {
+          return -1;
+        }
+      if (r > 0)
+        {
+          entry.queue_depth_ = val;
+          continue;
+        }
+
+      if (TAO_debug_level > 0)
+        {
+          TAOLIB_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("TAO (%P|%t) - DTP_Config - ")
+                        ACE_TEXT ("Unrecognized argv[%d], %C\n"),
+                        curarg, argv[curarg]));
+        }
+      return -1;
     }
 
   if ((entry.max_threads_ != -1 && entry.max_threads_ < entry.init_threads_) ||
