@@ -18,6 +18,11 @@ TAO_Exclusive_TMS::~TAO_Exclusive_TMS () = default;
 CORBA::ULong
 TAO_Exclusive_TMS::request_id ()
 {
+  ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX, ace_mon, this->lock_, 0));
+
+  this->request_sent_ = false;
+  this->transport_idle_ = false;
+
   ++this->request_id_generator_;
 
   // if TAO_Transport::bidirectional_flag_
@@ -31,9 +36,9 @@ TAO_Exclusive_TMS::request_id ()
 
   if ((bidir_flag == 1 && ACE_ODD (this->request_id_generator_))
        || (bidir_flag == 0 && ACE_EVEN (this->request_id_generator_)))
-  {
-    ++this->request_id_generator_;
-  }
+    {
+      ++this->request_id_generator_;
+    }
 
   if (TAO_debug_level > 4)
     {
@@ -50,6 +55,8 @@ int
 TAO_Exclusive_TMS::bind_dispatcher (CORBA::ULong request_id,
                                     ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher> rd)
 {
+  ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX, ace_mon, this->lock_, -1));
+
   this->request_id_ = request_id;
   this->rd_.reset (rd.get ());
 
@@ -59,16 +66,20 @@ TAO_Exclusive_TMS::bind_dispatcher (CORBA::ULong request_id,
 bool
 TAO_Exclusive_TMS::has_request ()
 {
+  ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX, ace_mon, this->lock_, false));
+
   return this->rd_.get () != nullptr;
 }
 
 int
 TAO_Exclusive_TMS::unbind_dispatcher (CORBA::ULong request_id)
 {
+  ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX, ace_mon, this->lock_, -1));
+
   if (!this->rd_ || this->request_id_ != request_id)
-  {
-    return -1;
-  }
+    {
+      return -1;
+    }
 
   this->rd_.release ();
 
@@ -78,24 +89,30 @@ TAO_Exclusive_TMS::unbind_dispatcher (CORBA::ULong request_id)
 int
 TAO_Exclusive_TMS::dispatch_reply (TAO_Pluggable_Reply_Params &params)
 {
-  // Check the ids.
-  if (!this->rd_ || this->request_id_ != params.request_id_)
-    {
-      if (TAO_debug_level > 0)
-        {
-          TAOLIB_DEBUG ((LM_DEBUG,
-                         ACE_TEXT ("TAO (%P|%t) - Exclusive_TMS::dispatch_reply - [%d] != [%d]\n"),
-                         this->request_id_, params.request_id_));
-        }
+  ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher> rd {};
 
-      // The return value 0 informs the transport that the mux strategy
-      // did not find the right reply handler.
-      return 0;
-    }
+  {
+    ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX, ace_mon, this->lock_, -1));
 
-  ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher> const rd (this->rd_.get ());
-  this->request_id_ = 0; // @@ What is a good value???
-  this->rd_.release ();
+    // Check the ids.
+    if (!this->rd_ || this->request_id_ != params.request_id_)
+      {
+        if (TAO_debug_level > 0)
+          {
+            TAOLIB_DEBUG ((LM_DEBUG,
+                           ACE_TEXT ("TAO (%P|%t) - Exclusive_TMS::dispatch_reply - [%d] != [%d]\n"),
+                           this->request_id_, params.request_id_));
+          }
+
+        // The return value 0 informs the transport that the mux strategy
+        // did not find the right reply handler.
+        return 0;
+      }
+
+    rd.reset (this->rd_.get ());
+    this->request_id_ = 0; // @@ What is a good value???
+    this->rd_.release ();
+  }
 
   // Dispatch the reply.
   // Returns 1 on success, -1 on failure.
@@ -105,24 +122,30 @@ TAO_Exclusive_TMS::dispatch_reply (TAO_Pluggable_Reply_Params &params)
 int
 TAO_Exclusive_TMS::reply_timed_out (CORBA::ULong request_id)
 {
-  // Check the ids.
-  if (!this->rd_ || this->request_id_ != request_id)
-    {
-      if (TAO_debug_level > 0)
-        {
-          TAOLIB_DEBUG ((LM_DEBUG,
-                         ACE_TEXT ("TAO (%P|%t) - Exclusive_TMS::reply_timed_out - [%d] != [%d]\n"),
-                         this->request_id_, request_id));
-        }
+  ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher> rd {};
 
-      // The return value 0 informs the transport that the mux strategy
-      // did not find the right reply handler.
-      return 0;
-    }
+  {
+    ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX, ace_mon, this->lock_, -1));
 
-  ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher> const rd (this->rd_.get ());
-  this->request_id_ = 0; // @@ What is a good value???
-  this->rd_.release ();
+    // Check the ids.
+    if (!this->rd_ || this->request_id_ != request_id)
+      {
+        if (TAO_debug_level > 0)
+          {
+            TAOLIB_DEBUG ((LM_DEBUG,
+                           ACE_TEXT ("TAO (%P|%t) - Exclusive_TMS::reply_timed_out - [%d] != [%d]\n"),
+                           this->request_id_, request_id));
+          }
+
+        // The return value 0 informs the transport that the mux strategy
+        // did not find the right reply handler.
+        return 0;
+      }
+
+    rd.reset (this->rd_.get ());
+    this->request_id_ = 0; // @@ What is a good value???
+    this->rd_.release ();
+  }
 
   rd->reply_timed_out ();
 
@@ -132,49 +155,75 @@ TAO_Exclusive_TMS::reply_timed_out (CORBA::ULong request_id)
 bool
 TAO_Exclusive_TMS::idle_after_send ()
 {
-  // if there is no reply dispatcher (possible in case of AMI requests)
-  // release the transport now
-  if (this->rd_)
-    {
-      return false;
-    }
-  else
-    {
-      if (this->transport_ != nullptr)
-        {
-          // let WS know we're finished
-          this->transport_->wait_strategy ()->finished_request ();
+  bool make_idle {};
 
-          (void) this->transport_->make_idle ();
-        }
-      return true;
+  {
+    ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX, ace_mon, this->lock_, false));
+
+    this->request_sent_ = true;
+
+    // If there is no reply dispatcher (possible when the reply arrived
+    // before sending completed), release the transport now.
+    if (!this->rd_ && !this->transport_idle_)
+      {
+        this->transport_idle_ = true;
+        make_idle = true;
+      }
+  }
+
+  if (make_idle && this->transport_ != nullptr)
+    {
+      // Let WS know we're finished.
+      this->transport_->wait_strategy ()->finished_request ();
+
+      (void) this->transport_->make_idle ();
     }
+
+  return make_idle;
 }
 
 bool
 TAO_Exclusive_TMS::idle_after_reply ()
 {
-  // Irrespective of whether we are successful or not we need to
-  // return true. If *this* class is not successful in idling the
-  // transport no one can.
-  if (this->transport_ != nullptr)
-  {
-    // let WS know we're finished
-    this->transport_->wait_strategy ()->finished_request ();
+  bool make_idle {};
 
-    (void) this->transport_->make_idle ();
+  {
+    ACE_MT (ACE_GUARD_RETURN (TAO_SYNCH_RECURSIVE_MUTEX, ace_mon, this->lock_, false));
+
+    if (this->request_sent_ && !this->transport_idle_)
+      {
+        this->transport_idle_ = true;
+        make_idle = true;
+      }
   }
 
+  if (make_idle && this->transport_ != nullptr)
+    {
+      // Let WS know we're finished.
+      this->transport_->wait_strategy ()->finished_request ();
+
+      (void) this->transport_->make_idle ();
+    }
+
+  // The send completion path will idle the transport if it is still active.
   return true;
 }
 
 void
 TAO_Exclusive_TMS::connection_closed ()
 {
-  if (this->rd_)
+  ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher> rd {};
+
   {
-    this->rd_->connection_closed ();
+    ACE_MT (ACE_GUARD (TAO_SYNCH_RECURSIVE_MUTEX, ace_mon, this->lock_));
+
+    rd.reset (this->rd_.get ());
   }
+
+  if (rd)
+    {
+      rd->connection_closed ();
+    }
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

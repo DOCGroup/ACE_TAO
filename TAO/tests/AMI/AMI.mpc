@@ -40,3 +40,12 @@ project(*Simple Client): messaging, taoserver, ami {
   IDL_Files {
   }
 }
+
+project(*Exclusive TMS Completion): taoclient {
+  exename = exclusive_tms_completion
+  Source_Files {
+    exclusive_tms_completion.cpp
+  }
+  IDL_Files {
+  }
+}

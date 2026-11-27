@@ -11,6 +11,7 @@
 #include /**/ "ace/pre.h"
 
 #include "tao/Transport_Mux_Strategy.h"
+#include "tao/orbconf.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -67,6 +68,9 @@ private:
   TAO_Exclusive_TMS &operator= (TAO_Exclusive_TMS &&) = delete;
 
 protected:
+  /// Lock protecting the request state.
+  TAO_SYNCH_RECURSIVE_MUTEX lock_ {};
+
   /// Used to generate a different request_id on each call to
   /// request_id().
   CORBA::ULong request_id_generator_ {};
@@ -77,6 +81,12 @@ protected:
   /// Reply Dispatcher corresponding to the request. If this is zero we don't
   /// have a reply, if it not zero we have one
   ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher> rd_ {};
+
+  /// True after sending the current request has completed.
+  bool request_sent_ {};
+
+  /// Prevent both completion paths from idling the transport.
+  bool transport_idle_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
