@@ -130,10 +130,14 @@ ACE_Filecache_Handle::size () const
 
 // ACE_Filecache_Hash
 
-#define ACE_Filecache_Hash \
-        ACE_Hash_Map_Manager_Ex<ACE_TCHAR const *, ACE_Filecache_Object *, ACE_Hash<ACE_TCHAR const *>, ACE_Equal_To<ACE_TCHAR const *>, ACE_Null_Mutex>
-#define ACE_Filecache_Hash_Entry \
-        ACE_Hash_Map_Entry<ACE_TCHAR const *, ACE_Filecache_Object *>
+using ACE_Filecache_Hash =
+  ACE_Hash_Map_Manager_Ex<ACE_TCHAR const *,
+                          ACE_Filecache_Object *,
+                          ACE_Hash<ACE_TCHAR const *>,
+                          ACE_Equal_To<ACE_TCHAR const *>,
+                          ACE_Null_Mutex>;
+using ACE_Filecache_Hash_Entry =
+  ACE_Hash_Map_Entry<ACE_TCHAR const *, ACE_Filecache_Object *>;
 
 template <>
 ACE_Filecache_Hash_Entry::ACE_Hash_Map_Entry (
@@ -187,9 +191,6 @@ ACE_Filecache_Hash::equal (ACE_TCHAR const *const &id1,
 {
   return ACE_OS::strcmp (id1, id2) == 0;
 }
-
-#undef ACE_Filecache_Hash
-#undef ACE_Filecache_Hash_Entry
 
 // ACE_Filecache
 
