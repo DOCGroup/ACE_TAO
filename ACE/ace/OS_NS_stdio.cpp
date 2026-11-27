@@ -1270,8 +1270,14 @@ namespace { // helpers for vsnprintf_emulation
 
     static void conv_storage_needed (char const *fmt, int &storage_needed)
     {
-      while (char const *f = std::strpbrk (fmt, "*%"))
+      while (true)
         {
+          char const *f = std::strpbrk (fmt, "*%");
+          if (f == nullptr)
+            {
+              break;
+            }
+
           if (!*f || *f == '%')
             {
               break;
@@ -1290,20 +1296,28 @@ namespace { // helpers for vsnprintf_emulation
       int storage_needed = n;
       char const *f = fmt;
       conv_storage_needed (f, storage_needed);
-      while (char const *const pct = std::strchr (f, '%'))
-        if (pct[1] == '%')
-          {
-            f = pct + 2;
-          }
-        else
-          {
-            const int p = snprintf_positional (++f);
-            if (p > storage_needed)
-              {
-                storage_needed = p;
-              }
-            conv_storage_needed (f, storage_needed);
-          }
+      while (true)
+        {
+          char const *const pct = std::strchr (f, '%');
+          if (pct == nullptr)
+            {
+              break;
+            }
+
+          if (pct[1] == '%')
+            {
+              f = pct + 2;
+            }
+          else
+            {
+              const int p = snprintf_positional (++f);
+              if (p > storage_needed)
+                {
+                  storage_needed = p;
+                }
+              conv_storage_needed (f, storage_needed);
+            }
+        }
 
       if (size_t (storage_needed) >
           sizeof this->pos_storage_ / sizeof (Positional_Arg))
@@ -1591,8 +1605,14 @@ ACE_OS::vsnprintf_emulation (char *buf, size_t max, char const *fmt, va_list ap)
   Snprintf_Buffer sb (buf, max);
   Snprintf_Positional_Args pos_arg;
 
-  while (char const *const pct = std::strchr (fmt, '%'))
+  while (true)
     {
+      char const *const pct = std::strchr (fmt, '%');
+      if (pct == nullptr)
+        {
+          break;
+        }
+
       // Output up to next % in format string
       bool const escaped = pct[1] == '%';
       size_t const non_conv = pct - fmt + escaped;

@@ -2552,8 +2552,14 @@ void ACE_Log_Formatter::prepare_format ()
 
   *this->fmt_out_ = 0;
 
-  while (char const *const pct = std::strchr (this->format_, '%'))
+  while (true)
     {
+      char const *const pct = std::strchr (this->format_, '%');
+      if (pct == nullptr)
+        {
+          break;
+        }
+
       bool const escaped = pct[1] == '%';
       this->format_ += 1 + this->copy_trunc (this->format_,
                                              pct - this->format_ + escaped);
