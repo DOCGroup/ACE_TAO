@@ -51,8 +51,8 @@ ACE_String_Base<ACE_CHAR_T>::empty () const
 
 template <class ACE_CHAR_T> ACE_INLINE ACE_String_Base<ACE_CHAR_T>
 ACE_String_Base<ACE_CHAR_T>::substr (
-  typename ACE_String_Base<ACE_CHAR_T>::size_type offset,
-  typename ACE_String_Base<ACE_CHAR_T>::size_type length) const
+  size_type offset,
+  size_type length) const
 {
   ACE_TRACE ("ACE_String_Base<ACE_CHAR_T>::substr");
   return this->substring (offset, length);
@@ -62,7 +62,7 @@ ACE_String_Base<ACE_CHAR_T>::substr (
 
 template <class ACE_CHAR_T> ACE_INLINE ACE_CHAR_T const &
 ACE_String_Base<ACE_CHAR_T>::operator[] (
-  typename ACE_String_Base<ACE_CHAR_T>::size_type slot) const
+  size_type slot) const
 {
   ACE_TRACE ("ACE_String_Base<ACE_CHAR_T>::operator[]");
   return this->rep_[slot];
@@ -72,7 +72,7 @@ ACE_String_Base<ACE_CHAR_T>::operator[] (
 
 template <class ACE_CHAR_T> ACE_INLINE ACE_CHAR_T &
 ACE_String_Base<ACE_CHAR_T>::operator[] (
-  typename ACE_String_Base<ACE_CHAR_T>::size_type slot)
+  size_type slot)
 {
   ACE_TRACE ("ACE_String_Base<ACE_CHAR_T>::operator[]");
   return this->rep_[slot];
@@ -125,7 +125,7 @@ ACE_String_Base<ACE_CHAR_T>::operator!= (ACE_CHAR_T const *s) const
 
 template <class ACE_CHAR_T> ACE_INLINE typename ACE_String_Base<ACE_CHAR_T>::size_type
 ACE_String_Base<ACE_CHAR_T>::find (ACE_String_Base<ACE_CHAR_T> const &str,
-                             typename ACE_String_Base<ACE_CHAR_T>::size_type pos) const
+                                   size_type pos) const
 {
   ACE_TRACE ("ACE_String_Base<ACE_CHAR_T>::find");
   return this->find (str.rep_, pos);

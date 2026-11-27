@@ -57,7 +57,7 @@ ACE_String_Base<ACE_CHAR_T>::ACE_String_Base (ACE_CHAR_T c,
 template <class ACE_CHAR_T>
 ACE_String_Base<ACE_CHAR_T>::ACE_String_Base (
   ACE_CHAR_T const *s,
-  typename ACE_String_Base<ACE_CHAR_T>::size_type len,
+  size_type len,
   ACE_Allocator *the_allocator,
   bool release)
   : allocator_ (the_allocator ? the_allocator : ACE_Allocator::instance ())
@@ -78,7 +78,7 @@ ACE_String_Base<ACE_CHAR_T>::ACE_String_Base (ACE_String_Base<ACE_CHAR_T> const 
 
 template <class ACE_CHAR_T>
 ACE_String_Base<ACE_CHAR_T>::ACE_String_Base (
-  typename ACE_String_Base<ACE_CHAR_T>::size_type len,
+  size_type len,
   ACE_CHAR_T c,
   ACE_Allocator *the_allocator)
   : allocator_ (the_allocator ? the_allocator : ACE_Allocator::instance ())
@@ -102,8 +102,8 @@ ACE_String_Base<ACE_CHAR_T>::~ACE_String_Base ()
 // this method might benefit from a little restructuring.
 template <class ACE_CHAR_T> void
 ACE_String_Base<ACE_CHAR_T>::set (ACE_CHAR_T const *s,
-                            typename ACE_String_Base<ACE_CHAR_T>::size_type len,
-                            bool release)
+                                  size_type len,
+                                  bool release)
 {
   // Case 1. Going from memory to more memory
   size_type new_buf_len {};
@@ -176,8 +176,8 @@ ACE_String_Base<ACE_CHAR_T>::set (ACE_CHAR_T const *s,
 // Return substring.
 template <class ACE_CHAR_T> ACE_String_Base<ACE_CHAR_T>
 ACE_String_Base<ACE_CHAR_T>::substring (
-  typename ACE_String_Base<ACE_CHAR_T>::size_type offset,
-  typename ACE_String_Base<ACE_CHAR_T>::size_type length) const
+  size_type offset,
+  size_type length) const
 {
   ACE_String_Base<ACE_CHAR_T> nill;
   size_type count = length;
@@ -209,7 +209,7 @@ ACE_String_Base<ACE_CHAR_T>::substring (
 
 template <class ACE_CHAR_T> ACE_String_Base<ACE_CHAR_T> &
 ACE_String_Base<ACE_CHAR_T>::append (ACE_CHAR_T const * s,
-                               typename ACE_String_Base<ACE_CHAR_T>::size_type slen)
+                                     size_type slen)
 {
   ACE_TRACE ("ACE_String_Base<ACE_CHAR_T>::append(const ACE_CHAR_T*, size_type)");
   if (slen > 0 && slen != npos)
@@ -264,8 +264,8 @@ ACE_String_Base<ACE_CHAR_T>::hash () const
 }
 
 template <class ACE_CHAR_T> void
-ACE_String_Base<ACE_CHAR_T>::resize (typename ACE_String_Base<ACE_CHAR_T>::size_type len,
-                               ACE_CHAR_T c)
+ACE_String_Base<ACE_CHAR_T>::resize (size_type len,
+                                     ACE_CHAR_T c)
 {
   ACE_TRACE ("ACE_String_Base<ACE_CHAR_T>::resize");
 
@@ -448,7 +448,7 @@ ACE_String_Base<ACE_CHAR_T>::operator== (ACE_CHAR_T const *s) const
 template <class ACE_CHAR_T> typename ACE_String_Base<ACE_CHAR_T>::size_type
 ACE_String_Base<ACE_CHAR_T>::find (
   ACE_CHAR_T const *s,
-  typename ACE_String_Base<ACE_CHAR_T>::size_type pos) const
+  size_type pos) const
 {
   ACE_CHAR_T *substr = this->rep_ + pos;
   size_t const len = ACE_OS::strlen (s);
@@ -459,14 +459,14 @@ ACE_String_Base<ACE_CHAR_T>::find (
     }
   else
     {
-      return static_cast<ACE_String_Base<ACE_CHAR_T>::size_type> (pointer - this->rep_);
+      return static_cast<size_type> (pointer - this->rep_);
     }
 }
 
 template <class ACE_CHAR_T> typename ACE_String_Base<ACE_CHAR_T>::size_type
 ACE_String_Base<ACE_CHAR_T>::find (
   ACE_CHAR_T c,
-  typename ACE_String_Base<ACE_CHAR_T>::size_type pos) const
+  size_type pos) const
 {
   ACE_CHAR_T *substr = this->rep_ + pos;
   ACE_CHAR_T *pointer = ACE_OS::strnchr (substr, c, this->len_ - pos);
@@ -476,14 +476,14 @@ ACE_String_Base<ACE_CHAR_T>::find (
     }
   else
     {
-      return static_cast<ACE_String_Base<ACE_CHAR_T>::size_type> (pointer - this->rep_);
+      return static_cast<size_type> (pointer - this->rep_);
     }
 }
 
 template <class ACE_CHAR_T> typename ACE_String_Base<ACE_CHAR_T>::size_type
 ACE_String_Base<ACE_CHAR_T>::rfind (
   ACE_CHAR_T c,
-  typename ACE_String_Base<ACE_CHAR_T>::size_type pos) const
+  size_type pos) const
 {
   if (pos == npos || pos > this->len_)
     {
