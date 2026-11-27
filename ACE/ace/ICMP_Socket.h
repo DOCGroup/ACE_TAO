@@ -54,7 +54,7 @@ public:
                 ACE_Addr & addr,
                 int flags = 0) const;
 
-  /// TODO: comment
+  /// Receive up to @a n bytes, waiting at most @a timeout.
   ssize_t recv (void * buf,
                 size_t n,
                 int flags,

@@ -81,7 +81,7 @@ private:
   std::unique_ptr<ACE_TCHAR, ACE_TCHAR_String_Deleter> mmap_prefix_;
 
   /// Minimum bytes of the mmap files.
-  /// TODO: Replace this magic number with a named configuration value.
+  /// @todo Replace this magic number with a named configuration value.
   ACE_OFF_T min_bytes_ {10 * 1024};
 };
 

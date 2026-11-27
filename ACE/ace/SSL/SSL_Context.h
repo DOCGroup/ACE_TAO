@@ -291,10 +291,8 @@ public:
    */
   void set_verify_peer (int strict = 0, int once = 1, int depth = 0);
 
-  /// TODO: a implementation that will lookup the CTX table for the list
-  /// of files and paths etc.
-  /// Query the location of trusted certification authority
-  /// certificates.
+  // TODO: Add an implementation that queries the context for trusted
+  // certification-authority certificate files and paths.
   // const char* ca_file_name() const;
   // const char* ca_dir_name() const;
 

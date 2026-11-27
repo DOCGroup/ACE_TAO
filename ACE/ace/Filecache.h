@@ -34,8 +34,9 @@ class ACE_Filecache_Object;
 /**
  * @class ACE_Filecache_Handle
  *
- * @brief
- * Abstraction over a real file.  This is meant to be the entry
+ * @brief Abstraction over a real file.
+ *
+ * This is meant to be the entry
  * point into the Cached Virtual Filesystem.
  *
  * This is a cached filesystem implementation based loosely on the
@@ -47,41 +48,28 @@ class ACE_Filecache_Object;
  * On creation, the cache is checked, and reference count is
  * incremented.  On destruction, reference count is decremented.  If
  * the reference count is 0, the file is removed from the cache.
- * E.g. 1,
- * {
- * ACE_Filecache_Handle foo("foo.html");
+ * @code
+ * ACE_Filecache_Handle foo (ACE_TEXT ("foo.html"));
  * this->peer ().send (foo.address (), foo.size ());
- * }
- * E.g. 2,
- * {
- * ACE_Filecache_Handle foo("foo.html");
+ * @endcode
+ *
+ * @code
+ * ACE_Filecache_Handle foo (ACE_TEXT ("foo.html"));
  * io->transmitfile (foo.handle (), this->peer ().handle ());
- * }
- * E.g. 3,
- * {
- * ACE_Filecache_Handle foo("foo.html", content_length);
+ * @endcode
+ *
+ * @code
+ * ACE_Filecache_Handle foo (ACE_TEXT ("foo.html"), content_length);
  * this->peer ().recv (foo.address (), content_length);
- * }
- * TODO:
+ * @endcode
+ *
+ * @todo Avoid copying files when reading while ensuring that files are in a
+ *       consistent state before they are sent.
+ * @todo Use a hash table to locate files.
+ * @todo Reduce locking while preserving thread safety.
  */
 class ACE_Export ACE_Filecache_Handle
 {
-  // (1) Get rid of the useless copying of files when reading.
-  // Although it does make sure the file you send isn't being changed,
-  // it doesn't make sure the file is in a sensible state before
-  // sending it.
-  //
-  // Alternative: if the file get's trashed while it is being shipped,
-  // let the client request the file again.  The cache should have an
-  // updated copy by that point.
-  //
-  // (2) Use hashing for locating files.  This means I need a hastable
-  // implementation with buckets.
-  //
-  // (3) Only lock when absolutely necessary.  JAWS_Virtual_Filesystem was
-  // rather conservative, but for some reason it still ran into problems.
-  // Since this design should be simpler, problems should be easier to spot.
-  //
 public:
   /// Query cache for file, and acquire it.  Assumes the file is being
   /// opened for reading.
